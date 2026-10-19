@@ -1,6 +1,7 @@
 import { chromium } from "playwright";
 import { strict as assert } from "node:assert";
 import { writeFileSync, mkdirSync } from "node:fs";
+import { openRoomSelect } from "./hotseat-driver.ts";
 const out = "output/playwright/phase2";
 mkdirSync(out, { recursive: true });
 const browser = await chromium.launch();
@@ -115,7 +116,7 @@ for (let i = 0; i < 4; i++) {
   const room = await target.evaluate((el) =>
     el.closest("[data-room-container]")!.getAttribute("data-room-container")!,
   );
-  await page.getByLabel("查看房间", { exact: true }).selectOption(room);
+  await (await openRoomSelect(page)).selectOption(room);
   await target.locator(":scope > rect").click();
   while (await page.getByTestId("ack-dice").count())
     await page.getByTestId("ack-dice").click();

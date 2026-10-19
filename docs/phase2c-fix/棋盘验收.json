@@ -1,0 +1,172 @@
+{
+  "records": [
+    {
+      "fullBoardCheck": {
+        "rooms": 11,
+        "routes": 22,
+        "viewport": {
+          "x": 0,
+          "y": 0.390625,
+          "width": 1179,
+          "height": 1163.6875
+        },
+        "pixels": {
+          "busy": 0.1476487276611377,
+          "std": 28.260908870602183
+        }
+      },
+      "seed": 1701,
+      "mapId": "macmillan_estate",
+      "screen": "电脑",
+      "viewport": {
+        "width": 1440,
+        "height": 1100
+      },
+      "commandCount": 76,
+      "round": 2,
+      "events": 147,
+      "file": "1701_电脑_中局.png"
+    },
+    {
+      "fullBoardCheck": {
+        "rooms": 11,
+        "routes": 22,
+        "viewport": {
+          "x": 0,
+          "y": 193.390625,
+          "width": 390,
+          "height": 548.59375
+        },
+        "pixels": {
+          "busy": 0.12096200636346621,
+          "std": 19.433649632782117
+        }
+      },
+      "seed": 1701,
+      "mapId": "macmillan_estate",
+      "screen": "手机竖屏",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "commandCount": 76,
+      "round": 2,
+      "events": 147,
+      "file": "1701_手机竖屏_中局.png"
+    },
+    {
+      "fullBoardCheck": {
+        "rooms": 11,
+        "routes": 22,
+        "viewport": {
+          "x": 0,
+          "y": 52,
+          "width": 844,
+          "height": 338
+        },
+        "pixels": {
+          "busy": 0.0757452536526543,
+          "std": 16.31664612151603
+        }
+      },
+      "seed": 1701,
+      "mapId": "macmillan_estate",
+      "screen": "手机横屏",
+      "viewport": {
+        "width": 844,
+        "height": 390
+      },
+      "commandCount": 76,
+      "round": 2,
+      "events": 147,
+      "file": "1701_手机横屏_中局.png"
+    },
+    {
+      "fullBoardCheck": {
+        "rooms": 10,
+        "routes": 19,
+        "viewport": {
+          "x": 0,
+          "y": 50.390625,
+          "width": 1179,
+          "height": 1010.5625
+        },
+        "pixels": {
+          "busy": 0.14420654488777218,
+          "std": 27.35608207777921
+        }
+      },
+      "seed": 2903,
+      "mapId": "autohaven_wreckers",
+      "screen": "电脑",
+      "viewport": {
+        "width": 1440,
+        "height": 1100
+      },
+      "commandCount": 76,
+      "round": 2,
+      "events": 168,
+      "file": "2903_电脑_中局.png"
+    },
+    {
+      "fullBoardCheck": {
+        "rooms": 10,
+        "routes": 19,
+        "viewport": {
+          "x": 0,
+          "y": 193.390625,
+          "width": 390,
+          "height": 548.59375
+        },
+        "pixels": {
+          "busy": 0.11059329964439453,
+          "std": 18.203101975265863
+        }
+      },
+      "seed": 2903,
+      "mapId": "autohaven_wreckers",
+      "screen": "手机竖屏",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "commandCount": 76,
+      "round": 2,
+      "events": 168,
+      "file": "2903_手机竖屏_中局.png"
+    },
+    {
+      "fullBoardCheck": {
+        "rooms": 10,
+        "routes": 19,
+        "viewport": {
+          "x": 0,
+          "y": 52,
+          "width": 844,
+          "height": 338
+        },
+        "pixels": {
+          "busy": 0.08171850023836899,
+          "std": 18.287104209483108
+        }
+      },
+      "seed": 2903,
+      "mapId": "autohaven_wreckers",
+      "screen": "手机横屏",
+      "viewport": {
+        "width": 844,
+        "height": 390
+      },
+      "commandCount": 76,
+      "round": 2,
+      "events": 168,
+      "file": "2903_手机横屏_中局.png"
+    }
+  ],
+  "boardReveals": 25,
+  "boardInteractions": 14,
+  "highlights": 1,
+  "diceCaptured": true,
+  "consoleErrors": [],
+  "method": "Rendered board/control clicks, independent reducer after every command; resize same actual midgame for each viewport. No state injection."
+}

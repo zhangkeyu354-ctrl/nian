@@ -30,13 +30,22 @@ export async function drainUI(
   if (await page.getByTestId("uncover").count())
     await page.getByTestId("uncover").click();
 }
+export async function openRoomSelect(page: Page) {
+  const select = page.getByLabel("查看房间", { exact: true });
+  if (!(await select.isVisible()))
+    await page.getByLabel("显示图例与房间列表", { exact: true }).click();
+  return select;
+}
 export async function clickUI(page: Page, c: Command) {
   if (c.type === "SETUP_REVEAL" || (c.type === "SELECT" && c.propId)) {
     const target = page.locator(`[data-prop="${c.propId}"]`);
     const room = await target.evaluate((el) =>
       el.closest("[data-room-container]")!.getAttribute("data-room-container")!,
     );
-    await page.getByLabel("查看房间", { exact: true }).selectOption(room);
+    const select = page.getByLabel("查看房间", { exact: true });
+    if (!(await select.isVisible()))
+      await page.getByLabel("显示图例与房间列表", { exact: true }).click();
+    await select.selectOption(room);
     await target.locator(":scope > rect").click();
     return;
   }
@@ -90,7 +99,10 @@ export async function clickUI(page: Page, c: Command) {
           .closest("[data-room-container]")!
           .getAttribute("data-room-container")!,
       );
-      await page.getByLabel("查看房间", { exact: true }).selectOption(room);
+      const select = page.getByLabel("查看房间", { exact: true });
+      if (!(await select.isVisible()))
+        await page.getByLabel("显示图例与房间列表", { exact: true }).click();
+      await select.selectOption(room);
       const before = JSON.parse(
         await page.evaluate(() => window.render_game_to_text()),
       ).events;

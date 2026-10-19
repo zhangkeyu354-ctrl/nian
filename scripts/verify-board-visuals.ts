@@ -3,6 +3,11 @@ import { readFileSync, writeFileSync, mkdirSync } from "node:fs";
 import { strict as assert } from "node:assert";
 import { createGame, reduce } from "../packages/game-engine/src/index.ts";
 import { startUI, drainUI, clickUI } from "./hotseat-driver.ts";
+import {
+  assertFullBoardShot,
+  visibleCounts,
+  waitForBoardImages,
+} from "./screenshot-check.ts";
 const out = "output/playwright/phase2c";
 mkdirSync(out, { recursive: true });
 const browser = await chromium.launch();
@@ -13,6 +18,9 @@ const ctx = await browser.newContext({
 const p = await ctx.newPage();
 const errors: string[] = [];
 p.on("pageerror", (e) => errors.push(String(e)));
+p.on("response", (r) => {
+  if (r.status() >= 400) errors.push(`HTTP ${r.status()} ${r.url()}`);
+});
 p.on("console", (m) => {
   if (m.type() === "error") errors.push(m.text());
 });
@@ -127,6 +135,7 @@ for (const seed of [1701, 2903]) {
     const svgBox = await p.getByTestId("board").boundingBox();
     assert(svgBox && svgBox.height > 200, "visible SVG canvas");
     const base = `${seed}_${screen.name}_中局`;
+    await waitForBoardImages(p);
     await p.screenshot({
       path: `${out}/${base}.png`,
       fullPage: screen.name === "电脑",
@@ -137,6 +146,10 @@ for (const seed of [1701, 2903]) {
         .locator(".board-shell")
         .screenshot({ path: `${out}/${seed}_棋盘全图.png` });
     if (screen.name === "手机竖屏") {
+      // 默认视图显示当前房间与相邻房间；点一下道具先放大到该房间，再检查点击区域
+      assert((await visibleCounts(p)).rooms >= 2, "定位视图应包含相邻房间");
+      await p.locator("[data-prop] > rect").first().click();
+      await p.waitForTimeout(150);
       const rect = await p
         .locator("[data-prop] > rect")
         .first()
@@ -187,7 +200,24 @@ for (const seed of [1701, 2903]) {
     }
     if (screen.name === "手机横屏")
       await p.getByLabel("横屏查看棋盘", { exact: true }).click();
+    // 全图验收截图：房间数、路线图标数、像素内容三项全部通过才算合格
+    if (screen.name === "手机横屏")
+      await p.getByLabel("横屏查看棋盘", { exact: true }).click();
+    await p.getByLabel("复位地图", { exact: true }).click();
+    await p.waitForTimeout(300);
+    const expected =
+      s.mapId === "macmillan_estate"
+        ? { rooms: 11, routes: 22 }
+        : { rooms: 10, routes: 19 };
+    const full = await assertFullBoardShot(
+      p,
+      `${out}/${seed}_${screen.name}_全图验收.png`,
+      expected,
+    );
+    if (screen.name === "手机横屏")
+      await p.getByLabel("横屏查看棋盘", { exact: true }).click();
     records.push({
+      fullBoardCheck: full,
       seed,
       mapId: s.mapId,
       screen: screen.name,

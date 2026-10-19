@@ -397,3 +397,30 @@
 .track-steps > span.filled {
   background: none;
 }
+
+/* Phase 2C 修复：小屏幕默认收起图例与房间列表，把空间让给棋盘 */
+.tools-toggle {
+  display: none;
+}
+@media (max-width: 950px), (max-height: 550px) {
+  .zoom-controls .tools-toggle {
+    display: inline-block;
+  }
+  .tools-collapsed .board-navigation,
+  .tools-collapsed .board-legend {
+    display: none;
+  }
+}
+@media (max-height: 550px) and (orientation: landscape) {
+  .tools-collapsed .map-viewport {
+    height: calc(100svh - 60px);
+  }
+  .board-expanded.tools-collapsed .map-viewport {
+    height: calc(100dvh - 52px);
+  }
+}
+@media (orientation: portrait) {
+  .board-expanded.tools-collapsed .map-viewport {
+    height: calc(100dvw - 52px);
+  }
+}

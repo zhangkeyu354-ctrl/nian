@@ -52,6 +52,7 @@ export function Board({
   const height = map.id === "macmillan_estate" ? 1520 : 1320;
   const settings = useSettings();
   const [expanded, setExpanded] = useState(false);
+  const [toolsOpen, setToolsOpen] = useState(false);
   const [size, setSize] = useState({ width: 1540, height });
   const yScale = 1;
   const [view, setView] = useState({ x: 0, y: 0, w: 1540, h: height });
@@ -70,19 +71,34 @@ export function Board({
     };
   }, [expanded]);
   const reset = () => setView({ x: 0, y: 0, w: 1540, h: height });
+  // 定位：让当前房间及其全部相邻房间同时可见（保留四周安全边距）
   function focus(id = focusRoom) {
-    const r = layout.rooms[id ?? ""] ?? Object.values(layout.rooms)[0];
-    const w = size.width < 600 ? 540 : size.width < 950 ? 1000 : 1540;
-    const h = (w * size.height) / size.width;
+    const roomId = id && layout.rooms[id] ? id : Object.keys(layout.rooms)[0];
+    const ids = new Set([roomId]);
+    for (const e of map.edges as Array<{
+      from?: string | null;
+      to?: string | null;
+      rooms?: string[];
+    }>) {
+      const rs = e.rooms ?? [e.from, e.to];
+      if (rs.includes(roomId)) rs.forEach((r) => r && ids.add(r));
+    }
+    const pts = [...ids].map((r) => layout.rooms[r]).filter(Boolean);
+    const pad = 40;
+    const x0 = Math.min(...pts.map((p) => p[0])) - 130 - pad,
+      x1 = Math.max(...pts.map((p) => p[0])) + 130 + pad,
+      y0 = Math.min(...pts.map((p) => p[1])) - 82 - pad,
+      y1 = Math.max(...pts.map((p) => p[1])) + 118 + pad;
+    const aspect = size.width / Math.max(1, size.height);
+    let w = Math.max(x1 - x0, (y1 - y0) * aspect, 420);
+    let h = w / aspect;
+    const cx = (x0 + x1) / 2,
+      cy = (y0 + y1) / 2;
+    const clamp = (v: number, lo: number, hi: number) =>
+      hi < lo ? (lo + hi) / 2 : Math.max(lo, Math.min(hi, v));
     setView({
-      x:
-        size.width < 950
-          ? Math.max(0, Math.min(1540 - w, r[0] - w / 2))
-          : r[0] - w / 2,
-      y:
-        size.width < 950
-          ? Math.max(0, Math.min(height - h, r[1] * yScale - h / 2))
-          : r[1] * yScale - h / 2,
+      x: clamp(cx - w / 2, -pad, 1540 + pad - w),
+      y: clamp(cy - h / 2, -pad, height + pad - h),
       w,
       h,
     });
@@ -100,6 +116,15 @@ export function Board({
     if (size.width < 950) focus();
     else reset();
   }, [map.id, focusRoom, size.width, size.height]);
+  // 手机上地图缩得很小时，第一次点击只放大到该房间（防误触），放大后再点才执行操作
+  const tiny = size.width < 950 && view.w / Math.max(1, size.width) > 1.4;
+  function zoomRoom(id: string) {
+    const r = layout.rooms[id];
+    if (!r) return;
+    const w = size.width < 600 ? 360 : 1000;
+    const h = (w * size.height) / Math.max(1, size.width);
+    setView({ x: r[0] - w / 2, y: r[1] + 18 - h / 2, w, h });
+  }
   const zoom = (factor: number) =>
     setView((v) => {
       const w = Math.min(2000, Math.max(380, v.w * factor));
@@ -171,7 +196,13 @@ export function Board({
   const visuals = boardVisuals(state);
   const props = visuals.props;
   return (
-    <div className={"board-shell" + (expanded ? " board-expanded" : "")}>
+    <div
+      className={
+        "board-shell" +
+        (expanded ? " board-expanded" : "") +
+        (toolsOpen ? " tools-open" : " tools-collapsed")
+      }
+    >
       <div className="board-top">
         <span>{map.name_zh}</span>
         <div className="zoom-controls">
@@ -183,6 +214,14 @@ export function Board({
             aria-label="横屏查看棋盘"
           >
             {expanded ? "退出横屏" : "横屏"}
+          </button>
+          <button
+            className="tools-toggle"
+            aria-label="显示图例与房间列表"
+            aria-expanded={toolsOpen}
+            onClick={() => setToolsOpen((v) => !v)}
+          >
+            {toolsOpen ? "收起" : "图例"}
           </button>
           <button aria-label="缩小地图" onClick={() => zoom(1.25)}>
             −
@@ -427,6 +466,14 @@ export function Board({
             const y = sourceY * yScale;
             const occupants = visuals.actors.filter((a) => a.room === n.id);
             const slots = props.filter((p) => p.room === n.id);
+            // 棋子行：避开左上角出生标记；人多时缩小，避免与道具行或彼此重叠
+            const crowded = occupants.length > 4;
+            const tokenSize = crowded ? 44 : 54;
+            const tokenGap = crowded ? 40 : 48;
+            const tokenStart = n.spawn_faces.length ? -62 : -92;
+            const slotGap = Math.min(51, 250 / Math.max(1, slots.length));
+            const slotHit = Math.min(62, slotGap);
+            const slotIcon = Math.min(50, slotGap - 6);
             const reachable = highlight.some((r) => r.to === n.id);
             return (
               <g
@@ -439,7 +486,11 @@ export function Board({
                   tabIndex={0}
                   aria-label={"房间：" + n.name_zh}
                   data-room={n.id}
-                  onClick={() => click(() => onRoom(n.id))}
+                  onClick={() =>
+                    click(() =>
+                      tiny && !reachable ? zoomRoom(n.id) : onRoom(n.id),
+                    )
+                  }
                   onKeyDown={(e) => {
                     if (e.key === "Enter") onRoom(n.id);
                   }}
@@ -557,7 +608,7 @@ export function Board({
                   {occupants.map((a, i) => (
                     <g
                       key={a.id}
-                      transform={`translate(${-92 + i * 48} 10)`}
+                      transform={`translate(${tokenStart + i * tokenGap} 10)`}
                       data-actor={a.id}
                       data-actor-state={a.state}
                       role="button"
@@ -565,7 +616,7 @@ export function Board({
                       aria-label={"棋子：" + a.label}
                       onClick={(e) => {
                         e.stopPropagation();
-                        click(() => onActor?.(a.id));
+                        click(() => (tiny ? zoomRoom(n.id) : onActor?.(a.id)));
                       }}
                       onKeyDown={(e) => {
                         if (e.key === "Enter") {
@@ -584,8 +635,10 @@ export function Board({
                         stroke={actionable.includes(a.id) ? "#e6d294" : "none"}
                         strokeWidth="2"
                       />
-                      <g transform="translate(-27 -27)">
-                        <Token token={a} size={54} />
+                      <g
+                        transform={`translate(${-tokenSize / 2} ${-tokenSize / 2})`}
+                      >
+                        <Token token={a} size={tokenSize} />
                       </g>
                       <text
                         y="35"
@@ -609,9 +662,7 @@ export function Board({
                   ))}
                 </g>
                 {slots.map((p, i) => {
-                  const px =
-                    (i - (slots.length - 1) / 2) *
-                    Math.min(51, 250 / slots.length);
+                  const px = (i - (slots.length - 1) / 2) * slotGap;
                   const available = actionable.includes(p.id);
                   return (
                     <g
@@ -627,7 +678,10 @@ export function Board({
                             ? "空槽（道具已移除）"
                             : p.label
                       }
-                      onClick={() => click(() => onProp(p.id))}
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        click(() => (tiny ? zoomRoom(n.id) : onProp(p.id)));
+                      }}
                       onKeyDown={(e) => {
                         if (e.key === "Enter") onProp(p.id);
                       }}
@@ -637,9 +691,9 @@ export function Board({
                       transform={`translate(${px} 82)`}
                     >
                       <rect
-                        x="-31"
+                        x={-slotHit / 2}
                         y="-31"
-                        width="62"
+                        width={slotHit}
                         height="62"
                         fill="transparent"
                         stroke={selected === p.id ? "#b7883b" : "none"}
@@ -653,8 +707,11 @@ export function Board({
                           strokeDasharray="3 3"
                         />
                       ) : (
-                        <g transform="translate(-25 -25)" pointerEvents="none">
-                          <Token token={p} size={50} />
+                        <g
+                          transform={`translate(${-slotIcon / 2} ${-slotIcon / 2})`}
+                          pointerEvents="none"
+                        >
+                          <Token token={p} size={slotIcon} />
                         </g>
                       )}
                     </g>
@@ -678,7 +735,11 @@ export function Board({
           <select
             aria-label="查看房间"
             value=""
-            onChange={(e) => focus(e.target.value)}
+            onChange={(e) =>
+              size.width < 950
+                ? zoomRoom(e.target.value)
+                : focus(e.target.value)
+            }
           >
             <option value="">选择房间并定位</option>
             {map.nodes.map((n) => (
