@@ -189,11 +189,17 @@ export function useItem(s: GameState, c: Command) {
       break;
     }
     case "firecracker": {
-      if (opt === "wall")
-        throw new RuleError(
-          "CHECK_REQUIRED",
-          "Q10 鞭炮移除可破坏墙壁的目标范围待用户裁定",
+      if (opt === "wall") {
+        // Q10（用户裁定 2026-10-19）：与你所在空间直接相连的路线上的一个可破坏墙壁。任何时候。
+        const path = s.paths[text(c, "pathId")];
+        requireThat(
+          path && path.wall && a.room && path.rooms.includes(a.room),
+          "breakable wall on a path from your space",
         );
+        params.option = "wall";
+        params.pathId = path.id;
+        break;
+      }
       requireThat(opt === "block", "block/wall");
       requireThat(
         inWindow && w!.event === "KILLER_WOULD_ENTER" && w!.context.to === a.room,
@@ -313,6 +319,14 @@ export function resolveItem(s: GameState, j: Payload) {
       }
       break;
     case "firecracker":
+      if (params.option === "wall") {
+        const p = s.paths[text(params, "pathId")];
+        p.wall = false;
+        p.temporaryWall = false;
+        delete p.temporaryWallUntil;
+        log(s, "WALL_REMOVED", { actorId: id, pathId: p.id, by: "firecracker" });
+        break;
+      }
       // 由 KILLER_WOULD_ENTER 之后的 MOVE_EFFECT/TELEPORT 读取
       s.blockedEntry = { room: a.room!, by: id };
       break;
@@ -408,6 +422,9 @@ export function itemCommands(s: GameState, actorId: string): Command[] {
       break;
     case "firecracker":
       out.push({ ...base, option: "block" });
+      for (const p of Object.values(s.paths))
+        if (p.wall && a.room && p.rooms.includes(a.room))
+          out.push({ ...base, option: "wall", pathId: p.id });
       break;
     default:
       if (KEY_BLOOD[a.item]) {

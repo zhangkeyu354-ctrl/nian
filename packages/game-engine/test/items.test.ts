@@ -234,12 +234,28 @@ describe("鞭炮", () => {
     s = act(s, { type: "MOVE", actorId: "trapper", pathId: r.pathId, to: r.to });
     expect(s.actors.trapper.room).toBe(r.to);
   });
-  it("移除可破坏墙壁的用法仍待用户裁定（Q10），明确报错", () => {
+  it("Q10：任何时候移除与你所在空间直接相连的路线上的一个可破坏墙壁", () => {
+    let s = base();
+    const wall = Object.values(s.paths).find((p) => p.wall)!;
+    s.actors.jake.room = wall.rooms[0];
+    s.actors.jake.item = "firecracker";
+    // 杀手回合中也可以（任何时候）
+    killerTurn(s, "MOVE");
+    s = act(s, { type: "USE_ITEM", actorId: "jake", option: "wall", pathId: wall.id });
+    expect(s.paths[wall.id].wall).toBe(false);
+    expect(s.events.some((e) => e.type === "WALL_REMOVED")).toBe(true);
+  });
+  it("Q10：不与你所在空间相连的墙不行", () => {
     const s = base();
+    const wall = Object.values(s.paths).find((p) => p.wall)!;
+    const far = Object.values(s.paths)
+      .flatMap((p) => p.rooms)
+      .find((r) => !wall.rooms.includes(r))!;
+    s.actors.jake.room = far;
     s.actors.jake.item = "firecracker";
     expect(() =>
-      reduce(s, { type: "USE_ITEM", actorId: "jake", option: "wall", pathId: "x" }),
-    ).toThrow(/CHECK_REQUIRED/);
+      reduce(s, { type: "USE_ITEM", actorId: "jake", option: "wall", pathId: wall.id }),
+    ).toThrow(/breakable wall/);
   });
   it("没有人持有物品时不产生多余的询问（不影响原有流程）", () => {
     let s = base();

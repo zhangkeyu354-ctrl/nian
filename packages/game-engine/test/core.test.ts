@@ -101,17 +101,7 @@ describe("U02 / B01 engine foundation", () => {
     expect(s.phase).toBe("PLANNING");
     expect(s.actors.dwight.room).toBeTruthy();
   });
-  it("unresolved Q11 and the Q10 firecracker wall option fail explicitly", () => {
-    const s = createGame(options);
+  it("unresolved Q11 fails explicitly", () => {
     expect(() => checkRule("Q11")).toThrow(/CHECK_REQUIRED/);
-    s.actors.dwight.item = "firecracker";
-    expect(() =>
-      reduce(s, {
-        type: "USE_ITEM",
-        actorId: "dwight",
-        itemId: "firecracker",
-        option: "wall",
-      }),
-    ).toThrow(/CHECK_REQUIRED/);
   });
 });

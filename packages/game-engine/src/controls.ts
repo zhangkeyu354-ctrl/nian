@@ -133,6 +133,8 @@ export function itemLabel(s: GameState, c: Command) {
   if (c.option === "killer_cards") return `使用${name}：翻开杀手的所有移动牌`;
   if (c.itemId === "flashlight") return `使用${name}：阻止杀手交互`;
   if (c.option === "block") return `使用${name}：阻止杀手进入`;
+  if (c.option === "wall")
+    return `使用${name}：移除墙壁（${pathLabel(s, String(c.pathId))}）`;
   if (c.option === "reroll")
     return `使用${name}：重掷第 ${Number(c.index) + 1} 颗骰子`;
   if (c.option === "blood") {
