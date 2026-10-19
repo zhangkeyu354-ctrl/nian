@@ -1,0 +1,14 @@
+﻿角色ID,中文名,阵营,板载技能文字,板载技能费用,已有实现分支,延后技能,力量文字,被动文字,新增问题
+dwight,德怀特·费菲尔德,survivor,3,3,3,,False,False,本轮未发现新增问题，非穷举证明
+meg,梅格·托马斯,survivor,3,3,2,冲刺爆发,False,False,AUDIT-B02：妖巫传送攻击前躲柜组合卡局
+claudette,克劳黛特·莫莱,survivor,3,3,3,,False,False,AUDIT-B01：精研百草回合限制
+jake,杰克·朴,survivor,3,3,3,,False,False,本轮未发现新增问题，非穷举证明
+nea,妮娅·卡尔森,survivor,3,3,3,,False,False,本轮未发现新增问题，非穷举证明
+ace,埃斯·维斯孔蒂,survivor,3,3,3,,False,False,本轮未发现新增问题，非穷举证明
+feng_min,凤敏,survivor,3,3,2,轻盈敏捷,False,False,本轮未发现新增问题，非穷举证明
+trapper,设陷者,killer,3,3,3,,True,True,本轮未发现新增问题，非穷举证明
+wraith,幽灵,killer,3,3,2,穷追不舍,True,False,本轮未发现新增问题，非穷举证明
+hillbilly,农场主,killer,3,3,3,,True,False,本轮未发现新增问题，非穷举证明
+nurse,护士,killer,3,3,3,,True,False,本轮未发现新增问题，非穷举证明
+hag,妖巫,killer,3,3,2,第三封印,True,True,AUDIT-B02：与梅格躲柜组合卡局
+doctor,医生,killer,3,3,2,压迫性气场,True,True,本轮未发现新增问题，非穷举证明

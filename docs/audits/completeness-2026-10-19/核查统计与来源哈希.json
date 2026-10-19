@@ -1,0 +1,104 @@
+{
+  "commit": "b654478",
+  "package_version": "0.2.2",
+  "verdict": "NOT_COMPLETE",
+  "pdf": {
+    "path": "reference/rulebooks/DBD_Board_Game_Rulebook_EN.pdf",
+    "pages": 20,
+    "sha256": "ee6368eebe911873ada1549fe283cf7d61a6adee8142fae907f9c86ecfef2b50"
+  },
+  "counts": {
+    "base_characters": 13,
+    "board_perks": 39,
+    "board_text_present": 39,
+    "board_cost_present": 39,
+    "board_implemented_flags": 34,
+    "board_deferred": 5,
+    "killer_powers": 6,
+    "killer_passives": 3,
+    "item_definitions": 10,
+    "physical_item_cards": 16,
+    "item_text_present": 10,
+    "item_effects_executable": 0,
+    "perk_card_slots": 52,
+    "perk_card_names": 10,
+    "perk_card_effect_records": 2,
+    "perk_card_effects_executable": 0,
+    "rule_records": 82,
+    "rule_confirmed": 81,
+    "rule_metadata_implementation_flags": {
+      "NOT_IMPLEMENTED": 78,
+      "BLOCKED": 4
+    },
+    "maps": 2,
+    "collector_out_of_scope": 20
+  },
+  "checks": {
+    "npm_test": {
+      "exit_code": 0,
+      "files": 9,
+      "tests": 84
+    },
+    "typecheck": {
+      "exit_code": 0
+    },
+    "verify_replays": {
+      "exit_code": 0,
+      "seeds": [
+        1701,
+        2903,
+        4111
+      ]
+    },
+    "probes": "2 real reproduced defects, not acceptance passes; declared missing features reject explicitly"
+  },
+  "source_hashes": {
+    "packages/game-engine/src/controls.ts": "3c1ba61f5c0fc15f318a48391b882f2e0e21c02335e87491295b64daa7099807",
+    "packages/game-engine/src/data.ts": "d356480c7851c7432aa984a621ebae7961cb20b82604b24da3499e6869c1eab1",
+    "packages/game-engine/src/dice.ts": "6d9bf28dc42e21f649a2431896aae36b212751956c87906bfa6cebbbc881316d",
+    "packages/game-engine/src/engine.ts": "5cc39539a27a47c026c96f2ff7197d194b95c12533ea9b416af7eb2e55c4fbb4",
+    "packages/game-engine/src/graph.ts": "c5b47e54e95ff2eef6491cf50d28a1faee7fbf23696963550f9cd111f3cd3b31",
+    "packages/game-engine/src/index.ts": "bbf4f477a256a6c920f8d35d26c457902d8a8460dff9277c61d8f00094e0ee80",
+    "packages/game-engine/src/presentation.ts": "3af44927629a36ba71ac68f84c909348946d5bff72d670fc6ff7dd9e453a3515",
+    "packages/game-engine/src/privacy.ts": "4282f317169a96c4a53bd96e76d5c46f4511ad2ae3d948f8c8613e6a5a134eed",
+    "packages/game-engine/src/skills.ts": "c73a50bf00423ce7d8e42d638ea9d1e39008b8a7322761ef969f66ae8d161caa",
+    "packages/game-data/CHARACTER_DATA.json": "469baf5041a9d8fef92ad035aaed133bb6458f0e86df752fe8588ba042601d6d",
+    "packages/game-data/DICE_DATA.json": "821a65fae7fa4ec525b0dcb13259ffa1a18c863665078a2384ef139f307906f5",
+    "packages/game-data/glossary.json": "5d344178245cd4a57848d010d19e60207f9759b54234df660d00ae2508287c4d",
+    "packages/game-data/ITEM_DATA.json": "3809a854ed23f93e10139c5b277d0f42944eea388653ecbcef280c81657bf7a6",
+    "packages/game-data/MAP_DATA.json": "2a3f1ddc247dd8ee36cbf26b6b3145a4b81748066c3714d058b4cbe6eb9c04bd",
+    "packages/game-data/MOVEMENT_CARD_DATA.json": "106da54a99b95c34475ddb60c463d64d770ff50343df9af6d92e368c64569043",
+    "packages/game-data/PERK_DATA.json": "f8fb43273c0e5a562a234ea91d3a0a2c97e87a03faa922e3faf003fa05e72a95",
+    "packages/game-data/PROP_DATA.json": "51cd84301460419772b597444ab43f83e4f7053373cbf9f69856cd35757c1547",
+    "packages/game-data/RULE_DATA.json": "bfb2b65f6824094f537735946d9cb8c8de94efa1fca17c888728970c3dabd15b",
+    "packages/game-data/drafts/AUTOHAVEN_FROM_PHOTOS.json": "ba6f920546f4fd538fd2a8f18e8a6c89b2d8733411bd520b1db9d719eaeed76e",
+    "packages/game-data/drafts/CHARACTERS_FROM_PHOTOS.json": "a0305f92c5b5a51530c7eeb154df7d6cbd01a9ca20ccdddc2067a1d7af2a05e5",
+    "packages/game-data/drafts/ITEMS_FROM_PHOTOS.json": "d93ae7b1005d1b35e53b5dfadf1db788b8081f684ff5960fb50cb83798ae1266",
+    "packages/game-data/drafts/MACMILLAN_FROM_PHOTOS.json": "4066ebd59d3538fa0c92f500d0cc8244568e26f503c094ff3039b5b7f1184a9c",
+    "packages/game-data/out-of-scope/COLLECTOR_CHARACTERS.json": "5e57049ed575e919e2845be354051fb7c8e9bc993f3e0b96e50e1b5bb869fa78",
+    "apps/web/src/App.tsx": "6d71a01483d1c2395a6653933258544fc5ea8476113977f60a38e7a80aa43335",
+    "apps/web/src/board-visuals.css": "554aeeb7ff8a9a518668aa351c85612bdee069c3046465fb46a2ecb99833c4bf",
+    "apps/web/src/Board.tsx": "e3e28c3f5824af3192b9c811802ab297e17e85a246606775a44fbc20a2b97e0f",
+    "apps/web/src/Dice.tsx": "4829c5185305c4fdd44464ec910d344f6299603bef9677eddedf912ab08ea4fc",
+    "apps/web/src/Feedback.tsx": "125fe9323ec3be1ba159cde62859a38ef1f1cbb3113996b14f61c6635418e818",
+    "apps/web/src/Gallery.tsx": "6101545a17cd993094ab64f0902acb33b6459a8c148a3bf7ff4a3469a6f1871c",
+    "apps/web/src/labels.ts": "4cfd5b5cadd34d7917461032f0a5c956afb997f20e866af4ce468f7688199b56",
+    "apps/web/src/layout.json": "7deb6be506125e91be5d8fa272014bce2ea8fafef3f8828240b0070174b52910",
+    "apps/web/src/main.tsx": "9277fff00165b60da9419d7505f0a5b5a79a61b6eae073d07267f6f3a16dac00",
+    "apps/web/src/mobile-preview-samples.json": "fb229d9ae3ab2e9447d22954c54ed76b9db0b278ce2ec9b282e831e6c0dc8ca3",
+    "apps/web/src/mobile-preview.css": "9c6a0f0f7a33e208e9d3ae8d0f97df967c665e9f1d3b362c2d1ce83af4ba6cd1",
+    "apps/web/src/MobilePreview.tsx": "88ef351e3d9e9a2b70c5f46284a349afa1d0cb95a1e414d0d43e7b896f8f3e02",
+    "apps/web/src/MotionIcon.tsx": "d546634c701937e42ce372faed7d68173e2caa083854410a3b4a8dfa0f51f8d3",
+    "apps/web/src/net.ts": "f7eceb4dfcfd003ce6041a763201196838873e01314c195791330b76c0dbe254",
+    "apps/web/src/Online.tsx": "1a0e71fc31f1366e75c6b373540b2c1e4a930a74f36d522200a15f9082049df7",
+    "apps/web/src/Settings.tsx": "3510b5630d7b9f36ec2d8108d96068d72eb2564a472c00f75d109d596dee4f41",
+    "apps/web/src/style.css": "4dc718b9409cab8ee1fe5ef8b4d55be3394cda41597745d0eeed05d5fd74af62",
+    "apps/web/src/Token.tsx": "6bbc41a34e9d8ac4516c10003eed0667aa6d7d602e9c75042e85908892d3c846",
+    "apps/web/src/visuals.css": "c851754607a6cab7038c111a18895e0267d843dfe428af28805538e18ad8ba6f",
+    "apps/web/src/vite-env.d.ts": "65996936fbb042915f7b74a200fcdde7e410f32a669b1ab9597cfaa4b0faddb5",
+    "apps/server/src/main.ts": "914aea08e7dfb37564da1ab82823ad6ca0d71639c071ca19bea7ea06d8fac912",
+    "apps/server/src/rooms.ts": "4db2bf17862db12c6008ec5f3c3d8e878a357c3c51854ac2d96ebbb698ff126b",
+    "packages/shared/src/protocol.ts": "bff08dfd3ed8809488e3c53f20d531b835acff62c60a3d7ac3cac8db120da1ff",
+    "packages/shared/src/types.ts": "e0fc2454a4c024e0f5d93259150818bb9b8777c8eee4eeaa3d7dc86193121e92"
+  }
+}

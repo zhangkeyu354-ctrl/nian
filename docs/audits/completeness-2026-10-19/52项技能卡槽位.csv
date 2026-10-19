@@ -1,0 +1,53 @@
+﻿研究ID,阵营,中文名,英文名,名称已知,费用已录,结构化效果已录,状态,实现状态,来源,注意
+prove_thyself,survivor,证明自己,Prove Thyself,True,False,False,CHECK_REQUIRED,NOT_IMPLEMENTED,B01:p4卡牌/人物板示例,研究槽位，不保证是已核实的实体卡号或完整卡组副本映射
+leader,survivor,领袖,Leader,True,False,False,CHECK_REQUIRED,NOT_IMPLEMENTED,B01:p4卡牌/人物板示例,研究槽位，不保证是已核实的实体卡号或完整卡组副本映射
+bond,survivor,同伴纽带,Bond,True,False,False,CHECK_REQUIRED,NOT_IMPLEMENTED,B01:p4卡牌/人物板示例,研究槽位，不保证是已核实的实体卡号或完整卡组副本映射
+hope,survivor,希望,Hope,True,True,True,CONFIRMED,NOT_IMPLEMENTED,B01:p5卡牌/人物板示例,研究槽位，不保证是已核实的实体卡号或完整卡组副本映射
+ace_in_the_hole,survivor,王牌后手,Ace in the Hole,True,False,False,CHECK_REQUIRED,NOT_IMPLEMENTED,B01:p3卡牌/人物板示例,研究槽位，不保证是已核实的实体卡号或完整卡组副本映射
+brutal_strength,killer,野蛮力量,Brutal Strength,True,False,False,CHECK_REQUIRED,NOT_IMPLEMENTED,B01:p4卡牌/人物板示例,研究槽位，不保证是已核实的实体卡号或完整卡组副本映射
+unnerving_presence,killer,恐惧降临,Unnerving Presence,True,False,False,CHECK_REQUIRED,NOT_IMPLEMENTED,B01:p4卡牌/人物板示例,研究槽位，不保证是已核实的实体卡号或完整卡组副本映射
+agitation,killer,兴奋,Agitation,True,False,False,CHECK_REQUIRED,NOT_IMPLEMENTED,B01:p4卡牌/人物板示例,研究槽位，不保证是已核实的实体卡号或完整卡组副本映射
+monstrous_shrine,killer,恐怖神龛,Monstrous Shrine,True,False,False,CHECK_REQUIRED,NOT_IMPLEMENTED,B01:p3卡牌/人物板示例,研究槽位，不保证是已核实的实体卡号或完整卡组副本映射
+insidious,killer,潜伏,Insidious,True,True,True,CONFIRMED,NOT_IMPLEMENTED,B01:p16卡牌/人物板示例,研究槽位，不保证是已核实的实体卡号或完整卡组副本映射
+survivor_unidentified_01,survivor,,,False,False,False,CHECK_REQUIRED,NOT_IMPLEMENTED,,研究槽位，不保证是已核实的实体卡号或完整卡组副本映射
+survivor_unidentified_02,survivor,,,False,False,False,CHECK_REQUIRED,NOT_IMPLEMENTED,,研究槽位，不保证是已核实的实体卡号或完整卡组副本映射
+survivor_unidentified_03,survivor,,,False,False,False,CHECK_REQUIRED,NOT_IMPLEMENTED,,研究槽位，不保证是已核实的实体卡号或完整卡组副本映射
+survivor_unidentified_04,survivor,,,False,False,False,CHECK_REQUIRED,NOT_IMPLEMENTED,,研究槽位，不保证是已核实的实体卡号或完整卡组副本映射
+survivor_unidentified_05,survivor,,,False,False,False,CHECK_REQUIRED,NOT_IMPLEMENTED,,研究槽位，不保证是已核实的实体卡号或完整卡组副本映射
+survivor_unidentified_06,survivor,,,False,False,False,CHECK_REQUIRED,NOT_IMPLEMENTED,,研究槽位，不保证是已核实的实体卡号或完整卡组副本映射
+survivor_unidentified_07,survivor,,,False,False,False,CHECK_REQUIRED,NOT_IMPLEMENTED,,研究槽位，不保证是已核实的实体卡号或完整卡组副本映射
+survivor_unidentified_08,survivor,,,False,False,False,CHECK_REQUIRED,NOT_IMPLEMENTED,,研究槽位，不保证是已核实的实体卡号或完整卡组副本映射
+survivor_unidentified_09,survivor,,,False,False,False,CHECK_REQUIRED,NOT_IMPLEMENTED,,研究槽位，不保证是已核实的实体卡号或完整卡组副本映射
+survivor_unidentified_10,survivor,,,False,False,False,CHECK_REQUIRED,NOT_IMPLEMENTED,,研究槽位，不保证是已核实的实体卡号或完整卡组副本映射
+survivor_unidentified_11,survivor,,,False,False,False,CHECK_REQUIRED,NOT_IMPLEMENTED,,研究槽位，不保证是已核实的实体卡号或完整卡组副本映射
+survivor_unidentified_12,survivor,,,False,False,False,CHECK_REQUIRED,NOT_IMPLEMENTED,,研究槽位，不保证是已核实的实体卡号或完整卡组副本映射
+survivor_unidentified_13,survivor,,,False,False,False,CHECK_REQUIRED,NOT_IMPLEMENTED,,研究槽位，不保证是已核实的实体卡号或完整卡组副本映射
+survivor_unidentified_14,survivor,,,False,False,False,CHECK_REQUIRED,NOT_IMPLEMENTED,,研究槽位，不保证是已核实的实体卡号或完整卡组副本映射
+survivor_unidentified_15,survivor,,,False,False,False,CHECK_REQUIRED,NOT_IMPLEMENTED,,研究槽位，不保证是已核实的实体卡号或完整卡组副本映射
+survivor_unidentified_16,survivor,,,False,False,False,CHECK_REQUIRED,NOT_IMPLEMENTED,,研究槽位，不保证是已核实的实体卡号或完整卡组副本映射
+survivor_unidentified_17,survivor,,,False,False,False,CHECK_REQUIRED,NOT_IMPLEMENTED,,研究槽位，不保证是已核实的实体卡号或完整卡组副本映射
+survivor_unidentified_18,survivor,,,False,False,False,CHECK_REQUIRED,NOT_IMPLEMENTED,,研究槽位，不保证是已核实的实体卡号或完整卡组副本映射
+survivor_unidentified_19,survivor,,,False,False,False,CHECK_REQUIRED,NOT_IMPLEMENTED,,研究槽位，不保证是已核实的实体卡号或完整卡组副本映射
+survivor_unidentified_20,survivor,,,False,False,False,CHECK_REQUIRED,NOT_IMPLEMENTED,,研究槽位，不保证是已核实的实体卡号或完整卡组副本映射
+survivor_unidentified_21,survivor,,,False,False,False,CHECK_REQUIRED,NOT_IMPLEMENTED,,研究槽位，不保证是已核实的实体卡号或完整卡组副本映射
+survivor_unidentified_22,survivor,,,False,False,False,CHECK_REQUIRED,NOT_IMPLEMENTED,,研究槽位，不保证是已核实的实体卡号或完整卡组副本映射
+survivor_unidentified_23,survivor,,,False,False,False,CHECK_REQUIRED,NOT_IMPLEMENTED,,研究槽位，不保证是已核实的实体卡号或完整卡组副本映射
+killer_unidentified_01,killer,,,False,False,False,CHECK_REQUIRED,NOT_IMPLEMENTED,,研究槽位，不保证是已核实的实体卡号或完整卡组副本映射
+killer_unidentified_02,killer,,,False,False,False,CHECK_REQUIRED,NOT_IMPLEMENTED,,研究槽位，不保证是已核实的实体卡号或完整卡组副本映射
+killer_unidentified_03,killer,,,False,False,False,CHECK_REQUIRED,NOT_IMPLEMENTED,,研究槽位，不保证是已核实的实体卡号或完整卡组副本映射
+killer_unidentified_04,killer,,,False,False,False,CHECK_REQUIRED,NOT_IMPLEMENTED,,研究槽位，不保证是已核实的实体卡号或完整卡组副本映射
+killer_unidentified_05,killer,,,False,False,False,CHECK_REQUIRED,NOT_IMPLEMENTED,,研究槽位，不保证是已核实的实体卡号或完整卡组副本映射
+killer_unidentified_06,killer,,,False,False,False,CHECK_REQUIRED,NOT_IMPLEMENTED,,研究槽位，不保证是已核实的实体卡号或完整卡组副本映射
+killer_unidentified_07,killer,,,False,False,False,CHECK_REQUIRED,NOT_IMPLEMENTED,,研究槽位，不保证是已核实的实体卡号或完整卡组副本映射
+killer_unidentified_08,killer,,,False,False,False,CHECK_REQUIRED,NOT_IMPLEMENTED,,研究槽位，不保证是已核实的实体卡号或完整卡组副本映射
+killer_unidentified_09,killer,,,False,False,False,CHECK_REQUIRED,NOT_IMPLEMENTED,,研究槽位，不保证是已核实的实体卡号或完整卡组副本映射
+killer_unidentified_10,killer,,,False,False,False,CHECK_REQUIRED,NOT_IMPLEMENTED,,研究槽位，不保证是已核实的实体卡号或完整卡组副本映射
+killer_unidentified_11,killer,,,False,False,False,CHECK_REQUIRED,NOT_IMPLEMENTED,,研究槽位，不保证是已核实的实体卡号或完整卡组副本映射
+killer_unidentified_12,killer,,,False,False,False,CHECK_REQUIRED,NOT_IMPLEMENTED,,研究槽位，不保证是已核实的实体卡号或完整卡组副本映射
+killer_unidentified_13,killer,,,False,False,False,CHECK_REQUIRED,NOT_IMPLEMENTED,,研究槽位，不保证是已核实的实体卡号或完整卡组副本映射
+killer_unidentified_14,killer,,,False,False,False,CHECK_REQUIRED,NOT_IMPLEMENTED,,研究槽位，不保证是已核实的实体卡号或完整卡组副本映射
+killer_unidentified_15,killer,,,False,False,False,CHECK_REQUIRED,NOT_IMPLEMENTED,,研究槽位，不保证是已核实的实体卡号或完整卡组副本映射
+killer_unidentified_16,killer,,,False,False,False,CHECK_REQUIRED,NOT_IMPLEMENTED,,研究槽位，不保证是已核实的实体卡号或完整卡组副本映射
+killer_unidentified_17,killer,,,False,False,False,CHECK_REQUIRED,NOT_IMPLEMENTED,,研究槽位，不保证是已核实的实体卡号或完整卡组副本映射
+killer_unidentified_18,killer,,,False,False,False,CHECK_REQUIRED,NOT_IMPLEMENTED,,研究槽位，不保证是已核实的实体卡号或完整卡组副本映射
+killer_unidentified_19,killer,,,False,False,False,CHECK_REQUIRED,NOT_IMPLEMENTED,,研究槽位，不保证是已核实的实体卡号或完整卡组副本映射

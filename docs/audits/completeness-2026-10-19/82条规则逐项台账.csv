@@ -1,0 +1,83 @@
+﻿规则ID,章节,摘要,资料状态,原实现标签,本次审计结论,实现定位,来源
+R001,准备,基础模式为Adept；双方使用人物板上的3个技能。,CONFIRMED,NOT_IMPLEMENTED,已存在相关实现与既有测试；本轮非逐规则穷举验收,engine.ts / graph.ts / dice.ts,B01:p6
+R002,准备,一名玩家控制杀手，其余玩家控制逃生者；先手标记交给一名逃生者。,CONFIRMED,NOT_IMPLEMENTED,已存在相关实现与既有测试；本轮非逐规则穷举验收,engine.ts / graph.ts / dice.ts,B01:p6
+R003,准备,每名逃生者人物板上先放一枚个人献祭进度。,CONFIRMED,NOT_IMPLEMENTED,已存在相关实现与既有测试；本轮非逐规则穷举验收,engine.ts / graph.ts / dice.ts,B01:p6
+R004,准备,共同选择地图；各房间按印刷类别和数量放背面道具。,CONFIRMED,NOT_IMPLEMENTED,已存在相关实现与既有测试；本轮非逐规则穷举验收,engine.ts / graph.ts / dice.ts,B01:p6
+R005,准备,逃生者依序各翻开地图任意位置一枚道具；墙放在有破损边框的路径。,CONFIRMED,NOT_IMPLEMENTED,已存在相关实现与既有测试；本轮非逐规则穷举验收,engine.ts / graph.ts / dice.ts,B01:p6
+R006,准备,每名玩家拿一套四色移动卡；杀手另拿Wait。,CONFIRMED,NOT_IMPLEMENTED,已存在相关实现与既有测试；本轮非逐规则穷举验收,engine.ts / graph.ts / dice.ts,B01:p6
+R007,准备,逃生者初始2、上限6；杀手初始4、上限12。,CONFIRMED,NOT_IMPLEMENTED,已存在相关实现与既有测试；本轮非逐规则穷举验收,engine.ts / graph.ts / dice.ts,B01:p4
+R008,准备,洗物品堆；每个角色掷黑骰，按对应出生标记落点；允许重叠及与杀手同房。,CONFIRMED,NOT_IMPLEMENTED,已存在相关实现与既有测试；本轮非逐规则穷举验收,engine.ts / graph.ts / dice.ts,B01:p6
+R009,人数,始终4名逃生者；4人局一人兼控2名，3人局两名逃生者玩家各兼控2名。,CONFIRMED,NOT_IMPLEMENTED,已存在相关实现与既有测试；本轮非逐规则穷举验收,engine.ts / graph.ts / dice.ts,B01:p19
+R010,人数,兼控2名角色的玩家只有一套移动卡，不能把两套卡分别发给角色。,CONFIRMED,NOT_IMPLEMENTED,已存在相关实现与既有测试；本轮非逐规则穷举验收,engine.ts / graph.ts / dice.ts,B01:p19
+R011,人数,先手标记在逃生者角色之间轮转，每个角色依其席位结算。,CONFIRMED,NOT_IMPLEMENTED,已存在相关实现与既有测试；本轮非逐规则穷举验收,engine.ts / graph.ts / dice.ts,B01:p19
+R012,回合,计划→逃生者行动→杀手行动→清理。,CONFIRMED,NOT_IMPLEMENTED,已存在相关实现与既有测试；本轮非逐规则穷举验收,engine.ts / graph.ts / dice.ts,B01:p8
+R013,回合,逃生者各秘密放1张移动卡；杀手秘密按左右顺序放2张。,CONFIRMED,NOT_IMPLEMENTED,已存在相关实现与既有测试；本轮非逐规则穷举验收,engine.ts / graph.ts / dice.ts,B01:p8
+R014,信息,允许讨论，但桌上沟通必须让所有人包括杀手听到；不得实现默认秘密队内通信。,CONFIRMED,NOT_IMPLEMENTED,沟通行为由玩家遵守；引擎无法验证现实中的所有对话,无默认秘密队聊；非纯引擎规则,B01:p8
+R015,移动,逃生者依角色顺序揭牌，沿匹配路径进入相邻房间；黄色翻越遵箭头。,CONFIRMED,NOT_IMPLEMENTED,已存在相关实现与既有测试；本轮非逐规则穷举验收,engine.ts / graph.ts / dice.ts,B01:p8
+R016,移动,任何原因进入房间都翻开一枚未揭示道具；全已揭示则跳过翻开。,CONFIRMED,NOT_IMPLEMENTED,已存在相关实现与既有测试；本轮非逐规则穷举验收,engine.ts / graph.ts / dice.ts,B01:p8
+R017,移动,揭开的可行移动必须执行；不能自选原地停留。,CONFIRMED,NOT_IMPLEMENTED,已存在相关实现与既有测试；本轮非逐规则穷举验收,engine.ts / graph.ts / dice.ts,B01:p18
+R018,移动,移动不成立则原地，且失去该张卡带来的交互机会。,CONFIRMED,NOT_IMPLEMENTED,已存在相关实现与既有测试；本轮非逐规则穷举验收,engine.ts / graph.ts / dice.ts,B01:p8
+R019,交互,移动后可选择同房已揭示道具或另一逃生者交互，也可放弃交互。,CONFIRMED,NOT_IMPLEMENTED,存在实现，但AUDIT-B01/B02说明组合时机/后续恢复仍有缺陷,"skills.ts:matches / engine.ts:reduce,performInteraction",B01:p9
+R020,额外回合,逃生者额外回合弃一张不同于计划牌的可用移动卡，移动后才可交互；可多次但受剩余牌限制。,CONFIRMED,NOT_IMPLEMENTED,已存在相关实现与既有测试；本轮非逐规则穷举验收,engine.ts / graph.ts / dice.ts,B01:p9
+R021,额外回合,额外回合可打断行动，结束后回到原先行动顺序。,CONFIRMED,NOT_IMPLEMENTED,已存在相关实现与既有测试；本轮非逐规则穷举验收,engine.ts / graph.ts / dice.ts,B01:p9
+R022,杀手,依次处理左卡再右卡，每张牌包含移动与交互。,CONFIRMED,NOT_IMPLEMENTED,已存在相关实现与既有测试；本轮非逐规则穷举验收,engine.ts / graph.ts / dice.ts,B01:p10
+R023,杀手,除Wait外不能移动则失去交互；Wait不移动仍是移动卡。,CONFIRMED,NOT_IMPLEMENTED,已存在相关实现与既有测试；本轮非逐规则穷举验收,engine.ts / graph.ts / dice.ts,B01:p10
+R024,杀手,可用专属力量替代交互，每轮一次；各力量文本尚需补全。,CONFIRMED,NOT_IMPLEMENTED,6力量已有正文和分支，旧摘要“尚需补全”过时；妖巫组合AUDIT-B02未通过,skills.ts:applyPower / engine.ts:select,B01:p10
+R025,杀手,仅在第二个回合结束可付4血点设置第三张卡；每轮最多一次额外回合。,CONFIRMED,NOT_IMPLEMENTED,已存在相关实现与既有测试；本轮非逐规则穷举验收,engine.ts / graph.ts / dice.ts,B01:p10
+R026,清理,依次累计挂钩进度、移除恶灵、将先手标记传给下一逃生者、回收移动卡。,CONFIRMED,NOT_IMPLEMENTED,已存在相关实现与既有测试；本轮非逐规则穷举验收,engine.ts / graph.ts / dice.ts,B01:p11
+R027,献祭,清理时每名仍在钩上的逃生者增加1献祭进度。,CONFIRMED,NOT_IMPLEMENTED,已存在相关实现与既有测试；本轮非逐规则穷举验收,engine.ts / graph.ts / dice.ts,B01:p11
+R028,胜负,献祭轨达到8或出口打开，率先完成目标的一方立即获胜，停止后续结算。,CONFIRMED,NOT_IMPLEMENTED,已存在相关实现与既有测试；本轮非逐规则穷举验收,engine.ts / graph.ts / dice.ts,B01:p11
+R029,道具,发电机检定成功加1，大成功加2，失败不加；最多3进度，完成后移到轨道。,CONFIRMED,NOT_IMPLEMENTED,已存在相关实现与既有测试；本轮非逐规则穷举验收,engine.ts / graph.ts / dice.ts,B01:p12
+R030,道具,翻找箱子后移除箱子并摸1物品；持有超过1张须弃至1张。,CONFIRMED,NOT_IMPLEMENTED,已存在相关实现与既有测试；本轮非逐规则穷举验收,engine.ts / graph.ts / dice.ts,B01:p12
+R031,道具,躲入柜子后不可发动技能，被视为不在场以处理交互/技能/力量；任意移动先离柜。,CONFIRMED,NOT_IMPLEMENTED,已存在相关实现与既有测试；本轮非逐规则穷举验收,engine.ts / graph.ts / dice.ts,B01:p12
+R032,道具,逃生者不能与已占用柜子交互；杀手只能搜索已占用柜子。,CONFIRMED,NOT_IMPLEMENTED,已存在相关实现与既有测试；本轮非逐规则穷举验收,engine.ts / graph.ts / dice.ts,B01:p12
+R033,道具,逃生者与乌鸦交互使杀手获得1血点，自己取得额外回合。,CONFIRMED,NOT_IMPLEMENTED,已存在相关实现与既有测试；本轮非逐规则穷举验收,engine.ts / graph.ts / dice.ts,B01:p12
+R034,道具,木板可放于连接当前房间且无墙、木板或其他组件的路径；逃生者可通过路径上木板。,CONFIRMED,NOT_IMPLEMENTED,已存在相关实现与既有测试；本轮非逐规则穷举验收,engine.ts / graph.ts / dice.ts,B01:p12
+R035,道具,完成4台发电机后才能操作出口；成功或大成功均加1，达3立即赢。,CONFIRMED,NOT_IMPLEMENTED,已存在相关实现与既有测试；本轮非逐规则穷举验收,engine.ts / graph.ts / dice.ts,B01:p13
+R036,道具,钩子放恶灵后本轮不能交互；如钩上有人则救人者加1血点，并将其救下。,CONFIRMED,NOT_IMPLEMENTED,已存在相关实现与既有测试；本轮非逐规则穷举验收,engine.ts / graph.ts / dice.ts,B01:p13
+R037,道具,救人后救人者可沿任意路径移动，之后被救者也可沿任意路径移动。,CONFIRMED,NOT_IMPLEMENTED,已存在相关实现与既有测试；本轮非逐规则穷举验收,engine.ts / graph.ts / dice.ts,B01:p13
+R038,道具,净化图腾成功则移除并获得2血点；大成功没有额外奖励。,CONFIRMED,NOT_IMPLEMENTED,已存在相关实现与既有测试；本轮非逐规则穷举验收,engine.ts / graph.ts / dice.ts,B01:p13
+R039,道具,为同房另一名受伤者治疗；检定成功使其恢复健康。,CONFIRMED,NOT_IMPLEMENTED,已存在相关实现与既有测试；本轮非逐规则穷举验收,engine.ts / graph.ts / dice.ts,B01:p13
+R040,道具,逃生者不能与墙交互或通常穿越带墙路径，移动失败同时失去交互。,CONFIRMED,NOT_IMPLEMENTED,已存在相关实现与既有测试；本轮非逐规则穷举验收,engine.ts / graph.ts / dice.ts,B01:p13
+R041,攻击,对健康逃生者攻击使其受伤。,CONFIRMED,NOT_IMPLEMENTED,已存在相关实现与既有测试；本轮非逐规则穷举验收,engine.ts / graph.ts / dice.ts,B01:p14
+R042,攻击,可抱起先前已受伤的逃生者；本轮新受伤者不能按此普通交互抱起。,CONFIRMED,NOT_IMPLEMENTED,已存在相关实现与既有测试；本轮非逐规则穷举验收,engine.ts / graph.ts / dice.ts,B01:p15
+R043,攻击,柜内逃生者检定失败被抱起（可以健康）；成功移除柜子。,CONFIRMED,NOT_IMPLEMENTED,已存在相关实现与既有测试；本轮非逐规则穷举验收,engine.ts / graph.ts / dice.ts,B01:p14
+R044,道具,杀手移除乌鸦获得1血点。,CONFIRMED,NOT_IMPLEMENTED,已存在相关实现与既有测试；本轮非逐规则穷举验收,engine.ts / graph.ts / dice.ts,B01:p14
+R045,道具,杀手破坏未完成发电机时清空该发电机进度。,CONFIRMED,NOT_IMPLEMENTED,已存在相关实现与既有测试；本轮非逐规则穷举验收,engine.ts / graph.ts / dice.ts,B01:p14
+R046,道具,杀手崇敬图腾获得2血点。,CONFIRMED,NOT_IMPLEMENTED,已存在相关实现与既有测试；本轮非逐规则穷举验收,engine.ts / graph.ts / dice.ts,B01:p14
+R047,路径,杀手尝试通过木板时摧毁木板且留原房，失去交互。,CONFIRMED,NOT_IMPLEMENTED,已存在相关实现与既有测试；本轮非逐规则穷举验收,engine.ts / graph.ts / dice.ts,B01:p14
+R048,路径,杀手通过墙时移除墙并正常完成移动；此后双方可通行。,CONFIRMED,NOT_IMPLEMENTED,已存在相关实现与既有测试；本轮非逐规则穷举验收,engine.ts / graph.ts / dice.ts,B01:p14
+R049,挂钩,抱起时当前房间有未占用的可用钩子则必须立即挂钩。,CONFIRMED,NOT_IMPLEMENTED,已存在相关实现与既有测试；本轮非逐规则穷举验收,engine.ts / graph.ts / dice.ts,B01:p15
+R050,搬运,无可用同房钩子时，杀手选择至多4枚黑骰由逃生者掷；任一大成功即原地挣脱。,CONFIRMED,NOT_IMPLEMENTED,已存在相关实现与既有测试；本轮非逐规则穷举验收,engine.ts / graph.ts / dice.ts,B01:p15
+R051,搬运,没有大成功则可移动最多等于骰子数的房间数；停下仍未到钩则在停下房间挣脱。,CONFIRMED,NOT_IMPLEMENTED,已存在相关实现与既有测试；本轮非逐规则穷举验收,engine.ts / graph.ts / dice.ts,B01:p15
+R052,搬运,搬运时不能过木板或墙、不能使用力量、不能交互。,CONFIRMED,NOT_IMPLEMENTED,已存在相关实现与既有测试；本轮非逐规则穷举验收,engine.ts / graph.ts / dice.ts,B01:p15
+R053,挂钩,被挂钩时将人物板上尚存的个人献祭进度移入献祭轨。,CONFIRMED,NOT_IMPLEMENTED,已存在相关实现与既有测试；本轮非逐规则穷举验收,engine.ts / graph.ts / dice.ts,B01:p15
+R054,挂钩,挂钩者不放计划卡、不能用技能、跳过回合，并视为不在场以处理交互/技能/力量。,CONFIRMED,NOT_IMPLEMENTED,已存在相关实现与既有测试；本轮非逐规则穷举验收,engine.ts / graph.ts / dice.ts,B01:p15
+R055,检定,通常仅逃生者掷骰；黑骰0失败、1–4成功、5大成功；无特殊奖励时大成功当普通成功。,CONFIRMED,NOT_IMPLEMENTED,已存在相关实现与既有测试；本轮非逐规则穷举验收,engine.ts / graph.ts / dice.ts,B01:p16
+R056,检定,检定失败通常使杀手获得1血点；结算时点须在重掷完成后。,CONFIRMED,NOT_IMPLEMENTED,已存在相关实现与既有测试；本轮非逐规则穷举验收,engine.ts / graph.ts / dice.ts,B01:p16
+R057,检定,接受重掷后的结果；同一枚已重掷的骰子不能再次重掷。,CONFIRMED,NOT_IMPLEMENTED,已存在相关实现与既有测试；本轮非逐规则穷举验收,engine.ts / graph.ts / dice.ts,B01:p16
+R058,检定,红色危险骰仅在效果要求时使用，4个失败面及2个大成功面。,CONFIRMED,NOT_IMPLEMENTED,已存在相关实现与既有测试；本轮非逐规则穷举验收,engine.ts / graph.ts / dice.ts,B01:p16
+R059,技能,每个技能每轮至多一次，包括0费用技能。,CONFIRMED,NOT_IMPLEMENTED,已存在相关实现与既有测试；本轮非逐规则穷举验收,engine.ts / graph.ts / dice.ts,B01:p16
+R060,技能,同一人同一时点多个技能，由其选择使用哪些及顺序。,CONFIRMED,NOT_IMPLEMENTED,存在实现，但AUDIT-B01/B02说明组合时机/后续恢复仍有缺陷,"skills.ts:matches / engine.ts:reduce,performInteraction",B01:p16
+R061,技能,多人同一时点：逃生者按角色回合顺序依次选择使用或放弃，再由杀手选择。,CONFIRMED,NOT_IMPLEMENTED,存在实现，但AUDIT-B01/B02说明组合时机/后续恢复仍有缺陷,"skills.ts:matches / engine.ts:reduce,performInteraction",B01:p16
+R062,特殊,仅一枚恶灵；重新放置立即移除旧位置，本轮清理移除。,CONFIRMED,NOT_IMPLEMENTED,已存在相关实现与既有测试；本轮非逐规则穷举验收,engine.ts / graph.ts / dice.ts,B01:p16
+R063,图论,相连房间定义包含单向路径的两端；相连关系与实际允许移动方向必须区分。,CONFIRMED,NOT_IMPLEMENTED,已存在相关实现与既有测试；本轮非逐规则穷举验收,engine.ts / graph.ts / dice.ts,B01:p16
+R064,FAQ,额外/效果移动揭示道具；搬运按Q08不揭示。,CONFIRMED,NOT_IMPLEMENTED,已存在相关实现与既有测试；本轮非逐规则穷举验收,engine.ts / graph.ts / dice.ts,B01:p18；D39:搬运期间不翻道具；U02:Q08
+R065,FAQ,弃掉的移动卡本轮不可用，清理时回收。,CONFIRMED,NOT_IMPLEMENTED,已存在相关实现与既有测试；本轮非逐规则穷举验收,engine.ts / graph.ts / dice.ts,B01:p18
+R066,FAQ,已受伤再次受伤不产生进一步伤害。,CONFIRMED,NOT_IMPLEMENTED,已存在相关实现与既有测试；本轮非逐规则穷举验收,engine.ts / graph.ts / dice.ts,B01:p18
+R067,FAQ,出口不是发电机；未点名出口的效果不影响出口，杀手不能按发电机交互破坏出口。,CONFIRMED,NOT_IMPLEMENTED,已存在相关实现与既有测试；本轮非逐规则穷举验收,engine.ts / graph.ts / dice.ts,B01:p18
+R068,FAQ,效果抱起健康逃生者不会自动使其受伤，即使已挂钩也仍可健康。,CONFIRMED,NOT_IMPLEMENTED,已存在相关实现与既有测试；本轮非逐规则穷举验收,engine.ts / graph.ts / dice.ts,B01:p18
+R069,FAQ,多掷后只保留部分结果时，被弃掉的失败结果仍可能给杀手血点；不适用于被重掷替换的旧结果。,CONFIRMED,NOT_IMPLEMENTED,已存在相关实现与既有测试；本轮非逐规则穷举验收,engine.ts / graph.ts / dice.ts,B01:p18
+R070,FAQ,效果要求抱起异地逃生者时，先把目标移到杀手房间。,CONFIRMED,NOT_IMPLEMENTED,已存在相关实现与既有测试；本轮非逐规则穷举验收,engine.ts / graph.ts / dice.ts,B01:p18
+R071,FAQ,超出角色血点上限时弃到上限。,CONFIRMED,NOT_IMPLEMENTED,已存在相关实现与既有测试；本轮非逐规则穷举验收,engine.ts / graph.ts / dice.ts,B01:p18
+R072,模式,Bloodweb：各抽5张与板上不同的技能，至多替换3个，最终保留3技能，弃未用卡。,CONFIRMED,NOT_IMPLEMENTED,未实现；创建模式明确报CHECK_REQUIRED,engine.ts:createGame,B01:p19
+R073,模式,Devout：自由选择至多3个技能替换板上技能，开局同时公开，不能重复同名技能。,CONFIRMED,NOT_IMPLEMENTED,未实现；创建模式明确报CHECK_REQUIRED,engine.ts:createGame,B01:p19
+R074,待核对,搬运任意颜色、遵守单向箭头；不能穿木板和墙。,CONFIRMED,BLOCKED,用户裁定已生效并有实现，但数据implementation_status仍BLOCKED,engine.ts / graph.ts / dice.ts + HOUSE_RULES,B01:p8/p15/p16；U02:Q01
+R075,待核对,每颗失败各给杀手1血点；重掷替换结果不再计，未保留的失败仍计。,CONFIRMED,BLOCKED,用户裁定已生效并有实现，但数据implementation_status仍BLOCKED,engine.ts / graph.ts / dice.ts + HOUSE_RULES,B01:p16/p18；U02:Q02
+R076,待核对,两张照片地图经用户接受；三端图标按Q09自订规则一移动两两互通，共用障碍组。,CONFIRMED,BLOCKED,用户裁定已生效并有实现，但数据implementation_status仍BLOCKED,engine.ts / graph.ts / dice.ts + HOUSE_RULES,B01:p3/p5/p7/p16；U02:Q09
+R077,待核对,13名基础角色板载文本已接受；Q11四项具体语义留Phase4，请求使用时明确报错。,CHECK_REQUIRED,BLOCKED,5个板载技能延后；旧摘要只写4项，登记需同步,engine.ts:reduce / skills.ts,B01:p4/p14；U02:Q11
+R078,地图核验,房名左侧是技能检定骰面；双方每个角色都掷骰放置，不存在头像对应房间仅供杀手的规则。,CONFIRMED,NOT_IMPLEMENTED,已存在相关实现与既有测试；本轮非逐规则穷举验收,MAP_DATA.json / graph.ts / presentation.ts,B01:p5/p6/p16
+R079,地图核验,破损边框路径开局放墙；本图为 mm_p05、mm_p11、mm_p21、mm_p22。,CONFIRMED,NOT_IMPLEMENTED,已存在相关实现与既有测试；本轮非逐规则穷举验收,MAP_DATA.json / graph.ts / presentation.ts,B01:p5/p6/p13/p14；B11:四条初始墙路径
+R080,地图核验,本图黄色路线四条，均沿箭头单向；相连关系仍按两端处理。搬运适用边界仍见 Q01。,CONFIRMED,NOT_IMPLEMENTED,已存在相关实现与既有测试；本轮非逐规则穷举验收,MAP_DATA.json / graph.ts / presentation.ts,B01:p8/p16；B11:mm_p02/mm_p11/mm_p12/mm_p22
+R081,地图核验,红轨8格；黄轨5格为4发电机和1出口大门。发电机完成移到轨道，4台完成后才能交互出口。,CONFIRMED,NOT_IMPLEMENTED,已存在相关实现与既有测试；本轮非逐规则穷举验收,MAP_DATA.json / graph.ts / presentation.ts,B01:p5/p8/p11/p12/p13；B11:顶部轨道
+R082,地图核验,黄色目标、红色勇气、蓝色生存、绿色协作；道具图例与类别顺序、实际道具配色交叉核验，不只依据数量推断。,CONFIRMED,NOT_IMPLEMENTED,已存在相关实现与既有测试；本轮非逐规则穷举验收,MAP_DATA.json / graph.ts / presentation.ts,B01:p3/p5；B11:房间道具图标

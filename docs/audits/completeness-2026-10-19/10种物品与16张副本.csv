@@ -1,0 +1,11 @@
+﻿物品ID,中文名,副本数,槽位映射数,中文原文存在,结构化草案存在,正式effect存在,效果状态,实现状态,来源
+toolbox,工具箱,2,2,True,True,False,CHECK_REQUIRED,DEFERRED_PHASE_4,D37:reference/items/items_16_cn.png / 照片印刷文字
+commodious_toolbox,宽敞工具箱,1,1,True,True,False,CHECK_REQUIRED,DEFERRED_PHASE_4,D37:reference/items/items_16_cn.png / 照片印刷文字
+firecracker,鞭炮,2,2,True,True,False,CHECK_REQUIRED,DEFERRED_PHASE_4,D37:reference/items/items_16_cn.png / 照片印刷文字
+map,地图,1,1,True,True,False,CHECK_REQUIRED,DEFERRED_PHASE_4,D37:reference/items/items_16_cn.png / 照片印刷文字
+rainbow_map,彩虹地图,1,1,True,True,False,CHECK_REQUIRED,DEFERRED_PHASE_4,D37:reference/items/items_16_cn.png / 照片印刷文字
+flashlight,手电筒,3,3,True,True,True,CONFIRMED,DEFERRED_PHASE_4,B01:p5物品卡示例；D37:reference/items/items_16_cn.png / 照片印刷文字
+first_aid_kit,急救箱,3,3,True,True,False,CHECK_REQUIRED,DEFERRED_PHASE_4,B01:p3物品卡缩略图；D37:reference/items/items_16_cn.png / 照片印刷文字
+broken_key,破损钥匙,1,1,True,True,False,CHECK_REQUIRED,DEFERRED_PHASE_4,D37:reference/items/items_16_cn.png / 照片印刷文字
+dull_key,晦暗钥匙,1,1,True,True,False,CHECK_REQUIRED,DEFERRED_PHASE_4,D37:reference/items/items_16_cn.png / 照片印刷文字
+skeleton_key,万能钥匙,1,1,True,True,False,CHECK_REQUIRED,DEFERRED_PHASE_4,D37:reference/items/items_16_cn.png / 照片印刷文字

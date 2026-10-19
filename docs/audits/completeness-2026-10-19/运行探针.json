@@ -1,0 +1,167 @@
+{
+  "kind": "Audit evidence; reproduced defects are NOT rules acceptance passes",
+  "fixtureScope": "isolated engine state and existing fixture helper; no product code changed",
+  "findings": [
+    {
+      "illegalUseAccepted": true,
+      "id": "AUDIT-B01",
+      "reproduced": true,
+      "description": "Claudette botany offered after following Dwight outside her own turn",
+      "turnActor": "dwight",
+      "window": {
+        "event": "AFTER_MOVE",
+        "context": {
+          "actorId": "claudette",
+          "from": "foundry_upper_floor",
+          "to": "mine_entrance",
+          "pathId": "mm_p02",
+          "normal": false
+        },
+        "actors": [
+          "claudette"
+        ],
+        "index": 0,
+        "eligible": {
+          "dwight": [],
+          "claudette": [
+            "board_claudette_1"
+          ],
+          "jake": [],
+          "ace": [],
+          "trapper": []
+        }
+      }
+    },
+    {
+      "id": "AUDIT-B02",
+      "legalActionsAfterHide": 0,
+      "reproduced": true,
+      "description": "Meg hides legally before Hag phantom interaction; PASS then rejects invalidated attack target, leaving response window unresolved",
+      "control": "Hag reveals before attack and offers Meg response correctly; ordering hypothesis disproved",
+      "passError": "RuleError: ILLEGAL_COMMAND: invalid survivor target",
+      "window": {
+        "event": "AFTER_MOVE",
+        "context": {
+          "actorId": "hag",
+          "from": "foundry_upper_floor",
+          "to": "mine_entrance",
+          "pathId": null,
+          "normal": false
+        },
+        "actors": [
+          "meg"
+        ],
+        "index": 0,
+        "eligible": {
+          "meg": [
+            "board_meg_3"
+          ],
+          "claudette": [],
+          "jake": [],
+          "ace": [],
+          "hag": []
+        }
+      },
+      "pendingAction": {
+        "actorId": "hag",
+        "action": "attack",
+        "targetId": "meg"
+      },
+      "jobs": [
+        {
+          "kind": "DO_INTERACTION"
+        }
+      ],
+      "megHealth": "healthy",
+      "lockerId": "foundry_upper_floor:survival:0"
+    },
+    {
+      "id": "DECLARED_GAPS",
+      "errors": [
+        {
+          "mode": "BLOODWEB",
+          "error": "RuleError: CHECK_REQUIRED: BLOODWEB card deck: Phase4"
+        },
+        {
+          "mode": "DEVOUT",
+          "error": "RuleError: CHECK_REQUIRED: DEVOUT card deck: Phase4"
+        },
+        {
+          "command": "USE_ITEM",
+          "itemId": "toolbox",
+          "error": "RuleError: CHECK_REQUIRED: Q10 / item effects: Phase4"
+        },
+        {
+          "command": "USE_ITEM",
+          "itemId": "commodious_toolbox",
+          "error": "RuleError: CHECK_REQUIRED: Q10 / item effects: Phase4"
+        },
+        {
+          "command": "USE_ITEM",
+          "itemId": "firecracker",
+          "error": "RuleError: CHECK_REQUIRED: Q10 / item effects: Phase4"
+        },
+        {
+          "command": "USE_ITEM",
+          "itemId": "map",
+          "error": "RuleError: CHECK_REQUIRED: Q10 / item effects: Phase4"
+        },
+        {
+          "command": "USE_ITEM",
+          "itemId": "rainbow_map",
+          "error": "RuleError: CHECK_REQUIRED: Q10 / item effects: Phase4"
+        },
+        {
+          "command": "USE_ITEM",
+          "itemId": "flashlight",
+          "error": "RuleError: CHECK_REQUIRED: Q10 / item effects: Phase4"
+        },
+        {
+          "command": "USE_ITEM",
+          "itemId": "first_aid_kit",
+          "error": "RuleError: CHECK_REQUIRED: Q10 / item effects: Phase4"
+        },
+        {
+          "command": "USE_ITEM",
+          "itemId": "broken_key",
+          "error": "RuleError: CHECK_REQUIRED: Q10 / item effects: Phase4"
+        },
+        {
+          "command": "USE_ITEM",
+          "itemId": "dull_key",
+          "error": "RuleError: CHECK_REQUIRED: Q10 / item effects: Phase4"
+        },
+        {
+          "command": "USE_ITEM",
+          "itemId": "skeleton_key",
+          "error": "RuleError: CHECK_REQUIRED: Q10 / item effects: Phase4"
+        },
+        {
+          "perkId": "board_meg_1",
+          "owner": "meg",
+          "error": "RuleError: CHECK_REQUIRED: board_meg_1: Phase4"
+        },
+        {
+          "perkId": "board_feng_min_1",
+          "owner": "feng_min",
+          "error": "RuleError: CHECK_REQUIRED: board_feng_min_1: Phase4"
+        },
+        {
+          "perkId": "board_wraith_3",
+          "owner": "wraith",
+          "error": "RuleError: CHECK_REQUIRED: board_wraith_3: Phase4"
+        },
+        {
+          "perkId": "board_hag_1",
+          "owner": "hag",
+          "error": "RuleError: CHECK_REQUIRED: board_hag_1: Phase4"
+        },
+        {
+          "perkId": "board_doctor_3",
+          "owner": "doctor",
+          "error": "RuleError: CHECK_REQUIRED: board_doctor_3: Phase4"
+        }
+      ]
+    }
+  ]
+}

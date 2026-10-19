@@ -1,0 +1,15 @@
+{
+  "verdict": "NOT_COMPLETE",
+  "ledgerCounts": {
+    "角色完整性.csv": 13,
+    "39项板载技能.csv": 39,
+    "10种物品与16张副本.csv": 10,
+    "52项技能卡槽位.csv": 52,
+    "82条规则逐项台账.csv": 82
+  },
+  "sourceFilesUnchanged": 47,
+  "reportLinksValid": true,
+  "defectsReproduced": 2,
+  "declaredGapRequests": 17,
+  "originalScansIncluded": false
+}
