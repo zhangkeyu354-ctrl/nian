@@ -1,0 +1,41 @@
+{
+  "allPassed": true,
+  "records": [
+    {
+      "mobile": false,
+      "switchWorks": true,
+      "galleriesDecode": true,
+      "noHorizontalOverflow": true,
+      "consoleErrors": [],
+      "scope": "Visible UI / prototype region, not a full-map-count claim",
+      "region": {
+        "x": 0,
+        "y": 0,
+        "width": 1365,
+        "height": 900
+      },
+      "pixels": {
+        "busy": 0.07123809523809524,
+        "std": 39.020182083308356
+      }
+    },
+    {
+      "mobile": true,
+      "switchWorks": true,
+      "galleriesDecode": true,
+      "noHorizontalOverflow": true,
+      "consoleErrors": [],
+      "scope": "Visible UI / prototype region, not a full-map-count claim",
+      "region": {
+        "x": 0,
+        "y": 0,
+        "width": 390,
+        "height": 664
+      },
+      "pixels": {
+        "busy": 0.08801702536642296,
+        "std": 43.92332541089568
+      }
+    }
+  ]
+}

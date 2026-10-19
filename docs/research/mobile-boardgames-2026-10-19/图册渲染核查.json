@@ -1,0 +1,50 @@
+{
+  "allPassed": true,
+  "checks": [
+    {
+      "name": "角色",
+      "count": 14,
+      "scope": "Visible UI / prototype region, not a full-map-count claim",
+      "region": {
+        "x": 0,
+        "y": 0,
+        "width": 1280,
+        "height": 1335
+      },
+      "pixels": {
+        "busy": 0.13494147940074908,
+        "std": 28.19294612768204
+      }
+    },
+    {
+      "name": "道具",
+      "count": 18,
+      "scope": "Visible UI / prototype region, not a full-map-count claim",
+      "region": {
+        "x": 0,
+        "y": 0,
+        "width": 1280,
+        "height": 1631
+      },
+      "pixels": {
+        "busy": 0.1530445278969957,
+        "std": 30.35680232325509
+      }
+    },
+    {
+      "name": "房间",
+      "count": 21,
+      "scope": "Visible UI / prototype region, not a full-map-count claim",
+      "region": {
+        "x": 0,
+        "y": 0,
+        "width": 1280,
+        "height": 1687
+      },
+      "pixels": {
+        "busy": 0.2724455394190871,
+        "std": 31.068279182944618
+      }
+    }
+  ]
+}

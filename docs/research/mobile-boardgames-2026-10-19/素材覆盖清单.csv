@@ -1,0 +1,76 @@
+﻿id,类别,中文名,现有文件,文件存在,宽,高,字节,来源,质量状态,计划文件,状态,sha256
+generator,道具或共用素材,发电机,apps/web/public/assets/generator.png,True,1254,1254,2374324,AI 生成,已登记；不等于身份可辨/手机画面验收通过,,待质量复核与手机衍生图,0b4a6c89031062ec64d597282aec7b853c426bc796d8cc1c8cf88e9ef01377dd
+exit_gate,道具或共用素材,出口大门,apps/web/public/assets/exit_gate.png,True,1254,1254,2535351,AI 生成,已登记；不等于身份可辨/手机画面验收通过,,待质量复核与手机衍生图,8c746cca2b0df09bcf0a257e8ee6d0d72b955e8d3c9a80c14c32518202812d92
+hook,道具或共用素材,钩子,apps/web/public/assets/hook.png,True,1254,1254,2297481,AI 生成,已登记；不等于身份可辨/手机画面验收通过,,待质量复核与手机衍生图,b0dc889e41b2b5ae120be04ef81798b56388167bebbb5245ec5cf90f5ec0b9a7
+hex_totem,道具或共用素材,厄咒图腾,apps/web/public/assets/hex_totem.png,True,1254,1254,2339458,AI 生成,已登记；不等于身份可辨/手机画面验收通过,,待质量复核与手机衍生图,b9e69fef8e1a4d70077e10b4937af4d2ac3156c262187b8ea2b74ff53b0401dc
+chest,道具或共用素材,箱子,apps/web/public/assets/chest.png,True,1254,1254,2271987,AI 生成,已登记；不等于身份可辨/手机画面验收通过,,待质量复核与手机衍生图,f03512d8f06f7e345ca1cdd6ec2553d54f831ca563e774453fba01a6dc6e32d4
+locker,道具或共用素材,储物柜,apps/web/public/assets/locker.png,True,1254,1254,2487282,AI 生成,已登记；不等于身份可辨/手机画面验收通过,,待质量复核与手机衍生图,7d32055d4cf81018bc91ffa817f9b83855c64c3785b1be83a6d2c99d113c12e5
+pallet,道具或共用素材,木板,apps/web/public/assets/pallet.png,True,1254,1254,2679172,AI 生成,已登记；不等于身份可辨/手机画面验收通过,,待质量复核与手机衍生图,c54aff78737249386a72d1e0117ed9049e91c9f5ac02f1ddc2500e0d6fd0b584
+crow,道具或共用素材,乌鸦,apps/web/public/assets/crow.png,True,1254,1254,2570746,AI 生成,已登记；不等于身份可辨/手机画面验收通过,,待质量复核与手机衍生图,d78224c3eb7cd16b4accb31de59208249e22ef3d792cd1f1a72e8854aa80b8ae
+wall,道具或共用素材,可破坏墙壁,apps/web/public/assets/wall.png,True,1254,1254,2368891,AI 生成,已登记；不等于身份可辨/手机画面验收通过,,待质量复核与手机衍生图,bd7c47134f670413c15cf597026692001269838dbfe14289cd66da49a1324b29
+bear_trap,道具或共用素材,捕兽夹,apps/web/public/assets/bear_trap.png,True,1254,1254,2358971,AI 生成,已登记；不等于身份可辨/手机画面验收通过,,待质量复核与手机衍生图,9da78bb4804ee127853d7e3a97d535fd15f0432d8dd58d1c85b6735f1d88819a
+phantasm,道具或共用素材,鬼灵陷阱,apps/web/public/assets/phantasm.png,True,1254,1254,2518876,AI 生成,已登记；不等于身份可辨/手机画面验收通过,,待质量复核与手机衍生图,6eb6f4391f72f03594ac829115c25f436a621ddaa58c85d4e3bcba63de75ea56
+madness,道具或共用素材,神经紊乱,apps/web/public/assets/madness.png,True,1254,1254,2469664,AI 生成,已登记；不等于身份可辨/手机画面验收通过,,待质量复核与手机衍生图,c5ca777641ef13ebbae7b5c92790e4ba6eea96a6e8f35de1392e1a3eaea864ba
+entity,道具或共用素材,恶灵,apps/web/public/assets/entity.png,True,1254,1254,2315118,AI 生成,已登记；不等于身份可辨/手机画面验收通过,,待质量复核与手机衍生图,2c52d1143e72f5f21a64ab121101df961ed5fab4052e2de8d7de99fb34c20087
+brand_lantern,道具或共用素材,原创灯笼标志,apps/web/public/assets/brand_lantern.png,True,1254,1254,2260673,AI 生成,已登记；不等于身份可辨/手机画面验收通过,,待质量复核与手机衍生图,00be2f1d89e1b4a7eefd5997acf142fd82e898e5dc6bf3bd56c5744847390dce
+back_objective,道具或共用素材,目标道具背面,apps/web/public/assets/back_objective.png,True,1254,1254,2627397,AI 生成,已登记；不等于身份可辨/手机画面验收通过,,待质量复核与手机衍生图,48219594e4c7538715cb1c6275c4bf0e3af7f42c9cc32cb92a6985a72b3bc480
+back_boldness,道具或共用素材,无惧道具背面,apps/web/public/assets/back_boldness.png,True,1254,1254,2712767,AI 生成,已登记；不等于身份可辨/手机画面验收通过,,待质量复核与手机衍生图,0b78c4320d7238b88fa4ed052ce1157e5db67b93c42c409be9aed04ca7c429ea
+back_survival,道具或共用素材,逃生道具背面,apps/web/public/assets/back_survival.png,True,1254,1254,2665269,AI 生成,已登记；不等于身份可辨/手机画面验收通过,,待质量复核与手机衍生图,a7b0054d67f1c8f0c1be0d4131a3b83e75e7267859c6c9e913f009267ed7c02b
+back_altruism,道具或共用素材,援助道具背面,apps/web/public/assets/back_altruism.png,True,1254,1254,2580673,AI 生成,已登记；不等于身份可辨/手机画面验收通过,,待质量复核与手机衍生图,60b53726b96f26f082178c95fe557676dadb83d8e12d92dff1aca6e3fbe94f6e
+portrait_anonymous,角色头像,匿名角色原创剪影,apps/web/public/assets/portrait_anonymous.png,True,1254,1254,2426559,AI 生成,已登记；不等于身份可辨/手机画面验收通过,,待质量复核与手机衍生图,958918e50d162fd4c9a17c6e442e05ac4704a25e814c16be8dec9482bda5ce36
+portrait_dwight,角色头像,德怀特·费菲尔德原创剪影,apps/web/public/assets/portrait_dwight.png,True,1254,1254,2296180,AI 生成,已登记；不等于身份可辨/手机画面验收通过,,待质量复核与手机衍生图,8085052dd00d4bc8ae73eba70bbaf0f7dbe9b8df5880fb5f389e5b885467dcb1
+portrait_meg,角色头像,梅格·托马斯原创剪影,apps/web/public/assets/portrait_meg.png,True,1254,1254,2578636,AI 生成,已登记；不等于身份可辨/手机画面验收通过,,待质量复核与手机衍生图,90e932ce0146c54c98b75b2a55ca0f27c00d096e798ce36f111d9a3d50e5e25b
+portrait_claudette,角色头像,克劳黛特·莫莱原创剪影,apps/web/public/assets/portrait_claudette.png,True,1254,1254,2416072,AI 生成,已登记；不等于身份可辨/手机画面验收通过,,待质量复核与手机衍生图,b8b91c02fdae4441721b72465b0c7c81e21b70e6589b52ab707e8c6f360be668
+portrait_jake,角色头像,杰克·朴原创剪影,apps/web/public/assets/portrait_jake.png,True,1254,1254,2613293,AI 生成,已登记；不等于身份可辨/手机画面验收通过,,待质量复核与手机衍生图,c9d2760778a053502de1993ceeded0e26b9df960c52a8d176f0eda81990fd977
+portrait_nea,角色头像,妮娅·卡尔森原创剪影,apps/web/public/assets/portrait_nea.png,True,1254,1254,2459607,AI 生成,已登记；不等于身份可辨/手机画面验收通过,,待质量复核与手机衍生图,d950930e4659b6ed306af22418eceb82c0963ec3cf5226850020d34a7c57388a
+portrait_ace,角色头像,埃斯·维斯孔蒂原创剪影,apps/web/public/assets/portrait_ace.png,True,1254,1254,2391349,AI 生成,已登记；不等于身份可辨/手机画面验收通过,,待质量复核与手机衍生图,60ef3d1a1ecdf7190b70aa924feaaa128ec24cdfda6ffc036fc325293b3992fe
+portrait_feng_min,角色头像,凤敏原创剪影,apps/web/public/assets/portrait_feng_min.png,True,1254,1254,2260164,AI 生成,已登记；不等于身份可辨/手机画面验收通过,,待质量复核与手机衍生图,04b499251cbc3ab8b548a45d883c2bb09c13f7a5a0d97e3139d32a46add4b304
+portrait_trapper,角色头像,设陷者原创剪影,apps/web/public/assets/portrait_trapper.png,True,1254,1254,2500457,AI 生成,已登记；不等于身份可辨/手机画面验收通过,,待质量复核与手机衍生图,6b64d9f3b70d71ab7b28eb91bb6af1412a870474a0cd4532a19910c1823d8060
+portrait_wraith,角色头像,幽灵原创剪影,apps/web/public/assets/portrait_wraith.png,True,1254,1254,2491571,AI 生成,已登记；不等于身份可辨/手机画面验收通过,,待质量复核与手机衍生图,1370411751c486f9804fde2285038b9fb84960114a592002fbd3330c4aed20c9
+portrait_hillbilly,角色头像,农场主原创剪影,apps/web/public/assets/portrait_hillbilly.png,True,1254,1254,2419773,AI 生成,已登记；不等于身份可辨/手机画面验收通过,,待质量复核与手机衍生图,e94cc3ae93a23f23f5dccbbf922a3805c678d55a984e8aefe60db98ade1d2859
+portrait_nurse,角色头像,护士原创剪影,apps/web/public/assets/portrait_nurse.png,True,1254,1254,2485208,AI 生成,已登记；不等于身份可辨/手机画面验收通过,,待质量复核与手机衍生图,b49d61ef674b5228f4a3ea4624c96625e27f30b2f1a705e346f392e58b4ef4c0
+portrait_hag,角色头像,妖巫原创剪影,apps/web/public/assets/portrait_hag.png,True,1254,1254,2502306,AI 生成,已登记；不等于身份可辨/手机画面验收通过,,待质量复核与手机衍生图,5db45c0fc2bccc0420d45913c969b61690dd798bf033bd57b4a6be9a70a613b9
+portrait_doctor,角色头像,医生原创剪影,apps/web/public/assets/portrait_doctor.png,True,1254,1254,2417931,AI 生成,已登记；不等于身份可辨/手机画面验收通过,,待质量复核与手机衍生图,af5f88dd913426250e53c22d0b9f87b6f90016c8b28bd8f311e5ef60d1bb58b0
+mine_depths,房间,矿井深处,apps/web/public/assets/rooms/mine_depths.png,True,1536,1024,2861318,AI 生成,已登记；不等于身份可辨/手机画面验收通过,,待质量复核与手机衍生图,31e1026f77215385e19f555959683aac62a3fea9ff73f465242e5b8b443f96ed
+mine_entrance,房间,矿井入口,apps/web/public/assets/rooms/mine_entrance.png,True,1536,1024,3322959,AI 生成,已登记；不等于身份可辨/手机画面验收通过,,待质量复核与手机衍生图,30f810e55e04fb3c50f4d110acbaadf30e69fd281dad0457470d4e350ff5ee87
+coal_tower_upper,房间,煤矿废塔上层,apps/web/public/assets/rooms/coal_tower_upper.png,True,1536,1024,2927282,AI 生成,已登记；不等于身份可辨/手机画面验收通过,,待质量复核与手机衍生图,b19a6b037be476afc726be1f858e0a0e8a55df598df2e5af06b5d644bc34d17b
+foundry_upper_floor,房间,熔炉上层,apps/web/public/assets/rooms/foundry_upper_floor.png,True,1536,1024,2858466,AI 生成,已登记；不等于身份可辨/手机画面验收通过,,待质量复核与手机衍生图,fa3c820a6d9d7d4a8cb829bd043a97c0918a16ff6b2137ad1cb52d6d1d76615f
+foundry_lower_floor,房间,熔炉下层,apps/web/public/assets/rooms/foundry_lower_floor.png,True,1536,1024,3274297,AI 生成,已登记；不等于身份可辨/手机画面验收通过,,待质量复核与手机衍生图,90f042be13c30c7f6d21434da325c6a4af149655e23685bf6267970cfffad64f
+ancient_tree,房间,古树,apps/web/public/assets/rooms/ancient_tree.png,True,1536,1024,3225708,AI 生成,已登记；不等于身份可辨/手机画面验收通过,,待质量复核与手机衍生图,3f2a782959c86d62ee9694c2b24c101b82aed03bd45212f1a423c14eefe1be3b
+coal_tower_ground,房间,煤矿废塔下层,apps/web/public/assets/rooms/coal_tower_ground.png,True,1536,1024,3078032,AI 生成,已登记；不等于身份可辨/手机画面验收通过,,待质量复核与手机衍生图,010514f043b36066ad215f5d51d76df219abe6a9dd80ffe6f5aa15adc90e9d9c
+scrapyard,房间,废品场,apps/web/public/assets/rooms/scrapyard.png,True,1536,1024,3401612,AI 生成,已登记；不等于身份可辨/手机画面验收通过,,待质量复核与手机衍生图,e554a14b31aaa67c04de5b05c623cdc8d0fff74128b0c4229d1854552f7dc7b0
+shack,房间,木屋,apps/web/public/assets/rooms/shack.png,True,1536,1024,3056273,AI 生成,已登记；不等于身份可辨/手机画面验收通过,,待质量复核与手机衍生图,e13231af893fff8fbf19c9c948513493674683ce12f11ec5361d1e83754eb88c
+foundry_basement,房间,熔炉地下室,apps/web/public/assets/rooms/foundry_basement.png,True,1536,1024,3027134,AI 生成,已登记；不等于身份可辨/手机画面验收通过,,待质量复核与手机衍生图,6eed68dbfdac0580dc3d9ee6714c3341177c39941c6ccb480ab27853e35fe063
+backlot,房间,露天场地,apps/web/public/assets/rooms/backlot.png,True,1536,1024,3411988,AI 生成,已登记；不等于身份可辨/手机画面验收通过,,待质量复核与手机衍生图,7736937b8d8d4038ef28cade82de15d0755f844b22114771dd664b92aebfac0a
+maze,房间,迷宫,apps/web/public/assets/rooms/maze.png,True,1536,1024,3465369,AI 生成,已登记；不等于身份可辨/手机画面验收通过,,待质量复核与手机衍生图,2a06c1836d6906423691785626dea1166c790a6eb1677afa0d9eea539c2d5da0
+wreckers_garage_north,房间,废旧车库北,apps/web/public/assets/rooms/wreckers_garage_north.png,True,1536,1024,3395525,AI 生成,已登记；不等于身份可辨/手机画面验收通过,,待质量复核与手机衍生图,e531d27e91ad09ace844123c222244e6418ad22c4d22781777bc0d4c894c7863
+scrap_pile,房间,废料堆,apps/web/public/assets/rooms/scrap_pile.png,True,1536,1024,3409189,AI 生成,已登记；不等于身份可辨/手机画面验收通过,,待质量复核与手机衍生图,56e57a1026112e3a88403a2cc5a31dba86497679484db406edb1b9210210647d
+main_garage,房间,主车库,apps/web/public/assets/rooms/main_garage.png,True,1536,1024,3162511,AI 生成,已登记；不等于身份可辨/手机画面验收通过,,待质量复核与手机衍生图,a23fa098272a15433611f9c7d97bfd7ea20b7b5c67470ca72f92fd9bad4b009a
+diner,房间,小吃店,apps/web/public/assets/rooms/diner.png,True,1536,1024,3132295,AI 生成,已登记；不等于身份可辨/手机画面验收通过,,待质量复核与手机衍生图,9cd9a44099e10826dc2dbe0abd88630a80a927525feea6e62fd58eebc5551678
+wreckers_garage_south,房间,废旧车库南,apps/web/public/assets/rooms/wreckers_garage_south.png,True,1536,1024,3491252,AI 生成,已登记；不等于身份可辨/手机画面验收通过,,待质量复核与手机衍生图,fa06d3fc3c39c3e8570736f6658a0d28681b21a3d7b648e81d3866b127b5d6bd
+barn,房间,谷仓,apps/web/public/assets/rooms/barn.png,True,1536,1024,3410105,AI 生成,已登记；不等于身份可辨/手机画面验收通过,,待质量复核与手机衍生图,3b14b328d636a294981604a90187c6011db7077783298d04b9ac5fb0c26151da
+cottage,房间,村舍,apps/web/public/assets/rooms/cottage.png,True,1536,1024,3436159,AI 生成,已登记；不等于身份可辨/手机画面验收通过,,待质量复核与手机衍生图,38c6f170f5ebc2ba50b32109cc052502d1f245a539c6c0de7e34db1c79b74d7b
+gas_pump,房间,油泵,apps/web/public/assets/rooms/gas_pump.png,True,1536,1024,3294231,AI 生成,已登记；不等于身份可辨/手机画面验收通过,,待质量复核与手机衍生图,5013f24ba58554e3cacfb5711fb7a6927c1c1f1fa148dcae3f7cf50470e34a2f
+old_cabin,房间,老木屋,apps/web/public/assets/rooms/old_cabin.png,True,1536,1024,3178908,AI 生成,已登记；不等于身份可辨/手机画面验收通过,,待质量复核与手机衍生图,2fcdc331e14a189805aab8dab1cb694eab944c81eeec104d2f572de6bc2d5082
+toolbox,物品卡插画,工具箱,,False,,,,待原创制作,缺少专属图；16张实体卡复用10种定义,items/toolbox.webp,待制作,
+commodious_toolbox,物品卡插画,宽敞工具箱,,False,,,,待原创制作,缺少专属图；16张实体卡复用10种定义,items/commodious_toolbox.webp,待制作,
+firecracker,物品卡插画,鞭炮,,False,,,,待原创制作,缺少专属图；16张实体卡复用10种定义,items/firecracker.webp,待制作,
+map,物品卡插画,地图,,False,,,,待原创制作,缺少专属图；16张实体卡复用10种定义,items/map.webp,待制作,
+rainbow_map,物品卡插画,彩虹地图,,False,,,,待原创制作,缺少专属图；16张实体卡复用10种定义,items/rainbow_map.webp,待制作,
+flashlight,物品卡插画,手电筒,,False,,,,待原创制作,缺少专属图；16张实体卡复用10种定义,items/flashlight.webp,待制作,
+first_aid_kit,物品卡插画,急救箱,,False,,,,待原创制作,缺少专属图；16张实体卡复用10种定义,items/first_aid_kit.webp,待制作,
+broken_key,物品卡插画,破损钥匙,,False,,,,待原创制作,缺少专属图；16张实体卡复用10种定义,items/broken_key.webp,待制作,
+dull_key,物品卡插画,晦暗钥匙,,False,,,,待原创制作,缺少专属图；16张实体卡复用10种定义,items/dull_key.webp,待制作,
+skeleton_key,物品卡插画,万能钥匙,,False,,,,待原创制作,缺少专属图；16张实体卡复用10种定义,items/skeleton_key.webp,待制作,
+macmillan_estate,地图封面,麦克米伦庄园,,False,,,,待原创制作,房间已有图；独立选图封面未在manifest登记,maps/macmillan_estate_cover.webp,待制作,
+autohaven_wreckers,地图封面,奥托海文废车场,,False,,,,待原创制作,房间已有图；独立选图封面未在manifest登记,maps/autohaven_wreckers_cover.webp,待制作,
+module_lobby,模块关键插图,房间大厅,,False,,,,新提议；待原创制作,独立模块关键图，不把整个UI烘焙成图片,modules/lobby.webp,待方案确认,
+module_characters,模块关键插图,角色选择,,False,,,,新提议；待原创制作,独立模块关键图，不把整个UI烘焙成图片,modules/characters.webp,待方案确认,
+module_plan,模块关键插图,秘密计划,,False,,,,新提议；待原创制作,独立模块关键图，不把整个UI烘焙成图片,modules/plan.webp,待方案确认,
+module_move,模块关键插图,移动,,False,,,,新提议；待原创制作,独立模块关键图，不把整个UI烘焙成图片,modules/move.webp,待方案确认,
+module_interact,模块关键插图,交互,,False,,,,新提议；待原创制作,独立模块关键图，不把整个UI烘焙成图片,modules/interact.webp,待方案确认,
+module_skill,模块关键插图,技能询问,,False,,,,新提议；待原创制作,独立模块关键图，不把整个UI烘焙成图片,modules/skill.webp,待方案确认,
+module_waiting,模块关键插图,等待与重连,,False,,,,新提议；待原创制作,独立模块关键图，不把整个UI烘焙成图片,modules/waiting.webp,待方案确认,
+module_dice,模块关键插图,检定,,False,,,,新提议；待原创制作,独立模块关键图，不把整个UI烘焙成图片,modules/dice.webp,待方案确认,
+module_carry,模块关键插图,搬运,,False,,,,新提议；待原创制作,独立模块关键图，不把整个UI烘焙成图片,modules/carry.webp,待方案确认,
+module_results,模块关键插图,结算,,False,,,,新提议；待原创制作,独立模块关键图，不把整个UI烘焙成图片,modules/results.webp,待方案确认,
