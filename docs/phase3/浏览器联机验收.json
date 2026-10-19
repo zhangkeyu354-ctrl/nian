@@ -1,0 +1,20 @@
+[
+  {
+    "seed": 4111,
+    "room": "MQW6",
+    "commands": 108,
+    "winner": "killer",
+    "browsers": 5,
+    "killerFramesChecked": 111,
+    "screenshotsChecked": 5
+  },
+  {
+    "seed": 1701,
+    "room": "MADX",
+    "commands": 192,
+    "winner": "survivor",
+    "browsers": 5,
+    "killerFramesChecked": 195,
+    "screenshotsChecked": 5
+  }
+]

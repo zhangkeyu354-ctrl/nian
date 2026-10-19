@@ -1070,3 +1070,103 @@ legend {
     scroll-behavior: auto !important;
   }
 }
+
+/* —— 联机 —— */
+.join-row {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 18px;
+}
+.join-row input {
+  flex: 1;
+  font-size: 22px;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  text-align: center;
+}
+.invite {
+  display: grid;
+  justify-items: center;
+  gap: 8px;
+  padding: 16px;
+  margin-bottom: 14px;
+  border: 1px solid #4b544c;
+  background: #182224;
+  text-align: center;
+}
+.room-code {
+  font-size: 40px;
+  font-weight: 700;
+  letter-spacing: 0.3em;
+  color: #ecd58e;
+}
+.invite .qr {
+  background: #fff;
+  padding: 6px;
+  border-radius: 4px;
+}
+.share-url {
+  font-size: 12px;
+  word-break: break-all;
+  color: #b8b29b;
+}
+.seat-list {
+  display: grid;
+  gap: 8px;
+  margin-top: 10px;
+}
+.seat {
+  display: grid;
+  gap: 2px;
+  text-align: left;
+  padding: 12px 14px;
+  min-height: 56px;
+  border: 1px solid #5d6455;
+  background: #1d2829;
+  color: inherit;
+}
+.seat.killer {
+  border-color: #8a4b45;
+}
+.seat.taken {
+  opacity: 0.5;
+}
+.seat-side {
+  font-size: 11px;
+  color: #b8ad88;
+}
+.net-status {
+  font-size: 12px;
+  color: #d48b7a;
+  align-self: center;
+  padding: 0 6px;
+}
+.net-status.on {
+  color: #9dbb8a;
+}
+.waiting {
+  display: grid;
+  gap: 10px;
+}
+.my-seat {
+  display: grid;
+  gap: 6px;
+}
+.my-actor {
+  display: flex;
+  justify-content: space-between;
+  gap: 8px;
+  padding: 8px 10px;
+  background: #1d2829;
+  border-left: 3px solid #b39a5b;
+}
+.seat-status {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  font-size: 13px;
+  color: #9a9886;
+}
+.seat-status li.on {
+  color: #d9d3b8;
+}

@@ -5,17 +5,24 @@
     "moduleResolution": "NodeNext",
     "strict": true,
     "jsx": "react-jsx",
-    "lib": ["ES2023", "DOM", "DOM.Iterable"],
+    "lib": [
+      "ES2023",
+      "DOM",
+      "DOM.Iterable"
+    ],
     "resolveJsonModule": true,
     "allowImportingTsExtensions": true,
     "noEmit": true,
     "skipLibCheck": true,
-    "types": ["node"]
+    "types": [
+      "node"
+    ]
   },
   "include": [
     "packages/**/*.ts",
     "scripts/**/*.ts",
     "apps/web/**/*.ts",
-    "apps/web/**/*.tsx"
+    "apps/web/**/*.tsx",
+    "apps/server/**/*.ts"
   ]
 }

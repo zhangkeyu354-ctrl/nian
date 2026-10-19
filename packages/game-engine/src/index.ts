@@ -2,6 +2,7 @@
 export { createGame, reduce, RuleError, checkRule } from "./engine.ts";
 export { connected, legalRoutes } from "./graph.ts";
 export { resolveDice, resultClass } from "./dice.ts";
+export { viewFor, HIDDEN } from "./privacy.ts";
 export {
   boardVisuals,
   propVisual,

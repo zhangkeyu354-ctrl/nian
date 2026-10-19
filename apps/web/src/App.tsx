@@ -1,4 +1,4 @@
-import React, { useMemo, useState, useEffect } from "react";
+import React, { useMemo, useState, useEffect, useRef } from "react";
 import {
   createGame,
   reduce,
@@ -31,6 +31,8 @@ import type { Feedback } from "../../../packages/game-engine/src/presentation.ts
 import { MotionIcon } from "./MotionIcon.tsx";
 import { Dice } from "./Dice.tsx";
 import { Board } from "./Board.tsx";
+import type { NetBinding } from "./net.ts";
+import { InvitePanel } from "./Online.tsx";
 import {
   phases,
   stages,
@@ -205,9 +207,73 @@ function ParameterForm({
     </form>
   );
 }
-export function App() {
+function WaitingPanel({
+  state,
+  net,
+  actorId,
+}: {
+  state: GameState;
+  net: NetBinding;
+  actorId: string | null;
+}) {
+  const mine = Object.values(state.actors).filter(
+    (a) => a.ownerId === net.seat,
+  );
+  const planning = state.phase === "PLANNING" && !state.window && !state.choice;
+  const pending = planning
+    ? Object.values(state.actors)
+        .filter((a) => !state.plans[a.id] && !a.hookId)
+        .map((a) => actorName(a.id))
+    : [];
+  return (
+    <div className="waiting" data-testid="waiting">
+      <p className="eyebrow">等待其他玩家</p>
+      <h2>
+        {planning
+          ? "你的计划已提交"
+          : actorId
+            ? `${actorName(actorId)} 正在行动`
+            : "请稍候"}
+      </h2>
+      {planning && !!pending.length && (
+        <p className="muted">还在选牌：{pending.join("、")}</p>
+      )}
+      <div className="my-seat">
+        {mine.map((a) => (
+          <div key={a.id} className="my-actor">
+            <strong>{actorName(a.id)}</strong>
+            <span>
+              {a.room ? roomName(state, a.room) : "准备入场"} · 血点 {a.blood}
+              {a.side === "survivor"
+                ? a.health === "healthy"
+                  ? " · 健康"
+                  : " · 受伤"
+                : ""}
+              {a.hookId ? " · 挂钩" : a.lockerId ? " · 躲藏" : ""}
+            </span>
+          </div>
+        ))}
+      </div>
+      <ul className="seat-status">
+        {net.seats.map((s) => (
+          <li key={s.seatId} className={s.connected ? "on" : ""}>
+            {s.actors.map(actorName).join(" · ")}
+            <small>
+              {s.name ? ` · ${s.name}` : ""}
+              {s.claimed ? (s.connected ? " · 在线" : " · 离线") : " · 空位"}
+            </small>
+          </li>
+        ))}
+      </ul>
+    </div>
+  );
+}
+export function App({ net }: { net?: NetBinding } = {}) {
   const [effects, setEffects] = useState<Feedback[]>([]);
-  const [state, setState] = useState<GameState | null>(null);
+  const [localState, setState] = useState<GameState | null>(null);
+  // 联机时以服务器发来的视图为准，避免本地副本与版本号短暂不一致
+  const state = net ? net.view : localState;
+  const [invite, setInvite] = useState(false);
   const [options, setOptions] = useState<CreateOptions>({
     seed: 1701,
     mapId: "macmillan_estate",
@@ -224,10 +290,60 @@ export function App() {
     [dice, setDice] = useState<GameEvent[]>([]);
   const [route, setRoute] = useState<Array<{ pathId: string; to: string }>>([]),
     [diceCount, setDiceCount] = useState(0);
-  const control = useMemo(() => (state ? getControls(state) : null), [state]);
+  const control = useMemo(() => {
+    if (!state) return null;
+    if (!net) return getControls(state);
+    // 联机：计划阶段所有玩家同时秘密选牌，各自为自己尚未计划的角色操作
+    if (state.phase === "PLANNING" && !state.window && !state.choice) {
+      const pendingPublic = state.publicPlans.find(
+        (x) => !state.plans[x] && !state.actors[x].hookId,
+      );
+      const order = pendingPublic
+        ? [pendingPublic]
+        : [...state.survivors, state.killerId];
+      const mine = order.find(
+        (x) =>
+          !state.plans[x] &&
+          !state.actors[x].hookId &&
+          state.actors[x].ownerId === net.seat,
+      );
+      if (mine)
+        return {
+          actorId: mine,
+          actions: [],
+          hand: state.hands[net.seat] as Card[],
+          planCount: state.actors[mine].side === "killer" ? 2 : 1,
+        };
+    }
+    const actorId = currentActor(state);
+    if (!actorId || state.actors[actorId].ownerId !== net.seat)
+      return { actorId, actions: [], hand: [] as Card[], planCount: 0 };
+    return getControls(state);
+  }, [state, net?.seat]);
   const id = control?.actorId ?? null,
     owner = id && state ? state.actors[id].ownerId : null;
-  const masked = !!state && !state.winner && (locked || viewer !== owner);
+  // 联机时没有交接遮挡；轮到别人时显示"等待"，棋盘照常可见
+  const waiting = !!net && !!state && !state.winner && owner !== net.seat;
+  const masked =
+    !net && !!state && !state.winner && (locked || viewer !== owner);
+  // 联机：收到服务器的新视图时，播放与本地操作相同的翻牌、掷骰和状态反馈
+  const prevView = useRef<GameState | null>(net?.view ?? null);
+  useEffect(() => {
+    if (!net) return;
+    const prev = prevView.current,
+      next = net.view;
+    prevView.current = next;
+    if (prev && next.events.length > prev.events.length) {
+      setEffects(feedbackEvents(prev, next));
+      setDice(
+        next.events
+          .slice(prev.events.length)
+          .filter((e) => e.type === "DICE_ROLLED" || e.type === "SPAWNED"),
+      );
+    }
+    if (prev && (prev.phase !== next.phase || prev.round !== next.round))
+      setPlan([]);
+  }, [net?.version, net?.view]);
   const current = id && state ? state.actors[id] : null;
   function start() {
     try {
@@ -256,7 +372,21 @@ export function App() {
     }
   }
   function send(c: Command) {
-    if (!state || masked || dice.length || effects.length) return;
+    if (!state || masked || waiting || dice.length || effects.length) return;
+    if (net) {
+      void net.send(c).then((err) => {
+        if (err) setError(err);
+        else {
+          setPlan([]);
+          setSelected(null);
+          setForm(null);
+          setRoute([]);
+          setDiceCount(0);
+          setError("");
+        }
+      });
+      return;
+    }
     try {
       const next = reduce(state, c);
       const rolls = next.events
@@ -280,14 +410,14 @@ export function App() {
     }
   }
   const highlights = useMemo(() => {
-    if (!state || !id || masked) return [];
+    if (!state || !id || masked || waiting) return [];
     if (state.choice?.kind === "CARRY") return carrySteps(state, route);
     if (state.phase === "PLANNING" && plan.length)
       return previewRoutes(state, id, plan[0]);
     return control!.actions
       .filter((a) => a.roomId && a.pathId)
       .map((a) => ({ pathId: a.pathId!, to: a.roomId! }));
-  }, [state, id, masked, route, plan, control]);
+  }, [state, id, masked, waiting, route, plan, control]);
   const visibleLogs = useMemo(
     () =>
       state?.events.filter(
@@ -339,6 +469,14 @@ export function App() {
             : {
                 screen: state.winner ? "对局结束" : "棋盘",
                 covered: false,
+                online: net
+                  ? {
+                      room: net.code,
+                      seat: net.seat,
+                      waiting,
+                      version: net.version,
+                    }
+                  : null,
                 phase: phases[state.phase],
                 round: state.round,
                 currentActor: id ? actorName(id) : null,
@@ -383,7 +521,7 @@ export function App() {
               },
       );
     window.advanceTime = () => {};
-  }, [state, masked, id, plan, highlights, recentRolls]);
+  }, [state, masked, waiting, id, plan, highlights, recentRolls, net?.version]);
   useEffect(() => {
     const f = (e: KeyboardEvent) => {
       if (
@@ -423,6 +561,9 @@ export function App() {
     return (
       <>
         <div className="lobby-settings">
+          <a href="/?online=1" data-testid="go-online">
+            联机对战
+          </a>
           <a href="/?view=props">道具状态一览</a>
           <SettingsButton />
         </div>
@@ -585,22 +726,36 @@ export function App() {
           </h1>
         </div>
         <div className="header-meta">
-          <span>热座</span>
+          <span>{net ? `联机 · 房间 ${net.code}` : "热座"}</span>
           <strong>第 {state.round} 轮</strong>
           <span>{phases[state.phase]}</span>
         </div>
         <div className="header-buttons">
           <SettingsButton />
-          <button
-            onClick={() => {
-              setLocked(true);
-              setViewer(null);
-            }}
-            disabled={!!state.winner}
-            aria-label="遮挡并交接设备"
-          >
-            交接设备
-          </button>
+          {net ? (
+            <>
+              <span
+                className={"net-status" + (net.connected ? " on" : "")}
+                data-testid="net-status"
+              >
+                {net.connected ? "已连接" : "重新连接中…"}
+              </span>
+              <button onClick={() => setInvite(true)} aria-label="邀请朋友">
+                邀请
+              </button>
+            </>
+          ) : (
+            <button
+              onClick={() => {
+                setLocked(true);
+                setViewer(null);
+              }}
+              disabled={!!state.winner}
+              aria-label="遮挡并交接设备"
+            >
+              交接设备
+            </button>
+          )}
         </div>
       </header>
       {((!masked && !dice.length) || !!state.winner) && (
@@ -630,9 +785,13 @@ export function App() {
                 onActor={(id) => pick("prop", id)}
                 selected={selected}
                 focusRoom={current?.room}
-                actionable={control!.actions
-                  .filter((a) => a.targetId)
-                  .map((a) => a.targetId!)}
+                actionable={
+                  waiting
+                    ? []
+                    : control!.actions
+                        .filter((a) => a.targetId)
+                        .map((a) => a.targetId!)
+                }
               />
               <section className="control-panel" data-testid="control-panel">
                 {state.winner ? (
@@ -648,14 +807,17 @@ export function App() {
                     </p>
                     <button
                       onClick={() => {
+                        if (net) return net.leave();
                         setState(null);
                         setViewer(null);
                       }}
                       data-testid="new-game"
                     >
-                      再开一局
+                      {net ? "返回联机大厅" : "再开一局"}
                     </button>
                   </div>
+                ) : waiting ? (
+                  <WaitingPanel state={state} net={net!} actorId={id} />
                 ) : (
                   current && (
                     <>
@@ -1099,6 +1261,16 @@ export function App() {
             我是该角色的玩家，查看棋盘
           </button>
           <small>热座 · 同一台设备轮流操作</small>
+        </div>
+      )}
+      {invite && net && (
+        <div
+          className="handoff"
+          role="dialog"
+          aria-modal="true"
+          aria-label="邀请朋友"
+        >
+          <InvitePanel code={net.code} onClose={() => setInvite(false)} />
         </div>
       )}
       {!!effects.length && !dice.length && (

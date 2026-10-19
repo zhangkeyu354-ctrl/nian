@@ -15,11 +15,15 @@
     "verify:mobile": "tsx scripts/verify-hotseat-mobile.ts",
     "verify:actions": "tsx scripts/verify-hotseat-actions.ts",
     "verify:visuals": "tsx scripts/verify-visual-feedback.ts",
-    "verify:board": "tsx scripts/verify-board-visuals.ts"
+    "verify:board": "tsx scripts/verify-board-visuals.ts",
+    "server": "tsx apps/server/src/main.ts",
+    "verify:lan-protocol": "tsx scripts/verify-lan-protocol.ts",
+    "verify:lan-browsers": "tsx scripts/verify-lan-browsers.ts"
   },
   "devDependencies": {
     "@tailwindcss/vite": "4.3.3",
     "@types/node": "26.6.5",
+    "@types/qrcode": "1.5.5",
     "@types/react": "19.3.0",
     "@types/react-dom": "19.3.0",
     "playwright": "1.64.1",
@@ -34,7 +38,10 @@
     "node": ">=24"
   },
   "dependencies": {
+    "qrcode": "1.5.4",
     "react": "19.3.1",
-    "react-dom": "19.3.1"
+    "react-dom": "19.3.1",
+    "socket.io": "4.8.1",
+    "socket.io-client": "4.8.1"
   }
 }

@@ -8,6 +8,11 @@ export default defineConfig({
     host: "127.0.0.1",
     port: 5173,
     strictPort: true,
+    // 开发时把联机请求转发到本地服务器（npm run server）
+    proxy: {
+      "/socket.io": { target: "http://127.0.0.1:3000", ws: true },
+      "/api": "http://127.0.0.1:3000",
+    },
     fs: {
       allow: [fileURLToPath(new URL("../..", import.meta.url))],
       deny: ["**/reference/**", "**/.git/**", "**/.env*"],

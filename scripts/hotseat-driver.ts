@@ -109,10 +109,24 @@ export async function clickUI(page: Page, c: Command) {
       if (await target.getAttribute("data-prop"))
         await target.locator(":scope > rect").click();
       else await target.locator(":scope > rect").click();
-      const after = JSON.parse(
-        await page.evaluate(() => window.render_game_to_text()),
-      ).events;
-      if (after !== before) return;
+      // 联机模式下结果要等服务器回传；最多等 1.5 秒
+      const view = async () =>
+        JSON.parse(await page.evaluate(() => window.render_game_to_text()));
+      const start = await view();
+      let after = start;
+      if (start.online && start.events === before) {
+        const t = Date.now();
+        while (Date.now() - t < 1500) {
+          await page.waitForTimeout(40);
+          after = await view();
+          if (
+            after.events !== before ||
+            after.online.version !== start.online.version
+          )
+            return;
+        }
+      }
+      if (after.events !== before) return;
     }
   }
   const buttons = page.locator("[data-command]");

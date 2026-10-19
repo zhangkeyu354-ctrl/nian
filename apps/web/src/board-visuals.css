@@ -424,3 +424,12 @@
     height: calc(100dvw - 52px);
   }
 }
+
+/* 笔记本等较矮的屏幕：整张棋盘不超过一屏，"全图"时不用滚动 */
+@media (min-width: 951px) {
+  .map-viewport {
+    width: 100%;
+    max-height: calc(100svh - 190px);
+    min-height: 420px;
+  }
+}

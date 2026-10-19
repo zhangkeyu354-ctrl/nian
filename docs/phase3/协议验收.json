@@ -1,0 +1,30 @@
+{
+  "games": [
+    {
+      "seed": 1701,
+      "code": "GTE8",
+      "commands": 192,
+      "winner": "survivor",
+      "events": 408,
+      "rejectedAsExpected": 21
+    },
+    {
+      "seed": 2903,
+      "code": "WP43",
+      "commands": 226,
+      "winner": "survivor",
+      "events": 477,
+      "rejectedAsExpected": 24
+    },
+    {
+      "seed": 4111,
+      "code": "KB47",
+      "commands": 108,
+      "winner": "killer",
+      "events": 227,
+      "rejectedAsExpected": 12
+    }
+  ],
+  "viewEqualityChecks": 2630,
+  "restartRestore": true
+}
