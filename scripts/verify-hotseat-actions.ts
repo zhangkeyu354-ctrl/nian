@@ -45,14 +45,16 @@ for (let i = 0; i < 350 && !(itemChecked && powerChecked); i++) {
   if (held && !itemChecked) {
     const events = state.events.length;
     await page.getByRole("button", { name: "使用物品", exact: true }).click();
-    await page.getByRole("alert").getByText("该功能尚未实现").waitFor();
+    // Phase 4A：物品效果已实现。旧界面的"使用物品"按钮只发送不带参数的命令，
+    // 引擎必须拒绝且不改变状态（正式按钮由 itemActions 提供，见 docs/phase4）。
+    await page.getByRole("alert").waitFor();
     assert.equal(
       JSON.parse(await page.evaluate(() => window.render_game_to_text()))
         .events,
       events,
     );
     await page.screenshot({
-      path: "output/playwright/phase2/物品_待实现提示.png",
+      path: "output/playwright/phase2/物品_缺参数被拒.png",
       fullPage: true,
     });
     await page.getByRole("button", { name: "关闭提示", exact: true }).click();

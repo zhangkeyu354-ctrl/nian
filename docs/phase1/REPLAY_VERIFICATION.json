@@ -17,8 +17,8 @@
     {
       "seed": 4111,
       "winner": "killer",
-      "sha256": "09c5ac9b4b284d6cfb15c081be4426d2c8a67383d99ba18cd5e101c558c970c8",
-      "eventsSha256": "6d761aec0a470dd0dd77299a5f399732b8290e5800c4ab86da84d0c0f4054bcc",
+      "sha256": "0cc6f1fa19be267c7bb8a76a191f351d82cd289ab14b98ac9d4cb49f00735bb3",
+      "eventsSha256": "26249dc4c56bc1291f0600ee2ceda6ec9c1f0ddf4ee8242ab1b1d97bad28e443",
       "commandsSha256": "bebc746a15c3a47245a8b56f88328e6abe7a021e6b363f82e9cece695ea42036"
     }
   ]

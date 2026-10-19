@@ -1,4 +1,4 @@
-{"seq":1,"round":1,"type":"GAME_CREATED","data":{"seed":4111,"mapId":"autohaven_wreckers","survivors":["dwight","meg","jake","claudette"],"killer":"doctor","unresolvedAbilities":["board_meg_1","board_doctor_3"]},"sourceRef":["B01:p6/p8-p16","U02:当前采用规则"]}
+{"seq":1,"round":1,"type":"GAME_CREATED","data":{"seed":4111,"mapId":"autohaven_wreckers","survivors":["dwight","meg","jake","claudette"],"killer":"doctor","unresolvedAbilities":["board_meg_1"]},"sourceRef":["B01:p6/p8-p16","U02:当前采用规则"]}
 {"seq":2,"round":1,"type":"PROP_REVEALED","data":{"actorId":"dwight","propId":"wreckers_garage_north:boldness:0","kind":"hook"},"sourceRef":["B01:p6/p8-p16","U02:当前采用规则"]}
 {"seq":3,"round":1,"type":"PROP_REVEALED","data":{"actorId":"meg","propId":"maze:boldness:0","kind":"hex_totem"},"sourceRef":["B01:p6/p8-p16","U02:当前采用规则"]}
 {"seq":4,"round":1,"type":"PROP_REVEALED","data":{"actorId":"jake","propId":"scrap_pile:boldness:0","kind":"hook"},"sourceRef":["B01:p6/p8-p16","U02:当前采用规则"]}

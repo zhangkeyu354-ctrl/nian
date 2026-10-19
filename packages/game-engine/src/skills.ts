@@ -68,10 +68,12 @@ export function matches(
         event === "AFTER_MOVE" && who?.side === "killer" && a.room === who.room
       );
     case "board_claudette_1":
+      // AUDIT-B01：卡文"在你的回合中移动之前或之后"——跟随别人移动（领袖群雄）等不算
       return (
         (event === "BEFORE_OWN_MOVE" || event === "AFTER_MOVE") &&
         own &&
-        who?.side === "survivor"
+        s.phase === "ACTING" &&
+        s.turn?.actorId === id
       );
     case "board_claudette_2":
     case "board_claudette_3":
@@ -464,8 +466,19 @@ export function applyAbility(
       wounded(s, t.id);
       break;
     }
-    case "board_doctor_3":
-      throw new RuleError("CHECK_REQUIRED", "item response resolution: Phase4");
+    case "board_doctor_3": {
+      // 压迫性气场：使用物品的逃生者掷危险骰，失败则该物品不产生效果（已弃掉）
+      const holder = actor(s, context.actorId);
+      requireThat(holder.side === "survivor", "item user");
+      enqueue(s, {
+        kind: "CHECK",
+        actorId: holder.id,
+        checkKind: "oppressive",
+        targetId: holder.id,
+        die: "danger",
+      });
+      break;
+    }
     default:
       throw new RuleError("CHECK_REQUIRED", `${pid}: Q11 / Phase4`);
   }
@@ -523,8 +536,15 @@ export function applyPower(s: GameState, c: Payload) {
         v.side === "survivor" && active(v) && v.room === c.to,
         "chainsaw survivor destination",
       );
-      moveEffect(s, a.id, p.id, text(c, "to"));
-      wounded(s, v.id);
+      // 鞭炮可能先让逃生者响应；被阻止时不造成伤害
+      const moved = moveEffect(s, a.id, p.id, text(c, "to"));
+      if (moved === "moved") wounded(s, v.id);
+      else if (moved === "deferred")
+        s.jobs.splice(2, 0, {
+          kind: "CHAINSAW_HIT",
+          targetId: v.id,
+          room: text(c, "to"),
+        });
       break;
     }
     case "nurse":

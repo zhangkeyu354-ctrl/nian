@@ -29,7 +29,11 @@ export {
   roomName,
   propLabel,
   pathLabel,
+  itemActions,
+  itemLabel,
+  itemNames,
 } from "./controls.ts";
+export { itemCommands, ITEM_IDS } from "./items.ts";
 export type {
   GameState,
   Command,

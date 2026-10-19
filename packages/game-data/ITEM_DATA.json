@@ -490,7 +490,13 @@
       "adoption_basis": "USER_ACCEPTED_CN_RETAIL",
       "adoption_ref": "U02:中文零售资料优先",
       "japanese_missing_blocks_runtime": false,
-      "effect_implementation_status": "DEFERRED_PHASE_4"
+      "effect_implementation_status": "IMPLEMENTED_TESTED",
+      "effect_runtime": {
+        "engine": "packages/game-engine/src/items.ts",
+        "timing_model": "docs/HOUSE_RULES.md#U-ITEM-TIMING",
+        "tests": "packages/game-engine/test/items.test.ts",
+        "implemented_by": "Claude 2026-10-19"
+      }
     },
     {
       "id": "commodious_toolbox",
@@ -581,7 +587,13 @@
       "adoption_basis": "USER_ACCEPTED_CN_RETAIL",
       "adoption_ref": "U02:中文零售资料优先",
       "japanese_missing_blocks_runtime": false,
-      "effect_implementation_status": "DEFERRED_PHASE_4"
+      "effect_implementation_status": "IMPLEMENTED_TESTED",
+      "effect_runtime": {
+        "engine": "packages/game-engine/src/items.ts",
+        "timing_model": "docs/HOUSE_RULES.md#U-ITEM-TIMING",
+        "tests": "packages/game-engine/test/items.test.ts",
+        "implemented_by": "Claude 2026-10-19"
+      }
     },
     {
       "id": "firecracker",
@@ -677,7 +689,13 @@
       "adoption_basis": "USER_ACCEPTED_CN_RETAIL",
       "adoption_ref": "U02:中文零售资料优先",
       "japanese_missing_blocks_runtime": false,
-      "effect_implementation_status": "DEFERRED_PHASE_4"
+      "effect_implementation_status": "PARTIAL_Q10_WALL_OPTION_CHECK_REQUIRED",
+      "effect_runtime": {
+        "engine": "packages/game-engine/src/items.ts",
+        "timing_model": "docs/HOUSE_RULES.md#U-ITEM-TIMING",
+        "tests": "packages/game-engine/test/items.test.ts",
+        "implemented_by": "Claude 2026-10-19"
+      }
     },
     {
       "id": "map",
@@ -771,7 +789,13 @@
       "adoption_basis": "USER_ACCEPTED_CN_RETAIL",
       "adoption_ref": "U02:中文零售资料优先",
       "japanese_missing_blocks_runtime": false,
-      "effect_implementation_status": "DEFERRED_PHASE_4"
+      "effect_implementation_status": "IMPLEMENTED_TESTED",
+      "effect_runtime": {
+        "engine": "packages/game-engine/src/items.ts",
+        "timing_model": "docs/HOUSE_RULES.md#U-ITEM-TIMING",
+        "tests": "packages/game-engine/test/items.test.ts",
+        "implemented_by": "Claude 2026-10-19"
+      }
     },
     {
       "id": "rainbow_map",
@@ -864,7 +888,13 @@
       "adoption_basis": "USER_ACCEPTED_CN_RETAIL",
       "adoption_ref": "U02:中文零售资料优先",
       "japanese_missing_blocks_runtime": false,
-      "effect_implementation_status": "DEFERRED_PHASE_4"
+      "effect_implementation_status": "IMPLEMENTED_TESTED",
+      "effect_runtime": {
+        "engine": "packages/game-engine/src/items.ts",
+        "timing_model": "docs/HOUSE_RULES.md#U-ITEM-TIMING",
+        "tests": "packages/game-engine/test/items.test.ts",
+        "implemented_by": "Claude 2026-10-19"
+      }
     },
     {
       "id": "flashlight",
@@ -989,7 +1019,13 @@
       "adoption_basis": "USER_ACCEPTED_CN_RETAIL",
       "adoption_ref": "U02:中文零售资料优先",
       "japanese_missing_blocks_runtime": false,
-      "effect_implementation_status": "DEFERRED_PHASE_4"
+      "effect_implementation_status": "IMPLEMENTED_TESTED",
+      "effect_runtime": {
+        "engine": "packages/game-engine/src/items.ts",
+        "timing_model": "docs/HOUSE_RULES.md#U-ITEM-TIMING",
+        "tests": "packages/game-engine/test/items.test.ts",
+        "implemented_by": "Claude 2026-10-19"
+      }
     },
     {
       "id": "first_aid_kit",
@@ -1092,7 +1128,13 @@
       "adoption_basis": "USER_ACCEPTED_CN_RETAIL",
       "adoption_ref": "U02:中文零售资料优先",
       "japanese_missing_blocks_runtime": false,
-      "effect_implementation_status": "DEFERRED_PHASE_4"
+      "effect_implementation_status": "IMPLEMENTED_TESTED",
+      "effect_runtime": {
+        "engine": "packages/game-engine/src/items.ts",
+        "timing_model": "docs/HOUSE_RULES.md#U-ITEM-TIMING",
+        "tests": "packages/game-engine/test/items.test.ts",
+        "implemented_by": "Claude 2026-10-19"
+      }
     },
     {
       "id": "broken_key",
@@ -1186,7 +1228,13 @@
       "adoption_basis": "USER_ACCEPTED_CN_RETAIL",
       "adoption_ref": "U02:中文零售资料优先",
       "japanese_missing_blocks_runtime": false,
-      "effect_implementation_status": "DEFERRED_PHASE_4"
+      "effect_implementation_status": "IMPLEMENTED_TESTED",
+      "effect_runtime": {
+        "engine": "packages/game-engine/src/items.ts",
+        "timing_model": "docs/HOUSE_RULES.md#U-ITEM-TIMING",
+        "tests": "packages/game-engine/test/items.test.ts",
+        "implemented_by": "Claude 2026-10-19"
+      }
     },
     {
       "id": "dull_key",
@@ -1280,7 +1328,13 @@
       "adoption_basis": "USER_ACCEPTED_CN_RETAIL",
       "adoption_ref": "U02:中文零售资料优先",
       "japanese_missing_blocks_runtime": false,
-      "effect_implementation_status": "DEFERRED_PHASE_4"
+      "effect_implementation_status": "IMPLEMENTED_TESTED",
+      "effect_runtime": {
+        "engine": "packages/game-engine/src/items.ts",
+        "timing_model": "docs/HOUSE_RULES.md#U-ITEM-TIMING",
+        "tests": "packages/game-engine/test/items.test.ts",
+        "implemented_by": "Claude 2026-10-19"
+      }
     },
     {
       "id": "skeleton_key",
@@ -1374,7 +1428,13 @@
       "adoption_basis": "USER_ACCEPTED_CN_RETAIL",
       "adoption_ref": "U02:中文零售资料优先",
       "japanese_missing_blocks_runtime": false,
-      "effect_implementation_status": "DEFERRED_PHASE_4"
+      "effect_implementation_status": "IMPLEMENTED_TESTED",
+      "effect_runtime": {
+        "engine": "packages/game-engine/src/items.ts",
+        "timing_model": "docs/HOUSE_RULES.md#U-ITEM-TIMING",
+        "tests": "packages/game-engine/test/items.test.ts",
+        "implemented_by": "Claude 2026-10-19"
+      }
     }
   ],
   "photo_count_check": {

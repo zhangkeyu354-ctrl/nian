@@ -416,7 +416,6 @@ describe("B01 and U02 state-machine regressions", () => {
       "board_feng_min_1",
       "board_hag_1",
       "board_wraith_3",
-      "board_doctor_3",
     ])
       expect(() =>
         reduce(fixture(), { type: "USE_PERK", actorId: "dwight", perkId }),

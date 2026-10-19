@@ -1,5 +1,6 @@
 import type { GameState, Command, Card } from "../../shared/src/types.ts";
-import { reduce, validateInteraction } from "./engine.ts";
+import { reduce, validateInteraction, phantasmTargets } from "./engine.ts";
+import { itemCommands } from "./items.ts";
 import { legalRoutes } from "./graph.ts";
 import { maps, roster, boardPerks } from "./data.ts";
 export const cardNames: Record<Card, string> = {
@@ -42,6 +43,18 @@ export const actionNames: Record<string, string> = {
   pickup: "搬运",
   heal: "治疗",
   power: "使用杀手力量",
+};
+export const itemNames: Record<string, string> = {
+  toolbox: "工具箱",
+  commodious_toolbox: "宽敞工具箱",
+  firecracker: "鞭炮",
+  map: "地图",
+  rainbow_map: "彩虹地图",
+  flashlight: "手电筒",
+  first_aid_kit: "急救箱",
+  broken_key: "破损钥匙",
+  dull_key: "晦暗钥匙",
+  skeleton_key: "万能钥匙",
 };
 export const actorName = (id: string) => roster.get(id)?.name_zh ?? "角色";
 export const roomName = (s: GameState, id: string) =>
@@ -109,6 +122,38 @@ export function carrySteps(
     ? legalRoutes(s, from, "killer", undefined, true)
     : [];
 }
+/** 物品按钮的文字 */
+export function itemLabel(s: GameState, c: Command) {
+  const name = itemNames[String(c.itemId)] ?? "物品";
+  const who = (id: unknown) => actorName(String(id));
+  if (c.propId) return `使用${name}：${propLabel(s, String(c.propId))} +1 进度`;
+  if (c.itemId === "first_aid_kit") return `使用${name}：${who(c.targetId)}变为健康`;
+  if (c.option === "reveal") return `使用${name}：翻开至多 3 个道具`;
+  if (c.option === "draw") return `使用${name}：再抽 1 张物品牌`;
+  if (c.option === "killer_cards") return `使用${name}：翻开杀手的所有移动牌`;
+  if (c.itemId === "flashlight") return `使用${name}：阻止杀手交互`;
+  if (c.option === "block") return `使用${name}：阻止杀手进入`;
+  if (c.option === "reroll")
+    return `使用${name}：重掷第 ${Number(c.index) + 1} 颗骰子`;
+  if (c.option === "blood") {
+    const n = { broken_key: 1, dull_key: 2, skeleton_key: 3 }[String(c.itemId)];
+    return `使用${name}：${who(c.targetId)}获得 ${n} 血点`;
+  }
+  return "使用" + name;
+}
+/** 某角色此刻能用的物品（全部是完整命令，可直接做成按钮）。
+ * 联机时，持有者不在自己的回合也可以用（"在任意逃生者的回合中""任何时候"），
+ * 界面应在"我的物品"处单独调用它，而不只依赖 getControls。 */
+export function itemActions(s: GameState, actorId: string): ControlAction[] {
+  return itemCommands(s, actorId)
+    .filter((c) => canCommand(s, c))
+    .map((command) => ({
+      label: itemLabel(s, command),
+      command,
+      targetId:
+        typeof command.propId === "string" ? command.propId : undefined,
+    }));
+}
 export function getControls(s: GameState) {
   const actorId = currentActor(s);
   const actions: ControlAction[] = [];
@@ -122,7 +167,10 @@ export function getControls(s: GameState) {
   if (!actorId) return { actorId, actions, hand: [] as Card[], planCount: 0 };
   const base = { actorId },
     a = s.actors[actorId];
-  if (s.window) add("不使用技能，继续", { type: "PASS", ...base });
+  if (s.window) {
+    add("不使用技能，继续", { type: "PASS", ...base });
+    actions.push(...itemActions(s, actorId));
+  }
   else if (s.choice) {
     const c = s.choice;
     if (c.kind === "REVEAL")
@@ -162,6 +210,22 @@ export function getControls(s: GameState) {
     }
     if (c.kind === "PHANTASM")
       add("获得1血点", { type: "SELECT", ...base, option: "blood" });
+    if (c.kind === "PHANTASM_TARGET")
+      for (const t of phantasmTargets(s))
+        add(
+          actionNames[t.action] + actorName(t.targetId),
+          { type: "SELECT", ...base, ...t },
+          { targetId: t.targetId, roomId: s.actors[t.targetId].room! },
+        );
+    if (c.kind === "MAP_REVEAL") {
+      for (const p of s.props)
+        add(
+          "翻开" + propLabel(s, p.id),
+          { type: "SELECT", ...base, propId: p.id },
+          { targetId: p.id, roomId: p.room },
+        );
+      add("翻开完毕", { type: "SELECT", ...base });
+    }
   } else if (s.phase === "SETUP") {
     for (const p of s.props)
       add(
@@ -177,6 +241,7 @@ export function getControls(s: GameState) {
       accept: true,
     });
   } else if (s.phase === "ACTING" && s.turn?.stage === "MOVE") {
+    actions.push(...itemActions(s, actorId));
     const routes = previewRoutes(s, actorId, s.turn.card!);
     if (!routes.length)
       add(
@@ -235,6 +300,7 @@ export function getControls(s: GameState) {
           },
           { targetId: p.id, pathId, roomId: p.room },
         );
+    actions.push(...itemActions(s, actorId));
     add("结束本次行动", { type: "END_TURN", ...base });
   }
   return {

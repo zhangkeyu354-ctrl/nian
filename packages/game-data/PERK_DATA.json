@@ -4294,7 +4294,7 @@
       "source_ref": [
         "D41:reference/characters/killers_hillbilly_doctor.png / 医生人物板"
       ],
-      "status": "CHECK_REQUIRED",
+      "status": "CONFIRMED",
       "on_board": true,
       "board_position": 3,
       "bloodpoint_cost": 1,
@@ -4302,7 +4302,7 @@
       "frame_semantics_status": "CHECK_REQUIRED",
       "text_original_zh": "当你所在空间或一个相连空间里的一位逃生者使用一个物品时，由他掷危险骰子。失败时，该物品被弃掉，不产生效果。",
       "transcription_confidence": "HIGH",
-      "implementation_status": "DEFERRED_PHASE_4",
+      "implementation_status": "IMPLEMENTED_TESTED",
       "chinese_print_evidence": {
         "source_level": "D",
         "source_ref": [
@@ -4324,10 +4324,10 @@
         "source_ref": [
           "D41:reference/characters/killers_hillbilly_doctor.png / 医生人物板"
         ],
-        "status": "CHECK_REQUIRED",
+        "status": "CONFIRMED",
         "source_text_zh": "当你所在空间或一个相连空间里的一位逃生者使用一个物品时，由他掷危险骰子。失败时，该物品被弃掉，不产生效果。",
-        "implementation_status": "NOT_IMPLEMENTED",
-        "requires_semantic_review": true,
+        "implementation_status": "IMPLEMENTED_TESTED",
+        "requires_semantic_review": false,
         "kind": "PERK",
         "trigger": {
           "event": "NEARBY_SURVIVOR_USES_ITEM"
@@ -4365,7 +4365,8 @@
       "japanese_missing_blocks_runtime": false,
       "implementation_ref": "packages/game-engine/src/skills.ts",
       "test_ref": "packages/game-engine/test/skills.test.ts",
-      "deferred_reason": "Phase4物品效果响应；当前USE_ITEM明确报错"
+      "deferred_reason": "Phase4物品效果响应；当前USE_ITEM明确报错",
+      "implementation_note": "Claude 2026-10-19：随物品效果一起实现。延后原因仅为物品使用尚未实现，卡文无语义争议。"
     }
   ],
   "board_perks_note": "board_perks是人物板印刷能力；perks仍为52张卡组研究槽。两种载体不因同名/图标自动建立一一对应；都未实现。",

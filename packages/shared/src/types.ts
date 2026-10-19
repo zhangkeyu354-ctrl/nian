@@ -60,6 +60,8 @@ export interface Window {
   actors: string[];
   index: number;
   eligible: Record<string, string[]>;
+  /** 持有物品、可在此时机使用物品的逃生者（只依据公开信息：是否持有物品） */
+  itemActors?: string[];
 }
 export interface Choice extends Payload {
   kind: string;
@@ -76,6 +78,8 @@ export interface Roll {
   failureCredit: boolean[];
   keep: number | null;
   data: Payload;
+  /** 已被重掷过的骰子序号；重掷过的骰子不能再重掷（B01 p16） */
+  rerolled?: number[];
 }
 export interface Turn {
   actorId: string;
@@ -86,6 +90,8 @@ export interface Turn {
   interactionSpent: boolean;
   interacted: boolean;
   token: number;
+  /** 手电筒：本回合杀手不能交互（仍可使用杀手力量，B01 p14 力量是"代替交互"） */
+  noInteract?: boolean;
 }
 export interface GameState {
   version: 1;
@@ -126,6 +132,8 @@ export interface GameState {
   unresolvedAbilities: string[];
   itemDeck: string[];
   itemDiscard: string[];
+  /** 鞭炮：阻止杀手进入该空间（仅在紧接着的那一次移动中生效） */
+  blockedEntry?: { room: string; by: string } | null;
 }
 export interface CreateOptions {
   mode?: "ADEPT" | "BLOODWEB" | "DEVOUT";

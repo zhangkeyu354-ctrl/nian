@@ -14,6 +14,13 @@ import { maps, roster, boardPerks, rules, dice, items } from "./data.ts";
 import { legalRoutes, connected } from "./graph.ts";
 import { resultClass, resolveDice } from "./dice.ts";
 import { matches, applyAbility, applyPower } from "./skills.ts";
+import {
+  useItem,
+  resolveItem,
+  itemResponders,
+  selectMapReveal,
+  negatePendingItem,
+} from "./items.ts";
 export { legalRoutes, connected, resolveDice };
 export type { GameState, Command, CreateOptions };
 export class RuleError extends Error {
@@ -314,9 +321,12 @@ function startPlanning(s: GameState) {
   enqueue(s, { kind: "SIGNAL", event: "PLANNING_START", context: {} });
 }
 function startTurn(s: GameState) {
+  // 被献祭的逃生者跳过回合（B01 p15）。计划阶段在钩子上、本轮行动中才被救下的逃生者
+  // 没有放置移动牌，本轮也没有回合（救援时已获得一次移动，B01 p13）。
   while (
     s.cursor < s.turnOrder.length &&
-    actor(s, s.turnOrder[s.cursor]).hookId
+    (actor(s, s.turnOrder[s.cursor]).hookId ||
+      !s.plans[s.turnOrder[s.cursor]]?.length)
   )
     s.cursor++;
   if (s.cursor >= s.turnOrder.length) {
@@ -414,8 +424,9 @@ export function moveEffect(
     destroy?: boolean;
     normal?: boolean;
     palletWindowResolved?: boolean;
+    entryWindowResolved?: boolean;
   } = {},
-) {
+): "moved" | "deferred" | "blocked" {
   const a = actor(s, id);
   requireThat(a.room && !a.hookId, "cannot move");
   const route = legalRoutes(
@@ -451,7 +462,7 @@ export function moveEffect(
         opts: { ...opts, palletWindowResolved: true },
       },
     );
-    return;
+    return "deferred";
   }
   if (opts.destroy) {
     if (p.pallet) {
@@ -473,7 +484,29 @@ export function moveEffect(
     if (s.turn) s.turn.interactionSpent = true;
     log(s, "PALLET_DESTROYED", { actorId: id, pathId });
     signal(s, "BLOCKER_DESTROYED", { actorId: id, kind: "pallet" });
-    return;
+    return "blocked";
+  }
+  if (a.side === "killer") {
+    const entry = killerEntry(s, id, to, !!opts.entryWindowResolved);
+    if (entry === "window") {
+      enqueue(
+        s,
+        {
+          kind: "SIGNAL",
+          event: "KILLER_WOULD_ENTER",
+          context: { actorId: id, to },
+        },
+        {
+          kind: "MOVE_EFFECT",
+          actorId: id,
+          pathId,
+          to,
+          opts: { ...opts, entryWindowResolved: true },
+        },
+      );
+      return "deferred";
+    }
+    if (entry === "blocked") return "blocked";
   }
   if (a.side === "killer" && p.wall && !p.temporaryWall && !opts.ignore) {
     p.wall = false;
@@ -509,13 +542,55 @@ export function moveEffect(
     });
   }
   enqueue(s, ...jobs);
+  return "moved";
 }
-export function teleport(s: GameState, id: string, to: string) {
+/** 鞭炮：杀手将要进入一个有持物逃生者的空间时，先给他们响应机会 */
+function killerEntry(
+  s: GameState,
+  id: string,
+  to: string,
+  resolved: boolean,
+): "go" | "window" | "blocked" {
+  if (!resolved)
+    return itemResponders(s, "KILLER_WOULD_ENTER", { actorId: id, to }).length
+      ? "window"
+      : "go";
+  const b = s.blockedEntry;
+  s.blockedEntry = null;
+  if (b?.room !== to) return "go";
+  log(s, "MOVE_BLOCKED", { actorId: id, to, by: b.by });
+  // B01 p18 FAQ：移动因故失败时，也失去本次交互机会
+  if (s.turn?.actorId === id) s.turn.interactionSpent = true;
+  if (s.pendingAction?.actorId === id) s.pendingAction = null;
+  return "blocked";
+}
+export function teleport(
+  s: GameState,
+  id: string,
+  to: string,
+  resolved = false,
+): "moved" | "deferred" | "blocked" {
   const a = actor(s, id);
   requireThat(
     maps.maps.find((m) => m.id === s.mapId)!.nodes.some((n) => n.id === to),
     "unknown room",
   );
+  if (a.side === "killer") {
+    const entry = killerEntry(s, id, to, resolved);
+    if (entry === "window") {
+      enqueue(
+        s,
+        {
+          kind: "SIGNAL",
+          event: "KILLER_WOULD_ENTER",
+          context: { actorId: id, to },
+        },
+        { kind: "TELEPORT", actorId: id, to },
+      );
+      return "deferred";
+    }
+    if (entry === "blocked") return "blocked";
+  }
   const from = a.room;
   a.lockerId = null;
   a.room = to;
@@ -529,6 +604,7 @@ export function teleport(s: GameState, id: string, to: string) {
       context: { actorId: id, from, to, pathId: null, normal: false },
     },
   );
+  return "moved";
 }
 export function beginRoll(
   s: GameState,
@@ -634,22 +710,14 @@ function resolveRoll(s: GameState) {
   });
   if (r.kind === "generator" || r.kind === "exit") {
     const p = prop(s, r.targetId);
-    if (ok)
-      p.progress = Math.min(
-        3,
-        p.progress + (r.kind === "generator" && great ? 2 : 1),
-      );
-    log(s, "PROP_PROGRESS", { propId: p.id, progress: p.progress });
-    if (p.progress === 3) {
-      if (r.kind === "exit") {
+    if (r.kind === "exit") {
+      if (ok) p.progress = Math.min(3, p.progress + 1);
+      log(s, "PROP_PROGRESS", { propId: p.id, progress: p.progress });
+      if (p.progress === 3) {
         win(s, "survivor");
         return;
       }
-      p.removed = true;
-      s.completedGenerators++;
-      s.generatorsThisRound++;
-      signal(s, "GENERATOR_COMPLETED", { actorId: r.actorId, propId: p.id });
-    }
+    } else addGeneratorProgress(s, p.id, ok ? (great ? 2 : 1) : 0, r.actorId);
     if (!ok && r.kind === "generator")
       signal(s, "GENERATOR_FAILURE", { actorId: r.actorId, propId: p.id });
   } else if (r.kind === "totem") {
@@ -681,6 +749,9 @@ function resolveRoll(s: GameState) {
       room: r.targetId,
       price: r.faces[0],
     };
+  } else if (r.kind === "oppressive") {
+    // 医生「压迫性气场」：失败时该物品被弃掉，不产生效果
+    if (!ok) negatePendingItem(s);
   } else if (r.kind === "carry") {
     const victimId = text(r.data, "victimId");
     const route = r.data.route as Array<{ pathId: string; to: string }>;
@@ -717,6 +788,23 @@ function resolveRoll(s: GameState) {
     if (h) hook(s, v.id, h.id);
     else log(s, "ESCAPED", { actorId: v.id, reason: "no_hook" });
   } else throw new RuleError("CHECK_REQUIRED", `check kind ${r.kind}`);
+}
+/** 给发电机加进度；满 3 时完成（掷骰修理与工具箱共用） */
+export function addGeneratorProgress(
+  s: GameState,
+  pid: string,
+  n: number,
+  actorId: string,
+) {
+  const p = prop(s, pid);
+  p.progress = Math.min(3, p.progress + n);
+  log(s, "PROP_PROGRESS", { propId: p.id, progress: p.progress });
+  if (p.progress === 3) {
+    p.removed = true;
+    s.completedGenerators++;
+    s.generatorsThisRound++;
+    signal(s, "GENERATOR_COMPLETED", { actorId, propId: p.id });
+  }
 }
 export function validateInteraction(s: GameState, action: Payload) {
   const a = actor(s, action.actorId),
@@ -808,6 +896,18 @@ export function validateInteraction(s: GameState, action: Payload) {
     );
   }
 }
+/** 妖巫传送后可交互的逃生者及交互方式 */
+export function phantasmTargets(s: GameState) {
+  const out: Array<{ action: string; targetId: string }> = [];
+  for (const v of s.survivors)
+    for (const action of ["attack", "pickup"]) {
+      try {
+        validateInteraction(s, { actorId: s.killerId, action, targetId: v });
+        out.push({ action, targetId: v });
+      } catch {}
+    }
+  return out;
+}
 function performInteraction(s: GameState) {
   const action = s.pendingAction!;
   s.pendingAction = null;
@@ -817,6 +917,24 @@ function performInteraction(s: GameState) {
   requireThat(a.room && active(a), "cannot interact");
   const pid = typeof action.targetId === "string" ? action.targetId : null;
   if (kind === "attack" || kind === "pickup" || kind === "heal") {
+    // AUDIT-B02：目标在宣告交互之后、结算之前合法地离开了（如梅格「急速静谧」躲进储物柜）。
+    // 不得卡局，也不得默默攻击柜内的人。妖巫传送交互的原文是"与那个空间里的一位逃生者交互"，
+    // 所以改为让杀手在该空间重新选择；其他情况本次交互作废（交互机会已用掉）。
+    try {
+      validateInteraction(s, action);
+    } catch (e) {
+      if (!(e instanceof RuleError) || e.code !== "ILLEGAL_COMMAND") throw e;
+      if (action.phantasm && phantasmTargets(s).length) {
+        s.choice = { kind: "PHANTASM_TARGET", actorId: a.id, room: a.room };
+        return;
+      }
+      log(s, "INTERACTION_LOST", {
+        actorId: a.id,
+        action: kind,
+        targetId: pid,
+      });
+      return;
+    }
     const v = actor(s, pid);
     requireThat(
       v.side === "survivor" && v.room === a.room && active(v) && v.id !== a.id,
@@ -971,9 +1089,19 @@ function run(s: GameState) {
             )
           : [];
       }
-      const actors = ids.filter((id) => eligible[id].length);
+      const itemActors = itemResponders(s, event, context);
+      const actors = ids.filter(
+        (id) => eligible[id].length || itemActors.includes(id),
+      );
       if (actors.length)
-        s.window = { event, context, actors, index: 0, eligible };
+        s.window = {
+          event,
+          context,
+          actors,
+          index: 0,
+          eligible,
+          ...(itemActors.length ? { itemActors } : {}),
+        };
     } else if (j.kind === "RESTORE_WINDOW")
       s.window = j.window as unknown as Window;
     else if (j.kind === "REVEAL_ROOM") {
@@ -1072,6 +1200,17 @@ function run(s: GameState) {
       }
       log(s, "ROUND_CLEANUP");
       startPlanning(s);
+    } else if (j.kind === "RESOLVE_ITEM") resolveItem(s, j);
+    else if (j.kind === "TELEPORT")
+      teleport(s, text(j, "actorId"), text(j, "to"), true);
+    else if (j.kind === "CHAINSAW_HIT") {
+      const v = actor(s, j.targetId);
+      if (
+        actor(s, s.killerId).room === j.room &&
+        v.room === j.room &&
+        active(v)
+      )
+        wounded(s, v.id);
     } else if (j.kind === "REMOVE_TEMP_WALL")
       s.paths[text(j, "pathId")].temporaryWall = false;
     else throw new RuleError("CHECK_REQUIRED", `continuation ${j.kind}`);
@@ -1156,24 +1295,47 @@ function select(s: GameState, c: Command) {
         "phantasm interaction target",
       );
       spend(s, s.killerId, number(choice, "price"));
+      requireThat(
+        c.action === "attack" || c.action === "pickup",
+        "phantasm interaction: attack/pickup",
+      );
       s.pendingAction = {
         actorId: s.killerId,
         action: c.action,
         targetId: v.id,
+        phantasm: true,
       };
       enqueue(s, { kind: "DO_INTERACTION" });
       teleport(s, s.killerId, text(choice, "room"));
     }
-  } else throw new RuleError("CHECK_REQUIRED", `choice ${choice.kind}`);
+  } else if (choice.kind === "PHANTASM_TARGET") {
+    const next = {
+      actorId: s.killerId,
+      action: text(c, "action"),
+      targetId: text(c, "targetId"),
+      phantasm: true,
+    };
+    requireThat(
+      phantasmTargets(s).some(
+        (t) => t.action === next.action && t.targetId === next.targetId,
+      ),
+      "phantasm retarget",
+    );
+    s.pendingAction = next;
+    log(s, "INTERACTION_REVISED", {
+      actorId: next.actorId,
+      action: next.action,
+      targetId: next.targetId,
+    });
+    enqueue(s, { kind: "DO_INTERACTION" });
+  } else if (choice.kind === "MAP_REVEAL") selectMapReveal(s, choice, c);
+  else throw new RuleError("CHECK_REQUIRED", `choice ${choice.kind}`);
 }
 export function reduce(state: GameState, c: Command): GameState {
   requireThat(c && typeof c.type === "string", "command type");
-  if (c.type === "USE_ITEM")
-    throw new RuleError("CHECK_REQUIRED", "Q10 / item effects: Phase4");
   if (
     c.type === "USE_PERK" &&
-    (c.perkId === "board_doctor_3" ||
-      boardPerks.get(String(c.perkId))?.status === "CHECK_REQUIRED")
+    boardPerks.get(String(c.perkId))?.status === "CHECK_REQUIRED"
   )
     throw new RuleError("CHECK_REQUIRED", `${c.perkId}: Phase4`);
   requireThat(!state.winner, "game already ended");
@@ -1182,6 +1344,11 @@ export function reduce(state: GameState, c: Command): GameState {
   if (c.type === "SELECT") {
     requireThat(s.choice && !s.window, "no choice");
     select(s, c);
+    run(s);
+    return s;
+  }
+  if (c.type === "USE_ITEM") {
+    useItem(s, c);
     run(s);
     return s;
   }
@@ -1326,6 +1493,10 @@ export function reduce(state: GameState, c: Command): GameState {
         t.stage === "INTERACT" &&
         !t.interactionSpent,
       "no interaction",
+    );
+    requireThat(
+      !t.noInteract || c.action === "power",
+      "flashlight: killer cannot interact this turn",
     );
     validateInteraction(s, c);
     t.interactionSpent = true;
