@@ -453,3 +453,60 @@ describe("审计缺陷回归", () => {
     expect(s.actors.meg.health).toBe("healthy");
   });
 });
+
+describe("卡文核对时发现的实现问题（2026-10-19）", () => {
+  function killerPowerTurn(killer: string) {
+    const s = base(killer);
+    killerTurn(s);
+    s.hands[s.actors[killer].ownerId] = ["blue", "green", "red", "yellow", "wait"];
+    return s;
+  }
+  it("农场主电锯：目的空间没有逃生者时也能用来移动", () => {
+    let s = killerPowerTurn("hillbilly");
+    const from = s.actors.hillbilly.room!;
+    const r = legalRoutes(s, from, "killer").find(
+      (r) => !s.paths[r.pathId].wall && !s.paths[r.pathId].pallet && s.paths[r.pathId].color !== "wait",
+    )!;
+    s = act(s, {
+      type: "INTERACT",
+      actorId: "hillbilly",
+      action: "power",
+      card: s.paths[r.pathId].color,
+      pathId: r.pathId,
+      to: r.to,
+    });
+    expect(s.actors.hillbilly.room).toBe(r.to);
+    expect(Object.values(s.actors).every((a) => a.health === "healthy")).toBe(true);
+  });
+  it("农场主电锯：目的空间有逃生者时必须选其中一位，并使其受伤", () => {
+    let s = killerPowerTurn("hillbilly");
+    const from = s.actors.hillbilly.room!;
+    const r = legalRoutes(s, from, "killer").find(
+      (r) => !s.paths[r.pathId].wall && !s.paths[r.pathId].pallet,
+    )!;
+    s.actors.jake.room = r.to;
+    const cmd = {
+      type: "INTERACT",
+      actorId: "hillbilly",
+      action: "power",
+      card: s.paths[r.pathId].color,
+      pathId: r.pathId,
+      to: r.to,
+    };
+    expect(() => reduce(s, cmd)).toThrow();
+    s = act(s, { ...cmd, targetId: "jake" });
+    expect(s.actors.jake.health).toBe("wounded");
+  });
+  it("妖巫黑化触媒：只有已翻开的厄咒图腾才给血点", () => {
+    for (const revealed of [false, true]) {
+      let s = killerPowerTurn("hag");
+      for (const p of s.props) if (p.kind === "hex_totem") p.room = "nowhere";
+      const t = s.props.find((p) => p.kind === "hex_totem")!;
+      t.room = s.actors.hag.room!;
+      t.revealed = revealed;
+      s.actors.hag.blood = 5;
+      s = act(s, { type: "INTERACT", actorId: "hag", action: "power" });
+      expect(s.actors.hag.blood).toBe(revealed ? 6 : 5);
+    }
+  });
+});

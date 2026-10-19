@@ -531,13 +531,20 @@ export function applyPower(s: GameState, c: Payload) {
           !p.bearTrap,
         "chainsaw clear matching path",
       );
-      const v = actor(s, text(c, "targetId"));
-      requireThat(
-        v.side === "survivor" && active(v) && v.room === c.to,
-        "chainsaw survivor destination",
+      // 卡文"你进入的空间里的一位逃生者变为受伤"：目的空间有逃生者时必须选其中一位；
+      // 没有逃生者时电锯只用来移动（人物板说明：电锯也可以提供额外的机动性）。
+      const present = s.survivors.filter(
+        (id) => active(s.actors[id]) && s.actors[id].room === c.to,
       );
+      let v: ReturnType<typeof actor> | null = null;
+      if (present.length) {
+        v = actor(s, text(c, "targetId"));
+        requireThat(present.includes(v.id), "chainsaw survivor destination");
+      } else
+        requireThat(c.targetId === undefined, "no survivor in destination");
       // 鞭炮可能先让逃生者响应；被阻止时不造成伤害
       const moved = moveEffect(s, a.id, p.id, text(c, "to"));
+      if (!v) break;
       if (moved === "moved") wounded(s, v.id);
       else if (moved === "deferred")
         s.jobs.splice(2, 0, {
@@ -561,7 +568,12 @@ export function applyPower(s: GameState, c: Payload) {
       s.phantasms.push(a.room!);
       if (
         s.props.some(
-          (p) => p.room === a.room && p.kind === "hex_totem" && !p.removed,
+          // 只算已翻开的厄咒图腾（面朝下的道具不能算，否则会泄露它是什么）
+          (p) =>
+            p.room === a.room &&
+            p.kind === "hex_totem" &&
+            p.revealed &&
+            !p.removed,
         )
       )
         gain(s, a.id, 1);

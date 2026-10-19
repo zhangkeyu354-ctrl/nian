@@ -400,7 +400,15 @@ export function commandFields(s: GameState, kind: string, id: string): Field[] {
         field("removeTrapId", "先移除已有捕兽夹", paths, { optional: true }),
       ];
     if (id === "wraith") return [to()];
-    if (id === "hillbilly") return [card(), path(), to(), target()];
+    if (id === "hillbilly")
+      return [
+        card(),
+        path(),
+        to(),
+        field("targetId", "受伤的逃生者（目的空间没有人时留空）", actors, {
+          optional: true,
+        }),
+      ];
     if (id === "nurse") return [path(), to()];
     if (id === "doctor")
       return [
