@@ -1206,6 +1206,8 @@ function run(s: GameState) {
       s.entity = null;
       for (const p of Object.values(s.paths)) p.temporaryWall = false;
       s.firstPlayer = (s.firstPlayer + 1) % 4;
+      // B01 p11 清理阶段属于本轮：记录在轮数加一之前
+      log(s, "ROUND_CLEANUP");
       s.round++;
       s.usedPerks = [];
       s.killerBonusUsed = false;
@@ -1218,7 +1220,6 @@ function run(s: GameState) {
             ? ["blue", "green", "red", "yellow", "wait"]
             : ["blue", "green", "red", "yellow"];
       }
-      log(s, "ROUND_CLEANUP");
       startPlanning(s);
     } else if (j.kind === "RESOLVE_ITEM") resolveItem(s, j);
     else if (j.kind === "TELEPORT")

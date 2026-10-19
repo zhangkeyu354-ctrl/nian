@@ -87,7 +87,7 @@
 {"seq":87,"round":1,"type":"AFTER_MOVE","data":{"actorId":"nurse","from":"wreckers_garage_north","to":"wreckers_garage_south","pathId":"ah_p05","normal":true},"sourceRef":["B01:p6/p8-p16","U02:当前采用规则"]}
 {"seq":88,"round":1,"type":"OWN_TURN_END","data":{"actorId":"nurse"},"sourceRef":["B01:p6/p8-p16","U02:当前采用规则"]}
 {"seq":89,"round":1,"type":"CLEANUP_START","data":{},"sourceRef":["B01:p6/p8-p16","U02:当前采用规则"]}
-{"seq":90,"round":2,"type":"ROUND_CLEANUP","data":{},"sourceRef":["B01:p6/p8-p16","U02:当前采用规则"]}
+{"seq":90,"round":1,"type":"ROUND_CLEANUP","data":{},"sourceRef":["B01:p6/p8-p16","U02:当前采用规则"]}
 {"seq":91,"round":2,"type":"PLANNING_START","data":{},"sourceRef":["B01:p6/p8-p16","U02:当前采用规则"]}
 {"seq":92,"round":2,"type":"PLAN_SUBMITTED","data":{"actorId":"meg"},"sourceRef":["B01:p6/p8-p16","U02:当前采用规则"]}
 {"seq":93,"round":2,"type":"PLAN_SUBMITTED","data":{"actorId":"nea"},"sourceRef":["B01:p6/p8-p16","U02:当前采用规则"]}
@@ -170,7 +170,7 @@
 {"seq":170,"round":2,"type":"AFTER_MOVE","data":{"actorId":"nurse","from":"wreckers_garage_south","to":"wreckers_garage_north","pathId":"ah_p05","normal":true},"sourceRef":["B01:p6/p8-p16","U02:当前采用规则"]}
 {"seq":171,"round":2,"type":"OWN_TURN_END","data":{"actorId":"nurse"},"sourceRef":["B01:p6/p8-p16","U02:当前采用规则"]}
 {"seq":172,"round":2,"type":"CLEANUP_START","data":{},"sourceRef":["B01:p6/p8-p16","U02:当前采用规则"]}
-{"seq":173,"round":3,"type":"ROUND_CLEANUP","data":{},"sourceRef":["B01:p6/p8-p16","U02:当前采用规则"]}
+{"seq":173,"round":2,"type":"ROUND_CLEANUP","data":{},"sourceRef":["B01:p6/p8-p16","U02:当前采用规则"]}
 {"seq":174,"round":3,"type":"PLANNING_START","data":{},"sourceRef":["B01:p6/p8-p16","U02:当前采用规则"]}
 {"seq":175,"round":3,"type":"PLAN_SUBMITTED","data":{"actorId":"meg"},"sourceRef":["B01:p6/p8-p16","U02:当前采用规则"]}
 {"seq":176,"round":3,"type":"PLAN_SUBMITTED","data":{"actorId":"nea"},"sourceRef":["B01:p6/p8-p16","U02:当前采用规则"]}
@@ -250,7 +250,7 @@
 {"seq":250,"round":3,"type":"AFTER_MOVE","data":{"actorId":"nurse","from":"wreckers_garage_north","to":"wreckers_garage_south","pathId":"ah_p05","normal":true},"sourceRef":["B01:p6/p8-p16","U02:当前采用规则"]}
 {"seq":251,"round":3,"type":"OWN_TURN_END","data":{"actorId":"nurse"},"sourceRef":["B01:p6/p8-p16","U02:当前采用规则"]}
 {"seq":252,"round":3,"type":"CLEANUP_START","data":{},"sourceRef":["B01:p6/p8-p16","U02:当前采用规则"]}
-{"seq":253,"round":4,"type":"ROUND_CLEANUP","data":{},"sourceRef":["B01:p6/p8-p16","U02:当前采用规则"]}
+{"seq":253,"round":3,"type":"ROUND_CLEANUP","data":{},"sourceRef":["B01:p6/p8-p16","U02:当前采用规则"]}
 {"seq":254,"round":4,"type":"PLANNING_START","data":{},"sourceRef":["B01:p6/p8-p16","U02:当前采用规则"]}
 {"seq":255,"round":4,"type":"PLAN_SUBMITTED","data":{"actorId":"meg"},"sourceRef":["B01:p6/p8-p16","U02:当前采用规则"]}
 {"seq":256,"round":4,"type":"PLAN_SUBMITTED","data":{"actorId":"nea"},"sourceRef":["B01:p6/p8-p16","U02:当前采用规则"]}
@@ -326,7 +326,7 @@
 {"seq":326,"round":4,"type":"AFTER_MOVE","data":{"actorId":"nurse","from":"wreckers_garage_south","to":"wreckers_garage_north","pathId":"ah_p05","normal":true},"sourceRef":["B01:p6/p8-p16","U02:当前采用规则"]}
 {"seq":327,"round":4,"type":"OWN_TURN_END","data":{"actorId":"nurse"},"sourceRef":["B01:p6/p8-p16","U02:当前采用规则"]}
 {"seq":328,"round":4,"type":"CLEANUP_START","data":{},"sourceRef":["B01:p6/p8-p16","U02:当前采用规则"]}
-{"seq":329,"round":5,"type":"ROUND_CLEANUP","data":{},"sourceRef":["B01:p6/p8-p16","U02:当前采用规则"]}
+{"seq":329,"round":4,"type":"ROUND_CLEANUP","data":{},"sourceRef":["B01:p6/p8-p16","U02:当前采用规则"]}
 {"seq":330,"round":5,"type":"PLANNING_START","data":{},"sourceRef":["B01:p6/p8-p16","U02:当前采用规则"]}
 {"seq":331,"round":5,"type":"PLAN_SUBMITTED","data":{"actorId":"meg"},"sourceRef":["B01:p6/p8-p16","U02:当前采用规则"]}
 {"seq":332,"round":5,"type":"PLAN_SUBMITTED","data":{"actorId":"nea"},"sourceRef":["B01:p6/p8-p16","U02:当前采用规则"]}
@@ -388,7 +388,7 @@
 {"seq":388,"round":5,"type":"AFTER_MOVE","data":{"actorId":"nurse","from":"wreckers_garage_north","to":"wreckers_garage_south","pathId":"ah_p05","normal":true},"sourceRef":["B01:p6/p8-p16","U02:当前采用规则"]}
 {"seq":389,"round":5,"type":"OWN_TURN_END","data":{"actorId":"nurse"},"sourceRef":["B01:p6/p8-p16","U02:当前采用规则"]}
 {"seq":390,"round":5,"type":"CLEANUP_START","data":{},"sourceRef":["B01:p6/p8-p16","U02:当前采用规则"]}
-{"seq":391,"round":6,"type":"ROUND_CLEANUP","data":{},"sourceRef":["B01:p6/p8-p16","U02:当前采用规则"]}
+{"seq":391,"round":5,"type":"ROUND_CLEANUP","data":{},"sourceRef":["B01:p6/p8-p16","U02:当前采用规则"]}
 {"seq":392,"round":6,"type":"PLANNING_START","data":{},"sourceRef":["B01:p6/p8-p16","U02:当前采用规则"]}
 {"seq":393,"round":6,"type":"PLAN_SUBMITTED","data":{"actorId":"meg"},"sourceRef":["B01:p6/p8-p16","U02:当前采用规则"]}
 {"seq":394,"round":6,"type":"PLAN_SUBMITTED","data":{"actorId":"nea"},"sourceRef":["B01:p6/p8-p16","U02:当前采用规则"]}
@@ -453,7 +453,7 @@
 {"seq":453,"round":6,"type":"BLOCKER_DESTROYED","data":{"actorId":"nurse","kind":"wall"},"sourceRef":["B01:p6/p8-p16","U02:当前采用规则"]}
 {"seq":454,"round":6,"type":"OWN_TURN_END","data":{"actorId":"nurse"},"sourceRef":["B01:p6/p8-p16","U02:当前采用规则"]}
 {"seq":455,"round":6,"type":"CLEANUP_START","data":{},"sourceRef":["B01:p6/p8-p16","U02:当前采用规则"]}
-{"seq":456,"round":7,"type":"ROUND_CLEANUP","data":{},"sourceRef":["B01:p6/p8-p16","U02:当前采用规则"]}
+{"seq":456,"round":6,"type":"ROUND_CLEANUP","data":{},"sourceRef":["B01:p6/p8-p16","U02:当前采用规则"]}
 {"seq":457,"round":7,"type":"PLANNING_START","data":{},"sourceRef":["B01:p6/p8-p16","U02:当前采用规则"]}
 {"seq":458,"round":7,"type":"PLAN_SUBMITTED","data":{"actorId":"meg"},"sourceRef":["B01:p6/p8-p16","U02:当前采用规则"]}
 {"seq":459,"round":7,"type":"PLAN_SUBMITTED","data":{"actorId":"nea"},"sourceRef":["B01:p6/p8-p16","U02:当前采用规则"]}

@@ -56,7 +56,7 @@
 {"seq":56,"round":1,"type":"BLOODPOINTS","data":{"actorId":"doctor","delta":0,"value":4},"sourceRef":["B01:p6/p8-p16","U02:当前采用规则"]}
 {"seq":57,"round":1,"type":"BLOODPOINTS","data":{"actorId":"doctor","delta":1,"value":5},"sourceRef":["B01:p6/p8-p16","U02:当前采用规则"]}
 {"seq":58,"round":1,"type":"PERK_USED","data":{"actorId":"doctor","perkId":"board_doctor_1","sourceRef":["D41:reference/characters/killers_hillbilly_doctor.png / 医生人物板"]},"sourceRef":["D41:reference/characters/killers_hillbilly_doctor.png / 医生人物板"]}
-{"seq":59,"round":2,"type":"ROUND_CLEANUP","data":{},"sourceRef":["B01:p6/p8-p16","U02:当前采用规则"]}
+{"seq":59,"round":1,"type":"ROUND_CLEANUP","data":{},"sourceRef":["B01:p6/p8-p16","U02:当前采用规则"]}
 {"seq":60,"round":2,"type":"PLANNING_START","data":{},"sourceRef":["B01:p6/p8-p16","U02:当前采用规则"]}
 {"seq":61,"round":2,"type":"PLAN_SUBMITTED","data":{"actorId":"dwight"},"sourceRef":["B01:p6/p8-p16","U02:当前采用规则"]}
 {"seq":62,"round":2,"type":"PLAN_SUBMITTED","data":{"actorId":"meg"},"sourceRef":["B01:p6/p8-p16","U02:当前采用规则"]}
@@ -102,7 +102,7 @@
 {"seq":102,"round":2,"type":"OWN_TURN_END","data":{"actorId":"doctor"},"sourceRef":["B01:p6/p8-p16","U02:当前采用规则"]}
 {"seq":103,"round":2,"type":"CLEANUP_START","data":{},"sourceRef":["B01:p6/p8-p16","U02:当前采用规则"]}
 {"seq":104,"round":2,"type":"SACRIFICE_PROGRESS","data":{"amount":1,"total":2},"sourceRef":["B01:p6/p8-p16","U02:当前采用规则"]}
-{"seq":105,"round":3,"type":"ROUND_CLEANUP","data":{},"sourceRef":["B01:p6/p8-p16","U02:当前采用规则"]}
+{"seq":105,"round":2,"type":"ROUND_CLEANUP","data":{},"sourceRef":["B01:p6/p8-p16","U02:当前采用规则"]}
 {"seq":106,"round":3,"type":"PLANNING_START","data":{},"sourceRef":["B01:p6/p8-p16","U02:当前采用规则"]}
 {"seq":107,"round":3,"type":"PLAN_SUBMITTED","data":{"actorId":"dwight"},"sourceRef":["B01:p6/p8-p16","U02:当前采用规则"]}
 {"seq":108,"round":3,"type":"PLAN_SUBMITTED","data":{"actorId":"jake"},"sourceRef":["B01:p6/p8-p16","U02:当前采用规则"]}
@@ -141,7 +141,7 @@
 {"seq":141,"round":3,"type":"OWN_TURN_END","data":{"actorId":"doctor"},"sourceRef":["B01:p6/p8-p16","U02:当前采用规则"]}
 {"seq":142,"round":3,"type":"CLEANUP_START","data":{},"sourceRef":["B01:p6/p8-p16","U02:当前采用规则"]}
 {"seq":143,"round":3,"type":"SACRIFICE_PROGRESS","data":{"amount":1,"total":3},"sourceRef":["B01:p6/p8-p16","U02:当前采用规则"]}
-{"seq":144,"round":4,"type":"ROUND_CLEANUP","data":{},"sourceRef":["B01:p6/p8-p16","U02:当前采用规则"]}
+{"seq":144,"round":3,"type":"ROUND_CLEANUP","data":{},"sourceRef":["B01:p6/p8-p16","U02:当前采用规则"]}
 {"seq":145,"round":4,"type":"PLANNING_START","data":{},"sourceRef":["B01:p6/p8-p16","U02:当前采用规则"]}
 {"seq":146,"round":4,"type":"PLAN_SUBMITTED","data":{"actorId":"dwight"},"sourceRef":["B01:p6/p8-p16","U02:当前采用规则"]}
 {"seq":147,"round":4,"type":"PLAN_SUBMITTED","data":{"actorId":"jake"},"sourceRef":["B01:p6/p8-p16","U02:当前采用规则"]}
@@ -188,7 +188,7 @@
 {"seq":188,"round":4,"type":"CLEANUP_START","data":{},"sourceRef":["B01:p6/p8-p16","U02:当前采用规则"]}
 {"seq":189,"round":4,"type":"SACRIFICE_PROGRESS","data":{"amount":1,"total":5},"sourceRef":["B01:p6/p8-p16","U02:当前采用规则"]}
 {"seq":190,"round":4,"type":"SACRIFICE_PROGRESS","data":{"amount":1,"total":6},"sourceRef":["B01:p6/p8-p16","U02:当前采用规则"]}
-{"seq":191,"round":5,"type":"ROUND_CLEANUP","data":{},"sourceRef":["B01:p6/p8-p16","U02:当前采用规则"]}
+{"seq":191,"round":4,"type":"ROUND_CLEANUP","data":{},"sourceRef":["B01:p6/p8-p16","U02:当前采用规则"]}
 {"seq":192,"round":5,"type":"PLANNING_START","data":{},"sourceRef":["B01:p6/p8-p16","U02:当前采用规则"]}
 {"seq":193,"round":5,"type":"PLAN_SUBMITTED","data":{"actorId":"dwight"},"sourceRef":["B01:p6/p8-p16","U02:当前采用规则"]}
 {"seq":194,"round":5,"type":"PLAN_SUBMITTED","data":{"actorId":"claudette"},"sourceRef":["B01:p6/p8-p16","U02:当前采用规则"]}
