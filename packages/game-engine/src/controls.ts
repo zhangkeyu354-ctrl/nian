@@ -219,6 +219,19 @@ export function getControls(s: GameState) {
           { type: "SELECT", ...base, ...t },
           { targetId: t.targetId, roomId: s.actors[t.targetId].room! },
         );
+    if (c.kind === "CARRY_REROUTE") {
+      if (a.room)
+        for (const r of legalRoutes(s, a.room, "killer", undefined, true))
+          add(
+            "搬运至" + roomName(s, r.to),
+            { type: "SELECT", ...base, ...r },
+            { roomId: r.to, pathId: r.pathId },
+          );
+      add("停下（被搬运者在这里挣脱，除非这里有空钩子）", { type: "SELECT", ...base });
+    }
+    if (c.kind === "REPLAN")
+      for (const card of s.hands[a.ownerId])
+        add("重新放置：" + cardNames[card], { type: "SELECT", ...base, card });
     if (c.kind === "MAP_REVEAL") {
       for (const p of s.props)
         add(
@@ -466,6 +479,8 @@ export function commandFields(s: GameState, kind: string, id: string): Field[] {
         ]),
       ];
     case "board_nea_1":
+    case "board_meg_1":
+    case "board_feng_min_1":
     case "board_feng_min_2":
     case "board_trapper_1":
     case "board_trapper_3":
@@ -483,7 +498,10 @@ export function commandFields(s: GameState, kind: string, id: string): Field[] {
     case "board_feng_min_3":
       return interact();
     case "board_wraith_1":
+    case "board_hag_1":
       return [card()];
+    case "board_wraith_3":
+      return [target()];
     case "board_hillbilly_3":
       return [index(), card()];
     default:

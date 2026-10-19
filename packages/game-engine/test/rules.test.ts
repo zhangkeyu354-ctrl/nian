@@ -410,16 +410,11 @@ describe("B01 and U02 state-machine regressions", () => {
       /response order/,
     );
   });
-  it("Phase4 unresolved effects report CHECK_REQUIRED even when no response window exists", () => {
-    for (const perkId of [
-      "board_meg_1",
-      "board_feng_min_1",
-      "board_hag_1",
-      "board_wraith_3",
-    ])
-      expect(() =>
-        reduce(fixture(), { type: "USE_PERK", actorId: "dwight", perkId }),
-      ).toThrow(/CHECK_REQUIRED/);
+  it("all 39 board perks are implemented; a perk outside a response window is still rejected", () => {
+    expect(fixture().unresolvedAbilities).toEqual([]);
+    expect(() =>
+      reduce(fixture(), { type: "USE_PERK", actorId: "dwight", perkId: "board_meg_1" }),
+    ).toThrow(/response order|no response|window/);
   });
 });
 export { fixture, settle, act, put };

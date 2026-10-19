@@ -3,22 +3,22 @@
     {
       "seed": 1701,
       "winner": "survivor",
-      "sha256": "1caf58f96682b1e0cb64cb1f1cb1b5d7e062d918ed1fd90563ea6027e876719f",
+      "sha256": "47460a36e24df944b08f6b0021556dff99a9b8293830d540cc0ba6f6b47c0446",
       "eventsSha256": "7583ef4f46f12f83c6cb36e84e275e63978f335189b21d1eb3a6532b64075029",
       "commandsSha256": "17c75af6d2d233c52b31675879c4c0c902bf89da76b727dafcb956347be06831"
     },
     {
       "seed": 2903,
       "winner": "survivor",
-      "sha256": "77c2bd391c8aa0838ed5eddec214be34c77622582709494702ca19799a14fb39",
-      "eventsSha256": "3467ecc1ccdbf36b8147185f1f63cfbd85f64478f344347fb7a045da79d86702",
-      "commandsSha256": "9184d781cc502f54f943ea2442520053da125ed2955ec435f6e266efb7623d14"
+      "sha256": "aa0fca0f2cf379dcb3e46bc9822d535fc8678fc254403dc653a56cc44ff5b051",
+      "eventsSha256": "4ec9c40027b087304429878088377b08b565f73e44728f15e87cee9abf089e38",
+      "commandsSha256": "4d17be4ff08a2f91ba3eb351a6e9611d655085bf33b38ac7e6b5a5db03ba162b"
     },
     {
       "seed": 4111,
       "winner": "killer",
-      "sha256": "2a507f984747dbd6840dee1140ec6db7c291cb4d9238e500fff377d2d40e93a7",
-      "eventsSha256": "8c2764613a011790a2ca8967061a49e994684cfeb3ef4e373d8c55f8c3868ebb",
+      "sha256": "2e442dfdb00bf0858961bdb900e5222e6f36e594f5c24b168f206238ae71d210",
+      "eventsSha256": "e3f09b08f5236f31132f33a6b15e23165f1119e2369359f68cc5a15ebec3f051",
       "commandsSha256": "9b4cecafdbe76ad19ef0b15edf1e4288a33923b78fd570a9024cdc42aa508733"
     }
   ]

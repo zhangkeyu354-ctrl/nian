@@ -134,6 +134,8 @@ export interface GameState {
   itemDiscard: string[];
   /** 鞭炮：阻止杀手进入该空间（仅在紧接着的那一次移动中生效） */
   blockedEntry?: { room: string; by: string } | null;
+  /** 妖巫「第三封印」本轮封住的移动牌颜色 */
+  sealedCard?: Card | null;
 }
 export interface CreateOptions {
   mode?: "ADEPT" | "BLOODWEB" | "DEVOUT";

@@ -65,7 +65,6 @@ export function itemResponders(
     event === "WOULD_INTERACT" &&
     context.actorId === s.killerId &&
     s.pendingAction &&
-    s.pendingAction.action !== "power" &&
     s.turn?.actorId === s.killerId
   ) {
     const room = s.actors[s.killerId].room;
@@ -74,9 +73,8 @@ export function itemResponders(
   if (
     event === "AFTER_ROLL" &&
     s.roll &&
-    s.roll.faces.some(
-      (f, i) => f === 0 && !(s.roll!.rerolled ?? []).includes(i),
-    )
+    // 钥匙"重掷任意一颗骰子"：每次掷骰都可以（不只失败时），重掷过的那颗除外
+    s.roll.faces.some((_, i) => !(s.roll!.rerolled ?? []).includes(i))
   )
     return holders;
   return [];

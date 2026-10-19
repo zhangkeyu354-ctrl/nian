@@ -19,6 +19,7 @@ interface Use {
   perk?: string;
   item?: Payload; // USE_ITEM 的参数
   args?: Payload;
+  event?: string; // 只在这个时机使用
 }
 
 /** 搭一个"正在行动阶段"的局面：所有人在 F，回合顺序为 4 位逃生者 → 杀手 ×2 */
@@ -71,7 +72,7 @@ function play(s: GameState, cmds: Command | Command[], use?: Use) {
           perks: w.eligible[who] ?? [],
           items: (w.itemActors ?? []).includes(who),
         });
-        if (!used && use && who === use.actor) {
+        if (!used && use && who === use.actor && (!use.event || use.event === w.event)) {
           if (use.perk && w.eligible[who]?.includes(use.perk)) {
             s = reduce(s, { type: "USE_PERK", actorId: who, perkId: use.perk, ...use.args });
             used = true;
@@ -706,12 +707,6 @@ describe("物品：在可以用的时机都能用，不能用的时机不出现"
 
 // ───────────────────────── 交互顺序与点击 ─────────────────────────
 describe("用完不追问", () => {
-  it("尚未实现的技能（如梅格冲刺爆发）不会弹出询问", () => {
-    const s = turnOf(table("trapper", ["meg", "dwight", "jake", "ace"]), "meg");
-    for (const a of Object.values(s.actors)) if (a.id !== "meg") a.perks = [];
-    const r = play(s, moveL("meg"));
-    expect(offered(r.offers, "meg", "board_meg_1")).toBe(false);
-  });
   it("用掉技能后，没有别的可用技能时直接轮到下一位，不再问第二遍", () => {
     const s = turnOf(table(), "jake", "INTERACT");
     const r = play(s, interact("jake", "repair", prop(s, "generator").id), {
@@ -745,5 +740,171 @@ describe("响应顺序", () => {
     const r = play(s, interact("jake", "repair", prop(s, "generator").id));
     const before = r.offers.filter((o) => o.event === "BEFORE_ROLL");
     expect(before.map((o) => o.actor)).toEqual(["dwight", "trapper"]);
+  });
+});
+
+// ───────────────── Q11 用户裁定后新实现的 4 个技能 + 物品规则更新（2026-10-20） ─────────────────
+describe("Q11 四个技能：自然触发", () => {
+  it("梅格①冲刺爆发：用移动牌移动之后出现；可走任意颜色的另一条路线，不能原路返回", () => {
+    let s = turnOf(table("trapper", ["meg", "dwight", "jake", "ace"]), "meg");
+    const out = legalRoutes(s, L, "survivor").find((r) => r.pathId !== "mm_p07")!;
+    // 原路返回：拒绝
+    let r = play(s, moveL("meg"));
+    expect(offered(r.offers, "meg", "board_meg_1")).toBe(true);
+    s = turnOf(table("trapper", ["meg", "dwight", "jake", "ace"]), "meg");
+    expect(() =>
+      play(s, moveL("meg"), { actor: "meg", perk: "board_meg_1", args: { pathId: "mm_p07", to: F } }),
+    ).toThrow(/other than the one just moved/);
+    r = play(s, moveL("meg"), { actor: "meg", perk: "board_meg_1", args: { pathId: out.pathId, to: out.to } });
+    expect(r.used).toBe(true);
+    expect(r.s.actors.meg.room).toBe(out.to);
+    // 之后仍可交互
+    expect(r.s.turn!.stage).toBe("INTERACT");
+    expect(r.s.turn!.interactionSpent).toBe(false);
+  });
+  it("梅格①冲刺爆发：被别的效果移动（如德怀特带着走）时不出现", () => {
+    const s = turnOf(table("trapper", ["dwight", "meg", "jake", "ace"]), "dwight");
+    const r = play(s, moveL("dwight"), { actor: "dwight", perk: "board_dwight_2", args: { targetId: "meg" } });
+    expect(r.s.actors.meg.room).toBe(L);
+    expect(offered(r.offers, "meg", "board_meg_1")).toBe(false);
+  });
+  it("凤敏①轻盈敏捷：穿过路线上的木板时出现；离开有木板道具的空间时也出现；都没有时不出现", () => {
+    const out = (s: GameState) => legalRoutes(s, L, "survivor").find((r) => r.pathId !== "mm_p07")!;
+    // 路线上的木板
+    let s = turnOf(table("trapper", ["feng_min", "dwight", "jake", "ace"]), "feng_min");
+    for (const p of s.props) if (p.kind === "pallet") p.room = "nowhere";
+    s.paths.mm_p07.pallet = true;
+    let o = out(s);
+    let r = play(s, moveL("feng_min"), { actor: "feng_min", perk: "board_feng_min_1", args: { pathId: o.pathId, to: o.to } });
+    expect(r.used).toBe(true);
+    expect(r.s.actors.feng_min.room).toBe(o.to);
+    // 离开有木板道具的空间
+    s = turnOf(table("trapper", ["feng_min", "dwight", "jake", "ace"]), "feng_min");
+    prop(s, "pallet", F);
+    o = out(s);
+    r = play(s, moveL("feng_min"), { actor: "feng_min", perk: "board_feng_min_1", args: { pathId: o.pathId, to: o.to } });
+    expect(r.used).toBe(true);
+    // 都没有
+    s = turnOf(table("trapper", ["feng_min", "dwight", "jake", "ace"]), "feng_min");
+    for (const p of s.props) if (p.kind === "pallet") p.room = "nowhere";
+    r = play(s, moveL("feng_min"));
+    expect(offered(r.offers, "feng_min", "board_feng_min_1")).toBe(false);
+  });
+  function planning(killer: string) {
+    const s = table(killer);
+    s.phase = "PLANNING";
+    s.turn = null;
+    s.plans = {};
+    s.hands[killer] = ["blue", "green", "red", "yellow", "wait"];
+    for (const id of ["dwight", "claudette", "jake", "ace"]) s.hands[id] = ["blue", "green", "red", "yellow"];
+    return s;
+  }
+  const plansFor = (killer: string, kcards: string[] = ["blue", "red"]): Command[] => [
+    ...["dwight", "claudette", "jake", "ace"].map((id) => ({ type: "PLAN", actorId: id, cards: ["blue"] })),
+    { type: "PLAN", actorId: killer, cards: kcards },
+  ];
+  it("幽灵③穷追不舍：计划阶段结束时出现；被选的逃生者弃牌后从手牌重放一张（本轮不能再用弃掉的牌）", () => {
+    let s = planning("wraith");
+    let r = play(s, plansFor("wraith"), { actor: "wraith", perk: "board_wraith_3", args: { targetId: "jake" } });
+    expect(r.used).toBe(true);
+    expect(r.s.choice).toMatchObject({ kind: "REPLAN", actorId: "jake" });
+    expect(r.s.hands.jake).not.toContain("blue");
+    // 别人看不到新牌，也看不到弃掉的是哪张（CHECK_REQUIRED_PUBLIC_DISCARD）
+    const t = play(r.s, { type: "SELECT", actorId: "jake", card: "green" });
+    expect(t.s.plans.jake).toEqual(["green"]);
+    expect(t.s.hands.jake).toEqual(["red", "yellow"]);
+    expect(t.s.events.find((e) => e.type === "PLANNED_CARD_DISCARDED")!.data.card).toBeUndefined();
+  });
+  it("妖巫①第三封印：计划阶段开始时出现；本轮用同色移动牌的逃生者无法移动、不能交互，额外回合也一样", async () => {
+    // 从上一轮清理进入新一轮计划
+    const s = turnOf(table("hag"), "hag", "INTERACT");
+    s.cursor = s.turnOrder.length - 1;
+    s.turn!.index = 1;
+    s.killerBonusUsed = true;
+    let r = play(s, end("hag"), { actor: "hag", perk: "board_hag_1", args: { card: "blue" } });
+    expect(r.used).toBe(true);
+    expect(r.s.sealedCard).toBe("blue");
+    expect(r.s.hands.hag).not.toContain("blue");
+    // 计划：本轮先手出蓝（被封），其余出绿
+    for (const a of Object.values(r.s.actors)) a.perks = [];
+    const firstId = r.s.survivors[r.s.firstPlayer];
+    r = play(r.s, [
+      ...r.s.survivors.map((id) => ({ type: "PLAN", actorId: id, cards: [id === firstId ? "blue" : "green"] })),
+      { type: "PLAN", actorId: "hag", cards: ["green", "red"] },
+    ]);
+    expect(r.s.turn!.actorId).toBe(firstId);
+    const blocked = play(r.s, { type: "MOVE", actorId: firstId });
+    expect(blocked.s.events.some((e) => e.type === "SEALED_MOVE_FAILED")).toBe(true);
+    expect(blocked.s.turn!.interactionSpent).toBe(true);
+    // 被封住后，颜色对所有人公开
+    const { viewFor } = await import("../src/index.ts");
+    expect(viewFor(blocked.s, "jake").sealedCard).toBe("blue");
+  });
+  it("妖巫①第三封印：在额外回合用被封的颜色同样走不动；下一轮解除", () => {
+    const s = turnOf(table("hag"), "dwight");
+    s.sealedCard = "blue";
+    s.turn!.bonus = true;
+    const r = play(s, { type: "MOVE", actorId: "dwight", pathId: "mm_p07", to: L });
+    expect(r.s.actors.dwight.room).toBe(F);
+    expect(r.s.events.some((e) => e.type === "SEALED_MOVE_FAILED")).toBe(true);
+  });
+  it("第三封印弃掉的牌：杀手看得到，逃生者在被封住之前看不到", async () => {
+    const { viewFor, HIDDEN } = await import("../src/index.ts");
+    const s = turnOf(table("hag"), "dwight");
+    s.sealedCard = "red";
+    expect(viewFor(s, "hag").sealedCard).toBe("red");
+    expect(viewFor(s, "dwight").sealedCard).toBe(HIDDEN);
+  });
+});
+
+describe("物品规则更新（2026-10-20 用户裁定）", () => {
+  it("鞭炮可以在杀手搬运途中阻止他进入你的空间；不消耗步数，杀手可用剩余步数改道", () => {
+    const s = turnOf(table(), "trapper", "INTERACT");
+    for (const p of s.props) if (p.kind === "hook") p.room = "nowhere";
+    s.actors.jake.health = "wounded";
+    s.actors.jake.woundedRound = 0;
+    s.actors.ace.room = L;
+    s.actors.ace.item = "firecracker";
+    let r = play(s, interact("trapper", "pickup", "jake"));
+    expect(r.s.choice?.kind).toBe("CARRY");
+    // 选 2 颗骰子、先走进艾斯所在的 L；找一颗不出大成功的种子
+    const cmd = { type: "SELECT", actorId: "trapper", dice: 2, route: [{ pathId: "mm_p07", to: L }] };
+    let found: ReturnType<typeof play> | null = null;
+    for (let seed = 1; seed < 300 && !found; seed++) {
+      const t = structuredClone(r.s);
+      t.rng = seed;
+      const x = play(t, cmd, { actor: "ace", item: { option: "block" }, event: "KILLER_WOULD_ENTER" });
+      if (x.used) found = x;
+    }
+    expect(found).not.toBeNull();
+    const f = found!;
+    expect(f.s.actors.trapper.room).toBe(F);
+    expect(f.s.choice).toMatchObject({ kind: "CARRY_REROUTE", budget: 2 });
+    // 改道走另一条路线
+    const other = legalRoutes(f.s, F, "killer", undefined, true).find((x) => x.to !== L)!;
+    const g = play(f.s, { type: "SELECT", actorId: "trapper", pathId: other.pathId, to: other.to });
+    expect(g.s.actors.trapper.room).toBe(other.to);
+    expect(g.s.actors.jake.room).toBe(other.to);
+  });
+  it("钥匙：没有掷出失败时也可以重掷（争取大成功）", () => {
+    const s = turnOf(table(), "dwight", "INTERACT");
+    s.actors.ace.item = "broken_key";
+    const g = prop(s, "generator");
+    const { s: r } = withFace(
+      s,
+      (t) => play(t, interact("dwight", "repair", g.id), { actor: "ace", item: { option: "reroll", index: 0 } }).s,
+      3,
+    );
+    expect(r.events.some((e) => e.type === "DIE_REROLLED" && e.data.from === 3)).toBe(true);
+  });
+  it("手电筒：杀手宣告使用力量（占用交互机会）时也可以阻止", () => {
+    const s = turnOf(table(), "trapper", "INTERACT");
+    s.actors.ace.item = "flashlight";
+    const r = play(s, interact("trapper", "power", "", { pathId: "mm_p07" }), {
+      actor: "ace",
+      item: { itemId: "flashlight" },
+    });
+    expect(r.used).toBe(true);
+    expect(r.s.paths.mm_p07.bearTrap).toBe(false);
   });
 });

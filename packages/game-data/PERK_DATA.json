@@ -1334,7 +1334,7 @@
       "source_ref": [
         "D49:reference/characters/survivors_david_meg_jake.png / 梅格·托马斯人物板"
       ],
-      "status": "CHECK_REQUIRED",
+      "status": "CONFIRMED",
       "on_board": true,
       "board_position": 1,
       "bloodpoint_cost": 1,
@@ -1342,7 +1342,7 @@
       "frame_semantics_status": "CHECK_REQUIRED",
       "text_original_zh": "当你用你的移动牌移动之后，沿着任意其它路线再次移动。",
       "transcription_confidence": "HIGH",
-      "implementation_status": "DEFERRED_PHASE_4",
+      "implementation_status": "IMPLEMENTED_TESTED",
       "chinese_print_evidence": {
         "source_level": "D",
         "source_ref": [
@@ -1364,10 +1364,10 @@
         "source_ref": [
           "D49:reference/characters/survivors_david_meg_jake.png / 梅格·托马斯人物板"
         ],
-        "status": "CHECK_REQUIRED",
+        "status": "CONFIRMED",
         "source_text_zh": "当你用你的移动牌移动之后，沿着任意其它路线再次移动。",
-        "implementation_status": "NOT_IMPLEMENTED",
-        "requires_semantic_review": true,
+        "implementation_status": "IMPLEMENTED_TESTED",
+        "requires_semantic_review": false,
         "kind": "PERK",
         "trigger": {
           "event": "AFTER_MOVE_WITH_MOVEMENT_CARD"
@@ -1396,8 +1396,8 @@
       "effect_original_ja": null,
       "effect_original_en": null,
       "previous_research_status": "CHECK_REQUIRED",
-      "adoption_basis": "USER_ACCEPTED_CN_RETAIL",
-      "adoption_ref": "U02:来源优先级与Phase1采用",
+      "adoption_basis": "USER_RULING_Q11",
+      "adoption_ref": "docs/HOUSE_RULES.md#Q11-用户裁定（2026-10-20）",
       "japanese_missing_blocks_runtime": false,
       "question_ref": "Q11",
       "deferred_phase": 4,
@@ -2611,7 +2611,7 @@
       "source_ref": [
         "D50:reference/characters/survivors_feng_felix_nea.png / 凤敏人物板"
       ],
-      "status": "CHECK_REQUIRED",
+      "status": "CONFIRMED",
       "on_board": true,
       "board_position": 1,
       "bloodpoint_cost": 0,
@@ -2619,7 +2619,7 @@
       "frame_semantics_status": "CHECK_REQUIRED",
       "text_original_zh": "在你的回合中，当你移动穿过一个木板或离开一个有木板的空间时，在交互之前（如果你将要交互）沿着任意其它路线再次移动。",
       "transcription_confidence": "HIGH",
-      "implementation_status": "DEFERRED_PHASE_4",
+      "implementation_status": "IMPLEMENTED_TESTED",
       "chinese_print_evidence": {
         "source_level": "D",
         "source_ref": [
@@ -2641,10 +2641,10 @@
         "source_ref": [
           "D50:reference/characters/survivors_feng_felix_nea.png / 凤敏人物板"
         ],
-        "status": "CHECK_REQUIRED",
+        "status": "CONFIRMED",
         "source_text_zh": "在你的回合中，当你移动穿过一个木板或离开一个有木板的空间时，在交互之前（如果你将要交互）沿着任意其它路线再次移动。",
-        "implementation_status": "NOT_IMPLEMENTED",
-        "requires_semantic_review": true,
+        "implementation_status": "IMPLEMENTED_TESTED",
+        "requires_semantic_review": false,
         "kind": "PERK",
         "trigger": {
           "event": "OWN_TURN_AFTER_MOVE_BEFORE_INTERACTION"
@@ -2673,8 +2673,8 @@
       "effect_original_ja": null,
       "effect_original_en": null,
       "previous_research_status": "CHECK_REQUIRED",
-      "adoption_basis": "USER_ACCEPTED_CN_RETAIL",
-      "adoption_ref": "U02:来源优先级与Phase1采用",
+      "adoption_basis": "USER_RULING_Q11",
+      "adoption_ref": "docs/HOUSE_RULES.md#Q11-用户裁定（2026-10-20）",
       "japanese_missing_blocks_runtime": false,
       "question_ref": "Q11",
       "deferred_phase": 4,
@@ -3283,7 +3283,7 @@
       "source_ref": [
         "D40:reference/characters/killers_clown_twins_wraith.png / 幽灵人物板"
       ],
-      "status": "CHECK_REQUIRED",
+      "status": "CONFIRMED",
       "on_board": true,
       "board_position": 3,
       "bloodpoint_cost": 2,
@@ -3291,7 +3291,7 @@
       "frame_semantics_status": "CHECK_REQUIRED",
       "text_original_zh": "在计划阶段结束时，选择一位逃生者。他弃掉他放置的移动牌，然后用一张新的移动牌替换它。",
       "transcription_confidence": "MEDIUM",
-      "implementation_status": "DEFERRED_PHASE_4",
+      "implementation_status": "IMPLEMENTED_TESTED",
       "chinese_print_evidence": {
         "source_level": "D",
         "source_ref": [
@@ -3313,10 +3313,10 @@
         "source_ref": [
           "D40:reference/characters/killers_clown_twins_wraith.png / 幽灵人物板"
         ],
-        "status": "CHECK_REQUIRED",
+        "status": "CONFIRMED",
         "source_text_zh": "在计划阶段结束时，选择一位逃生者。他弃掉他放置的移动牌，然后用一张新的移动牌替换它。",
-        "implementation_status": "NOT_IMPLEMENTED",
-        "requires_semantic_review": true,
+        "implementation_status": "IMPLEMENTED_TESTED",
+        "requires_semantic_review": false,
         "kind": "PERK",
         "trigger": {
           "event": "PLANNING_END"
@@ -3345,8 +3345,8 @@
       "effect_original_ja": null,
       "effect_original_en": null,
       "previous_research_status": "CHECK_REQUIRED",
-      "adoption_basis": "USER_ACCEPTED_CN_RETAIL",
-      "adoption_ref": "U02:来源优先级与Phase1采用",
+      "adoption_basis": "USER_RULING_Q11",
+      "adoption_ref": "docs/HOUSE_RULES.md#Q11-用户裁定（2026-10-20）",
       "japanese_missing_blocks_runtime": false,
       "question_ref": "Q11",
       "deferred_phase": 4,
@@ -3869,7 +3869,7 @@
       "source_ref": [
         "D44:reference/characters/killers_plague_hag_nurse.png / 妖巫人物板"
       ],
-      "status": "CHECK_REQUIRED",
+      "status": "CONFIRMED",
       "on_board": true,
       "board_position": 1,
       "bloodpoint_cost": 3,
@@ -3877,7 +3877,7 @@
       "frame_semantics_status": "CHECK_REQUIRED",
       "text_original_zh": "在计划阶段开始时，弃掉一张移动牌。在本回合中，使用与之相同的移动牌的逃生者无法移动。（如果他无法移动，他就不能交互。）",
       "transcription_confidence": "HIGH",
-      "implementation_status": "DEFERRED_PHASE_4",
+      "implementation_status": "IMPLEMENTED_TESTED",
       "chinese_print_evidence": {
         "source_level": "D",
         "source_ref": [
@@ -3899,10 +3899,10 @@
         "source_ref": [
           "D44:reference/characters/killers_plague_hag_nurse.png / 妖巫人物板"
         ],
-        "status": "CHECK_REQUIRED",
+        "status": "CONFIRMED",
         "source_text_zh": "在计划阶段开始时，弃掉一张移动牌。在本回合中，使用与之相同的移动牌的逃生者无法移动。（如果他无法移动，他就不能交互。）",
-        "implementation_status": "NOT_IMPLEMENTED",
-        "requires_semantic_review": true,
+        "implementation_status": "IMPLEMENTED_TESTED",
+        "requires_semantic_review": false,
         "kind": "PERK",
         "trigger": {
           "event": "PLANNING_START"
@@ -3935,8 +3935,8 @@
       "effect_original_ja": null,
       "effect_original_en": null,
       "previous_research_status": "CHECK_REQUIRED",
-      "adoption_basis": "USER_ACCEPTED_CN_RETAIL",
-      "adoption_ref": "U02:来源优先级与Phase1采用",
+      "adoption_basis": "USER_RULING_Q11",
+      "adoption_ref": "docs/HOUSE_RULES.md#Q11-用户裁定（2026-10-20）",
       "japanese_missing_blocks_runtime": false,
       "question_ref": "Q11",
       "deferred_phase": 4,

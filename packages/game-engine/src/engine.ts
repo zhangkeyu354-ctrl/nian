@@ -651,6 +651,65 @@ export function beginRoll(
     { kind: "RESOLVE_ROLL" },
   );
 }
+/**
+ * 搬运的一步。route 是杀手预先选好的路线，budget 是还能走的格数（=掷骰数）。
+ * 被鞭炮阻止的一步不消耗格数、不进入那个空间；杀手可以用剩余格数改走别的路线（CARRY_REROUTE）。
+ */
+function carryMove(s: GameState, j: Payload) {
+  const victimId = text(j, "victimId");
+  const route = (j.route ?? []) as Array<{ pathId: string; to: string }>;
+  const budget = number(j, "budget");
+  const k = actor(s, s.killerId),
+    v = actor(s, victimId);
+  const finish = () => {
+    const h = availableHook(s, k.room!);
+    if (h) hook(s, v.id, h.id);
+    else log(s, "ESCAPED", { actorId: v.id, reason: "no_hook" });
+  };
+  if (!route.length || budget <= 0) return finish();
+  const [step, ...rest] = route;
+  requireThat(
+    legalRoutes(s, k.room!, "killer", undefined, true).some(
+      (p) => p.pathId === step.pathId && p.to === step.to,
+    ),
+    "illegal carry path",
+  );
+  const entry = killerEntry(s, k.id, step.to, !!j.entryWindowResolved);
+  if (entry === "window") {
+    enqueue(
+      s,
+      {
+        kind: "SIGNAL",
+        event: "KILLER_WOULD_ENTER",
+        context: { actorId: k.id, to: step.to, carrying: v.id },
+      },
+      { ...j, kind: "CARRY_MOVE", entryWindowResolved: true },
+    );
+    return;
+  }
+  if (entry === "blocked") {
+    if (legalRoutes(s, k.room!, "killer", undefined, true).length)
+      s.choice = {
+        kind: "CARRY_REROUTE",
+        actorId: k.id,
+        victimId: v.id,
+        budget,
+        blocked: step.to,
+      };
+    else finish();
+    return;
+  }
+  const from = k.room;
+  k.room = step.to;
+  v.room = step.to;
+  log(
+    s,
+    "CARRIED",
+    { actorId: v.id, from, to: step.to, pathId: step.pathId, revealed: false },
+    ["U02:Q01/Q08"],
+  );
+  enqueue(s, { kind: "CARRY_MOVE", victimId: v.id, route: rest, budget: budget - 1 });
+}
 function availableHook(s: GameState, room: string) {
   return s.props.find(
     (p) =>
@@ -759,37 +818,15 @@ function resolveRoll(s: GameState) {
       log(s, "ESCAPED", { actorId: victimId, reason: "great_success" });
       return;
     }
-    const k = actor(s, s.killerId),
-      v = actor(s, victimId);
-    for (const step of route) {
-      requireThat(
-        legalRoutes(s, k.room!, "killer", undefined, true).some(
-          (p) => p.pathId === step.pathId && p.to === step.to,
-        ),
-        "illegal carry path",
-      );
-      const from = k.room;
-      k.room = step.to;
-      v.room = step.to;
-      log(
-        s,
-        "CARRIED",
-        {
-          actorId: v.id,
-          from,
-          to: step.to,
-          pathId: step.pathId,
-          revealed: false,
-        },
-        ["U02:Q01/Q08"],
-      );
-    }
-    const h = availableHook(s, k.room!);
-    if (h) hook(s, v.id, h.id);
-    else log(s, "ESCAPED", { actorId: v.id, reason: "no_hook" });
+    // 逐步搬运：每一步进入有持物逃生者的空间前，都给他们用鞭炮阻止的机会（Q14 用户裁定）
+    enqueue(s, {
+      kind: "CARRY_MOVE",
+      victimId,
+      route,
+      budget: r.faces.length,
+    });
   } else throw new RuleError("CHECK_REQUIRED", `check kind ${r.kind}`);
 }
-/** 给发电机加进度；满 3 时完成（掷骰修理与工具箱共用） */
 /** 用掉一个技能或物品后要恢复的窗口；该响应者已无事可做时直接跳到下一位（省一次点击） */
 export function afterUse(
   s: GameState,
@@ -812,6 +849,7 @@ export function afterUse(
   const index = w.index + 1;
   return index < w.actors.length ? { ...w, index } : null;
 }
+/** 给发电机加进度；满 3 时完成（掷骰修理与工具箱共用） */
 export function addGeneratorProgress(
   s: GameState,
   pid: string,
@@ -1204,6 +1242,7 @@ function run(s: GameState) {
           if (s.winner) return;
         }
       s.entity = null;
+      s.sealedCard = null;
       for (const p of Object.values(s.paths)) p.temporaryWall = false;
       s.firstPlayer = (s.firstPlayer + 1) % 4;
       // B01 p11 清理阶段属于本轮：记录在轮数加一之前
@@ -1222,6 +1261,7 @@ function run(s: GameState) {
       }
       startPlanning(s);
     } else if (j.kind === "RESOLVE_ITEM") resolveItem(s, j);
+    else if (j.kind === "CARRY_MOVE") carryMove(s, j);
     else if (j.kind === "TELEPORT")
       teleport(s, text(j, "actorId"), text(j, "to"), true);
     else if (j.kind === "CHAINSAW_HIT") {
@@ -1350,6 +1390,29 @@ function select(s: GameState, c: Command) {
     });
     enqueue(s, { kind: "DO_INTERACTION" });
   } else if (choice.kind === "MAP_REVEAL") selectMapReveal(s, choice, c);
+  else if (choice.kind === "CARRY_REROUTE") {
+    // 每次走一步；不选路线表示停下
+    const victimId = text(choice, "victimId"),
+      budget = number(choice, "budget");
+    if (c.pathId === undefined)
+      enqueue(s, { kind: "CARRY_MOVE", victimId, route: [], budget: 0 });
+    else {
+      const step = { pathId: text(c, "pathId"), to: text(c, "to") };
+      requireThat(
+        legalRoutes(s, actor(s, s.killerId).room!, "killer", undefined, true).some(
+          (p) => p.pathId === step.pathId && p.to === step.to,
+        ),
+        "carry route blocked/reversed",
+      );
+      enqueue(s, { kind: "CARRY_MOVE", victimId, route: [step], budget, reroute: true });
+    }
+  } else if (choice.kind === "REPLAN") {
+    // 幽灵「穷追不舍」：被选中的逃生者从手牌中背面朝上放一张新牌
+    const a = actor(s, choice.actorId);
+    s.plans[a.id] = [card(s, a, c.card)];
+    s.publicPlans = s.publicPlans.filter((x) => x !== a.id);
+    log(s, "PLAN_REPLACED", { actorId: a.id });
+  }
   else throw new RuleError("CHECK_REQUIRED", `choice ${choice.kind}`);
 }
 export function reduce(state: GameState, c: Command): GameState {
@@ -1493,10 +1556,16 @@ export function reduce(state: GameState, c: Command): GameState {
     );
     const a = actor(s, c.actorId);
     a.lockerId = null;
-    const routes = legalRoutes(s, a.room!, a.side, t.card!);
+    const sealed =
+      a.side === "survivor" && !!s.sealedCard && t.card === s.sealedCard;
+    const routes = sealed ? [] : legalRoutes(s, a.room!, a.side, t.card!);
     t.stage = "INTERACT";
     enqueue(s, { kind: "TURN_INTERACT" });
-    if (t.card === "wait") log(s, "WAITED", { actorId: a.id });
+    if (sealed) {
+      // 妖巫「第三封印」：无法移动，也就不能交互（Q11 用户裁定：持续整轮，含额外回合）
+      t.interactionSpent = true;
+      log(s, "SEALED_MOVE_FAILED", { actorId: a.id, card: t.card });
+    } else if (t.card === "wait") log(s, "WAITED", { actorId: a.id });
     else if (!routes.length) {
       t.interactionSpent = true;
       log(s, "MOVEMENT_FAILED", { actorId: a.id, card: t.card });
@@ -1517,10 +1586,8 @@ export function reduce(state: GameState, c: Command): GameState {
         !t.interactionSpent,
       "no interaction",
     );
-    requireThat(
-      !t.noInteract || c.action === "power",
-      "flashlight: killer cannot interact this turn",
-    );
+    // 手电筒阻止交互机会，也就阻止了占用交互机会的杀手力量（用户裁定 2026-10-20，推翻 Q13）
+    requireThat(!t.noInteract, "flashlight: killer cannot interact this turn");
     validateInteraction(s, c);
     t.interactionSpent = true;
     t.interacted = true;

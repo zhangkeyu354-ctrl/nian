@@ -1,4 +1,4 @@
-{"seq":1,"round":1,"type":"GAME_CREATED","data":{"seed":2903,"mapId":"autohaven_wreckers","survivors":["meg","nea","feng_min","ace"],"killer":"nurse","unresolvedAbilities":["board_meg_1","board_feng_min_1"]},"sourceRef":["B01:p6/p8-p16","U02:当前采用规则"]}
+{"seq":1,"round":1,"type":"GAME_CREATED","data":{"seed":2903,"mapId":"autohaven_wreckers","survivors":["meg","nea","feng_min","ace"],"killer":"nurse","unresolvedAbilities":[]},"sourceRef":["B01:p6/p8-p16","U02:当前采用规则"]}
 {"seq":2,"round":1,"type":"PROP_REVEALED","data":{"actorId":"meg","propId":"wreckers_garage_north:objective:0","kind":"generator"},"sourceRef":["B01:p6/p8-p16","U02:当前采用规则"]}
 {"seq":3,"round":1,"type":"PROP_REVEALED","data":{"actorId":"nea","propId":"maze:objective:0","kind":"exit_gate"},"sourceRef":["B01:p6/p8-p16","U02:当前采用规则"]}
 {"seq":4,"round":1,"type":"PROP_REVEALED","data":{"actorId":"feng_min","propId":"scrap_pile:objective:0","kind":"generator"},"sourceRef":["B01:p6/p8-p16","U02:当前采用规则"]}

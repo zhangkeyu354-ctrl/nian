@@ -182,7 +182,7 @@ describe("手电筒", () => {
     expect(s.actors.dwight.health).toBe("healthy");
     expect(s.events.some((e) => e.type === "INTERACTION_PREVENTED")).toBe(true);
   });
-  it("杀手回合中、杀手还没交互前也可以用：本回合不能交互，但仍可使用杀手力量", () => {
+  it("杀手回合中、杀手还没交互前也可以用：本回合不能交互，也不能用占用交互机会的杀手力量", () => {
     let s = base();
     killerTurn(s);
     s.actors.jake.item = "flashlight";
@@ -193,8 +193,10 @@ describe("手电筒", () => {
     const path = Object.values(s.paths).find(
       (p) => p.rooms.includes(room(s)) && !p.wall && !p.pallet,
     )!;
-    s = act(s, { type: "INTERACT", actorId: "trapper", action: "power", pathId: path.id });
-    expect(s.paths[path.id].bearTrap).toBe(true);
+    expect(() =>
+      reduce(s, { type: "INTERACT", actorId: "trapper", action: "power", pathId: path.id }),
+    ).toThrow(/flashlight/);
+    expect(s.paths[path.id].bearTrap).toBe(false);
   });
   it("逃生者回合不能用", () => {
     const s = base();

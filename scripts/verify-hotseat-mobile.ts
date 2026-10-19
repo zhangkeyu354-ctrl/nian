@@ -25,17 +25,18 @@ await page.getByTestId("uncover").click();
 const before = JSON.parse(
   await page.evaluate(() => window.render_game_to_text()),
 ).events;
-await page.locator('[data-perk="board_meg_1"]').click();
-await page.getByRole("alert").getByText("该功能尚未实现").waitFor();
+// 2026-10-20：39 个板载技能已全部实现。改为检查"不在时机时按钮不可点"，且不会改变状态。
+const megSprint = page.locator('[data-perk="board_meg_1"]');
+assert(await megSprint.isDisabled(), "perk outside its timing must be disabled");
+assert.equal((await megSprint.textContent())?.trim(), "尚未到使用时机");
 assert.equal(
   JSON.parse(await page.evaluate(() => window.render_game_to_text())).events,
   before,
 );
 await page.screenshot({
-  path: `${out}/手机_CHECK_REQUIRED.png`,
+  path: `${out}/手机_技能未到时机.png`,
   fullPage: true,
 });
-await page.getByRole("button", { name: "关闭提示", exact: true }).click();
 await page.getByTestId("board").scrollIntoViewIfNeeded();
 const initial = await page.getByTestId("board").getAttribute("viewBox");
 assert(
@@ -153,4 +154,4 @@ writeFileSync(
   ),
 );
 await browser.close();
-console.log("MOBILE_PASS pinch,drag,privacy,44px,CHECK_REQUIRED");
+console.log("MOBILE_PASS pinch,drag,privacy,44px,perk-timing");

@@ -100,7 +100,22 @@ export function matches(
     case "board_ace_3":
       return event === "OWN_TURN_END" && own;
     case "board_feng_min_1":
-      return event === "AFTER_MOVE" && own;
+      // 在你的回合中，移动穿过木板（路线上的木板）或离开有木板（已翻开的木板道具）的空间
+      return (
+        event === "AFTER_MOVE" &&
+        own &&
+        s.phase === "ACTING" &&
+        s.turn?.actorId === id &&
+        typeof c.pathId === "string" &&
+        (s.paths[c.pathId]?.pallet ||
+          s.props.some(
+            (p) =>
+              p.room === c.from &&
+              p.kind === "pallet" &&
+              p.revealed &&
+              !p.removed,
+          ))
+      );
     case "board_feng_min_2":
       return event === "BLOCKER_DESTROYED" || event === "GENERATOR_DAMAGED";
     case "board_feng_min_3":
@@ -114,6 +129,8 @@ export function matches(
     case "board_wraith_3":
     case "board_hillbilly_1":
       return event === "PLANNING_END";
+    case "board_hag_1":
+      return event === "PLANNING_START" && !s.plans[id];
     case "board_wraith_2":
       return event === "AFTER_SACRIFICE" && own;
     case "board_hillbilly_2":
@@ -121,7 +138,6 @@ export function matches(
     case "board_hillbilly_3":
       return event === "GENERATOR_COMPLETED";
     case "board_nurse_1":
-    case "board_hag_1":
     case "board_hag_3":
       return event === "PLANNING_START";
     case "board_nurse_2":
@@ -362,6 +378,38 @@ export function applyAbility(
     case "board_feng_min_2":
       move();
       break;
+    case "board_meg_1":
+    case "board_feng_min_1": {
+      // "沿着任意其它路线再次移动"（Q11 用户裁定）：刚走过的那条之外的任意一条，
+      // 不限颜色（同色的另一条也可以），墙和黄色单向照常限制
+      requireThat(
+        c.pathId !== context.pathId,
+        "must use a path other than the one just moved along",
+      );
+      move();
+      break;
+    }
+    case "board_wraith_3": {
+      // 穷追不舍：选一位逃生者，他弃掉放置的移动牌，再从手牌背面朝上放一张新的
+      // 被弃掉的牌本轮不能再用（B01 p18 FAQ）；是否公开：CHECK_REQUIRED，暂不公开
+      const t = target();
+      requireThat(s.plans[t.id]?.length, "survivor with a planned card");
+      s.plans[t.id] = [];
+      log(s, "PLANNED_CARD_DISCARDED", { actorId: t.id, by: id });
+      s.choice = { kind: "REPLAN", actorId: t.id };
+      break;
+    }
+    case "board_hag_1": {
+      // 第三封印：计划阶段开始时弃掉一张移动牌；本轮使用同色移动牌的逃生者无法移动
+      // （含额外回合，Q11 用户裁定）。弃掉的是哪张：CHECK_REQUIRED，暂不公开，直到封住某人
+      const hand = s.hands[a.ownerId];
+      const k = String(c.card);
+      requireThat(k !== "wait" && hand.includes(k as never), "discard a movement card from hand");
+      hand.splice(hand.indexOf(k as never), 1);
+      s.sealedCard = k as never;
+      log(s, "SEAL_CARD_DISCARDED", { actorId: id });
+      break;
+    }
     case "board_feng_min_3": {
       const targetId = text(c, "targetId");
       requireThat(

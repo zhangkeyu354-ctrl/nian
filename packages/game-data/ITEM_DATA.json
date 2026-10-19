@@ -689,7 +689,7 @@
       "adoption_basis": "USER_ACCEPTED_CN_RETAIL",
       "adoption_ref": "U02:中文零售资料优先",
       "japanese_missing_blocks_runtime": false,
-      "effect_implementation_status": "IMPLEMENTED_TESTED_EXCEPT_Q14_CARRY",
+      "effect_implementation_status": "IMPLEMENTED_TESTED",
       "effect_runtime": {
         "engine": "packages/game-engine/src/items.ts",
         "timing_model": "docs/HOUSE_RULES.md#U-ITEM-TIMING",

@@ -93,6 +93,10 @@
       "propId": "gas_pump:objective:0"
     },
     {
+      "type": "PASS",
+      "actorId": "meg"
+    },
+    {
       "type": "INTERACT",
       "actorId": "meg",
       "action": "repair",
@@ -354,6 +358,10 @@
       "propId": "wreckers_garage_south:survival:0"
     },
     {
+      "type": "PASS",
+      "actorId": "meg"
+    },
+    {
       "type": "INTERACT",
       "actorId": "meg",
       "action": "repair",
@@ -495,6 +503,10 @@
       "type": "SELECT",
       "actorId": "meg",
       "propId": "cottage:objective:0"
+    },
+    {
+      "type": "PASS",
+      "actorId": "meg"
     },
     {
       "type": "INTERACT",
@@ -643,6 +655,10 @@
       "to": "wreckers_garage_south"
     },
     {
+      "type": "PASS",
+      "actorId": "meg"
+    },
+    {
       "type": "INTERACT",
       "actorId": "meg",
       "action": "repair",
@@ -782,6 +798,10 @@
       "type": "SELECT",
       "actorId": "meg",
       "propId": "old_cabin:objective:0"
+    },
+    {
+      "type": "PASS",
+      "actorId": "meg"
     },
     {
       "type": "END_TURN",
@@ -1012,6 +1032,10 @@
       "propId": "diner:survival:1"
     },
     {
+      "type": "PASS",
+      "actorId": "meg"
+    },
+    {
       "type": "END_TURN",
       "actorId": "meg"
     },
@@ -1105,6 +1129,10 @@
       "type": "SELECT",
       "actorId": "feng_min",
       "propId": "maze:altruism:1"
+    },
+    {
+      "type": "PASS",
+      "actorId": "feng_min"
     },
     {
       "type": "INTERACT",
