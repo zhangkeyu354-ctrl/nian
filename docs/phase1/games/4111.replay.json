@@ -158,10 +158,6 @@
       "perkId": "board_doctor_1"
     },
     {
-      "type": "PASS",
-      "actorId": "doctor"
-    },
-    {
       "type": "PLAN",
       "actorId": "dwight",
       "cards": [

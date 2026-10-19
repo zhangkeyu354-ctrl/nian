@@ -5,7 +5,7 @@
       "mapId": "macmillan_estate",
       "winner": "survivor",
       "rounds": 6,
-      "commands": 192,
+      "commands": 188,
       "events": 408,
       "usedBoardAbilities": [
         "board_ace_1",
@@ -17,7 +17,7 @@
       "mapId": "autohaven_wreckers",
       "winner": "survivor",
       "rounds": 7,
-      "commands": 226,
+      "commands": 211,
       "events": 477,
       "usedBoardAbilities": [
         "board_ace_1"
@@ -28,7 +28,7 @@
       "mapId": "autohaven_wreckers",
       "winner": "killer",
       "rounds": 5,
-      "commands": 108,
+      "commands": 107,
       "events": 227,
       "usedBoardAbilities": [
         "board_doctor_1"

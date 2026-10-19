@@ -74,10 +74,6 @@
       "index": 0
     },
     {
-      "type": "PASS",
-      "actorId": "ace"
-    },
-    {
       "type": "MOVE",
       "actorId": "dwight",
       "pathId": "mm_p04",
@@ -151,10 +147,6 @@
       "type": "USE_PERK",
       "actorId": "dwight",
       "perkId": "board_dwight_3"
-    },
-    {
-      "type": "PASS",
-      "actorId": "dwight"
     },
     {
       "type": "PASS",
@@ -289,10 +281,6 @@
     },
     {
       "type": "PASS",
-      "actorId": "ace"
-    },
-    {
-      "type": "PASS",
       "actorId": "claudette"
     },
     {
@@ -320,10 +308,6 @@
       "type": "USE_PERK",
       "actorId": "dwight",
       "perkId": "board_dwight_3"
-    },
-    {
-      "type": "PASS",
-      "actorId": "dwight"
     },
     {
       "type": "PASS",

@@ -19,6 +19,7 @@ import {
   connected,
   signal,
   RuleError,
+  validateInteraction,
 } from "./engine.ts";
 const nearby = (s: GameState, a: string, b: string) =>
   actor(s, a).room === actor(s, b).room ||
@@ -324,6 +325,16 @@ export function applyAbility(
           "occupied/progress prop",
         );
       [p.room, q.room] = [q.room, p.room];
+      // 若把自己正要交互的道具换走了，同样的交互改为对换进来的那个道具（合法时）；
+      // 否则可以在同一时机改选交互对象（REVISE_INTERACTION）
+      const pa = s.pendingAction;
+      if (pa && pa.actorId === id && pa.targetId === p.id) {
+        const next = { ...pa, targetId: q.id };
+        try {
+          validateInteraction(s, next);
+          s.pendingAction = next;
+        } catch {}
+      }
       break;
     }
     case "board_ace_3":

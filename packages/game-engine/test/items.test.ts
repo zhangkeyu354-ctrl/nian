@@ -288,8 +288,9 @@ describe("钥匙", () => {
     s = reduce(s, { type: "USE_ITEM", actorId: "ace", option: "reroll", index: 0 });
     const reroll = s.events.find((e) => e.type === "DIE_REROLLED")!;
     expect(reroll.data.index).toBe(0);
-    // 同一颗不能再重掷
-    expect(s.roll?.rerolled).toEqual([0]);
+    // 重掷后结算用的是新骰面
+    const resolved = s.events.filter((e) => e.type === "CHECK_RESOLVED").at(-1);
+    if (resolved) expect((resolved.data.faces as number[])[0]).toBe(reroll.data.face);
     s = settle(s);
     const face = reroll.data.face as number;
     expect(s.actors.trapper.blood).toBe(Math.min(12, blood + (face === 0 ? 1 : 0)));

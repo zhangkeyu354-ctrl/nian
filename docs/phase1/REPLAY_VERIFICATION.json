@@ -5,21 +5,21 @@
       "winner": "survivor",
       "sha256": "16761427b3c584b8d9bd5ba43e45eb86365258eb217303bdd7063ee00da9fcbc",
       "eventsSha256": "996eb4e3af5fdf0bb58627b2b24c78f4a67039cb4156bcb251f1defedac55eea",
-      "commandsSha256": "e5b9ff8a229c8886816673210ade33ef09624f146593f8c71e0c968f40e3e9a9"
+      "commandsSha256": "17c75af6d2d233c52b31675879c4c0c902bf89da76b727dafcb956347be06831"
     },
     {
       "seed": 2903,
       "winner": "survivor",
       "sha256": "396286e872483de21c1ec16caa701f7e963b14bf1e913056286c034128378917",
       "eventsSha256": "cc9942c7ffe66248b01e07459b62ad775f23f8459c4b51b20c297460de19c6ab",
-      "commandsSha256": "1b74a74042aabbc4338f38e2dadd8e7e1f796384631df1619c1e20fdf74844d8"
+      "commandsSha256": "9184d781cc502f54f943ea2442520053da125ed2955ec435f6e266efb7623d14"
     },
     {
       "seed": 4111,
       "winner": "killer",
       "sha256": "0cc6f1fa19be267c7bb8a76a191f351d82cd289ab14b98ac9d4cb49f00735bb3",
       "eventsSha256": "26249dc4c56bc1291f0600ee2ceda6ec9c1f0ddf4ee8242ab1b1d97bad28e443",
-      "commandsSha256": "bebc746a15c3a47245a8b56f88328e6abe7a021e6b363f82e9cece695ea42036"
+      "commandsSha256": "9b4cecafdbe76ad19ef0b15edf1e4288a33923b78fd570a9024cdc42aa508733"
     }
   ]
 }

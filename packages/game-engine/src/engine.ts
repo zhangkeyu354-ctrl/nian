@@ -790,6 +790,28 @@ function resolveRoll(s: GameState) {
   } else throw new RuleError("CHECK_REQUIRED", `check kind ${r.kind}`);
 }
 /** 给发电机加进度；满 3 时完成（掷骰修理与工具箱共用） */
+/** 用掉一个技能或物品后要恢复的窗口；该响应者已无事可做时直接跳到下一位（省一次点击） */
+export function afterUse(
+  s: GameState,
+  w: Window,
+  id: string,
+  justUsedPerk?: string,
+): Window | null {
+  const a = actor(s, id);
+  const more =
+    (w.eligible[id] ?? []).some(
+      (pid) =>
+        pid !== justUsedPerk &&
+        !s.usedPerks.includes(pid) &&
+        boardPerks.get(pid)!.bloodpoint_cost <= a.blood,
+    ) ||
+    (!!a.item && (w.itemActors ?? []).includes(id)) ||
+    // 自己将要交互时用了技能（如锦囊妙计），可能还要改选交互对象
+    (w.event === "WOULD_INTERACT" && w.context.actorId === id);
+  if (more) return w;
+  const index = w.index + 1;
+  return index < w.actors.length ? { ...w, index } : null;
+}
 export function addGeneratorProgress(
   s: GameState,
   pid: string,
@@ -914,27 +936,23 @@ function performInteraction(s: GameState) {
   const id = text(action, "actorId"),
     a = actor(s, id),
     kind = text(action, "action");
-  requireThat(a.room && active(a), "cannot interact");
   const pid = typeof action.targetId === "string" ? action.targetId : null;
-  if (kind === "attack" || kind === "pickup" || kind === "heal") {
-    // AUDIT-B02：目标在宣告交互之后、结算之前合法地离开了（如梅格「急速静谧」躲进储物柜）。
-    // 不得卡局，也不得默默攻击柜内的人。妖巫传送交互的原文是"与那个空间里的一位逃生者交互"，
-    // 所以改为让杀手在该空间重新选择；其他情况本次交互作废（交互机会已用掉）。
-    try {
-      validateInteraction(s, action);
-    } catch (e) {
-      if (!(e instanceof RuleError) || e.code !== "ILLEGAL_COMMAND") throw e;
-      if (action.phantasm && phantasmTargets(s).length) {
-        s.choice = { kind: "PHANTASM_TARGET", actorId: a.id, room: a.room };
-        return;
-      }
-      log(s, "INTERACTION_LOST", {
-        actorId: a.id,
-        action: kind,
-        targetId: pid,
-      });
+  // 宣告交互之后、结算之前，交互对象可能已被合法地改变：
+  // AUDIT-B02 梅格「急速静谧」躲进柜子；埃斯「锦囊妙计」把要交互的道具换走了；等等。
+  // 不得卡局，也不得对已经不合法的对象强行结算。妖巫传送交互的原文是"与那个空间里的
+  // 一位逃生者交互"，所以让杀手在该空间重新选择；其他情况本次交互作废（交互机会已用掉）。
+  try {
+    validateInteraction(s, action);
+  } catch (e) {
+    if (!(e instanceof RuleError) || e.code !== "ILLEGAL_COMMAND") throw e;
+    if (action.phantasm && phantasmTargets(s).length) {
+      s.choice = { kind: "PHANTASM_TARGET", actorId: a.id, room: a.room };
       return;
     }
+    log(s, "INTERACTION_LOST", { actorId: a.id, action: kind, targetId: pid });
+    return;
+  }
+  if (kind === "attack" || kind === "pickup" || kind === "heal") {
     const v = actor(s, pid);
     requireThat(
       v.side === "survivor" && v.room === a.room && active(v) && v.id !== a.id,
@@ -1084,6 +1102,8 @@ function run(s: GameState) {
           ? a.perks.filter(
               (pid) =>
                 !s.usedPerks.includes(pid) &&
+                // 尚未实现的技能不弹出询问（只会显示"未实现"，白白多点一次）
+                boardPerks.get(pid)!.status === "CONFIRMED" &&
                 boardPerks.get(pid)!.bloodpoint_cost <= a.blood &&
                 matches(s, id, pid, event, context),
             )
@@ -1373,7 +1393,9 @@ export function reduce(state: GameState, c: Command): GameState {
       spend(s, a.id, p.bloodpoint_cost);
       s.usedPerks.push(id);
       s.window = null;
-      enqueue(s, { kind: "RESTORE_WINDOW", window: w });
+      // 用完之后，如果这个人在这个时机已经没有别的可用技能/物品，就不再问他第二遍
+      const next = afterUse(s, w, a.id, id);
+      if (next) enqueue(s, { kind: "RESTORE_WINDOW", window: next });
       applyAbility(s, a.id, id, c, w.context);
       log(
         s,

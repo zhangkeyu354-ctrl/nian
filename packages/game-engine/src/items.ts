@@ -19,6 +19,7 @@ import {
   random,
   RuleError,
   addGeneratorProgress,
+  afterUse,
 } from "./engine.ts";
 import { dice } from "./data.ts";
 import { resultClass } from "./dice.ts";
@@ -247,11 +248,12 @@ export function useItem(s: GameState, c: Command) {
   ]);
   if (w) {
     s.window = null;
+    const next = afterUse(s, w, a.id);
     enqueue(
       s,
       { kind: "SIGNAL", event: "ITEM_USED", context: { actorId: a.id, item } },
       { kind: "RESOLVE_ITEM", actorId: a.id, item, params },
-      { kind: "RESTORE_WINDOW", window: w },
+      ...(next ? [{ kind: "RESTORE_WINDOW", window: next }] : []),
     );
   } else
     enqueue(

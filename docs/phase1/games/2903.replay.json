@@ -82,10 +82,6 @@
       "index": 0
     },
     {
-      "type": "PASS",
-      "actorId": "ace"
-    },
-    {
       "type": "MOVE",
       "actorId": "meg",
       "pathId": "ah_p17",
@@ -95,10 +91,6 @@
       "type": "SELECT",
       "actorId": "meg",
       "propId": "gas_pump:objective:0"
-    },
-    {
-      "type": "PASS",
-      "actorId": "meg"
     },
     {
       "type": "INTERACT",
@@ -153,10 +145,6 @@
       "type": "SELECT",
       "actorId": "feng_min",
       "propId": "gas_pump:boldness:0"
-    },
-    {
-      "type": "PASS",
-      "actorId": "feng_min"
     },
     {
       "type": "INTERACT",
@@ -276,10 +264,6 @@
       "index": 0
     },
     {
-      "type": "PASS",
-      "actorId": "ace"
-    },
-    {
       "type": "MOVE",
       "actorId": "nea",
       "pathId": "ah_p02",
@@ -318,10 +302,6 @@
       "type": "SELECT",
       "actorId": "feng_min",
       "propId": "wreckers_garage_south:boldness:0"
-    },
-    {
-      "type": "PASS",
-      "actorId": "feng_min"
     },
     {
       "type": "INTERACT",
@@ -372,10 +352,6 @@
       "type": "SELECT",
       "actorId": "meg",
       "propId": "wreckers_garage_south:survival:0"
-    },
-    {
-      "type": "PASS",
-      "actorId": "meg"
     },
     {
       "type": "INTERACT",
@@ -471,10 +447,6 @@
       "propId": "gas_pump:survival:0"
     },
     {
-      "type": "PASS",
-      "actorId": "feng_min"
-    },
-    {
       "type": "INTERACT",
       "actorId": "feng_min",
       "action": "repair",
@@ -523,10 +495,6 @@
       "type": "SELECT",
       "actorId": "meg",
       "propId": "cottage:objective:0"
-    },
-    {
-      "type": "PASS",
-      "actorId": "meg"
     },
     {
       "type": "INTERACT",
@@ -675,10 +643,6 @@
       "to": "wreckers_garage_south"
     },
     {
-      "type": "PASS",
-      "actorId": "meg"
-    },
-    {
       "type": "INTERACT",
       "actorId": "meg",
       "action": "repair",
@@ -726,10 +690,6 @@
       "actorId": "feng_min",
       "pathId": "ah_p04",
       "to": "wreckers_garage_south"
-    },
-    {
-      "type": "PASS",
-      "actorId": "feng_min"
     },
     {
       "type": "INTERACT",
@@ -824,10 +784,6 @@
       "propId": "old_cabin:objective:0"
     },
     {
-      "type": "PASS",
-      "actorId": "meg"
-    },
-    {
       "type": "END_TURN",
       "actorId": "meg"
     },
@@ -874,10 +830,6 @@
       "type": "SELECT",
       "actorId": "feng_min",
       "propId": "old_cabin:boldness:0"
-    },
-    {
-      "type": "PASS",
-      "actorId": "feng_min"
     },
     {
       "type": "END_TURN",
@@ -1016,10 +968,6 @@
       "propId": "diner:survival:0"
     },
     {
-      "type": "PASS",
-      "actorId": "feng_min"
-    },
-    {
       "type": "END_TURN",
       "actorId": "feng_min"
     },
@@ -1062,10 +1010,6 @@
       "type": "SELECT",
       "actorId": "meg",
       "propId": "diner:survival:1"
-    },
-    {
-      "type": "PASS",
-      "actorId": "meg"
     },
     {
       "type": "END_TURN",
@@ -1161,10 +1105,6 @@
       "type": "SELECT",
       "actorId": "feng_min",
       "propId": "maze:altruism:1"
-    },
-    {
-      "type": "PASS",
-      "actorId": "feng_min"
     },
     {
       "type": "INTERACT",
