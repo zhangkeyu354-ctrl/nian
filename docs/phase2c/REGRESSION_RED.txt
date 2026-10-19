@@ -1,0 +1,98 @@
+npm.cmd run typecheck
+
+> dbd-boardgame-private@0.2.2 typecheck
+> tsc --noEmit
+
+
+EXIT_CODE=0
+npm.cmd test
+
+> dbd-boardgame-private@0.2.2 test
+> vitest run
+
+
+ RUN  v5.0.5 E:/DBD-BoardGame-Web
+
+
+ Test Files  8 passed (8)
+      Tests  79 passed (79)
+   Start at  16:37:55
+   Duration  1.33s (tests 45%, import 26%, transform 26%, worker 2%)
+
+
+EXIT_CODE=0
+npm.cmd run build
+
+> dbd-boardgame-private@0.2.2 build
+> vite build --config apps/web/vite.config.ts
+
+vite v8.3.4 building client environment for production...
+transforming...
+✓ 42 modules transformed.
+rendering chunks...
+computing gzip size...
+dist/web/index.html                   0.42 kB │ gzip:   0.33 kB
+dist/web/assets/index-V3TH1T7_.css   29.13 kB │ gzip:   7.97 kB
+dist/web/assets/index-CpUCLQOw.js   638.99 kB │ gzip: 133.80 kB
+
+✓ built in 462ms
+[plugin builtin:vite-reporter]
+(!) Some chunks are larger than 500 kB after minification. Consider:
+- Using dynamic import() to code-split the application
+- Use build.rolldownOptions.output.codeSplitting to improve chunking: https://rolldown.rs/reference/OutputOptions.codeSplitting
+- Adjust chunk size limit for this warning via build.chunkSizeWarningLimit.
+
+EXIT_CODE=0
+npm.cmd run verify:replays
+
+> dbd-boardgame-private@0.2.2 verify:replays
+> tsx scripts/verify-replays.ts
+
+Replay 1701: survivor, every event reproduced, SHA-256 16761427b3c584b8d9bd5ba43e45eb86365258eb217303bdd7063ee00da9fcbc
+Replay 2903: survivor, every event reproduced, SHA-256 396286e872483de21c1ec16caa701f7e963b14bf1e913056286c034128378917
+Replay 4111: killer, every event reproduced, SHA-256 09c5ac9b4b284d6cfb15c081be4426d2c8a67383d99ba18cd5e101c558c970c8
+
+EXIT_CODE=0
+npm.cmd run verify:hotseat
+
+> dbd-boardgame-private@0.2.2 verify:hotseat
+> tsx scripts/verify-hotseat.ts
+
+FULL_GAME_PASS 1701 survivor 192
+FULL_GAME_PASS 2903 survivor 226
+E:\DBD-BoardGame-Web\scripts\verify-hotseat.ts:136
+      throw new Error(
+            ^
+
+Error: seed=4111 step=25 {"type":"INTERACT","actorId":"doctor","action":"attack","targetId":"meg"}: TimeoutError: locator.click: Timeout 30000ms exceeded.
+Call log:
+[2m  - waiting for locator('[data-prop="meg"],[data-actor="meg"]').first()[22m
+[2m    - locator resolved to <g tabindex="0" role="button" data-actor="meg" aria-label="棋子：梅格·托马斯" data-actor-state="healthy" transform="translate(-92 10)">…</g>[22m
+[2m  - attempting click action[22m
+[2m    2 × waiting for element to be visible, enabled and stable[22m
+[2m      - element is visible, enabled and stable[22m
+[2m      - scrolling into view if needed[22m
+[2m      - done scrolling[22m
+[2m      - <rect rx="4" y="-82" x="-130" width="260" height="200" fill="#1c2729" stroke="#736e59" stroke-width="3"></rect> intercepts pointer events[22m
+[2m    - retrying click action[22m
+[2m    - waiting 20ms[22m
+[2m    2 × waiting for element to be visible, enabled and stable[22m
+[2m      - element is visible, enabled and stable[22m
+[2m      - scrolling into view if needed[22m
+[2m      - done scrolling[22m
+[2m      - <rect rx="4" y="-82" x="-130" width="260" height="200" fill="#1c2729" stroke="#736e59" stroke-width="3"></rect> intercepts pointer events[22m
+[2m    - retrying click action[22m
+[2m      - waiting 100ms[22m
+[2m    57 × waiting for element to be visible, enabled and stable[22m
+[2m       - element is visible, enabled and stable[22m
+[2m       - scrolling into view if needed[22m
+[2m       - done scrolling[22m
+[2m       - <rect rx="4" y="-82" x="-130" width="260" height="200" fill="#1c2729" stroke="#736e59" stroke-width="3"></rect> intercepts pointer events[22m
+[2m     - retrying click action[22m
+[2m       - waiting 500ms[22m
+
+    at <anonymous> (E:\DBD-BoardGame-Web\scripts\verify-hotseat.ts:136:13)
+
+Node.js v24.14.0
+
+EXIT_CODE=1

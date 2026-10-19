@@ -19,3 +19,5 @@ npm run dev
 验证：npm run typecheck、npm test、npm run build；完整浏览器对局npm run verify:hotseat（先启动开发服务；首次另运行npx playwright install chromium）。研究审计另运行tests/verify_*.py；缺少原版reference的分享包运行既有资料审计时加`--allow-missing-reference`（仅跳过原版文件哈希，不证明原图已核对）。引擎测试无需原版PDF/图片。
 
 资料以已接受中文版零售照片优先、英文官方规则其次，日文仅参考。34个板载技能已实现，5个留Phase 4并明确CHECK_REQUIRED。无远程仓库、未上传；原版reference资料不随代码包分享。
+
+Phase 2C 棋盘视觉、21份原创房间场景及手机直点操作已完成，说明见 docs/PHASE_2C_REPORT.md；本地服务启动后可运行 npm run verify:board。

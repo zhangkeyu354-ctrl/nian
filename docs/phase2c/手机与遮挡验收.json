@@ -1,0 +1,14 @@
+{
+  "viewport": {
+    "width": 390,
+    "height": 844
+  },
+  "checkRequiredHandled": true,
+  "rejectedCommandUnchanged": true,
+  "twoFingerPinch": true,
+  "oneFingerDrag": true,
+  "largeButtons": true,
+  "noPageOverflow": true,
+  "secretPlanHandoffUnmounted": true,
+  "consoleErrors": []
+}

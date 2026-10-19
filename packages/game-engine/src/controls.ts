@@ -3,10 +3,10 @@ import { reduce, validateInteraction } from "./engine.ts";
 import { legalRoutes } from "./graph.ts";
 import { maps, roster, boardPerks } from "./data.ts";
 export const cardNames: Record<Card, string> = {
-  blue: "蓝色移动",
-  green: "绿色移动",
-  red: "红色移动",
-  yellow: "黄色移动",
+  blue: "潜行（蓝）",
+  green: "冲刺（绿）",
+  red: "蹲伏（红）",
+  yellow: "翻越（黄）",
   wait: "等待",
 };
 export const propNames: Record<string, string> = {

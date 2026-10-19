@@ -1,0 +1,88 @@
+{
+  "records": [
+    {
+      "seed": 1701,
+      "mapId": "macmillan_estate",
+      "screen": "电脑",
+      "viewport": {
+        "width": 1440,
+        "height": 1100
+      },
+      "commandCount": 76,
+      "round": 2,
+      "events": 147,
+      "file": "1701_电脑_中局.png"
+    },
+    {
+      "seed": 1701,
+      "mapId": "macmillan_estate",
+      "screen": "手机竖屏",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "commandCount": 76,
+      "round": 2,
+      "events": 147,
+      "file": "1701_手机竖屏_中局.png"
+    },
+    {
+      "seed": 1701,
+      "mapId": "macmillan_estate",
+      "screen": "手机横屏",
+      "viewport": {
+        "width": 844,
+        "height": 390
+      },
+      "commandCount": 76,
+      "round": 2,
+      "events": 147,
+      "file": "1701_手机横屏_中局.png"
+    },
+    {
+      "seed": 2903,
+      "mapId": "autohaven_wreckers",
+      "screen": "电脑",
+      "viewport": {
+        "width": 1440,
+        "height": 1100
+      },
+      "commandCount": 76,
+      "round": 2,
+      "events": 168,
+      "file": "2903_电脑_中局.png"
+    },
+    {
+      "seed": 2903,
+      "mapId": "autohaven_wreckers",
+      "screen": "手机竖屏",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "commandCount": 76,
+      "round": 2,
+      "events": 168,
+      "file": "2903_手机竖屏_中局.png"
+    },
+    {
+      "seed": 2903,
+      "mapId": "autohaven_wreckers",
+      "screen": "手机横屏",
+      "viewport": {
+        "width": 844,
+        "height": 390
+      },
+      "commandCount": 76,
+      "round": 2,
+      "events": 168,
+      "file": "2903_手机横屏_中局.png"
+    }
+  ],
+  "boardReveals": 25,
+  "boardInteractions": 14,
+  "highlights": 1,
+  "diceCaptured": true,
+  "consoleErrors": [],
+  "method": "Rendered board/control clicks, independent reducer after every command; resize same actual midgame for each viewport. No state injection."
+}

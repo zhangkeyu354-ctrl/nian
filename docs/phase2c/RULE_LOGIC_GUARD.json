@@ -1,0 +1,94 @@
+{
+  "base_commit": "68d90272228964d643409f57fc3a2a45ffca7f87",
+  "unchanged_rule_and_data_files": [
+    {
+      "file": "packages/game-engine/src/data.ts",
+      "sha256_lf": "d356480c7851c7432aa984a621ebae7961cb20b82604b24da3499e6869c1eab1"
+    },
+    {
+      "file": "packages/game-engine/src/dice.ts",
+      "sha256_lf": "6d9bf28dc42e21f649a2431896aae36b212751956c87906bfa6cebbbc881316d"
+    },
+    {
+      "file": "packages/game-engine/src/engine.ts",
+      "sha256_lf": "5cc39539a27a47c026c96f2ff7197d194b95c12533ea9b416af7eb2e55c4fbb4"
+    },
+    {
+      "file": "packages/game-engine/src/graph.ts",
+      "sha256_lf": "c5b47e54e95ff2eef6491cf50d28a1faee7fbf23696963550f9cd111f3cd3b31"
+    },
+    {
+      "file": "packages/game-engine/src/index.ts",
+      "sha256_lf": "948df581188874d7362c4e2d8284a7e1a2878c7041cb3062be819e295c24cbb8"
+    },
+    {
+      "file": "packages/game-engine/src/presentation.ts",
+      "sha256_lf": "3af44927629a36ba71ac68f84c909348946d5bff72d670fc6ff7dd9e453a3515"
+    },
+    {
+      "file": "packages/game-engine/src/skills.ts",
+      "sha256_lf": "c73a50bf00423ce7d8e42d638ea9d1e39008b8a7322761ef969f66ae8d161caa"
+    },
+    {
+      "file": "packages/shared/src/types.ts",
+      "sha256_lf": "e0fc2454a4c024e0f5d93259150818bb9b8777c8eee4eeaa3d7dc86193121e92"
+    },
+    {
+      "file": "packages/game-data/CHARACTER_DATA.json",
+      "sha256_lf": "0ab97064c2e2d55f97558874195555514ba772fe30cec3c7f5752ab94a12f133"
+    },
+    {
+      "file": "packages/game-data/DICE_DATA.json",
+      "sha256_lf": "06007514119b688a1bf91ee6240cab572377142cd7d50c98a73782cc14806ef1"
+    },
+    {
+      "file": "packages/game-data/glossary.json",
+      "sha256_lf": "40a132f0b3ab2054357168a273c37b23b7aa7351ba9a6e70845d3322846e1517"
+    },
+    {
+      "file": "packages/game-data/ITEM_DATA.json",
+      "sha256_lf": "2ec6634fe2d97efa56561906ef378d1e7cf852aa79950702402054fde7be15ab"
+    },
+    {
+      "file": "packages/game-data/MAP_DATA.json",
+      "sha256_lf": "dbfcbdf78f63dcf5de29bdd352e1c6cfdd23f104c39dd63e656c7f83c56c61b5"
+    },
+    {
+      "file": "packages/game-data/MOVEMENT_CARD_DATA.json",
+      "sha256_lf": "76ee855ca054de668e3fbb6a1a9482c1993346313340cec2ebd3a99a356f2d6c"
+    },
+    {
+      "file": "packages/game-data/PERK_DATA.json",
+      "sha256_lf": "f2c2f7aec09bbd2e89d2637a59070430f1b44899798faac7e2c565126c0ee606"
+    },
+    {
+      "file": "packages/game-data/PROP_DATA.json",
+      "sha256_lf": "5642730eb65c92c60e99f7f7a9208a0c36f2a0febe69d12556afe70aca3a6525"
+    },
+    {
+      "file": "packages/game-data/RULE_DATA.json",
+      "sha256_lf": "d8a89b61e01d4a83a96807ab7df6fcdc607befc7afd06b115964d01eba37f0c9"
+    },
+    {
+      "file": "packages/game-data/drafts/AUTOHAVEN_FROM_PHOTOS.json",
+      "sha256_lf": "ba6f920546f4fd538fd2a8f18e8a6c89b2d8733411bd520b1db9d719eaeed76e"
+    },
+    {
+      "file": "packages/game-data/drafts/CHARACTERS_FROM_PHOTOS.json",
+      "sha256_lf": "a0305f92c5b5a51530c7eeb154df7d6cbd01a9ca20ccdddc2067a1d7af2a05e5"
+    },
+    {
+      "file": "packages/game-data/drafts/ITEMS_FROM_PHOTOS.json",
+      "sha256_lf": "d93ae7b1005d1b35e53b5dfadf1db788b8081f684ff5960fb50cb83798ae1266"
+    },
+    {
+      "file": "packages/game-data/drafts/MACMILLAN_FROM_PHOTOS.json",
+      "sha256_lf": "4066ebd59d3538fa0c92f500d0cc8244568e26f503c094ff3039b5b7f1184a9c"
+    },
+    {
+      "file": "packages/game-data/out-of-scope/COLLECTOR_CHARACTERS.json",
+      "sha256_lf": "ee87a1bcac2c50e3981c5952a2d6c3e752537c7497c604011c29c820d50c0134"
+    }
+  ],
+  "controls_change": "cardNames display strings only; color IDs and logic unchanged"
+}

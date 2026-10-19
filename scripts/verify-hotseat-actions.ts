@@ -1,3 +1,4 @@
+import { clickUI } from "./hotseat-driver.ts";
 import { chromium } from "playwright";
 import { strict as assert } from "node:assert";
 import { writeFileSync } from "node:fs";
@@ -129,36 +130,8 @@ for (let i = 0; i < 350 && !(itemChecked && powerChecked); i++) {
       }
     }
   }
-  if (c.type === "PLAN") {
-    for (const card of c.cards as Card[])
-      await page.locator(`[data-card="${card}"]`).click();
-    await page.getByTestId("confirm-plan").click();
-  } else if (c.action === "power") {
-    await page.locator(".power > summary").first().click();
-    await page.getByTestId("power").click();
-    await page.locator('[data-field="pathId"]').selectOption(String(c.pathId));
-    await page.getByTestId("submit-parameters").click();
-    powerChecked = true;
-  } else if (c.type === "USE_PERK") {
-    await page.locator(`[data-perk="${c.perkId}"]`).click();
-    if (c.index !== undefined)
-      await page.locator('[data-field="index"]').selectOption(String(c.index));
-    await page.getByTestId("submit-parameters").click();
-  } else {
-    const buttons = page.locator("[data-command]");
-    const idx = await buttons.evaluateAll(
-      (els, c) =>
-        els.findIndex((el) => {
-          const actual = JSON.parse(el.getAttribute("data-command")!);
-          return Object.entries(c).every(
-            ([k, v]) => JSON.stringify(actual[k]) === JSON.stringify(v),
-          );
-        }),
-      c,
-    );
-    assert(idx >= 0, JSON.stringify(c));
-    await buttons.nth(idx).click();
-  }
+  await clickUI(page, c);
+  if (c.action === "power") powerChecked = true;
   assert.equal(await page.getByRole("alert").count(), 0, JSON.stringify(c));
   state = reduce(state, c);
   commands.push(c);

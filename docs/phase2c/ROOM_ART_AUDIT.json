@@ -1,0 +1,215 @@
+{
+  "all_passed": true,
+  "rooms": [
+    {
+      "id": "mine_depths",
+      "size": [
+        1536,
+        1024
+      ],
+      "mode": "RGB",
+      "bytes": 2861318,
+      "hash_passed": true
+    },
+    {
+      "id": "mine_entrance",
+      "size": [
+        1536,
+        1024
+      ],
+      "mode": "RGB",
+      "bytes": 3322959,
+      "hash_passed": true
+    },
+    {
+      "id": "coal_tower_upper",
+      "size": [
+        1536,
+        1024
+      ],
+      "mode": "RGB",
+      "bytes": 2927282,
+      "hash_passed": true
+    },
+    {
+      "id": "foundry_upper_floor",
+      "size": [
+        1536,
+        1024
+      ],
+      "mode": "RGB",
+      "bytes": 2858466,
+      "hash_passed": true
+    },
+    {
+      "id": "foundry_lower_floor",
+      "size": [
+        1536,
+        1024
+      ],
+      "mode": "RGB",
+      "bytes": 3274297,
+      "hash_passed": true
+    },
+    {
+      "id": "ancient_tree",
+      "size": [
+        1536,
+        1024
+      ],
+      "mode": "RGB",
+      "bytes": 3225708,
+      "hash_passed": true
+    },
+    {
+      "id": "coal_tower_ground",
+      "size": [
+        1536,
+        1024
+      ],
+      "mode": "RGB",
+      "bytes": 3078032,
+      "hash_passed": true
+    },
+    {
+      "id": "scrapyard",
+      "size": [
+        1536,
+        1024
+      ],
+      "mode": "RGB",
+      "bytes": 3401612,
+      "hash_passed": true
+    },
+    {
+      "id": "shack",
+      "size": [
+        1536,
+        1024
+      ],
+      "mode": "RGB",
+      "bytes": 3056273,
+      "hash_passed": true
+    },
+    {
+      "id": "foundry_basement",
+      "size": [
+        1536,
+        1024
+      ],
+      "mode": "RGB",
+      "bytes": 3027134,
+      "hash_passed": true
+    },
+    {
+      "id": "backlot",
+      "size": [
+        1536,
+        1024
+      ],
+      "mode": "RGB",
+      "bytes": 3411988,
+      "hash_passed": true
+    },
+    {
+      "id": "maze",
+      "size": [
+        1536,
+        1024
+      ],
+      "mode": "RGB",
+      "bytes": 3465369,
+      "hash_passed": true
+    },
+    {
+      "id": "wreckers_garage_north",
+      "size": [
+        1536,
+        1024
+      ],
+      "mode": "RGB",
+      "bytes": 3395525,
+      "hash_passed": true
+    },
+    {
+      "id": "scrap_pile",
+      "size": [
+        1536,
+        1024
+      ],
+      "mode": "RGB",
+      "bytes": 3409189,
+      "hash_passed": true
+    },
+    {
+      "id": "main_garage",
+      "size": [
+        1536,
+        1024
+      ],
+      "mode": "RGB",
+      "bytes": 3162511,
+      "hash_passed": true
+    },
+    {
+      "id": "diner",
+      "size": [
+        1536,
+        1024
+      ],
+      "mode": "RGB",
+      "bytes": 3132295,
+      "hash_passed": true
+    },
+    {
+      "id": "wreckers_garage_south",
+      "size": [
+        1536,
+        1024
+      ],
+      "mode": "RGB",
+      "bytes": 3491252,
+      "hash_passed": true
+    },
+    {
+      "id": "barn",
+      "size": [
+        1536,
+        1024
+      ],
+      "mode": "RGB",
+      "bytes": 3410105,
+      "hash_passed": true
+    },
+    {
+      "id": "cottage",
+      "size": [
+        1536,
+        1024
+      ],
+      "mode": "RGB",
+      "bytes": 3436159,
+      "hash_passed": true
+    },
+    {
+      "id": "gas_pump",
+      "size": [
+        1536,
+        1024
+      ],
+      "mode": "RGB",
+      "bytes": 3294231,
+      "hash_passed": true
+    },
+    {
+      "id": "old_cabin",
+      "size": [
+        1536,
+        1024
+      ],
+      "mode": "RGB",
+      "bytes": 3178908,
+      "hash_passed": true
+    }
+  ]
+}

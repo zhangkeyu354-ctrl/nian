@@ -37,21 +37,9 @@ await page.screenshot({
 await page.getByRole("button", { name: "关闭提示", exact: true }).click();
 await page.getByTestId("board").scrollIntoViewIfNeeded();
 const initial = await page.getByTestId("board").getAttribute("viewBox");
-assert.equal(
-  await page.locator("[data-room] rect").evaluateAll((els) =>
-    els.every((el) => {
-      const a = el.getBoundingClientRect(),
-        b = el.closest("svg")!.getBoundingClientRect();
-      return (
-        a.top >= b.top - 1 &&
-        a.left >= b.left - 1 &&
-        a.right <= b.right + 1 &&
-        a.bottom <= b.bottom + 1
-      );
-    }),
-  ),
-  true,
-  "all room rectangles fit initial viewport",
+assert(
+  Number(initial!.split(" ")[2]) < 1000,
+  "mobile starts with readable focused map",
 );
 await page.getByRole("button", { name: "放大地图", exact: true }).click();
 assert.notEqual(
@@ -123,7 +111,12 @@ for (let i = 0; i < 4; i++) {
     await page.getByTestId("ack-feedback").click();
   if (await page.getByTestId("uncover").count())
     await page.getByTestId("uncover").click();
-  await page.locator("[data-command]").first().click();
+  const target = page.locator(".actionable-prop").first();
+  const room = await target.evaluate((el) =>
+    el.closest("[data-room-container]")!.getAttribute("data-room-container")!,
+  );
+  await page.getByLabel("查看房间", { exact: true }).selectOption(room);
+  await target.locator(":scope > rect").click();
   while (await page.getByTestId("ack-dice").count())
     await page.getByTestId("ack-dice").click();
 }

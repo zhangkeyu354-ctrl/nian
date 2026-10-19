@@ -1071,5 +1071,364 @@
       "svg_source": "占位",
       "svg_creator": "original_code"
     }
+  ],
+  "rooms": [
+    {
+      "id": "mine_depths",
+      "name_zh": "矿井深处",
+      "file": "rooms/mine_depths.png",
+      "source": "AI 生成",
+      "provider": "built-in image_gen",
+      "generation_prompt": "Use case: stylized-concept. Create one ORIGINAL environment illustration for an interactive tabletop room card: deep abandoned mine tunnel, broken rails and a distant dim lantern. Horizontal landscape composition, painted charcoal and weathered oil-gouache, pale silver fog, muted cold teal vegetation, restrained tarnished amber light, dark atmospheric horror but readable architectural silhouette, no pitch-black empty regions. High-angle establishing view with a clear distinctive central scene, no people. Full bleed opaque background, no frame, no hexagon, no UI, no text, no letters, no logo, no watermark. Not based on or reproducing any existing game screenshot or artwork. Each room is a newly invented environment, not an official map recreation. Intended file rooms/mine_depths.png.",
+      "size": [
+        1536,
+        1024
+      ],
+      "background": "opaque full bleed",
+      "sha256": "31e1026f77215385e19f555959683aac62a3fea9ff73f465242e5b8b443f96ed",
+      "source_file": "exec-969b4d2c-ca89-4711-aca0-2bf39ee6cfd1.png",
+      "official_reference_input": false,
+      "fallback": "code-painted charcoal room surface"
+    },
+    {
+      "id": "mine_entrance",
+      "name_zh": "矿井入口",
+      "file": "rooms/mine_entrance.png",
+      "source": "AI 生成",
+      "provider": "built-in image_gen",
+      "generation_prompt": "Use case: stylized-concept. Create one ORIGINAL environment illustration for an interactive tabletop room card: mine entrance timber portal in a rocky wooded hillside. Horizontal landscape composition, painted charcoal and weathered oil-gouache, pale silver fog, muted cold teal vegetation, restrained tarnished amber light, dark atmospheric horror but readable architectural silhouette, no pitch-black empty regions. High-angle establishing view with a clear distinctive central scene, no people. Full bleed opaque background, no frame, no hexagon, no UI, no text, no letters, no logo, no watermark. Not based on or reproducing any existing game screenshot or artwork. Each room is a newly invented environment, not an official map recreation. Intended file rooms/mine_entrance.png.",
+      "size": [
+        1536,
+        1024
+      ],
+      "background": "opaque full bleed",
+      "sha256": "30f810e55e04fb3c50f4d110acbaadf30e69fd281dad0457470d4e350ff5ee87",
+      "source_file": "exec-ccbfdc0e-8651-4bd5-a1ee-54ea9da00414.png",
+      "official_reference_input": false,
+      "fallback": "code-painted charcoal room surface"
+    },
+    {
+      "id": "coal_tower_upper",
+      "name_zh": "煤矿废塔上层",
+      "file": "rooms/coal_tower_upper.png",
+      "source": "AI 生成",
+      "provider": "built-in image_gen",
+      "generation_prompt": "Use case: stylized-concept. Create one ORIGINAL environment illustration for an interactive tabletop room card: upper level of a decaying coal tower, elevated timber platform and rusted hopper. Horizontal landscape composition, painted charcoal and weathered oil-gouache, pale silver fog, muted cold teal vegetation, restrained tarnished amber light, dark atmospheric horror but readable architectural silhouette, no pitch-black empty regions. High-angle establishing view with a clear distinctive central scene, no people. Full bleed opaque background, no frame, no hexagon, no UI, no text, no letters, no logo, no watermark. Not based on or reproducing any existing game screenshot or artwork. Each room is a newly invented environment, not an official map recreation. Intended file rooms/coal_tower_upper.png.",
+      "size": [
+        1536,
+        1024
+      ],
+      "background": "opaque full bleed",
+      "sha256": "b19a6b037be476afc726be1f858e0a0e8a55df598df2e5af06b5d644bc34d17b",
+      "source_file": "exec-f883e9ad-06fc-43ac-83d0-031bbbf29a86.png",
+      "official_reference_input": false,
+      "fallback": "code-painted charcoal room surface"
+    },
+    {
+      "id": "foundry_upper_floor",
+      "name_zh": "熔炉上层",
+      "file": "rooms/foundry_upper_floor.png",
+      "source": "AI 生成",
+      "provider": "built-in image_gen",
+      "generation_prompt": "Use case: stylized-concept. Create one ORIGINAL environment illustration for an interactive tabletop room card: upper catwalk inside a derelict iron foundry, hanging chains and high windows. Horizontal landscape composition, painted charcoal and weathered oil-gouache, pale silver fog, muted cold teal vegetation, restrained tarnished amber light, dark atmospheric horror but readable architectural silhouette, no pitch-black empty regions. High-angle establishing view with a clear distinctive central scene, no people. Full bleed opaque background, no frame, no hexagon, no UI, no text, no letters, no logo, no watermark. Not based on or reproducing any existing game screenshot or artwork. Each room is a newly invented environment, not an official map recreation. Intended file rooms/foundry_upper_floor.png.",
+      "size": [
+        1536,
+        1024
+      ],
+      "background": "opaque full bleed",
+      "sha256": "fa3c820a6d9d7d4a8cb829bd043a97c0918a16ff6b2137ad1cb52d6d1d76615f",
+      "source_file": "exec-20507540-18cf-4fa3-8775-c2918d8a1eae.png",
+      "official_reference_input": false,
+      "fallback": "code-painted charcoal room surface"
+    },
+    {
+      "id": "foundry_lower_floor",
+      "name_zh": "熔炉下层",
+      "file": "rooms/foundry_lower_floor.png",
+      "source": "AI 生成",
+      "provider": "built-in image_gen",
+      "generation_prompt": "Use case: stylized-concept. Create one ORIGINAL environment illustration for an interactive tabletop room card: lower foundry floor, cold furnace mouth and scattered industrial molds. Horizontal landscape composition, painted charcoal and weathered oil-gouache, pale silver fog, muted cold teal vegetation, restrained tarnished amber light, dark atmospheric horror but readable architectural silhouette, no pitch-black empty regions. High-angle establishing view with a clear distinctive central scene, no people. Full bleed opaque background, no frame, no hexagon, no UI, no text, no letters, no logo, no watermark. Not based on or reproducing any existing game screenshot or artwork. Each room is a newly invented environment, not an official map recreation. Intended file rooms/foundry_lower_floor.png.",
+      "size": [
+        1536,
+        1024
+      ],
+      "background": "opaque full bleed",
+      "sha256": "90f042be13c30c7f6d21434da325c6a4af149655e23685bf6267970cfffad64f",
+      "source_file": "exec-a1f7c37c-82e3-414d-9189-25a86c605cc9.png",
+      "official_reference_input": false,
+      "fallback": "code-painted charcoal room surface"
+    },
+    {
+      "id": "ancient_tree",
+      "name_zh": "古树",
+      "file": "rooms/ancient_tree.png",
+      "source": "AI 生成",
+      "provider": "built-in image_gen",
+      "generation_prompt": "Use case: stylized-concept. Create one ORIGINAL environment illustration for an interactive tabletop room card: ancient gnarled solitary tree, thick roots and low mist. Horizontal landscape composition, painted charcoal and weathered oil-gouache, pale silver fog, muted cold teal vegetation, restrained tarnished amber light, dark atmospheric horror but readable architectural silhouette, no pitch-black empty regions. High-angle establishing view with a clear distinctive central scene, no people. Full bleed opaque background, no frame, no hexagon, no UI, no text, no letters, no logo, no watermark. Not based on or reproducing any existing game screenshot or artwork. Each room is a newly invented environment, not an official map recreation. Intended file rooms/ancient_tree.png.",
+      "size": [
+        1536,
+        1024
+      ],
+      "background": "opaque full bleed",
+      "sha256": "3f2a782959c86d62ee9694c2b24c101b82aed03bd45212f1a423c14eefe1be3b",
+      "source_file": "exec-15a911ce-c0c7-4d1a-8072-88f0dea7a45e.png",
+      "official_reference_input": false,
+      "fallback": "code-painted charcoal room surface"
+    },
+    {
+      "id": "coal_tower_ground",
+      "name_zh": "煤矿废塔下层",
+      "file": "rooms/coal_tower_ground.png",
+      "source": "AI 生成",
+      "provider": "built-in image_gen",
+      "generation_prompt": "Use case: stylized-concept. Create one ORIGINAL environment illustration for an interactive tabletop room card: ground floor beneath a coal tower, pillars and coal dust. Horizontal landscape composition, painted charcoal and weathered oil-gouache, pale silver fog, muted cold teal vegetation, restrained tarnished amber light, dark atmospheric horror but readable architectural silhouette, no pitch-black empty regions. High-angle establishing view with a clear distinctive central scene, no people. Full bleed opaque background, no frame, no hexagon, no UI, no text, no letters, no logo, no watermark. Not based on or reproducing any existing game screenshot or artwork. Each room is a newly invented environment, not an official map recreation. Intended file rooms/coal_tower_ground.png.",
+      "size": [
+        1536,
+        1024
+      ],
+      "background": "opaque full bleed",
+      "sha256": "010514f043b36066ad215f5d51d76df219abe6a9dd80ffe6f5aa15adc90e9d9c",
+      "source_file": "exec-049af72c-f8e0-4929-bece-c0b160747cc6.png",
+      "official_reference_input": false,
+      "fallback": "code-painted charcoal room surface"
+    },
+    {
+      "id": "scrapyard",
+      "name_zh": "废品场",
+      "file": "rooms/scrapyard.png",
+      "source": "AI 生成",
+      "provider": "built-in image_gen",
+      "generation_prompt": "Use case: stylized-concept. Create one ORIGINAL environment illustration for an interactive tabletop room card: industrial scrap yard of twisted rusted iron and discarded machinery. Horizontal landscape composition, painted charcoal and weathered oil-gouache, pale silver fog, muted cold teal vegetation, restrained tarnished amber light, dark atmospheric horror but readable architectural silhouette, no pitch-black empty regions. High-angle establishing view with a clear distinctive central scene, no people. Full bleed opaque background, no frame, no hexagon, no UI, no text, no letters, no logo, no watermark. Not based on or reproducing any existing game screenshot or artwork. Each room is a newly invented environment, not an official map recreation. Intended file rooms/scrapyard.png.",
+      "size": [
+        1536,
+        1024
+      ],
+      "background": "opaque full bleed",
+      "sha256": "e554a14b31aaa67c04de5b05c623cdc8d0fff74128b0c4229d1854552f7dc7b0",
+      "source_file": "exec-5a8da415-c5f7-4411-bbf6-db4941067491.png",
+      "official_reference_input": false,
+      "fallback": "code-painted charcoal room surface"
+    },
+    {
+      "id": "shack",
+      "name_zh": "木屋",
+      "file": "rooms/shack.png",
+      "source": "AI 生成",
+      "provider": "built-in image_gen",
+      "generation_prompt": "Use case: stylized-concept. Create one ORIGINAL environment illustration for an interactive tabletop room card: small weathered timber shack among pine trees. Horizontal landscape composition, painted charcoal and weathered oil-gouache, pale silver fog, muted cold teal vegetation, restrained tarnished amber light, dark atmospheric horror but readable architectural silhouette, no pitch-black empty regions. High-angle establishing view with a clear distinctive central scene, no people. Full bleed opaque background, no frame, no hexagon, no UI, no text, no letters, no logo, no watermark. Not based on or reproducing any existing game screenshot or artwork. Each room is a newly invented environment, not an official map recreation. Intended file rooms/shack.png.",
+      "size": [
+        1536,
+        1024
+      ],
+      "background": "opaque full bleed",
+      "sha256": "e13231af893fff8fbf19c9c948513493674683ce12f11ec5361d1e83754eb88c",
+      "source_file": "exec-231b098c-c068-4ff0-a3f7-5d99ca6e5541.png",
+      "official_reference_input": false,
+      "fallback": "code-painted charcoal room surface"
+    },
+    {
+      "id": "foundry_basement",
+      "name_zh": "熔炉地下室",
+      "file": "rooms/foundry_basement.png",
+      "source": "AI 生成",
+      "provider": "built-in image_gen",
+      "generation_prompt": "Use case: stylized-concept. Create one ORIGINAL environment illustration for an interactive tabletop room card: damp foundry basement, brick arches and an abandoned boiler. Horizontal landscape composition, painted charcoal and weathered oil-gouache, pale silver fog, muted cold teal vegetation, restrained tarnished amber light, dark atmospheric horror but readable architectural silhouette, no pitch-black empty regions. High-angle establishing view with a clear distinctive central scene, no people. Full bleed opaque background, no frame, no hexagon, no UI, no text, no letters, no logo, no watermark. Not based on or reproducing any existing game screenshot or artwork. Each room is a newly invented environment, not an official map recreation. Intended file rooms/foundry_basement.png.",
+      "size": [
+        1536,
+        1024
+      ],
+      "background": "opaque full bleed",
+      "sha256": "6eed68dbfdac0580dc3d9ee6714c3341177c39941c6ccb480ab27853e35fe063",
+      "source_file": "exec-1915a736-9337-4258-a712-b14677a8cfd5.png",
+      "official_reference_input": false,
+      "fallback": "code-painted charcoal room surface"
+    },
+    {
+      "id": "backlot",
+      "name_zh": "露天场地",
+      "file": "rooms/backlot.png",
+      "source": "AI 生成",
+      "provider": "built-in image_gen",
+      "generation_prompt": "Use case: stylized-concept. Create one ORIGINAL environment illustration for an interactive tabletop room card: open forest clearing, stumps and wet flattened grass. Horizontal landscape composition, painted charcoal and weathered oil-gouache, pale silver fog, muted cold teal vegetation, restrained tarnished amber light, dark atmospheric horror but readable architectural silhouette, no pitch-black empty regions. High-angle establishing view with a clear distinctive central scene, no people. Full bleed opaque background, no frame, no hexagon, no UI, no text, no letters, no logo, no watermark. Not based on or reproducing any existing game screenshot or artwork. Each room is a newly invented environment, not an official map recreation. Intended file rooms/backlot.png.",
+      "size": [
+        1536,
+        1024
+      ],
+      "background": "opaque full bleed",
+      "sha256": "7736937b8d8d4038ef28cade82de15d0755f844b22114771dd664b92aebfac0a",
+      "source_file": "exec-b877f35d-da40-47de-9a79-3bbf945af810.png",
+      "official_reference_input": false,
+      "fallback": "code-painted charcoal room surface"
+    },
+    {
+      "id": "maze",
+      "name_zh": "迷宫",
+      "file": "rooms/maze.png",
+      "source": "AI 生成",
+      "provider": "built-in image_gen",
+      "generation_prompt": "Use case: stylized-concept. Create one ORIGINAL environment illustration for an interactive tabletop room card: maze of stacked crushed automobile shells and narrow misty passages. Horizontal landscape composition, painted charcoal and weathered oil-gouache, pale silver fog, muted cold teal vegetation, restrained tarnished amber light, dark atmospheric horror but readable architectural silhouette, no pitch-black empty regions. High-angle establishing view with a clear distinctive central scene, no people. Full bleed opaque background, no frame, no hexagon, no UI, no text, no letters, no logo, no watermark. Not based on or reproducing any existing game screenshot or artwork. Each room is a newly invented environment, not an official map recreation. Intended file rooms/maze.png.",
+      "size": [
+        1536,
+        1024
+      ],
+      "background": "opaque full bleed",
+      "sha256": "2a06c1836d6906423691785626dea1166c790a6eb1677afa0d9eea539c2d5da0",
+      "source_file": "exec-185d6028-6150-43f2-9d00-9a6021044b6d.png",
+      "official_reference_input": false,
+      "fallback": "code-painted charcoal room surface"
+    },
+    {
+      "id": "wreckers_garage_north",
+      "name_zh": "废旧车库北",
+      "file": "rooms/wreckers_garage_north.png",
+      "source": "AI 生成",
+      "provider": "built-in image_gen",
+      "generation_prompt": "Use case: stylized-concept. Create one ORIGINAL environment illustration for an interactive tabletop room card: north abandoned vehicle garage, open repair bays and rusty car lifts. Horizontal landscape composition, painted charcoal and weathered oil-gouache, pale silver fog, muted cold teal vegetation, restrained tarnished amber light, dark atmospheric horror but readable architectural silhouette, no pitch-black empty regions. High-angle establishing view with a clear distinctive central scene, no people. Full bleed opaque background, no frame, no hexagon, no UI, no text, no letters, no logo, no watermark. Not based on or reproducing any existing game screenshot or artwork. Each room is a newly invented environment, not an official map recreation. Intended file rooms/wreckers_garage_north.png.",
+      "size": [
+        1536,
+        1024
+      ],
+      "background": "opaque full bleed",
+      "sha256": "e531d27e91ad09ace844123c222244e6418ad22c4d22781777bc0d4c894c7863",
+      "source_file": "exec-7cc2f937-0d52-4d85-a64b-e584e65e6bcd.png",
+      "official_reference_input": false,
+      "fallback": "code-painted charcoal room surface"
+    },
+    {
+      "id": "scrap_pile",
+      "name_zh": "废料堆",
+      "file": "rooms/scrap_pile.png",
+      "source": "AI 生成",
+      "provider": "built-in image_gen",
+      "generation_prompt": "Use case: stylized-concept. Create one ORIGINAL environment illustration for an interactive tabletop room card: towering pile of scrap metal and crushed car bodies. Horizontal landscape composition, painted charcoal and weathered oil-gouache, pale silver fog, muted cold teal vegetation, restrained tarnished amber light, dark atmospheric horror but readable architectural silhouette, no pitch-black empty regions. High-angle establishing view with a clear distinctive central scene, no people. Full bleed opaque background, no frame, no hexagon, no UI, no text, no letters, no logo, no watermark. Not based on or reproducing any existing game screenshot or artwork. Each room is a newly invented environment, not an official map recreation. Intended file rooms/scrap_pile.png.",
+      "size": [
+        1536,
+        1024
+      ],
+      "background": "opaque full bleed",
+      "sha256": "56e57a1026112e3a88403a2cc5a31dba86497679484db406edb1b9210210647d",
+      "source_file": "exec-0f569bc7-e107-4b89-9be4-f01da7de33da.png",
+      "official_reference_input": false,
+      "fallback": "code-painted charcoal room surface"
+    },
+    {
+      "id": "main_garage",
+      "name_zh": "主车库",
+      "file": "rooms/main_garage.png",
+      "source": "AI 生成",
+      "provider": "built-in image_gen",
+      "generation_prompt": "Use case: stylized-concept. Create one ORIGINAL environment illustration for an interactive tabletop room card: large derelict auto repair workshop interior, workbench and oily floor. Horizontal landscape composition, painted charcoal and weathered oil-gouache, pale silver fog, muted cold teal vegetation, restrained tarnished amber light, dark atmospheric horror but readable architectural silhouette, no pitch-black empty regions. High-angle establishing view with a clear distinctive central scene, no people. Full bleed opaque background, no frame, no hexagon, no UI, no text, no letters, no logo, no watermark. Not based on or reproducing any existing game screenshot or artwork. Each room is a newly invented environment, not an official map recreation. Intended file rooms/main_garage.png.",
+      "size": [
+        1536,
+        1024
+      ],
+      "background": "opaque full bleed",
+      "sha256": "a23fa098272a15433611f9c7d97bfd7ea20b7b5c67470ca72f92fd9bad4b009a",
+      "source_file": "exec-9de5c568-0f9f-49fe-ae11-bddbd2677c13.png",
+      "official_reference_input": false,
+      "fallback": "code-painted charcoal room surface"
+    },
+    {
+      "id": "diner",
+      "name_zh": "小吃店",
+      "file": "rooms/diner.png",
+      "source": "AI 生成",
+      "provider": "built-in image_gen",
+      "generation_prompt": "Use case: stylized-concept. Create one ORIGINAL environment illustration for an interactive tabletop room card: abandoned roadside diner exterior, dark windows and empty stools visible. Horizontal landscape composition, painted charcoal and weathered oil-gouache, pale silver fog, muted cold teal vegetation, restrained tarnished amber light, dark atmospheric horror but readable architectural silhouette, no pitch-black empty regions. High-angle establishing view with a clear distinctive central scene, no people. Full bleed opaque background, no frame, no hexagon, no UI, no text, no letters, no logo, no watermark. Not based on or reproducing any existing game screenshot or artwork. Each room is a newly invented environment, not an official map recreation. Intended file rooms/diner.png.",
+      "size": [
+        1536,
+        1024
+      ],
+      "background": "opaque full bleed",
+      "sha256": "9cd9a44099e10826dc2dbe0abd88630a80a927525feea6e62fd58eebc5551678",
+      "source_file": "exec-cac0957b-1e06-43a0-b73c-9070c1070d6f.png",
+      "official_reference_input": false,
+      "fallback": "code-painted charcoal room surface"
+    },
+    {
+      "id": "wreckers_garage_south",
+      "name_zh": "废旧车库南",
+      "file": "rooms/wreckers_garage_south.png",
+      "source": "AI 生成",
+      "provider": "built-in image_gen",
+      "generation_prompt": "Use case: stylized-concept. Create one ORIGINAL environment illustration for an interactive tabletop room card: south ramshackle car garage, corrugated roof and dismantled truck. Horizontal landscape composition, painted charcoal and weathered oil-gouache, pale silver fog, muted cold teal vegetation, restrained tarnished amber light, dark atmospheric horror but readable architectural silhouette, no pitch-black empty regions. High-angle establishing view with a clear distinctive central scene, no people. Full bleed opaque background, no frame, no hexagon, no UI, no text, no letters, no logo, no watermark. Not based on or reproducing any existing game screenshot or artwork. Each room is a newly invented environment, not an official map recreation. Intended file rooms/wreckers_garage_south.png.",
+      "size": [
+        1536,
+        1024
+      ],
+      "background": "opaque full bleed",
+      "sha256": "fa06d3fc3c39c3e8570736f6658a0d28681b21a3d7b648e81d3866b127b5d6bd",
+      "source_file": "exec-aa783e65-6783-43a8-85e8-b517670166a1.png",
+      "official_reference_input": false,
+      "fallback": "code-painted charcoal room surface"
+    },
+    {
+      "id": "barn",
+      "name_zh": "谷仓",
+      "file": "rooms/barn.png",
+      "source": "AI 生成",
+      "provider": "built-in image_gen",
+      "generation_prompt": "Use case: stylized-concept. Create one ORIGINAL environment illustration for an interactive tabletop room card: old barn with slanted wooden roof and open loft. Horizontal landscape composition, painted charcoal and weathered oil-gouache, pale silver fog, muted cold teal vegetation, restrained tarnished amber light, dark atmospheric horror but readable architectural silhouette, no pitch-black empty regions. High-angle establishing view with a clear distinctive central scene, no people. Full bleed opaque background, no frame, no hexagon, no UI, no text, no letters, no logo, no watermark. Not based on or reproducing any existing game screenshot or artwork. Each room is a newly invented environment, not an official map recreation. Intended file rooms/barn.png.",
+      "size": [
+        1536,
+        1024
+      ],
+      "background": "opaque full bleed",
+      "sha256": "3b14b328d636a294981604a90187c6011db7077783298d04b9ac5fb0c26151da",
+      "source_file": "exec-f369f907-e8d0-49bb-ab1b-eee54b4d373b.png",
+      "official_reference_input": false,
+      "fallback": "code-painted charcoal room surface"
+    },
+    {
+      "id": "cottage",
+      "name_zh": "村舍",
+      "file": "rooms/cottage.png",
+      "source": "AI 生成",
+      "provider": "built-in image_gen",
+      "generation_prompt": "Use case: stylized-concept. Create one ORIGINAL environment illustration for an interactive tabletop room card: small rural cottage with peeling plaster and overgrown path. Horizontal landscape composition, painted charcoal and weathered oil-gouache, pale silver fog, muted cold teal vegetation, restrained tarnished amber light, dark atmospheric horror but readable architectural silhouette, no pitch-black empty regions. High-angle establishing view with a clear distinctive central scene, no people. Full bleed opaque background, no frame, no hexagon, no UI, no text, no letters, no logo, no watermark. Not based on or reproducing any existing game screenshot or artwork. Each room is a newly invented environment, not an official map recreation. Intended file rooms/cottage.png.",
+      "size": [
+        1536,
+        1024
+      ],
+      "background": "opaque full bleed",
+      "sha256": "38c6f170f5ebc2ba50b32109cc052502d1f245a539c6c0de7e34db1c79b74d7b",
+      "source_file": "exec-730c3fa1-1cdb-46e6-8899-cfca1d16b733.png",
+      "official_reference_input": false,
+      "fallback": "code-painted charcoal room surface"
+    },
+    {
+      "id": "gas_pump",
+      "name_zh": "油泵",
+      "file": "rooms/gas_pump.png",
+      "source": "AI 生成",
+      "provider": "built-in image_gen",
+      "generation_prompt": "Use case: stylized-concept. Create one ORIGINAL environment illustration for an interactive tabletop room card: lonely old fuel pump beside cracked asphalt, abandoned service station. Horizontal landscape composition, painted charcoal and weathered oil-gouache, pale silver fog, muted cold teal vegetation, restrained tarnished amber light, dark atmospheric horror but readable architectural silhouette, no pitch-black empty regions. High-angle establishing view with a clear distinctive central scene, no people. Full bleed opaque background, no frame, no hexagon, no UI, no text, no letters, no logo, no watermark. Not based on or reproducing any existing game screenshot or artwork. Each room is a newly invented environment, not an official map recreation. Intended file rooms/gas_pump.png.",
+      "size": [
+        1536,
+        1024
+      ],
+      "background": "opaque full bleed",
+      "sha256": "5013f24ba58554e3cacfb5711fb7a6927c1c1f1fa148dcae3f7cf50470e34a2f",
+      "source_file": "exec-0a5b1015-29ff-4a16-98f2-aa59a2f6a388.png",
+      "official_reference_input": false,
+      "fallback": "code-painted charcoal room surface"
+    },
+    {
+      "id": "old_cabin",
+      "name_zh": "老木屋",
+      "file": "rooms/old_cabin.png",
+      "source": "AI 生成",
+      "provider": "built-in image_gen",
+      "generation_prompt": "Use case: stylized-concept. Create one ORIGINAL environment illustration for an interactive tabletop room card: old log cabin deep in a foggy grove, sagging porch. Horizontal landscape composition, painted charcoal and weathered oil-gouache, pale silver fog, muted cold teal vegetation, restrained tarnished amber light, dark atmospheric horror but readable architectural silhouette, no pitch-black empty regions. High-angle establishing view with a clear distinctive central scene, no people. Full bleed opaque background, no frame, no hexagon, no UI, no text, no letters, no logo, no watermark. Not based on or reproducing any existing game screenshot or artwork. Each room is a newly invented environment, not an official map recreation. Intended file rooms/old_cabin.png.",
+      "size": [
+        1536,
+        1024
+      ],
+      "background": "opaque full bleed",
+      "sha256": "2fcdc331e14a189805aab8dab1cb694eab944c81eeec104d2f572de6bc2d5082",
+      "source_file": "exec-de2822eb-6c16-4b8c-9f5b-762e79db4de8.png",
+      "official_reference_input": false,
+      "fallback": "code-painted charcoal room surface"
+    }
   ]
 }

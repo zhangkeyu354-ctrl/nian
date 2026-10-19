@@ -1,3 +1,4 @@
+import { clickUI } from "./hotseat-driver.ts";
 import { chromium, type Page } from "playwright";
 import { readFileSync, writeFileSync, mkdirSync } from "node:fs";
 import { strict as assert } from "node:assert";
@@ -98,62 +99,14 @@ for (const seed of [1701, 2903, 4111]) {
           true,
           "all map rooms fit initial viewport",
         );
-      if (c.type === "PLAN") {
-        for (const card of c.cards as string[])
-          await page.locator(`[data-card="${card}"]`).click();
-        if (seed === 1701 && i < 10) {
-          await page.getByTestId("board").scrollIntoViewIfNeeded();
-          await capture(page, "麦克米伦_合法路线");
-        }
-        await page.getByTestId("confirm-plan").click();
-      } else if (c.type === "USE_PERK") {
-        await page.locator(`[data-perk="${c.perkId}"]`).click();
-        for (const [key, value] of Object.entries(c).filter(
-          ([key]) => !["type", "actorId", "perkId"].includes(key),
-        )) {
-          const field = page.locator(`[data-field="${key}"]`);
-          if (await field.count()) await field.selectOption(String(value));
-        }
-        await page.getByTestId("submit-parameters").click();
-        used++;
-      } else if (c.type === "SELECT" && Array.isArray(c.route)) {
-        for (const r of c.route as Array<{ pathId: string; to: string }>)
-          await page
-            .locator(`[data-carry-path="${r.pathId}"][data-carry-to="${r.to}"]`)
-            .click();
-        await page.getByTestId("carry-dice").selectOption(String(c.dice));
-        await page.getByTestId("confirm-carry").click();
-      } else if (
+      await clickUI(page, c);
+      if (c.type === "USE_PERK") used++;
+      if (
         c.type === "SETUP_REVEAL" ||
+        c.type === "INTERACT" ||
         (c.type === "SELECT" && c.propId)
-      ) {
-        await page.locator(`[data-prop="${c.propId}"] > rect`).click();
+      )
         mapClicks++;
-      } else if (
-        c.type === "MOVE" &&
-        c.to &&
-        getControls(state).actions.filter((a) => a.roomId === c.to).length === 1
-      ) {
-        await page.locator(`[data-room="${c.to}"] > rect`).click();
-        mapClicks++;
-      } else {
-        const buttons = page.locator("[data-command]");
-        const index = await buttons.evaluateAll(
-          (els, c) =>
-            els.findIndex((el) => {
-              const actual = JSON.parse(el.getAttribute("data-command")!);
-              return Object.entries(c).every(
-                ([k, v]) => JSON.stringify(actual[k]) === JSON.stringify(v),
-              );
-            }),
-          c,
-        );
-        assert(
-          index >= 0,
-          "command has a real visible button " + JSON.stringify(c),
-        );
-        await buttons.nth(index).click();
-      }
       assert.equal(
         await page.getByRole("alert").count(),
         0,

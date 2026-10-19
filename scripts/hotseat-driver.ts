@@ -31,6 +31,15 @@ export async function drainUI(
     await page.getByTestId("uncover").click();
 }
 export async function clickUI(page: Page, c: Command) {
+  if (c.type === "SETUP_REVEAL" || (c.type === "SELECT" && c.propId)) {
+    const target = page.locator(`[data-prop="${c.propId}"]`);
+    const room = await target.evaluate((el) =>
+      el.closest("[data-room-container]")!.getAttribute("data-room-container")!,
+    );
+    await page.getByLabel("查看房间", { exact: true }).selectOption(room);
+    await target.locator(":scope > rect").click();
+    return;
+  }
   if (c.type === "PLAN") {
     for (const card of c.cards as string[])
       await page.locator(`[data-card="${card}"]`).click();
@@ -70,6 +79,29 @@ export async function clickUI(page: Page, c: Command) {
     await page.getByTestId("carry-dice").selectOption(String(c.dice));
     await page.getByTestId("confirm-carry").click();
     return;
+  }
+  if (c.type === "INTERACT" && c.targetId) {
+    const target = page
+      .locator(`[data-prop="${c.targetId}"],[data-actor="${c.targetId}"]`)
+      .first();
+    if (await target.count()) {
+      const room = await target.evaluate((el) =>
+        el
+          .closest("[data-room-container]")!
+          .getAttribute("data-room-container")!,
+      );
+      await page.getByLabel("查看房间", { exact: true }).selectOption(room);
+      const before = JSON.parse(
+        await page.evaluate(() => window.render_game_to_text()),
+      ).events;
+      if (await target.getAttribute("data-prop"))
+        await target.locator(":scope > rect").click();
+      else await target.locator(":scope > rect").click();
+      const after = JSON.parse(
+        await page.evaluate(() => window.render_game_to_text()),
+      ).events;
+      if (after !== before) return;
+    }
   }
   const buttons = page.locator("[data-command]");
   const idx = await buttons.evaluateAll(

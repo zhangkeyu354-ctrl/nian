@@ -28,6 +28,8 @@ import { SettingsButton } from "./Settings.tsx";
 import { Token } from "./Token.tsx";
 import { FeedbackPanel, CompletedGenerators } from "./Feedback.tsx";
 import type { Feedback } from "../../../packages/game-engine/src/presentation.ts";
+import { MotionIcon } from "./MotionIcon.tsx";
+import { Dice } from "./Dice.tsx";
 import { Board } from "./Board.tsx";
 import {
   phases,
@@ -65,8 +67,64 @@ function Track({
       </div>
       <div className="track-steps">
         {Array.from({ length: max }, (_, i) => (
-          <i key={i} className={i < value ? "filled" : ""} />
+          <span
+            key={i}
+            className={i < value ? "filled" : ""}
+            data-track-icon={max === 8 ? "hook" : "generator"}
+          >
+            {max === 8 ? (
+              <svg
+                className="track-hook"
+                viewBox="0 0 40 40"
+                width="36"
+                height="36"
+                aria-hidden="true"
+              >
+                <circle
+                  cx="20"
+                  cy="20"
+                  r="17"
+                  fill={i < value ? "#733f39" : "#252b2d"}
+                  stroke={i < value ? "#e28274" : "#797463"}
+                />
+                <path
+                  d="M25 8v17c0 9-14 9-14 0v-4l5 4"
+                  fill="none"
+                  stroke={i < value ? "#ffd4b9" : "#c9bc98"}
+                  strokeWidth="3"
+                  strokeLinecap="round"
+                />
+              </svg>
+            ) : (
+              <Token
+                token={{
+                  id: "track-" + i,
+                  kind: max === 8 ? "hook" : "generator",
+                  state: "normal",
+                  asset: max === 8 ? "hook" : "generator",
+                  label: max === 8 ? "献祭格" + (i + 1) : "发电机格" + (i + 1),
+                  location: "track",
+                }}
+                size={36}
+              />
+            )}
+          </span>
         ))}
+        {max === 4 && (
+          <span data-track-icon="exit_gate">
+            <Token
+              token={{
+                id: "track-exit",
+                kind: "exit_gate",
+                state: value >= 4 ? "powered" : "unpowered",
+                asset: "exit_gate",
+                label: "出口大门",
+                location: "track",
+              }}
+              size={36}
+            />
+          </span>
+        )}
       </div>
     </div>
   );
@@ -569,7 +627,12 @@ export function App() {
                 highlight={highlights}
                 onRoom={(id) => pick("room", id)}
                 onProp={(id) => pick("prop", id)}
+                onActor={(id) => pick("prop", id)}
                 selected={selected}
+                focusRoom={current?.room}
+                actionable={control!.actions
+                  .filter((a) => a.targetId)
+                  .map((a) => a.targetId!)}
               />
               <section className="control-panel" data-testid="control-panel">
                 {state.winner ? (
@@ -679,7 +742,7 @@ export function App() {
                                   }
                                 >
                                   <span className="card-symbol">
-                                    {c === "wait" ? "Ⅱ" : "↗"}
+                                    <MotionIcon card={c} size={40} />
                                   </span>
                                   <span>{cardNames[c]}</span>
                                   {plan.includes(c) && (
@@ -789,7 +852,9 @@ export function App() {
                           <span>
                             {state.props.some((p) => p.id === selected)
                               ? propLabel(state, selected)
-                              : roomName(state, selected)}
+                              : state.actors[selected]
+                                ? actorName(selected)
+                                : roomName(state, selected)}
                           </span>
                           <button onClick={() => setSelected(null)}>
                             显示全部操作
@@ -800,10 +865,12 @@ export function App() {
                         {control!.actions
                           .filter(
                             (a) =>
-                              !selected ||
-                              a.targetId === selected ||
-                              a.roomId === selected ||
-                              (!a.targetId && !a.roomId),
+                              (!a.targetId ||
+                                (!!selected && a.targetId === selected)) &&
+                              (!selected ||
+                                a.targetId === selected ||
+                                a.roomId === selected ||
+                                (!a.targetId && !a.roomId)),
                           )
                           .map((a, i) => (
                             <button
@@ -1056,17 +1123,13 @@ export function App() {
           <div className="dice-faces">
             {((dice[0].data.faces ?? [dice[0].data.face]) as number[]).map(
               (f, i) => (
-                <div
+                <Dice
                   key={String(dice[0].seq) + "-" + i}
-                  className={
-                    "die " + (f === 0 ? "failure" : f === 5 ? "great" : "")
-                  }
-                >
-                  <strong>{f === 5 ? "★" : f === 0 ? "×" : f}</strong>
-                  <span>
-                    {dice[0].type === "SPAWNED" ? "出生骰面 " + f : faceName(f)}
-                  </span>
-                </div>
+                  rollKey={String(dice[0].seq) + "-" + i}
+                  face={f}
+                  danger={dice[0].data.die === "danger"}
+                  spawn={dice[0].type === "SPAWNED"}
+                />
               ),
             )}
           </div>

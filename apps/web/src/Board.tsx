@@ -3,11 +3,14 @@ import type { GameState } from "../../../packages/shared/src/types.ts";
 import { maps } from "../../../packages/game-engine/src/data.ts";
 import {
   actorName,
+  cardNames,
   propNames,
   categoryNames,
   propLabel,
   boardVisuals,
 } from "../../../packages/game-engine/src/index.ts";
+import { MotionIcon } from "./MotionIcon.tsx";
+import { useSettings } from "./Settings.tsx";
 import { Token } from "./Token.tsx";
 import layoutData from "./layout.json" with { type: "json" };
 const colors: Record<string, string> = {
@@ -16,28 +19,24 @@ const colors: Record<string, string> = {
   red: "#d98176",
   yellow: "#f1ca62",
 };
-const marks: Record<string, string> = {
-  generator: "电",
-  exit_gate: "门",
-  hook: "钩",
-  hex_totem: "咒",
-  chest: "箱",
-  locker: "柜",
-  pallet: "板",
-  crow: "鸦",
-};
 export function Board({
   state,
   highlight,
   onRoom,
   onProp,
+  onActor,
   selected,
+  focusRoom,
+  actionable = [],
 }: {
   state: GameState;
   highlight: Array<{ pathId: string; to: string }>;
   onRoom: (id: string) => void;
   onProp: (id: string) => void;
+  onActor?: (id: string) => void;
   selected: string | null;
+  focusRoom?: string | null;
+  actionable?: string[];
 }) {
   const map = maps.maps.find((m) => m.id === state.mapId)!;
   const layout = (
@@ -50,8 +49,11 @@ export function Board({
       }
     >
   )[map.id];
-  const height = map.id === "macmillan_estate" ? 1000 : 880;
-  const yScale = 0.66;
+  const height = map.id === "macmillan_estate" ? 1520 : 1320;
+  const settings = useSettings();
+  const [expanded, setExpanded] = useState(false);
+  const [size, setSize] = useState({ width: 1540, height });
+  const yScale = 1;
   const [view, setView] = useState({ x: 0, y: 0, w: 1540, h: height });
   const viewRef = useRef(view);
   viewRef.current = view;
@@ -59,12 +61,49 @@ export function Board({
     pointers = useRef(new Map<number, { x: number; y: number }>()),
     last = useRef<{ x: number; y: number; distance: number } | null>(null),
     drag = useRef(false);
+  useEffect(() => {
+    if (!expanded) return;
+    const old = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+    return () => {
+      document.body.style.overflow = old;
+    };
+  }, [expanded]);
   const reset = () => setView({ x: 0, y: 0, w: 1540, h: height });
-  useEffect(reset, [map.id]);
+  function focus(id = focusRoom) {
+    const r = layout.rooms[id ?? ""] ?? Object.values(layout.rooms)[0];
+    const w = size.width < 600 ? 540 : size.width < 950 ? 1000 : 1540;
+    const h = (w * size.height) / size.width;
+    setView({
+      x:
+        size.width < 950
+          ? Math.max(0, Math.min(1540 - w, r[0] - w / 2))
+          : r[0] - w / 2,
+      y:
+        size.width < 950
+          ? Math.max(0, Math.min(height - h, r[1] * yScale - h / 2))
+          : r[1] * yScale - h / 2,
+      w,
+      h,
+    });
+  }
+  useEffect(() => {
+    const node = el.current!;
+    const ro = new ResizeObserver(([entry]) => {
+      const { width, height: h } = entry.contentRect;
+      setSize({ width, height: h });
+    });
+    ro.observe(node);
+    return () => ro.disconnect();
+  }, []);
+  useEffect(() => {
+    if (size.width < 950) focus();
+    else reset();
+  }, [map.id, focusRoom, size.width, size.height]);
   const zoom = (factor: number) =>
     setView((v) => {
       const w = Math.min(2000, Math.max(380, v.w * factor));
-      const h = (w / 1540) * height;
+      const h = (w * size.height) / size.width;
       return { x: v.x + (v.w - w) / 2, y: v.y + (v.h - h) / 2, w, h };
     });
   useEffect(() => {
@@ -75,10 +114,14 @@ export function Board({
     };
     node.addEventListener("wheel", f, { passive: false });
     return () => node.removeEventListener("wheel", f);
-  }, [height]);
+  }, [height, size]);
   function pointer(e: React.PointerEvent, kind: string) {
+    const rotated = expanded && window.innerHeight > window.innerWidth;
+    const point = rotated
+      ? { x: e.clientY, y: -e.clientX }
+      : { x: e.clientX, y: e.clientY };
     if (kind === "down") {
-      pointers.current.set(e.pointerId, { x: e.clientX, y: e.clientY });
+      pointers.current.set(e.pointerId, point);
       drag.current = false;
     }
     if (kind === "up") {
@@ -88,7 +131,7 @@ export function Board({
     }
     if (kind === "move") {
       if (!pointers.current.has(e.pointerId)) return;
-      pointers.current.set(e.pointerId, { x: e.clientX, y: e.clientY });
+      pointers.current.set(e.pointerId, point);
     }
     const pts = [...pointers.current.values()];
     const center = {
@@ -111,10 +154,10 @@ export function Board({
             ? prev.distance / center.distance
             : 1;
         const w = Math.min(2000, Math.max(380, v.w * factor)),
-          h = (w / 1540) * height;
+          h = (w * size.height) / size.width;
         return {
-          x: v.x - (dx * v.w) / rect.width + (v.w - w) / 2,
-          y: v.y - (dy * v.h) / rect.height + (v.h - h) / 2,
+          x: v.x - (dx * v.w) / size.width + (v.w - w) / 2,
+          y: v.y - (dy * v.h) / size.height + (v.h - h) / 2,
           w,
           h,
         };
@@ -128,15 +171,24 @@ export function Board({
   const visuals = boardVisuals(state);
   const props = visuals.props;
   return (
-    <div className="board-shell">
+    <div className={"board-shell" + (expanded ? " board-expanded" : "")}>
       <div className="board-top">
         <span>{map.name_zh}</span>
         <div className="zoom-controls">
+          <button onClick={() => focus()} aria-label="定位当前角色">
+            定位
+          </button>
+          <button
+            onClick={() => setExpanded((v) => !v)}
+            aria-label="横屏查看棋盘"
+          >
+            {expanded ? "退出横屏" : "横屏"}
+          </button>
           <button aria-label="缩小地图" onClick={() => zoom(1.25)}>
             −
           </button>
           <button onClick={reset} aria-label="复位地图">
-            {Math.round((1540 / view.w) * 100)}%
+            全图
           </button>
           <button aria-label="放大地图" onClick={() => zoom(0.8)}>
             ＋
@@ -145,6 +197,7 @@ export function Board({
       </div>
       <div
         className="map-viewport"
+        style={{ "--board-ratio": `1540/${height}` } as React.CSSProperties}
         ref={el}
         onPointerDown={(e) => pointer(e, "down")}
         onPointerMove={(e) => pointer(e, "move")}
@@ -159,6 +212,34 @@ export function Board({
           aria-label={`${map.name_zh}数字棋盘，房间和道具可点击`}
         >
           <defs>
+            <pattern
+              id="weather"
+              width="90"
+              height="90"
+              patternUnits="userSpaceOnUse"
+            >
+              <path
+                d="M0 13l90 17M-20 60L80 20M8 85l70-15"
+                stroke="#566260"
+                strokeWidth=".8"
+                opacity=".25"
+              />
+              <path
+                d="M5 5h1m44 42h2m20-30h1m-48 59h2"
+                stroke="#a4936b"
+                strokeWidth="2"
+                opacity=".22"
+              />
+            </pattern>
+            <linearGradient id="room-shade" x2="0" y2="1">
+              <stop offset="0" stopColor="#111a1c" stopOpacity="0" />
+              <stop offset="1" stopColor="#0e1518" stopOpacity=".96" />
+            </linearGradient>
+            {map.nodes.map((n) => (
+              <clipPath key={n.id} id={"clip-" + n.id}>
+                <rect x="-127" y="-46" width="254" height="156" rx="2" />
+              </clipPath>
+            ))}
             {Object.entries(colors).map(([id, color]) => (
               <marker
                 key={id}
@@ -187,18 +268,18 @@ export function Board({
             </pattern>
           </defs>
           <rect
-            x="-6000"
-            y="-6000"
-            width="12000"
-            height="12000"
-            fill="#1d2928"
+            x={view.x}
+            y={view.y}
+            width={view.w}
+            height={view.h}
+            fill="#151d20"
           />
           <rect
-            x="-6000"
-            y="-6000"
-            width="12000"
-            height="12000"
-            fill="url(#grid)"
+            x={view.x}
+            y={view.y}
+            width={view.w}
+            height={view.h}
+            fill="url(#weather)"
             opacity=".42"
           />
           {Object.values(state.paths).map((p) => {
@@ -216,9 +297,44 @@ export function Board({
               segments[0]?.split(" ").map((v) => v.split(",").map(Number)) ??
               [];
             const marker = layout.markers[p.id];
-            const m = marker
+            const candidate = marker
               ? [marker[0], marker[1] * yScale]
-              : (pts[Math.floor(pts.length / 2)] ?? [0, 0]);
+              : (pts[1] ?? [0, 0]);
+            let m = candidate,
+              best = Infinity;
+            const safe = (q: number[]) =>
+              map.nodes.every((n) => {
+                const [x, y] = layout.rooms[n.id];
+                return (
+                  Math.abs(q[0] - x) > 157 ||
+                  q[1] < y * yScale - 109 ||
+                  q[1] > y * yScale + 145
+                );
+              });
+            for (const seg of segments) {
+              const ps = seg.split(" ").map((v) => v.split(",").map(Number));
+              for (let j = 1; j < ps.length; j++) {
+                const a = ps[j - 1],
+                  b = ps[j],
+                  length = Math.hypot(b[0] - a[0], b[1] - a[1]);
+                for (let k = 0; k <= Math.ceil(length / 4); k++) {
+                  const f = k / Math.ceil(length / 4),
+                    q = [a[0] + (b[0] - a[0]) * f, a[1] + (b[1] - a[1]) * f];
+                  const d = Math.hypot(
+                    q[0] - candidate[0],
+                    q[1] - candidate[1],
+                  );
+                  if (safe(q) && d < best) {
+                    m = q;
+                    best = d;
+                  }
+                }
+              }
+            }
+            if (segments.length === 3) {
+              const p = segments[0].split(" ").at(-1)!;
+              m = p.split(",").map(Number);
+            }
             return (
               <g
                 key={p.id}
@@ -249,15 +365,43 @@ export function Board({
                     />
                   </React.Fragment>
                 ))}
+                <g
+                  transform={`translate(${m[0]} ${m[1]})`}
+                  className={"route-badge" + (lit ? " is-lit" : "")}
+                  data-route-icon={p.id}
+                  aria-label={cardNames[p.color] + "路线"}
+                >
+                  <rect
+                    x="-27"
+                    y="-27"
+                    width="54"
+                    height="54"
+                    rx="2"
+                    fill="#182020"
+                    stroke={colors[p.color]}
+                    strokeWidth="4"
+                  />
+                  {map.edges.find((e) => e.id === p.id)?.jagged && (
+                    <path
+                      d="M-30-30l8-5 8 5 8-5 8 5 8-5 8 5 8-5 8 5v60l-8 5-8-5-8 5-8-5-8 5-8-5-8 5-8-5z"
+                      fill="none"
+                      stroke={colors[p.color]}
+                      strokeWidth="3"
+                    />
+                  )}
+                  <g transform="translate(-22 -22)" color="#f4efdb">
+                    <MotionIcon card={p.color} size={44} />
+                  </g>
+                </g>
                 {visuals.paths
                   .filter((v) => v.id === p.id)
                   .map((v, i) => (
                     <g
                       key={v.kind}
-                      transform={`translate(${m[0] - 27 + i * 43} ${m[1] - 26})`}
+                      transform={`translate(${m[0] + 28 + i * 38} ${m[1] - 23})`}
                       data-testid={v.kind === "wall" ? "wall" : undefined}
                     >
-                      <Token token={v} size={54} />
+                      <Token token={v} size={44} />
                     </g>
                   ))}
                 {state.entity?.id === p.id && (
@@ -285,7 +429,11 @@ export function Board({
             const slots = props.filter((p) => p.room === n.id);
             const reachable = highlight.some((r) => r.to === n.id);
             return (
-              <g key={n.id} transform={`translate(${x} ${y})`}>
+              <g
+                key={n.id}
+                data-room-container={n.id}
+                transform={`translate(${x} ${y})`}
+              >
                 <g
                   role="button"
                   tabIndex={0}
@@ -298,49 +446,152 @@ export function Board({
                   className="room-node"
                 >
                   <rect
-                    x="-109"
-                    y="-46"
-                    width="218"
-                    height="139"
-                    rx="7"
-                    fill={selected === n.id ? "#e8dfbb" : "#c7c9b8"}
+                    x="-130"
+                    y="-82"
+                    width="260"
+                    height="200"
+                    rx="4"
+                    fill="#1c2729"
                     stroke={
                       reachable
                         ? "#f1d47c"
                         : selected === n.id
-                          ? "#f3dd9a"
-                          : "#819289"
+                          ? "#d6bb78"
+                          : "#736e59"
                     }
-                    strokeWidth={reachable ? 7 : 3}
+                    strokeWidth={reachable ? 6 : 3}
                   />
-                  <text
-                    x="0"
-                    y="-16"
-                    textAnchor="middle"
-                    className="room-label"
-                  >
-                    {n.name_zh}
-                  </text>
-                  {!!n.spawn_faces.length && (
-                    <text x="-96" y="6" fontSize="15" fill="#48564f">
-                      出生 {n.spawn_faces.join("/")}
+                  <g pointerEvents="none">
+                    <g clipPath={`url(#clip-${n.id})`}>
+                      <rect
+                        x="-127"
+                        y="-46"
+                        width="254"
+                        height="156"
+                        fill="#283b3d"
+                      />
+                      <path
+                        d="M-127 103l70-45 50 23 61-64 73 79v20h-254z"
+                        fill="#18272b"
+                      />
+                      <path
+                        d="M-99 68V-10l34-22 32 22v68m-40-56v64M40-32v88m22-61v92m33-105v98"
+                        fill="none"
+                        stroke="#76817b"
+                        strokeWidth="4"
+                        opacity=".4"
+                      />
+                      {settings.art && (
+                        <image
+                          data-room-art={n.id}
+                          href={`/assets/rooms/${n.id}.png`}
+                          x="-127"
+                          y="-46"
+                          width="254"
+                          height="156"
+                          preserveAspectRatio="xMidYMid slice"
+                          onError={(e) => {
+                            e.currentTarget.style.display = "none";
+                          }}
+                        />
+                      )}
+                      <rect
+                        x="-127"
+                        y="-46"
+                        width="254"
+                        height="156"
+                        fill="url(#room-shade)"
+                      />
+                    </g>
+                    <text
+                      x="0"
+                      y="-56"
+                      textAnchor="middle"
+                      className="room-label"
+                    >
+                      {n.name_zh}
                     </text>
-                  )}
+                    {!!n.spawn_faces.length && (
+                      <g
+                        transform="translate(-117 -38)"
+                        data-spawn={n.spawn_faces.join(",")}
+                      >
+                        <rect
+                          width="40"
+                          height="35"
+                          rx="3"
+                          fill="#11191b"
+                          stroke="#a89b77"
+                        />
+                        {n.spawn_faces.some((f) => f === 0) ? (
+                          <g transform="translate(2 0)">
+                            <Token
+                              token={{
+                                id: "spawn",
+                                kind: "actor",
+                                state: "healthy",
+                                asset: "portrait_anonymous",
+                                label: "杀手出生点",
+                                location: "room",
+                              }}
+                              size={35}
+                            />
+                          </g>
+                        ) : (
+                          <g
+                            stroke="#ece2be"
+                            strokeWidth="3"
+                            strokeLinecap="round"
+                          >
+                            {Array.from(
+                              { length: n.spawn_faces[0] },
+                              (_, i) => (
+                                <path key={i} d={`M${8 + i * 6} 9l-2 19`} />
+                              ),
+                            )}
+                          </g>
+                        )}
+                      </g>
+                    )}
+                  </g>
                   {occupants.map((a, i) => (
                     <g
                       key={a.id}
-                      transform={`translate(${-82 + i * 40} 23)`}
+                      transform={`translate(${-92 + i * 48} 10)`}
                       data-actor={a.id}
                       data-actor-state={a.state}
+                      role="button"
+                      tabIndex={0}
+                      aria-label={"棋子：" + a.label}
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        click(() => onActor?.(a.id));
+                      }}
+                      onKeyDown={(e) => {
+                        if (e.key === "Enter") {
+                          e.stopPropagation();
+                          onActor?.(a.id);
+                        }
+                      }}
                     >
-                      <g transform="translate(-18 -18)">
-                        <Token token={a} size={36} />
+                      <rect
+                        x="-31"
+                        y="-31"
+                        width="62"
+                        height="76"
+                        rx="8"
+                        fill="transparent"
+                        stroke={actionable.includes(a.id) ? "#e6d294" : "none"}
+                        strokeWidth="2"
+                      />
+                      <g transform="translate(-27 -27)">
+                        <Token token={a} size={54} />
                       </g>
                       <text
-                        y="22"
+                        y="35"
                         textAnchor="middle"
-                        fill="#243931"
-                        fontSize="10"
+                        fill="#f2e9cb"
+                        fontSize="12"
                       >
                         {a.label.replace("·", "").slice(0, 3)}
                       </text>
@@ -358,7 +609,10 @@ export function Board({
                   ))}
                 </g>
                 {slots.map((p, i) => {
-                  const px = -91 + i * 36;
+                  const px =
+                    (i - (slots.length - 1) / 2) *
+                    Math.min(51, 250 / slots.length);
+                  const available = actionable.includes(p.id);
                   return (
                     <g
                       key={p.id}
@@ -377,14 +631,16 @@ export function Board({
                       onKeyDown={(e) => {
                         if (e.key === "Enter") onProp(p.id);
                       }}
-                      className="prop-node"
-                      transform={`translate(${px} 68)`}
+                      className={
+                        "prop-node" + (available ? " actionable-prop" : "")
+                      }
+                      transform={`translate(${px} 82)`}
                     >
                       <rect
-                        x="-17"
-                        y="-23"
-                        width="34"
-                        height="44"
+                        x="-31"
+                        y="-31"
+                        width="62"
+                        height="62"
                         fill="transparent"
                         stroke={selected === p.id ? "#b7883b" : "none"}
                         strokeWidth="3"
@@ -397,8 +653,8 @@ export function Board({
                           strokeDasharray="3 3"
                         />
                       ) : (
-                        <g transform="translate(-18 -23)" pointerEvents="none">
-                          <Token token={p} size={36} />
+                        <g transform="translate(-25 -25)" pointerEvents="none">
+                          <Token token={p} size={50} />
                         </g>
                       )}
                     </g>
@@ -416,18 +672,40 @@ export function Board({
           })}
         </svg>
       </div>
+      <div className="board-navigation">
+        <label>
+          查看房间
+          <select
+            aria-label="查看房间"
+            value=""
+            onChange={(e) => focus(e.target.value)}
+          >
+            <option value="">选择房间并定位</option>
+            {map.nodes.map((n) => (
+              <option key={n.id} value={n.id}>
+                {n.name_zh}
+              </option>
+            ))}
+          </select>
+        </label>
+        <span>点击亮框道具执行操作 · 拖动与双指缩放</span>
+      </div>
       <div className="board-legend">
         <span>
-          <i style={{ background: colors.blue }} />蓝
+          <MotionIcon card="blue" size={24} />
+          潜行（蓝）
         </span>
         <span>
-          <i style={{ background: colors.green }} />绿
+          <MotionIcon card="green" size={24} />
+          冲刺（绿）
         </span>
         <span>
-          <i style={{ background: colors.red }} />红
+          <MotionIcon card="red" size={24} />
+          蹲伏（红）
         </span>
         <span>
-          <i style={{ background: colors.yellow }} />黄 · 单向箭头
+          <MotionIcon card="yellow" size={24} />
+          翻越（黄）· 单向箭头
         </span>
         <span>锯齿框：可破坏墙壁</span>
         <span>拖动 / 双指缩放</span>

@@ -1,0 +1,206 @@
+{
+  "options": {
+    "seed": 1701,
+    "mapId": "macmillan_estate",
+    "survivors": [
+      "dwight",
+      "claudette",
+      "jake",
+      "ace"
+    ],
+    "killer": "trapper"
+  },
+  "commands": [
+    {
+      "type": "SETUP_REVEAL",
+      "actorId": "dwight",
+      "propId": "foundry_upper_floor:survival:0"
+    },
+    {
+      "type": "SETUP_REVEAL",
+      "actorId": "claudette",
+      "propId": "foundry_lower_floor:survival:0"
+    },
+    {
+      "type": "SETUP_REVEAL",
+      "actorId": "jake",
+      "propId": "scrapyard:survival:0"
+    },
+    {
+      "type": "SETUP_REVEAL",
+      "actorId": "ace",
+      "propId": "scrapyard:survival:1"
+    },
+    {
+      "type": "PLAN",
+      "actorId": "dwight",
+      "cards": [
+        "green"
+      ]
+    },
+    {
+      "type": "PLAN",
+      "actorId": "claudette",
+      "cards": [
+        "blue"
+      ]
+    },
+    {
+      "type": "PLAN",
+      "actorId": "jake",
+      "cards": [
+        "red"
+      ]
+    },
+    {
+      "type": "PLAN",
+      "actorId": "ace",
+      "cards": [
+        "green"
+      ]
+    },
+    {
+      "type": "PLAN",
+      "actorId": "trapper",
+      "cards": [
+        "wait",
+        "blue"
+      ]
+    },
+    {
+      "type": "USE_PERK",
+      "actorId": "ace",
+      "perkId": "board_ace_1",
+      "index": 0
+    },
+    {
+      "type": "PASS",
+      "actorId": "ace"
+    },
+    {
+      "type": "MOVE",
+      "actorId": "dwight",
+      "pathId": "mm_p06",
+      "to": "foundry_lower_floor",
+      "color": "green"
+    },
+    {
+      "type": "SELECT",
+      "actorId": "dwight",
+      "propId": "foundry_lower_floor:objective:0"
+    },
+    {
+      "type": "PASS",
+      "actorId": "dwight"
+    },
+    {
+      "type": "INTERACT",
+      "actorId": "dwight",
+      "action": "chest",
+      "targetId": "foundry_lower_floor:survival:0"
+    },
+    {
+      "type": "PASS",
+      "actorId": "dwight"
+    },
+    {
+      "type": "END_TURN",
+      "actorId": "dwight"
+    },
+    {
+      "type": "PASS",
+      "actorId": "claudette"
+    },
+    {
+      "type": "PASS",
+      "actorId": "claudette"
+    },
+    {
+      "type": "MOVE",
+      "actorId": "claudette",
+      "pathId": "mm_p04",
+      "to": "mine_entrance"
+    },
+    {
+      "type": "SELECT",
+      "actorId": "claudette",
+      "propId": "mine_entrance:objective:0"
+    },
+    {
+      "type": "PASS",
+      "actorId": "claudette"
+    },
+    {
+      "type": "INTERACT",
+      "actorId": "claudette",
+      "action": "repair",
+      "targetId": "mine_entrance:objective:0"
+    },
+    {
+      "type": "USE_PERK",
+      "actorId": "dwight",
+      "perkId": "board_dwight_3"
+    },
+    {
+      "type": "PASS",
+      "actorId": "dwight"
+    },
+    {
+      "type": "PASS",
+      "actorId": "trapper"
+    },
+    {
+      "type": "SELECT",
+      "actorId": "claudette",
+      "index": 1
+    },
+    {
+      "type": "END_TURN",
+      "actorId": "claudette"
+    },
+    {
+      "type": "MOVE",
+      "actorId": "jake",
+      "pathId": "mm_p14",
+      "to": "foundry_lower_floor"
+    },
+    {
+      "type": "SELECT",
+      "actorId": "jake",
+      "propId": "foundry_lower_floor:boldness:0"
+    },
+    {
+      "type": "END_TURN",
+      "actorId": "jake"
+    },
+    {
+      "type": "MOVE",
+      "actorId": "ace",
+      "pathId": "mm_p06",
+      "to": "foundry_lower_floor"
+    },
+    {
+      "type": "SELECT",
+      "actorId": "ace",
+      "propId": "foundry_lower_floor:altruism:0"
+    },
+    {
+      "type": "END_TURN",
+      "actorId": "ace"
+    },
+    {
+      "type": "MOVE",
+      "actorId": "trapper"
+    },
+    {
+      "type": "INTERACT",
+      "actorId": "trapper",
+      "action": "power",
+      "pathId": "mm_p03"
+    }
+  ],
+  "itemDrawAndRejectedUse": true,
+  "powerFormExecuted": true,
+  "consoleErrors": [],
+  "note": "Focused legal-command scenario; not counted among full-game acceptance runs. Setup deliberately selects chest IDs to exercise item UI."
+}

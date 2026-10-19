@@ -1,6 +1,6 @@
 {
   "name": "dbd-boardgame-private",
-  "version": "0.2.1",
+  "version": "0.2.2",
   "private": true,
   "type": "module",
   "scripts": {
@@ -14,7 +14,8 @@
     "verify:hotseat": "tsx scripts/verify-hotseat.ts",
     "verify:mobile": "tsx scripts/verify-hotseat-mobile.ts",
     "verify:actions": "tsx scripts/verify-hotseat-actions.ts",
-    "verify:visuals": "tsx scripts/verify-visual-feedback.ts"
+    "verify:visuals": "tsx scripts/verify-visual-feedback.ts",
+    "verify:board": "tsx scripts/verify-board-visuals.ts"
   },
   "devDependencies": {
     "@tailwindcss/vite": "4.3.3",

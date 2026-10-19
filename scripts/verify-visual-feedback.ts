@@ -143,7 +143,12 @@ await page.goto("http://127.0.0.1:5173/");
 assert.equal(await page.locator("html").getAttribute("data-motion"), "off");
 await page.getByTestId("start").click();
 await page.getByTestId("uncover").click();
-await page.locator("[data-command]").first().click();
+const staticTarget = page.locator(".actionable-prop").first();
+const staticRoom = await staticTarget.evaluate((el) =>
+  el.closest("[data-room-container]")!.getAttribute("data-room-container")!,
+);
+await page.getByLabel("查看房间", { exact: true }).selectOption(staticRoom);
+await staticTarget.locator(":scope > rect").click();
 await page.getByTestId("ack-feedback").waitFor();
 assert.equal(
   await page
