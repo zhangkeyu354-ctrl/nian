@@ -135,3 +135,44 @@ export async function assertFullBoardShot(
   );
   return { ...counts, pixels: px };
 }
+/** UI/partial-board evidence for audits and explicitly labelled prototypes.
+ * This does not claim that a local camera view contains the entire map.
+ * Full-map screenshots must continue to use assertFullBoardShot. */
+export async function assertUiShot(
+  p: Page,
+  path: string,
+  regionSelector: string = "body",
+) {
+  await waitForBoardImages(p);
+  await p.evaluate(() => document.fonts.ready);
+  const box = (await p.locator(regionSelector).boundingBox())!;
+  const win = await p.evaluate(() => ({ w: innerWidth, h: innerHeight }));
+  const x = Math.max(0, box.x),
+    y = Math.max(0, box.y);
+  // Fixed dialogs can extend outside a short body box. Body evidence means
+  // the visible viewport; selected board regions still use their clipped box.
+  const rect =
+    regionSelector === "body"
+      ? { x: 0, y: 0, width: win.w, height: win.h }
+      : {
+          x,
+          y,
+          width: Math.min(box.x + box.width, win.w) - x,
+          height: Math.min(box.y + box.height, win.h) - y,
+        };
+  assert(
+    rect.width > 20 && rect.height > 20,
+    "Evidence region must be visible",
+  );
+  const png = await p.screenshot({ path, animations: "disabled" });
+  const pixels = await pixelStats(p, png, rect);
+  assert(
+    pixels.busy > 0.025 && pixels.std > 6,
+    `UI evidence is blank: ${path} ${JSON.stringify(pixels)}`,
+  );
+  return {
+    scope: "Visible UI / prototype region, not a full-map-count claim",
+    region: rect,
+    pixels,
+  };
+}

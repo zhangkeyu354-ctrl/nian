@@ -1,0 +1,17 @@
+{
+  "file": "2903_电脑_中局.png",
+  "sha256": "ccea18e1261c469da7335133ed743f8c33917ff035ba9e2bf95b26aab8f83ba5",
+  "sample_region": [
+    10,
+    240,
+    1100,
+    1200
+  ],
+  "channel_stddev": [
+    0.030275229357452943,
+    0.030275229357452943,
+    0.030275229357452943
+  ],
+  "observed": "Delivered historical image has a blank board area; do not reuse its former passing report.",
+  "current_audit_base": "5b9683e (includes 391a077 fix and Phase3)"
+}

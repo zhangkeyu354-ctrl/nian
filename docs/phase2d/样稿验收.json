@@ -1,0 +1,130 @@
+{
+  "all_passed": true,
+  "engine": "Chromium with official device descriptors; not physical Safari/Android",
+  "records": [
+    {
+      "model": "iPhone 13",
+      "scene": "plan",
+      "taps": 2,
+      "noPageScroll": true,
+      "noDropdown": true,
+      "targets48": true,
+      "screenshot": "preview/iPhone_13_plan.png",
+      "scope": "Visible UI / prototype region, not a full-map-count claim",
+      "region": {
+        "x": 0,
+        "y": 141,
+        "width": 390,
+        "height": 335
+      },
+      "pixels": {
+        "busy": 0.20704646503131346,
+        "std": 26.727513658672457
+      }
+    },
+    {
+      "model": "iPhone 13",
+      "scene": "move",
+      "taps": 1,
+      "noPageScroll": true,
+      "noDropdown": true,
+      "targets48": true,
+      "screenshot": "preview/iPhone_13_move.png",
+      "scope": "Visible UI / prototype region, not a full-map-count claim",
+      "region": {
+        "x": 0,
+        "y": 141,
+        "width": 390,
+        "height": 353
+      },
+      "pixels": {
+        "busy": 0.2246172818781113,
+        "std": 30.53464707154679
+      }
+    },
+    {
+      "model": "iPhone 13",
+      "scene": "interact",
+      "taps": 2,
+      "noPageScroll": true,
+      "noDropdown": true,
+      "targets48": true,
+      "screenshot": "preview/iPhone_13_interact.png",
+      "scope": "Visible UI / prototype region, not a full-map-count claim",
+      "region": {
+        "x": 0,
+        "y": 141,
+        "width": 390,
+        "height": 289
+      },
+      "pixels": {
+        "busy": 0.18468205585217548,
+        "std": 25.643877878897378
+      }
+    },
+    {
+      "model": "Pixel 7",
+      "scene": "plan",
+      "taps": 2,
+      "noPageScroll": true,
+      "noDropdown": true,
+      "targets48": true,
+      "screenshot": "preview/Pixel_7_plan.png",
+      "scope": "Visible UI / prototype region, not a full-map-count claim",
+      "region": {
+        "x": 0,
+        "y": 146,
+        "width": 412,
+        "height": 485
+      },
+      "pixels": {
+        "busy": 0.25717081897039906,
+        "std": 28.35681868124511
+      }
+    },
+    {
+      "model": "Pixel 7",
+      "scene": "move",
+      "taps": 1,
+      "noPageScroll": true,
+      "noDropdown": true,
+      "targets48": true,
+      "screenshot": "preview/Pixel_7_move.png",
+      "scope": "Visible UI / prototype region, not a full-map-count claim",
+      "region": {
+        "x": 0,
+        "y": 146,
+        "width": 412,
+        "height": 493
+      },
+      "pixels": {
+        "busy": 0.2640282035385842,
+        "std": 31.640553705484102
+      }
+    },
+    {
+      "model": "Pixel 7",
+      "scene": "interact",
+      "taps": 2,
+      "noPageScroll": true,
+      "noDropdown": true,
+      "targets48": true,
+      "screenshot": "preview/Pixel_7_interact.png",
+      "scope": "Visible UI / prototype region, not a full-map-count claim",
+      "region": {
+        "x": 0,
+        "y": 146,
+        "width": 412,
+        "height": 455
+      },
+      "pixels": {
+        "busy": 0.2660622892651799,
+        "std": 28.670157202889012
+      }
+    }
+  ],
+  "killerPlanTaps": 3,
+  "blankRejected": true,
+  "realRoomConnections": 0,
+  "consoleErrors": []
+}

@@ -160,3 +160,7 @@ tests/
 - 之后所有截图验收必须使用 `scripts/screenshot-check.ts`；联机改动必须通过 `verify:lan-protocol` 与 `verify:lan-browsers`（先 `npm run build`）。
 - 下一阶段按用户计划：Phase 2D 桌面化改版（规则、协议、数据不改），然后 Phase 4/5。
 - 用户裁定 U-ITEM、U-DICE 见 `docs/HOUSE_RULES.md` 末节：物品仅持有者可见、打出后公开；骰子所有人同时看到并有翻滚动画。
+
+## 17. Phase 2D 当前授权：仅第一步
+
+按 `docs/instructions/PHASE_2D_手机优先改版.md` 第2节，完成现有手机操作审计与独立可点样稿 `/?view=mobile-preview`；提交Git、报告后停止，等用户确认方案。正式界面、规则引擎、联机协议、privacy.ts与游戏数据不改。第16节“桌面化”名称以本次“手机优先”为准。样稿不接真实对局，不能以样稿点击数/占位图流量冒充第二步的正式整局/8MB验收。证据与方案在 `docs/phase2d/`。

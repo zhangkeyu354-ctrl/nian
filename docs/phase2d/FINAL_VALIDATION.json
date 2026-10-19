@@ -1,0 +1,64 @@
+{
+  "base_commit": "5b9683e",
+  "all_passed": true,
+  "checks": [
+    {
+      "command": "npm.cmd run typecheck",
+      "exit_code": 0
+    },
+    {
+      "command": "npm.cmd run build",
+      "exit_code": 0
+    },
+    {
+      "command": "npm.cmd test",
+      "exit_code": 0
+    },
+    {
+      "command": "npm.cmd run verify:replays",
+      "exit_code": 0
+    },
+    {
+      "command": "npm.cmd run verify:hotseat",
+      "exit_code": 0
+    },
+    {
+      "command": "npm.cmd run verify:mobile",
+      "exit_code": 0
+    },
+    {
+      "command": "npm.cmd run verify:actions",
+      "exit_code": 0
+    },
+    {
+      "command": "npm.cmd run verify:visuals",
+      "exit_code": 0
+    },
+    {
+      "command": "npm.cmd run verify:board",
+      "exit_code": 0
+    },
+    {
+      "command": "npm.cmd run verify:lan-protocol",
+      "exit_code": 0
+    },
+    {
+      "command": "npm.cmd run verify:lan-browsers",
+      "exit_code": 0
+    },
+    {
+      "command": "npm.cmd run verify:mobile-preview",
+      "exit_code": 0
+    }
+  ],
+  "audit_follow_up": [
+    {
+      "command": "npm.cmd run typecheck",
+      "exit_code": 0
+    },
+    {
+      "command": "npm.cmd run verify:mobile-preview",
+      "exit_code": 0
+    }
+  ]
+}

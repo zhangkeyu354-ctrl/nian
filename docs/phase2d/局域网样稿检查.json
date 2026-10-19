@@ -1,0 +1,17 @@
+{
+  "status": 200,
+  "url": "http://192.168.0.71:3000/?view=mobile-preview",
+  "test": "headless Chromium from this PC; physical phone and firewall not verified",
+  "state": {
+    "demo": true,
+    "scene": "plan",
+    "actor": "德怀特·费菲尔德",
+    "selectedCards": [
+      "blue"
+    ],
+    "selectedAction": null,
+    "taps": 1,
+    "intendedCommand": null,
+    "notice": ""
+  }
+}

@@ -18,7 +18,9 @@
     "verify:board": "tsx scripts/verify-board-visuals.ts",
     "server": "tsx apps/server/src/main.ts",
     "verify:lan-protocol": "tsx scripts/verify-lan-protocol.ts",
-    "verify:lan-browsers": "tsx scripts/verify-lan-browsers.ts"
+    "verify:lan-browsers": "tsx scripts/verify-lan-browsers.ts",
+    "verify:mobile-preview": "tsx scripts/verify-mobile-preview.ts",
+    "audit:mobile": "tsx scripts/audit-current-mobile.ts"
   },
   "devDependencies": {
     "@tailwindcss/vite": "4.3.3",

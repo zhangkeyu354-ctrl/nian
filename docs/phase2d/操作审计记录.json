@@ -1,0 +1,1089 @@
+{
+  "device": "Playwright iPhone 13 descriptor in Chromium (390x844 CSS, touch, DPR 3), not physical Safari",
+  "base": "5b9683e",
+  "preparation": "Separate test server; original legal command prefix via authenticated protocol, then browser rejoined its own test seat. No game-state injection. Measured steps use touchscreen taps; native select confirmations counted separately. ScrollIntoView is recorded as page scrolling, not claimed to be a physical swipe. Command taps and dice/feedback acknowledgement taps are listed separately; taps includes both.",
+  "results": [
+    {
+      "kind": "reveal",
+      "seed": 1701,
+      "prefixCommands": 0,
+      "command": {
+        "type": "SETUP_REVEAL",
+        "actorId": "dwight",
+        "propId": "mine_depths:objective:0"
+      },
+      "limit": 2,
+      "taps": 3,
+      "commandTaps": 2,
+      "acknowledgementTaps": 1,
+      "physicalTaps": 3,
+      "nativeSelectConfirmations": 0,
+      "scrollRequired": false,
+      "scrollTransitions": 0,
+      "dropdownRequired": false,
+      "smallestTapTarget": 44,
+      "roomLabelCssPixels": 27.083333333333332,
+      "completed": true,
+      "error": "",
+      "overLimit": true,
+      "coldRoomTransferBytes": 57734958,
+      "screenshot": {
+        "file": "audit/reveal.png",
+        "scope": "Visible UI / prototype region, not a full-map-count claim",
+        "region": {
+          "x": 0,
+          "y": 0,
+          "width": 390,
+          "height": 664
+        },
+        "pixels": {
+          "busy": 0.18244602340987884,
+          "std": 37.12663104184303
+        }
+      },
+      "trace": [
+        {
+          "kind": "tap",
+          "box": {
+            "width": 96.19419860839844,
+            "height": 74.24874877929688
+          },
+          "scrollY": 0
+        },
+        {
+          "kind": "tap",
+          "box": {
+            "width": 57.416664123535156,
+            "height": 69.33331298828125
+          },
+          "scrollY": 0
+        },
+        {
+          "kind": "tap",
+          "label": "已查看变化，继续",
+          "box": {
+            "width": 144,
+            "height": 44
+          },
+          "scrollY": 0
+        }
+      ],
+      "consoleErrors": []
+    },
+    {
+      "kind": "plan_survivor",
+      "seed": 1701,
+      "prefixCommands": 4,
+      "command": {
+        "type": "PLAN",
+        "actorId": "dwight",
+        "cards": [
+          "blue"
+        ]
+      },
+      "limit": 2,
+      "taps": 2,
+      "commandTaps": 2,
+      "acknowledgementTaps": 0,
+      "physicalTaps": 2,
+      "nativeSelectConfirmations": 0,
+      "scrollRequired": true,
+      "scrollTransitions": 1,
+      "dropdownRequired": false,
+      "smallestTapTarget": 44,
+      "roomLabelCssPixels": 9.143935239617308,
+      "completed": true,
+      "error": "",
+      "overLimit": false,
+      "coldRoomTransferBytes": 69957004,
+      "screenshot": {
+        "file": "audit/plan_survivor.png",
+        "scope": "Visible UI / prototype region, not a full-map-count claim",
+        "region": {
+          "x": 0,
+          "y": 0,
+          "width": 390,
+          "height": 664
+        },
+        "pixels": {
+          "busy": 0.1553684824769162,
+          "std": 39.343440750205126
+        }
+      },
+      "trace": [
+        {
+          "kind": "tap",
+          "label": "潜行（蓝）",
+          "box": {
+            "width": 86,
+            "height": 89
+          },
+          "scrollY": 602
+        },
+        {
+          "kind": "tap",
+          "label": "确认秘密计划",
+          "box": {
+            "width": 116,
+            "height": 44
+          },
+          "scrollY": 602
+        }
+      ],
+      "consoleErrors": []
+    },
+    {
+      "kind": "plan_killer",
+      "seed": 1701,
+      "prefixCommands": 8,
+      "command": {
+        "type": "PLAN",
+        "actorId": "trapper",
+        "cards": [
+          "wait",
+          "blue"
+        ]
+      },
+      "limit": 3,
+      "taps": 3,
+      "commandTaps": 3,
+      "acknowledgementTaps": 0,
+      "physicalTaps": 3,
+      "nativeSelectConfirmations": 0,
+      "scrollRequired": true,
+      "scrollTransitions": 1,
+      "dropdownRequired": false,
+      "smallestTapTarget": 44,
+      "roomLabelCssPixels": 9.848484848484848,
+      "completed": true,
+      "error": "",
+      "overLimit": false,
+      "coldRoomTransferBytes": 69957004,
+      "screenshot": {
+        "file": "audit/plan_killer.png",
+        "scope": "Visible UI / prototype region, not a full-map-count claim",
+        "region": {
+          "x": 0,
+          "y": 0,
+          "width": 390,
+          "height": 664
+        },
+        "pixels": {
+          "busy": 0.18863316513918924,
+          "std": 39.50447888674932
+        }
+      },
+      "trace": [
+        {
+          "kind": "tap",
+          "label": "等待",
+          "box": {
+            "width": 86,
+            "height": 89
+          },
+          "scrollY": 699
+        },
+        {
+          "kind": "tap",
+          "label": "潜行（蓝）",
+          "box": {
+            "width": 86,
+            "height": 89
+          },
+          "scrollY": 699
+        },
+        {
+          "kind": "tap",
+          "label": "确认秘密计划",
+          "box": {
+            "width": 116,
+            "height": 44
+          },
+          "scrollY": 699
+        }
+      ],
+      "consoleErrors": []
+    },
+    {
+      "kind": "skill_use",
+      "seed": 1701,
+      "prefixCommands": 9,
+      "command": {
+        "type": "USE_PERK",
+        "actorId": "ace",
+        "perkId": "board_ace_1",
+        "index": 0
+      },
+      "limit": 1,
+      "taps": 2,
+      "commandTaps": 2,
+      "acknowledgementTaps": 0,
+      "physicalTaps": 2,
+      "nativeSelectConfirmations": 0,
+      "scrollRequired": true,
+      "scrollTransitions": 2,
+      "dropdownRequired": false,
+      "smallestTapTarget": 44,
+      "roomLabelCssPixels": 9.848484848484848,
+      "completed": true,
+      "error": "",
+      "overLimit": true,
+      "coldRoomTransferBytes": 69957004,
+      "screenshot": {
+        "file": "audit/skill_use.png",
+        "scope": "Visible UI / prototype region, not a full-map-count claim",
+        "region": {
+          "x": 0,
+          "y": 0,
+          "width": 390,
+          "height": 664
+        },
+        "pixels": {
+          "busy": 0.062224968249064636,
+          "std": 29.656819690966817
+        }
+      },
+      "trace": [
+        {
+          "kind": "tap",
+          "label": "使用技能",
+          "box": {
+            "width": 130,
+            "height": 44
+          },
+          "scrollY": 761
+        },
+        {
+          "kind": "tap",
+          "label": "确认使用",
+          "box": {
+            "width": 88,
+            "height": 44
+          },
+          "scrollY": 1391
+        }
+      ],
+      "consoleErrors": []
+    },
+    {
+      "kind": "skill_skip",
+      "seed": 1701,
+      "prefixCommands": 9,
+      "command": {
+        "type": "PASS",
+        "actorId": "ace"
+      },
+      "limit": 1,
+      "taps": 1,
+      "commandTaps": 1,
+      "acknowledgementTaps": 0,
+      "physicalTaps": 1,
+      "nativeSelectConfirmations": 0,
+      "scrollRequired": true,
+      "scrollTransitions": 1,
+      "dropdownRequired": false,
+      "smallestTapTarget": 44,
+      "roomLabelCssPixels": 9.848484848484848,
+      "completed": true,
+      "error": "",
+      "overLimit": false,
+      "coldRoomTransferBytes": 69957004,
+      "screenshot": {
+        "file": "audit/skill_skip.png",
+        "scope": "Visible UI / prototype region, not a full-map-count claim",
+        "region": {
+          "x": 0,
+          "y": 0,
+          "width": 390,
+          "height": 664
+        },
+        "pixels": {
+          "busy": 0.17381663405759792,
+          "std": 49.03300239385927
+        }
+      },
+      "trace": [
+        {
+          "kind": "tap",
+          "label": "不使用技能，继续",
+          "box": {
+            "width": 356,
+            "height": 44
+          },
+          "scrollY": 548
+        }
+      ],
+      "consoleErrors": []
+    },
+    {
+      "kind": "move",
+      "seed": 1701,
+      "prefixCommands": 11,
+      "command": {
+        "type": "MOVE",
+        "actorId": "dwight",
+        "pathId": "mm_p04",
+        "to": "ancient_tree"
+      },
+      "limit": 1,
+      "taps": 1,
+      "commandTaps": 1,
+      "acknowledgementTaps": 0,
+      "physicalTaps": 1,
+      "nativeSelectConfirmations": 0,
+      "scrollRequired": false,
+      "scrollTransitions": 0,
+      "dropdownRequired": false,
+      "smallestTapTarget": 81.15155029296875,
+      "roomLabelCssPixels": 9.143935239617308,
+      "completed": true,
+      "error": "",
+      "overLimit": false,
+      "coldRoomTransferBytes": 69957004,
+      "screenshot": {
+        "file": "audit/move.png",
+        "scope": "Visible UI / prototype region, not a full-map-count claim",
+        "region": {
+          "x": 0,
+          "y": 0,
+          "width": 390,
+          "height": 664
+        },
+        "pixels": {
+          "busy": 0.14710465794803143,
+          "std": 34.24614070204478
+        }
+      },
+      "trace": [
+        {
+          "kind": "tap",
+          "box": {
+            "width": 104.78788185119629,
+            "height": 81.15155029296875
+          },
+          "scrollY": 0
+        }
+      ],
+      "consoleErrors": []
+    },
+    {
+      "kind": "repair",
+      "seed": 1701,
+      "prefixCommands": 14,
+      "command": {
+        "type": "INTERACT",
+        "actorId": "dwight",
+        "action": "repair",
+        "targetId": "ancient_tree:objective:0"
+      },
+      "limit": 2,
+      "taps": 2,
+      "commandTaps": 2,
+      "acknowledgementTaps": 0,
+      "physicalTaps": 2,
+      "nativeSelectConfirmations": 0,
+      "scrollRequired": false,
+      "scrollTransitions": 0,
+      "dropdownRequired": false,
+      "smallestTapTarget": 57.416664123535156,
+      "roomLabelCssPixels": 27.083333333333332,
+      "completed": true,
+      "error": "",
+      "overLimit": false,
+      "coldRoomTransferBytes": 69957004,
+      "screenshot": {
+        "file": "audit/repair.png",
+        "scope": "Visible UI / prototype region, not a full-map-count claim",
+        "region": {
+          "x": 0,
+          "y": 0,
+          "width": 390,
+          "height": 664
+        },
+        "pixels": {
+          "busy": 0.23933855078433391,
+          "std": 41.93832509141723
+        }
+      },
+      "trace": [
+        {
+          "kind": "tap",
+          "box": {
+            "width": 96.19419860839844,
+            "height": 74.24874877929688
+          },
+          "scrollY": 0
+        },
+        {
+          "kind": "tap",
+          "box": {
+            "width": 57.416664123535156,
+            "height": 69.33331298828125
+          },
+          "scrollY": 0
+        }
+      ],
+      "consoleErrors": []
+    },
+    {
+      "kind": "end",
+      "seed": 1701,
+      "prefixCommands": 14,
+      "command": {
+        "type": "END_TURN",
+        "actorId": "dwight"
+      },
+      "limit": 1,
+      "taps": 1,
+      "commandTaps": 1,
+      "acknowledgementTaps": 0,
+      "physicalTaps": 1,
+      "nativeSelectConfirmations": 0,
+      "scrollRequired": true,
+      "scrollTransitions": 1,
+      "dropdownRequired": false,
+      "smallestTapTarget": 44,
+      "roomLabelCssPixels": 9.143935239617308,
+      "completed": true,
+      "error": "",
+      "overLimit": false,
+      "coldRoomTransferBytes": 69957004,
+      "screenshot": {
+        "file": "audit/end.png",
+        "scope": "Visible UI / prototype region, not a full-map-count claim",
+        "region": {
+          "x": 0,
+          "y": 0,
+          "width": 390,
+          "height": 664
+        },
+        "pixels": {
+          "busy": 0.17450657330175404,
+          "std": 47.63642898306558
+        }
+      },
+      "trace": [
+        {
+          "kind": "tap",
+          "label": "结束本次行动",
+          "box": {
+            "width": 356,
+            "height": 44
+          },
+          "scrollY": 548
+        }
+      ],
+      "consoleErrors": []
+    },
+    {
+      "kind": "cleanse",
+      "seed": 1701,
+      "prefixCommands": 36,
+      "command": {
+        "type": "INTERACT",
+        "actorId": "ace",
+        "action": "cleanse",
+        "targetId": "ancient_tree:boldness:0"
+      },
+      "limit": 2,
+      "taps": 2,
+      "commandTaps": 2,
+      "acknowledgementTaps": 0,
+      "physicalTaps": 2,
+      "nativeSelectConfirmations": 0,
+      "scrollRequired": false,
+      "scrollTransitions": 0,
+      "dropdownRequired": false,
+      "smallestTapTarget": 57.416656494140625,
+      "roomLabelCssPixels": 27.083333333333332,
+      "completed": true,
+      "error": "",
+      "overLimit": false,
+      "coldRoomTransferBytes": 74595676,
+      "screenshot": {
+        "file": "audit/cleanse.png",
+        "scope": "Visible UI / prototype region, not a full-map-count claim",
+        "region": {
+          "x": 0,
+          "y": 0,
+          "width": 390,
+          "height": 664
+        },
+        "pixels": {
+          "busy": 0.24018638657192873,
+          "std": 42.32932298904521
+        }
+      },
+      "trace": [
+        {
+          "kind": "tap",
+          "box": {
+            "width": 96.19419860839844,
+            "height": 74.24874877929688
+          },
+          "scrollY": 0
+        },
+        {
+          "kind": "tap",
+          "box": {
+            "width": 57.416656494140625,
+            "height": 69.33331298828125
+          },
+          "scrollY": 0
+        }
+      ],
+      "consoleErrors": []
+    },
+    {
+      "kind": "attack",
+      "seed": 1701,
+      "prefixCommands": 41,
+      "command": {
+        "type": "INTERACT",
+        "actorId": "trapper",
+        "action": "attack",
+        "targetId": "dwight"
+      },
+      "limit": 2,
+      "taps": 3,
+      "commandTaps": 2,
+      "acknowledgementTaps": 1,
+      "physicalTaps": 3,
+      "nativeSelectConfirmations": 0,
+      "scrollRequired": false,
+      "scrollTransitions": 0,
+      "dropdownRequired": false,
+      "smallestTapTarget": 44,
+      "roomLabelCssPixels": 27.083333333333332,
+      "completed": true,
+      "error": "",
+      "overLimit": true,
+      "coldRoomTransferBytes": 74595676,
+      "screenshot": {
+        "file": "audit/attack.png",
+        "scope": "Visible UI / prototype region, not a full-map-count claim",
+        "region": {
+          "x": 0,
+          "y": 0,
+          "width": 390,
+          "height": 664
+        },
+        "pixels": {
+          "busy": 0.2417739333401984,
+          "std": 43.34715809265593
+        }
+      },
+      "trace": [
+        {
+          "kind": "tap",
+          "box": {
+            "width": 96.19419860839844,
+            "height": 74.24874877929688
+          },
+          "scrollY": 0
+        },
+        {
+          "kind": "tap",
+          "box": {
+            "width": 69.33333587646484,
+            "height": 84.49996948242188
+          },
+          "scrollY": 0
+        },
+        {
+          "kind": "tap",
+          "label": "已查看变化，继续",
+          "box": {
+            "width": 144,
+            "height": 44
+          },
+          "scrollY": 0
+        }
+      ],
+      "consoleErrors": []
+    },
+    {
+      "kind": "pallet",
+      "seed": 1701,
+      "prefixCommands": 66,
+      "command": {
+        "type": "INTERACT",
+        "actorId": "jake",
+        "action": "pallet",
+        "targetId": "mine_entrance:altruism:0",
+        "pathId": "mm_p01"
+      },
+      "limit": 2,
+      "taps": 4,
+      "commandTaps": 4,
+      "acknowledgementTaps": 0,
+      "physicalTaps": 4,
+      "nativeSelectConfirmations": 0,
+      "scrollRequired": true,
+      "scrollTransitions": 1,
+      "dropdownRequired": false,
+      "smallestTapTarget": 20.878799438476562,
+      "roomLabelCssPixels": 27.083333333333332,
+      "completed": true,
+      "error": "",
+      "overLimit": true,
+      "coldRoomTransferBytes": 79847351,
+      "screenshot": {
+        "file": "audit/pallet.png",
+        "scope": "Visible UI / prototype region, not a full-map-count claim",
+        "region": {
+          "x": 0,
+          "y": 0,
+          "width": 390,
+          "height": 664
+        },
+        "pixels": {
+          "busy": 0.17632753235162874,
+          "std": 49.75286593417921
+        }
+      },
+      "trace": [
+        {
+          "kind": "tap",
+          "box": {
+            "width": 104.78788757324219,
+            "height": 81.15151977539062
+          },
+          "scrollY": 0
+        },
+        {
+          "kind": "tap",
+          "box": {
+            "width": 20.878799438476562,
+            "height": 25.212127685546875
+          },
+          "scrollY": 0
+        },
+        {
+          "kind": "tap",
+          "box": {
+            "width": 57.416656494140625,
+            "height": 69.33331298828125
+          },
+          "scrollY": 0
+        },
+        {
+          "kind": "tap",
+          "label": "放置木板：蹲伏（红） · 矿井深处 ↔ 矿井入口",
+          "box": {
+            "width": 173.5,
+            "height": 61.59375
+          },
+          "scrollY": 611
+        }
+      ],
+      "consoleErrors": []
+    },
+    {
+      "kind": "locker",
+      "seed": 1701,
+      "prefixCommands": 134,
+      "command": {
+        "type": "INTERACT",
+        "actorId": "claudette",
+        "action": "locker",
+        "targetId": "shack:survival:0"
+      },
+      "limit": 2,
+      "taps": 3,
+      "commandTaps": 2,
+      "acknowledgementTaps": 1,
+      "physicalTaps": 3,
+      "nativeSelectConfirmations": 0,
+      "scrollRequired": false,
+      "scrollTransitions": 0,
+      "dropdownRequired": false,
+      "smallestTapTarget": 44,
+      "roomLabelCssPixels": 27.083333333333332,
+      "completed": true,
+      "error": "",
+      "overLimit": true,
+      "coldRoomTransferBytes": 84608394,
+      "screenshot": {
+        "file": "audit/locker.png",
+        "scope": "Visible UI / prototype region, not a full-map-count claim",
+        "region": {
+          "x": 0,
+          "y": 0,
+          "width": 390,
+          "height": 664
+        },
+        "pixels": {
+          "busy": 0.20261387430062128,
+          "std": 38.52086748260696
+        }
+      },
+      "trace": [
+        {
+          "kind": "tap",
+          "box": {
+            "width": 73.7913703918457,
+            "height": 56.956878662109375
+          },
+          "scrollY": 0
+        },
+        {
+          "kind": "tap",
+          "box": {
+            "width": 57.416656494140625,
+            "height": 69.33331298828125
+          },
+          "scrollY": 0
+        },
+        {
+          "kind": "tap",
+          "label": "已查看变化，继续",
+          "box": {
+            "width": 144,
+            "height": 44
+          },
+          "scrollY": 0
+        }
+      ],
+      "consoleErrors": []
+    },
+    {
+      "kind": "chest",
+      "seed": 1701,
+      "prefixCommands": 140,
+      "command": {
+        "type": "INTERACT",
+        "actorId": "jake",
+        "action": "chest",
+        "targetId": "shack:survival:1"
+      },
+      "limit": 2,
+      "taps": 2,
+      "commandTaps": 2,
+      "acknowledgementTaps": 0,
+      "physicalTaps": 2,
+      "nativeSelectConfirmations": 0,
+      "scrollRequired": false,
+      "scrollTransitions": 0,
+      "dropdownRequired": false,
+      "smallestTapTarget": 56.956878662109375,
+      "roomLabelCssPixels": 27.083333333333332,
+      "completed": true,
+      "error": "",
+      "overLimit": false,
+      "coldRoomTransferBytes": 84608394,
+      "screenshot": {
+        "file": "audit/chest.png",
+        "scope": "Visible UI / prototype region, not a full-map-count claim",
+        "region": {
+          "x": 0,
+          "y": 0,
+          "width": 390,
+          "height": 664
+        },
+        "pixels": {
+          "busy": 0.20567912676346412,
+          "std": 39.01858522819553
+        }
+      },
+      "trace": [
+        {
+          "kind": "tap",
+          "box": {
+            "width": 73.7913703918457,
+            "height": 56.956878662109375
+          },
+          "scrollY": 0
+        },
+        {
+          "kind": "tap",
+          "box": {
+            "width": 57.41667175292969,
+            "height": 69.33331298828125
+          },
+          "scrollY": 0
+        }
+      ],
+      "consoleErrors": []
+    },
+    {
+      "kind": "exit",
+      "seed": 1701,
+      "prefixCommands": 180,
+      "command": {
+        "type": "INTERACT",
+        "actorId": "claudette",
+        "action": "exit",
+        "targetId": "mine_depths:objective:0"
+      },
+      "limit": 2,
+      "taps": 2,
+      "commandTaps": 2,
+      "acknowledgementTaps": 0,
+      "physicalTaps": 2,
+      "nativeSelectConfirmations": 0,
+      "scrollRequired": false,
+      "scrollTransitions": 0,
+      "dropdownRequired": false,
+      "smallestTapTarget": 57.416664123535156,
+      "roomLabelCssPixels": 9.848484848484848,
+      "completed": true,
+      "error": "",
+      "overLimit": false,
+      "coldRoomTransferBytes": 84608394,
+      "screenshot": {
+        "file": "audit/exit.png",
+        "scope": "Visible UI / prototype region, not a full-map-count claim",
+        "region": {
+          "x": 0,
+          "y": 0,
+          "width": 390,
+          "height": 664
+        },
+        "pixels": {
+          "busy": 0.18784196615521917,
+          "std": 36.737483371845386
+        }
+      },
+      "trace": [
+        {
+          "kind": "tap",
+          "box": {
+            "width": 96.19419860839844,
+            "height": 74.24874877929688
+          },
+          "scrollY": 0
+        },
+        {
+          "kind": "tap",
+          "box": {
+            "width": 57.416664123535156,
+            "height": 69.33331298828125
+          },
+          "scrollY": 0
+        }
+      ],
+      "consoleErrors": []
+    },
+    {
+      "kind": "pickup",
+      "seed": 4111,
+      "prefixCommands": 46,
+      "command": {
+        "type": "INTERACT",
+        "actorId": "doctor",
+        "action": "pickup",
+        "targetId": "meg"
+      },
+      "limit": 2,
+      "taps": 3,
+      "commandTaps": 2,
+      "acknowledgementTaps": 1,
+      "physicalTaps": 3,
+      "nativeSelectConfirmations": 0,
+      "scrollRequired": false,
+      "scrollTransitions": 0,
+      "dropdownRequired": false,
+      "smallestTapTarget": 44,
+      "roomLabelCssPixels": 27.083333333333332,
+      "completed": true,
+      "error": "",
+      "overLimit": true,
+      "coldRoomTransferBytes": 73630722,
+      "screenshot": {
+        "file": "audit/pickup.png",
+        "scope": "Visible UI / prototype region, not a full-map-count claim",
+        "region": {
+          "x": 0,
+          "y": 0,
+          "width": 390,
+          "height": 664
+        },
+        "pixels": {
+          "busy": 0.18995983935742972,
+          "std": 37.88563316817814
+        }
+      },
+      "trace": [
+        {
+          "kind": "tap",
+          "box": {
+            "width": 100.5588264465332,
+            "height": 77.61764526367188
+          },
+          "scrollY": 0
+        },
+        {
+          "kind": "tap",
+          "box": {
+            "width": 69.33333587646484,
+            "height": 84.5
+          },
+          "scrollY": 0
+        },
+        {
+          "kind": "tap",
+          "label": "已查看变化，继续",
+          "box": {
+            "width": 144,
+            "height": 44
+          },
+          "scrollY": 0
+        }
+      ],
+      "consoleErrors": []
+    },
+    {
+      "kind": "carry",
+      "seed": 4111,
+      "prefixCommands": 85,
+      "command": {
+        "type": "SELECT",
+        "actorId": "doctor",
+        "dice": 1,
+        "route": [
+          {
+            "pathId": "ah_p04",
+            "to": "gas_pump"
+          }
+        ]
+      },
+      "limit": 2,
+      "taps": 4,
+      "commandTaps": 2,
+      "acknowledgementTaps": 2,
+      "physicalTaps": 4,
+      "nativeSelectConfirmations": 0,
+      "scrollRequired": true,
+      "scrollTransitions": 2,
+      "dropdownRequired": false,
+      "smallestTapTarget": 44,
+      "roomLabelCssPixels": 7.116788321167883,
+      "completed": true,
+      "error": "",
+      "overLimit": true,
+      "coldRoomTransferBytes": 73630722,
+      "screenshot": {
+        "file": "audit/carry.png",
+        "scope": "Visible UI / prototype region, not a full-map-count claim",
+        "region": {
+          "x": 0,
+          "y": 0,
+          "width": 390,
+          "height": 664
+        },
+        "pixels": {
+          "busy": 0.07099509147701918,
+          "std": 32.51772295214625
+        }
+      },
+      "trace": [
+        {
+          "kind": "tap",
+          "label": "前往油泵冲刺（绿） · 废旧车库南 ↔ 油泵 ↔ 村舍",
+          "box": {
+            "width": 324,
+            "height": 59.984375
+          },
+          "scrollY": 622
+        },
+        {
+          "kind": "tap",
+          "label": "确认搬运",
+          "box": {
+            "width": 88,
+            "height": 44
+          },
+          "scrollY": 983
+        },
+        {
+          "kind": "tap",
+          "label": "已查看，继续",
+          "box": {
+            "width": 116,
+            "height": 44
+          },
+          "scrollY": 0
+        },
+        {
+          "kind": "tap",
+          "label": "已查看变化，继续",
+          "box": {
+            "width": 144,
+            "height": 44
+          },
+          "scrollY": 0
+        }
+      ],
+      "consoleErrors": []
+    },
+    {
+      "kind": "heal",
+      "seed": 4111,
+      "prefixCommands": 46,
+      "command": {
+        "type": "INTERACT",
+        "actorId": "claudette",
+        "action": "heal",
+        "targetId": "meg"
+      },
+      "limit": 2,
+      "taps": 3,
+      "commandTaps": 2,
+      "acknowledgementTaps": 1,
+      "physicalTaps": 3,
+      "nativeSelectConfirmations": 0,
+      "scrollRequired": false,
+      "scrollTransitions": 0,
+      "dropdownRequired": false,
+      "smallestTapTarget": 44,
+      "roomLabelCssPixels": 7.116788321167883,
+      "completed": true,
+      "error": "",
+      "overLimit": true,
+      "coldRoomTransferBytes": 73630722,
+      "screenshot": {
+        "file": "audit/heal.png",
+        "scope": "Visible UI / prototype region, not a full-map-count claim",
+        "region": {
+          "x": 0,
+          "y": 0,
+          "width": 390,
+          "height": 664
+        },
+        "pixels": {
+          "busy": 0.195007379947139,
+          "std": 37.8582785181338
+        }
+      },
+      "trace": [
+        {
+          "kind": "tap",
+          "box": {
+            "width": 74.86862182617188,
+            "height": 57.788330078125
+          },
+          "scrollY": 0
+        },
+        {
+          "kind": "tap",
+          "box": {
+            "width": 69.33333587646484,
+            "height": 84.5
+          },
+          "scrollY": 0
+        },
+        {
+          "kind": "tap",
+          "label": "已查看，继续",
+          "box": {
+            "width": 116,
+            "height": 44
+          },
+          "scrollY": 0
+        }
+      ],
+      "consoleErrors": []
+    }
+  ]
+}

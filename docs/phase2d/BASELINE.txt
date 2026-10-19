@@ -1,0 +1,113 @@
+npm.cmd run typecheck
+
+> dbd-boardgame-private@0.2.2 typecheck
+> tsc --noEmit
+
+
+EXIT_CODE=0
+npm.cmd run build
+
+> dbd-boardgame-private@0.2.2 build
+> vite build --config apps/web/vite.config.ts
+
+vite v8.3.4 building client environment for production...
+transforming...
+✓ 75 modules transformed.
+rendering chunks...
+computing gzip size...
+dist/web/index.html                   0.49 kB │ gzip:   0.36 kB
+dist/web/assets/index-BTyafI4j.css   31.41 kB │ gzip:   8.56 kB
+dist/web/assets/index-BTZvC0Oi.js   693.65 kB │ gzip: 151.47 kB
+
+✓ built in 549ms
+[plugin builtin:vite-reporter]
+(!) Some chunks are larger than 500 kB after minification. Consider:
+- Using dynamic import() to code-split the application
+- Use build.rolldownOptions.output.codeSplitting to improve chunking: https://rolldown.rs/reference/OutputOptions.codeSplitting
+- Adjust chunk size limit for this warning via build.chunkSizeWarningLimit.
+
+EXIT_CODE=0
+npm.cmd test
+
+> dbd-boardgame-private@0.2.2 test
+> vitest run
+
+
+ RUN  v5.0.5 E:/DBD-BoardGame-Web
+
+
+ Test Files  9 passed (9)
+      Tests  84 passed (84)
+   Start at  19:49:06
+   Duration  4.73s (tests 79%, import 14%, transform 7%, worker 1%)
+
+
+EXIT_CODE=0
+npm.cmd run verify:replays
+
+> dbd-boardgame-private@0.2.2 verify:replays
+> tsx scripts/verify-replays.ts
+
+Replay 1701: survivor, every event reproduced, SHA-256 16761427b3c584b8d9bd5ba43e45eb86365258eb217303bdd7063ee00da9fcbc
+Replay 2903: survivor, every event reproduced, SHA-256 396286e872483de21c1ec16caa701f7e963b14bf1e913056286c034128378917
+Replay 4111: killer, every event reproduced, SHA-256 09c5ac9b4b284d6cfb15c081be4426d2c8a67383d99ba18cd5e101c558c970c8
+
+EXIT_CODE=0
+npm.cmd run verify:hotseat
+
+> dbd-boardgame-private@0.2.2 verify:hotseat
+> tsx scripts/verify-hotseat.ts
+
+FULL_GAME_PASS 1701 survivor 192
+FULL_GAME_PASS 2903 survivor 226
+FULL_GAME_PASS 4111 killer 108
+
+EXIT_CODE=0
+npm.cmd run verify:mobile
+
+> dbd-boardgame-private@0.2.2 verify:mobile
+> tsx scripts/verify-hotseat-mobile.ts
+
+MOBILE_PASS pinch,drag,privacy,44px,CHECK_REQUIRED
+
+EXIT_CODE=0
+npm.cmd run verify:actions
+
+> dbd-boardgame-private@0.2.2 verify:actions
+> tsx scripts/verify-hotseat-actions.ts
+
+ACTIONS_PASS item,error,power,all-command-events-match 36
+
+EXIT_CODE=0
+npm.cmd run verify:visuals
+
+> dbd-boardgame-private@0.2.2 verify:visuals
+> tsx scripts/verify-visual-feedback.ts
+
+VISUAL_FEEDBACK_PASS 41 states; flip/dice/progress/hook/attack sequences; settings; fallback; privacy unit tests separate.
+
+EXIT_CODE=0
+npm.cmd run verify:board
+
+> dbd-boardgame-private@0.2.2 verify:board
+> tsx scripts/verify-board-visuals.ts
+
+PHASE2C_PASS 6 midgame views 25 board reveals 14 board interactions
+
+EXIT_CODE=0
+npm.cmd run verify:lan-protocol
+
+> dbd-boardgame-private@0.2.2 verify:lan-protocol
+> tsx scripts/verify-lan-protocol.ts
+
+LAN_PROTOCOL_PASS [{"seed":1701,"code":"TP67","commands":192,"winner":"survivor","events":408,"rejectedAsExpected":21},{"seed":2903,"code":"MZQL","commands":226,"winner":"survivor","events":477,"rejectedAsExpected":24},{"seed":4111,"code":"HYD6","commands":108,"winner":"killer","events":227,"rejectedAsExpected":12}] view checks 2630
+
+EXIT_CODE=0
+npm.cmd run verify:lan-browsers
+
+> dbd-boardgame-private@0.2.2 verify:lan-browsers
+> tsx scripts/verify-lan-browsers.ts
+
+LAN_BROWSERS_PASS [{"seed":4111,"room":"6H8J","commands":108,"winner":"killer","browsers":5,"killerFramesChecked":111,"screenshotsChecked":5},{"seed":1701,"room":"4JDK","commands":192,"winner":"survivor","browsers":5,"killerFramesChecked":195,"screenshotsChecked":5}]
+
+EXIT_CODE=0

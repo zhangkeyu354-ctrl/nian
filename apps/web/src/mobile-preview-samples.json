@@ -1,0 +1,3617 @@
+[
+  {
+    "scene": "plan",
+    "source": {
+      "replay": "1701.replay.json",
+      "prefixCommands": 4
+    },
+    "round": 1,
+    "gens": 0,
+    "sacrifice": 0,
+    "actor": {
+      "id": "dwight",
+      "name": "德怀特·费菲尔德",
+      "room": "mine_entrance",
+      "health": "healthy",
+      "blood": 2,
+      "side": "survivor",
+      "asset": "portrait_dwight"
+    },
+    "mapId": "macmillan_estate",
+    "mapName": "麦克米伦庄园",
+    "rooms": [
+      {
+        "id": "mine_depths",
+        "name": "矿井深处",
+        "point": [
+          200,
+          220
+        ]
+      },
+      {
+        "id": "mine_entrance",
+        "name": "矿井入口",
+        "point": [
+          500,
+          360
+        ]
+      },
+      {
+        "id": "foundry_upper_floor",
+        "name": "熔炉上层",
+        "point": [
+          850,
+          220
+        ]
+      },
+      {
+        "id": "coal_tower_upper",
+        "name": "煤矿废塔上层",
+        "point": [
+          1250,
+          360
+        ]
+      },
+      {
+        "id": "foundry_lower_floor",
+        "name": "熔炉下层",
+        "point": [
+          850,
+          630
+        ]
+      },
+      {
+        "id": "ancient_tree",
+        "name": "古树",
+        "point": [
+          200,
+          630
+        ]
+      },
+      {
+        "id": "coal_tower_ground",
+        "name": "煤矿废塔下层",
+        "point": [
+          1250,
+          770
+        ]
+      },
+      {
+        "id": "scrapyard",
+        "name": "废品场",
+        "point": [
+          500,
+          880
+        ]
+      },
+      {
+        "id": "foundry_basement",
+        "name": "熔炉地下室",
+        "point": [
+          850,
+          1120
+        ]
+      },
+      {
+        "id": "shack",
+        "name": "木屋",
+        "point": [
+          200,
+          1120
+        ]
+      },
+      {
+        "id": "backlot",
+        "name": "露天场地",
+        "point": [
+          1250,
+          1260
+        ]
+      }
+    ],
+    "paths": [
+      {
+        "id": "mm_p01",
+        "color": "red",
+        "from": "mine_depths",
+        "to": "mine_entrance",
+        "direction": "both"
+      },
+      {
+        "id": "mm_p02",
+        "color": "yellow",
+        "from": "foundry_upper_floor",
+        "to": "mine_entrance",
+        "direction": "a_to_b"
+      },
+      {
+        "id": "mm_p03",
+        "color": "green",
+        "from": "mine_depths",
+        "to": "ancient_tree",
+        "direction": "both"
+      },
+      {
+        "id": "mm_p04",
+        "color": "blue",
+        "from": "mine_entrance",
+        "to": "ancient_tree",
+        "direction": "both"
+      },
+      {
+        "id": "mm_p05",
+        "color": "blue",
+        "from": "mine_depths",
+        "to": "shack",
+        "direction": "both"
+      },
+      {
+        "id": "mm_p06",
+        "color": "green",
+        "from": "mine_entrance",
+        "to": "foundry_lower_floor",
+        "direction": "both"
+      },
+      {
+        "id": "mm_p07",
+        "color": "blue",
+        "from": "foundry_upper_floor",
+        "to": "foundry_lower_floor",
+        "direction": "both"
+      },
+      {
+        "id": "mm_p08",
+        "color": "red",
+        "from": "foundry_upper_floor",
+        "to": "coal_tower_ground",
+        "direction": "both"
+      },
+      {
+        "id": "mm_p09",
+        "color": "green",
+        "from": "foundry_upper_floor",
+        "to": "coal_tower_upper",
+        "direction": "both"
+      },
+      {
+        "id": "mm_p10",
+        "color": "blue",
+        "from": "coal_tower_upper",
+        "to": "coal_tower_ground",
+        "direction": "both"
+      },
+      {
+        "id": "mm_p11",
+        "color": "yellow",
+        "from": "coal_tower_ground",
+        "to": "foundry_lower_floor",
+        "direction": "a_to_b"
+      },
+      {
+        "id": "mm_p12",
+        "color": "yellow",
+        "from": "coal_tower_upper",
+        "to": "backlot",
+        "direction": "a_to_b"
+      },
+      {
+        "id": "mm_p13",
+        "color": "red",
+        "from": "coal_tower_ground",
+        "to": "backlot",
+        "direction": "both"
+      },
+      {
+        "id": "mm_p14",
+        "color": "red",
+        "from": "foundry_lower_floor",
+        "to": "scrapyard",
+        "direction": "both"
+      },
+      {
+        "id": "mm_p15",
+        "color": "blue",
+        "from": "ancient_tree",
+        "to": "scrapyard",
+        "direction": "both"
+      },
+      {
+        "id": "mm_p16",
+        "color": "red",
+        "from": "ancient_tree",
+        "to": "shack",
+        "direction": "both"
+      },
+      {
+        "id": "mm_p17",
+        "color": "green",
+        "from": "scrapyard",
+        "to": "shack",
+        "direction": "both"
+      },
+      {
+        "id": "mm_p18",
+        "color": "blue",
+        "from": "foundry_lower_floor",
+        "to": "foundry_basement",
+        "direction": "both"
+      },
+      {
+        "id": "mm_p19",
+        "color": "green",
+        "from": "foundry_lower_floor",
+        "to": "backlot",
+        "direction": "both"
+      },
+      {
+        "id": "mm_p20",
+        "color": "green",
+        "from": "foundry_basement",
+        "to": "backlot",
+        "direction": "both"
+      },
+      {
+        "id": "mm_p21",
+        "color": "green",
+        "from": "shack",
+        "to": "foundry_basement",
+        "direction": "both"
+      },
+      {
+        "id": "mm_p22",
+        "color": "yellow",
+        "from": "shack",
+        "to": "backlot",
+        "direction": "a_to_b"
+      }
+    ],
+    "props": [
+      {
+        "id": "mine_depths:objective:0",
+        "kind": "exit_gate",
+        "state": "unpowered",
+        "label": "出口大门 · 未通电",
+        "asset": "exit_gate",
+        "location": "room",
+        "room": "mine_depths",
+        "progress": 0
+      },
+      {
+        "id": "mine_depths:boldness:0",
+        "kind": "back",
+        "state": "boldness",
+        "label": "无惧 · 未翻开",
+        "asset": "back_boldness",
+        "location": "room",
+        "progress": 0,
+        "color": "#bb6458",
+        "wounded": false,
+        "room": "mine_depths"
+      },
+      {
+        "id": "mine_depths:altruism:0",
+        "kind": "back",
+        "state": "altruism",
+        "label": "援助 · 未翻开",
+        "asset": "back_altruism",
+        "location": "room",
+        "progress": 0,
+        "color": "#7da579",
+        "wounded": false,
+        "room": "mine_depths"
+      },
+      {
+        "id": "mine_entrance:objective:0",
+        "kind": "generator",
+        "state": "idle",
+        "label": "发电机 · 0个进度",
+        "asset": "generator",
+        "location": "room",
+        "room": "mine_entrance",
+        "progress": 0
+      },
+      {
+        "id": "mine_entrance:boldness:0",
+        "kind": "back",
+        "state": "boldness",
+        "label": "无惧 · 未翻开",
+        "asset": "back_boldness",
+        "location": "room",
+        "progress": 0,
+        "color": "#bb6458",
+        "wounded": false,
+        "room": "mine_entrance"
+      },
+      {
+        "id": "mine_entrance:altruism:0",
+        "kind": "back",
+        "state": "altruism",
+        "label": "援助 · 未翻开",
+        "asset": "back_altruism",
+        "location": "room",
+        "progress": 0,
+        "color": "#7da579",
+        "wounded": false,
+        "room": "mine_entrance"
+      },
+      {
+        "id": "mine_entrance:altruism:1",
+        "kind": "back",
+        "state": "altruism",
+        "label": "援助 · 未翻开",
+        "asset": "back_altruism",
+        "location": "room",
+        "progress": 0,
+        "color": "#7da579",
+        "wounded": false,
+        "room": "mine_entrance"
+      },
+      {
+        "id": "foundry_upper_floor:objective:0",
+        "kind": "generator",
+        "state": "idle",
+        "label": "发电机 · 0个进度",
+        "asset": "generator",
+        "location": "room",
+        "room": "foundry_upper_floor",
+        "progress": 0
+      },
+      {
+        "id": "foundry_upper_floor:boldness:0",
+        "kind": "back",
+        "state": "boldness",
+        "label": "无惧 · 未翻开",
+        "asset": "back_boldness",
+        "location": "room",
+        "progress": 0,
+        "color": "#bb6458",
+        "wounded": false,
+        "room": "foundry_upper_floor"
+      },
+      {
+        "id": "foundry_upper_floor:survival:0",
+        "kind": "back",
+        "state": "survival",
+        "label": "逃生 · 未翻开",
+        "asset": "back_survival",
+        "location": "room",
+        "progress": 0,
+        "color": "#609cb7",
+        "wounded": false,
+        "room": "foundry_upper_floor"
+      },
+      {
+        "id": "foundry_upper_floor:altruism:0",
+        "kind": "back",
+        "state": "altruism",
+        "label": "援助 · 未翻开",
+        "asset": "back_altruism",
+        "location": "room",
+        "progress": 0,
+        "color": "#7da579",
+        "wounded": false,
+        "room": "foundry_upper_floor"
+      },
+      {
+        "id": "coal_tower_upper:objective:0",
+        "kind": "generator",
+        "state": "idle",
+        "label": "发电机 · 0个进度",
+        "asset": "generator",
+        "location": "room",
+        "room": "coal_tower_upper",
+        "progress": 0
+      },
+      {
+        "id": "coal_tower_upper:survival:0",
+        "kind": "back",
+        "state": "survival",
+        "label": "逃生 · 未翻开",
+        "asset": "back_survival",
+        "location": "room",
+        "progress": 0,
+        "color": "#609cb7",
+        "wounded": false,
+        "room": "coal_tower_upper"
+      },
+      {
+        "id": "coal_tower_upper:survival:1",
+        "kind": "back",
+        "state": "survival",
+        "label": "逃生 · 未翻开",
+        "asset": "back_survival",
+        "location": "room",
+        "progress": 0,
+        "color": "#609cb7",
+        "wounded": false,
+        "room": "coal_tower_upper"
+      },
+      {
+        "id": "coal_tower_upper:altruism:0",
+        "kind": "back",
+        "state": "altruism",
+        "label": "援助 · 未翻开",
+        "asset": "back_altruism",
+        "location": "room",
+        "progress": 0,
+        "color": "#7da579",
+        "wounded": false,
+        "room": "coal_tower_upper"
+      },
+      {
+        "id": "foundry_lower_floor:objective:0",
+        "kind": "back",
+        "state": "objective",
+        "label": "目标 · 未翻开",
+        "asset": "back_objective",
+        "location": "room",
+        "progress": 0,
+        "color": "#d8b95c",
+        "wounded": false,
+        "room": "foundry_lower_floor"
+      },
+      {
+        "id": "foundry_lower_floor:boldness:0",
+        "kind": "back",
+        "state": "boldness",
+        "label": "无惧 · 未翻开",
+        "asset": "back_boldness",
+        "location": "room",
+        "progress": 0,
+        "color": "#bb6458",
+        "wounded": false,
+        "room": "foundry_lower_floor"
+      },
+      {
+        "id": "foundry_lower_floor:survival:0",
+        "kind": "back",
+        "state": "survival",
+        "label": "逃生 · 未翻开",
+        "asset": "back_survival",
+        "location": "room",
+        "progress": 0,
+        "color": "#609cb7",
+        "wounded": false,
+        "room": "foundry_lower_floor"
+      },
+      {
+        "id": "foundry_lower_floor:altruism:0",
+        "kind": "back",
+        "state": "altruism",
+        "label": "援助 · 未翻开",
+        "asset": "back_altruism",
+        "location": "room",
+        "progress": 0,
+        "color": "#7da579",
+        "wounded": false,
+        "room": "foundry_lower_floor"
+      },
+      {
+        "id": "foundry_lower_floor:altruism:1",
+        "kind": "back",
+        "state": "altruism",
+        "label": "援助 · 未翻开",
+        "asset": "back_altruism",
+        "location": "room",
+        "progress": 0,
+        "color": "#7da579",
+        "wounded": false,
+        "room": "foundry_lower_floor"
+      },
+      {
+        "id": "ancient_tree:objective:0",
+        "kind": "back",
+        "state": "objective",
+        "label": "目标 · 未翻开",
+        "asset": "back_objective",
+        "location": "room",
+        "progress": 0,
+        "color": "#d8b95c",
+        "wounded": false,
+        "room": "ancient_tree"
+      },
+      {
+        "id": "ancient_tree:boldness:0",
+        "kind": "back",
+        "state": "boldness",
+        "label": "无惧 · 未翻开",
+        "asset": "back_boldness",
+        "location": "room",
+        "progress": 0,
+        "color": "#bb6458",
+        "wounded": false,
+        "room": "ancient_tree"
+      },
+      {
+        "id": "ancient_tree:altruism:0",
+        "kind": "back",
+        "state": "altruism",
+        "label": "援助 · 未翻开",
+        "asset": "back_altruism",
+        "location": "room",
+        "progress": 0,
+        "color": "#7da579",
+        "wounded": false,
+        "room": "ancient_tree"
+      },
+      {
+        "id": "ancient_tree:altruism:1",
+        "kind": "back",
+        "state": "altruism",
+        "label": "援助 · 未翻开",
+        "asset": "back_altruism",
+        "location": "room",
+        "progress": 0,
+        "color": "#7da579",
+        "wounded": false,
+        "room": "ancient_tree"
+      },
+      {
+        "id": "coal_tower_ground:boldness:0",
+        "kind": "back",
+        "state": "boldness",
+        "label": "无惧 · 未翻开",
+        "asset": "back_boldness",
+        "location": "room",
+        "progress": 0,
+        "color": "#bb6458",
+        "wounded": false,
+        "room": "coal_tower_ground"
+      },
+      {
+        "id": "coal_tower_ground:survival:0",
+        "kind": "back",
+        "state": "survival",
+        "label": "逃生 · 未翻开",
+        "asset": "back_survival",
+        "location": "room",
+        "progress": 0,
+        "color": "#609cb7",
+        "wounded": false,
+        "room": "coal_tower_ground"
+      },
+      {
+        "id": "coal_tower_ground:survival:1",
+        "kind": "back",
+        "state": "survival",
+        "label": "逃生 · 未翻开",
+        "asset": "back_survival",
+        "location": "room",
+        "progress": 0,
+        "color": "#609cb7",
+        "wounded": false,
+        "room": "coal_tower_ground"
+      },
+      {
+        "id": "coal_tower_ground:altruism:0",
+        "kind": "back",
+        "state": "altruism",
+        "label": "援助 · 未翻开",
+        "asset": "back_altruism",
+        "location": "room",
+        "progress": 0,
+        "color": "#7da579",
+        "wounded": false,
+        "room": "coal_tower_ground"
+      },
+      {
+        "id": "scrapyard:objective:0",
+        "kind": "back",
+        "state": "objective",
+        "label": "目标 · 未翻开",
+        "asset": "back_objective",
+        "location": "room",
+        "progress": 0,
+        "color": "#d8b95c",
+        "wounded": false,
+        "room": "scrapyard"
+      },
+      {
+        "id": "scrapyard:boldness:0",
+        "kind": "back",
+        "state": "boldness",
+        "label": "无惧 · 未翻开",
+        "asset": "back_boldness",
+        "location": "room",
+        "progress": 0,
+        "color": "#bb6458",
+        "wounded": false,
+        "room": "scrapyard"
+      },
+      {
+        "id": "scrapyard:survival:0",
+        "kind": "back",
+        "state": "survival",
+        "label": "逃生 · 未翻开",
+        "asset": "back_survival",
+        "location": "room",
+        "progress": 0,
+        "color": "#609cb7",
+        "wounded": false,
+        "room": "scrapyard"
+      },
+      {
+        "id": "scrapyard:survival:1",
+        "kind": "back",
+        "state": "survival",
+        "label": "逃生 · 未翻开",
+        "asset": "back_survival",
+        "location": "room",
+        "progress": 0,
+        "color": "#609cb7",
+        "wounded": false,
+        "room": "scrapyard"
+      },
+      {
+        "id": "foundry_basement:objective:0",
+        "kind": "back",
+        "state": "objective",
+        "label": "目标 · 未翻开",
+        "asset": "back_objective",
+        "location": "room",
+        "progress": 0,
+        "color": "#d8b95c",
+        "wounded": false,
+        "room": "foundry_basement"
+      },
+      {
+        "id": "foundry_basement:boldness:0",
+        "kind": "back",
+        "state": "boldness",
+        "label": "无惧 · 未翻开",
+        "asset": "back_boldness",
+        "location": "room",
+        "progress": 0,
+        "color": "#bb6458",
+        "wounded": false,
+        "room": "foundry_basement"
+      },
+      {
+        "id": "foundry_basement:survival:0",
+        "kind": "back",
+        "state": "survival",
+        "label": "逃生 · 未翻开",
+        "asset": "back_survival",
+        "location": "room",
+        "progress": 0,
+        "color": "#609cb7",
+        "wounded": false,
+        "room": "foundry_basement"
+      },
+      {
+        "id": "foundry_basement:altruism:0",
+        "kind": "back",
+        "state": "altruism",
+        "label": "援助 · 未翻开",
+        "asset": "back_altruism",
+        "location": "room",
+        "progress": 0,
+        "color": "#7da579",
+        "wounded": false,
+        "room": "foundry_basement"
+      },
+      {
+        "id": "shack:objective:0",
+        "kind": "back",
+        "state": "objective",
+        "label": "目标 · 未翻开",
+        "asset": "back_objective",
+        "location": "room",
+        "progress": 0,
+        "color": "#d8b95c",
+        "wounded": false,
+        "room": "shack"
+      },
+      {
+        "id": "shack:boldness:0",
+        "kind": "back",
+        "state": "boldness",
+        "label": "无惧 · 未翻开",
+        "asset": "back_boldness",
+        "location": "room",
+        "progress": 0,
+        "color": "#bb6458",
+        "wounded": false,
+        "room": "shack"
+      },
+      {
+        "id": "shack:survival:0",
+        "kind": "back",
+        "state": "survival",
+        "label": "逃生 · 未翻开",
+        "asset": "back_survival",
+        "location": "room",
+        "progress": 0,
+        "color": "#609cb7",
+        "wounded": false,
+        "room": "shack"
+      },
+      {
+        "id": "shack:survival:1",
+        "kind": "back",
+        "state": "survival",
+        "label": "逃生 · 未翻开",
+        "asset": "back_survival",
+        "location": "room",
+        "progress": 0,
+        "color": "#609cb7",
+        "wounded": false,
+        "room": "shack"
+      },
+      {
+        "id": "backlot:objective:0",
+        "kind": "back",
+        "state": "objective",
+        "label": "目标 · 未翻开",
+        "asset": "back_objective",
+        "location": "room",
+        "progress": 0,
+        "color": "#d8b95c",
+        "wounded": false,
+        "room": "backlot"
+      },
+      {
+        "id": "backlot:boldness:0",
+        "kind": "back",
+        "state": "boldness",
+        "label": "无惧 · 未翻开",
+        "asset": "back_boldness",
+        "location": "room",
+        "progress": 0,
+        "color": "#bb6458",
+        "wounded": false,
+        "room": "backlot"
+      },
+      {
+        "id": "backlot:survival:0",
+        "kind": "back",
+        "state": "survival",
+        "label": "逃生 · 未翻开",
+        "asset": "back_survival",
+        "location": "room",
+        "progress": 0,
+        "color": "#609cb7",
+        "wounded": false,
+        "room": "backlot"
+      },
+      {
+        "id": "backlot:altruism:0",
+        "kind": "back",
+        "state": "altruism",
+        "label": "援助 · 未翻开",
+        "asset": "back_altruism",
+        "location": "room",
+        "progress": 0,
+        "color": "#7da579",
+        "wounded": false,
+        "room": "backlot"
+      }
+    ],
+    "actors": [
+      {
+        "id": "dwight",
+        "kind": "actor",
+        "state": "healthy",
+        "label": "德怀特·费菲尔德",
+        "asset": "portrait_dwight",
+        "location": "room",
+        "room": "mine_entrance",
+        "wounded": false,
+        "madness": false
+      },
+      {
+        "id": "claudette",
+        "kind": "actor",
+        "state": "healthy",
+        "label": "克劳黛特·莫莱",
+        "asset": "portrait_claudette",
+        "location": "room",
+        "room": "ancient_tree",
+        "wounded": false,
+        "madness": false
+      },
+      {
+        "id": "jake",
+        "kind": "actor",
+        "state": "healthy",
+        "label": "杰克·朴",
+        "asset": "portrait_jake",
+        "location": "room",
+        "room": "scrapyard",
+        "wounded": false,
+        "madness": false
+      },
+      {
+        "id": "ace",
+        "kind": "actor",
+        "state": "healthy",
+        "label": "埃斯·维斯孔蒂",
+        "asset": "portrait_ace",
+        "location": "room",
+        "room": "mine_entrance",
+        "wounded": false,
+        "madness": false
+      },
+      {
+        "id": "trapper",
+        "kind": "actor",
+        "state": "healthy",
+        "label": "设陷者",
+        "asset": "portrait_trapper",
+        "location": "room",
+        "room": "ancient_tree",
+        "wounded": false,
+        "madness": false
+      }
+    ],
+    "hand": [
+      "blue",
+      "green",
+      "red",
+      "yellow"
+    ],
+    "planCount": 1,
+    "card": null,
+    "routes": {
+      "blue": [
+        {
+          "pathId": "mm_p04",
+          "to": "ancient_tree",
+          "color": "blue"
+        }
+      ],
+      "green": [
+        {
+          "pathId": "mm_p06",
+          "to": "foundry_lower_floor",
+          "color": "green"
+        }
+      ],
+      "red": [
+        {
+          "pathId": "mm_p01",
+          "to": "mine_depths",
+          "color": "red"
+        }
+      ],
+      "yellow": [],
+      "wait": []
+    },
+    "actions": [],
+    "skills": [
+      {
+        "name": "证明自己",
+        "text": "当你将要交互时，改为由你所在空间或一个相邻空间里的另一位逃生者交互。"
+      },
+      {
+        "name": "领袖群雄",
+        "text": "当你所在空间里的另一位逃生者移动时，你与其一起移动；或者，当你移动时，你所在空间里的另一位逃生者与你一起移动。"
+      },
+      {
+        "name": "携手合作",
+        "text": "当你所在空间或一个相连空间里的另一位逃生者将要进行一次技能检定时，改为掷两颗技能检定骰子并保留其中一颗的结果。"
+      }
+    ]
+  },
+  {
+    "scene": "killer_plan",
+    "source": {
+      "replay": "1701.replay.json",
+      "prefixCommands": 8
+    },
+    "round": 1,
+    "gens": 0,
+    "sacrifice": 0,
+    "actor": {
+      "id": "trapper",
+      "name": "设陷者",
+      "room": "ancient_tree",
+      "health": "healthy",
+      "blood": 4,
+      "side": "killer",
+      "asset": "portrait_trapper"
+    },
+    "mapId": "macmillan_estate",
+    "mapName": "麦克米伦庄园",
+    "rooms": [
+      {
+        "id": "mine_depths",
+        "name": "矿井深处",
+        "point": [
+          200,
+          220
+        ]
+      },
+      {
+        "id": "mine_entrance",
+        "name": "矿井入口",
+        "point": [
+          500,
+          360
+        ]
+      },
+      {
+        "id": "foundry_upper_floor",
+        "name": "熔炉上层",
+        "point": [
+          850,
+          220
+        ]
+      },
+      {
+        "id": "coal_tower_upper",
+        "name": "煤矿废塔上层",
+        "point": [
+          1250,
+          360
+        ]
+      },
+      {
+        "id": "foundry_lower_floor",
+        "name": "熔炉下层",
+        "point": [
+          850,
+          630
+        ]
+      },
+      {
+        "id": "ancient_tree",
+        "name": "古树",
+        "point": [
+          200,
+          630
+        ]
+      },
+      {
+        "id": "coal_tower_ground",
+        "name": "煤矿废塔下层",
+        "point": [
+          1250,
+          770
+        ]
+      },
+      {
+        "id": "scrapyard",
+        "name": "废品场",
+        "point": [
+          500,
+          880
+        ]
+      },
+      {
+        "id": "foundry_basement",
+        "name": "熔炉地下室",
+        "point": [
+          850,
+          1120
+        ]
+      },
+      {
+        "id": "shack",
+        "name": "木屋",
+        "point": [
+          200,
+          1120
+        ]
+      },
+      {
+        "id": "backlot",
+        "name": "露天场地",
+        "point": [
+          1250,
+          1260
+        ]
+      }
+    ],
+    "paths": [
+      {
+        "id": "mm_p01",
+        "color": "red",
+        "from": "mine_depths",
+        "to": "mine_entrance",
+        "direction": "both"
+      },
+      {
+        "id": "mm_p02",
+        "color": "yellow",
+        "from": "foundry_upper_floor",
+        "to": "mine_entrance",
+        "direction": "a_to_b"
+      },
+      {
+        "id": "mm_p03",
+        "color": "green",
+        "from": "mine_depths",
+        "to": "ancient_tree",
+        "direction": "both"
+      },
+      {
+        "id": "mm_p04",
+        "color": "blue",
+        "from": "mine_entrance",
+        "to": "ancient_tree",
+        "direction": "both"
+      },
+      {
+        "id": "mm_p05",
+        "color": "blue",
+        "from": "mine_depths",
+        "to": "shack",
+        "direction": "both"
+      },
+      {
+        "id": "mm_p06",
+        "color": "green",
+        "from": "mine_entrance",
+        "to": "foundry_lower_floor",
+        "direction": "both"
+      },
+      {
+        "id": "mm_p07",
+        "color": "blue",
+        "from": "foundry_upper_floor",
+        "to": "foundry_lower_floor",
+        "direction": "both"
+      },
+      {
+        "id": "mm_p08",
+        "color": "red",
+        "from": "foundry_upper_floor",
+        "to": "coal_tower_ground",
+        "direction": "both"
+      },
+      {
+        "id": "mm_p09",
+        "color": "green",
+        "from": "foundry_upper_floor",
+        "to": "coal_tower_upper",
+        "direction": "both"
+      },
+      {
+        "id": "mm_p10",
+        "color": "blue",
+        "from": "coal_tower_upper",
+        "to": "coal_tower_ground",
+        "direction": "both"
+      },
+      {
+        "id": "mm_p11",
+        "color": "yellow",
+        "from": "coal_tower_ground",
+        "to": "foundry_lower_floor",
+        "direction": "a_to_b"
+      },
+      {
+        "id": "mm_p12",
+        "color": "yellow",
+        "from": "coal_tower_upper",
+        "to": "backlot",
+        "direction": "a_to_b"
+      },
+      {
+        "id": "mm_p13",
+        "color": "red",
+        "from": "coal_tower_ground",
+        "to": "backlot",
+        "direction": "both"
+      },
+      {
+        "id": "mm_p14",
+        "color": "red",
+        "from": "foundry_lower_floor",
+        "to": "scrapyard",
+        "direction": "both"
+      },
+      {
+        "id": "mm_p15",
+        "color": "blue",
+        "from": "ancient_tree",
+        "to": "scrapyard",
+        "direction": "both"
+      },
+      {
+        "id": "mm_p16",
+        "color": "red",
+        "from": "ancient_tree",
+        "to": "shack",
+        "direction": "both"
+      },
+      {
+        "id": "mm_p17",
+        "color": "green",
+        "from": "scrapyard",
+        "to": "shack",
+        "direction": "both"
+      },
+      {
+        "id": "mm_p18",
+        "color": "blue",
+        "from": "foundry_lower_floor",
+        "to": "foundry_basement",
+        "direction": "both"
+      },
+      {
+        "id": "mm_p19",
+        "color": "green",
+        "from": "foundry_lower_floor",
+        "to": "backlot",
+        "direction": "both"
+      },
+      {
+        "id": "mm_p20",
+        "color": "green",
+        "from": "foundry_basement",
+        "to": "backlot",
+        "direction": "both"
+      },
+      {
+        "id": "mm_p21",
+        "color": "green",
+        "from": "shack",
+        "to": "foundry_basement",
+        "direction": "both"
+      },
+      {
+        "id": "mm_p22",
+        "color": "yellow",
+        "from": "shack",
+        "to": "backlot",
+        "direction": "a_to_b"
+      }
+    ],
+    "props": [
+      {
+        "id": "mine_depths:objective:0",
+        "kind": "exit_gate",
+        "state": "unpowered",
+        "label": "出口大门 · 未通电",
+        "asset": "exit_gate",
+        "location": "room",
+        "room": "mine_depths",
+        "progress": 0
+      },
+      {
+        "id": "mine_depths:boldness:0",
+        "kind": "back",
+        "state": "boldness",
+        "label": "无惧 · 未翻开",
+        "asset": "back_boldness",
+        "location": "room",
+        "progress": 0,
+        "color": "#bb6458",
+        "wounded": false,
+        "room": "mine_depths"
+      },
+      {
+        "id": "mine_depths:altruism:0",
+        "kind": "back",
+        "state": "altruism",
+        "label": "援助 · 未翻开",
+        "asset": "back_altruism",
+        "location": "room",
+        "progress": 0,
+        "color": "#7da579",
+        "wounded": false,
+        "room": "mine_depths"
+      },
+      {
+        "id": "mine_entrance:objective:0",
+        "kind": "generator",
+        "state": "idle",
+        "label": "发电机 · 0个进度",
+        "asset": "generator",
+        "location": "room",
+        "room": "mine_entrance",
+        "progress": 0
+      },
+      {
+        "id": "mine_entrance:boldness:0",
+        "kind": "back",
+        "state": "boldness",
+        "label": "无惧 · 未翻开",
+        "asset": "back_boldness",
+        "location": "room",
+        "progress": 0,
+        "color": "#bb6458",
+        "wounded": false,
+        "room": "mine_entrance"
+      },
+      {
+        "id": "mine_entrance:altruism:0",
+        "kind": "back",
+        "state": "altruism",
+        "label": "援助 · 未翻开",
+        "asset": "back_altruism",
+        "location": "room",
+        "progress": 0,
+        "color": "#7da579",
+        "wounded": false,
+        "room": "mine_entrance"
+      },
+      {
+        "id": "mine_entrance:altruism:1",
+        "kind": "back",
+        "state": "altruism",
+        "label": "援助 · 未翻开",
+        "asset": "back_altruism",
+        "location": "room",
+        "progress": 0,
+        "color": "#7da579",
+        "wounded": false,
+        "room": "mine_entrance"
+      },
+      {
+        "id": "foundry_upper_floor:objective:0",
+        "kind": "generator",
+        "state": "idle",
+        "label": "发电机 · 0个进度",
+        "asset": "generator",
+        "location": "room",
+        "room": "foundry_upper_floor",
+        "progress": 0
+      },
+      {
+        "id": "foundry_upper_floor:boldness:0",
+        "kind": "back",
+        "state": "boldness",
+        "label": "无惧 · 未翻开",
+        "asset": "back_boldness",
+        "location": "room",
+        "progress": 0,
+        "color": "#bb6458",
+        "wounded": false,
+        "room": "foundry_upper_floor"
+      },
+      {
+        "id": "foundry_upper_floor:survival:0",
+        "kind": "back",
+        "state": "survival",
+        "label": "逃生 · 未翻开",
+        "asset": "back_survival",
+        "location": "room",
+        "progress": 0,
+        "color": "#609cb7",
+        "wounded": false,
+        "room": "foundry_upper_floor"
+      },
+      {
+        "id": "foundry_upper_floor:altruism:0",
+        "kind": "back",
+        "state": "altruism",
+        "label": "援助 · 未翻开",
+        "asset": "back_altruism",
+        "location": "room",
+        "progress": 0,
+        "color": "#7da579",
+        "wounded": false,
+        "room": "foundry_upper_floor"
+      },
+      {
+        "id": "coal_tower_upper:objective:0",
+        "kind": "generator",
+        "state": "idle",
+        "label": "发电机 · 0个进度",
+        "asset": "generator",
+        "location": "room",
+        "room": "coal_tower_upper",
+        "progress": 0
+      },
+      {
+        "id": "coal_tower_upper:survival:0",
+        "kind": "back",
+        "state": "survival",
+        "label": "逃生 · 未翻开",
+        "asset": "back_survival",
+        "location": "room",
+        "progress": 0,
+        "color": "#609cb7",
+        "wounded": false,
+        "room": "coal_tower_upper"
+      },
+      {
+        "id": "coal_tower_upper:survival:1",
+        "kind": "back",
+        "state": "survival",
+        "label": "逃生 · 未翻开",
+        "asset": "back_survival",
+        "location": "room",
+        "progress": 0,
+        "color": "#609cb7",
+        "wounded": false,
+        "room": "coal_tower_upper"
+      },
+      {
+        "id": "coal_tower_upper:altruism:0",
+        "kind": "back",
+        "state": "altruism",
+        "label": "援助 · 未翻开",
+        "asset": "back_altruism",
+        "location": "room",
+        "progress": 0,
+        "color": "#7da579",
+        "wounded": false,
+        "room": "coal_tower_upper"
+      },
+      {
+        "id": "foundry_lower_floor:objective:0",
+        "kind": "back",
+        "state": "objective",
+        "label": "目标 · 未翻开",
+        "asset": "back_objective",
+        "location": "room",
+        "progress": 0,
+        "color": "#d8b95c",
+        "wounded": false,
+        "room": "foundry_lower_floor"
+      },
+      {
+        "id": "foundry_lower_floor:boldness:0",
+        "kind": "back",
+        "state": "boldness",
+        "label": "无惧 · 未翻开",
+        "asset": "back_boldness",
+        "location": "room",
+        "progress": 0,
+        "color": "#bb6458",
+        "wounded": false,
+        "room": "foundry_lower_floor"
+      },
+      {
+        "id": "foundry_lower_floor:survival:0",
+        "kind": "back",
+        "state": "survival",
+        "label": "逃生 · 未翻开",
+        "asset": "back_survival",
+        "location": "room",
+        "progress": 0,
+        "color": "#609cb7",
+        "wounded": false,
+        "room": "foundry_lower_floor"
+      },
+      {
+        "id": "foundry_lower_floor:altruism:0",
+        "kind": "back",
+        "state": "altruism",
+        "label": "援助 · 未翻开",
+        "asset": "back_altruism",
+        "location": "room",
+        "progress": 0,
+        "color": "#7da579",
+        "wounded": false,
+        "room": "foundry_lower_floor"
+      },
+      {
+        "id": "foundry_lower_floor:altruism:1",
+        "kind": "back",
+        "state": "altruism",
+        "label": "援助 · 未翻开",
+        "asset": "back_altruism",
+        "location": "room",
+        "progress": 0,
+        "color": "#7da579",
+        "wounded": false,
+        "room": "foundry_lower_floor"
+      },
+      {
+        "id": "ancient_tree:objective:0",
+        "kind": "back",
+        "state": "objective",
+        "label": "目标 · 未翻开",
+        "asset": "back_objective",
+        "location": "room",
+        "progress": 0,
+        "color": "#d8b95c",
+        "wounded": false,
+        "room": "ancient_tree"
+      },
+      {
+        "id": "ancient_tree:boldness:0",
+        "kind": "back",
+        "state": "boldness",
+        "label": "无惧 · 未翻开",
+        "asset": "back_boldness",
+        "location": "room",
+        "progress": 0,
+        "color": "#bb6458",
+        "wounded": false,
+        "room": "ancient_tree"
+      },
+      {
+        "id": "ancient_tree:altruism:0",
+        "kind": "back",
+        "state": "altruism",
+        "label": "援助 · 未翻开",
+        "asset": "back_altruism",
+        "location": "room",
+        "progress": 0,
+        "color": "#7da579",
+        "wounded": false,
+        "room": "ancient_tree"
+      },
+      {
+        "id": "ancient_tree:altruism:1",
+        "kind": "back",
+        "state": "altruism",
+        "label": "援助 · 未翻开",
+        "asset": "back_altruism",
+        "location": "room",
+        "progress": 0,
+        "color": "#7da579",
+        "wounded": false,
+        "room": "ancient_tree"
+      },
+      {
+        "id": "coal_tower_ground:boldness:0",
+        "kind": "back",
+        "state": "boldness",
+        "label": "无惧 · 未翻开",
+        "asset": "back_boldness",
+        "location": "room",
+        "progress": 0,
+        "color": "#bb6458",
+        "wounded": false,
+        "room": "coal_tower_ground"
+      },
+      {
+        "id": "coal_tower_ground:survival:0",
+        "kind": "back",
+        "state": "survival",
+        "label": "逃生 · 未翻开",
+        "asset": "back_survival",
+        "location": "room",
+        "progress": 0,
+        "color": "#609cb7",
+        "wounded": false,
+        "room": "coal_tower_ground"
+      },
+      {
+        "id": "coal_tower_ground:survival:1",
+        "kind": "back",
+        "state": "survival",
+        "label": "逃生 · 未翻开",
+        "asset": "back_survival",
+        "location": "room",
+        "progress": 0,
+        "color": "#609cb7",
+        "wounded": false,
+        "room": "coal_tower_ground"
+      },
+      {
+        "id": "coal_tower_ground:altruism:0",
+        "kind": "back",
+        "state": "altruism",
+        "label": "援助 · 未翻开",
+        "asset": "back_altruism",
+        "location": "room",
+        "progress": 0,
+        "color": "#7da579",
+        "wounded": false,
+        "room": "coal_tower_ground"
+      },
+      {
+        "id": "scrapyard:objective:0",
+        "kind": "back",
+        "state": "objective",
+        "label": "目标 · 未翻开",
+        "asset": "back_objective",
+        "location": "room",
+        "progress": 0,
+        "color": "#d8b95c",
+        "wounded": false,
+        "room": "scrapyard"
+      },
+      {
+        "id": "scrapyard:boldness:0",
+        "kind": "back",
+        "state": "boldness",
+        "label": "无惧 · 未翻开",
+        "asset": "back_boldness",
+        "location": "room",
+        "progress": 0,
+        "color": "#bb6458",
+        "wounded": false,
+        "room": "scrapyard"
+      },
+      {
+        "id": "scrapyard:survival:0",
+        "kind": "back",
+        "state": "survival",
+        "label": "逃生 · 未翻开",
+        "asset": "back_survival",
+        "location": "room",
+        "progress": 0,
+        "color": "#609cb7",
+        "wounded": false,
+        "room": "scrapyard"
+      },
+      {
+        "id": "scrapyard:survival:1",
+        "kind": "back",
+        "state": "survival",
+        "label": "逃生 · 未翻开",
+        "asset": "back_survival",
+        "location": "room",
+        "progress": 0,
+        "color": "#609cb7",
+        "wounded": false,
+        "room": "scrapyard"
+      },
+      {
+        "id": "foundry_basement:objective:0",
+        "kind": "back",
+        "state": "objective",
+        "label": "目标 · 未翻开",
+        "asset": "back_objective",
+        "location": "room",
+        "progress": 0,
+        "color": "#d8b95c",
+        "wounded": false,
+        "room": "foundry_basement"
+      },
+      {
+        "id": "foundry_basement:boldness:0",
+        "kind": "back",
+        "state": "boldness",
+        "label": "无惧 · 未翻开",
+        "asset": "back_boldness",
+        "location": "room",
+        "progress": 0,
+        "color": "#bb6458",
+        "wounded": false,
+        "room": "foundry_basement"
+      },
+      {
+        "id": "foundry_basement:survival:0",
+        "kind": "back",
+        "state": "survival",
+        "label": "逃生 · 未翻开",
+        "asset": "back_survival",
+        "location": "room",
+        "progress": 0,
+        "color": "#609cb7",
+        "wounded": false,
+        "room": "foundry_basement"
+      },
+      {
+        "id": "foundry_basement:altruism:0",
+        "kind": "back",
+        "state": "altruism",
+        "label": "援助 · 未翻开",
+        "asset": "back_altruism",
+        "location": "room",
+        "progress": 0,
+        "color": "#7da579",
+        "wounded": false,
+        "room": "foundry_basement"
+      },
+      {
+        "id": "shack:objective:0",
+        "kind": "back",
+        "state": "objective",
+        "label": "目标 · 未翻开",
+        "asset": "back_objective",
+        "location": "room",
+        "progress": 0,
+        "color": "#d8b95c",
+        "wounded": false,
+        "room": "shack"
+      },
+      {
+        "id": "shack:boldness:0",
+        "kind": "back",
+        "state": "boldness",
+        "label": "无惧 · 未翻开",
+        "asset": "back_boldness",
+        "location": "room",
+        "progress": 0,
+        "color": "#bb6458",
+        "wounded": false,
+        "room": "shack"
+      },
+      {
+        "id": "shack:survival:0",
+        "kind": "back",
+        "state": "survival",
+        "label": "逃生 · 未翻开",
+        "asset": "back_survival",
+        "location": "room",
+        "progress": 0,
+        "color": "#609cb7",
+        "wounded": false,
+        "room": "shack"
+      },
+      {
+        "id": "shack:survival:1",
+        "kind": "back",
+        "state": "survival",
+        "label": "逃生 · 未翻开",
+        "asset": "back_survival",
+        "location": "room",
+        "progress": 0,
+        "color": "#609cb7",
+        "wounded": false,
+        "room": "shack"
+      },
+      {
+        "id": "backlot:objective:0",
+        "kind": "back",
+        "state": "objective",
+        "label": "目标 · 未翻开",
+        "asset": "back_objective",
+        "location": "room",
+        "progress": 0,
+        "color": "#d8b95c",
+        "wounded": false,
+        "room": "backlot"
+      },
+      {
+        "id": "backlot:boldness:0",
+        "kind": "back",
+        "state": "boldness",
+        "label": "无惧 · 未翻开",
+        "asset": "back_boldness",
+        "location": "room",
+        "progress": 0,
+        "color": "#bb6458",
+        "wounded": false,
+        "room": "backlot"
+      },
+      {
+        "id": "backlot:survival:0",
+        "kind": "back",
+        "state": "survival",
+        "label": "逃生 · 未翻开",
+        "asset": "back_survival",
+        "location": "room",
+        "progress": 0,
+        "color": "#609cb7",
+        "wounded": false,
+        "room": "backlot"
+      },
+      {
+        "id": "backlot:altruism:0",
+        "kind": "back",
+        "state": "altruism",
+        "label": "援助 · 未翻开",
+        "asset": "back_altruism",
+        "location": "room",
+        "progress": 0,
+        "color": "#7da579",
+        "wounded": false,
+        "room": "backlot"
+      }
+    ],
+    "actors": [
+      {
+        "id": "dwight",
+        "kind": "actor",
+        "state": "healthy",
+        "label": "德怀特·费菲尔德",
+        "asset": "portrait_dwight",
+        "location": "room",
+        "room": "mine_entrance",
+        "wounded": false,
+        "madness": false
+      },
+      {
+        "id": "claudette",
+        "kind": "actor",
+        "state": "healthy",
+        "label": "克劳黛特·莫莱",
+        "asset": "portrait_claudette",
+        "location": "room",
+        "room": "ancient_tree",
+        "wounded": false,
+        "madness": false
+      },
+      {
+        "id": "jake",
+        "kind": "actor",
+        "state": "healthy",
+        "label": "杰克·朴",
+        "asset": "portrait_jake",
+        "location": "room",
+        "room": "scrapyard",
+        "wounded": false,
+        "madness": false
+      },
+      {
+        "id": "ace",
+        "kind": "actor",
+        "state": "healthy",
+        "label": "埃斯·维斯孔蒂",
+        "asset": "portrait_ace",
+        "location": "room",
+        "room": "mine_entrance",
+        "wounded": false,
+        "madness": false
+      },
+      {
+        "id": "trapper",
+        "kind": "actor",
+        "state": "healthy",
+        "label": "设陷者",
+        "asset": "portrait_trapper",
+        "location": "room",
+        "room": "ancient_tree",
+        "wounded": false,
+        "madness": false
+      }
+    ],
+    "hand": [
+      "blue",
+      "green",
+      "red",
+      "yellow",
+      "wait"
+    ],
+    "planCount": 2,
+    "card": null,
+    "routes": {
+      "blue": [
+        {
+          "pathId": "mm_p04",
+          "to": "mine_entrance",
+          "color": "blue"
+        },
+        {
+          "pathId": "mm_p15",
+          "to": "scrapyard",
+          "color": "blue"
+        }
+      ],
+      "green": [
+        {
+          "pathId": "mm_p03",
+          "to": "mine_depths",
+          "color": "green"
+        }
+      ],
+      "red": [
+        {
+          "pathId": "mm_p16",
+          "to": "shack",
+          "color": "red"
+        }
+      ],
+      "yellow": [],
+      "wait": []
+    },
+    "actions": [],
+    "skills": [
+      {
+        "name": "所向无敌",
+        "text": "当你攻击一位健康的逃生者之后，将他沿着任意路线移动。如果你将他移动穿过一个木板或可破坏墙壁，摧毁该木板或可破坏墙壁。"
+      },
+      {
+        "name": "恐慌降临",
+        "text": "当你所在空间或一个相连空间里的一位逃生者将要进行一次技能检定时，改为由他掷危险骰子。"
+      },
+      {
+        "name": "欣喜若狂",
+        "text": "当你攻击一位健康的逃生者之后，沿着任意路线移动。"
+      }
+    ]
+  },
+  {
+    "scene": "move",
+    "source": {
+      "replay": "1701.replay.json",
+      "prefixCommands": 11
+    },
+    "round": 1,
+    "gens": 0,
+    "sacrifice": 0,
+    "actor": {
+      "id": "dwight",
+      "name": "德怀特·费菲尔德",
+      "room": "mine_entrance",
+      "health": "healthy",
+      "blood": 2,
+      "side": "survivor",
+      "asset": "portrait_dwight"
+    },
+    "mapId": "macmillan_estate",
+    "mapName": "麦克米伦庄园",
+    "rooms": [
+      {
+        "id": "mine_depths",
+        "name": "矿井深处",
+        "point": [
+          200,
+          220
+        ]
+      },
+      {
+        "id": "mine_entrance",
+        "name": "矿井入口",
+        "point": [
+          500,
+          360
+        ]
+      },
+      {
+        "id": "foundry_upper_floor",
+        "name": "熔炉上层",
+        "point": [
+          850,
+          220
+        ]
+      },
+      {
+        "id": "coal_tower_upper",
+        "name": "煤矿废塔上层",
+        "point": [
+          1250,
+          360
+        ]
+      },
+      {
+        "id": "foundry_lower_floor",
+        "name": "熔炉下层",
+        "point": [
+          850,
+          630
+        ]
+      },
+      {
+        "id": "ancient_tree",
+        "name": "古树",
+        "point": [
+          200,
+          630
+        ]
+      },
+      {
+        "id": "coal_tower_ground",
+        "name": "煤矿废塔下层",
+        "point": [
+          1250,
+          770
+        ]
+      },
+      {
+        "id": "scrapyard",
+        "name": "废品场",
+        "point": [
+          500,
+          880
+        ]
+      },
+      {
+        "id": "foundry_basement",
+        "name": "熔炉地下室",
+        "point": [
+          850,
+          1120
+        ]
+      },
+      {
+        "id": "shack",
+        "name": "木屋",
+        "point": [
+          200,
+          1120
+        ]
+      },
+      {
+        "id": "backlot",
+        "name": "露天场地",
+        "point": [
+          1250,
+          1260
+        ]
+      }
+    ],
+    "paths": [
+      {
+        "id": "mm_p01",
+        "color": "red",
+        "from": "mine_depths",
+        "to": "mine_entrance",
+        "direction": "both"
+      },
+      {
+        "id": "mm_p02",
+        "color": "yellow",
+        "from": "foundry_upper_floor",
+        "to": "mine_entrance",
+        "direction": "a_to_b"
+      },
+      {
+        "id": "mm_p03",
+        "color": "green",
+        "from": "mine_depths",
+        "to": "ancient_tree",
+        "direction": "both"
+      },
+      {
+        "id": "mm_p04",
+        "color": "blue",
+        "from": "mine_entrance",
+        "to": "ancient_tree",
+        "direction": "both"
+      },
+      {
+        "id": "mm_p05",
+        "color": "blue",
+        "from": "mine_depths",
+        "to": "shack",
+        "direction": "both"
+      },
+      {
+        "id": "mm_p06",
+        "color": "green",
+        "from": "mine_entrance",
+        "to": "foundry_lower_floor",
+        "direction": "both"
+      },
+      {
+        "id": "mm_p07",
+        "color": "blue",
+        "from": "foundry_upper_floor",
+        "to": "foundry_lower_floor",
+        "direction": "both"
+      },
+      {
+        "id": "mm_p08",
+        "color": "red",
+        "from": "foundry_upper_floor",
+        "to": "coal_tower_ground",
+        "direction": "both"
+      },
+      {
+        "id": "mm_p09",
+        "color": "green",
+        "from": "foundry_upper_floor",
+        "to": "coal_tower_upper",
+        "direction": "both"
+      },
+      {
+        "id": "mm_p10",
+        "color": "blue",
+        "from": "coal_tower_upper",
+        "to": "coal_tower_ground",
+        "direction": "both"
+      },
+      {
+        "id": "mm_p11",
+        "color": "yellow",
+        "from": "coal_tower_ground",
+        "to": "foundry_lower_floor",
+        "direction": "a_to_b"
+      },
+      {
+        "id": "mm_p12",
+        "color": "yellow",
+        "from": "coal_tower_upper",
+        "to": "backlot",
+        "direction": "a_to_b"
+      },
+      {
+        "id": "mm_p13",
+        "color": "red",
+        "from": "coal_tower_ground",
+        "to": "backlot",
+        "direction": "both"
+      },
+      {
+        "id": "mm_p14",
+        "color": "red",
+        "from": "foundry_lower_floor",
+        "to": "scrapyard",
+        "direction": "both"
+      },
+      {
+        "id": "mm_p15",
+        "color": "blue",
+        "from": "ancient_tree",
+        "to": "scrapyard",
+        "direction": "both"
+      },
+      {
+        "id": "mm_p16",
+        "color": "red",
+        "from": "ancient_tree",
+        "to": "shack",
+        "direction": "both"
+      },
+      {
+        "id": "mm_p17",
+        "color": "green",
+        "from": "scrapyard",
+        "to": "shack",
+        "direction": "both"
+      },
+      {
+        "id": "mm_p18",
+        "color": "blue",
+        "from": "foundry_lower_floor",
+        "to": "foundry_basement",
+        "direction": "both"
+      },
+      {
+        "id": "mm_p19",
+        "color": "green",
+        "from": "foundry_lower_floor",
+        "to": "backlot",
+        "direction": "both"
+      },
+      {
+        "id": "mm_p20",
+        "color": "green",
+        "from": "foundry_basement",
+        "to": "backlot",
+        "direction": "both"
+      },
+      {
+        "id": "mm_p21",
+        "color": "green",
+        "from": "shack",
+        "to": "foundry_basement",
+        "direction": "both"
+      },
+      {
+        "id": "mm_p22",
+        "color": "yellow",
+        "from": "shack",
+        "to": "backlot",
+        "direction": "a_to_b"
+      }
+    ],
+    "props": [
+      {
+        "id": "mine_depths:objective:0",
+        "kind": "exit_gate",
+        "state": "unpowered",
+        "label": "出口大门 · 未通电",
+        "asset": "exit_gate",
+        "location": "room",
+        "room": "mine_depths",
+        "progress": 0
+      },
+      {
+        "id": "mine_depths:boldness:0",
+        "kind": "back",
+        "state": "boldness",
+        "label": "无惧 · 未翻开",
+        "asset": "back_boldness",
+        "location": "room",
+        "progress": 0,
+        "color": "#bb6458",
+        "wounded": false,
+        "room": "mine_depths"
+      },
+      {
+        "id": "mine_depths:altruism:0",
+        "kind": "back",
+        "state": "altruism",
+        "label": "援助 · 未翻开",
+        "asset": "back_altruism",
+        "location": "room",
+        "progress": 0,
+        "color": "#7da579",
+        "wounded": false,
+        "room": "mine_depths"
+      },
+      {
+        "id": "mine_entrance:objective:0",
+        "kind": "generator",
+        "state": "idle",
+        "label": "发电机 · 0个进度",
+        "asset": "generator",
+        "location": "room",
+        "room": "mine_entrance",
+        "progress": 0
+      },
+      {
+        "id": "mine_entrance:boldness:0",
+        "kind": "back",
+        "state": "boldness",
+        "label": "无惧 · 未翻开",
+        "asset": "back_boldness",
+        "location": "room",
+        "progress": 0,
+        "color": "#bb6458",
+        "wounded": false,
+        "room": "mine_entrance"
+      },
+      {
+        "id": "mine_entrance:altruism:0",
+        "kind": "back",
+        "state": "altruism",
+        "label": "援助 · 未翻开",
+        "asset": "back_altruism",
+        "location": "room",
+        "progress": 0,
+        "color": "#7da579",
+        "wounded": false,
+        "room": "mine_entrance"
+      },
+      {
+        "id": "mine_entrance:altruism:1",
+        "kind": "back",
+        "state": "altruism",
+        "label": "援助 · 未翻开",
+        "asset": "back_altruism",
+        "location": "room",
+        "progress": 0,
+        "color": "#7da579",
+        "wounded": false,
+        "room": "mine_entrance"
+      },
+      {
+        "id": "foundry_upper_floor:objective:0",
+        "kind": "generator",
+        "state": "idle",
+        "label": "发电机 · 0个进度",
+        "asset": "generator",
+        "location": "room",
+        "room": "foundry_upper_floor",
+        "progress": 0
+      },
+      {
+        "id": "foundry_upper_floor:boldness:0",
+        "kind": "back",
+        "state": "boldness",
+        "label": "无惧 · 未翻开",
+        "asset": "back_boldness",
+        "location": "room",
+        "progress": 0,
+        "color": "#bb6458",
+        "wounded": false,
+        "room": "foundry_upper_floor"
+      },
+      {
+        "id": "foundry_upper_floor:survival:0",
+        "kind": "back",
+        "state": "survival",
+        "label": "逃生 · 未翻开",
+        "asset": "back_survival",
+        "location": "room",
+        "progress": 0,
+        "color": "#609cb7",
+        "wounded": false,
+        "room": "foundry_upper_floor"
+      },
+      {
+        "id": "foundry_upper_floor:altruism:0",
+        "kind": "back",
+        "state": "altruism",
+        "label": "援助 · 未翻开",
+        "asset": "back_altruism",
+        "location": "room",
+        "progress": 0,
+        "color": "#7da579",
+        "wounded": false,
+        "room": "foundry_upper_floor"
+      },
+      {
+        "id": "coal_tower_upper:objective:0",
+        "kind": "generator",
+        "state": "idle",
+        "label": "发电机 · 0个进度",
+        "asset": "generator",
+        "location": "room",
+        "room": "coal_tower_upper",
+        "progress": 0
+      },
+      {
+        "id": "coal_tower_upper:survival:0",
+        "kind": "back",
+        "state": "survival",
+        "label": "逃生 · 未翻开",
+        "asset": "back_survival",
+        "location": "room",
+        "progress": 0,
+        "color": "#609cb7",
+        "wounded": false,
+        "room": "coal_tower_upper"
+      },
+      {
+        "id": "coal_tower_upper:survival:1",
+        "kind": "back",
+        "state": "survival",
+        "label": "逃生 · 未翻开",
+        "asset": "back_survival",
+        "location": "room",
+        "progress": 0,
+        "color": "#609cb7",
+        "wounded": false,
+        "room": "coal_tower_upper"
+      },
+      {
+        "id": "coal_tower_upper:altruism:0",
+        "kind": "back",
+        "state": "altruism",
+        "label": "援助 · 未翻开",
+        "asset": "back_altruism",
+        "location": "room",
+        "progress": 0,
+        "color": "#7da579",
+        "wounded": false,
+        "room": "coal_tower_upper"
+      },
+      {
+        "id": "foundry_lower_floor:objective:0",
+        "kind": "back",
+        "state": "objective",
+        "label": "目标 · 未翻开",
+        "asset": "back_objective",
+        "location": "room",
+        "progress": 0,
+        "color": "#d8b95c",
+        "wounded": false,
+        "room": "foundry_lower_floor"
+      },
+      {
+        "id": "foundry_lower_floor:boldness:0",
+        "kind": "back",
+        "state": "boldness",
+        "label": "无惧 · 未翻开",
+        "asset": "back_boldness",
+        "location": "room",
+        "progress": 0,
+        "color": "#bb6458",
+        "wounded": false,
+        "room": "foundry_lower_floor"
+      },
+      {
+        "id": "foundry_lower_floor:survival:0",
+        "kind": "back",
+        "state": "survival",
+        "label": "逃生 · 未翻开",
+        "asset": "back_survival",
+        "location": "room",
+        "progress": 0,
+        "color": "#609cb7",
+        "wounded": false,
+        "room": "foundry_lower_floor"
+      },
+      {
+        "id": "foundry_lower_floor:altruism:0",
+        "kind": "back",
+        "state": "altruism",
+        "label": "援助 · 未翻开",
+        "asset": "back_altruism",
+        "location": "room",
+        "progress": 0,
+        "color": "#7da579",
+        "wounded": false,
+        "room": "foundry_lower_floor"
+      },
+      {
+        "id": "foundry_lower_floor:altruism:1",
+        "kind": "back",
+        "state": "altruism",
+        "label": "援助 · 未翻开",
+        "asset": "back_altruism",
+        "location": "room",
+        "progress": 0,
+        "color": "#7da579",
+        "wounded": false,
+        "room": "foundry_lower_floor"
+      },
+      {
+        "id": "ancient_tree:objective:0",
+        "kind": "back",
+        "state": "objective",
+        "label": "目标 · 未翻开",
+        "asset": "back_objective",
+        "location": "room",
+        "progress": 0,
+        "color": "#d8b95c",
+        "wounded": false,
+        "room": "ancient_tree"
+      },
+      {
+        "id": "ancient_tree:boldness:0",
+        "kind": "back",
+        "state": "boldness",
+        "label": "无惧 · 未翻开",
+        "asset": "back_boldness",
+        "location": "room",
+        "progress": 0,
+        "color": "#bb6458",
+        "wounded": false,
+        "room": "ancient_tree"
+      },
+      {
+        "id": "ancient_tree:altruism:0",
+        "kind": "back",
+        "state": "altruism",
+        "label": "援助 · 未翻开",
+        "asset": "back_altruism",
+        "location": "room",
+        "progress": 0,
+        "color": "#7da579",
+        "wounded": false,
+        "room": "ancient_tree"
+      },
+      {
+        "id": "ancient_tree:altruism:1",
+        "kind": "back",
+        "state": "altruism",
+        "label": "援助 · 未翻开",
+        "asset": "back_altruism",
+        "location": "room",
+        "progress": 0,
+        "color": "#7da579",
+        "wounded": false,
+        "room": "ancient_tree"
+      },
+      {
+        "id": "coal_tower_ground:boldness:0",
+        "kind": "back",
+        "state": "boldness",
+        "label": "无惧 · 未翻开",
+        "asset": "back_boldness",
+        "location": "room",
+        "progress": 0,
+        "color": "#bb6458",
+        "wounded": false,
+        "room": "coal_tower_ground"
+      },
+      {
+        "id": "coal_tower_ground:survival:0",
+        "kind": "back",
+        "state": "survival",
+        "label": "逃生 · 未翻开",
+        "asset": "back_survival",
+        "location": "room",
+        "progress": 0,
+        "color": "#609cb7",
+        "wounded": false,
+        "room": "coal_tower_ground"
+      },
+      {
+        "id": "coal_tower_ground:survival:1",
+        "kind": "back",
+        "state": "survival",
+        "label": "逃生 · 未翻开",
+        "asset": "back_survival",
+        "location": "room",
+        "progress": 0,
+        "color": "#609cb7",
+        "wounded": false,
+        "room": "coal_tower_ground"
+      },
+      {
+        "id": "coal_tower_ground:altruism:0",
+        "kind": "back",
+        "state": "altruism",
+        "label": "援助 · 未翻开",
+        "asset": "back_altruism",
+        "location": "room",
+        "progress": 0,
+        "color": "#7da579",
+        "wounded": false,
+        "room": "coal_tower_ground"
+      },
+      {
+        "id": "scrapyard:objective:0",
+        "kind": "back",
+        "state": "objective",
+        "label": "目标 · 未翻开",
+        "asset": "back_objective",
+        "location": "room",
+        "progress": 0,
+        "color": "#d8b95c",
+        "wounded": false,
+        "room": "scrapyard"
+      },
+      {
+        "id": "scrapyard:boldness:0",
+        "kind": "back",
+        "state": "boldness",
+        "label": "无惧 · 未翻开",
+        "asset": "back_boldness",
+        "location": "room",
+        "progress": 0,
+        "color": "#bb6458",
+        "wounded": false,
+        "room": "scrapyard"
+      },
+      {
+        "id": "scrapyard:survival:0",
+        "kind": "back",
+        "state": "survival",
+        "label": "逃生 · 未翻开",
+        "asset": "back_survival",
+        "location": "room",
+        "progress": 0,
+        "color": "#609cb7",
+        "wounded": false,
+        "room": "scrapyard"
+      },
+      {
+        "id": "scrapyard:survival:1",
+        "kind": "back",
+        "state": "survival",
+        "label": "逃生 · 未翻开",
+        "asset": "back_survival",
+        "location": "room",
+        "progress": 0,
+        "color": "#609cb7",
+        "wounded": false,
+        "room": "scrapyard"
+      },
+      {
+        "id": "foundry_basement:objective:0",
+        "kind": "back",
+        "state": "objective",
+        "label": "目标 · 未翻开",
+        "asset": "back_objective",
+        "location": "room",
+        "progress": 0,
+        "color": "#d8b95c",
+        "wounded": false,
+        "room": "foundry_basement"
+      },
+      {
+        "id": "foundry_basement:boldness:0",
+        "kind": "back",
+        "state": "boldness",
+        "label": "无惧 · 未翻开",
+        "asset": "back_boldness",
+        "location": "room",
+        "progress": 0,
+        "color": "#bb6458",
+        "wounded": false,
+        "room": "foundry_basement"
+      },
+      {
+        "id": "foundry_basement:survival:0",
+        "kind": "back",
+        "state": "survival",
+        "label": "逃生 · 未翻开",
+        "asset": "back_survival",
+        "location": "room",
+        "progress": 0,
+        "color": "#609cb7",
+        "wounded": false,
+        "room": "foundry_basement"
+      },
+      {
+        "id": "foundry_basement:altruism:0",
+        "kind": "back",
+        "state": "altruism",
+        "label": "援助 · 未翻开",
+        "asset": "back_altruism",
+        "location": "room",
+        "progress": 0,
+        "color": "#7da579",
+        "wounded": false,
+        "room": "foundry_basement"
+      },
+      {
+        "id": "shack:objective:0",
+        "kind": "back",
+        "state": "objective",
+        "label": "目标 · 未翻开",
+        "asset": "back_objective",
+        "location": "room",
+        "progress": 0,
+        "color": "#d8b95c",
+        "wounded": false,
+        "room": "shack"
+      },
+      {
+        "id": "shack:boldness:0",
+        "kind": "back",
+        "state": "boldness",
+        "label": "无惧 · 未翻开",
+        "asset": "back_boldness",
+        "location": "room",
+        "progress": 0,
+        "color": "#bb6458",
+        "wounded": false,
+        "room": "shack"
+      },
+      {
+        "id": "shack:survival:0",
+        "kind": "back",
+        "state": "survival",
+        "label": "逃生 · 未翻开",
+        "asset": "back_survival",
+        "location": "room",
+        "progress": 0,
+        "color": "#609cb7",
+        "wounded": false,
+        "room": "shack"
+      },
+      {
+        "id": "shack:survival:1",
+        "kind": "back",
+        "state": "survival",
+        "label": "逃生 · 未翻开",
+        "asset": "back_survival",
+        "location": "room",
+        "progress": 0,
+        "color": "#609cb7",
+        "wounded": false,
+        "room": "shack"
+      },
+      {
+        "id": "backlot:objective:0",
+        "kind": "back",
+        "state": "objective",
+        "label": "目标 · 未翻开",
+        "asset": "back_objective",
+        "location": "room",
+        "progress": 0,
+        "color": "#d8b95c",
+        "wounded": false,
+        "room": "backlot"
+      },
+      {
+        "id": "backlot:boldness:0",
+        "kind": "back",
+        "state": "boldness",
+        "label": "无惧 · 未翻开",
+        "asset": "back_boldness",
+        "location": "room",
+        "progress": 0,
+        "color": "#bb6458",
+        "wounded": false,
+        "room": "backlot"
+      },
+      {
+        "id": "backlot:survival:0",
+        "kind": "back",
+        "state": "survival",
+        "label": "逃生 · 未翻开",
+        "asset": "back_survival",
+        "location": "room",
+        "progress": 0,
+        "color": "#609cb7",
+        "wounded": false,
+        "room": "backlot"
+      },
+      {
+        "id": "backlot:altruism:0",
+        "kind": "back",
+        "state": "altruism",
+        "label": "援助 · 未翻开",
+        "asset": "back_altruism",
+        "location": "room",
+        "progress": 0,
+        "color": "#7da579",
+        "wounded": false,
+        "room": "backlot"
+      }
+    ],
+    "actors": [
+      {
+        "id": "dwight",
+        "kind": "actor",
+        "state": "healthy",
+        "label": "德怀特·费菲尔德",
+        "asset": "portrait_dwight",
+        "location": "room",
+        "room": "mine_entrance",
+        "wounded": false,
+        "madness": false
+      },
+      {
+        "id": "claudette",
+        "kind": "actor",
+        "state": "healthy",
+        "label": "克劳黛特·莫莱",
+        "asset": "portrait_claudette",
+        "location": "room",
+        "room": "ancient_tree",
+        "wounded": false,
+        "madness": false
+      },
+      {
+        "id": "jake",
+        "kind": "actor",
+        "state": "healthy",
+        "label": "杰克·朴",
+        "asset": "portrait_jake",
+        "location": "room",
+        "room": "scrapyard",
+        "wounded": false,
+        "madness": false
+      },
+      {
+        "id": "ace",
+        "kind": "actor",
+        "state": "healthy",
+        "label": "埃斯·维斯孔蒂",
+        "asset": "portrait_ace",
+        "location": "room",
+        "room": "mine_entrance",
+        "wounded": false,
+        "madness": false
+      },
+      {
+        "id": "trapper",
+        "kind": "actor",
+        "state": "healthy",
+        "label": "设陷者",
+        "asset": "portrait_trapper",
+        "location": "room",
+        "room": "ancient_tree",
+        "wounded": false,
+        "madness": false
+      }
+    ],
+    "hand": [
+      "green",
+      "red",
+      "yellow"
+    ],
+    "planCount": 1,
+    "card": "blue",
+    "routes": {
+      "blue": [
+        {
+          "pathId": "mm_p04",
+          "to": "ancient_tree",
+          "color": "blue"
+        }
+      ],
+      "green": [
+        {
+          "pathId": "mm_p06",
+          "to": "foundry_lower_floor",
+          "color": "green"
+        }
+      ],
+      "red": [
+        {
+          "pathId": "mm_p01",
+          "to": "mine_depths",
+          "color": "red"
+        }
+      ],
+      "yellow": [],
+      "wait": []
+    },
+    "actions": [
+      {
+        "label": "移动至古树",
+        "command": {
+          "type": "MOVE",
+          "actorId": "dwight",
+          "pathId": "mm_p04",
+          "to": "ancient_tree",
+          "color": "blue"
+        },
+        "roomId": "ancient_tree",
+        "pathId": "mm_p04"
+      }
+    ],
+    "skills": [
+      {
+        "name": "证明自己",
+        "text": "当你将要交互时，改为由你所在空间或一个相邻空间里的另一位逃生者交互。"
+      },
+      {
+        "name": "领袖群雄",
+        "text": "当你所在空间里的另一位逃生者移动时，你与其一起移动；或者，当你移动时，你所在空间里的另一位逃生者与你一起移动。"
+      },
+      {
+        "name": "携手合作",
+        "text": "当你所在空间或一个相连空间里的另一位逃生者将要进行一次技能检定时，改为掷两颗技能检定骰子并保留其中一颗的结果。"
+      }
+    ]
+  },
+  {
+    "scene": "interact",
+    "source": {
+      "replay": "1701.replay.json",
+      "prefixCommands": 14
+    },
+    "round": 1,
+    "gens": 0,
+    "sacrifice": 0,
+    "actor": {
+      "id": "dwight",
+      "name": "德怀特·费菲尔德",
+      "room": "ancient_tree",
+      "health": "healthy",
+      "blood": 2,
+      "side": "survivor",
+      "asset": "portrait_dwight"
+    },
+    "mapId": "macmillan_estate",
+    "mapName": "麦克米伦庄园",
+    "rooms": [
+      {
+        "id": "mine_depths",
+        "name": "矿井深处",
+        "point": [
+          200,
+          220
+        ]
+      },
+      {
+        "id": "mine_entrance",
+        "name": "矿井入口",
+        "point": [
+          500,
+          360
+        ]
+      },
+      {
+        "id": "foundry_upper_floor",
+        "name": "熔炉上层",
+        "point": [
+          850,
+          220
+        ]
+      },
+      {
+        "id": "coal_tower_upper",
+        "name": "煤矿废塔上层",
+        "point": [
+          1250,
+          360
+        ]
+      },
+      {
+        "id": "foundry_lower_floor",
+        "name": "熔炉下层",
+        "point": [
+          850,
+          630
+        ]
+      },
+      {
+        "id": "ancient_tree",
+        "name": "古树",
+        "point": [
+          200,
+          630
+        ]
+      },
+      {
+        "id": "coal_tower_ground",
+        "name": "煤矿废塔下层",
+        "point": [
+          1250,
+          770
+        ]
+      },
+      {
+        "id": "scrapyard",
+        "name": "废品场",
+        "point": [
+          500,
+          880
+        ]
+      },
+      {
+        "id": "foundry_basement",
+        "name": "熔炉地下室",
+        "point": [
+          850,
+          1120
+        ]
+      },
+      {
+        "id": "shack",
+        "name": "木屋",
+        "point": [
+          200,
+          1120
+        ]
+      },
+      {
+        "id": "backlot",
+        "name": "露天场地",
+        "point": [
+          1250,
+          1260
+        ]
+      }
+    ],
+    "paths": [
+      {
+        "id": "mm_p01",
+        "color": "red",
+        "from": "mine_depths",
+        "to": "mine_entrance",
+        "direction": "both"
+      },
+      {
+        "id": "mm_p02",
+        "color": "yellow",
+        "from": "foundry_upper_floor",
+        "to": "mine_entrance",
+        "direction": "a_to_b"
+      },
+      {
+        "id": "mm_p03",
+        "color": "green",
+        "from": "mine_depths",
+        "to": "ancient_tree",
+        "direction": "both"
+      },
+      {
+        "id": "mm_p04",
+        "color": "blue",
+        "from": "mine_entrance",
+        "to": "ancient_tree",
+        "direction": "both"
+      },
+      {
+        "id": "mm_p05",
+        "color": "blue",
+        "from": "mine_depths",
+        "to": "shack",
+        "direction": "both"
+      },
+      {
+        "id": "mm_p06",
+        "color": "green",
+        "from": "mine_entrance",
+        "to": "foundry_lower_floor",
+        "direction": "both"
+      },
+      {
+        "id": "mm_p07",
+        "color": "blue",
+        "from": "foundry_upper_floor",
+        "to": "foundry_lower_floor",
+        "direction": "both"
+      },
+      {
+        "id": "mm_p08",
+        "color": "red",
+        "from": "foundry_upper_floor",
+        "to": "coal_tower_ground",
+        "direction": "both"
+      },
+      {
+        "id": "mm_p09",
+        "color": "green",
+        "from": "foundry_upper_floor",
+        "to": "coal_tower_upper",
+        "direction": "both"
+      },
+      {
+        "id": "mm_p10",
+        "color": "blue",
+        "from": "coal_tower_upper",
+        "to": "coal_tower_ground",
+        "direction": "both"
+      },
+      {
+        "id": "mm_p11",
+        "color": "yellow",
+        "from": "coal_tower_ground",
+        "to": "foundry_lower_floor",
+        "direction": "a_to_b"
+      },
+      {
+        "id": "mm_p12",
+        "color": "yellow",
+        "from": "coal_tower_upper",
+        "to": "backlot",
+        "direction": "a_to_b"
+      },
+      {
+        "id": "mm_p13",
+        "color": "red",
+        "from": "coal_tower_ground",
+        "to": "backlot",
+        "direction": "both"
+      },
+      {
+        "id": "mm_p14",
+        "color": "red",
+        "from": "foundry_lower_floor",
+        "to": "scrapyard",
+        "direction": "both"
+      },
+      {
+        "id": "mm_p15",
+        "color": "blue",
+        "from": "ancient_tree",
+        "to": "scrapyard",
+        "direction": "both"
+      },
+      {
+        "id": "mm_p16",
+        "color": "red",
+        "from": "ancient_tree",
+        "to": "shack",
+        "direction": "both"
+      },
+      {
+        "id": "mm_p17",
+        "color": "green",
+        "from": "scrapyard",
+        "to": "shack",
+        "direction": "both"
+      },
+      {
+        "id": "mm_p18",
+        "color": "blue",
+        "from": "foundry_lower_floor",
+        "to": "foundry_basement",
+        "direction": "both"
+      },
+      {
+        "id": "mm_p19",
+        "color": "green",
+        "from": "foundry_lower_floor",
+        "to": "backlot",
+        "direction": "both"
+      },
+      {
+        "id": "mm_p20",
+        "color": "green",
+        "from": "foundry_basement",
+        "to": "backlot",
+        "direction": "both"
+      },
+      {
+        "id": "mm_p21",
+        "color": "green",
+        "from": "shack",
+        "to": "foundry_basement",
+        "direction": "both"
+      },
+      {
+        "id": "mm_p22",
+        "color": "yellow",
+        "from": "shack",
+        "to": "backlot",
+        "direction": "a_to_b"
+      }
+    ],
+    "props": [
+      {
+        "id": "mine_depths:objective:0",
+        "kind": "exit_gate",
+        "state": "unpowered",
+        "label": "出口大门 · 未通电",
+        "asset": "exit_gate",
+        "location": "room",
+        "room": "mine_depths",
+        "progress": 0
+      },
+      {
+        "id": "mine_depths:boldness:0",
+        "kind": "back",
+        "state": "boldness",
+        "label": "无惧 · 未翻开",
+        "asset": "back_boldness",
+        "location": "room",
+        "progress": 0,
+        "color": "#bb6458",
+        "wounded": false,
+        "room": "mine_depths"
+      },
+      {
+        "id": "mine_depths:altruism:0",
+        "kind": "back",
+        "state": "altruism",
+        "label": "援助 · 未翻开",
+        "asset": "back_altruism",
+        "location": "room",
+        "progress": 0,
+        "color": "#7da579",
+        "wounded": false,
+        "room": "mine_depths"
+      },
+      {
+        "id": "mine_entrance:objective:0",
+        "kind": "generator",
+        "state": "idle",
+        "label": "发电机 · 0个进度",
+        "asset": "generator",
+        "location": "room",
+        "room": "mine_entrance",
+        "progress": 0
+      },
+      {
+        "id": "mine_entrance:boldness:0",
+        "kind": "back",
+        "state": "boldness",
+        "label": "无惧 · 未翻开",
+        "asset": "back_boldness",
+        "location": "room",
+        "progress": 0,
+        "color": "#bb6458",
+        "wounded": false,
+        "room": "mine_entrance"
+      },
+      {
+        "id": "mine_entrance:altruism:0",
+        "kind": "back",
+        "state": "altruism",
+        "label": "援助 · 未翻开",
+        "asset": "back_altruism",
+        "location": "room",
+        "progress": 0,
+        "color": "#7da579",
+        "wounded": false,
+        "room": "mine_entrance"
+      },
+      {
+        "id": "mine_entrance:altruism:1",
+        "kind": "back",
+        "state": "altruism",
+        "label": "援助 · 未翻开",
+        "asset": "back_altruism",
+        "location": "room",
+        "progress": 0,
+        "color": "#7da579",
+        "wounded": false,
+        "room": "mine_entrance"
+      },
+      {
+        "id": "foundry_upper_floor:objective:0",
+        "kind": "generator",
+        "state": "idle",
+        "label": "发电机 · 0个进度",
+        "asset": "generator",
+        "location": "room",
+        "room": "foundry_upper_floor",
+        "progress": 0
+      },
+      {
+        "id": "foundry_upper_floor:boldness:0",
+        "kind": "back",
+        "state": "boldness",
+        "label": "无惧 · 未翻开",
+        "asset": "back_boldness",
+        "location": "room",
+        "progress": 0,
+        "color": "#bb6458",
+        "wounded": false,
+        "room": "foundry_upper_floor"
+      },
+      {
+        "id": "foundry_upper_floor:survival:0",
+        "kind": "back",
+        "state": "survival",
+        "label": "逃生 · 未翻开",
+        "asset": "back_survival",
+        "location": "room",
+        "progress": 0,
+        "color": "#609cb7",
+        "wounded": false,
+        "room": "foundry_upper_floor"
+      },
+      {
+        "id": "foundry_upper_floor:altruism:0",
+        "kind": "back",
+        "state": "altruism",
+        "label": "援助 · 未翻开",
+        "asset": "back_altruism",
+        "location": "room",
+        "progress": 0,
+        "color": "#7da579",
+        "wounded": false,
+        "room": "foundry_upper_floor"
+      },
+      {
+        "id": "coal_tower_upper:objective:0",
+        "kind": "generator",
+        "state": "idle",
+        "label": "发电机 · 0个进度",
+        "asset": "generator",
+        "location": "room",
+        "room": "coal_tower_upper",
+        "progress": 0
+      },
+      {
+        "id": "coal_tower_upper:survival:0",
+        "kind": "back",
+        "state": "survival",
+        "label": "逃生 · 未翻开",
+        "asset": "back_survival",
+        "location": "room",
+        "progress": 0,
+        "color": "#609cb7",
+        "wounded": false,
+        "room": "coal_tower_upper"
+      },
+      {
+        "id": "coal_tower_upper:survival:1",
+        "kind": "back",
+        "state": "survival",
+        "label": "逃生 · 未翻开",
+        "asset": "back_survival",
+        "location": "room",
+        "progress": 0,
+        "color": "#609cb7",
+        "wounded": false,
+        "room": "coal_tower_upper"
+      },
+      {
+        "id": "coal_tower_upper:altruism:0",
+        "kind": "back",
+        "state": "altruism",
+        "label": "援助 · 未翻开",
+        "asset": "back_altruism",
+        "location": "room",
+        "progress": 0,
+        "color": "#7da579",
+        "wounded": false,
+        "room": "coal_tower_upper"
+      },
+      {
+        "id": "foundry_lower_floor:objective:0",
+        "kind": "back",
+        "state": "objective",
+        "label": "目标 · 未翻开",
+        "asset": "back_objective",
+        "location": "room",
+        "progress": 0,
+        "color": "#d8b95c",
+        "wounded": false,
+        "room": "foundry_lower_floor"
+      },
+      {
+        "id": "foundry_lower_floor:boldness:0",
+        "kind": "back",
+        "state": "boldness",
+        "label": "无惧 · 未翻开",
+        "asset": "back_boldness",
+        "location": "room",
+        "progress": 0,
+        "color": "#bb6458",
+        "wounded": false,
+        "room": "foundry_lower_floor"
+      },
+      {
+        "id": "foundry_lower_floor:survival:0",
+        "kind": "back",
+        "state": "survival",
+        "label": "逃生 · 未翻开",
+        "asset": "back_survival",
+        "location": "room",
+        "progress": 0,
+        "color": "#609cb7",
+        "wounded": false,
+        "room": "foundry_lower_floor"
+      },
+      {
+        "id": "foundry_lower_floor:altruism:0",
+        "kind": "back",
+        "state": "altruism",
+        "label": "援助 · 未翻开",
+        "asset": "back_altruism",
+        "location": "room",
+        "progress": 0,
+        "color": "#7da579",
+        "wounded": false,
+        "room": "foundry_lower_floor"
+      },
+      {
+        "id": "foundry_lower_floor:altruism:1",
+        "kind": "back",
+        "state": "altruism",
+        "label": "援助 · 未翻开",
+        "asset": "back_altruism",
+        "location": "room",
+        "progress": 0,
+        "color": "#7da579",
+        "wounded": false,
+        "room": "foundry_lower_floor"
+      },
+      {
+        "id": "ancient_tree:objective:0",
+        "kind": "generator",
+        "state": "idle",
+        "label": "发电机 · 0个进度",
+        "asset": "generator",
+        "location": "room",
+        "room": "ancient_tree",
+        "progress": 0
+      },
+      {
+        "id": "ancient_tree:boldness:0",
+        "kind": "back",
+        "state": "boldness",
+        "label": "无惧 · 未翻开",
+        "asset": "back_boldness",
+        "location": "room",
+        "progress": 0,
+        "color": "#bb6458",
+        "wounded": false,
+        "room": "ancient_tree"
+      },
+      {
+        "id": "ancient_tree:altruism:0",
+        "kind": "back",
+        "state": "altruism",
+        "label": "援助 · 未翻开",
+        "asset": "back_altruism",
+        "location": "room",
+        "progress": 0,
+        "color": "#7da579",
+        "wounded": false,
+        "room": "ancient_tree"
+      },
+      {
+        "id": "ancient_tree:altruism:1",
+        "kind": "back",
+        "state": "altruism",
+        "label": "援助 · 未翻开",
+        "asset": "back_altruism",
+        "location": "room",
+        "progress": 0,
+        "color": "#7da579",
+        "wounded": false,
+        "room": "ancient_tree"
+      },
+      {
+        "id": "coal_tower_ground:boldness:0",
+        "kind": "back",
+        "state": "boldness",
+        "label": "无惧 · 未翻开",
+        "asset": "back_boldness",
+        "location": "room",
+        "progress": 0,
+        "color": "#bb6458",
+        "wounded": false,
+        "room": "coal_tower_ground"
+      },
+      {
+        "id": "coal_tower_ground:survival:0",
+        "kind": "back",
+        "state": "survival",
+        "label": "逃生 · 未翻开",
+        "asset": "back_survival",
+        "location": "room",
+        "progress": 0,
+        "color": "#609cb7",
+        "wounded": false,
+        "room": "coal_tower_ground"
+      },
+      {
+        "id": "coal_tower_ground:survival:1",
+        "kind": "back",
+        "state": "survival",
+        "label": "逃生 · 未翻开",
+        "asset": "back_survival",
+        "location": "room",
+        "progress": 0,
+        "color": "#609cb7",
+        "wounded": false,
+        "room": "coal_tower_ground"
+      },
+      {
+        "id": "coal_tower_ground:altruism:0",
+        "kind": "back",
+        "state": "altruism",
+        "label": "援助 · 未翻开",
+        "asset": "back_altruism",
+        "location": "room",
+        "progress": 0,
+        "color": "#7da579",
+        "wounded": false,
+        "room": "coal_tower_ground"
+      },
+      {
+        "id": "scrapyard:objective:0",
+        "kind": "back",
+        "state": "objective",
+        "label": "目标 · 未翻开",
+        "asset": "back_objective",
+        "location": "room",
+        "progress": 0,
+        "color": "#d8b95c",
+        "wounded": false,
+        "room": "scrapyard"
+      },
+      {
+        "id": "scrapyard:boldness:0",
+        "kind": "back",
+        "state": "boldness",
+        "label": "无惧 · 未翻开",
+        "asset": "back_boldness",
+        "location": "room",
+        "progress": 0,
+        "color": "#bb6458",
+        "wounded": false,
+        "room": "scrapyard"
+      },
+      {
+        "id": "scrapyard:survival:0",
+        "kind": "back",
+        "state": "survival",
+        "label": "逃生 · 未翻开",
+        "asset": "back_survival",
+        "location": "room",
+        "progress": 0,
+        "color": "#609cb7",
+        "wounded": false,
+        "room": "scrapyard"
+      },
+      {
+        "id": "scrapyard:survival:1",
+        "kind": "back",
+        "state": "survival",
+        "label": "逃生 · 未翻开",
+        "asset": "back_survival",
+        "location": "room",
+        "progress": 0,
+        "color": "#609cb7",
+        "wounded": false,
+        "room": "scrapyard"
+      },
+      {
+        "id": "foundry_basement:objective:0",
+        "kind": "back",
+        "state": "objective",
+        "label": "目标 · 未翻开",
+        "asset": "back_objective",
+        "location": "room",
+        "progress": 0,
+        "color": "#d8b95c",
+        "wounded": false,
+        "room": "foundry_basement"
+      },
+      {
+        "id": "foundry_basement:boldness:0",
+        "kind": "back",
+        "state": "boldness",
+        "label": "无惧 · 未翻开",
+        "asset": "back_boldness",
+        "location": "room",
+        "progress": 0,
+        "color": "#bb6458",
+        "wounded": false,
+        "room": "foundry_basement"
+      },
+      {
+        "id": "foundry_basement:survival:0",
+        "kind": "back",
+        "state": "survival",
+        "label": "逃生 · 未翻开",
+        "asset": "back_survival",
+        "location": "room",
+        "progress": 0,
+        "color": "#609cb7",
+        "wounded": false,
+        "room": "foundry_basement"
+      },
+      {
+        "id": "foundry_basement:altruism:0",
+        "kind": "back",
+        "state": "altruism",
+        "label": "援助 · 未翻开",
+        "asset": "back_altruism",
+        "location": "room",
+        "progress": 0,
+        "color": "#7da579",
+        "wounded": false,
+        "room": "foundry_basement"
+      },
+      {
+        "id": "shack:objective:0",
+        "kind": "back",
+        "state": "objective",
+        "label": "目标 · 未翻开",
+        "asset": "back_objective",
+        "location": "room",
+        "progress": 0,
+        "color": "#d8b95c",
+        "wounded": false,
+        "room": "shack"
+      },
+      {
+        "id": "shack:boldness:0",
+        "kind": "back",
+        "state": "boldness",
+        "label": "无惧 · 未翻开",
+        "asset": "back_boldness",
+        "location": "room",
+        "progress": 0,
+        "color": "#bb6458",
+        "wounded": false,
+        "room": "shack"
+      },
+      {
+        "id": "shack:survival:0",
+        "kind": "back",
+        "state": "survival",
+        "label": "逃生 · 未翻开",
+        "asset": "back_survival",
+        "location": "room",
+        "progress": 0,
+        "color": "#609cb7",
+        "wounded": false,
+        "room": "shack"
+      },
+      {
+        "id": "shack:survival:1",
+        "kind": "back",
+        "state": "survival",
+        "label": "逃生 · 未翻开",
+        "asset": "back_survival",
+        "location": "room",
+        "progress": 0,
+        "color": "#609cb7",
+        "wounded": false,
+        "room": "shack"
+      },
+      {
+        "id": "backlot:objective:0",
+        "kind": "back",
+        "state": "objective",
+        "label": "目标 · 未翻开",
+        "asset": "back_objective",
+        "location": "room",
+        "progress": 0,
+        "color": "#d8b95c",
+        "wounded": false,
+        "room": "backlot"
+      },
+      {
+        "id": "backlot:boldness:0",
+        "kind": "back",
+        "state": "boldness",
+        "label": "无惧 · 未翻开",
+        "asset": "back_boldness",
+        "location": "room",
+        "progress": 0,
+        "color": "#bb6458",
+        "wounded": false,
+        "room": "backlot"
+      },
+      {
+        "id": "backlot:survival:0",
+        "kind": "back",
+        "state": "survival",
+        "label": "逃生 · 未翻开",
+        "asset": "back_survival",
+        "location": "room",
+        "progress": 0,
+        "color": "#609cb7",
+        "wounded": false,
+        "room": "backlot"
+      },
+      {
+        "id": "backlot:altruism:0",
+        "kind": "back",
+        "state": "altruism",
+        "label": "援助 · 未翻开",
+        "asset": "back_altruism",
+        "location": "room",
+        "progress": 0,
+        "color": "#7da579",
+        "wounded": false,
+        "room": "backlot"
+      }
+    ],
+    "actors": [
+      {
+        "id": "dwight",
+        "kind": "actor",
+        "state": "healthy",
+        "label": "德怀特·费菲尔德",
+        "asset": "portrait_dwight",
+        "location": "room",
+        "room": "ancient_tree",
+        "wounded": false,
+        "madness": false
+      },
+      {
+        "id": "claudette",
+        "kind": "actor",
+        "state": "healthy",
+        "label": "克劳黛特·莫莱",
+        "asset": "portrait_claudette",
+        "location": "room",
+        "room": "ancient_tree",
+        "wounded": false,
+        "madness": false
+      },
+      {
+        "id": "jake",
+        "kind": "actor",
+        "state": "healthy",
+        "label": "杰克·朴",
+        "asset": "portrait_jake",
+        "location": "room",
+        "room": "scrapyard",
+        "wounded": false,
+        "madness": false
+      },
+      {
+        "id": "ace",
+        "kind": "actor",
+        "state": "healthy",
+        "label": "埃斯·维斯孔蒂",
+        "asset": "portrait_ace",
+        "location": "room",
+        "room": "mine_entrance",
+        "wounded": false,
+        "madness": false
+      },
+      {
+        "id": "trapper",
+        "kind": "actor",
+        "state": "healthy",
+        "label": "设陷者",
+        "asset": "portrait_trapper",
+        "location": "room",
+        "room": "ancient_tree",
+        "wounded": false,
+        "madness": false
+      }
+    ],
+    "hand": [
+      "green",
+      "red",
+      "yellow"
+    ],
+    "planCount": 1,
+    "card": "blue",
+    "routes": {
+      "blue": [
+        {
+          "pathId": "mm_p04",
+          "to": "mine_entrance",
+          "color": "blue"
+        },
+        {
+          "pathId": "mm_p15",
+          "to": "scrapyard",
+          "color": "blue"
+        }
+      ],
+      "green": [
+        {
+          "pathId": "mm_p03",
+          "to": "mine_depths",
+          "color": "green"
+        }
+      ],
+      "red": [
+        {
+          "pathId": "mm_p16",
+          "to": "shack",
+          "color": "red"
+        }
+      ],
+      "yellow": [],
+      "wait": []
+    },
+    "actions": [
+      {
+        "label": "修理古树 · 发电机 1",
+        "command": {
+          "type": "INTERACT",
+          "actorId": "dwight",
+          "action": "repair",
+          "targetId": "ancient_tree:objective:0"
+        },
+        "targetId": "ancient_tree:objective:0",
+        "roomId": "ancient_tree"
+      },
+      {
+        "label": "结束本次行动",
+        "command": {
+          "type": "END_TURN",
+          "actorId": "dwight"
+        }
+      }
+    ],
+    "skills": [
+      {
+        "name": "证明自己",
+        "text": "当你将要交互时，改为由你所在空间或一个相邻空间里的另一位逃生者交互。"
+      },
+      {
+        "name": "领袖群雄",
+        "text": "当你所在空间里的另一位逃生者移动时，你与其一起移动；或者，当你移动时，你所在空间里的另一位逃生者与你一起移动。"
+      },
+      {
+        "name": "携手合作",
+        "text": "当你所在空间或一个相连空间里的另一位逃生者将要进行一次技能检定时，改为掷两颗技能检定骰子并保留其中一颗的结果。"
+      }
+    ]
+  }
+]

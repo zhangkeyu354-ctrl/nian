@@ -45,7 +45,41 @@ export async function clickUI(page: Page, c: Command) {
     const select = page.getByLabel("查看房间", { exact: true });
     if (!(await select.isVisible()))
       await page.getByLabel("显示图例与房间列表", { exact: true }).click();
+    await page.evaluate(
+      () =>
+        new Promise((r) =>
+          requestAnimationFrame(() => requestAnimationFrame(r)),
+        ),
+    );
     await select.selectOption(room);
+    await page.evaluate(
+      () =>
+        new Promise((r) =>
+          requestAnimationFrame(() => requestAnimationFrame(r)),
+        ),
+    );
+    // Selection changes the camera asynchronously. Wait for the non-tiny view;
+    // otherwise the next tap merely zooms, so no game command is submitted.
+    await page.waitForFunction(
+      () => {
+        const svg = document.querySelector('[data-testid="board"]');
+        const vp = document.querySelector(".map-viewport");
+        if (!svg || !vp) return false;
+        const width = vp.getBoundingClientRect().width;
+        return (
+          width >= 950 ||
+          Number(svg.getAttribute("viewBox")!.split(" ")[2]) / width <= 1.4
+        );
+      },
+      undefined,
+      { timeout: 3000 },
+    );
+    await page.evaluate(
+      () =>
+        new Promise((r) =>
+          requestAnimationFrame(() => requestAnimationFrame(r)),
+        ),
+    );
     await target.locator(":scope > rect").click();
     return;
   }
@@ -102,7 +136,41 @@ export async function clickUI(page: Page, c: Command) {
       const select = page.getByLabel("查看房间", { exact: true });
       if (!(await select.isVisible()))
         await page.getByLabel("显示图例与房间列表", { exact: true }).click();
+      await page.evaluate(
+        () =>
+          new Promise((r) =>
+            requestAnimationFrame(() => requestAnimationFrame(r)),
+          ),
+      );
       await select.selectOption(room);
+      await page.evaluate(
+        () =>
+          new Promise((r) =>
+            requestAnimationFrame(() => requestAnimationFrame(r)),
+          ),
+      );
+      // Selection changes the camera asynchronously. Wait for the non-tiny view;
+      // otherwise the next tap merely zooms, so no game command is submitted.
+      await page.waitForFunction(
+        () => {
+          const svg = document.querySelector('[data-testid="board"]');
+          const vp = document.querySelector(".map-viewport");
+          if (!svg || !vp) return false;
+          const width = vp.getBoundingClientRect().width;
+          return (
+            width >= 950 ||
+            Number(svg.getAttribute("viewBox")!.split(" ")[2]) / width <= 1.4
+          );
+        },
+        undefined,
+        { timeout: 3000 },
+      );
+      await page.evaluate(
+        () =>
+          new Promise((r) =>
+            requestAnimationFrame(() => requestAnimationFrame(r)),
+          ),
+      );
       const before = JSON.parse(
         await page.evaluate(() => window.render_game_to_text()),
       ).events;
