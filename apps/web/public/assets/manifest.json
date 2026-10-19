@@ -1,0 +1,1075 @@
+{
+  "version": 1,
+  "style_guide": "docs/ART_STYLE_GUIDE.md",
+  "original_only": true,
+  "state_composition": "Base art plus engine-owned SVG overlays; PNG absence uses SVG automatically.",
+  "assets": [
+    {
+      "id": "generator",
+      "file": "generator.png",
+      "svg": "svg/generator.svg",
+      "source": "AI 生成",
+      "states": [
+        "idle",
+        "progress_1",
+        "progress_2",
+        "completed",
+        "blocked"
+      ],
+      "size": [
+        1254,
+        1254
+      ],
+      "transparent": true,
+      "name_zh": "发电机",
+      "prompt_zh": "原创发电机的独立游戏素材，做旧炭笔与骨白刻线，黑暗迷雾气质，居中简洁构图；透明RGBA背景，正方形1024像素。统一六边形底框，主体清楚易识别。禁止官方素材、描摹、标志、文字、水印。",
+      "prompt_en": "Original standalone 发电机 game asset. Worn charcoal and bone-white engraved brushwork, dark fog mood, simple readable centered composition. Square 1024px transparent RGBA background. One unified hexagonal token frame. No official game art, no tracing, no franchise iconography, no letters, no logo, no watermark.",
+      "provider": "built-in image_gen",
+      "requested_size": [
+        1024,
+        1024
+      ],
+      "display_size": [
+        256,
+        256
+      ],
+      "source_file": "exec-d5348694-11a4-44aa-8db0-ffab947ce62c.png",
+      "sha256": "0b4a6c89031062ec64d597282aec7b853c426bc796d8cc1c8cf88e9ef01377dd",
+      "generation_prompt": "Create exactly one ORIGINAL game prop icon: a compact improvised mechanical generator with a large circular flywheel on left, rectangular machine housing, two unequal exhaust tubes, and broad squat feet. Not the icon or design from any existing game. Worn charcoal hand-painted cut-paper silhouette with bone-white engraved highlights and tiny oxidized brass scratches. Clear readable bold simple shapes at small size. Centered inside ONE weathered hexagonal token rim, charcoal interior, genuinely transparent outside the hexagon. Square 1024x1024 RGBA. No scenery, no text, no numbers, no logo, no watermark, no skull, no franchise motifs. UI progress and states will be added separately in code; show neutral idle machine only. Asset file intended: generator.png.",
+      "svg_source": "占位",
+      "svg_creator": "original_code"
+    },
+    {
+      "id": "exit_gate",
+      "file": "exit_gate.png",
+      "svg": "svg/exit_gate.svg",
+      "source": "AI 生成",
+      "states": [
+        "unpowered",
+        "powered",
+        "progress_1",
+        "progress_2",
+        "open"
+      ],
+      "size": [
+        1254,
+        1254
+      ],
+      "transparent": true,
+      "name_zh": "出口大门",
+      "prompt_zh": "原创出口大门的独立游戏素材，做旧炭笔与骨白刻线，黑暗迷雾气质，居中简洁构图；透明RGBA背景，正方形1024像素。统一六边形底框，主体清楚易识别。禁止官方素材、描摹、标志、文字、水印。",
+      "prompt_en": "Original standalone 出口大门 game asset. Worn charcoal and bone-white engraved brushwork, dark fog mood, simple readable centered composition. Square 1024px transparent RGBA background. One unified hexagonal token frame. No official game art, no tracing, no franchise iconography, no letters, no logo, no watermark.",
+      "provider": "built-in image_gen",
+      "requested_size": [
+        1024,
+        1024
+      ],
+      "display_size": [
+        256,
+        256
+      ],
+      "source_file": "exec-9abe65d1-18db-47f8-8206-5ebb89d69380.png",
+      "sha256": "8c746cca2b0df09bcf0a257e8ee6d0d72b955e8d3c9a80c14c32518202812d92",
+      "generation_prompt": "Create exactly ONE standalone original game token icon: a heavy two-panel barred industrial exit door, rectangular arch, one round latch. Cohesive worn charcoal hand-painted cut-paper with bone-white engraved highlights, subdued oxidized brass scratches, dark fog atmosphere. Strong simple readable shapes. Centered inside ONE weathered hexagonal token rim with charcoal interior; genuinely transparent outside the hexagon, no external shadow. Square RGBA, requested 1024x1024. Neutral base object only; progress, power, damage, and occupancy are separate code overlays. No text, no numbers, no letters, no logos, no tally marks, no skull emblems, no watermark. Do not copy, trace or recreate official art from any existing game. Asset filename: exit_gate.png.",
+      "svg_source": "占位",
+      "svg_creator": "original_code"
+    },
+    {
+      "id": "hook",
+      "file": "hook.png",
+      "svg": "svg/hook.svg",
+      "source": "AI 生成",
+      "states": [
+        "empty",
+        "occupied",
+        "broken"
+      ],
+      "size": [
+        1254,
+        1254
+      ],
+      "transparent": true,
+      "name_zh": "钩子",
+      "prompt_zh": "原创钩子的独立游戏素材，做旧炭笔与骨白刻线，黑暗迷雾气质，居中简洁构图；透明RGBA背景，正方形1024像素。统一六边形底框，主体清楚易识别。禁止官方素材、描摹、标志、文字、水印。",
+      "prompt_en": "Original standalone 钩子 game asset. Worn charcoal and bone-white engraved brushwork, dark fog mood, simple readable centered composition. Square 1024px transparent RGBA background. One unified hexagonal token frame. No official game art, no tracing, no franchise iconography, no letters, no logo, no watermark.",
+      "provider": "built-in image_gen",
+      "requested_size": [
+        1024,
+        1024
+      ],
+      "display_size": [
+        256,
+        256
+      ],
+      "source_file": "exec-f6e3b395-294a-4985-a50d-48834412e3e5.png",
+      "sha256": "b0dc889e41b2b5ae120be04ef81798b56388167bebbb5245ec5cf90f5ec0b9a7",
+      "generation_prompt": "Create exactly ONE standalone original game token icon: a rough timber upright gallows-like hook stand, one curved metal hook, not a human body. Cohesive worn charcoal hand-painted cut-paper with bone-white engraved highlights, subdued oxidized brass scratches, dark fog atmosphere. Strong simple readable shapes. Centered inside ONE weathered hexagonal token rim with charcoal interior; genuinely transparent outside the hexagon, no external shadow. Square RGBA, requested 1024x1024. Neutral base object only; progress, power, damage, and occupancy are separate code overlays. No text, no numbers, no letters, no logos, no tally marks, no skull emblems, no watermark. Do not copy, trace or recreate official art from any existing game. Asset filename: hook.png.",
+      "svg_source": "占位",
+      "svg_creator": "original_code"
+    },
+    {
+      "id": "hex_totem",
+      "file": "hex_totem.png",
+      "svg": "svg/hex_totem.svg",
+      "source": "AI 生成",
+      "states": [
+        "normal",
+        "cleansed"
+      ],
+      "size": [
+        1254,
+        1254
+      ],
+      "transparent": true,
+      "name_zh": "厄咒图腾",
+      "prompt_zh": "原创厄咒图腾的独立游戏素材，做旧炭笔与骨白刻线，黑暗迷雾气质，居中简洁构图；透明RGBA背景，正方形1024像素。统一六边形底框，主体清楚易识别。禁止官方素材、描摹、标志、文字、水印。",
+      "prompt_en": "Original standalone 厄咒图腾 game asset. Worn charcoal and bone-white engraved brushwork, dark fog mood, simple readable centered composition. Square 1024px transparent RGBA background. One unified hexagonal token frame. No official game art, no tracing, no franchise iconography, no letters, no logo, no watermark.",
+      "provider": "built-in image_gen",
+      "requested_size": [
+        1024,
+        1024
+      ],
+      "display_size": [
+        256,
+        256
+      ],
+      "source_file": "exec-9c5f850c-0e54-4027-aaea-d9b00e333359.png",
+      "sha256": "b9e69fef8e1a4d70077e10b4937af4d2ac3156c262187b8ea2b74ff53b0401dc",
+      "generation_prompt": "Create exactly ONE standalone original game token icon: an invented stacked angular stone talisman sculpture with a diamond glass prism, no skull, not any existing game totem. Cohesive worn charcoal hand-painted cut-paper with bone-white engraved highlights, subdued oxidized brass scratches, dark fog atmosphere. Strong simple readable shapes. Centered inside ONE weathered hexagonal token rim with charcoal interior; genuinely transparent outside the hexagon, no external shadow. Square RGBA, requested 1024x1024. Neutral base object only; progress, power, damage, and occupancy are separate code overlays. No text, no numbers, no letters, no logos, no tally marks, no skull emblems, no watermark. Do not copy, trace or recreate official art from any existing game. Asset filename: hex_totem.png.",
+      "svg_source": "占位",
+      "svg_creator": "original_code"
+    },
+    {
+      "id": "chest",
+      "file": "chest.png",
+      "svg": "svg/chest.svg",
+      "source": "AI 生成",
+      "states": [
+        "unopened",
+        "searched"
+      ],
+      "size": [
+        1254,
+        1254
+      ],
+      "transparent": true,
+      "name_zh": "箱子",
+      "prompt_zh": "原创箱子的独立游戏素材，做旧炭笔与骨白刻线，黑暗迷雾气质，居中简洁构图；透明RGBA背景，正方形1024像素。统一六边形底框，主体清楚易识别。禁止官方素材、描摹、标志、文字、水印。",
+      "prompt_en": "Original standalone 箱子 game asset. Worn charcoal and bone-white engraved brushwork, dark fog mood, simple readable centered composition. Square 1024px transparent RGBA background. One unified hexagonal token frame. No official game art, no tracing, no franchise iconography, no letters, no logo, no watermark.",
+      "provider": "built-in image_gen",
+      "requested_size": [
+        1024,
+        1024
+      ],
+      "display_size": [
+        256,
+        256
+      ],
+      "source_file": "exec-0f1b1c98-728c-4780-8db3-c24746d42ebb.png",
+      "sha256": "f03512d8f06f7e345ca1cdd6ec2553d54f831ca563e774453fba01a6dc6e32d4",
+      "generation_prompt": "Create exactly ONE standalone original game token icon: a small closed arched wooden utility chest with two metal bands and a simple central padlock. Cohesive worn charcoal hand-painted cut-paper with bone-white engraved highlights, subdued oxidized brass scratches, dark fog atmosphere. Strong simple readable shapes. Centered inside ONE weathered hexagonal token rim with charcoal interior; genuinely transparent outside the hexagon, no external shadow. Square RGBA, requested 1024x1024. Neutral base object only; progress, power, damage, and occupancy are separate code overlays. No text, no numbers, no letters, no logos, no tally marks, no skull emblems, no watermark. Do not copy, trace or recreate official art from any existing game. Asset filename: chest.png.",
+      "svg_source": "占位",
+      "svg_creator": "original_code"
+    },
+    {
+      "id": "locker",
+      "file": "locker.png",
+      "svg": "svg/locker.svg",
+      "source": "AI 生成",
+      "states": [
+        "empty",
+        "occupied",
+        "removed"
+      ],
+      "size": [
+        1254,
+        1254
+      ],
+      "transparent": true,
+      "name_zh": "储物柜",
+      "prompt_zh": "原创储物柜的独立游戏素材，做旧炭笔与骨白刻线，黑暗迷雾气质，居中简洁构图；透明RGBA背景，正方形1024像素。统一六边形底框，主体清楚易识别。禁止官方素材、描摹、标志、文字、水印。",
+      "prompt_en": "Original standalone 储物柜 game asset. Worn charcoal and bone-white engraved brushwork, dark fog mood, simple readable centered composition. Square 1024px transparent RGBA background. One unified hexagonal token frame. No official game art, no tracing, no franchise iconography, no letters, no logo, no watermark.",
+      "provider": "built-in image_gen",
+      "requested_size": [
+        1024,
+        1024
+      ],
+      "display_size": [
+        256,
+        256
+      ],
+      "source_file": "exec-f02e6201-7e12-457f-9e2d-051b8fe4fe24.png",
+      "sha256": "7d32055d4cf81018bc91ffa817f9b83855c64c3785b1be83a6d2c99d113c12e5",
+      "generation_prompt": "Create exactly ONE standalone original game token icon: a tall narrow single-door metal locker with three horizontal ventilation slots and round handle. Cohesive worn charcoal hand-painted cut-paper with bone-white engraved highlights, subdued oxidized brass scratches, dark fog atmosphere. Strong simple readable shapes. Centered inside ONE weathered hexagonal token rim with charcoal interior; genuinely transparent outside the hexagon, no external shadow. Square RGBA, requested 1024x1024. Neutral base object only; progress, power, damage, and occupancy are separate code overlays. No text, no numbers, no letters, no logos, no tally marks, no skull emblems, no watermark. Do not copy, trace or recreate official art from any existing game. Asset filename: locker.png.",
+      "svg_source": "占位",
+      "svg_creator": "original_code"
+    },
+    {
+      "id": "pallet",
+      "file": "pallet.png",
+      "svg": "svg/pallet.svg",
+      "source": "AI 生成",
+      "states": [
+        "in_room",
+        "on_path",
+        "destroyed"
+      ],
+      "size": [
+        1254,
+        1254
+      ],
+      "transparent": true,
+      "name_zh": "木板",
+      "prompt_zh": "原创木板的独立游戏素材，做旧炭笔与骨白刻线，黑暗迷雾气质，居中简洁构图；透明RGBA背景，正方形1024像素。统一六边形底框，主体清楚易识别。禁止官方素材、描摹、标志、文字、水印。",
+      "prompt_en": "Original standalone 木板 game asset. Worn charcoal and bone-white engraved brushwork, dark fog mood, simple readable centered composition. Square 1024px transparent RGBA background. One unified hexagonal token frame. No official game art, no tracing, no franchise iconography, no letters, no logo, no watermark.",
+      "provider": "built-in image_gen",
+      "requested_size": [
+        1024,
+        1024
+      ],
+      "display_size": [
+        256,
+        256
+      ],
+      "source_file": "exec-6de57ac5-fbc0-4542-9528-dfad9655d754.png",
+      "sha256": "c54aff78737249386a72d1e0117ed9049e91c9f5ac02f1ddc2500e0d6fd0b584",
+      "generation_prompt": "Create exactly ONE standalone original game token icon: three thick uneven timber planks fastened diagonally into a loose wood barrier. Cohesive worn charcoal hand-painted cut-paper with bone-white engraved highlights, subdued oxidized brass scratches, dark fog atmosphere. Strong simple readable shapes. Centered inside ONE weathered hexagonal token rim with charcoal interior; genuinely transparent outside the hexagon, no external shadow. Square RGBA, requested 1024x1024. Neutral base object only; progress, power, damage, and occupancy are separate code overlays. No text, no numbers, no letters, no logos, no tally marks, no skull emblems, no watermark. Do not copy, trace or recreate official art from any existing game. Asset filename: pallet.png.",
+      "svg_source": "占位",
+      "svg_creator": "original_code"
+    },
+    {
+      "id": "crow",
+      "file": "crow.png",
+      "svg": "svg/crow.svg",
+      "source": "AI 生成",
+      "states": [
+        "still",
+        "startled"
+      ],
+      "size": [
+        1254,
+        1254
+      ],
+      "transparent": true,
+      "name_zh": "乌鸦",
+      "prompt_zh": "原创乌鸦的独立游戏素材，做旧炭笔与骨白刻线，黑暗迷雾气质，居中简洁构图；透明RGBA背景，正方形1024像素。统一六边形底框，主体清楚易识别。禁止官方素材、描摹、标志、文字、水印。",
+      "prompt_en": "Original standalone 乌鸦 game asset. Worn charcoal and bone-white engraved brushwork, dark fog mood, simple readable centered composition. Square 1024px transparent RGBA background. One unified hexagonal token frame. No official game art, no tracing, no franchise iconography, no letters, no logo, no watermark.",
+      "provider": "built-in image_gen",
+      "requested_size": [
+        1024,
+        1024
+      ],
+      "display_size": [
+        256,
+        256
+      ],
+      "source_file": "exec-31218b76-b2ba-48c6-ae70-3b4d84258b19.png",
+      "sha256": "d78224c3eb7cd16b4accb31de59208249e22ef3d792cd1f1a72e8854aa80b8ae",
+      "generation_prompt": "Create exactly ONE standalone original game token icon: one perched black corvid bird in profile, beak and folded angular wings, no franchise silhouette. Cohesive worn charcoal hand-painted cut-paper with bone-white engraved highlights, subdued oxidized brass scratches, dark fog atmosphere. Strong simple readable shapes. Centered inside ONE weathered hexagonal token rim with charcoal interior; genuinely transparent outside the hexagon, no external shadow. Square RGBA, requested 1024x1024. Neutral base object only; progress, power, damage, and occupancy are separate code overlays. No text, no numbers, no letters, no logos, no tally marks, no skull emblems, no watermark. Do not copy, trace or recreate official art from any existing game. Asset filename: crow.png.",
+      "svg_source": "占位",
+      "svg_creator": "original_code"
+    },
+    {
+      "id": "wall",
+      "file": "wall.png",
+      "svg": "svg/wall.svg",
+      "source": "AI 生成",
+      "states": [
+        "intact",
+        "broken",
+        "temporary"
+      ],
+      "size": [
+        1254,
+        1254
+      ],
+      "transparent": true,
+      "name_zh": "可破坏墙壁",
+      "prompt_zh": "原创可破坏墙壁的独立游戏素材，做旧炭笔与骨白刻线，黑暗迷雾气质，居中简洁构图；透明RGBA背景，正方形1024像素。统一六边形底框，主体清楚易识别。禁止官方素材、描摹、标志、文字、水印。",
+      "prompt_en": "Original standalone 可破坏墙壁 game asset. Worn charcoal and bone-white engraved brushwork, dark fog mood, simple readable centered composition. Square 1024px transparent RGBA background. One unified hexagonal token frame. No official game art, no tracing, no franchise iconography, no letters, no logo, no watermark.",
+      "provider": "built-in image_gen",
+      "requested_size": [
+        1024,
+        1024
+      ],
+      "display_size": [
+        256,
+        256
+      ],
+      "source_file": "exec-129da85f-035f-4ea8-9389-f546fa63068e.png",
+      "sha256": "bd7c47134f670413c15cf597026692001269838dbfe14289cd66da49a1324b29",
+      "generation_prompt": "Create exactly ONE standalone original game token icon: a short jagged old brick wall with three missing bricks at the top. Cohesive worn charcoal hand-painted cut-paper with bone-white engraved highlights, subdued oxidized brass scratches, dark fog atmosphere. Strong simple readable shapes. Centered inside ONE weathered hexagonal token rim with charcoal interior; genuinely transparent outside the hexagon, no external shadow. Square RGBA, requested 1024x1024. Neutral base object only; progress, power, damage, and occupancy are separate code overlays. No text, no numbers, no letters, no logos, no tally marks, no skull emblems, no watermark. Do not copy, trace or recreate official art from any existing game. Asset filename: wall.png.",
+      "svg_source": "占位",
+      "svg_creator": "original_code"
+    },
+    {
+      "id": "bear_trap",
+      "file": "bear_trap.png",
+      "svg": "svg/bear_trap.svg",
+      "source": "AI 生成",
+      "states": [
+        "active"
+      ],
+      "size": [
+        1254,
+        1254
+      ],
+      "transparent": true,
+      "name_zh": "捕兽夹",
+      "prompt_zh": "原创捕兽夹的独立游戏素材，做旧炭笔与骨白刻线，黑暗迷雾气质，居中简洁构图；透明RGBA背景，正方形1024像素。统一六边形底框，主体清楚易识别。禁止官方素材、描摹、标志、文字、水印。",
+      "prompt_en": "Original standalone 捕兽夹 game asset. Worn charcoal and bone-white engraved brushwork, dark fog mood, simple readable centered composition. Square 1024px transparent RGBA background. One unified hexagonal token frame. No official game art, no tracing, no franchise iconography, no letters, no logo, no watermark.",
+      "provider": "built-in image_gen",
+      "requested_size": [
+        1024,
+        1024
+      ],
+      "display_size": [
+        256,
+        256
+      ],
+      "source_file": "exec-b36f1541-5df2-485f-b765-b9f9a3890fc0.png",
+      "sha256": "9da78bb4804ee127853d7e3a97d535fd15f0432d8dd58d1c85b6735f1d88819a",
+      "generation_prompt": "Create exactly ONE standalone original game token icon: a simple circular mechanical spring trap lying open, two opposing toothed jaws, no gore. Cohesive worn charcoal hand-painted cut-paper with bone-white engraved highlights, subdued oxidized brass scratches, dark fog atmosphere. Strong simple readable shapes. Centered inside ONE weathered hexagonal token rim with charcoal interior; genuinely transparent outside the hexagon, no external shadow. Square RGBA, requested 1024x1024. Neutral base object only; progress, power, damage, and occupancy are separate code overlays. No text, no numbers, no letters, no logos, no tally marks, no skull emblems, no watermark. Do not copy, trace or recreate official art from any existing game. Asset filename: bear_trap.png.",
+      "svg_source": "占位",
+      "svg_creator": "original_code"
+    },
+    {
+      "id": "phantasm",
+      "file": "phantasm.png",
+      "svg": "svg/phantasm.svg",
+      "source": "AI 生成",
+      "states": [
+        "active"
+      ],
+      "size": [
+        1254,
+        1254
+      ],
+      "transparent": true,
+      "name_zh": "鬼灵陷阱",
+      "prompt_zh": "原创鬼灵陷阱的独立游戏素材，做旧炭笔与骨白刻线，黑暗迷雾气质，居中简洁构图；透明RGBA背景，正方形1024像素。统一六边形底框，主体清楚易识别。禁止官方素材、描摹、标志、文字、水印。",
+      "prompt_en": "Original standalone 鬼灵陷阱 game asset. Worn charcoal and bone-white engraved brushwork, dark fog mood, simple readable centered composition. Square 1024px transparent RGBA background. One unified hexagonal token frame. No official game art, no tracing, no franchise iconography, no letters, no logo, no watermark.",
+      "provider": "built-in image_gen",
+      "requested_size": [
+        1024,
+        1024
+      ],
+      "display_size": [
+        256,
+        256
+      ],
+      "source_file": "exec-5feca8eb-edc3-4c2a-911f-cb433c67e873.png",
+      "sha256": "6eb6f4391f72f03594ac829115c25f436a621ddaa58c85d4e3bcba63de75ea56",
+      "generation_prompt": "Create exactly ONE standalone original game token icon: an original abstract triangle echo rune with three nested asymmetrical ripple triangles. Cohesive worn charcoal hand-painted cut-paper with bone-white engraved highlights, subdued oxidized brass scratches, dark fog atmosphere. Strong simple readable shapes. Centered inside ONE weathered hexagonal token rim with charcoal interior; genuinely transparent outside the hexagon, no external shadow. Square RGBA, requested 1024x1024. Neutral base object only; progress, power, damage, and occupancy are separate code overlays. No text, no numbers, no letters, no logos, no tally marks, no skull emblems, no watermark. Do not copy, trace or recreate official art from any existing game. Asset filename: phantasm.png.",
+      "svg_source": "占位",
+      "svg_creator": "original_code"
+    },
+    {
+      "id": "madness",
+      "file": "madness.png",
+      "svg": "svg/madness.svg",
+      "source": "AI 生成",
+      "states": [
+        "active"
+      ],
+      "size": [
+        1254,
+        1254
+      ],
+      "transparent": true,
+      "name_zh": "神经紊乱",
+      "prompt_zh": "原创神经紊乱的独立游戏素材，做旧炭笔与骨白刻线，黑暗迷雾气质，居中简洁构图；透明RGBA背景，正方形1024像素。统一六边形底框，主体清楚易识别。禁止官方素材、描摹、标志、文字、水印。",
+      "prompt_en": "Original standalone 神经紊乱 game asset. Worn charcoal and bone-white engraved brushwork, dark fog mood, simple readable centered composition. Square 1024px transparent RGBA background. One unified hexagonal token frame. No official game art, no tracing, no franchise iconography, no letters, no logo, no watermark.",
+      "provider": "built-in image_gen",
+      "requested_size": [
+        1024,
+        1024
+      ],
+      "display_size": [
+        256,
+        256
+      ],
+      "source_file": "exec-145e0c90-5c83-440c-95dc-9ce9c2112635.png",
+      "sha256": "c5ca777641ef13ebbae7b5c92790e4ba6eea96a6e8f35de1392e1a3eaea864ba",
+      "generation_prompt": "Create exactly ONE standalone original game token icon: an anonymous side-profile head containing a single zigzag line, abstract mental disruption symbol. Cohesive worn charcoal hand-painted cut-paper with bone-white engraved highlights, subdued oxidized brass scratches, dark fog atmosphere. Strong simple readable shapes. Centered inside ONE weathered hexagonal token rim with charcoal interior; genuinely transparent outside the hexagon, no external shadow. Square RGBA, requested 1024x1024. Neutral base object only; progress, power, damage, and occupancy are separate code overlays. No text, no numbers, no letters, no logos, no tally marks, no skull emblems, no watermark. Do not copy, trace or recreate official art from any existing game. Asset filename: madness.png.",
+      "svg_source": "占位",
+      "svg_creator": "original_code"
+    },
+    {
+      "id": "entity",
+      "file": "entity.png",
+      "svg": "svg/entity.svg",
+      "source": "AI 生成",
+      "states": [
+        "active"
+      ],
+      "size": [
+        1254,
+        1254
+      ],
+      "transparent": true,
+      "name_zh": "恶灵",
+      "prompt_zh": "原创恶灵的独立游戏素材，做旧炭笔与骨白刻线，黑暗迷雾气质，居中简洁构图；透明RGBA背景，正方形1024像素。统一六边形底框，主体清楚易识别。禁止官方素材、描摹、标志、文字、水印。",
+      "prompt_en": "Original standalone 恶灵 game asset. Worn charcoal and bone-white engraved brushwork, dark fog mood, simple readable centered composition. Square 1024px transparent RGBA background. One unified hexagonal token frame. No official game art, no tracing, no franchise iconography, no letters, no logo, no watermark.",
+      "provider": "built-in image_gen",
+      "requested_size": [
+        1024,
+        1024
+      ],
+      "display_size": [
+        256,
+        256
+      ],
+      "source_file": "exec-f45ec1d4-7928-41c4-b9a5-e59a1afb13d7.png",
+      "sha256": "2c52d1143e72f5f21a64ab121101df961ed5fab4052e2de8d7de99fb34c20087",
+      "generation_prompt": "Create exactly ONE standalone original game token icon: an invented floating four-point twisted crystal with asymmetric branches, no tentacled franchise emblem. Cohesive worn charcoal hand-painted cut-paper with bone-white engraved highlights, subdued oxidized brass scratches, dark fog atmosphere. Strong simple readable shapes. Centered inside ONE weathered hexagonal token rim with charcoal interior; genuinely transparent outside the hexagon, no external shadow. Square RGBA, requested 1024x1024. Neutral base object only; progress, power, damage, and occupancy are separate code overlays. No text, no numbers, no letters, no logos, no tally marks, no skull emblems, no watermark. Do not copy, trace or recreate official art from any existing game. Asset filename: entity.png.",
+      "svg_source": "占位",
+      "svg_creator": "original_code"
+    },
+    {
+      "id": "brand_lantern",
+      "file": "brand_lantern.png",
+      "svg": "svg/brand_lantern.svg",
+      "source": "AI 生成",
+      "states": [
+        "decoration"
+      ],
+      "size": [
+        1254,
+        1254
+      ],
+      "transparent": true,
+      "name_zh": "原创灯笼标志",
+      "prompt_zh": "原创原创灯笼标志的独立游戏素材，做旧炭笔与骨白刻线，黑暗迷雾气质，居中简洁构图；透明RGBA背景，正方形1024像素。统一六边形底框，主体清楚易识别。禁止官方素材、描摹、标志、文字、水印。",
+      "prompt_en": "Original standalone 原创灯笼标志 game asset. Worn charcoal and bone-white engraved brushwork, dark fog mood, simple readable centered composition. Square 1024px transparent RGBA background. One unified hexagonal token frame. No official game art, no tracing, no franchise iconography, no letters, no logo, no watermark.",
+      "provider": "built-in image_gen",
+      "requested_size": [
+        1024,
+        1024
+      ],
+      "display_size": [
+        256,
+        256
+      ],
+      "source_file": "exec-6a978e6d-833a-448b-b2fe-379e9f46d841.png",
+      "sha256": "00be2f1d89e1b4a7eefd5997acf142fd82e898e5dc6bf3bd56c5744847390dce",
+      "generation_prompt": "Create exactly ONE standalone original game token icon: one unique original small hanging square lantern with an arched handle and simple warm vertical flame, no letters or tally-mark logo. Cohesive worn charcoal hand-painted cut-paper with bone-white engraved highlights, subdued oxidized brass scratches, dark fog atmosphere. Strong simple readable shapes. Centered inside ONE weathered hexagonal token rim with charcoal interior; genuinely transparent outside the hexagon, no external shadow. Square RGBA, requested 1024x1024. Neutral base object only; progress, power, damage, and occupancy are separate code overlays. No text, no numbers, no letters, no logos, no tally marks, no skull emblems, no watermark. Do not copy, trace or recreate official art from any existing game. Asset filename: brand_lantern.png.",
+      "svg_source": "占位",
+      "svg_creator": "original_code"
+    },
+    {
+      "id": "back_objective",
+      "file": "back_objective.png",
+      "svg": "svg/back_objective.svg",
+      "source": "AI 生成",
+      "states": [
+        "objective"
+      ],
+      "size": [
+        1254,
+        1254
+      ],
+      "transparent": true,
+      "name_zh": "目标道具背面",
+      "prompt_zh": "原创目标道具背面的独立游戏素材，做旧炭笔与骨白刻线，黑暗迷雾气质，居中简洁构图；透明RGBA背景，正方形1024像素。统一六边形底框，主体清楚易识别。禁止官方素材、描摹、标志、文字、水印。",
+      "prompt_en": "Original standalone 目标道具背面 game asset. Worn charcoal and bone-white engraved brushwork, dark fog mood, simple readable centered composition. Square 1024px transparent RGBA background. One unified hexagonal token frame. No official game art, no tracing, no franchise iconography, no letters, no logo, no watermark.",
+      "provider": "built-in image_gen",
+      "requested_size": [
+        1024,
+        1024
+      ],
+      "display_size": [
+        256,
+        256
+      ],
+      "source_file": "exec-9acd8e00-bd47-497f-ad29-9b91018b6430.png",
+      "sha256": "48219594e4c7538715cb1c6275c4bf0e3af7f42c9cc32cb92a6985a72b3bc480",
+      "generation_prompt": "Create exactly ONE standalone original game token icon: a centered sun-compass motif with four rays, dominant muted ochre-yellow #d8b95c. Cohesive worn charcoal hand-painted cut-paper with bone-white engraved highlights, subdued oxidized brass scratches, dark fog atmosphere. Strong simple readable shapes. Centered inside ONE weathered hexagonal token rim with charcoal interior; genuinely transparent outside the hexagon, no external shadow. Square RGBA, requested 1024x1024. Neutral base object only; progress, power, damage, and occupancy are separate code overlays. No text, no numbers, no letters, no logos, no tally marks, no skull emblems, no watermark. Do not copy, trace or recreate official art from any existing game. Asset filename: back_objective.png.",
+      "svg_source": "占位",
+      "svg_creator": "original_code"
+    },
+    {
+      "id": "back_boldness",
+      "file": "back_boldness.png",
+      "svg": "svg/back_boldness.svg",
+      "source": "AI 生成",
+      "states": [
+        "boldness"
+      ],
+      "size": [
+        1254,
+        1254
+      ],
+      "transparent": true,
+      "name_zh": "无惧道具背面",
+      "prompt_zh": "原创无惧道具背面的独立游戏素材，做旧炭笔与骨白刻线，黑暗迷雾气质，居中简洁构图；透明RGBA背景，正方形1024像素。统一六边形底框，主体清楚易识别。禁止官方素材、描摹、标志、文字、水印。",
+      "prompt_en": "Original standalone 无惧道具背面 game asset. Worn charcoal and bone-white engraved brushwork, dark fog mood, simple readable centered composition. Square 1024px transparent RGBA background. One unified hexagonal token frame. No official game art, no tracing, no franchise iconography, no letters, no logo, no watermark.",
+      "provider": "built-in image_gen",
+      "requested_size": [
+        1024,
+        1024
+      ],
+      "display_size": [
+        256,
+        256
+      ],
+      "source_file": "exec-a110d28d-ef4f-457b-be7d-287054556694.png",
+      "sha256": "0b78c4320d7238b88fa4ed052ce1157e5db67b93c42c409be9aed04ca7c429ea",
+      "generation_prompt": "Create exactly ONE standalone original game token icon: a centered angular lightning motif, dominant muted clay-red #bb6458. Cohesive worn charcoal hand-painted cut-paper with bone-white engraved highlights, subdued oxidized brass scratches, dark fog atmosphere. Strong simple readable shapes. Centered inside ONE weathered hexagonal token rim with charcoal interior; genuinely transparent outside the hexagon, no external shadow. Square RGBA, requested 1024x1024. Neutral base object only; progress, power, damage, and occupancy are separate code overlays. No text, no numbers, no letters, no logos, no tally marks, no skull emblems, no watermark. Do not copy, trace or recreate official art from any existing game. Asset filename: back_boldness.png.",
+      "svg_source": "占位",
+      "svg_creator": "original_code"
+    },
+    {
+      "id": "back_survival",
+      "file": "back_survival.png",
+      "svg": "svg/back_survival.svg",
+      "source": "AI 生成",
+      "states": [
+        "survival"
+      ],
+      "size": [
+        1254,
+        1254
+      ],
+      "transparent": true,
+      "name_zh": "逃生道具背面",
+      "prompt_zh": "原创逃生道具背面的独立游戏素材，做旧炭笔与骨白刻线，黑暗迷雾气质，居中简洁构图；透明RGBA背景，正方形1024像素。统一六边形底框，主体清楚易识别。禁止官方素材、描摹、标志、文字、水印。",
+      "prompt_en": "Original standalone 逃生道具背面 game asset. Worn charcoal and bone-white engraved brushwork, dark fog mood, simple readable centered composition. Square 1024px transparent RGBA background. One unified hexagonal token frame. No official game art, no tracing, no franchise iconography, no letters, no logo, no watermark.",
+      "provider": "built-in image_gen",
+      "requested_size": [
+        1024,
+        1024
+      ],
+      "display_size": [
+        256,
+        256
+      ],
+      "source_file": "exec-8709d1b6-6e02-4d0b-8622-2f300aa0a324.png",
+      "sha256": "a7b0054d67f1c8f0c1be0d4131a3b83e75e7267859c6c9e913f009267ed7c02b",
+      "generation_prompt": "Create exactly ONE standalone original game token icon: a centered winding outward arrow motif, dominant muted steel-blue #609cb7. Cohesive worn charcoal hand-painted cut-paper with bone-white engraved highlights, subdued oxidized brass scratches, dark fog atmosphere. Strong simple readable shapes. Centered inside ONE weathered hexagonal token rim with charcoal interior; genuinely transparent outside the hexagon, no external shadow. Square RGBA, requested 1024x1024. Neutral base object only; progress, power, damage, and occupancy are separate code overlays. No text, no numbers, no letters, no logos, no tally marks, no skull emblems, no watermark. Do not copy, trace or recreate official art from any existing game. Asset filename: back_survival.png.",
+      "svg_source": "占位",
+      "svg_creator": "original_code"
+    },
+    {
+      "id": "back_altruism",
+      "file": "back_altruism.png",
+      "svg": "svg/back_altruism.svg",
+      "source": "AI 生成",
+      "states": [
+        "altruism"
+      ],
+      "size": [
+        1254,
+        1254
+      ],
+      "transparent": true,
+      "name_zh": "援助道具背面",
+      "prompt_zh": "原创援助道具背面的独立游戏素材，做旧炭笔与骨白刻线，黑暗迷雾气质，居中简洁构图；透明RGBA背景，正方形1024像素。统一六边形底框，主体清楚易识别。禁止官方素材、描摹、标志、文字、水印。",
+      "prompt_en": "Original standalone 援助道具背面 game asset. Worn charcoal and bone-white engraved brushwork, dark fog mood, simple readable centered composition. Square 1024px transparent RGBA background. One unified hexagonal token frame. No official game art, no tracing, no franchise iconography, no letters, no logo, no watermark.",
+      "provider": "built-in image_gen",
+      "requested_size": [
+        1024,
+        1024
+      ],
+      "display_size": [
+        256,
+        256
+      ],
+      "source_file": "exec-e9663ec7-e093-45d7-822e-1ba5f48dfd00.png",
+      "sha256": "60b53726b96f26f082178c95fe557676dadb83d8e12d92dff1aca6e3fbe94f6e",
+      "generation_prompt": "Create exactly ONE standalone original game token icon: a centered two cupped palms around a small light motif, dominant muted sage-green #7da579. Cohesive worn charcoal hand-painted cut-paper with bone-white engraved highlights, subdued oxidized brass scratches, dark fog atmosphere. Strong simple readable shapes. Centered inside ONE weathered hexagonal token rim with charcoal interior; genuinely transparent outside the hexagon, no external shadow. Square RGBA, requested 1024x1024. Neutral base object only; progress, power, damage, and occupancy are separate code overlays. No text, no numbers, no letters, no logos, no tally marks, no skull emblems, no watermark. Do not copy, trace or recreate official art from any existing game. Asset filename: back_altruism.png.",
+      "svg_source": "占位",
+      "svg_creator": "original_code"
+    },
+    {
+      "id": "portrait_anonymous",
+      "file": "portrait_anonymous.png",
+      "svg": "svg/portrait_anonymous.svg",
+      "source": "AI 生成",
+      "states": [
+        "healthy",
+        "wounded",
+        "carried",
+        "hidden",
+        "hooked"
+      ],
+      "size": [
+        1254,
+        1254
+      ],
+      "transparent": true,
+      "name_zh": "匿名角色原创剪影",
+      "prompt_zh": "原创匿名角色原创剪影的独立游戏素材，做旧炭笔与骨白刻线，黑暗迷雾气质，居中简洁构图；透明RGBA背景，正方形1024像素。原创匿名头肩剪影，不还原任何既有角色面貌、服装、武器。禁止官方素材、描摹、标志、文字、水印。",
+      "prompt_en": "Original standalone 匿名角色原创剪影 game asset. Worn charcoal and bone-white engraved brushwork, dark fog mood, simple readable centered composition. Square 1024px transparent RGBA background. An anonymous invented head-and-shoulders silhouette, no recognizable existing character face, costume or weapon. No official game art, no tracing, no franchise iconography, no letters, no logo, no watermark.",
+      "provider": "built-in image_gen",
+      "requested_size": [
+        1024,
+        1024
+      ],
+      "display_size": [
+        384,
+        384
+      ],
+      "source_file": "exec-a15a4e66-af12-4cc1-a6d9-f4aff010e6e1.png",
+      "sha256": "958918e50d162fd4c9a17c6e442e05ac4704a25e814c16be8dec9482bda5ce36",
+      "generation_prompt": "Create exactly ONE standalone original head-and-shoulders silhouette portrait: a completely featureless anonymous human bust in a simple round collar, neutral front view. Cohesive worn charcoal hand-painted cut-paper with bone-white engraved highlights, subdued oxidized brass scratches, dark fog atmosphere. Strong simple readable shapes. Centered inside ONE weathered hexagonal token rim with charcoal interior; genuinely transparent outside the hexagon, no external shadow. Square RGBA, requested 1024x1024. The figure is an original anonymous archetype, not a portrait of an existing character. Face entirely in shadow, no facial likeness. No text, no numbers, no letters, no logos, no tally marks, no skull emblems, no watermark. Do not copy, trace or recreate official art from any existing game. Asset filename: portrait_anonymous.png.",
+      "svg_source": "占位",
+      "svg_creator": "original_code"
+    },
+    {
+      "id": "portrait_dwight",
+      "file": "portrait_dwight.png",
+      "svg": "svg/portrait_dwight.svg",
+      "source": "AI 生成",
+      "states": [
+        "healthy",
+        "wounded",
+        "carried",
+        "hidden",
+        "hooked"
+      ],
+      "size": [
+        1254,
+        1254
+      ],
+      "transparent": true,
+      "name_zh": "德怀特·费菲尔德原创剪影",
+      "prompt_zh": "原创德怀特·费菲尔德原创剪影的独立游戏素材，做旧炭笔与骨白刻线，黑暗迷雾气质，居中简洁构图；透明RGBA背景，正方形1024像素。原创匿名头肩剪影，不还原任何既有角色面貌、服装、武器。禁止官方素材、描摹、标志、文字、水印。",
+      "prompt_en": "Original standalone 德怀特·费菲尔德原创剪影 game asset. Worn charcoal and bone-white engraved brushwork, dark fog mood, simple readable centered composition. Square 1024px transparent RGBA background. An anonymous invented head-and-shoulders silhouette, no recognizable existing character face, costume or weapon. No official game art, no tracing, no franchise iconography, no letters, no logo, no watermark.",
+      "provider": "built-in image_gen",
+      "requested_size": [
+        1024,
+        1024
+      ],
+      "display_size": [
+        384,
+        384
+      ],
+      "source_file": "exec-7db537de-5243-4353-a1b6-27c6e27451d2.png",
+      "sha256": "8085052dd00d4bc8ae73eba70bbaf0f7dbe9b8df5880fb5f389e5b885467dcb1",
+      "generation_prompt": "Create exactly ONE standalone original head-and-shoulders silhouette portrait: an invented slim adult male silhouette, asymmetrical short hair, high soft collar, front three-quarter view. Cohesive worn charcoal hand-painted cut-paper with bone-white engraved highlights, subdued oxidized brass scratches, dark fog atmosphere. Strong simple readable shapes. Centered inside ONE weathered hexagonal token rim with charcoal interior; genuinely transparent outside the hexagon, no external shadow. Square RGBA, requested 1024x1024. The figure is an original anonymous archetype, not a portrait of an existing character. Face entirely in shadow, no facial likeness. No text, no numbers, no letters, no logos, no tally marks, no skull emblems, no watermark. Do not copy, trace or recreate official art from any existing game. Asset filename: portrait_dwight.png.",
+      "svg_source": "占位",
+      "svg_creator": "original_code"
+    },
+    {
+      "id": "portrait_meg",
+      "file": "portrait_meg.png",
+      "svg": "svg/portrait_meg.svg",
+      "source": "AI 生成",
+      "states": [
+        "healthy",
+        "wounded",
+        "carried",
+        "hidden",
+        "hooked"
+      ],
+      "size": [
+        1254,
+        1254
+      ],
+      "transparent": true,
+      "name_zh": "梅格·托马斯原创剪影",
+      "prompt_zh": "原创梅格·托马斯原创剪影的独立游戏素材，做旧炭笔与骨白刻线，黑暗迷雾气质，居中简洁构图；透明RGBA背景，正方形1024像素。原创匿名头肩剪影，不还原任何既有角色面貌、服装、武器。禁止官方素材、描摹、标志、文字、水印。",
+      "prompt_en": "Original standalone 梅格·托马斯原创剪影 game asset. Worn charcoal and bone-white engraved brushwork, dark fog mood, simple readable centered composition. Square 1024px transparent RGBA background. An anonymous invented head-and-shoulders silhouette, no recognizable existing character face, costume or weapon. No official game art, no tracing, no franchise iconography, no letters, no logo, no watermark.",
+      "provider": "built-in image_gen",
+      "requested_size": [
+        1024,
+        1024
+      ],
+      "display_size": [
+        384,
+        384
+      ],
+      "source_file": "exec-14882ad0-59b9-4d97-a63f-53cb1e69cd28.png",
+      "sha256": "90e932ce0146c54c98b75b2a55ca0f27c00d096e798ce36f111d9a3d50e5e25b",
+      "generation_prompt": "Create exactly ONE standalone original head-and-shoulders silhouette portrait: an invented adult female silhouette with a short swept-back hairstyle and plain scarf, side three-quarter view. Cohesive worn charcoal hand-painted cut-paper with bone-white engraved highlights, subdued oxidized brass scratches, dark fog atmosphere. Strong simple readable shapes. Centered inside ONE weathered hexagonal token rim with charcoal interior; genuinely transparent outside the hexagon, no external shadow. Square RGBA, requested 1024x1024. The figure is an original anonymous archetype, not a portrait of an existing character. Face entirely in shadow, no facial likeness. No text, no numbers, no letters, no logos, no tally marks, no skull emblems, no watermark. Do not copy, trace or recreate official art from any existing game. Asset filename: portrait_meg.png.",
+      "svg_source": "占位",
+      "svg_creator": "original_code"
+    },
+    {
+      "id": "portrait_claudette",
+      "file": "portrait_claudette.png",
+      "svg": "svg/portrait_claudette.svg",
+      "source": "AI 生成",
+      "states": [
+        "healthy",
+        "wounded",
+        "carried",
+        "hidden",
+        "hooked"
+      ],
+      "size": [
+        1254,
+        1254
+      ],
+      "transparent": true,
+      "name_zh": "克劳黛特·莫莱原创剪影",
+      "prompt_zh": "原创克劳黛特·莫莱原创剪影的独立游戏素材，做旧炭笔与骨白刻线，黑暗迷雾气质，居中简洁构图；透明RGBA背景，正方形1024像素。原创匿名头肩剪影，不还原任何既有角色面貌、服装、武器。禁止官方素材、描摹、标志、文字、水印。",
+      "prompt_en": "Original standalone 克劳黛特·莫莱原创剪影 game asset. Worn charcoal and bone-white engraved brushwork, dark fog mood, simple readable centered composition. Square 1024px transparent RGBA background. An anonymous invented head-and-shoulders silhouette, no recognizable existing character face, costume or weapon. No official game art, no tracing, no franchise iconography, no letters, no logo, no watermark.",
+      "provider": "built-in image_gen",
+      "requested_size": [
+        1024,
+        1024
+      ],
+      "display_size": [
+        384,
+        384
+      ],
+      "source_file": "exec-65dc4b52-e845-4843-8b7b-4e89cf0043dd.png",
+      "sha256": "b8b91c02fdae4441721b72465b0c7c81e21b70e6589b52ab707e8c6f360be668",
+      "generation_prompt": "Create exactly ONE standalone original head-and-shoulders silhouette portrait: an invented adult female silhouette with rounded textured hair, loose plain jacket, front three-quarter view. Cohesive worn charcoal hand-painted cut-paper with bone-white engraved highlights, subdued oxidized brass scratches, dark fog atmosphere. Strong simple readable shapes. Centered inside ONE weathered hexagonal token rim with charcoal interior; genuinely transparent outside the hexagon, no external shadow. Square RGBA, requested 1024x1024. The figure is an original anonymous archetype, not a portrait of an existing character. Face entirely in shadow, no facial likeness. No text, no numbers, no letters, no logos, no tally marks, no skull emblems, no watermark. Do not copy, trace or recreate official art from any existing game. Asset filename: portrait_claudette.png.",
+      "svg_source": "占位",
+      "svg_creator": "original_code"
+    },
+    {
+      "id": "portrait_jake",
+      "file": "portrait_jake.png",
+      "svg": "svg/portrait_jake.svg",
+      "source": "AI 生成",
+      "states": [
+        "healthy",
+        "wounded",
+        "carried",
+        "hidden",
+        "hooked"
+      ],
+      "size": [
+        1254,
+        1254
+      ],
+      "transparent": true,
+      "name_zh": "杰克·朴原创剪影",
+      "prompt_zh": "原创杰克·朴原创剪影的独立游戏素材，做旧炭笔与骨白刻线，黑暗迷雾气质，居中简洁构图；透明RGBA背景，正方形1024像素。原创匿名头肩剪影，不还原任何既有角色面貌、服装、武器。禁止官方素材、描摹、标志、文字、水印。",
+      "prompt_en": "Original standalone 杰克·朴原创剪影 game asset. Worn charcoal and bone-white engraved brushwork, dark fog mood, simple readable centered composition. Square 1024px transparent RGBA background. An anonymous invented head-and-shoulders silhouette, no recognizable existing character face, costume or weapon. No official game art, no tracing, no franchise iconography, no letters, no logo, no watermark.",
+      "provider": "built-in image_gen",
+      "requested_size": [
+        1024,
+        1024
+      ],
+      "display_size": [
+        384,
+        384
+      ],
+      "source_file": "exec-f236e3fe-fdf1-410a-b4fa-1e586096c0e2.png",
+      "sha256": "c9d2760778a053502de1993ceeded0e26b9df960c52a8d176f0eda81990fd977",
+      "generation_prompt": "Create exactly ONE standalone original head-and-shoulders silhouette portrait: an invented adult male silhouette with tied-back wavy hair, plain work shirt, left three-quarter view. Cohesive worn charcoal hand-painted cut-paper with bone-white engraved highlights, subdued oxidized brass scratches, dark fog atmosphere. Strong simple readable shapes. Centered inside ONE weathered hexagonal token rim with charcoal interior; genuinely transparent outside the hexagon, no external shadow. Square RGBA, requested 1024x1024. The figure is an original anonymous archetype, not a portrait of an existing character. Face entirely in shadow, no facial likeness. No text, no numbers, no letters, no logos, no tally marks, no skull emblems, no watermark. Do not copy, trace or recreate official art from any existing game. Asset filename: portrait_jake.png.",
+      "svg_source": "占位",
+      "svg_creator": "original_code"
+    },
+    {
+      "id": "portrait_nea",
+      "file": "portrait_nea.png",
+      "svg": "svg/portrait_nea.svg",
+      "source": "AI 生成",
+      "states": [
+        "healthy",
+        "wounded",
+        "carried",
+        "hidden",
+        "hooked"
+      ],
+      "size": [
+        1254,
+        1254
+      ],
+      "transparent": true,
+      "name_zh": "妮娅·卡尔森原创剪影",
+      "prompt_zh": "原创妮娅·卡尔森原创剪影的独立游戏素材，做旧炭笔与骨白刻线，黑暗迷雾气质，居中简洁构图；透明RGBA背景，正方形1024像素。原创匿名头肩剪影，不还原任何既有角色面貌、服装、武器。禁止官方素材、描摹、标志、文字、水印。",
+      "prompt_en": "Original standalone 妮娅·卡尔森原创剪影 game asset. Worn charcoal and bone-white engraved brushwork, dark fog mood, simple readable centered composition. Square 1024px transparent RGBA background. An anonymous invented head-and-shoulders silhouette, no recognizable existing character face, costume or weapon. No official game art, no tracing, no franchise iconography, no letters, no logo, no watermark.",
+      "provider": "built-in image_gen",
+      "requested_size": [
+        1024,
+        1024
+      ],
+      "display_size": [
+        384,
+        384
+      ],
+      "source_file": "exec-55aaae52-adfe-4527-b84a-728ebd4503bc.png",
+      "sha256": "d950930e4659b6ed306af22418eceb82c0963ec3cf5226850020d34a7c57388a",
+      "generation_prompt": "Create exactly ONE standalone original head-and-shoulders silhouette portrait: an invented adult female silhouette with cropped geometric haircut and simple hood resting on shoulders, right profile. Cohesive worn charcoal hand-painted cut-paper with bone-white engraved highlights, subdued oxidized brass scratches, dark fog atmosphere. Strong simple readable shapes. Centered inside ONE weathered hexagonal token rim with charcoal interior; genuinely transparent outside the hexagon, no external shadow. Square RGBA, requested 1024x1024. The figure is an original anonymous archetype, not a portrait of an existing character. Face entirely in shadow, no facial likeness. No text, no numbers, no letters, no logos, no tally marks, no skull emblems, no watermark. Do not copy, trace or recreate official art from any existing game. Asset filename: portrait_nea.png.",
+      "svg_source": "占位",
+      "svg_creator": "original_code"
+    },
+    {
+      "id": "portrait_ace",
+      "file": "portrait_ace.png",
+      "svg": "svg/portrait_ace.svg",
+      "source": "AI 生成",
+      "states": [
+        "healthy",
+        "wounded",
+        "carried",
+        "hidden",
+        "hooked"
+      ],
+      "size": [
+        1254,
+        1254
+      ],
+      "transparent": true,
+      "name_zh": "埃斯·维斯孔蒂原创剪影",
+      "prompt_zh": "原创埃斯·维斯孔蒂原创剪影的独立游戏素材，做旧炭笔与骨白刻线，黑暗迷雾气质，居中简洁构图；透明RGBA背景，正方形1024像素。原创匿名头肩剪影，不还原任何既有角色面貌、服装、武器。禁止官方素材、描摹、标志、文字、水印。",
+      "prompt_en": "Original standalone 埃斯·维斯孔蒂原创剪影 game asset. Worn charcoal and bone-white engraved brushwork, dark fog mood, simple readable centered composition. Square 1024px transparent RGBA background. An anonymous invented head-and-shoulders silhouette, no recognizable existing character face, costume or weapon. No official game art, no tracing, no franchise iconography, no letters, no logo, no watermark.",
+      "provider": "built-in image_gen",
+      "requested_size": [
+        1024,
+        1024
+      ],
+      "display_size": [
+        384,
+        384
+      ],
+      "source_file": "exec-295d2579-db7d-4a34-a13e-46676591e8e0.png",
+      "sha256": "60ef3d1a1ecdf7190b70aa924feaaa128ec24cdfda6ffc036fc325293b3992fe",
+      "generation_prompt": "Create exactly ONE standalone original head-and-shoulders silhouette portrait: an invented middle-aged male silhouette with a broad flat hat and plain lapel coat, left three-quarter view. Cohesive worn charcoal hand-painted cut-paper with bone-white engraved highlights, subdued oxidized brass scratches, dark fog atmosphere. Strong simple readable shapes. Centered inside ONE weathered hexagonal token rim with charcoal interior; genuinely transparent outside the hexagon, no external shadow. Square RGBA, requested 1024x1024. The figure is an original anonymous archetype, not a portrait of an existing character. Face entirely in shadow, no facial likeness. No text, no numbers, no letters, no logos, no tally marks, no skull emblems, no watermark. Do not copy, trace or recreate official art from any existing game. Asset filename: portrait_ace.png.",
+      "svg_source": "占位",
+      "svg_creator": "original_code"
+    },
+    {
+      "id": "portrait_feng_min",
+      "file": "portrait_feng_min.png",
+      "svg": "svg/portrait_feng_min.svg",
+      "source": "AI 生成",
+      "states": [
+        "healthy",
+        "wounded",
+        "carried",
+        "hidden",
+        "hooked"
+      ],
+      "size": [
+        1254,
+        1254
+      ],
+      "transparent": true,
+      "name_zh": "凤敏原创剪影",
+      "prompt_zh": "原创凤敏原创剪影的独立游戏素材，做旧炭笔与骨白刻线，黑暗迷雾气质，居中简洁构图；透明RGBA背景，正方形1024像素。原创匿名头肩剪影，不还原任何既有角色面貌、服装、武器。禁止官方素材、描摹、标志、文字、水印。",
+      "prompt_en": "Original standalone 凤敏原创剪影 game asset. Worn charcoal and bone-white engraved brushwork, dark fog mood, simple readable centered composition. Square 1024px transparent RGBA background. An anonymous invented head-and-shoulders silhouette, no recognizable existing character face, costume or weapon. No official game art, no tracing, no franchise iconography, no letters, no logo, no watermark.",
+      "provider": "built-in image_gen",
+      "requested_size": [
+        1024,
+        1024
+      ],
+      "display_size": [
+        384,
+        384
+      ],
+      "source_file": "exec-276f7e5f-9485-4ca8-931f-26ce221692b9.png",
+      "sha256": "04b499251cbc3ab8b548a45d883c2bb09c13f7a5a0d97e3139d32a46add4b304",
+      "generation_prompt": "Create exactly ONE standalone original head-and-shoulders silhouette portrait: an invented adult female silhouette with chin-length straight bob and standing collar, front view. Cohesive worn charcoal hand-painted cut-paper with bone-white engraved highlights, subdued oxidized brass scratches, dark fog atmosphere. Strong simple readable shapes. Centered inside ONE weathered hexagonal token rim with charcoal interior; genuinely transparent outside the hexagon, no external shadow. Square RGBA, requested 1024x1024. The figure is an original anonymous archetype, not a portrait of an existing character. Face entirely in shadow, no facial likeness. No text, no numbers, no letters, no logos, no tally marks, no skull emblems, no watermark. Do not copy, trace or recreate official art from any existing game. Asset filename: portrait_feng_min.png.",
+      "svg_source": "占位",
+      "svg_creator": "original_code"
+    },
+    {
+      "id": "portrait_trapper",
+      "file": "portrait_trapper.png",
+      "svg": "svg/portrait_trapper.svg",
+      "source": "AI 生成",
+      "states": [
+        "healthy",
+        "wounded",
+        "carried",
+        "hidden",
+        "hooked"
+      ],
+      "size": [
+        1254,
+        1254
+      ],
+      "transparent": true,
+      "name_zh": "设陷者原创剪影",
+      "prompt_zh": "原创设陷者原创剪影的独立游戏素材，做旧炭笔与骨白刻线，黑暗迷雾气质，居中简洁构图；透明RGBA背景，正方形1024像素。原创匿名头肩剪影，不还原任何既有角色面貌、服装、武器。禁止官方素材、描摹、标志、文字、水印。",
+      "prompt_en": "Original standalone 设陷者原创剪影 game asset. Worn charcoal and bone-white engraved brushwork, dark fog mood, simple readable centered composition. Square 1024px transparent RGBA background. An anonymous invented head-and-shoulders silhouette, no recognizable existing character face, costume or weapon. No official game art, no tracing, no franchise iconography, no letters, no logo, no watermark.",
+      "provider": "built-in image_gen",
+      "requested_size": [
+        1024,
+        1024
+      ],
+      "display_size": [
+        384,
+        384
+      ],
+      "source_file": "exec-969408d1-cb57-400e-bb6e-a110bf90f192.png",
+      "sha256": "6b64d9f3b70d71ab7b28eb91bb6af1412a870474a0cd4532a19910c1823d8060",
+      "generation_prompt": "Create exactly ONE standalone original head-and-shoulders silhouette portrait: an invented imposing broad-shouldered figure wearing a plain layered canvas cowl, no mask, no weapons, no franchise costume. Cohesive worn charcoal hand-painted cut-paper with bone-white engraved highlights, subdued oxidized brass scratches, dark fog atmosphere. Strong simple readable shapes. Centered inside ONE weathered hexagonal token rim with charcoal interior; genuinely transparent outside the hexagon, no external shadow. Square RGBA, requested 1024x1024. The figure is an original anonymous archetype, not a portrait of an existing character. Face entirely in shadow, no facial likeness. No text, no numbers, no letters, no logos, no tally marks, no skull emblems, no watermark. Do not copy, trace or recreate official art from any existing game. Asset filename: portrait_trapper.png.",
+      "svg_source": "占位",
+      "svg_creator": "original_code"
+    },
+    {
+      "id": "portrait_wraith",
+      "file": "portrait_wraith.png",
+      "svg": "svg/portrait_wraith.svg",
+      "source": "AI 生成",
+      "states": [
+        "healthy",
+        "wounded",
+        "carried",
+        "hidden",
+        "hooked"
+      ],
+      "size": [
+        1254,
+        1254
+      ],
+      "transparent": true,
+      "name_zh": "幽灵原创剪影",
+      "prompt_zh": "原创幽灵原创剪影的独立游戏素材，做旧炭笔与骨白刻线，黑暗迷雾气质，居中简洁构图；透明RGBA背景，正方形1024像素。原创匿名头肩剪影，不还原任何既有角色面貌、服装、武器。禁止官方素材、描摹、标志、文字、水印。",
+      "prompt_en": "Original standalone 幽灵原创剪影 game asset. Worn charcoal and bone-white engraved brushwork, dark fog mood, simple readable centered composition. Square 1024px transparent RGBA background. An anonymous invented head-and-shoulders silhouette, no recognizable existing character face, costume or weapon. No official game art, no tracing, no franchise iconography, no letters, no logo, no watermark.",
+      "provider": "built-in image_gen",
+      "requested_size": [
+        1024,
+        1024
+      ],
+      "display_size": [
+        384,
+        384
+      ],
+      "source_file": "exec-67394698-c954-42c5-9217-91fbfc6eb782.png",
+      "sha256": "1370411751c486f9804fde2285038b9fb84960114a592002fbd3330c4aed20c9",
+      "generation_prompt": "Create exactly ONE standalone original head-and-shoulders silhouette portrait: an invented slender figure with a tall folded cloth collar and swept hair, no skeletal face, no bell, no weapons. Cohesive worn charcoal hand-painted cut-paper with bone-white engraved highlights, subdued oxidized brass scratches, dark fog atmosphere. Strong simple readable shapes. Centered inside ONE weathered hexagonal token rim with charcoal interior; genuinely transparent outside the hexagon, no external shadow. Square RGBA, requested 1024x1024. The figure is an original anonymous archetype, not a portrait of an existing character. Face entirely in shadow, no facial likeness. No text, no numbers, no letters, no logos, no tally marks, no skull emblems, no watermark. Do not copy, trace or recreate official art from any existing game. Asset filename: portrait_wraith.png.",
+      "svg_source": "占位",
+      "svg_creator": "original_code"
+    },
+    {
+      "id": "portrait_hillbilly",
+      "file": "portrait_hillbilly.png",
+      "svg": "svg/portrait_hillbilly.svg",
+      "source": "AI 生成",
+      "states": [
+        "healthy",
+        "wounded",
+        "carried",
+        "hidden",
+        "hooked"
+      ],
+      "size": [
+        1254,
+        1254
+      ],
+      "transparent": true,
+      "name_zh": "农场主原创剪影",
+      "prompt_zh": "原创农场主原创剪影的独立游戏素材，做旧炭笔与骨白刻线，黑暗迷雾气质，居中简洁构图；透明RGBA背景，正方形1024像素。原创匿名头肩剪影，不还原任何既有角色面貌、服装、武器。禁止官方素材、描摹、标志、文字、水印。",
+      "prompt_en": "Original standalone 农场主原创剪影 game asset. Worn charcoal and bone-white engraved brushwork, dark fog mood, simple readable centered composition. Square 1024px transparent RGBA background. An anonymous invented head-and-shoulders silhouette, no recognizable existing character face, costume or weapon. No official game art, no tracing, no franchise iconography, no letters, no logo, no watermark.",
+      "provider": "built-in image_gen",
+      "requested_size": [
+        1024,
+        1024
+      ],
+      "display_size": [
+        384,
+        384
+      ],
+      "source_file": "exec-a2935ece-550d-459b-b863-c85b3b234fb9.png",
+      "sha256": "e94cc3ae93a23f23f5dccbbf922a3805c678d55a984e8aefe60db98ade1d2859",
+      "generation_prompt": "Create exactly ONE standalone original head-and-shoulders silhouette portrait: an invented large stocky figure with a heavy work coat and smooth featureless face in shadow, no deformity, no chainsaw. Cohesive worn charcoal hand-painted cut-paper with bone-white engraved highlights, subdued oxidized brass scratches, dark fog atmosphere. Strong simple readable shapes. Centered inside ONE weathered hexagonal token rim with charcoal interior; genuinely transparent outside the hexagon, no external shadow. Square RGBA, requested 1024x1024. The figure is an original anonymous archetype, not a portrait of an existing character. Face entirely in shadow, no facial likeness. No text, no numbers, no letters, no logos, no tally marks, no skull emblems, no watermark. Do not copy, trace or recreate official art from any existing game. Asset filename: portrait_hillbilly.png.",
+      "svg_source": "占位",
+      "svg_creator": "original_code"
+    },
+    {
+      "id": "portrait_nurse",
+      "file": "portrait_nurse.png",
+      "svg": "svg/portrait_nurse.svg",
+      "source": "AI 生成",
+      "states": [
+        "healthy",
+        "wounded",
+        "carried",
+        "hidden",
+        "hooked"
+      ],
+      "size": [
+        1254,
+        1254
+      ],
+      "transparent": true,
+      "name_zh": "护士原创剪影",
+      "prompt_zh": "原创护士原创剪影的独立游戏素材，做旧炭笔与骨白刻线，黑暗迷雾气质，居中简洁构图；透明RGBA背景，正方形1024像素。原创匿名头肩剪影，不还原任何既有角色面貌、服装、武器。禁止官方素材、描摹、标志、文字、水印。",
+      "prompt_en": "Original standalone 护士原创剪影 game asset. Worn charcoal and bone-white engraved brushwork, dark fog mood, simple readable centered composition. Square 1024px transparent RGBA background. An anonymous invented head-and-shoulders silhouette, no recognizable existing character face, costume or weapon. No official game art, no tracing, no franchise iconography, no letters, no logo, no watermark.",
+      "provider": "built-in image_gen",
+      "requested_size": [
+        1024,
+        1024
+      ],
+      "display_size": [
+        384,
+        384
+      ],
+      "source_file": "exec-3ebe9106-6215-401d-b398-497c7b4c4e65.png",
+      "sha256": "b49d61ef674b5228f4a3ea4624c96625e27f30b2f1a705e346f392e58b4ef4c0",
+      "generation_prompt": "Create exactly ONE standalone original head-and-shoulders silhouette portrait: an invented tall anonymous female silhouette with a flowing plain shawl and low bun, no nurse uniform, no bandages, no weapons. Cohesive worn charcoal hand-painted cut-paper with bone-white engraved highlights, subdued oxidized brass scratches, dark fog atmosphere. Strong simple readable shapes. Centered inside ONE weathered hexagonal token rim with charcoal interior; genuinely transparent outside the hexagon, no external shadow. Square RGBA, requested 1024x1024. The figure is an original anonymous archetype, not a portrait of an existing character. Face entirely in shadow, no facial likeness. No text, no numbers, no letters, no logos, no tally marks, no skull emblems, no watermark. Do not copy, trace or recreate official art from any existing game. Asset filename: portrait_nurse.png.",
+      "svg_source": "占位",
+      "svg_creator": "original_code"
+    },
+    {
+      "id": "portrait_hag",
+      "file": "portrait_hag.png",
+      "svg": "svg/portrait_hag.svg",
+      "source": "AI 生成",
+      "states": [
+        "healthy",
+        "wounded",
+        "carried",
+        "hidden",
+        "hooked"
+      ],
+      "size": [
+        1254,
+        1254
+      ],
+      "transparent": true,
+      "name_zh": "妖巫原创剪影",
+      "prompt_zh": "原创妖巫原创剪影的独立游戏素材，做旧炭笔与骨白刻线，黑暗迷雾气质，居中简洁构图；透明RGBA背景，正方形1024像素。原创匿名头肩剪影，不还原任何既有角色面貌、服装、武器。禁止官方素材、描摹、标志、文字、水印。",
+      "prompt_en": "Original standalone 妖巫原创剪影 game asset. Worn charcoal and bone-white engraved brushwork, dark fog mood, simple readable centered composition. Square 1024px transparent RGBA background. An anonymous invented head-and-shoulders silhouette, no recognizable existing character face, costume or weapon. No official game art, no tracing, no franchise iconography, no letters, no logo, no watermark.",
+      "provider": "built-in image_gen",
+      "requested_size": [
+        1024,
+        1024
+      ],
+      "display_size": [
+        384,
+        384
+      ],
+      "source_file": "exec-a42c3d9e-b340-4b97-9c64-4c30447aba9f.png",
+      "sha256": "5db45c0fc2bccc0420d45913c969b61690dd798bf033bd57b4a6be9a70a613b9",
+      "generation_prompt": "Create exactly ONE standalone original head-and-shoulders silhouette portrait: an invented wiry anonymous figure with a windswept ragged mantle and narrow head, no monster face, no claws. Cohesive worn charcoal hand-painted cut-paper with bone-white engraved highlights, subdued oxidized brass scratches, dark fog atmosphere. Strong simple readable shapes. Centered inside ONE weathered hexagonal token rim with charcoal interior; genuinely transparent outside the hexagon, no external shadow. Square RGBA, requested 1024x1024. The figure is an original anonymous archetype, not a portrait of an existing character. Face entirely in shadow, no facial likeness. No text, no numbers, no letters, no logos, no tally marks, no skull emblems, no watermark. Do not copy, trace or recreate official art from any existing game. Asset filename: portrait_hag.png.",
+      "svg_source": "占位",
+      "svg_creator": "original_code"
+    },
+    {
+      "id": "portrait_doctor",
+      "file": "portrait_doctor.png",
+      "svg": "svg/portrait_doctor.svg",
+      "source": "AI 生成",
+      "states": [
+        "healthy",
+        "wounded",
+        "carried",
+        "hidden",
+        "hooked"
+      ],
+      "size": [
+        1254,
+        1254
+      ],
+      "transparent": true,
+      "name_zh": "医生原创剪影",
+      "prompt_zh": "原创医生原创剪影的独立游戏素材，做旧炭笔与骨白刻线，黑暗迷雾气质，居中简洁构图；透明RGBA背景，正方形1024像素。原创匿名头肩剪影，不还原任何既有角色面貌、服装、武器。禁止官方素材、描摹、标志、文字、水印。",
+      "prompt_en": "Original standalone 医生原创剪影 game asset. Worn charcoal and bone-white engraved brushwork, dark fog mood, simple readable centered composition. Square 1024px transparent RGBA background. An anonymous invented head-and-shoulders silhouette, no recognizable existing character face, costume or weapon. No official game art, no tracing, no franchise iconography, no letters, no logo, no watermark.",
+      "provider": "built-in image_gen",
+      "requested_size": [
+        1024,
+        1024
+      ],
+      "display_size": [
+        384,
+        384
+      ],
+      "source_file": "exec-038ad650-5b17-4c6e-b514-0a604c614074.png",
+      "sha256": "af5f88dd913426250e53c22d0b9f87b6f90016c8b28bd8f311e5ef60d1bb58b0",
+      "generation_prompt": "Create exactly ONE standalone original head-and-shoulders silhouette portrait: an invented anonymous figure with a stiff standing collar and squared shoulders, no medical headgear, no electrodes, no weapons. Cohesive worn charcoal hand-painted cut-paper with bone-white engraved highlights, subdued oxidized brass scratches, dark fog atmosphere. Strong simple readable shapes. Centered inside ONE weathered hexagonal token rim with charcoal interior; genuinely transparent outside the hexagon, no external shadow. Square RGBA, requested 1024x1024. The figure is an original anonymous archetype, not a portrait of an existing character. Face entirely in shadow, no facial likeness. No text, no numbers, no letters, no logos, no tally marks, no skull emblems, no watermark. Do not copy, trace or recreate official art from any existing game. Asset filename: portrait_doctor.png.",
+      "svg_source": "占位",
+      "svg_creator": "original_code"
+    }
+  ]
+}

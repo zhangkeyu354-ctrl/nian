@@ -84,9 +84,9 @@ export function eventText(s: GameState, e: Event) {
     case "BLOODPOINTS":
       return `${a}${d.delta >= 0 ? "获得" : "失去"}${Math.abs(d.delta)}血点，现有${d.value}。`;
     case "DICE_ROLLED":
-      return `${a}进行${checkNames[d.kind] ?? "检定"}：${d.faces.map((f: number) => f + "（" + faceName(f) + "）").join("、")}。`;
+      return `${d.kind==='locker'?'被占用的储物柜':a}进行${checkNames[d.kind] ?? "检定"}：${d.faces.map((f: number) => f + "（" + faceName(f) + "）").join("、")}。`;
     case "CHECK_RESOLVED":
-      return `${a}检定结算：${({ failure: "失败", success: "成功", great_success: "大成功" } as Record<string, string>)[d.result] ?? "已结算"}。`;
+      return `${d.kind==='locker'?'被占用的储物柜':a}检定结算：${({ failure: "失败", success: "成功", great_success: "大成功" } as Record<string, string>)[d.result] ?? "已结算"}。`;
     case "PROP_PROGRESS":
       return `道具进度变为${d.progress}。`;
     case "GENERATOR_COMPLETED":
@@ -107,7 +107,8 @@ export function eventText(s: GameState, e: Event) {
     case "CARRIED":
       return `${a}被搬运；途中不翻开道具。`;
     case "HIDDEN_IN_LOCKER":
-      return `${a}躲入储物柜。`;
+      return '一处储物柜被占用。';
+    case 'CROW_STARTLED':return '乌鸦被惊飞。';
     case "ITEM_DRAWN":
       return `${a}摸到${itemInfo(d.item)?.name_zh ?? "一张物品"}。`;
     case "PERK_USED":

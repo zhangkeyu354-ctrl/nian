@@ -1,0 +1,418 @@
+npm.cmd run typecheck
+
+> dbd-boardgame-private@0.2.1 typecheck
+> tsc --noEmit
+
+
+EXIT_CODE=0
+
+npm.cmd test -- --reporter=verbose
+
+> dbd-boardgame-private@0.2.1 test
+> vitest run --reporter=verbose
+
+
+ RUN  v5.0.5 E:/DBD-BoardGame-Web
+
+ ✓ packages/game-engine/test/rules.test.ts > B01 and U02 state-machine regressions > Nea temporarily takes the wall off board, so it does not prevent placing a pallet during that turn 9ms
+ ✓ packages/game-engine/test/rules.test.ts > B01 and U02 state-machine regressions > Ace can choose the incoming prop after his before-interaction swap, without gaining another interaction 6ms
+ ✓ packages/game-engine/test/rules.test.ts > B01 and U02 state-machine regressions > Jake success conversion retains failure blood but prevents Doctor failure-only madness removal 3ms
+ ✓ packages/game-engine/test/rules.test.ts > B01 and U02 state-machine regressions > R019 invalid commands roll back completely, including random stream and log 6ms
+ ✓ packages/game-engine/test/rules.test.ts > B01 and U02 state-machine regressions > R010 commits cards from shared PLAYER hand, not one deck per character 4ms
+ ✓ packages/game-engine/test/rules.test.ts > B01 and U02 state-machine regressions > R018 a failed legal-card attempt loses interaction; cannot voluntarily stay if route exists 3ms
+ ✓ packages/game-engine/test/rules.test.ts > B01 and U02 state-machine regressions > R047 killer destroys a pallet but stays and loses interaction; R048 wall instead permits movement 3ms
+ ✓ packages/game-engine/test/rules.test.ts > B01 and U02 state-machine regressions > Q09 pallet blocks every killer branch but survivors pass; a single wall is shared by all branches 10ms
+ ✓ packages/game-engine/test/rules.test.ts > B01 and U02 state-machine regressions > R035 requires four generators, then exit skill checks count great success as ONE and win immediately 6ms
+ ✓ packages/game-engine/test/rules.test.ts > B01 and U02 state-machine regressions > R042 prohibits grabbing a survivor wounded THIS ROUND 1ms
+ ✓ packages/game-engine/test/rules.test.ts > B01 and U02 state-machine regressions > Q08 carry moves both figures, never reveals props; Q01 rejects illegal route without consuming dice 6ms
+ ✓ packages/game-engine/test/rules.test.ts > B01 and U02 state-machine regressions > R049 immediate unoccupied hook transfers personal progress; no dice roll or optional carry 1ms
+ ✓ packages/game-engine/test/rules.test.ts > B01 and U02 state-machine regressions > R036 rescue moves rescuer THEN rescued and single Entity blocks only the latest hook 4ms
+ ✓ packages/game-engine/test/rules.test.ts > B01 and U02 state-machine regressions > R026 cleanup progresses hooks before clearing entity, rotates CHARACTER marker and restores shared hands 2ms
+ ✓ packages/game-engine/test/rules.test.ts > B01 and U02 state-machine regressions > R061 response order is survivors in turn order then killer; R059 zero-cost perks still once/round 3ms
+ ✓ packages/game-engine/test/rules.test.ts > B01 and U02 state-machine regressions > Phase4 unresolved effects report CHECK_REQUIRED even when no response window exists 4ms
+ ✓ packages/game-engine/test/core.test.ts > U02 / B01 engine foundation > R057 replaces failed old results on reroll and refuses a second reroll of the same die 8ms
+ ✓ packages/game-engine/test/core.test.ts > U02 / B01 engine foundation > unavailable Bloodweb/Devout card decks explicitly fail instead of silently running Adept 1ms
+ ✓ packages/game-engine/test/core.test.ts > U02 / B01 engine foundation > sets up a real 44-prop map deterministically without mutating options 7ms
+ ✓ packages/game-engine/test/core.test.ts > U02 / B01 engine foundation > Q02 counts all failures including discarded dice; different actions use different success amounts 1ms
+ ✓ packages/game-engine/test/core.test.ts > U02 / B01 engine foundation > Q09 shared icon is a one-step clique but blocker belongs to the icon 1ms
+ ✓ packages/game-engine/test/core.test.ts > U02 / B01 engine foundation > Q01 carrying respects one-way and blocks walls, unlike normal killer movement 1ms
+ ✓ packages/game-engine/test/core.test.ts > U02 / B01 engine foundation > requires four explicit survivor setup reveals and preserves input on errors 8ms
+ ✓ packages/game-engine/test/core.test.ts > U02 / B01 engine foundation > unresolved Q11 and Phase4 items fail explicitly 1ms
+ ✓ packages/game-engine/test/skills.test.ts > Chinese retail board abilities: source photos in PERK_DATA.board_perks > Dwight #1 replaces the actor and chosen interaction, not an extra free normal turn 14ms
+ ✓ packages/game-engine/test/skills.test.ts > Chinese retail board abilities: source photos in PERK_DATA.board_perks > Dwight #2 follows the actual path from the mover previous room 4ms
+ ✓ packages/game-engine/test/skills.test.ts > Chinese retail board abilities: source photos in PERK_DATA.board_perks > Dwight #3 changes one skill die into two and keeps only one result 2ms
+ ✓ packages/game-engine/test/skills.test.ts > Chinese retail board abilities: source photos in PERK_DATA.board_perks > Meg #2 grants a survivor turn at cleanup after generator completion 3ms
+ ✓ packages/game-engine/test/skills.test.ts > Chinese retail board abilities: source photos in PERK_DATA.board_perks > Meg #3 hides before the entering killer can interact 2ms
+ ✓ packages/game-engine/test/skills.test.ts > Chinese retail board abilities: source photos in PERK_DATA.board_perks > Claudette #1 rolls the danger die for another survivor without spending her interaction 3ms
+ ✓ packages/game-engine/test/skills.test.ts > Chinese retail board abilities: source photos in PERK_DATA.board_perks > Claudette #2 transfers exactly one bloodpoint only with consent; zero cost still once/round 4ms
+ ✓ packages/game-engine/test/skills.test.ts > Chinese retail board abilities: source photos in PERK_DATA.board_perks > Claudette #3 uses danger die on herself at turn start 2ms
+ ✓ packages/game-engine/test/skills.test.ts > Chinese retail board abilities: source photos in PERK_DATA.board_perks > Jake #1 success conversion preserves failure bloodpoint credit 2ms
+ ✓ packages/game-engine/test/skills.test.ts > Chinese retail board abilities: source photos in PERK_DATA.board_perks > Jake #2 moves a crow and replaces the pending interaction 3ms
+ ✓ packages/game-engine/test/skills.test.ts > Chinese retail board abilities: source photos in PERK_DATA.board_perks > Jake #3 explicitly pays the additional two bloodpoints for bonus choice 1ms
+ ✓ packages/game-engine/test/skills.test.ts > Chinese retail board abilities: source photos in PERK_DATA.board_perks > Nea #1 replaces interaction with reverse one-way movement then gains blood 2ms
+ ✓ packages/game-engine/test/skills.test.ts > Chinese retail board abilities: source photos in PERK_DATA.board_perks > Nea #2 removes a wall for this exact survivor turn, not permanently 2ms
+ ✓ packages/game-engine/test/skills.test.ts > Chinese retail board abilities: source photos in PERK_DATA.board_perks > Nea #3 preserves the chest after rummaging 1ms
+ ✓ packages/game-engine/test/skills.test.ts > Chinese retail board abilities: source photos in PERK_DATA.board_perks > Ace #1 reveals precisely one committed killer card 1ms
+ ✓ packages/game-engine/test/skills.test.ts > Chinese retail board abilities: source photos in PERK_DATA.board_perks > Ace #2 swaps same-category props between connected spaces, refuses generator with progress 2ms
+ ✓ packages/game-engine/test/skills.test.ts > Chinese retail board abilities: source photos in PERK_DATA.board_perks > Ace #3 suspends the original continuation until bonus turn ends, then killer gains two 5ms
+ ✓ packages/game-engine/test/skills.test.ts > Chinese retail board abilities: source photos in PERK_DATA.board_perks > Feng #2 moves in response to a killer destroying a blocker 4ms
+ ✓ packages/game-engine/test/skills.test.ts > Chinese retail board abilities: source photos in PERK_DATA.board_perks > Feng #3 failed generator check allows another target only 5ms
+ ✓ packages/game-engine/test/skills.test.ts > Chinese retail board abilities: source photos in PERK_DATA.board_perks > Trapper #1 pushes wounded victim through a blocker and destroys it 4ms
+ ✓ packages/game-engine/test/skills.test.ts > Chinese retail board abilities: source photos in PERK_DATA.board_perks > Trapper #2 substitutes danger die in nearby skill check 3ms
+ ✓ packages/game-engine/test/skills.test.ts > Chinese retail board abilities: source photos in PERK_DATA.board_perks > Trapper #3 moves self after attack 3ms
+ ✓ packages/game-engine/test/skills.test.ts > Chinese retail board abilities: source photos in PERK_DATA.board_perks > Wraith #1 commits a third normal card but prohibits any killer bonus this round 2ms
+ ✓ packages/game-engine/test/skills.test.ts > Chinese retail board abilities: source photos in PERK_DATA.board_perks > Wraith #2 gains blood even if the sacrificed target cannot lose any 2ms
+ ✓ packages/game-engine/test/skills.test.ts > Chinese retail board abilities: source photos in PERK_DATA.board_perks > Hillbilly #1 reveals his committed card and gains one 4ms
+ ✓ packages/game-engine/test/skills.test.ts > Chinese retail board abilities: source photos in PERK_DATA.board_perks > Hillbilly #2 destroys pallet before move and emits the blocker trigger for Feng 2ms
+ ✓ packages/game-engine/test/skills.test.ts > Chinese retail board abilities: source photos in PERK_DATA.board_perks > Hillbilly #3 returns a future committed card to hand and swaps in another 2ms
+ ✓ packages/game-engine/test/skills.test.ts > Chinese retail board abilities: source photos in PERK_DATA.board_perks > Nurse #1 forces wounded target to plan publicly before anyone else 2ms
+ ✓ packages/game-engine/test/skills.test.ts > Chinese retail board abilities: source photos in PERK_DATA.board_perks > Nurse #2 only affects skill checks, not carry/phantasm dice rolls 1ms
+ ✓ packages/game-engine/test/skills.test.ts > Chinese retail board abilities: source photos in PERK_DATA.board_perks > Nurse #3 gains two when a survivor becomes healthy 1ms
+ ✓ packages/game-engine/test/skills.test.ts > Chinese retail board abilities: source photos in PERK_DATA.board_perks > Hag #2 grants the sole permitted killer bonus, including at cleanup 1ms
+ ✓ packages/game-engine/test/skills.test.ts > Chinese retail board abilities: source photos in PERK_DATA.board_perks > Hag #3 removes one generator progress only in a survivor-free room 2ms
+ ✓ packages/game-engine/test/skills.test.ts > Chinese retail board abilities: source photos in PERK_DATA.board_perks > Doctor #1 gains one only when nobody is hooked at cleanup 2ms
+ ✓ packages/game-engine/test/skills.test.ts > Chinese retail board abilities: source photos in PERK_DATA.board_perks > Doctor #2 wounds one nearby survivor after damaging generator 2ms
+ ✓ packages/game-engine/test/skills.test.ts > six base powers and three passives, Chinese board sources > Trapper power places one of four traps once per round on a clear connected path 3ms
+ ✓ packages/game-engine/test/skills.test.ts > six base powers and three passives, Chinese board sources > Wraith travels only to a nonconnected different room 1ms
+ ✓ packages/game-engine/test/skills.test.ts > six base powers and three passives, Chinese board sources > Hillbilly discards a non-Wait movement card, traverses clear matching path, wounds destination survivor 1ms
+ ✓ packages/game-engine/test/skills.test.ts > six base powers and three passives, Chinese board sources > Nurse reverses one-way and ignores but does not destroy wall/pallet 1ms
+ ✓ packages/game-engine/test/skills.test.ts > six base powers and three passives, Chinese board sources > Hag places one phantasm in a room and gains one for its hex totem 1ms
+ ✓ packages/game-engine/test/skills.test.ts > six base powers and three passives, Chinese board sources > Doctor gives each affected survivor a separate pay/effect choice 1ms
+ ✓ packages/game-engine/test/skills.test.ts > six base powers and three passives, Chinese board sources > Trapper passive failure removes trap; an already wounded victim gives sacrifice progress 3ms
+ ✓ packages/game-engine/test/skills.test.ts > six base powers and three passives, Chinese board sources > Hag passive removes trap and offers blood versus value-priced teleport/interaction 3ms
+ ✓ packages/game-engine/test/skills.test.ts > six base powers and three passives, Chinese board sources > Doctor passive substitutes danger die on madness skill checks and removes madness on failure 3ms
+ ✓ packages/game-engine/test/skills.test.ts > six base powers and three passives, Chinese board sources > all 13 selectable identities have exactly three linked board perks; deferred effects never masquerade as implementations 2ms
+ ✓ packages/game-engine/test/presentation.test.ts > engine-driven visual states and anonymous lockers > hides unrevealed identities and anonymous occupied lockers including actor tokens 9ms
+ ✓ packages/game-engine/test/presentation.test.ts > engine-driven visual states and anonymous lockers > moves completed generators to track, respects entity, exit power and cleared tiles 1ms
+ ✓ packages/game-engine/test/presentation.test.ts > engine-driven visual states and anonymous lockers > reflects broken hook, wall, trap, phantasm, madness and carry choices without mutating state 2ms
+ ✓ packages/game-engine/test/presentation.test.ts > engine-driven visual states and anonymous lockers > feedback derives only actual engine deltas and reveals no locker identity 2ms
+stderr | packages/game-engine/test/visual-privacy.test.tsx > rendered locker privacy > does not render hidden identity, portrait, tooltip or actor ID on public board
+React expects the `children` prop of <title> tags to be a string, number, bigint, or object with a novel `toString` method but found an Array with length 4 instead. Browsers treat all child Nodes of <title> tags as Text content and React expects to be able to convert `children` of <title> tags to a single string value which is why Arrays of length greater than 1 are not supported. When using JSX it can be common to combine text nodes and value nodes. For example: <title>hello {nameOfUser}</title>. While not immediately apparent, `children` in this case is an Array with length 2. If your `children` prop is using this form try rewriting it using a template string: <title>{`hello ${nameOfUser}`}</title>.
+React expects the `children` prop of <title> tags to be a string, number, bigint, or object with a novel `toString` method but found an Array with length 4 instead. Browsers treat all child Nodes of <title> tags as Text content and React expects to be able to convert `children` of <title> tags to a single string value which is why Arrays of length greater than 1 are not supported. When using JSX it can be common to combine text nodes and value nodes. For example: <title>hello {nameOfUser}</title>. While not immediately apparent, `children` in this case is an Array with length 2. If your `children` prop is using this form try rewriting it using a template string: <title>{`hello ${nameOfUser}`}</title>.
+React expects the `children` prop of <title> tags to be a string, number, bigint, or object with a novel `toString` method but found an Array with length 4 instead. Browsers treat all child Nodes of <title> tags as Text content and React expects to be able to convert `children` of <title> tags to a single string value which is why Arrays of length greater than 1 are not supported. When using JSX it can be common to combine text nodes and value nodes. For example: <title>hello {nameOfUser}</title>. While not immediately apparent, `children` in this case is an Array with length 2. If your `children` prop is using this form try rewriting it using a template string: <title>{`hello ${nameOfUser}`}</title>.
+React expects the `children` prop of <title> tags to be a string, number, bigint, or object with a novel `toString` method but found an Array with length 4 instead. Browsers treat all child Nodes of <title> tags as Text content and React expects to be able to convert `children` of <title> tags to a single string value which is why Arrays of length greater than 1 are not supported. When using JSX it can be common to combine text nodes and value nodes. For example: <title>hello {nameOfUser}</title>. While not immediately apparent, `children` in this case is an Array with length 2. If your `children` prop is using this form try rewriting it using a template string: <title>{`hello ${nameOfUser}`}</title>.
+
+ ✓ packages/game-engine/test/visual-privacy.test.tsx > rendered locker privacy > does not render hidden identity, portrait, tooltip or actor ID on public board 85ms
+ ✓ packages/game-engine/test/visual-privacy.test.tsx > rendered locker privacy > anonymizes locker event and check identities in the shared log 2ms
+ ✓ packages/game-engine/test/simulation.test.ts > finishes and replays three seeded games on real maps with both winners (Phase1 acceptance) 396ms
+ ✓ packages/game-engine/test/controls.test.ts > Hotseat engine queries > offers setup choices without leaking hidden prop identities or advancing RNG 53ms
+ ✓ packages/game-engine/test/controls.test.ts > Hotseat engine queries > every offered basic action on full legal games is accepted; preview respects one-way and walls 790ms
+
+ Test Files  7 passed (7)
+      Tests  77 passed (77)
+   Start at  15:44:59
+   Duration  1.55s (tests 49%, import 27%, transform 22%, worker 2%)
+
+
+EXIT_CODE=0
+
+npm.cmd run build
+
+> dbd-boardgame-private@0.2.1 build
+> vite build --config apps/web/vite.config.ts
+
+vite v8.3.4 building client environment for production...
+transforming...
+✓ 39 modules transformed.
+rendering chunks...
+computing gzip size...
+dist/web/index.html                   0.42 kB │ gzip:   0.33 kB
+dist/web/assets/index-nMw3p_SE.css   23.76 kB │ gzip:   6.74 kB
+dist/web/assets/index-B3LgToKW.js   605.58 kB │ gzip: 127.26 kB
+
+✓ built in 416ms
+[plugin builtin:vite-reporter]
+(!) Some chunks are larger than 500 kB after minification. Consider:
+- Using dynamic import() to code-split the application
+- Use build.rolldownOptions.output.codeSplitting to improve chunking: https://rolldown.rs/reference/OutputOptions.codeSplitting
+- Adjust chunk size limit for this warning via build.chunkSizeWarningLimit.
+
+EXIT_CODE=0
+
+npm.cmd run verify:replays
+
+> dbd-boardgame-private@0.2.1 verify:replays
+> tsx scripts/verify-replays.ts
+
+Replay 1701: survivor, every event reproduced, SHA-256 16761427b3c584b8d9bd5ba43e45eb86365258eb217303bdd7063ee00da9fcbc
+Replay 2903: survivor, every event reproduced, SHA-256 396286e872483de21c1ec16caa701f7e963b14bf1e913056286c034128378917
+Replay 4111: killer, every event reproduced, SHA-256 09c5ac9b4b284d6cfb15c081be4426d2c8a67383d99ba18cd5e101c558c970c8
+
+EXIT_CODE=0
+
+npm.cmd run verify:hotseat
+
+> dbd-boardgame-private@0.2.1 verify:hotseat
+> tsx scripts/verify-hotseat.ts
+
+FULL_GAME_PASS 1701 survivor 192
+FULL_GAME_PASS 2903 survivor 226
+FULL_GAME_PASS 4111 killer 108
+
+EXIT_CODE=0
+
+npm.cmd run verify:mobile
+
+> dbd-boardgame-private@0.2.1 verify:mobile
+> tsx scripts/verify-hotseat-mobile.ts
+
+MOBILE_PASS pinch,drag,privacy,44px,CHECK_REQUIRED
+
+EXIT_CODE=0
+
+npm.cmd run verify:actions
+
+> dbd-boardgame-private@0.2.1 verify:actions
+> tsx scripts/verify-hotseat-actions.ts
+
+ACTIONS_PASS item,error,power,all-command-events-match 36
+
+EXIT_CODE=0
+
+npm.cmd run verify:visuals
+
+> dbd-boardgame-private@0.2.1 verify:visuals
+> tsx scripts/verify-visual-feedback.ts
+
+VISUAL_FEEDBACK_PASS 41 states; flip/dice/progress/hook/attack sequences; settings; fallback; privacy unit tests separate.
+
+EXIT_CODE=0
+
+C:\Users\Lenovo\AppData\Local\Python\pythoncore-3.14-64\python.exe tests/verify_phase0.py
+[PASS] required research documents exist
+[PASS] 17 JSON documents parse; 9 game-data research files
+[PASS] 76 source IDs are unique
+[PASS] CHARACTER_DATA.json/characters: unique IDs
+[PASS] DICE_DATA.json/dice: unique IDs
+[PASS] glossary.json/terms: unique IDs
+[PASS] ITEM_DATA.json/physical_cards: unique IDs
+[PASS] ITEM_DATA.json/definitions: unique IDs
+[PASS] MAP_DATA.json/maps: unique IDs
+[PASS] MOVEMENT_CARD_DATA.json/card_types: unique IDs
+[PASS] PERK_DATA.json/perks: unique IDs
+[PASS] PROP_DATA.json/categories: unique IDs
+[PASS] PROP_DATA.json/types: unique IDs
+[PASS] PROP_DATA.json/separate_components: unique IDs
+[PASS] RULE_DATA.json/rules: unique IDs
+[PASS] valid provenance; printed Chinese transcriptions retain D evidence and are not APPROVED
+[PASS] character inventory is 7 survivors + 6 killers
+[PASS] perk inventory is 28 + 24, including explicitly unidentified slots
+[PASS] exactly 2 perk effects confirmed; unknown effects are not substituted
+[PASS] 16 photo-observed item slots map to 10 definitions, explicitly adopted under U02
+[PASS] movement counts 5+5+5+5+1=21
+[PASS] prop category counts total 44; 4 walls remain separate
+[PASS] 8 prop subtype quantities reconcile to user-specified C06 evidence and total 44
+[PASS] MacMillan 22 paths; Autohaven 19 icons explicitly adopted under U02, provenance retained
+[PASS] 20 component count rows reconcile to charter and 89-card official total
+[PASS] rule research totals reconcile to current statistics
+[PASS] original file hash audit: 25 verified, 0 explicitly skipped
+[PASS] Git ignores original materials, databases and dependencies (including uncreated probe paths)
+[PASS] no Git remote or tracked original materials; only reference README/placeholders allowed
+[PASS] authorized engine/UI phases retain separate engine; no Phase3 network implementation
+
+RESULT: 30 research audit checks passed. Engine tests run separately with npm test.
+
+EXIT_CODE=0
+
+C:\Users\Lenovo\AppData\Local\Python\pythoncore-3.14-64\python.exe tests/verify_phase0_supplement.py
+[PASS] source registry reconciles to current statistics
+[PASS] BGG prop grade preserves the explicit user override rather than assuming official authorship
+[PASS] subtype sums reconcile independently to all four prop categories
+[PASS] adopted prop counts do not falsely certify the user physical edition
+[PASS] 6 unique quoted-skill records
+[PASS] quotes graded by speaker: 1 C, 5 D
+[PASS] same-thread official and player quotations retain different grades
+[PASS] 2 expansion-preview quotations remain out of base scope
+[PASS] access limitation and zero obtained item quotations remain explicit
+[PASS] BQ01 source URL resolves
+[PASS] BQ02 source URL resolves
+[PASS] BQ03 source URL resolves
+[PASS] BQ04 source URL resolves
+[PASS] BQ05 source URL resolves
+[PASS] BQ06 source URL resolves
+[PASS] short quotation budget <=25 words per source page
+[PASS] partial or secondary quotations do not silently become complete formal effects
+[PASS] formal perk inventory remains 52 slots and 2 confirmed effects
+[PASS] unread automa thread and candidate association are not falsely certified
+[PASS] automa inventory records observation scope without claiming absent data
+[PASS] photo list removes solved counts and distinguishes physical-edition evidence from network gaps
+[PASS] comparison records 7 differences and does not invent resolutions to Q01/Q02
+[PASS] docs/PHASE_0_SUPPLEMENT_REPORT.md exists
+[PASS] docs/BGG_CARD_QUOTE_REVIEW.md exists
+[PASS] docs/AUTOMA_REVIEW.md exists
+
+RESULT: 25 supplemental research checks passed. Engine tests run separately with npm test.
+
+EXIT_CODE=0
+
+C:\Users\Lenovo\AppData\Local\Python\pythoncore-3.14-64\python.exe tests/verify_macmillan.py
+[PASS 1/4] Directed reachability: Backlot reaches 11/11; all 11 origins reach 11/11.
+[PASS 2/4] Every room has an outgoing route; minimum out-degree = 3
+[PASS 3/4] Four distressed-border routes match four initial breakable walls: mm_p05, mm_p11, mm_p21, mm_p22
+[PASS 4/4] Prop slots = 44; Y/R/B/G = 10/10/12/12.
+[PASS] Existing MacMillan source references preserved; Q05 uses explicit user ruling.
+[PASS] Four directed yellow routes, unresolved fields, grade exception and base-edition scope are preserved.
+RESULT: All four requested structural checks and provenance safeguards passed.
+Scope: topology ignoring dynamic blockers; killer may break initial walls under B01 p14.
+This script audits map structure/provenance only; Phase1 initialization, Q01 and gameplay have separate engine tests. Japanese materials are optional.
+
+EXIT_CODE=0
+
+C:\Users\Lenovo\AppData\Local\Python\pythoncore-3.14-64\python.exe tests/verify_batch2.py
+[PASS] all formal and isolated data parse; refs resolve; no D text silently upgraded
+[PASS] Q05=3 explicitly uses user ruling + P1
+[PASS] Q06 English title remains unknown
+[PASS] Autohaven distinguishes 19 icons from Q09-adopted 23 pairwise links
+[PASS] Autohaven original D provenance retained, adoption uses U02, not MacMillan preview
+[PASS] Autohaven 44 slots independently sum to Y/R/B/G 10/10/12/12
+[PASS] photo-observed Autohaven start faces each 0..5 appear once; not an official-version assertion
+[PASS] four photo-observed wall icons reconcile to four wall components
+[PASS] three photo-observed arrows preserve exact from/to direction
+[PASS] multi-room traversal explicitly follows Q09 house rule, physical path icon remains shared
+[PASS] candidate binary routes alone give all 10 origins reachability; no junction assumption needed
+[PASS] each room has a candidate outgoing binary route; not a gameplay-validity certificate
+[PASS] 16 observed row-major cards reconcile independently to all 10 copy counts
+[PASS] ten item identities/counts adopted; item effects remain Phase4 CHECK_REQUIRED
+[PASS] existing official Flashlight effect was preserved
+[PASS] four item timing scopes remain distinct
+[PASS] base roster remains 7+6
+[PASS] 39 board perk IDs retain D provenance; 34 reviewed implementations and 5 explicit deferrals
+[PASS] each of 13 boards links exactly three own perks
+[PASS] 39 structured records preserve printed costs and distinguish reviewed/deferred effects
+[PASS] 52 deck slots stay separate from 39 printed board abilities; Q07 does not double count
+[PASS] six base powers and three printed passives imported
+[PASS] 20 collector/additional characters isolated from base roster
+[PASS] 60 out-of-scope board abilities keep literal clause drafts and are not certified
+[PASS] 30 reference comparisons retain the carrying/reveal conflict
+[PASS] Q08 explicit user ruling adopts no reveal, while original differing claims stay recorded
+[PASS] current Chinese glossary follows printed terminology
+[PASS] source priority correction explicitly records no Japanese physical copy
+RESULT: 28 second-intake research checks passed. No game behavior tests were run.
+
+EXIT_CODE=0
+
+C:\Users\Lenovo\AppData\Local\Python\pythoncore-3.14-64\python.exe tests/verify_phase1.py
+[PASS] Chinese retail data highest, Japanese optional
+[PASS] corrected ownership assumption and original Phase1 acceptance restored
+[PASS] npm package private
+[PASS] Q04 black-die six adopted faces
+[PASS] Q01/Q02/Q08/Q09 adopted, not blocked on Japanese
+[PASS] 34 board implementations; five explicit Phase4 errors rather than fake no-ops
+[PASS] at least three full games and both winners
+[PASS] both real maps exercised
+[PASS] 1701 real terminal event and event count
+[PASS] 1701 sequential events and full replay command list
+[PASS] 1701 activates a real board ability through reducer commands
+[PASS] 2903 real terminal event and event count
+[PASS] 2903 sequential events and full replay command list
+[PASS] 2903 activates a real board ability through reducer commands
+[PASS] 4111 real terminal event and event count
+[PASS] 4111 sequential events and full replay command list
+[PASS] 4111 activates a real board ability through reducer commands
+[PASS] independent replay verifier recorded all three final-state hashes
+[PASS] replay verification hashes match current logs/commands, not a stale prior run
+[PASS] Phase2 UI explicitly authorized; Phase3 server remains unimplemented
+RESULT: 20 Phase1 acceptance/provenance checks passed.
+
+EXIT_CODE=0
+
+C:\Users\Lenovo\AppData\Local\Python\pythoncore-3.14-64\python.exe tests/verify_phase2.py
+[PASS] three complete click-driven games on both real maps
+[PASS] both sides win in actual UI runs
+[PASS] all 526 rule commands / 1112 events checked against independent engine
+[PASS] handoffs, all dice, map clicks, zero browser errors recorded
+[PASS] real touch input, error rejection, large targets, privacy assertions passed
+[PASS] 390px portrait tested without console errors
+[PASS] item draw/rejected effect and actual killer power form exercised
+[PASS] macmillan_estate drawing rooms exactly match MAP_DATA
+[PASS] macmillan_estate drawing paths exactly match physical graph icons
+[PASS] autohaven_wreckers drawing rooms exactly match MAP_DATA
+[PASS] autohaven_wreckers drawing paths exactly match physical graph icons
+[PASS] reviewable UI screenshots preserved
+[PASS] Phase3 game server remains out of scope
+[PASS] future per-phase commit policy persisted
+[PASS] no original reference image/PDF tracked
+[PASS] package remains private
+RESULT: 16 Phase2 evidence/geometry checks passed.
+
+EXIT_CODE=0
+
+C:\Users\Lenovo\AppData\Local\Python\pythoncore-3.14-64\python.exe tests/verify_phase2_art.py
+[PASS] root/browser manifests identical
+[PASS] 32 unique original asset entries
+[PASS] AI provenance, explicit state coverage and original-code SVG fallback recorded
+[PASS] all PNG hashes / uniform native RGBA sizes and SVG files verified
+[PASS] actual transparent-alpha read-only inspection retained
+[PASS] all 41 state examples exercised
+[PASS] five real feedback sequences, three timed frames each
+[PASS] settings/reduced-motion/SVG/missing-PNG paths passed without JS exceptions
+[PASS] all 15 screenshot files present
+[PASS] SVG-only functional stage evidence preserved before raster ingestion
+[PASS] style guide and bilingual production prompts saved
+[PASS] no original reference images/PDF tracked
+RESULT: 12 Phase2 art/feedback checks passed.
+
+EXIT_CODE=0
+
+FINAL VISUAL POLISH CHECKS
+npm.cmd run typecheck
+
+> dbd-boardgame-private@0.2.1 typecheck
+> tsc --noEmit
+
+
+EXIT_CODE=0
+npm.cmd test
+
+> dbd-boardgame-private@0.2.1 test
+> vitest run
+
+
+ RUN  v5.0.5 E:/DBD-BoardGame-Web
+
+
+ Test Files  7 passed (7)
+      Tests  77 passed (77)
+   Start at  15:58:17
+   Duration  1.40s (tests 49%, import 28%, transform 21%, worker 2%)
+
+
+EXIT_CODE=0
+npm.cmd run build
+
+> dbd-boardgame-private@0.2.1 build
+> vite build --config apps/web/vite.config.ts
+
+vite v8.3.4 building client environment for production...
+transforming...
+✓ 39 modules transformed.
+rendering chunks...
+computing gzip size...
+dist/web/index.html                   0.42 kB │ gzip:   0.33 kB
+dist/web/assets/index-ClA40c14.css   23.90 kB │ gzip:   6.76 kB
+dist/web/assets/index-BHlJcIhL.js   606.81 kB │ gzip: 127.67 kB
+
+✓ built in 361ms
+[plugin builtin:vite-reporter]
+(!) Some chunks are larger than 500 kB after minification. Consider:
+- Using dynamic import() to code-split the application
+- Use build.rolldownOptions.output.codeSplitting to improve chunking: https://rolldown.rs/reference/OutputOptions.codeSplitting
+- Adjust chunk size limit for this warning via build.chunkSizeWarningLimit.
+
+EXIT_CODE=0
+python tests/verify_phase2_art.py
+[PASS] root/browser manifests identical
+[PASS] 32 unique original asset entries
+[PASS] AI provenance, explicit state coverage and original-code SVG fallback recorded
+[PASS] all PNG hashes / uniform native RGBA sizes and SVG files verified
+[PASS] actual transparent-alpha read-only inspection retained
+[PASS] all 41 state examples exercised
+[PASS] five real feedback sequences, three timed frames each
+[PASS] settings/reduced-motion/SVG/missing-PNG paths passed without JS exceptions
+[PASS] all 15 screenshot files present
+[PASS] SVG-only functional stage evidence preserved before raster ingestion
+[PASS] style guide and bilingual production prompts saved
+[PASS] no original reference images/PDF tracked
+RESULT: 12 Phase2 art/feedback checks passed.
+
+EXIT_CODE=0

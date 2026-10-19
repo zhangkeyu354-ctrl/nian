@@ -21,9 +21,9 @@ export const propNames: Record<string, string> = {
 };
 export const categoryNames: Record<string, string> = {
   objective: "目标",
-  boldness: "勇敢",
-  survival: "生存",
-  altruism: "利他",
+  boldness: "无惧",
+  survival: "逃生",
+  altruism: "援助",
 };
 export const actionNames: Record<string, string> = {
   repair: "修理",

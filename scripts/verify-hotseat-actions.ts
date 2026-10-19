@@ -32,6 +32,8 @@ await page.getByTestId("start").click();
 async function uncover() {
   while (await page.getByTestId("ack-dice").count())
     await page.getByTestId("ack-dice").click();
+  while (await page.getByTestId("ack-feedback").count())
+    await page.getByTestId("ack-feedback").click();
   if (await page.getByTestId("uncover").count())
     await page.getByTestId("uncover").click();
 }

@@ -1,0 +1,486 @@
+{
+  "assets": [
+    {
+      "id": "generator",
+      "rgba": true,
+      "size": [
+        1254,
+        1254
+      ],
+      "alpha_extrema": [
+        0,
+        255
+      ],
+      "corner_alpha": 0,
+      "bytes": 2374324,
+      "sha256": "0b4a6c89031062ec64d597282aec7b853c426bc796d8cc1c8cf88e9ef01377dd"
+    },
+    {
+      "id": "exit_gate",
+      "rgba": true,
+      "size": [
+        1254,
+        1254
+      ],
+      "alpha_extrema": [
+        0,
+        255
+      ],
+      "corner_alpha": 0,
+      "bytes": 2535351,
+      "sha256": "8c746cca2b0df09bcf0a257e8ee6d0d72b955e8d3c9a80c14c32518202812d92"
+    },
+    {
+      "id": "hook",
+      "rgba": true,
+      "size": [
+        1254,
+        1254
+      ],
+      "alpha_extrema": [
+        0,
+        255
+      ],
+      "corner_alpha": 0,
+      "bytes": 2297481,
+      "sha256": "b0dc889e41b2b5ae120be04ef81798b56388167bebbb5245ec5cf90f5ec0b9a7"
+    },
+    {
+      "id": "hex_totem",
+      "rgba": true,
+      "size": [
+        1254,
+        1254
+      ],
+      "alpha_extrema": [
+        0,
+        255
+      ],
+      "corner_alpha": 0,
+      "bytes": 2339458,
+      "sha256": "b9e69fef8e1a4d70077e10b4937af4d2ac3156c262187b8ea2b74ff53b0401dc"
+    },
+    {
+      "id": "chest",
+      "rgba": true,
+      "size": [
+        1254,
+        1254
+      ],
+      "alpha_extrema": [
+        0,
+        255
+      ],
+      "corner_alpha": 0,
+      "bytes": 2271987,
+      "sha256": "f03512d8f06f7e345ca1cdd6ec2553d54f831ca563e774453fba01a6dc6e32d4"
+    },
+    {
+      "id": "locker",
+      "rgba": true,
+      "size": [
+        1254,
+        1254
+      ],
+      "alpha_extrema": [
+        0,
+        255
+      ],
+      "corner_alpha": 0,
+      "bytes": 2487282,
+      "sha256": "7d32055d4cf81018bc91ffa817f9b83855c64c3785b1be83a6d2c99d113c12e5"
+    },
+    {
+      "id": "pallet",
+      "rgba": true,
+      "size": [
+        1254,
+        1254
+      ],
+      "alpha_extrema": [
+        0,
+        255
+      ],
+      "corner_alpha": 0,
+      "bytes": 2679172,
+      "sha256": "c54aff78737249386a72d1e0117ed9049e91c9f5ac02f1ddc2500e0d6fd0b584"
+    },
+    {
+      "id": "crow",
+      "rgba": true,
+      "size": [
+        1254,
+        1254
+      ],
+      "alpha_extrema": [
+        0,
+        255
+      ],
+      "corner_alpha": 0,
+      "bytes": 2570746,
+      "sha256": "d78224c3eb7cd16b4accb31de59208249e22ef3d792cd1f1a72e8854aa80b8ae"
+    },
+    {
+      "id": "wall",
+      "rgba": true,
+      "size": [
+        1254,
+        1254
+      ],
+      "alpha_extrema": [
+        0,
+        255
+      ],
+      "corner_alpha": 1,
+      "bytes": 2368891,
+      "sha256": "bd7c47134f670413c15cf597026692001269838dbfe14289cd66da49a1324b29"
+    },
+    {
+      "id": "bear_trap",
+      "rgba": true,
+      "size": [
+        1254,
+        1254
+      ],
+      "alpha_extrema": [
+        0,
+        255
+      ],
+      "corner_alpha": 0,
+      "bytes": 2358971,
+      "sha256": "9da78bb4804ee127853d7e3a97d535fd15f0432d8dd58d1c85b6735f1d88819a"
+    },
+    {
+      "id": "phantasm",
+      "rgba": true,
+      "size": [
+        1254,
+        1254
+      ],
+      "alpha_extrema": [
+        0,
+        255
+      ],
+      "corner_alpha": 0,
+      "bytes": 2518876,
+      "sha256": "6eb6f4391f72f03594ac829115c25f436a621ddaa58c85d4e3bcba63de75ea56"
+    },
+    {
+      "id": "madness",
+      "rgba": true,
+      "size": [
+        1254,
+        1254
+      ],
+      "alpha_extrema": [
+        0,
+        255
+      ],
+      "corner_alpha": 0,
+      "bytes": 2469664,
+      "sha256": "c5ca777641ef13ebbae7b5c92790e4ba6eea96a6e8f35de1392e1a3eaea864ba"
+    },
+    {
+      "id": "entity",
+      "rgba": true,
+      "size": [
+        1254,
+        1254
+      ],
+      "alpha_extrema": [
+        0,
+        255
+      ],
+      "corner_alpha": 0,
+      "bytes": 2315118,
+      "sha256": "2c52d1143e72f5f21a64ab121101df961ed5fab4052e2de8d7de99fb34c20087"
+    },
+    {
+      "id": "brand_lantern",
+      "rgba": true,
+      "size": [
+        1254,
+        1254
+      ],
+      "alpha_extrema": [
+        0,
+        255
+      ],
+      "corner_alpha": 0,
+      "bytes": 2260673,
+      "sha256": "00be2f1d89e1b4a7eefd5997acf142fd82e898e5dc6bf3bd56c5744847390dce"
+    },
+    {
+      "id": "back_objective",
+      "rgba": true,
+      "size": [
+        1254,
+        1254
+      ],
+      "alpha_extrema": [
+        0,
+        255
+      ],
+      "corner_alpha": 0,
+      "bytes": 2627397,
+      "sha256": "48219594e4c7538715cb1c6275c4bf0e3af7f42c9cc32cb92a6985a72b3bc480"
+    },
+    {
+      "id": "back_boldness",
+      "rgba": true,
+      "size": [
+        1254,
+        1254
+      ],
+      "alpha_extrema": [
+        0,
+        255
+      ],
+      "corner_alpha": 0,
+      "bytes": 2712767,
+      "sha256": "0b78c4320d7238b88fa4ed052ce1157e5db67b93c42c409be9aed04ca7c429ea"
+    },
+    {
+      "id": "back_survival",
+      "rgba": true,
+      "size": [
+        1254,
+        1254
+      ],
+      "alpha_extrema": [
+        0,
+        255
+      ],
+      "corner_alpha": 0,
+      "bytes": 2665269,
+      "sha256": "a7b0054d67f1c8f0c1be0d4131a3b83e75e7267859c6c9e913f009267ed7c02b"
+    },
+    {
+      "id": "back_altruism",
+      "rgba": true,
+      "size": [
+        1254,
+        1254
+      ],
+      "alpha_extrema": [
+        0,
+        255
+      ],
+      "corner_alpha": 0,
+      "bytes": 2580673,
+      "sha256": "60b53726b96f26f082178c95fe557676dadb83d8e12d92dff1aca6e3fbe94f6e"
+    },
+    {
+      "id": "portrait_anonymous",
+      "rgba": true,
+      "size": [
+        1254,
+        1254
+      ],
+      "alpha_extrema": [
+        0,
+        255
+      ],
+      "corner_alpha": 0,
+      "bytes": 2426559,
+      "sha256": "958918e50d162fd4c9a17c6e442e05ac4704a25e814c16be8dec9482bda5ce36"
+    },
+    {
+      "id": "portrait_dwight",
+      "rgba": true,
+      "size": [
+        1254,
+        1254
+      ],
+      "alpha_extrema": [
+        0,
+        255
+      ],
+      "corner_alpha": 0,
+      "bytes": 2296180,
+      "sha256": "8085052dd00d4bc8ae73eba70bbaf0f7dbe9b8df5880fb5f389e5b885467dcb1"
+    },
+    {
+      "id": "portrait_meg",
+      "rgba": true,
+      "size": [
+        1254,
+        1254
+      ],
+      "alpha_extrema": [
+        0,
+        255
+      ],
+      "corner_alpha": 0,
+      "bytes": 2578636,
+      "sha256": "90e932ce0146c54c98b75b2a55ca0f27c00d096e798ce36f111d9a3d50e5e25b"
+    },
+    {
+      "id": "portrait_claudette",
+      "rgba": true,
+      "size": [
+        1254,
+        1254
+      ],
+      "alpha_extrema": [
+        0,
+        255
+      ],
+      "corner_alpha": 0,
+      "bytes": 2416072,
+      "sha256": "b8b91c02fdae4441721b72465b0c7c81e21b70e6589b52ab707e8c6f360be668"
+    },
+    {
+      "id": "portrait_jake",
+      "rgba": true,
+      "size": [
+        1254,
+        1254
+      ],
+      "alpha_extrema": [
+        0,
+        255
+      ],
+      "corner_alpha": 0,
+      "bytes": 2613293,
+      "sha256": "c9d2760778a053502de1993ceeded0e26b9df960c52a8d176f0eda81990fd977"
+    },
+    {
+      "id": "portrait_nea",
+      "rgba": true,
+      "size": [
+        1254,
+        1254
+      ],
+      "alpha_extrema": [
+        0,
+        255
+      ],
+      "corner_alpha": 0,
+      "bytes": 2459607,
+      "sha256": "d950930e4659b6ed306af22418eceb82c0963ec3cf5226850020d34a7c57388a"
+    },
+    {
+      "id": "portrait_ace",
+      "rgba": true,
+      "size": [
+        1254,
+        1254
+      ],
+      "alpha_extrema": [
+        0,
+        255
+      ],
+      "corner_alpha": 0,
+      "bytes": 2391349,
+      "sha256": "60ef3d1a1ecdf7190b70aa924feaaa128ec24cdfda6ffc036fc325293b3992fe"
+    },
+    {
+      "id": "portrait_feng_min",
+      "rgba": true,
+      "size": [
+        1254,
+        1254
+      ],
+      "alpha_extrema": [
+        0,
+        255
+      ],
+      "corner_alpha": 0,
+      "bytes": 2260164,
+      "sha256": "04b499251cbc3ab8b548a45d883c2bb09c13f7a5a0d97e3139d32a46add4b304"
+    },
+    {
+      "id": "portrait_trapper",
+      "rgba": true,
+      "size": [
+        1254,
+        1254
+      ],
+      "alpha_extrema": [
+        0,
+        255
+      ],
+      "corner_alpha": 0,
+      "bytes": 2500457,
+      "sha256": "6b64d9f3b70d71ab7b28eb91bb6af1412a870474a0cd4532a19910c1823d8060"
+    },
+    {
+      "id": "portrait_wraith",
+      "rgba": true,
+      "size": [
+        1254,
+        1254
+      ],
+      "alpha_extrema": [
+        0,
+        255
+      ],
+      "corner_alpha": 0,
+      "bytes": 2491571,
+      "sha256": "1370411751c486f9804fde2285038b9fb84960114a592002fbd3330c4aed20c9"
+    },
+    {
+      "id": "portrait_hillbilly",
+      "rgba": true,
+      "size": [
+        1254,
+        1254
+      ],
+      "alpha_extrema": [
+        0,
+        255
+      ],
+      "corner_alpha": 0,
+      "bytes": 2419773,
+      "sha256": "e94cc3ae93a23f23f5dccbbf922a3805c678d55a984e8aefe60db98ade1d2859"
+    },
+    {
+      "id": "portrait_nurse",
+      "rgba": true,
+      "size": [
+        1254,
+        1254
+      ],
+      "alpha_extrema": [
+        0,
+        255
+      ],
+      "corner_alpha": 0,
+      "bytes": 2485208,
+      "sha256": "b49d61ef674b5228f4a3ea4624c96625e27f30b2f1a705e346f392e58b4ef4c0"
+    },
+    {
+      "id": "portrait_hag",
+      "rgba": true,
+      "size": [
+        1254,
+        1254
+      ],
+      "alpha_extrema": [
+        0,
+        255
+      ],
+      "corner_alpha": 0,
+      "bytes": 2502306,
+      "sha256": "5db45c0fc2bccc0420d45913c969b61690dd798bf033bd57b4a6be9a70a613b9"
+    },
+    {
+      "id": "portrait_doctor",
+      "rgba": true,
+      "size": [
+        1254,
+        1254
+      ],
+      "alpha_extrema": [
+        0,
+        255
+      ],
+      "corner_alpha": 0,
+      "bytes": 2417931,
+      "sha256": "af5f88dd913426250e53c22d0b9f87b6f90016c8b28bd8f311e5ef60d1bb58b0"
+    }
+  ],
+  "method": "Read-only PNG inspection; files copied unchanged from built-in image_gen. All native outputs are uniformly 1254x1254 RGBA; CSS controls display dimensions.",
+  "all_passed": true
+}

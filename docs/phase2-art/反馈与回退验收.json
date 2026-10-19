@@ -1,0 +1,71 @@
+{
+  "galleryStates": 41,
+  "records": [
+    {
+      "kind": "flip",
+      "label": "翻牌",
+      "seed": 1701,
+      "commandIndex": 0,
+      "frames": [
+        "sequence/flip_1.png",
+        "sequence/flip_2.png",
+        "sequence/flip_3.png"
+      ],
+      "timing": "Native CSS animations paused at 12%,55%,98%; no game-state edits."
+    },
+    {
+      "kind": "dice",
+      "label": "掷骰",
+      "seed": 1701,
+      "commandIndex": 16,
+      "frames": [
+        "sequence/dice_1.png",
+        "sequence/dice_2.png",
+        "sequence/dice_3.png"
+      ],
+      "timing": "Native CSS animations paused at 12%,55%,98%; no game-state edits."
+    },
+    {
+      "kind": "progress",
+      "label": "修机",
+      "seed": 1701,
+      "commandIndex": 29,
+      "frames": [
+        "sequence/progress_1.png",
+        "sequence/progress_2.png",
+        "sequence/progress_3.png"
+      ],
+      "timing": "Native CSS animations paused at 12%,55%,98%; no game-state edits."
+    },
+    {
+      "kind": "attack",
+      "label": "受伤",
+      "seed": 4111,
+      "commandIndex": 25,
+      "frames": [
+        "sequence/attack_1.png",
+        "sequence/attack_2.png",
+        "sequence/attack_3.png"
+      ],
+      "timing": "Native CSS animations paused at 12%,55%,98%; no game-state edits."
+    },
+    {
+      "kind": "hook",
+      "label": "挂钩",
+      "seed": 4111,
+      "commandIndex": 46,
+      "frames": [
+        "sequence/hook_1.png",
+        "sequence/hook_2.png",
+        "sequence/hook_3.png"
+      ],
+      "timing": "Native CSS animations paused at 12%,55%,98%; no game-state edits."
+    }
+  ],
+  "settingsOff": true,
+  "settingsPersisted": true,
+  "systemReducedMotion": true,
+  "missingPngFallback": true,
+  "svgMode": true,
+  "consoleErrors": []
+}

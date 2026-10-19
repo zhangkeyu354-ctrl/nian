@@ -896,6 +896,7 @@ function performInteraction(s: GameState) {
       log(s, "HIDDEN_IN_LOCKER", { actorId: a.id, propId: p.id });
     } else if (kind === "crow") {
       requireThat(p.kind === "crow", "not crow");
+      log(s,'CROW_STARTLED',{propId:p.id});
       gain(s, s.killerId, 1);
       enqueue(s, { kind: "BONUS", actorId: a.id });
     } else if (kind === "pallet") {

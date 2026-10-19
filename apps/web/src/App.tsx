@@ -14,6 +14,7 @@ import {
   propLabel,
   cardNames,
   pathLabel,
+  feedbackEvents,
 } from "../../../packages/game-engine/src/index.ts";
 import type {
   GameState,
@@ -23,6 +24,10 @@ import type {
   Event as GameEvent,
 } from "../../../packages/shared/src/types.ts";
 import { maps, chars } from "../../../packages/game-engine/src/data.ts";
+import { SettingsButton } from "./Settings.tsx";
+import { Token } from "./Token.tsx";
+import { FeedbackPanel, CompletedGenerators } from "./Feedback.tsx";
+import type { Feedback } from "../../../packages/game-engine/src/presentation.ts";
 import { Board } from "./Board.tsx";
 import {
   phases,
@@ -143,6 +148,7 @@ function ParameterForm({
   );
 }
 export function App() {
+  const [effects, setEffects] = useState<Feedback[]>([]);
   const [state, setState] = useState<GameState | null>(null);
   const [options, setOptions] = useState<CreateOptions>({
     seed: 1701,
@@ -185,19 +191,21 @@ export function App() {
       setForm(null);
       setError("");
       setDice([]);
+      setEffects([]);
       setSelected(null);
     } catch {
       setError("请选择四位不同的逃生者、一位杀手及有效的对局种子。");
     }
   }
   function send(c: Command) {
-    if (!state || masked || dice.length) return;
+    if (!state || masked || dice.length || effects.length) return;
     try {
       const next = reduce(state, c);
       const rolls = next.events
         .slice(state.events.length)
         .filter((e) => e.type === "DICE_ROLLED" || e.type === "SPAWNED");
       setState(next);
+      setEffects(feedbackEvents(state, next));
       setDice(rolls);
       setPlan([]);
       setSelected(null);
@@ -355,137 +363,165 @@ export function App() {
             : "";
   if (!state)
     return (
-      <main className="lobby">
-        <div className="lobby-brand">
-          <div className="tally" aria-hidden="true">
-            ⅡⅡ╱
-          </div>
-          <p className="eyebrow">中文版 · 实体桌游规则</p>
-          <h1>
-            黎明杀机<span>桌游版</span>
-          </h1>
-          <p>
-            一张棋盘，五个角色。
-            <br />
-            在同一台设备上，轮流计划与行动。
-          </p>
-          <div className="lobby-line" />
-          <p className="muted">热座模式 · 两张基础地图 · 十三名角色</p>
+      <>
+        <div className="lobby-settings">
+          <a href="/?view=props">道具状态一览</a>
+          <SettingsButton />
         </div>
-        <section className="setup">
-          <h2>开始一局</h2>
-          <p className="muted">交接设备时会遮挡棋盘和秘密移动牌。</p>
-          <label>
-            地图
-            <select
-              data-testid="map-select"
-              value={options.mapId}
-              onChange={(e) =>
-                setOptions((o) => ({ ...o, mapId: e.target.value }))
-              }
-            >
-              {maps.maps.map((m) => (
-                <option key={m.id} value={m.id}>
-                  {m.name_zh}
-                </option>
-              ))}
-            </select>
-          </label>
-          <div className="setup-row">
-            <label>
-              玩家人数
-              <select
-                value={playerCount}
-                onChange={(e) => setPlayerCount(e.target.value)}
-              >
-                <option value="5">5人 · 各控一个角色</option>
-                <option value="4">4人 · 一人兼控</option>
-                <option value="3">3人 · 两人各控两名逃生者</option>
-              </select>
-            </label>
-            <label>
-              对局种子
-              <input
-                type="number"
-                data-testid="seed-input"
-                value={options.seed}
-                onChange={(e) =>
-                  setOptions((o) => ({ ...o, seed: Number(e.target.value) }))
-                }
+        <main className="lobby">
+          <div className="lobby-brand">
+            <div className="tally" aria-hidden="true">
+              <Token
+                token={{
+                  id: "brand",
+                  kind: "brand_lantern",
+                  state: "normal",
+                  asset: "brand_lantern",
+                  label: "原创灯笼",
+                  location: "room",
+                }}
+                size={100}
               />
-            </label>
-          </div>
-          <fieldset>
-            <legend>逃生者</legend>
-            <div className="setup-row">
-              {options.survivors.map((value, i) => (
-                <label key={i}>
-                  角色 {i + 1}
-                  <select
-                    data-testid={"survivor-" + i}
-                    value={value}
-                    onChange={(e) =>
-                      setOptions((o) => ({
-                        ...o,
-                        survivors: o.survivors.map((v, j) =>
-                          i === j ? e.target.value : v,
-                        ),
-                      }))
-                    }
-                  >
-                    {chars.characters
-                      .filter((c) => c.side === "survivor")
-                      .map((c) => (
-                        <option key={c.id} value={c.id}>
-                          {c.name_zh}
-                        </option>
-                      ))}
-                  </select>
-                </label>
-              ))}
             </div>
-          </fieldset>
-          <label>
-            杀手
-            <select
-              data-testid="killer-select"
-              value={options.killer}
-              onChange={(e) =>
-                setOptions((o) => ({ ...o, killer: e.target.value }))
-              }
-            >
-              {chars.characters
-                .filter((c) => c.side === "killer")
-                .map((c) => (
-                  <option key={c.id} value={c.id}>
-                    {c.name_zh}
+            <p className="eyebrow">中文版 · 实体桌游规则</p>
+            <h1>
+              黎明杀机<span>桌游版</span>
+            </h1>
+            <p>
+              一张棋盘，五个角色。
+              <br />
+              在同一台设备上，轮流计划与行动。
+            </p>
+            <div className="lobby-line" />
+            <p className="muted">热座模式 · 两张基础地图 · 十三名角色</p>
+          </div>
+          <section className="setup">
+            <h2>开始一局</h2>
+            <p className="muted">交接设备时会遮挡棋盘和秘密移动牌。</p>
+            <label>
+              地图
+              <select
+                data-testid="map-select"
+                value={options.mapId}
+                onChange={(e) =>
+                  setOptions((o) => ({ ...o, mapId: e.target.value }))
+                }
+              >
+                {maps.maps.map((m) => (
+                  <option key={m.id} value={m.id}>
+                    {m.name_zh}
                   </option>
                 ))}
-            </select>
-          </label>
-          {error && (
-            <div role="alert" className="error">
-              {error}
+              </select>
+            </label>
+            <div className="setup-row">
+              <label>
+                玩家人数
+                <select
+                  value={playerCount}
+                  onChange={(e) => setPlayerCount(e.target.value)}
+                >
+                  <option value="5">5人 · 各控一个角色</option>
+                  <option value="4">4人 · 一人兼控</option>
+                  <option value="3">3人 · 两人各控两名逃生者</option>
+                </select>
+              </label>
+              <label>
+                对局种子
+                <input
+                  type="number"
+                  data-testid="seed-input"
+                  value={options.seed}
+                  onChange={(e) =>
+                    setOptions((o) => ({ ...o, seed: Number(e.target.value) }))
+                  }
+                />
+              </label>
             </div>
-          )}
-          <button
-            className="primary start-button"
-            data-testid="start"
-            onClick={start}
-          >
-            布置棋盘 <span>→</span>
-          </button>
-          <p className="muted small">
-            本地热座 · 不连接网络房间。刷新页面会重新开始。
-          </p>
-        </section>
-      </main>
+            <fieldset>
+              <legend>逃生者</legend>
+              <div className="setup-row">
+                {options.survivors.map((value, i) => (
+                  <label key={i}>
+                    角色 {i + 1}
+                    <select
+                      data-testid={"survivor-" + i}
+                      value={value}
+                      onChange={(e) =>
+                        setOptions((o) => ({
+                          ...o,
+                          survivors: o.survivors.map((v, j) =>
+                            i === j ? e.target.value : v,
+                          ),
+                        }))
+                      }
+                    >
+                      {chars.characters
+                        .filter((c) => c.side === "survivor")
+                        .map((c) => (
+                          <option key={c.id} value={c.id}>
+                            {c.name_zh}
+                          </option>
+                        ))}
+                    </select>
+                  </label>
+                ))}
+              </div>
+            </fieldset>
+            <label>
+              杀手
+              <select
+                data-testid="killer-select"
+                value={options.killer}
+                onChange={(e) =>
+                  setOptions((o) => ({ ...o, killer: e.target.value }))
+                }
+              >
+                {chars.characters
+                  .filter((c) => c.side === "killer")
+                  .map((c) => (
+                    <option key={c.id} value={c.id}>
+                      {c.name_zh}
+                    </option>
+                  ))}
+              </select>
+            </label>
+            {error && (
+              <div role="alert" className="error">
+                {error}
+              </div>
+            )}
+            <button
+              className="primary start-button"
+              data-testid="start"
+              onClick={start}
+            >
+              布置棋盘 <span>→</span>
+            </button>
+            <p className="muted small">
+              本地热座 · 不连接网络房间。刷新页面会重新开始。
+            </p>
+          </section>
+        </main>
+      </>
     );
   return (
     <div className="game">
       <header className="game-header">
         <div className="brand">
-          <span className="mini-tally">ⅡⅡ╱</span>
+          <span className="mini-tally">
+            <Token
+              token={{
+                id: "brand",
+                kind: "brand_lantern",
+                state: "normal",
+                asset: "brand_lantern",
+                label: "原创灯笼",
+                location: "room",
+              }}
+              size={42}
+            />
+          </span>
           <h1>
             黎明杀机 <small>桌游版</small>
           </h1>
@@ -495,16 +531,19 @@ export function App() {
           <strong>第 {state.round} 轮</strong>
           <span>{phases[state.phase]}</span>
         </div>
-        <button
-          onClick={() => {
-            setLocked(true);
-            setViewer(null);
-          }}
-          disabled={!!state.winner}
-          aria-label="遮挡并交接设备"
-        >
-          交接设备
-        </button>
+        <div className="header-buttons">
+          <SettingsButton />
+          <button
+            onClick={() => {
+              setLocked(true);
+              setViewer(null);
+            }}
+            disabled={!!state.winner}
+            aria-label="遮挡并交接设备"
+          >
+            交接设备
+          </button>
+        </div>
       </header>
       {((!masked && !dice.length) || !!state.winner) && (
         <>
@@ -515,6 +554,7 @@ export function App() {
               max={4}
             />
             <Track name="献祭进度" value={state.sacrifice} max={8} />
+            <CompletedGenerators state={state} />
             <div className="objective-text">
               {state.completedGenerators >= 4
                 ? "出口大门已通电"
@@ -961,7 +1001,19 @@ export function App() {
           aria-modal="true"
           aria-label="交接设备"
         >
-          <div className="handoff-symbol">ⅡⅡ╱</div>
+          <div className="handoff-symbol">
+            <Token
+              token={{
+                id: "brand",
+                kind: "brand_lantern",
+                state: "normal",
+                asset: "brand_lantern",
+                label: "原创灯笼",
+                location: "room",
+              }}
+              size={100}
+            />
+          </div>
           <p className="eyebrow">请将设备交给下一位玩家</p>
           <h2>{id ? actorName(id) : "下一位玩家"}</h2>
           <p>
@@ -982,6 +1034,9 @@ export function App() {
           <small>热座 · 同一台设备轮流操作</small>
         </div>
       )}
+      {!!effects.length && !dice.length && (
+        <FeedbackPanel effects={effects} onDone={() => setEffects([])} />
+      )}
       {!!dice.length && (
         <div
           className="dice-overlay"
@@ -992,13 +1047,17 @@ export function App() {
           <p className="eyebrow">
             {dice[0].type === "SPAWNED" ? "出生骰" : "检定结果"}
           </p>
-          <h2>{actorName(String(dice[0].data.actorId))}</h2>
+          <h2>
+            {dice[0].data.kind === "locker"
+              ? "被占用的储物柜"
+              : actorName(String(dice[0].data.actorId))}
+          </h2>
           <p>{checkNames[String(dice[0].data.kind)] ?? "确定出生位置"}</p>
           <div className="dice-faces">
             {((dice[0].data.faces ?? [dice[0].data.face]) as number[]).map(
               (f, i) => (
                 <div
-                  key={i}
+                  key={String(dice[0].seq) + "-" + i}
                   className={
                     "die " + (f === 0 ? "failure" : f === 5 ? "great" : "")
                   }

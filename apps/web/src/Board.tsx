@@ -6,8 +6,9 @@ import {
   propNames,
   categoryNames,
   propLabel,
-  publicProps,
+  boardVisuals,
 } from "../../../packages/game-engine/src/index.ts";
+import { Token } from "./Token.tsx";
 import layoutData from "./layout.json" with { type: "json" };
 const colors: Record<string, string> = {
   blue: "#62b5de",
@@ -124,7 +125,8 @@ export function Board({
   const click = (fn: () => void) => {
     if (!drag.current) fn();
   };
-  const props = publicProps(state);
+  const visuals = boardVisuals(state);
+  const props = visuals.props;
   return (
     <div className="board-shell">
       <div className="board-top">
@@ -247,41 +249,31 @@ export function Board({
                     />
                   </React.Fragment>
                 ))}
-                {p.wall && !p.temporaryWall && (
-                  <g className="wall" data-testid="wall">
-                    <title>可破坏墙壁</title>
-                    <path
-                      d="M-32 -13L-24 -20L-16 -13L-8 -20L0 -13L8 -20L16 -13L24 -20L32 -13L32 13L24 20L16 13L8 20L0 13L-8 20L-16 13L-24 20L-32 13Z"
-                      transform={`translate(${m[0]} ${m[1]})`}
-                      fill="#b5a789"
-                      stroke="#332e28"
-                      strokeWidth="3"
-                    />
-                    <text
-                      x={m[0]}
-                      y={m[1] + 7}
-                      textAnchor="middle"
-                      fill="#252820"
-                      fontSize="19"
+                {visuals.paths
+                  .filter((v) => v.id === p.id)
+                  .map((v, i) => (
+                    <g
+                      key={v.kind}
+                      transform={`translate(${m[0] - 27 + i * 43} ${m[1] - 26})`}
+                      data-testid={v.kind === "wall" ? "wall" : undefined}
                     >
-                      墙
-                    </text>
-                  </g>
-                )}
-                {p.pallet && (
-                  <text x={m[0]} y={m[1] - 20} className="path-token">
-                    木板
-                  </text>
-                )}
-                {p.bearTrap && (
-                  <text x={m[0]} y={m[1] + 35} className="path-token">
-                    捕兽夹
-                  </text>
-                )}
+                      <Token token={v} size={54} />
+                    </g>
+                  ))}
                 {state.entity?.id === p.id && (
-                  <text x={m[0]} y={m[1] - 22} className="path-token">
-                    恶灵
-                  </text>
+                  <g transform={`translate(${m[0] - 20} ${m[1] - 65})`}>
+                    <Token
+                      token={{
+                        id: p.id,
+                        kind: "entity",
+                        state: "active",
+                        label: "恶灵封锁",
+                        asset: "entity",
+                        location: "path",
+                      }}
+                      size={40}
+                    />
+                  </g>
                 )}
               </g>
             );
@@ -289,9 +281,7 @@ export function Board({
           {map.nodes.map((n) => {
             const [x, sourceY] = layout.rooms[n.id];
             const y = sourceY * yScale;
-            const occupants = Object.values(state.actors).filter(
-              (a) => a.room === n.id,
-            );
+            const occupants = visuals.actors.filter((a) => a.room === n.id);
             const slots = props.filter((p) => p.room === n.id);
             const reachable = highlight.some((r) => r.to === n.id);
             return (
@@ -337,30 +327,32 @@ export function Board({
                     </text>
                   )}
                   {occupants.map((a, i) => (
-                    <g key={a.id} transform={`translate(${-79 + i * 38} 27)`}>
-                      <circle
-                        r="17"
-                        fill={
-                          a.side === "killer"
-                            ? "#943d37"
-                            : a.health === "wounded"
-                              ? "#a27830"
-                              : "#335b60"
-                        }
-                        stroke="#fff8e1"
-                        strokeWidth="2"
-                      />
+                    <g
+                      key={a.id}
+                      transform={`translate(${-82 + i * 40} 23)`}
+                      data-actor={a.id}
+                      data-actor-state={a.state}
+                    >
+                      <g transform="translate(-18 -18)">
+                        <Token token={a} size={36} />
+                      </g>
                       <text
-                        y="6"
+                        y="22"
                         textAnchor="middle"
-                        fill="white"
-                        fontSize="17"
+                        fill="#243931"
+                        fontSize="10"
                       >
-                        {actorName(a.id).slice(0, 1)}
+                        {a.label.replace("·", "").slice(0, 3)}
                       </text>
                       <title>
-                        {actorName(a.id)}
-                        {a.hookId ? "（挂钩）" : a.lockerId ? "（躲藏）" : ""}
+                        {a.label} ·{" "}
+                        {a.state === "hooked"
+                          ? "挂在钩子上"
+                          : a.state === "carried"
+                            ? "被扛起"
+                            : a.wounded
+                              ? "受伤"
+                              : "健康"}
                       </title>
                     </g>
                   ))}
@@ -373,66 +365,52 @@ export function Board({
                       role="button"
                       tabIndex={0}
                       data-prop={p.id}
-                      aria-label={propLabel(state, p.id)}
+                      data-prop-state={p.state}
+                      aria-label={
+                        p.location === "track"
+                          ? "空槽（发电机已移到进度轨）"
+                          : p.location === "removed"
+                            ? "空槽（道具已移除）"
+                            : p.label
+                      }
                       onClick={() => click(() => onProp(p.id))}
                       onKeyDown={(e) => {
                         if (e.key === "Enter") onProp(p.id);
                       }}
-                      className={"prop-node " + (p.removed ? "removed" : "")}
+                      className="prop-node"
                       transform={`translate(${px} 68)`}
                     >
                       <rect
-                        x="-15"
-                        y="-18"
-                        width="31"
-                        height="34"
-                        rx="4"
-                        fill={
-                          p.kind
-                            ? "#f0eddc"
-                            : (
-                                {
-                                  objective: "#8d9fc2",
-                                  boldness: "#b97869",
-                                  survival: "#92a785",
-                                  altruism: "#b4a181",
-                                } as Record<string, string>
-                              )[p.category]
-                        }
-                        stroke={selected === p.id ? "#9c5a13" : "#677467"}
-                        strokeWidth="2"
+                        x="-17"
+                        y="-23"
+                        width="34"
+                        height="44"
+                        fill="transparent"
+                        stroke={selected === p.id ? "#b7883b" : "none"}
+                        strokeWidth="3"
                       />
-                      <text
-                        y="5"
-                        textAnchor="middle"
-                        fontSize="20"
-                        fill="#26342f"
-                      >
-                        {p.removed
-                          ? "·"
-                          : p.kind
-                            ? marks[p.kind]
-                            : categoryNames[p.category].slice(0, 1)}
-                      </text>
-                      {p.progress > 0 && (
-                        <text
-                          x="0"
-                          y="33"
-                          fontSize="18"
-                          textAnchor="middle"
-                          fill="#fff0ab"
-                        >
-                          {"●".repeat(p.progress)}
-                        </text>
-                      )}
-                      {state.entity?.id === p.id && (
-                        <text x="0" y="-23" fontSize="16" fill="#902f28">
-                          恶灵
-                        </text>
+                      {p.location === "removed" || p.location === "track" ? (
+                        <path
+                          d="M0 -18l15 9v18L0 18l-15-9V-9z"
+                          fill="none"
+                          stroke="#818a78"
+                          strokeDasharray="3 3"
+                        />
+                      ) : (
+                        <g transform="translate(-18 -23)" pointerEvents="none">
+                          <Token token={p} size={36} />
+                        </g>
                       )}
                     </g>
                   );
                 })}
+                {visuals.markers
+                  .filter((v) => v.room === n.id && v.kind === "phantasm")
+                  .map((v) => (
+                    <g key={v.kind} transform="translate(77 5)">
+                      <Token token={v} size={30} />
+                    </g>
+                  ))}
               </g>
             );
           })}

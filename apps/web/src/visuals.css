@@ -1,0 +1,471 @@
+.visual-token {
+  overflow: visible;
+  vertical-align: middle;
+}
+.visual-token .asset-svg,
+.visual-token .asset-png {
+  pointer-events: none;
+}
+.settings-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 90;
+  background: #111c19ee;
+  display: grid;
+  place-items: center;
+  padding: 24px;
+}
+.settings-overlay section {
+  width: min(100%, 440px);
+  background: #25372e;
+  border: 1px solid #b8a67a;
+  padding: 28px;
+  border-radius: 8px;
+}
+.settings-overlay h2 {
+  margin-bottom: 20px;
+}
+.settings-overlay label {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  min-height: 54px;
+}
+.settings-overlay input {
+  width: 22px;
+  height: 22px;
+  min-height: 0;
+  accent-color: #dfc589;
+}
+.settings-overlay a {
+  display: block;
+  color: #dfc589;
+  margin: 17px 0;
+  text-decoration: underline;
+}
+.settings-overlay button {
+  margin-top: 10px;
+  width: 100%;
+}
+.lobby-settings {
+  position: absolute;
+  top: 18px;
+  right: 22px;
+}
+.lobby-settings a {
+  color: #d6c693;
+  margin-right: 15px;
+}
+.header-buttons {
+  display: flex;
+  gap: 8px;
+}
+.brand-lantern {
+  width: 42px;
+  height: 42px;
+}
+.tally,
+.handoff-symbol {
+  letter-spacing: normal;
+}
+.tally svg {
+  width: 120px;
+  height: 120px;
+}
+.mini-tally svg {
+  width: 42px;
+  height: 42px;
+}
+.handoff-symbol svg {
+  width: 100px;
+  height: 100px;
+}
+.feedback-overlay {
+  position: fixed;
+  inset: 0;
+  background: #182722;
+  z-index: 35;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 28px;
+  gap: 25px;
+}
+.feedback-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 24px;
+  justify-content: center;
+  max-height: 76svh;
+  overflow: auto;
+}
+.feedback-card {
+  width: 230px;
+  text-align: center;
+  padding: 24px 16px;
+  background: #22372c;
+  border: 1px solid #61765b;
+  border-radius: 6px;
+}
+.feedback-card h2 {
+  font-size: 16px;
+  margin-top: 18px;
+  color: #e8dbad;
+}
+.effect-art {
+  position: relative;
+  display: inline-block;
+}
+.feedback-card .visual-token {
+  animation: effect-arrive 0.35s ease-out;
+}
+.fx-flip .visual-token {
+  animation: tile-flip 0.36s ease-out;
+}
+.fx-remove .visual-token {
+  animation: tile-remove 0.42s ease-in forwards;
+}
+.fx-attack {
+  animation: injury-flash 0.36s ease-out;
+}
+.fx-hook .visual-token {
+  animation: hook-drop 0.6s ease-out;
+}
+.hook-chain {
+  position: absolute;
+  height: 58px;
+  top: -23px;
+  left: 50%;
+  border-left: 3px dashed #af927b;
+  animation: hook-chain 0.6s ease-out;
+}
+.repair-meter {
+  height: 10px;
+  background: #405442;
+  margin-top: 16px;
+  overflow: hidden;
+  border-radius: 3px;
+}
+.repair-meter i {
+  display: block;
+  height: 100%;
+  background: #e3c777;
+  transform-origin: left;
+  animation: repair-growth 0.42s ease-out;
+}
+.completed-tray {
+  display: flex;
+  gap: 4px;
+}
+.fx-startle .visual-token {
+  animation: crow-flight 0.42s ease-out;
+}
+.die {
+  animation: dice-roll 0.52s ease-out;
+}
+.die strong {
+  animation: dice-face 0.52s steps(4, end);
+}
+.victory {
+  animation: victory-arrive 0.65s ease-out;
+}
+.state-gallery {
+  max-width: 1440px;
+  margin: auto;
+  padding: 35px;
+}
+.state-gallery header {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  margin-bottom: 30px;
+}
+.state-gallery header > div {
+  flex: 1;
+}
+.state-gallery h1 {
+  font-size: 30px;
+  color: #ebd9a7;
+}
+.state-gallery h2 {
+  font-size: 17px;
+  color: #e4d4a4;
+  border-top: 1px solid #4a5d4c;
+  padding-top: 20px;
+  margin-bottom: 12px;
+}
+.state-gallery a {
+  color: #dec68e;
+}
+.state-grid {
+  display: grid;
+  grid-template-columns: repeat(7, minmax(0, 1fr));
+  gap: 12px;
+  margin-bottom: 20px;
+}
+.state-grid figure {
+  margin: 0;
+  text-align: center;
+  padding: 12px 5px;
+  background: #22332b;
+  border-radius: 5px;
+}
+.state-grid figcaption {
+  font-size: 12px;
+  color: #cbd2b5;
+  margin-top: 6px;
+}
+.state-grid .visual-token {
+  width: min(100%, 100px);
+  height: auto;
+}
+.kind-wall.state-intact {
+  filter: drop-shadow(1px 0 0 #b8a887);
+}
+.visual-token.state-broken,
+.visual-token.state-destroyed {
+  filter: grayscale(0.4);
+}
+.token-progress rect {
+  transition: fill 0.42s ease;
+}
+.injury-ring {
+  stroke-dasharray: 10 4;
+}
+@keyframes tile-flip {
+  0% {
+    transform: perspective(500px) rotateY(-180deg);
+    opacity: 0.2;
+  }
+  50% {
+    opacity: 0.7;
+  }
+  100% {
+    transform: perspective(500px) rotateY(0);
+    opacity: 1;
+  }
+}
+@keyframes tile-remove {
+  to {
+    transform: translateY(-40px) scale(0.8);
+    opacity: 0.12;
+  }
+}
+@keyframes repair-growth {
+  from {
+    transform: scaleX(0.05);
+  }
+  to {
+    transform: scaleX(1);
+  }
+}
+@keyframes injury-flash {
+  0%,
+  45% {
+    background: #893f35;
+  }
+  100% {
+    background: #22372c;
+  }
+}
+@keyframes hook-drop {
+  0% {
+    transform: translateY(-45px) rotate(-12deg);
+    opacity: 0.1;
+  }
+  70% {
+    transform: translateY(6px) rotate(4deg);
+  }
+  100% {
+    transform: none;
+    opacity: 1;
+  }
+}
+@keyframes hook-chain {
+  from {
+    height: 5px;
+  }
+  to {
+    height: 58px;
+  }
+}
+@keyframes crow-flight {
+  0% {
+    transform: translateY(10px) rotate(-8deg);
+  }
+  65% {
+    transform: translateY(-25px) rotate(8deg);
+  }
+  100% {
+    transform: none;
+  }
+}
+@keyframes dice-roll {
+  0% {
+    transform: translateX(-30px) rotate(-120deg) scale(0.6);
+  }
+  65% {
+    transform: translateX(8px) rotate(20deg) scale(1.1);
+  }
+  100% {
+    transform: none;
+  }
+}
+@keyframes dice-face {
+  0% {
+    opacity: 0.1;
+  }
+  75% {
+    opacity: 0.5;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+@keyframes effect-arrive {
+  from {
+    transform: scale(0.8);
+    opacity: 0.1;
+  }
+  to {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+@keyframes victory-arrive {
+  from {
+    opacity: 0;
+    transform: translateY(22px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+.flip-assembly {
+  position: relative;
+  width: 126px;
+  height: 126px;
+  transform-style: preserve-3d;
+  animation: card-turn 0.36s ease-in-out;
+}
+.flip-front,
+.flip-back {
+  position: absolute;
+  inset: 0;
+  backface-visibility: hidden;
+}
+.flip-back {
+  transform: rotateY(180deg);
+}
+.fx-flip .visual-token {
+  animation: none;
+}
+.fx-attack .effect-art::after {
+  content: "";
+  position: absolute;
+  inset: 7%;
+  border-radius: 50%;
+  background: #d84636;
+  opacity: 0;
+  pointer-events: none;
+  animation: portrait-red 0.36s ease-out;
+}
+@keyframes portrait-red {
+  0%,
+  35% {
+    opacity: 0.65;
+  }
+  100% {
+    opacity: 0;
+  }
+}
+html[data-motion="off"] *,
+html[data-motion="off"] *::before,
+html[data-motion="off"] *::after {
+  animation: none !important;
+  transition: none !important;
+  scroll-behavior: auto !important;
+}
+@media (max-width: 600px) {
+  .state-gallery {
+    padding: 20px 14px;
+  }
+  .state-gallery header {
+    flex-wrap: wrap;
+    gap: 12px;
+  }
+  .state-gallery header > div {
+    flex-basis: 100%;
+  }
+  .state-grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 8px;
+  }
+  .state-grid figcaption {
+    font-size: 11px;
+  }
+  .state-gallery h1 {
+    font-size: 26px;
+  }
+  .feedback-card {
+    width: 160px;
+    padding: 16px 10px;
+  }
+  .feedback-card h2 {
+    font-size: 14px;
+  }
+  .effect-art .visual-token {
+    width: 90px;
+    height: 90px;
+  }
+  .feedback-overlay {
+    padding: 20px;
+    gap: 18px;
+  }
+  .header-buttons {
+    gap: 4px;
+  }
+  .game-header > button,
+  .header-buttons button {
+    padding: 6px 8px;
+    font-size: 11px;
+  }
+  .brand h1 {
+    font-size: 14px;
+  }
+  .mini-tally svg {
+    width: 27px;
+    height: 27px;
+  }
+  .lobby-settings {
+    position: static;
+    display: flex;
+    justify-content: end;
+    margin-bottom: 20px;
+  }
+  .completed-tray .visual-token {
+    width: 30px;
+    height: 30px;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation: none !important;
+    transition: none !important;
+  }
+}
+@keyframes card-turn {
+  from {
+    transform: perspective(500px) rotateY(-180deg);
+  }
+  to {
+    transform: perspective(500px) rotateY(0);
+  }
+}
+.dice-overlay {
+  animation: none;
+}

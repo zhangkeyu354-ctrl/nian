@@ -119,12 +119,16 @@ const small = await page
 assert.deepEqual(small, [], "all standard buttons at least44px");
 // Complete setup through visible action buttons, then inspect secret-plan handoff.
 for (let i = 0; i < 4; i++) {
+  while (await page.getByTestId("ack-feedback").count())
+    await page.getByTestId("ack-feedback").click();
   if (await page.getByTestId("uncover").count())
     await page.getByTestId("uncover").click();
   await page.locator("[data-command]").first().click();
   while (await page.getByTestId("ack-dice").count())
     await page.getByTestId("ack-dice").click();
 }
+while (await page.getByTestId("ack-feedback").count())
+  await page.getByTestId("ack-feedback").click();
 if (await page.getByTestId("uncover").count())
   await page.getByTestId("uncover").click();
 await page.locator('[data-card="blue"]').click();

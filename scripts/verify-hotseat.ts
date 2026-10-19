@@ -25,14 +25,22 @@ page.on("console", (m) => {
   if (m.type() === "error") errors.push(m.text());
 });
 async function capture(p: Page, name: string) {
-  await p.screenshot({ path: `${out}/${name}.png`, fullPage: true, animations:'disabled' });
+  await p.screenshot({
+    path: `${out}/${name}.png`,
+    fullPage: true,
+    animations: "disabled",
+  });
 }
 async function clearOverlays(p: Page) {
+  while (await p.getByTestId("ack-feedback").count())
+    await p.getByTestId("ack-feedback").click();
   while (await p.getByTestId("ack-dice").count()) {
     diceShown++;
     if (diceShown === 6) await capture(p, "骰子结果");
     await p.getByTestId("ack-dice").click();
   }
+  while (await p.getByTestId("ack-feedback").count())
+    await p.getByTestId("ack-feedback").click();
   if (await p.getByTestId("uncover").count()) {
     curtains++;
     assert.equal(
@@ -73,7 +81,23 @@ for (const seed of [1701, 2903, 4111]) {
     const c = data.commands[i];
     try {
       await clearOverlays(page);
-      if(i===0)assert.equal(await page.locator('[data-room] rect').evaluateAll(els=>els.every(el=>{const a=el.getBoundingClientRect(),b=el.closest('svg')!.getBoundingClientRect();return a.top>=b.top-1&&a.left>=b.left-1&&a.right<=b.right+1&&a.bottom<=b.bottom+1;})),true,'all map rooms fit initial viewport');
+      if (i === 0)
+        assert.equal(
+          await page.locator("[data-room] rect").evaluateAll((els) =>
+            els.every((el) => {
+              const a = el.getBoundingClientRect(),
+                b = el.closest("svg")!.getBoundingClientRect();
+              return (
+                a.top >= b.top - 1 &&
+                a.left >= b.left - 1 &&
+                a.right <= b.right + 1 &&
+                a.bottom <= b.bottom + 1
+              );
+            }),
+          ),
+          true,
+          "all map rooms fit initial viewport",
+        );
       if (c.type === "PLAN") {
         for (const card of c.cards as string[])
           await page.locator(`[data-card="${card}"]`).click();
@@ -103,14 +127,14 @@ for (const seed of [1701, 2903, 4111]) {
         c.type === "SETUP_REVEAL" ||
         (c.type === "SELECT" && c.propId)
       ) {
-        await page.locator(`[data-prop="${c.propId}"] rect`).click();
+        await page.locator(`[data-prop="${c.propId}"] > rect`).click();
         mapClicks++;
       } else if (
         c.type === "MOVE" &&
         c.to &&
         getControls(state).actions.filter((a) => a.roomId === c.to).length === 1
       ) {
-        await page.locator(`[data-room="${c.to}"] rect`).click();
+        await page.locator(`[data-room="${c.to}"] > rect`).click();
         mapClicks++;
       } else {
         const buttons = page.locator("[data-command]");
