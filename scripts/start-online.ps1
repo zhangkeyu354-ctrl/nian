@@ -3,9 +3,9 @@
 $ErrorActionPreference = 'Stop'
 Set-Location (Split-Path -Parent $PSScriptRoot)
 if (-not (Get-Command node -ErrorAction SilentlyContinue)) { throw '请先安装 Node.js 24（https://nodejs.org/）。' }
-if (-not (Test-Path -LiteralPath 'node_modules/socket.io')) {
+if (-not (Test-Path -LiteralPath 'node_modules/socket.io') -or -not (Test-Path -LiteralPath 'node_modules/react') -or -not (Test-Path -LiteralPath 'node_modules/qrcode')) {
     Write-Host '首次运行：正在安装依赖……'
-    & npm ci --ignore-scripts
+    & npm install --ignore-scripts --no-audit --no-fund
     if ($LASTEXITCODE -ne 0) { throw '依赖安装失败。' }
 }
 Write-Host '正在构建网页……'
