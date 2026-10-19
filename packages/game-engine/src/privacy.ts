@@ -14,6 +14,10 @@ export const HIDDEN = "hidden";
  *
  * 公开的内容：棋盘位置、已翻开的道具、已打出的移动牌、骰子结果、血点、伤势、进度等。
  * 储物柜：规则原文要求把逃生者棋子放在储物柜上，所以占用者身份属于公开信息。
+ *
+ * 物品（用户裁定 U-ITEM，2026-10-19）：持有中的物品只有持有者能看到；
+ * 打出（使用/弃掉）时所有人都能看到。Phase 4 实现物品效果时，使用物品的事件
+ * 必须带上物品 id，且不要在这里隐藏它；弃牌堆 itemDiscard 本来就是公开的。
  */
 export function viewFor(full: GameState, seat: string | null): GameState {
   const s: GameState = structuredClone(full);

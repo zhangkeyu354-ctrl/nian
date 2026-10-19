@@ -433,3 +433,36 @@
     min-height: 420px;
   }
 }
+
+/* 掷骰：先在桌面上翻滚（骰面快速变化），再弹跳落定 */
+.die.cube-die.tumbling {
+  animation: dice-tumble 0.34s linear infinite;
+}
+.die.cube-die.landed {
+  animation: dice-land 0.45s cubic-bezier(0.2, 1.6, 0.4, 1) both;
+}
+.die.cube-die.landed.great {
+  box-shadow:
+    0 0 0 3px #eed38c80,
+    0 0 26px #eed38c90,
+    10px 14px 15px #0008;
+}
+@keyframes dice-tumble {
+  0% {
+    transform: translate(-6px, -10px) rotate(0deg) scale(0.92);
+  }
+  50% {
+    transform: translate(6px, 4px) rotate(180deg) scale(1.04);
+  }
+  100% {
+    transform: translate(-6px, -10px) rotate(360deg) scale(0.92);
+  }
+}
+@keyframes dice-land {
+  0% {
+    transform: translateY(-14px) scale(1.12) rotate(-8deg);
+  }
+  100% {
+    transform: none;
+  }
+}

@@ -159,3 +159,4 @@ tests/
 - 存档为 `data/rooms/*.json`（创建参数+命令列表，重放恢复），未用SQLite；`data/` 不提交。
 - 之后所有截图验收必须使用 `scripts/screenshot-check.ts`；联机改动必须通过 `verify:lan-protocol` 与 `verify:lan-browsers`（先 `npm run build`）。
 - 下一阶段按用户计划：Phase 2D 桌面化改版（规则、协议、数据不改），然后 Phase 4/5。
+- 用户裁定 U-ITEM、U-DICE 见 `docs/HOUSE_RULES.md` 末节：物品仅持有者可见、打出后公开；骰子所有人同时看到并有翻滚动画。

@@ -55,11 +55,12 @@ const text = async (p: Page) =>
 
 /** 关掉所有浏览器上的骰子与反馈弹窗（观看者也会看到） */
 async function drain(p: Page) {
+  // 观看者的弹窗会自动关闭，所以点击可能扑空；扑空不算错误
   for (let i = 0; i < 30; i++) {
-    if (await p.getByTestId("ack-dice").count())
-      await p.getByTestId("ack-dice").click();
-    else if (await p.getByTestId("ack-feedback").count())
-      await p.getByTestId("ack-feedback").click();
+    const dice = p.getByTestId("ack-dice"),
+      fb = p.getByTestId("ack-feedback");
+    if (await dice.count()) await dice.click({ timeout: 1500 }).catch(() => {});
+    else if (await fb.count()) await fb.click({ timeout: 1500 }).catch(() => {});
     else return;
   }
 }

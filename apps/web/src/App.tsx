@@ -326,6 +326,20 @@ export function App({ net }: { net?: NetBinding } = {}) {
   const waiting = !!net && !!state && !state.winner && owner !== net.seat;
   const masked =
     !net && !!state && !state.winner && (locked || viewer !== owner);
+  // 联机：掷骰和棋盘变化所有人同时看到。观看者的弹窗在动画播完后自动关闭，
+  // 只有行动者需要点"已查看"，这样不会挡住别人的屏幕。
+  const watching = !!net && waiting;
+  useEffect(() => {
+    if (!watching || !dice.length) return;
+    const n = ((dice[0].data.faces as unknown[]) ?? [0]).length;
+    const t = setTimeout(() => setDice((v) => v.slice(1)), 2600 + n * 220);
+    return () => clearTimeout(t);
+  }, [watching, dice]);
+  useEffect(() => {
+    if (!watching || dice.length || !effects.length) return;
+    const t = setTimeout(() => setEffects([]), 2600);
+    return () => clearTimeout(t);
+  }, [watching, dice, effects]);
   // 联机：收到服务器的新视图时，播放与本地操作相同的翻牌、掷骰和状态反馈
   const prevView = useRef<GameState | null>(net?.view ?? null);
   useEffect(() => {
@@ -1301,6 +1315,7 @@ export function App({ net }: { net?: NetBinding } = {}) {
                   face={f}
                   danger={dice[0].data.die === "danger"}
                   spawn={dice[0].type === "SPAWNED"}
+                  delay={i * 220}
                 />
               ),
             )}
