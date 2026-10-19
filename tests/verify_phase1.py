@@ -33,5 +33,5 @@ for g in summary:
 replay=read('docs/phase1/REPLAY_VERIFICATION.json')['verified']
 check({g['seed'] for g in replay}=={g['seed'] for g in summary} and all(len(g['sha256'])==64 for g in replay),'independent replay verifier recorded all three final-state hashes')
 check(all(hashlib.sha256((R/f"docs/phase1/games/{g['seed']}.events.jsonl").read_bytes()).hexdigest()==g['eventsSha256'] and hashlib.sha256((R/f"docs/phase1/games/{g['seed']}.replay.json").read_bytes()).hexdigest()==g['commandsSha256'] for g in replay),'replay verification hashes match current logs/commands, not a stale prior run')
-check(not list((R/'apps').rglob('*.ts')) and not list((R/'apps').rglob('*.tsx')),'no UI/server implementation added')
+check(not list((R/'apps/server').rglob('*.ts')) and 'Phase 2' in text,'Phase2 UI explicitly authorized; Phase3 server remains unimplemented')
 print(f'RESULT: {checks} Phase1 acceptance/provenance checks passed.')

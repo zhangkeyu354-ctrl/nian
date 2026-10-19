@@ -1,0 +1,105 @@
+{
+  "node": "24.14.0",
+  "checks": [
+    {
+      "command": "npm.cmd run typecheck",
+      "exit_code": 0
+    },
+    {
+      "command": "npm.cmd test -- --reporter=verbose",
+      "exit_code": 0
+    },
+    {
+      "command": "npm.cmd run build",
+      "exit_code": 0
+    },
+    {
+      "command": "npm.cmd run verify:replays",
+      "exit_code": 0
+    },
+    {
+      "command": "npm.cmd run verify:hotseat",
+      "exit_code": 0
+    },
+    {
+      "command": "npm.cmd run verify:mobile",
+      "exit_code": 0
+    },
+    {
+      "command": "npm.cmd run verify:actions",
+      "exit_code": 0
+    },
+    {
+      "command": "C:\\Users\\Lenovo\\AppData\\Local\\Python\\pythoncore-3.14-64\\python.exe tests/verify_phase0.py",
+      "exit_code": 0
+    },
+    {
+      "command": "C:\\Users\\Lenovo\\AppData\\Local\\Python\\pythoncore-3.14-64\\python.exe tests/verify_phase0_supplement.py",
+      "exit_code": 0
+    },
+    {
+      "command": "C:\\Users\\Lenovo\\AppData\\Local\\Python\\pythoncore-3.14-64\\python.exe tests/verify_macmillan.py",
+      "exit_code": 0
+    },
+    {
+      "command": "C:\\Users\\Lenovo\\AppData\\Local\\Python\\pythoncore-3.14-64\\python.exe tests/verify_batch2.py",
+      "exit_code": 0
+    },
+    {
+      "command": "C:\\Users\\Lenovo\\AppData\\Local\\Python\\pythoncore-3.14-64\\python.exe tests/verify_phase1.py",
+      "exit_code": 0
+    },
+    {
+      "command": "C:\\Users\\Lenovo\\AppData\\Local\\Python\\pythoncore-3.14-64\\python.exe tests/verify_phase2.py",
+      "exit_code": 0
+    },
+    {
+      "command": "npm.cmd run typecheck",
+      "exit_code": 0
+    },
+    {
+      "command": "npm.cmd test",
+      "exit_code": 0
+    },
+    {
+      "command": "C:\\Users\\Lenovo\\AppData\\Local\\Python\\pythoncore-3.14-64\\python.exe tests/verify_phase2.py",
+      "exit_code": 0
+    }
+  ],
+  "all_passed": true,
+  "source_sha256": {
+    "apps/web/.gitkeep": "7eb70257593da06f682a3ddda54a9d260d4fc514f645237f5ca74b08f8da61a6",
+    "apps/web/index.html": "b6f0545aba7d4791a33fd1d91b4226fa1e2d267f8a86b288a670adc1ced25dc1",
+    "apps/web/src/App.tsx": "34c9ba5aaa9d1ba5af0ffd52fe0615b9591f425452bd7b30600acf9d71157ba0",
+    "apps/web/src/Board.tsx": "7fcafe4099661001f20e6d9564041e72f5c2a2247b4a8531532b5a6cd904336a",
+    "apps/web/src/labels.ts": "1a85050dd9edccffb29a3971653d32318b38b6721bdcdb8703b6625ad4ce1142",
+    "apps/web/src/layout.json": "9071b1a570fcfc37f95745532331e63f5023701cd69a220f1f31f7f32aa44da9",
+    "apps/web/src/main.tsx": "93ed5125c65ddc4f9d9d53314931a8073048c6574235675cdc3c6990231be2dc",
+    "apps/web/src/style.css": "eb459cb2172928b2ef01466ff1aa9343f2394490962e2b4cff5506a6a885cd8c",
+    "apps/web/src/vite-env.d.ts": "65996936fbb042915f7b74a200fcdde7e410f32a669b1ab9597cfaa4b0faddb5",
+    "apps/web/vite.config.ts": "4c9d106c9cca32255ec315c9129288f3b7129f3ba671af9cfb7fb8df3aa63b6a",
+    "packages/game-data/CHARACTER_DATA.json": "469baf5041a9d8fef92ad035aaed133bb6458f0e86df752fe8588ba042601d6d",
+    "packages/game-data/DICE_DATA.json": "821a65fae7fa4ec525b0dcb13259ffa1a18c863665078a2384ef139f307906f5",
+    "packages/game-data/drafts/AUTOHAVEN_FROM_PHOTOS.json": "ba6f920546f4fd538fd2a8f18e8a6c89b2d8733411bd520b1db9d719eaeed76e",
+    "packages/game-data/drafts/CHARACTERS_FROM_PHOTOS.json": "a0305f92c5b5a51530c7eeb154df7d6cbd01a9ca20ccdddc2067a1d7af2a05e5",
+    "packages/game-data/drafts/ITEMS_FROM_PHOTOS.json": "d93ae7b1005d1b35e53b5dfadf1db788b8081f684ff5960fb50cb83798ae1266",
+    "packages/game-data/drafts/MACMILLAN_FROM_PHOTOS.json": "4066ebd59d3538fa0c92f500d0cc8244568e26f503c094ff3039b5b7f1184a9c",
+    "packages/game-data/glossary.json": "5d344178245cd4a57848d010d19e60207f9759b54234df660d00ae2508287c4d",
+    "packages/game-data/ITEM_DATA.json": "3809a854ed23f93e10139c5b277d0f42944eea388653ecbcef280c81657bf7a6",
+    "packages/game-data/MAP_DATA.json": "2a3f1ddc247dd8ee36cbf26b6b3145a4b81748066c3714d058b4cbe6eb9c04bd",
+    "packages/game-data/MOVEMENT_CARD_DATA.json": "106da54a99b95c34475ddb60c463d64d770ff50343df9af6d92e368c64569043",
+    "packages/game-data/out-of-scope/COLLECTOR_CHARACTERS.json": "5e57049ed575e919e2845be354051fb7c8e9bc993f3e0b96e50e1b5bb869fa78",
+    "packages/game-data/PERK_DATA.json": "f8fb43273c0e5a562a234ea91d3a0a2c97e87a03faa922e3faf003fa05e72a95",
+    "packages/game-data/PROP_DATA.json": "51cd84301460419772b597444ab43f83e4f7053373cbf9f69856cd35757c1547",
+    "packages/game-data/RULE_DATA.json": "bfb2b65f6824094f537735946d9cb8c8de94efa1fca17c888728970c3dabd15b",
+    "packages/game-engine/src/controls.ts": "c4d6a0420260391460faacdb106784fb9efe171494411cc509adf19b26e6d250",
+    "packages/game-engine/src/data.ts": "d356480c7851c7432aa984a621ebae7961cb20b82604b24da3499e6869c1eab1",
+    "packages/game-engine/src/dice.ts": "6d9bf28dc42e21f649a2431896aae36b212751956c87906bfa6cebbbc881316d",
+    "packages/game-engine/src/engine.ts": "26eb8d9f58af13368da04a77af49162708eddf1db4f945fed97c3fd84113d65e",
+    "packages/game-engine/src/graph.ts": "c5b47e54e95ff2eef6491cf50d28a1faee7fbf23696963550f9cd111f3cd3b31",
+    "packages/game-engine/src/index.ts": "2779e78ea5dbece8b0a10e6b07271aca58f9d85627b2a0b3abb930751159ae14",
+    "packages/game-engine/src/skills.ts": "c73a50bf00423ce7d8e42d638ea9d1e39008b8a7322761ef969f66ae8d161caa",
+    "packages/shared/src/types.ts": "e0fc2454a4c024e0f5d93259150818bb9b8777c8eee4eeaa3d7dc86193121e92"
+  },
+  "screenshot_note": "Dice screenshot recaptured from real command prefix with CSS animations disabled for a fully opaque, stable result overlay."
+}

@@ -149,9 +149,10 @@ if (ROOT / '.git').is_dir():
     check(True,'Git ignores original materials, databases and dependencies (including uncreated probe paths)')
     remote = subprocess.run(['git','remote'],cwd=ROOT,capture_output=True,text=True,check=True)
     tracked = subprocess.run(['git','ls-files','reference'],cwd=ROOT,capture_output=True,text=True,check=True)
-    check(not remote.stdout.strip() and not tracked.stdout.strip(), 'no Git remote or tracked original reference files')
+    reference_files=tracked.stdout.splitlines()
+    check(not remote.stdout.strip() and all(p=='reference/README.md' or p.endswith('/.gitkeep') for p in reference_files), 'no Git remote or tracked original materials; only reference README/placeholders allowed')
 else:
     print('[SKIP] Git repository checks: this extracted copy has no .git directory')
-check(not list((ROOT/'apps').rglob('*.ts')) and not list((ROOT/'apps').rglob('*.tsx'))
-      and (ROOT/'packages/game-engine/src/index.ts').exists(), 'authorized Phase1 engine exists; no UI/network implementation')
+check(not list((ROOT/'apps/server').rglob('*.ts'))
+      and (ROOT/'packages/game-engine/src/index.ts').exists(), 'authorized engine/UI phases retain separate engine; no Phase3 network implementation')
 print(f'\nRESULT: {passed} research audit checks passed. Engine tests run separately with npm test.')

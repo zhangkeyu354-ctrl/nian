@@ -21,4 +21,5 @@ test-results/
 !.env.example
 work/
 *.log
+output/
 __pycache__/

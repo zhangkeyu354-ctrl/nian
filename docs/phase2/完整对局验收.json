@@ -1,0 +1,38 @@
+{
+  "games": [
+    {
+      "seed": 1701,
+      "mapId": "macmillan_estate",
+      "winner": "survivor",
+      "round": 6,
+      "commands": 192,
+      "events": 408,
+      "usedAbilities": 4,
+      "method": "Only rendered controls clicked; state independently reduced outside browser and event count checked after every command."
+    },
+    {
+      "seed": 2903,
+      "mapId": "autohaven_wreckers",
+      "winner": "survivor",
+      "round": 7,
+      "commands": 226,
+      "events": 477,
+      "usedAbilities": 2,
+      "method": "Only rendered controls clicked; state independently reduced outside browser and event count checked after every command."
+    },
+    {
+      "seed": 4111,
+      "mapId": "autohaven_wreckers",
+      "winner": "killer",
+      "round": 5,
+      "commands": 108,
+      "events": 227,
+      "usedAbilities": 1,
+      "method": "Only rendered controls clicked; state independently reduced outside browser and event count checked after every command."
+    }
+  ],
+  "curtains": 245,
+  "diceShown": 54,
+  "mapClicks": 129,
+  "consoleErrors": []
+}

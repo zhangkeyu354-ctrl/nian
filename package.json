@@ -1,22 +1,38 @@
 {
   "name": "dbd-boardgame-private",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "private": true,
   "type": "module",
   "scripts": {
     "test": "vitest run",
     "typecheck": "tsc --noEmit",
     "simulate": "tsx scripts/simulate.ts",
-    "verify:replays": "tsx scripts/verify-replays.ts"
+    "verify:replays": "tsx scripts/verify-replays.ts",
+    "dev": "vite --config apps/web/vite.config.ts",
+    "build": "vite build --config apps/web/vite.config.ts",
+    "preview": "vite preview --config apps/web/vite.config.ts --host 127.0.0.1",
+    "verify:hotseat": "tsx scripts/verify-hotseat.ts",
+    "verify:mobile": "tsx scripts/verify-hotseat-mobile.ts",
+    "verify:actions": "tsx scripts/verify-hotseat-actions.ts"
   },
   "devDependencies": {
+    "@tailwindcss/vite": "4.3.3",
     "@types/node": "26.6.5",
+    "@types/react": "19.3.0",
+    "@types/react-dom": "19.3.0",
+    "playwright": "1.64.1",
     "prettier": "3.9.10",
+    "tailwindcss": "4.3.3",
     "tsx": "4.23.15",
     "typescript": "7.0.2",
+    "vite": "8.3.4",
     "vitest": "5.0.5"
   },
   "engines": {
     "node": ">=24"
+  },
+  "dependencies": {
+    "react": "19.3.1",
+    "react-dom": "19.3.1"
   }
 }
