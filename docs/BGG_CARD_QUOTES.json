@@ -1,0 +1,183 @@
+{
+  "schema_version": 1,
+  "research_date": "2026-10-19",
+  "quotes": [
+    {
+      "id": "BQ01",
+      "card_name_en": "Sprint Burst",
+      "card_kind": "perk",
+      "source_id": "D17",
+      "source_level": "D",
+      "source_ref": [
+        "https://boardgamegeek.com/thread/3072690/meg-thomas-sprint-burst"
+      ],
+      "speaker": "Skip591（引文在HIDALICLICK回复中重现）",
+      "post_date_as_displayed": "2023-04-25",
+      "author_role_evidence": null,
+      "access": "SEARCH_INDEX_TEXT",
+      "quote_observation_status": "CONFIRMED",
+      "verbatim_excerpt_en": "After you move with your movement card, move again along any other path.",
+      "excerpt_is_complete_quoted_effect": true,
+      "effect_summary_zh": "用移动卡完成移动后，可沿另一条路径再移动一次；帖子未给费用，玩家解读不是官方裁定。",
+      "translation_status": "DRAFT",
+      "edition_scope": "BASE_CANDIDATE",
+      "status": "CHECK_REQUIRED",
+      "missing": [
+        "血点费用未核实",
+        "日文实物原文/印次未核实"
+      ],
+      "adopted_into_formal_effects": false,
+      "note": "短引文保留所见拼写；较长效果用中文重述并链接原帖，不将短摘录冒充完整卡文。"
+    },
+    {
+      "id": "BQ02",
+      "card_name_en": "Ace in the Hole",
+      "card_kind": "perk",
+      "source_id": "D18",
+      "source_level": "D",
+      "source_ref": [
+        "https://boardgamegeek.com/thread/3725010/dbd-board-game-ace-viscontis-perk-ace-in-the-hole"
+      ],
+      "speaker": "Michael Weber / KaruiAshi",
+      "post_date_as_displayed": "Jun 17（索引未显示年份，不猜年份）",
+      "author_role_evidence": null,
+      "access": "SEARCH_INDEX_TEXT",
+      "quote_observation_status": "CONFIRMED",
+      "verbatim_excerpt_en": "Before you interact, swap a prop in your space with another from the same category in a connected space.",
+      "excerpt_is_complete_quoted_effect": false,
+      "effect_summary_zh": "交互前可与相连房间交换同类别道具；帖内后文还排除带进度的发电机、被占柜子和被占钩。未取得费用，出口进度争议不自行裁定。",
+      "translation_status": "DRAFT",
+      "edition_scope": "BASE_CANDIDATE",
+      "status": "CHECK_REQUIRED",
+      "missing": [
+        "血点费用未核实",
+        "日文实物原文/印次未核实"
+      ],
+      "adopted_into_formal_effects": false,
+      "note": "短引文保留所见拼写；较长效果用中文重述并链接原帖，不将短摘录冒充完整卡文。"
+    },
+    {
+      "id": "BQ03",
+      "card_name_en": "Botany Knowledge",
+      "card_kind": "perk",
+      "source_id": "C07",
+      "source_level": "C",
+      "source_ref": [
+        "https://boardgamegeek.com/thread/3085734/can-you-use-botany-knowledge-after-an-interaction"
+      ],
+      "speaker": "Marco Santos / mnmkami",
+      "post_date_as_displayed": "2023-05-20",
+      "author_role_evidence": "C08同用户名为L99官方项目Creator；B01 p20列开发团队Marco De Santos。",
+      "access": "SEARCH_INDEX_TEXT",
+      "quote_observation_status": "CONFIRMED",
+      "verbatim_excerpt_en": "Before or after moving during your turn, roll the danger die.",
+      "excerpt_is_complete_quoted_effect": false,
+      "effect_summary_zh": "自己回合移动前后掷危险骰，成功使同房另一逃生者恢复健康；该效果不会单独产生交互机会。答复确认可在救人移动后触发。费用仍未取得。",
+      "translation_status": "DRAFT",
+      "edition_scope": "BASE_CANDIDATE",
+      "status": "CHECK_REQUIRED",
+      "missing": [
+        "血点费用未核实",
+        "日文实物原文/印次未核实"
+      ],
+      "adopted_into_formal_effects": false,
+      "note": "短引文保留所见拼写；较长效果用中文重述并链接原帖，不将短摘录冒充完整卡文。"
+    },
+    {
+      "id": "BQ04",
+      "card_name_en": "Deception",
+      "card_kind": "perk",
+      "source_id": "C07",
+      "source_level": "D",
+      "source_ref": [
+        "https://boardgamegeek.com/thread/3085734/can-you-use-botany-knowledge-after-an-interaction"
+      ],
+      "speaker": "HIDALICLICK",
+      "post_date_as_displayed": "2023-05-18",
+      "author_role_evidence": null,
+      "access": "SEARCH_INDEX_TEXT",
+      "quote_observation_status": "CONFIRMED",
+      "verbatim_excerpt_en": "You cannot interact this turn. Gain a Bloodpoint.",
+      "excerpt_is_complete_quoted_effect": false,
+      "effect_summary_zh": "玩家引用：在自己回合本应移动时改为停留，并失去该回合交互，获得1血点。此处只是引用其曾收到答复，没有可核实的原答复链接。",
+      "translation_status": "DRAFT",
+      "edition_scope": "EDITION_CHECK_REQUIRED",
+      "status": "CHECK_REQUIRED",
+      "missing": [
+        "血点费用未核实",
+        "日文实物原文/印次未核实"
+      ],
+      "adopted_into_formal_effects": false,
+      "note": "短引文保留所见拼写；较长效果用中文重述并链接原帖，不将短摘录冒充完整卡文。"
+    },
+    {
+      "id": "BQ05",
+      "card_name_en": "Pain Resonance",
+      "card_kind": "perk",
+      "source_id": "D19",
+      "source_level": "D",
+      "source_ref": [
+        "https://boardgamegeek.com/thread/3301194/rule-questions-about-the-new-expansion"
+      ],
+      "speaker": "HIDALICLICK",
+      "post_date_as_displayed": "2024-05-15",
+      "author_role_evidence": null,
+      "access": "SEARCH_INDEX_TEXT",
+      "quote_observation_status": "CONFIRMED",
+      "verbatim_excerpt_en": "As an interaction, interact with an unoccupied hook.",
+      "excerpt_is_complete_quoted_effect": false,
+      "effect_summary_zh": "2024扩展预览：与空钩交互，可使相连房间逃生者受伤。基础版排除。",
+      "translation_status": "DRAFT",
+      "edition_scope": "MALICIOUS_PREVIEW_OUT_OF_SCOPE",
+      "status": "CHECK_REQUIRED",
+      "missing": [
+        "血点费用未核实",
+        "日文实物原文/印次未核实"
+      ],
+      "adopted_into_formal_effects": false,
+      "note": "短引文保留所见拼写；较长效果用中文重述并链接原帖，不将短摘录冒充完整卡文。"
+    },
+    {
+      "id": "BQ06",
+      "card_name_en": "Grim Embrace",
+      "card_kind": "perk",
+      "source_id": "D19",
+      "source_level": "D",
+      "source_ref": [
+        "https://boardgamegeek.com/thread/3301194/rule-questions-about-the-new-expansion"
+      ],
+      "speaker": "HIDALICLICK",
+      "post_date_as_displayed": "2024-05-15",
+      "author_role_evidence": null,
+      "access": "SEARCH_INDEX_TEXT",
+      "quote_observation_status": "CONFIRMED",
+      "verbatim_excerpt_en": "After a Survivor sabotages an occupied hook",
+      "excerpt_is_complete_quoted_effect": false,
+      "effect_summary_zh": "2024扩展预览：救人相关事件在救人者板上放标记，之后挂钩转化为献祭进度；帖内玩家猜测不可用作裁定。基础版排除。",
+      "translation_status": "DRAFT",
+      "edition_scope": "MALICIOUS_PREVIEW_OUT_OF_SCOPE",
+      "status": "CHECK_REQUIRED",
+      "missing": [
+        "血点费用未核实",
+        "日文实物原文/印次未核实"
+      ],
+      "adopted_into_formal_effects": false,
+      "note": "短引文保留所见拼写；较长效果用中文重述并链接原帖，不将短摘录冒充完整卡文。"
+    }
+  ],
+  "coverage_status": "PARTIAL_ACCESS_LIMITED",
+  "exhaustive": false,
+  "verbatim_quote_card_count": 6,
+  "base_or_edition_unverified_candidates": 4,
+  "out_of_scope_preview_cards": 2,
+  "item_quote_count": 0,
+  "policy": "按具体发言者评级；D级只作线索，未进入正式效果；C级未补齐费用也不作为完整卡牌。",
+  "excerpt_note": "逐页保留短引文及原帖定位；不是全文卡牌复制库。C07中的两种卡引文总计20词。",
+  "item_search_result": "对Flashlight/First Aid Kit/Toolbox及通用item card相关检索未获得可核实BGG逐字卡文。发现另一桌游/自订内容即排除。",
+  "files_review": {
+    "source_id": "D01",
+    "visible_index_count": 13,
+    "full_file_text_obtained": false,
+    "card_translation_lead": "Adaptador de componentes a español / Duskclaw25；是西文玩家翻译索引，不是已取得英文原文。"
+  }
+}

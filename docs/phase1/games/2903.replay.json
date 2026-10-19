@@ -1,0 +1,1176 @@
+{
+  "options": {
+    "seed": 2903,
+    "mapId": "autohaven_wreckers",
+    "survivors": [
+      "meg",
+      "nea",
+      "feng_min",
+      "ace"
+    ],
+    "killer": "nurse"
+  },
+  "commands": [
+    {
+      "type": "SETUP_REVEAL",
+      "actorId": "meg",
+      "propId": "wreckers_garage_north:objective:0"
+    },
+    {
+      "type": "SETUP_REVEAL",
+      "actorId": "nea",
+      "propId": "maze:objective:0"
+    },
+    {
+      "type": "SETUP_REVEAL",
+      "actorId": "feng_min",
+      "propId": "scrap_pile:objective:0"
+    },
+    {
+      "type": "SETUP_REVEAL",
+      "actorId": "ace",
+      "propId": "main_garage:objective:0"
+    },
+    {
+      "type": "PASS",
+      "actorId": "nurse"
+    },
+    {
+      "type": "PLAN",
+      "actorId": "meg",
+      "cards": [
+        "blue"
+      ]
+    },
+    {
+      "type": "PLAN",
+      "actorId": "nea",
+      "cards": [
+        "green"
+      ]
+    },
+    {
+      "type": "PLAN",
+      "actorId": "feng_min",
+      "cards": [
+        "blue"
+      ]
+    },
+    {
+      "type": "PLAN",
+      "actorId": "ace",
+      "cards": [
+        "blue"
+      ]
+    },
+    {
+      "type": "PLAN",
+      "actorId": "nurse",
+      "cards": [
+        "wait",
+        "blue"
+      ]
+    },
+    {
+      "type": "PASS",
+      "actorId": "nea"
+    },
+    {
+      "type": "USE_PERK",
+      "actorId": "ace",
+      "perkId": "board_ace_1",
+      "index": 0
+    },
+    {
+      "type": "PASS",
+      "actorId": "ace"
+    },
+    {
+      "type": "MOVE",
+      "actorId": "meg",
+      "pathId": "ah_p17",
+      "to": "gas_pump"
+    },
+    {
+      "type": "SELECT",
+      "actorId": "meg",
+      "propId": "gas_pump:objective:0"
+    },
+    {
+      "type": "PASS",
+      "actorId": "meg"
+    },
+    {
+      "type": "INTERACT",
+      "actorId": "meg",
+      "action": "repair",
+      "targetId": "gas_pump:objective:0"
+    },
+    {
+      "type": "END_TURN",
+      "actorId": "meg"
+    },
+    {
+      "type": "PASS",
+      "actorId": "nea"
+    },
+    {
+      "type": "MOVE",
+      "actorId": "nea",
+      "pathId": "ah_p02",
+      "to": "diner"
+    },
+    {
+      "type": "SELECT",
+      "actorId": "nea",
+      "propId": "diner:objective:0"
+    },
+    {
+      "type": "INTERACT",
+      "actorId": "nea",
+      "action": "repair",
+      "targetId": "diner:objective:0"
+    },
+    {
+      "type": "PASS",
+      "actorId": "nea"
+    },
+    {
+      "type": "END_TURN",
+      "actorId": "nea"
+    },
+    {
+      "type": "PASS",
+      "actorId": "nea"
+    },
+    {
+      "type": "MOVE",
+      "actorId": "feng_min",
+      "pathId": "ah_p17",
+      "to": "gas_pump"
+    },
+    {
+      "type": "SELECT",
+      "actorId": "feng_min",
+      "propId": "gas_pump:boldness:0"
+    },
+    {
+      "type": "PASS",
+      "actorId": "feng_min"
+    },
+    {
+      "type": "INTERACT",
+      "actorId": "feng_min",
+      "action": "repair",
+      "targetId": "gas_pump:objective:0"
+    },
+    {
+      "type": "END_TURN",
+      "actorId": "feng_min"
+    },
+    {
+      "type": "PASS",
+      "actorId": "nea"
+    },
+    {
+      "type": "MOVE",
+      "actorId": "ace",
+      "pathId": "ah_p12",
+      "to": "barn"
+    },
+    {
+      "type": "SELECT",
+      "actorId": "ace",
+      "propId": "barn:objective:0"
+    },
+    {
+      "type": "INTERACT",
+      "actorId": "ace",
+      "action": "repair",
+      "targetId": "barn:objective:0"
+    },
+    {
+      "type": "PASS",
+      "actorId": "ace"
+    },
+    {
+      "type": "END_TURN",
+      "actorId": "ace"
+    },
+    {
+      "type": "MOVE",
+      "actorId": "nurse"
+    },
+    {
+      "type": "END_TURN",
+      "actorId": "nurse"
+    },
+    {
+      "type": "MOVE",
+      "actorId": "nurse",
+      "pathId": "ah_p05",
+      "to": "wreckers_garage_south"
+    },
+    {
+      "type": "SELECT",
+      "actorId": "nurse",
+      "propId": "wreckers_garage_south:objective:0"
+    },
+    {
+      "type": "END_TURN",
+      "actorId": "nurse"
+    },
+    {
+      "type": "KILLER_BONUS",
+      "actorId": "nurse",
+      "accept": false
+    },
+    {
+      "type": "PASS",
+      "actorId": "nurse"
+    },
+    {
+      "type": "PLAN",
+      "actorId": "meg",
+      "cards": [
+        "green"
+      ]
+    },
+    {
+      "type": "PLAN",
+      "actorId": "nea",
+      "cards": [
+        "green"
+      ]
+    },
+    {
+      "type": "PLAN",
+      "actorId": "feng_min",
+      "cards": [
+        "green"
+      ]
+    },
+    {
+      "type": "PLAN",
+      "actorId": "ace",
+      "cards": [
+        "blue"
+      ]
+    },
+    {
+      "type": "PLAN",
+      "actorId": "nurse",
+      "cards": [
+        "wait",
+        "blue"
+      ]
+    },
+    {
+      "type": "PASS",
+      "actorId": "nea"
+    },
+    {
+      "type": "USE_PERK",
+      "actorId": "ace",
+      "perkId": "board_ace_1",
+      "index": 0
+    },
+    {
+      "type": "PASS",
+      "actorId": "ace"
+    },
+    {
+      "type": "MOVE",
+      "actorId": "nea",
+      "pathId": "ah_p02",
+      "to": "wreckers_garage_north"
+    },
+    {
+      "type": "SELECT",
+      "actorId": "nea",
+      "propId": "wreckers_garage_north:boldness:0"
+    },
+    {
+      "type": "INTERACT",
+      "actorId": "nea",
+      "action": "repair",
+      "targetId": "wreckers_garage_north:objective:0"
+    },
+    {
+      "type": "PASS",
+      "actorId": "nea"
+    },
+    {
+      "type": "END_TURN",
+      "actorId": "nea"
+    },
+    {
+      "type": "PASS",
+      "actorId": "nea"
+    },
+    {
+      "type": "MOVE",
+      "actorId": "feng_min",
+      "pathId": "ah_p04",
+      "to": "wreckers_garage_south"
+    },
+    {
+      "type": "SELECT",
+      "actorId": "feng_min",
+      "propId": "wreckers_garage_south:boldness:0"
+    },
+    {
+      "type": "PASS",
+      "actorId": "feng_min"
+    },
+    {
+      "type": "INTERACT",
+      "actorId": "feng_min",
+      "action": "repair",
+      "targetId": "wreckers_garage_south:objective:0"
+    },
+    {
+      "type": "END_TURN",
+      "actorId": "feng_min"
+    },
+    {
+      "type": "PASS",
+      "actorId": "nea"
+    },
+    {
+      "type": "MOVE",
+      "actorId": "ace",
+      "pathId": "ah_p12",
+      "to": "scrap_pile"
+    },
+    {
+      "type": "SELECT",
+      "actorId": "ace",
+      "propId": "scrap_pile:boldness:0"
+    },
+    {
+      "type": "INTERACT",
+      "actorId": "ace",
+      "action": "repair",
+      "targetId": "scrap_pile:objective:0"
+    },
+    {
+      "type": "END_TURN",
+      "actorId": "ace"
+    },
+    {
+      "type": "PASS",
+      "actorId": "nea"
+    },
+    {
+      "type": "MOVE",
+      "actorId": "meg",
+      "pathId": "ah_p04",
+      "to": "wreckers_garage_south"
+    },
+    {
+      "type": "SELECT",
+      "actorId": "meg",
+      "propId": "wreckers_garage_south:survival:0"
+    },
+    {
+      "type": "PASS",
+      "actorId": "meg"
+    },
+    {
+      "type": "INTERACT",
+      "actorId": "meg",
+      "action": "repair",
+      "targetId": "wreckers_garage_south:objective:0"
+    },
+    {
+      "type": "END_TURN",
+      "actorId": "meg"
+    },
+    {
+      "type": "MOVE",
+      "actorId": "nurse"
+    },
+    {
+      "type": "END_TURN",
+      "actorId": "nurse"
+    },
+    {
+      "type": "MOVE",
+      "actorId": "nurse",
+      "pathId": "ah_p05",
+      "to": "wreckers_garage_north"
+    },
+    {
+      "type": "SELECT",
+      "actorId": "nurse",
+      "propId": "wreckers_garage_north:survival:0"
+    },
+    {
+      "type": "END_TURN",
+      "actorId": "nurse"
+    },
+    {
+      "type": "KILLER_BONUS",
+      "actorId": "nurse",
+      "accept": false
+    },
+    {
+      "type": "PASS",
+      "actorId": "nurse"
+    },
+    {
+      "type": "PLAN",
+      "actorId": "meg",
+      "cards": [
+        "green"
+      ]
+    },
+    {
+      "type": "PLAN",
+      "actorId": "nea",
+      "cards": [
+        "green"
+      ]
+    },
+    {
+      "type": "PLAN",
+      "actorId": "feng_min",
+      "cards": [
+        "green"
+      ]
+    },
+    {
+      "type": "PLAN",
+      "actorId": "ace",
+      "cards": [
+        "blue"
+      ]
+    },
+    {
+      "type": "PLAN",
+      "actorId": "nurse",
+      "cards": [
+        "wait",
+        "blue"
+      ]
+    },
+    {
+      "type": "PASS",
+      "actorId": "nea"
+    },
+    {
+      "type": "MOVE",
+      "actorId": "feng_min",
+      "pathId": "ah_p04",
+      "to": "gas_pump"
+    },
+    {
+      "type": "SELECT",
+      "actorId": "feng_min",
+      "propId": "gas_pump:survival:0"
+    },
+    {
+      "type": "PASS",
+      "actorId": "feng_min"
+    },
+    {
+      "type": "INTERACT",
+      "actorId": "feng_min",
+      "action": "repair",
+      "targetId": "gas_pump:objective:0"
+    },
+    {
+      "type": "END_TURN",
+      "actorId": "feng_min"
+    },
+    {
+      "type": "PASS",
+      "actorId": "nea"
+    },
+    {
+      "type": "MOVE",
+      "actorId": "ace",
+      "pathId": "ah_p12",
+      "to": "barn"
+    },
+    {
+      "type": "SELECT",
+      "actorId": "ace",
+      "propId": "barn:boldness:0"
+    },
+    {
+      "type": "INTERACT",
+      "actorId": "ace",
+      "action": "repair",
+      "targetId": "barn:objective:0"
+    },
+    {
+      "type": "END_TURN",
+      "actorId": "ace"
+    },
+    {
+      "type": "PASS",
+      "actorId": "nea"
+    },
+    {
+      "type": "MOVE",
+      "actorId": "meg",
+      "pathId": "ah_p04",
+      "to": "cottage"
+    },
+    {
+      "type": "SELECT",
+      "actorId": "meg",
+      "propId": "cottage:objective:0"
+    },
+    {
+      "type": "PASS",
+      "actorId": "meg"
+    },
+    {
+      "type": "INTERACT",
+      "actorId": "meg",
+      "action": "repair",
+      "targetId": "cottage:objective:0"
+    },
+    {
+      "type": "END_TURN",
+      "actorId": "meg"
+    },
+    {
+      "type": "PASS",
+      "actorId": "nea"
+    },
+    {
+      "type": "MOVE",
+      "actorId": "nea",
+      "pathId": "ah_p02",
+      "to": "diner"
+    },
+    {
+      "type": "SELECT",
+      "actorId": "nea",
+      "propId": "diner:boldness:0"
+    },
+    {
+      "type": "INTERACT",
+      "actorId": "nea",
+      "action": "repair",
+      "targetId": "diner:objective:0"
+    },
+    {
+      "type": "PASS",
+      "actorId": "nea"
+    },
+    {
+      "type": "END_TURN",
+      "actorId": "nea"
+    },
+    {
+      "type": "MOVE",
+      "actorId": "nurse"
+    },
+    {
+      "type": "END_TURN",
+      "actorId": "nurse"
+    },
+    {
+      "type": "MOVE",
+      "actorId": "nurse",
+      "pathId": "ah_p05",
+      "to": "wreckers_garage_south"
+    },
+    {
+      "type": "SELECT",
+      "actorId": "nurse",
+      "propId": "wreckers_garage_south:altruism:0"
+    },
+    {
+      "type": "END_TURN",
+      "actorId": "nurse"
+    },
+    {
+      "type": "KILLER_BONUS",
+      "actorId": "nurse",
+      "accept": false
+    },
+    {
+      "type": "PASS",
+      "actorId": "meg"
+    },
+    {
+      "type": "PASS",
+      "actorId": "nurse"
+    },
+    {
+      "type": "PLAN",
+      "actorId": "meg",
+      "cards": [
+        "green"
+      ]
+    },
+    {
+      "type": "PLAN",
+      "actorId": "nea",
+      "cards": [
+        "green"
+      ]
+    },
+    {
+      "type": "PLAN",
+      "actorId": "feng_min",
+      "cards": [
+        "green"
+      ]
+    },
+    {
+      "type": "PLAN",
+      "actorId": "ace",
+      "cards": [
+        "blue"
+      ]
+    },
+    {
+      "type": "PLAN",
+      "actorId": "nurse",
+      "cards": [
+        "wait",
+        "blue"
+      ]
+    },
+    {
+      "type": "PASS",
+      "actorId": "nea"
+    },
+    {
+      "type": "MOVE",
+      "actorId": "ace",
+      "pathId": "ah_p12",
+      "to": "scrap_pile"
+    },
+    {
+      "type": "SELECT",
+      "actorId": "ace",
+      "propId": "scrap_pile:survival:0"
+    },
+    {
+      "type": "INTERACT",
+      "actorId": "ace",
+      "action": "repair",
+      "targetId": "scrap_pile:objective:0"
+    },
+    {
+      "type": "END_TURN",
+      "actorId": "ace"
+    },
+    {
+      "type": "PASS",
+      "actorId": "nea"
+    },
+    {
+      "type": "MOVE",
+      "actorId": "meg",
+      "pathId": "ah_p04",
+      "to": "wreckers_garage_south"
+    },
+    {
+      "type": "PASS",
+      "actorId": "meg"
+    },
+    {
+      "type": "INTERACT",
+      "actorId": "meg",
+      "action": "repair",
+      "targetId": "wreckers_garage_south:objective:0"
+    },
+    {
+      "type": "END_TURN",
+      "actorId": "meg"
+    },
+    {
+      "type": "PASS",
+      "actorId": "nea"
+    },
+    {
+      "type": "MOVE",
+      "actorId": "nea",
+      "pathId": "ah_p02",
+      "to": "wreckers_garage_north"
+    },
+    {
+      "type": "SELECT",
+      "actorId": "nea",
+      "propId": "wreckers_garage_north:altruism:0"
+    },
+    {
+      "type": "INTERACT",
+      "actorId": "nea",
+      "action": "repair",
+      "targetId": "wreckers_garage_north:objective:0"
+    },
+    {
+      "type": "PASS",
+      "actorId": "nea"
+    },
+    {
+      "type": "END_TURN",
+      "actorId": "nea"
+    },
+    {
+      "type": "PASS",
+      "actorId": "nea"
+    },
+    {
+      "type": "MOVE",
+      "actorId": "feng_min",
+      "pathId": "ah_p04",
+      "to": "wreckers_garage_south"
+    },
+    {
+      "type": "PASS",
+      "actorId": "feng_min"
+    },
+    {
+      "type": "INTERACT",
+      "actorId": "feng_min",
+      "action": "repair",
+      "targetId": "wreckers_garage_south:objective:0"
+    },
+    {
+      "type": "END_TURN",
+      "actorId": "feng_min"
+    },
+    {
+      "type": "MOVE",
+      "actorId": "nurse"
+    },
+    {
+      "type": "END_TURN",
+      "actorId": "nurse"
+    },
+    {
+      "type": "MOVE",
+      "actorId": "nurse",
+      "pathId": "ah_p05",
+      "to": "wreckers_garage_north"
+    },
+    {
+      "type": "END_TURN",
+      "actorId": "nurse"
+    },
+    {
+      "type": "KILLER_BONUS",
+      "actorId": "nurse",
+      "accept": false
+    },
+    {
+      "type": "PASS",
+      "actorId": "meg"
+    },
+    {
+      "type": "PASS",
+      "actorId": "nurse"
+    },
+    {
+      "type": "PLAN",
+      "actorId": "meg",
+      "cards": [
+        "red"
+      ]
+    },
+    {
+      "type": "PLAN",
+      "actorId": "nea",
+      "cards": [
+        "yellow"
+      ]
+    },
+    {
+      "type": "PLAN",
+      "actorId": "feng_min",
+      "cards": [
+        "red"
+      ]
+    },
+    {
+      "type": "PLAN",
+      "actorId": "ace",
+      "cards": [
+        "red"
+      ]
+    },
+    {
+      "type": "PLAN",
+      "actorId": "nurse",
+      "cards": [
+        "wait",
+        "blue"
+      ]
+    },
+    {
+      "type": "PASS",
+      "actorId": "nea"
+    },
+    {
+      "type": "MOVE",
+      "actorId": "meg",
+      "pathId": "ah_p18",
+      "to": "old_cabin"
+    },
+    {
+      "type": "SELECT",
+      "actorId": "meg",
+      "propId": "old_cabin:objective:0"
+    },
+    {
+      "type": "PASS",
+      "actorId": "meg"
+    },
+    {
+      "type": "END_TURN",
+      "actorId": "meg"
+    },
+    {
+      "type": "PASS",
+      "actorId": "nea"
+    },
+    {
+      "type": "MOVE",
+      "actorId": "nea",
+      "pathId": "ah_p01",
+      "to": "maze"
+    },
+    {
+      "type": "SELECT",
+      "actorId": "nea",
+      "propId": "maze:boldness:0"
+    },
+    {
+      "type": "INTERACT",
+      "actorId": "nea",
+      "action": "exit",
+      "targetId": "maze:objective:0"
+    },
+    {
+      "type": "PASS",
+      "actorId": "nea"
+    },
+    {
+      "type": "END_TURN",
+      "actorId": "nea"
+    },
+    {
+      "type": "PASS",
+      "actorId": "nea"
+    },
+    {
+      "type": "MOVE",
+      "actorId": "feng_min",
+      "pathId": "ah_p18",
+      "to": "old_cabin"
+    },
+    {
+      "type": "SELECT",
+      "actorId": "feng_min",
+      "propId": "old_cabin:boldness:0"
+    },
+    {
+      "type": "PASS",
+      "actorId": "feng_min"
+    },
+    {
+      "type": "END_TURN",
+      "actorId": "feng_min"
+    },
+    {
+      "type": "PASS",
+      "actorId": "nea"
+    },
+    {
+      "type": "MOVE",
+      "actorId": "ace",
+      "pathId": "ah_p09",
+      "to": "maze"
+    },
+    {
+      "type": "SELECT",
+      "actorId": "ace",
+      "propId": "maze:altruism:0"
+    },
+    {
+      "type": "INTERACT",
+      "actorId": "ace",
+      "action": "exit",
+      "targetId": "maze:objective:0"
+    },
+    {
+      "type": "END_TURN",
+      "actorId": "ace"
+    },
+    {
+      "type": "MOVE",
+      "actorId": "nurse"
+    },
+    {
+      "type": "END_TURN",
+      "actorId": "nurse"
+    },
+    {
+      "type": "MOVE",
+      "actorId": "nurse",
+      "pathId": "ah_p05",
+      "to": "wreckers_garage_south"
+    },
+    {
+      "type": "END_TURN",
+      "actorId": "nurse"
+    },
+    {
+      "type": "KILLER_BONUS",
+      "actorId": "nurse",
+      "accept": false
+    },
+    {
+      "type": "PASS",
+      "actorId": "nurse"
+    },
+    {
+      "type": "PLAN",
+      "actorId": "meg",
+      "cards": [
+        "yellow"
+      ]
+    },
+    {
+      "type": "PLAN",
+      "actorId": "nea",
+      "cards": [
+        "blue"
+      ]
+    },
+    {
+      "type": "PLAN",
+      "actorId": "feng_min",
+      "cards": [
+        "yellow"
+      ]
+    },
+    {
+      "type": "PLAN",
+      "actorId": "ace",
+      "cards": [
+        "blue"
+      ]
+    },
+    {
+      "type": "PLAN",
+      "actorId": "nurse",
+      "cards": [
+        "wait",
+        "blue"
+      ]
+    },
+    {
+      "type": "PASS",
+      "actorId": "nea"
+    },
+    {
+      "type": "MOVE",
+      "actorId": "nea",
+      "pathId": "ah_p08",
+      "to": "main_garage"
+    },
+    {
+      "type": "SELECT",
+      "actorId": "nea",
+      "propId": "main_garage:boldness:0"
+    },
+    {
+      "type": "INTERACT",
+      "actorId": "nea",
+      "action": "exit",
+      "targetId": "main_garage:objective:0"
+    },
+    {
+      "type": "PASS",
+      "actorId": "nea"
+    },
+    {
+      "type": "END_TURN",
+      "actorId": "nea"
+    },
+    {
+      "type": "PASS",
+      "actorId": "nea"
+    },
+    {
+      "type": "MOVE",
+      "actorId": "feng_min",
+      "pathId": "ah_p19",
+      "to": "diner"
+    },
+    {
+      "type": "SELECT",
+      "actorId": "feng_min",
+      "propId": "diner:survival:0"
+    },
+    {
+      "type": "PASS",
+      "actorId": "feng_min"
+    },
+    {
+      "type": "END_TURN",
+      "actorId": "feng_min"
+    },
+    {
+      "type": "PASS",
+      "actorId": "nea"
+    },
+    {
+      "type": "MOVE",
+      "actorId": "ace",
+      "pathId": "ah_p08",
+      "to": "main_garage"
+    },
+    {
+      "type": "SELECT",
+      "actorId": "ace",
+      "propId": "main_garage:survival:0"
+    },
+    {
+      "type": "INTERACT",
+      "actorId": "ace",
+      "action": "exit",
+      "targetId": "main_garage:objective:0"
+    },
+    {
+      "type": "END_TURN",
+      "actorId": "ace"
+    },
+    {
+      "type": "PASS",
+      "actorId": "nea"
+    },
+    {
+      "type": "MOVE",
+      "actorId": "meg",
+      "pathId": "ah_p19",
+      "to": "diner"
+    },
+    {
+      "type": "SELECT",
+      "actorId": "meg",
+      "propId": "diner:survival:1"
+    },
+    {
+      "type": "PASS",
+      "actorId": "meg"
+    },
+    {
+      "type": "END_TURN",
+      "actorId": "meg"
+    },
+    {
+      "type": "MOVE",
+      "actorId": "nurse"
+    },
+    {
+      "type": "END_TURN",
+      "actorId": "nurse"
+    },
+    {
+      "type": "MOVE",
+      "actorId": "nurse",
+      "pathId": "ah_p06",
+      "to": "diner"
+    },
+    {
+      "type": "SELECT",
+      "actorId": "nurse",
+      "propId": "diner:altruism:0"
+    },
+    {
+      "type": "PASS",
+      "actorId": "meg"
+    },
+    {
+      "type": "PASS",
+      "actorId": "feng_min"
+    },
+    {
+      "type": "END_TURN",
+      "actorId": "nurse"
+    },
+    {
+      "type": "KILLER_BONUS",
+      "actorId": "nurse",
+      "accept": false
+    },
+    {
+      "type": "PASS",
+      "actorId": "nurse"
+    },
+    {
+      "type": "PLAN",
+      "actorId": "meg",
+      "cards": [
+        "green"
+      ]
+    },
+    {
+      "type": "PLAN",
+      "actorId": "nea",
+      "cards": [
+        "blue"
+      ]
+    },
+    {
+      "type": "PLAN",
+      "actorId": "feng_min",
+      "cards": [
+        "green"
+      ]
+    },
+    {
+      "type": "PLAN",
+      "actorId": "ace",
+      "cards": [
+        "blue"
+      ]
+    },
+    {
+      "type": "PLAN",
+      "actorId": "nurse",
+      "cards": [
+        "wait",
+        "blue"
+      ]
+    },
+    {
+      "type": "PASS",
+      "actorId": "nea"
+    },
+    {
+      "type": "MOVE",
+      "actorId": "feng_min",
+      "pathId": "ah_p02",
+      "to": "maze"
+    },
+    {
+      "type": "SELECT",
+      "actorId": "feng_min",
+      "propId": "maze:altruism:1"
+    },
+    {
+      "type": "PASS",
+      "actorId": "feng_min"
+    },
+    {
+      "type": "INTERACT",
+      "actorId": "feng_min",
+      "action": "exit",
+      "targetId": "maze:objective:0"
+    }
+  ]
+}

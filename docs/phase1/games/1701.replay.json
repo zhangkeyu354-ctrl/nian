@@ -1,0 +1,1003 @@
+{
+  "options": {
+    "seed": 1701,
+    "mapId": "macmillan_estate",
+    "survivors": [
+      "dwight",
+      "claudette",
+      "jake",
+      "ace"
+    ],
+    "killer": "trapper"
+  },
+  "commands": [
+    {
+      "type": "SETUP_REVEAL",
+      "actorId": "dwight",
+      "propId": "mine_depths:objective:0"
+    },
+    {
+      "type": "SETUP_REVEAL",
+      "actorId": "claudette",
+      "propId": "mine_entrance:objective:0"
+    },
+    {
+      "type": "SETUP_REVEAL",
+      "actorId": "jake",
+      "propId": "foundry_upper_floor:objective:0"
+    },
+    {
+      "type": "SETUP_REVEAL",
+      "actorId": "ace",
+      "propId": "coal_tower_upper:objective:0"
+    },
+    {
+      "type": "PLAN",
+      "actorId": "dwight",
+      "cards": [
+        "blue"
+      ]
+    },
+    {
+      "type": "PLAN",
+      "actorId": "claudette",
+      "cards": [
+        "blue"
+      ]
+    },
+    {
+      "type": "PLAN",
+      "actorId": "jake",
+      "cards": [
+        "red"
+      ]
+    },
+    {
+      "type": "PLAN",
+      "actorId": "ace",
+      "cards": [
+        "blue"
+      ]
+    },
+    {
+      "type": "PLAN",
+      "actorId": "trapper",
+      "cards": [
+        "wait",
+        "blue"
+      ]
+    },
+    {
+      "type": "USE_PERK",
+      "actorId": "ace",
+      "perkId": "board_ace_1",
+      "index": 0
+    },
+    {
+      "type": "PASS",
+      "actorId": "ace"
+    },
+    {
+      "type": "MOVE",
+      "actorId": "dwight",
+      "pathId": "mm_p04",
+      "to": "ancient_tree"
+    },
+    {
+      "type": "SELECT",
+      "actorId": "dwight",
+      "propId": "ancient_tree:objective:0"
+    },
+    {
+      "type": "PASS",
+      "actorId": "dwight"
+    },
+    {
+      "type": "INTERACT",
+      "actorId": "dwight",
+      "action": "repair",
+      "targetId": "ancient_tree:objective:0"
+    },
+    {
+      "type": "PASS",
+      "actorId": "dwight"
+    },
+    {
+      "type": "PASS",
+      "actorId": "trapper"
+    },
+    {
+      "type": "PASS",
+      "actorId": "jake"
+    },
+    {
+      "type": "END_TURN",
+      "actorId": "dwight"
+    },
+    {
+      "type": "PASS",
+      "actorId": "claudette"
+    },
+    {
+      "type": "PASS",
+      "actorId": "claudette"
+    },
+    {
+      "type": "MOVE",
+      "actorId": "claudette",
+      "pathId": "mm_p04",
+      "to": "mine_entrance"
+    },
+    {
+      "type": "SELECT",
+      "actorId": "claudette",
+      "propId": "mine_entrance:boldness:0"
+    },
+    {
+      "type": "PASS",
+      "actorId": "dwight"
+    },
+    {
+      "type": "PASS",
+      "actorId": "claudette"
+    },
+    {
+      "type": "INTERACT",
+      "actorId": "claudette",
+      "action": "repair",
+      "targetId": "mine_entrance:objective:0"
+    },
+    {
+      "type": "USE_PERK",
+      "actorId": "dwight",
+      "perkId": "board_dwight_3"
+    },
+    {
+      "type": "PASS",
+      "actorId": "dwight"
+    },
+    {
+      "type": "PASS",
+      "actorId": "trapper"
+    },
+    {
+      "type": "SELECT",
+      "actorId": "claudette",
+      "index": 0
+    },
+    {
+      "type": "END_TURN",
+      "actorId": "claudette"
+    },
+    {
+      "type": "MOVE",
+      "actorId": "jake",
+      "pathId": "mm_p14",
+      "to": "foundry_lower_floor"
+    },
+    {
+      "type": "SELECT",
+      "actorId": "jake",
+      "propId": "foundry_lower_floor:objective:0"
+    },
+    {
+      "type": "END_TURN",
+      "actorId": "jake"
+    },
+    {
+      "type": "MOVE",
+      "actorId": "ace",
+      "pathId": "mm_p04",
+      "to": "ancient_tree"
+    },
+    {
+      "type": "SELECT",
+      "actorId": "ace",
+      "propId": "ancient_tree:boldness:0"
+    },
+    {
+      "type": "INTERACT",
+      "actorId": "ace",
+      "action": "repair",
+      "targetId": "ancient_tree:objective:0"
+    },
+    {
+      "type": "PASS",
+      "actorId": "ace"
+    },
+    {
+      "type": "PASS",
+      "actorId": "trapper"
+    },
+    {
+      "type": "END_TURN",
+      "actorId": "ace"
+    },
+    {
+      "type": "MOVE",
+      "actorId": "trapper"
+    },
+    {
+      "type": "END_TURN",
+      "actorId": "trapper"
+    },
+    {
+      "type": "MOVE",
+      "actorId": "trapper",
+      "pathId": "mm_p04",
+      "to": "mine_entrance"
+    },
+    {
+      "type": "SELECT",
+      "actorId": "trapper",
+      "propId": "mine_entrance:altruism:0"
+    },
+    {
+      "type": "END_TURN",
+      "actorId": "trapper"
+    },
+    {
+      "type": "KILLER_BONUS",
+      "actorId": "trapper",
+      "accept": false
+    },
+    {
+      "type": "PLAN",
+      "actorId": "dwight",
+      "cards": [
+        "blue"
+      ]
+    },
+    {
+      "type": "PLAN",
+      "actorId": "claudette",
+      "cards": [
+        "blue"
+      ]
+    },
+    {
+      "type": "PLAN",
+      "actorId": "jake",
+      "cards": [
+        "green"
+      ]
+    },
+    {
+      "type": "PLAN",
+      "actorId": "ace",
+      "cards": [
+        "blue"
+      ]
+    },
+    {
+      "type": "PLAN",
+      "actorId": "trapper",
+      "cards": [
+        "wait",
+        "blue"
+      ]
+    },
+    {
+      "type": "PASS",
+      "actorId": "claudette"
+    },
+    {
+      "type": "USE_PERK",
+      "actorId": "ace",
+      "perkId": "board_ace_1",
+      "index": 0
+    },
+    {
+      "type": "PASS",
+      "actorId": "ace"
+    },
+    {
+      "type": "PASS",
+      "actorId": "claudette"
+    },
+    {
+      "type": "MOVE",
+      "actorId": "claudette",
+      "pathId": "mm_p04",
+      "to": "ancient_tree"
+    },
+    {
+      "type": "SELECT",
+      "actorId": "claudette",
+      "propId": "ancient_tree:altruism:0"
+    },
+    {
+      "type": "PASS",
+      "actorId": "claudette"
+    },
+    {
+      "type": "INTERACT",
+      "actorId": "claudette",
+      "action": "repair",
+      "targetId": "ancient_tree:objective:0"
+    },
+    {
+      "type": "USE_PERK",
+      "actorId": "dwight",
+      "perkId": "board_dwight_3"
+    },
+    {
+      "type": "PASS",
+      "actorId": "dwight"
+    },
+    {
+      "type": "PASS",
+      "actorId": "trapper"
+    },
+    {
+      "type": "SELECT",
+      "actorId": "claudette",
+      "index": 0
+    },
+    {
+      "type": "END_TURN",
+      "actorId": "claudette"
+    },
+    {
+      "type": "MOVE",
+      "actorId": "jake",
+      "pathId": "mm_p06",
+      "to": "mine_entrance"
+    },
+    {
+      "type": "SELECT",
+      "actorId": "jake",
+      "propId": "mine_entrance:altruism:1"
+    },
+    {
+      "type": "INTERACT",
+      "actorId": "jake",
+      "action": "repair",
+      "targetId": "mine_entrance:objective:0"
+    },
+    {
+      "type": "PASS",
+      "actorId": "jake"
+    },
+    {
+      "type": "PASS",
+      "actorId": "trapper"
+    },
+    {
+      "type": "END_TURN",
+      "actorId": "jake"
+    },
+    {
+      "type": "MOVE",
+      "actorId": "ace",
+      "pathId": "mm_p04",
+      "to": "mine_entrance"
+    },
+    {
+      "type": "INTERACT",
+      "actorId": "ace",
+      "action": "repair",
+      "targetId": "mine_entrance:objective:0"
+    },
+    {
+      "type": "PASS",
+      "actorId": "trapper"
+    },
+    {
+      "type": "END_TURN",
+      "actorId": "ace"
+    },
+    {
+      "type": "MOVE",
+      "actorId": "dwight",
+      "pathId": "mm_p15",
+      "to": "scrapyard"
+    },
+    {
+      "type": "SELECT",
+      "actorId": "dwight",
+      "propId": "scrapyard:objective:0"
+    },
+    {
+      "type": "INTERACT",
+      "actorId": "dwight",
+      "action": "repair",
+      "targetId": "scrapyard:objective:0"
+    },
+    {
+      "type": "END_TURN",
+      "actorId": "dwight"
+    },
+    {
+      "type": "MOVE",
+      "actorId": "trapper"
+    },
+    {
+      "type": "END_TURN",
+      "actorId": "trapper"
+    },
+    {
+      "type": "MOVE",
+      "actorId": "trapper",
+      "pathId": "mm_p04",
+      "to": "ancient_tree"
+    },
+    {
+      "type": "SELECT",
+      "actorId": "trapper",
+      "propId": "ancient_tree:altruism:1"
+    },
+    {
+      "type": "END_TURN",
+      "actorId": "trapper"
+    },
+    {
+      "type": "KILLER_BONUS",
+      "actorId": "trapper",
+      "accept": false
+    },
+    {
+      "type": "PLAN",
+      "actorId": "dwight",
+      "cards": [
+        "blue"
+      ]
+    },
+    {
+      "type": "PLAN",
+      "actorId": "claudette",
+      "cards": [
+        "blue"
+      ]
+    },
+    {
+      "type": "PLAN",
+      "actorId": "jake",
+      "cards": [
+        "blue"
+      ]
+    },
+    {
+      "type": "PLAN",
+      "actorId": "ace",
+      "cards": [
+        "blue"
+      ]
+    },
+    {
+      "type": "PLAN",
+      "actorId": "trapper",
+      "cards": [
+        "wait",
+        "blue"
+      ]
+    },
+    {
+      "type": "MOVE",
+      "actorId": "jake",
+      "pathId": "mm_p04",
+      "to": "ancient_tree"
+    },
+    {
+      "type": "INTERACT",
+      "actorId": "jake",
+      "action": "repair",
+      "targetId": "ancient_tree:objective:0"
+    },
+    {
+      "type": "PASS",
+      "actorId": "jake"
+    },
+    {
+      "type": "PASS",
+      "actorId": "trapper"
+    },
+    {
+      "type": "END_TURN",
+      "actorId": "jake"
+    },
+    {
+      "type": "MOVE",
+      "actorId": "ace",
+      "pathId": "mm_p04",
+      "to": "ancient_tree"
+    },
+    {
+      "type": "INTERACT",
+      "actorId": "ace",
+      "action": "repair",
+      "targetId": "ancient_tree:objective:0"
+    },
+    {
+      "type": "PASS",
+      "actorId": "trapper"
+    },
+    {
+      "type": "END_TURN",
+      "actorId": "ace"
+    },
+    {
+      "type": "MOVE",
+      "actorId": "dwight",
+      "pathId": "mm_p15",
+      "to": "ancient_tree"
+    },
+    {
+      "type": "END_TURN",
+      "actorId": "dwight"
+    },
+    {
+      "type": "PASS",
+      "actorId": "claudette"
+    },
+    {
+      "type": "PASS",
+      "actorId": "claudette"
+    },
+    {
+      "type": "MOVE",
+      "actorId": "claudette",
+      "pathId": "mm_p15",
+      "to": "scrapyard"
+    },
+    {
+      "type": "SELECT",
+      "actorId": "claudette",
+      "propId": "scrapyard:boldness:0"
+    },
+    {
+      "type": "PASS",
+      "actorId": "claudette"
+    },
+    {
+      "type": "INTERACT",
+      "actorId": "claudette",
+      "action": "repair",
+      "targetId": "scrapyard:objective:0"
+    },
+    {
+      "type": "PASS",
+      "actorId": "trapper"
+    },
+    {
+      "type": "END_TURN",
+      "actorId": "claudette"
+    },
+    {
+      "type": "MOVE",
+      "actorId": "trapper"
+    },
+    {
+      "type": "END_TURN",
+      "actorId": "trapper"
+    },
+    {
+      "type": "MOVE",
+      "actorId": "trapper",
+      "pathId": "mm_p15",
+      "to": "scrapyard"
+    },
+    {
+      "type": "SELECT",
+      "actorId": "trapper",
+      "propId": "scrapyard:survival:0"
+    },
+    {
+      "type": "END_TURN",
+      "actorId": "trapper"
+    },
+    {
+      "type": "KILLER_BONUS",
+      "actorId": "trapper",
+      "accept": false
+    },
+    {
+      "type": "PLAN",
+      "actorId": "dwight",
+      "cards": [
+        "red"
+      ]
+    },
+    {
+      "type": "PLAN",
+      "actorId": "claudette",
+      "cards": [
+        "green"
+      ]
+    },
+    {
+      "type": "PLAN",
+      "actorId": "jake",
+      "cards": [
+        "red"
+      ]
+    },
+    {
+      "type": "PLAN",
+      "actorId": "ace",
+      "cards": [
+        "red"
+      ]
+    },
+    {
+      "type": "PLAN",
+      "actorId": "trapper",
+      "cards": [
+        "wait",
+        "blue"
+      ]
+    },
+    {
+      "type": "MOVE",
+      "actorId": "ace",
+      "pathId": "mm_p16",
+      "to": "shack"
+    },
+    {
+      "type": "SELECT",
+      "actorId": "ace",
+      "propId": "shack:objective:0"
+    },
+    {
+      "type": "INTERACT",
+      "actorId": "ace",
+      "action": "repair",
+      "targetId": "shack:objective:0"
+    },
+    {
+      "type": "PASS",
+      "actorId": "trapper"
+    },
+    {
+      "type": "END_TURN",
+      "actorId": "ace"
+    },
+    {
+      "type": "MOVE",
+      "actorId": "dwight",
+      "pathId": "mm_p16",
+      "to": "shack"
+    },
+    {
+      "type": "SELECT",
+      "actorId": "dwight",
+      "propId": "shack:boldness:0"
+    },
+    {
+      "type": "INTERACT",
+      "actorId": "dwight",
+      "action": "repair",
+      "targetId": "shack:objective:0"
+    },
+    {
+      "type": "PASS",
+      "actorId": "trapper"
+    },
+    {
+      "type": "END_TURN",
+      "actorId": "dwight"
+    },
+    {
+      "type": "PASS",
+      "actorId": "claudette"
+    },
+    {
+      "type": "PASS",
+      "actorId": "claudette"
+    },
+    {
+      "type": "MOVE",
+      "actorId": "claudette",
+      "pathId": "mm_p17",
+      "to": "shack"
+    },
+    {
+      "type": "SELECT",
+      "actorId": "claudette",
+      "propId": "shack:survival:0"
+    },
+    {
+      "type": "PASS",
+      "actorId": "claudette"
+    },
+    {
+      "type": "INTERACT",
+      "actorId": "claudette",
+      "action": "repair",
+      "targetId": "shack:objective:0"
+    },
+    {
+      "type": "PASS",
+      "actorId": "trapper"
+    },
+    {
+      "type": "PASS",
+      "actorId": "jake"
+    },
+    {
+      "type": "END_TURN",
+      "actorId": "claudette"
+    },
+    {
+      "type": "MOVE",
+      "actorId": "jake",
+      "pathId": "mm_p16",
+      "to": "shack"
+    },
+    {
+      "type": "SELECT",
+      "actorId": "jake",
+      "propId": "shack:survival:1"
+    },
+    {
+      "type": "INTERACT",
+      "actorId": "jake",
+      "action": "repair",
+      "targetId": "shack:objective:0"
+    },
+    {
+      "type": "PASS",
+      "actorId": "jake"
+    },
+    {
+      "type": "PASS",
+      "actorId": "trapper"
+    },
+    {
+      "type": "END_TURN",
+      "actorId": "jake"
+    },
+    {
+      "type": "MOVE",
+      "actorId": "trapper"
+    },
+    {
+      "type": "END_TURN",
+      "actorId": "trapper"
+    },
+    {
+      "type": "MOVE",
+      "actorId": "trapper",
+      "pathId": "mm_p15",
+      "to": "ancient_tree"
+    },
+    {
+      "type": "END_TURN",
+      "actorId": "trapper"
+    },
+    {
+      "type": "KILLER_BONUS",
+      "actorId": "trapper",
+      "accept": false
+    },
+    {
+      "type": "PLAN",
+      "actorId": "dwight",
+      "cards": [
+        "red"
+      ]
+    },
+    {
+      "type": "PLAN",
+      "actorId": "claudette",
+      "cards": [
+        "red"
+      ]
+    },
+    {
+      "type": "PLAN",
+      "actorId": "jake",
+      "cards": [
+        "red"
+      ]
+    },
+    {
+      "type": "PLAN",
+      "actorId": "ace",
+      "cards": [
+        "red"
+      ]
+    },
+    {
+      "type": "PLAN",
+      "actorId": "trapper",
+      "cards": [
+        "wait",
+        "blue"
+      ]
+    },
+    {
+      "type": "MOVE",
+      "actorId": "dwight",
+      "pathId": "mm_p16",
+      "to": "ancient_tree"
+    },
+    {
+      "type": "END_TURN",
+      "actorId": "dwight"
+    },
+    {
+      "type": "PASS",
+      "actorId": "claudette"
+    },
+    {
+      "type": "PASS",
+      "actorId": "claudette"
+    },
+    {
+      "type": "MOVE",
+      "actorId": "claudette",
+      "pathId": "mm_p16",
+      "to": "ancient_tree"
+    },
+    {
+      "type": "PASS",
+      "actorId": "claudette"
+    },
+    {
+      "type": "END_TURN",
+      "actorId": "claudette"
+    },
+    {
+      "type": "MOVE",
+      "actorId": "jake",
+      "pathId": "mm_p16",
+      "to": "ancient_tree"
+    },
+    {
+      "type": "END_TURN",
+      "actorId": "jake"
+    },
+    {
+      "type": "MOVE",
+      "actorId": "ace",
+      "pathId": "mm_p16",
+      "to": "ancient_tree"
+    },
+    {
+      "type": "END_TURN",
+      "actorId": "ace"
+    },
+    {
+      "type": "MOVE",
+      "actorId": "trapper"
+    },
+    {
+      "type": "END_TURN",
+      "actorId": "trapper"
+    },
+    {
+      "type": "MOVE",
+      "actorId": "trapper",
+      "pathId": "mm_p04",
+      "to": "mine_entrance"
+    },
+    {
+      "type": "END_TURN",
+      "actorId": "trapper"
+    },
+    {
+      "type": "KILLER_BONUS",
+      "actorId": "trapper",
+      "accept": false
+    },
+    {
+      "type": "PLAN",
+      "actorId": "dwight",
+      "cards": [
+        "green"
+      ]
+    },
+    {
+      "type": "PLAN",
+      "actorId": "claudette",
+      "cards": [
+        "green"
+      ]
+    },
+    {
+      "type": "PLAN",
+      "actorId": "jake",
+      "cards": [
+        "green"
+      ]
+    },
+    {
+      "type": "PLAN",
+      "actorId": "ace",
+      "cards": [
+        "green"
+      ]
+    },
+    {
+      "type": "PLAN",
+      "actorId": "trapper",
+      "cards": [
+        "wait",
+        "blue"
+      ]
+    },
+    {
+      "type": "PASS",
+      "actorId": "claudette"
+    },
+    {
+      "type": "PASS",
+      "actorId": "claudette"
+    },
+    {
+      "type": "MOVE",
+      "actorId": "claudette",
+      "pathId": "mm_p03",
+      "to": "mine_depths"
+    },
+    {
+      "type": "SELECT",
+      "actorId": "claudette",
+      "propId": "mine_depths:boldness:0"
+    },
+    {
+      "type": "PASS",
+      "actorId": "claudette"
+    },
+    {
+      "type": "INTERACT",
+      "actorId": "claudette",
+      "action": "exit",
+      "targetId": "mine_depths:objective:0"
+    },
+    {
+      "type": "PASS",
+      "actorId": "trapper"
+    },
+    {
+      "type": "END_TURN",
+      "actorId": "claudette"
+    },
+    {
+      "type": "MOVE",
+      "actorId": "jake",
+      "pathId": "mm_p03",
+      "to": "mine_depths"
+    },
+    {
+      "type": "SELECT",
+      "actorId": "jake",
+      "propId": "mine_depths:altruism:0"
+    },
+    {
+      "type": "INTERACT",
+      "actorId": "jake",
+      "action": "exit",
+      "targetId": "mine_depths:objective:0"
+    },
+    {
+      "type": "PASS",
+      "actorId": "jake"
+    },
+    {
+      "type": "PASS",
+      "actorId": "trapper"
+    },
+    {
+      "type": "END_TURN",
+      "actorId": "jake"
+    },
+    {
+      "type": "MOVE",
+      "actorId": "ace",
+      "pathId": "mm_p03",
+      "to": "mine_depths"
+    },
+    {
+      "type": "INTERACT",
+      "actorId": "ace",
+      "action": "exit",
+      "targetId": "mine_depths:objective:0"
+    },
+    {
+      "type": "PASS",
+      "actorId": "trapper"
+    }
+  ]
+}

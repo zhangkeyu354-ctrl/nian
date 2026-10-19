@@ -1,0 +1,32 @@
+[PASS] required research documents exist
+[PASS] 12 JSON documents parse; 9 game-data research files
+[PASS] 30 source IDs are unique
+[PASS] CHARACTER_DATA.json/characters: unique IDs
+[PASS] DICE_DATA.json/dice: unique IDs
+[PASS] glossary.json/terms: unique IDs
+[PASS] ITEM_DATA.json/physical_cards: unique IDs
+[PASS] ITEM_DATA.json/definitions: unique IDs
+[PASS] MAP_DATA.json/maps: unique IDs
+[PASS] MOVEMENT_CARD_DATA.json/card_types: unique IDs
+[PASS] PERK_DATA.json/perks: unique IDs
+[PASS] PROP_DATA.json/categories: unique IDs
+[PASS] PROP_DATA.json/types: unique IDs
+[PASS] PROP_DATA.json/separate_components: unique IDs
+[PASS] RULE_DATA.json/rules: unique IDs
+[PASS] data records have valid status/provenance; confirmed facts have A/B/C evidence; translations remain DRAFT
+[PASS] character inventory is 7 survivors + 6 killers
+[PASS] perk inventory is 28 + 24, including explicitly unidentified slots
+[PASS] exactly 2 perk effects confirmed; unknown effects are not substituted
+[PASS] 16 physical item slots; no invented per-type allocations
+[PASS] movement counts 5+5+5+5+1=21
+[PASS] prop category counts total 44; 4 walls remain separate
+[PASS] unverified prop subtype quantities remain null
+[PASS] 2 map identities; no unverified graph edges
+[PASS] 20 component count rows reconcile to charter and 89-card official total
+[PASS] report statistics match 73 confirmed / 77 researched rule entries
+[PASS] original file hash audit: 2 verified, 0 explicitly skipped
+[PASS] Git ignores original materials, databases and dependencies (including uncreated probe paths)
+[PASS] no Git remote or tracked original reference files
+[PASS] no game feature code created in Phase 0
+
+RESULT: 30 audit checks passed. Gameplay/unit/E2E tests: NOT RUN (no implementation).

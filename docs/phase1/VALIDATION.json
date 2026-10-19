@@ -1,0 +1,42 @@
+{
+  "node": "24.14.0",
+  "checks": [
+    {
+      "command": "npm.cmd run typecheck",
+      "exit_code": 0
+    },
+    {
+      "command": "npm.cmd test -- --reporter=verbose",
+      "exit_code": 0
+    },
+    {
+      "command": "npm.cmd run simulate",
+      "exit_code": 0
+    },
+    {
+      "command": "npm.cmd run verify:replays",
+      "exit_code": 0
+    },
+    {
+      "command": "C:\\Users\\Lenovo\\AppData\\Local\\Python\\pythoncore-3.14-64\\python.exe tests/verify_phase0.py",
+      "exit_code": 0
+    },
+    {
+      "command": "C:\\Users\\Lenovo\\AppData\\Local\\Python\\pythoncore-3.14-64\\python.exe tests/verify_phase0_supplement.py",
+      "exit_code": 0
+    },
+    {
+      "command": "C:\\Users\\Lenovo\\AppData\\Local\\Python\\pythoncore-3.14-64\\python.exe tests/verify_macmillan.py",
+      "exit_code": 0
+    },
+    {
+      "command": "C:\\Users\\Lenovo\\AppData\\Local\\Python\\pythoncore-3.14-64\\python.exe tests/verify_batch2.py",
+      "exit_code": 0
+    },
+    {
+      "command": "C:\\Users\\Lenovo\\AppData\\Local\\Python\\pythoncore-3.14-64\\python.exe tests/verify_phase1.py",
+      "exit_code": 0
+    }
+  ],
+  "all_passed": true
+}

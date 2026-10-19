@@ -1,0 +1,39 @@
+{
+  "games": [
+    {
+      "seed": 1701,
+      "mapId": "macmillan_estate",
+      "winner": "survivor",
+      "rounds": 6,
+      "commands": 192,
+      "events": 408,
+      "usedBoardAbilities": [
+        "board_ace_1",
+        "board_dwight_3"
+      ]
+    },
+    {
+      "seed": 2903,
+      "mapId": "autohaven_wreckers",
+      "winner": "survivor",
+      "rounds": 7,
+      "commands": 226,
+      "events": 477,
+      "usedBoardAbilities": [
+        "board_ace_1"
+      ]
+    },
+    {
+      "seed": 4111,
+      "mapId": "autohaven_wreckers",
+      "winner": "killer",
+      "rounds": 5,
+      "commands": 108,
+      "events": 227,
+      "usedBoardAbilities": [
+        "board_doctor_1"
+      ]
+    }
+  ],
+  "method": "Only createGame + public reduce commands, no state edits or injected victories; all RNG derives from fixed seed. Scripted cooperative policies, not AI balance validation."
+}

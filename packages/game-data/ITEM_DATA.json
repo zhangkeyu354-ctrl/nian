@@ -1,0 +1,1401 @@
+{
+  "schema_version": 1,
+  "research_date": "2026-10-19",
+  "edition_scope": "BASE_STANDARD",
+  "note": "16是实体总张数，不是16种不同物品。示例定义未与实体槽位分配，避免虚构各物品副本数。",
+  "expected_physical_total": 16,
+  "physical_cards": [
+    {
+      "id": "item_slot_01",
+      "name_ja": null,
+      "name_en": null,
+      "name_zh": "工具箱",
+      "translation_status": "DRAFT",
+      "japanese_text_status": "CHECK_REQUIRED",
+      "source_level": "D",
+      "source_ref": [
+        "D37:reference/items/items_16_cn.png / 照片印刷文字"
+      ],
+      "status": "CONFIRMED",
+      "definition_id": "toolbox",
+      "count_basis_ref": "B01:p3",
+      "id_is_official_card_number": false,
+      "photo_position": {
+        "row": 1,
+        "column": 1
+      },
+      "mapping_basis": "PHOTO_ROW_MAJOR_INTERNAL_SLOT_ID",
+      "mapping_status": "CONFIRMED",
+      "adoption_basis": "USER_ACCEPTED_CN_RETAIL",
+      "adoption_ref": "U02:中文零售资料优先",
+      "japanese_missing_blocks_runtime": false
+    },
+    {
+      "id": "item_slot_02",
+      "name_ja": null,
+      "name_en": null,
+      "name_zh": "鞭炮",
+      "translation_status": "DRAFT",
+      "japanese_text_status": "CHECK_REQUIRED",
+      "source_level": "D",
+      "source_ref": [
+        "D37:reference/items/items_16_cn.png / 照片印刷文字"
+      ],
+      "status": "CONFIRMED",
+      "definition_id": "firecracker",
+      "count_basis_ref": "B01:p3",
+      "id_is_official_card_number": false,
+      "photo_position": {
+        "row": 1,
+        "column": 2
+      },
+      "mapping_basis": "PHOTO_ROW_MAJOR_INTERNAL_SLOT_ID",
+      "mapping_status": "CONFIRMED",
+      "adoption_basis": "USER_ACCEPTED_CN_RETAIL",
+      "adoption_ref": "U02:中文零售资料优先",
+      "japanese_missing_blocks_runtime": false
+    },
+    {
+      "id": "item_slot_03",
+      "name_ja": null,
+      "name_en": null,
+      "name_zh": "彩虹地图",
+      "translation_status": "DRAFT",
+      "japanese_text_status": "CHECK_REQUIRED",
+      "source_level": "D",
+      "source_ref": [
+        "D37:reference/items/items_16_cn.png / 照片印刷文字"
+      ],
+      "status": "CONFIRMED",
+      "definition_id": "rainbow_map",
+      "count_basis_ref": "B01:p3",
+      "id_is_official_card_number": false,
+      "photo_position": {
+        "row": 1,
+        "column": 3
+      },
+      "mapping_basis": "PHOTO_ROW_MAJOR_INTERNAL_SLOT_ID",
+      "mapping_status": "CONFIRMED",
+      "adoption_basis": "USER_ACCEPTED_CN_RETAIL",
+      "adoption_ref": "U02:中文零售资料优先",
+      "japanese_missing_blocks_runtime": false
+    },
+    {
+      "id": "item_slot_04",
+      "name_ja": null,
+      "name_en": null,
+      "name_zh": "宽敞工具箱",
+      "translation_status": "DRAFT",
+      "japanese_text_status": "CHECK_REQUIRED",
+      "source_level": "D",
+      "source_ref": [
+        "D37:reference/items/items_16_cn.png / 照片印刷文字"
+      ],
+      "status": "CONFIRMED",
+      "definition_id": "commodious_toolbox",
+      "count_basis_ref": "B01:p3",
+      "id_is_official_card_number": false,
+      "photo_position": {
+        "row": 1,
+        "column": 4
+      },
+      "mapping_basis": "PHOTO_ROW_MAJOR_INTERNAL_SLOT_ID",
+      "mapping_status": "CONFIRMED",
+      "adoption_basis": "USER_ACCEPTED_CN_RETAIL",
+      "adoption_ref": "U02:中文零售资料优先",
+      "japanese_missing_blocks_runtime": false
+    },
+    {
+      "id": "item_slot_05",
+      "name_ja": null,
+      "name_en": null,
+      "name_zh": "地图",
+      "translation_status": "DRAFT",
+      "japanese_text_status": "CHECK_REQUIRED",
+      "source_level": "D",
+      "source_ref": [
+        "D37:reference/items/items_16_cn.png / 照片印刷文字"
+      ],
+      "status": "CONFIRMED",
+      "definition_id": "map",
+      "count_basis_ref": "B01:p3",
+      "id_is_official_card_number": false,
+      "photo_position": {
+        "row": 2,
+        "column": 1
+      },
+      "mapping_basis": "PHOTO_ROW_MAJOR_INTERNAL_SLOT_ID",
+      "mapping_status": "CONFIRMED",
+      "adoption_basis": "USER_ACCEPTED_CN_RETAIL",
+      "adoption_ref": "U02:中文零售资料优先",
+      "japanese_missing_blocks_runtime": false
+    },
+    {
+      "id": "item_slot_06",
+      "name_ja": null,
+      "name_en": null,
+      "name_zh": "手电筒",
+      "translation_status": "DRAFT",
+      "japanese_text_status": "CHECK_REQUIRED",
+      "source_level": "D",
+      "source_ref": [
+        "D37:reference/items/items_16_cn.png / 照片印刷文字"
+      ],
+      "status": "CONFIRMED",
+      "definition_id": "flashlight",
+      "count_basis_ref": "B01:p3",
+      "id_is_official_card_number": false,
+      "photo_position": {
+        "row": 2,
+        "column": 2
+      },
+      "mapping_basis": "PHOTO_ROW_MAJOR_INTERNAL_SLOT_ID",
+      "mapping_status": "CONFIRMED",
+      "adoption_basis": "USER_ACCEPTED_CN_RETAIL",
+      "adoption_ref": "U02:中文零售资料优先",
+      "japanese_missing_blocks_runtime": false
+    },
+    {
+      "id": "item_slot_07",
+      "name_ja": null,
+      "name_en": null,
+      "name_zh": "晦暗钥匙",
+      "translation_status": "DRAFT",
+      "japanese_text_status": "CHECK_REQUIRED",
+      "source_level": "D",
+      "source_ref": [
+        "D37:reference/items/items_16_cn.png / 照片印刷文字"
+      ],
+      "status": "CONFIRMED",
+      "definition_id": "dull_key",
+      "count_basis_ref": "B01:p3",
+      "id_is_official_card_number": false,
+      "photo_position": {
+        "row": 2,
+        "column": 3
+      },
+      "mapping_basis": "PHOTO_ROW_MAJOR_INTERNAL_SLOT_ID",
+      "mapping_status": "CONFIRMED",
+      "adoption_basis": "USER_ACCEPTED_CN_RETAIL",
+      "adoption_ref": "U02:中文零售资料优先",
+      "japanese_missing_blocks_runtime": false
+    },
+    {
+      "id": "item_slot_08",
+      "name_ja": null,
+      "name_en": null,
+      "name_zh": "急救箱",
+      "translation_status": "DRAFT",
+      "japanese_text_status": "CHECK_REQUIRED",
+      "source_level": "D",
+      "source_ref": [
+        "D37:reference/items/items_16_cn.png / 照片印刷文字"
+      ],
+      "status": "CONFIRMED",
+      "definition_id": "first_aid_kit",
+      "count_basis_ref": "B01:p3",
+      "id_is_official_card_number": false,
+      "photo_position": {
+        "row": 2,
+        "column": 4
+      },
+      "mapping_basis": "PHOTO_ROW_MAJOR_INTERNAL_SLOT_ID",
+      "mapping_status": "CONFIRMED",
+      "adoption_basis": "USER_ACCEPTED_CN_RETAIL",
+      "adoption_ref": "U02:中文零售资料优先",
+      "japanese_missing_blocks_runtime": false
+    },
+    {
+      "id": "item_slot_09",
+      "name_ja": null,
+      "name_en": null,
+      "name_zh": "手电筒",
+      "translation_status": "DRAFT",
+      "japanese_text_status": "CHECK_REQUIRED",
+      "source_level": "D",
+      "source_ref": [
+        "D37:reference/items/items_16_cn.png / 照片印刷文字"
+      ],
+      "status": "CONFIRMED",
+      "definition_id": "flashlight",
+      "count_basis_ref": "B01:p3",
+      "id_is_official_card_number": false,
+      "photo_position": {
+        "row": 3,
+        "column": 1
+      },
+      "mapping_basis": "PHOTO_ROW_MAJOR_INTERNAL_SLOT_ID",
+      "mapping_status": "CONFIRMED",
+      "adoption_basis": "USER_ACCEPTED_CN_RETAIL",
+      "adoption_ref": "U02:中文零售资料优先",
+      "japanese_missing_blocks_runtime": false
+    },
+    {
+      "id": "item_slot_10",
+      "name_ja": null,
+      "name_en": null,
+      "name_zh": "急救箱",
+      "translation_status": "DRAFT",
+      "japanese_text_status": "CHECK_REQUIRED",
+      "source_level": "D",
+      "source_ref": [
+        "D37:reference/items/items_16_cn.png / 照片印刷文字"
+      ],
+      "status": "CONFIRMED",
+      "definition_id": "first_aid_kit",
+      "count_basis_ref": "B01:p3",
+      "id_is_official_card_number": false,
+      "photo_position": {
+        "row": 3,
+        "column": 2
+      },
+      "mapping_basis": "PHOTO_ROW_MAJOR_INTERNAL_SLOT_ID",
+      "mapping_status": "CONFIRMED",
+      "adoption_basis": "USER_ACCEPTED_CN_RETAIL",
+      "adoption_ref": "U02:中文零售资料优先",
+      "japanese_missing_blocks_runtime": false
+    },
+    {
+      "id": "item_slot_11",
+      "name_ja": null,
+      "name_en": null,
+      "name_zh": "万能钥匙",
+      "translation_status": "DRAFT",
+      "japanese_text_status": "CHECK_REQUIRED",
+      "source_level": "D",
+      "source_ref": [
+        "D37:reference/items/items_16_cn.png / 照片印刷文字"
+      ],
+      "status": "CONFIRMED",
+      "definition_id": "skeleton_key",
+      "count_basis_ref": "B01:p3",
+      "id_is_official_card_number": false,
+      "photo_position": {
+        "row": 3,
+        "column": 3
+      },
+      "mapping_basis": "PHOTO_ROW_MAJOR_INTERNAL_SLOT_ID",
+      "mapping_status": "CONFIRMED",
+      "adoption_basis": "USER_ACCEPTED_CN_RETAIL",
+      "adoption_ref": "U02:中文零售资料优先",
+      "japanese_missing_blocks_runtime": false
+    },
+    {
+      "id": "item_slot_12",
+      "name_ja": null,
+      "name_en": null,
+      "name_zh": "急救箱",
+      "translation_status": "DRAFT",
+      "japanese_text_status": "CHECK_REQUIRED",
+      "source_level": "D",
+      "source_ref": [
+        "D37:reference/items/items_16_cn.png / 照片印刷文字"
+      ],
+      "status": "CONFIRMED",
+      "definition_id": "first_aid_kit",
+      "count_basis_ref": "B01:p3",
+      "id_is_official_card_number": false,
+      "photo_position": {
+        "row": 3,
+        "column": 4
+      },
+      "mapping_basis": "PHOTO_ROW_MAJOR_INTERNAL_SLOT_ID",
+      "mapping_status": "CONFIRMED",
+      "adoption_basis": "USER_ACCEPTED_CN_RETAIL",
+      "adoption_ref": "U02:中文零售资料优先",
+      "japanese_missing_blocks_runtime": false
+    },
+    {
+      "id": "item_slot_13",
+      "name_ja": null,
+      "name_en": null,
+      "name_zh": "破损钥匙",
+      "translation_status": "DRAFT",
+      "japanese_text_status": "CHECK_REQUIRED",
+      "source_level": "D",
+      "source_ref": [
+        "D37:reference/items/items_16_cn.png / 照片印刷文字"
+      ],
+      "status": "CONFIRMED",
+      "definition_id": "broken_key",
+      "count_basis_ref": "B01:p3",
+      "id_is_official_card_number": false,
+      "photo_position": {
+        "row": 4,
+        "column": 1
+      },
+      "mapping_basis": "PHOTO_ROW_MAJOR_INTERNAL_SLOT_ID",
+      "mapping_status": "CONFIRMED",
+      "adoption_basis": "USER_ACCEPTED_CN_RETAIL",
+      "adoption_ref": "U02:中文零售资料优先",
+      "japanese_missing_blocks_runtime": false
+    },
+    {
+      "id": "item_slot_14",
+      "name_ja": null,
+      "name_en": null,
+      "name_zh": "手电筒",
+      "translation_status": "DRAFT",
+      "japanese_text_status": "CHECK_REQUIRED",
+      "source_level": "D",
+      "source_ref": [
+        "D37:reference/items/items_16_cn.png / 照片印刷文字"
+      ],
+      "status": "CONFIRMED",
+      "definition_id": "flashlight",
+      "count_basis_ref": "B01:p3",
+      "id_is_official_card_number": false,
+      "photo_position": {
+        "row": 4,
+        "column": 2
+      },
+      "mapping_basis": "PHOTO_ROW_MAJOR_INTERNAL_SLOT_ID",
+      "mapping_status": "CONFIRMED",
+      "adoption_basis": "USER_ACCEPTED_CN_RETAIL",
+      "adoption_ref": "U02:中文零售资料优先",
+      "japanese_missing_blocks_runtime": false
+    },
+    {
+      "id": "item_slot_15",
+      "name_ja": null,
+      "name_en": null,
+      "name_zh": "工具箱",
+      "translation_status": "DRAFT",
+      "japanese_text_status": "CHECK_REQUIRED",
+      "source_level": "D",
+      "source_ref": [
+        "D37:reference/items/items_16_cn.png / 照片印刷文字"
+      ],
+      "status": "CONFIRMED",
+      "definition_id": "toolbox",
+      "count_basis_ref": "B01:p3",
+      "id_is_official_card_number": false,
+      "photo_position": {
+        "row": 4,
+        "column": 3
+      },
+      "mapping_basis": "PHOTO_ROW_MAJOR_INTERNAL_SLOT_ID",
+      "mapping_status": "CONFIRMED",
+      "adoption_basis": "USER_ACCEPTED_CN_RETAIL",
+      "adoption_ref": "U02:中文零售资料优先",
+      "japanese_missing_blocks_runtime": false
+    },
+    {
+      "id": "item_slot_16",
+      "name_ja": null,
+      "name_en": null,
+      "name_zh": "鞭炮",
+      "translation_status": "DRAFT",
+      "japanese_text_status": "CHECK_REQUIRED",
+      "source_level": "D",
+      "source_ref": [
+        "D37:reference/items/items_16_cn.png / 照片印刷文字"
+      ],
+      "status": "CONFIRMED",
+      "definition_id": "firecracker",
+      "count_basis_ref": "B01:p3",
+      "id_is_official_card_number": false,
+      "photo_position": {
+        "row": 4,
+        "column": 4
+      },
+      "mapping_basis": "PHOTO_ROW_MAJOR_INTERNAL_SLOT_ID",
+      "mapping_status": "CONFIRMED",
+      "adoption_basis": "USER_ACCEPTED_CN_RETAIL",
+      "adoption_ref": "U02:中文零售资料优先",
+      "japanese_missing_blocks_runtime": false
+    }
+  ],
+  "definitions": [
+    {
+      "id": "toolbox",
+      "name_ja": null,
+      "name_en": null,
+      "name_zh": "工具箱",
+      "translation_status": "OFFICIAL_ZH_PRINT",
+      "japanese_text_status": "CHECK_REQUIRED",
+      "source_level": "D",
+      "source_ref": [
+        "D37:reference/items/items_16_cn.png / 照片印刷文字"
+      ],
+      "status": "CONFIRMED",
+      "effect": null,
+      "effect_status": "CHECK_REQUIRED",
+      "copies": 2,
+      "copies_status": "CONFIRMED",
+      "text_original_zh": "在你的回合中弃掉此物品，以让你所在空间里的一台发电机增加1个进度。",
+      "on_board": false,
+      "chinese_print_evidence": {
+        "source_level": "D",
+        "source_ref": [
+          "D37:reference/items/items_16_cn.png / 照片印刷文字"
+        ],
+        "status": "CHECK_REQUIRED"
+      },
+      "field_evidence": {
+        "name_zh": {
+          "source_level": "D",
+          "source_ref": [
+            "D37:reference/items/items_16_cn.png / 照片印刷文字"
+          ],
+          "status": "CHECK_REQUIRED"
+        },
+        "copies": {
+          "source_level": "D",
+          "source_ref": [
+            "D37:reference/items/items_16_cn.png / 照片印刷文字"
+          ],
+          "status": "CHECK_REQUIRED"
+        },
+        "text_original_zh": {
+          "source_level": "D",
+          "source_ref": [
+            "D37:reference/items/items_16_cn.png / 照片印刷文字"
+          ],
+          "status": "CHECK_REQUIRED"
+        }
+      },
+      "structured_effect_draft": {
+        "source_level": "D",
+        "source_ref": [
+          "D37:reference/items/items_16_cn.png / 照片印刷文字"
+        ],
+        "status": "CHECK_REQUIRED",
+        "source_text_zh": "在你的回合中弃掉此物品，以让你所在空间里的一台发电机增加1个进度。",
+        "implementation_status": "NOT_IMPLEMENTED",
+        "requires_semantic_review": true,
+        "kind": "ITEM",
+        "trigger": {
+          "event": "DURING_OWN_TURN"
+        },
+        "conditions": [],
+        "effects": [
+          {
+            "operation": "DISCARD_SELF",
+            "parameters": {}
+          },
+          {
+            "operation": "ADD_GENERATOR_PROGRESS",
+            "parameters": {
+              "target": "generator_in_holder_space",
+              "amount": 1
+            }
+          }
+        ],
+        "resolution_scope": "DRAFT_ONLY_NOT_RUNTIME_DSL"
+      },
+      "id_is_verified_english_card_name": false,
+      "text_original_ja": null,
+      "text_original_en": null,
+      "adoption_basis": "USER_ACCEPTED_CN_RETAIL",
+      "adoption_ref": "U02:中文零售资料优先",
+      "japanese_missing_blocks_runtime": false,
+      "effect_implementation_status": "DEFERRED_PHASE_4"
+    },
+    {
+      "id": "commodious_toolbox",
+      "name_ja": null,
+      "name_en": null,
+      "name_zh": "宽敞工具箱",
+      "translation_status": "OFFICIAL_ZH_PRINT",
+      "japanese_text_status": "CHECK_REQUIRED",
+      "source_level": "D",
+      "source_ref": [
+        "D37:reference/items/items_16_cn.png / 照片印刷文字"
+      ],
+      "status": "CONFIRMED",
+      "effect": null,
+      "effect_status": "CHECK_REQUIRED",
+      "copies": 1,
+      "copies_status": "CONFIRMED",
+      "text_original_zh": "在任意逃生者的回合中弃掉此物品，以让你所在空间里的一台发电机增加1个进度，然后抽取一张物品牌。",
+      "on_board": false,
+      "chinese_print_evidence": {
+        "source_level": "D",
+        "source_ref": [
+          "D37:reference/items/items_16_cn.png / 照片印刷文字"
+        ],
+        "status": "CHECK_REQUIRED"
+      },
+      "field_evidence": {
+        "name_zh": {
+          "source_level": "D",
+          "source_ref": [
+            "D37:reference/items/items_16_cn.png / 照片印刷文字"
+          ],
+          "status": "CHECK_REQUIRED"
+        },
+        "copies": {
+          "source_level": "D",
+          "source_ref": [
+            "D37:reference/items/items_16_cn.png / 照片印刷文字"
+          ],
+          "status": "CHECK_REQUIRED"
+        },
+        "text_original_zh": {
+          "source_level": "D",
+          "source_ref": [
+            "D37:reference/items/items_16_cn.png / 照片印刷文字"
+          ],
+          "status": "CHECK_REQUIRED"
+        }
+      },
+      "structured_effect_draft": {
+        "source_level": "D",
+        "source_ref": [
+          "D37:reference/items/items_16_cn.png / 照片印刷文字"
+        ],
+        "status": "CHECK_REQUIRED",
+        "source_text_zh": "在任意逃生者的回合中弃掉此物品，以让你所在空间里的一台发电机增加1个进度，然后抽取一张物品牌。",
+        "implementation_status": "NOT_IMPLEMENTED",
+        "requires_semantic_review": true,
+        "kind": "ITEM",
+        "trigger": {
+          "event": "DURING_ANY_SURVIVOR_TURN"
+        },
+        "conditions": [],
+        "effects": [
+          {
+            "operation": "DISCARD_SELF",
+            "parameters": {}
+          },
+          {
+            "operation": "ADD_GENERATOR_PROGRESS",
+            "parameters": {
+              "target": "generator_in_holder_space",
+              "amount": 1
+            }
+          },
+          {
+            "operation": "DRAW_ITEM",
+            "parameters": {
+              "amount": 1
+            }
+          }
+        ],
+        "resolution_scope": "DRAFT_ONLY_NOT_RUNTIME_DSL"
+      },
+      "id_is_verified_english_card_name": false,
+      "text_original_ja": null,
+      "text_original_en": null,
+      "adoption_basis": "USER_ACCEPTED_CN_RETAIL",
+      "adoption_ref": "U02:中文零售资料优先",
+      "japanese_missing_blocks_runtime": false,
+      "effect_implementation_status": "DEFERRED_PHASE_4"
+    },
+    {
+      "id": "firecracker",
+      "name_ja": null,
+      "name_en": null,
+      "name_zh": "鞭炮",
+      "translation_status": "OFFICIAL_ZH_PRINT",
+      "japanese_text_status": "CHECK_REQUIRED",
+      "source_level": "D",
+      "source_ref": [
+        "D37:reference/items/items_16_cn.png / 照片印刷文字"
+      ],
+      "status": "CONFIRMED",
+      "effect": null,
+      "effect_status": "CHECK_REQUIRED",
+      "copies": 2,
+      "copies_status": "CONFIRMED",
+      "text_original_zh": "在任何时候弃掉此物品，以移除一个相连空间里的一个可破坏墙壁或阻止杀手移动进入你所在的空间。",
+      "on_board": false,
+      "chinese_print_evidence": {
+        "source_level": "D",
+        "source_ref": [
+          "D37:reference/items/items_16_cn.png / 照片印刷文字"
+        ],
+        "status": "CHECK_REQUIRED"
+      },
+      "field_evidence": {
+        "name_zh": {
+          "source_level": "D",
+          "source_ref": [
+            "D37:reference/items/items_16_cn.png / 照片印刷文字"
+          ],
+          "status": "CHECK_REQUIRED"
+        },
+        "copies": {
+          "source_level": "D",
+          "source_ref": [
+            "D37:reference/items/items_16_cn.png / 照片印刷文字"
+          ],
+          "status": "CHECK_REQUIRED"
+        },
+        "text_original_zh": {
+          "source_level": "D",
+          "source_ref": [
+            "D37:reference/items/items_16_cn.png / 照片印刷文字"
+          ],
+          "status": "CHECK_REQUIRED"
+        }
+      },
+      "structured_effect_draft": {
+        "source_level": "D",
+        "source_ref": [
+          "D37:reference/items/items_16_cn.png / 照片印刷文字"
+        ],
+        "status": "CHECK_REQUIRED",
+        "source_text_zh": "在任何时候弃掉此物品，以移除一个相连空间里的一个可破坏墙壁或阻止杀手移动进入你所在的空间。",
+        "implementation_status": "NOT_IMPLEMENTED",
+        "requires_semantic_review": true,
+        "kind": "ITEM",
+        "trigger": {
+          "event": "ANY_TIME"
+        },
+        "conditions": [],
+        "effects": [
+          {
+            "operation": "DISCARD_SELF",
+            "parameters": {}
+          },
+          {
+            "operation": "CHOOSE_ONE",
+            "parameters": {
+              "options": [
+                {
+                  "operation": "REMOVE_BREAKABLE_WALL",
+                  "target_text_zh": "一个相连空间里的一个可破坏墙壁",
+                  "target_schema_status": "CHECK_REQUIRED"
+                },
+                {
+                  "operation": "PREVENT_KILLER_ENTERING_HOLDER_SPACE"
+                }
+              ]
+            }
+          }
+        ],
+        "resolution_scope": "DRAFT_ONLY_NOT_RUNTIME_DSL",
+        "unresolved_questions": [
+          "Q10：相连空间里的墙如何对应路径上的墙，保留原文，不补猜目标集合。"
+        ]
+      },
+      "id_is_verified_english_card_name": false,
+      "text_original_ja": null,
+      "text_original_en": null,
+      "adoption_basis": "USER_ACCEPTED_CN_RETAIL",
+      "adoption_ref": "U02:中文零售资料优先",
+      "japanese_missing_blocks_runtime": false,
+      "effect_implementation_status": "DEFERRED_PHASE_4"
+    },
+    {
+      "id": "map",
+      "name_ja": null,
+      "name_en": null,
+      "name_zh": "地图",
+      "translation_status": "OFFICIAL_ZH_PRINT",
+      "japanese_text_status": "CHECK_REQUIRED",
+      "source_level": "D",
+      "source_ref": [
+        "D37:reference/items/items_16_cn.png / 照片印刷文字"
+      ],
+      "status": "CONFIRMED",
+      "effect": null,
+      "effect_status": "CHECK_REQUIRED",
+      "copies": 1,
+      "copies_status": "CONFIRMED",
+      "text_original_zh": "在任意逃生者的回合中弃掉此物品，以翻开游戏版图上任意位置的至多3个道具或抽取另一张物品牌。",
+      "on_board": false,
+      "chinese_print_evidence": {
+        "source_level": "D",
+        "source_ref": [
+          "D37:reference/items/items_16_cn.png / 照片印刷文字"
+        ],
+        "status": "CHECK_REQUIRED"
+      },
+      "field_evidence": {
+        "name_zh": {
+          "source_level": "D",
+          "source_ref": [
+            "D37:reference/items/items_16_cn.png / 照片印刷文字"
+          ],
+          "status": "CHECK_REQUIRED"
+        },
+        "copies": {
+          "source_level": "D",
+          "source_ref": [
+            "D37:reference/items/items_16_cn.png / 照片印刷文字"
+          ],
+          "status": "CHECK_REQUIRED"
+        },
+        "text_original_zh": {
+          "source_level": "D",
+          "source_ref": [
+            "D37:reference/items/items_16_cn.png / 照片印刷文字"
+          ],
+          "status": "CHECK_REQUIRED"
+        }
+      },
+      "structured_effect_draft": {
+        "source_level": "D",
+        "source_ref": [
+          "D37:reference/items/items_16_cn.png / 照片印刷文字"
+        ],
+        "status": "CHECK_REQUIRED",
+        "source_text_zh": "在任意逃生者的回合中弃掉此物品，以翻开游戏版图上任意位置的至多3个道具或抽取另一张物品牌。",
+        "implementation_status": "NOT_IMPLEMENTED",
+        "requires_semantic_review": true,
+        "kind": "ITEM",
+        "trigger": {
+          "event": "DURING_ANY_SURVIVOR_TURN"
+        },
+        "conditions": [],
+        "effects": [
+          {
+            "operation": "DISCARD_SELF",
+            "parameters": {}
+          },
+          {
+            "operation": "CHOOSE_ONE",
+            "parameters": {
+              "options": [
+                {
+                  "operation": "REVEAL_PROPS",
+                  "up_to": 3,
+                  "target": "anywhere_on_board"
+                },
+                {
+                  "operation": "DRAW_ITEM",
+                  "amount": 1
+                }
+              ]
+            }
+          }
+        ],
+        "resolution_scope": "DRAFT_ONLY_NOT_RUNTIME_DSL"
+      },
+      "id_is_verified_english_card_name": false,
+      "text_original_ja": null,
+      "text_original_en": null,
+      "adoption_basis": "USER_ACCEPTED_CN_RETAIL",
+      "adoption_ref": "U02:中文零售资料优先",
+      "japanese_missing_blocks_runtime": false,
+      "effect_implementation_status": "DEFERRED_PHASE_4"
+    },
+    {
+      "id": "rainbow_map",
+      "name_ja": null,
+      "name_en": null,
+      "name_zh": "彩虹地图",
+      "translation_status": "OFFICIAL_ZH_PRINT",
+      "japanese_text_status": "CHECK_REQUIRED",
+      "source_level": "D",
+      "source_ref": [
+        "D37:reference/items/items_16_cn.png / 照片印刷文字"
+      ],
+      "status": "CONFIRMED",
+      "effect": null,
+      "effect_status": "CHECK_REQUIRED",
+      "copies": 1,
+      "copies_status": "CONFIRMED",
+      "text_original_zh": "在任意逃生者的回合中弃掉此物品，以翻开游戏版图上任意位置的至多3个道具或翻开杀手的所有移动牌。",
+      "on_board": false,
+      "chinese_print_evidence": {
+        "source_level": "D",
+        "source_ref": [
+          "D37:reference/items/items_16_cn.png / 照片印刷文字"
+        ],
+        "status": "CHECK_REQUIRED"
+      },
+      "field_evidence": {
+        "name_zh": {
+          "source_level": "D",
+          "source_ref": [
+            "D37:reference/items/items_16_cn.png / 照片印刷文字"
+          ],
+          "status": "CHECK_REQUIRED"
+        },
+        "copies": {
+          "source_level": "D",
+          "source_ref": [
+            "D37:reference/items/items_16_cn.png / 照片印刷文字"
+          ],
+          "status": "CHECK_REQUIRED"
+        },
+        "text_original_zh": {
+          "source_level": "D",
+          "source_ref": [
+            "D37:reference/items/items_16_cn.png / 照片印刷文字"
+          ],
+          "status": "CHECK_REQUIRED"
+        }
+      },
+      "structured_effect_draft": {
+        "source_level": "D",
+        "source_ref": [
+          "D37:reference/items/items_16_cn.png / 照片印刷文字"
+        ],
+        "status": "CHECK_REQUIRED",
+        "source_text_zh": "在任意逃生者的回合中弃掉此物品，以翻开游戏版图上任意位置的至多3个道具或翻开杀手的所有移动牌。",
+        "implementation_status": "NOT_IMPLEMENTED",
+        "requires_semantic_review": true,
+        "kind": "ITEM",
+        "trigger": {
+          "event": "DURING_ANY_SURVIVOR_TURN"
+        },
+        "conditions": [],
+        "effects": [
+          {
+            "operation": "DISCARD_SELF",
+            "parameters": {}
+          },
+          {
+            "operation": "CHOOSE_ONE",
+            "parameters": {
+              "options": [
+                {
+                  "operation": "REVEAL_PROPS",
+                  "up_to": 3,
+                  "target": "anywhere_on_board"
+                },
+                {
+                  "operation": "REVEAL_ALL_KILLER_MOVEMENT_CARDS"
+                }
+              ]
+            }
+          }
+        ],
+        "resolution_scope": "DRAFT_ONLY_NOT_RUNTIME_DSL"
+      },
+      "id_is_verified_english_card_name": false,
+      "text_original_ja": null,
+      "text_original_en": null,
+      "adoption_basis": "USER_ACCEPTED_CN_RETAIL",
+      "adoption_ref": "U02:中文零售资料优先",
+      "japanese_missing_blocks_runtime": false,
+      "effect_implementation_status": "DEFERRED_PHASE_4"
+    },
+    {
+      "id": "flashlight",
+      "name_ja": null,
+      "name_en": "Flashlight",
+      "name_zh": "手电筒",
+      "translation_status": "OFFICIAL_ZH_PRINT",
+      "japanese_text_status": "CHECK_REQUIRED",
+      "source_level": "D",
+      "source_ref": [
+        "B01:p5物品卡示例",
+        "D37:reference/items/items_16_cn.png / 照片印刷文字"
+      ],
+      "status": "CONFIRMED",
+      "identity_status": "CONFIRMED",
+      "effect_status": "CONFIRMED",
+      "copies": 3,
+      "effect": {
+        "timing": "during_killer_turn",
+        "cost": "discard_this_item",
+        "target": "killer_in_holder_space",
+        "operation": "prevent_interaction"
+      },
+      "effect_summary_zh": "在杀手回合弃掉此物品，阻止持有者所在房间内杀手的交互。",
+      "missing_fields": [
+        "卡底副本数量无法可靠辨读",
+        "日文原文"
+      ],
+      "copies_status": "CONFIRMED",
+      "text_original_zh": "在杀手的回合中弃掉此物品，以阻止你所在空间里的杀手进行交互。",
+      "on_board": false,
+      "chinese_print_evidence": {
+        "source_level": "D",
+        "source_ref": [
+          "D37:reference/items/items_16_cn.png / 照片印刷文字"
+        ],
+        "status": "CHECK_REQUIRED"
+      },
+      "field_evidence": {
+        "name_zh": {
+          "source_level": "D",
+          "source_ref": [
+            "D37:reference/items/items_16_cn.png / 照片印刷文字"
+          ],
+          "status": "CHECK_REQUIRED"
+        },
+        "copies": {
+          "source_level": "D",
+          "source_ref": [
+            "D37:reference/items/items_16_cn.png / 照片印刷文字"
+          ],
+          "status": "CHECK_REQUIRED"
+        },
+        "text_original_zh": {
+          "source_level": "D",
+          "source_ref": [
+            "D37:reference/items/items_16_cn.png / 照片印刷文字"
+          ],
+          "status": "CHECK_REQUIRED"
+        }
+      },
+      "prior_official_evidence": {
+        "id": "flashlight",
+        "name_ja": null,
+        "name_en": "Flashlight",
+        "name_zh": "手电筒",
+        "translation_status": "DRAFT",
+        "japanese_text_status": "CHECK_REQUIRED",
+        "source_level": "B",
+        "source_ref": [
+          "B01:p5物品卡示例"
+        ],
+        "status": "CHECK_REQUIRED",
+        "identity_status": "CONFIRMED",
+        "effect_status": "CONFIRMED",
+        "copies": null,
+        "effect": {
+          "timing": "during_killer_turn",
+          "cost": "discard_this_item",
+          "target": "killer_in_holder_space",
+          "operation": "prevent_interaction"
+        },
+        "effect_summary_zh": "在杀手回合弃掉此物品，阻止持有者所在房间内杀手的交互。",
+        "missing_fields": [
+          "卡底副本数量无法可靠辨读",
+          "日文原文"
+        ]
+      },
+      "structured_effect_draft": {
+        "source_level": "D",
+        "source_ref": [
+          "D37:reference/items/items_16_cn.png / 照片印刷文字"
+        ],
+        "status": "CHECK_REQUIRED",
+        "source_text_zh": "在杀手的回合中弃掉此物品，以阻止你所在空间里的杀手进行交互。",
+        "implementation_status": "NOT_IMPLEMENTED",
+        "requires_semantic_review": true,
+        "kind": "ITEM",
+        "trigger": {
+          "event": "DURING_KILLER_TURN"
+        },
+        "conditions": [
+          "杀手在持有者空间"
+        ],
+        "effects": [
+          {
+            "operation": "DISCARD_SELF",
+            "parameters": {}
+          },
+          {
+            "operation": "PREVENT_KILLER_INTERACTION",
+            "parameters": {
+              "target": "killer_in_holder_space"
+            }
+          }
+        ],
+        "resolution_scope": "DRAFT_ONLY_NOT_RUNTIME_DSL"
+      },
+      "id_is_verified_english_card_name": true,
+      "text_original_ja": null,
+      "text_original_en": null,
+      "adoption_basis": "USER_ACCEPTED_CN_RETAIL",
+      "adoption_ref": "U02:中文零售资料优先",
+      "japanese_missing_blocks_runtime": false,
+      "effect_implementation_status": "DEFERRED_PHASE_4"
+    },
+    {
+      "id": "first_aid_kit",
+      "name_ja": null,
+      "name_en": "First Aid Kit",
+      "name_zh": "急救箱",
+      "translation_status": "OFFICIAL_ZH_PRINT",
+      "japanese_text_status": "CHECK_REQUIRED",
+      "source_level": "D",
+      "source_ref": [
+        "B01:p3物品卡缩略图",
+        "D37:reference/items/items_16_cn.png / 照片印刷文字"
+      ],
+      "status": "CONFIRMED",
+      "identity_status": "CONFIRMED",
+      "effect_status": "CHECK_REQUIRED",
+      "copies": 3,
+      "effect": null,
+      "copies_status": "CONFIRMED",
+      "text_original_zh": "在任意逃生者的回合中弃掉此物品，以让你自己或你所在空间里的另一位逃生者变为健康。",
+      "on_board": false,
+      "chinese_print_evidence": {
+        "source_level": "D",
+        "source_ref": [
+          "D37:reference/items/items_16_cn.png / 照片印刷文字"
+        ],
+        "status": "CHECK_REQUIRED"
+      },
+      "field_evidence": {
+        "name_zh": {
+          "source_level": "D",
+          "source_ref": [
+            "D37:reference/items/items_16_cn.png / 照片印刷文字"
+          ],
+          "status": "CHECK_REQUIRED"
+        },
+        "copies": {
+          "source_level": "D",
+          "source_ref": [
+            "D37:reference/items/items_16_cn.png / 照片印刷文字"
+          ],
+          "status": "CHECK_REQUIRED"
+        },
+        "text_original_zh": {
+          "source_level": "D",
+          "source_ref": [
+            "D37:reference/items/items_16_cn.png / 照片印刷文字"
+          ],
+          "status": "CHECK_REQUIRED"
+        }
+      },
+      "prior_official_evidence": {
+        "id": "first_aid_kit",
+        "name_ja": null,
+        "name_en": "First Aid Kit",
+        "name_zh": "急救包",
+        "translation_status": "DRAFT",
+        "japanese_text_status": "CHECK_REQUIRED",
+        "source_level": "B",
+        "source_ref": [
+          "B01:p3物品卡缩略图"
+        ],
+        "status": "CHECK_REQUIRED",
+        "identity_status": "CONFIRMED",
+        "effect_status": "CHECK_REQUIRED",
+        "copies": null,
+        "effect": null
+      },
+      "structured_effect_draft": {
+        "source_level": "D",
+        "source_ref": [
+          "D37:reference/items/items_16_cn.png / 照片印刷文字"
+        ],
+        "status": "CHECK_REQUIRED",
+        "source_text_zh": "在任意逃生者的回合中弃掉此物品，以让你自己或你所在空间里的另一位逃生者变为健康。",
+        "implementation_status": "NOT_IMPLEMENTED",
+        "requires_semantic_review": true,
+        "kind": "ITEM",
+        "trigger": {
+          "event": "DURING_ANY_SURVIVOR_TURN"
+        },
+        "conditions": [],
+        "effects": [
+          {
+            "operation": "DISCARD_SELF",
+            "parameters": {}
+          },
+          {
+            "operation": "MAKE_HEALTHY",
+            "parameters": {
+              "target": "self_or_other_survivor_in_holder_space"
+            }
+          }
+        ],
+        "resolution_scope": "DRAFT_ONLY_NOT_RUNTIME_DSL"
+      },
+      "id_is_verified_english_card_name": true,
+      "text_original_ja": null,
+      "text_original_en": null,
+      "adoption_basis": "USER_ACCEPTED_CN_RETAIL",
+      "adoption_ref": "U02:中文零售资料优先",
+      "japanese_missing_blocks_runtime": false,
+      "effect_implementation_status": "DEFERRED_PHASE_4"
+    },
+    {
+      "id": "broken_key",
+      "name_ja": null,
+      "name_en": null,
+      "name_zh": "破损钥匙",
+      "translation_status": "OFFICIAL_ZH_PRINT",
+      "japanese_text_status": "CHECK_REQUIRED",
+      "source_level": "D",
+      "source_ref": [
+        "D37:reference/items/items_16_cn.png / 照片印刷文字"
+      ],
+      "status": "CONFIRMED",
+      "effect": null,
+      "effect_status": "CHECK_REQUIRED",
+      "copies": 1,
+      "copies_status": "CONFIRMED",
+      "text_original_zh": "在任何时候弃掉此物品，以允许任意一位逃生者重掷任意一颗骰子或获得1血点。",
+      "on_board": false,
+      "chinese_print_evidence": {
+        "source_level": "D",
+        "source_ref": [
+          "D37:reference/items/items_16_cn.png / 照片印刷文字"
+        ],
+        "status": "CHECK_REQUIRED"
+      },
+      "field_evidence": {
+        "name_zh": {
+          "source_level": "D",
+          "source_ref": [
+            "D37:reference/items/items_16_cn.png / 照片印刷文字"
+          ],
+          "status": "CHECK_REQUIRED"
+        },
+        "copies": {
+          "source_level": "D",
+          "source_ref": [
+            "D37:reference/items/items_16_cn.png / 照片印刷文字"
+          ],
+          "status": "CHECK_REQUIRED"
+        },
+        "text_original_zh": {
+          "source_level": "D",
+          "source_ref": [
+            "D37:reference/items/items_16_cn.png / 照片印刷文字"
+          ],
+          "status": "CHECK_REQUIRED"
+        }
+      },
+      "structured_effect_draft": {
+        "source_level": "D",
+        "source_ref": [
+          "D37:reference/items/items_16_cn.png / 照片印刷文字"
+        ],
+        "status": "CHECK_REQUIRED",
+        "source_text_zh": "在任何时候弃掉此物品，以允许任意一位逃生者重掷任意一颗骰子或获得1血点。",
+        "implementation_status": "NOT_IMPLEMENTED",
+        "requires_semantic_review": true,
+        "kind": "ITEM",
+        "trigger": {
+          "event": "ANY_TIME"
+        },
+        "conditions": [],
+        "effects": [
+          {
+            "operation": "DISCARD_SELF",
+            "parameters": {}
+          },
+          {
+            "operation": "CHOOSE_ONE",
+            "parameters": {
+              "options": [
+                {
+                  "operation": "ALLOW_REROLL_ONE_DIE",
+                  "target": "any_survivor"
+                },
+                {
+                  "operation": "GAIN_BLOODPOINTS",
+                  "target": "any_survivor",
+                  "amount": 1
+                }
+              ]
+            }
+          }
+        ],
+        "resolution_scope": "DRAFT_ONLY_NOT_RUNTIME_DSL"
+      },
+      "id_is_verified_english_card_name": false,
+      "text_original_ja": null,
+      "text_original_en": null,
+      "adoption_basis": "USER_ACCEPTED_CN_RETAIL",
+      "adoption_ref": "U02:中文零售资料优先",
+      "japanese_missing_blocks_runtime": false,
+      "effect_implementation_status": "DEFERRED_PHASE_4"
+    },
+    {
+      "id": "dull_key",
+      "name_ja": null,
+      "name_en": null,
+      "name_zh": "晦暗钥匙",
+      "translation_status": "OFFICIAL_ZH_PRINT",
+      "japanese_text_status": "CHECK_REQUIRED",
+      "source_level": "D",
+      "source_ref": [
+        "D37:reference/items/items_16_cn.png / 照片印刷文字"
+      ],
+      "status": "CONFIRMED",
+      "effect": null,
+      "effect_status": "CHECK_REQUIRED",
+      "copies": 1,
+      "copies_status": "CONFIRMED",
+      "text_original_zh": "在任何时候弃掉此物品，以允许任意一位逃生者重掷任意一颗骰子或获得2血点。",
+      "on_board": false,
+      "chinese_print_evidence": {
+        "source_level": "D",
+        "source_ref": [
+          "D37:reference/items/items_16_cn.png / 照片印刷文字"
+        ],
+        "status": "CHECK_REQUIRED"
+      },
+      "field_evidence": {
+        "name_zh": {
+          "source_level": "D",
+          "source_ref": [
+            "D37:reference/items/items_16_cn.png / 照片印刷文字"
+          ],
+          "status": "CHECK_REQUIRED"
+        },
+        "copies": {
+          "source_level": "D",
+          "source_ref": [
+            "D37:reference/items/items_16_cn.png / 照片印刷文字"
+          ],
+          "status": "CHECK_REQUIRED"
+        },
+        "text_original_zh": {
+          "source_level": "D",
+          "source_ref": [
+            "D37:reference/items/items_16_cn.png / 照片印刷文字"
+          ],
+          "status": "CHECK_REQUIRED"
+        }
+      },
+      "structured_effect_draft": {
+        "source_level": "D",
+        "source_ref": [
+          "D37:reference/items/items_16_cn.png / 照片印刷文字"
+        ],
+        "status": "CHECK_REQUIRED",
+        "source_text_zh": "在任何时候弃掉此物品，以允许任意一位逃生者重掷任意一颗骰子或获得2血点。",
+        "implementation_status": "NOT_IMPLEMENTED",
+        "requires_semantic_review": true,
+        "kind": "ITEM",
+        "trigger": {
+          "event": "ANY_TIME"
+        },
+        "conditions": [],
+        "effects": [
+          {
+            "operation": "DISCARD_SELF",
+            "parameters": {}
+          },
+          {
+            "operation": "CHOOSE_ONE",
+            "parameters": {
+              "options": [
+                {
+                  "operation": "ALLOW_REROLL_ONE_DIE",
+                  "target": "any_survivor"
+                },
+                {
+                  "operation": "GAIN_BLOODPOINTS",
+                  "target": "any_survivor",
+                  "amount": 2
+                }
+              ]
+            }
+          }
+        ],
+        "resolution_scope": "DRAFT_ONLY_NOT_RUNTIME_DSL"
+      },
+      "id_is_verified_english_card_name": false,
+      "text_original_ja": null,
+      "text_original_en": null,
+      "adoption_basis": "USER_ACCEPTED_CN_RETAIL",
+      "adoption_ref": "U02:中文零售资料优先",
+      "japanese_missing_blocks_runtime": false,
+      "effect_implementation_status": "DEFERRED_PHASE_4"
+    },
+    {
+      "id": "skeleton_key",
+      "name_ja": null,
+      "name_en": null,
+      "name_zh": "万能钥匙",
+      "translation_status": "OFFICIAL_ZH_PRINT",
+      "japanese_text_status": "CHECK_REQUIRED",
+      "source_level": "D",
+      "source_ref": [
+        "D37:reference/items/items_16_cn.png / 照片印刷文字"
+      ],
+      "status": "CONFIRMED",
+      "effect": null,
+      "effect_status": "CHECK_REQUIRED",
+      "copies": 1,
+      "copies_status": "CONFIRMED",
+      "text_original_zh": "在任何时候弃掉此物品，以允许任意一位逃生者重掷任意一颗骰子或获得3血点。",
+      "on_board": false,
+      "chinese_print_evidence": {
+        "source_level": "D",
+        "source_ref": [
+          "D37:reference/items/items_16_cn.png / 照片印刷文字"
+        ],
+        "status": "CHECK_REQUIRED"
+      },
+      "field_evidence": {
+        "name_zh": {
+          "source_level": "D",
+          "source_ref": [
+            "D37:reference/items/items_16_cn.png / 照片印刷文字"
+          ],
+          "status": "CHECK_REQUIRED"
+        },
+        "copies": {
+          "source_level": "D",
+          "source_ref": [
+            "D37:reference/items/items_16_cn.png / 照片印刷文字"
+          ],
+          "status": "CHECK_REQUIRED"
+        },
+        "text_original_zh": {
+          "source_level": "D",
+          "source_ref": [
+            "D37:reference/items/items_16_cn.png / 照片印刷文字"
+          ],
+          "status": "CHECK_REQUIRED"
+        }
+      },
+      "structured_effect_draft": {
+        "source_level": "D",
+        "source_ref": [
+          "D37:reference/items/items_16_cn.png / 照片印刷文字"
+        ],
+        "status": "CHECK_REQUIRED",
+        "source_text_zh": "在任何时候弃掉此物品，以允许任意一位逃生者重掷任意一颗骰子或获得3血点。",
+        "implementation_status": "NOT_IMPLEMENTED",
+        "requires_semantic_review": true,
+        "kind": "ITEM",
+        "trigger": {
+          "event": "ANY_TIME"
+        },
+        "conditions": [],
+        "effects": [
+          {
+            "operation": "DISCARD_SELF",
+            "parameters": {}
+          },
+          {
+            "operation": "CHOOSE_ONE",
+            "parameters": {
+              "options": [
+                {
+                  "operation": "ALLOW_REROLL_ONE_DIE",
+                  "target": "any_survivor"
+                },
+                {
+                  "operation": "GAIN_BLOODPOINTS",
+                  "target": "any_survivor",
+                  "amount": 3
+                }
+              ]
+            }
+          }
+        ],
+        "resolution_scope": "DRAFT_ONLY_NOT_RUNTIME_DSL"
+      },
+      "id_is_verified_english_card_name": false,
+      "text_original_ja": null,
+      "text_original_en": null,
+      "adoption_basis": "USER_ACCEPTED_CN_RETAIL",
+      "adoption_ref": "U02:中文零售资料优先",
+      "japanese_missing_blocks_runtime": false,
+      "effect_implementation_status": "DEFERRED_PHASE_4"
+    }
+  ],
+  "photo_count_check": {
+    "observed_total": 16,
+    "observed_types": 10,
+    "copies_by_type": {
+      "toolbox": 2,
+      "firecracker": 2,
+      "rainbow_map": 1,
+      "commodious_toolbox": 1,
+      "map": 1,
+      "flashlight": 3,
+      "dull_key": 1,
+      "first_aid_kit": 3,
+      "skeleton_key": 1,
+      "broken_key": 1
+    },
+    "source_level": "D",
+    "source_ref": [
+      "D37:reference/items/items_16_cn.png / 照片印刷文字"
+    ],
+    "status": "CHECK_REQUIRED"
+  }
+}

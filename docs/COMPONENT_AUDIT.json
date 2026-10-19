@@ -1,0 +1,346 @@
+{
+  "research_date": "2026-10-19",
+  "items": [
+    {
+      "id": "survivor_boards",
+      "charter_quantity": 7,
+      "observed_quantity": 7,
+      "source_level": "B",
+      "source_ref": [
+        "B01:p3"
+      ],
+      "status": "CONFIRMED",
+      "physical_japanese_quantity": null,
+      "physical_status": "CHECK_REQUIRED"
+    },
+    {
+      "id": "killer_boards",
+      "charter_quantity": 6,
+      "observed_quantity": 6,
+      "source_level": "B",
+      "source_ref": [
+        "B01:p3"
+      ],
+      "status": "CONFIRMED",
+      "physical_japanese_quantity": null,
+      "physical_status": "CHECK_REQUIRED"
+    },
+    {
+      "id": "double_sided_board",
+      "charter_quantity": 1,
+      "observed_quantity": 1,
+      "source_level": "B",
+      "source_ref": [
+        "B01:p3"
+      ],
+      "status": "CONFIRMED",
+      "physical_japanese_quantity": null,
+      "physical_status": "CHECK_REQUIRED"
+    },
+    {
+      "id": "prop_tiles",
+      "charter_quantity": 44,
+      "observed_quantity": 44,
+      "source_level": "B",
+      "source_ref": [
+        "B01:p3"
+      ],
+      "status": "CONFIRMED",
+      "physical_japanese_quantity": null,
+      "physical_status": "CHECK_REQUIRED"
+    },
+    {
+      "id": "breakable_wall",
+      "charter_quantity": 4,
+      "observed_quantity": 4,
+      "source_level": "B",
+      "source_ref": [
+        "B01:p3"
+      ],
+      "status": "CONFIRMED",
+      "physical_japanese_quantity": null,
+      "physical_status": "CHECK_REQUIRED"
+    },
+    {
+      "id": "sacrifice_tokens",
+      "charter_quantity": 12,
+      "observed_quantity": 12,
+      "source_level": "B",
+      "source_ref": [
+        "B01:p3"
+      ],
+      "status": "CONFIRMED",
+      "physical_japanese_quantity": null,
+      "physical_status": "CHECK_REQUIRED"
+    },
+    {
+      "id": "generator_tokens",
+      "charter_quantity": 25,
+      "observed_quantity": 25,
+      "source_level": "B",
+      "source_ref": [
+        "B01:p3"
+      ],
+      "status": "CONFIRMED",
+      "physical_japanese_quantity": null,
+      "physical_status": "CHECK_REQUIRED"
+    },
+    {
+      "id": "first_player_marker",
+      "charter_quantity": 1,
+      "observed_quantity": 1,
+      "source_level": "B",
+      "source_ref": [
+        "B01:p3"
+      ],
+      "status": "CONFIRMED",
+      "physical_japanese_quantity": null,
+      "physical_status": "CHECK_REQUIRED"
+    },
+    {
+      "id": "entity_token",
+      "charter_quantity": 1,
+      "observed_quantity": 1,
+      "source_level": "B",
+      "source_ref": [
+        "B01:p3"
+      ],
+      "status": "CONFIRMED",
+      "physical_japanese_quantity": null,
+      "physical_status": "CHECK_REQUIRED"
+    },
+    {
+      "id": "bloodpoint_tokens",
+      "charter_quantity": 40,
+      "observed_quantity": 40,
+      "source_level": "B",
+      "source_ref": [
+        "B01:p3"
+      ],
+      "status": "CONFIRMED",
+      "physical_japanese_quantity": null,
+      "physical_status": "CHECK_REQUIRED"
+    },
+    {
+      "id": "bear_trap_tokens",
+      "charter_quantity": 4,
+      "observed_quantity": 4,
+      "source_level": "B",
+      "source_ref": [
+        "B01:p3"
+      ],
+      "status": "CONFIRMED",
+      "physical_japanese_quantity": null,
+      "physical_status": "CHECK_REQUIRED"
+    },
+    {
+      "id": "madness_tokens",
+      "charter_quantity": 4,
+      "observed_quantity": 4,
+      "source_level": "B",
+      "source_ref": [
+        "B01:p3"
+      ],
+      "status": "CONFIRMED",
+      "physical_japanese_quantity": null,
+      "physical_status": "CHECK_REQUIRED"
+    },
+    {
+      "id": "phantasm_trap_tokens",
+      "charter_quantity": 7,
+      "observed_quantity": 7,
+      "source_level": "B",
+      "source_ref": [
+        "B01:p3"
+      ],
+      "status": "CONFIRMED",
+      "physical_japanese_quantity": null,
+      "physical_status": "CHECK_REQUIRED"
+    },
+    {
+      "id": "skill_check_dice",
+      "charter_quantity": 4,
+      "observed_quantity": 4,
+      "source_level": "B",
+      "source_ref": [
+        "B01:p3"
+      ],
+      "status": "CONFIRMED",
+      "physical_japanese_quantity": null,
+      "physical_status": "CHECK_REQUIRED"
+    },
+    {
+      "id": "danger_die",
+      "charter_quantity": 1,
+      "observed_quantity": 1,
+      "source_level": "B",
+      "source_ref": [
+        "B01:p3"
+      ],
+      "status": "CONFIRMED",
+      "physical_japanese_quantity": null,
+      "physical_status": "CHECK_REQUIRED"
+    },
+    {
+      "id": "wound_rings",
+      "charter_quantity": 4,
+      "observed_quantity": 4,
+      "source_level": "B",
+      "source_ref": [
+        "B01:p3"
+      ],
+      "status": "CONFIRMED",
+      "physical_japanese_quantity": null,
+      "physical_status": "CHECK_REQUIRED"
+    },
+    {
+      "id": "survivor_perks",
+      "charter_quantity": 28,
+      "observed_quantity": 28,
+      "source_level": "B",
+      "source_ref": [
+        "B01:p3"
+      ],
+      "status": "CONFIRMED",
+      "physical_japanese_quantity": null,
+      "physical_status": "CHECK_REQUIRED"
+    },
+    {
+      "id": "killer_perks",
+      "charter_quantity": 24,
+      "observed_quantity": 24,
+      "source_level": "B",
+      "source_ref": [
+        "B01:p3"
+      ],
+      "status": "CONFIRMED",
+      "physical_japanese_quantity": null,
+      "physical_status": "CHECK_REQUIRED"
+    },
+    {
+      "id": "item_cards",
+      "charter_quantity": 16,
+      "observed_quantity": 16,
+      "source_level": "B",
+      "source_ref": [
+        "B01:p3"
+      ],
+      "status": "CONFIRMED",
+      "physical_japanese_quantity": null,
+      "physical_status": "CHECK_REQUIRED"
+    },
+    {
+      "id": "movement_cards",
+      "charter_quantity": 21,
+      "observed_quantity": 21,
+      "source_level": "B",
+      "source_ref": [
+        "B01:p3"
+      ],
+      "status": "CONFIRMED",
+      "physical_japanese_quantity": null,
+      "physical_status": "CHECK_REQUIRED"
+    }
+  ],
+  "card_total": {
+    "charter": 89,
+    "official_store": 89,
+    "calculation": "28+24+16+21=89",
+    "status": "CONFIRMED",
+    "source_level": "B",
+    "source_ref": [
+      "B01:p3",
+      "B02"
+    ]
+  },
+  "conflicts": [],
+  "note": "未发现英文B级数量与总纲冲突；未做日文实物盘点，不等于实物已核对。",
+  "prop_subtype_audit": [
+    {
+      "id": "generator",
+      "quantity": 8,
+      "source_level": "C",
+      "source_ref": [
+        "C06:Standard Edition / 44 Props"
+      ],
+      "status": "CONFIRMED",
+      "physical_japanese_status": "CHECK_REQUIRED"
+    },
+    {
+      "id": "exit_gate",
+      "quantity": 2,
+      "source_level": "C",
+      "source_ref": [
+        "C06:Standard Edition / 44 Props"
+      ],
+      "status": "CONFIRMED",
+      "physical_japanese_status": "CHECK_REQUIRED"
+    },
+    {
+      "id": "hook",
+      "quantity": 5,
+      "source_level": "C",
+      "source_ref": [
+        "C06:Standard Edition / 44 Props"
+      ],
+      "status": "CONFIRMED",
+      "physical_japanese_status": "CHECK_REQUIRED"
+    },
+    {
+      "id": "hex_totem",
+      "quantity": 5,
+      "source_level": "C",
+      "source_ref": [
+        "C06:Standard Edition / 44 Props"
+      ],
+      "status": "CONFIRMED",
+      "physical_japanese_status": "CHECK_REQUIRED"
+    },
+    {
+      "id": "chest",
+      "quantity": 6,
+      "source_level": "C",
+      "source_ref": [
+        "C06:Standard Edition / 44 Props"
+      ],
+      "status": "CONFIRMED",
+      "physical_japanese_status": "CHECK_REQUIRED"
+    },
+    {
+      "id": "locker",
+      "quantity": 6,
+      "source_level": "C",
+      "source_ref": [
+        "C06:Standard Edition / 44 Props"
+      ],
+      "status": "CONFIRMED",
+      "physical_japanese_status": "CHECK_REQUIRED"
+    },
+    {
+      "id": "pallet",
+      "quantity": 6,
+      "source_level": "C",
+      "source_ref": [
+        "C06:Standard Edition / 44 Props"
+      ],
+      "status": "CONFIRMED",
+      "physical_japanese_status": "CHECK_REQUIRED"
+    },
+    {
+      "id": "crow",
+      "quantity": 6,
+      "source_level": "C",
+      "source_ref": [
+        "C06:Standard Edition / 44 Props"
+      ],
+      "status": "CONFIRMED",
+      "physical_japanese_status": "CHECK_REQUIRED"
+    }
+  ],
+  "prop_category_sums": {
+    "objective": "8+2=10",
+    "boldness": "5+5=10",
+    "survival": "6+6=12",
+    "altruism": "6+6=12"
+  }
+}

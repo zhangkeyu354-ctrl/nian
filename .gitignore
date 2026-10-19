@@ -1,0 +1,24 @@
+# Private original materials: never commit scans, photos, PDFs or preview art.
+reference/**
+!reference/README.md
+!reference/**/
+!reference/**/.gitkeep
+node_modules/
+dist/
+build/
+coverage/
+.vite/
+playwright-report/
+test-results/
+*.db
+*.db-*
+*.sqlite
+*.sqlite-*
+*.sqlite3
+*.sqlite3-*
+.env
+.env.*
+!.env.example
+work/
+*.log
+__pycache__/

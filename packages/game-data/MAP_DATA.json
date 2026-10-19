@@ -1,0 +1,2786 @@
+{
+  "schema_version": 1,
+  "research_date": "2026-10-19",
+  "edition_scope": "BASE_STANDARD",
+  "note": "CONFIRMED只表示所标注的事实范围有依据；不等于全字段齐全、日文版一致、译文批准或已实现。null/空数组表示未确认。",
+  "expected_total": 2,
+  "maps": [
+    {
+      "id": "macmillan_estate",
+      "name_ja": null,
+      "name_en": "MacMillan Estate",
+      "name_zh": "麦克米伦庄园",
+      "translation_status": "DRAFT",
+      "japanese_text_status": "CHECK_REQUIRED",
+      "source_level": "B",
+      "source_ref": [
+        "B01:p3地图名称",
+        "B11:本次地图评级例外",
+        "D28:P1中文标题佐证"
+      ],
+      "status": "CONFIRMED",
+      "identity_status": "CONFIRMED",
+      "nodes": [
+        {
+          "id": "mine_depths",
+          "name_ja": null,
+          "name_en": "Mine Depths",
+          "name_zh": "矿井深处",
+          "translation_status": "OFFICIAL_ZH_PRINT",
+          "japanese_text_status": "CHECK_REQUIRED",
+          "source_level": "B",
+          "source_ref": [
+            "B11:房间位置与连线端点",
+            "D28:P1对应房间"
+          ],
+          "status": "CONFIRMED",
+          "name_status": "CHECK_REQUIRED",
+          "initial_prop_counts": {
+            "objective": 1,
+            "boldness": 1,
+            "survival": 0,
+            "altruism": 1
+          },
+          "spawn_faces": [],
+          "coordinates": null,
+          "translation_note": "按入库说明转录 P1 的中文印刷字样；D 级照片不能单独证明出版授权/版次，未标用户 APPROVED。",
+          "previous_draft_name_zh": null,
+          "confirmed_scope": [
+            "room_identity_and_topology"
+          ],
+          "field_evidence": {
+            "name_zh": {
+              "source_level": "D",
+              "source_ref": [
+                "D28:P1房间标题"
+              ],
+              "status": "CONFIRMED",
+              "transcription_status": "OFFICIAL_ZH_PRINT",
+              "authorization_and_printing_status": "CHECK_REQUIRED",
+              "previous_research_status": "CHECK_REQUIRED",
+              "adoption_basis": "USER_ACCEPTED_CN_RETAIL",
+              "adoption_ref": "U02:来源优先级与Phase1采用",
+              "japanese_missing_blocks_runtime": false
+            },
+            "name_en": {
+              "source_level": "D",
+              "source_ref": [
+                "D29:P2房名"
+              ],
+              "status": "CHECK_REQUIRED"
+            },
+            "initial_prop_counts": {
+              "source_level": "B",
+              "source_ref": [
+                "B11:房间标题下彩色图标",
+                "B01:p7开局示意中的四色道具",
+                "D28:P1彩色图标"
+              ],
+              "status": "CONFIRMED",
+              "previous_research_status": "CONFIRMED",
+              "adoption_basis": "USER_ACCEPTED_CN_RETAIL",
+              "adoption_ref": "U02:来源优先级与Phase1采用",
+              "japanese_missing_blocks_runtime": false
+            },
+            "spawn_faces": {
+              "source_level": "B",
+              "source_ref": [
+                "B11:房名左侧黑底骰面标记",
+                "B01:p5/p6/p16含义"
+              ],
+              "status": "CONFIRMED",
+              "previous_research_status": "CONFIRMED",
+              "adoption_basis": "USER_ACCEPTED_CN_RETAIL",
+              "adoption_ref": "U02:来源优先级与Phase1采用",
+              "japanese_missing_blocks_runtime": false
+            }
+          },
+          "previous_research_status": "CONFIRMED",
+          "adoption_basis": "USER_ACCEPTED_CN_RETAIL",
+          "adoption_ref": "U02:来源优先级与Phase1采用",
+          "japanese_missing_blocks_runtime": false
+        },
+        {
+          "id": "mine_entrance",
+          "name_ja": null,
+          "name_en": "Mine Entrance",
+          "name_zh": "矿井入口",
+          "translation_status": "OFFICIAL_ZH_PRINT",
+          "japanese_text_status": "CHECK_REQUIRED",
+          "source_level": "B",
+          "source_ref": [
+            "B11:房间位置与连线端点",
+            "D28:P1对应房间"
+          ],
+          "status": "CONFIRMED",
+          "name_status": "CHECK_REQUIRED",
+          "initial_prop_counts": {
+            "objective": 1,
+            "boldness": 1,
+            "survival": 0,
+            "altruism": 2
+          },
+          "spawn_faces": [
+            2
+          ],
+          "coordinates": null,
+          "translation_note": "按入库说明转录 P1 的中文印刷字样；D 级照片不能单独证明出版授权/版次，未标用户 APPROVED。",
+          "previous_draft_name_zh": null,
+          "confirmed_scope": [
+            "room_identity_and_topology"
+          ],
+          "field_evidence": {
+            "name_zh": {
+              "source_level": "D",
+              "source_ref": [
+                "D28:P1房间标题"
+              ],
+              "status": "CONFIRMED",
+              "transcription_status": "OFFICIAL_ZH_PRINT",
+              "authorization_and_printing_status": "CHECK_REQUIRED",
+              "previous_research_status": "CHECK_REQUIRED",
+              "adoption_basis": "USER_ACCEPTED_CN_RETAIL",
+              "adoption_ref": "U02:来源优先级与Phase1采用",
+              "japanese_missing_blocks_runtime": false
+            },
+            "name_en": {
+              "source_level": "D",
+              "source_ref": [
+                "D29:P2房名"
+              ],
+              "status": "CHECK_REQUIRED"
+            },
+            "initial_prop_counts": {
+              "source_level": "B",
+              "source_ref": [
+                "B11:房间标题下彩色图标",
+                "B01:p7开局示意中的四色道具",
+                "D28:P1彩色图标"
+              ],
+              "status": "CONFIRMED",
+              "previous_research_status": "CONFIRMED",
+              "adoption_basis": "USER_ACCEPTED_CN_RETAIL",
+              "adoption_ref": "U02:来源优先级与Phase1采用",
+              "japanese_missing_blocks_runtime": false
+            },
+            "spawn_faces": {
+              "source_level": "B",
+              "source_ref": [
+                "B11:房名左侧黑底骰面标记",
+                "B01:p5/p6/p16含义"
+              ],
+              "status": "CONFIRMED",
+              "previous_research_status": "CONFIRMED",
+              "adoption_basis": "USER_ACCEPTED_CN_RETAIL",
+              "adoption_ref": "U02:来源优先级与Phase1采用",
+              "japanese_missing_blocks_runtime": false
+            }
+          },
+          "previous_research_status": "CONFIRMED",
+          "adoption_basis": "USER_ACCEPTED_CN_RETAIL",
+          "adoption_ref": "U02:来源优先级与Phase1采用",
+          "japanese_missing_blocks_runtime": false
+        },
+        {
+          "id": "foundry_upper_floor",
+          "name_ja": null,
+          "name_en": "Foundry Upper Floor",
+          "name_zh": "熔炉上层",
+          "translation_status": "OFFICIAL_ZH_PRINT",
+          "japanese_text_status": "CHECK_REQUIRED",
+          "source_level": "B",
+          "source_ref": [
+            "B01:p5地图示例",
+            "B11:房间位置与连线端点",
+            "D28:P1对应房间"
+          ],
+          "status": "CONFIRMED",
+          "name_status": "CONFIRMED",
+          "initial_prop_counts": {
+            "objective": 1,
+            "boldness": 1,
+            "survival": 1,
+            "altruism": 1
+          },
+          "spawn_faces": [
+            1
+          ],
+          "coordinates": null,
+          "translation_note": "按入库说明转录 P1 的中文印刷字样；D 级照片不能单独证明出版授权/版次，未标用户 APPROVED。",
+          "previous_draft_name_zh": "铸造厂上层",
+          "confirmed_scope": [
+            "room_identity_and_topology"
+          ],
+          "field_evidence": {
+            "name_zh": {
+              "source_level": "D",
+              "source_ref": [
+                "D28:P1房间标题"
+              ],
+              "status": "CONFIRMED",
+              "transcription_status": "OFFICIAL_ZH_PRINT",
+              "authorization_and_printing_status": "CHECK_REQUIRED",
+              "previous_research_status": "CHECK_REQUIRED",
+              "adoption_basis": "USER_ACCEPTED_CN_RETAIL",
+              "adoption_ref": "U02:来源优先级与Phase1采用",
+              "japanese_missing_blocks_runtime": false
+            },
+            "name_en": {
+              "source_level": "B",
+              "source_ref": [
+                "B01:p5地图示例"
+              ],
+              "status": "CONFIRMED"
+            },
+            "initial_prop_counts": {
+              "source_level": "B",
+              "source_ref": [
+                "B11:房间标题下彩色图标",
+                "B01:p7开局示意中的四色道具",
+                "D28:P1彩色图标"
+              ],
+              "status": "CONFIRMED",
+              "previous_research_status": "CONFIRMED",
+              "adoption_basis": "USER_ACCEPTED_CN_RETAIL",
+              "adoption_ref": "U02:来源优先级与Phase1采用",
+              "japanese_missing_blocks_runtime": false
+            },
+            "spawn_faces": {
+              "source_level": "B",
+              "source_ref": [
+                "B11:房名左侧黑底骰面标记",
+                "B01:p5/p6/p16含义"
+              ],
+              "status": "CONFIRMED",
+              "previous_research_status": "CONFIRMED",
+              "adoption_basis": "USER_ACCEPTED_CN_RETAIL",
+              "adoption_ref": "U02:来源优先级与Phase1采用",
+              "japanese_missing_blocks_runtime": false
+            }
+          },
+          "previous_research_status": "CONFIRMED",
+          "adoption_basis": "USER_ACCEPTED_CN_RETAIL",
+          "adoption_ref": "U02:来源优先级与Phase1采用",
+          "japanese_missing_blocks_runtime": false
+        },
+        {
+          "id": "coal_tower_upper",
+          "name_ja": null,
+          "name_en": "Coal Tower Upper Floor",
+          "name_zh": "煤矿废塔上层",
+          "translation_status": "OFFICIAL_ZH_PRINT",
+          "japanese_text_status": "CHECK_REQUIRED",
+          "source_level": "B",
+          "source_ref": [
+            "B11:房间位置与连线端点",
+            "D28:P1对应房间"
+          ],
+          "status": "CONFIRMED",
+          "name_status": "CHECK_REQUIRED",
+          "initial_prop_counts": {
+            "objective": 1,
+            "boldness": 0,
+            "survival": 2,
+            "altruism": 1
+          },
+          "spawn_faces": [
+            3
+          ],
+          "coordinates": null,
+          "translation_note": "按入库说明转录 P1 的中文印刷字样；D 级照片不能单独证明出版授权/版次，未标用户 APPROVED。",
+          "previous_draft_name_zh": null,
+          "confirmed_scope": [
+            "room_identity_and_topology"
+          ],
+          "field_evidence": {
+            "name_zh": {
+              "source_level": "D",
+              "source_ref": [
+                "D28:P1房间标题"
+              ],
+              "status": "CONFIRMED",
+              "transcription_status": "OFFICIAL_ZH_PRINT",
+              "authorization_and_printing_status": "CHECK_REQUIRED",
+              "previous_research_status": "CHECK_REQUIRED",
+              "adoption_basis": "USER_ACCEPTED_CN_RETAIL",
+              "adoption_ref": "U02:来源优先级与Phase1采用",
+              "japanese_missing_blocks_runtime": false
+            },
+            "name_en": {
+              "source_level": "D",
+              "source_ref": [
+                "D29:P2房名"
+              ],
+              "status": "CHECK_REQUIRED"
+            },
+            "initial_prop_counts": {
+              "source_level": "B",
+              "source_ref": [
+                "B11:房间标题下彩色图标",
+                "B01:p7开局示意中的四色道具",
+                "D28:P1彩色图标"
+              ],
+              "status": "CONFIRMED",
+              "previous_research_status": "CONFIRMED",
+              "adoption_basis": "USER_ACCEPTED_CN_RETAIL",
+              "adoption_ref": "U02:来源优先级与Phase1采用",
+              "japanese_missing_blocks_runtime": false
+            },
+            "spawn_faces": {
+              "source_level": "D",
+              "source_ref": [
+                "U01:Q05 用户裁定 + 零售照 P1",
+                "D28:reference/maps/macmillan_cn_retail_xhs.jpg",
+                "D30:III放大"
+              ],
+              "status": "CONFIRMED",
+              "decision_basis": "USER_RULING",
+              "ruling_id": "Q05",
+              "note": "用于本项目的明确用户裁定，未将D级零售照伪升A/B；历史候选3/4保留。",
+              "previous_research_status": "CONFIRMED",
+              "adoption_basis": "USER_ACCEPTED_CN_RETAIL",
+              "adoption_ref": "U02:来源优先级与Phase1采用",
+              "japanese_missing_blocks_runtime": false
+            }
+          },
+          "spawn_face_candidates": [
+            {
+              "value": 3,
+              "source_ref": [
+                "D28:P1",
+                "D30:放大"
+              ]
+            },
+            {
+              "value": 4,
+              "source_ref": [
+                "D29:P2"
+              ]
+            }
+          ],
+          "previous_research_status": "CONFIRMED",
+          "adoption_basis": "USER_ACCEPTED_CN_RETAIL",
+          "adoption_ref": "U02:来源优先级与Phase1采用",
+          "japanese_missing_blocks_runtime": false
+        },
+        {
+          "id": "foundry_lower_floor",
+          "name_ja": null,
+          "name_en": null,
+          "name_zh": "熔炉下层",
+          "translation_status": "OFFICIAL_ZH_PRINT",
+          "japanese_text_status": "CHECK_REQUIRED",
+          "source_level": "B",
+          "source_ref": [
+            "B11:房间位置与连线端点",
+            "D28:P1对应房间"
+          ],
+          "status": "CONFIRMED",
+          "name_status": "CHECK_REQUIRED",
+          "initial_prop_counts": {
+            "objective": 1,
+            "boldness": 1,
+            "survival": 1,
+            "altruism": 2
+          },
+          "spawn_faces": [],
+          "coordinates": null,
+          "translation_note": "按入库说明转录 P1 的中文印刷字样；D 级照片不能单独证明出版授权/版次，未标用户 APPROVED。",
+          "previous_draft_name_zh": null,
+          "confirmed_scope": [
+            "room_identity_and_topology"
+          ],
+          "field_evidence": {
+            "name_zh": {
+              "source_level": "D",
+              "source_ref": [
+                "D28:P1房间标题"
+              ],
+              "status": "CONFIRMED",
+              "transcription_status": "OFFICIAL_ZH_PRINT",
+              "authorization_and_printing_status": "CHECK_REQUIRED",
+              "previous_research_status": "CHECK_REQUIRED",
+              "adoption_basis": "USER_ACCEPTED_CN_RETAIL",
+              "adoption_ref": "U02:来源优先级与Phase1采用",
+              "japanese_missing_blocks_runtime": false
+            },
+            "name_en": {
+              "source_level": "D",
+              "source_ref": [
+                "D29:P2房名"
+              ],
+              "status": "CHECK_REQUIRED",
+              "note": "Lower Floor 只在草稿中推断；P2重复印 Upper Floor，正式英文值保留 null。Q06。",
+              "development_blocking": false,
+              "user_processing_decision_ref": "U01:Q06 保持CHECK_REQUIRED，不影响开发"
+            },
+            "initial_prop_counts": {
+              "source_level": "B",
+              "source_ref": [
+                "B11:房间标题下彩色图标",
+                "B01:p7开局示意中的四色道具",
+                "D28:P1彩色图标"
+              ],
+              "status": "CONFIRMED",
+              "previous_research_status": "CONFIRMED",
+              "adoption_basis": "USER_ACCEPTED_CN_RETAIL",
+              "adoption_ref": "U02:来源优先级与Phase1采用",
+              "japanese_missing_blocks_runtime": false
+            },
+            "spawn_faces": {
+              "source_level": "B",
+              "source_ref": [
+                "B11:房名左侧黑底骰面标记",
+                "B01:p5/p6/p16含义"
+              ],
+              "status": "CONFIRMED",
+              "previous_research_status": "CONFIRMED",
+              "adoption_basis": "USER_ACCEPTED_CN_RETAIL",
+              "adoption_ref": "U02:来源优先级与Phase1采用",
+              "japanese_missing_blocks_runtime": false
+            }
+          },
+          "previous_research_status": "CONFIRMED",
+          "adoption_basis": "USER_ACCEPTED_CN_RETAIL",
+          "adoption_ref": "U02:来源优先级与Phase1采用",
+          "japanese_missing_blocks_runtime": false
+        },
+        {
+          "id": "ancient_tree",
+          "name_ja": null,
+          "name_en": "Ancient Tree",
+          "name_zh": "古树",
+          "translation_status": "OFFICIAL_ZH_PRINT",
+          "japanese_text_status": "CHECK_REQUIRED",
+          "source_level": "B",
+          "source_ref": [
+            "B01:p16地图示例",
+            "B11:房间位置与连线端点",
+            "D28:P1对应房间"
+          ],
+          "status": "CONFIRMED",
+          "name_status": "CONFIRMED",
+          "initial_prop_counts": {
+            "objective": 1,
+            "boldness": 1,
+            "survival": 0,
+            "altruism": 2
+          },
+          "spawn_faces": [
+            5
+          ],
+          "coordinates": null,
+          "translation_note": "按入库说明转录 P1 的中文印刷字样；D 级照片不能单独证明出版授权/版次，未标用户 APPROVED。",
+          "previous_draft_name_zh": "古树",
+          "confirmed_scope": [
+            "room_identity_and_topology"
+          ],
+          "field_evidence": {
+            "name_zh": {
+              "source_level": "D",
+              "source_ref": [
+                "D28:P1房间标题"
+              ],
+              "status": "CONFIRMED",
+              "transcription_status": "OFFICIAL_ZH_PRINT",
+              "authorization_and_printing_status": "CHECK_REQUIRED",
+              "previous_research_status": "CHECK_REQUIRED",
+              "adoption_basis": "USER_ACCEPTED_CN_RETAIL",
+              "adoption_ref": "U02:来源优先级与Phase1采用",
+              "japanese_missing_blocks_runtime": false
+            },
+            "name_en": {
+              "source_level": "B",
+              "source_ref": [
+                "B01:p16地图示例"
+              ],
+              "status": "CONFIRMED"
+            },
+            "initial_prop_counts": {
+              "source_level": "B",
+              "source_ref": [
+                "B11:房间标题下彩色图标",
+                "B01:p7开局示意中的四色道具",
+                "D28:P1彩色图标"
+              ],
+              "status": "CONFIRMED",
+              "previous_research_status": "CONFIRMED",
+              "adoption_basis": "USER_ACCEPTED_CN_RETAIL",
+              "adoption_ref": "U02:来源优先级与Phase1采用",
+              "japanese_missing_blocks_runtime": false
+            },
+            "spawn_faces": {
+              "source_level": "B",
+              "source_ref": [
+                "B11:房名左侧黑底骰面标记",
+                "B01:p5/p6/p16含义"
+              ],
+              "status": "CONFIRMED",
+              "previous_research_status": "CONFIRMED",
+              "adoption_basis": "USER_ACCEPTED_CN_RETAIL",
+              "adoption_ref": "U02:来源优先级与Phase1采用",
+              "japanese_missing_blocks_runtime": false
+            }
+          },
+          "previous_research_status": "CONFIRMED",
+          "adoption_basis": "USER_ACCEPTED_CN_RETAIL",
+          "adoption_ref": "U02:来源优先级与Phase1采用",
+          "japanese_missing_blocks_runtime": false
+        },
+        {
+          "id": "coal_tower_ground",
+          "name_ja": null,
+          "name_en": "Coal Tower Ground Floor",
+          "name_zh": "煤矿废塔下层",
+          "translation_status": "OFFICIAL_ZH_PRINT",
+          "japanese_text_status": "CHECK_REQUIRED",
+          "source_level": "B",
+          "source_ref": [
+            "B11:房间位置与连线端点",
+            "D28:P1对应房间"
+          ],
+          "status": "CONFIRMED",
+          "name_status": "CHECK_REQUIRED",
+          "initial_prop_counts": {
+            "objective": 0,
+            "boldness": 1,
+            "survival": 2,
+            "altruism": 1
+          },
+          "spawn_faces": [],
+          "coordinates": null,
+          "translation_note": "按入库说明转录 P1 的中文印刷字样；D 级照片不能单独证明出版授权/版次，未标用户 APPROVED。",
+          "previous_draft_name_zh": null,
+          "confirmed_scope": [
+            "room_identity_and_topology"
+          ],
+          "field_evidence": {
+            "name_zh": {
+              "source_level": "D",
+              "source_ref": [
+                "D28:P1房间标题"
+              ],
+              "status": "CONFIRMED",
+              "transcription_status": "OFFICIAL_ZH_PRINT",
+              "authorization_and_printing_status": "CHECK_REQUIRED",
+              "previous_research_status": "CHECK_REQUIRED",
+              "adoption_basis": "USER_ACCEPTED_CN_RETAIL",
+              "adoption_ref": "U02:来源优先级与Phase1采用",
+              "japanese_missing_blocks_runtime": false
+            },
+            "name_en": {
+              "source_level": "D",
+              "source_ref": [
+                "D29:P2房名"
+              ],
+              "status": "CHECK_REQUIRED"
+            },
+            "initial_prop_counts": {
+              "source_level": "B",
+              "source_ref": [
+                "B11:房间标题下彩色图标",
+                "B01:p7开局示意中的四色道具",
+                "D28:P1彩色图标"
+              ],
+              "status": "CONFIRMED",
+              "previous_research_status": "CONFIRMED",
+              "adoption_basis": "USER_ACCEPTED_CN_RETAIL",
+              "adoption_ref": "U02:来源优先级与Phase1采用",
+              "japanese_missing_blocks_runtime": false
+            },
+            "spawn_faces": {
+              "source_level": "B",
+              "source_ref": [
+                "B11:房名左侧黑底骰面标记",
+                "B01:p5/p6/p16含义"
+              ],
+              "status": "CONFIRMED",
+              "previous_research_status": "CONFIRMED",
+              "adoption_basis": "USER_ACCEPTED_CN_RETAIL",
+              "adoption_ref": "U02:来源优先级与Phase1采用",
+              "japanese_missing_blocks_runtime": false
+            }
+          },
+          "previous_research_status": "CONFIRMED",
+          "adoption_basis": "USER_ACCEPTED_CN_RETAIL",
+          "adoption_ref": "U02:来源优先级与Phase1采用",
+          "japanese_missing_blocks_runtime": false
+        },
+        {
+          "id": "scrapyard",
+          "name_ja": null,
+          "name_en": "Scrapyard",
+          "name_zh": "废品场",
+          "translation_status": "OFFICIAL_ZH_PRINT",
+          "japanese_text_status": "CHECK_REQUIRED",
+          "source_level": "B",
+          "source_ref": [
+            "B01:p16地图示例",
+            "B11:房间位置与连线端点",
+            "D28:P1对应房间"
+          ],
+          "status": "CONFIRMED",
+          "name_status": "CONFIRMED",
+          "initial_prop_counts": {
+            "objective": 1,
+            "boldness": 1,
+            "survival": 2,
+            "altruism": 0
+          },
+          "spawn_faces": [
+            4
+          ],
+          "coordinates": null,
+          "translation_note": "按入库说明转录 P1 的中文印刷字样；D 级照片不能单独证明出版授权/版次，未标用户 APPROVED。",
+          "previous_draft_name_zh": "废料场",
+          "confirmed_scope": [
+            "room_identity_and_topology"
+          ],
+          "field_evidence": {
+            "name_zh": {
+              "source_level": "D",
+              "source_ref": [
+                "D28:P1房间标题"
+              ],
+              "status": "CONFIRMED",
+              "transcription_status": "OFFICIAL_ZH_PRINT",
+              "authorization_and_printing_status": "CHECK_REQUIRED",
+              "previous_research_status": "CHECK_REQUIRED",
+              "adoption_basis": "USER_ACCEPTED_CN_RETAIL",
+              "adoption_ref": "U02:来源优先级与Phase1采用",
+              "japanese_missing_blocks_runtime": false
+            },
+            "name_en": {
+              "source_level": "B",
+              "source_ref": [
+                "B01:p16地图示例"
+              ],
+              "status": "CONFIRMED"
+            },
+            "initial_prop_counts": {
+              "source_level": "B",
+              "source_ref": [
+                "B11:房间标题下彩色图标",
+                "B01:p7开局示意中的四色道具",
+                "D28:P1彩色图标"
+              ],
+              "status": "CONFIRMED",
+              "previous_research_status": "CONFIRMED",
+              "adoption_basis": "USER_ACCEPTED_CN_RETAIL",
+              "adoption_ref": "U02:来源优先级与Phase1采用",
+              "japanese_missing_blocks_runtime": false
+            },
+            "spawn_faces": {
+              "source_level": "B",
+              "source_ref": [
+                "B11:房名左侧黑底骰面标记",
+                "B01:p5/p6/p16含义"
+              ],
+              "status": "CONFIRMED",
+              "previous_research_status": "CONFIRMED",
+              "adoption_basis": "USER_ACCEPTED_CN_RETAIL",
+              "adoption_ref": "U02:来源优先级与Phase1采用",
+              "japanese_missing_blocks_runtime": false
+            }
+          },
+          "previous_research_status": "CONFIRMED",
+          "adoption_basis": "USER_ACCEPTED_CN_RETAIL",
+          "adoption_ref": "U02:来源优先级与Phase1采用",
+          "japanese_missing_blocks_runtime": false
+        },
+        {
+          "id": "foundry_basement",
+          "name_ja": null,
+          "name_en": "Foundry Basement",
+          "name_zh": "熔炉地下室",
+          "translation_status": "OFFICIAL_ZH_PRINT",
+          "japanese_text_status": "CHECK_REQUIRED",
+          "source_level": "B",
+          "source_ref": [
+            "B01:p16地图示例",
+            "B11:房间位置与连线端点",
+            "D28:P1对应房间"
+          ],
+          "status": "CONFIRMED",
+          "name_status": "CONFIRMED",
+          "initial_prop_counts": {
+            "objective": 1,
+            "boldness": 1,
+            "survival": 1,
+            "altruism": 1
+          },
+          "spawn_faces": [],
+          "coordinates": null,
+          "translation_note": "按入库说明转录 P1 的中文印刷字样；D 级照片不能单独证明出版授权/版次，未标用户 APPROVED。",
+          "previous_draft_name_zh": "铸造厂地下室",
+          "confirmed_scope": [
+            "room_identity_and_topology"
+          ],
+          "field_evidence": {
+            "name_zh": {
+              "source_level": "D",
+              "source_ref": [
+                "D28:P1房间标题"
+              ],
+              "status": "CONFIRMED",
+              "transcription_status": "OFFICIAL_ZH_PRINT",
+              "authorization_and_printing_status": "CHECK_REQUIRED",
+              "previous_research_status": "CHECK_REQUIRED",
+              "adoption_basis": "USER_ACCEPTED_CN_RETAIL",
+              "adoption_ref": "U02:来源优先级与Phase1采用",
+              "japanese_missing_blocks_runtime": false
+            },
+            "name_en": {
+              "source_level": "B",
+              "source_ref": [
+                "B01:p16地图示例"
+              ],
+              "status": "CONFIRMED"
+            },
+            "initial_prop_counts": {
+              "source_level": "B",
+              "source_ref": [
+                "B11:房间标题下彩色图标",
+                "B01:p7开局示意中的四色道具",
+                "D28:P1彩色图标"
+              ],
+              "status": "CONFIRMED",
+              "previous_research_status": "CONFIRMED",
+              "adoption_basis": "USER_ACCEPTED_CN_RETAIL",
+              "adoption_ref": "U02:来源优先级与Phase1采用",
+              "japanese_missing_blocks_runtime": false
+            },
+            "spawn_faces": {
+              "source_level": "B",
+              "source_ref": [
+                "B11:房名左侧黑底骰面标记",
+                "B01:p5/p6/p16含义"
+              ],
+              "status": "CONFIRMED",
+              "previous_research_status": "CONFIRMED",
+              "adoption_basis": "USER_ACCEPTED_CN_RETAIL",
+              "adoption_ref": "U02:来源优先级与Phase1采用",
+              "japanese_missing_blocks_runtime": false
+            }
+          },
+          "previous_research_status": "CONFIRMED",
+          "adoption_basis": "USER_ACCEPTED_CN_RETAIL",
+          "adoption_ref": "U02:来源优先级与Phase1采用",
+          "japanese_missing_blocks_runtime": false
+        },
+        {
+          "id": "shack",
+          "name_ja": null,
+          "name_en": "Shack",
+          "name_zh": "木屋",
+          "translation_status": "OFFICIAL_ZH_PRINT",
+          "japanese_text_status": "CHECK_REQUIRED",
+          "source_level": "B",
+          "source_ref": [
+            "B01:p16地图示例",
+            "B11:房间位置与连线端点",
+            "D28:P1对应房间"
+          ],
+          "status": "CONFIRMED",
+          "name_status": "CONFIRMED",
+          "initial_prop_counts": {
+            "objective": 1,
+            "boldness": 1,
+            "survival": 2,
+            "altruism": 0
+          },
+          "spawn_faces": [],
+          "coordinates": null,
+          "translation_note": "按入库说明转录 P1 的中文印刷字样；D 级照片不能单独证明出版授权/版次，未标用户 APPROVED。",
+          "previous_draft_name_zh": "小屋",
+          "confirmed_scope": [
+            "room_identity_and_topology"
+          ],
+          "field_evidence": {
+            "name_zh": {
+              "source_level": "D",
+              "source_ref": [
+                "D28:P1房间标题"
+              ],
+              "status": "CONFIRMED",
+              "transcription_status": "OFFICIAL_ZH_PRINT",
+              "authorization_and_printing_status": "CHECK_REQUIRED",
+              "previous_research_status": "CHECK_REQUIRED",
+              "adoption_basis": "USER_ACCEPTED_CN_RETAIL",
+              "adoption_ref": "U02:来源优先级与Phase1采用",
+              "japanese_missing_blocks_runtime": false
+            },
+            "name_en": {
+              "source_level": "B",
+              "source_ref": [
+                "B01:p16地图示例"
+              ],
+              "status": "CONFIRMED"
+            },
+            "initial_prop_counts": {
+              "source_level": "B",
+              "source_ref": [
+                "B11:房间标题下彩色图标",
+                "B01:p7开局示意中的四色道具",
+                "D28:P1彩色图标"
+              ],
+              "status": "CONFIRMED",
+              "previous_research_status": "CONFIRMED",
+              "adoption_basis": "USER_ACCEPTED_CN_RETAIL",
+              "adoption_ref": "U02:来源优先级与Phase1采用",
+              "japanese_missing_blocks_runtime": false
+            },
+            "spawn_faces": {
+              "source_level": "B",
+              "source_ref": [
+                "B11:房名左侧黑底骰面标记",
+                "B01:p5/p6/p16含义"
+              ],
+              "status": "CONFIRMED",
+              "previous_research_status": "CONFIRMED",
+              "adoption_basis": "USER_ACCEPTED_CN_RETAIL",
+              "adoption_ref": "U02:来源优先级与Phase1采用",
+              "japanese_missing_blocks_runtime": false
+            }
+          },
+          "previous_research_status": "CONFIRMED",
+          "adoption_basis": "USER_ACCEPTED_CN_RETAIL",
+          "adoption_ref": "U02:来源优先级与Phase1采用",
+          "japanese_missing_blocks_runtime": false
+        },
+        {
+          "id": "backlot",
+          "name_ja": null,
+          "name_en": "Backlot",
+          "name_zh": "露天场地",
+          "translation_status": "OFFICIAL_ZH_PRINT",
+          "japanese_text_status": "CHECK_REQUIRED",
+          "source_level": "B",
+          "source_ref": [
+            "B11:房间位置与连线端点",
+            "D28:P1对应房间"
+          ],
+          "status": "CONFIRMED",
+          "name_status": "CHECK_REQUIRED",
+          "initial_prop_counts": {
+            "objective": 1,
+            "boldness": 1,
+            "survival": 1,
+            "altruism": 1
+          },
+          "spawn_faces": [
+            0
+          ],
+          "coordinates": null,
+          "translation_note": "按入库说明转录 P1 的中文印刷字样；D 级照片不能单独证明出版授权/版次，未标用户 APPROVED。",
+          "previous_draft_name_zh": null,
+          "confirmed_scope": [
+            "room_identity_and_topology"
+          ],
+          "field_evidence": {
+            "name_zh": {
+              "source_level": "D",
+              "source_ref": [
+                "D28:P1房间标题"
+              ],
+              "status": "CONFIRMED",
+              "transcription_status": "OFFICIAL_ZH_PRINT",
+              "authorization_and_printing_status": "CHECK_REQUIRED",
+              "previous_research_status": "CHECK_REQUIRED",
+              "adoption_basis": "USER_ACCEPTED_CN_RETAIL",
+              "adoption_ref": "U02:来源优先级与Phase1采用",
+              "japanese_missing_blocks_runtime": false
+            },
+            "name_en": {
+              "source_level": "D",
+              "source_ref": [
+                "D29:P2房名"
+              ],
+              "status": "CHECK_REQUIRED"
+            },
+            "initial_prop_counts": {
+              "source_level": "B",
+              "source_ref": [
+                "B11:房间标题下彩色图标",
+                "B01:p7开局示意中的四色道具",
+                "D28:P1彩色图标"
+              ],
+              "status": "CONFIRMED",
+              "previous_research_status": "CONFIRMED",
+              "adoption_basis": "USER_ACCEPTED_CN_RETAIL",
+              "adoption_ref": "U02:来源优先级与Phase1采用",
+              "japanese_missing_blocks_runtime": false
+            },
+            "spawn_faces": {
+              "source_level": "B",
+              "source_ref": [
+                "B11:房名左侧黑底骰面标记",
+                "B01:p5/p6/p16含义"
+              ],
+              "status": "CONFIRMED",
+              "previous_research_status": "CONFIRMED",
+              "adoption_basis": "USER_ACCEPTED_CN_RETAIL",
+              "adoption_ref": "U02:来源优先级与Phase1采用",
+              "japanese_missing_blocks_runtime": false
+            }
+          },
+          "previous_research_status": "CONFIRMED",
+          "adoption_basis": "USER_ACCEPTED_CN_RETAIL",
+          "adoption_ref": "U02:来源优先级与Phase1采用",
+          "japanese_missing_blocks_runtime": false
+        }
+      ],
+      "edges": [
+        {
+          "id": "mm_p01",
+          "from": "mine_depths",
+          "to": "mine_entrance",
+          "color": "red",
+          "direction": "both",
+          "special_state": "NONE_AT_SETUP",
+          "source_level": "B",
+          "source_ref": [
+            "B11:mm_p01端点/颜色/箭头/初始墙",
+            "B01:p5/p6破损边框含义",
+            "D28:P1",
+            "D29:P2辅助"
+          ],
+          "status": "CONFIRMED",
+          "jagged": false,
+          "verification_note": "上排红色蹲伏图标清晰，补 P1 反光处。",
+          "previous_research_status": "CONFIRMED",
+          "adoption_basis": "USER_ACCEPTED_CN_RETAIL",
+          "adoption_ref": "U02:来源优先级与Phase1采用",
+          "japanese_missing_blocks_runtime": false
+        },
+        {
+          "id": "mm_p02",
+          "from": "foundry_upper_floor",
+          "to": "mine_entrance",
+          "color": "yellow",
+          "direction": "a_to_b",
+          "special_state": "NONE_AT_SETUP",
+          "source_level": "B",
+          "source_ref": [
+            "B11:mm_p02端点/颜色/箭头/初始墙",
+            "B01:p5/p6破损边框含义",
+            "D28:P1",
+            "D29:P2辅助"
+          ],
+          "status": "CONFIRMED",
+          "jagged": false,
+          "verification_note": "B11可沿连续色线核对两端；无箭头，非初始墙。",
+          "previous_research_status": "CONFIRMED",
+          "adoption_basis": "USER_ACCEPTED_CN_RETAIL",
+          "adoption_ref": "U02:来源优先级与Phase1采用",
+          "japanese_missing_blocks_runtime": false
+        },
+        {
+          "id": "mm_p03",
+          "from": "mine_depths",
+          "to": "ancient_tree",
+          "color": "green",
+          "direction": "both",
+          "special_state": "NONE_AT_SETUP",
+          "source_level": "B",
+          "source_ref": [
+            "B11:mm_p03端点/颜色/箭头/初始墙",
+            "B01:p5/p6破损边框含义",
+            "D28:P1",
+            "D29:P2辅助"
+          ],
+          "status": "CONFIRMED",
+          "jagged": false,
+          "verification_note": "B11可沿连续色线核对两端；无箭头，非初始墙。",
+          "previous_research_status": "CONFIRMED",
+          "adoption_basis": "USER_ACCEPTED_CN_RETAIL",
+          "adoption_ref": "U02:来源优先级与Phase1采用",
+          "japanese_missing_blocks_runtime": false
+        },
+        {
+          "id": "mm_p04",
+          "from": "mine_entrance",
+          "to": "ancient_tree",
+          "color": "blue",
+          "direction": "both",
+          "special_state": "NONE_AT_SETUP",
+          "source_level": "B",
+          "source_ref": [
+            "B11:mm_p04端点/颜色/箭头/初始墙",
+            "B01:p5/p6破损边框含义",
+            "D28:P1",
+            "D29:P2辅助"
+          ],
+          "status": "CONFIRMED",
+          "jagged": false,
+          "verification_note": "B11可沿连续色线核对两端；无箭头，非初始墙。",
+          "previous_research_status": "CONFIRMED",
+          "adoption_basis": "USER_ACCEPTED_CN_RETAIL",
+          "adoption_ref": "U02:来源优先级与Phase1采用",
+          "japanese_missing_blocks_runtime": false
+        },
+        {
+          "id": "mm_p05",
+          "from": "mine_depths",
+          "to": "shack",
+          "color": "blue",
+          "direction": "both",
+          "special_state": "BREAKABLE_WALL_AT_SETUP",
+          "source_level": "B",
+          "source_ref": [
+            "B11:mm_p05端点/颜色/箭头/初始墙",
+            "B01:p5/p6破损边框含义",
+            "D28:P1",
+            "D29:P2辅助"
+          ],
+          "status": "CONFIRMED",
+          "jagged": true,
+          "verification_note": "左外侧蓝线；白色墙道具的破损边框可见。",
+          "previous_research_status": "CONFIRMED",
+          "adoption_basis": "USER_ACCEPTED_CN_RETAIL",
+          "adoption_ref": "U02:来源优先级与Phase1采用",
+          "japanese_missing_blocks_runtime": false
+        },
+        {
+          "id": "mm_p06",
+          "from": "mine_entrance",
+          "to": "foundry_lower_floor",
+          "color": "green",
+          "direction": "both",
+          "special_state": "NONE_AT_SETUP",
+          "source_level": "B",
+          "source_ref": [
+            "B11:mm_p06端点/颜色/箭头/初始墙",
+            "B01:p5/p6破损边框含义",
+            "D28:P1",
+            "D29:P2辅助"
+          ],
+          "status": "CONFIRMED",
+          "jagged": false,
+          "verification_note": "B11可沿连续色线核对两端；无箭头，非初始墙。",
+          "previous_research_status": "CONFIRMED",
+          "adoption_basis": "USER_ACCEPTED_CN_RETAIL",
+          "adoption_ref": "U02:来源优先级与Phase1采用",
+          "japanese_missing_blocks_runtime": false
+        },
+        {
+          "id": "mm_p07",
+          "from": "foundry_upper_floor",
+          "to": "foundry_lower_floor",
+          "color": "blue",
+          "direction": "both",
+          "special_state": "NONE_AT_SETUP",
+          "source_level": "B",
+          "source_ref": [
+            "B11:mm_p07端点/颜色/箭头/初始墙",
+            "B01:p5/p6破损边框含义",
+            "D28:P1",
+            "D29:P2辅助"
+          ],
+          "status": "CONFIRMED",
+          "jagged": false,
+          "verification_note": "B11可沿连续色线核对两端；无箭头，非初始墙。",
+          "previous_research_status": "CONFIRMED",
+          "adoption_basis": "USER_ACCEPTED_CN_RETAIL",
+          "adoption_ref": "U02:来源优先级与Phase1采用",
+          "japanese_missing_blocks_runtime": false
+        },
+        {
+          "id": "mm_p08",
+          "from": "foundry_upper_floor",
+          "to": "coal_tower_ground",
+          "color": "red",
+          "direction": "both",
+          "special_state": "NONE_AT_SETUP",
+          "source_level": "B",
+          "source_ref": [
+            "B11:mm_p08端点/颜色/箭头/初始墙",
+            "B01:p5/p6破损边框含义",
+            "D28:P1",
+            "D29:P2辅助"
+          ],
+          "status": "CONFIRMED",
+          "jagged": false,
+          "verification_note": "B11可沿连续色线核对两端；无箭头，非初始墙。",
+          "previous_research_status": "CONFIRMED",
+          "adoption_basis": "USER_ACCEPTED_CN_RETAIL",
+          "adoption_ref": "U02:来源优先级与Phase1采用",
+          "japanese_missing_blocks_runtime": false
+        },
+        {
+          "id": "mm_p09",
+          "from": "foundry_upper_floor",
+          "to": "coal_tower_upper",
+          "color": "green",
+          "direction": "both",
+          "special_state": "NONE_AT_SETUP",
+          "source_level": "B",
+          "source_ref": [
+            "B11:mm_p09端点/颜色/箭头/初始墙",
+            "B01:p5/p6破损边框含义",
+            "D28:P1",
+            "D29:P2辅助"
+          ],
+          "status": "CONFIRMED",
+          "jagged": false,
+          "verification_note": "上排绿色奔跑图标清晰，补 P1 反光处。",
+          "previous_research_status": "CONFIRMED",
+          "adoption_basis": "USER_ACCEPTED_CN_RETAIL",
+          "adoption_ref": "U02:来源优先级与Phase1采用",
+          "japanese_missing_blocks_runtime": false
+        },
+        {
+          "id": "mm_p10",
+          "from": "coal_tower_upper",
+          "to": "coal_tower_ground",
+          "color": "blue",
+          "direction": "both",
+          "special_state": "NONE_AT_SETUP",
+          "source_level": "B",
+          "source_ref": [
+            "B11:mm_p10端点/颜色/箭头/初始墙",
+            "B01:p5/p6破损边框含义",
+            "D28:P1",
+            "D29:P2辅助"
+          ],
+          "status": "CONFIRMED",
+          "jagged": false,
+          "verification_note": "B11可沿连续色线核对两端；无箭头，非初始墙。",
+          "previous_research_status": "CONFIRMED",
+          "adoption_basis": "USER_ACCEPTED_CN_RETAIL",
+          "adoption_ref": "U02:来源优先级与Phase1采用",
+          "japanese_missing_blocks_runtime": false
+        },
+        {
+          "id": "mm_p11",
+          "from": "coal_tower_ground",
+          "to": "foundry_lower_floor",
+          "color": "yellow",
+          "direction": "a_to_b",
+          "special_state": "BREAKABLE_WALL_AT_SETUP",
+          "source_level": "B",
+          "source_ref": [
+            "B11:mm_p11端点/颜色/箭头/初始墙",
+            "B01:p5/p6破损边框含义",
+            "D28:P1",
+            "D29:P2辅助"
+          ],
+          "status": "CONFIRMED",
+          "jagged": true,
+          "verification_note": "右侧中层黄线左箭头及破损边框墙道具。",
+          "previous_research_status": "CONFIRMED",
+          "adoption_basis": "USER_ACCEPTED_CN_RETAIL",
+          "adoption_ref": "U02:来源优先级与Phase1采用",
+          "japanese_missing_blocks_runtime": false
+        },
+        {
+          "id": "mm_p12",
+          "from": "coal_tower_upper",
+          "to": "backlot",
+          "color": "yellow",
+          "direction": "a_to_b",
+          "special_state": "NONE_AT_SETUP",
+          "source_level": "B",
+          "source_ref": [
+            "B11:mm_p12端点/颜色/箭头/初始墙",
+            "B01:p5/p6破损边框含义",
+            "D28:P1",
+            "D29:P2辅助"
+          ],
+          "status": "CONFIRMED",
+          "jagged": false,
+          "verification_note": "右外侧黄线向下箭头。",
+          "previous_research_status": "CONFIRMED",
+          "adoption_basis": "USER_ACCEPTED_CN_RETAIL",
+          "adoption_ref": "U02:来源优先级与Phase1采用",
+          "japanese_missing_blocks_runtime": false
+        },
+        {
+          "id": "mm_p13",
+          "from": "coal_tower_ground",
+          "to": "backlot",
+          "color": "red",
+          "direction": "both",
+          "special_state": "NONE_AT_SETUP",
+          "source_level": "B",
+          "source_ref": [
+            "B11:mm_p13端点/颜色/箭头/初始墙",
+            "B01:p5/p6破损边框含义",
+            "D28:P1",
+            "D29:P2辅助"
+          ],
+          "status": "CONFIRMED",
+          "jagged": false,
+          "verification_note": "B11可沿连续色线核对两端；无箭头，非初始墙。",
+          "previous_research_status": "CONFIRMED",
+          "adoption_basis": "USER_ACCEPTED_CN_RETAIL",
+          "adoption_ref": "U02:来源优先级与Phase1采用",
+          "japanese_missing_blocks_runtime": false
+        },
+        {
+          "id": "mm_p14",
+          "from": "foundry_lower_floor",
+          "to": "scrapyard",
+          "color": "red",
+          "direction": "both",
+          "special_state": "NONE_AT_SETUP",
+          "source_level": "B",
+          "source_ref": [
+            "B11:mm_p14端点/颜色/箭头/初始墙",
+            "B01:p5/p6破损边框含义",
+            "D28:P1",
+            "D29:P2辅助"
+          ],
+          "status": "CONFIRMED",
+          "jagged": false,
+          "verification_note": "B11可沿连续色线核对两端；无箭头，非初始墙。",
+          "previous_research_status": "CONFIRMED",
+          "adoption_basis": "USER_ACCEPTED_CN_RETAIL",
+          "adoption_ref": "U02:来源优先级与Phase1采用",
+          "japanese_missing_blocks_runtime": false
+        },
+        {
+          "id": "mm_p15",
+          "from": "ancient_tree",
+          "to": "scrapyard",
+          "color": "blue",
+          "direction": "both",
+          "special_state": "NONE_AT_SETUP",
+          "source_level": "B",
+          "source_ref": [
+            "B11:mm_p15端点/颜色/箭头/初始墙",
+            "B01:p5/p6破损边框含义",
+            "D28:P1",
+            "D29:P2辅助"
+          ],
+          "status": "CONFIRMED",
+          "jagged": false,
+          "verification_note": "B11可沿连续色线核对两端；无箭头，非初始墙。",
+          "previous_research_status": "CONFIRMED",
+          "adoption_basis": "USER_ACCEPTED_CN_RETAIL",
+          "adoption_ref": "U02:来源优先级与Phase1采用",
+          "japanese_missing_blocks_runtime": false
+        },
+        {
+          "id": "mm_p16",
+          "from": "ancient_tree",
+          "to": "shack",
+          "color": "red",
+          "direction": "both",
+          "special_state": "NONE_AT_SETUP",
+          "source_level": "B",
+          "source_ref": [
+            "B11:mm_p16端点/颜色/箭头/初始墙",
+            "B01:p5/p6破损边框含义",
+            "D28:P1",
+            "D29:P2辅助"
+          ],
+          "status": "CONFIRMED",
+          "jagged": false,
+          "verification_note": "B11可沿连续色线核对两端；无箭头，非初始墙。",
+          "previous_research_status": "CONFIRMED",
+          "adoption_basis": "USER_ACCEPTED_CN_RETAIL",
+          "adoption_ref": "U02:来源优先级与Phase1采用",
+          "japanese_missing_blocks_runtime": false
+        },
+        {
+          "id": "mm_p17",
+          "from": "scrapyard",
+          "to": "shack",
+          "color": "green",
+          "direction": "both",
+          "special_state": "NONE_AT_SETUP",
+          "source_level": "B",
+          "source_ref": [
+            "B11:mm_p17端点/颜色/箭头/初始墙",
+            "B01:p5/p6破损边框含义",
+            "D28:P1",
+            "D29:P2辅助"
+          ],
+          "status": "CONFIRMED",
+          "jagged": false,
+          "verification_note": "B11可沿连续色线核对两端；无箭头，非初始墙。",
+          "previous_research_status": "CONFIRMED",
+          "adoption_basis": "USER_ACCEPTED_CN_RETAIL",
+          "adoption_ref": "U02:来源优先级与Phase1采用",
+          "japanese_missing_blocks_runtime": false
+        },
+        {
+          "id": "mm_p18",
+          "from": "foundry_lower_floor",
+          "to": "foundry_basement",
+          "color": "blue",
+          "direction": "both",
+          "special_state": "NONE_AT_SETUP",
+          "source_level": "B",
+          "source_ref": [
+            "B11:mm_p18端点/颜色/箭头/初始墙",
+            "B01:p5/p6破损边框含义",
+            "D28:P1",
+            "D29:P2辅助"
+          ],
+          "status": "CONFIRMED",
+          "jagged": false,
+          "verification_note": "B11可沿连续色线核对两端；无箭头，非初始墙。",
+          "previous_research_status": "CONFIRMED",
+          "adoption_basis": "USER_ACCEPTED_CN_RETAIL",
+          "adoption_ref": "U02:来源优先级与Phase1采用",
+          "japanese_missing_blocks_runtime": false
+        },
+        {
+          "id": "mm_p19",
+          "from": "foundry_lower_floor",
+          "to": "backlot",
+          "color": "green",
+          "direction": "both",
+          "special_state": "NONE_AT_SETUP",
+          "source_level": "B",
+          "source_ref": [
+            "B11:mm_p19端点/颜色/箭头/初始墙",
+            "B01:p5/p6破损边框含义",
+            "D28:P1",
+            "D29:P2辅助"
+          ],
+          "status": "CONFIRMED",
+          "jagged": false,
+          "verification_note": "B11可沿连续色线核对两端；无箭头，非初始墙。",
+          "previous_research_status": "CONFIRMED",
+          "adoption_basis": "USER_ACCEPTED_CN_RETAIL",
+          "adoption_ref": "U02:来源优先级与Phase1采用",
+          "japanese_missing_blocks_runtime": false
+        },
+        {
+          "id": "mm_p20",
+          "from": "foundry_basement",
+          "to": "backlot",
+          "color": "green",
+          "direction": "both",
+          "special_state": "NONE_AT_SETUP",
+          "source_level": "B",
+          "source_ref": [
+            "B11:mm_p20端点/颜色/箭头/初始墙",
+            "B01:p5/p6破损边框含义",
+            "D28:P1",
+            "D29:P2辅助"
+          ],
+          "status": "CONFIRMED",
+          "jagged": false,
+          "verification_note": "B11可沿连续色线核对两端；无箭头，非初始墙。",
+          "previous_research_status": "CONFIRMED",
+          "adoption_basis": "USER_ACCEPTED_CN_RETAIL",
+          "adoption_ref": "U02:来源优先级与Phase1采用",
+          "japanese_missing_blocks_runtime": false
+        },
+        {
+          "id": "mm_p21",
+          "from": "shack",
+          "to": "foundry_basement",
+          "color": "green",
+          "direction": "both",
+          "special_state": "BREAKABLE_WALL_AT_SETUP",
+          "source_level": "B",
+          "source_ref": [
+            "B11:mm_p21端点/颜色/箭头/初始墙",
+            "B01:p5/p6破损边框含义",
+            "D28:P1",
+            "D29:P2辅助"
+          ],
+          "status": "CONFIRMED",
+          "jagged": true,
+          "verification_note": "底部绿色横线及破损边框墙道具。",
+          "previous_research_status": "CONFIRMED",
+          "adoption_basis": "USER_ACCEPTED_CN_RETAIL",
+          "adoption_ref": "U02:来源优先级与Phase1采用",
+          "japanese_missing_blocks_runtime": false
+        },
+        {
+          "id": "mm_p22",
+          "from": "shack",
+          "to": "backlot",
+          "color": "yellow",
+          "direction": "a_to_b",
+          "special_state": "BREAKABLE_WALL_AT_SETUP",
+          "source_level": "B",
+          "source_ref": [
+            "B11:mm_p22端点/颜色/箭头/初始墙",
+            "B01:p5/p6破损边框含义",
+            "D28:P1",
+            "D29:P2辅助"
+          ],
+          "status": "CONFIRMED",
+          "jagged": true,
+          "verification_note": "最底部黄色横线向右箭头，破损边框墙道具；补 P1 裁切处。",
+          "previous_research_status": "CONFIRMED",
+          "adoption_basis": "USER_ACCEPTED_CN_RETAIL",
+          "adoption_ref": "U02:来源优先级与Phase1采用",
+          "japanese_missing_blocks_runtime": false
+        }
+      ],
+      "expected_node_count": 11,
+      "expected_edge_count": 22,
+      "topology_status": "CONFIRMED",
+      "preview_source_ref": [
+        "B01:p3/p5/p7/p16",
+        "C02",
+        "B11",
+        "D28",
+        "D29",
+        "D30"
+      ],
+      "missing_fields": [
+        "熔炉下层英文原名及新增房间英文名的最终印刷核验，Q06"
+      ],
+      "edge_schema": {
+        "id": "string",
+        "from": "node ID",
+        "to": "node ID",
+        "color": "CHECK_REQUIRED",
+        "direction": "CHECK_REQUIRED",
+        "special_state": "CHECK_REQUIRED",
+        "source_level": null,
+        "source_ref": [],
+        "status": "CHECK_REQUIRED"
+      },
+      "review_stage": "ADOPTED_FOR_PHASE_1",
+      "spawn_rule": {
+        "eligible_sides": [
+          "survivor",
+          "killer"
+        ],
+        "method": "ROLL_SKILL_CHECK_DIE_FOR_EACH_CHARACTER",
+        "exclusive_killer_room": null,
+        "source_level": "B",
+        "source_ref": [
+          "B01:p5/p6/p16"
+        ],
+        "status": "CONFIRMED",
+        "note": "0/头像是骰面标记，非杀手专属起点；煤矿废塔上层3按Q05用户裁定采用。"
+      },
+      "tracks": {
+        "sacrifice": {
+          "slots": 8,
+          "source_level": "B",
+          "source_ref": [
+            "B11:左上红轨8格",
+            "B01:p8/p11"
+          ],
+          "status": "CONFIRMED"
+        },
+        "generator": {
+          "slots": 5,
+          "layout_left_to_right": [
+            "exit_gate",
+            "generator",
+            "generator",
+            "generator",
+            "generator"
+          ],
+          "source_level": "B",
+          "source_ref": [
+            "B11:右上黄轨5格",
+            "B01:p5/p12/p13"
+          ],
+          "status": "CONFIRMED"
+        }
+      },
+      "prop_slot_legend": {
+        "Y": {
+          "category_id": "objective",
+          "source_level": "B",
+          "source_ref": [
+            "B01:p3道具图例",
+            "B01:p5房间准备",
+            "B11:彩色背面图标"
+          ],
+          "status": "CONFIRMED"
+        },
+        "R": {
+          "category_id": "boldness",
+          "source_level": "B",
+          "source_ref": [
+            "B01:p3道具图例",
+            "B01:p5房间准备",
+            "B11:彩色背面图标"
+          ],
+          "status": "CONFIRMED"
+        },
+        "B": {
+          "category_id": "survival",
+          "source_level": "B",
+          "source_ref": [
+            "B01:p3道具图例",
+            "B01:p5房间准备",
+            "B11:彩色背面图标"
+          ],
+          "status": "CONFIRMED"
+        },
+        "G": {
+          "category_id": "altruism",
+          "source_level": "B",
+          "source_ref": [
+            "B01:p3道具图例",
+            "B01:p5房间准备",
+            "B11:彩色背面图标"
+          ],
+          "status": "CONFIRMED"
+        }
+      },
+      "previous_research_status": "CHECK_REQUIRED",
+      "adoption_basis": "USER_ACCEPTED_CN_RETAIL",
+      "adoption_ref": "U02:来源优先级与Phase1采用",
+      "japanese_missing_blocks_runtime": false
+    },
+    {
+      "id": "autohaven_wreckers",
+      "name_ja": null,
+      "name_en": "Autohaven Wreckers",
+      "name_zh": "奥托海文废车场",
+      "translation_status": "OFFICIAL_ZH_PRINT",
+      "japanese_text_status": "CHECK_REQUIRED",
+      "source_level": "D",
+      "source_ref": [
+        "B01:p3地图名称",
+        "D36:reference/maps/autohaven_cn_retail_xhs.png / 照片印刷文字"
+      ],
+      "status": "CONFIRMED",
+      "identity_status": "CONFIRMED",
+      "nodes": [
+        {
+          "id": "wreckers_garage_north",
+          "name_ja": null,
+          "name_en": null,
+          "name_zh": "废旧车库北",
+          "translation_status": "OFFICIAL_ZH_PRINT",
+          "japanese_text_status": "CHECK_REQUIRED",
+          "source_level": "D",
+          "source_ref": [
+            "D36:reference/maps/autohaven_cn_retail_xhs.png / 照片印刷文字"
+          ],
+          "status": "CONFIRMED",
+          "name_status": "CHECK_REQUIRED",
+          "initial_prop_counts": {
+            "objective": 1,
+            "boldness": 1,
+            "survival": 1,
+            "altruism": 1
+          },
+          "spawn_faces": [
+            1
+          ],
+          "coordinates": null,
+          "field_evidence": {
+            "name_zh": {
+              "source_level": "D",
+              "source_ref": [
+                "D36:reference/maps/autohaven_cn_retail_xhs.png / 照片印刷文字"
+              ],
+              "status": "CONFIRMED",
+              "previous_research_status": "CHECK_REQUIRED",
+              "adoption_basis": "USER_ACCEPTED_CN_RETAIL",
+              "adoption_ref": "U02:来源优先级与Phase1采用",
+              "japanese_missing_blocks_runtime": false
+            },
+            "initial_prop_counts": {
+              "source_level": "D",
+              "source_ref": [
+                "D36:reference/maps/autohaven_cn_retail_xhs.png / 照片印刷文字"
+              ],
+              "status": "CONFIRMED",
+              "previous_research_status": "CHECK_REQUIRED",
+              "adoption_basis": "USER_ACCEPTED_CN_RETAIL",
+              "adoption_ref": "U02:来源优先级与Phase1采用",
+              "japanese_missing_blocks_runtime": false
+            },
+            "spawn_faces": {
+              "source_level": "D",
+              "source_ref": [
+                "D36:reference/maps/autohaven_cn_retail_xhs.png / 照片印刷文字"
+              ],
+              "status": "CONFIRMED",
+              "previous_research_status": "CHECK_REQUIRED",
+              "adoption_basis": "USER_ACCEPTED_CN_RETAIL",
+              "adoption_ref": "U02:来源优先级与Phase1采用",
+              "japanese_missing_blocks_runtime": false
+            }
+          },
+          "id_is_official_english_name": false,
+          "previous_research_status": "CHECK_REQUIRED",
+          "adoption_basis": "USER_ACCEPTED_CN_RETAIL",
+          "adoption_ref": "U02:来源优先级与Phase1采用",
+          "japanese_missing_blocks_runtime": false
+        },
+        {
+          "id": "maze",
+          "name_ja": null,
+          "name_en": null,
+          "name_zh": "迷宫",
+          "translation_status": "OFFICIAL_ZH_PRINT",
+          "japanese_text_status": "CHECK_REQUIRED",
+          "source_level": "D",
+          "source_ref": [
+            "D36:reference/maps/autohaven_cn_retail_xhs.png / 照片印刷文字"
+          ],
+          "status": "CONFIRMED",
+          "name_status": "CHECK_REQUIRED",
+          "initial_prop_counts": {
+            "objective": 1,
+            "boldness": 1,
+            "survival": 0,
+            "altruism": 2
+          },
+          "spawn_faces": [],
+          "coordinates": null,
+          "field_evidence": {
+            "name_zh": {
+              "source_level": "D",
+              "source_ref": [
+                "D36:reference/maps/autohaven_cn_retail_xhs.png / 照片印刷文字"
+              ],
+              "status": "CONFIRMED",
+              "previous_research_status": "CHECK_REQUIRED",
+              "adoption_basis": "USER_ACCEPTED_CN_RETAIL",
+              "adoption_ref": "U02:来源优先级与Phase1采用",
+              "japanese_missing_blocks_runtime": false
+            },
+            "initial_prop_counts": {
+              "source_level": "D",
+              "source_ref": [
+                "D36:reference/maps/autohaven_cn_retail_xhs.png / 照片印刷文字"
+              ],
+              "status": "CONFIRMED",
+              "previous_research_status": "CHECK_REQUIRED",
+              "adoption_basis": "USER_ACCEPTED_CN_RETAIL",
+              "adoption_ref": "U02:来源优先级与Phase1采用",
+              "japanese_missing_blocks_runtime": false
+            },
+            "spawn_faces": {
+              "source_level": "D",
+              "source_ref": [
+                "D36:reference/maps/autohaven_cn_retail_xhs.png / 照片印刷文字"
+              ],
+              "status": "CONFIRMED",
+              "previous_research_status": "CHECK_REQUIRED",
+              "adoption_basis": "USER_ACCEPTED_CN_RETAIL",
+              "adoption_ref": "U02:来源优先级与Phase1采用",
+              "japanese_missing_blocks_runtime": false
+            }
+          },
+          "id_is_official_english_name": false,
+          "previous_research_status": "CHECK_REQUIRED",
+          "adoption_basis": "USER_ACCEPTED_CN_RETAIL",
+          "adoption_ref": "U02:来源优先级与Phase1采用",
+          "japanese_missing_blocks_runtime": false
+        },
+        {
+          "id": "scrap_pile",
+          "name_ja": null,
+          "name_en": null,
+          "name_zh": "废料堆",
+          "translation_status": "OFFICIAL_ZH_PRINT",
+          "japanese_text_status": "CHECK_REQUIRED",
+          "source_level": "D",
+          "source_ref": [
+            "D36:reference/maps/autohaven_cn_retail_xhs.png / 照片印刷文字"
+          ],
+          "status": "CONFIRMED",
+          "name_status": "CHECK_REQUIRED",
+          "initial_prop_counts": {
+            "objective": 1,
+            "boldness": 1,
+            "survival": 1,
+            "altruism": 1
+          },
+          "spawn_faces": [
+            2
+          ],
+          "coordinates": null,
+          "field_evidence": {
+            "name_zh": {
+              "source_level": "D",
+              "source_ref": [
+                "D36:reference/maps/autohaven_cn_retail_xhs.png / 照片印刷文字"
+              ],
+              "status": "CONFIRMED",
+              "previous_research_status": "CHECK_REQUIRED",
+              "adoption_basis": "USER_ACCEPTED_CN_RETAIL",
+              "adoption_ref": "U02:来源优先级与Phase1采用",
+              "japanese_missing_blocks_runtime": false
+            },
+            "initial_prop_counts": {
+              "source_level": "D",
+              "source_ref": [
+                "D36:reference/maps/autohaven_cn_retail_xhs.png / 照片印刷文字"
+              ],
+              "status": "CONFIRMED",
+              "previous_research_status": "CHECK_REQUIRED",
+              "adoption_basis": "USER_ACCEPTED_CN_RETAIL",
+              "adoption_ref": "U02:来源优先级与Phase1采用",
+              "japanese_missing_blocks_runtime": false
+            },
+            "spawn_faces": {
+              "source_level": "D",
+              "source_ref": [
+                "D36:reference/maps/autohaven_cn_retail_xhs.png / 照片印刷文字"
+              ],
+              "status": "CONFIRMED",
+              "previous_research_status": "CHECK_REQUIRED",
+              "adoption_basis": "USER_ACCEPTED_CN_RETAIL",
+              "adoption_ref": "U02:来源优先级与Phase1采用",
+              "japanese_missing_blocks_runtime": false
+            }
+          },
+          "id_is_official_english_name": false,
+          "previous_research_status": "CHECK_REQUIRED",
+          "adoption_basis": "USER_ACCEPTED_CN_RETAIL",
+          "adoption_ref": "U02:来源优先级与Phase1采用",
+          "japanese_missing_blocks_runtime": false
+        },
+        {
+          "id": "main_garage",
+          "name_ja": null,
+          "name_en": null,
+          "name_zh": "主车库",
+          "translation_status": "OFFICIAL_ZH_PRINT",
+          "japanese_text_status": "CHECK_REQUIRED",
+          "source_level": "D",
+          "source_ref": [
+            "D36:reference/maps/autohaven_cn_retail_xhs.png / 照片印刷文字"
+          ],
+          "status": "CONFIRMED",
+          "name_status": "CHECK_REQUIRED",
+          "initial_prop_counts": {
+            "objective": 1,
+            "boldness": 1,
+            "survival": 2,
+            "altruism": 1
+          },
+          "spawn_faces": [],
+          "coordinates": null,
+          "field_evidence": {
+            "name_zh": {
+              "source_level": "D",
+              "source_ref": [
+                "D36:reference/maps/autohaven_cn_retail_xhs.png / 照片印刷文字"
+              ],
+              "status": "CONFIRMED",
+              "previous_research_status": "CHECK_REQUIRED",
+              "adoption_basis": "USER_ACCEPTED_CN_RETAIL",
+              "adoption_ref": "U02:来源优先级与Phase1采用",
+              "japanese_missing_blocks_runtime": false
+            },
+            "initial_prop_counts": {
+              "source_level": "D",
+              "source_ref": [
+                "D36:reference/maps/autohaven_cn_retail_xhs.png / 照片印刷文字"
+              ],
+              "status": "CONFIRMED",
+              "previous_research_status": "CHECK_REQUIRED",
+              "adoption_basis": "USER_ACCEPTED_CN_RETAIL",
+              "adoption_ref": "U02:来源优先级与Phase1采用",
+              "japanese_missing_blocks_runtime": false
+            },
+            "spawn_faces": {
+              "source_level": "D",
+              "source_ref": [
+                "D36:reference/maps/autohaven_cn_retail_xhs.png / 照片印刷文字"
+              ],
+              "status": "CONFIRMED",
+              "previous_research_status": "CHECK_REQUIRED",
+              "adoption_basis": "USER_ACCEPTED_CN_RETAIL",
+              "adoption_ref": "U02:来源优先级与Phase1采用",
+              "japanese_missing_blocks_runtime": false
+            }
+          },
+          "id_is_official_english_name": false,
+          "previous_research_status": "CHECK_REQUIRED",
+          "adoption_basis": "USER_ACCEPTED_CN_RETAIL",
+          "adoption_ref": "U02:来源优先级与Phase1采用",
+          "japanese_missing_blocks_runtime": false
+        },
+        {
+          "id": "wreckers_garage_south",
+          "name_ja": null,
+          "name_en": null,
+          "name_zh": "废旧车库南",
+          "translation_status": "OFFICIAL_ZH_PRINT",
+          "japanese_text_status": "CHECK_REQUIRED",
+          "source_level": "D",
+          "source_ref": [
+            "D36:reference/maps/autohaven_cn_retail_xhs.png / 照片印刷文字"
+          ],
+          "status": "CONFIRMED",
+          "name_status": "CHECK_REQUIRED",
+          "initial_prop_counts": {
+            "objective": 1,
+            "boldness": 1,
+            "survival": 1,
+            "altruism": 1
+          },
+          "spawn_faces": [],
+          "coordinates": null,
+          "field_evidence": {
+            "name_zh": {
+              "source_level": "D",
+              "source_ref": [
+                "D36:reference/maps/autohaven_cn_retail_xhs.png / 照片印刷文字"
+              ],
+              "status": "CONFIRMED",
+              "previous_research_status": "CHECK_REQUIRED",
+              "adoption_basis": "USER_ACCEPTED_CN_RETAIL",
+              "adoption_ref": "U02:来源优先级与Phase1采用",
+              "japanese_missing_blocks_runtime": false
+            },
+            "initial_prop_counts": {
+              "source_level": "D",
+              "source_ref": [
+                "D36:reference/maps/autohaven_cn_retail_xhs.png / 照片印刷文字"
+              ],
+              "status": "CONFIRMED",
+              "previous_research_status": "CHECK_REQUIRED",
+              "adoption_basis": "USER_ACCEPTED_CN_RETAIL",
+              "adoption_ref": "U02:来源优先级与Phase1采用",
+              "japanese_missing_blocks_runtime": false
+            },
+            "spawn_faces": {
+              "source_level": "D",
+              "source_ref": [
+                "D36:reference/maps/autohaven_cn_retail_xhs.png / 照片印刷文字"
+              ],
+              "status": "CONFIRMED",
+              "previous_research_status": "CHECK_REQUIRED",
+              "adoption_basis": "USER_ACCEPTED_CN_RETAIL",
+              "adoption_ref": "U02:来源优先级与Phase1采用",
+              "japanese_missing_blocks_runtime": false
+            }
+          },
+          "id_is_official_english_name": false,
+          "previous_research_status": "CHECK_REQUIRED",
+          "adoption_basis": "USER_ACCEPTED_CN_RETAIL",
+          "adoption_ref": "U02:来源优先级与Phase1采用",
+          "japanese_missing_blocks_runtime": false
+        },
+        {
+          "id": "diner",
+          "name_ja": null,
+          "name_en": null,
+          "name_zh": "小吃店",
+          "translation_status": "OFFICIAL_ZH_PRINT",
+          "japanese_text_status": "CHECK_REQUIRED",
+          "source_level": "D",
+          "source_ref": [
+            "D36:reference/maps/autohaven_cn_retail_xhs.png / 照片印刷文字"
+          ],
+          "status": "CONFIRMED",
+          "name_status": "CHECK_REQUIRED",
+          "initial_prop_counts": {
+            "objective": 1,
+            "boldness": 1,
+            "survival": 2,
+            "altruism": 2
+          },
+          "spawn_faces": [
+            5
+          ],
+          "coordinates": null,
+          "field_evidence": {
+            "name_zh": {
+              "source_level": "D",
+              "source_ref": [
+                "D36:reference/maps/autohaven_cn_retail_xhs.png / 照片印刷文字"
+              ],
+              "status": "CONFIRMED",
+              "previous_research_status": "CHECK_REQUIRED",
+              "adoption_basis": "USER_ACCEPTED_CN_RETAIL",
+              "adoption_ref": "U02:来源优先级与Phase1采用",
+              "japanese_missing_blocks_runtime": false
+            },
+            "initial_prop_counts": {
+              "source_level": "D",
+              "source_ref": [
+                "D36:reference/maps/autohaven_cn_retail_xhs.png / 照片印刷文字"
+              ],
+              "status": "CONFIRMED",
+              "previous_research_status": "CHECK_REQUIRED",
+              "adoption_basis": "USER_ACCEPTED_CN_RETAIL",
+              "adoption_ref": "U02:来源优先级与Phase1采用",
+              "japanese_missing_blocks_runtime": false
+            },
+            "spawn_faces": {
+              "source_level": "D",
+              "source_ref": [
+                "D36:reference/maps/autohaven_cn_retail_xhs.png / 照片印刷文字"
+              ],
+              "status": "CONFIRMED",
+              "previous_research_status": "CHECK_REQUIRED",
+              "adoption_basis": "USER_ACCEPTED_CN_RETAIL",
+              "adoption_ref": "U02:来源优先级与Phase1采用",
+              "japanese_missing_blocks_runtime": false
+            }
+          },
+          "id_is_official_english_name": false,
+          "previous_research_status": "CHECK_REQUIRED",
+          "adoption_basis": "USER_ACCEPTED_CN_RETAIL",
+          "adoption_ref": "U02:来源优先级与Phase1采用",
+          "japanese_missing_blocks_runtime": false
+        },
+        {
+          "id": "barn",
+          "name_ja": null,
+          "name_en": null,
+          "name_zh": "谷仓",
+          "translation_status": "OFFICIAL_ZH_PRINT",
+          "japanese_text_status": "CHECK_REQUIRED",
+          "source_level": "D",
+          "source_ref": [
+            "D36:reference/maps/autohaven_cn_retail_xhs.png / 照片印刷文字"
+          ],
+          "status": "CONFIRMED",
+          "name_status": "CHECK_REQUIRED",
+          "initial_prop_counts": {
+            "objective": 1,
+            "boldness": 1,
+            "survival": 2,
+            "altruism": 1
+          },
+          "spawn_faces": [],
+          "coordinates": null,
+          "field_evidence": {
+            "name_zh": {
+              "source_level": "D",
+              "source_ref": [
+                "D36:reference/maps/autohaven_cn_retail_xhs.png / 照片印刷文字"
+              ],
+              "status": "CONFIRMED",
+              "previous_research_status": "CHECK_REQUIRED",
+              "adoption_basis": "USER_ACCEPTED_CN_RETAIL",
+              "adoption_ref": "U02:来源优先级与Phase1采用",
+              "japanese_missing_blocks_runtime": false
+            },
+            "initial_prop_counts": {
+              "source_level": "D",
+              "source_ref": [
+                "D36:reference/maps/autohaven_cn_retail_xhs.png / 照片印刷文字"
+              ],
+              "status": "CONFIRMED",
+              "previous_research_status": "CHECK_REQUIRED",
+              "adoption_basis": "USER_ACCEPTED_CN_RETAIL",
+              "adoption_ref": "U02:来源优先级与Phase1采用",
+              "japanese_missing_blocks_runtime": false
+            },
+            "spawn_faces": {
+              "source_level": "D",
+              "source_ref": [
+                "D36:reference/maps/autohaven_cn_retail_xhs.png / 照片印刷文字"
+              ],
+              "status": "CONFIRMED",
+              "previous_research_status": "CHECK_REQUIRED",
+              "adoption_basis": "USER_ACCEPTED_CN_RETAIL",
+              "adoption_ref": "U02:来源优先级与Phase1采用",
+              "japanese_missing_blocks_runtime": false
+            }
+          },
+          "id_is_official_english_name": false,
+          "previous_research_status": "CHECK_REQUIRED",
+          "adoption_basis": "USER_ACCEPTED_CN_RETAIL",
+          "adoption_ref": "U02:来源优先级与Phase1采用",
+          "japanese_missing_blocks_runtime": false
+        },
+        {
+          "id": "gas_pump",
+          "name_ja": null,
+          "name_en": null,
+          "name_zh": "油泵",
+          "translation_status": "OFFICIAL_ZH_PRINT",
+          "japanese_text_status": "CHECK_REQUIRED",
+          "source_level": "D",
+          "source_ref": [
+            "D36:reference/maps/autohaven_cn_retail_xhs.png / 照片印刷文字"
+          ],
+          "status": "CONFIRMED",
+          "name_status": "CHECK_REQUIRED",
+          "initial_prop_counts": {
+            "objective": 1,
+            "boldness": 1,
+            "survival": 1,
+            "altruism": 1
+          },
+          "spawn_faces": [
+            0
+          ],
+          "coordinates": null,
+          "field_evidence": {
+            "name_zh": {
+              "source_level": "D",
+              "source_ref": [
+                "D36:reference/maps/autohaven_cn_retail_xhs.png / 照片印刷文字"
+              ],
+              "status": "CONFIRMED",
+              "previous_research_status": "CHECK_REQUIRED",
+              "adoption_basis": "USER_ACCEPTED_CN_RETAIL",
+              "adoption_ref": "U02:来源优先级与Phase1采用",
+              "japanese_missing_blocks_runtime": false
+            },
+            "initial_prop_counts": {
+              "source_level": "D",
+              "source_ref": [
+                "D36:reference/maps/autohaven_cn_retail_xhs.png / 照片印刷文字"
+              ],
+              "status": "CONFIRMED",
+              "previous_research_status": "CHECK_REQUIRED",
+              "adoption_basis": "USER_ACCEPTED_CN_RETAIL",
+              "adoption_ref": "U02:来源优先级与Phase1采用",
+              "japanese_missing_blocks_runtime": false
+            },
+            "spawn_faces": {
+              "source_level": "D",
+              "source_ref": [
+                "D36:reference/maps/autohaven_cn_retail_xhs.png / 照片印刷文字"
+              ],
+              "status": "CONFIRMED",
+              "previous_research_status": "CHECK_REQUIRED",
+              "adoption_basis": "USER_ACCEPTED_CN_RETAIL",
+              "adoption_ref": "U02:来源优先级与Phase1采用",
+              "japanese_missing_blocks_runtime": false
+            }
+          },
+          "id_is_official_english_name": false,
+          "previous_research_status": "CHECK_REQUIRED",
+          "adoption_basis": "USER_ACCEPTED_CN_RETAIL",
+          "adoption_ref": "U02:来源优先级与Phase1采用",
+          "japanese_missing_blocks_runtime": false
+        },
+        {
+          "id": "old_cabin",
+          "name_ja": null,
+          "name_en": null,
+          "name_zh": "老木屋",
+          "translation_status": "OFFICIAL_ZH_PRINT",
+          "japanese_text_status": "CHECK_REQUIRED",
+          "source_level": "D",
+          "source_ref": [
+            "D36:reference/maps/autohaven_cn_retail_xhs.png / 照片印刷文字"
+          ],
+          "status": "CONFIRMED",
+          "name_status": "CHECK_REQUIRED",
+          "initial_prop_counts": {
+            "objective": 1,
+            "boldness": 1,
+            "survival": 1,
+            "altruism": 1
+          },
+          "spawn_faces": [
+            4
+          ],
+          "coordinates": null,
+          "field_evidence": {
+            "name_zh": {
+              "source_level": "D",
+              "source_ref": [
+                "D36:reference/maps/autohaven_cn_retail_xhs.png / 照片印刷文字"
+              ],
+              "status": "CONFIRMED",
+              "previous_research_status": "CHECK_REQUIRED",
+              "adoption_basis": "USER_ACCEPTED_CN_RETAIL",
+              "adoption_ref": "U02:来源优先级与Phase1采用",
+              "japanese_missing_blocks_runtime": false
+            },
+            "initial_prop_counts": {
+              "source_level": "D",
+              "source_ref": [
+                "D36:reference/maps/autohaven_cn_retail_xhs.png / 照片印刷文字"
+              ],
+              "status": "CONFIRMED",
+              "previous_research_status": "CHECK_REQUIRED",
+              "adoption_basis": "USER_ACCEPTED_CN_RETAIL",
+              "adoption_ref": "U02:来源优先级与Phase1采用",
+              "japanese_missing_blocks_runtime": false
+            },
+            "spawn_faces": {
+              "source_level": "D",
+              "source_ref": [
+                "D36:reference/maps/autohaven_cn_retail_xhs.png / 照片印刷文字"
+              ],
+              "status": "CONFIRMED",
+              "previous_research_status": "CHECK_REQUIRED",
+              "adoption_basis": "USER_ACCEPTED_CN_RETAIL",
+              "adoption_ref": "U02:来源优先级与Phase1采用",
+              "japanese_missing_blocks_runtime": false
+            }
+          },
+          "id_is_official_english_name": false,
+          "previous_research_status": "CHECK_REQUIRED",
+          "adoption_basis": "USER_ACCEPTED_CN_RETAIL",
+          "adoption_ref": "U02:来源优先级与Phase1采用",
+          "japanese_missing_blocks_runtime": false
+        },
+        {
+          "id": "cottage",
+          "name_ja": null,
+          "name_en": null,
+          "name_zh": "村舍",
+          "translation_status": "OFFICIAL_ZH_PRINT",
+          "japanese_text_status": "CHECK_REQUIRED",
+          "source_level": "D",
+          "source_ref": [
+            "D36:reference/maps/autohaven_cn_retail_xhs.png / 照片印刷文字"
+          ],
+          "status": "CONFIRMED",
+          "name_status": "CHECK_REQUIRED",
+          "initial_prop_counts": {
+            "objective": 1,
+            "boldness": 1,
+            "survival": 1,
+            "altruism": 1
+          },
+          "spawn_faces": [
+            3
+          ],
+          "coordinates": null,
+          "field_evidence": {
+            "name_zh": {
+              "source_level": "D",
+              "source_ref": [
+                "D36:reference/maps/autohaven_cn_retail_xhs.png / 照片印刷文字"
+              ],
+              "status": "CONFIRMED",
+              "previous_research_status": "CHECK_REQUIRED",
+              "adoption_basis": "USER_ACCEPTED_CN_RETAIL",
+              "adoption_ref": "U02:来源优先级与Phase1采用",
+              "japanese_missing_blocks_runtime": false
+            },
+            "initial_prop_counts": {
+              "source_level": "D",
+              "source_ref": [
+                "D36:reference/maps/autohaven_cn_retail_xhs.png / 照片印刷文字"
+              ],
+              "status": "CONFIRMED",
+              "previous_research_status": "CHECK_REQUIRED",
+              "adoption_basis": "USER_ACCEPTED_CN_RETAIL",
+              "adoption_ref": "U02:来源优先级与Phase1采用",
+              "japanese_missing_blocks_runtime": false
+            },
+            "spawn_faces": {
+              "source_level": "D",
+              "source_ref": [
+                "D36:reference/maps/autohaven_cn_retail_xhs.png / 照片印刷文字"
+              ],
+              "status": "CONFIRMED",
+              "previous_research_status": "CHECK_REQUIRED",
+              "adoption_basis": "USER_ACCEPTED_CN_RETAIL",
+              "adoption_ref": "U02:来源优先级与Phase1采用",
+              "japanese_missing_blocks_runtime": false
+            }
+          },
+          "id_is_official_english_name": false,
+          "previous_research_status": "CHECK_REQUIRED",
+          "adoption_basis": "USER_ACCEPTED_CN_RETAIL",
+          "adoption_ref": "U02:来源优先级与Phase1采用",
+          "japanese_missing_blocks_runtime": false
+        }
+      ],
+      "edges": [
+        {
+          "id": "ah_p01",
+          "from": "wreckers_garage_north",
+          "to": "maze",
+          "rooms": [
+            "wreckers_garage_north",
+            "maze"
+          ],
+          "endpoint_kind": "BINARY_PATH_ICON",
+          "color": "yellow",
+          "direction": "a_to_b",
+          "jagged": false,
+          "special_state": "NONE_AT_SETUP",
+          "source_level": "D",
+          "source_ref": [
+            "D36:reference/maps/autohaven_cn_retail_xhs.png / 照片印刷文字"
+          ],
+          "status": "CONFIRMED",
+          "traversal_semantics": "CANDIDATE_BINARY",
+          "pairwise_edges": [],
+          "verification_note": "P3/D36照片可读；未取得A/B确认",
+          "additional_room_candidates": [],
+          "previous_research_status": "CHECK_REQUIRED",
+          "adoption_basis": "USER_ACCEPTED_CN_RETAIL",
+          "adoption_ref": "U02:来源优先级与Phase1采用",
+          "japanese_missing_blocks_runtime": false
+        },
+        {
+          "id": "ah_p02",
+          "from": null,
+          "to": null,
+          "rooms": [
+            "wreckers_garage_north",
+            "maze",
+            "diner"
+          ],
+          "endpoint_kind": "MULTI_ROOM_PATH_ICON",
+          "color": "green",
+          "direction": "both",
+          "jagged": false,
+          "special_state": "NONE_AT_SETUP",
+          "source_level": "D",
+          "source_ref": [
+            "D36:reference/maps/autohaven_cn_retail_xhs.png / 照片印刷文字"
+          ],
+          "status": "CONFIRMED",
+          "traversal_semantics": "ALL_PAIRS_ONE_STEP",
+          "pairwise_edges": [],
+          "verification_note": "同一个冲刺图标连出 3 条线（车库北、迷宫、小吃店）。须确认三房间两两互通，还是某条线只是经过。",
+          "additional_room_candidates": [],
+          "previous_research_status": "CHECK_REQUIRED",
+          "adoption_basis": "USER_ACCEPTED_CN_RETAIL",
+          "adoption_ref": "U02:来源优先级与Phase1采用",
+          "japanese_missing_blocks_runtime": false,
+          "blocker_scope": "ENTIRE_PATH_ICON",
+          "house_rule_ref": "U02:Q09"
+        },
+        {
+          "id": "ah_p03",
+          "from": "maze",
+          "to": "wreckers_garage_south",
+          "rooms": [
+            "maze",
+            "wreckers_garage_south"
+          ],
+          "endpoint_kind": "BINARY_PATH_ICON",
+          "color": "green",
+          "direction": "both",
+          "jagged": true,
+          "special_state": "BREAKABLE_WALL_AT_SETUP",
+          "source_level": "D",
+          "source_ref": [
+            "D36:reference/maps/autohaven_cn_retail_xhs.png / 照片印刷文字"
+          ],
+          "status": "CONFIRMED",
+          "traversal_semantics": "CANDIDATE_BINARY",
+          "pairwise_edges": [],
+          "verification_note": "左上角锯齿冲刺图标：右连迷宫，下沿左侧边线连废旧车库南。",
+          "additional_room_candidates": [],
+          "previous_research_status": "CHECK_REQUIRED",
+          "adoption_basis": "USER_ACCEPTED_CN_RETAIL",
+          "adoption_ref": "U02:来源优先级与Phase1采用",
+          "japanese_missing_blocks_runtime": false
+        },
+        {
+          "id": "ah_p04",
+          "from": null,
+          "to": null,
+          "rooms": [
+            "wreckers_garage_south",
+            "gas_pump",
+            "cottage"
+          ],
+          "endpoint_kind": "MULTI_ROOM_PATH_ICON",
+          "color": "green",
+          "direction": "both",
+          "jagged": false,
+          "special_state": "NONE_AT_SETUP",
+          "source_level": "D",
+          "source_ref": [
+            "D36:reference/maps/autohaven_cn_retail_xhs.png / 照片印刷文字"
+          ],
+          "status": "CONFIRMED",
+          "traversal_semantics": "ALL_PAIRS_ONE_STEP",
+          "pairwise_edges": [],
+          "verification_note": "底部冲刺图标：左侧长线绕到废旧车库南，上连油泵，右连村舍。须确认是否经过老木屋（线从老木屋下方通过，看起来没有连接）。",
+          "additional_room_candidates": [],
+          "previous_research_status": "CHECK_REQUIRED",
+          "adoption_basis": "USER_ACCEPTED_CN_RETAIL",
+          "adoption_ref": "U02:来源优先级与Phase1采用",
+          "japanese_missing_blocks_runtime": false,
+          "blocker_scope": "ENTIRE_PATH_ICON",
+          "house_rule_ref": "U02:Q09"
+        },
+        {
+          "id": "ah_p05",
+          "from": "wreckers_garage_north",
+          "to": "wreckers_garage_south",
+          "rooms": [
+            "wreckers_garage_north",
+            "wreckers_garage_south"
+          ],
+          "endpoint_kind": "BINARY_PATH_ICON",
+          "color": "blue",
+          "direction": "both",
+          "jagged": false,
+          "special_state": "NONE_AT_SETUP",
+          "source_level": "D",
+          "source_ref": [
+            "D36:reference/maps/autohaven_cn_retail_xhs.png / 照片印刷文字"
+          ],
+          "status": "CONFIRMED",
+          "traversal_semantics": "CANDIDATE_BINARY",
+          "pairwise_edges": [],
+          "verification_note": "P3/D36照片可读；未取得A/B确认",
+          "additional_room_candidates": [],
+          "previous_research_status": "CHECK_REQUIRED",
+          "adoption_basis": "USER_ACCEPTED_CN_RETAIL",
+          "adoption_ref": "U02:来源优先级与Phase1采用",
+          "japanese_missing_blocks_runtime": false
+        },
+        {
+          "id": "ah_p06",
+          "from": "wreckers_garage_south",
+          "to": "diner",
+          "rooms": [
+            "wreckers_garage_south",
+            "diner"
+          ],
+          "endpoint_kind": "BINARY_PATH_ICON",
+          "color": "blue",
+          "direction": "both",
+          "jagged": true,
+          "special_state": "BREAKABLE_WALL_AT_SETUP",
+          "source_level": "D",
+          "source_ref": [
+            "D36:reference/maps/autohaven_cn_retail_xhs.png / 照片印刷文字"
+          ],
+          "status": "CONFIRMED",
+          "traversal_semantics": "CANDIDATE_BINARY",
+          "pairwise_edges": [],
+          "verification_note": "放大照片未见向上连接北车库的线，仅见向下南车库、向右小吃店；仍D级，待A/B完整图确认。",
+          "additional_room_candidates": [],
+          "previous_research_status": "CHECK_REQUIRED",
+          "adoption_basis": "USER_ACCEPTED_CN_RETAIL",
+          "adoption_ref": "U02:来源优先级与Phase1采用",
+          "japanese_missing_blocks_runtime": false
+        },
+        {
+          "id": "ah_p07",
+          "from": "diner",
+          "to": "main_garage",
+          "rooms": [
+            "diner",
+            "main_garage"
+          ],
+          "endpoint_kind": "BINARY_PATH_ICON",
+          "color": "red",
+          "direction": "both",
+          "jagged": false,
+          "special_state": "NONE_AT_SETUP",
+          "source_level": "D",
+          "source_ref": [
+            "D36:reference/maps/autohaven_cn_retail_xhs.png / 照片印刷文字"
+          ],
+          "status": "CONFIRMED",
+          "traversal_semantics": "CANDIDATE_BINARY",
+          "pairwise_edges": [],
+          "verification_note": "P3/D36照片可读；未取得A/B确认",
+          "additional_room_candidates": [],
+          "previous_research_status": "CHECK_REQUIRED",
+          "adoption_basis": "USER_ACCEPTED_CN_RETAIL",
+          "adoption_ref": "U02:来源优先级与Phase1采用",
+          "japanese_missing_blocks_runtime": false
+        },
+        {
+          "id": "ah_p08",
+          "from": "maze",
+          "to": "main_garage",
+          "rooms": [
+            "maze",
+            "main_garage"
+          ],
+          "endpoint_kind": "BINARY_PATH_ICON",
+          "color": "blue",
+          "direction": "both",
+          "jagged": false,
+          "special_state": "NONE_AT_SETUP",
+          "source_level": "D",
+          "source_ref": [
+            "D36:reference/maps/autohaven_cn_retail_xhs.png / 照片印刷文字"
+          ],
+          "status": "CONFIRMED",
+          "traversal_semantics": "CANDIDATE_BINARY",
+          "pairwise_edges": [],
+          "verification_note": "P3/D36照片可读；未取得A/B确认",
+          "additional_room_candidates": [],
+          "previous_research_status": "CHECK_REQUIRED",
+          "adoption_basis": "USER_ACCEPTED_CN_RETAIL",
+          "adoption_ref": "U02:来源优先级与Phase1采用",
+          "japanese_missing_blocks_runtime": false
+        },
+        {
+          "id": "ah_p09",
+          "from": "maze",
+          "to": "scrap_pile",
+          "rooms": [
+            "maze",
+            "scrap_pile"
+          ],
+          "endpoint_kind": "BINARY_PATH_ICON",
+          "color": "red",
+          "direction": "both",
+          "jagged": false,
+          "special_state": "NONE_AT_SETUP",
+          "source_level": "D",
+          "source_ref": [
+            "D36:reference/maps/autohaven_cn_retail_xhs.png / 照片印刷文字"
+          ],
+          "status": "CONFIRMED",
+          "traversal_semantics": "CANDIDATE_BINARY",
+          "pairwise_edges": [],
+          "verification_note": "P3/D36照片可读；未取得A/B确认",
+          "additional_room_candidates": [],
+          "previous_research_status": "CHECK_REQUIRED",
+          "adoption_basis": "USER_ACCEPTED_CN_RETAIL",
+          "adoption_ref": "U02:来源优先级与Phase1采用",
+          "japanese_missing_blocks_runtime": false
+        },
+        {
+          "id": "ah_p10",
+          "from": "scrap_pile",
+          "to": "main_garage",
+          "rooms": [
+            "scrap_pile",
+            "main_garage"
+          ],
+          "endpoint_kind": "BINARY_PATH_ICON",
+          "color": "blue",
+          "direction": "both",
+          "jagged": true,
+          "special_state": "BREAKABLE_WALL_AT_SETUP",
+          "source_level": "D",
+          "source_ref": [
+            "D36:reference/maps/autohaven_cn_retail_xhs.png / 照片印刷文字"
+          ],
+          "status": "CONFIRMED",
+          "traversal_semantics": "CANDIDATE_BINARY",
+          "pairwise_edges": [],
+          "verification_note": "P3/D36照片可读；未取得A/B确认",
+          "additional_room_candidates": [],
+          "previous_research_status": "CHECK_REQUIRED",
+          "adoption_basis": "USER_ACCEPTED_CN_RETAIL",
+          "adoption_ref": "U02:来源优先级与Phase1采用",
+          "japanese_missing_blocks_runtime": false
+        },
+        {
+          "id": "ah_p11",
+          "from": "main_garage",
+          "to": "barn",
+          "rooms": [
+            "main_garage",
+            "barn"
+          ],
+          "endpoint_kind": "BINARY_PATH_ICON",
+          "color": "red",
+          "direction": "both",
+          "jagged": false,
+          "special_state": "NONE_AT_SETUP",
+          "source_level": "D",
+          "source_ref": [
+            "D36:reference/maps/autohaven_cn_retail_xhs.png / 照片印刷文字"
+          ],
+          "status": "CONFIRMED",
+          "traversal_semantics": "CANDIDATE_BINARY",
+          "pairwise_edges": [],
+          "verification_note": "P3/D36照片可读；未取得A/B确认",
+          "additional_room_candidates": [],
+          "previous_research_status": "CHECK_REQUIRED",
+          "adoption_basis": "USER_ACCEPTED_CN_RETAIL",
+          "adoption_ref": "U02:来源优先级与Phase1采用",
+          "japanese_missing_blocks_runtime": false
+        },
+        {
+          "id": "ah_p12",
+          "from": "scrap_pile",
+          "to": "barn",
+          "rooms": [
+            "scrap_pile",
+            "barn"
+          ],
+          "endpoint_kind": "BINARY_PATH_ICON",
+          "color": "blue",
+          "direction": "both",
+          "jagged": false,
+          "special_state": "NONE_AT_SETUP",
+          "source_level": "D",
+          "source_ref": [
+            "D36:reference/maps/autohaven_cn_retail_xhs.png / 照片印刷文字"
+          ],
+          "status": "CONFIRMED",
+          "traversal_semantics": "CANDIDATE_BINARY",
+          "pairwise_edges": [],
+          "verification_note": "P3/D36照片可读；未取得A/B确认",
+          "additional_room_candidates": [],
+          "previous_research_status": "CHECK_REQUIRED",
+          "adoption_basis": "USER_ACCEPTED_CN_RETAIL",
+          "adoption_ref": "U02:来源优先级与Phase1采用",
+          "japanese_missing_blocks_runtime": false
+        },
+        {
+          "id": "ah_p13",
+          "from": "main_garage",
+          "to": "gas_pump",
+          "rooms": [
+            "main_garage",
+            "gas_pump"
+          ],
+          "endpoint_kind": "BINARY_PATH_ICON",
+          "color": "red",
+          "direction": "both",
+          "jagged": true,
+          "special_state": "BREAKABLE_WALL_AT_SETUP",
+          "source_level": "D",
+          "source_ref": [
+            "D36:reference/maps/autohaven_cn_retail_xhs.png / 照片印刷文字"
+          ],
+          "status": "CONFIRMED",
+          "traversal_semantics": "CANDIDATE_BINARY",
+          "pairwise_edges": [],
+          "verification_note": "P3/D36照片可读；未取得A/B确认",
+          "additional_room_candidates": [],
+          "previous_research_status": "CHECK_REQUIRED",
+          "adoption_basis": "USER_ACCEPTED_CN_RETAIL",
+          "adoption_ref": "U02:来源优先级与Phase1采用",
+          "japanese_missing_blocks_runtime": false
+        },
+        {
+          "id": "ah_p14",
+          "from": "gas_pump",
+          "to": "barn",
+          "rooms": [
+            "gas_pump",
+            "barn"
+          ],
+          "endpoint_kind": "BINARY_PATH_ICON",
+          "color": "yellow",
+          "direction": "a_to_b",
+          "jagged": false,
+          "special_state": "NONE_AT_SETUP",
+          "source_level": "D",
+          "source_ref": [
+            "D36:reference/maps/autohaven_cn_retail_xhs.png / 照片印刷文字"
+          ],
+          "status": "CONFIRMED",
+          "traversal_semantics": "CANDIDATE_BINARY",
+          "pairwise_edges": [],
+          "verification_note": "P3/D36照片可读；未取得A/B确认",
+          "additional_room_candidates": [],
+          "previous_research_status": "CHECK_REQUIRED",
+          "adoption_basis": "USER_ACCEPTED_CN_RETAIL",
+          "adoption_ref": "U02:来源优先级与Phase1采用",
+          "japanese_missing_blocks_runtime": false
+        },
+        {
+          "id": "ah_p15",
+          "from": "barn",
+          "to": "cottage",
+          "rooms": [
+            "barn",
+            "cottage"
+          ],
+          "endpoint_kind": "BINARY_PATH_ICON",
+          "color": "blue",
+          "direction": "both",
+          "jagged": false,
+          "special_state": "NONE_AT_SETUP",
+          "source_level": "D",
+          "source_ref": [
+            "D36:reference/maps/autohaven_cn_retail_xhs.png / 照片印刷文字"
+          ],
+          "status": "CONFIRMED",
+          "traversal_semantics": "CANDIDATE_BINARY",
+          "pairwise_edges": [],
+          "verification_note": "P3/D36照片可读；未取得A/B确认",
+          "additional_room_candidates": [],
+          "previous_research_status": "CHECK_REQUIRED",
+          "adoption_basis": "USER_ACCEPTED_CN_RETAIL",
+          "adoption_ref": "U02:来源优先级与Phase1采用",
+          "japanese_missing_blocks_runtime": false
+        },
+        {
+          "id": "ah_p16",
+          "from": "diner",
+          "to": "gas_pump",
+          "rooms": [
+            "diner",
+            "gas_pump"
+          ],
+          "endpoint_kind": "BINARY_PATH_ICON",
+          "color": "red",
+          "direction": "both",
+          "jagged": false,
+          "special_state": "NONE_AT_SETUP",
+          "source_level": "D",
+          "source_ref": [
+            "D36:reference/maps/autohaven_cn_retail_xhs.png / 照片印刷文字"
+          ],
+          "status": "CONFIRMED",
+          "traversal_semantics": "CANDIDATE_BINARY",
+          "pairwise_edges": [],
+          "verification_note": "P3/D36照片可读；未取得A/B确认",
+          "additional_room_candidates": [],
+          "previous_research_status": "CHECK_REQUIRED",
+          "adoption_basis": "USER_ACCEPTED_CN_RETAIL",
+          "adoption_ref": "U02:来源优先级与Phase1采用",
+          "japanese_missing_blocks_runtime": false
+        },
+        {
+          "id": "ah_p17",
+          "from": "old_cabin",
+          "to": "gas_pump",
+          "rooms": [
+            "old_cabin",
+            "gas_pump"
+          ],
+          "endpoint_kind": "BINARY_PATH_ICON",
+          "color": "blue",
+          "direction": "both",
+          "jagged": false,
+          "special_state": "NONE_AT_SETUP",
+          "source_level": "D",
+          "source_ref": [
+            "D36:reference/maps/autohaven_cn_retail_xhs.png / 照片印刷文字"
+          ],
+          "status": "CONFIRMED",
+          "traversal_semantics": "CANDIDATE_BINARY",
+          "pairwise_edges": [],
+          "verification_note": "P3/D36照片可读；未取得A/B确认",
+          "additional_room_candidates": [],
+          "previous_research_status": "CHECK_REQUIRED",
+          "adoption_basis": "USER_ACCEPTED_CN_RETAIL",
+          "adoption_ref": "U02:来源优先级与Phase1采用",
+          "japanese_missing_blocks_runtime": false
+        },
+        {
+          "id": "ah_p18",
+          "from": "wreckers_garage_south",
+          "to": "old_cabin",
+          "rooms": [
+            "wreckers_garage_south",
+            "old_cabin"
+          ],
+          "endpoint_kind": "BINARY_PATH_ICON",
+          "color": "red",
+          "direction": "both",
+          "jagged": false,
+          "special_state": "NONE_AT_SETUP",
+          "source_level": "D",
+          "source_ref": [
+            "D36:reference/maps/autohaven_cn_retail_xhs.png / 照片印刷文字"
+          ],
+          "status": "CONFIRMED",
+          "traversal_semantics": "CANDIDATE_BINARY",
+          "pairwise_edges": [],
+          "verification_note": "P3/D36照片可读；未取得A/B确认",
+          "additional_room_candidates": [],
+          "previous_research_status": "CHECK_REQUIRED",
+          "adoption_basis": "USER_ACCEPTED_CN_RETAIL",
+          "adoption_ref": "U02:来源优先级与Phase1采用",
+          "japanese_missing_blocks_runtime": false
+        },
+        {
+          "id": "ah_p19",
+          "from": "old_cabin",
+          "to": "diner",
+          "rooms": [
+            "old_cabin",
+            "diner"
+          ],
+          "endpoint_kind": "BINARY_PATH_ICON",
+          "color": "yellow",
+          "direction": "a_to_b",
+          "jagged": false,
+          "special_state": "NONE_AT_SETUP",
+          "source_level": "D",
+          "source_ref": [
+            "D36:reference/maps/autohaven_cn_retail_xhs.png / 照片印刷文字"
+          ],
+          "status": "CONFIRMED",
+          "traversal_semantics": "CANDIDATE_BINARY",
+          "pairwise_edges": [],
+          "verification_note": "P3/D36照片可读；未取得A/B确认",
+          "additional_room_candidates": [],
+          "previous_research_status": "CHECK_REQUIRED",
+          "adoption_basis": "USER_ACCEPTED_CN_RETAIL",
+          "adoption_ref": "U02:来源优先级与Phase1采用",
+          "japanese_missing_blocks_runtime": false
+        }
+      ],
+      "expected_node_count": 10,
+      "expected_edge_count": 19,
+      "topology_status": "CONFIRMED",
+      "preview_source_ref": [
+        "B01:p3/p5/p7/p16",
+        "C02",
+        "D36:reference/maps/autohaven_cn_retail_xhs.png / 照片印刷文字"
+      ],
+      "missing_fields": [
+        "英文/日文房间原名（程序ID不是原文）"
+      ],
+      "edge_schema": {
+        "id": "string",
+        "from": "node ID for BINARY_PATH_ICON; null for MULTI_ROOM_PATH_ICON",
+        "to": "node ID for BINARY_PATH_ICON; null for MULTI_ROOM_PATH_ICON",
+        "color": "CHECK_REQUIRED",
+        "direction": "CHECK_REQUIRED",
+        "special_state": "CHECK_REQUIRED",
+        "source_level": null,
+        "source_ref": [],
+        "status": "CHECK_REQUIRED",
+        "rooms": [
+          "node ID; two or more photo-observed endpoints"
+        ],
+        "endpoint_kind": "BINARY_PATH_ICON | MULTI_ROOM_PATH_ICON",
+        "traversal_semantics": "CANDIDATE_BINARY | CHECK_REQUIRED",
+        "pairwise_edges": []
+      },
+      "review_stage": "ADOPTED_FOR_PHASE_1",
+      "expected_path_icon_count": 19,
+      "name_evidence": {
+        "source_level": "D",
+        "source_ref": [
+          "D36:reference/maps/autohaven_cn_retail_xhs.png / 照片印刷文字"
+        ],
+        "status": "CHECK_REQUIRED",
+        "previous_draft_name": "废旧汽车场"
+      },
+      "official_crosscheck": {
+        "source_ref": [
+          "C02",
+          "B11"
+        ],
+        "source_level": "C",
+        "status": "CHECK_REQUIRED",
+        "result": "NOT_APPLICABLE_OTHER_MAP",
+        "note": "该原图只显示麦克米伦庄园，不含奥托海文；B11例外亦仅限麦克米伦。"
+      },
+      "graph_model": {
+        "version": 2,
+        "description": "edges兼容二端路径和多房间共用图标；rooms为照片端点转录，多端from/to留空；未生成两两通行边。",
+        "multi_room_traversal_status": "CHECK_REQUIRED",
+        "junction_question_ref": "Q09",
+        "path_icon_ids": [
+          "ah_p02",
+          "ah_p04"
+        ],
+        "null_endpoint_note": "多端项from/to空表示该记录不是二端边；端点名单保存在rooms，不表示没有端点。"
+      },
+      "tracks": {
+        "sacrifice_slots": {
+          "value": 8,
+          "source_level": "D",
+          "source_ref": [
+            "D36:reference/maps/autohaven_cn_retail_xhs.png / 照片印刷文字"
+          ],
+          "status": "CHECK_REQUIRED"
+        },
+        "generator_slots": {
+          "value": 5,
+          "source_level": "D",
+          "source_ref": [
+            "D36:reference/maps/autohaven_cn_retail_xhs.png / 照片印刷文字"
+          ],
+          "status": "CHECK_REQUIRED"
+        }
+      },
+      "previous_research_status": "CHECK_REQUIRED",
+      "adoption_basis": "USER_ACCEPTED_CN_RETAIL",
+      "adoption_ref": "U02:来源优先级与Phase1采用",
+      "japanese_missing_blocks_runtime": false,
+      "expected_pairwise_edge_count": 23
+    }
+  ]
+}

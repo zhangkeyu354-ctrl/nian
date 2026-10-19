@@ -1,0 +1,1457 @@
+{
+  "schema_version": 1,
+  "research_date": "2026-10-19",
+  "edition_scope": "BASE_STANDARD",
+  "note": "CONFIRMED只表示所标注的事实范围有依据；不等于全字段齐全、日文版一致、译文批准或已实现。null/空数组表示未确认。",
+  "rules": [
+    {
+      "id": "R001",
+      "section": "准备",
+      "key": "setup_adept",
+      "summary_zh": "基础模式为Adept；双方使用人物板上的3个技能。",
+      "source_level": "B",
+      "source_ref": [
+        "B01:p6"
+      ],
+      "status": "CONFIRMED",
+      "japanese_edition_status": "CHECK_REQUIRED",
+      "implementation_status": "NOT_IMPLEMENTED"
+    },
+    {
+      "id": "R002",
+      "section": "准备",
+      "key": "assign_roles",
+      "summary_zh": "一名玩家控制杀手，其余玩家控制逃生者；先手标记交给一名逃生者。",
+      "source_level": "B",
+      "source_ref": [
+        "B01:p6"
+      ],
+      "status": "CONFIRMED",
+      "japanese_edition_status": "CHECK_REQUIRED",
+      "implementation_status": "NOT_IMPLEMENTED"
+    },
+    {
+      "id": "R003",
+      "section": "准备",
+      "key": "personal_sacrifice",
+      "summary_zh": "每名逃生者人物板上先放一枚个人献祭进度。",
+      "source_level": "B",
+      "source_ref": [
+        "B01:p6"
+      ],
+      "status": "CONFIRMED",
+      "japanese_edition_status": "CHECK_REQUIRED",
+      "implementation_status": "NOT_IMPLEMENTED"
+    },
+    {
+      "id": "R004",
+      "section": "准备",
+      "key": "choose_map",
+      "summary_zh": "共同选择地图；各房间按印刷类别和数量放背面道具。",
+      "source_level": "B",
+      "source_ref": [
+        "B01:p6"
+      ],
+      "status": "CONFIRMED",
+      "japanese_edition_status": "CHECK_REQUIRED",
+      "implementation_status": "NOT_IMPLEMENTED"
+    },
+    {
+      "id": "R005",
+      "section": "准备",
+      "key": "initial_reveal",
+      "summary_zh": "逃生者依序各翻开地图任意位置一枚道具；墙放在有破损边框的路径。",
+      "source_level": "B",
+      "source_ref": [
+        "B01:p6"
+      ],
+      "status": "CONFIRMED",
+      "japanese_edition_status": "CHECK_REQUIRED",
+      "implementation_status": "NOT_IMPLEMENTED"
+    },
+    {
+      "id": "R006",
+      "section": "准备",
+      "key": "deal_movement",
+      "summary_zh": "每名玩家拿一套四色移动卡；杀手另拿Wait。",
+      "source_level": "B",
+      "source_ref": [
+        "B01:p6"
+      ],
+      "status": "CONFIRMED",
+      "japanese_edition_status": "CHECK_REQUIRED",
+      "implementation_status": "NOT_IMPLEMENTED"
+    },
+    {
+      "id": "R007",
+      "section": "准备",
+      "key": "bloodpoints",
+      "summary_zh": "逃生者初始2、上限6；杀手初始4、上限12。",
+      "source_level": "B",
+      "source_ref": [
+        "B01:p4"
+      ],
+      "status": "CONFIRMED",
+      "japanese_edition_status": "CHECK_REQUIRED",
+      "implementation_status": "NOT_IMPLEMENTED",
+      "chinese_corroboration": [
+        {
+          "comparison_ref": "REF29",
+          "source_level": "D",
+          "source_ref": [
+            "D41:初始/上限：逃生者2/6、杀手4/12"
+          ],
+          "status": "CHECK_REQUIRED",
+          "comparison_status": "MATCH"
+        }
+      ]
+    },
+    {
+      "id": "R008",
+      "section": "准备",
+      "key": "items_and_spawn",
+      "summary_zh": "洗物品堆；每个角色掷黑骰，按对应出生标记落点；允许重叠及与杀手同房。",
+      "source_level": "B",
+      "source_ref": [
+        "B01:p6"
+      ],
+      "status": "CONFIRMED",
+      "japanese_edition_status": "CHECK_REQUIRED",
+      "implementation_status": "NOT_IMPLEMENTED"
+    },
+    {
+      "id": "R009",
+      "section": "人数",
+      "key": "always_four",
+      "summary_zh": "始终4名逃生者；4人局一人兼控2名，3人局两名逃生者玩家各兼控2名。",
+      "source_level": "B",
+      "source_ref": [
+        "B01:p19"
+      ],
+      "status": "CONFIRMED",
+      "japanese_edition_status": "CHECK_REQUIRED",
+      "implementation_status": "NOT_IMPLEMENTED"
+    },
+    {
+      "id": "R010",
+      "section": "人数",
+      "key": "shared_hand",
+      "summary_zh": "兼控2名角色的玩家只有一套移动卡，不能把两套卡分别发给角色。",
+      "source_level": "B",
+      "source_ref": [
+        "B01:p19"
+      ],
+      "status": "CONFIRMED",
+      "japanese_edition_status": "CHECK_REQUIRED",
+      "implementation_status": "NOT_IMPLEMENTED"
+    },
+    {
+      "id": "R011",
+      "section": "人数",
+      "key": "character_turn_order",
+      "summary_zh": "先手标记在逃生者角色之间轮转，每个角色依其席位结算。",
+      "source_level": "B",
+      "source_ref": [
+        "B01:p19"
+      ],
+      "status": "CONFIRMED",
+      "japanese_edition_status": "CHECK_REQUIRED",
+      "implementation_status": "NOT_IMPLEMENTED"
+    },
+    {
+      "id": "R012",
+      "section": "回合",
+      "key": "round_phases",
+      "summary_zh": "计划→逃生者行动→杀手行动→清理。",
+      "source_level": "B",
+      "source_ref": [
+        "B01:p8"
+      ],
+      "status": "CONFIRMED",
+      "japanese_edition_status": "CHECK_REQUIRED",
+      "implementation_status": "NOT_IMPLEMENTED",
+      "chinese_corroboration": [
+        {
+          "comparison_ref": "REF28",
+          "source_level": "D",
+          "source_ref": [
+            "D51:人物板每轮四阶段公共文字"
+          ],
+          "status": "CHECK_REQUIRED",
+          "comparison_status": "MATCH"
+        }
+      ]
+    },
+    {
+      "id": "R013",
+      "section": "回合",
+      "key": "planning",
+      "summary_zh": "逃生者各秘密放1张移动卡；杀手秘密按左右顺序放2张。",
+      "source_level": "B",
+      "source_ref": [
+        "B01:p8"
+      ],
+      "status": "CONFIRMED",
+      "japanese_edition_status": "CHECK_REQUIRED",
+      "implementation_status": "NOT_IMPLEMENTED"
+    },
+    {
+      "id": "R014",
+      "section": "信息",
+      "key": "public_communication",
+      "summary_zh": "允许讨论，但桌上沟通必须让所有人包括杀手听到；不得实现默认秘密队内通信。",
+      "source_level": "B",
+      "source_ref": [
+        "B01:p8"
+      ],
+      "status": "CONFIRMED",
+      "japanese_edition_status": "CHECK_REQUIRED",
+      "implementation_status": "NOT_IMPLEMENTED"
+    },
+    {
+      "id": "R015",
+      "section": "移动",
+      "key": "survivor_move",
+      "summary_zh": "逃生者依角色顺序揭牌，沿匹配路径进入相邻房间；黄色翻越遵箭头。",
+      "source_level": "B",
+      "source_ref": [
+        "B01:p8"
+      ],
+      "status": "CONFIRMED",
+      "japanese_edition_status": "CHECK_REQUIRED",
+      "implementation_status": "NOT_IMPLEMENTED"
+    },
+    {
+      "id": "R016",
+      "section": "移动",
+      "key": "reveal_on_entry",
+      "summary_zh": "任何原因进入房间都翻开一枚未揭示道具；全已揭示则跳过翻开。",
+      "source_level": "B",
+      "source_ref": [
+        "B01:p8"
+      ],
+      "status": "CONFIRMED",
+      "japanese_edition_status": "CHECK_REQUIRED",
+      "implementation_status": "NOT_IMPLEMENTED"
+    },
+    {
+      "id": "R017",
+      "section": "移动",
+      "key": "mandatory_movement",
+      "summary_zh": "揭开的可行移动必须执行；不能自选原地停留。",
+      "source_level": "B",
+      "source_ref": [
+        "B01:p18"
+      ],
+      "status": "CONFIRMED",
+      "japanese_edition_status": "CHECK_REQUIRED",
+      "implementation_status": "NOT_IMPLEMENTED"
+    },
+    {
+      "id": "R018",
+      "section": "移动",
+      "key": "failed_move",
+      "summary_zh": "移动不成立则原地，且失去该张卡带来的交互机会。",
+      "source_level": "B",
+      "source_ref": [
+        "B01:p8"
+      ],
+      "status": "CONFIRMED",
+      "japanese_edition_status": "CHECK_REQUIRED",
+      "implementation_status": "NOT_IMPLEMENTED"
+    },
+    {
+      "id": "R019",
+      "section": "交互",
+      "key": "survivor_interact",
+      "summary_zh": "移动后可选择同房已揭示道具或另一逃生者交互，也可放弃交互。",
+      "source_level": "B",
+      "source_ref": [
+        "B01:p9"
+      ],
+      "status": "CONFIRMED",
+      "japanese_edition_status": "CHECK_REQUIRED",
+      "implementation_status": "NOT_IMPLEMENTED"
+    },
+    {
+      "id": "R020",
+      "section": "额外回合",
+      "key": "survivor_bonus",
+      "summary_zh": "逃生者额外回合弃一张不同于计划牌的可用移动卡，移动后才可交互；可多次但受剩余牌限制。",
+      "source_level": "B",
+      "source_ref": [
+        "B01:p9"
+      ],
+      "status": "CONFIRMED",
+      "japanese_edition_status": "CHECK_REQUIRED",
+      "implementation_status": "NOT_IMPLEMENTED"
+    },
+    {
+      "id": "R021",
+      "section": "额外回合",
+      "key": "resume_order",
+      "summary_zh": "额外回合可打断行动，结束后回到原先行动顺序。",
+      "source_level": "B",
+      "source_ref": [
+        "B01:p9"
+      ],
+      "status": "CONFIRMED",
+      "japanese_edition_status": "CHECK_REQUIRED",
+      "implementation_status": "NOT_IMPLEMENTED"
+    },
+    {
+      "id": "R022",
+      "section": "杀手",
+      "key": "killer_sequence",
+      "summary_zh": "依次处理左卡再右卡，每张牌包含移动与交互。",
+      "source_level": "B",
+      "source_ref": [
+        "B01:p10"
+      ],
+      "status": "CONFIRMED",
+      "japanese_edition_status": "CHECK_REQUIRED",
+      "implementation_status": "NOT_IMPLEMENTED"
+    },
+    {
+      "id": "R023",
+      "section": "杀手",
+      "key": "wait_exception",
+      "summary_zh": "除Wait外不能移动则失去交互；Wait不移动仍是移动卡。",
+      "source_level": "B",
+      "source_ref": [
+        "B01:p10"
+      ],
+      "status": "CONFIRMED",
+      "japanese_edition_status": "CHECK_REQUIRED",
+      "implementation_status": "NOT_IMPLEMENTED"
+    },
+    {
+      "id": "R024",
+      "section": "杀手",
+      "key": "killer_power",
+      "summary_zh": "可用专属力量替代交互，每轮一次；各力量文本尚需补全。",
+      "source_level": "B",
+      "source_ref": [
+        "B01:p10"
+      ],
+      "status": "CONFIRMED",
+      "japanese_edition_status": "CHECK_REQUIRED",
+      "implementation_status": "NOT_IMPLEMENTED"
+    },
+    {
+      "id": "R025",
+      "section": "杀手",
+      "key": "killer_bonus",
+      "summary_zh": "仅在第二个回合结束可付4血点设置第三张卡；每轮最多一次额外回合。",
+      "source_level": "B",
+      "source_ref": [
+        "B01:p10"
+      ],
+      "status": "CONFIRMED",
+      "japanese_edition_status": "CHECK_REQUIRED",
+      "implementation_status": "NOT_IMPLEMENTED",
+      "chinese_corroboration": [
+        {
+          "comparison_ref": "REF30",
+          "source_level": "D",
+          "source_ref": [
+            "D41:杀手第二回合后消耗4执行额外回合"
+          ],
+          "status": "CHECK_REQUIRED",
+          "comparison_status": "MATCH"
+        }
+      ]
+    },
+    {
+      "id": "R026",
+      "section": "清理",
+      "key": "cleanup_sequence",
+      "summary_zh": "依次累计挂钩进度、移除恶灵、将先手标记传给下一逃生者、回收移动卡。",
+      "source_level": "B",
+      "source_ref": [
+        "B01:p11"
+      ],
+      "status": "CONFIRMED",
+      "japanese_edition_status": "CHECK_REQUIRED",
+      "implementation_status": "NOT_IMPLEMENTED"
+    },
+    {
+      "id": "R027",
+      "section": "献祭",
+      "key": "end_round_sacrifice",
+      "summary_zh": "清理时每名仍在钩上的逃生者增加1献祭进度。",
+      "source_level": "B",
+      "source_ref": [
+        "B01:p11"
+      ],
+      "status": "CONFIRMED",
+      "japanese_edition_status": "CHECK_REQUIRED",
+      "implementation_status": "NOT_IMPLEMENTED"
+    },
+    {
+      "id": "R028",
+      "section": "胜负",
+      "key": "immediate_end",
+      "summary_zh": "献祭轨达到8或出口打开，率先完成目标的一方立即获胜，停止后续结算。",
+      "source_level": "B",
+      "source_ref": [
+        "B01:p11"
+      ],
+      "status": "CONFIRMED",
+      "japanese_edition_status": "CHECK_REQUIRED",
+      "implementation_status": "NOT_IMPLEMENTED"
+    },
+    {
+      "id": "R029",
+      "section": "道具",
+      "key": "repair_generator",
+      "summary_zh": "发电机检定成功加1，大成功加2，失败不加；最多3进度，完成后移到轨道。",
+      "source_level": "B",
+      "source_ref": [
+        "B01:p12"
+      ],
+      "status": "CONFIRMED",
+      "japanese_edition_status": "CHECK_REQUIRED",
+      "implementation_status": "NOT_IMPLEMENTED",
+      "chinese_corroboration": [
+        {
+          "comparison_ref": "REF07",
+          "source_level": "D",
+          "source_ref": [
+            "D38:发电机：成功1/大成功2/失败0，封顶3，完成移轨"
+          ],
+          "status": "CHECK_REQUIRED",
+          "comparison_status": "MATCH"
+        }
+      ]
+    },
+    {
+      "id": "R030",
+      "section": "道具",
+      "key": "chest",
+      "summary_zh": "翻找箱子后移除箱子并摸1物品；持有超过1张须弃至1张。",
+      "source_level": "B",
+      "source_ref": [
+        "B01:p12"
+      ],
+      "status": "CONFIRMED",
+      "japanese_edition_status": "CHECK_REQUIRED",
+      "implementation_status": "NOT_IMPLEMENTED",
+      "chinese_corroboration": [
+        {
+          "comparison_ref": "REF01",
+          "source_level": "D",
+          "source_ref": [
+            "D38:箱子：移除、摸1物品、超1弃至1"
+          ],
+          "status": "CHECK_REQUIRED",
+          "comparison_status": "MATCH"
+        }
+      ]
+    },
+    {
+      "id": "R031",
+      "section": "道具",
+      "key": "locker",
+      "summary_zh": "躲入柜子后不可发动技能，被视为不在场以处理交互/技能/力量；任意移动先离柜。",
+      "source_level": "B",
+      "source_ref": [
+        "B01:p12"
+      ],
+      "status": "CONFIRMED",
+      "japanese_edition_status": "CHECK_REQUIRED",
+      "implementation_status": "NOT_IMPLEMENTED",
+      "chinese_corroboration": [
+        {
+          "comparison_ref": "REF04",
+          "source_level": "D",
+          "source_ref": [
+            "D38:柜内角色视为不在场，不能用技能，移动先离柜"
+          ],
+          "status": "CHECK_REQUIRED",
+          "comparison_status": "MATCH"
+        }
+      ]
+    },
+    {
+      "id": "R032",
+      "section": "道具",
+      "key": "occupied_locker",
+      "summary_zh": "逃生者不能与已占用柜子交互；杀手只能搜索已占用柜子。",
+      "source_level": "B",
+      "source_ref": [
+        "B01:p12"
+      ],
+      "status": "CONFIRMED",
+      "japanese_edition_status": "CHECK_REQUIRED",
+      "implementation_status": "NOT_IMPLEMENTED",
+      "chinese_corroboration": [
+        {
+          "comparison_ref": "REF03",
+          "source_level": "D",
+          "source_ref": [
+            "D38:储物柜：同柜不能再交互"
+          ],
+          "status": "CHECK_REQUIRED",
+          "comparison_status": "MATCH"
+        },
+        {
+          "comparison_ref": "REF13",
+          "source_level": "D",
+          "source_ref": [
+            "D39:杀手仅搜被占用储物柜"
+          ],
+          "status": "CHECK_REQUIRED",
+          "comparison_status": "MATCH"
+        }
+      ]
+    },
+    {
+      "id": "R033",
+      "section": "道具",
+      "key": "crow_survivor",
+      "summary_zh": "逃生者与乌鸦交互使杀手获得1血点，自己取得额外回合。",
+      "source_level": "B",
+      "source_ref": [
+        "B01:p12"
+      ],
+      "status": "CONFIRMED",
+      "japanese_edition_status": "CHECK_REQUIRED",
+      "implementation_status": "NOT_IMPLEMENTED",
+      "chinese_corroboration": [
+        {
+          "comparison_ref": "REF02",
+          "source_level": "D",
+          "source_ref": [
+            "D38:乌鸦冲刺：杀手+1血点，逃生者额外回合"
+          ],
+          "status": "CHECK_REQUIRED",
+          "comparison_status": "MATCH"
+        }
+      ]
+    },
+    {
+      "id": "R034",
+      "section": "道具",
+      "key": "drop_pallet",
+      "summary_zh": "木板可放于连接当前房间且无墙、木板或其他组件的路径；逃生者可通过路径上木板。",
+      "source_level": "B",
+      "source_ref": [
+        "B01:p12"
+      ],
+      "status": "CONFIRMED",
+      "japanese_edition_status": "CHECK_REQUIRED",
+      "implementation_status": "NOT_IMPLEMENTED",
+      "chinese_corroboration": [
+        {
+          "comparison_ref": "REF05",
+          "source_level": "D",
+          "source_ref": [
+            "D38:木板：放相连路线，不得与已有配件同路"
+          ],
+          "status": "CHECK_REQUIRED",
+          "comparison_status": "MATCH"
+        }
+      ]
+    },
+    {
+      "id": "R035",
+      "section": "道具",
+      "key": "exit_gate",
+      "summary_zh": "完成4台发电机后才能操作出口；成功或大成功均加1，达3立即赢。",
+      "source_level": "B",
+      "source_ref": [
+        "B01:p13"
+      ],
+      "status": "CONFIRMED",
+      "japanese_edition_status": "CHECK_REQUIRED",
+      "implementation_status": "NOT_IMPLEMENTED",
+      "chinese_corroboration": [
+        {
+          "comparison_ref": "REF10",
+          "source_level": "D",
+          "source_ref": [
+            "D38:出口：完成4发电机才通电，成功+1，达3获胜"
+          ],
+          "status": "CHECK_REQUIRED",
+          "comparison_status": "MATCH"
+        }
+      ]
+    },
+    {
+      "id": "R036",
+      "section": "道具",
+      "key": "sabotage_hook",
+      "summary_zh": "钩子放恶灵后本轮不能交互；如钩上有人则救人者加1血点，并将其救下。",
+      "source_level": "B",
+      "source_ref": [
+        "B01:p13"
+      ],
+      "status": "CONFIRMED",
+      "japanese_edition_status": "CHECK_REQUIRED",
+      "implementation_status": "NOT_IMPLEMENTED",
+      "chinese_corroboration": [
+        {
+          "comparison_ref": "REF08",
+          "source_level": "D",
+          "source_ref": [
+            "D38:钩子：放恶灵，本轮末移除；中文省略该钩不能交互"
+          ],
+          "status": "CHECK_REQUIRED",
+          "comparison_status": "MATCH_WITH_OMISSION"
+        },
+        {
+          "comparison_ref": "REF09",
+          "source_level": "D",
+          "source_ref": [
+            "D38:救人：获得1血点，救者先移，被救者后移"
+          ],
+          "status": "CHECK_REQUIRED",
+          "comparison_status": "MATCH"
+        }
+      ]
+    },
+    {
+      "id": "R037",
+      "section": "道具",
+      "key": "rescue_moves",
+      "summary_zh": "救人后救人者可沿任意路径移动，之后被救者也可沿任意路径移动。",
+      "source_level": "B",
+      "source_ref": [
+        "B01:p13"
+      ],
+      "status": "CONFIRMED",
+      "japanese_edition_status": "CHECK_REQUIRED",
+      "implementation_status": "NOT_IMPLEMENTED",
+      "chinese_corroboration": [
+        {
+          "comparison_ref": "REF09",
+          "source_level": "D",
+          "source_ref": [
+            "D38:救人：获得1血点，救者先移，被救者后移"
+          ],
+          "status": "CHECK_REQUIRED",
+          "comparison_status": "MATCH"
+        }
+      ]
+    },
+    {
+      "id": "R038",
+      "section": "道具",
+      "key": "cleanse",
+      "summary_zh": "净化图腾成功则移除并获得2血点；大成功没有额外奖励。",
+      "source_level": "B",
+      "source_ref": [
+        "B01:p13"
+      ],
+      "status": "CONFIRMED",
+      "japanese_edition_status": "CHECK_REQUIRED",
+      "implementation_status": "NOT_IMPLEMENTED",
+      "chinese_corroboration": [
+        {
+          "comparison_ref": "REF11",
+          "source_level": "D",
+          "source_ref": [
+            "D38:厄咒图腾：成功移除并得2血点"
+          ],
+          "status": "CHECK_REQUIRED",
+          "comparison_status": "MATCH"
+        }
+      ]
+    },
+    {
+      "id": "R039",
+      "section": "道具",
+      "key": "heal_other",
+      "summary_zh": "为同房另一名受伤者治疗；检定成功使其恢复健康。",
+      "source_level": "B",
+      "source_ref": [
+        "B01:p13"
+      ],
+      "status": "CONFIRMED",
+      "japanese_edition_status": "CHECK_REQUIRED",
+      "implementation_status": "NOT_IMPLEMENTED",
+      "chinese_corroboration": [
+        {
+          "comparison_ref": "REF12",
+          "source_level": "D",
+          "source_ref": [
+            "D38:治疗：另一位受伤逃生者成功变健康"
+          ],
+          "status": "CHECK_REQUIRED",
+          "comparison_status": "MATCH"
+        }
+      ]
+    },
+    {
+      "id": "R040",
+      "section": "道具",
+      "key": "survivor_wall",
+      "summary_zh": "逃生者不能与墙交互或通常穿越带墙路径，移动失败同时失去交互。",
+      "source_level": "B",
+      "source_ref": [
+        "B01:p13"
+      ],
+      "status": "CONFIRMED",
+      "japanese_edition_status": "CHECK_REQUIRED",
+      "implementation_status": "NOT_IMPLEMENTED"
+    },
+    {
+      "id": "R041",
+      "section": "攻击",
+      "key": "healthy_attack",
+      "summary_zh": "对健康逃生者攻击使其受伤。",
+      "source_level": "B",
+      "source_ref": [
+        "B01:p14"
+      ],
+      "status": "CONFIRMED",
+      "japanese_edition_status": "CHECK_REQUIRED",
+      "implementation_status": "NOT_IMPLEMENTED",
+      "chinese_corroboration": [
+        {
+          "comparison_ref": "REF18",
+          "source_level": "D",
+          "source_ref": [
+            "D39:攻击健康逃生者：受伤并放环"
+          ],
+          "status": "CHECK_REQUIRED",
+          "comparison_status": "MATCH"
+        }
+      ]
+    },
+    {
+      "id": "R042",
+      "section": "攻击",
+      "key": "pickup_wounded",
+      "summary_zh": "可抱起先前已受伤的逃生者；本轮新受伤者不能按此普通交互抱起。",
+      "source_level": "B",
+      "source_ref": [
+        "B01:p15"
+      ],
+      "status": "CONFIRMED",
+      "japanese_edition_status": "CHECK_REQUIRED",
+      "implementation_status": "NOT_IMPLEMENTED",
+      "chinese_corroboration": [
+        {
+          "comparison_ref": "REF19",
+          "source_level": "D",
+          "source_ref": [
+            "D39:抓取受伤者：不能抓本轮受伤者"
+          ],
+          "status": "CHECK_REQUIRED",
+          "comparison_status": "MATCH"
+        }
+      ]
+    },
+    {
+      "id": "R043",
+      "section": "攻击",
+      "key": "locker_search",
+      "summary_zh": "柜内逃生者检定失败被抱起（可以健康）；成功移除柜子。",
+      "source_level": "B",
+      "source_ref": [
+        "B01:p14"
+      ],
+      "status": "CONFIRMED",
+      "japanese_edition_status": "CHECK_REQUIRED",
+      "implementation_status": "NOT_IMPLEMENTED",
+      "chinese_corroboration": [
+        {
+          "comparison_ref": "REF14",
+          "source_level": "D",
+          "source_ref": [
+            "D39:搜柜：失败抓取，包括健康者；成功移除柜"
+          ],
+          "status": "CHECK_REQUIRED",
+          "comparison_status": "MATCH"
+        }
+      ]
+    },
+    {
+      "id": "R044",
+      "section": "道具",
+      "key": "killer_crow",
+      "summary_zh": "杀手移除乌鸦获得1血点。",
+      "source_level": "B",
+      "source_ref": [
+        "B01:p14"
+      ],
+      "status": "CONFIRMED",
+      "japanese_edition_status": "CHECK_REQUIRED",
+      "implementation_status": "NOT_IMPLEMENTED",
+      "chinese_corroboration": [
+        {
+          "comparison_ref": "REF15",
+          "source_level": "D",
+          "source_ref": [
+            "D39:侦察乌鸦：移除并+1血点"
+          ],
+          "status": "CHECK_REQUIRED",
+          "comparison_status": "MATCH"
+        }
+      ]
+    },
+    {
+      "id": "R045",
+      "section": "道具",
+      "key": "killer_generator",
+      "summary_zh": "杀手破坏未完成发电机时清空该发电机进度。",
+      "source_level": "B",
+      "source_ref": [
+        "B01:p14"
+      ],
+      "status": "CONFIRMED",
+      "japanese_edition_status": "CHECK_REQUIRED",
+      "implementation_status": "NOT_IMPLEMENTED",
+      "chinese_corroboration": [
+        {
+          "comparison_ref": "REF16",
+          "source_level": "D",
+          "source_ref": [
+            "D39:破坏发电机：移除所有进度"
+          ],
+          "status": "CHECK_REQUIRED",
+          "comparison_status": "MATCH"
+        }
+      ]
+    },
+    {
+      "id": "R046",
+      "section": "道具",
+      "key": "killer_totem",
+      "summary_zh": "杀手崇敬图腾获得2血点。",
+      "source_level": "B",
+      "source_ref": [
+        "B01:p14"
+      ],
+      "status": "CONFIRMED",
+      "japanese_edition_status": "CHECK_REQUIRED",
+      "implementation_status": "NOT_IMPLEMENTED",
+      "chinese_corroboration": [
+        {
+          "comparison_ref": "REF17",
+          "source_level": "D",
+          "source_ref": [
+            "D39:敬拜图腾：+2血点"
+          ],
+          "status": "CHECK_REQUIRED",
+          "comparison_status": "MATCH"
+        }
+      ]
+    },
+    {
+      "id": "R047",
+      "section": "路径",
+      "key": "killer_pallet",
+      "summary_zh": "杀手尝试通过木板时摧毁木板且留原房，失去交互。",
+      "source_level": "B",
+      "source_ref": [
+        "B01:p14"
+      ],
+      "status": "CONFIRMED",
+      "japanese_edition_status": "CHECK_REQUIRED",
+      "implementation_status": "NOT_IMPLEMENTED",
+      "chinese_corroboration": [
+        {
+          "comparison_ref": "REF06",
+          "source_level": "D",
+          "source_ref": [
+            "D38:杀手遇木板：移除，原地，不能交互"
+          ],
+          "status": "CHECK_REQUIRED",
+          "comparison_status": "MATCH"
+        }
+      ]
+    },
+    {
+      "id": "R048",
+      "section": "路径",
+      "key": "killer_wall",
+      "summary_zh": "杀手通过墙时移除墙并正常完成移动；此后双方可通行。",
+      "source_level": "B",
+      "source_ref": [
+        "B01:p14"
+      ],
+      "status": "CONFIRMED",
+      "japanese_edition_status": "CHECK_REQUIRED",
+      "implementation_status": "NOT_IMPLEMENTED"
+    },
+    {
+      "id": "R049",
+      "section": "挂钩",
+      "key": "immediate_hook",
+      "summary_zh": "抱起时当前房间有未占用的可用钩子则必须立即挂钩。",
+      "source_level": "B",
+      "source_ref": [
+        "B01:p15"
+      ],
+      "status": "CONFIRMED",
+      "japanese_edition_status": "CHECK_REQUIRED",
+      "implementation_status": "NOT_IMPLEMENTED",
+      "chinese_corroboration": [
+        {
+          "comparison_ref": "REF20",
+          "source_level": "D",
+          "source_ref": [
+            "D39:同空间有未占钩必须立刻献祭"
+          ],
+          "status": "CHECK_REQUIRED",
+          "comparison_status": "MATCH"
+        },
+        {
+          "comparison_ref": "REF25",
+          "source_level": "D",
+          "source_ref": [
+            "D39:终点有未占钩放上；个人献祭进度移全局轨"
+          ],
+          "status": "CHECK_REQUIRED",
+          "comparison_status": "MATCH"
+        }
+      ]
+    },
+    {
+      "id": "R050",
+      "section": "搬运",
+      "key": "carry_roll",
+      "summary_zh": "无可用同房钩子时，杀手选择至多4枚黑骰由逃生者掷；任一大成功即原地挣脱。",
+      "source_level": "B",
+      "source_ref": [
+        "B01:p15"
+      ],
+      "status": "CONFIRMED",
+      "japanese_edition_status": "CHECK_REQUIRED",
+      "implementation_status": "NOT_IMPLEMENTED",
+      "chinese_corroboration": [
+        {
+          "comparison_ref": "REF21",
+          "source_level": "D",
+          "source_ref": [
+            "D39:无未占钩要搬运，不用移动牌"
+          ],
+          "status": "CHECK_REQUIRED",
+          "comparison_status": "MATCH"
+        },
+        {
+          "comparison_ref": "REF22",
+          "source_level": "D",
+          "source_ref": [
+            "D39:选至多4骰，任一大成功原地挣脱"
+          ],
+          "status": "CHECK_REQUIRED",
+          "comparison_status": "MATCH"
+        }
+      ]
+    },
+    {
+      "id": "R051",
+      "section": "搬运",
+      "key": "carry_distance",
+      "summary_zh": "没有大成功则可移动最多等于骰子数的房间数；停下仍未到钩则在停下房间挣脱。",
+      "source_level": "B",
+      "source_ref": [
+        "B01:p15"
+      ],
+      "status": "CONFIRMED",
+      "japanese_edition_status": "CHECK_REQUIRED",
+      "implementation_status": "NOT_IMPLEMENTED",
+      "chinese_corroboration": [
+        {
+          "comparison_ref": "REF23",
+          "source_level": "D",
+          "source_ref": [
+            "D39:无大成功每骰至多移动1空间；未达钩于终点挣脱"
+          ],
+          "status": "CHECK_REQUIRED",
+          "comparison_status": "MATCH"
+        }
+      ]
+    },
+    {
+      "id": "R052",
+      "section": "搬运",
+      "key": "carry_restrictions",
+      "summary_zh": "搬运时不能过木板或墙、不能使用力量、不能交互。",
+      "source_level": "B",
+      "source_ref": [
+        "B01:p15"
+      ],
+      "status": "CONFIRMED",
+      "japanese_edition_status": "CHECK_REQUIRED",
+      "implementation_status": "NOT_IMPLEMENTED",
+      "chinese_corroboration": [
+        {
+          "comparison_ref": "REF24",
+          "source_level": "D",
+          "source_ref": [
+            "D39:搬运不能穿木板/墙、不能力量/交互"
+          ],
+          "status": "CHECK_REQUIRED",
+          "comparison_status": "MATCH"
+        }
+      ]
+    },
+    {
+      "id": "R053",
+      "section": "挂钩",
+      "key": "first_hook_progress",
+      "summary_zh": "被挂钩时将人物板上尚存的个人献祭进度移入献祭轨。",
+      "source_level": "B",
+      "source_ref": [
+        "B01:p15"
+      ],
+      "status": "CONFIRMED",
+      "japanese_edition_status": "CHECK_REQUIRED",
+      "implementation_status": "NOT_IMPLEMENTED",
+      "chinese_corroboration": [
+        {
+          "comparison_ref": "REF25",
+          "source_level": "D",
+          "source_ref": [
+            "D39:终点有未占钩放上；个人献祭进度移全局轨"
+          ],
+          "status": "CHECK_REQUIRED",
+          "comparison_status": "MATCH"
+        }
+      ]
+    },
+    {
+      "id": "R054",
+      "section": "挂钩",
+      "key": "hooked_state",
+      "summary_zh": "挂钩者不放计划卡、不能用技能、跳过回合，并视为不在场以处理交互/技能/力量。",
+      "source_level": "B",
+      "source_ref": [
+        "B01:p15"
+      ],
+      "status": "CONFIRMED",
+      "japanese_edition_status": "CHECK_REQUIRED",
+      "implementation_status": "NOT_IMPLEMENTED"
+    },
+    {
+      "id": "R055",
+      "section": "检定",
+      "key": "result_classes",
+      "summary_zh": "通常仅逃生者掷骰；黑骰0失败、1–4成功、5大成功；无特殊奖励时大成功当普通成功。",
+      "source_level": "B",
+      "source_ref": [
+        "B01:p16"
+      ],
+      "status": "CONFIRMED",
+      "japanese_edition_status": "CHECK_REQUIRED",
+      "implementation_status": "NOT_IMPLEMENTED"
+    },
+    {
+      "id": "R056",
+      "section": "检定",
+      "key": "failed_check_bp",
+      "summary_zh": "检定失败通常使杀手获得1血点；结算时点须在重掷完成后。",
+      "source_level": "B",
+      "source_ref": [
+        "B01:p16"
+      ],
+      "status": "CONFIRMED",
+      "japanese_edition_status": "CHECK_REQUIRED",
+      "implementation_status": "NOT_IMPLEMENTED"
+    },
+    {
+      "id": "R057",
+      "section": "检定",
+      "key": "reroll_once",
+      "summary_zh": "接受重掷后的结果；同一枚已重掷的骰子不能再次重掷。",
+      "source_level": "B",
+      "source_ref": [
+        "B01:p16"
+      ],
+      "status": "CONFIRMED",
+      "japanese_edition_status": "CHECK_REQUIRED",
+      "implementation_status": "NOT_IMPLEMENTED"
+    },
+    {
+      "id": "R058",
+      "section": "检定",
+      "key": "danger_die",
+      "summary_zh": "红色危险骰仅在效果要求时使用，4个失败面及2个大成功面。",
+      "source_level": "B",
+      "source_ref": [
+        "B01:p16"
+      ],
+      "status": "CONFIRMED",
+      "japanese_edition_status": "CHECK_REQUIRED",
+      "implementation_status": "NOT_IMPLEMENTED"
+    },
+    {
+      "id": "R059",
+      "section": "技能",
+      "key": "once_per_round",
+      "summary_zh": "每个技能每轮至多一次，包括0费用技能。",
+      "source_level": "B",
+      "source_ref": [
+        "B01:p16"
+      ],
+      "status": "CONFIRMED",
+      "japanese_edition_status": "CHECK_REQUIRED",
+      "implementation_status": "NOT_IMPLEMENTED"
+    },
+    {
+      "id": "R060",
+      "section": "技能",
+      "key": "timing_same_player",
+      "summary_zh": "同一人同一时点多个技能，由其选择使用哪些及顺序。",
+      "source_level": "B",
+      "source_ref": [
+        "B01:p16"
+      ],
+      "status": "CONFIRMED",
+      "japanese_edition_status": "CHECK_REQUIRED",
+      "implementation_status": "NOT_IMPLEMENTED"
+    },
+    {
+      "id": "R061",
+      "section": "技能",
+      "key": "timing_players",
+      "summary_zh": "多人同一时点：逃生者按角色回合顺序依次选择使用或放弃，再由杀手选择。",
+      "source_level": "B",
+      "source_ref": [
+        "B01:p16"
+      ],
+      "status": "CONFIRMED",
+      "japanese_edition_status": "CHECK_REQUIRED",
+      "implementation_status": "NOT_IMPLEMENTED"
+    },
+    {
+      "id": "R062",
+      "section": "特殊",
+      "key": "entity_unique",
+      "summary_zh": "仅一枚恶灵；重新放置立即移除旧位置，本轮清理移除。",
+      "source_level": "B",
+      "source_ref": [
+        "B01:p16"
+      ],
+      "status": "CONFIRMED",
+      "japanese_edition_status": "CHECK_REQUIRED",
+      "implementation_status": "NOT_IMPLEMENTED",
+      "chinese_corroboration": [
+        {
+          "comparison_ref": "REF08",
+          "source_level": "D",
+          "source_ref": [
+            "D38:钩子：放恶灵，本轮末移除；中文省略该钩不能交互"
+          ],
+          "status": "CHECK_REQUIRED",
+          "comparison_status": "MATCH_WITH_OMISSION"
+        }
+      ]
+    },
+    {
+      "id": "R063",
+      "section": "图论",
+      "key": "connected_vs_directed",
+      "summary_zh": "相连房间定义包含单向路径的两端；相连关系与实际允许移动方向必须区分。",
+      "source_level": "B",
+      "source_ref": [
+        "B01:p16"
+      ],
+      "status": "CONFIRMED",
+      "japanese_edition_status": "CHECK_REQUIRED",
+      "implementation_status": "NOT_IMPLEMENTED"
+    },
+    {
+      "id": "R064",
+      "section": "FAQ",
+      "key": "reveal_carry",
+      "summary_zh": "额外/效果移动揭示道具；搬运按Q08不揭示。",
+      "source_level": "B",
+      "source_ref": [
+        "B01:p18",
+        "D39:搬运期间不翻道具",
+        "U02:Q08"
+      ],
+      "status": "CONFIRMED",
+      "japanese_edition_status": "CHECK_REQUIRED",
+      "implementation_status": "NOT_IMPLEMENTED",
+      "chinese_corroboration": [
+        {
+          "comparison_ref": "REF26",
+          "source_level": "D",
+          "source_ref": [
+            "D39:搬运中不翻道具；英文FAQ明确搬运移动仍翻"
+          ],
+          "status": "CHECK_REQUIRED",
+          "comparison_status": "CONFLICT"
+        }
+      ],
+      "version_claims": [
+        {
+          "source_ref": [
+            "B01:p18"
+          ],
+          "reveal_props_during_carry": true
+        },
+        {
+          "source_ref": [
+            "D39:献祭段落"
+          ],
+          "reveal_props_during_carry": false
+        }
+      ],
+      "adopted_reveal_props_during_carry": false,
+      "question_ref": "Q08",
+      "japanese_missing_blocks_runtime": false,
+      "resolution": "CLOSED_USER_RULING"
+    },
+    {
+      "id": "R065",
+      "section": "FAQ",
+      "key": "discard_round",
+      "summary_zh": "弃掉的移动卡本轮不可用，清理时回收。",
+      "source_level": "B",
+      "source_ref": [
+        "B01:p18"
+      ],
+      "status": "CONFIRMED",
+      "japanese_edition_status": "CHECK_REQUIRED",
+      "implementation_status": "NOT_IMPLEMENTED"
+    },
+    {
+      "id": "R066",
+      "section": "FAQ",
+      "key": "already_wounded",
+      "summary_zh": "已受伤再次受伤不产生进一步伤害。",
+      "source_level": "B",
+      "source_ref": [
+        "B01:p18"
+      ],
+      "status": "CONFIRMED",
+      "japanese_edition_status": "CHECK_REQUIRED",
+      "implementation_status": "NOT_IMPLEMENTED"
+    },
+    {
+      "id": "R067",
+      "section": "FAQ",
+      "key": "no_gate_damage",
+      "summary_zh": "出口不是发电机；未点名出口的效果不影响出口，杀手不能按发电机交互破坏出口。",
+      "source_level": "B",
+      "source_ref": [
+        "B01:p18"
+      ],
+      "status": "CONFIRMED",
+      "japanese_edition_status": "CHECK_REQUIRED",
+      "implementation_status": "NOT_IMPLEMENTED"
+    },
+    {
+      "id": "R068",
+      "section": "FAQ",
+      "key": "healthy_pickup",
+      "summary_zh": "效果抱起健康逃生者不会自动使其受伤，即使已挂钩也仍可健康。",
+      "source_level": "B",
+      "source_ref": [
+        "B01:p18"
+      ],
+      "status": "CONFIRMED",
+      "japanese_edition_status": "CHECK_REQUIRED",
+      "implementation_status": "NOT_IMPLEMENTED"
+    },
+    {
+      "id": "R069",
+      "section": "FAQ",
+      "key": "discarded_results",
+      "summary_zh": "多掷后只保留部分结果时，被弃掉的失败结果仍可能给杀手血点；不适用于被重掷替换的旧结果。",
+      "source_level": "B",
+      "source_ref": [
+        "B01:p18"
+      ],
+      "status": "CONFIRMED",
+      "japanese_edition_status": "CHECK_REQUIRED",
+      "implementation_status": "NOT_IMPLEMENTED"
+    },
+    {
+      "id": "R070",
+      "section": "FAQ",
+      "key": "remote_pickup",
+      "summary_zh": "效果要求抱起异地逃生者时，先把目标移到杀手房间。",
+      "source_level": "B",
+      "source_ref": [
+        "B01:p18"
+      ],
+      "status": "CONFIRMED",
+      "japanese_edition_status": "CHECK_REQUIRED",
+      "implementation_status": "NOT_IMPLEMENTED"
+    },
+    {
+      "id": "R071",
+      "section": "FAQ",
+      "key": "bp_overflow",
+      "summary_zh": "超出角色血点上限时弃到上限。",
+      "source_level": "B",
+      "source_ref": [
+        "B01:p18"
+      ],
+      "status": "CONFIRMED",
+      "japanese_edition_status": "CHECK_REQUIRED",
+      "implementation_status": "NOT_IMPLEMENTED"
+    },
+    {
+      "id": "R072",
+      "section": "模式",
+      "key": "bloodweb",
+      "summary_zh": "Bloodweb：各抽5张与板上不同的技能，至多替换3个，最终保留3技能，弃未用卡。",
+      "source_level": "B",
+      "source_ref": [
+        "B01:p19"
+      ],
+      "status": "CONFIRMED",
+      "japanese_edition_status": "CHECK_REQUIRED",
+      "implementation_status": "NOT_IMPLEMENTED"
+    },
+    {
+      "id": "R073",
+      "section": "模式",
+      "key": "devout",
+      "summary_zh": "Devout：自由选择至多3个技能替换板上技能，开局同时公开，不能重复同名技能。",
+      "source_level": "B",
+      "source_ref": [
+        "B01:p19"
+      ],
+      "status": "CONFIRMED",
+      "japanese_edition_status": "CHECK_REQUIRED",
+      "implementation_status": "NOT_IMPLEMENTED"
+    },
+    {
+      "id": "R074",
+      "section": "待核对",
+      "key": "carry_routes",
+      "summary_zh": "搬运任意颜色、遵守单向箭头；不能穿木板和墙。",
+      "source_level": "B",
+      "source_ref": [
+        "B01:p8/p15/p16",
+        "U02:Q01"
+      ],
+      "status": "CONFIRMED",
+      "implementation_status": "BLOCKED",
+      "japanese_missing_blocks_runtime": false
+    },
+    {
+      "id": "R075",
+      "section": "待核对",
+      "key": "multi_failure_bp",
+      "summary_zh": "每颗失败各给杀手1血点；重掷替换结果不再计，未保留的失败仍计。",
+      "source_level": "B",
+      "source_ref": [
+        "B01:p16/p18",
+        "U02:Q02"
+      ],
+      "status": "CONFIRMED",
+      "implementation_status": "BLOCKED",
+      "japanese_missing_blocks_runtime": false
+    },
+    {
+      "id": "R076",
+      "section": "待核对",
+      "key": "exact_map",
+      "summary_zh": "两张照片地图经用户接受；三端图标按Q09自订规则一移动两两互通，共用障碍组。",
+      "source_level": "B",
+      "source_ref": [
+        "B01:p3/p5/p7/p16",
+        "U02:Q09"
+      ],
+      "status": "CONFIRMED",
+      "implementation_status": "BLOCKED",
+      "japanese_missing_blocks_runtime": false
+    },
+    {
+      "id": "R077",
+      "section": "待核对",
+      "key": "complete_character_effects",
+      "summary_zh": "13名基础角色板载文本已接受；Q11四项具体语义留Phase4，请求使用时明确报错。",
+      "source_level": "B",
+      "source_ref": [
+        "B01:p4/p14",
+        "U02:Q11"
+      ],
+      "status": "CHECK_REQUIRED",
+      "implementation_status": "BLOCKED",
+      "japanese_missing_blocks_runtime": false
+    },
+    {
+      "id": "R078",
+      "section": "地图核验",
+      "key": "map_setup_markers",
+      "summary_zh": "房名左侧是技能检定骰面；双方每个角色都掷骰放置，不存在头像对应房间仅供杀手的规则。",
+      "source_level": "B",
+      "source_ref": [
+        "B01:p5/p6/p16"
+      ],
+      "status": "CONFIRMED",
+      "japanese_edition_status": "CHECK_REQUIRED",
+      "implementation_status": "NOT_IMPLEMENTED"
+    },
+    {
+      "id": "R079",
+      "section": "地图核验",
+      "key": "map_distressed_walls",
+      "summary_zh": "破损边框路径开局放墙；本图为 mm_p05、mm_p11、mm_p21、mm_p22。",
+      "source_level": "B",
+      "source_ref": [
+        "B01:p5/p6/p13/p14",
+        "B11:四条初始墙路径"
+      ],
+      "status": "CONFIRMED",
+      "japanese_edition_status": "CHECK_REQUIRED",
+      "implementation_status": "NOT_IMPLEMENTED"
+    },
+    {
+      "id": "R080",
+      "section": "地图核验",
+      "key": "map_vault_arrows",
+      "summary_zh": "本图黄色路线四条，均沿箭头单向；相连关系仍按两端处理。搬运适用边界仍见 Q01。",
+      "source_level": "B",
+      "source_ref": [
+        "B01:p8/p16",
+        "B11:mm_p02/mm_p11/mm_p12/mm_p22"
+      ],
+      "status": "CONFIRMED",
+      "japanese_edition_status": "CHECK_REQUIRED",
+      "implementation_status": "NOT_IMPLEMENTED"
+    },
+    {
+      "id": "R081",
+      "section": "地图核验",
+      "key": "map_top_tracks",
+      "summary_zh": "红轨8格；黄轨5格为4发电机和1出口大门。发电机完成移到轨道，4台完成后才能交互出口。",
+      "source_level": "B",
+      "source_ref": [
+        "B01:p5/p8/p11/p12/p13",
+        "B11:顶部轨道"
+      ],
+      "status": "CONFIRMED",
+      "japanese_edition_status": "CHECK_REQUIRED",
+      "implementation_status": "NOT_IMPLEMENTED"
+    },
+    {
+      "id": "R082",
+      "section": "地图核验",
+      "key": "map_prop_colors",
+      "summary_zh": "黄色目标、红色勇气、蓝色生存、绿色协作；道具图例与类别顺序、实际道具配色交叉核验，不只依据数量推断。",
+      "source_level": "B",
+      "source_ref": [
+        "B01:p3/p5",
+        "B11:房间道具图标"
+      ],
+      "status": "CONFIRMED",
+      "japanese_edition_status": "CHECK_REQUIRED",
+      "implementation_status": "NOT_IMPLEMENTED",
+      "chinese_corroboration": [
+        {
+          "comparison_ref": "REF27",
+          "source_level": "D",
+          "source_ref": [
+            "D38:四色类别与数量，与既有B01图例相符"
+          ],
+          "status": "CHECK_REQUIRED",
+          "comparison_status": "MATCH"
+        }
+      ]
+    }
+  ]
+}

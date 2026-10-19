@@ -1,0 +1,1584 @@
+{
+  "schema_version": 1,
+  "research_date": "2026-10-19",
+  "timezone": "Asia/Tokyo",
+  "edition_scope": "2023 base/standard edition; Japanese physical edition takes priority when supplied",
+  "source_levels": {
+    "A": "用户实物",
+    "B": "L99官方/官方规则书",
+    "C": "授权地区出版方/已核实官方人员",
+    "D": "社区/零售/视频线索"
+  },
+  "initial_reference_inventory": [],
+  "initial_reference_inventory_note": "新建目录，无用户原始资料；不是声称检查过用户其他磁盘。",
+  "limitations": [
+    "Kickstarter 51条Updates未完成全文审阅",
+    "BGG直接访问403",
+    "日文/中文规则书PDF未取得",
+    "未观看视频；时间点只记录描述中实际提供的章节"
+  ],
+  "sources": [
+    {
+      "id": "B01",
+      "title": "英文基础规则书（20页；未见明确修订号）",
+      "url": "https://cdn.shopify.com/s/files/1/0277/6724/2855/files/DBD_Board_Game_Rulebook.pdf",
+      "language": "en",
+      "source_level": "B",
+      "coverage": [
+        "组件数量",
+        "基础规则",
+        "FAQ",
+        "3–4人模式",
+        "局部地图/卡牌示例"
+      ],
+      "access": "DOWNLOADED",
+      "checked_on": "2026-10-19",
+      "note": "L99商店CDN上的官方署名规则书；网页解析失败，直接HTTPS下载成功。20页均成功提取；已阅读核心规则章节p2–6、p8–16、p18–19，3/4/5/7/16页另作视觉核验。不能据此确认与用户日文印次一致。",
+      "adopted_for_formal_data": true,
+      "local_path": "reference/rulebooks/DBD_Board_Game_Rulebook_EN.pdf",
+      "source_ref": [
+        "https://cdn.shopify.com/s/files/1/0277/6724/2855/files/DBD_Board_Game_Rulebook.pdf"
+      ],
+      "status": "CONFIRMED",
+      "bytes": 4872008,
+      "sha256": "ee6368eebe911873ada1549fe283cf7d61a6adee8142fae907f9c86ecfef2b50"
+    },
+    {
+      "id": "B02",
+      "title": "Level 99 官方基础版商店组件清单",
+      "url": "https://www.level99games.com/products/dead-by-daylight-the-board-game",
+      "language": "en",
+      "source_level": "B",
+      "coverage": [
+        "13名基础角色名单",
+        "89张卡",
+        "组件数量"
+      ],
+      "access": "FULL_TEXT",
+      "checked_on": "2026-10-19",
+      "note": "旧level99store产品链接重定向到此。仅采用基础版栏目。",
+      "adopted_for_formal_data": true,
+      "local_path": null,
+      "source_ref": [
+        "https://www.level99games.com/products/dead-by-daylight-the-board-game"
+      ],
+      "status": "CONFIRMED"
+    },
+    {
+      "id": "B03",
+      "title": "Level 99 官方游戏介绍",
+      "url": "https://www.level99games.com/pages/dead-by-daylight",
+      "language": "en",
+      "source_level": "B",
+      "coverage": [
+        "基础版/典藏版范围区别",
+        "两张基础地图"
+      ],
+      "access": "FULL_TEXT",
+      "checked_on": "2026-10-19",
+      "note": "营销页没有可读取的完整卡牌数据库。",
+      "adopted_for_formal_data": true,
+      "local_path": null,
+      "source_ref": [
+        "https://www.level99games.com/pages/dead-by-daylight"
+      ],
+      "status": "CONFIRMED"
+    },
+    {
+      "id": "B04",
+      "title": "Level 99 支持中心 DBD 分类",
+      "url": "https://support.level99games.com/support/solutions/folders/65000157049",
+      "language": "en",
+      "source_level": "B",
+      "coverage": [
+        "售卖版本FAQ入口"
+      ],
+      "access": "FULL_TEXT",
+      "checked_on": "2026-10-19",
+      "note": "本次可见仅典藏版零售问题；未找到独立规则勘误文件。规则FAQ采用B01第18页。",
+      "adopted_for_formal_data": false,
+      "local_path": null,
+      "source_ref": [
+        "https://support.level99games.com/support/solutions/folders/65000157049"
+      ],
+      "status": "CONFIRMED"
+    },
+    {
+      "id": "B05",
+      "title": "Kickstarter 原项目",
+      "url": "https://www.kickstarter.com/projects/level99games/dead-by-daylight-the-board-game",
+      "language": "en",
+      "source_level": "B",
+      "coverage": [
+        "众筹资料入口"
+      ],
+      "access": "INDEX_ONLY",
+      "checked_on": "2026-10-19",
+      "note": "可检索项目摘要，不把众筹早期内容当最终版规则。",
+      "adopted_for_formal_data": false,
+      "local_path": null,
+      "source_ref": [
+        "https://www.kickstarter.com/projects/level99games/dead-by-daylight-the-board-game"
+      ],
+      "status": "CHECK_REQUIRED"
+    },
+    {
+      "id": "B06",
+      "title": "Kickstarter Updates 全部更新入口",
+      "url": "https://www.kickstarter.com/projects/level99games/dead-by-daylight-the-board-game/posts",
+      "language": "en",
+      "source_level": "B",
+      "coverage": [
+        "51条Updates入口",
+        "潜在卡牌/地图预览"
+      ],
+      "access": "PARTIAL_403",
+      "checked_on": "2026-10-19",
+      "note": "网页工具仅返回导航摘要（Updates 51）；直接HTTPS为403。完整正文及逐条分页未能审阅，不能声称全部已读。",
+      "adopted_for_formal_data": false,
+      "local_path": null,
+      "source_ref": [
+        "https://www.kickstarter.com/projects/level99games/dead-by-daylight-the-board-game/posts"
+      ],
+      "status": "CHECK_REQUIRED"
+    },
+    {
+      "id": "B07",
+      "title": "Kickstarter Auris Box更新（新版本线索）",
+      "url": "https://www.kickstarter.com/projects/level99games/dead-by-daylight-the-board-game/posts/4637318",
+      "language": "en",
+      "source_level": "B",
+      "coverage": [
+        "2026新版本线索"
+      ],
+      "access": "INDEX_ONLY",
+      "checked_on": "2026-10-19",
+      "note": "仅索引标题；Auris/solo内容不纳入2023基础版。",
+      "adopted_for_formal_data": false,
+      "local_path": null,
+      "source_ref": [
+        "https://www.kickstarter.com/projects/level99games/dead-by-daylight-the-board-game/posts/4637318"
+      ],
+      "status": "CHECK_REQUIRED"
+    },
+    {
+      "id": "B08",
+      "title": "官方设计日志 Part 4",
+      "url": "https://www.level99games.com/blogs/design-series/making-dead-by-daylight-the-boardgame-part4",
+      "language": "en",
+      "source_level": "B",
+      "coverage": [
+        "设计历史",
+        "机制演变"
+      ],
+      "access": "FULL_TEXT",
+      "checked_on": "2026-10-19",
+      "note": "2022年设计过程，有废弃机制；只作历史背景，不代替最终规则。",
+      "adopted_for_formal_data": false,
+      "local_path": null,
+      "source_ref": [
+        "https://www.level99games.com/blogs/design-series/making-dead-by-daylight-the-boardgame-part4"
+      ],
+      "status": "CONFIRMED"
+    },
+    {
+      "id": "B09",
+      "title": "官方设计日志 Part 6",
+      "url": "https://www.level99games.com/blogs/design-series/making-dead-by-daylight-the-boardgame-part6",
+      "language": "en",
+      "source_level": "B",
+      "coverage": [
+        "杀人鬼设计",
+        "典藏角色示例"
+      ],
+      "access": "FULL_TEXT",
+      "checked_on": "2026-10-19",
+      "note": "包含基础版以外角色和原型时期描述，不导入正式效果。",
+      "adopted_for_formal_data": false,
+      "local_path": null,
+      "source_ref": [
+        "https://www.level99games.com/blogs/design-series/making-dead-by-daylight-the-boardgame-part6"
+      ],
+      "status": "CONFIRMED"
+    },
+    {
+      "id": "B10",
+      "title": "官方设计日志 Part 7",
+      "url": "https://www.level99games.com/blogs/dead-by-daylight%E2%84%A2-the-board-game/making-dead-by-daylight-the-boardgame-part7",
+      "language": "en",
+      "source_level": "B",
+      "coverage": [
+        "逃生者设计",
+        "典藏角色示例"
+      ],
+      "access": "FULL_TEXT",
+      "checked_on": "2026-10-19",
+      "note": "不能用扩展/典藏角色填基础版的7人名额。",
+      "adopted_for_formal_data": false,
+      "local_path": null,
+      "source_ref": [
+        "https://www.level99games.com/blogs/dead-by-daylight%E2%84%A2-the-board-game/making-dead-by-daylight-the-boardgame-part7"
+      ],
+      "status": "CONFIRMED"
+    },
+    {
+      "id": "C01",
+      "title": "Asobition 日文官方发行页",
+      "url": "https://www.asobition.com/deadbydaylight",
+      "language": "ja",
+      "source_level": "C",
+      "coverage": [
+        "日文标准版",
+        "2023-05-19发售",
+        "日文预览图"
+      ],
+      "access": "FULL_TEXT",
+      "checked_on": "2026-10-19",
+      "note": "按用户分级：授权地区发行商为C。此页没有找到日文规则书下载。",
+      "adopted_for_formal_data": true,
+      "local_path": null,
+      "source_ref": [
+        "https://www.asobition.com/deadbydaylight"
+      ],
+      "status": "CONFIRMED",
+      "supplement_rechecked_on": "2026-10-19",
+      "supplement_result": "产品页及Support均未发现DBD日文规则PDF/FAQ；限定域搜索同样未检出，不推断资料绝不存在。"
+    },
+    {
+      "id": "C02",
+      "title": "Asobition 日文版整桌预览图",
+      "url": "https://static.wixstatic.com/media/ac6530_103b12ec59c84ef6906815c9bd84e46a~mv2.png",
+      "language": "ja",
+      "source_level": "C",
+      "coverage": [
+        "5名角色日文姓名",
+        "一面地图的预览",
+        "部分板面"
+      ],
+      "access": "DOWNLOADED",
+      "checked_on": "2026-10-19",
+      "note": "由C01的盤面.png图片链接取得原图；4645×3293。倾斜且有棋子、道具遮挡，不可证明全部连线。",
+      "adopted_for_formal_data": true,
+      "local_path": "reference/maps/ASOBITION_board_preview.png",
+      "source_ref": [
+        "https://static.wixstatic.com/media/ac6530_103b12ec59c84ef6906815c9bd84e46a~mv2.png"
+      ],
+      "status": "CONFIRMED",
+      "bytes": 12924603,
+      "sha256": "037c8083bff507970fd23074fc4b1cba2b708c4cabe1b06d019d7c49f98b7977"
+    },
+    {
+      "id": "C03",
+      "title": "Asobition Support / 勘误入口",
+      "url": "https://www.asobition.com/blank-4",
+      "language": "ja",
+      "source_level": "C",
+      "coverage": [
+        "各游戏勘误入口"
+      ],
+      "access": "FULL_TEXT",
+      "checked_on": "2026-10-19",
+      "note": "本次可见页面未列DBD；不能推断DBD不存在任何勘误。",
+      "adopted_for_formal_data": false,
+      "local_path": null,
+      "source_ref": [
+        "https://www.asobition.com/blank-4"
+      ],
+      "status": "CONFIRMED",
+      "supplement_rechecked_on": "2026-10-19",
+      "supplement_result": "产品页及Support均未发现DBD日文规则PDF/FAQ；限定域搜索同样未检出，不推断资料绝不存在。"
+    },
+    {
+      "id": "C04",
+      "title": "繁中出版方在挖贝的答复线索",
+      "url": "https://wabay.tw/projects/day-by-daylight-board-game/comments?locale=zh-TW",
+      "language": "zh-Hant",
+      "source_level": "C",
+      "coverage": [
+        "繁中卡牌/规则书存在",
+        "典藏版"
+      ],
+      "access": "INDEX_ONLY_403",
+      "checked_on": "2026-10-19",
+      "note": "搜索索引显示提案者「彌生的桌遊日記」2023-05-23确认繁中卡牌及规则书；打开正文403。未取得公开规则PDF，不用于卡牌原文。",
+      "adopted_for_formal_data": false,
+      "local_path": null,
+      "source_ref": [
+        "https://wabay.tw/projects/day-by-daylight-board-game/comments?locale=zh-TW"
+      ],
+      "status": "CHECK_REQUIRED"
+    },
+    {
+      "id": "C05",
+      "title": "BGG设计师 Brad Talton / Kyokai 文章线索",
+      "url": "https://boardgamegeek.com/thread/3728362/how-to-win-as-the-killer",
+      "language": "en",
+      "source_level": "C",
+      "coverage": [
+        "设计师策略文章入口"
+      ],
+      "access": "INDEX_ONLY_403",
+      "checked_on": "2026-10-19",
+      "note": "索引标注Designer/Publisher；打开403。未获得可作为具体规则裁定的完整答复。",
+      "adopted_for_formal_data": false,
+      "local_path": null,
+      "source_ref": [
+        "https://boardgamegeek.com/thread/3728362/how-to-win-as-the-killer"
+      ],
+      "status": "CHECK_REQUIRED"
+    },
+    {
+      "id": "D01",
+      "title": "BGG 基础版 Files",
+      "url": "https://boardgamegeek.com/boardgame/358246/dead-by-daylight-the-board-game/files",
+      "language": "en",
+      "source_level": "D",
+      "coverage": [
+        "13个文件索引",
+        "玩家参考资料"
+      ],
+      "access": "INDEX_ONLY_403",
+      "checked_on": "2026-10-19",
+      "note": "索引可见English/French/Spanish/Ukrainian分类；直接读取403。上传者与官方身份未逐个核实；不能整体升级为C。 补充轮可读索引列出13文件：含英文字体规则摘要、法文发行商规则、西文组件翻译、乌文民译、变体/计分表。未取得具体文件正文或英文逐卡引用库。",
+      "adopted_for_formal_data": false,
+      "local_path": null,
+      "source_ref": [
+        "https://boardgamegeek.com/boardgame/358246/dead-by-daylight-the-board-game/files"
+      ],
+      "status": "CHECK_REQUIRED"
+    },
+    {
+      "id": "D02",
+      "title": "BGG Rules论坛入口",
+      "url": "https://boardgamegeek.com/boardgame/358246/dead-by-daylight-the-board-game/forums/66",
+      "language": "en",
+      "source_level": "D",
+      "coverage": [
+        "规则问答检索入口"
+      ],
+      "access": "INDEX_ONLY",
+      "checked_on": "2026-10-19",
+      "note": "未将一般玩家回复升级为官方裁定；日文问答未检出有效结果。",
+      "adopted_for_formal_data": false,
+      "local_path": null,
+      "source_ref": [
+        "https://boardgamegeek.com/boardgame/358246/dead-by-daylight-the-board-game/forums/66"
+      ],
+      "status": "CHECK_REQUIRED"
+    },
+    {
+      "id": "D03",
+      "title": "Nerdist / Geek & Sundry 合作教学",
+      "url": "https://www.youtube.com/watch?v=3C76rQmeW9A",
+      "language": "en",
+      "source_level": "D",
+      "coverage": [
+        "教学视频"
+      ],
+      "access": "METADATA_ONLY",
+      "checked_on": "2026-10-19",
+      "note": "描述明确与L99付费合作。按用户规定视频只作线索；未观看完整视频/无可核验时间轴，时间点保留空。",
+      "adopted_for_formal_data": false,
+      "local_path": null,
+      "source_ref": [
+        "https://www.youtube.com/watch?v=3C76rQmeW9A"
+      ],
+      "status": "CHECK_REQUIRED"
+    },
+    {
+      "id": "D04",
+      "title": "Nerdist 合作教学说明页",
+      "url": "https://nerdist.com/article/dead-by-daylight-board-game-level-99-games-how-to-play-becca-scott/",
+      "language": "en",
+      "source_level": "D",
+      "coverage": [
+        "教学来源身份",
+        "视频入口"
+      ],
+      "access": "FULL_TEXT",
+      "checked_on": "2026-10-19",
+      "note": "用于验证合作身份，不代替规则书。",
+      "adopted_for_formal_data": false,
+      "local_path": null,
+      "source_ref": [
+        "https://nerdist.com/article/dead-by-daylight-board-game-level-99-games-how-to-play-becca-scott/"
+      ],
+      "status": "CONFIRMED"
+    },
+    {
+      "id": "D05",
+      "title": "ボドゲーマ 日文商品页",
+      "url": "https://bodoge.hoobby.net/market/items/5914?canonical=true",
+      "language": "ja",
+      "source_level": "D",
+      "coverage": [
+        "日本零售",
+        "13个模型"
+      ],
+      "access": "FULL_TEXT",
+      "checked_on": "2026-10-19",
+      "note": "零售资料仅作线索。",
+      "adopted_for_formal_data": false,
+      "local_path": null,
+      "source_ref": [
+        "https://bodoge.hoobby.net/market/items/5914?canonical=true"
+      ],
+      "status": "CONFIRMED"
+    },
+    {
+      "id": "D06",
+      "title": "ボドゲーマ 白州评测",
+      "url": "https://bodoge.hoobby.net/games/dead-by-daylight-bg/reviews/40768",
+      "language": "ja",
+      "source_level": "D",
+      "coverage": [
+        "日本玩家体验"
+      ],
+      "access": "INDEX_ONLY",
+      "checked_on": "2026-10-19",
+      "note": "没有取得官方规则答复。",
+      "adopted_for_formal_data": false,
+      "local_path": null,
+      "source_ref": [
+        "https://bodoge.hoobby.net/games/dead-by-daylight-bg/reviews/40768"
+      ],
+      "status": "CHECK_REQUIRED"
+    },
+    {
+      "id": "D07",
+      "title": "ボドゲーマ 日文教学视频索引",
+      "url": "https://bodoge.hoobby.net/games/dead-by-daylight-bg/videos",
+      "language": "ja",
+      "source_level": "D",
+      "coverage": [
+        "日本玩家教学视频"
+      ],
+      "access": "FULL_TEXT",
+      "checked_on": "2026-10-19",
+      "note": "找到ボドゲかぞく教学线索；未观看，时间点空。",
+      "adopted_for_formal_data": false,
+      "local_path": null,
+      "source_ref": [
+        "https://bodoge.hoobby.net/games/dead-by-daylight-bg/videos"
+      ],
+      "status": "CONFIRMED"
+    },
+    {
+      "id": "D08",
+      "title": "旅法师营地 玩家译文 1–7页",
+      "url": "https://www.iyingdi.com/tz/post/5211354",
+      "language": "zh-Hans",
+      "source_level": "D",
+      "coverage": [
+        "规则翻译线索"
+      ],
+      "access": "INDEX_ONLY",
+      "checked_on": "2026-10-19",
+      "note": "个人译文并自述可能过时/有误；未用来填正式规则。",
+      "adopted_for_formal_data": false,
+      "local_path": null,
+      "source_ref": [
+        "https://www.iyingdi.com/tz/post/5211354"
+      ],
+      "status": "CHECK_REQUIRED"
+    },
+    {
+      "id": "D09",
+      "title": "旅法师营地 玩家译文 8–9页",
+      "url": "https://www.iyingdi.com/tz/post/5213488",
+      "language": "zh-Hans",
+      "source_level": "D",
+      "coverage": [
+        "规划/行动",
+        "中文术语线索"
+      ],
+      "access": "INDEX_ONLY",
+      "checked_on": "2026-10-19",
+      "note": "索引说明与B站专栏/贴吧同步；不是官方中文版规则。",
+      "adopted_for_formal_data": false,
+      "local_path": null,
+      "source_ref": [
+        "https://www.iyingdi.com/tz/post/5213488"
+      ],
+      "status": "CHECK_REQUIRED"
+    },
+    {
+      "id": "D10",
+      "title": "B站 中文教学（弥生的桌游日记）",
+      "url": "https://www.bilibili.com/video/BV1ud4y1S7AY/",
+      "language": "zh-Hant",
+      "source_level": "D",
+      "coverage": [
+        "全流程教学线索"
+      ],
+      "access": "METADATA_ONLY",
+      "checked_on": "2026-10-19",
+      "note": "时间点来自视频描述而非实际观看：02:41规划、02:59行动、04:46追杀、07:19重整、07:48结束、08:01箱子、08:15柜子、08:50乌鸦、09:03木板、09:19钩子、09:49图腾、10:01通则、11:30变体。",
+      "adopted_for_formal_data": false,
+      "local_path": null,
+      "source_ref": [
+        "https://www.bilibili.com/video/BV1ud4y1S7AY/"
+      ],
+      "status": "CHECK_REQUIRED"
+    },
+    {
+      "id": "D11",
+      "title": "游民星空 中文典藏版报道",
+      "url": "https://www.gamersky.com/news/202208/1510264.shtml",
+      "language": "zh-Hans",
+      "source_level": "D",
+      "coverage": [
+        "2022中文典藏版预售线索"
+      ],
+      "access": "FULL_TEXT",
+      "checked_on": "2026-10-19",
+      "note": "报道不是官方发行授权证明；17/16为典藏，不能改基础版7/6。",
+      "adopted_for_formal_data": false,
+      "local_path": null,
+      "source_ref": [
+        "https://www.gamersky.com/news/202208/1510264.shtml"
+      ],
+      "status": "CONFIRMED"
+    },
+    {
+      "id": "D12",
+      "title": "摩点 香蕉桌游光明使者众筹索引",
+      "url": "https://zhongchou.modian.com/tablegames/top_time/all/21",
+      "language": "zh-Hans",
+      "source_level": "D",
+      "coverage": [
+        "简中代理线索",
+        "扩展众筹"
+      ],
+      "access": "INDEX_ONLY",
+      "checked_on": "2026-10-19",
+      "note": "找到香蕉桌游名义项目，但未取得基础版官方规则PDF或授权说明。",
+      "adopted_for_formal_data": false,
+      "local_path": null,
+      "source_ref": [
+        "https://zhongchou.modian.com/tablegames/top_time/all/21"
+      ],
+      "status": "CHECK_REQUIRED"
+    },
+    {
+      "id": "D13",
+      "title": "爱桌游 中文规则线索",
+      "url": "https://zhuoyoux.com/",
+      "language": "zh-Hans",
+      "source_level": "D",
+      "coverage": [
+        "中文规则帖子线索"
+      ],
+      "access": "INDEX_ONLY",
+      "checked_on": "2026-10-19",
+      "note": "只检出首页标题；不下载来源不明文件。",
+      "adopted_for_formal_data": false,
+      "local_path": null,
+      "source_ref": [
+        "https://zhuoyoux.com/"
+      ],
+      "status": "CHECK_REQUIRED"
+    },
+    {
+      "id": "D14",
+      "title": "Steam创意工坊 官方PDF链接线索",
+      "url": "https://steamcommunity.com/workshop/filedetails/?id=3403937480&l=portuguese",
+      "language": "pt-BR",
+      "source_level": "D",
+      "coverage": [
+        "B01官方PDF URL发现路径"
+      ],
+      "access": "INDEX_ONLY",
+      "checked_on": "2026-10-19",
+      "note": "只使用指向官方CDN的链接；不导入MOD、自制、扩展或扫描素材。",
+      "adopted_for_formal_data": false,
+      "local_path": null,
+      "source_ref": [
+        "https://steamcommunity.com/workshop/filedetails/?id=3403937480&l=portuguese"
+      ],
+      "status": "CHECK_REQUIRED"
+    },
+    {
+      "id": "D15",
+      "title": "B站 恶意扩展日志民间翻译",
+      "url": "https://www.bilibili.com/read/cv35386695/",
+      "language": "zh-Hans",
+      "source_level": "D",
+      "coverage": [
+        "玩家译文活动",
+        "扩展线索"
+      ],
+      "access": "INDEX_ONLY",
+      "checked_on": "2026-10-19",
+      "note": "属于恶意扩展，明确排除本项目基础版数据。",
+      "adopted_for_formal_data": false,
+      "local_path": null,
+      "source_ref": [
+        "https://www.bilibili.com/read/cv35386695/"
+      ],
+      "status": "CHECK_REQUIRED"
+    },
+    {
+      "id": "C06",
+      "title": "BGG 基础版八种道具数量（用户指定C级）",
+      "url": "https://boardgamegeek.com/wiki/page/thing%3A358246%3Amoreinfo",
+      "language": "en",
+      "source_level": "C",
+      "coverage": [
+        "八种道具子类型数量"
+      ],
+      "access": "SEARCH_INDEX_TEXT",
+      "checked_on": "2026-10-19",
+      "note": "本次检索实际显示8/2/5/5/6/6/6/6。BGG社区条目作者的官方身份未核实；C评级是用户明确指令的特定例外，不能外推至其他Wiki/玩家引用。",
+      "adopted_for_formal_data": true,
+      "local_path": null,
+      "source_ref": [
+        "https://boardgamegeek.com/wiki/page/thing%3A358246%3Amoreinfo"
+      ],
+      "status": "CHECK_REQUIRED",
+      "research_round": "PHASE_0_SUPPLEMENT"
+    },
+    {
+      "id": "D16",
+      "title": "RulesPal 英文规则转录",
+      "url": "https://www.rulespal.com/dead-by-daylight/rulebook",
+      "language": "en",
+      "source_level": "D",
+      "coverage": [
+        "官方PDF章节对照",
+        "排版/符号差异"
+      ],
+      "access": "FULL_TEXT",
+      "checked_on": "2026-10-19",
+      "note": "网页工具可读取429行；普通HTTPS下载403。对照报告不把该转录认定为独立官方资料。",
+      "adopted_for_formal_data": false,
+      "local_path": null,
+      "source_ref": [
+        "https://www.rulespal.com/dead-by-daylight/rulebook"
+      ],
+      "status": "CONFIRMED",
+      "research_round": "PHASE_0_SUPPLEMENT"
+    },
+    {
+      "id": "D17",
+      "title": "BGG Meg Thomas Sprint Burst",
+      "url": "https://boardgamegeek.com/thread/3072690/meg-thomas-sprint-burst",
+      "language": "en",
+      "source_level": "D",
+      "coverage": [
+        "Sprint Burst逐字引用"
+      ],
+      "access": "SEARCH_INDEX_TEXT",
+      "checked_on": "2026-10-19",
+      "note": "Skip591首帖（引用在HIDALICLICK回复中重复）。实际取得搜索索引中的帖子内容，直接页面受限；未取得费用。",
+      "adopted_for_formal_data": false,
+      "local_path": null,
+      "source_ref": [
+        "https://boardgamegeek.com/thread/3072690/meg-thomas-sprint-burst"
+      ],
+      "status": "CHECK_REQUIRED",
+      "research_round": "PHASE_0_SUPPLEMENT"
+    },
+    {
+      "id": "D18",
+      "title": "BGG Ace in the Hole",
+      "url": "https://boardgamegeek.com/thread/3725010/dbd-board-game-ace-viscontis-perk-ace-in-the-hole",
+      "language": "en",
+      "source_level": "D",
+      "coverage": [
+        "Ace in the Hole逐字引用",
+        "版本/进度限制线索"
+      ],
+      "access": "SEARCH_INDEX_TEXT",
+      "checked_on": "2026-10-19",
+      "note": "原文由KaruiAshi引用。Kyokai在同帖回复策略链接，没有逐字确认卡文；该引用仍为D。",
+      "adopted_for_formal_data": false,
+      "local_path": null,
+      "source_ref": [
+        "https://boardgamegeek.com/thread/3725010/dbd-board-game-ace-viscontis-perk-ace-in-the-hole"
+      ],
+      "status": "CHECK_REQUIRED",
+      "research_round": "PHASE_0_SUPPLEMENT"
+    },
+    {
+      "id": "C07",
+      "title": "BGG Botany Knowledge 官方人员答复",
+      "url": "https://boardgamegeek.com/thread/3085734/can-you-use-botany-knowledge-after-an-interaction",
+      "language": "en",
+      "source_level": "C",
+      "coverage": [
+        "Botany Knowledge逐字引用/时序澄清",
+        "同帖Deception玩家引文"
+      ],
+      "access": "SEARCH_INDEX_TEXT",
+      "checked_on": "2026-10-19",
+      "note": "2023-05-20 Marco Santos / mnmkami引用Botany Knowledge并澄清移动后触发；C08交叉核实同用户名为L99官方项目Creator。HIDALICLICK引用Deception仍为D，不整帖升级。",
+      "adopted_for_formal_data": false,
+      "local_path": null,
+      "source_ref": [
+        "https://boardgamegeek.com/thread/3085734/can-you-use-botany-knowledge-after-an-interaction"
+      ],
+      "status": "CHECK_REQUIRED",
+      "research_round": "PHASE_0_SUPPLEMENT"
+    },
+    {
+      "id": "C08",
+      "title": "mnmkami 官方身份交叉依据",
+      "url": "https://gamefound.com/en/projects/level-99-games/dbd/comments?commentId=2790236",
+      "language": "en",
+      "source_level": "C",
+      "coverage": [
+        "官方回答者用户名身份"
+      ],
+      "access": "SEARCH_INDEX_TEXT",
+      "checked_on": "2026-10-19",
+      "note": "L99项目评论中同一用户名mnmkami带Creator身份，结合BGG署名Marco Santos及B01制作名单；不采用该项目solo规则进入基础版。",
+      "adopted_for_formal_data": false,
+      "local_path": null,
+      "source_ref": [
+        "https://gamefound.com/en/projects/level-99-games/dbd/comments?commentId=2790236"
+      ],
+      "status": "CHECK_REQUIRED",
+      "research_round": "PHASE_0_SUPPLEMENT"
+    },
+    {
+      "id": "D19",
+      "title": "BGG 新扩展规则问题",
+      "url": "https://boardgamegeek.com/thread/3301194/rule-questions-about-the-new-expansion",
+      "language": "en",
+      "source_level": "D",
+      "coverage": [
+        "Pain Resonance引用",
+        "Grim Embrace引用"
+      ],
+      "access": "SEARCH_INDEX_TEXT",
+      "checked_on": "2026-10-19",
+      "note": "HIDALICLICK引用2024扩展预览卡文；明确排除2023基础版。玩家猜测/转述Discord不是官方答复。",
+      "adopted_for_formal_data": false,
+      "local_path": null,
+      "source_ref": [
+        "https://boardgamegeek.com/thread/3301194/rule-questions-about-the-new-expansion"
+      ],
+      "status": "CHECK_REQUIRED",
+      "research_round": "PHASE_0_SUPPLEMENT"
+    },
+    {
+      "id": "C09",
+      "title": "BGG Bond与Madness 官方人员回答线索",
+      "url": "https://boardgamegeek.com/thread/3084753/could-bond-replace-effect-madness",
+      "language": "en",
+      "source_level": "C",
+      "coverage": [
+        "Bond替换骰子澄清"
+      ],
+      "access": "SEARCH_INDEX_TEXT",
+      "checked_on": "2026-10-19",
+      "note": "Marco Santos / mnmkami答复，身份依据C08；没有逐字完整卡文，不计入卡文收集总数，也不据此补完整费用。",
+      "adopted_for_formal_data": false,
+      "local_path": null,
+      "source_ref": [
+        "https://boardgamegeek.com/thread/3084753/could-bond-replace-effect-madness"
+      ],
+      "status": "CHECK_REQUIRED",
+      "research_round": "PHASE_0_SUPPLEMENT"
+    },
+    {
+      "id": "D20",
+      "title": "BGG Dark Sense 讨论",
+      "url": "https://boardgamegeek.com/thread/3083560/does-the-dark-sense-perk-have-a-use",
+      "language": "en",
+      "source_level": "D",
+      "coverage": [
+        "卡名/适用情境线索"
+      ],
+      "access": "SEARCH_INDEX_TEXT",
+      "checked_on": "2026-10-19",
+      "note": "只见玩家问题与解释，没有可靠的逐字完整卡文。",
+      "adopted_for_formal_data": false,
+      "local_path": null,
+      "source_ref": [
+        "https://boardgamegeek.com/thread/3083560/does-the-dark-sense-perk-have-a-use"
+      ],
+      "status": "CHECK_REQUIRED",
+      "research_round": "PHASE_0_SUPPLEMENT"
+    },
+    {
+      "id": "D21",
+      "title": "BGG Urban Evasion与Bamboozle 讨论",
+      "url": "https://boardgamegeek.com/thread/3069117/could-urban-evasion-removes-the-entity-placed-by-b",
+      "language": "en",
+      "source_level": "D",
+      "coverage": [
+        "卡名/墙与恶灵区别线索"
+      ],
+      "access": "SEARCH_INDEX_TEXT",
+      "checked_on": "2026-10-19",
+      "note": "可见回答未可靠显示发言者身份；不升级C，没有逐字卡文。",
+      "adopted_for_formal_data": false,
+      "local_path": null,
+      "source_ref": [
+        "https://boardgamegeek.com/thread/3069117/could-urban-evasion-removes-the-entity-placed-by-b"
+      ],
+      "status": "CHECK_REQUIRED",
+      "research_round": "PHASE_0_SUPPLEMENT"
+    },
+    {
+      "id": "D22",
+      "title": "BGG Iron Will与Breakdown 讨论",
+      "url": "https://boardgamegeek.com/thread/3309453/iron-will-and-breakdown-combo",
+      "language": "en",
+      "source_level": "D",
+      "coverage": [
+        "检定与掷骰区别线索"
+      ],
+      "access": "SEARCH_INDEX_TEXT",
+      "checked_on": "2026-10-19",
+      "note": "讨论含玩家解释及典藏/扩展角色Jeff；没有按逐字完整基础卡文采纳。",
+      "adopted_for_formal_data": false,
+      "local_path": null,
+      "source_ref": [
+        "https://boardgamegeek.com/thread/3309453/iron-will-and-breakdown-combo"
+      ],
+      "status": "CHECK_REQUIRED",
+      "research_round": "PHASE_0_SUPPLEMENT"
+    },
+    {
+      "id": "D23",
+      "title": "BGG The Trapper Killer Automation（变体，排除）",
+      "url": "https://boardgamegeek.com/thread/3093922/the-trapper-killer-automation",
+      "language": "en",
+      "source_level": "D",
+      "coverage": [
+        "自动杀人鬼自订变体"
+      ],
+      "access": "SEARCH_INDEX_TEXT",
+      "checked_on": "2026-10-19",
+      "note": "作者Exterasmors修改费用/持续效果/移动规则；出现的技能名字及描述不等于原版卡文，未复制到正式数据。",
+      "adopted_for_formal_data": false,
+      "local_path": null,
+      "source_ref": [
+        "https://boardgamegeek.com/thread/3093922/the-trapper-killer-automation"
+      ],
+      "status": "CHECK_REQUIRED",
+      "research_round": "PHASE_0_SUPPLEMENT"
+    },
+    {
+      "id": "D24",
+      "title": "BGG Variants中的Free web automa helper索引",
+      "url": "https://boardgamegeek.com/boardgame/358246/dead-by-daylight-the-board-game/forums/69",
+      "language": "en",
+      "source_level": "D",
+      "coverage": [
+        "目标帖标题",
+        "作者bluekms21"
+      ],
+      "access": "SEARCH_INDEX_TEXT",
+      "checked_on": "2026-10-19",
+      "note": "索引可见[Solo] Free web automa helper for Dead by Daylight: The Board Game和作者bluekms21；未获得具体thread URL/正文。普通浏览器也停在安全验证，没有完成或绕过验证。",
+      "adopted_for_formal_data": false,
+      "local_path": null,
+      "source_ref": [
+        "https://boardgamegeek.com/boardgame/358246/dead-by-daylight-the-board-game/forums/69"
+      ],
+      "status": "CHECK_REQUIRED",
+      "research_round": "PHASE_0_SUPPLEMENT"
+    },
+    {
+      "id": "D25",
+      "title": "automa helper候选关联工具（只检查范围）",
+      "url": "https://bluekms.github.io/dbd-boardgame-automa-helper/",
+      "language": "en",
+      "source_level": "D",
+      "coverage": [
+        "单人自动模式界面",
+        "移动卡/骰子辅助",
+        "规则/力量说明"
+      ],
+      "access": "UI_READ_ONLY",
+      "checked_on": "2026-10-19",
+      "note": "从同名bluekms21博客索引D26找到候选链接；与BGG目标帖的实际出链关系未核实。已用正常浏览器只读检查首页、杀人鬼选择、Trapper的规则/力量面板；不复制原文、源代码、图片或数据。没有在已查看界面发现房间节点/边列表；未检查到的数据不能断言不存在。",
+      "adopted_for_formal_data": false,
+      "local_path": null,
+      "source_ref": [
+        "https://bluekms.github.io/dbd-boardgame-automa-helper/"
+      ],
+      "status": "CONFIRMED",
+      "research_round": "PHASE_0_SUPPLEMENT"
+    },
+    {
+      "id": "D26",
+      "title": "bluekms21博客索引中的helper链接",
+      "url": "https://bluekms21.keyzard.org/",
+      "language": "en",
+      "source_level": "D",
+      "coverage": [
+        "同名作者工具线索"
+      ],
+      "access": "SEARCH_INDEX_TEXT",
+      "checked_on": "2026-10-19",
+      "note": "搜索索引含上述GitHub Pages URL；仅作为关联线索，不把索引当BGG帖子全文。",
+      "adopted_for_formal_data": false,
+      "local_path": null,
+      "source_ref": [
+        "https://bluekms21.keyzard.org/"
+      ],
+      "status": "CHECK_REQUIRED",
+      "research_round": "PHASE_0_SUPPLEMENT"
+    },
+    {
+      "id": "D27",
+      "title": "排除误命中的另一桌游讨论",
+      "url": "https://boardgamegeek.com/thread/3065442/needs-more-concerns",
+      "language": "en",
+      "source_level": "D",
+      "coverage": [
+        "误命中排除"
+      ],
+      "access": "SEARCH_INDEX_TEXT",
+      "checked_on": "2026-10-19",
+      "note": "搜索命中Flashlight/Toolbox，但正文是在比较另一桌游与DBD，有radio/keys等机制；不将其物品建议误收为本项目原版卡文。",
+      "adopted_for_formal_data": false,
+      "local_path": null,
+      "source_ref": [
+        "https://boardgamegeek.com/thread/3065442/needs-more-concerns"
+      ],
+      "status": "CHECK_REQUIRED",
+      "research_round": "PHASE_0_SUPPLEMENT"
+    },
+    {
+      "id": "B11",
+      "title": "Asobition 麦克米伦地图：本次用户指定 B 级例外",
+      "url": "https://static.wixstatic.com/media/ac6530_103b12ec59c84ef6906815c9bd84e46a~mv2.png",
+      "language": "ja",
+      "source_level": "B",
+      "coverage": [
+        "麦克米伦地图房间/路径/印刷标记"
+      ],
+      "access": "LOCAL_IMAGE_VISUAL_REVIEW",
+      "checked_on": "2026-10-19",
+      "note": "用户明确回复：按入库说明，本次指定为 B 级例外。仅用于此次麦克米伦地图核验；C02 原 C 级登记及原始文件哈希保留，不提升其他发行商资料或被遮挡内容。",
+      "adopted_for_formal_data": true,
+      "local_path": null,
+      "source_ref": [
+        "C02:同一原图，哈希和本地路径见原登记"
+      ],
+      "status": "CONFIRMED",
+      "grade_override_scope": "MACMILLAN_MAP_ONLY",
+      "previous_grade": "C"
+    },
+    {
+      "id": "D28",
+      "title": "P1 中文棋盘第三方照片",
+      "url": null,
+      "language": "zh-Hans",
+      "source_level": "D",
+      "coverage": [
+        "第三方截图线索；不等于用户本盒日文 A 级证据"
+      ],
+      "access": "USER_SUPPLIED_THIRD_PARTY_SCREENSHOT",
+      "checked_on": "2026-10-19",
+      "note": "用户提供文件，原始小红书帖子 URL 未提供；本地来源可审计。",
+      "adopted_for_formal_data": false,
+      "local_path": "reference/maps/macmillan_cn_retail_xhs.jpg",
+      "source_ref": [
+        "reference/maps/macmillan_cn_retail_xhs.jpg"
+      ],
+      "status": "CHECK_REQUIRED",
+      "bytes": 538912,
+      "sha256": "6fc2ae9d8e74c88f653191a1f833559072edb74c6fd2be5a801fbc042421db54"
+    },
+    {
+      "id": "D29",
+      "title": "P2 发售前宣传图转载",
+      "url": null,
+      "language": "en",
+      "source_level": "D",
+      "coverage": [
+        "第三方截图线索；不等于用户本盒日文 A 级证据"
+      ],
+      "access": "USER_SUPPLIED_THIRD_PARTY_SCREENSHOT",
+      "checked_on": "2026-10-19",
+      "note": "用户提供文件，原始小红书帖子 URL 未提供；本地来源可审计。",
+      "adopted_for_formal_data": false,
+      "local_path": "reference/maps/macmillan_en_promo_xhs.jpg",
+      "source_ref": [
+        "reference/maps/macmillan_en_promo_xhs.jpg"
+      ],
+      "status": "CHECK_REQUIRED",
+      "bytes": 621287,
+      "sha256": "2e1eb81efb8f7f500a99020a64f2d7d7fbb887ec8ba7a13e65b6949c9fb73853"
+    },
+    {
+      "id": "D30",
+      "title": "P1 起点标记放大",
+      "url": null,
+      "language": "zh-Hans",
+      "source_level": "D",
+      "coverage": [
+        "第三方截图线索；不等于用户本盒日文 A 级证据"
+      ],
+      "access": "USER_SUPPLIED_THIRD_PARTY_SCREENSHOT",
+      "checked_on": "2026-10-19",
+      "note": "用户提供文件，原始小红书帖子 URL 未提供；本地来源可审计。",
+      "adopted_for_formal_data": false,
+      "local_path": "reference/maps/macmillan_cn_start_markers_zoom.png",
+      "source_ref": [
+        "reference/maps/macmillan_cn_start_markers_zoom.png"
+      ],
+      "status": "CHECK_REQUIRED",
+      "bytes": 313200,
+      "sha256": "67a4f7e7836c655efddd03af46b1534e77cb8a26120a771b6373d5787a7f55d4"
+    },
+    {
+      "id": "D31",
+      "title": "遗弃埋骨地照片：排除基础版",
+      "url": null,
+      "language": "zh-Hans",
+      "source_level": "D",
+      "coverage": [
+        "第三方截图线索；不等于用户本盒日文 A 级证据"
+      ],
+      "access": "USER_SUPPLIED_THIRD_PARTY_SCREENSHOT",
+      "checked_on": "2026-10-19",
+      "note": "用户提供文件，原始小红书帖子 URL 未提供；本地来源可审计。非基础版，不导入。",
+      "adopted_for_formal_data": false,
+      "local_path": "reference/maps/forsaken_boneyard_cn_retail_xhs.png",
+      "source_ref": [
+        "reference/maps/forsaken_boneyard_cn_retail_xhs.png"
+      ],
+      "status": "CHECK_REQUIRED",
+      "bytes": 4205310,
+      "sha256": "28961e6d41152215175a8d6419643d5f9d0888d07b0c0bdccca8dbcc143ddfe0"
+    },
+    {
+      "id": "D32",
+      "title": "移动卡第三方照片",
+      "url": null,
+      "language": "zh-Hans",
+      "source_level": "D",
+      "coverage": [
+        "第三方截图线索；不等于用户本盒日文 A 级证据"
+      ],
+      "access": "USER_SUPPLIED_THIRD_PARTY_SCREENSHOT",
+      "checked_on": "2026-10-19",
+      "note": "用户提供文件，原始小红书帖子 URL 未提供；本地来源可审计。",
+      "adopted_for_formal_data": false,
+      "local_path": "reference/photos/movement_cards_xhs.jpg",
+      "source_ref": [
+        "reference/photos/movement_cards_xhs.jpg"
+      ],
+      "status": "CHECK_REQUIRED",
+      "bytes": 495912,
+      "sha256": "84c5b176ad292a5c1c7de4033df6b95c6cc7c342e7a4160b3247aedb54521fe2"
+    },
+    {
+      "id": "D33",
+      "title": "开局示意截图第三方转载",
+      "url": null,
+      "language": "en",
+      "source_level": "D",
+      "coverage": [
+        "第三方截图线索；不等于用户本盒日文 A 级证据"
+      ],
+      "access": "USER_SUPPLIED_THIRD_PARTY_SCREENSHOT",
+      "checked_on": "2026-10-19",
+      "note": "用户提供文件，原始小红书帖子 URL 未提供；本地来源可审计。",
+      "adopted_for_formal_data": false,
+      "local_path": "reference/photos/setup_layout_en_xhs.jpg",
+      "source_ref": [
+        "reference/photos/setup_layout_en_xhs.jpg"
+      ],
+      "status": "CHECK_REQUIRED",
+      "bytes": 548493,
+      "sha256": "3699f3b9089992f28499ac263e2aab7a1ddf17b0fcd72eab8bd17080d51a8aba"
+    },
+    {
+      "id": "D34",
+      "title": "中文典藏版预售报道",
+      "url": "https://www.gamersky.com/news/202208/1510264.shtml",
+      "language": "zh-Hans",
+      "source_level": "D",
+      "coverage": [
+        "中文版发行/规则书搜索"
+      ],
+      "access": "FULL_TEXT",
+      "checked_on": "2026-10-19",
+      "note": "正文确认中文版本报道及集石预售线索，未列出简中发行商名称或规则书下载。",
+      "adopted_for_formal_data": false,
+      "local_path": null,
+      "source_ref": [
+        "https://www.gamersky.com/news/202208/1510264.shtml"
+      ],
+      "status": "CHECK_REQUIRED"
+    },
+    {
+      "id": "C10",
+      "title": "繁中项目 FAQ（提案者自述）",
+      "url": "https://wabay.tw/projects/day-by-daylight-board-game/faq?locale=zh-TW",
+      "language": "zh-Hant",
+      "source_level": "C",
+      "coverage": [
+        "中文版发行/规则书搜索"
+      ],
+      "access": "SEARCH_INDEX_TEXT",
+      "checked_on": "2026-10-19",
+      "note": "搜索结果可读 FAQ：彌生的桌遊日記；港澳由808代理。直接打开失败。繁中不能证明 P1 简中印次。",
+      "adopted_for_formal_data": false,
+      "local_path": null,
+      "source_ref": [
+        "https://wabay.tw/projects/day-by-daylight-board-game/faq?locale=zh-TW"
+      ],
+      "status": "CHECK_REQUIRED"
+    },
+    {
+      "id": "C11",
+      "title": "彌生桌遊商城出版方信息",
+      "url": "https://yayoithedreamerbg.cashier.ecpay.com.tw/product/000000000664636",
+      "language": "zh-Hant",
+      "source_level": "C",
+      "coverage": [
+        "中文版发行/规则书搜索"
+      ],
+      "access": "PARTIAL_TEXT",
+      "checked_on": "2026-10-19",
+      "note": "页面页脚为彌生戲夢桌上遊戲出版社；商品详情动态模板未展开，未取得规则PDF。",
+      "adopted_for_formal_data": false,
+      "local_path": null,
+      "source_ref": [
+        "https://yayoithedreamerbg.cashier.ecpay.com.tw/product/000000000664636"
+      ],
+      "status": "CHECK_REQUIRED"
+    },
+    {
+      "id": "D35",
+      "title": "摩点扩展项目索引",
+      "url": "https://zhongchou.modian.com/tablegames/top_time/all/21",
+      "language": "zh-Hans",
+      "source_level": "D",
+      "coverage": [
+        "中文版发行/规则书搜索"
+      ],
+      "access": "SEARCH_INDEX_TEXT",
+      "checked_on": "2026-10-19",
+      "note": "搜索索引把光明使者扩展与香蕉桌游关联；不是基础版授权声明，不能据此确认P1发行商。",
+      "adopted_for_formal_data": false,
+      "local_path": null,
+      "source_ref": [
+        "https://zhongchou.modian.com/tablegames/top_time/all/21"
+      ],
+      "status": "CHECK_REQUIRED"
+    },
+    {
+      "id": "U01",
+      "title": "用户裁定 Q05/Q07/Q06 与版本依据",
+      "url": null,
+      "language": "zh-Hans",
+      "source_level": "D",
+      "source_kind": "USER_RULING",
+      "coverage": [
+        "本项目明确采用的裁定；不冒充官方勘误"
+      ],
+      "access": "DIRECT_USER_MESSAGE",
+      "checked_on": "2026-10-19",
+      "note": "Q05=3，来源 用户裁定 + 零售照 P1；Q07基础技能52，68误含16物品，关闭；Q06待核不阻碍开发。用户另回复保留日文实物优先，中文照片和英文规则辅助。",
+      "adopted_for_formal_data": true,
+      "local_path": null,
+      "source_ref": [
+        "docs/HOUSE_RULES.md:2026-10-19用户裁定"
+      ],
+      "status": "CONFIRMED"
+    },
+    {
+      "id": "D36",
+      "title": "autohaven_cn_retail_xhs.png：第二批中文第三方实物照",
+      "url": null,
+      "language": "zh-Hans",
+      "source_level": "D",
+      "coverage": [
+        "照片转录；典藏版与基础版按条目分开"
+      ],
+      "access": "USER_SUPPLIED_THIRD_PARTY_SCREENSHOT",
+      "checked_on": "2026-10-19",
+      "note": "原小红书帖子URL未提供；不属于用户日文实物A级。抄录清晰度与规则可信等级独立。",
+      "adopted_for_formal_data": false,
+      "local_path": "reference/maps/autohaven_cn_retail_xhs.png",
+      "source_ref": [
+        "reference/maps/autohaven_cn_retail_xhs.png"
+      ],
+      "status": "CHECK_REQUIRED",
+      "bytes": 4694407,
+      "sha256": "b8b42745fcc27148a9442e40a0acb589f8deb54a4582f669cf2f13783c6acd39"
+    },
+    {
+      "id": "D37",
+      "title": "items_16_cn.png：第二批中文第三方实物照",
+      "url": null,
+      "language": "zh-Hans",
+      "source_level": "D",
+      "coverage": [
+        "照片转录；典藏版与基础版按条目分开"
+      ],
+      "access": "USER_SUPPLIED_THIRD_PARTY_SCREENSHOT",
+      "checked_on": "2026-10-19",
+      "note": "原小红书帖子URL未提供；不属于用户日文实物A级。抄录清晰度与规则可信等级独立。",
+      "adopted_for_formal_data": false,
+      "local_path": "reference/items/items_16_cn.png",
+      "source_ref": [
+        "reference/items/items_16_cn.png"
+      ],
+      "status": "CHECK_REQUIRED",
+      "bytes": 8695191,
+      "sha256": "5780b489baad97fe1e38edd5f9d6214f2bdacee52b382f0d6fa93de6bf9bd33a"
+    },
+    {
+      "id": "D38",
+      "title": "ref_survivor_interactions_cn.png：第二批中文第三方实物照",
+      "url": null,
+      "language": "zh-Hans",
+      "source_level": "D",
+      "coverage": [
+        "照片转录；典藏版与基础版按条目分开"
+      ],
+      "access": "USER_SUPPLIED_THIRD_PARTY_SCREENSHOT",
+      "checked_on": "2026-10-19",
+      "note": "原小红书帖子URL未提供；不属于用户日文实物A级。抄录清晰度与规则可信等级独立。",
+      "adopted_for_formal_data": false,
+      "local_path": "reference/photos/ref_survivor_interactions_cn.png",
+      "source_ref": [
+        "reference/photos/ref_survivor_interactions_cn.png"
+      ],
+      "status": "CHECK_REQUIRED",
+      "bytes": 10375584,
+      "sha256": "d9844c94ff0b713947d9e1de12bfda1977f07f33027d61a9a24e6fd3c28d2c28"
+    },
+    {
+      "id": "D39",
+      "title": "ref_killer_interactions_cn.png：第二批中文第三方实物照",
+      "url": null,
+      "language": "zh-Hans",
+      "source_level": "D",
+      "coverage": [
+        "照片转录；典藏版与基础版按条目分开"
+      ],
+      "access": "USER_SUPPLIED_THIRD_PARTY_SCREENSHOT",
+      "checked_on": "2026-10-19",
+      "note": "原小红书帖子URL未提供；不属于用户日文实物A级。抄录清晰度与规则可信等级独立。",
+      "adopted_for_formal_data": false,
+      "local_path": "reference/photos/ref_killer_interactions_cn.png",
+      "source_ref": [
+        "reference/photos/ref_killer_interactions_cn.png"
+      ],
+      "status": "CHECK_REQUIRED",
+      "bytes": 9237824,
+      "sha256": "9f94aac769c56c8403d43a21f75c47466b6ca50d5233e5521a21c1e3f439777a"
+    },
+    {
+      "id": "D40",
+      "title": "killers_clown_twins_wraith.png：第二批中文第三方实物照",
+      "url": null,
+      "language": "zh-Hans",
+      "source_level": "D",
+      "coverage": [
+        "照片转录；典藏版与基础版按条目分开"
+      ],
+      "access": "USER_SUPPLIED_THIRD_PARTY_SCREENSHOT",
+      "checked_on": "2026-10-19",
+      "note": "原小红书帖子URL未提供；不属于用户日文实物A级。抄录清晰度与规则可信等级独立。",
+      "adopted_for_formal_data": false,
+      "local_path": "reference/characters/killers_clown_twins_wraith.png",
+      "source_ref": [
+        "reference/characters/killers_clown_twins_wraith.png"
+      ],
+      "status": "CHECK_REQUIRED",
+      "bytes": 11974090,
+      "sha256": "5aa8cb5f418695c9a6a5d0ef9dc52edbdb1ce7bdbee587b2d9afa6fb2f02970b"
+    },
+    {
+      "id": "D41",
+      "title": "killers_hillbilly_doctor.png：第二批中文第三方实物照",
+      "url": null,
+      "language": "zh-Hans",
+      "source_level": "D",
+      "coverage": [
+        "照片转录；典藏版与基础版按条目分开"
+      ],
+      "access": "USER_SUPPLIED_THIRD_PARTY_SCREENSHOT",
+      "checked_on": "2026-10-19",
+      "note": "原小红书帖子URL未提供；不属于用户日文实物A级。抄录清晰度与规则可信等级独立。",
+      "adopted_for_formal_data": false,
+      "local_path": "reference/characters/killers_hillbilly_doctor.png",
+      "source_ref": [
+        "reference/characters/killers_hillbilly_doctor.png"
+      ],
+      "status": "CHECK_REQUIRED",
+      "bytes": 11841005,
+      "sha256": "b9ed4b6aebc9e93b7af3d5052a6b162a90879368a83d6526826167e90c944ae2"
+    },
+    {
+      "id": "D42",
+      "title": "killers_legion_huntress_blight.png：第二批中文第三方实物照",
+      "url": null,
+      "language": "zh-Hans",
+      "source_level": "D",
+      "coverage": [
+        "照片转录；典藏版与基础版按条目分开"
+      ],
+      "access": "USER_SUPPLIED_THIRD_PARTY_SCREENSHOT",
+      "checked_on": "2026-10-19",
+      "note": "原小红书帖子URL未提供；不属于用户日文实物A级。抄录清晰度与规则可信等级独立。",
+      "adopted_for_formal_data": false,
+      "local_path": "reference/characters/killers_legion_huntress_blight.png",
+      "source_ref": [
+        "reference/characters/killers_legion_huntress_blight.png"
+      ],
+      "status": "CHECK_REQUIRED",
+      "bytes": 11961664,
+      "sha256": "b2aaedf3cf18b4518bf6d1a37860830e61e30e0d16ebb9b0190225ea5f76caa7"
+    },
+    {
+      "id": "D43",
+      "title": "killers_oni_spirit.png：第二批中文第三方实物照",
+      "url": null,
+      "language": "zh-Hans",
+      "source_level": "D",
+      "coverage": [
+        "照片转录；典藏版与基础版按条目分开"
+      ],
+      "access": "USER_SUPPLIED_THIRD_PARTY_SCREENSHOT",
+      "checked_on": "2026-10-19",
+      "note": "原小红书帖子URL未提供；不属于用户日文实物A级。抄录清晰度与规则可信等级独立。",
+      "adopted_for_formal_data": false,
+      "local_path": "reference/characters/killers_oni_spirit.png",
+      "source_ref": [
+        "reference/characters/killers_oni_spirit.png"
+      ],
+      "status": "CHECK_REQUIRED",
+      "bytes": 11991241,
+      "sha256": "8b6507e5fa5e3e8c3735c23e99a34aa39c9ae913f2e583a4ec06fe6b5b2df347"
+    },
+    {
+      "id": "D44",
+      "title": "killers_plague_hag_nurse.png：第二批中文第三方实物照",
+      "url": null,
+      "language": "zh-Hans",
+      "source_level": "D",
+      "coverage": [
+        "照片转录；典藏版与基础版按条目分开"
+      ],
+      "access": "USER_SUPPLIED_THIRD_PARTY_SCREENSHOT",
+      "checked_on": "2026-10-19",
+      "note": "原小红书帖子URL未提供；不属于用户日文实物A级。抄录清晰度与规则可信等级独立。",
+      "adopted_for_formal_data": false,
+      "local_path": "reference/characters/killers_plague_hag_nurse.png",
+      "source_ref": [
+        "reference/characters/killers_plague_hag_nurse.png"
+      ],
+      "status": "CHECK_REQUIRED",
+      "bytes": 11804741,
+      "sha256": "75f469c7fc9ebb20e4eba64e9e780d187cee6104deeee175bed97e5ae6a5ccf9"
+    },
+    {
+      "id": "D45",
+      "title": "killers_trapper_trickster_deathslinger.png：第二批中文第三方实物照",
+      "url": null,
+      "language": "zh-Hans",
+      "source_level": "D",
+      "coverage": [
+        "照片转录；典藏版与基础版按条目分开"
+      ],
+      "access": "USER_SUPPLIED_THIRD_PARTY_SCREENSHOT",
+      "checked_on": "2026-10-19",
+      "note": "原小红书帖子URL未提供；不属于用户日文实物A级。抄录清晰度与规则可信等级独立。",
+      "adopted_for_formal_data": false,
+      "local_path": "reference/characters/killers_trapper_trickster_deathslinger.png",
+      "source_ref": [
+        "reference/characters/killers_trapper_trickster_deathslinger.png"
+      ],
+      "status": "CHECK_REQUIRED",
+      "bytes": 12298513,
+      "sha256": "6e890466e31920bdcb3b90bee98636943ffd82598675535129066117d26e300a"
+    },
+    {
+      "id": "D46",
+      "title": "survivor_nea.png：第二批中文第三方实物照",
+      "url": null,
+      "language": "zh-Hans",
+      "source_level": "D",
+      "coverage": [
+        "照片转录；典藏版与基础版按条目分开"
+      ],
+      "access": "USER_SUPPLIED_THIRD_PARTY_SCREENSHOT",
+      "checked_on": "2026-10-19",
+      "note": "原小红书帖子URL未提供；不属于用户日文实物A级。抄录清晰度与规则可信等级独立。",
+      "adopted_for_formal_data": false,
+      "local_path": "reference/characters/survivor_nea.png",
+      "source_ref": [
+        "reference/characters/survivor_nea.png"
+      ],
+      "status": "CHECK_REQUIRED",
+      "bytes": 10800036,
+      "sha256": "77a83c3fba850516caa7c6573a0c35789e1c6c58b163d316f023c6e8b47db053"
+    },
+    {
+      "id": "D47",
+      "title": "survivors_adam_jane_jeff.png：第二批中文第三方实物照",
+      "url": null,
+      "language": "zh-Hans",
+      "source_level": "D",
+      "coverage": [
+        "照片转录；典藏版与基础版按条目分开"
+      ],
+      "access": "USER_SUPPLIED_THIRD_PARTY_SCREENSHOT",
+      "checked_on": "2026-10-19",
+      "note": "原小红书帖子URL未提供；不属于用户日文实物A级。抄录清晰度与规则可信等级独立。",
+      "adopted_for_formal_data": false,
+      "local_path": "reference/characters/survivors_adam_jane_jeff.png",
+      "source_ref": [
+        "reference/characters/survivors_adam_jane_jeff.png"
+      ],
+      "status": "CHECK_REQUIRED",
+      "bytes": 11243935,
+      "sha256": "d1a0340fa58b0c0cd61fc6123003ad15623008152ac704e1b2728f69a188d8e0"
+    },
+    {
+      "id": "D48",
+      "title": "survivors_claudette_zarina.png：第二批中文第三方实物照",
+      "url": null,
+      "language": "zh-Hans",
+      "source_level": "D",
+      "coverage": [
+        "照片转录；典藏版与基础版按条目分开"
+      ],
+      "access": "USER_SUPPLIED_THIRD_PARTY_SCREENSHOT",
+      "checked_on": "2026-10-19",
+      "note": "原小红书帖子URL未提供；不属于用户日文实物A级。抄录清晰度与规则可信等级独立。",
+      "adopted_for_formal_data": false,
+      "local_path": "reference/characters/survivors_claudette_zarina.png",
+      "source_ref": [
+        "reference/characters/survivors_claudette_zarina.png"
+      ],
+      "status": "CHECK_REQUIRED",
+      "bytes": 10815121,
+      "sha256": "4ae0fce98039eb061179ddc17f09aa29c243d89db4019cb02f4049d8316d7c5b"
+    },
+    {
+      "id": "D49",
+      "title": "survivors_david_meg_jake.png：第二批中文第三方实物照",
+      "url": null,
+      "language": "zh-Hans",
+      "source_level": "D",
+      "coverage": [
+        "照片转录；典藏版与基础版按条目分开"
+      ],
+      "access": "USER_SUPPLIED_THIRD_PARTY_SCREENSHOT",
+      "checked_on": "2026-10-19",
+      "note": "原小红书帖子URL未提供；不属于用户日文实物A级。抄录清晰度与规则可信等级独立。",
+      "adopted_for_formal_data": false,
+      "local_path": "reference/characters/survivors_david_meg_jake.png",
+      "source_ref": [
+        "reference/characters/survivors_david_meg_jake.png"
+      ],
+      "status": "CHECK_REQUIRED",
+      "bytes": 11033657,
+      "sha256": "a2f4d517f9c54926f8e7607f9def5173dcd357b8bc8f35a4d7073317474963c1"
+    },
+    {
+      "id": "D50",
+      "title": "survivors_feng_felix_nea.png：第二批中文第三方实物照",
+      "url": null,
+      "language": "zh-Hans",
+      "source_level": "D",
+      "coverage": [
+        "照片转录；典藏版与基础版按条目分开"
+      ],
+      "access": "USER_SUPPLIED_THIRD_PARTY_SCREENSHOT",
+      "checked_on": "2026-10-19",
+      "note": "原小红书帖子URL未提供；不属于用户日文实物A级。抄录清晰度与规则可信等级独立。",
+      "adopted_for_formal_data": false,
+      "local_path": "reference/characters/survivors_feng_felix_nea.png",
+      "source_ref": [
+        "reference/characters/survivors_feng_felix_nea.png"
+      ],
+      "status": "CHECK_REQUIRED",
+      "bytes": 10944077,
+      "sha256": "b7ff6e149998432529d074506342da23cbef1f1d1468756a4e78685d4a00950f"
+    },
+    {
+      "id": "D51",
+      "title": "survivors_kate_ace_dwight.png：第二批中文第三方实物照",
+      "url": null,
+      "language": "zh-Hans",
+      "source_level": "D",
+      "coverage": [
+        "照片转录；典藏版与基础版按条目分开"
+      ],
+      "access": "USER_SUPPLIED_THIRD_PARTY_SCREENSHOT",
+      "checked_on": "2026-10-19",
+      "note": "原小红书帖子URL未提供；不属于用户日文实物A级。抄录清晰度与规则可信等级独立。",
+      "adopted_for_formal_data": false,
+      "local_path": "reference/characters/survivors_kate_ace_dwight.png",
+      "source_ref": [
+        "reference/characters/survivors_kate_ace_dwight.png"
+      ],
+      "status": "CHECK_REQUIRED",
+      "bytes": 11527441,
+      "sha256": "7bce8b0846c32309f608f27876697fd295f69c8b2bf464be775cff05d0a2a54e"
+    },
+    {
+      "id": "D52",
+      "title": "survivors_yunjin_elodie_yui.png：第二批中文第三方实物照",
+      "url": null,
+      "language": "zh-Hans",
+      "source_level": "D",
+      "coverage": [
+        "照片转录；典藏版与基础版按条目分开"
+      ],
+      "access": "USER_SUPPLIED_THIRD_PARTY_SCREENSHOT",
+      "checked_on": "2026-10-19",
+      "note": "原小红书帖子URL未提供；不属于用户日文实物A级。抄录清晰度与规则可信等级独立。",
+      "adopted_for_formal_data": false,
+      "local_path": "reference/characters/survivors_yunjin_elodie_yui.png",
+      "source_ref": [
+        "reference/characters/survivors_yunjin_elodie_yui.png"
+      ],
+      "status": "CHECK_REQUIRED",
+      "bytes": 11158399,
+      "sha256": "b9b4757ab51fd262eb476d3495a1934a3c40609fc95ccc3525e118bdd8078359"
+    },
+    {
+      "id": "U02",
+      "title": "用户更正版本依据并授权Phase1",
+      "url": null,
+      "language": "zh-Hans",
+      "source_level": "A",
+      "source_kind": "USER_RULING",
+      "coverage": [
+        "来源优先级",
+        "Q01/Q02/Q04/Q08/Q09",
+        "Phase1授权"
+      ],
+      "access": "DIRECT_USER_MESSAGE",
+      "checked_on": "2026-10-19",
+      "note": "用户接受当前中文零售照片作为项目主要依据。A表示项目裁定权威，不改变第三方照片原始D级出处；Q09为自订规则。",
+      "adopted_for_formal_data": true,
+      "local_path": null,
+      "source_ref": [
+        "docs/HOUSE_RULES.md:当前有效裁定：Phase 1"
+      ],
+      "status": "CONFIRMED"
+    }
+  ],
+  "supplement_limitations": [
+    "BGG分页及正文访问受限，搜索索引不能证明已穷尽全部逐字引用。",
+    "本轮未获得任何可核实的BGG物品卡逐字原文；0并不表示论坛没有。",
+    "Free web automa helper具体帖子正文及出链未取得，工具仅为同名作者候选关联。",
+    "日文发行商产品页/Support重查及限定域搜索仍未发现DBD日文规则PDF/FAQ。"
+  ],
+  "current_source_policy": {
+    "primary": "USER_ACCEPTED_CN_RETAIL",
+    "secondary": "B01_OFFICIAL_ENGLISH",
+    "japanese": "OPTIONAL_REFERENCE",
+    "authority_ref": "U02",
+    "note": "原始照片D级出处不改；运行采用状态以用户接受和裁定记录为准。"
+  }
+}

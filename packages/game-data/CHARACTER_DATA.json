@@ -1,0 +1,1288 @@
+{
+  "schema_version": 1,
+  "research_date": "2026-10-19",
+  "edition_scope": "BASE_STANDARD",
+  "note": "CONFIRMED只表示所标注的事实范围有依据；不等于全字段齐全、日文版一致、译文批准或已实现。null/空数组表示未确认。",
+  "expected_total": 13,
+  "expected_survivors": 7,
+  "expected_killers": 6,
+  "characters": [
+    {
+      "id": "dwight",
+      "name_ja": "ドワイト・フェアフィールド",
+      "name_en": "Dwight Fairfield",
+      "name_zh": "德怀特·费菲尔德",
+      "translation_status": "OFFICIAL_ZH_PRINT",
+      "japanese_text_status": "CONFIRMED",
+      "side": "survivor",
+      "source_level": "D",
+      "source_ref": [
+        "B01:p4",
+        "D51:reference/characters/survivors_kate_ace_dwight.png / 德怀特·费菲尔德人物板"
+      ],
+      "status": "CONFIRMED",
+      "identity_status": "CONFIRMED",
+      "japanese_name_source": "C02:角色板标题",
+      "power": null,
+      "passive": null,
+      "starting_perks": [
+        "board_dwight_1",
+        "board_dwight_2",
+        "board_dwight_3"
+      ],
+      "board_complete_status": "CONFIRMED",
+      "missing_fields": [],
+      "bp_initial": 2,
+      "bp_max": 6,
+      "bp_source_ref": "B01:p4",
+      "prior_official_identity_evidence": {
+        "source_level": "B",
+        "source_ref": [
+          "B01:p4"
+        ],
+        "identity_status": "CONFIRMED"
+      },
+      "subtitle_zh": "忐忑不安的领袖",
+      "real_name_zh": null,
+      "difficulty_zh": "简单",
+      "photo_transcription_status": "AVAILABLE",
+      "field_evidence": {
+        "name_zh": {
+          "source_level": "D",
+          "source_ref": [
+            "D51:reference/characters/survivors_kate_ace_dwight.png / 德怀特·费菲尔德人物板"
+          ],
+          "status": "CHECK_REQUIRED"
+        },
+        "board_text": {
+          "source_level": "D",
+          "source_ref": [
+            "D51:reference/characters/survivors_kate_ace_dwight.png / 德怀特·费菲尔德人物板"
+          ],
+          "status": "CHECK_REQUIRED"
+        }
+      },
+      "chinese_print_evidence": {
+        "source_level": "D",
+        "source_ref": [
+          "D51:reference/characters/survivors_kate_ace_dwight.png / 德怀特·费菲尔德人物板"
+        ],
+        "status": "CHECK_REQUIRED"
+      },
+      "previous_research_status": "CHECK_REQUIRED",
+      "adoption_basis": "USER_ACCEPTED_CN_RETAIL",
+      "adoption_ref": "U02:来源优先级与Phase1采用",
+      "japanese_missing_blocks_runtime": false
+    },
+    {
+      "id": "meg",
+      "name_ja": "メグ・トーマス",
+      "name_en": "Meg Thomas",
+      "name_zh": "梅格·托马斯",
+      "translation_status": "OFFICIAL_ZH_PRINT",
+      "japanese_text_status": "CONFIRMED",
+      "side": "survivor",
+      "source_level": "D",
+      "source_ref": [
+        "B01:p7",
+        "D49:reference/characters/survivors_david_meg_jake.png / 梅格·托马斯人物板"
+      ],
+      "status": "CONFIRMED",
+      "identity_status": "CONFIRMED",
+      "japanese_name_source": "C02:角色板标题",
+      "power": null,
+      "passive": null,
+      "starting_perks": [
+        "board_meg_1",
+        "board_meg_2",
+        "board_meg_3"
+      ],
+      "board_complete_status": "CHECK_REQUIRED",
+      "missing_fields": [
+        "Q11 其它路线语义"
+      ],
+      "bp_initial": 2,
+      "bp_max": 6,
+      "bp_source_ref": "B01:p4",
+      "prior_official_identity_evidence": {
+        "source_level": "B",
+        "source_ref": [
+          "B01:p7"
+        ],
+        "identity_status": "CONFIRMED"
+      },
+      "subtitle_zh": "精力充沛的运动员",
+      "real_name_zh": null,
+      "difficulty_zh": "简单",
+      "photo_transcription_status": "AVAILABLE",
+      "field_evidence": {
+        "name_zh": {
+          "source_level": "D",
+          "source_ref": [
+            "D49:reference/characters/survivors_david_meg_jake.png / 梅格·托马斯人物板"
+          ],
+          "status": "CHECK_REQUIRED"
+        },
+        "board_text": {
+          "source_level": "D",
+          "source_ref": [
+            "D49:reference/characters/survivors_david_meg_jake.png / 梅格·托马斯人物板"
+          ],
+          "status": "CHECK_REQUIRED"
+        }
+      },
+      "chinese_print_evidence": {
+        "source_level": "D",
+        "source_ref": [
+          "D49:reference/characters/survivors_david_meg_jake.png / 梅格·托马斯人物板"
+        ],
+        "status": "CHECK_REQUIRED"
+      },
+      "previous_research_status": "CHECK_REQUIRED",
+      "adoption_basis": "USER_ACCEPTED_CN_RETAIL",
+      "adoption_ref": "U02:来源优先级与Phase1采用",
+      "japanese_missing_blocks_runtime": false
+    },
+    {
+      "id": "claudette",
+      "name_ja": "クローデット・モレル",
+      "name_en": "Claudette Morel",
+      "name_zh": "克劳黛特·莫莱",
+      "translation_status": "OFFICIAL_ZH_PRINT",
+      "japanese_text_status": "CONFIRMED",
+      "side": "survivor",
+      "source_level": "D",
+      "source_ref": [
+        "B01:p7",
+        "D48:reference/characters/survivors_claudette_zarina.png / 克劳黛特·莫莱人物板"
+      ],
+      "status": "CONFIRMED",
+      "identity_status": "CONFIRMED",
+      "japanese_name_source": "C02:角色板标题",
+      "power": null,
+      "passive": null,
+      "starting_perks": [
+        "board_claudette_1",
+        "board_claudette_2",
+        "board_claudette_3"
+      ],
+      "board_complete_status": "CONFIRMED",
+      "missing_fields": [],
+      "bp_initial": 2,
+      "bp_max": 6,
+      "bp_source_ref": "B01:p4",
+      "prior_official_identity_evidence": {
+        "source_level": "B",
+        "source_ref": [
+          "B01:p7"
+        ],
+        "identity_status": "CONFIRMED"
+      },
+      "subtitle_zh": "勤奋刻苦的植物学家",
+      "real_name_zh": null,
+      "difficulty_zh": "简单",
+      "photo_transcription_status": "AVAILABLE",
+      "field_evidence": {
+        "name_zh": {
+          "source_level": "D",
+          "source_ref": [
+            "D48:reference/characters/survivors_claudette_zarina.png / 克劳黛特·莫莱人物板"
+          ],
+          "status": "CHECK_REQUIRED"
+        },
+        "board_text": {
+          "source_level": "D",
+          "source_ref": [
+            "D48:reference/characters/survivors_claudette_zarina.png / 克劳黛特·莫莱人物板"
+          ],
+          "status": "CHECK_REQUIRED"
+        }
+      },
+      "chinese_print_evidence": {
+        "source_level": "D",
+        "source_ref": [
+          "D48:reference/characters/survivors_claudette_zarina.png / 克劳黛特·莫莱人物板"
+        ],
+        "status": "CHECK_REQUIRED"
+      },
+      "previous_research_status": "CHECK_REQUIRED",
+      "adoption_basis": "USER_ACCEPTED_CN_RETAIL",
+      "adoption_ref": "U02:来源优先级与Phase1采用",
+      "japanese_missing_blocks_runtime": false
+    },
+    {
+      "id": "jake",
+      "name_ja": "ジェイク・パーク",
+      "name_en": "Jake Park",
+      "name_zh": "杰克·朴",
+      "translation_status": "OFFICIAL_ZH_PRINT",
+      "japanese_text_status": "CONFIRMED",
+      "side": "survivor",
+      "source_level": "D",
+      "source_ref": [
+        "B01:p7",
+        "D49:reference/characters/survivors_david_meg_jake.png / 杰克·朴人物板"
+      ],
+      "status": "CONFIRMED",
+      "identity_status": "CONFIRMED",
+      "japanese_name_source": "C02:角色板标题",
+      "power": null,
+      "passive": null,
+      "starting_perks": [
+        "board_jake_1",
+        "board_jake_2",
+        "board_jake_3"
+      ],
+      "board_complete_status": "CONFIRMED",
+      "missing_fields": [],
+      "bp_initial": 2,
+      "bp_max": 6,
+      "bp_source_ref": "B01:p4",
+      "prior_official_identity_evidence": {
+        "source_level": "B",
+        "source_ref": [
+          "B01:p7"
+        ],
+        "identity_status": "CONFIRMED"
+      },
+      "subtitle_zh": "独来独往的生存主义者",
+      "real_name_zh": null,
+      "difficulty_zh": "简单",
+      "photo_transcription_status": "AVAILABLE",
+      "field_evidence": {
+        "name_zh": {
+          "source_level": "D",
+          "source_ref": [
+            "D49:reference/characters/survivors_david_meg_jake.png / 杰克·朴人物板"
+          ],
+          "status": "CHECK_REQUIRED"
+        },
+        "board_text": {
+          "source_level": "D",
+          "source_ref": [
+            "D49:reference/characters/survivors_david_meg_jake.png / 杰克·朴人物板"
+          ],
+          "status": "CHECK_REQUIRED"
+        }
+      },
+      "chinese_print_evidence": {
+        "source_level": "D",
+        "source_ref": [
+          "D49:reference/characters/survivors_david_meg_jake.png / 杰克·朴人物板"
+        ],
+        "status": "CHECK_REQUIRED"
+      },
+      "previous_research_status": "CHECK_REQUIRED",
+      "adoption_basis": "USER_ACCEPTED_CN_RETAIL",
+      "adoption_ref": "U02:来源优先级与Phase1采用",
+      "japanese_missing_blocks_runtime": false
+    },
+    {
+      "id": "nea",
+      "name_ja": null,
+      "name_en": "Nea",
+      "name_zh": "妮娅·卡尔森",
+      "translation_status": "OFFICIAL_ZH_PRINT",
+      "japanese_text_status": "CHECK_REQUIRED",
+      "side": "survivor",
+      "source_level": "D",
+      "source_ref": [
+        "B02:7 Playable Survivors",
+        "D46:reference/characters/survivor_nea.png / 妮娅·卡尔森人物板"
+      ],
+      "status": "CONFIRMED",
+      "identity_status": "CONFIRMED",
+      "japanese_name_source": null,
+      "power": null,
+      "passive": null,
+      "starting_perks": [
+        "board_nea_1",
+        "board_nea_2",
+        "board_nea_3"
+      ],
+      "board_complete_status": "CONFIRMED",
+      "missing_fields": [],
+      "bp_initial": 2,
+      "bp_max": 6,
+      "bp_source_ref": "B01:p4",
+      "prior_official_identity_evidence": {
+        "source_level": "B",
+        "source_ref": [
+          "B02:7 Playable Survivors"
+        ],
+        "identity_status": "CONFIRMED"
+      },
+      "subtitle_zh": "城市艺术家",
+      "real_name_zh": null,
+      "difficulty_zh": "简单",
+      "photo_transcription_status": "AVAILABLE",
+      "field_evidence": {
+        "name_zh": {
+          "source_level": "D",
+          "source_ref": [
+            "D46:reference/characters/survivor_nea.png / 妮娅·卡尔森人物板"
+          ],
+          "status": "CHECK_REQUIRED"
+        },
+        "board_text": {
+          "source_level": "D",
+          "source_ref": [
+            "D46:reference/characters/survivor_nea.png / 妮娅·卡尔森人物板"
+          ],
+          "status": "CHECK_REQUIRED"
+        }
+      },
+      "chinese_print_evidence": {
+        "source_level": "D",
+        "source_ref": [
+          "D46:reference/characters/survivor_nea.png / 妮娅·卡尔森人物板"
+        ],
+        "status": "CHECK_REQUIRED"
+      },
+      "previous_research_status": "CHECK_REQUIRED",
+      "adoption_basis": "USER_ACCEPTED_CN_RETAIL",
+      "adoption_ref": "U02:来源优先级与Phase1采用",
+      "japanese_missing_blocks_runtime": false
+    },
+    {
+      "id": "ace",
+      "name_ja": null,
+      "name_en": "Ace",
+      "name_zh": "埃斯·维斯孔蒂",
+      "translation_status": "OFFICIAL_ZH_PRINT",
+      "japanese_text_status": "CHECK_REQUIRED",
+      "side": "survivor",
+      "source_level": "D",
+      "source_ref": [
+        "B02:7 Playable Survivors",
+        "D51:reference/characters/survivors_kate_ace_dwight.png / 埃斯·维斯孔蒂人物板"
+      ],
+      "status": "CONFIRMED",
+      "identity_status": "CONFIRMED",
+      "japanese_name_source": null,
+      "power": null,
+      "passive": null,
+      "starting_perks": [
+        "board_ace_1",
+        "board_ace_2",
+        "board_ace_3"
+      ],
+      "board_complete_status": "CONFIRMED",
+      "missing_fields": [],
+      "bp_initial": 2,
+      "bp_max": 6,
+      "bp_source_ref": "B01:p4",
+      "prior_official_identity_evidence": {
+        "source_level": "B",
+        "source_ref": [
+          "B02:7 Playable Survivors"
+        ],
+        "identity_status": "CONFIRMED"
+      },
+      "subtitle_zh": "福星高照的赌场老手",
+      "real_name_zh": null,
+      "difficulty_zh": "简单",
+      "photo_transcription_status": "AVAILABLE",
+      "field_evidence": {
+        "name_zh": {
+          "source_level": "D",
+          "source_ref": [
+            "D51:reference/characters/survivors_kate_ace_dwight.png / 埃斯·维斯孔蒂人物板"
+          ],
+          "status": "CHECK_REQUIRED"
+        },
+        "board_text": {
+          "source_level": "D",
+          "source_ref": [
+            "D51:reference/characters/survivors_kate_ace_dwight.png / 埃斯·维斯孔蒂人物板"
+          ],
+          "status": "CHECK_REQUIRED"
+        }
+      },
+      "chinese_print_evidence": {
+        "source_level": "D",
+        "source_ref": [
+          "D51:reference/characters/survivors_kate_ace_dwight.png / 埃斯·维斯孔蒂人物板"
+        ],
+        "status": "CHECK_REQUIRED"
+      },
+      "previous_research_status": "CHECK_REQUIRED",
+      "adoption_basis": "USER_ACCEPTED_CN_RETAIL",
+      "adoption_ref": "U02:来源优先级与Phase1采用",
+      "japanese_missing_blocks_runtime": false
+    },
+    {
+      "id": "feng_min",
+      "name_ja": null,
+      "name_en": "Feng Min",
+      "name_zh": "凤敏",
+      "translation_status": "OFFICIAL_ZH_PRINT",
+      "japanese_text_status": "CHECK_REQUIRED",
+      "side": "survivor",
+      "source_level": "D",
+      "source_ref": [
+        "B02:7 Playable Survivors",
+        "D50:reference/characters/survivors_feng_felix_nea.png / 凤敏人物板"
+      ],
+      "status": "CONFIRMED",
+      "identity_status": "CONFIRMED",
+      "japanese_name_source": null,
+      "power": null,
+      "passive": null,
+      "starting_perks": [
+        "board_feng_min_1",
+        "board_feng_min_2",
+        "board_feng_min_3"
+      ],
+      "board_complete_status": "CHECK_REQUIRED",
+      "missing_fields": [
+        "Q11 其它路线/木板空间语义"
+      ],
+      "bp_initial": 2,
+      "bp_max": 6,
+      "bp_source_ref": "B01:p4",
+      "prior_official_identity_evidence": {
+        "source_level": "B",
+        "source_ref": [
+          "B02:7 Playable Survivors"
+        ],
+        "identity_status": "CONFIRMED"
+      },
+      "subtitle_zh": "专注于目标的竞争者",
+      "real_name_zh": null,
+      "difficulty_zh": "简单",
+      "photo_transcription_status": "AVAILABLE",
+      "field_evidence": {
+        "name_zh": {
+          "source_level": "D",
+          "source_ref": [
+            "D50:reference/characters/survivors_feng_felix_nea.png / 凤敏人物板"
+          ],
+          "status": "CHECK_REQUIRED"
+        },
+        "board_text": {
+          "source_level": "D",
+          "source_ref": [
+            "D50:reference/characters/survivors_feng_felix_nea.png / 凤敏人物板"
+          ],
+          "status": "CHECK_REQUIRED"
+        }
+      },
+      "chinese_print_evidence": {
+        "source_level": "D",
+        "source_ref": [
+          "D50:reference/characters/survivors_feng_felix_nea.png / 凤敏人物板"
+        ],
+        "status": "CHECK_REQUIRED"
+      },
+      "previous_research_status": "CHECK_REQUIRED",
+      "adoption_basis": "USER_ACCEPTED_CN_RETAIL",
+      "adoption_ref": "U02:来源优先级与Phase1采用",
+      "japanese_missing_blocks_runtime": false
+    },
+    {
+      "id": "trapper",
+      "name_ja": "トラッパー",
+      "name_en": "The Trapper",
+      "name_zh": "设陷者",
+      "translation_status": "OFFICIAL_ZH_PRINT",
+      "japanese_text_status": "CONFIRMED",
+      "side": "killer",
+      "source_level": "D",
+      "source_ref": [
+        "B02:6 Playable Killers",
+        "D45:reference/characters/killers_trapper_trickster_deathslinger.png / 设陷者人物板"
+      ],
+      "status": "CONFIRMED",
+      "identity_status": "CONFIRMED",
+      "japanese_name_source": "C02:角色板标题",
+      "power": {
+        "name_zh": "捕兽夹",
+        "text_original_zh": "在一条没有木板、可破坏墙壁或任何其它配件的相连路线上放置一个捕兽夹。你可以移除一个现有的捕兽夹，以放置一个新的捕兽夹。",
+        "source_level": "D",
+        "source_ref": [
+          "D45:reference/characters/killers_trapper_trickster_deathslinger.png / 设陷者人物板"
+        ],
+        "status": "CONFIRMED",
+        "structured_effect_draft": {
+          "source_level": "D",
+          "source_ref": [
+            "D45:reference/characters/killers_trapper_trickster_deathslinger.png / 设陷者人物板"
+          ],
+          "status": "CONFIRMED",
+          "source_text_zh": "在一条没有木板、可破坏墙壁或任何其它配件的相连路线上放置一个捕兽夹。你可以移除一个现有的捕兽夹，以放置一个新的捕兽夹。",
+          "implementation_status": "IMPLEMENTED_TESTED",
+          "requires_semantic_review": false,
+          "kind": "KILLER_POWER",
+          "trigger": {
+            "event": "INSTEAD_OF_INTERACTION"
+          },
+          "conditions": [
+            "每轮至多一次，B01 p10/p14；此照片效果文本仍D级",
+            "相连路线无木板、可破坏墙或其他配件"
+          ],
+          "effects": [
+            {
+              "operation": "PLACE_BEAR_TRAP",
+              "text_zh": "在该路线放1个捕兽夹"
+            },
+            {
+              "operation": "OPTIONAL_REPLACE_BEAR_TRAP",
+              "text_zh": "可移除1个已有捕兽夹以放新夹"
+            }
+          ],
+          "resolution_scope": "DRAFT_ONLY_NOT_RUNTIME_DSL",
+          "adoption_basis": "USER_ACCEPTED_CN_RETAIL",
+          "adoption_ref": "U02:中文零售资料优先",
+          "japanese_missing_blocks_runtime": false
+        },
+        "previous_research_status": "CHECK_REQUIRED",
+        "adoption_basis": "USER_ACCEPTED_CN_RETAIL",
+        "adoption_ref": "U02:来源优先级与Phase1采用",
+        "japanese_missing_blocks_runtime": false,
+        "implementation_status": "IMPLEMENTED_TESTED"
+      },
+      "passive": {
+        "text_original_zh": "当一位逃生者沿着一条有捕兽夹的路线移动时，由他掷危险骰子。失败时，移除这个捕兽夹，该逃生者变为受伤。如果该逃生者已经受伤，获得1个献祭进度。",
+        "source_level": "D",
+        "source_ref": [
+          "D45:reference/characters/killers_trapper_trickster_deathslinger.png / 设陷者人物板"
+        ],
+        "status": "CONFIRMED",
+        "structured_effect_draft": {
+          "source_level": "D",
+          "source_ref": [
+            "D45:reference/characters/killers_trapper_trickster_deathslinger.png / 设陷者人物板"
+          ],
+          "status": "CONFIRMED",
+          "source_text_zh": "当一位逃生者沿着一条有捕兽夹的路线移动时，由他掷危险骰子。失败时，移除这个捕兽夹，该逃生者变为受伤。如果该逃生者已经受伤，获得1个献祭进度。",
+          "implementation_status": "IMPLEMENTED_TESTED",
+          "requires_semantic_review": false,
+          "kind": "KILLER_PASSIVE",
+          "trigger": {
+            "event": "SURVIVOR_MOVES_ALONG_BEAR_TRAP_PATH"
+          },
+          "conditions": [],
+          "effects": [
+            {
+              "operation": "ROLL_DANGER_DIE",
+              "text_zh": "该逃生者掷危险骰"
+            },
+            {
+              "operation": "ON_FAILURE_REMOVE_TRAP",
+              "text_zh": "失败移除捕兽夹"
+            },
+            {
+              "operation": "ON_FAILURE_WOUND_OR_GAIN_SACRIFICE",
+              "text_zh": "失败使其受伤；如已受伤则获得1献祭进度"
+            }
+          ],
+          "resolution_scope": "DRAFT_ONLY_NOT_RUNTIME_DSL",
+          "adoption_basis": "USER_ACCEPTED_CN_RETAIL",
+          "adoption_ref": "U02:中文零售资料优先",
+          "japanese_missing_blocks_runtime": false
+        },
+        "previous_research_status": "CHECK_REQUIRED",
+        "adoption_basis": "USER_ACCEPTED_CN_RETAIL",
+        "adoption_ref": "U02:来源优先级与Phase1采用",
+        "japanese_missing_blocks_runtime": false,
+        "implementation_status": "IMPLEMENTED_TESTED"
+      },
+      "starting_perks": [
+        "board_trapper_1",
+        "board_trapper_2",
+        "board_trapper_3"
+      ],
+      "board_complete_status": "CONFIRMED",
+      "missing_fields": [],
+      "bp_initial": 4,
+      "bp_max": 12,
+      "bp_source_ref": "B01:p4",
+      "prior_official_identity_evidence": {
+        "source_level": "B",
+        "source_ref": [
+          "B02:6 Playable Killers"
+        ],
+        "identity_status": "CONFIRMED"
+      },
+      "subtitle_zh": null,
+      "real_name_zh": "埃文·迈克米伦",
+      "difficulty_zh": "困难",
+      "photo_transcription_status": "AVAILABLE",
+      "field_evidence": {
+        "name_zh": {
+          "source_level": "D",
+          "source_ref": [
+            "D45:reference/characters/killers_trapper_trickster_deathslinger.png / 设陷者人物板"
+          ],
+          "status": "CHECK_REQUIRED"
+        },
+        "board_text": {
+          "source_level": "D",
+          "source_ref": [
+            "D45:reference/characters/killers_trapper_trickster_deathslinger.png / 设陷者人物板"
+          ],
+          "status": "CHECK_REQUIRED"
+        }
+      },
+      "chinese_print_evidence": {
+        "source_level": "D",
+        "source_ref": [
+          "D45:reference/characters/killers_trapper_trickster_deathslinger.png / 设陷者人物板"
+        ],
+        "status": "CHECK_REQUIRED"
+      },
+      "previous_research_status": "CHECK_REQUIRED",
+      "adoption_basis": "USER_ACCEPTED_CN_RETAIL",
+      "adoption_ref": "U02:来源优先级与Phase1采用",
+      "japanese_missing_blocks_runtime": false
+    },
+    {
+      "id": "wraith",
+      "name_ja": null,
+      "name_en": "The Wraith",
+      "name_zh": "幽灵",
+      "translation_status": "OFFICIAL_ZH_PRINT",
+      "japanese_text_status": "CHECK_REQUIRED",
+      "side": "killer",
+      "source_level": "D",
+      "source_ref": [
+        "B02:6 Playable Killers",
+        "D40:reference/characters/killers_clown_twins_wraith.png / 幽灵人物板"
+      ],
+      "status": "CONFIRMED",
+      "identity_status": "CONFIRMED",
+      "japanese_name_source": null,
+      "power": {
+        "name_zh": "骷髅丧钟",
+        "text_original_zh": "直接移动到一个不与你所在空间相连的空间。",
+        "source_level": "D",
+        "source_ref": [
+          "D40:reference/characters/killers_clown_twins_wraith.png / 幽灵人物板"
+        ],
+        "status": "CONFIRMED",
+        "structured_effect_draft": {
+          "source_level": "D",
+          "source_ref": [
+            "D40:reference/characters/killers_clown_twins_wraith.png / 幽灵人物板"
+          ],
+          "status": "CONFIRMED",
+          "source_text_zh": "直接移动到一个不与你所在空间相连的空间。",
+          "implementation_status": "IMPLEMENTED_TESTED",
+          "requires_semantic_review": false,
+          "kind": "KILLER_POWER",
+          "trigger": {
+            "event": "INSTEAD_OF_INTERACTION"
+          },
+          "conditions": [
+            "每轮至多一次，B01 p10/p14；此照片效果文本仍D级",
+            "目的空间不与自己所在空间相连"
+          ],
+          "effects": [
+            {
+              "operation": "DIRECT_MOVE",
+              "text_zh": "直接移动到该空间"
+            }
+          ],
+          "resolution_scope": "DRAFT_ONLY_NOT_RUNTIME_DSL",
+          "adoption_basis": "USER_ACCEPTED_CN_RETAIL",
+          "adoption_ref": "U02:中文零售资料优先",
+          "japanese_missing_blocks_runtime": false
+        },
+        "previous_research_status": "CHECK_REQUIRED",
+        "adoption_basis": "USER_ACCEPTED_CN_RETAIL",
+        "adoption_ref": "U02:来源优先级与Phase1采用",
+        "japanese_missing_blocks_runtime": false,
+        "implementation_status": "IMPLEMENTED_TESTED"
+      },
+      "passive": null,
+      "starting_perks": [
+        "board_wraith_1",
+        "board_wraith_2",
+        "board_wraith_3"
+      ],
+      "board_complete_status": "CHECK_REQUIRED",
+      "missing_fields": [
+        "Q11 反光文字"
+      ],
+      "bp_initial": 4,
+      "bp_max": 12,
+      "bp_source_ref": "B01:p4",
+      "prior_official_identity_evidence": {
+        "source_level": "B",
+        "source_ref": [
+          "B02:6 Playable Killers"
+        ],
+        "identity_status": "CONFIRMED"
+      },
+      "subtitle_zh": null,
+      "real_name_zh": "菲利普·奥乔莫",
+      "difficulty_zh": "困难",
+      "photo_transcription_status": "AVAILABLE",
+      "field_evidence": {
+        "name_zh": {
+          "source_level": "D",
+          "source_ref": [
+            "D40:reference/characters/killers_clown_twins_wraith.png / 幽灵人物板"
+          ],
+          "status": "CHECK_REQUIRED"
+        },
+        "board_text": {
+          "source_level": "D",
+          "source_ref": [
+            "D40:reference/characters/killers_clown_twins_wraith.png / 幽灵人物板"
+          ],
+          "status": "CHECK_REQUIRED"
+        }
+      },
+      "chinese_print_evidence": {
+        "source_level": "D",
+        "source_ref": [
+          "D40:reference/characters/killers_clown_twins_wraith.png / 幽灵人物板"
+        ],
+        "status": "CHECK_REQUIRED"
+      },
+      "previous_research_status": "CHECK_REQUIRED",
+      "adoption_basis": "USER_ACCEPTED_CN_RETAIL",
+      "adoption_ref": "U02:来源优先级与Phase1采用",
+      "japanese_missing_blocks_runtime": false
+    },
+    {
+      "id": "hillbilly",
+      "name_ja": null,
+      "name_en": "The Hillbilly",
+      "name_zh": "农场主",
+      "translation_status": "OFFICIAL_ZH_PRINT",
+      "japanese_text_status": "CHECK_REQUIRED",
+      "side": "killer",
+      "source_level": "D",
+      "source_ref": [
+        "B02:6 Playable Killers",
+        "D41:reference/characters/killers_hillbilly_doctor.png / 农场主人物板"
+      ],
+      "status": "CONFIRMED",
+      "identity_status": "CONFIRMED",
+      "japanese_name_source": null,
+      "power": {
+        "name_zh": "电锯",
+        "text_original_zh": "弃掉一张“等待”以外的移动牌，以沿着该牌的路线移动。使用此力量时，你不能沿着有木板、可破坏墙壁或任何其它配件的路线移动。你进入的空间里的一位逃生者变为受伤。",
+        "source_level": "D",
+        "source_ref": [
+          "D41:reference/characters/killers_hillbilly_doctor.png / 农场主人物板"
+        ],
+        "status": "CONFIRMED",
+        "structured_effect_draft": {
+          "source_level": "D",
+          "source_ref": [
+            "D41:reference/characters/killers_hillbilly_doctor.png / 农场主人物板"
+          ],
+          "status": "CONFIRMED",
+          "source_text_zh": "弃掉一张“等待”以外的移动牌，以沿着该牌的路线移动。使用此力量时，你不能沿着有木板、可破坏墙壁或任何其它配件的路线移动。你进入的空间里的一位逃生者变为受伤。",
+          "implementation_status": "IMPLEMENTED_TESTED",
+          "requires_semantic_review": false,
+          "kind": "KILLER_POWER",
+          "trigger": {
+            "event": "INSTEAD_OF_INTERACTION"
+          },
+          "conditions": [
+            "每轮至多一次，B01 p10/p14；此照片效果文本仍D级",
+            "弃掉1张非等待移动牌",
+            "对应路线无木板、墙或其他配件"
+          ],
+          "effects": [
+            {
+              "operation": "DISCARD_AND_MOVE",
+              "text_zh": "弃牌并沿该牌路线移动"
+            },
+            {
+              "operation": "WOUND_ONE_SURVIVOR",
+              "text_zh": "进入空间中1位逃生者受伤"
+            }
+          ],
+          "resolution_scope": "DRAFT_ONLY_NOT_RUNTIME_DSL",
+          "adoption_basis": "USER_ACCEPTED_CN_RETAIL",
+          "adoption_ref": "U02:中文零售资料优先",
+          "japanese_missing_blocks_runtime": false
+        },
+        "previous_research_status": "CHECK_REQUIRED",
+        "adoption_basis": "USER_ACCEPTED_CN_RETAIL",
+        "adoption_ref": "U02:来源优先级与Phase1采用",
+        "japanese_missing_blocks_runtime": false,
+        "implementation_status": "IMPLEMENTED_TESTED"
+      },
+      "passive": null,
+      "starting_perks": [
+        "board_hillbilly_1",
+        "board_hillbilly_2",
+        "board_hillbilly_3"
+      ],
+      "board_complete_status": "CONFIRMED",
+      "missing_fields": [],
+      "bp_initial": 4,
+      "bp_max": 12,
+      "bp_source_ref": "B01:p4",
+      "prior_official_identity_evidence": {
+        "source_level": "B",
+        "source_ref": [
+          "B02:6 Playable Killers"
+        ],
+        "identity_status": "CONFIRMED"
+      },
+      "subtitle_zh": null,
+      "real_name_zh": "小马克思·汤普森",
+      "difficulty_zh": "简单",
+      "photo_transcription_status": "AVAILABLE",
+      "field_evidence": {
+        "name_zh": {
+          "source_level": "D",
+          "source_ref": [
+            "D41:reference/characters/killers_hillbilly_doctor.png / 农场主人物板"
+          ],
+          "status": "CHECK_REQUIRED"
+        },
+        "board_text": {
+          "source_level": "D",
+          "source_ref": [
+            "D41:reference/characters/killers_hillbilly_doctor.png / 农场主人物板"
+          ],
+          "status": "CHECK_REQUIRED"
+        }
+      },
+      "chinese_print_evidence": {
+        "source_level": "D",
+        "source_ref": [
+          "D41:reference/characters/killers_hillbilly_doctor.png / 农场主人物板"
+        ],
+        "status": "CHECK_REQUIRED"
+      },
+      "previous_research_status": "CHECK_REQUIRED",
+      "adoption_basis": "USER_ACCEPTED_CN_RETAIL",
+      "adoption_ref": "U02:来源优先级与Phase1采用",
+      "japanese_missing_blocks_runtime": false
+    },
+    {
+      "id": "nurse",
+      "name_ja": null,
+      "name_en": "The Nurse",
+      "name_zh": "护士",
+      "translation_status": "OFFICIAL_ZH_PRINT",
+      "japanese_text_status": "CHECK_REQUIRED",
+      "side": "killer",
+      "source_level": "D",
+      "source_ref": [
+        "B02:6 Playable Killers",
+        "D44:reference/characters/killers_plague_hag_nurse.png / 护士人物板"
+      ],
+      "status": "CONFIRMED",
+      "identity_status": "CONFIRMED",
+      "japanese_name_source": null,
+      "power": {
+        "name_zh": "斯宾塞的濒死之息",
+        "text_original_zh": "移动到任意相连的空间，忽略木板和可破坏墙壁。使用此力量时，你也可以沿着单向路线反向移动。",
+        "source_level": "D",
+        "source_ref": [
+          "D44:reference/characters/killers_plague_hag_nurse.png / 护士人物板"
+        ],
+        "status": "CONFIRMED",
+        "structured_effect_draft": {
+          "source_level": "D",
+          "source_ref": [
+            "D44:reference/characters/killers_plague_hag_nurse.png / 护士人物板"
+          ],
+          "status": "CONFIRMED",
+          "source_text_zh": "移动到任意相连的空间，忽略木板和可破坏墙壁。使用此力量时，你也可以沿着单向路线反向移动。",
+          "implementation_status": "IMPLEMENTED_TESTED",
+          "requires_semantic_review": false,
+          "kind": "KILLER_POWER",
+          "trigger": {
+            "event": "INSTEAD_OF_INTERACTION"
+          },
+          "conditions": [
+            "每轮至多一次，B01 p10/p14；此照片效果文本仍D级",
+            "目的空间相连"
+          ],
+          "effects": [
+            {
+              "operation": "MOVE_IGNORE_BLOCKERS",
+              "text_zh": "忽略木板与可破坏墙移动"
+            },
+            {
+              "operation": "ALLOW_REVERSE_ONE_WAY",
+              "text_zh": "可逆单向路线移动；原文未写移除障碍，不补猜摧毁"
+            }
+          ],
+          "resolution_scope": "DRAFT_ONLY_NOT_RUNTIME_DSL",
+          "adoption_basis": "USER_ACCEPTED_CN_RETAIL",
+          "adoption_ref": "U02:中文零售资料优先",
+          "japanese_missing_blocks_runtime": false
+        },
+        "previous_research_status": "CHECK_REQUIRED",
+        "adoption_basis": "USER_ACCEPTED_CN_RETAIL",
+        "adoption_ref": "U02:来源优先级与Phase1采用",
+        "japanese_missing_blocks_runtime": false,
+        "implementation_status": "IMPLEMENTED_TESTED"
+      },
+      "passive": null,
+      "starting_perks": [
+        "board_nurse_1",
+        "board_nurse_2",
+        "board_nurse_3"
+      ],
+      "board_complete_status": "CONFIRMED",
+      "missing_fields": [],
+      "bp_initial": 4,
+      "bp_max": 12,
+      "bp_source_ref": "B01:p4",
+      "prior_official_identity_evidence": {
+        "source_level": "B",
+        "source_ref": [
+          "B02:6 Playable Killers"
+        ],
+        "identity_status": "CONFIRMED"
+      },
+      "subtitle_zh": null,
+      "real_name_zh": "莎莉·史密森",
+      "difficulty_zh": "简单",
+      "photo_transcription_status": "AVAILABLE",
+      "field_evidence": {
+        "name_zh": {
+          "source_level": "D",
+          "source_ref": [
+            "D44:reference/characters/killers_plague_hag_nurse.png / 护士人物板"
+          ],
+          "status": "CHECK_REQUIRED"
+        },
+        "board_text": {
+          "source_level": "D",
+          "source_ref": [
+            "D44:reference/characters/killers_plague_hag_nurse.png / 护士人物板"
+          ],
+          "status": "CHECK_REQUIRED"
+        }
+      },
+      "chinese_print_evidence": {
+        "source_level": "D",
+        "source_ref": [
+          "D44:reference/characters/killers_plague_hag_nurse.png / 护士人物板"
+        ],
+        "status": "CHECK_REQUIRED"
+      },
+      "previous_research_status": "CHECK_REQUIRED",
+      "adoption_basis": "USER_ACCEPTED_CN_RETAIL",
+      "adoption_ref": "U02:来源优先级与Phase1采用",
+      "japanese_missing_blocks_runtime": false
+    },
+    {
+      "id": "hag",
+      "name_ja": null,
+      "name_en": "The Hag",
+      "name_zh": "妖巫",
+      "translation_status": "OFFICIAL_ZH_PRINT",
+      "japanese_text_status": "CHECK_REQUIRED",
+      "side": "killer",
+      "source_level": "D",
+      "source_ref": [
+        "B02:6 Playable Killers",
+        "D44:reference/characters/killers_plague_hag_nurse.png / 妖巫人物板"
+      ],
+      "status": "CONFIRMED",
+      "identity_status": "CONFIRMED",
+      "japanese_name_source": null,
+      "power": {
+        "name_zh": "黑化触媒",
+        "text_original_zh": "在你所在空间里放置一个鬼灵陷阱。如果你所在空间里有厄咒图腾，获得1血点。每个空间最多只能有一个鬼灵陷阱。",
+        "source_level": "D",
+        "source_ref": [
+          "D44:reference/characters/killers_plague_hag_nurse.png / 妖巫人物板"
+        ],
+        "status": "CONFIRMED",
+        "structured_effect_draft": {
+          "source_level": "D",
+          "source_ref": [
+            "D44:reference/characters/killers_plague_hag_nurse.png / 妖巫人物板"
+          ],
+          "status": "CONFIRMED",
+          "source_text_zh": "在你所在空间里放置一个鬼灵陷阱。如果你所在空间里有厄咒图腾，获得1血点。每个空间最多只能有一个鬼灵陷阱。",
+          "implementation_status": "IMPLEMENTED_TESTED",
+          "requires_semantic_review": false,
+          "kind": "KILLER_POWER",
+          "trigger": {
+            "event": "INSTEAD_OF_INTERACTION"
+          },
+          "conditions": [
+            "每轮至多一次，B01 p10/p14；此照片效果文本仍D级",
+            "每个空间最多1个鬼灵陷阱"
+          ],
+          "effects": [
+            {
+              "operation": "PLACE_PHANTASM_TRAP",
+              "text_zh": "在自己空间放陷阱"
+            },
+            {
+              "operation": "CONDITIONAL_GAIN_BLOODPOINT",
+              "text_zh": "如自己空间有厄咒图腾，获得1血点"
+            }
+          ],
+          "resolution_scope": "DRAFT_ONLY_NOT_RUNTIME_DSL",
+          "adoption_basis": "USER_ACCEPTED_CN_RETAIL",
+          "adoption_ref": "U02:中文零售资料优先",
+          "japanese_missing_blocks_runtime": false
+        },
+        "previous_research_status": "CHECK_REQUIRED",
+        "adoption_basis": "USER_ACCEPTED_CN_RETAIL",
+        "adoption_ref": "U02:来源优先级与Phase1采用",
+        "japanese_missing_blocks_runtime": false,
+        "implementation_status": "IMPLEMENTED_TESTED"
+      },
+      "passive": {
+        "text_original_zh": "每当一位逃生者进入有鬼灵陷阱的空间时，移除该陷阱，该逃生者掷一颗技能检定骰子。然后，你可以选择获得1血点，或者消耗等于骰子所示数量的血点以直接移动到该陷阱所在空间并与那个空间里的一位逃生者交互。（由于技能检定失败的结果为0，在这种情况下你可以免费传送并交互。）",
+        "source_level": "D",
+        "source_ref": [
+          "D44:reference/characters/killers_plague_hag_nurse.png / 妖巫人物板"
+        ],
+        "status": "CONFIRMED",
+        "structured_effect_draft": {
+          "source_level": "D",
+          "source_ref": [
+            "D44:reference/characters/killers_plague_hag_nurse.png / 妖巫人物板"
+          ],
+          "status": "CONFIRMED",
+          "source_text_zh": "每当一位逃生者进入有鬼灵陷阱的空间时，移除该陷阱，该逃生者掷一颗技能检定骰子。然后，你可以选择获得1血点，或者消耗等于骰子所示数量的血点以直接移动到该陷阱所在空间并与那个空间里的一位逃生者交互。（由于技能检定失败的结果为0，在这种情况下你可以免费传送并交互。）",
+          "implementation_status": "IMPLEMENTED_TESTED",
+          "requires_semantic_review": false,
+          "kind": "KILLER_PASSIVE",
+          "trigger": {
+            "event": "SURVIVOR_ENTERS_PHANTASM_TRAP_SPACE"
+          },
+          "conditions": [],
+          "effects": [
+            {
+              "operation": "REMOVE_TRAP_AND_ROLL",
+              "text_zh": "移除陷阱，目标掷1技能检定骰"
+            },
+            {
+              "operation": "CHOOSE_ONE",
+              "text_zh": "获得1血点，或付骰面数血点直接移动到陷阱空间并与其中1位逃生者交互；失败为0可免费"
+            }
+          ],
+          "resolution_scope": "DRAFT_ONLY_NOT_RUNTIME_DSL",
+          "adoption_basis": "USER_ACCEPTED_CN_RETAIL",
+          "adoption_ref": "U02:中文零售资料优先",
+          "japanese_missing_blocks_runtime": false
+        },
+        "previous_research_status": "CHECK_REQUIRED",
+        "adoption_basis": "USER_ACCEPTED_CN_RETAIL",
+        "adoption_ref": "U02:来源优先级与Phase1采用",
+        "japanese_missing_blocks_runtime": false,
+        "implementation_status": "IMPLEMENTED_TESTED"
+      },
+      "starting_perks": [
+        "board_hag_1",
+        "board_hag_2",
+        "board_hag_3"
+      ],
+      "board_complete_status": "CHECK_REQUIRED",
+      "missing_fields": [
+        "Q11 本回合持续范围"
+      ],
+      "bp_initial": 4,
+      "bp_max": 12,
+      "bp_source_ref": "B01:p4",
+      "prior_official_identity_evidence": {
+        "source_level": "B",
+        "source_ref": [
+          "B02:6 Playable Killers"
+        ],
+        "identity_status": "CONFIRMED"
+      },
+      "subtitle_zh": null,
+      "real_name_zh": "丽莎·谢伍德",
+      "difficulty_zh": "困难",
+      "photo_transcription_status": "AVAILABLE",
+      "field_evidence": {
+        "name_zh": {
+          "source_level": "D",
+          "source_ref": [
+            "D44:reference/characters/killers_plague_hag_nurse.png / 妖巫人物板"
+          ],
+          "status": "CHECK_REQUIRED"
+        },
+        "board_text": {
+          "source_level": "D",
+          "source_ref": [
+            "D44:reference/characters/killers_plague_hag_nurse.png / 妖巫人物板"
+          ],
+          "status": "CHECK_REQUIRED"
+        }
+      },
+      "chinese_print_evidence": {
+        "source_level": "D",
+        "source_ref": [
+          "D44:reference/characters/killers_plague_hag_nurse.png / 妖巫人物板"
+        ],
+        "status": "CHECK_REQUIRED"
+      },
+      "previous_research_status": "CHECK_REQUIRED",
+      "adoption_basis": "USER_ACCEPTED_CN_RETAIL",
+      "adoption_ref": "U02:来源优先级与Phase1采用",
+      "japanese_missing_blocks_runtime": false
+    },
+    {
+      "id": "doctor",
+      "name_ja": null,
+      "name_en": "The Doctor",
+      "name_zh": "医生",
+      "translation_status": "OFFICIAL_ZH_PRINT",
+      "japanese_text_status": "CHECK_REQUIRED",
+      "side": "killer",
+      "source_level": "D",
+      "source_ref": [
+        "B02:6 Playable Killers",
+        "D41:reference/characters/killers_hillbilly_doctor.png / 医生人物板"
+      ],
+      "status": "CONFIRMED",
+      "identity_status": "CONFIRMED",
+      "japanese_name_source": null,
+      "power": {
+        "name_zh": "卡特的电火花",
+        "text_original_zh": "选择你所在空间或一个相连的空间。该空间里的每位没有神经紊乱的逃生者消耗1血点或获得神经紊乱。已经神经紊乱的逃生者消耗1血点或变为受伤。",
+        "source_level": "D",
+        "source_ref": [
+          "D41:reference/characters/killers_hillbilly_doctor.png / 医生人物板"
+        ],
+        "status": "CONFIRMED",
+        "structured_effect_draft": {
+          "source_level": "D",
+          "source_ref": [
+            "D41:reference/characters/killers_hillbilly_doctor.png / 医生人物板"
+          ],
+          "status": "CONFIRMED",
+          "source_text_zh": "选择你所在空间或一个相连的空间。该空间里的每位没有神经紊乱的逃生者消耗1血点或获得神经紊乱。已经神经紊乱的逃生者消耗1血点或变为受伤。",
+          "implementation_status": "IMPLEMENTED_TESTED",
+          "requires_semantic_review": false,
+          "kind": "KILLER_POWER",
+          "trigger": {
+            "event": "INSTEAD_OF_INTERACTION"
+          },
+          "conditions": [
+            "每轮至多一次，B01 p10/p14；此照片效果文本仍D级",
+            "选择自己所在或相连的1个空间"
+          ],
+          "effects": [
+            {
+              "operation": "AFFECT_EACH_SURVIVOR",
+              "text_zh": "每位非神经紊乱者消耗1血点或获得神经紊乱；已神经紊乱者消耗1血点或受伤"
+            }
+          ],
+          "resolution_scope": "DRAFT_ONLY_NOT_RUNTIME_DSL",
+          "adoption_basis": "USER_ACCEPTED_CN_RETAIL",
+          "adoption_ref": "U02:中文零售资料优先",
+          "japanese_missing_blocks_runtime": false
+        },
+        "previous_research_status": "CHECK_REQUIRED",
+        "adoption_basis": "USER_ACCEPTED_CN_RETAIL",
+        "adoption_ref": "U02:来源优先级与Phase1采用",
+        "japanese_missing_blocks_runtime": false,
+        "implementation_status": "IMPLEMENTED_TESTED"
+      },
+      "passive": {
+        "text_original_zh": "神经紊乱的逃生者为所有技能检定掷危险骰子。失败时，失去神经紊乱。每有一位神经紊乱的逃生者，你的杀手额外回合的血点消耗降低1。",
+        "source_level": "D",
+        "source_ref": [
+          "D41:reference/characters/killers_hillbilly_doctor.png / 医生人物板"
+        ],
+        "status": "CONFIRMED",
+        "structured_effect_draft": {
+          "source_level": "D",
+          "source_ref": [
+            "D41:reference/characters/killers_hillbilly_doctor.png / 医生人物板"
+          ],
+          "status": "CONFIRMED",
+          "source_text_zh": "神经紊乱的逃生者为所有技能检定掷危险骰子。失败时，失去神经紊乱。每有一位神经紊乱的逃生者，你的杀手额外回合的血点消耗降低1。",
+          "implementation_status": "IMPLEMENTED_TESTED",
+          "requires_semantic_review": false,
+          "kind": "KILLER_PASSIVE",
+          "trigger": {
+            "event": "MADNESS_STATE_ACTIVE_OR_SKILL_CHECK_FAILURE"
+          },
+          "conditions": [
+            "目标处于神经紊乱"
+          ],
+          "effects": [
+            {
+              "operation": "REPLACE_DIE",
+              "text_zh": "神经紊乱者所有技能检定掷危险骰"
+            },
+            {
+              "operation": "ON_FAILURE_REMOVE_MADNESS",
+              "text_zh": "失败时失去神经紊乱"
+            },
+            {
+              "operation": "DISCOUNT_KILLER_BONUS_TURN",
+              "text_zh": "每位神经紊乱者使杀手额外回合消耗降低1"
+            }
+          ],
+          "resolution_scope": "DRAFT_ONLY_NOT_RUNTIME_DSL",
+          "adoption_basis": "USER_ACCEPTED_CN_RETAIL",
+          "adoption_ref": "U02:中文零售资料优先",
+          "japanese_missing_blocks_runtime": false
+        },
+        "previous_research_status": "CHECK_REQUIRED",
+        "adoption_basis": "USER_ACCEPTED_CN_RETAIL",
+        "adoption_ref": "U02:来源优先级与Phase1采用",
+        "japanese_missing_blocks_runtime": false,
+        "implementation_status": "IMPLEMENTED_TESTED"
+      },
+      "starting_perks": [
+        "board_doctor_1",
+        "board_doctor_2",
+        "board_doctor_3"
+      ],
+      "board_complete_status": "CHECK_REQUIRED",
+      "missing_fields": [
+        "Phase4物品效果响应；当前USE_ITEM明确报错"
+      ],
+      "bp_initial": 4,
+      "bp_max": 12,
+      "bp_source_ref": "B01:p4",
+      "prior_official_identity_evidence": {
+        "source_level": "B",
+        "source_ref": [
+          "B02:6 Playable Killers"
+        ],
+        "identity_status": "CONFIRMED"
+      },
+      "subtitle_zh": null,
+      "real_name_zh": "赫曼·卡特",
+      "difficulty_zh": "简单",
+      "photo_transcription_status": "AVAILABLE",
+      "field_evidence": {
+        "name_zh": {
+          "source_level": "D",
+          "source_ref": [
+            "D41:reference/characters/killers_hillbilly_doctor.png / 医生人物板"
+          ],
+          "status": "CHECK_REQUIRED"
+        },
+        "board_text": {
+          "source_level": "D",
+          "source_ref": [
+            "D41:reference/characters/killers_hillbilly_doctor.png / 医生人物板"
+          ],
+          "status": "CHECK_REQUIRED"
+        }
+      },
+      "chinese_print_evidence": {
+        "source_level": "D",
+        "source_ref": [
+          "D41:reference/characters/killers_hillbilly_doctor.png / 医生人物板"
+        ],
+        "status": "CHECK_REQUIRED"
+      },
+      "previous_research_status": "CHECK_REQUIRED",
+      "adoption_basis": "USER_ACCEPTED_CN_RETAIL",
+      "adoption_ref": "U02:来源优先级与Phase1采用",
+      "japanese_missing_blocks_runtime": false
+    }
+  ]
+}

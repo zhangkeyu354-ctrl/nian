@@ -1,0 +1,72 @@
+{
+  "schema_version": 1,
+  "research_date": "2026-10-19",
+  "edition_scope": "BASE_STANDARD",
+  "note": "CONFIRMED只表示所标注的事实范围有依据；不等于全字段齐全、日文版一致、译文批准或已实现。null/空数组表示未确认。",
+  "dice": [
+    {
+      "id": "skill_check",
+      "copies": 4,
+      "result_classes": {
+        "failure": [
+          0
+        ],
+        "success": [
+          1,
+          2,
+          3,
+          4
+        ],
+        "great_success": [
+          5
+        ]
+      },
+      "face_multiplicity": {
+        "failure": 1,
+        "success": 4,
+        "great_success": 1
+      },
+      "source_level": "B",
+      "source_ref": [
+        "B01:p3/p16",
+        "U02:Q04"
+      ],
+      "status": "CONFIRMED",
+      "result_classes_status": "CONFIRMED",
+      "missing_fields": [],
+      "faces": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5
+      ],
+      "distribution_basis": "USER_RULING_Q04"
+    },
+    {
+      "id": "danger",
+      "copies": 1,
+      "face_multiplicity": {
+        "failure": 4,
+        "great_success": 2
+      },
+      "source_level": "B",
+      "source_ref": [
+        "B01:p16",
+        "U02:Q04"
+      ],
+      "status": "CONFIRMED",
+      "faces": [
+        0,
+        0,
+        0,
+        0,
+        5,
+        5
+      ],
+      "missing_fields": [],
+      "distribution_basis": "B01:p16 + USER_RULING_Q04"
+    }
+  ]
+}

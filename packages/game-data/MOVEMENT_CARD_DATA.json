@@ -1,0 +1,141 @@
+{
+  "schema_version": 1,
+  "research_date": "2026-10-19",
+  "edition_scope": "BASE_STANDARD",
+  "note": "CONFIRMED只表示所标注的事实范围有依据；不等于全字段齐全、日文版一致、译文批准或已实现。null/空数组表示未确认。",
+  "expected_physical_total": 21,
+  "card_types": [
+    {
+      "id": "sneak",
+      "name_ja": null,
+      "name_en": "Sneak",
+      "name_zh": "潜行",
+      "translation_status": "DRAFT",
+      "japanese_text_status": "CHECK_REQUIRED",
+      "color": "blue",
+      "copies": 5,
+      "one_way_path": false,
+      "available_to": [
+        "survivor",
+        "killer"
+      ],
+      "moves_figure": true,
+      "source_level": "B",
+      "source_ref": [
+        "B01:p3卡面/5套加1Wait",
+        "B01:p6",
+        "B01:p8/p10",
+        "B01:p18 Wait FAQ"
+      ],
+      "status": "CONFIRMED",
+      "note": "共有五套四色卡；少人数时同一玩家兼控角色共享一套，见p19。"
+    },
+    {
+      "id": "sprint",
+      "name_ja": null,
+      "name_en": "Sprint",
+      "name_zh": "冲刺",
+      "translation_status": "DRAFT",
+      "japanese_text_status": "CHECK_REQUIRED",
+      "color": "green",
+      "copies": 5,
+      "one_way_path": false,
+      "available_to": [
+        "survivor",
+        "killer"
+      ],
+      "moves_figure": true,
+      "source_level": "B",
+      "source_ref": [
+        "B01:p3卡面/5套加1Wait",
+        "B01:p6",
+        "B01:p8/p10",
+        "B01:p18 Wait FAQ"
+      ],
+      "status": "CONFIRMED",
+      "note": "共有五套四色卡；少人数时同一玩家兼控角色共享一套，见p19。"
+    },
+    {
+      "id": "crouch",
+      "name_ja": null,
+      "name_en": "Crouch",
+      "name_zh": "蹲行",
+      "translation_status": "DRAFT",
+      "japanese_text_status": "CHECK_REQUIRED",
+      "color": "red",
+      "copies": 5,
+      "one_way_path": false,
+      "available_to": [
+        "survivor",
+        "killer"
+      ],
+      "moves_figure": true,
+      "source_level": "B",
+      "source_ref": [
+        "B01:p3卡面/5套加1Wait",
+        "B01:p6",
+        "B01:p8/p10",
+        "B01:p18 Wait FAQ"
+      ],
+      "status": "CONFIRMED",
+      "note": "共有五套四色卡；少人数时同一玩家兼控角色共享一套，见p19。"
+    },
+    {
+      "id": "vault",
+      "name_ja": null,
+      "name_en": "Vault",
+      "name_zh": "翻越",
+      "translation_status": "DRAFT",
+      "japanese_text_status": "CHECK_REQUIRED",
+      "color": "yellow",
+      "copies": 5,
+      "one_way_path": true,
+      "available_to": [
+        "survivor",
+        "killer"
+      ],
+      "moves_figure": true,
+      "source_level": "B",
+      "source_ref": [
+        "B01:p3卡面/5套加1Wait",
+        "B01:p6",
+        "B01:p8/p10",
+        "B01:p18 Wait FAQ"
+      ],
+      "status": "CONFIRMED",
+      "note": "共有五套四色卡；少人数时同一玩家兼控角色共享一套，见p19。"
+    },
+    {
+      "id": "wait",
+      "name_ja": null,
+      "name_en": "Wait",
+      "name_zh": "等待",
+      "translation_status": "DRAFT",
+      "japanese_text_status": "CHECK_REQUIRED",
+      "color": null,
+      "copies": 1,
+      "one_way_path": null,
+      "available_to": [
+        "killer"
+      ],
+      "moves_figure": false,
+      "source_level": "B",
+      "source_ref": [
+        "B01:p3卡面/5套加1Wait",
+        "B01:p6",
+        "B01:p8/p10",
+        "B01:p18 Wait FAQ"
+      ],
+      "status": "CONFIRMED",
+      "note": "共有五套四色卡；少人数时同一玩家兼控角色共享一套，见p19。"
+    }
+  ],
+  "ownership": {
+    "model": "per_player_shared_hand",
+    "source_level": "B",
+    "source_ref": [
+      "B01:p6/p19"
+    ],
+    "status": "CONFIRMED"
+  }
+}

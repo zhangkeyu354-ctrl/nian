@@ -1,0 +1,9 @@
+import maps from "../../game-data/MAP_DATA.json" with { type: "json" };
+import chars from "../../game-data/CHARACTER_DATA.json" with { type: "json" };
+import perks from "../../game-data/PERK_DATA.json" with { type: "json" };
+import rules from "../../game-data/RULE_DATA.json" with { type: "json" };
+import dice from "../../game-data/DICE_DATA.json" with { type: "json" };
+import items from "../../game-data/ITEM_DATA.json" with { type: "json" };
+export { maps, chars, perks, rules, dice, items };
+export const boardPerks = new Map(perks.board_perks.map((p) => [p.id, p]));
+export const roster = new Map(chars.characters.map((c) => [c.id, c]));

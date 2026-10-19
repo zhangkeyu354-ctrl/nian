@@ -1,0 +1,103 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1450" height="1430"><title>奥托海文废车场D级路线图标转录核对图</title><rect width="100%" height="100%" fill="#f7f8fa"/><g font-family="Microsoft YaHei, sans-serif">
+<text x="45" y="43" font-size="28" fill="#243140" text-anchor="start">奥托海文废车场 · 照片转录核对图</text>
+<text x="45" y="73" font-size="19" fill="#243140" text-anchor="start">10 房间 / 19 路线图标 / 3 单向 / 4 初始墙 · 全部 D 级 CHECK_REQUIRED</text>
+<text x="45" y="101" font-size="16" fill="#243140" text-anchor="start">J02 / J04 表示共用图标，不是新增房间；三端间移动与障碍语义未裁定。</text>
+<polyline points="350,250 450,250 450,175 550,175" fill="none" stroke="#a6820e" stroke-width="4"/>
+<polygon points="550,175 534,167 534,183" fill="#a6820e"/>
+<rect x="402" y="204" width="96" height="34" rx="5" fill="#ffffff" stroke="#a6820e"/>
+<text x="450" y="223" font-size="17" fill="#a6820e" text-anchor="middle">p01 Y</text>
+<polyline points="250,285 250,350 500,350" fill="none" stroke="#388448" stroke-width="4"/>
+<polyline points="650,185 650,350 500,350" fill="none" stroke="#388448" stroke-width="4"/>
+<polyline points="500,525 500,350" fill="none" stroke="#388448" stroke-width="4"/>
+<rect x="452" y="334" width="96" height="34" rx="5" fill="#fff8df" stroke="#388448"/>
+<text x="500" y="353" font-size="17" fill="#388448" text-anchor="middle">J02 ?</text>
+<polyline points="550,150 60,150 60,560 70,560" fill="none" stroke="#388448" stroke-width="4"/>
+<rect x="42" y="394" width="96" height="34" rx="5" fill="#ffffff" stroke="#388448"/>
+<text x="90" y="413" font-size="17" fill="#388448" text-anchor="middle">p03 G W</text>
+<polyline points="70,580 45,580 45,1190 740,1190" fill="none" stroke="#388448" stroke-width="4"/>
+<polyline points="850,915 850,1190 740,1190" fill="none" stroke="#388448" stroke-width="4"/>
+<polyline points="1150,1125 1150,1190 740,1190" fill="none" stroke="#388448" stroke-width="4"/>
+<rect x="692" y="1174" width="96" height="34" rx="5" fill="#fff8df" stroke="#388448"/>
+<text x="740" y="1193" font-size="17" fill="#388448" text-anchor="middle">J04 ?</text>
+<polyline points="220,285 220,470 170,470 170,525" fill="none" stroke="#297da8" stroke-width="4"/>
+<rect x="172" y="424" width="96" height="34" rx="5" fill="#ffffff" stroke="#297da8"/>
+<text x="220" y="443" font-size="17" fill="#297da8" text-anchor="middle">p05 B</text>
+<polyline points="270,560 400,560" fill="none" stroke="#297da8" stroke-width="4"/>
+<rect x="287" y="544" width="96" height="34" rx="5" fill="#ffffff" stroke="#297da8"/>
+<text x="335" y="563" font-size="17" fill="#297da8" text-anchor="middle">p06 B W</text>
+<polyline points="600,540 700,540 700,460 800,460" fill="none" stroke="#b9474a" stroke-width="4"/>
+<rect x="692" y="444" width="96" height="34" rx="5" fill="#ffffff" stroke="#b9474a"/>
+<text x="740" y="463" font-size="17" fill="#b9474a" text-anchor="middle">p07 R</text>
+<polyline points="700,185 700,400 900,400 900,425" fill="none" stroke="#297da8" stroke-width="4"/>
+<rect x="762" y="384" width="96" height="34" rx="5" fill="#ffffff" stroke="#297da8"/>
+<text x="810" y="403" font-size="17" fill="#297da8" text-anchor="middle">p08 B</text>
+<polyline points="750,150 1000,150" fill="none" stroke="#b9474a" stroke-width="4"/>
+<rect x="832" y="134" width="96" height="34" rx="5" fill="#ffffff" stroke="#b9474a"/>
+<text x="880" y="153" font-size="17" fill="#b9474a" text-anchor="middle">p09 R</text>
+<polyline points="1100,185 1100,460 1000,460" fill="none" stroke="#297da8" stroke-width="4"/>
+<rect x="1052" y="364" width="96" height="34" rx="5" fill="#ffffff" stroke="#297da8"/>
+<text x="1100" y="383" font-size="17" fill="#297da8" text-anchor="middle">p10 B W</text>
+<polyline points="1000,480 1200,480 1200,685" fill="none" stroke="#b9474a" stroke-width="4"/>
+<rect x="1152" y="554" width="96" height="34" rx="5" fill="#ffffff" stroke="#b9474a"/>
+<text x="1200" y="573" font-size="17" fill="#b9474a" text-anchor="middle">p11 R</text>
+<polyline points="1200,150 1330,150 1330,720 1300,720" fill="none" stroke="#297da8" stroke-width="4"/>
+<rect x="1282" y="414" width="96" height="34" rx="5" fill="#ffffff" stroke="#297da8"/>
+<text x="1330" y="433" font-size="17" fill="#297da8" text-anchor="middle">p12 B</text>
+<polyline points="900,495 900,780 850,780 850,845" fill="none" stroke="#b9474a" stroke-width="4"/>
+<rect x="852" y="664" width="96" height="34" rx="5" fill="#ffffff" stroke="#b9474a"/>
+<text x="900" y="683" font-size="17" fill="#b9474a" text-anchor="middle">p13 R W</text>
+<polyline points="950,880 1040,880 1040,720 1100,720" fill="none" stroke="#a6820e" stroke-width="4"/>
+<polygon points="1100,720 1084,712 1084,728" fill="#a6820e"/>
+<rect x="992" y="804" width="96" height="34" rx="5" fill="#ffffff" stroke="#a6820e"/>
+<text x="1040" y="823" font-size="17" fill="#a6820e" text-anchor="middle">p14 Y</text>
+<polyline points="1200,755 1200,1020 1150,1020 1150,1055" fill="none" stroke="#297da8" stroke-width="4"/>
+<rect x="1152" y="964" width="96" height="34" rx="5" fill="#ffffff" stroke="#297da8"/>
+<text x="1200" y="983" font-size="17" fill="#297da8" text-anchor="middle">p15 B</text>
+<polyline points="500,595 500,880 750,880" fill="none" stroke="#b9474a" stroke-width="4"/>
+<rect x="602" y="864" width="96" height="34" rx="5" fill="#ffffff" stroke="#b9474a"/>
+<text x="650" y="883" font-size="17" fill="#b9474a" text-anchor="middle">p16 R</text>
+<polyline points="380,940 700,940 700,900 750,900" fill="none" stroke="#297da8" stroke-width="4"/>
+<rect x="532" y="924" width="96" height="34" rx="5" fill="#ffffff" stroke="#297da8"/>
+<text x="580" y="943" font-size="17" fill="#297da8" text-anchor="middle">p17 B</text>
+<polyline points="170,595 170,940 180,940" fill="none" stroke="#b9474a" stroke-width="4"/>
+<rect x="122" y="744" width="96" height="34" rx="5" fill="#ffffff" stroke="#b9474a"/>
+<text x="170" y="763" font-size="17" fill="#b9474a" text-anchor="middle">p18 R</text>
+<polyline points="280,905 280,680 410,680 410,595" fill="none" stroke="#a6820e" stroke-width="4"/>
+<polygon points="410,595 402,611 418,611" fill="#a6820e"/>
+<rect x="282" y="664" width="96" height="34" rx="5" fill="#ffffff" stroke="#a6820e"/>
+<text x="330" y="683" font-size="17" fill="#a6820e" text-anchor="middle">p19 Y</text>
+<rect x="150" y="215" width="200" height="70" rx="8" fill="#ffffff" stroke="#576674"/>
+<text x="250" y="243" font-size="21" fill="#243140" text-anchor="middle">废旧车库北</text>
+<text x="250" y="269" font-size="16" fill="#607182" text-anchor="middle">骰面 1</text>
+<rect x="550" y="115" width="200" height="70" rx="8" fill="#ffffff" stroke="#576674"/>
+<text x="650" y="143" font-size="21" fill="#243140" text-anchor="middle">迷宫</text>
+<text x="650" y="169" font-size="16" fill="#607182" text-anchor="middle">骰面 —</text>
+<rect x="1000" y="115" width="200" height="70" rx="8" fill="#ffffff" stroke="#576674"/>
+<text x="1100" y="143" font-size="21" fill="#243140" text-anchor="middle">废料堆</text>
+<text x="1100" y="169" font-size="16" fill="#607182" text-anchor="middle">骰面 2</text>
+<rect x="800" y="425" width="200" height="70" rx="8" fill="#ffffff" stroke="#576674"/>
+<text x="900" y="453" font-size="21" fill="#243140" text-anchor="middle">主车库</text>
+<text x="900" y="479" font-size="16" fill="#607182" text-anchor="middle">骰面 —</text>
+<rect x="70" y="525" width="200" height="70" rx="8" fill="#ffffff" stroke="#576674"/>
+<text x="170" y="553" font-size="21" fill="#243140" text-anchor="middle">废旧车库南</text>
+<text x="170" y="579" font-size="16" fill="#607182" text-anchor="middle">骰面 —</text>
+<rect x="400" y="525" width="200" height="70" rx="8" fill="#ffffff" stroke="#576674"/>
+<text x="500" y="553" font-size="21" fill="#243140" text-anchor="middle">小吃店</text>
+<text x="500" y="579" font-size="16" fill="#607182" text-anchor="middle">骰面 5</text>
+<rect x="1100" y="685" width="200" height="70" rx="8" fill="#ffffff" stroke="#576674"/>
+<text x="1200" y="713" font-size="21" fill="#243140" text-anchor="middle">谷仓</text>
+<text x="1200" y="739" font-size="16" fill="#607182" text-anchor="middle">骰面 —</text>
+<rect x="750" y="845" width="200" height="70" rx="8" fill="#ffffff" stroke="#576674"/>
+<text x="850" y="873" font-size="21" fill="#243140" text-anchor="middle">油泵</text>
+<text x="850" y="899" font-size="16" fill="#607182" text-anchor="middle">骰面 0</text>
+<rect x="180" y="905" width="200" height="70" rx="8" fill="#ffffff" stroke="#576674"/>
+<text x="280" y="933" font-size="21" fill="#243140" text-anchor="middle">老木屋</text>
+<text x="280" y="959" font-size="16" fill="#607182" text-anchor="middle">骰面 4</text>
+<rect x="1050" y="1055" width="200" height="70" rx="8" fill="#ffffff" stroke="#576674"/>
+<text x="1150" y="1083" font-size="21" fill="#243140" text-anchor="middle">村舍</text>
+<text x="1150" y="1109" font-size="16" fill="#607182" text-anchor="middle">骰面 3</text>
+<text x="45" y="1279" font-size="19" fill="#243140" text-anchor="start">R 红 蹲伏   G 绿 冲刺   B 蓝 潜行   Y 黄 翻越箭头   W 破损边框/初始墙</text>
+<text x="45" y="1318" font-size="18" fill="#243140" text-anchor="start">连线只在命名房间或标出的 J 图标相接，其他交叉不表示连接；示意坐标不写入地图数据。</text>
+<text x="45" y="1358" font-size="18" fill="#243140" text-anchor="start">J 图标三端保留原样，未生成两两移动边。来源：D36/P3；本图不能证明规则已验证或可直接开局。</text>
+<text x="45" y="1397" font-size="17" fill="#243140" text-anchor="start">2026-10-19 · 日文实物优先；中文照片为辅助资料。</text>
+</g></svg>

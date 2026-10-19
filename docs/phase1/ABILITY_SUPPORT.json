@@ -1,0 +1,436 @@
+{
+  "board_perks": [
+    {
+      "id": "board_dwight_1",
+      "name_zh": "证明自己",
+      "owner": "dwight",
+      "status": "CONFIRMED",
+      "implementation": "IMPLEMENTED_TESTED",
+      "source_ref": [
+        "D51:reference/characters/survivors_kate_ace_dwight.png / 德怀特·费菲尔德人物板"
+      ],
+      "reason": null
+    },
+    {
+      "id": "board_dwight_2",
+      "name_zh": "领袖群雄",
+      "owner": "dwight",
+      "status": "CONFIRMED",
+      "implementation": "IMPLEMENTED_TESTED",
+      "source_ref": [
+        "D51:reference/characters/survivors_kate_ace_dwight.png / 德怀特·费菲尔德人物板"
+      ],
+      "reason": null
+    },
+    {
+      "id": "board_dwight_3",
+      "name_zh": "携手合作",
+      "owner": "dwight",
+      "status": "CONFIRMED",
+      "implementation": "IMPLEMENTED_TESTED",
+      "source_ref": [
+        "D51:reference/characters/survivors_kate_ace_dwight.png / 德怀特·费菲尔德人物板"
+      ],
+      "reason": null
+    },
+    {
+      "id": "board_meg_1",
+      "name_zh": "冲刺爆发",
+      "owner": "meg",
+      "status": "CHECK_REQUIRED",
+      "implementation": "DEFERRED_PHASE_4",
+      "source_ref": [
+        "D49:reference/characters/survivors_david_meg_jake.png / 梅格·托马斯人物板"
+      ],
+      "reason": "Q11 其它路线语义"
+    },
+    {
+      "id": "board_meg_2",
+      "name_zh": "肾上腺素",
+      "owner": "meg",
+      "status": "CONFIRMED",
+      "implementation": "IMPLEMENTED_TESTED",
+      "source_ref": [
+        "D49:reference/characters/survivors_david_meg_jake.png / 梅格·托马斯人物板"
+      ],
+      "reason": null
+    },
+    {
+      "id": "board_meg_3",
+      "name_zh": "急速静谧",
+      "owner": "meg",
+      "status": "CONFIRMED",
+      "implementation": "IMPLEMENTED_TESTED",
+      "source_ref": [
+        "D49:reference/characters/survivors_david_meg_jake.png / 梅格·托马斯人物板"
+      ],
+      "reason": null
+    },
+    {
+      "id": "board_claudette_1",
+      "name_zh": "精研百草",
+      "owner": "claudette",
+      "status": "CONFIRMED",
+      "implementation": "IMPLEMENTED_TESTED",
+      "source_ref": [
+        "D48:reference/characters/survivors_claudette_zarina.png / 克劳黛特·莫莱人物板"
+      ],
+      "reason": null
+    },
+    {
+      "id": "board_claudette_2",
+      "name_zh": "心灵共鸣",
+      "owner": "claudette",
+      "status": "CONFIRMED",
+      "implementation": "IMPLEMENTED_TESTED",
+      "source_ref": [
+        "D48:reference/characters/survivors_claudette_zarina.png / 克劳黛特·莫莱人物板"
+      ],
+      "reason": null
+    },
+    {
+      "id": "board_claudette_3",
+      "name_zh": "自我疗愈",
+      "owner": "claudette",
+      "status": "CONFIRMED",
+      "implementation": "IMPLEMENTED_TESTED",
+      "source_ref": [
+        "D48:reference/characters/survivors_claudette_zarina.png / 克劳黛特·莫莱人物板"
+      ],
+      "reason": null
+    },
+    {
+      "id": "board_jake_1",
+      "name_zh": "钢铁意志",
+      "owner": "jake",
+      "status": "CONFIRMED",
+      "implementation": "IMPLEMENTED_TESTED",
+      "source_ref": [
+        "D49:reference/characters/survivors_david_meg_jake.png / 杰克·朴人物板"
+      ],
+      "reason": null
+    },
+    {
+      "id": "board_jake_2",
+      "name_zh": "安抚生灵",
+      "owner": "jake",
+      "status": "CONFIRMED",
+      "implementation": "IMPLEMENTED_TESTED",
+      "source_ref": [
+        "D49:reference/characters/survivors_david_meg_jake.png / 杰克·朴人物板"
+      ],
+      "reason": null
+    },
+    {
+      "id": "board_jake_3",
+      "name_zh": "破坏手",
+      "owner": "jake",
+      "status": "CONFIRMED",
+      "implementation": "IMPLEMENTED_TESTED",
+      "source_ref": [
+        "D49:reference/characters/survivors_david_meg_jake.png / 杰克·朴人物板"
+      ],
+      "reason": null
+    },
+    {
+      "id": "board_nea_1",
+      "name_zh": "平稳着陆",
+      "owner": "nea",
+      "status": "CONFIRMED",
+      "implementation": "IMPLEMENTED_TESTED",
+      "source_ref": [
+        "D46:reference/characters/survivor_nea.png / 妮娅·卡尔森人物板"
+      ],
+      "reason": null
+    },
+    {
+      "id": "board_nea_2",
+      "name_zh": "暴走族",
+      "owner": "nea",
+      "status": "CONFIRMED",
+      "implementation": "IMPLEMENTED_TESTED",
+      "source_ref": [
+        "D46:reference/characters/survivor_nea.png / 妮娅·卡尔森人物板"
+      ],
+      "reason": null
+    },
+    {
+      "id": "board_nea_3",
+      "name_zh": "都市生存",
+      "owner": "nea",
+      "status": "CONFIRMED",
+      "implementation": "IMPLEMENTED_TESTED",
+      "source_ref": [
+        "D46:reference/characters/survivor_nea.png / 妮娅·卡尔森人物板"
+      ],
+      "reason": null
+    },
+    {
+      "id": "board_ace_1",
+      "name_zh": "稳操胜券",
+      "owner": "ace",
+      "status": "CONFIRMED",
+      "implementation": "IMPLEMENTED_TESTED",
+      "source_ref": [
+        "D51:reference/characters/survivors_kate_ace_dwight.png / 埃斯·维斯孔蒂人物板"
+      ],
+      "reason": null
+    },
+    {
+      "id": "board_ace_2",
+      "name_zh": "锦囊妙计",
+      "owner": "ace",
+      "status": "CONFIRMED",
+      "implementation": "IMPLEMENTED_TESTED",
+      "source_ref": [
+        "D51:reference/characters/survivors_kate_ace_dwight.png / 埃斯·维斯孔蒂人物板"
+      ],
+      "reason": null
+    },
+    {
+      "id": "board_ace_3",
+      "name_zh": "好运会传染",
+      "owner": "ace",
+      "status": "CONFIRMED",
+      "implementation": "IMPLEMENTED_TESTED",
+      "source_ref": [
+        "D51:reference/characters/survivors_kate_ace_dwight.png / 埃斯·维斯孔蒂人物板"
+      ],
+      "reason": null
+    },
+    {
+      "id": "board_feng_min_1",
+      "name_zh": "轻盈敏捷",
+      "owner": "feng_min",
+      "status": "CHECK_REQUIRED",
+      "implementation": "DEFERRED_PHASE_4",
+      "source_ref": [
+        "D50:reference/characters/survivors_feng_felix_nea.png / 凤敏人物板"
+      ],
+      "reason": "Q11 其它路线/木板空间语义"
+    },
+    {
+      "id": "board_feng_min_2",
+      "name_zh": "警戒",
+      "owner": "feng_min",
+      "status": "CONFIRMED",
+      "implementation": "IMPLEMENTED_TESTED",
+      "source_ref": [
+        "D50:reference/characters/survivors_feng_felix_nea.png / 凤敏人物板"
+      ],
+      "reason": null
+    },
+    {
+      "id": "board_feng_min_3",
+      "name_zh": "技术员",
+      "owner": "feng_min",
+      "status": "CONFIRMED",
+      "implementation": "IMPLEMENTED_TESTED",
+      "source_ref": [
+        "D50:reference/characters/survivors_feng_felix_nea.png / 凤敏人物板"
+      ],
+      "reason": null
+    },
+    {
+      "id": "board_trapper_1",
+      "name_zh": "所向无敌",
+      "owner": "trapper",
+      "status": "CONFIRMED",
+      "implementation": "IMPLEMENTED_TESTED",
+      "source_ref": [
+        "D45:reference/characters/killers_trapper_trickster_deathslinger.png / 设陷者人物板"
+      ],
+      "reason": null
+    },
+    {
+      "id": "board_trapper_2",
+      "name_zh": "恐慌降临",
+      "owner": "trapper",
+      "status": "CONFIRMED",
+      "implementation": "IMPLEMENTED_TESTED",
+      "source_ref": [
+        "D45:reference/characters/killers_trapper_trickster_deathslinger.png / 设陷者人物板"
+      ],
+      "reason": null
+    },
+    {
+      "id": "board_trapper_3",
+      "name_zh": "欣喜若狂",
+      "owner": "trapper",
+      "status": "CONFIRMED",
+      "implementation": "IMPLEMENTED_TESTED",
+      "source_ref": [
+        "D45:reference/characters/killers_trapper_trickster_deathslinger.png / 设陷者人物板"
+      ],
+      "reason": null
+    },
+    {
+      "id": "board_wraith_1",
+      "name_zh": "暗夜之睛",
+      "owner": "wraith",
+      "status": "CONFIRMED",
+      "implementation": "IMPLEMENTED_TESTED",
+      "source_ref": [
+        "D40:reference/characters/killers_clown_twins_wraith.png / 幽灵人物板"
+      ],
+      "reason": null
+    },
+    {
+      "id": "board_wraith_2",
+      "name_zh": "血气追踪",
+      "owner": "wraith",
+      "status": "CONFIRMED",
+      "implementation": "IMPLEMENTED_TESTED",
+      "source_ref": [
+        "D40:reference/characters/killers_clown_twins_wraith.png / 幽灵人物板"
+      ],
+      "reason": null
+    },
+    {
+      "id": "board_wraith_3",
+      "name_zh": "穷追不舍",
+      "owner": "wraith",
+      "status": "CHECK_REQUIRED",
+      "implementation": "DEFERRED_PHASE_4",
+      "source_ref": [
+        "D40:reference/characters/killers_clown_twins_wraith.png / 幽灵人物板"
+      ],
+      "reason": "Q11 反光文字"
+    },
+    {
+      "id": "board_hillbilly_1",
+      "name_zh": "光明之眼",
+      "owner": "hillbilly",
+      "status": "CONFIRMED",
+      "implementation": "IMPLEMENTED_TESTED",
+      "source_ref": [
+        "D41:reference/characters/killers_hillbilly_doctor.png / 农场主人物板"
+      ],
+      "reason": null
+    },
+    {
+      "id": "board_hillbilly_2",
+      "name_zh": "耐力持久",
+      "owner": "hillbilly",
+      "status": "CONFIRMED",
+      "implementation": "IMPLEMENTED_TESTED",
+      "source_ref": [
+        "D41:reference/characters/killers_hillbilly_doctor.png / 农场主人物板"
+      ],
+      "reason": null
+    },
+    {
+      "id": "board_hillbilly_3",
+      "name_zh": "工匠",
+      "owner": "hillbilly",
+      "status": "CONFIRMED",
+      "implementation": "IMPLEMENTED_TESTED",
+      "source_ref": [
+        "D41:reference/characters/killers_hillbilly_doctor.png / 农场主人物板"
+      ],
+      "reason": null
+    },
+    {
+      "id": "board_nurse_1",
+      "name_zh": "喘鸣感知",
+      "owner": "nurse",
+      "status": "CONFIRMED",
+      "implementation": "IMPLEMENTED_TESTED",
+      "source_ref": [
+        "D44:reference/characters/killers_plague_hag_nurse.png / 护士人物板"
+      ],
+      "reason": null
+    },
+    {
+      "id": "board_nurse_2",
+      "name_zh": "死亡恐惧",
+      "owner": "nurse",
+      "status": "CONFIRMED",
+      "implementation": "IMPLEMENTED_TESTED",
+      "source_ref": [
+        "D44:reference/characters/killers_plague_hag_nurse.png / 护士人物板"
+      ],
+      "reason": null
+    },
+    {
+      "id": "board_nurse_3",
+      "name_zh": "护士的呼唤",
+      "owner": "nurse",
+      "status": "CONFIRMED",
+      "implementation": "IMPLEMENTED_TESTED",
+      "source_ref": [
+        "D44:reference/characters/killers_plague_hag_nurse.png / 护士人物板"
+      ],
+      "reason": null
+    },
+    {
+      "id": "board_hag_1",
+      "name_zh": "第三封印",
+      "owner": "hag",
+      "status": "CHECK_REQUIRED",
+      "implementation": "DEFERRED_PHASE_4",
+      "source_ref": [
+        "D44:reference/characters/killers_plague_hag_nurse.png / 妖巫人物板"
+      ],
+      "reason": "Q11 本回合持续范围"
+    },
+    {
+      "id": "board_hag_2",
+      "name_zh": "吞噬希望",
+      "owner": "hag",
+      "status": "CONFIRMED",
+      "implementation": "IMPLEMENTED_TESTED",
+      "source_ref": [
+        "D44:reference/characters/killers_plague_hag_nurse.png / 妖巫人物板"
+      ],
+      "reason": null
+    },
+    {
+      "id": "board_hag_3",
+      "name_zh": "毁灭",
+      "owner": "hag",
+      "status": "CONFIRMED",
+      "implementation": "IMPLEMENTED_TESTED",
+      "source_ref": [
+        "D44:reference/characters/killers_plague_hag_nurse.png / 妖巫人物板"
+      ],
+      "reason": null
+    },
+    {
+      "id": "board_doctor_1",
+      "name_zh": "行监坐守",
+      "owner": "doctor",
+      "status": "CONFIRMED",
+      "implementation": "IMPLEMENTED_TESTED",
+      "source_ref": [
+        "D41:reference/characters/killers_hillbilly_doctor.png / 医生人物板"
+      ],
+      "reason": null
+    },
+    {
+      "id": "board_doctor_2",
+      "name_zh": "电量超载",
+      "owner": "doctor",
+      "status": "CONFIRMED",
+      "implementation": "IMPLEMENTED_TESTED",
+      "source_ref": [
+        "D41:reference/characters/killers_hillbilly_doctor.png / 医生人物板"
+      ],
+      "reason": null
+    },
+    {
+      "id": "board_doctor_3",
+      "name_zh": "压迫性气场",
+      "owner": "doctor",
+      "status": "CHECK_REQUIRED",
+      "implementation": "DEFERRED_PHASE_4",
+      "source_ref": [
+        "D41:reference/characters/killers_hillbilly_doctor.png / 医生人物板"
+      ],
+      "reason": "Phase4物品效果响应；当前USE_ITEM明确报错"
+    }
+  ],
+  "implemented": 34,
+  "deferred": 5,
+  "note": "运行请求待核/Phase4能力抛CHECK_REQUIRED；不是无效果占位。全部13名角色仍可选。"
+}

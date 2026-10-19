@@ -1,0 +1,102 @@
+{
+  "schema_version": 1,
+  "kind": "PHOTO_TRANSCRIPTION_DRAFT",
+  "map_id": "macmillan_estate",
+  "transcribed_by": "Claude (from user-supplied Xiaohongshu screenshots), 2026-10-19",
+  "warning": "这是从照片人工转录的草稿，不得直接覆盖 MAP_DATA.json。合并前须按 docs/CLAUDE_INTAKE_2026-10-19.md 的步骤核对。",
+  "sources": {
+    "P1": {
+      "file": "reference/maps/macmillan_cn_retail_xhs.jpg",
+      "desc": "中文版零售实物棋盘俯拍照（小红书用户 232...，水印可见）。底部约 1/6 被裁切，上方中部与右上角有反光。",
+      "source_level": "D",
+      "note": "第三方拍摄的真实零售品；按 AGENTS.md 分级属 D，但其内容可被 reference/maps/ASOBITION_board_preview.png（如为官方图则 B 级）交叉确认。"
+    },
+    "P2": {
+      "file": "reference/maps/macmillan_en_promo_xhs.jpg",
+      "desc": "发售前英文宣传渲染图（小红书转载）。地图完整，但有错字（中央房间误标为 FOUNDRY UPPER FLOOR），起点编号与零售版不同，部分格子印有原型期专用图标。",
+      "source_level": "D",
+      "note": "只用来补全 P1 被裁切的底部。凡与 P1 冲突，以 P1 为准。"
+    }
+  },
+  "official_zh_names_note": "P1 证明存在中文版零售品，房间名为官方中文印刷名。MAP_DATA.json 中 Codex 草拟的'铸造厂上层''废料场'等应改为下表 name_zh_official。",
+
+  "tracks": {
+    "sacrifice_track": {"slots": 8, "location": "棋盘左上红色区", "source": ["P1", "P2"], "note": "与 Level 99 官方博客'杀人鬼需累积 8 点献祭进度'一致"},
+    "generator_track": {"slots": 5, "layout": "右上黄黑区，最左 1 格为逃生门图标，其余 4 格为发电机图标，格间有指向左的三角", "source": ["P1", "P2"], "note": "与'修好 4 台发电机后开启逃生门'一致"}
+  },
+
+  "slot_colors": {
+    "Y": "黄色格 = 目标类 Objective（发电机 8 + 逃生门 2）",
+    "R": "红色格 = 勇气类 Boldness（钩子 5 + 诅咒图腾 5）",
+    "B": "蓝色格 = 生存类 Survival（宝箱 6 + 储物柜 6）",
+    "G": "绿色格 = 协作类 Altruism（木板 6 + 乌鸦 6）",
+    "verification": "按 P1 逐房间计数：Y=10, R=10, B=12, G=12，合计 44，与官方 44 枚道具及各类数量（10/10/12/12）完全吻合。颜色→类别的对应是由此计数推断的，须用规则书道具章节确认（CHECK_REQUIRED）。"
+  },
+
+  "rooms": [
+    {"id": "mine_depths",          "name_zh_official": "矿井深处",     "name_en": "Mine Depths",            "slots": ["Y","R","G"],         "slot_count": 3, "start_marker": null,           "source": ["P1","P2"]},
+    {"id": "mine_entrance",        "name_zh_official": "矿井入口",     "name_en": "Mine Entrance",          "slots": ["Y","R","G","G"],     "slot_count": 4, "start_marker": "II (2 道刻痕)", "source": ["P1","P2"]},
+    {"id": "foundry_upper_floor",  "name_zh_official": "熔炉上层",     "name_en": "Foundry Upper Floor",    "slots": ["Y","R","B","G"],     "slot_count": 4, "start_marker": "I (1 道刻痕)",  "source": ["P1","P2"]},
+    {"id": "coal_tower_upper",     "name_zh_official": "煤矿废塔上层", "name_en": "Coal Tower Upper Floor", "slots": ["Y","B","B","G"],     "slot_count": 4, "start_marker": "III (3 道刻痕)","source": ["P1","P2"], "conflict": "P2 宣传图此处印的是数字 4，P1 实物为 3 道刻痕；以 P1 为准"},
+    {"id": "foundry_lower_floor",  "name_zh_official": "熔炉下层",     "name_en": "Foundry Lower Floor (P2 误印为 Foundry Upper Floor)", "slots": ["Y","R","B","G","G"], "slot_count": 5, "start_marker": null, "source": ["P1","P2"], "note": "英文名 Lower Floor 为推断，须查英文规则书 p5/p16 地图示例确认"},
+    {"id": "ancient_tree",         "name_zh_official": "古树",         "name_en": "Ancient Tree",           "slots": ["Y","R","G","G"],     "slot_count": 4, "start_marker": "DBD 标志（4 道刻痕+1 道斜线，即 5）", "source": ["P1","P2"]},
+    {"id": "coal_tower_ground",    "name_zh_official": "煤矿废塔下层", "name_en": "Coal Tower Ground Floor","slots": ["R","B","B","G"],     "slot_count": 4, "start_marker": null,           "source": ["P1","P2"], "note": "唯一没有黄色格的房间"},
+    {"id": "scrapyard",            "name_zh_official": "废品场",       "name_en": "Scrapyard",              "slots": ["Y","R","B","B"],     "slot_count": 4, "start_marker": "IIII (4 道刻痕)","source": ["P1","P2"]},
+    {"id": "foundry_basement",     "name_zh_official": "熔炉地下室",   "name_en": "Foundry Basement",       "slots": ["Y","R","B","G"],     "slot_count": 4, "start_marker": null,           "source": ["P1","P2"]},
+    {"id": "shack",                "name_zh_official": "木屋",         "name_en": "Shack",                  "slots": ["Y","R","B","B"],     "slot_count": 4, "start_marker": null,           "source": ["P1","P2"]},
+    {"id": "backlot",              "name_zh_official": "露天场地",     "name_en": "Backlot",                "slots": ["Y","R","B","G"],     "slot_count": 4, "start_marker": "杀人鬼头像",   "source": ["P1","P2"]}
+  ],
+  "start_marker_interpretation": "CHECK_REQUIRED：推测 1~5 道刻痕为逃生者起点编号（可能配合掷骰或按顺序分配），杀人鬼头像为杀人鬼起点。须以规则书'Setup / Starting positions'段落确认含义与用法。",
+
+  "path_legend": {
+    "color_to_card": {"blue": "潜行 Sneak", "green": "冲刺 Sprint", "red": "蹲伏 Crouch", "yellow": "翻越 Vault"},
+    "card_source": "reference/photos/movement_cards_xhs.jpg：卡框颜色与地图路线颜色一一对应；移动卡共 21 张 = 4 种 × 5 套 + 1 张等待 Wait（规则书组件表）",
+    "jagged_border": "图标外框为锯齿状的路线。P1 中可见 3 条（另 1 条在裁切边缘、只见一角），共 4 条，与 4 枚可破坏墙标记数量吻合；P2 宣传图在完全相同的 4 个位置印着墙壁图标。推测 = 有可破坏墙的路线，含义与规则须以规则书确认（CHECK_REQUIRED）。",
+    "arrow": "路线末端有箭头 = 单向，只能沿箭头方向移动（须以规则书确认）"
+  },
+
+  "paths": [
+    {"id": "mm_p01", "a": "mine_depths",         "b": "mine_entrance",       "color": "red",    "direction": "both",  "jagged": false, "source": "P1 线路可见、图标处有反光；P2 图标清楚", "status_suggest": "P1_PARTIAL+P2"},
+    {"id": "mm_p02", "a": "foundry_upper_floor", "b": "mine_entrance",       "color": "yellow", "direction": "a_to_b","jagged": false, "source": "P1+P2，箭头向下指入矿井入口", "status_suggest": "P1"},
+    {"id": "mm_p03", "a": "mine_depths",         "b": "ancient_tree",        "color": "green",  "direction": "both",  "jagged": false, "source": "P1+P2", "status_suggest": "P1"},
+    {"id": "mm_p04", "a": "mine_entrance",       "b": "ancient_tree",        "color": "blue",   "direction": "both",  "jagged": false, "source": "P1+P2", "status_suggest": "P1"},
+    {"id": "mm_p05", "a": "mine_depths",         "b": "shack",               "color": "blue",   "direction": "both",  "jagged": true,  "source": "P1 最左侧蓝线+锯齿潜行图标；P2 同位置为墙壁图标", "status_suggest": "P1"},
+    {"id": "mm_p06", "a": "mine_entrance",       "b": "foundry_lower_floor", "color": "green",  "direction": "both",  "jagged": false, "source": "P1+P2", "status_suggest": "P1"},
+    {"id": "mm_p07", "a": "foundry_upper_floor", "b": "foundry_lower_floor", "color": "blue",   "direction": "both",  "jagged": false, "source": "P1+P2", "status_suggest": "P1"},
+    {"id": "mm_p08", "a": "foundry_upper_floor", "b": "coal_tower_ground",   "color": "red",    "direction": "both",  "jagged": false, "source": "P1+P2（红线从熔炉上层右下方折行至煤矿废塔下层）", "status_suggest": "P1"},
+    {"id": "mm_p09", "a": "foundry_upper_floor", "b": "coal_tower_upper",    "color": "green",  "direction": "both",  "jagged": false, "source": "P1 线路可见、图标处强反光；P2 清楚", "status_suggest": "P1_PARTIAL+P2"},
+    {"id": "mm_p10", "a": "coal_tower_upper",    "b": "coal_tower_ground",   "color": "blue",   "direction": "both",  "jagged": false, "source": "P1+P2", "status_suggest": "P1"},
+    {"id": "mm_p11", "a": "coal_tower_ground",   "b": "foundry_lower_floor", "color": "yellow", "direction": "a_to_b","jagged": true,  "source": "P1 锯齿翻越图标，箭头向左指入熔炉下层；P2 同位置为墙壁图标+箭头", "status_suggest": "P1"},
+    {"id": "mm_p12", "a": "coal_tower_upper",    "b": "backlot",             "color": "yellow", "direction": "a_to_b","jagged": false, "source": "P1 最右侧黄线，箭头向下指入露天场地；P2 该图标旁印有'1/1'（原型标注，零售版未见）", "status_suggest": "P1"},
+    {"id": "mm_p13", "a": "coal_tower_ground",   "b": "backlot",             "color": "red",    "direction": "both",  "jagged": false, "source": "P1+P2", "status_suggest": "P1"},
+    {"id": "mm_p14", "a": "foundry_lower_floor", "b": "scrapyard",           "color": "red",    "direction": "both",  "jagged": false, "source": "P1+P2", "status_suggest": "P1"},
+    {"id": "mm_p15", "a": "ancient_tree",        "b": "scrapyard",           "color": "blue",   "direction": "both",  "jagged": false, "source": "P1+P2", "status_suggest": "P1"},
+    {"id": "mm_p16", "a": "ancient_tree",        "b": "shack",               "color": "red",    "direction": "both",  "jagged": false, "source": "P1+P2", "status_suggest": "P1"},
+    {"id": "mm_p17", "a": "scrapyard",           "b": "shack",               "color": "green",  "direction": "both",  "jagged": false, "source": "P1+P2", "status_suggest": "P1"},
+    {"id": "mm_p18", "a": "foundry_lower_floor", "b": "foundry_basement",    "color": "blue",   "direction": "both",  "jagged": false, "source": "P1+P2", "status_suggest": "P1"},
+    {"id": "mm_p19", "a": "foundry_lower_floor", "b": "backlot",             "color": "green",  "direction": "both",  "jagged": false, "source": "P1+P2（绿线从熔炉下层下方向右折行至露天场地）", "status_suggest": "P1"},
+    {"id": "mm_p20", "a": "foundry_basement",    "b": "backlot",             "color": "green",  "direction": "both",  "jagged": false, "source": "P1+P2", "status_suggest": "P1"},
+    {"id": "mm_p21", "a": "shack",               "b": "foundry_basement",    "color": "green",  "direction": "both",  "jagged": true,  "source": "P1 底部锯齿冲刺图标可见；P2 同位置为墙壁图标", "status_suggest": "P1"},
+    {"id": "mm_p22", "a": "shack",               "b": "backlot",             "color": "yellow?","direction": "a_to_b","jagged": true,  "source": "P1 已被裁切，仅在底边见到一角黄色锯齿框；P2 显示木屋→露天场地单向箭头+墙壁图标", "status_suggest": "P2_ONLY", "check": "颜色与锯齿框须用完整照片或 ASOBITION 预览图确认"}
+  ],
+
+  "self_checks": {
+    "rooms": 11,
+    "paths": 22,
+    "slot_total": 44,
+    "jagged_paths": 4,
+    "one_way_paths": ["mm_p02", "mm_p11", "mm_p12", "mm_p22"],
+    "codex_must_run": [
+      "图连通性：每个房间至少能从杀人鬼起点到达（考虑单向路线）",
+      "每个房间至少有一条可离开的路线",
+      "4 条锯齿路线 = 4 枚可破坏墙",
+      "槽位合计 44，Y/R/B/G = 10/10/12/12"
+    ]
+  },
+
+  "not_covered": [
+    "废旧车场 Autohaven Wreckers（地图另一面）：完全没有照片",
+    "房间在网页上的坐标：未录入，Phase 2 再根据图片定位",
+    "遗弃埋骨地（reference/maps/forsaken_boneyard_cn_retail_xhs.png）不是基础版内容，只作扩展参考，不得录入基础版"
+  ]
+}

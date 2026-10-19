@@ -1,0 +1,425 @@
+{
+  "schema_version": 1,
+  "research_date": "2026-10-19",
+  "edition_scope": "BASE_STANDARD",
+  "note": "CONFIRMED只表示所标注的事实范围有依据；不等于全字段齐全、日文版一致、译文批准或已实现。null/空数组表示未确认。",
+  "terms": [
+    {
+      "id": "survivor",
+      "name_ja": "サバイバー",
+      "name_en": "Survivor",
+      "name_zh": "逃生者",
+      "translation_status": "DRAFT",
+      "japanese_text_status": "CONFIRMED",
+      "source_level": "B",
+      "source_ref": [
+        "B01:p2"
+      ],
+      "status": "CONFIRMED",
+      "japanese_source_ref": "C01:产品介绍"
+    },
+    {
+      "id": "killer",
+      "name_ja": "キラー",
+      "name_en": "Killer",
+      "name_zh": "杀手",
+      "translation_status": "DRAFT",
+      "japanese_text_status": "CONFIRMED",
+      "source_level": "B",
+      "source_ref": [
+        "B01:p2"
+      ],
+      "status": "CONFIRMED",
+      "japanese_source_ref": "C01:产品介绍",
+      "previous_draft_name_zh": "杀手",
+      "chinese_print_evidence": {
+        "source_level": "D",
+        "source_ref": [
+          "D38:中文参考用语",
+          "D39:中文参考用语"
+        ],
+        "status": "CHECK_REQUIRED"
+      },
+      "translation_origin": "CN_PRINT_TRANSCRIPTION"
+    },
+    {
+      "id": "entity",
+      "name_ja": "エンティティ",
+      "name_en": "The Entity",
+      "name_zh": "恶灵指示物",
+      "translation_status": "DRAFT",
+      "japanese_text_status": "CONFIRMED",
+      "source_level": "B",
+      "source_ref": [
+        "B01:p16"
+      ],
+      "status": "CONFIRMED",
+      "japanese_source_ref": "C01:产品介绍",
+      "previous_draft_name_zh": "恶灵",
+      "chinese_print_evidence": {
+        "source_level": "D",
+        "source_ref": [
+          "D38:中文参考用语",
+          "D39:中文参考用语"
+        ],
+        "status": "CHECK_REQUIRED"
+      },
+      "translation_origin": "CN_PRINT_TRANSCRIPTION"
+    },
+    {
+      "id": "bloodpoint",
+      "name_ja": null,
+      "name_en": "Bloodpoint",
+      "name_zh": "血点",
+      "translation_status": "DRAFT",
+      "japanese_text_status": "CHECK_REQUIRED",
+      "source_level": "B",
+      "source_ref": [
+        "B01:p4"
+      ],
+      "status": "CONFIRMED",
+      "japanese_source_ref": null
+    },
+    {
+      "id": "perk",
+      "name_ja": null,
+      "name_en": "Perk",
+      "name_zh": "技能",
+      "translation_status": "DRAFT",
+      "japanese_text_status": "CHECK_REQUIRED",
+      "source_level": "B",
+      "source_ref": [
+        "B01:p16"
+      ],
+      "status": "CONFIRMED",
+      "japanese_source_ref": null
+    },
+    {
+      "id": "power",
+      "name_ja": null,
+      "name_en": "Killer Power",
+      "name_zh": "杀手力量",
+      "translation_status": "DRAFT",
+      "japanese_text_status": "CHECK_REQUIRED",
+      "source_level": "B",
+      "source_ref": [
+        "B01:p14"
+      ],
+      "status": "CONFIRMED",
+      "japanese_source_ref": null,
+      "previous_draft_name_zh": "杀手力量",
+      "chinese_print_evidence": {
+        "source_level": "D",
+        "source_ref": [
+          "D38:中文参考用语",
+          "D39:中文参考用语"
+        ],
+        "status": "CHECK_REQUIRED"
+      },
+      "translation_origin": "CN_PRINT_TRANSCRIPTION"
+    },
+    {
+      "id": "skill_check",
+      "name_ja": null,
+      "name_en": "Skill Check",
+      "name_zh": "技能检定",
+      "translation_status": "DRAFT",
+      "japanese_text_status": "CHECK_REQUIRED",
+      "source_level": "B",
+      "source_ref": [
+        "B01:p16"
+      ],
+      "status": "CONFIRMED",
+      "japanese_source_ref": null
+    },
+    {
+      "id": "great_success",
+      "name_ja": null,
+      "name_en": "Great Success",
+      "name_zh": "大成功",
+      "translation_status": "DRAFT",
+      "japanese_text_status": "CHECK_REQUIRED",
+      "source_level": "B",
+      "source_ref": [
+        "B01:p16"
+      ],
+      "status": "CONFIRMED",
+      "japanese_source_ref": null
+    },
+    {
+      "id": "planning",
+      "name_ja": null,
+      "name_en": "Planning",
+      "name_zh": "计划阶段",
+      "translation_status": "DRAFT",
+      "japanese_text_status": "CHECK_REQUIRED",
+      "source_level": "B",
+      "source_ref": [
+        "B01:p8"
+      ],
+      "status": "CONFIRMED",
+      "japanese_source_ref": null
+    },
+    {
+      "id": "cleanup",
+      "name_ja": null,
+      "name_en": "Cleanup",
+      "name_zh": "清理阶段",
+      "translation_status": "DRAFT",
+      "japanese_text_status": "CHECK_REQUIRED",
+      "source_level": "B",
+      "source_ref": [
+        "B01:p11"
+      ],
+      "status": "CONFIRMED",
+      "japanese_source_ref": null
+    },
+    {
+      "id": "sacrificed",
+      "name_ja": null,
+      "name_en": "Sacrificed",
+      "name_zh": "被献祭（挂钩状态）",
+      "translation_status": "DRAFT",
+      "japanese_text_status": "CHECK_REQUIRED",
+      "source_level": "B",
+      "source_ref": [
+        "B01:p15"
+      ],
+      "status": "CONFIRMED",
+      "japanese_source_ref": null
+    },
+    {
+      "id": "sneak",
+      "name_ja": null,
+      "name_en": "Sneak",
+      "name_zh": "潜行",
+      "translation_status": "DRAFT",
+      "japanese_text_status": "CHECK_REQUIRED",
+      "source_level": "B",
+      "source_ref": [
+        "B01:p3卡面/5套加1Wait",
+        "B01:p6",
+        "B01:p8/p10",
+        "B01:p18 Wait FAQ"
+      ],
+      "status": "CONFIRMED"
+    },
+    {
+      "id": "sprint",
+      "name_ja": null,
+      "name_en": "Sprint",
+      "name_zh": "冲刺",
+      "translation_status": "DRAFT",
+      "japanese_text_status": "CHECK_REQUIRED",
+      "source_level": "B",
+      "source_ref": [
+        "B01:p3卡面/5套加1Wait",
+        "B01:p6",
+        "B01:p8/p10",
+        "B01:p18 Wait FAQ"
+      ],
+      "status": "CONFIRMED"
+    },
+    {
+      "id": "crouch",
+      "name_ja": null,
+      "name_en": "Crouch",
+      "name_zh": "蹲伏",
+      "translation_status": "DRAFT",
+      "japanese_text_status": "CHECK_REQUIRED",
+      "source_level": "B",
+      "source_ref": [
+        "B01:p3卡面/5套加1Wait",
+        "B01:p6",
+        "B01:p8/p10",
+        "B01:p18 Wait FAQ"
+      ],
+      "status": "CONFIRMED",
+      "previous_draft_name_zh": "蹲行",
+      "chinese_print_evidence": {
+        "source_level": "D",
+        "source_ref": [
+          "D38:中文参考用语",
+          "D39:中文参考用语"
+        ],
+        "status": "CHECK_REQUIRED"
+      },
+      "translation_origin": "CN_PRINT_TRANSCRIPTION"
+    },
+    {
+      "id": "vault",
+      "name_ja": null,
+      "name_en": "Vault",
+      "name_zh": "翻越",
+      "translation_status": "DRAFT",
+      "japanese_text_status": "CHECK_REQUIRED",
+      "source_level": "B",
+      "source_ref": [
+        "B01:p3卡面/5套加1Wait",
+        "B01:p6",
+        "B01:p8/p10",
+        "B01:p18 Wait FAQ"
+      ],
+      "status": "CONFIRMED"
+    },
+    {
+      "id": "wait",
+      "name_ja": null,
+      "name_en": "Wait",
+      "name_zh": "等待",
+      "translation_status": "DRAFT",
+      "japanese_text_status": "CHECK_REQUIRED",
+      "source_level": "B",
+      "source_ref": [
+        "B01:p3卡面/5套加1Wait",
+        "B01:p6",
+        "B01:p8/p10",
+        "B01:p18 Wait FAQ"
+      ],
+      "status": "CONFIRMED"
+    },
+    {
+      "id": "generator",
+      "name_ja": null,
+      "name_en": "Generator",
+      "name_zh": "发电机",
+      "translation_status": "DRAFT",
+      "japanese_text_status": "CHECK_REQUIRED",
+      "source_level": "B",
+      "source_ref": [
+        "B01:p12/p14",
+        "B01:p3类别图示"
+      ],
+      "status": "CONFIRMED"
+    },
+    {
+      "id": "exit_gate",
+      "name_ja": null,
+      "name_en": "Exit Gate",
+      "name_zh": "出口大门",
+      "translation_status": "DRAFT",
+      "japanese_text_status": "CHECK_REQUIRED",
+      "source_level": "B",
+      "source_ref": [
+        "B01:p13",
+        "B01:p3类别图示"
+      ],
+      "status": "CONFIRMED",
+      "previous_draft_name_zh": "出口大门",
+      "chinese_print_evidence": {
+        "source_level": "D",
+        "source_ref": [
+          "D38:中文参考用语",
+          "D39:中文参考用语"
+        ],
+        "status": "CHECK_REQUIRED"
+      },
+      "translation_origin": "CN_PRINT_TRANSCRIPTION"
+    },
+    {
+      "id": "hook",
+      "name_ja": null,
+      "name_en": "Hook",
+      "name_zh": "钩子",
+      "translation_status": "DRAFT",
+      "japanese_text_status": "CHECK_REQUIRED",
+      "source_level": "B",
+      "source_ref": [
+        "B01:p13/p15",
+        "B01:p3类别图示"
+      ],
+      "status": "CONFIRMED"
+    },
+    {
+      "id": "hex_totem",
+      "name_ja": null,
+      "name_en": "Hex Totem",
+      "name_zh": "厄咒图腾",
+      "translation_status": "DRAFT",
+      "japanese_text_status": "CHECK_REQUIRED",
+      "source_level": "B",
+      "source_ref": [
+        "B01:p13/p14",
+        "B01:p3类别图示"
+      ],
+      "status": "CONFIRMED",
+      "previous_draft_name_zh": "厄咒图腾",
+      "chinese_print_evidence": {
+        "source_level": "D",
+        "source_ref": [
+          "D38:中文参考用语",
+          "D39:中文参考用语"
+        ],
+        "status": "CHECK_REQUIRED"
+      },
+      "translation_origin": "CN_PRINT_TRANSCRIPTION"
+    },
+    {
+      "id": "chest",
+      "name_ja": null,
+      "name_en": "Chest",
+      "name_zh": "箱子",
+      "translation_status": "DRAFT",
+      "japanese_text_status": "CHECK_REQUIRED",
+      "source_level": "B",
+      "source_ref": [
+        "B01:p12",
+        "B01:p3类别图示"
+      ],
+      "status": "CONFIRMED",
+      "previous_draft_name_zh": "箱子",
+      "chinese_print_evidence": {
+        "source_level": "D",
+        "source_ref": [
+          "D38:中文参考用语",
+          "D39:中文参考用语"
+        ],
+        "status": "CHECK_REQUIRED"
+      },
+      "translation_origin": "CN_PRINT_TRANSCRIPTION"
+    },
+    {
+      "id": "locker",
+      "name_ja": null,
+      "name_en": "Locker",
+      "name_zh": "储物柜",
+      "translation_status": "DRAFT",
+      "japanese_text_status": "CHECK_REQUIRED",
+      "source_level": "B",
+      "source_ref": [
+        "B01:p12/p14",
+        "B01:p3类别图示"
+      ],
+      "status": "CONFIRMED"
+    },
+    {
+      "id": "crow",
+      "name_ja": null,
+      "name_en": "Crow",
+      "name_zh": "乌鸦",
+      "translation_status": "DRAFT",
+      "japanese_text_status": "CHECK_REQUIRED",
+      "source_level": "B",
+      "source_ref": [
+        "B01:p12/p14",
+        "B01:p3类别图示"
+      ],
+      "status": "CONFIRMED"
+    },
+    {
+      "id": "pallet",
+      "name_ja": null,
+      "name_en": "Pallet",
+      "name_zh": "木板",
+      "translation_status": "DRAFT",
+      "japanese_text_status": "CHECK_REQUIRED",
+      "source_level": "B",
+      "source_ref": [
+        "B01:p12/p14",
+        "B01:p3类别图示"
+      ],
+      "status": "CONFIRMED"
+    }
+  ],
+  "approval_note": "中文用语按第二批印刷更新，原文D级证据另列；仍0条APPROVED。日文实物优先，英文辅助。"
+}

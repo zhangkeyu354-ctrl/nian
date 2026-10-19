@@ -1,0 +1,59 @@
+{
+  "schema_version": 1,
+  "kind": "PHOTO_TRANSCRIPTION_DRAFT",
+  "map_id": "autohaven_wreckers",
+  "name_zh_official": "奥托海文废车场",
+  "name_en": "Autohaven Wreckers",
+  "transcribed_by": "Claude, 2026-10-19",
+  "warning": "照片转录草稿，不得直接覆盖 MAP_DATA.json。合并步骤同 docs/CLAUDE_INTAKE_2026-10-19.md 第 3 节。",
+  "sources": {
+    "P3": {
+      "file": "reference/maps/autohaven_cn_retail_xhs.png",
+      "desc": "中文版实物棋盘整面俯拍（小红书截图），整张完整、无裁切，分辨率中等。",
+      "source_level": "D"
+    }
+  },
+  "tracks": {"sacrifice_track": 8, "generator_track": "5 格（最左为出口大门，其余 4 格为发电机）", "note": "与麦克米伦庄园相同"},
+
+  "rooms": [
+    {"id": "wreckers_garage_north", "name_zh_official": "废旧车库北", "slots": ["Y","R","B","G"],         "slot_count": 4, "start_marker": "I"},
+    {"id": "maze",                  "name_zh_official": "迷宫",       "slots": ["Y","R","G","G"],         "slot_count": 4, "start_marker": null},
+    {"id": "scrap_pile",            "name_zh_official": "废料堆",     "slots": ["Y","R","B","G"],         "slot_count": 4, "start_marker": "II"},
+    {"id": "main_garage",           "name_zh_official": "主车库",     "slots": ["Y","R","B","B","G"],     "slot_count": 5, "start_marker": null},
+    {"id": "wreckers_garage_south", "name_zh_official": "废旧车库南", "slots": ["Y","R","B","G"],         "slot_count": 4, "start_marker": null},
+    {"id": "diner",                 "name_zh_official": "小吃店",     "slots": ["Y","R","B","B","G","G"], "slot_count": 6, "start_marker": "DBD 标志（=5）"},
+    {"id": "barn",                  "name_zh_official": "谷仓",       "slots": ["Y","R","B","B","G"],     "slot_count": 5, "start_marker": null},
+    {"id": "gas_pump",              "name_zh_official": "油泵",       "slots": ["Y","R","B","G"],         "slot_count": 4, "start_marker": "杀手头像"},
+    {"id": "old_cabin",             "name_zh_official": "老木屋",     "slots": ["Y","R","B","G"],         "slot_count": 4, "start_marker": "IIII"},
+    {"id": "cottage",               "name_zh_official": "村舍",       "slots": ["Y","R","B","G"],         "slot_count": 4, "start_marker": "III"}
+  ],
+  "room_count_note": "本地图只有 10 个房间（麦克米伦庄园为 11 个），但槽位合计同为 44。",
+  "slot_check": "Y=10, R=10, B=12, G=12，合计 44，与 44 枚道具完全吻合。",
+  "english_names_note": "英文 id 为 Claude 推测，英文房间名须以英文规则书 / 宣传图确认。",
+
+  "paths": [
+    {"id": "ah_p01", "rooms": ["wreckers_garage_north","maze"],                  "color": "yellow", "direction": "wreckers_garage_north→maze", "jagged": false},
+    {"id": "ah_p02", "rooms": ["wreckers_garage_north","maze","diner"],          "color": "green",  "direction": "both",  "jagged": false, "junction": true, "check": "同一个冲刺图标连出 3 条线（车库北、迷宫、小吃店）。须确认三房间两两互通，还是某条线只是经过。"},
+    {"id": "ah_p03", "rooms": ["maze","wreckers_garage_south"],                  "color": "green",  "direction": "both",  "jagged": true,  "check": "左上角锯齿冲刺图标：右连迷宫，下沿左侧边线连废旧车库南。"},
+    {"id": "ah_p04", "rooms": ["wreckers_garage_south","gas_pump","cottage"],    "color": "green",  "direction": "both",  "jagged": false, "junction": true, "check": "底部冲刺图标：左侧长线绕到废旧车库南，上连油泵，右连村舍。须确认是否经过老木屋（线从老木屋下方通过，看起来没有连接）。"},
+    {"id": "ah_p05", "rooms": ["wreckers_garage_north","wreckers_garage_south"], "color": "blue",   "direction": "both",  "jagged": false},
+    {"id": "ah_p06", "rooms": ["wreckers_garage_south","diner"],                 "color": "blue",   "direction": "both",  "jagged": true,  "check": "锯齿潜行图标：右连小吃店、下连车库南；是否也向上连车库北看不清。"},
+    {"id": "ah_p07", "rooms": ["diner","main_garage"],                           "color": "red",    "direction": "both",  "jagged": false},
+    {"id": "ah_p08", "rooms": ["maze","main_garage"],                            "color": "blue",   "direction": "both",  "jagged": false},
+    {"id": "ah_p09", "rooms": ["maze","scrap_pile"],                             "color": "red",    "direction": "both",  "jagged": false},
+    {"id": "ah_p10", "rooms": ["scrap_pile","main_garage"],                      "color": "blue",   "direction": "both",  "jagged": true},
+    {"id": "ah_p11", "rooms": ["main_garage","barn"],                            "color": "red",    "direction": "both",  "jagged": false},
+    {"id": "ah_p12", "rooms": ["scrap_pile","barn"],                             "color": "blue",   "direction": "both",  "jagged": false},
+    {"id": "ah_p13", "rooms": ["main_garage","gas_pump"],                        "color": "red",    "direction": "both",  "jagged": true},
+    {"id": "ah_p14", "rooms": ["gas_pump","barn"],                               "color": "yellow", "direction": "gas_pump→barn", "jagged": false},
+    {"id": "ah_p15", "rooms": ["barn","cottage"],                                "color": "blue",   "direction": "both",  "jagged": false},
+    {"id": "ah_p16", "rooms": ["diner","gas_pump"],                              "color": "red",    "direction": "both",  "jagged": false},
+    {"id": "ah_p17", "rooms": ["old_cabin","gas_pump"],                          "color": "blue",   "direction": "both",  "jagged": false},
+    {"id": "ah_p18", "rooms": ["wreckers_garage_south","old_cabin"],             "color": "red",    "direction": "both",  "jagged": false},
+    {"id": "ah_p19", "rooms": ["old_cabin","diner"],                             "color": "yellow", "direction": "old_cabin→diner", "jagged": false}
+  ],
+  "self_checks": {
+    "rooms": 10, "path_icons": 19, "jagged": 4, "one_way": ["ah_p01","ah_p14","ah_p19"], "junction_icons": ["ah_p02","ah_p04"],
+    "note": "本地图出现了'一个移动图标连接 3 个房间'的结构（麦克米伦庄园没有）。数据结构须支持一条路线连接多于 2 个房间，或拆成多条边——以规则书说明为准，写入 RULE_QUESTIONS.md。"
+  }
+}

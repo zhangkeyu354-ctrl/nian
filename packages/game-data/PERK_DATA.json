@@ -1,0 +1,4387 @@
+{
+  "schema_version": 1,
+  "research_date": "2026-10-19",
+  "edition_scope": "BASE_STANDARD",
+  "note": "CONFIRMED只表示所标注的事实范围有依据；不等于全字段齐全、日文版一致、译文批准或已实现。null/空数组表示未确认。",
+  "expected_survivor_total": 28,
+  "expected_killer_total": 24,
+  "expected_total": 52,
+  "perks": [
+    {
+      "id": "prove_thyself",
+      "name_ja": null,
+      "name_en": "Prove Thyself",
+      "name_zh": "证明自己",
+      "translation_status": "DRAFT",
+      "japanese_text_status": "CHECK_REQUIRED",
+      "side": "survivor",
+      "owner_id": "dwight",
+      "source_level": "B",
+      "source_ref": [
+        "B01:p4卡牌/人物板示例"
+      ],
+      "status": "CHECK_REQUIRED",
+      "identity_status": "CONFIRMED",
+      "bloodpoint_cost": null,
+      "effect": null,
+      "effect_summary_zh": null,
+      "effect_original_ja": null,
+      "implementation_status": "NOT_IMPLEMENTED"
+    },
+    {
+      "id": "leader",
+      "name_ja": null,
+      "name_en": "Leader",
+      "name_zh": "领袖",
+      "translation_status": "DRAFT",
+      "japanese_text_status": "CHECK_REQUIRED",
+      "side": "survivor",
+      "owner_id": "dwight",
+      "source_level": "B",
+      "source_ref": [
+        "B01:p4卡牌/人物板示例"
+      ],
+      "status": "CHECK_REQUIRED",
+      "identity_status": "CONFIRMED",
+      "bloodpoint_cost": null,
+      "effect": null,
+      "effect_summary_zh": null,
+      "effect_original_ja": null,
+      "implementation_status": "NOT_IMPLEMENTED"
+    },
+    {
+      "id": "bond",
+      "name_ja": null,
+      "name_en": "Bond",
+      "name_zh": "同伴纽带",
+      "translation_status": "DRAFT",
+      "japanese_text_status": "CHECK_REQUIRED",
+      "side": "survivor",
+      "owner_id": "dwight",
+      "source_level": "B",
+      "source_ref": [
+        "B01:p4卡牌/人物板示例"
+      ],
+      "status": "CHECK_REQUIRED",
+      "identity_status": "CONFIRMED",
+      "bloodpoint_cost": null,
+      "effect": null,
+      "effect_summary_zh": null,
+      "effect_original_ja": null,
+      "implementation_status": "NOT_IMPLEMENTED"
+    },
+    {
+      "id": "hope",
+      "name_ja": null,
+      "name_en": "Hope",
+      "name_zh": "希望",
+      "translation_status": "DRAFT",
+      "japanese_text_status": "CHECK_REQUIRED",
+      "side": "survivor",
+      "owner_id": null,
+      "source_level": "B",
+      "source_ref": [
+        "B01:p5卡牌/人物板示例"
+      ],
+      "status": "CONFIRMED",
+      "identity_status": "CONFIRMED",
+      "bloodpoint_cost": 0,
+      "effect": {
+        "timing": "after_generator_completed",
+        "actor": "self",
+        "operation": "gain_bloodpoints",
+        "amount": 2
+      },
+      "effect_summary_zh": "发电机完成时，该技能持有者获得2血点。",
+      "effect_original_ja": null,
+      "implementation_status": "NOT_IMPLEMENTED"
+    },
+    {
+      "id": "ace_in_the_hole",
+      "name_ja": null,
+      "name_en": "Ace in the Hole",
+      "name_zh": "王牌后手",
+      "translation_status": "DRAFT",
+      "japanese_text_status": "CHECK_REQUIRED",
+      "side": "survivor",
+      "owner_id": null,
+      "source_level": "B",
+      "source_ref": [
+        "B01:p3卡牌/人物板示例"
+      ],
+      "status": "CHECK_REQUIRED",
+      "identity_status": "CONFIRMED",
+      "bloodpoint_cost": null,
+      "effect": null,
+      "effect_summary_zh": null,
+      "effect_original_ja": null,
+      "implementation_status": "NOT_IMPLEMENTED"
+    },
+    {
+      "id": "brutal_strength",
+      "name_ja": null,
+      "name_en": "Brutal Strength",
+      "name_zh": "野蛮力量",
+      "translation_status": "DRAFT",
+      "japanese_text_status": "CHECK_REQUIRED",
+      "side": "killer",
+      "owner_id": "trapper",
+      "source_level": "B",
+      "source_ref": [
+        "B01:p4卡牌/人物板示例"
+      ],
+      "status": "CHECK_REQUIRED",
+      "identity_status": "CONFIRMED",
+      "bloodpoint_cost": null,
+      "effect": null,
+      "effect_summary_zh": null,
+      "effect_original_ja": null,
+      "implementation_status": "NOT_IMPLEMENTED"
+    },
+    {
+      "id": "unnerving_presence",
+      "name_ja": null,
+      "name_en": "Unnerving Presence",
+      "name_zh": "恐惧降临",
+      "translation_status": "DRAFT",
+      "japanese_text_status": "CHECK_REQUIRED",
+      "side": "killer",
+      "owner_id": "trapper",
+      "source_level": "B",
+      "source_ref": [
+        "B01:p4卡牌/人物板示例"
+      ],
+      "status": "CHECK_REQUIRED",
+      "identity_status": "CONFIRMED",
+      "bloodpoint_cost": null,
+      "effect": null,
+      "effect_summary_zh": null,
+      "effect_original_ja": null,
+      "implementation_status": "NOT_IMPLEMENTED"
+    },
+    {
+      "id": "agitation",
+      "name_ja": null,
+      "name_en": "Agitation",
+      "name_zh": "兴奋",
+      "translation_status": "DRAFT",
+      "japanese_text_status": "CHECK_REQUIRED",
+      "side": "killer",
+      "owner_id": "trapper",
+      "source_level": "B",
+      "source_ref": [
+        "B01:p4卡牌/人物板示例"
+      ],
+      "status": "CHECK_REQUIRED",
+      "identity_status": "CONFIRMED",
+      "bloodpoint_cost": null,
+      "effect": null,
+      "effect_summary_zh": null,
+      "effect_original_ja": null,
+      "implementation_status": "NOT_IMPLEMENTED"
+    },
+    {
+      "id": "monstrous_shrine",
+      "name_ja": null,
+      "name_en": "Monstrous Shrine",
+      "name_zh": "恐怖神龛",
+      "translation_status": "DRAFT",
+      "japanese_text_status": "CHECK_REQUIRED",
+      "side": "killer",
+      "owner_id": null,
+      "source_level": "B",
+      "source_ref": [
+        "B01:p3卡牌/人物板示例"
+      ],
+      "status": "CHECK_REQUIRED",
+      "identity_status": "CONFIRMED",
+      "bloodpoint_cost": null,
+      "effect": null,
+      "effect_summary_zh": null,
+      "effect_original_ja": null,
+      "implementation_status": "NOT_IMPLEMENTED"
+    },
+    {
+      "id": "insidious",
+      "name_ja": null,
+      "name_en": "Insidious",
+      "name_zh": "潜伏",
+      "translation_status": "DRAFT",
+      "japanese_text_status": "CHECK_REQUIRED",
+      "side": "killer",
+      "owner_id": null,
+      "source_level": "B",
+      "source_ref": [
+        "B01:p16卡牌/人物板示例"
+      ],
+      "status": "CONFIRMED",
+      "identity_status": "CONFIRMED",
+      "bloodpoint_cost": 2,
+      "effect": {
+        "timing": "would_attack_healthy_survivor",
+        "condition": "killer_has_not_moved_this_turn",
+        "replacement": "pick_up_target_instead",
+        "pick_up_procedure_ref": "B01:p15/p18"
+      },
+      "effect_summary_zh": "本回合尚未移动时，将原本对健康逃生者的攻击替换为抱起。",
+      "effect_original_ja": null,
+      "implementation_status": "NOT_IMPLEMENTED"
+    },
+    {
+      "id": "survivor_unidentified_01",
+      "name_ja": null,
+      "name_en": null,
+      "name_zh": null,
+      "translation_status": "DRAFT",
+      "japanese_text_status": "CHECK_REQUIRED",
+      "side": "survivor",
+      "owner_id": null,
+      "source_level": null,
+      "source_ref": [],
+      "status": "CHECK_REQUIRED",
+      "identity_status": "CHECK_REQUIRED",
+      "bloodpoint_cost": null,
+      "effect": null,
+      "count_basis_ref": "B01:p3",
+      "id_is_official_card_number": false,
+      "note": "研究清单内部槽位，不是已知卡名或官方卡号。",
+      "implementation_status": "NOT_IMPLEMENTED"
+    },
+    {
+      "id": "survivor_unidentified_02",
+      "name_ja": null,
+      "name_en": null,
+      "name_zh": null,
+      "translation_status": "DRAFT",
+      "japanese_text_status": "CHECK_REQUIRED",
+      "side": "survivor",
+      "owner_id": null,
+      "source_level": null,
+      "source_ref": [],
+      "status": "CHECK_REQUIRED",
+      "identity_status": "CHECK_REQUIRED",
+      "bloodpoint_cost": null,
+      "effect": null,
+      "count_basis_ref": "B01:p3",
+      "id_is_official_card_number": false,
+      "note": "研究清单内部槽位，不是已知卡名或官方卡号。",
+      "implementation_status": "NOT_IMPLEMENTED"
+    },
+    {
+      "id": "survivor_unidentified_03",
+      "name_ja": null,
+      "name_en": null,
+      "name_zh": null,
+      "translation_status": "DRAFT",
+      "japanese_text_status": "CHECK_REQUIRED",
+      "side": "survivor",
+      "owner_id": null,
+      "source_level": null,
+      "source_ref": [],
+      "status": "CHECK_REQUIRED",
+      "identity_status": "CHECK_REQUIRED",
+      "bloodpoint_cost": null,
+      "effect": null,
+      "count_basis_ref": "B01:p3",
+      "id_is_official_card_number": false,
+      "note": "研究清单内部槽位，不是已知卡名或官方卡号。",
+      "implementation_status": "NOT_IMPLEMENTED"
+    },
+    {
+      "id": "survivor_unidentified_04",
+      "name_ja": null,
+      "name_en": null,
+      "name_zh": null,
+      "translation_status": "DRAFT",
+      "japanese_text_status": "CHECK_REQUIRED",
+      "side": "survivor",
+      "owner_id": null,
+      "source_level": null,
+      "source_ref": [],
+      "status": "CHECK_REQUIRED",
+      "identity_status": "CHECK_REQUIRED",
+      "bloodpoint_cost": null,
+      "effect": null,
+      "count_basis_ref": "B01:p3",
+      "id_is_official_card_number": false,
+      "note": "研究清单内部槽位，不是已知卡名或官方卡号。",
+      "implementation_status": "NOT_IMPLEMENTED"
+    },
+    {
+      "id": "survivor_unidentified_05",
+      "name_ja": null,
+      "name_en": null,
+      "name_zh": null,
+      "translation_status": "DRAFT",
+      "japanese_text_status": "CHECK_REQUIRED",
+      "side": "survivor",
+      "owner_id": null,
+      "source_level": null,
+      "source_ref": [],
+      "status": "CHECK_REQUIRED",
+      "identity_status": "CHECK_REQUIRED",
+      "bloodpoint_cost": null,
+      "effect": null,
+      "count_basis_ref": "B01:p3",
+      "id_is_official_card_number": false,
+      "note": "研究清单内部槽位，不是已知卡名或官方卡号。",
+      "implementation_status": "NOT_IMPLEMENTED"
+    },
+    {
+      "id": "survivor_unidentified_06",
+      "name_ja": null,
+      "name_en": null,
+      "name_zh": null,
+      "translation_status": "DRAFT",
+      "japanese_text_status": "CHECK_REQUIRED",
+      "side": "survivor",
+      "owner_id": null,
+      "source_level": null,
+      "source_ref": [],
+      "status": "CHECK_REQUIRED",
+      "identity_status": "CHECK_REQUIRED",
+      "bloodpoint_cost": null,
+      "effect": null,
+      "count_basis_ref": "B01:p3",
+      "id_is_official_card_number": false,
+      "note": "研究清单内部槽位，不是已知卡名或官方卡号。",
+      "implementation_status": "NOT_IMPLEMENTED"
+    },
+    {
+      "id": "survivor_unidentified_07",
+      "name_ja": null,
+      "name_en": null,
+      "name_zh": null,
+      "translation_status": "DRAFT",
+      "japanese_text_status": "CHECK_REQUIRED",
+      "side": "survivor",
+      "owner_id": null,
+      "source_level": null,
+      "source_ref": [],
+      "status": "CHECK_REQUIRED",
+      "identity_status": "CHECK_REQUIRED",
+      "bloodpoint_cost": null,
+      "effect": null,
+      "count_basis_ref": "B01:p3",
+      "id_is_official_card_number": false,
+      "note": "研究清单内部槽位，不是已知卡名或官方卡号。",
+      "implementation_status": "NOT_IMPLEMENTED"
+    },
+    {
+      "id": "survivor_unidentified_08",
+      "name_ja": null,
+      "name_en": null,
+      "name_zh": null,
+      "translation_status": "DRAFT",
+      "japanese_text_status": "CHECK_REQUIRED",
+      "side": "survivor",
+      "owner_id": null,
+      "source_level": null,
+      "source_ref": [],
+      "status": "CHECK_REQUIRED",
+      "identity_status": "CHECK_REQUIRED",
+      "bloodpoint_cost": null,
+      "effect": null,
+      "count_basis_ref": "B01:p3",
+      "id_is_official_card_number": false,
+      "note": "研究清单内部槽位，不是已知卡名或官方卡号。",
+      "implementation_status": "NOT_IMPLEMENTED"
+    },
+    {
+      "id": "survivor_unidentified_09",
+      "name_ja": null,
+      "name_en": null,
+      "name_zh": null,
+      "translation_status": "DRAFT",
+      "japanese_text_status": "CHECK_REQUIRED",
+      "side": "survivor",
+      "owner_id": null,
+      "source_level": null,
+      "source_ref": [],
+      "status": "CHECK_REQUIRED",
+      "identity_status": "CHECK_REQUIRED",
+      "bloodpoint_cost": null,
+      "effect": null,
+      "count_basis_ref": "B01:p3",
+      "id_is_official_card_number": false,
+      "note": "研究清单内部槽位，不是已知卡名或官方卡号。",
+      "implementation_status": "NOT_IMPLEMENTED"
+    },
+    {
+      "id": "survivor_unidentified_10",
+      "name_ja": null,
+      "name_en": null,
+      "name_zh": null,
+      "translation_status": "DRAFT",
+      "japanese_text_status": "CHECK_REQUIRED",
+      "side": "survivor",
+      "owner_id": null,
+      "source_level": null,
+      "source_ref": [],
+      "status": "CHECK_REQUIRED",
+      "identity_status": "CHECK_REQUIRED",
+      "bloodpoint_cost": null,
+      "effect": null,
+      "count_basis_ref": "B01:p3",
+      "id_is_official_card_number": false,
+      "note": "研究清单内部槽位，不是已知卡名或官方卡号。",
+      "implementation_status": "NOT_IMPLEMENTED"
+    },
+    {
+      "id": "survivor_unidentified_11",
+      "name_ja": null,
+      "name_en": null,
+      "name_zh": null,
+      "translation_status": "DRAFT",
+      "japanese_text_status": "CHECK_REQUIRED",
+      "side": "survivor",
+      "owner_id": null,
+      "source_level": null,
+      "source_ref": [],
+      "status": "CHECK_REQUIRED",
+      "identity_status": "CHECK_REQUIRED",
+      "bloodpoint_cost": null,
+      "effect": null,
+      "count_basis_ref": "B01:p3",
+      "id_is_official_card_number": false,
+      "note": "研究清单内部槽位，不是已知卡名或官方卡号。",
+      "implementation_status": "NOT_IMPLEMENTED"
+    },
+    {
+      "id": "survivor_unidentified_12",
+      "name_ja": null,
+      "name_en": null,
+      "name_zh": null,
+      "translation_status": "DRAFT",
+      "japanese_text_status": "CHECK_REQUIRED",
+      "side": "survivor",
+      "owner_id": null,
+      "source_level": null,
+      "source_ref": [],
+      "status": "CHECK_REQUIRED",
+      "identity_status": "CHECK_REQUIRED",
+      "bloodpoint_cost": null,
+      "effect": null,
+      "count_basis_ref": "B01:p3",
+      "id_is_official_card_number": false,
+      "note": "研究清单内部槽位，不是已知卡名或官方卡号。",
+      "implementation_status": "NOT_IMPLEMENTED"
+    },
+    {
+      "id": "survivor_unidentified_13",
+      "name_ja": null,
+      "name_en": null,
+      "name_zh": null,
+      "translation_status": "DRAFT",
+      "japanese_text_status": "CHECK_REQUIRED",
+      "side": "survivor",
+      "owner_id": null,
+      "source_level": null,
+      "source_ref": [],
+      "status": "CHECK_REQUIRED",
+      "identity_status": "CHECK_REQUIRED",
+      "bloodpoint_cost": null,
+      "effect": null,
+      "count_basis_ref": "B01:p3",
+      "id_is_official_card_number": false,
+      "note": "研究清单内部槽位，不是已知卡名或官方卡号。",
+      "implementation_status": "NOT_IMPLEMENTED"
+    },
+    {
+      "id": "survivor_unidentified_14",
+      "name_ja": null,
+      "name_en": null,
+      "name_zh": null,
+      "translation_status": "DRAFT",
+      "japanese_text_status": "CHECK_REQUIRED",
+      "side": "survivor",
+      "owner_id": null,
+      "source_level": null,
+      "source_ref": [],
+      "status": "CHECK_REQUIRED",
+      "identity_status": "CHECK_REQUIRED",
+      "bloodpoint_cost": null,
+      "effect": null,
+      "count_basis_ref": "B01:p3",
+      "id_is_official_card_number": false,
+      "note": "研究清单内部槽位，不是已知卡名或官方卡号。",
+      "implementation_status": "NOT_IMPLEMENTED"
+    },
+    {
+      "id": "survivor_unidentified_15",
+      "name_ja": null,
+      "name_en": null,
+      "name_zh": null,
+      "translation_status": "DRAFT",
+      "japanese_text_status": "CHECK_REQUIRED",
+      "side": "survivor",
+      "owner_id": null,
+      "source_level": null,
+      "source_ref": [],
+      "status": "CHECK_REQUIRED",
+      "identity_status": "CHECK_REQUIRED",
+      "bloodpoint_cost": null,
+      "effect": null,
+      "count_basis_ref": "B01:p3",
+      "id_is_official_card_number": false,
+      "note": "研究清单内部槽位，不是已知卡名或官方卡号。",
+      "implementation_status": "NOT_IMPLEMENTED"
+    },
+    {
+      "id": "survivor_unidentified_16",
+      "name_ja": null,
+      "name_en": null,
+      "name_zh": null,
+      "translation_status": "DRAFT",
+      "japanese_text_status": "CHECK_REQUIRED",
+      "side": "survivor",
+      "owner_id": null,
+      "source_level": null,
+      "source_ref": [],
+      "status": "CHECK_REQUIRED",
+      "identity_status": "CHECK_REQUIRED",
+      "bloodpoint_cost": null,
+      "effect": null,
+      "count_basis_ref": "B01:p3",
+      "id_is_official_card_number": false,
+      "note": "研究清单内部槽位，不是已知卡名或官方卡号。",
+      "implementation_status": "NOT_IMPLEMENTED"
+    },
+    {
+      "id": "survivor_unidentified_17",
+      "name_ja": null,
+      "name_en": null,
+      "name_zh": null,
+      "translation_status": "DRAFT",
+      "japanese_text_status": "CHECK_REQUIRED",
+      "side": "survivor",
+      "owner_id": null,
+      "source_level": null,
+      "source_ref": [],
+      "status": "CHECK_REQUIRED",
+      "identity_status": "CHECK_REQUIRED",
+      "bloodpoint_cost": null,
+      "effect": null,
+      "count_basis_ref": "B01:p3",
+      "id_is_official_card_number": false,
+      "note": "研究清单内部槽位，不是已知卡名或官方卡号。",
+      "implementation_status": "NOT_IMPLEMENTED"
+    },
+    {
+      "id": "survivor_unidentified_18",
+      "name_ja": null,
+      "name_en": null,
+      "name_zh": null,
+      "translation_status": "DRAFT",
+      "japanese_text_status": "CHECK_REQUIRED",
+      "side": "survivor",
+      "owner_id": null,
+      "source_level": null,
+      "source_ref": [],
+      "status": "CHECK_REQUIRED",
+      "identity_status": "CHECK_REQUIRED",
+      "bloodpoint_cost": null,
+      "effect": null,
+      "count_basis_ref": "B01:p3",
+      "id_is_official_card_number": false,
+      "note": "研究清单内部槽位，不是已知卡名或官方卡号。",
+      "implementation_status": "NOT_IMPLEMENTED"
+    },
+    {
+      "id": "survivor_unidentified_19",
+      "name_ja": null,
+      "name_en": null,
+      "name_zh": null,
+      "translation_status": "DRAFT",
+      "japanese_text_status": "CHECK_REQUIRED",
+      "side": "survivor",
+      "owner_id": null,
+      "source_level": null,
+      "source_ref": [],
+      "status": "CHECK_REQUIRED",
+      "identity_status": "CHECK_REQUIRED",
+      "bloodpoint_cost": null,
+      "effect": null,
+      "count_basis_ref": "B01:p3",
+      "id_is_official_card_number": false,
+      "note": "研究清单内部槽位，不是已知卡名或官方卡号。",
+      "implementation_status": "NOT_IMPLEMENTED"
+    },
+    {
+      "id": "survivor_unidentified_20",
+      "name_ja": null,
+      "name_en": null,
+      "name_zh": null,
+      "translation_status": "DRAFT",
+      "japanese_text_status": "CHECK_REQUIRED",
+      "side": "survivor",
+      "owner_id": null,
+      "source_level": null,
+      "source_ref": [],
+      "status": "CHECK_REQUIRED",
+      "identity_status": "CHECK_REQUIRED",
+      "bloodpoint_cost": null,
+      "effect": null,
+      "count_basis_ref": "B01:p3",
+      "id_is_official_card_number": false,
+      "note": "研究清单内部槽位，不是已知卡名或官方卡号。",
+      "implementation_status": "NOT_IMPLEMENTED"
+    },
+    {
+      "id": "survivor_unidentified_21",
+      "name_ja": null,
+      "name_en": null,
+      "name_zh": null,
+      "translation_status": "DRAFT",
+      "japanese_text_status": "CHECK_REQUIRED",
+      "side": "survivor",
+      "owner_id": null,
+      "source_level": null,
+      "source_ref": [],
+      "status": "CHECK_REQUIRED",
+      "identity_status": "CHECK_REQUIRED",
+      "bloodpoint_cost": null,
+      "effect": null,
+      "count_basis_ref": "B01:p3",
+      "id_is_official_card_number": false,
+      "note": "研究清单内部槽位，不是已知卡名或官方卡号。",
+      "implementation_status": "NOT_IMPLEMENTED"
+    },
+    {
+      "id": "survivor_unidentified_22",
+      "name_ja": null,
+      "name_en": null,
+      "name_zh": null,
+      "translation_status": "DRAFT",
+      "japanese_text_status": "CHECK_REQUIRED",
+      "side": "survivor",
+      "owner_id": null,
+      "source_level": null,
+      "source_ref": [],
+      "status": "CHECK_REQUIRED",
+      "identity_status": "CHECK_REQUIRED",
+      "bloodpoint_cost": null,
+      "effect": null,
+      "count_basis_ref": "B01:p3",
+      "id_is_official_card_number": false,
+      "note": "研究清单内部槽位，不是已知卡名或官方卡号。",
+      "implementation_status": "NOT_IMPLEMENTED"
+    },
+    {
+      "id": "survivor_unidentified_23",
+      "name_ja": null,
+      "name_en": null,
+      "name_zh": null,
+      "translation_status": "DRAFT",
+      "japanese_text_status": "CHECK_REQUIRED",
+      "side": "survivor",
+      "owner_id": null,
+      "source_level": null,
+      "source_ref": [],
+      "status": "CHECK_REQUIRED",
+      "identity_status": "CHECK_REQUIRED",
+      "bloodpoint_cost": null,
+      "effect": null,
+      "count_basis_ref": "B01:p3",
+      "id_is_official_card_number": false,
+      "note": "研究清单内部槽位，不是已知卡名或官方卡号。",
+      "implementation_status": "NOT_IMPLEMENTED"
+    },
+    {
+      "id": "killer_unidentified_01",
+      "name_ja": null,
+      "name_en": null,
+      "name_zh": null,
+      "translation_status": "DRAFT",
+      "japanese_text_status": "CHECK_REQUIRED",
+      "side": "killer",
+      "owner_id": null,
+      "source_level": null,
+      "source_ref": [],
+      "status": "CHECK_REQUIRED",
+      "identity_status": "CHECK_REQUIRED",
+      "bloodpoint_cost": null,
+      "effect": null,
+      "count_basis_ref": "B01:p3",
+      "id_is_official_card_number": false,
+      "note": "研究清单内部槽位，不是已知卡名或官方卡号。",
+      "implementation_status": "NOT_IMPLEMENTED"
+    },
+    {
+      "id": "killer_unidentified_02",
+      "name_ja": null,
+      "name_en": null,
+      "name_zh": null,
+      "translation_status": "DRAFT",
+      "japanese_text_status": "CHECK_REQUIRED",
+      "side": "killer",
+      "owner_id": null,
+      "source_level": null,
+      "source_ref": [],
+      "status": "CHECK_REQUIRED",
+      "identity_status": "CHECK_REQUIRED",
+      "bloodpoint_cost": null,
+      "effect": null,
+      "count_basis_ref": "B01:p3",
+      "id_is_official_card_number": false,
+      "note": "研究清单内部槽位，不是已知卡名或官方卡号。",
+      "implementation_status": "NOT_IMPLEMENTED"
+    },
+    {
+      "id": "killer_unidentified_03",
+      "name_ja": null,
+      "name_en": null,
+      "name_zh": null,
+      "translation_status": "DRAFT",
+      "japanese_text_status": "CHECK_REQUIRED",
+      "side": "killer",
+      "owner_id": null,
+      "source_level": null,
+      "source_ref": [],
+      "status": "CHECK_REQUIRED",
+      "identity_status": "CHECK_REQUIRED",
+      "bloodpoint_cost": null,
+      "effect": null,
+      "count_basis_ref": "B01:p3",
+      "id_is_official_card_number": false,
+      "note": "研究清单内部槽位，不是已知卡名或官方卡号。",
+      "implementation_status": "NOT_IMPLEMENTED"
+    },
+    {
+      "id": "killer_unidentified_04",
+      "name_ja": null,
+      "name_en": null,
+      "name_zh": null,
+      "translation_status": "DRAFT",
+      "japanese_text_status": "CHECK_REQUIRED",
+      "side": "killer",
+      "owner_id": null,
+      "source_level": null,
+      "source_ref": [],
+      "status": "CHECK_REQUIRED",
+      "identity_status": "CHECK_REQUIRED",
+      "bloodpoint_cost": null,
+      "effect": null,
+      "count_basis_ref": "B01:p3",
+      "id_is_official_card_number": false,
+      "note": "研究清单内部槽位，不是已知卡名或官方卡号。",
+      "implementation_status": "NOT_IMPLEMENTED"
+    },
+    {
+      "id": "killer_unidentified_05",
+      "name_ja": null,
+      "name_en": null,
+      "name_zh": null,
+      "translation_status": "DRAFT",
+      "japanese_text_status": "CHECK_REQUIRED",
+      "side": "killer",
+      "owner_id": null,
+      "source_level": null,
+      "source_ref": [],
+      "status": "CHECK_REQUIRED",
+      "identity_status": "CHECK_REQUIRED",
+      "bloodpoint_cost": null,
+      "effect": null,
+      "count_basis_ref": "B01:p3",
+      "id_is_official_card_number": false,
+      "note": "研究清单内部槽位，不是已知卡名或官方卡号。",
+      "implementation_status": "NOT_IMPLEMENTED"
+    },
+    {
+      "id": "killer_unidentified_06",
+      "name_ja": null,
+      "name_en": null,
+      "name_zh": null,
+      "translation_status": "DRAFT",
+      "japanese_text_status": "CHECK_REQUIRED",
+      "side": "killer",
+      "owner_id": null,
+      "source_level": null,
+      "source_ref": [],
+      "status": "CHECK_REQUIRED",
+      "identity_status": "CHECK_REQUIRED",
+      "bloodpoint_cost": null,
+      "effect": null,
+      "count_basis_ref": "B01:p3",
+      "id_is_official_card_number": false,
+      "note": "研究清单内部槽位，不是已知卡名或官方卡号。",
+      "implementation_status": "NOT_IMPLEMENTED"
+    },
+    {
+      "id": "killer_unidentified_07",
+      "name_ja": null,
+      "name_en": null,
+      "name_zh": null,
+      "translation_status": "DRAFT",
+      "japanese_text_status": "CHECK_REQUIRED",
+      "side": "killer",
+      "owner_id": null,
+      "source_level": null,
+      "source_ref": [],
+      "status": "CHECK_REQUIRED",
+      "identity_status": "CHECK_REQUIRED",
+      "bloodpoint_cost": null,
+      "effect": null,
+      "count_basis_ref": "B01:p3",
+      "id_is_official_card_number": false,
+      "note": "研究清单内部槽位，不是已知卡名或官方卡号。",
+      "implementation_status": "NOT_IMPLEMENTED"
+    },
+    {
+      "id": "killer_unidentified_08",
+      "name_ja": null,
+      "name_en": null,
+      "name_zh": null,
+      "translation_status": "DRAFT",
+      "japanese_text_status": "CHECK_REQUIRED",
+      "side": "killer",
+      "owner_id": null,
+      "source_level": null,
+      "source_ref": [],
+      "status": "CHECK_REQUIRED",
+      "identity_status": "CHECK_REQUIRED",
+      "bloodpoint_cost": null,
+      "effect": null,
+      "count_basis_ref": "B01:p3",
+      "id_is_official_card_number": false,
+      "note": "研究清单内部槽位，不是已知卡名或官方卡号。",
+      "implementation_status": "NOT_IMPLEMENTED"
+    },
+    {
+      "id": "killer_unidentified_09",
+      "name_ja": null,
+      "name_en": null,
+      "name_zh": null,
+      "translation_status": "DRAFT",
+      "japanese_text_status": "CHECK_REQUIRED",
+      "side": "killer",
+      "owner_id": null,
+      "source_level": null,
+      "source_ref": [],
+      "status": "CHECK_REQUIRED",
+      "identity_status": "CHECK_REQUIRED",
+      "bloodpoint_cost": null,
+      "effect": null,
+      "count_basis_ref": "B01:p3",
+      "id_is_official_card_number": false,
+      "note": "研究清单内部槽位，不是已知卡名或官方卡号。",
+      "implementation_status": "NOT_IMPLEMENTED"
+    },
+    {
+      "id": "killer_unidentified_10",
+      "name_ja": null,
+      "name_en": null,
+      "name_zh": null,
+      "translation_status": "DRAFT",
+      "japanese_text_status": "CHECK_REQUIRED",
+      "side": "killer",
+      "owner_id": null,
+      "source_level": null,
+      "source_ref": [],
+      "status": "CHECK_REQUIRED",
+      "identity_status": "CHECK_REQUIRED",
+      "bloodpoint_cost": null,
+      "effect": null,
+      "count_basis_ref": "B01:p3",
+      "id_is_official_card_number": false,
+      "note": "研究清单内部槽位，不是已知卡名或官方卡号。",
+      "implementation_status": "NOT_IMPLEMENTED"
+    },
+    {
+      "id": "killer_unidentified_11",
+      "name_ja": null,
+      "name_en": null,
+      "name_zh": null,
+      "translation_status": "DRAFT",
+      "japanese_text_status": "CHECK_REQUIRED",
+      "side": "killer",
+      "owner_id": null,
+      "source_level": null,
+      "source_ref": [],
+      "status": "CHECK_REQUIRED",
+      "identity_status": "CHECK_REQUIRED",
+      "bloodpoint_cost": null,
+      "effect": null,
+      "count_basis_ref": "B01:p3",
+      "id_is_official_card_number": false,
+      "note": "研究清单内部槽位，不是已知卡名或官方卡号。",
+      "implementation_status": "NOT_IMPLEMENTED"
+    },
+    {
+      "id": "killer_unidentified_12",
+      "name_ja": null,
+      "name_en": null,
+      "name_zh": null,
+      "translation_status": "DRAFT",
+      "japanese_text_status": "CHECK_REQUIRED",
+      "side": "killer",
+      "owner_id": null,
+      "source_level": null,
+      "source_ref": [],
+      "status": "CHECK_REQUIRED",
+      "identity_status": "CHECK_REQUIRED",
+      "bloodpoint_cost": null,
+      "effect": null,
+      "count_basis_ref": "B01:p3",
+      "id_is_official_card_number": false,
+      "note": "研究清单内部槽位，不是已知卡名或官方卡号。",
+      "implementation_status": "NOT_IMPLEMENTED"
+    },
+    {
+      "id": "killer_unidentified_13",
+      "name_ja": null,
+      "name_en": null,
+      "name_zh": null,
+      "translation_status": "DRAFT",
+      "japanese_text_status": "CHECK_REQUIRED",
+      "side": "killer",
+      "owner_id": null,
+      "source_level": null,
+      "source_ref": [],
+      "status": "CHECK_REQUIRED",
+      "identity_status": "CHECK_REQUIRED",
+      "bloodpoint_cost": null,
+      "effect": null,
+      "count_basis_ref": "B01:p3",
+      "id_is_official_card_number": false,
+      "note": "研究清单内部槽位，不是已知卡名或官方卡号。",
+      "implementation_status": "NOT_IMPLEMENTED"
+    },
+    {
+      "id": "killer_unidentified_14",
+      "name_ja": null,
+      "name_en": null,
+      "name_zh": null,
+      "translation_status": "DRAFT",
+      "japanese_text_status": "CHECK_REQUIRED",
+      "side": "killer",
+      "owner_id": null,
+      "source_level": null,
+      "source_ref": [],
+      "status": "CHECK_REQUIRED",
+      "identity_status": "CHECK_REQUIRED",
+      "bloodpoint_cost": null,
+      "effect": null,
+      "count_basis_ref": "B01:p3",
+      "id_is_official_card_number": false,
+      "note": "研究清单内部槽位，不是已知卡名或官方卡号。",
+      "implementation_status": "NOT_IMPLEMENTED"
+    },
+    {
+      "id": "killer_unidentified_15",
+      "name_ja": null,
+      "name_en": null,
+      "name_zh": null,
+      "translation_status": "DRAFT",
+      "japanese_text_status": "CHECK_REQUIRED",
+      "side": "killer",
+      "owner_id": null,
+      "source_level": null,
+      "source_ref": [],
+      "status": "CHECK_REQUIRED",
+      "identity_status": "CHECK_REQUIRED",
+      "bloodpoint_cost": null,
+      "effect": null,
+      "count_basis_ref": "B01:p3",
+      "id_is_official_card_number": false,
+      "note": "研究清单内部槽位，不是已知卡名或官方卡号。",
+      "implementation_status": "NOT_IMPLEMENTED"
+    },
+    {
+      "id": "killer_unidentified_16",
+      "name_ja": null,
+      "name_en": null,
+      "name_zh": null,
+      "translation_status": "DRAFT",
+      "japanese_text_status": "CHECK_REQUIRED",
+      "side": "killer",
+      "owner_id": null,
+      "source_level": null,
+      "source_ref": [],
+      "status": "CHECK_REQUIRED",
+      "identity_status": "CHECK_REQUIRED",
+      "bloodpoint_cost": null,
+      "effect": null,
+      "count_basis_ref": "B01:p3",
+      "id_is_official_card_number": false,
+      "note": "研究清单内部槽位，不是已知卡名或官方卡号。",
+      "implementation_status": "NOT_IMPLEMENTED"
+    },
+    {
+      "id": "killer_unidentified_17",
+      "name_ja": null,
+      "name_en": null,
+      "name_zh": null,
+      "translation_status": "DRAFT",
+      "japanese_text_status": "CHECK_REQUIRED",
+      "side": "killer",
+      "owner_id": null,
+      "source_level": null,
+      "source_ref": [],
+      "status": "CHECK_REQUIRED",
+      "identity_status": "CHECK_REQUIRED",
+      "bloodpoint_cost": null,
+      "effect": null,
+      "count_basis_ref": "B01:p3",
+      "id_is_official_card_number": false,
+      "note": "研究清单内部槽位，不是已知卡名或官方卡号。",
+      "implementation_status": "NOT_IMPLEMENTED"
+    },
+    {
+      "id": "killer_unidentified_18",
+      "name_ja": null,
+      "name_en": null,
+      "name_zh": null,
+      "translation_status": "DRAFT",
+      "japanese_text_status": "CHECK_REQUIRED",
+      "side": "killer",
+      "owner_id": null,
+      "source_level": null,
+      "source_ref": [],
+      "status": "CHECK_REQUIRED",
+      "identity_status": "CHECK_REQUIRED",
+      "bloodpoint_cost": null,
+      "effect": null,
+      "count_basis_ref": "B01:p3",
+      "id_is_official_card_number": false,
+      "note": "研究清单内部槽位，不是已知卡名或官方卡号。",
+      "implementation_status": "NOT_IMPLEMENTED"
+    },
+    {
+      "id": "killer_unidentified_19",
+      "name_ja": null,
+      "name_en": null,
+      "name_zh": null,
+      "translation_status": "DRAFT",
+      "japanese_text_status": "CHECK_REQUIRED",
+      "side": "killer",
+      "owner_id": null,
+      "source_level": null,
+      "source_ref": [],
+      "status": "CHECK_REQUIRED",
+      "identity_status": "CHECK_REQUIRED",
+      "bloodpoint_cost": null,
+      "effect": null,
+      "count_basis_ref": "B01:p3",
+      "id_is_official_card_number": false,
+      "note": "研究清单内部槽位，不是已知卡名或官方卡号。",
+      "implementation_status": "NOT_IMPLEMENTED"
+    }
+  ],
+  "board_perks": [
+    {
+      "id": "board_dwight_1",
+      "name_ja": null,
+      "name_en": null,
+      "name_zh": "证明自己",
+      "translation_status": "OFFICIAL_ZH_PRINT",
+      "japanese_text_status": "CHECK_REQUIRED",
+      "side": "survivor",
+      "owner_id": "dwight",
+      "source_level": "D",
+      "source_ref": [
+        "D51:reference/characters/survivors_kate_ace_dwight.png / 德怀特·费菲尔德人物板"
+      ],
+      "status": "CONFIRMED",
+      "on_board": true,
+      "board_position": 1,
+      "bloodpoint_cost": 1,
+      "frame": "purple",
+      "frame_semantics_status": "CHECK_REQUIRED",
+      "text_original_zh": "当你将要交互时，改为由你所在空间或一个相邻空间里的另一位逃生者交互。",
+      "transcription_confidence": "HIGH",
+      "implementation_status": "IMPLEMENTED_TESTED",
+      "chinese_print_evidence": {
+        "source_level": "D",
+        "source_ref": [
+          "D51:reference/characters/survivors_kate_ace_dwight.png / 德怀特·费菲尔德人物板"
+        ],
+        "status": "CHECK_REQUIRED"
+      },
+      "field_evidence": {
+        "name_zh": {
+          "source_level": "D",
+          "source_ref": [
+            "D51:reference/characters/survivors_kate_ace_dwight.png / 德怀特·费菲尔德人物板"
+          ],
+          "status": "CHECK_REQUIRED"
+        }
+      },
+      "structured_effect_draft": {
+        "source_level": "D",
+        "source_ref": [
+          "D51:reference/characters/survivors_kate_ace_dwight.png / 德怀特·费菲尔德人物板"
+        ],
+        "status": "CONFIRMED",
+        "source_text_zh": "当你将要交互时，改为由你所在空间或一个相邻空间里的另一位逃生者交互。",
+        "implementation_status": "IMPLEMENTED_TESTED",
+        "requires_semantic_review": false,
+        "kind": "PERK",
+        "trigger": {
+          "event": "WOULD_INTERACT"
+        },
+        "conditions": [
+          "另一位逃生者位于自己所在或相邻空间"
+        ],
+        "effects": [
+          {
+            "operation": "REPLACE_INTERACTION",
+            "text_zh": "改为该另一位逃生者交互"
+          }
+        ],
+        "resolution_scope": "DRAFT_ONLY_NOT_RUNTIME_DSL",
+        "cost": {
+          "bloodpoints": 1
+        },
+        "usage_limit": {
+          "per_round": 1,
+          "source_ref": [
+            "B01:p16"
+          ]
+        },
+        "adoption_basis": "USER_ACCEPTED_CN_RETAIL",
+        "adoption_ref": "U02:中文零售资料优先",
+        "japanese_missing_blocks_runtime": false
+      },
+      "edition_scope": "BASE_STANDARD",
+      "effect_original_ja": null,
+      "effect_original_en": null,
+      "previous_research_status": "CHECK_REQUIRED",
+      "adoption_basis": "USER_ACCEPTED_CN_RETAIL",
+      "adoption_ref": "U02:来源优先级与Phase1采用",
+      "japanese_missing_blocks_runtime": false,
+      "implementation_ref": "packages/game-engine/src/skills.ts",
+      "test_ref": "packages/game-engine/test/skills.test.ts"
+    },
+    {
+      "id": "board_dwight_2",
+      "name_ja": null,
+      "name_en": null,
+      "name_zh": "领袖群雄",
+      "translation_status": "OFFICIAL_ZH_PRINT",
+      "japanese_text_status": "CHECK_REQUIRED",
+      "side": "survivor",
+      "owner_id": "dwight",
+      "source_level": "D",
+      "source_ref": [
+        "D51:reference/characters/survivors_kate_ace_dwight.png / 德怀特·费菲尔德人物板"
+      ],
+      "status": "CONFIRMED",
+      "on_board": true,
+      "board_position": 2,
+      "bloodpoint_cost": 1,
+      "frame": "green",
+      "frame_semantics_status": "CHECK_REQUIRED",
+      "text_original_zh": "当你所在空间里的另一位逃生者移动时，你与其一起移动；或者，当你移动时，你所在空间里的另一位逃生者与你一起移动。",
+      "transcription_confidence": "HIGH",
+      "implementation_status": "IMPLEMENTED_TESTED",
+      "chinese_print_evidence": {
+        "source_level": "D",
+        "source_ref": [
+          "D51:reference/characters/survivors_kate_ace_dwight.png / 德怀特·费菲尔德人物板"
+        ],
+        "status": "CHECK_REQUIRED"
+      },
+      "field_evidence": {
+        "name_zh": {
+          "source_level": "D",
+          "source_ref": [
+            "D51:reference/characters/survivors_kate_ace_dwight.png / 德怀特·费菲尔德人物板"
+          ],
+          "status": "CHECK_REQUIRED"
+        }
+      },
+      "structured_effect_draft": {
+        "source_level": "D",
+        "source_ref": [
+          "D51:reference/characters/survivors_kate_ace_dwight.png / 德怀特·费菲尔德人物板"
+        ],
+        "status": "CONFIRMED",
+        "source_text_zh": "当你所在空间里的另一位逃生者移动时，你与其一起移动；或者，当你移动时，你所在空间里的另一位逃生者与你一起移动。",
+        "implementation_status": "IMPLEMENTED_TESTED",
+        "requires_semantic_review": false,
+        "kind": "PERK",
+        "trigger": {
+          "event": "SELF_OR_COLOCATED_SURVIVOR_MOVES"
+        },
+        "conditions": [
+          "同一空间的另一位逃生者；按原文选择跟随或带同伴"
+        ],
+        "effects": [
+          {
+            "operation": "MOVE_TOGETHER",
+            "text_zh": "自己随另一位逃生者移动，或自己移动时带另一位一起移动"
+          }
+        ],
+        "resolution_scope": "DRAFT_ONLY_NOT_RUNTIME_DSL",
+        "cost": {
+          "bloodpoints": 1
+        },
+        "usage_limit": {
+          "per_round": 1,
+          "source_ref": [
+            "B01:p16"
+          ]
+        },
+        "adoption_basis": "USER_ACCEPTED_CN_RETAIL",
+        "adoption_ref": "U02:中文零售资料优先",
+        "japanese_missing_blocks_runtime": false
+      },
+      "edition_scope": "BASE_STANDARD",
+      "effect_original_ja": null,
+      "effect_original_en": null,
+      "previous_research_status": "CHECK_REQUIRED",
+      "adoption_basis": "USER_ACCEPTED_CN_RETAIL",
+      "adoption_ref": "U02:来源优先级与Phase1采用",
+      "japanese_missing_blocks_runtime": false,
+      "implementation_ref": "packages/game-engine/src/skills.ts",
+      "test_ref": "packages/game-engine/test/skills.test.ts"
+    },
+    {
+      "id": "board_dwight_3",
+      "name_ja": null,
+      "name_en": null,
+      "name_zh": "携手合作",
+      "translation_status": "OFFICIAL_ZH_PRINT",
+      "japanese_text_status": "CHECK_REQUIRED",
+      "side": "survivor",
+      "owner_id": "dwight",
+      "source_level": "D",
+      "source_ref": [
+        "D51:reference/characters/survivors_kate_ace_dwight.png / 德怀特·费菲尔德人物板"
+      ],
+      "status": "CONFIRMED",
+      "on_board": true,
+      "board_position": 3,
+      "bloodpoint_cost": 1,
+      "frame": "green",
+      "frame_semantics_status": "CHECK_REQUIRED",
+      "text_original_zh": "当你所在空间或一个相连空间里的另一位逃生者将要进行一次技能检定时，改为掷两颗技能检定骰子并保留其中一颗的结果。",
+      "transcription_confidence": "HIGH",
+      "implementation_status": "IMPLEMENTED_TESTED",
+      "chinese_print_evidence": {
+        "source_level": "D",
+        "source_ref": [
+          "D51:reference/characters/survivors_kate_ace_dwight.png / 德怀特·费菲尔德人物板"
+        ],
+        "status": "CHECK_REQUIRED"
+      },
+      "field_evidence": {
+        "name_zh": {
+          "source_level": "D",
+          "source_ref": [
+            "D51:reference/characters/survivors_kate_ace_dwight.png / 德怀特·费菲尔德人物板"
+          ],
+          "status": "CHECK_REQUIRED"
+        }
+      },
+      "structured_effect_draft": {
+        "source_level": "D",
+        "source_ref": [
+          "D51:reference/characters/survivors_kate_ace_dwight.png / 德怀特·费菲尔德人物板"
+        ],
+        "status": "CONFIRMED",
+        "source_text_zh": "当你所在空间或一个相连空间里的另一位逃生者将要进行一次技能检定时，改为掷两颗技能检定骰子并保留其中一颗的结果。",
+        "implementation_status": "IMPLEMENTED_TESTED",
+        "requires_semantic_review": false,
+        "kind": "PERK",
+        "trigger": {
+          "event": "OTHER_SURVIVOR_WOULD_SKILL_CHECK"
+        },
+        "conditions": [
+          "目标在自己所在或相连空间"
+        ],
+        "effects": [
+          {
+            "operation": "REPLACE_ROLL",
+            "text_zh": "掷2颗技能检定骰，保留1颗结果"
+          }
+        ],
+        "resolution_scope": "DRAFT_ONLY_NOT_RUNTIME_DSL",
+        "cost": {
+          "bloodpoints": 1
+        },
+        "usage_limit": {
+          "per_round": 1,
+          "source_ref": [
+            "B01:p16"
+          ]
+        },
+        "adoption_basis": "USER_ACCEPTED_CN_RETAIL",
+        "adoption_ref": "U02:中文零售资料优先",
+        "japanese_missing_blocks_runtime": false
+      },
+      "edition_scope": "BASE_STANDARD",
+      "effect_original_ja": null,
+      "effect_original_en": null,
+      "previous_research_status": "CHECK_REQUIRED",
+      "adoption_basis": "USER_ACCEPTED_CN_RETAIL",
+      "adoption_ref": "U02:来源优先级与Phase1采用",
+      "japanese_missing_blocks_runtime": false,
+      "implementation_ref": "packages/game-engine/src/skills.ts",
+      "test_ref": "packages/game-engine/test/skills.test.ts"
+    },
+    {
+      "id": "board_meg_1",
+      "name_ja": null,
+      "name_en": null,
+      "name_zh": "冲刺爆发",
+      "translation_status": "OFFICIAL_ZH_PRINT",
+      "japanese_text_status": "CHECK_REQUIRED",
+      "side": "survivor",
+      "owner_id": "meg",
+      "source_level": "D",
+      "source_ref": [
+        "D49:reference/characters/survivors_david_meg_jake.png / 梅格·托马斯人物板"
+      ],
+      "status": "CHECK_REQUIRED",
+      "on_board": true,
+      "board_position": 1,
+      "bloodpoint_cost": 1,
+      "frame": "purple",
+      "frame_semantics_status": "CHECK_REQUIRED",
+      "text_original_zh": "当你用你的移动牌移动之后，沿着任意其它路线再次移动。",
+      "transcription_confidence": "HIGH",
+      "implementation_status": "DEFERRED_PHASE_4",
+      "chinese_print_evidence": {
+        "source_level": "D",
+        "source_ref": [
+          "D49:reference/characters/survivors_david_meg_jake.png / 梅格·托马斯人物板"
+        ],
+        "status": "CHECK_REQUIRED"
+      },
+      "field_evidence": {
+        "name_zh": {
+          "source_level": "D",
+          "source_ref": [
+            "D49:reference/characters/survivors_david_meg_jake.png / 梅格·托马斯人物板"
+          ],
+          "status": "CHECK_REQUIRED"
+        }
+      },
+      "structured_effect_draft": {
+        "source_level": "D",
+        "source_ref": [
+          "D49:reference/characters/survivors_david_meg_jake.png / 梅格·托马斯人物板"
+        ],
+        "status": "CHECK_REQUIRED",
+        "source_text_zh": "当你用你的移动牌移动之后，沿着任意其它路线再次移动。",
+        "implementation_status": "NOT_IMPLEMENTED",
+        "requires_semantic_review": true,
+        "kind": "PERK",
+        "trigger": {
+          "event": "AFTER_MOVE_WITH_MOVEMENT_CARD"
+        },
+        "conditions": [
+          "其它路线含义待审，不补猜忽略障碍"
+        ],
+        "effects": [
+          {
+            "operation": "MOVE",
+            "text_zh": "沿任意其它路线再次移动"
+          }
+        ],
+        "resolution_scope": "DRAFT_ONLY_NOT_RUNTIME_DSL",
+        "cost": {
+          "bloodpoints": 1
+        },
+        "usage_limit": {
+          "per_round": 1,
+          "source_ref": [
+            "B01:p16"
+          ]
+        }
+      },
+      "edition_scope": "BASE_STANDARD",
+      "effect_original_ja": null,
+      "effect_original_en": null,
+      "previous_research_status": "CHECK_REQUIRED",
+      "adoption_basis": "USER_ACCEPTED_CN_RETAIL",
+      "adoption_ref": "U02:来源优先级与Phase1采用",
+      "japanese_missing_blocks_runtime": false,
+      "question_ref": "Q11",
+      "deferred_phase": 4,
+      "implementation_ref": "packages/game-engine/src/skills.ts",
+      "test_ref": "packages/game-engine/test/skills.test.ts",
+      "deferred_reason": "Q11 其它路线语义"
+    },
+    {
+      "id": "board_meg_2",
+      "name_ja": null,
+      "name_en": null,
+      "name_zh": "肾上腺素",
+      "translation_status": "OFFICIAL_ZH_PRINT",
+      "japanese_text_status": "CHECK_REQUIRED",
+      "side": "survivor",
+      "owner_id": "meg",
+      "source_level": "D",
+      "source_ref": [
+        "D49:reference/characters/survivors_david_meg_jake.png / 梅格·托马斯人物板"
+      ],
+      "status": "CONFIRMED",
+      "on_board": true,
+      "board_position": 2,
+      "bloodpoint_cost": 2,
+      "frame": "green",
+      "frame_semantics_status": "CHECK_REQUIRED",
+      "text_original_zh": "在清理阶段开始时，如果本轮有发电机被修理完成，执行一个逃生者额外回合。",
+      "transcription_confidence": "HIGH",
+      "implementation_status": "IMPLEMENTED_TESTED",
+      "chinese_print_evidence": {
+        "source_level": "D",
+        "source_ref": [
+          "D49:reference/characters/survivors_david_meg_jake.png / 梅格·托马斯人物板"
+        ],
+        "status": "CHECK_REQUIRED"
+      },
+      "field_evidence": {
+        "name_zh": {
+          "source_level": "D",
+          "source_ref": [
+            "D49:reference/characters/survivors_david_meg_jake.png / 梅格·托马斯人物板"
+          ],
+          "status": "CHECK_REQUIRED"
+        }
+      },
+      "structured_effect_draft": {
+        "source_level": "D",
+        "source_ref": [
+          "D49:reference/characters/survivors_david_meg_jake.png / 梅格·托马斯人物板"
+        ],
+        "status": "CONFIRMED",
+        "source_text_zh": "在清理阶段开始时，如果本轮有发电机被修理完成，执行一个逃生者额外回合。",
+        "implementation_status": "IMPLEMENTED_TESTED",
+        "requires_semantic_review": false,
+        "kind": "PERK",
+        "trigger": {
+          "event": "CLEANUP_START"
+        },
+        "conditions": [
+          "本轮有发电机修理完成"
+        ],
+        "effects": [
+          {
+            "operation": "SURVIVOR_BONUS_TURN",
+            "text_zh": "执行1个逃生者额外回合"
+          }
+        ],
+        "resolution_scope": "DRAFT_ONLY_NOT_RUNTIME_DSL",
+        "cost": {
+          "bloodpoints": 2
+        },
+        "usage_limit": {
+          "per_round": 1,
+          "source_ref": [
+            "B01:p16"
+          ]
+        },
+        "adoption_basis": "USER_ACCEPTED_CN_RETAIL",
+        "adoption_ref": "U02:中文零售资料优先",
+        "japanese_missing_blocks_runtime": false
+      },
+      "edition_scope": "BASE_STANDARD",
+      "effect_original_ja": null,
+      "effect_original_en": null,
+      "previous_research_status": "CHECK_REQUIRED",
+      "adoption_basis": "USER_ACCEPTED_CN_RETAIL",
+      "adoption_ref": "U02:来源优先级与Phase1采用",
+      "japanese_missing_blocks_runtime": false,
+      "implementation_ref": "packages/game-engine/src/skills.ts",
+      "test_ref": "packages/game-engine/test/skills.test.ts"
+    },
+    {
+      "id": "board_meg_3",
+      "name_ja": null,
+      "name_en": null,
+      "name_zh": "急速静谧",
+      "translation_status": "OFFICIAL_ZH_PRINT",
+      "japanese_text_status": "CHECK_REQUIRED",
+      "side": "survivor",
+      "owner_id": "meg",
+      "source_level": "D",
+      "source_ref": [
+        "D49:reference/characters/survivors_david_meg_jake.png / 梅格·托马斯人物板"
+      ],
+      "status": "CONFIRMED",
+      "on_board": true,
+      "board_position": 3,
+      "bloodpoint_cost": 1,
+      "frame": "green",
+      "frame_semantics_status": "CHECK_REQUIRED",
+      "text_original_zh": "当杀手进入你所在空间时（在他交互之前），你与你所在空间里的一个储物柜交互。",
+      "transcription_confidence": "HIGH",
+      "implementation_status": "IMPLEMENTED_TESTED",
+      "chinese_print_evidence": {
+        "source_level": "D",
+        "source_ref": [
+          "D49:reference/characters/survivors_david_meg_jake.png / 梅格·托马斯人物板"
+        ],
+        "status": "CHECK_REQUIRED"
+      },
+      "field_evidence": {
+        "name_zh": {
+          "source_level": "D",
+          "source_ref": [
+            "D49:reference/characters/survivors_david_meg_jake.png / 梅格·托马斯人物板"
+          ],
+          "status": "CHECK_REQUIRED"
+        }
+      },
+      "structured_effect_draft": {
+        "source_level": "D",
+        "source_ref": [
+          "D49:reference/characters/survivors_david_meg_jake.png / 梅格·托马斯人物板"
+        ],
+        "status": "CONFIRMED",
+        "source_text_zh": "当杀手进入你所在空间时（在他交互之前），你与你所在空间里的一个储物柜交互。",
+        "implementation_status": "IMPLEMENTED_TESTED",
+        "requires_semantic_review": false,
+        "kind": "PERK",
+        "trigger": {
+          "event": "KILLER_ENTERS_SELF_SPACE_BEFORE_INTERACTION"
+        },
+        "conditions": [
+          "自己空间中有储物柜"
+        ],
+        "effects": [
+          {
+            "operation": "INTERACT",
+            "text_zh": "自己与该储物柜交互"
+          }
+        ],
+        "resolution_scope": "DRAFT_ONLY_NOT_RUNTIME_DSL",
+        "cost": {
+          "bloodpoints": 1
+        },
+        "usage_limit": {
+          "per_round": 1,
+          "source_ref": [
+            "B01:p16"
+          ]
+        },
+        "adoption_basis": "USER_ACCEPTED_CN_RETAIL",
+        "adoption_ref": "U02:中文零售资料优先",
+        "japanese_missing_blocks_runtime": false
+      },
+      "edition_scope": "BASE_STANDARD",
+      "effect_original_ja": null,
+      "effect_original_en": null,
+      "previous_research_status": "CHECK_REQUIRED",
+      "adoption_basis": "USER_ACCEPTED_CN_RETAIL",
+      "adoption_ref": "U02:来源优先级与Phase1采用",
+      "japanese_missing_blocks_runtime": false,
+      "implementation_ref": "packages/game-engine/src/skills.ts",
+      "test_ref": "packages/game-engine/test/skills.test.ts"
+    },
+    {
+      "id": "board_claudette_1",
+      "name_ja": null,
+      "name_en": null,
+      "name_zh": "精研百草",
+      "translation_status": "OFFICIAL_ZH_PRINT",
+      "japanese_text_status": "CHECK_REQUIRED",
+      "side": "survivor",
+      "owner_id": "claudette",
+      "source_level": "D",
+      "source_ref": [
+        "D48:reference/characters/survivors_claudette_zarina.png / 克劳黛特·莫莱人物板"
+      ],
+      "status": "CONFIRMED",
+      "on_board": true,
+      "board_position": 1,
+      "bloodpoint_cost": 1,
+      "frame": "purple",
+      "frame_semantics_status": "CHECK_REQUIRED",
+      "text_original_zh": "在你的回合中移动之前或之后，掷危险骰子。成功时，你所在空间里的另一位逃生者变为健康。本回合你仍然可以交互。",
+      "transcription_confidence": "HIGH",
+      "implementation_status": "IMPLEMENTED_TESTED",
+      "chinese_print_evidence": {
+        "source_level": "D",
+        "source_ref": [
+          "D48:reference/characters/survivors_claudette_zarina.png / 克劳黛特·莫莱人物板"
+        ],
+        "status": "CHECK_REQUIRED"
+      },
+      "field_evidence": {
+        "name_zh": {
+          "source_level": "D",
+          "source_ref": [
+            "D48:reference/characters/survivors_claudette_zarina.png / 克劳黛特·莫莱人物板"
+          ],
+          "status": "CHECK_REQUIRED"
+        }
+      },
+      "structured_effect_draft": {
+        "source_level": "D",
+        "source_ref": [
+          "D48:reference/characters/survivors_claudette_zarina.png / 克劳黛特·莫莱人物板"
+        ],
+        "status": "CONFIRMED",
+        "source_text_zh": "在你的回合中移动之前或之后，掷危险骰子。成功时，你所在空间里的另一位逃生者变为健康。本回合你仍然可以交互。",
+        "implementation_status": "IMPLEMENTED_TESTED",
+        "requires_semantic_review": false,
+        "kind": "PERK",
+        "trigger": {
+          "event": "OWN_TURN_BEFORE_OR_AFTER_MOVE"
+        },
+        "conditions": [
+          "目标为自己所在空间的另一位逃生者"
+        ],
+        "effects": [
+          {
+            "operation": "ROLL_DANGER_DIE",
+            "text_zh": "掷危险骰子"
+          },
+          {
+            "operation": "ON_SUCCESS_MAKE_HEALTHY",
+            "text_zh": "成功使该目标健康"
+          },
+          {
+            "operation": "KEEP_INTERACTION",
+            "text_zh": "本回合仍可交互"
+          }
+        ],
+        "resolution_scope": "DRAFT_ONLY_NOT_RUNTIME_DSL",
+        "cost": {
+          "bloodpoints": 1
+        },
+        "usage_limit": {
+          "per_round": 1,
+          "source_ref": [
+            "B01:p16"
+          ]
+        },
+        "adoption_basis": "USER_ACCEPTED_CN_RETAIL",
+        "adoption_ref": "U02:中文零售资料优先",
+        "japanese_missing_blocks_runtime": false
+      },
+      "edition_scope": "BASE_STANDARD",
+      "effect_original_ja": null,
+      "effect_original_en": null,
+      "previous_research_status": "CHECK_REQUIRED",
+      "adoption_basis": "USER_ACCEPTED_CN_RETAIL",
+      "adoption_ref": "U02:来源优先级与Phase1采用",
+      "japanese_missing_blocks_runtime": false,
+      "implementation_ref": "packages/game-engine/src/skills.ts",
+      "test_ref": "packages/game-engine/test/skills.test.ts"
+    },
+    {
+      "id": "board_claudette_2",
+      "name_ja": null,
+      "name_en": null,
+      "name_zh": "心灵共鸣",
+      "translation_status": "OFFICIAL_ZH_PRINT",
+      "japanese_text_status": "CHECK_REQUIRED",
+      "side": "survivor",
+      "owner_id": "claudette",
+      "source_level": "D",
+      "source_ref": [
+        "D48:reference/characters/survivors_claudette_zarina.png / 克劳黛特·莫莱人物板"
+      ],
+      "status": "CONFIRMED",
+      "on_board": true,
+      "board_position": 2,
+      "bloodpoint_cost": 0,
+      "frame": "green",
+      "frame_semantics_status": "CHECK_REQUIRED",
+      "text_original_zh": "在你的回合开始时，你可以从一位自愿的逃生者那里拿取1血点。或者，你可以给予一位自愿的逃生者1血点。",
+      "transcription_confidence": "HIGH",
+      "implementation_status": "IMPLEMENTED_TESTED",
+      "chinese_print_evidence": {
+        "source_level": "D",
+        "source_ref": [
+          "D48:reference/characters/survivors_claudette_zarina.png / 克劳黛特·莫莱人物板"
+        ],
+        "status": "CHECK_REQUIRED"
+      },
+      "field_evidence": {
+        "name_zh": {
+          "source_level": "D",
+          "source_ref": [
+            "D48:reference/characters/survivors_claudette_zarina.png / 克劳黛特·莫莱人物板"
+          ],
+          "status": "CHECK_REQUIRED"
+        }
+      },
+      "structured_effect_draft": {
+        "source_level": "D",
+        "source_ref": [
+          "D48:reference/characters/survivors_claudette_zarina.png / 克劳黛特·莫莱人物板"
+        ],
+        "status": "CONFIRMED",
+        "source_text_zh": "在你的回合开始时，你可以从一位自愿的逃生者那里拿取1血点。或者，你可以给予一位自愿的逃生者1血点。",
+        "implementation_status": "IMPLEMENTED_TESTED",
+        "requires_semantic_review": false,
+        "kind": "PERK",
+        "trigger": {
+          "event": "OWN_TURN_START"
+        },
+        "conditions": [
+          "另一位逃生者自愿"
+        ],
+        "effects": [
+          {
+            "operation": "CHOOSE_ONE",
+            "text_zh": "从其处拿1血点，或给其1血点"
+          }
+        ],
+        "resolution_scope": "DRAFT_ONLY_NOT_RUNTIME_DSL",
+        "cost": {
+          "bloodpoints": 0
+        },
+        "usage_limit": {
+          "per_round": 1,
+          "source_ref": [
+            "B01:p16"
+          ]
+        },
+        "adoption_basis": "USER_ACCEPTED_CN_RETAIL",
+        "adoption_ref": "U02:中文零售资料优先",
+        "japanese_missing_blocks_runtime": false
+      },
+      "edition_scope": "BASE_STANDARD",
+      "effect_original_ja": null,
+      "effect_original_en": null,
+      "previous_research_status": "CHECK_REQUIRED",
+      "adoption_basis": "USER_ACCEPTED_CN_RETAIL",
+      "adoption_ref": "U02:来源优先级与Phase1采用",
+      "japanese_missing_blocks_runtime": false,
+      "implementation_ref": "packages/game-engine/src/skills.ts",
+      "test_ref": "packages/game-engine/test/skills.test.ts"
+    },
+    {
+      "id": "board_claudette_3",
+      "name_ja": null,
+      "name_en": null,
+      "name_zh": "自我疗愈",
+      "translation_status": "OFFICIAL_ZH_PRINT",
+      "japanese_text_status": "CHECK_REQUIRED",
+      "side": "survivor",
+      "owner_id": "claudette",
+      "source_level": "D",
+      "source_ref": [
+        "D48:reference/characters/survivors_claudette_zarina.png / 克劳黛特·莫莱人物板"
+      ],
+      "status": "CONFIRMED",
+      "on_board": true,
+      "board_position": 3,
+      "bloodpoint_cost": 1,
+      "frame": "green",
+      "frame_semantics_status": "CHECK_REQUIRED",
+      "text_original_zh": "在你的回合开始时，掷危险骰子。成功时，你变为健康。",
+      "transcription_confidence": "HIGH",
+      "implementation_status": "IMPLEMENTED_TESTED",
+      "chinese_print_evidence": {
+        "source_level": "D",
+        "source_ref": [
+          "D48:reference/characters/survivors_claudette_zarina.png / 克劳黛特·莫莱人物板"
+        ],
+        "status": "CHECK_REQUIRED"
+      },
+      "field_evidence": {
+        "name_zh": {
+          "source_level": "D",
+          "source_ref": [
+            "D48:reference/characters/survivors_claudette_zarina.png / 克劳黛特·莫莱人物板"
+          ],
+          "status": "CHECK_REQUIRED"
+        }
+      },
+      "structured_effect_draft": {
+        "source_level": "D",
+        "source_ref": [
+          "D48:reference/characters/survivors_claudette_zarina.png / 克劳黛特·莫莱人物板"
+        ],
+        "status": "CONFIRMED",
+        "source_text_zh": "在你的回合开始时，掷危险骰子。成功时，你变为健康。",
+        "implementation_status": "IMPLEMENTED_TESTED",
+        "requires_semantic_review": false,
+        "kind": "PERK",
+        "trigger": {
+          "event": "OWN_TURN_START"
+        },
+        "conditions": [],
+        "effects": [
+          {
+            "operation": "ROLL_DANGER_DIE",
+            "text_zh": "掷危险骰子"
+          },
+          {
+            "operation": "ON_SUCCESS_MAKE_HEALTHY",
+            "text_zh": "成功时自己健康"
+          }
+        ],
+        "resolution_scope": "DRAFT_ONLY_NOT_RUNTIME_DSL",
+        "cost": {
+          "bloodpoints": 1
+        },
+        "usage_limit": {
+          "per_round": 1,
+          "source_ref": [
+            "B01:p16"
+          ]
+        },
+        "adoption_basis": "USER_ACCEPTED_CN_RETAIL",
+        "adoption_ref": "U02:中文零售资料优先",
+        "japanese_missing_blocks_runtime": false
+      },
+      "edition_scope": "BASE_STANDARD",
+      "effect_original_ja": null,
+      "effect_original_en": null,
+      "previous_research_status": "CHECK_REQUIRED",
+      "adoption_basis": "USER_ACCEPTED_CN_RETAIL",
+      "adoption_ref": "U02:来源优先级与Phase1采用",
+      "japanese_missing_blocks_runtime": false,
+      "implementation_ref": "packages/game-engine/src/skills.ts",
+      "test_ref": "packages/game-engine/test/skills.test.ts"
+    },
+    {
+      "id": "board_jake_1",
+      "name_ja": null,
+      "name_en": null,
+      "name_zh": "钢铁意志",
+      "translation_status": "OFFICIAL_ZH_PRINT",
+      "japanese_text_status": "CHECK_REQUIRED",
+      "side": "survivor",
+      "owner_id": "jake",
+      "source_level": "D",
+      "source_ref": [
+        "D49:reference/characters/survivors_david_meg_jake.png / 杰克·朴人物板"
+      ],
+      "status": "CONFIRMED",
+      "on_board": true,
+      "board_position": 1,
+      "bloodpoint_cost": 1,
+      "frame": "purple",
+      "frame_semantics_status": "CHECK_REQUIRED",
+      "text_original_zh": "当你或者你所在空间或一个相连空间里的另一位逃生者掷出一个失败时，将其视为一个成功。不过，杀手依然会获得血点。",
+      "transcription_confidence": "HIGH",
+      "implementation_status": "IMPLEMENTED_TESTED",
+      "chinese_print_evidence": {
+        "source_level": "D",
+        "source_ref": [
+          "D49:reference/characters/survivors_david_meg_jake.png / 杰克·朴人物板"
+        ],
+        "status": "CHECK_REQUIRED"
+      },
+      "field_evidence": {
+        "name_zh": {
+          "source_level": "D",
+          "source_ref": [
+            "D49:reference/characters/survivors_david_meg_jake.png / 杰克·朴人物板"
+          ],
+          "status": "CHECK_REQUIRED"
+        }
+      },
+      "structured_effect_draft": {
+        "source_level": "D",
+        "source_ref": [
+          "D49:reference/characters/survivors_david_meg_jake.png / 杰克·朴人物板"
+        ],
+        "status": "CONFIRMED",
+        "source_text_zh": "当你或者你所在空间或一个相连空间里的另一位逃生者掷出一个失败时，将其视为一个成功。不过，杀手依然会获得血点。",
+        "implementation_status": "IMPLEMENTED_TESTED",
+        "requires_semantic_review": false,
+        "kind": "PERK",
+        "trigger": {
+          "event": "SELF_OR_NEARBY_SURVIVOR_ROLLS_FAILURE"
+        },
+        "conditions": [
+          "自己，或所在/相连空间另一位逃生者"
+        ],
+        "effects": [
+          {
+            "operation": "TREAT_RESULT_AS_SUCCESS",
+            "text_zh": "视为成功"
+          },
+          {
+            "operation": "KEEP_KILLER_BLOODPOINT_GAIN",
+            "text_zh": "杀手仍获得血点；多失败计数Q02未决"
+          }
+        ],
+        "resolution_scope": "DRAFT_ONLY_NOT_RUNTIME_DSL",
+        "cost": {
+          "bloodpoints": 1
+        },
+        "usage_limit": {
+          "per_round": 1,
+          "source_ref": [
+            "B01:p16"
+          ]
+        },
+        "adoption_basis": "USER_ACCEPTED_CN_RETAIL",
+        "adoption_ref": "U02:中文零售资料优先",
+        "japanese_missing_blocks_runtime": false
+      },
+      "edition_scope": "BASE_STANDARD",
+      "effect_original_ja": null,
+      "effect_original_en": null,
+      "previous_research_status": "CHECK_REQUIRED",
+      "adoption_basis": "USER_ACCEPTED_CN_RETAIL",
+      "adoption_ref": "U02:来源优先级与Phase1采用",
+      "japanese_missing_blocks_runtime": false,
+      "implementation_ref": "packages/game-engine/src/skills.ts",
+      "test_ref": "packages/game-engine/test/skills.test.ts"
+    },
+    {
+      "id": "board_jake_2",
+      "name_ja": null,
+      "name_en": null,
+      "name_zh": "安抚生灵",
+      "translation_status": "OFFICIAL_ZH_PRINT",
+      "japanese_text_status": "CHECK_REQUIRED",
+      "side": "survivor",
+      "owner_id": "jake",
+      "source_level": "D",
+      "source_ref": [
+        "D49:reference/characters/survivors_david_meg_jake.png / 杰克·朴人物板"
+      ],
+      "status": "CONFIRMED",
+      "on_board": true,
+      "board_position": 2,
+      "bloodpoint_cost": 0,
+      "frame": "green",
+      "frame_semantics_status": "CHECK_REQUIRED",
+      "text_original_zh": "作为一个交互行动，将你所在空间里的一个乌鸦移到游戏版图上的任意空间。",
+      "transcription_confidence": "HIGH",
+      "implementation_status": "IMPLEMENTED_TESTED",
+      "chinese_print_evidence": {
+        "source_level": "D",
+        "source_ref": [
+          "D49:reference/characters/survivors_david_meg_jake.png / 杰克·朴人物板"
+        ],
+        "status": "CHECK_REQUIRED"
+      },
+      "field_evidence": {
+        "name_zh": {
+          "source_level": "D",
+          "source_ref": [
+            "D49:reference/characters/survivors_david_meg_jake.png / 杰克·朴人物板"
+          ],
+          "status": "CHECK_REQUIRED"
+        }
+      },
+      "structured_effect_draft": {
+        "source_level": "D",
+        "source_ref": [
+          "D49:reference/characters/survivors_david_meg_jake.png / 杰克·朴人物板"
+        ],
+        "status": "CONFIRMED",
+        "source_text_zh": "作为一个交互行动，将你所在空间里的一个乌鸦移到游戏版图上的任意空间。",
+        "implementation_status": "IMPLEMENTED_TESTED",
+        "requires_semantic_review": false,
+        "kind": "PERK",
+        "trigger": {
+          "event": "INSTEAD_OF_INTERACTION"
+        },
+        "conditions": [
+          "自己空间存在乌鸦"
+        ],
+        "effects": [
+          {
+            "operation": "RELOCATE_PROP",
+            "text_zh": "将该乌鸦移到版图任意空间"
+          }
+        ],
+        "resolution_scope": "DRAFT_ONLY_NOT_RUNTIME_DSL",
+        "cost": {
+          "bloodpoints": 0
+        },
+        "usage_limit": {
+          "per_round": 1,
+          "source_ref": [
+            "B01:p16"
+          ]
+        },
+        "adoption_basis": "USER_ACCEPTED_CN_RETAIL",
+        "adoption_ref": "U02:中文零售资料优先",
+        "japanese_missing_blocks_runtime": false
+      },
+      "edition_scope": "BASE_STANDARD",
+      "effect_original_ja": null,
+      "effect_original_en": null,
+      "previous_research_status": "CHECK_REQUIRED",
+      "adoption_basis": "USER_ACCEPTED_CN_RETAIL",
+      "adoption_ref": "U02:来源优先级与Phase1采用",
+      "japanese_missing_blocks_runtime": false,
+      "implementation_ref": "packages/game-engine/src/skills.ts",
+      "test_ref": "packages/game-engine/test/skills.test.ts"
+    },
+    {
+      "id": "board_jake_3",
+      "name_ja": null,
+      "name_en": null,
+      "name_zh": "破坏手",
+      "translation_status": "OFFICIAL_ZH_PRINT",
+      "japanese_text_status": "CHECK_REQUIRED",
+      "side": "survivor",
+      "owner_id": "jake",
+      "source_level": "D",
+      "source_ref": [
+        "D49:reference/characters/survivors_david_meg_jake.png / 杰克·朴人物板"
+      ],
+      "status": "CONFIRMED",
+      "on_board": true,
+      "board_position": 3,
+      "bloodpoint_cost": 0,
+      "frame": "green",
+      "frame_semantics_status": "CHECK_REQUIRED",
+      "text_original_zh": "当你破坏一个钩子之后，选择一项：获得1血点；或消耗2血点以执行一个逃生者额外回合。",
+      "transcription_confidence": "HIGH",
+      "implementation_status": "IMPLEMENTED_TESTED",
+      "chinese_print_evidence": {
+        "source_level": "D",
+        "source_ref": [
+          "D49:reference/characters/survivors_david_meg_jake.png / 杰克·朴人物板"
+        ],
+        "status": "CHECK_REQUIRED"
+      },
+      "field_evidence": {
+        "name_zh": {
+          "source_level": "D",
+          "source_ref": [
+            "D49:reference/characters/survivors_david_meg_jake.png / 杰克·朴人物板"
+          ],
+          "status": "CHECK_REQUIRED"
+        }
+      },
+      "structured_effect_draft": {
+        "source_level": "D",
+        "source_ref": [
+          "D49:reference/characters/survivors_david_meg_jake.png / 杰克·朴人物板"
+        ],
+        "status": "CONFIRMED",
+        "source_text_zh": "当你破坏一个钩子之后，选择一项：获得1血点；或消耗2血点以执行一个逃生者额外回合。",
+        "implementation_status": "IMPLEMENTED_TESTED",
+        "requires_semantic_review": false,
+        "kind": "PERK",
+        "trigger": {
+          "event": "AFTER_SELF_SABOTAGES_HOOK"
+        },
+        "conditions": [],
+        "effects": [
+          {
+            "operation": "CHOOSE_ONE",
+            "text_zh": "获得1血点，或消耗2血点执行1个逃生者额外回合"
+          }
+        ],
+        "resolution_scope": "DRAFT_ONLY_NOT_RUNTIME_DSL",
+        "cost": {
+          "bloodpoints": 0
+        },
+        "usage_limit": {
+          "per_round": 1,
+          "source_ref": [
+            "B01:p16"
+          ]
+        },
+        "adoption_basis": "USER_ACCEPTED_CN_RETAIL",
+        "adoption_ref": "U02:中文零售资料优先",
+        "japanese_missing_blocks_runtime": false
+      },
+      "edition_scope": "BASE_STANDARD",
+      "effect_original_ja": null,
+      "effect_original_en": null,
+      "previous_research_status": "CHECK_REQUIRED",
+      "adoption_basis": "USER_ACCEPTED_CN_RETAIL",
+      "adoption_ref": "U02:来源优先级与Phase1采用",
+      "japanese_missing_blocks_runtime": false,
+      "implementation_ref": "packages/game-engine/src/skills.ts",
+      "test_ref": "packages/game-engine/test/skills.test.ts"
+    },
+    {
+      "id": "board_nea_1",
+      "name_ja": null,
+      "name_en": null,
+      "name_zh": "平稳着陆",
+      "translation_status": "OFFICIAL_ZH_PRINT",
+      "japanese_text_status": "CHECK_REQUIRED",
+      "side": "survivor",
+      "owner_id": "nea",
+      "source_level": "D",
+      "source_ref": [
+        "D46:reference/characters/survivor_nea.png / 妮娅·卡尔森人物板"
+      ],
+      "status": "CONFIRMED",
+      "on_board": true,
+      "board_position": 1,
+      "bloodpoint_cost": 0,
+      "frame": "purple",
+      "frame_semantics_status": "CHECK_REQUIRED",
+      "text_original_zh": "替代你的回合中的交互，沿着任意路线移动，包括沿着单向路线反向移动，然后获得1血点。",
+      "transcription_confidence": "HIGH",
+      "implementation_status": "IMPLEMENTED_TESTED",
+      "chinese_print_evidence": {
+        "source_level": "D",
+        "source_ref": [
+          "D46:reference/characters/survivor_nea.png / 妮娅·卡尔森人物板"
+        ],
+        "status": "CHECK_REQUIRED"
+      },
+      "field_evidence": {
+        "name_zh": {
+          "source_level": "D",
+          "source_ref": [
+            "D46:reference/characters/survivor_nea.png / 妮娅·卡尔森人物板"
+          ],
+          "status": "CHECK_REQUIRED"
+        }
+      },
+      "structured_effect_draft": {
+        "source_level": "D",
+        "source_ref": [
+          "D46:reference/characters/survivor_nea.png / 妮娅·卡尔森人物板"
+        ],
+        "status": "CONFIRMED",
+        "source_text_zh": "替代你的回合中的交互，沿着任意路线移动，包括沿着单向路线反向移动，然后获得1血点。",
+        "implementation_status": "IMPLEMENTED_TESTED",
+        "requires_semantic_review": false,
+        "kind": "PERK",
+        "trigger": {
+          "event": "INSTEAD_OF_OWN_TURN_INTERACTION"
+        },
+        "conditions": [],
+        "effects": [
+          {
+            "operation": "MOVE",
+            "text_zh": "沿任意路线移动，包括逆单向"
+          },
+          {
+            "operation": "GAIN_BLOODPOINTS",
+            "text_zh": "获得1血点"
+          }
+        ],
+        "resolution_scope": "DRAFT_ONLY_NOT_RUNTIME_DSL",
+        "cost": {
+          "bloodpoints": 0
+        },
+        "usage_limit": {
+          "per_round": 1,
+          "source_ref": [
+            "B01:p16"
+          ]
+        },
+        "adoption_basis": "USER_ACCEPTED_CN_RETAIL",
+        "adoption_ref": "U02:中文零售资料优先",
+        "japanese_missing_blocks_runtime": false
+      },
+      "edition_scope": "BASE_STANDARD",
+      "effect_original_ja": null,
+      "effect_original_en": null,
+      "previous_research_status": "CHECK_REQUIRED",
+      "adoption_basis": "USER_ACCEPTED_CN_RETAIL",
+      "adoption_ref": "U02:来源优先级与Phase1采用",
+      "japanese_missing_blocks_runtime": false,
+      "implementation_ref": "packages/game-engine/src/skills.ts",
+      "test_ref": "packages/game-engine/test/skills.test.ts"
+    },
+    {
+      "id": "board_nea_2",
+      "name_ja": null,
+      "name_en": null,
+      "name_zh": "暴走族",
+      "translation_status": "OFFICIAL_ZH_PRINT",
+      "japanese_text_status": "CHECK_REQUIRED",
+      "side": "survivor",
+      "owner_id": "nea",
+      "source_level": "D",
+      "source_ref": [
+        "D46:reference/characters/survivor_nea.png / 妮娅·卡尔森人物板"
+      ],
+      "status": "CONFIRMED",
+      "on_board": true,
+      "board_position": 2,
+      "bloodpoint_cost": 1,
+      "frame": "green",
+      "frame_semantics_status": "CHECK_REQUIRED",
+      "text_original_zh": "在任意逃生者回合开始时，将一个可破坏墙壁移出场外。在该逃生者回合结束时，将这个可破坏墙壁放回同一条路线上。",
+      "transcription_confidence": "HIGH",
+      "implementation_status": "IMPLEMENTED_TESTED",
+      "chinese_print_evidence": {
+        "source_level": "D",
+        "source_ref": [
+          "D46:reference/characters/survivor_nea.png / 妮娅·卡尔森人物板"
+        ],
+        "status": "CHECK_REQUIRED"
+      },
+      "field_evidence": {
+        "name_zh": {
+          "source_level": "D",
+          "source_ref": [
+            "D46:reference/characters/survivor_nea.png / 妮娅·卡尔森人物板"
+          ],
+          "status": "CHECK_REQUIRED"
+        }
+      },
+      "structured_effect_draft": {
+        "source_level": "D",
+        "source_ref": [
+          "D46:reference/characters/survivor_nea.png / 妮娅·卡尔森人物板"
+        ],
+        "status": "CONFIRMED",
+        "source_text_zh": "在任意逃生者回合开始时，将一个可破坏墙壁移出场外。在该逃生者回合结束时，将这个可破坏墙壁放回同一条路线上。",
+        "implementation_status": "IMPLEMENTED_TESTED",
+        "requires_semantic_review": false,
+        "kind": "PERK",
+        "trigger": {
+          "event": "ANY_SURVIVOR_TURN_START"
+        },
+        "conditions": [
+          "选择可破坏墙壁"
+        ],
+        "effects": [
+          {
+            "operation": "TEMPORARILY_REMOVE_WALL",
+            "text_zh": "移出场外"
+          },
+          {
+            "operation": "RESTORE_WALL_AT_TURN_END",
+            "text_zh": "该逃生者回合结束，放回同一路线"
+          }
+        ],
+        "resolution_scope": "DRAFT_ONLY_NOT_RUNTIME_DSL",
+        "cost": {
+          "bloodpoints": 1
+        },
+        "usage_limit": {
+          "per_round": 1,
+          "source_ref": [
+            "B01:p16"
+          ]
+        },
+        "adoption_basis": "USER_ACCEPTED_CN_RETAIL",
+        "adoption_ref": "U02:中文零售资料优先",
+        "japanese_missing_blocks_runtime": false
+      },
+      "edition_scope": "BASE_STANDARD",
+      "effect_original_ja": null,
+      "effect_original_en": null,
+      "previous_research_status": "CHECK_REQUIRED",
+      "adoption_basis": "USER_ACCEPTED_CN_RETAIL",
+      "adoption_ref": "U02:来源优先级与Phase1采用",
+      "japanese_missing_blocks_runtime": false,
+      "implementation_ref": "packages/game-engine/src/skills.ts",
+      "test_ref": "packages/game-engine/test/skills.test.ts"
+    },
+    {
+      "id": "board_nea_3",
+      "name_ja": null,
+      "name_en": null,
+      "name_zh": "都市生存",
+      "translation_status": "OFFICIAL_ZH_PRINT",
+      "japanese_text_status": "CHECK_REQUIRED",
+      "side": "survivor",
+      "owner_id": "nea",
+      "source_level": "D",
+      "source_ref": [
+        "D46:reference/characters/survivor_nea.png / 妮娅·卡尔森人物板"
+      ],
+      "status": "CONFIRMED",
+      "on_board": true,
+      "board_position": 3,
+      "bloodpoint_cost": 1,
+      "frame": "green",
+      "frame_semantics_status": "CHECK_REQUIRED",
+      "text_original_zh": "当你与一个箱子交互之后，该箱子不会被移除。",
+      "transcription_confidence": "HIGH",
+      "implementation_status": "IMPLEMENTED_TESTED",
+      "chinese_print_evidence": {
+        "source_level": "D",
+        "source_ref": [
+          "D46:reference/characters/survivor_nea.png / 妮娅·卡尔森人物板"
+        ],
+        "status": "CHECK_REQUIRED"
+      },
+      "field_evidence": {
+        "name_zh": {
+          "source_level": "D",
+          "source_ref": [
+            "D46:reference/characters/survivor_nea.png / 妮娅·卡尔森人物板"
+          ],
+          "status": "CHECK_REQUIRED"
+        }
+      },
+      "structured_effect_draft": {
+        "source_level": "D",
+        "source_ref": [
+          "D46:reference/characters/survivor_nea.png / 妮娅·卡尔森人物板"
+        ],
+        "status": "CONFIRMED",
+        "source_text_zh": "当你与一个箱子交互之后，该箱子不会被移除。",
+        "implementation_status": "IMPLEMENTED_TESTED",
+        "requires_semantic_review": false,
+        "kind": "PERK",
+        "trigger": {
+          "event": "AFTER_SELF_INTERACTS_WITH_CHEST"
+        },
+        "conditions": [],
+        "effects": [
+          {
+            "operation": "KEEP_CHEST",
+            "text_zh": "该箱子不被移除"
+          }
+        ],
+        "resolution_scope": "DRAFT_ONLY_NOT_RUNTIME_DSL",
+        "cost": {
+          "bloodpoints": 1
+        },
+        "usage_limit": {
+          "per_round": 1,
+          "source_ref": [
+            "B01:p16"
+          ]
+        },
+        "adoption_basis": "USER_ACCEPTED_CN_RETAIL",
+        "adoption_ref": "U02:中文零售资料优先",
+        "japanese_missing_blocks_runtime": false
+      },
+      "edition_scope": "BASE_STANDARD",
+      "effect_original_ja": null,
+      "effect_original_en": null,
+      "previous_research_status": "CHECK_REQUIRED",
+      "adoption_basis": "USER_ACCEPTED_CN_RETAIL",
+      "adoption_ref": "U02:来源优先级与Phase1采用",
+      "japanese_missing_blocks_runtime": false,
+      "implementation_ref": "packages/game-engine/src/skills.ts",
+      "test_ref": "packages/game-engine/test/skills.test.ts"
+    },
+    {
+      "id": "board_ace_1",
+      "name_ja": null,
+      "name_en": null,
+      "name_zh": "稳操胜券",
+      "translation_status": "OFFICIAL_ZH_PRINT",
+      "japanese_text_status": "CHECK_REQUIRED",
+      "side": "survivor",
+      "owner_id": "ace",
+      "source_level": "D",
+      "source_ref": [
+        "D51:reference/characters/survivors_kate_ace_dwight.png / 埃斯·维斯孔蒂人物板"
+      ],
+      "status": "CONFIRMED",
+      "on_board": true,
+      "board_position": 1,
+      "bloodpoint_cost": 1,
+      "frame": "purple",
+      "frame_semantics_status": "CHECK_REQUIRED",
+      "text_original_zh": "在任意逃生者的回合开始时，翻开杀手放置的一张移动牌。",
+      "transcription_confidence": "HIGH",
+      "implementation_status": "IMPLEMENTED_TESTED",
+      "chinese_print_evidence": {
+        "source_level": "D",
+        "source_ref": [
+          "D51:reference/characters/survivors_kate_ace_dwight.png / 埃斯·维斯孔蒂人物板"
+        ],
+        "status": "CHECK_REQUIRED"
+      },
+      "field_evidence": {
+        "name_zh": {
+          "source_level": "D",
+          "source_ref": [
+            "D51:reference/characters/survivors_kate_ace_dwight.png / 埃斯·维斯孔蒂人物板"
+          ],
+          "status": "CHECK_REQUIRED"
+        }
+      },
+      "structured_effect_draft": {
+        "source_level": "D",
+        "source_ref": [
+          "D51:reference/characters/survivors_kate_ace_dwight.png / 埃斯·维斯孔蒂人物板"
+        ],
+        "status": "CONFIRMED",
+        "source_text_zh": "在任意逃生者的回合开始时，翻开杀手放置的一张移动牌。",
+        "implementation_status": "IMPLEMENTED_TESTED",
+        "requires_semantic_review": false,
+        "kind": "PERK",
+        "trigger": {
+          "event": "ANY_SURVIVOR_TURN_START"
+        },
+        "conditions": [],
+        "effects": [
+          {
+            "operation": "REVEAL_PLANNED_MOVEMENT",
+            "text_zh": "翻开杀手放置的1张移动牌"
+          }
+        ],
+        "resolution_scope": "DRAFT_ONLY_NOT_RUNTIME_DSL",
+        "cost": {
+          "bloodpoints": 1
+        },
+        "usage_limit": {
+          "per_round": 1,
+          "source_ref": [
+            "B01:p16"
+          ]
+        },
+        "adoption_basis": "USER_ACCEPTED_CN_RETAIL",
+        "adoption_ref": "U02:中文零售资料优先",
+        "japanese_missing_blocks_runtime": false
+      },
+      "edition_scope": "BASE_STANDARD",
+      "effect_original_ja": null,
+      "effect_original_en": null,
+      "previous_research_status": "CHECK_REQUIRED",
+      "adoption_basis": "USER_ACCEPTED_CN_RETAIL",
+      "adoption_ref": "U02:来源优先级与Phase1采用",
+      "japanese_missing_blocks_runtime": false,
+      "implementation_ref": "packages/game-engine/src/skills.ts",
+      "test_ref": "packages/game-engine/test/skills.test.ts"
+    },
+    {
+      "id": "board_ace_2",
+      "name_ja": null,
+      "name_en": null,
+      "name_zh": "锦囊妙计",
+      "translation_status": "OFFICIAL_ZH_PRINT",
+      "japanese_text_status": "CHECK_REQUIRED",
+      "side": "survivor",
+      "owner_id": "ace",
+      "source_level": "D",
+      "source_ref": [
+        "D51:reference/characters/survivors_kate_ace_dwight.png / 埃斯·维斯孔蒂人物板"
+      ],
+      "status": "CONFIRMED",
+      "on_board": true,
+      "board_position": 2,
+      "bloodpoint_cost": 1,
+      "frame": "green",
+      "frame_semantics_status": "CHECK_REQUIRED",
+      "text_original_zh": "在你交互之前，将你所在空间里的一个道具与一个相连空间里的同一类别的另一个道具交换。有进度指示物的发电机、被占用的储物柜以及被占用的钩子不能被交换。",
+      "transcription_confidence": "HIGH",
+      "implementation_status": "IMPLEMENTED_TESTED",
+      "chinese_print_evidence": {
+        "source_level": "D",
+        "source_ref": [
+          "D51:reference/characters/survivors_kate_ace_dwight.png / 埃斯·维斯孔蒂人物板"
+        ],
+        "status": "CHECK_REQUIRED"
+      },
+      "field_evidence": {
+        "name_zh": {
+          "source_level": "D",
+          "source_ref": [
+            "D51:reference/characters/survivors_kate_ace_dwight.png / 埃斯·维斯孔蒂人物板"
+          ],
+          "status": "CHECK_REQUIRED"
+        }
+      },
+      "structured_effect_draft": {
+        "source_level": "D",
+        "source_ref": [
+          "D51:reference/characters/survivors_kate_ace_dwight.png / 埃斯·维斯孔蒂人物板"
+        ],
+        "status": "CONFIRMED",
+        "source_text_zh": "在你交互之前，将你所在空间里的一个道具与一个相连空间里的同一类别的另一个道具交换。有进度指示物的发电机、被占用的储物柜以及被占用的钩子不能被交换。",
+        "implementation_status": "IMPLEMENTED_TESTED",
+        "requires_semantic_review": false,
+        "kind": "PERK",
+        "trigger": {
+          "event": "BEFORE_SELF_INTERACTION"
+        },
+        "conditions": [
+          "两个道具同类别；一个在自己空间，一个在相连空间",
+          "不能交换有进度发电机、被占用储物柜或钩子"
+        ],
+        "effects": [
+          {
+            "operation": "SWAP_PROPS",
+            "text_zh": "交换这两个道具"
+          }
+        ],
+        "resolution_scope": "DRAFT_ONLY_NOT_RUNTIME_DSL",
+        "cost": {
+          "bloodpoints": 1
+        },
+        "usage_limit": {
+          "per_round": 1,
+          "source_ref": [
+            "B01:p16"
+          ]
+        },
+        "adoption_basis": "USER_ACCEPTED_CN_RETAIL",
+        "adoption_ref": "U02:中文零售资料优先",
+        "japanese_missing_blocks_runtime": false
+      },
+      "edition_scope": "BASE_STANDARD",
+      "effect_original_ja": null,
+      "effect_original_en": null,
+      "previous_research_status": "CHECK_REQUIRED",
+      "adoption_basis": "USER_ACCEPTED_CN_RETAIL",
+      "adoption_ref": "U02:来源优先级与Phase1采用",
+      "japanese_missing_blocks_runtime": false,
+      "implementation_ref": "packages/game-engine/src/skills.ts",
+      "test_ref": "packages/game-engine/test/skills.test.ts"
+    },
+    {
+      "id": "board_ace_3",
+      "name_ja": null,
+      "name_en": null,
+      "name_zh": "好运会传染",
+      "translation_status": "OFFICIAL_ZH_PRINT",
+      "japanese_text_status": "CHECK_REQUIRED",
+      "side": "survivor",
+      "owner_id": "ace",
+      "source_level": "D",
+      "source_ref": [
+        "D51:reference/characters/survivors_kate_ace_dwight.png / 埃斯·维斯孔蒂人物板"
+      ],
+      "status": "CONFIRMED",
+      "on_board": true,
+      "board_position": 3,
+      "bloodpoint_cost": 2,
+      "frame": "green",
+      "frame_semantics_status": "CHECK_REQUIRED",
+      "text_original_zh": "在你的回合结束时，执行一个逃生者额外回合。杀手获得2血点。",
+      "transcription_confidence": "HIGH",
+      "implementation_status": "IMPLEMENTED_TESTED",
+      "chinese_print_evidence": {
+        "source_level": "D",
+        "source_ref": [
+          "D51:reference/characters/survivors_kate_ace_dwight.png / 埃斯·维斯孔蒂人物板"
+        ],
+        "status": "CHECK_REQUIRED"
+      },
+      "field_evidence": {
+        "name_zh": {
+          "source_level": "D",
+          "source_ref": [
+            "D51:reference/characters/survivors_kate_ace_dwight.png / 埃斯·维斯孔蒂人物板"
+          ],
+          "status": "CHECK_REQUIRED"
+        }
+      },
+      "structured_effect_draft": {
+        "source_level": "D",
+        "source_ref": [
+          "D51:reference/characters/survivors_kate_ace_dwight.png / 埃斯·维斯孔蒂人物板"
+        ],
+        "status": "CONFIRMED",
+        "source_text_zh": "在你的回合结束时，执行一个逃生者额外回合。杀手获得2血点。",
+        "implementation_status": "IMPLEMENTED_TESTED",
+        "requires_semantic_review": false,
+        "kind": "PERK",
+        "trigger": {
+          "event": "OWN_TURN_END"
+        },
+        "conditions": [],
+        "effects": [
+          {
+            "operation": "SURVIVOR_BONUS_TURN",
+            "text_zh": "执行1个逃生者额外回合"
+          },
+          {
+            "operation": "KILLER_GAIN_BLOODPOINTS",
+            "text_zh": "杀手获得2血点"
+          }
+        ],
+        "resolution_scope": "DRAFT_ONLY_NOT_RUNTIME_DSL",
+        "cost": {
+          "bloodpoints": 2
+        },
+        "usage_limit": {
+          "per_round": 1,
+          "source_ref": [
+            "B01:p16"
+          ]
+        },
+        "adoption_basis": "USER_ACCEPTED_CN_RETAIL",
+        "adoption_ref": "U02:中文零售资料优先",
+        "japanese_missing_blocks_runtime": false
+      },
+      "edition_scope": "BASE_STANDARD",
+      "effect_original_ja": null,
+      "effect_original_en": null,
+      "previous_research_status": "CHECK_REQUIRED",
+      "adoption_basis": "USER_ACCEPTED_CN_RETAIL",
+      "adoption_ref": "U02:来源优先级与Phase1采用",
+      "japanese_missing_blocks_runtime": false,
+      "implementation_ref": "packages/game-engine/src/skills.ts",
+      "test_ref": "packages/game-engine/test/skills.test.ts"
+    },
+    {
+      "id": "board_feng_min_1",
+      "name_ja": null,
+      "name_en": null,
+      "name_zh": "轻盈敏捷",
+      "translation_status": "OFFICIAL_ZH_PRINT",
+      "japanese_text_status": "CHECK_REQUIRED",
+      "side": "survivor",
+      "owner_id": "feng_min",
+      "source_level": "D",
+      "source_ref": [
+        "D50:reference/characters/survivors_feng_felix_nea.png / 凤敏人物板"
+      ],
+      "status": "CHECK_REQUIRED",
+      "on_board": true,
+      "board_position": 1,
+      "bloodpoint_cost": 0,
+      "frame": "purple",
+      "frame_semantics_status": "CHECK_REQUIRED",
+      "text_original_zh": "在你的回合中，当你移动穿过一个木板或离开一个有木板的空间时，在交互之前（如果你将要交互）沿着任意其它路线再次移动。",
+      "transcription_confidence": "HIGH",
+      "implementation_status": "DEFERRED_PHASE_4",
+      "chinese_print_evidence": {
+        "source_level": "D",
+        "source_ref": [
+          "D50:reference/characters/survivors_feng_felix_nea.png / 凤敏人物板"
+        ],
+        "status": "CHECK_REQUIRED"
+      },
+      "field_evidence": {
+        "name_zh": {
+          "source_level": "D",
+          "source_ref": [
+            "D50:reference/characters/survivors_feng_felix_nea.png / 凤敏人物板"
+          ],
+          "status": "CHECK_REQUIRED"
+        }
+      },
+      "structured_effect_draft": {
+        "source_level": "D",
+        "source_ref": [
+          "D50:reference/characters/survivors_feng_felix_nea.png / 凤敏人物板"
+        ],
+        "status": "CHECK_REQUIRED",
+        "source_text_zh": "在你的回合中，当你移动穿过一个木板或离开一个有木板的空间时，在交互之前（如果你将要交互）沿着任意其它路线再次移动。",
+        "implementation_status": "NOT_IMPLEMENTED",
+        "requires_semantic_review": true,
+        "kind": "PERK",
+        "trigger": {
+          "event": "OWN_TURN_AFTER_MOVE_BEFORE_INTERACTION"
+        },
+        "conditions": [
+          "移动穿过木板或离开有木板空间；空间/路线术语须复核"
+        ],
+        "effects": [
+          {
+            "operation": "MOVE",
+            "text_zh": "沿任意其它路线再次移动"
+          }
+        ],
+        "resolution_scope": "DRAFT_ONLY_NOT_RUNTIME_DSL",
+        "cost": {
+          "bloodpoints": 0
+        },
+        "usage_limit": {
+          "per_round": 1,
+          "source_ref": [
+            "B01:p16"
+          ]
+        }
+      },
+      "edition_scope": "BASE_STANDARD",
+      "effect_original_ja": null,
+      "effect_original_en": null,
+      "previous_research_status": "CHECK_REQUIRED",
+      "adoption_basis": "USER_ACCEPTED_CN_RETAIL",
+      "adoption_ref": "U02:来源优先级与Phase1采用",
+      "japanese_missing_blocks_runtime": false,
+      "question_ref": "Q11",
+      "deferred_phase": 4,
+      "implementation_ref": "packages/game-engine/src/skills.ts",
+      "test_ref": "packages/game-engine/test/skills.test.ts",
+      "deferred_reason": "Q11 其它路线/木板空间语义"
+    },
+    {
+      "id": "board_feng_min_2",
+      "name_ja": null,
+      "name_en": null,
+      "name_zh": "警戒",
+      "translation_status": "OFFICIAL_ZH_PRINT",
+      "japanese_text_status": "CHECK_REQUIRED",
+      "side": "survivor",
+      "owner_id": "feng_min",
+      "source_level": "D",
+      "source_ref": [
+        "D50:reference/characters/survivors_feng_felix_nea.png / 凤敏人物板"
+      ],
+      "status": "CONFIRMED",
+      "on_board": true,
+      "board_position": 2,
+      "bloodpoint_cost": 1,
+      "frame": "green",
+      "frame_semantics_status": "CHECK_REQUIRED",
+      "text_original_zh": "当杀手摧毁一个木板、移动穿过一个可破坏墙壁或破坏一台发电机时，你沿着任意路线移动。",
+      "transcription_confidence": "HIGH",
+      "implementation_status": "IMPLEMENTED_TESTED",
+      "chinese_print_evidence": {
+        "source_level": "D",
+        "source_ref": [
+          "D50:reference/characters/survivors_feng_felix_nea.png / 凤敏人物板"
+        ],
+        "status": "CHECK_REQUIRED"
+      },
+      "field_evidence": {
+        "name_zh": {
+          "source_level": "D",
+          "source_ref": [
+            "D50:reference/characters/survivors_feng_felix_nea.png / 凤敏人物板"
+          ],
+          "status": "CHECK_REQUIRED"
+        }
+      },
+      "structured_effect_draft": {
+        "source_level": "D",
+        "source_ref": [
+          "D50:reference/characters/survivors_feng_felix_nea.png / 凤敏人物板"
+        ],
+        "status": "CONFIRMED",
+        "source_text_zh": "当杀手摧毁一个木板、移动穿过一个可破坏墙壁或破坏一台发电机时，你沿着任意路线移动。",
+        "implementation_status": "IMPLEMENTED_TESTED",
+        "requires_semantic_review": false,
+        "kind": "PERK",
+        "trigger": {
+          "event": "KILLER_DESTROYS_PALLET_OR_PASSES_WALL_OR_DAMAGES_GENERATOR"
+        },
+        "conditions": [],
+        "effects": [
+          {
+            "operation": "MOVE",
+            "text_zh": "自己沿任意路线移动"
+          }
+        ],
+        "resolution_scope": "DRAFT_ONLY_NOT_RUNTIME_DSL",
+        "cost": {
+          "bloodpoints": 1
+        },
+        "usage_limit": {
+          "per_round": 1,
+          "source_ref": [
+            "B01:p16"
+          ]
+        },
+        "adoption_basis": "USER_ACCEPTED_CN_RETAIL",
+        "adoption_ref": "U02:中文零售资料优先",
+        "japanese_missing_blocks_runtime": false
+      },
+      "edition_scope": "BASE_STANDARD",
+      "effect_original_ja": null,
+      "effect_original_en": null,
+      "previous_research_status": "CHECK_REQUIRED",
+      "adoption_basis": "USER_ACCEPTED_CN_RETAIL",
+      "adoption_ref": "U02:来源优先级与Phase1采用",
+      "japanese_missing_blocks_runtime": false,
+      "implementation_ref": "packages/game-engine/src/skills.ts",
+      "test_ref": "packages/game-engine/test/skills.test.ts"
+    },
+    {
+      "id": "board_feng_min_3",
+      "name_ja": null,
+      "name_en": null,
+      "name_zh": "技术员",
+      "translation_status": "OFFICIAL_ZH_PRINT",
+      "japanese_text_status": "CHECK_REQUIRED",
+      "side": "survivor",
+      "owner_id": "feng_min",
+      "source_level": "D",
+      "source_ref": [
+        "D50:reference/characters/survivors_feng_felix_nea.png / 凤敏人物板"
+      ],
+      "status": "CONFIRMED",
+      "on_board": true,
+      "board_position": 3,
+      "bloodpoint_cost": 0,
+      "frame": "green",
+      "frame_semantics_status": "CHECK_REQUIRED",
+      "text_original_zh": "当你在与一台发电机交互期间掷出失败时，再次交互。第二次交互必须以另一个道具或逃生者作为目标。",
+      "transcription_confidence": "HIGH",
+      "implementation_status": "IMPLEMENTED_TESTED",
+      "chinese_print_evidence": {
+        "source_level": "D",
+        "source_ref": [
+          "D50:reference/characters/survivors_feng_felix_nea.png / 凤敏人物板"
+        ],
+        "status": "CHECK_REQUIRED"
+      },
+      "field_evidence": {
+        "name_zh": {
+          "source_level": "D",
+          "source_ref": [
+            "D50:reference/characters/survivors_feng_felix_nea.png / 凤敏人物板"
+          ],
+          "status": "CHECK_REQUIRED"
+        }
+      },
+      "structured_effect_draft": {
+        "source_level": "D",
+        "source_ref": [
+          "D50:reference/characters/survivors_feng_felix_nea.png / 凤敏人物板"
+        ],
+        "status": "CONFIRMED",
+        "source_text_zh": "当你在与一台发电机交互期间掷出失败时，再次交互。第二次交互必须以另一个道具或逃生者作为目标。",
+        "implementation_status": "IMPLEMENTED_TESTED",
+        "requires_semantic_review": false,
+        "kind": "PERK",
+        "trigger": {
+          "event": "SELF_ROLLS_FAILURE_DURING_GENERATOR_INTERACTION"
+        },
+        "conditions": [
+          "第二次交互必须选另一个道具或逃生者"
+        ],
+        "effects": [
+          {
+            "operation": "INTERACT_AGAIN",
+            "text_zh": "再次交互"
+          }
+        ],
+        "resolution_scope": "DRAFT_ONLY_NOT_RUNTIME_DSL",
+        "cost": {
+          "bloodpoints": 0
+        },
+        "usage_limit": {
+          "per_round": 1,
+          "source_ref": [
+            "B01:p16"
+          ]
+        },
+        "adoption_basis": "USER_ACCEPTED_CN_RETAIL",
+        "adoption_ref": "U02:中文零售资料优先",
+        "japanese_missing_blocks_runtime": false
+      },
+      "edition_scope": "BASE_STANDARD",
+      "effect_original_ja": null,
+      "effect_original_en": null,
+      "previous_research_status": "CHECK_REQUIRED",
+      "adoption_basis": "USER_ACCEPTED_CN_RETAIL",
+      "adoption_ref": "U02:来源优先级与Phase1采用",
+      "japanese_missing_blocks_runtime": false,
+      "implementation_ref": "packages/game-engine/src/skills.ts",
+      "test_ref": "packages/game-engine/test/skills.test.ts"
+    },
+    {
+      "id": "board_trapper_1",
+      "name_ja": null,
+      "name_en": null,
+      "name_zh": "所向无敌",
+      "translation_status": "OFFICIAL_ZH_PRINT",
+      "japanese_text_status": "CHECK_REQUIRED",
+      "side": "killer",
+      "owner_id": "trapper",
+      "source_level": "D",
+      "source_ref": [
+        "D45:reference/characters/killers_trapper_trickster_deathslinger.png / 设陷者人物板"
+      ],
+      "status": "CONFIRMED",
+      "on_board": true,
+      "board_position": 1,
+      "bloodpoint_cost": 1,
+      "frame": "purple",
+      "frame_semantics_status": "CHECK_REQUIRED",
+      "text_original_zh": "当你攻击一位健康的逃生者之后，将他沿着任意路线移动。如果你将他移动穿过一个木板或可破坏墙壁，摧毁该木板或可破坏墙壁。",
+      "transcription_confidence": "HIGH",
+      "implementation_status": "IMPLEMENTED_TESTED",
+      "chinese_print_evidence": {
+        "source_level": "D",
+        "source_ref": [
+          "D45:reference/characters/killers_trapper_trickster_deathslinger.png / 设陷者人物板"
+        ],
+        "status": "CHECK_REQUIRED"
+      },
+      "field_evidence": {
+        "name_zh": {
+          "source_level": "D",
+          "source_ref": [
+            "D45:reference/characters/killers_trapper_trickster_deathslinger.png / 设陷者人物板"
+          ],
+          "status": "CHECK_REQUIRED"
+        }
+      },
+      "structured_effect_draft": {
+        "source_level": "D",
+        "source_ref": [
+          "D45:reference/characters/killers_trapper_trickster_deathslinger.png / 设陷者人物板"
+        ],
+        "status": "CONFIRMED",
+        "source_text_zh": "当你攻击一位健康的逃生者之后，将他沿着任意路线移动。如果你将他移动穿过一个木板或可破坏墙壁，摧毁该木板或可破坏墙壁。",
+        "implementation_status": "IMPLEMENTED_TESTED",
+        "requires_semantic_review": false,
+        "kind": "PERK",
+        "trigger": {
+          "event": "AFTER_ATTACKING_HEALTHY_SURVIVOR"
+        },
+        "conditions": [],
+        "effects": [
+          {
+            "operation": "MOVE_TARGET_SURVIVOR",
+            "text_zh": "使其沿任意路线移动"
+          },
+          {
+            "operation": "DESTROY_CROSSED_BLOCKER",
+            "text_zh": "若穿过木板或可破坏墙则摧毁"
+          }
+        ],
+        "resolution_scope": "DRAFT_ONLY_NOT_RUNTIME_DSL",
+        "cost": {
+          "bloodpoints": 1
+        },
+        "usage_limit": {
+          "per_round": 1,
+          "source_ref": [
+            "B01:p16"
+          ]
+        },
+        "adoption_basis": "USER_ACCEPTED_CN_RETAIL",
+        "adoption_ref": "U02:中文零售资料优先",
+        "japanese_missing_blocks_runtime": false
+      },
+      "edition_scope": "BASE_STANDARD",
+      "effect_original_ja": null,
+      "effect_original_en": null,
+      "previous_research_status": "CHECK_REQUIRED",
+      "adoption_basis": "USER_ACCEPTED_CN_RETAIL",
+      "adoption_ref": "U02:来源优先级与Phase1采用",
+      "japanese_missing_blocks_runtime": false,
+      "implementation_ref": "packages/game-engine/src/skills.ts",
+      "test_ref": "packages/game-engine/test/skills.test.ts"
+    },
+    {
+      "id": "board_trapper_2",
+      "name_ja": null,
+      "name_en": null,
+      "name_zh": "恐慌降临",
+      "translation_status": "OFFICIAL_ZH_PRINT",
+      "japanese_text_status": "CHECK_REQUIRED",
+      "side": "killer",
+      "owner_id": "trapper",
+      "source_level": "D",
+      "source_ref": [
+        "D45:reference/characters/killers_trapper_trickster_deathslinger.png / 设陷者人物板"
+      ],
+      "status": "CONFIRMED",
+      "on_board": true,
+      "board_position": 2,
+      "bloodpoint_cost": 1,
+      "frame": "green",
+      "frame_semantics_status": "CHECK_REQUIRED",
+      "text_original_zh": "当你所在空间或一个相连空间里的一位逃生者将要进行一次技能检定时，改为由他掷危险骰子。",
+      "transcription_confidence": "HIGH",
+      "implementation_status": "IMPLEMENTED_TESTED",
+      "chinese_print_evidence": {
+        "source_level": "D",
+        "source_ref": [
+          "D45:reference/characters/killers_trapper_trickster_deathslinger.png / 设陷者人物板"
+        ],
+        "status": "CHECK_REQUIRED"
+      },
+      "field_evidence": {
+        "name_zh": {
+          "source_level": "D",
+          "source_ref": [
+            "D45:reference/characters/killers_trapper_trickster_deathslinger.png / 设陷者人物板"
+          ],
+          "status": "CHECK_REQUIRED"
+        }
+      },
+      "structured_effect_draft": {
+        "source_level": "D",
+        "source_ref": [
+          "D45:reference/characters/killers_trapper_trickster_deathslinger.png / 设陷者人物板"
+        ],
+        "status": "CONFIRMED",
+        "source_text_zh": "当你所在空间或一个相连空间里的一位逃生者将要进行一次技能检定时，改为由他掷危险骰子。",
+        "implementation_status": "IMPLEMENTED_TESTED",
+        "requires_semantic_review": false,
+        "kind": "PERK",
+        "trigger": {
+          "event": "NEARBY_SURVIVOR_WOULD_SKILL_CHECK"
+        },
+        "conditions": [
+          "目标在自己所在或相连空间"
+        ],
+        "effects": [
+          {
+            "operation": "REPLACE_DIE",
+            "text_zh": "改掷危险骰子"
+          }
+        ],
+        "resolution_scope": "DRAFT_ONLY_NOT_RUNTIME_DSL",
+        "cost": {
+          "bloodpoints": 1
+        },
+        "usage_limit": {
+          "per_round": 1,
+          "source_ref": [
+            "B01:p16"
+          ]
+        },
+        "adoption_basis": "USER_ACCEPTED_CN_RETAIL",
+        "adoption_ref": "U02:中文零售资料优先",
+        "japanese_missing_blocks_runtime": false
+      },
+      "edition_scope": "BASE_STANDARD",
+      "effect_original_ja": null,
+      "effect_original_en": null,
+      "previous_research_status": "CHECK_REQUIRED",
+      "adoption_basis": "USER_ACCEPTED_CN_RETAIL",
+      "adoption_ref": "U02:来源优先级与Phase1采用",
+      "japanese_missing_blocks_runtime": false,
+      "implementation_ref": "packages/game-engine/src/skills.ts",
+      "test_ref": "packages/game-engine/test/skills.test.ts"
+    },
+    {
+      "id": "board_trapper_3",
+      "name_ja": null,
+      "name_en": null,
+      "name_zh": "欣喜若狂",
+      "translation_status": "OFFICIAL_ZH_PRINT",
+      "japanese_text_status": "CHECK_REQUIRED",
+      "side": "killer",
+      "owner_id": "trapper",
+      "source_level": "D",
+      "source_ref": [
+        "D45:reference/characters/killers_trapper_trickster_deathslinger.png / 设陷者人物板"
+      ],
+      "status": "CONFIRMED",
+      "on_board": true,
+      "board_position": 3,
+      "bloodpoint_cost": 1,
+      "frame": "green",
+      "frame_semantics_status": "CHECK_REQUIRED",
+      "text_original_zh": "当你攻击一位健康的逃生者之后，沿着任意路线移动。",
+      "transcription_confidence": "HIGH",
+      "implementation_status": "IMPLEMENTED_TESTED",
+      "chinese_print_evidence": {
+        "source_level": "D",
+        "source_ref": [
+          "D45:reference/characters/killers_trapper_trickster_deathslinger.png / 设陷者人物板"
+        ],
+        "status": "CHECK_REQUIRED"
+      },
+      "field_evidence": {
+        "name_zh": {
+          "source_level": "D",
+          "source_ref": [
+            "D45:reference/characters/killers_trapper_trickster_deathslinger.png / 设陷者人物板"
+          ],
+          "status": "CHECK_REQUIRED"
+        }
+      },
+      "structured_effect_draft": {
+        "source_level": "D",
+        "source_ref": [
+          "D45:reference/characters/killers_trapper_trickster_deathslinger.png / 设陷者人物板"
+        ],
+        "status": "CONFIRMED",
+        "source_text_zh": "当你攻击一位健康的逃生者之后，沿着任意路线移动。",
+        "implementation_status": "IMPLEMENTED_TESTED",
+        "requires_semantic_review": false,
+        "kind": "PERK",
+        "trigger": {
+          "event": "AFTER_ATTACKING_HEALTHY_SURVIVOR"
+        },
+        "conditions": [],
+        "effects": [
+          {
+            "operation": "MOVE_SELF",
+            "text_zh": "沿任意路线移动"
+          }
+        ],
+        "resolution_scope": "DRAFT_ONLY_NOT_RUNTIME_DSL",
+        "cost": {
+          "bloodpoints": 1
+        },
+        "usage_limit": {
+          "per_round": 1,
+          "source_ref": [
+            "B01:p16"
+          ]
+        },
+        "adoption_basis": "USER_ACCEPTED_CN_RETAIL",
+        "adoption_ref": "U02:中文零售资料优先",
+        "japanese_missing_blocks_runtime": false
+      },
+      "edition_scope": "BASE_STANDARD",
+      "effect_original_ja": null,
+      "effect_original_en": null,
+      "previous_research_status": "CHECK_REQUIRED",
+      "adoption_basis": "USER_ACCEPTED_CN_RETAIL",
+      "adoption_ref": "U02:来源优先级与Phase1采用",
+      "japanese_missing_blocks_runtime": false,
+      "implementation_ref": "packages/game-engine/src/skills.ts",
+      "test_ref": "packages/game-engine/test/skills.test.ts"
+    },
+    {
+      "id": "board_wraith_1",
+      "name_ja": null,
+      "name_en": null,
+      "name_zh": "暗夜之睛",
+      "translation_status": "OFFICIAL_ZH_PRINT",
+      "japanese_text_status": "CHECK_REQUIRED",
+      "side": "killer",
+      "owner_id": "wraith",
+      "source_level": "D",
+      "source_ref": [
+        "D40:reference/characters/killers_clown_twins_wraith.png / 幽灵人物板"
+      ],
+      "status": "CONFIRMED",
+      "on_board": true,
+      "board_position": 1,
+      "bloodpoint_cost": 2,
+      "frame": "purple",
+      "frame_semantics_status": "CHECK_REQUIRED",
+      "text_original_zh": "在计划阶段结束时，放置第三张移动牌（这将允许你执行第三个回合）。本轮你无法执行杀手额外回合。",
+      "transcription_confidence": "HIGH",
+      "implementation_status": "IMPLEMENTED_TESTED",
+      "chinese_print_evidence": {
+        "source_level": "D",
+        "source_ref": [
+          "D40:reference/characters/killers_clown_twins_wraith.png / 幽灵人物板"
+        ],
+        "status": "CHECK_REQUIRED"
+      },
+      "field_evidence": {
+        "name_zh": {
+          "source_level": "D",
+          "source_ref": [
+            "D40:reference/characters/killers_clown_twins_wraith.png / 幽灵人物板"
+          ],
+          "status": "CHECK_REQUIRED"
+        }
+      },
+      "structured_effect_draft": {
+        "source_level": "D",
+        "source_ref": [
+          "D40:reference/characters/killers_clown_twins_wraith.png / 幽灵人物板"
+        ],
+        "status": "CONFIRMED",
+        "source_text_zh": "在计划阶段结束时，放置第三张移动牌（这将允许你执行第三个回合）。本轮你无法执行杀手额外回合。",
+        "implementation_status": "IMPLEMENTED_TESTED",
+        "requires_semantic_review": false,
+        "kind": "PERK",
+        "trigger": {
+          "event": "PLANNING_END"
+        },
+        "conditions": [
+          "本轮无法执行杀手额外回合"
+        ],
+        "effects": [
+          {
+            "operation": "SET_THIRD_MOVEMENT_CARD",
+            "text_zh": "放置第3张移动牌，执行第3回合"
+          }
+        ],
+        "resolution_scope": "DRAFT_ONLY_NOT_RUNTIME_DSL",
+        "cost": {
+          "bloodpoints": 2
+        },
+        "usage_limit": {
+          "per_round": 1,
+          "source_ref": [
+            "B01:p16"
+          ]
+        },
+        "adoption_basis": "USER_ACCEPTED_CN_RETAIL",
+        "adoption_ref": "U02:中文零售资料优先",
+        "japanese_missing_blocks_runtime": false
+      },
+      "edition_scope": "BASE_STANDARD",
+      "effect_original_ja": null,
+      "effect_original_en": null,
+      "previous_research_status": "CHECK_REQUIRED",
+      "adoption_basis": "USER_ACCEPTED_CN_RETAIL",
+      "adoption_ref": "U02:来源优先级与Phase1采用",
+      "japanese_missing_blocks_runtime": false,
+      "implementation_ref": "packages/game-engine/src/skills.ts",
+      "test_ref": "packages/game-engine/test/skills.test.ts"
+    },
+    {
+      "id": "board_wraith_2",
+      "name_ja": null,
+      "name_en": null,
+      "name_zh": "血气追踪",
+      "translation_status": "OFFICIAL_ZH_PRINT",
+      "japanese_text_status": "CHECK_REQUIRED",
+      "side": "killer",
+      "owner_id": "wraith",
+      "source_level": "D",
+      "source_ref": [
+        "D40:reference/characters/killers_clown_twins_wraith.png / 幽灵人物板"
+      ],
+      "status": "CONFIRMED",
+      "on_board": true,
+      "board_position": 2,
+      "bloodpoint_cost": 0,
+      "frame": "green",
+      "frame_semantics_status": "CHECK_REQUIRED",
+      "text_original_zh": "当你献祭一位逃生者之后，他失去1血点，而你获得1血点。（即使他没有任何血点可以失去，你仍会获得血点。）",
+      "transcription_confidence": "HIGH",
+      "implementation_status": "IMPLEMENTED_TESTED",
+      "chinese_print_evidence": {
+        "source_level": "D",
+        "source_ref": [
+          "D40:reference/characters/killers_clown_twins_wraith.png / 幽灵人物板"
+        ],
+        "status": "CHECK_REQUIRED"
+      },
+      "field_evidence": {
+        "name_zh": {
+          "source_level": "D",
+          "source_ref": [
+            "D40:reference/characters/killers_clown_twins_wraith.png / 幽灵人物板"
+          ],
+          "status": "CHECK_REQUIRED"
+        }
+      },
+      "structured_effect_draft": {
+        "source_level": "D",
+        "source_ref": [
+          "D40:reference/characters/killers_clown_twins_wraith.png / 幽灵人物板"
+        ],
+        "status": "CONFIRMED",
+        "source_text_zh": "当你献祭一位逃生者之后，他失去1血点，而你获得1血点。（即使他没有任何血点可以失去，你仍会获得血点。）",
+        "implementation_status": "IMPLEMENTED_TESTED",
+        "requires_semantic_review": false,
+        "kind": "PERK",
+        "trigger": {
+          "event": "AFTER_SACRIFICING_SURVIVOR"
+        },
+        "conditions": [],
+        "effects": [
+          {
+            "operation": "TARGET_LOSE_BLOODPOINTS",
+            "text_zh": "该逃生者失去1血点"
+          },
+          {
+            "operation": "GAIN_BLOODPOINTS",
+            "text_zh": "自己获得1，即使目标没有血点"
+          }
+        ],
+        "resolution_scope": "DRAFT_ONLY_NOT_RUNTIME_DSL",
+        "cost": {
+          "bloodpoints": 0
+        },
+        "usage_limit": {
+          "per_round": 1,
+          "source_ref": [
+            "B01:p16"
+          ]
+        },
+        "adoption_basis": "USER_ACCEPTED_CN_RETAIL",
+        "adoption_ref": "U02:中文零售资料优先",
+        "japanese_missing_blocks_runtime": false
+      },
+      "edition_scope": "BASE_STANDARD",
+      "effect_original_ja": null,
+      "effect_original_en": null,
+      "previous_research_status": "CHECK_REQUIRED",
+      "adoption_basis": "USER_ACCEPTED_CN_RETAIL",
+      "adoption_ref": "U02:来源优先级与Phase1采用",
+      "japanese_missing_blocks_runtime": false,
+      "implementation_ref": "packages/game-engine/src/skills.ts",
+      "test_ref": "packages/game-engine/test/skills.test.ts"
+    },
+    {
+      "id": "board_wraith_3",
+      "name_ja": null,
+      "name_en": null,
+      "name_zh": "穷追不舍",
+      "translation_status": "OFFICIAL_ZH_PRINT",
+      "japanese_text_status": "CHECK_REQUIRED",
+      "side": "killer",
+      "owner_id": "wraith",
+      "source_level": "D",
+      "source_ref": [
+        "D40:reference/characters/killers_clown_twins_wraith.png / 幽灵人物板"
+      ],
+      "status": "CHECK_REQUIRED",
+      "on_board": true,
+      "board_position": 3,
+      "bloodpoint_cost": 2,
+      "frame": "green",
+      "frame_semantics_status": "CHECK_REQUIRED",
+      "text_original_zh": "在计划阶段结束时，选择一位逃生者。他弃掉他放置的移动牌，然后用一张新的移动牌替换它。",
+      "transcription_confidence": "MEDIUM",
+      "implementation_status": "DEFERRED_PHASE_4",
+      "chinese_print_evidence": {
+        "source_level": "D",
+        "source_ref": [
+          "D40:reference/characters/killers_clown_twins_wraith.png / 幽灵人物板"
+        ],
+        "status": "CHECK_REQUIRED"
+      },
+      "field_evidence": {
+        "name_zh": {
+          "source_level": "D",
+          "source_ref": [
+            "D40:reference/characters/killers_clown_twins_wraith.png / 幽灵人物板"
+          ],
+          "status": "CHECK_REQUIRED"
+        }
+      },
+      "structured_effect_draft": {
+        "source_level": "D",
+        "source_ref": [
+          "D40:reference/characters/killers_clown_twins_wraith.png / 幽灵人物板"
+        ],
+        "status": "CHECK_REQUIRED",
+        "source_text_zh": "在计划阶段结束时，选择一位逃生者。他弃掉他放置的移动牌，然后用一张新的移动牌替换它。",
+        "implementation_status": "NOT_IMPLEMENTED",
+        "requires_semantic_review": true,
+        "kind": "PERK",
+        "trigger": {
+          "event": "PLANNING_END"
+        },
+        "conditions": [
+          "原照片该技能MEDIUM；重新放牌可用性边界待核"
+        ],
+        "effects": [
+          {
+            "operation": "REPLACE_SURVIVOR_PLANNED_CARD",
+            "text_zh": "选择1位逃生者，弃掉已放牌，用1张新移动牌替换"
+          }
+        ],
+        "resolution_scope": "DRAFT_ONLY_NOT_RUNTIME_DSL",
+        "cost": {
+          "bloodpoints": 2
+        },
+        "usage_limit": {
+          "per_round": 1,
+          "source_ref": [
+            "B01:p16"
+          ]
+        }
+      },
+      "edition_scope": "BASE_STANDARD",
+      "effect_original_ja": null,
+      "effect_original_en": null,
+      "previous_research_status": "CHECK_REQUIRED",
+      "adoption_basis": "USER_ACCEPTED_CN_RETAIL",
+      "adoption_ref": "U02:来源优先级与Phase1采用",
+      "japanese_missing_blocks_runtime": false,
+      "question_ref": "Q11",
+      "deferred_phase": 4,
+      "implementation_ref": "packages/game-engine/src/skills.ts",
+      "test_ref": "packages/game-engine/test/skills.test.ts",
+      "deferred_reason": "Q11 反光文字"
+    },
+    {
+      "id": "board_hillbilly_1",
+      "name_ja": null,
+      "name_en": null,
+      "name_zh": "光明之眼",
+      "translation_status": "OFFICIAL_ZH_PRINT",
+      "japanese_text_status": "CHECK_REQUIRED",
+      "side": "killer",
+      "owner_id": "hillbilly",
+      "source_level": "D",
+      "source_ref": [
+        "D41:reference/characters/killers_hillbilly_doctor.png / 农场主人物板"
+      ],
+      "status": "CONFIRMED",
+      "on_board": true,
+      "board_position": 1,
+      "bloodpoint_cost": 0,
+      "frame": "purple",
+      "frame_semantics_status": "CHECK_REQUIRED",
+      "text_original_zh": "在计划阶段结束时，翻开你放置的一张移动牌并获得1血点。",
+      "transcription_confidence": "HIGH",
+      "implementation_status": "IMPLEMENTED_TESTED",
+      "chinese_print_evidence": {
+        "source_level": "D",
+        "source_ref": [
+          "D41:reference/characters/killers_hillbilly_doctor.png / 农场主人物板"
+        ],
+        "status": "CHECK_REQUIRED"
+      },
+      "field_evidence": {
+        "name_zh": {
+          "source_level": "D",
+          "source_ref": [
+            "D41:reference/characters/killers_hillbilly_doctor.png / 农场主人物板"
+          ],
+          "status": "CHECK_REQUIRED"
+        }
+      },
+      "structured_effect_draft": {
+        "source_level": "D",
+        "source_ref": [
+          "D41:reference/characters/killers_hillbilly_doctor.png / 农场主人物板"
+        ],
+        "status": "CONFIRMED",
+        "source_text_zh": "在计划阶段结束时，翻开你放置的一张移动牌并获得1血点。",
+        "implementation_status": "IMPLEMENTED_TESTED",
+        "requires_semantic_review": false,
+        "kind": "PERK",
+        "trigger": {
+          "event": "PLANNING_END"
+        },
+        "conditions": [],
+        "effects": [
+          {
+            "operation": "REVEAL_OWN_PLANNED_CARD",
+            "text_zh": "翻开自己1张已放移动牌"
+          },
+          {
+            "operation": "GAIN_BLOODPOINTS",
+            "text_zh": "获得1血点"
+          }
+        ],
+        "resolution_scope": "DRAFT_ONLY_NOT_RUNTIME_DSL",
+        "cost": {
+          "bloodpoints": 0
+        },
+        "usage_limit": {
+          "per_round": 1,
+          "source_ref": [
+            "B01:p16"
+          ]
+        },
+        "adoption_basis": "USER_ACCEPTED_CN_RETAIL",
+        "adoption_ref": "U02:中文零售资料优先",
+        "japanese_missing_blocks_runtime": false
+      },
+      "edition_scope": "BASE_STANDARD",
+      "effect_original_ja": null,
+      "effect_original_en": null,
+      "previous_research_status": "CHECK_REQUIRED",
+      "adoption_basis": "USER_ACCEPTED_CN_RETAIL",
+      "adoption_ref": "U02:来源优先级与Phase1采用",
+      "japanese_missing_blocks_runtime": false,
+      "implementation_ref": "packages/game-engine/src/skills.ts",
+      "test_ref": "packages/game-engine/test/skills.test.ts"
+    },
+    {
+      "id": "board_hillbilly_2",
+      "name_ja": null,
+      "name_en": null,
+      "name_zh": "耐力持久",
+      "translation_status": "OFFICIAL_ZH_PRINT",
+      "japanese_text_status": "CHECK_REQUIRED",
+      "side": "killer",
+      "owner_id": "hillbilly",
+      "source_level": "D",
+      "source_ref": [
+        "D41:reference/characters/killers_hillbilly_doctor.png / 农场主人物板"
+      ],
+      "status": "CONFIRMED",
+      "on_board": true,
+      "board_position": 2,
+      "bloodpoint_cost": 2,
+      "frame": "green",
+      "frame_semantics_status": "CHECK_REQUIRED",
+      "text_original_zh": "当你将要沿着一条有木板的路线移动时，摧毁该木板并照常完成你的回合。你在本回合仍然可以交互。",
+      "transcription_confidence": "HIGH",
+      "implementation_status": "IMPLEMENTED_TESTED",
+      "chinese_print_evidence": {
+        "source_level": "D",
+        "source_ref": [
+          "D41:reference/characters/killers_hillbilly_doctor.png / 农场主人物板"
+        ],
+        "status": "CHECK_REQUIRED"
+      },
+      "field_evidence": {
+        "name_zh": {
+          "source_level": "D",
+          "source_ref": [
+            "D41:reference/characters/killers_hillbilly_doctor.png / 农场主人物板"
+          ],
+          "status": "CHECK_REQUIRED"
+        }
+      },
+      "structured_effect_draft": {
+        "source_level": "D",
+        "source_ref": [
+          "D41:reference/characters/killers_hillbilly_doctor.png / 农场主人物板"
+        ],
+        "status": "CONFIRMED",
+        "source_text_zh": "当你将要沿着一条有木板的路线移动时，摧毁该木板并照常完成你的回合。你在本回合仍然可以交互。",
+        "implementation_status": "IMPLEMENTED_TESTED",
+        "requires_semantic_review": false,
+        "kind": "PERK",
+        "trigger": {
+          "event": "WOULD_MOVE_ALONG_PALLET_PATH"
+        },
+        "conditions": [],
+        "effects": [
+          {
+            "operation": "DESTROY_PALLET",
+            "text_zh": "摧毁木板"
+          },
+          {
+            "operation": "COMPLETE_TURN_NORMALLY",
+            "text_zh": "照常完成回合，仍可交互"
+          }
+        ],
+        "resolution_scope": "DRAFT_ONLY_NOT_RUNTIME_DSL",
+        "cost": {
+          "bloodpoints": 2
+        },
+        "usage_limit": {
+          "per_round": 1,
+          "source_ref": [
+            "B01:p16"
+          ]
+        },
+        "adoption_basis": "USER_ACCEPTED_CN_RETAIL",
+        "adoption_ref": "U02:中文零售资料优先",
+        "japanese_missing_blocks_runtime": false
+      },
+      "edition_scope": "BASE_STANDARD",
+      "effect_original_ja": null,
+      "effect_original_en": null,
+      "previous_research_status": "CHECK_REQUIRED",
+      "adoption_basis": "USER_ACCEPTED_CN_RETAIL",
+      "adoption_ref": "U02:来源优先级与Phase1采用",
+      "japanese_missing_blocks_runtime": false,
+      "implementation_ref": "packages/game-engine/src/skills.ts",
+      "test_ref": "packages/game-engine/test/skills.test.ts"
+    },
+    {
+      "id": "board_hillbilly_3",
+      "name_ja": null,
+      "name_en": null,
+      "name_zh": "工匠",
+      "translation_status": "OFFICIAL_ZH_PRINT",
+      "japanese_text_status": "CHECK_REQUIRED",
+      "side": "killer",
+      "owner_id": "hillbilly",
+      "source_level": "D",
+      "source_ref": [
+        "D41:reference/characters/killers_hillbilly_doctor.png / 农场主人物板"
+      ],
+      "status": "CONFIRMED",
+      "on_board": true,
+      "board_position": 3,
+      "bloodpoint_cost": 0,
+      "frame": "green",
+      "frame_semantics_status": "CHECK_REQUIRED",
+      "text_original_zh": "当一台发电机被修理完成时，拿起你放置的一张移动牌，用你手中的另一张移动牌替换它。",
+      "transcription_confidence": "HIGH",
+      "implementation_status": "IMPLEMENTED_TESTED",
+      "chinese_print_evidence": {
+        "source_level": "D",
+        "source_ref": [
+          "D41:reference/characters/killers_hillbilly_doctor.png / 农场主人物板"
+        ],
+        "status": "CHECK_REQUIRED"
+      },
+      "field_evidence": {
+        "name_zh": {
+          "source_level": "D",
+          "source_ref": [
+            "D41:reference/characters/killers_hillbilly_doctor.png / 农场主人物板"
+          ],
+          "status": "CHECK_REQUIRED"
+        }
+      },
+      "structured_effect_draft": {
+        "source_level": "D",
+        "source_ref": [
+          "D41:reference/characters/killers_hillbilly_doctor.png / 农场主人物板"
+        ],
+        "status": "CONFIRMED",
+        "source_text_zh": "当一台发电机被修理完成时，拿起你放置的一张移动牌，用你手中的另一张移动牌替换它。",
+        "implementation_status": "IMPLEMENTED_TESTED",
+        "requires_semantic_review": false,
+        "kind": "PERK",
+        "trigger": {
+          "event": "GENERATOR_COMPLETED"
+        },
+        "conditions": [],
+        "effects": [
+          {
+            "operation": "REPLACE_OWN_PLANNED_CARD",
+            "text_zh": "拿起1张已放牌，以手中另一张移动牌替换"
+          }
+        ],
+        "resolution_scope": "DRAFT_ONLY_NOT_RUNTIME_DSL",
+        "cost": {
+          "bloodpoints": 0
+        },
+        "usage_limit": {
+          "per_round": 1,
+          "source_ref": [
+            "B01:p16"
+          ]
+        },
+        "adoption_basis": "USER_ACCEPTED_CN_RETAIL",
+        "adoption_ref": "U02:中文零售资料优先",
+        "japanese_missing_blocks_runtime": false
+      },
+      "edition_scope": "BASE_STANDARD",
+      "effect_original_ja": null,
+      "effect_original_en": null,
+      "previous_research_status": "CHECK_REQUIRED",
+      "adoption_basis": "USER_ACCEPTED_CN_RETAIL",
+      "adoption_ref": "U02:来源优先级与Phase1采用",
+      "japanese_missing_blocks_runtime": false,
+      "implementation_ref": "packages/game-engine/src/skills.ts",
+      "test_ref": "packages/game-engine/test/skills.test.ts"
+    },
+    {
+      "id": "board_nurse_1",
+      "name_ja": null,
+      "name_en": null,
+      "name_zh": "喘鸣感知",
+      "translation_status": "OFFICIAL_ZH_PRINT",
+      "japanese_text_status": "CHECK_REQUIRED",
+      "side": "killer",
+      "owner_id": "nurse",
+      "source_level": "D",
+      "source_ref": [
+        "D44:reference/characters/killers_plague_hag_nurse.png / 护士人物板"
+      ],
+      "status": "CONFIRMED",
+      "on_board": true,
+      "board_position": 1,
+      "bloodpoint_cost": 1,
+      "frame": "purple",
+      "frame_semantics_status": "CHECK_REQUIRED",
+      "text_original_zh": "在计划阶段开始时，选择一位受伤的逃生者。他必须在你或其他逃生者之前面朝上打出他的移动牌。",
+      "transcription_confidence": "HIGH",
+      "implementation_status": "IMPLEMENTED_TESTED",
+      "chinese_print_evidence": {
+        "source_level": "D",
+        "source_ref": [
+          "D44:reference/characters/killers_plague_hag_nurse.png / 护士人物板"
+        ],
+        "status": "CHECK_REQUIRED"
+      },
+      "field_evidence": {
+        "name_zh": {
+          "source_level": "D",
+          "source_ref": [
+            "D44:reference/characters/killers_plague_hag_nurse.png / 护士人物板"
+          ],
+          "status": "CHECK_REQUIRED"
+        }
+      },
+      "structured_effect_draft": {
+        "source_level": "D",
+        "source_ref": [
+          "D44:reference/characters/killers_plague_hag_nurse.png / 护士人物板"
+        ],
+        "status": "CONFIRMED",
+        "source_text_zh": "在计划阶段开始时，选择一位受伤的逃生者。他必须在你或其他逃生者之前面朝上打出他的移动牌。",
+        "implementation_status": "IMPLEMENTED_TESTED",
+        "requires_semantic_review": false,
+        "kind": "PERK",
+        "trigger": {
+          "event": "PLANNING_START"
+        },
+        "conditions": [
+          "选1位受伤逃生者"
+        ],
+        "effects": [
+          {
+            "operation": "FORCE_EARLY_FACE_UP_PLAN",
+            "text_zh": "目标须在自己或其他逃生者之前面朝上打移动牌"
+          }
+        ],
+        "resolution_scope": "DRAFT_ONLY_NOT_RUNTIME_DSL",
+        "cost": {
+          "bloodpoints": 1
+        },
+        "usage_limit": {
+          "per_round": 1,
+          "source_ref": [
+            "B01:p16"
+          ]
+        },
+        "adoption_basis": "USER_ACCEPTED_CN_RETAIL",
+        "adoption_ref": "U02:中文零售资料优先",
+        "japanese_missing_blocks_runtime": false
+      },
+      "edition_scope": "BASE_STANDARD",
+      "effect_original_ja": null,
+      "effect_original_en": null,
+      "previous_research_status": "CHECK_REQUIRED",
+      "adoption_basis": "USER_ACCEPTED_CN_RETAIL",
+      "adoption_ref": "U02:来源优先级与Phase1采用",
+      "japanese_missing_blocks_runtime": false,
+      "implementation_ref": "packages/game-engine/src/skills.ts",
+      "test_ref": "packages/game-engine/test/skills.test.ts"
+    },
+    {
+      "id": "board_nurse_2",
+      "name_ja": null,
+      "name_en": null,
+      "name_zh": "死亡恐惧",
+      "translation_status": "OFFICIAL_ZH_PRINT",
+      "japanese_text_status": "CHECK_REQUIRED",
+      "side": "killer",
+      "owner_id": "nurse",
+      "source_level": "D",
+      "source_ref": [
+        "D44:reference/characters/killers_plague_hag_nurse.png / 护士人物板"
+      ],
+      "status": "CONFIRMED",
+      "on_board": true,
+      "board_position": 2,
+      "bloodpoint_cost": 1,
+      "frame": "green",
+      "frame_semantics_status": "CHECK_REQUIRED",
+      "text_original_zh": "当一位受伤的逃生者将要进行一次技能检定时，改为由他掷危险骰子。",
+      "transcription_confidence": "HIGH",
+      "implementation_status": "IMPLEMENTED_TESTED",
+      "chinese_print_evidence": {
+        "source_level": "D",
+        "source_ref": [
+          "D44:reference/characters/killers_plague_hag_nurse.png / 护士人物板"
+        ],
+        "status": "CHECK_REQUIRED"
+      },
+      "field_evidence": {
+        "name_zh": {
+          "source_level": "D",
+          "source_ref": [
+            "D44:reference/characters/killers_plague_hag_nurse.png / 护士人物板"
+          ],
+          "status": "CHECK_REQUIRED"
+        }
+      },
+      "structured_effect_draft": {
+        "source_level": "D",
+        "source_ref": [
+          "D44:reference/characters/killers_plague_hag_nurse.png / 护士人物板"
+        ],
+        "status": "CONFIRMED",
+        "source_text_zh": "当一位受伤的逃生者将要进行一次技能检定时，改为由他掷危险骰子。",
+        "implementation_status": "IMPLEMENTED_TESTED",
+        "requires_semantic_review": false,
+        "kind": "PERK",
+        "trigger": {
+          "event": "WOUNDED_SURVIVOR_WOULD_SKILL_CHECK"
+        },
+        "conditions": [],
+        "effects": [
+          {
+            "operation": "REPLACE_DIE",
+            "text_zh": "改由其掷危险骰子"
+          }
+        ],
+        "resolution_scope": "DRAFT_ONLY_NOT_RUNTIME_DSL",
+        "cost": {
+          "bloodpoints": 1
+        },
+        "usage_limit": {
+          "per_round": 1,
+          "source_ref": [
+            "B01:p16"
+          ]
+        },
+        "adoption_basis": "USER_ACCEPTED_CN_RETAIL",
+        "adoption_ref": "U02:中文零售资料优先",
+        "japanese_missing_blocks_runtime": false
+      },
+      "edition_scope": "BASE_STANDARD",
+      "effect_original_ja": null,
+      "effect_original_en": null,
+      "previous_research_status": "CHECK_REQUIRED",
+      "adoption_basis": "USER_ACCEPTED_CN_RETAIL",
+      "adoption_ref": "U02:来源优先级与Phase1采用",
+      "japanese_missing_blocks_runtime": false,
+      "implementation_ref": "packages/game-engine/src/skills.ts",
+      "test_ref": "packages/game-engine/test/skills.test.ts"
+    },
+    {
+      "id": "board_nurse_3",
+      "name_ja": null,
+      "name_en": null,
+      "name_zh": "护士的呼唤",
+      "translation_status": "OFFICIAL_ZH_PRINT",
+      "japanese_text_status": "CHECK_REQUIRED",
+      "side": "killer",
+      "owner_id": "nurse",
+      "source_level": "D",
+      "source_ref": [
+        "D44:reference/characters/killers_plague_hag_nurse.png / 护士人物板"
+      ],
+      "status": "CONFIRMED",
+      "on_board": true,
+      "board_position": 3,
+      "bloodpoint_cost": 0,
+      "frame": "green",
+      "frame_semantics_status": "CHECK_REQUIRED",
+      "text_original_zh": "当一位逃生者变为健康之后，你获得2血点。",
+      "transcription_confidence": "HIGH",
+      "implementation_status": "IMPLEMENTED_TESTED",
+      "chinese_print_evidence": {
+        "source_level": "D",
+        "source_ref": [
+          "D44:reference/characters/killers_plague_hag_nurse.png / 护士人物板"
+        ],
+        "status": "CHECK_REQUIRED"
+      },
+      "field_evidence": {
+        "name_zh": {
+          "source_level": "D",
+          "source_ref": [
+            "D44:reference/characters/killers_plague_hag_nurse.png / 护士人物板"
+          ],
+          "status": "CHECK_REQUIRED"
+        }
+      },
+      "structured_effect_draft": {
+        "source_level": "D",
+        "source_ref": [
+          "D44:reference/characters/killers_plague_hag_nurse.png / 护士人物板"
+        ],
+        "status": "CONFIRMED",
+        "source_text_zh": "当一位逃生者变为健康之后，你获得2血点。",
+        "implementation_status": "IMPLEMENTED_TESTED",
+        "requires_semantic_review": false,
+        "kind": "PERK",
+        "trigger": {
+          "event": "SURVIVOR_BECOMES_HEALTHY"
+        },
+        "conditions": [],
+        "effects": [
+          {
+            "operation": "GAIN_BLOODPOINTS",
+            "text_zh": "获得2血点"
+          }
+        ],
+        "resolution_scope": "DRAFT_ONLY_NOT_RUNTIME_DSL",
+        "cost": {
+          "bloodpoints": 0
+        },
+        "usage_limit": {
+          "per_round": 1,
+          "source_ref": [
+            "B01:p16"
+          ]
+        },
+        "adoption_basis": "USER_ACCEPTED_CN_RETAIL",
+        "adoption_ref": "U02:中文零售资料优先",
+        "japanese_missing_blocks_runtime": false
+      },
+      "edition_scope": "BASE_STANDARD",
+      "effect_original_ja": null,
+      "effect_original_en": null,
+      "previous_research_status": "CHECK_REQUIRED",
+      "adoption_basis": "USER_ACCEPTED_CN_RETAIL",
+      "adoption_ref": "U02:来源优先级与Phase1采用",
+      "japanese_missing_blocks_runtime": false,
+      "implementation_ref": "packages/game-engine/src/skills.ts",
+      "test_ref": "packages/game-engine/test/skills.test.ts"
+    },
+    {
+      "id": "board_hag_1",
+      "name_ja": null,
+      "name_en": null,
+      "name_zh": "第三封印",
+      "translation_status": "OFFICIAL_ZH_PRINT",
+      "japanese_text_status": "CHECK_REQUIRED",
+      "side": "killer",
+      "owner_id": "hag",
+      "source_level": "D",
+      "source_ref": [
+        "D44:reference/characters/killers_plague_hag_nurse.png / 妖巫人物板"
+      ],
+      "status": "CHECK_REQUIRED",
+      "on_board": true,
+      "board_position": 1,
+      "bloodpoint_cost": 3,
+      "frame": "purple",
+      "frame_semantics_status": "CHECK_REQUIRED",
+      "text_original_zh": "在计划阶段开始时，弃掉一张移动牌。在本回合中，使用与之相同的移动牌的逃生者无法移动。（如果他无法移动，他就不能交互。）",
+      "transcription_confidence": "HIGH",
+      "implementation_status": "DEFERRED_PHASE_4",
+      "chinese_print_evidence": {
+        "source_level": "D",
+        "source_ref": [
+          "D44:reference/characters/killers_plague_hag_nurse.png / 妖巫人物板"
+        ],
+        "status": "CHECK_REQUIRED"
+      },
+      "field_evidence": {
+        "name_zh": {
+          "source_level": "D",
+          "source_ref": [
+            "D44:reference/characters/killers_plague_hag_nurse.png / 妖巫人物板"
+          ],
+          "status": "CHECK_REQUIRED"
+        }
+      },
+      "structured_effect_draft": {
+        "source_level": "D",
+        "source_ref": [
+          "D44:reference/characters/killers_plague_hag_nurse.png / 妖巫人物板"
+        ],
+        "status": "CHECK_REQUIRED",
+        "source_text_zh": "在计划阶段开始时，弃掉一张移动牌。在本回合中，使用与之相同的移动牌的逃生者无法移动。（如果他无法移动，他就不能交互。）",
+        "implementation_status": "NOT_IMPLEMENTED",
+        "requires_semantic_review": true,
+        "kind": "PERK",
+        "trigger": {
+          "event": "PLANNING_START"
+        },
+        "conditions": [
+          "弃掉1张移动牌；本回合/本轮持续时域尚待原文核验"
+        ],
+        "effects": [
+          {
+            "operation": "DISCARD_MOVEMENT_CARD",
+            "text_zh": "弃掉该牌"
+          },
+          {
+            "operation": "BLOCK_MATCHING_SURVIVOR_MOVEMENT",
+            "text_zh": "使用相同移动牌的逃生者无法移动；不能移动则不能交互"
+          }
+        ],
+        "resolution_scope": "DRAFT_ONLY_NOT_RUNTIME_DSL",
+        "cost": {
+          "bloodpoints": 3
+        },
+        "usage_limit": {
+          "per_round": 1,
+          "source_ref": [
+            "B01:p16"
+          ]
+        }
+      },
+      "edition_scope": "BASE_STANDARD",
+      "effect_original_ja": null,
+      "effect_original_en": null,
+      "previous_research_status": "CHECK_REQUIRED",
+      "adoption_basis": "USER_ACCEPTED_CN_RETAIL",
+      "adoption_ref": "U02:来源优先级与Phase1采用",
+      "japanese_missing_blocks_runtime": false,
+      "question_ref": "Q11",
+      "deferred_phase": 4,
+      "implementation_ref": "packages/game-engine/src/skills.ts",
+      "test_ref": "packages/game-engine/test/skills.test.ts",
+      "deferred_reason": "Q11 本回合持续范围"
+    },
+    {
+      "id": "board_hag_2",
+      "name_ja": null,
+      "name_en": null,
+      "name_zh": "吞噬希望",
+      "translation_status": "OFFICIAL_ZH_PRINT",
+      "japanese_text_status": "CHECK_REQUIRED",
+      "side": "killer",
+      "owner_id": "hag",
+      "source_level": "D",
+      "source_ref": [
+        "D44:reference/characters/killers_plague_hag_nurse.png / 妖巫人物板"
+      ],
+      "status": "CONFIRMED",
+      "on_board": true,
+      "board_position": 2,
+      "bloodpoint_cost": 2,
+      "frame": "green",
+      "frame_semantics_status": "CHECK_REQUIRED",
+      "text_original_zh": "在清理阶段开始时，如果本轮有发电机被修理完成，执行一个杀手额外回合。（每轮你只能执行一个杀手额外回合。）",
+      "transcription_confidence": "HIGH",
+      "implementation_status": "IMPLEMENTED_TESTED",
+      "chinese_print_evidence": {
+        "source_level": "D",
+        "source_ref": [
+          "D44:reference/characters/killers_plague_hag_nurse.png / 妖巫人物板"
+        ],
+        "status": "CHECK_REQUIRED"
+      },
+      "field_evidence": {
+        "name_zh": {
+          "source_level": "D",
+          "source_ref": [
+            "D44:reference/characters/killers_plague_hag_nurse.png / 妖巫人物板"
+          ],
+          "status": "CHECK_REQUIRED"
+        }
+      },
+      "structured_effect_draft": {
+        "source_level": "D",
+        "source_ref": [
+          "D44:reference/characters/killers_plague_hag_nurse.png / 妖巫人物板"
+        ],
+        "status": "CONFIRMED",
+        "source_text_zh": "在清理阶段开始时，如果本轮有发电机被修理完成，执行一个杀手额外回合。（每轮你只能执行一个杀手额外回合。）",
+        "implementation_status": "IMPLEMENTED_TESTED",
+        "requires_semantic_review": false,
+        "kind": "PERK",
+        "trigger": {
+          "event": "CLEANUP_START"
+        },
+        "conditions": [
+          "本轮有发电机完成",
+          "每轮仅1个杀手额外回合"
+        ],
+        "effects": [
+          {
+            "operation": "KILLER_BONUS_TURN",
+            "text_zh": "执行1个杀手额外回合"
+          }
+        ],
+        "resolution_scope": "DRAFT_ONLY_NOT_RUNTIME_DSL",
+        "cost": {
+          "bloodpoints": 2
+        },
+        "usage_limit": {
+          "per_round": 1,
+          "source_ref": [
+            "B01:p16"
+          ]
+        },
+        "adoption_basis": "USER_ACCEPTED_CN_RETAIL",
+        "adoption_ref": "U02:中文零售资料优先",
+        "japanese_missing_blocks_runtime": false
+      },
+      "edition_scope": "BASE_STANDARD",
+      "effect_original_ja": null,
+      "effect_original_en": null,
+      "previous_research_status": "CHECK_REQUIRED",
+      "adoption_basis": "USER_ACCEPTED_CN_RETAIL",
+      "adoption_ref": "U02:来源优先级与Phase1采用",
+      "japanese_missing_blocks_runtime": false,
+      "implementation_ref": "packages/game-engine/src/skills.ts",
+      "test_ref": "packages/game-engine/test/skills.test.ts"
+    },
+    {
+      "id": "board_hag_3",
+      "name_ja": null,
+      "name_en": null,
+      "name_zh": "毁灭",
+      "translation_status": "OFFICIAL_ZH_PRINT",
+      "japanese_text_status": "CHECK_REQUIRED",
+      "side": "killer",
+      "owner_id": "hag",
+      "source_level": "D",
+      "source_ref": [
+        "D44:reference/characters/killers_plague_hag_nurse.png / 妖巫人物板"
+      ],
+      "status": "CONFIRMED",
+      "on_board": true,
+      "board_position": 3,
+      "bloodpoint_cost": 1,
+      "frame": "green",
+      "frame_semantics_status": "CHECK_REQUIRED",
+      "text_original_zh": "在计划阶段开始时，移除一台发电机上的1个进度，前提是该发电机所在空间没有逃生者。",
+      "transcription_confidence": "HIGH",
+      "implementation_status": "IMPLEMENTED_TESTED",
+      "chinese_print_evidence": {
+        "source_level": "D",
+        "source_ref": [
+          "D44:reference/characters/killers_plague_hag_nurse.png / 妖巫人物板"
+        ],
+        "status": "CHECK_REQUIRED"
+      },
+      "field_evidence": {
+        "name_zh": {
+          "source_level": "D",
+          "source_ref": [
+            "D44:reference/characters/killers_plague_hag_nurse.png / 妖巫人物板"
+          ],
+          "status": "CHECK_REQUIRED"
+        }
+      },
+      "structured_effect_draft": {
+        "source_level": "D",
+        "source_ref": [
+          "D44:reference/characters/killers_plague_hag_nurse.png / 妖巫人物板"
+        ],
+        "status": "CONFIRMED",
+        "source_text_zh": "在计划阶段开始时，移除一台发电机上的1个进度，前提是该发电机所在空间没有逃生者。",
+        "implementation_status": "IMPLEMENTED_TESTED",
+        "requires_semantic_review": false,
+        "kind": "PERK",
+        "trigger": {
+          "event": "PLANNING_START"
+        },
+        "conditions": [
+          "所选发电机空间没有逃生者"
+        ],
+        "effects": [
+          {
+            "operation": "REMOVE_GENERATOR_PROGRESS",
+            "text_zh": "移除该发电机1进度"
+          }
+        ],
+        "resolution_scope": "DRAFT_ONLY_NOT_RUNTIME_DSL",
+        "cost": {
+          "bloodpoints": 1
+        },
+        "usage_limit": {
+          "per_round": 1,
+          "source_ref": [
+            "B01:p16"
+          ]
+        },
+        "adoption_basis": "USER_ACCEPTED_CN_RETAIL",
+        "adoption_ref": "U02:中文零售资料优先",
+        "japanese_missing_blocks_runtime": false
+      },
+      "edition_scope": "BASE_STANDARD",
+      "effect_original_ja": null,
+      "effect_original_en": null,
+      "previous_research_status": "CHECK_REQUIRED",
+      "adoption_basis": "USER_ACCEPTED_CN_RETAIL",
+      "adoption_ref": "U02:来源优先级与Phase1采用",
+      "japanese_missing_blocks_runtime": false,
+      "implementation_ref": "packages/game-engine/src/skills.ts",
+      "test_ref": "packages/game-engine/test/skills.test.ts"
+    },
+    {
+      "id": "board_doctor_1",
+      "name_ja": null,
+      "name_en": null,
+      "name_zh": "行监坐守",
+      "translation_status": "OFFICIAL_ZH_PRINT",
+      "japanese_text_status": "CHECK_REQUIRED",
+      "side": "killer",
+      "owner_id": "doctor",
+      "source_level": "D",
+      "source_ref": [
+        "D41:reference/characters/killers_hillbilly_doctor.png / 医生人物板"
+      ],
+      "status": "CONFIRMED",
+      "on_board": true,
+      "board_position": 1,
+      "bloodpoint_cost": 0,
+      "frame": "purple",
+      "frame_semantics_status": "CHECK_REQUIRED",
+      "text_original_zh": "在清理阶段开始时，如果没有被献祭的逃生者，获得1血点。",
+      "transcription_confidence": "HIGH",
+      "implementation_status": "IMPLEMENTED_TESTED",
+      "chinese_print_evidence": {
+        "source_level": "D",
+        "source_ref": [
+          "D41:reference/characters/killers_hillbilly_doctor.png / 医生人物板"
+        ],
+        "status": "CHECK_REQUIRED"
+      },
+      "field_evidence": {
+        "name_zh": {
+          "source_level": "D",
+          "source_ref": [
+            "D41:reference/characters/killers_hillbilly_doctor.png / 医生人物板"
+          ],
+          "status": "CHECK_REQUIRED"
+        }
+      },
+      "structured_effect_draft": {
+        "source_level": "D",
+        "source_ref": [
+          "D41:reference/characters/killers_hillbilly_doctor.png / 医生人物板"
+        ],
+        "status": "CONFIRMED",
+        "source_text_zh": "在清理阶段开始时，如果没有被献祭的逃生者，获得1血点。",
+        "implementation_status": "IMPLEMENTED_TESTED",
+        "requires_semantic_review": false,
+        "kind": "PERK",
+        "trigger": {
+          "event": "CLEANUP_START"
+        },
+        "conditions": [
+          "没有被献祭的逃生者"
+        ],
+        "effects": [
+          {
+            "operation": "GAIN_BLOODPOINTS",
+            "text_zh": "获得1血点"
+          }
+        ],
+        "resolution_scope": "DRAFT_ONLY_NOT_RUNTIME_DSL",
+        "cost": {
+          "bloodpoints": 0
+        },
+        "usage_limit": {
+          "per_round": 1,
+          "source_ref": [
+            "B01:p16"
+          ]
+        },
+        "adoption_basis": "USER_ACCEPTED_CN_RETAIL",
+        "adoption_ref": "U02:中文零售资料优先",
+        "japanese_missing_blocks_runtime": false
+      },
+      "edition_scope": "BASE_STANDARD",
+      "effect_original_ja": null,
+      "effect_original_en": null,
+      "previous_research_status": "CHECK_REQUIRED",
+      "adoption_basis": "USER_ACCEPTED_CN_RETAIL",
+      "adoption_ref": "U02:来源优先级与Phase1采用",
+      "japanese_missing_blocks_runtime": false,
+      "implementation_ref": "packages/game-engine/src/skills.ts",
+      "test_ref": "packages/game-engine/test/skills.test.ts"
+    },
+    {
+      "id": "board_doctor_2",
+      "name_ja": null,
+      "name_en": null,
+      "name_zh": "电量超载",
+      "translation_status": "OFFICIAL_ZH_PRINT",
+      "japanese_text_status": "CHECK_REQUIRED",
+      "side": "killer",
+      "owner_id": "doctor",
+      "source_level": "D",
+      "source_ref": [
+        "D41:reference/characters/killers_hillbilly_doctor.png / 医生人物板"
+      ],
+      "status": "CONFIRMED",
+      "on_board": true,
+      "board_position": 2,
+      "bloodpoint_cost": 2,
+      "frame": "green",
+      "frame_semantics_status": "CHECK_REQUIRED",
+      "text_original_zh": "当你破坏一台发电机之后，你所在空间或一个相连空间里的一位逃生者变为受伤。",
+      "transcription_confidence": "HIGH",
+      "implementation_status": "IMPLEMENTED_TESTED",
+      "chinese_print_evidence": {
+        "source_level": "D",
+        "source_ref": [
+          "D41:reference/characters/killers_hillbilly_doctor.png / 医生人物板"
+        ],
+        "status": "CHECK_REQUIRED"
+      },
+      "field_evidence": {
+        "name_zh": {
+          "source_level": "D",
+          "source_ref": [
+            "D41:reference/characters/killers_hillbilly_doctor.png / 医生人物板"
+          ],
+          "status": "CHECK_REQUIRED"
+        }
+      },
+      "structured_effect_draft": {
+        "source_level": "D",
+        "source_ref": [
+          "D41:reference/characters/killers_hillbilly_doctor.png / 医生人物板"
+        ],
+        "status": "CONFIRMED",
+        "source_text_zh": "当你破坏一台发电机之后，你所在空间或一个相连空间里的一位逃生者变为受伤。",
+        "implementation_status": "IMPLEMENTED_TESTED",
+        "requires_semantic_review": false,
+        "kind": "PERK",
+        "trigger": {
+          "event": "AFTER_DAMAGING_GENERATOR"
+        },
+        "conditions": [
+          "目标逃生者在自己所在或相连空间"
+        ],
+        "effects": [
+          {
+            "operation": "WOUND_SURVIVOR",
+            "text_zh": "使1位目标受伤"
+          }
+        ],
+        "resolution_scope": "DRAFT_ONLY_NOT_RUNTIME_DSL",
+        "cost": {
+          "bloodpoints": 2
+        },
+        "usage_limit": {
+          "per_round": 1,
+          "source_ref": [
+            "B01:p16"
+          ]
+        },
+        "adoption_basis": "USER_ACCEPTED_CN_RETAIL",
+        "adoption_ref": "U02:中文零售资料优先",
+        "japanese_missing_blocks_runtime": false
+      },
+      "edition_scope": "BASE_STANDARD",
+      "effect_original_ja": null,
+      "effect_original_en": null,
+      "previous_research_status": "CHECK_REQUIRED",
+      "adoption_basis": "USER_ACCEPTED_CN_RETAIL",
+      "adoption_ref": "U02:来源优先级与Phase1采用",
+      "japanese_missing_blocks_runtime": false,
+      "implementation_ref": "packages/game-engine/src/skills.ts",
+      "test_ref": "packages/game-engine/test/skills.test.ts"
+    },
+    {
+      "id": "board_doctor_3",
+      "name_ja": null,
+      "name_en": null,
+      "name_zh": "压迫性气场",
+      "translation_status": "OFFICIAL_ZH_PRINT",
+      "japanese_text_status": "CHECK_REQUIRED",
+      "side": "killer",
+      "owner_id": "doctor",
+      "source_level": "D",
+      "source_ref": [
+        "D41:reference/characters/killers_hillbilly_doctor.png / 医生人物板"
+      ],
+      "status": "CHECK_REQUIRED",
+      "on_board": true,
+      "board_position": 3,
+      "bloodpoint_cost": 1,
+      "frame": "green",
+      "frame_semantics_status": "CHECK_REQUIRED",
+      "text_original_zh": "当你所在空间或一个相连空间里的一位逃生者使用一个物品时，由他掷危险骰子。失败时，该物品被弃掉，不产生效果。",
+      "transcription_confidence": "HIGH",
+      "implementation_status": "DEFERRED_PHASE_4",
+      "chinese_print_evidence": {
+        "source_level": "D",
+        "source_ref": [
+          "D41:reference/characters/killers_hillbilly_doctor.png / 医生人物板"
+        ],
+        "status": "CHECK_REQUIRED"
+      },
+      "field_evidence": {
+        "name_zh": {
+          "source_level": "D",
+          "source_ref": [
+            "D41:reference/characters/killers_hillbilly_doctor.png / 医生人物板"
+          ],
+          "status": "CHECK_REQUIRED"
+        }
+      },
+      "structured_effect_draft": {
+        "source_level": "D",
+        "source_ref": [
+          "D41:reference/characters/killers_hillbilly_doctor.png / 医生人物板"
+        ],
+        "status": "CHECK_REQUIRED",
+        "source_text_zh": "当你所在空间或一个相连空间里的一位逃生者使用一个物品时，由他掷危险骰子。失败时，该物品被弃掉，不产生效果。",
+        "implementation_status": "NOT_IMPLEMENTED",
+        "requires_semantic_review": true,
+        "kind": "PERK",
+        "trigger": {
+          "event": "NEARBY_SURVIVOR_USES_ITEM"
+        },
+        "conditions": [
+          "目标在自己所在或相连空间"
+        ],
+        "effects": [
+          {
+            "operation": "ROLL_DANGER_DIE",
+            "text_zh": "由该逃生者掷危险骰"
+          },
+          {
+            "operation": "ON_FAILURE_CANCEL_AND_DISCARD_ITEM",
+            "text_zh": "失败弃该物品，不产生效果"
+          }
+        ],
+        "resolution_scope": "DRAFT_ONLY_NOT_RUNTIME_DSL",
+        "cost": {
+          "bloodpoints": 1
+        },
+        "usage_limit": {
+          "per_round": 1,
+          "source_ref": [
+            "B01:p16"
+          ]
+        }
+      },
+      "edition_scope": "BASE_STANDARD",
+      "effect_original_ja": null,
+      "effect_original_en": null,
+      "previous_research_status": "CHECK_REQUIRED",
+      "adoption_basis": "USER_ACCEPTED_CN_RETAIL",
+      "adoption_ref": "U02:来源优先级与Phase1采用",
+      "japanese_missing_blocks_runtime": false,
+      "implementation_ref": "packages/game-engine/src/skills.ts",
+      "test_ref": "packages/game-engine/test/skills.test.ts",
+      "deferred_reason": "Phase4物品效果响应；当前USE_ITEM明确报错"
+    }
+  ],
+  "board_perks_note": "board_perks是人物板印刷能力；perks仍为52张卡组研究槽。两种载体不因同名/图标自动建立一一对应；都未实现。",
+  "count_clarification": {
+    "skills": 52,
+    "survivor_cards": 28,
+    "killer_cards": 24,
+    "item_cards_counted_separately": 16,
+    "erroneous_68_included_items": true,
+    "source_level": "B",
+    "source_ref": [
+      "B01:p3",
+      "U01:Q07 用户澄清68误含16物品，关闭"
+    ],
+    "status": "CONFIRMED",
+    "question_resolution": "CLOSED_USER_RULING",
+    "confirmed_scope": "52技能数量由B01确认；68误含物品的原因来自用户U01明确澄清。"
+  }
+}

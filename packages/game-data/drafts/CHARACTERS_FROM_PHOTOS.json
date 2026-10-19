@@ -1,0 +1,1346 @@
+{
+ "schema_version": 1,
+ "kind": "PHOTO_TRANSCRIPTION_DRAFT",
+ "source_note": "中文版典藏版实物照片（用户经小红书提供的手机截图，D 级第三方实物照）。文字由 Claude 逐字转录，base 角色经放大核对；典藏版角色仅按截图原分辨率转录，可能有个别错字。",
+ "source_level": "D",
+ "edition_note": "照片为中文版典藏版（含 10 名追加逃生者、10 名追加杀手）。edition=BASE 的 13 名角色属于基础版范围；其余 20 名只作扩展参考，不得混入基础版。",
+ "frame_note": "每个角色板上 3 个技能：第 1 个为紫色菱形框，其余为绿色菱形框。推测紫色=角色专属技能、绿色=可通过技能卡组自定义的技能，须用规则书 Perks/游戏模式章节确认（CHECK_REQUIRED）。",
+ "board_common_text_zh": "游戏过程分为数轮。每轮分为4个阶段：1. 计划：所有玩家计划自己的移动。2. 逃生者：按照回合顺序，每位逃生者执行一个回合。3. 杀手：杀手执行回合（通常是两个回合）。4. 清理：准备下一轮。",
+ "bloodpoint_rules_from_boards": {
+  "survivor": "初始 2，最大 6",
+  "killer": "初始 4，最大 12；X4 消耗：在你的第二个回合之后，从手牌打出一张牌执行一个额外回合"
+ },
+ "terminology_note": "中文版官方用语：杀手（非“杀人鬼”）、血点（▲）、厄咒图腾（非“诅咒图腾”）、出口大门、箱子、木板、储物柜、乌鸦、钩子、发电机、危险骰子、技能检定骰子、大成功、献祭进度、恶灵指示物。",
+ "survivors": [
+  {
+   "id": "dwight",
+   "role": "survivor",
+   "name_zh": "德怀特·费菲尔德",
+   "name_en": "Dwight Fairfield",
+   "subtitle_zh": "忐忑不安的领袖",
+   "difficulty_zh": "简单",
+   "bloodpoints": {
+    "start": 2,
+    "max": 6
+   },
+   "perks": [
+    {
+     "name_zh": "证明自己",
+     "bp_cost": 1,
+     "frame": "purple",
+     "text_zh": "当你将要交互时，改为由你所在空间或一个相邻空间里的另一位逃生者交互。",
+     "transcription_confidence": "HIGH"
+    },
+    {
+     "name_zh": "领袖群雄",
+     "bp_cost": 1,
+     "frame": "green",
+     "text_zh": "当你所在空间里的另一位逃生者移动时，你与其一起移动；或者，当你移动时，你所在空间里的另一位逃生者与你一起移动。",
+     "transcription_confidence": "HIGH"
+    },
+    {
+     "name_zh": "携手合作",
+     "bp_cost": 1,
+     "frame": "green",
+     "text_zh": "当你所在空间或一个相连空间里的另一位逃生者将要进行一次技能检定时，改为掷两颗技能检定骰子并保留其中一颗的结果。",
+     "transcription_confidence": "HIGH"
+    }
+   ],
+   "edition": "BASE",
+   "photo": "characters/survivors_kate_ace_dwight.png"
+  },
+  {
+   "id": "meg",
+   "role": "survivor",
+   "name_zh": "梅格·托马斯",
+   "name_en": "Meg Thomas",
+   "subtitle_zh": "精力充沛的运动员",
+   "difficulty_zh": "简单",
+   "bloodpoints": {
+    "start": 2,
+    "max": 6
+   },
+   "perks": [
+    {
+     "name_zh": "冲刺爆发",
+     "bp_cost": 1,
+     "frame": "purple",
+     "text_zh": "当你用你的移动牌移动之后，沿着任意其它路线再次移动。",
+     "transcription_confidence": "HIGH"
+    },
+    {
+     "name_zh": "肾上腺素",
+     "bp_cost": 2,
+     "frame": "green",
+     "text_zh": "在清理阶段开始时，如果本轮有发电机被修理完成，执行一个逃生者额外回合。",
+     "transcription_confidence": "HIGH"
+    },
+    {
+     "name_zh": "急速静谧",
+     "bp_cost": 1,
+     "frame": "green",
+     "text_zh": "当杀手进入你所在空间时（在他交互之前），你与你所在空间里的一个储物柜交互。",
+     "transcription_confidence": "HIGH"
+    }
+   ],
+   "edition": "BASE",
+   "photo": "characters/survivors_david_meg_jake.png"
+  },
+  {
+   "id": "claudette",
+   "role": "survivor",
+   "name_zh": "克劳黛特·莫莱",
+   "name_en": "Claudette Morel",
+   "subtitle_zh": "勤奋刻苦的植物学家",
+   "difficulty_zh": "简单",
+   "bloodpoints": {
+    "start": 2,
+    "max": 6
+   },
+   "perks": [
+    {
+     "name_zh": "精研百草",
+     "bp_cost": 1,
+     "frame": "purple",
+     "text_zh": "在你的回合中移动之前或之后，掷危险骰子。成功时，你所在空间里的另一位逃生者变为健康。本回合你仍然可以交互。",
+     "transcription_confidence": "HIGH"
+    },
+    {
+     "name_zh": "心灵共鸣",
+     "bp_cost": 0,
+     "frame": "green",
+     "text_zh": "在你的回合开始时，你可以从一位自愿的逃生者那里拿取1血点。或者，你可以给予一位自愿的逃生者1血点。",
+     "transcription_confidence": "HIGH"
+    },
+    {
+     "name_zh": "自我疗愈",
+     "bp_cost": 1,
+     "frame": "green",
+     "text_zh": "在你的回合开始时，掷危险骰子。成功时，你变为健康。",
+     "transcription_confidence": "HIGH"
+    }
+   ],
+   "edition": "BASE",
+   "photo": "characters/survivors_claudette_zarina.png"
+  },
+  {
+   "id": "jake",
+   "role": "survivor",
+   "name_zh": "杰克·朴",
+   "name_en": "Jake Park",
+   "subtitle_zh": "独来独往的生存主义者",
+   "difficulty_zh": "简单",
+   "bloodpoints": {
+    "start": 2,
+    "max": 6
+   },
+   "perks": [
+    {
+     "name_zh": "钢铁意志",
+     "bp_cost": 1,
+     "frame": "purple",
+     "text_zh": "当你或者你所在空间或一个相连空间里的另一位逃生者掷出一个失败时，将其视为一个成功。不过，杀手依然会获得血点。",
+     "transcription_confidence": "HIGH"
+    },
+    {
+     "name_zh": "安抚生灵",
+     "bp_cost": 0,
+     "frame": "green",
+     "text_zh": "作为一个交互行动，将你所在空间里的一个乌鸦移到游戏版图上的任意空间。",
+     "transcription_confidence": "HIGH"
+    },
+    {
+     "name_zh": "破坏手",
+     "bp_cost": 0,
+     "frame": "green",
+     "text_zh": "当你破坏一个钩子之后，选择一项：获得1血点；或消耗2血点以执行一个逃生者额外回合。",
+     "transcription_confidence": "HIGH"
+    }
+   ],
+   "edition": "BASE",
+   "photo": "characters/survivors_david_meg_jake.png"
+  },
+  {
+   "id": "nea",
+   "role": "survivor",
+   "name_zh": "妮娅·卡尔森",
+   "name_en": "Nea Karlsson",
+   "subtitle_zh": "城市艺术家",
+   "difficulty_zh": "简单",
+   "bloodpoints": {
+    "start": 2,
+    "max": 6
+   },
+   "perks": [
+    {
+     "name_zh": "平稳着陆",
+     "bp_cost": 0,
+     "frame": "purple",
+     "text_zh": "替代你的回合中的交互，沿着任意路线移动，包括沿着单向路线反向移动，然后获得1血点。",
+     "transcription_confidence": "HIGH"
+    },
+    {
+     "name_zh": "暴走族",
+     "bp_cost": 1,
+     "frame": "green",
+     "text_zh": "在任意逃生者回合开始时，将一个可破坏墙壁移出场外。在该逃生者回合结束时，将这个可破坏墙壁放回同一条路线上。",
+     "transcription_confidence": "HIGH"
+    },
+    {
+     "name_zh": "都市生存",
+     "bp_cost": 1,
+     "frame": "green",
+     "text_zh": "当你与一个箱子交互之后，该箱子不会被移除。",
+     "transcription_confidence": "HIGH"
+    }
+   ],
+   "edition": "BASE",
+   "photo": "characters/survivor_nea.png"
+  },
+  {
+   "id": "ace",
+   "role": "survivor",
+   "name_zh": "埃斯·维斯孔蒂",
+   "name_en": "Ace Visconti",
+   "subtitle_zh": "福星高照的赌场老手",
+   "difficulty_zh": "简单",
+   "bloodpoints": {
+    "start": 2,
+    "max": 6
+   },
+   "perks": [
+    {
+     "name_zh": "稳操胜券",
+     "bp_cost": 1,
+     "frame": "purple",
+     "text_zh": "在任意逃生者的回合开始时，翻开杀手放置的一张移动牌。",
+     "transcription_confidence": "HIGH"
+    },
+    {
+     "name_zh": "锦囊妙计",
+     "bp_cost": 1,
+     "frame": "green",
+     "text_zh": "在你交互之前，将你所在空间里的一个道具与一个相连空间里的同一类别的另一个道具交换。有进度指示物的发电机、被占用的储物柜以及被占用的钩子不能被交换。",
+     "transcription_confidence": "HIGH"
+    },
+    {
+     "name_zh": "好运会传染",
+     "bp_cost": 2,
+     "frame": "green",
+     "text_zh": "在你的回合结束时，执行一个逃生者额外回合。杀手获得2血点。",
+     "transcription_confidence": "HIGH"
+    }
+   ],
+   "edition": "BASE",
+   "photo": "characters/survivors_kate_ace_dwight.png"
+  },
+  {
+   "id": "feng_min",
+   "role": "survivor",
+   "name_zh": "凤敏",
+   "name_en": "Feng Min",
+   "subtitle_zh": "专注于目标的竞争者",
+   "difficulty_zh": "简单",
+   "bloodpoints": {
+    "start": 2,
+    "max": 6
+   },
+   "perks": [
+    {
+     "name_zh": "轻盈敏捷",
+     "bp_cost": 0,
+     "frame": "purple",
+     "text_zh": "在你的回合中，当你移动穿过一个木板或离开一个有木板的空间时，在交互之前（如果你将要交互）沿着任意其它路线再次移动。",
+     "transcription_confidence": "HIGH"
+    },
+    {
+     "name_zh": "警戒",
+     "bp_cost": 1,
+     "frame": "green",
+     "text_zh": "当杀手摧毁一个木板、移动穿过一个可破坏墙壁或破坏一台发电机时，你沿着任意路线移动。",
+     "transcription_confidence": "HIGH"
+    },
+    {
+     "name_zh": "技术员",
+     "bp_cost": 0,
+     "frame": "green",
+     "text_zh": "当你在与一台发电机交互期间掷出失败时，再次交互。第二次交互必须以另一个道具或逃生者作为目标。",
+     "transcription_confidence": "HIGH"
+    }
+   ],
+   "edition": "BASE",
+   "photo": "characters/survivors_feng_felix_nea.png"
+  },
+  {
+   "id": "adam",
+   "role": "survivor",
+   "name_zh": "亚当·弗朗西斯",
+   "name_en": "Adam Francis",
+   "subtitle_zh": "足智多谋的教师",
+   "difficulty_zh": "困难",
+   "bloodpoints": {
+    "start": 2,
+    "max": 6
+   },
+   "perks": [
+    {
+     "name_zh": "声东击西",
+     "bp_cost": 2,
+     "frame": "purple",
+     "text_zh": "作为一个交互行动，与杀手交互以将其沿着任意路线移动。杀手获得1血点。",
+     "transcription_confidence": "MEDIUM"
+    },
+    {
+     "name_zh": "自学成才",
+     "bp_cost": 2,
+     "frame": "green",
+     "text_zh": "当你或者你所在空间或一个相连空间里的另一位逃生者掷出一个成功时，将该结果改为一个大成功。",
+     "transcription_confidence": "MEDIUM"
+    },
+    {
+     "name_zh": "善有善报",
+     "bp_cost": 1,
+     "frame": "green",
+     "text_zh": "当你破坏一个被占用的钩子，或者挂着你的钩子被另一位逃生者破坏之后，你或该逃生者变为健康（由你选择）。",
+     "transcription_confidence": "MEDIUM"
+    }
+   ],
+   "edition": "COLLECTORS_OR_EXPANSION",
+   "photo": "characters/survivors_adam_jane_jeff.png"
+  },
+  {
+   "id": "jane",
+   "role": "survivor",
+   "name_zh": "简·罗梅罗",
+   "name_en": "Jane Romero",
+   "subtitle_zh": "有巨大影响力的名人",
+   "difficulty_zh": "简单",
+   "bloodpoints": {
+    "start": 2,
+    "max": 6
+   },
+   "perks": [
+    {
+     "name_zh": "蓄势待发",
+     "bp_cost": 1,
+     "frame": "purple",
+     "text_zh": "在一个逃生者回合中，当一位逃生者在技能检定期间掷出大成功之后，该逃生者执行一个逃生者额外回合。",
+     "transcription_confidence": "MEDIUM"
+    },
+    {
+     "name_zh": "团结一致",
+     "bp_cost": 1,
+     "frame": "green",
+     "text_zh": "作为一个交互行动，你可以与一个相连空间里的另一位逃生者交互，以对其使用“治疗”交互行动。",
+     "transcription_confidence": "MEDIUM"
+    },
+    {
+     "name_zh": "勇往直前",
+     "bp_cost": 1,
+     "frame": "green",
+     "text_zh": "当杀手进入你所在空间之后，移除你所在空间里的一个储物柜以阻止杀手本回合进行交互。",
+     "transcription_confidence": "MEDIUM"
+    }
+   ],
+   "edition": "COLLECTORS_OR_EXPANSION",
+   "photo": "characters/survivors_adam_jane_jeff.png"
+  },
+  {
+   "id": "jeff",
+   "role": "survivor",
+   "name_zh": "杰夫·约翰森",
+   "name_en": "Jeff Johansen",
+   "subtitle_zh": "安静的艺术家",
+   "difficulty_zh": "困难",
+   "bloodpoints": {
+    "start": 2,
+    "max": 6
+   },
+   "perks": [
+    {
+     "name_zh": "分崩离析",
+     "bp_cost": 1,
+     "frame": "purple",
+     "text_zh": "当你破坏一个被占用的钩子，或者挂着你的钩子被另一位逃生者破坏之后，掷危险骰子。成功时，杀手失去1个献祭进度。",
+     "transcription_confidence": "MEDIUM"
+    },
+    {
+     "name_zh": "劫后余生",
+     "bp_cost": 0,
+     "frame": "green",
+     "text_zh": "当你或另一位逃生者变为健康之后，破坏游戏版图上任意位置的一个未占用的钩子。",
+     "transcription_confidence": "MEDIUM"
+    },
+    {
+     "name_zh": "气场失真",
+     "bp_cost": 1,
+     "frame": "green",
+     "text_zh": "在你的回合中，当你移动进入杀手所在空间之后，在交互之前沿着任意其它路线再次移动。",
+     "transcription_confidence": "MEDIUM"
+    }
+   ],
+   "edition": "COLLECTORS_OR_EXPANSION",
+   "photo": "characters/survivors_adam_jane_jeff.png"
+  },
+  {
+   "id": "yun_jin",
+   "role": "survivor",
+   "name_zh": "李允珍",
+   "name_en": "Yun-Jin Lee",
+   "subtitle_zh": "注重自我的音乐制作人",
+   "difficulty_zh": "简单",
+   "bloodpoints": {
+    "start": 2,
+    "max": 6
+   },
+   "perks": [
+    {
+     "name_zh": "成功捷径",
+     "bp_cost": 1,
+     "frame": "purple",
+     "text_zh": "在另一位逃生者受伤或被献祭的回合结束之后，你与你所在空间里的一台发电机交互。",
+     "transcription_confidence": "MEDIUM"
+    },
+    {
+     "name_zh": "轰动演出",
+     "bp_cost": 0,
+     "frame": "green",
+     "text_zh": "当杀手摧毁一个木板、移动穿过一个可破坏墙壁或破坏一台发电机时，你获得1血点。",
+     "transcription_confidence": "MEDIUM"
+    },
+    {
+     "name_zh": "自我保护",
+     "bp_cost": 1,
+     "frame": "green",
+     "text_zh": "在另一位逃生者受伤或被献祭的回合结束之后，你与你所在空间里的一个储物柜交互。",
+     "transcription_confidence": "MEDIUM"
+    }
+   ],
+   "edition": "COLLECTORS_OR_EXPANSION",
+   "photo": "characters/survivors_yunjin_elodie_yui.png"
+  },
+  {
+   "id": "elodie",
+   "role": "survivor",
+   "name_zh": "伊洛迪·拉科托",
+   "name_en": "Élodie Rakoto",
+   "subtitle_zh": "神秘学调查员",
+   "difficulty_zh": "困难",
+   "bloodpoints": {
+    "start": 2,
+    "max": 6
+   },
+   "perks": [
+    {
+     "name_zh": "强力挣扎",
+     "bp_cost": 2,
+     "frame": "purple",
+     "text_zh": "作为一个交互行动，与杀手交互以翻开他放置的第一张移动牌。杀手在用他的第一张牌移动之后无法交互。杀手获得2血点。",
+     "transcription_confidence": "MEDIUM"
+    },
+    {
+     "name_zh": "明察秋毫",
+     "bp_cost": 2,
+     "frame": "green",
+     "text_zh": "当另一位逃生者将要弃掉一张物品牌时，改为由你获得它。如果你拥有多于一张物品牌，就弃到只剩一张。",
+     "transcription_confidence": "MEDIUM"
+    },
+    {
+     "name_zh": "兵不厌诈",
+     "bp_cost": 0,
+     "frame": "green",
+     "text_zh": "在你的回合中，当你将要移动时，你改为留在你所在空间。本回合你不能交互。获得1血点。",
+     "transcription_confidence": "MEDIUM"
+    }
+   ],
+   "edition": "COLLECTORS_OR_EXPANSION",
+   "photo": "characters/survivors_yunjin_elodie_yui.png"
+  },
+  {
+   "id": "yui",
+   "role": "survivor",
+   "name_zh": "木村唯",
+   "name_en": "Yui Kimura",
+   "subtitle_zh": "坚毅的街道赛手",
+   "difficulty_zh": "困难",
+   "bloodpoints": {
+    "start": 2,
+    "max": 6
+   },
+   "perks": [
+    {
+     "name_zh": "挣脱激励",
+     "bp_cost": 1,
+     "frame": "purple",
+     "text_zh": "在你的回合开始时，将一位受伤逃生者沿着任意路线移动。",
+     "transcription_confidence": "MEDIUM"
+    },
+    {
+     "name_zh": "幸运喘息",
+     "bp_cost": 2,
+     "frame": "green",
+     "text_zh": "在任意逃生者掷出大成功之后，你变为健康。",
+     "transcription_confidence": "MEDIUM"
+    },
+    {
+     "name_zh": "不惜一切",
+     "bp_cost": 0,
+     "frame": "green",
+     "text_zh": "在你的回合结束时，如果你是健康状态，变为受伤以执行一个逃生者额外回合。",
+     "transcription_confidence": "MEDIUM"
+    }
+   ],
+   "edition": "COLLECTORS_OR_EXPANSION",
+   "photo": "characters/survivors_yunjin_elodie_yui.png"
+  },
+  {
+   "id": "kate",
+   "role": "survivor",
+   "name_zh": "凯特·登森",
+   "name_en": "Kate Denson",
+   "subtitle_zh": "乐观开朗的女歌手",
+   "difficulty_zh": "困难",
+   "bloodpoints": {
+    "start": 2,
+    "max": 6
+   },
+   "perks": [
+    {
+     "name_zh": "机遇之窗",
+     "bp_cost": 1,
+     "frame": "purple",
+     "text_zh": "你可以与一个相连空间里的一个逃生道具或援助道具交互。如果该道具是一个储物柜，你移入该空间。",
+     "transcription_confidence": "MEDIUM"
+    },
+    {
+     "name_zh": "脱缰野马",
+     "bp_cost": 2,
+     "frame": "green",
+     "text_zh": "当你或你所在空间里的另一位逃生者被抓取时，在杀手决定掷多少颗骰子之后，被抓取的逃生者可以掷4颗技能检定骰子，而非杀手选择的数量。",
+     "transcription_confidence": "MEDIUM"
+    },
+    {
+     "name_zh": "与我共舞",
+     "bp_cost": 0,
+     "frame": "green",
+     "text_zh": "如果你在本回合开始时占用一个储物柜，当你移动之后，在交互之前沿着任意其它路线再次移动。",
+     "transcription_confidence": "MEDIUM"
+    }
+   ],
+   "edition": "COLLECTORS_OR_EXPANSION",
+   "photo": "characters/survivors_kate_ace_dwight.png"
+  },
+  {
+   "id": "david",
+   "role": "survivor",
+   "name_zh": "大卫·金",
+   "name_en": "David King",
+   "subtitle_zh": "体格魁梧的好战分子",
+   "difficulty_zh": "困难",
+   "bloodpoints": {
+    "start": 2,
+    "max": 6
+   },
+   "perks": [
+    {
+     "name_zh": "不痛不痒",
+     "bp_cost": 1,
+     "frame": "purple",
+     "text_zh": "当杀手与你所在空间里的一位健康逃生者交互时，掷危险骰子。成功时，该逃生者保持健康，而杀手获得1血点。",
+     "transcription_confidence": "MEDIUM"
+    },
+    {
+     "name_zh": "钢筋铁骨",
+     "bp_cost": 2,
+     "frame": "green",
+     "text_zh": "当你所在空间里的另一位逃生者将要被献祭时，掷危险骰子。成功时，该逃生者不会被献祭，而是沿着任意路线移动。",
+     "transcription_confidence": "MEDIUM"
+    },
+    {
+     "name_zh": "生死与共",
+     "bp_cost": 1,
+     "frame": "green",
+     "text_zh": "当杀手将要离开你所在空间时，阻止这次移动。杀手仍然可以在你所在空间进行交互。",
+     "transcription_confidence": "MEDIUM"
+    }
+   ],
+   "edition": "COLLECTORS_OR_EXPANSION",
+   "photo": "characters/survivors_david_meg_jake.png"
+  },
+  {
+   "id": "felix",
+   "role": "survivor",
+   "name_zh": "菲利克斯·里奇特",
+   "name_en": "Felix Richter",
+   "subtitle_zh": "远见卓识的建筑师",
+   "difficulty_zh": "简单",
+   "bloodpoints": {
+    "start": 2,
+    "max": 6
+   },
+   "perks": [
+    {
+     "name_zh": "绝境对策",
+     "bp_cost": 1,
+     "frame": "purple",
+     "text_zh": "在执行你的第一个交互行动之后，再次交互。第二次交互必须以一个逃生道具为目标。",
+     "transcription_confidence": "HIGH"
+    },
+    {
+     "name_zh": "远见卓识",
+     "bp_cost": 0,
+     "frame": "green",
+     "text_zh": "当你将要翻开一个道具时，改为翻开一个相连空间里的任意一个道具。",
+     "transcription_confidence": "HIGH"
+    },
+    {
+     "name_zh": "经久耐用",
+     "bp_cost": 2,
+     "frame": "green",
+     "text_zh": "当你使用一张物品牌之后将要弃掉它时，改为保留它。你在本回合无法再次使用它。",
+     "transcription_confidence": "HIGH"
+    }
+   ],
+   "edition": "COLLECTORS_OR_EXPANSION",
+   "photo": "characters/survivors_feng_felix_nea.png"
+  },
+  {
+   "id": "zarina",
+   "role": "survivor",
+   "name_zh": "萨丽娜·卡希尔",
+   "name_en": "Zarina Kassir",
+   "subtitle_zh": "勇敢的纪录片导演",
+   "difficulty_zh": "困难",
+   "bloodpoints": {
+    "start": 2,
+    "max": 6
+   },
+   "perks": [
+    {
+     "name_zh": "转移注意",
+     "bp_cost": 2,
+     "frame": "purple",
+     "text_zh": "当杀手将要与你或你所在空间里的另一位逃生者交互时，迫使杀手改为与该空间里的一台发电机交互。如果那台发电机有2个进度，你获得1血点。",
+     "transcription_confidence": "MEDIUM"
+    },
+    {
+     "name_zh": "舍己为人",
+     "bp_cost": 1,
+     "frame": "green",
+     "text_zh": "当你进入一个空间之后，如果你未受伤，则变为受伤，以让你所在空间里的另一位逃生者变为健康或让你所在空间里的一台发电机增加1个进度（本回合你依然可以交互）。",
+     "transcription_confidence": "MEDIUM"
+    },
+    {
+     "name_zh": "非正式调查",
+     "bp_cost": 0,
+     "frame": "green",
+     "text_zh": "当你或者你所在空间或一个相连空间里的另一位逃生者掷出失败时，由你而非杀手获得1血点。",
+     "transcription_confidence": "MEDIUM"
+    }
+   ],
+   "edition": "COLLECTORS_OR_EXPANSION",
+   "photo": "characters/survivors_claudette_zarina.png"
+  }
+ ],
+ "killers": [
+  {
+   "id": "trapper",
+   "role": "killer",
+   "name_zh": "设陷者",
+   "name_en": "The Trapper",
+   "real_name_zh": "埃文·迈克米伦",
+   "difficulty_zh": "困难",
+   "bloodpoints": {
+    "start": 4,
+    "max": 12
+   },
+   "bp_x4_ability_zh": "X4：在你的第二个回合之后，从你的手中打出一张牌来执行一个额外回合。",
+   "power": {
+    "name_zh": "捕兽夹",
+    "text_zh": "在一条没有木板、可破坏墙壁或任何其它配件的相连路线上放置一个捕兽夹。你可以移除一个现有的捕兽夹，以放置一个新的捕兽夹。"
+   },
+   "passive_zh": "当一位逃生者沿着一条有捕兽夹的路线移动时，由他掷危险骰子。失败时，移除这个捕兽夹，该逃生者变为受伤。如果该逃生者已经受伤，获得1个献祭进度。",
+   "perks": [
+    {
+     "name_zh": "所向无敌",
+     "bp_cost": 1,
+     "frame": "purple",
+     "text_zh": "当你攻击一位健康的逃生者之后，将他沿着任意路线移动。如果你将他移动穿过一个木板或可破坏墙壁，摧毁该木板或可破坏墙壁。",
+     "transcription_confidence": "HIGH"
+    },
+    {
+     "name_zh": "恐慌降临",
+     "bp_cost": 1,
+     "frame": "green",
+     "text_zh": "当你所在空间或一个相连空间里的一位逃生者将要进行一次技能检定时，改为由他掷危险骰子。",
+     "transcription_confidence": "HIGH"
+    },
+    {
+     "name_zh": "欣喜若狂",
+     "bp_cost": 1,
+     "frame": "green",
+     "text_zh": "当你攻击一位健康的逃生者之后，沿着任意路线移动。",
+     "transcription_confidence": "HIGH"
+    }
+   ],
+   "edition": "BASE",
+   "photo": "characters/killers_trapper_trickster_deathslinger.png"
+  },
+  {
+   "id": "wraith",
+   "role": "killer",
+   "name_zh": "幽灵",
+   "name_en": "The Wraith",
+   "real_name_zh": "菲利普·奥乔莫",
+   "difficulty_zh": "困难",
+   "bloodpoints": {
+    "start": 4,
+    "max": 12
+   },
+   "bp_x4_ability_zh": "X4：在你的第二个回合之后，从你的手中打出一张牌来执行一个额外回合。",
+   "power": {
+    "name_zh": "骷髅丧钟",
+    "text_zh": "直接移动到一个不与你所在空间相连的空间。"
+   },
+   "passive_zh": null,
+   "perks": [
+    {
+     "name_zh": "暗夜之睛",
+     "bp_cost": 2,
+     "frame": "purple",
+     "text_zh": "在计划阶段结束时，放置第三张移动牌（这将允许你执行第三个回合）。本轮你无法执行杀手额外回合。",
+     "transcription_confidence": "HIGH"
+    },
+    {
+     "name_zh": "血气追踪",
+     "bp_cost": 0,
+     "frame": "green",
+     "text_zh": "当你献祭一位逃生者之后，他失去1血点，而你获得1血点。（即使他没有任何血点可以失去，你仍会获得血点。）",
+     "transcription_confidence": "HIGH"
+    },
+    {
+     "name_zh": "穷追不舍",
+     "bp_cost": 2,
+     "frame": "green",
+     "text_zh": "在计划阶段结束时，选择一位逃生者。他弃掉他放置的移动牌，然后用一张新的移动牌替换它。",
+     "transcription_confidence": "MEDIUM"
+    }
+   ],
+   "edition": "BASE",
+   "photo": "characters/killers_clown_twins_wraith.png"
+  },
+  {
+   "id": "hillbilly",
+   "role": "killer",
+   "name_zh": "农场主",
+   "name_en": "The Hillbilly",
+   "real_name_zh": "小马克思·汤普森",
+   "difficulty_zh": "简单",
+   "bloodpoints": {
+    "start": 4,
+    "max": 12
+   },
+   "bp_x4_ability_zh": "X4：在你的第二个回合之后，从你的手中打出一张牌来执行一个额外回合。",
+   "power": {
+    "name_zh": "电锯",
+    "text_zh": "弃掉一张“等待”以外的移动牌，以沿着该牌的路线移动。使用此力量时，你不能沿着有木板、可破坏墙壁或任何其它配件的路线移动。你进入的空间里的一位逃生者变为受伤。"
+   },
+   "passive_zh": null,
+   "perks": [
+    {
+     "name_zh": "光明之眼",
+     "bp_cost": 0,
+     "frame": "purple",
+     "text_zh": "在计划阶段结束时，翻开你放置的一张移动牌并获得1血点。",
+     "transcription_confidence": "HIGH"
+    },
+    {
+     "name_zh": "耐力持久",
+     "bp_cost": 2,
+     "frame": "green",
+     "text_zh": "当你将要沿着一条有木板的路线移动时，摧毁该木板并照常完成你的回合。你在本回合仍然可以交互。",
+     "transcription_confidence": "HIGH"
+    },
+    {
+     "name_zh": "工匠",
+     "bp_cost": 0,
+     "frame": "green",
+     "text_zh": "当一台发电机被修理完成时，拿起你放置的一张移动牌，用你手中的另一张移动牌替换它。",
+     "transcription_confidence": "HIGH"
+    }
+   ],
+   "edition": "BASE",
+   "photo": "characters/killers_hillbilly_doctor.png"
+  },
+  {
+   "id": "nurse",
+   "role": "killer",
+   "name_zh": "护士",
+   "name_en": "The Nurse",
+   "real_name_zh": "莎莉·史密森",
+   "difficulty_zh": "简单",
+   "bloodpoints": {
+    "start": 4,
+    "max": 12
+   },
+   "bp_x4_ability_zh": "X4：在你的第二个回合之后，从你的手中打出一张牌来执行一个额外回合。",
+   "power": {
+    "name_zh": "斯宾塞的濒死之息",
+    "text_zh": "移动到任意相连的空间，忽略木板和可破坏墙壁。使用此力量时，你也可以沿着单向路线反向移动。"
+   },
+   "passive_zh": null,
+   "perks": [
+    {
+     "name_zh": "喘鸣感知",
+     "bp_cost": 1,
+     "frame": "purple",
+     "text_zh": "在计划阶段开始时，选择一位受伤的逃生者。他必须在你或其他逃生者之前面朝上打出他的移动牌。",
+     "transcription_confidence": "HIGH"
+    },
+    {
+     "name_zh": "死亡恐惧",
+     "bp_cost": 1,
+     "frame": "green",
+     "text_zh": "当一位受伤的逃生者将要进行一次技能检定时，改为由他掷危险骰子。",
+     "transcription_confidence": "HIGH"
+    },
+    {
+     "name_zh": "护士的呼唤",
+     "bp_cost": 0,
+     "frame": "green",
+     "text_zh": "当一位逃生者变为健康之后，你获得2血点。",
+     "transcription_confidence": "HIGH"
+    }
+   ],
+   "edition": "BASE",
+   "photo": "characters/killers_plague_hag_nurse.png"
+  },
+  {
+   "id": "hag",
+   "role": "killer",
+   "name_zh": "妖巫",
+   "name_en": "The Hag",
+   "real_name_zh": "丽莎·谢伍德",
+   "difficulty_zh": "困难",
+   "bloodpoints": {
+    "start": 4,
+    "max": 12
+   },
+   "bp_x4_ability_zh": "X4：在你的第二个回合之后，从你的手中打出一张牌来执行一个额外回合。",
+   "power": {
+    "name_zh": "黑化触媒",
+    "text_zh": "在你所在空间里放置一个鬼灵陷阱。如果你所在空间里有厄咒图腾，获得1血点。每个空间最多只能有一个鬼灵陷阱。"
+   },
+   "passive_zh": "每当一位逃生者进入有鬼灵陷阱的空间时，移除该陷阱，该逃生者掷一颗技能检定骰子。然后，你可以选择获得1血点，或者消耗等于骰子所示数量的血点以直接移动到该陷阱所在空间并与那个空间里的一位逃生者交互。（由于技能检定失败的结果为0，在这种情况下你可以免费传送并交互。）",
+   "perks": [
+    {
+     "name_zh": "第三封印",
+     "bp_cost": 3,
+     "frame": "purple",
+     "text_zh": "在计划阶段开始时，弃掉一张移动牌。在本回合中，使用与之相同的移动牌的逃生者无法移动。（如果他无法移动，他就不能交互。）",
+     "transcription_confidence": "HIGH"
+    },
+    {
+     "name_zh": "吞噬希望",
+     "bp_cost": 2,
+     "frame": "green",
+     "text_zh": "在清理阶段开始时，如果本轮有发电机被修理完成，执行一个杀手额外回合。（每轮你只能执行一个杀手额外回合。）",
+     "transcription_confidence": "HIGH"
+    },
+    {
+     "name_zh": "毁灭",
+     "bp_cost": 1,
+     "frame": "green",
+     "text_zh": "在计划阶段开始时，移除一台发电机上的1个进度，前提是该发电机所在空间没有逃生者。",
+     "transcription_confidence": "HIGH"
+    }
+   ],
+   "edition": "BASE",
+   "photo": "characters/killers_plague_hag_nurse.png"
+  },
+  {
+   "id": "doctor",
+   "role": "killer",
+   "name_zh": "医生",
+   "name_en": "The Doctor",
+   "real_name_zh": "赫曼·卡特",
+   "difficulty_zh": "简单",
+   "bloodpoints": {
+    "start": 4,
+    "max": 12
+   },
+   "bp_x4_ability_zh": "X4：在你的第二个回合之后，从你的手中打出一张牌来执行一个额外回合。",
+   "power": {
+    "name_zh": "卡特的电火花",
+    "text_zh": "选择你所在空间或一个相连的空间。该空间里的每位没有神经紊乱的逃生者消耗1血点或获得神经紊乱。已经神经紊乱的逃生者消耗1血点或变为受伤。"
+   },
+   "passive_zh": "神经紊乱的逃生者为所有技能检定掷危险骰子。失败时，失去神经紊乱。每有一位神经紊乱的逃生者，你的杀手额外回合的血点消耗降低1。",
+   "perks": [
+    {
+     "name_zh": "行监坐守",
+     "bp_cost": 0,
+     "frame": "purple",
+     "text_zh": "在清理阶段开始时，如果没有被献祭的逃生者，获得1血点。",
+     "transcription_confidence": "HIGH"
+    },
+    {
+     "name_zh": "电量超载",
+     "bp_cost": 2,
+     "frame": "green",
+     "text_zh": "当你破坏一台发电机之后，你所在空间或一个相连空间里的一位逃生者变为受伤。",
+     "transcription_confidence": "HIGH"
+    },
+    {
+     "name_zh": "压迫性气场",
+     "bp_cost": 1,
+     "frame": "green",
+     "text_zh": "当你所在空间或一个相连空间里的一位逃生者使用一个物品时，由他掷危险骰子。失败时，该物品被弃掉，不产生效果。",
+     "transcription_confidence": "HIGH"
+    }
+   ],
+   "edition": "BASE",
+   "photo": "characters/killers_hillbilly_doctor.png"
+  },
+  {
+   "id": "legion",
+   "role": "killer",
+   "name_zh": "军团",
+   "name_en": "The Legion",
+   "real_name_zh": null,
+   "difficulty_zh": "简单",
+   "bloodpoints": {
+    "start": 4,
+    "max": 12
+   },
+   "bp_x4_ability_zh": "X4：在你的第二个回合之后，从你的手中打出一张牌来执行一个额外回合。",
+   "power": {
+    "name_zh": "野性狂暴",
+    "text_zh": "你所在空间里的每位逃生者均变为受伤。如果有至少一位逃生者已经受伤，你获得1血点。"
+   },
+   "passive_zh": null,
+   "perks": [
+    {
+     "name_zh": "疯狂勇气",
+     "bp_cost": 0,
+     "frame": "purple",
+     "text_zh": "在尝试献祭一位逃生者期间，当你进入一个有另一位逃生者的空间时，使该逃生者受伤。",
+     "transcription_confidence": "MEDIUM"
+    },
+    {
+     "name_zh": "配合失调",
+     "bp_cost": 0,
+     "frame": "green",
+     "text_zh": "当一位逃生者进入其他逃生者所在空间时，你获得等于该空间里逃生者和杀手总数的血点。",
+     "transcription_confidence": "MEDIUM"
+    },
+    {
+     "name_zh": "铁处女",
+     "bp_cost": 2,
+     "frame": "green",
+     "text_zh": "在交互之前，将游戏版图上任意位置的一个未占用储物柜与一个未占用钩子交换位置。",
+     "transcription_confidence": "MEDIUM"
+    }
+   ],
+   "edition": "COLLECTORS_OR_EXPANSION",
+   "photo": "characters/killers_legion_huntress_blight.png"
+  },
+  {
+   "id": "huntress",
+   "role": "killer",
+   "name_zh": "女猎手",
+   "name_en": "The Huntress",
+   "real_name_zh": null,
+   "difficulty_zh": "简单",
+   "bloodpoints": {
+    "start": 4,
+    "max": 12
+   },
+   "bp_x4_ability_zh": "X4：在你的第二个回合之后，从你的手中打出一张牌来执行一个额外回合。",
+   "power": {
+    "name_zh": "狩猎飞斧",
+    "text_zh": "一个相连空间里的一位逃生者掷危险骰子。失败时，他变为受伤。"
+   },
+   "passive_zh": null,
+   "perks": [
+    {
+     "name_zh": "猎手摇篮曲",
+     "bp_cost": 2,
+     "frame": "purple",
+     "text_zh": "当一位逃生者将要用其移动牌进行移动时，你弃掉一张与之相同的移动牌以阻止这次移动。该逃生者仍然可以交互。",
+     "transcription_confidence": "MEDIUM"
+    },
+    {
+     "name_zh": "嗜血凶兽",
+     "bp_cost": 1,
+     "frame": "green",
+     "text_zh": "在计划阶段开始时，沿着任意路线移动。",
+     "transcription_confidence": "MEDIUM"
+    },
+    {
+     "name_zh": "领地意识",
+     "bp_cost": 2,
+     "frame": "green",
+     "text_zh": "在交互之后，使用你的杀手力量。（每轮你只能使用一次杀手力量。）",
+     "transcription_confidence": "MEDIUM"
+    }
+   ],
+   "edition": "COLLECTORS_OR_EXPANSION",
+   "photo": "characters/killers_legion_huntress_blight.png"
+  },
+  {
+   "id": "blight",
+   "role": "killer",
+   "name_zh": "枯萎者",
+   "name_en": "The Blight",
+   "real_name_zh": null,
+   "difficulty_zh": "困难",
+   "bloodpoints": {
+    "start": 4,
+    "max": 12
+   },
+   "bp_x4_ability_zh": "X4：在你的第二个回合之后，从你的手中打出一张牌来执行一个额外回合。",
+   "power": {
+    "name_zh": "枯萎腐败",
+    "text_zh": "洗混你的手牌并随机弃掉一张移动牌，然后沿着该牌的路线移动。如果你用这次移动进入了另一个空间，接下来你可以选择在该空间里交互，或者重复此效果。如果你手中没有移动牌，就不能使用此杀手力量。"
+   },
+   "passive_zh": "开始游戏时，你额外拥有每种移动牌各一张，但没有“等待”，总共有8张移动牌。",
+   "perks": [
+    {
+     "name_zh": "鲜血恩惠",
+     "bp_cost": 0,
+     "frame": "purple",
+     "text_zh": "在清理阶段开始时，如果所有逃生者都受伤，而且没有逃生者被献祭，获得1个献祭进度。",
+     "transcription_confidence": "MEDIUM"
+    },
+    {
+     "name_zh": "巨龙之握",
+     "bp_cost": 1,
+     "frame": "green",
+     "text_zh": "当你破坏一台发电机时，弃掉至多2张移动牌。通过其中任何一张牌的路线与这台发电机相连的空间里的每位逃生者选择一项：消耗1血点，或变为受伤。",
+     "transcription_confidence": "MEDIUM"
+    },
+    {
+     "name_zh": "不死",
+     "bp_cost": 1,
+     "frame": "green",
+     "text_zh": "作为一个交互行动，弃掉一张“等待”以外的移动牌，以与通过该牌的路线相连的空间里的一个道具交互。",
+     "transcription_confidence": "MEDIUM"
+    }
+   ],
+   "edition": "COLLECTORS_OR_EXPANSION",
+   "photo": "characters/killers_legion_huntress_blight.png"
+  },
+  {
+   "id": "trickster",
+   "role": "killer",
+   "name_zh": "骗术师",
+   "name_en": "The Trickster",
+   "real_name_zh": null,
+   "difficulty_zh": "困难",
+   "bloodpoints": {
+    "start": 4,
+    "max": 12
+   },
+   "bp_x4_ability_zh": "X4：在你的第二个回合之后，从你的手中打出一张牌来执行一个额外回合。",
+   "power": {
+    "name_zh": "精彩表演",
+    "text_zh": "你所在空间和相连空间里的每位逃生者获得一把飞刀。"
+   },
+   "passive_zh": "逃生者每有一把飞刀，其最大血点就降低2。逃生者弃掉任何超出其最大值的血点。当一位逃生者与储物柜交互之后，该逃生者弃掉他的所有飞刀。当一位逃生者获得他的第3把飞刀时，他变为受伤。如果一位逃生者将要获得第4把飞刀，改为你获得1个献祭进度。有3把飞刀的逃生者无法变为健康。",
+   "perks": [
+    {
+     "name_zh": "无路可逃",
+     "bp_cost": 1,
+     "frame": "purple",
+     "text_zh": "当一位血点比你少的逃生者将要与一台发电机或出口大门交互时，阻止这次交互。",
+     "transcription_confidence": "MEDIUM"
+    },
+    {
+     "name_zh": "群体控制",
+     "bp_cost": 1,
+     "frame": "green",
+     "text_zh": "在计划阶段开始时，选择一位逃生者。逃生者们可以总共消耗2血点。否则，由你选择那位被选中的逃生者将在本回合从手中放置什么移动牌。",
+     "transcription_confidence": "MEDIUM"
+    },
+    {
+     "name_zh": "追星狂",
+     "bp_cost": 2,
+     "frame": "green",
+     "text_zh": "当你将要抓取一位逃生者时，改为沿着任意路线移动然后抓取另一位逃生者（他不需要是受伤状态）。",
+     "transcription_confidence": "MEDIUM"
+    }
+   ],
+   "edition": "COLLECTORS_OR_EXPANSION",
+   "photo": "characters/killers_trapper_trickster_deathslinger.png"
+  },
+  {
+   "id": "deathslinger",
+   "role": "killer",
+   "name_zh": "死亡枪手",
+   "name_en": "The Deathslinger",
+   "real_name_zh": null,
+   "difficulty_zh": "困难",
+   "bloodpoints": {
+    "start": 4,
+    "max": 12
+   },
+   "bp_x4_ability_zh": "X4：在你的第二个回合之后，从你的手中打出一张牌来执行一个额外回合。",
+   "power": {
+    "name_zh": "救赎者",
+    "text_zh": "选择路线上没有木板或可破坏墙壁的一个相连空间里的一位受伤逃生者。秘密弃掉一张移动牌，被选择的逃生者猜测这张移动牌，然后你展示它。如果猜错了，将该逃生者移入你所在空间，你将其抓取。"
+   },
+   "passive_zh": null,
+   "perks": [
+    {
+     "name_zh": "设备发烧友",
+     "bp_cost": 1,
+     "frame": "purple",
+     "text_zh": "当你破坏一台发电机之后，在你所在空间里再次交互。",
+     "transcription_confidence": "MEDIUM"
+    },
+    {
+     "name_zh": "惩戒",
+     "bp_cost": 0,
+     "frame": "green",
+     "text_zh": "当一位逃生者尝试净化一个厄咒图腾时，改为由他掷危险骰子。成功时，你获得2血点。",
+     "transcription_confidence": "MEDIUM"
+    },
+    {
+     "name_zh": "失效开关",
+     "bp_cost": 1,
+     "frame": "green",
+     "text_zh": "当你献祭一位逃生者之后，你选择的一台发电机或一个出口大门失去1个进度。",
+     "transcription_confidence": "MEDIUM"
+    }
+   ],
+   "edition": "COLLECTORS_OR_EXPANSION",
+   "photo": "characters/killers_trapper_trickster_deathslinger.png"
+  },
+  {
+   "id": "plague",
+   "role": "killer",
+   "name_zh": "瘟疫",
+   "name_en": "The Plague",
+   "real_name_zh": null,
+   "difficulty_zh": "困难",
+   "bloodpoints": {
+    "start": 4,
+    "max": 12
+   },
+   "bp_x4_ability_zh": "X4：在你的第二个回合之后，从你的手中打出一张牌来执行一个额外回合。",
+   "power": {
+    "name_zh": "肮脏倾泻",
+    "text_zh": "选择一个相连的空间。在你所在空间和那个相连的空间里各放置一个肮脏倾泻指示物。每个空间里最多只能有一个肮脏倾泻指示物。"
+   },
+   "passive_zh": "当一位逃生者进入有肮脏倾泻的空间时，该逃生者拿取这个肮脏倾泻指示物并用它覆盖自己的一个技能。被覆盖的技能无法使用。当一位逃生者获得第3个肮脏倾泻指示物时，他将它们全部弃掉并变为受伤。如果该逃生者已经受伤，获得1个献祭进度。当一位逃生者与储物柜交互时，他移除1个肮脏倾泻指示物并将其放在自己所在空间里，或者将它移除（如果该空间已有一个肮脏倾泻指示物）。",
+   "perks": [
+    {
+     "name_zh": "黑暗奉献",
+     "bp_cost": 2,
+     "frame": "purple",
+     "text_zh": "在清理阶段开始时，将你所在空间或一个相连空间里的一位逃生者沿着任意路线移动。",
+     "transcription_confidence": "MEDIUM"
+    },
+    {
+     "name_zh": "腐烂干预",
+     "bp_cost": 1,
+     "frame": "green",
+     "text_zh": "在计划阶段开始时，将恶灵放在任意空间里的一台翻开的发电机上。它无法被交互。",
+     "transcription_confidence": "MEDIUM"
+    },
+    {
+     "name_zh": "恐惧传染",
+     "bp_cost": 1,
+     "frame": "green",
+     "text_zh": "当你攻击一位健康的逃生者之后，将一个相连空间里的一位逃生者沿着任意路线移动。",
+     "transcription_confidence": "MEDIUM"
+    }
+   ],
+   "edition": "COLLECTORS_OR_EXPANSION",
+   "photo": "characters/killers_plague_hag_nurse.png"
+  },
+  {
+   "id": "clown",
+   "role": "killer",
+   "name_zh": "小丑",
+   "name_en": "The Clown",
+   "real_name_zh": null,
+   "difficulty_zh": "困难",
+   "bloodpoints": {
+    "start": 4,
+    "max": 12
+   },
+   "bp_x4_ability_zh": "X4：在你的第二个回合之后，从你的手中打出一张牌来执行一个额外回合。",
+   "power": {
+    "name_zh": "精练毒酒",
+    "text_zh": "将你的精练毒酒或精练解药放在你所在空间或一个相连空间里。你可以移除一个现有的精练毒酒或精练解药以放置一个新的。"
+   },
+   "passive_zh": "（毒酒）当一位逃生者进入有你的精练毒酒的空间时，他面朝上放置他的移动牌。（解药）当杀手或一位逃生者进入有你的精练解药的空间时，杀手或该逃生者可以在交互之前沿着任意其它路线再次移动。",
+   "perks": [
+    {
+     "name_zh": "小丑恐惧症",
+     "bp_cost": 2,
+     "frame": "purple",
+     "text_zh": "当一位逃生者将要移动进入你所在空间时，阻止这次移动。该逃生者本回合无法交互。",
+     "transcription_confidence": "MEDIUM"
+    },
+    {
+     "name_zh": "花言巧语",
+     "bp_cost": 1,
+     "frame": "green",
+     "text_zh": "在计划阶段开始时，将恶灵放在一条路线上。玩家们将它视为一个可破坏墙壁（你可以自由穿过它）。",
+     "transcription_confidence": "MEDIUM"
+    },
+    {
+     "name_zh": "心惊肉跳",
+     "bp_cost": 0,
+     "frame": "green",
+     "text_zh": "在伤害或献祭一位逃生者之后，移除一个相连空间里的一个乌鸦、一个未占用的储物柜或一个箱子。",
+     "transcription_confidence": "MEDIUM"
+    }
+   ],
+   "edition": "COLLECTORS_OR_EXPANSION",
+   "photo": "characters/killers_clown_twins_wraith.png"
+  },
+  {
+   "id": "twins",
+   "role": "killer",
+   "name_zh": "连体婴",
+   "name_en": "The Twins",
+   "real_name_zh": null,
+   "difficulty_zh": "困难",
+   "bloodpoints": {
+    "start": 4,
+    "max": 12
+   },
+   "bp_x4_ability_zh": "X4：在你的第二个回合之后，从你的手中打出一张牌来执行一个额外回合。",
+   "power": {
+    "name_zh": "血之羁绊",
+    "text_zh": "将维克多放在你所在空间里。如果维克多已经在游戏版图上，则先将他移除，再放回你所在空间里。"
+   },
+   "passive_zh": "在你的每个回合中，你可以用维克多或夏洛特来执行该回合。当维克多将要抓取一位逃生者时，改为你获得1血点。逃生者可以与维克多交互来移除他。当用维克多执行回合时，他被视为“杀手”。在所有其他情况下，只有夏洛特是“杀手”。",
+   "perks": [
+    {
+     "name_zh": "恩赐解脱",
+     "bp_cost": 2,
+     "frame": "purple",
+     "text_zh": "在你的回合结束时，执行一个杀手额外回合。不要打出一张新的卡牌，而是重复你的上一个杀手回合的移动牌。（每轮你只能执行一个杀手额外回合。）",
+     "transcription_confidence": "MEDIUM"
+    },
+    {
+     "name_zh": "囤积者",
+     "bp_cost": 0,
+     "frame": "green",
+     "text_zh": "作为一个交互行动，与一个箱子交互以移除它并获得2血点。",
+     "transcription_confidence": "MEDIUM"
+    },
+    {
+     "name_zh": "切肤之痛",
+     "bp_cost": 2,
+     "frame": "green",
+     "text_zh": "当你破坏一台发电机时，从游戏版图上任意位置的至多2台其它发电机上各移除1个进度。",
+     "transcription_confidence": "MEDIUM"
+    }
+   ],
+   "edition": "COLLECTORS_OR_EXPANSION",
+   "photo": "characters/killers_clown_twins_wraith.png"
+  },
+  {
+   "id": "oni",
+   "role": "killer",
+   "name_zh": "鬼武士",
+   "name_en": "The Oni",
+   "real_name_zh": null,
+   "difficulty_zh": "简单",
+   "bloodpoints": {
+    "start": 4,
+    "max": 12
+   },
+   "bp_x4_ability_zh": "X4：在你的第二个回合之后，从你的手中打出一张牌来执行一个额外回合。",
+   "power": {
+    "name_zh": "山冈之怒",
+    "text_zh": "获得等于你所在空间和相连空间里受伤逃生者和厄咒图腾总数的血点。"
+   },
+   "passive_zh": null,
+   "perks": [
+    {
+     "name_zh": "鲜血回响",
+     "bp_cost": 2,
+     "frame": "purple",
+     "text_zh": "当你献祭一位逃生者之后，一个相连空间里的一位逃生者变为受伤。",
+     "transcription_confidence": "MEDIUM"
+    },
+    {
+     "name_zh": "残心",
+     "bp_cost": 2,
+     "frame": "green",
+     "text_zh": "在你的回合开始时，弃掉一张你放置的移动牌，用一张新的移动牌替换它。",
+     "transcription_confidence": "MEDIUM"
+    },
+    {
+     "name_zh": "搜皮",
+     "bp_cost": 2,
+     "frame": "green",
+     "text_zh": "当一位逃生者与你所在空间或一个相连空间里的一个木板或储物柜交互之后，移除该木板或储物柜。",
+     "transcription_confidence": "MEDIUM"
+    }
+   ],
+   "edition": "COLLECTORS_OR_EXPANSION",
+   "photo": "characters/killers_oni_spirit.png"
+  },
+  {
+   "id": "spirit",
+   "role": "killer",
+   "name_zh": "怨灵",
+   "name_en": "The Spirit",
+   "real_name_zh": null,
+   "difficulty_zh": "简单",
+   "bloodpoints": {
+    "start": 4,
+    "max": 12
+   },
+   "bp_x4_ability_zh": "X4：在你的第二个回合之后，从你的手中打出一张牌来执行一个额外回合。",
+   "power": {
+    "name_zh": "山冈作祟",
+    "text_zh": "弃掉一张“等待”以外的移动牌，以与通过该牌的路线相连的一个空间里的一位健康逃生者或一个道具交互。"
+   },
+   "passive_zh": null,
+   "perks": [
+    {
+     "name_zh": "怨气冲天",
+     "bp_cost": 2,
+     "frame": "purple",
+     "text_zh": "当你移动时，你所在空间里的一位受伤逃生者与你一起移动。",
+     "transcription_confidence": "MEDIUM"
+    },
+    {
+     "name_zh": "闹鬼之地",
+     "bp_cost": 1,
+     "frame": "green",
+     "text_zh": "当一位逃生者翻开一个道具之后，将该道具与同一类别的另一个翻开的道具交换。有进度指示物的发电机、路线上的木板、被占用的储物柜以及被占用的钩子不能被交换。",
+     "transcription_confidence": "MEDIUM"
+    },
+    {
+     "name_zh": "暴怒怨灵",
+     "bp_cost": 0,
+     "frame": "green",
+     "text_zh": "当你摧毁一个木板之后，获得2血点。",
+     "transcription_confidence": "MEDIUM"
+    }
+   ],
+   "edition": "COLLECTORS_OR_EXPANSION",
+   "photo": "characters/killers_oni_spirit.png"
+  }
+ ],
+ "counts": {
+  "base_survivors": 7,
+  "base_killers": 6,
+  "ce_survivors": 10,
+  "ce_killers": 10
+ },
+ "not_covered": [
+  "28 张逃生者技能卡、24 张杀手技能卡（卡组本身）：本批照片未拍到",
+  "角色板背面",
+  "日文原文（照片为中文版）"
+ ]
+}

@@ -1,0 +1,80 @@
+2026-10-19 MACMILLAN INTAKE VALIDATION
+
+$ python tests/verify_macmillan.py
+[PASS 1/4] Directed reachability: Backlot reaches 11/11; all 11 origins reach 11/11.
+[PASS 2/4] Every room has an outgoing route; minimum out-degree = 3
+[PASS 3/4] Four distressed-border routes match four initial breakable walls: mm_p05, mm_p11, mm_p21, mm_p22
+[PASS 4/4] Prop slots = 44; Y/R/B/G = 10/10/12/12.
+[PASS] Existing source references preserved; Autohaven object unchanged from pre-merge snapshot.
+[PASS] Four directed yellow routes, unresolved fields, grade exception and base-edition scope are preserved.
+RESULT: All four requested structural checks and provenance safeguards passed.
+Scope: topology ignoring dynamic blockers; killer may break initial walls under B01 p14.
+Not certified: full playable initialization, transport ambiguity Q01, Japanese physical edition, or gameplay tests.
+EXIT_CODE=0
+
+$ python tests/verify_phase0.py
+[PASS] required research documents exist
+[PASS] 16 JSON documents parse; 9 game-data research files
+[PASS] 57 source IDs are unique
+[PASS] CHARACTER_DATA.json/characters: unique IDs
+[PASS] DICE_DATA.json/dice: unique IDs
+[PASS] glossary.json/terms: unique IDs
+[PASS] ITEM_DATA.json/physical_cards: unique IDs
+[PASS] ITEM_DATA.json/definitions: unique IDs
+[PASS] MAP_DATA.json/maps: unique IDs
+[PASS] MOVEMENT_CARD_DATA.json/card_types: unique IDs
+[PASS] PERK_DATA.json/perks: unique IDs
+[PASS] PROP_DATA.json/categories: unique IDs
+[PASS] PROP_DATA.json/types: unique IDs
+[PASS] PROP_DATA.json/separate_components: unique IDs
+[PASS] RULE_DATA.json/rules: unique IDs
+[PASS] valid provenance; printed Chinese transcriptions retain D evidence and are not APPROVED
+[PASS] character inventory is 7 survivors + 6 killers
+[PASS] perk inventory is 28 + 24, including explicitly unidentified slots
+[PASS] exactly 2 perk effects confirmed; unknown effects are not substituted
+[PASS] 16 physical item slots; no invented per-type allocations
+[PASS] movement counts 5+5+5+5+1=21
+[PASS] prop category counts total 44; 4 walls remain separate
+[PASS] 8 prop subtype quantities reconcile to user-specified C06 evidence and total 44
+[PASS] MacMillan has 22 source-verified edges; Autohaven graph remains missing
+[PASS] 20 component count rows reconcile to charter and 89-card official total
+[PASS] rule research totals reconcile to current statistics
+[PASS] original file hash audit: 8 verified, 0 explicitly skipped
+[PASS] Git ignores original materials, databases and dependencies (including uncreated probe paths)
+[PASS] no Git remote or tracked original reference files
+[PASS] no game feature code created in Phase 0
+
+RESULT: 30 audit checks passed. Gameplay/unit/E2E tests: NOT RUN (no implementation).
+EXIT_CODE=0
+
+$ python tests/verify_phase0_supplement.py
+[PASS] source registry reconciles to current statistics
+[PASS] BGG prop grade preserves the explicit user override rather than assuming official authorship
+[PASS] subtype sums reconcile independently to all four prop categories
+[PASS] adopted prop counts do not falsely certify the user physical edition
+[PASS] 6 unique quoted-skill records
+[PASS] quotes graded by speaker: 1 C, 5 D
+[PASS] same-thread official and player quotations retain different grades
+[PASS] 2 expansion-preview quotations remain out of base scope
+[PASS] access limitation and zero obtained item quotations remain explicit
+[PASS] BQ01 source URL resolves
+[PASS] BQ02 source URL resolves
+[PASS] BQ03 source URL resolves
+[PASS] BQ04 source URL resolves
+[PASS] BQ05 source URL resolves
+[PASS] BQ06 source URL resolves
+[PASS] short quotation budget <=25 words per source page
+[PASS] partial or secondary quotations do not silently become complete formal effects
+[PASS] formal perk inventory remains 52 slots and 2 confirmed effects
+[PASS] unread automa thread and candidate association are not falsely certified
+[PASS] automa inventory records observation scope without claiming absent data
+[PASS] photo list removes solved counts and distinguishes physical-edition evidence from network gaps
+[PASS] comparison records 7 differences and does not invent resolutions to Q01/Q02
+[PASS] docs/PHASE_0_SUPPLEMENT_REPORT.md exists
+[PASS] docs/BGG_CARD_QUOTE_REVIEW.md exists
+[PASS] docs/AUTOMA_REVIEW.md exists
+
+RESULT: 25 supplemental research checks passed. Gameplay tests: NOT RUN.
+EXIT_CODE=0
+
+SVG: XML parse passed; PNG visual review performed, p05 label margin corrected.

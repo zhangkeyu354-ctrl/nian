@@ -1,0 +1,563 @@
+{
+  "options": {
+    "seed": 4111,
+    "mapId": "autohaven_wreckers",
+    "survivors": [
+      "dwight",
+      "meg",
+      "jake",
+      "claudette"
+    ],
+    "killer": "doctor"
+  },
+  "commands": [
+    {
+      "type": "SETUP_REVEAL",
+      "actorId": "dwight",
+      "propId": "wreckers_garage_north:boldness:0"
+    },
+    {
+      "type": "SETUP_REVEAL",
+      "actorId": "meg",
+      "propId": "maze:boldness:0"
+    },
+    {
+      "type": "SETUP_REVEAL",
+      "actorId": "jake",
+      "propId": "scrap_pile:boldness:0"
+    },
+    {
+      "type": "SETUP_REVEAL",
+      "actorId": "claudette",
+      "propId": "main_garage:boldness:0"
+    },
+    {
+      "type": "PLAN",
+      "actorId": "dwight",
+      "cards": [
+        "green"
+      ]
+    },
+    {
+      "type": "PLAN",
+      "actorId": "meg",
+      "cards": [
+        "green"
+      ]
+    },
+    {
+      "type": "PLAN",
+      "actorId": "jake",
+      "cards": [
+        "green"
+      ]
+    },
+    {
+      "type": "PLAN",
+      "actorId": "claudette",
+      "cards": [
+        "red"
+      ]
+    },
+    {
+      "type": "PLAN",
+      "actorId": "doctor",
+      "cards": [
+        "wait",
+        "blue"
+      ]
+    },
+    {
+      "type": "MOVE",
+      "actorId": "dwight"
+    },
+    {
+      "type": "END_TURN",
+      "actorId": "dwight"
+    },
+    {
+      "type": "MOVE",
+      "actorId": "meg"
+    },
+    {
+      "type": "END_TURN",
+      "actorId": "meg"
+    },
+    {
+      "type": "MOVE",
+      "actorId": "jake",
+      "pathId": "ah_p04",
+      "to": "wreckers_garage_south"
+    },
+    {
+      "type": "SELECT",
+      "actorId": "jake",
+      "propId": "wreckers_garage_south:boldness:0"
+    },
+    {
+      "type": "END_TURN",
+      "actorId": "jake"
+    },
+    {
+      "type": "PASS",
+      "actorId": "claudette"
+    },
+    {
+      "type": "PASS",
+      "actorId": "claudette"
+    },
+    {
+      "type": "MOVE",
+      "actorId": "claudette"
+    },
+    {
+      "type": "END_TURN",
+      "actorId": "claudette"
+    },
+    {
+      "type": "MOVE",
+      "actorId": "doctor"
+    },
+    {
+      "type": "END_TURN",
+      "actorId": "doctor"
+    },
+    {
+      "type": "MOVE",
+      "actorId": "doctor",
+      "pathId": "ah_p17",
+      "to": "old_cabin"
+    },
+    {
+      "type": "SELECT",
+      "actorId": "doctor",
+      "propId": "old_cabin:boldness:0"
+    },
+    {
+      "type": "PASS",
+      "actorId": "meg"
+    },
+    {
+      "type": "INTERACT",
+      "actorId": "doctor",
+      "action": "attack",
+      "targetId": "meg"
+    },
+    {
+      "type": "END_TURN",
+      "actorId": "doctor"
+    },
+    {
+      "type": "KILLER_BONUS",
+      "actorId": "doctor",
+      "accept": false
+    },
+    {
+      "type": "USE_PERK",
+      "actorId": "doctor",
+      "perkId": "board_doctor_1"
+    },
+    {
+      "type": "PASS",
+      "actorId": "doctor"
+    },
+    {
+      "type": "PLAN",
+      "actorId": "dwight",
+      "cards": [
+        "green"
+      ]
+    },
+    {
+      "type": "PLAN",
+      "actorId": "meg",
+      "cards": [
+        "green"
+      ]
+    },
+    {
+      "type": "PLAN",
+      "actorId": "jake",
+      "cards": [
+        "yellow"
+      ]
+    },
+    {
+      "type": "PLAN",
+      "actorId": "claudette",
+      "cards": [
+        "red"
+      ]
+    },
+    {
+      "type": "PLAN",
+      "actorId": "doctor",
+      "cards": [
+        "wait",
+        "blue"
+      ]
+    },
+    {
+      "type": "MOVE",
+      "actorId": "meg"
+    },
+    {
+      "type": "END_TURN",
+      "actorId": "meg"
+    },
+    {
+      "type": "MOVE",
+      "actorId": "jake"
+    },
+    {
+      "type": "END_TURN",
+      "actorId": "jake"
+    },
+    {
+      "type": "PASS",
+      "actorId": "claudette"
+    },
+    {
+      "type": "PASS",
+      "actorId": "claudette"
+    },
+    {
+      "type": "MOVE",
+      "actorId": "claudette"
+    },
+    {
+      "type": "END_TURN",
+      "actorId": "claudette"
+    },
+    {
+      "type": "MOVE",
+      "actorId": "dwight"
+    },
+    {
+      "type": "END_TURN",
+      "actorId": "dwight"
+    },
+    {
+      "type": "MOVE",
+      "actorId": "doctor"
+    },
+    {
+      "type": "INTERACT",
+      "actorId": "doctor",
+      "action": "pickup",
+      "targetId": "meg"
+    },
+    {
+      "type": "END_TURN",
+      "actorId": "doctor"
+    },
+    {
+      "type": "MOVE",
+      "actorId": "doctor",
+      "pathId": "ah_p17",
+      "to": "gas_pump"
+    },
+    {
+      "type": "SELECT",
+      "actorId": "doctor",
+      "propId": "gas_pump:boldness:0"
+    },
+    {
+      "type": "END_TURN",
+      "actorId": "doctor"
+    },
+    {
+      "type": "KILLER_BONUS",
+      "actorId": "doctor",
+      "accept": false
+    },
+    {
+      "type": "PLAN",
+      "actorId": "dwight",
+      "cards": [
+        "green"
+      ]
+    },
+    {
+      "type": "PLAN",
+      "actorId": "jake",
+      "cards": [
+        "yellow"
+      ]
+    },
+    {
+      "type": "PLAN",
+      "actorId": "claudette",
+      "cards": [
+        "red"
+      ]
+    },
+    {
+      "type": "PLAN",
+      "actorId": "doctor",
+      "cards": [
+        "green",
+        "wait"
+      ]
+    },
+    {
+      "type": "MOVE",
+      "actorId": "jake"
+    },
+    {
+      "type": "END_TURN",
+      "actorId": "jake"
+    },
+    {
+      "type": "PASS",
+      "actorId": "claudette"
+    },
+    {
+      "type": "PASS",
+      "actorId": "claudette"
+    },
+    {
+      "type": "MOVE",
+      "actorId": "claudette"
+    },
+    {
+      "type": "END_TURN",
+      "actorId": "claudette"
+    },
+    {
+      "type": "MOVE",
+      "actorId": "dwight"
+    },
+    {
+      "type": "END_TURN",
+      "actorId": "dwight"
+    },
+    {
+      "type": "MOVE",
+      "actorId": "doctor",
+      "pathId": "ah_p04",
+      "to": "wreckers_garage_south"
+    },
+    {
+      "type": "SELECT",
+      "actorId": "doctor",
+      "propId": "wreckers_garage_south:objective:0"
+    },
+    {
+      "type": "INTERACT",
+      "actorId": "doctor",
+      "action": "attack",
+      "targetId": "jake"
+    },
+    {
+      "type": "END_TURN",
+      "actorId": "doctor"
+    },
+    {
+      "type": "MOVE",
+      "actorId": "doctor"
+    },
+    {
+      "type": "END_TURN",
+      "actorId": "doctor"
+    },
+    {
+      "type": "KILLER_BONUS",
+      "actorId": "doctor",
+      "accept": false
+    },
+    {
+      "type": "PLAN",
+      "actorId": "dwight",
+      "cards": [
+        "green"
+      ]
+    },
+    {
+      "type": "PLAN",
+      "actorId": "jake",
+      "cards": [
+        "yellow"
+      ]
+    },
+    {
+      "type": "PLAN",
+      "actorId": "claudette",
+      "cards": [
+        "red"
+      ]
+    },
+    {
+      "type": "PLAN",
+      "actorId": "doctor",
+      "cards": [
+        "wait",
+        "blue"
+      ]
+    },
+    {
+      "type": "PASS",
+      "actorId": "claudette"
+    },
+    {
+      "type": "PASS",
+      "actorId": "claudette"
+    },
+    {
+      "type": "MOVE",
+      "actorId": "claudette"
+    },
+    {
+      "type": "END_TURN",
+      "actorId": "claudette"
+    },
+    {
+      "type": "MOVE",
+      "actorId": "dwight"
+    },
+    {
+      "type": "END_TURN",
+      "actorId": "dwight"
+    },
+    {
+      "type": "MOVE",
+      "actorId": "jake"
+    },
+    {
+      "type": "END_TURN",
+      "actorId": "jake"
+    },
+    {
+      "type": "MOVE",
+      "actorId": "doctor"
+    },
+    {
+      "type": "INTERACT",
+      "actorId": "doctor",
+      "action": "pickup",
+      "targetId": "jake"
+    },
+    {
+      "type": "SELECT",
+      "actorId": "doctor",
+      "dice": 1,
+      "route": [
+        {
+          "pathId": "ah_p04",
+          "to": "gas_pump"
+        }
+      ]
+    },
+    {
+      "type": "END_TURN",
+      "actorId": "doctor"
+    },
+    {
+      "type": "MOVE",
+      "actorId": "doctor",
+      "pathId": "ah_p17",
+      "to": "old_cabin"
+    },
+    {
+      "type": "SELECT",
+      "actorId": "doctor",
+      "propId": "old_cabin:objective:0"
+    },
+    {
+      "type": "END_TURN",
+      "actorId": "doctor"
+    },
+    {
+      "type": "KILLER_BONUS",
+      "actorId": "doctor",
+      "accept": false
+    },
+    {
+      "type": "PLAN",
+      "actorId": "dwight",
+      "cards": [
+        "green"
+      ]
+    },
+    {
+      "type": "PLAN",
+      "actorId": "claudette",
+      "cards": [
+        "red"
+      ]
+    },
+    {
+      "type": "PLAN",
+      "actorId": "doctor",
+      "cards": [
+        "blue",
+        "green"
+      ]
+    },
+    {
+      "type": "MOVE",
+      "actorId": "dwight"
+    },
+    {
+      "type": "END_TURN",
+      "actorId": "dwight"
+    },
+    {
+      "type": "PASS",
+      "actorId": "claudette"
+    },
+    {
+      "type": "PASS",
+      "actorId": "claudette"
+    },
+    {
+      "type": "MOVE",
+      "actorId": "claudette"
+    },
+    {
+      "type": "END_TURN",
+      "actorId": "claudette"
+    },
+    {
+      "type": "MOVE",
+      "actorId": "doctor",
+      "pathId": "ah_p17",
+      "to": "gas_pump"
+    },
+    {
+      "type": "SELECT",
+      "actorId": "doctor",
+      "propId": "gas_pump:objective:0"
+    },
+    {
+      "type": "END_TURN",
+      "actorId": "doctor"
+    },
+    {
+      "type": "MOVE",
+      "actorId": "doctor",
+      "pathId": "ah_p04",
+      "to": "cottage"
+    },
+    {
+      "type": "SELECT",
+      "actorId": "doctor",
+      "propId": "cottage:boldness:0"
+    },
+    {
+      "type": "INTERACT",
+      "actorId": "doctor",
+      "action": "attack",
+      "targetId": "claudette"
+    },
+    {
+      "type": "END_TURN",
+      "actorId": "doctor"
+    },
+    {
+      "type": "KILLER_BONUS",
+      "actorId": "doctor",
+      "accept": false
+    }
+  ]
+}

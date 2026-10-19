@@ -1,0 +1,64 @@
+{
+  "leads": [
+    {
+      "source_id": "D20",
+      "topic": "Dark Sense",
+      "result": "只有情境问答，非逐字卡文",
+      "source_ref": [
+        "https://boardgamegeek.com/thread/3083560/does-the-dark-sense-perk-have-a-use"
+      ],
+      "source_level": "D",
+      "status": "CHECK_REQUIRED"
+    },
+    {
+      "source_id": "D21",
+      "topic": "Urban Evasion / Bamboozle",
+      "result": "有解释，答复者身份未可靠显示",
+      "source_ref": [
+        "https://boardgamegeek.com/thread/3069117/could-urban-evasion-removes-the-entity-placed-by-b"
+      ],
+      "source_level": "D",
+      "status": "CHECK_REQUIRED"
+    },
+    {
+      "source_id": "D22",
+      "topic": "Iron Will / Breakdown",
+      "result": "玩家组合讨论，含非基础角色，非逐字完整卡文",
+      "source_ref": [
+        "https://boardgamegeek.com/thread/3309453/iron-will-and-breakdown-combo"
+      ],
+      "source_level": "D",
+      "status": "CHECK_REQUIRED"
+    },
+    {
+      "source_id": "C09",
+      "topic": "Bond",
+      "result": "官方人员澄清与Madness关系，缺完整卡文/费用",
+      "source_ref": [
+        "https://boardgamegeek.com/thread/3084753/could-bond-replace-effect-madness"
+      ],
+      "source_level": "C",
+      "status": "CHECK_REQUIRED"
+    },
+    {
+      "source_id": "D23",
+      "topic": "Trapper自动变体中的多技能",
+      "result": "变体文字不是原版卡文，排除",
+      "source_ref": [
+        "https://boardgamegeek.com/thread/3093922/the-trapper-killer-automation"
+      ],
+      "source_level": "D",
+      "status": "CHECK_REQUIRED"
+    },
+    {
+      "source_id": "D27",
+      "topic": "另一桌游的Flashlight / Toolbox",
+      "result": "误命中其他游戏，排除",
+      "source_ref": [
+        "https://boardgamegeek.com/thread/3065442/needs-more-concerns"
+      ],
+      "source_level": "D",
+      "status": "CHECK_REQUIRED"
+    }
+  ]
+}

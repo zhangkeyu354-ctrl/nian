@@ -1,0 +1,344 @@
+{
+  "schema_version": 1,
+  "research_date": "2026-10-19",
+  "edition_scope": "BASE_STANDARD",
+  "note": "八种数量8+2+5+5+6+6+6+6=44；按用户指定的BGG条目C级采用。4墙单列。日文实物差异未核，不要求为一般数量重复拍照。交互规则依据仍为B01。",
+  "expected_total": 44,
+  "categories": [
+    {
+      "id": "objective",
+      "name_ja": null,
+      "name_en": "Objective",
+      "name_zh": "目标",
+      "translation_status": "DRAFT",
+      "japanese_text_status": "CHECK_REQUIRED",
+      "quantity": 10,
+      "color": "yellow",
+      "source_level": "B",
+      "source_ref": [
+        "B01:p3组件图"
+      ],
+      "status": "CONFIRMED",
+      "chinese_print_evidence": {
+        "source_level": "D",
+        "source_ref": [
+          "D38:类别中文印刷"
+        ],
+        "status": "CHECK_REQUIRED"
+      }
+    },
+    {
+      "id": "boldness",
+      "name_ja": null,
+      "name_en": "Boldness",
+      "name_zh": "无惧",
+      "translation_status": "DRAFT",
+      "japanese_text_status": "CHECK_REQUIRED",
+      "quantity": 10,
+      "color": "red",
+      "source_level": "B",
+      "source_ref": [
+        "B01:p3组件图"
+      ],
+      "status": "CONFIRMED",
+      "chinese_print_evidence": {
+        "source_level": "D",
+        "source_ref": [
+          "D38:类别中文印刷"
+        ],
+        "status": "CHECK_REQUIRED"
+      }
+    },
+    {
+      "id": "survival",
+      "name_ja": null,
+      "name_en": "Survival",
+      "name_zh": "逃生",
+      "translation_status": "DRAFT",
+      "japanese_text_status": "CHECK_REQUIRED",
+      "quantity": 12,
+      "color": "blue",
+      "source_level": "B",
+      "source_ref": [
+        "B01:p3组件图"
+      ],
+      "status": "CONFIRMED",
+      "chinese_print_evidence": {
+        "source_level": "D",
+        "source_ref": [
+          "D38:类别中文印刷"
+        ],
+        "status": "CHECK_REQUIRED"
+      }
+    },
+    {
+      "id": "altruism",
+      "name_ja": null,
+      "name_en": "Altruism",
+      "name_zh": "援助",
+      "translation_status": "DRAFT",
+      "japanese_text_status": "CHECK_REQUIRED",
+      "quantity": 12,
+      "color": "green",
+      "source_level": "B",
+      "source_ref": [
+        "B01:p3组件图"
+      ],
+      "status": "CONFIRMED",
+      "chinese_print_evidence": {
+        "source_level": "D",
+        "source_ref": [
+          "D38:类别中文印刷"
+        ],
+        "status": "CHECK_REQUIRED"
+      }
+    }
+  ],
+  "types": [
+    {
+      "id": "generator",
+      "name_ja": null,
+      "name_en": "Generator",
+      "name_zh": "发电机",
+      "translation_status": "DRAFT",
+      "japanese_text_status": "CHECK_REQUIRED",
+      "category_id": "objective",
+      "quantity": 8,
+      "source_level": "C",
+      "source_ref": [
+        "C06:Standard Edition / 44 Props"
+      ],
+      "status": "CONFIRMED",
+      "identity_status": "CONFIRMED",
+      "quantity_status": "CONFIRMED",
+      "interaction_rules_ref": "B01:p12/p14",
+      "identity_source_ref": "B01:p12/p14",
+      "quantity_rating_basis": "USER_SPECIFIED_C_2026-10-19",
+      "physical_japanese_status": "CHECK_REQUIRED",
+      "chinese_print_evidence": {
+        "source_level": "D",
+        "source_ref": [
+          "D38:道具名/数量",
+          "D39:道具名/数量"
+        ],
+        "status": "CHECK_REQUIRED"
+      }
+    },
+    {
+      "id": "exit_gate",
+      "name_ja": null,
+      "name_en": "Exit Gate",
+      "name_zh": "出口大门",
+      "translation_status": "DRAFT",
+      "japanese_text_status": "CHECK_REQUIRED",
+      "category_id": "objective",
+      "quantity": 2,
+      "source_level": "C",
+      "source_ref": [
+        "C06:Standard Edition / 44 Props"
+      ],
+      "status": "CONFIRMED",
+      "identity_status": "CONFIRMED",
+      "quantity_status": "CONFIRMED",
+      "interaction_rules_ref": "B01:p13",
+      "identity_source_ref": "B01:p13",
+      "quantity_rating_basis": "USER_SPECIFIED_C_2026-10-19",
+      "physical_japanese_status": "CHECK_REQUIRED",
+      "chinese_print_evidence": {
+        "source_level": "D",
+        "source_ref": [
+          "D38:道具名/数量",
+          "D39:道具名/数量"
+        ],
+        "status": "CHECK_REQUIRED"
+      }
+    },
+    {
+      "id": "hook",
+      "name_ja": null,
+      "name_en": "Hook",
+      "name_zh": "钩子",
+      "translation_status": "DRAFT",
+      "japanese_text_status": "CHECK_REQUIRED",
+      "category_id": "boldness",
+      "quantity": 5,
+      "source_level": "C",
+      "source_ref": [
+        "C06:Standard Edition / 44 Props"
+      ],
+      "status": "CONFIRMED",
+      "identity_status": "CONFIRMED",
+      "quantity_status": "CONFIRMED",
+      "interaction_rules_ref": "B01:p13/p15",
+      "identity_source_ref": "B01:p13/p15",
+      "quantity_rating_basis": "USER_SPECIFIED_C_2026-10-19",
+      "physical_japanese_status": "CHECK_REQUIRED",
+      "chinese_print_evidence": {
+        "source_level": "D",
+        "source_ref": [
+          "D38:道具名/数量",
+          "D39:道具名/数量"
+        ],
+        "status": "CHECK_REQUIRED"
+      }
+    },
+    {
+      "id": "hex_totem",
+      "name_ja": null,
+      "name_en": "Hex Totem",
+      "name_zh": "厄咒图腾",
+      "translation_status": "DRAFT",
+      "japanese_text_status": "CHECK_REQUIRED",
+      "category_id": "boldness",
+      "quantity": 5,
+      "source_level": "C",
+      "source_ref": [
+        "C06:Standard Edition / 44 Props"
+      ],
+      "status": "CONFIRMED",
+      "identity_status": "CONFIRMED",
+      "quantity_status": "CONFIRMED",
+      "interaction_rules_ref": "B01:p13/p14",
+      "identity_source_ref": "B01:p13/p14",
+      "quantity_rating_basis": "USER_SPECIFIED_C_2026-10-19",
+      "physical_japanese_status": "CHECK_REQUIRED",
+      "chinese_print_evidence": {
+        "source_level": "D",
+        "source_ref": [
+          "D38:道具名/数量",
+          "D39:道具名/数量"
+        ],
+        "status": "CHECK_REQUIRED"
+      }
+    },
+    {
+      "id": "chest",
+      "name_ja": null,
+      "name_en": "Chest",
+      "name_zh": "箱子",
+      "translation_status": "DRAFT",
+      "japanese_text_status": "CHECK_REQUIRED",
+      "category_id": "survival",
+      "quantity": 6,
+      "source_level": "C",
+      "source_ref": [
+        "C06:Standard Edition / 44 Props"
+      ],
+      "status": "CONFIRMED",
+      "identity_status": "CONFIRMED",
+      "quantity_status": "CONFIRMED",
+      "interaction_rules_ref": "B01:p12",
+      "identity_source_ref": "B01:p12",
+      "quantity_rating_basis": "USER_SPECIFIED_C_2026-10-19",
+      "physical_japanese_status": "CHECK_REQUIRED",
+      "chinese_print_evidence": {
+        "source_level": "D",
+        "source_ref": [
+          "D38:道具名/数量",
+          "D39:道具名/数量"
+        ],
+        "status": "CHECK_REQUIRED"
+      }
+    },
+    {
+      "id": "locker",
+      "name_ja": null,
+      "name_en": "Locker",
+      "name_zh": "储物柜",
+      "translation_status": "DRAFT",
+      "japanese_text_status": "CHECK_REQUIRED",
+      "category_id": "survival",
+      "quantity": 6,
+      "source_level": "C",
+      "source_ref": [
+        "C06:Standard Edition / 44 Props"
+      ],
+      "status": "CONFIRMED",
+      "identity_status": "CONFIRMED",
+      "quantity_status": "CONFIRMED",
+      "interaction_rules_ref": "B01:p12/p14",
+      "identity_source_ref": "B01:p12/p14",
+      "quantity_rating_basis": "USER_SPECIFIED_C_2026-10-19",
+      "physical_japanese_status": "CHECK_REQUIRED",
+      "chinese_print_evidence": {
+        "source_level": "D",
+        "source_ref": [
+          "D38:道具名/数量",
+          "D39:道具名/数量"
+        ],
+        "status": "CHECK_REQUIRED"
+      }
+    },
+    {
+      "id": "crow",
+      "name_ja": null,
+      "name_en": "Crow",
+      "name_zh": "乌鸦",
+      "translation_status": "DRAFT",
+      "japanese_text_status": "CHECK_REQUIRED",
+      "category_id": "altruism",
+      "quantity": 6,
+      "source_level": "C",
+      "source_ref": [
+        "C06:Standard Edition / 44 Props"
+      ],
+      "status": "CONFIRMED",
+      "identity_status": "CONFIRMED",
+      "quantity_status": "CONFIRMED",
+      "interaction_rules_ref": "B01:p12/p14",
+      "identity_source_ref": "B01:p12/p14",
+      "quantity_rating_basis": "USER_SPECIFIED_C_2026-10-19",
+      "physical_japanese_status": "CHECK_REQUIRED",
+      "chinese_print_evidence": {
+        "source_level": "D",
+        "source_ref": [
+          "D38:道具名/数量",
+          "D39:道具名/数量"
+        ],
+        "status": "CHECK_REQUIRED"
+      }
+    },
+    {
+      "id": "pallet",
+      "name_ja": null,
+      "name_en": "Pallet",
+      "name_zh": "木板",
+      "translation_status": "DRAFT",
+      "japanese_text_status": "CHECK_REQUIRED",
+      "category_id": "altruism",
+      "quantity": 6,
+      "source_level": "C",
+      "source_ref": [
+        "C06:Standard Edition / 44 Props"
+      ],
+      "status": "CONFIRMED",
+      "identity_status": "CONFIRMED",
+      "quantity_status": "CONFIRMED",
+      "interaction_rules_ref": "B01:p12/p14",
+      "identity_source_ref": "B01:p12/p14",
+      "quantity_rating_basis": "USER_SPECIFIED_C_2026-10-19",
+      "physical_japanese_status": "CHECK_REQUIRED",
+      "chinese_print_evidence": {
+        "source_level": "D",
+        "source_ref": [
+          "D38:道具名/数量",
+          "D39:道具名/数量"
+        ],
+        "status": "CHECK_REQUIRED"
+      }
+    }
+  ],
+  "separate_components": [
+    {
+      "id": "breakable_wall",
+      "quantity": 4,
+      "source_level": "B",
+      "source_ref": [
+        "B01:p3",
+        "B02:Whats In The Box"
+      ],
+      "status": "CONFIRMED"
+    }
+  ],
+  "research_revision": "PHASE_0_SUPPLEMENT"
+}

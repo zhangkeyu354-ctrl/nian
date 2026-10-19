@@ -1,0 +1,465 @@
+{
+  "schema_version": 1,
+  "note": "比对关系不等于中文规则原文已获A/B认证；原始完整转录保留用户提供文件。",
+  "entries": [
+    {
+      "id": "REF01",
+      "claim_zh": "箱子：移除、摸1物品、超1弃至1",
+      "rule_ids": [
+        "R030"
+      ],
+      "source_level": "D",
+      "source_ref": [
+        "D38:对应中文印刷条目",
+        "B01:p12"
+      ],
+      "comparison_status": "MATCH",
+      "transcription_status": "CHECK_REQUIRED",
+      "note": "中文版原文佐证（D级第三方照片；不升级为官方A/B来源）"
+    },
+    {
+      "id": "REF02",
+      "claim_zh": "乌鸦冲刺：杀手+1血点，逃生者额外回合",
+      "rule_ids": [
+        "R033"
+      ],
+      "source_level": "D",
+      "source_ref": [
+        "D38:对应中文印刷条目",
+        "B01:p12"
+      ],
+      "comparison_status": "MATCH",
+      "transcription_status": "CHECK_REQUIRED",
+      "note": "中文版原文佐证（D级第三方照片；不升级为官方A/B来源）"
+    },
+    {
+      "id": "REF03",
+      "claim_zh": "储物柜：同柜不能再交互",
+      "rule_ids": [
+        "R032"
+      ],
+      "source_level": "D",
+      "source_ref": [
+        "D38:对应中文印刷条目",
+        "B01:p12"
+      ],
+      "comparison_status": "MATCH",
+      "transcription_status": "CHECK_REQUIRED",
+      "note": "中文版原文佐证（D级第三方照片；不升级为官方A/B来源）"
+    },
+    {
+      "id": "REF04",
+      "claim_zh": "柜内角色视为不在场，不能用技能，移动先离柜",
+      "rule_ids": [
+        "R031"
+      ],
+      "source_level": "D",
+      "source_ref": [
+        "D38:对应中文印刷条目",
+        "B01:p12"
+      ],
+      "comparison_status": "MATCH",
+      "transcription_status": "CHECK_REQUIRED",
+      "note": "中文版原文佐证（D级第三方照片；不升级为官方A/B来源）"
+    },
+    {
+      "id": "REF05",
+      "claim_zh": "木板：放相连路线，不得与已有配件同路",
+      "rule_ids": [
+        "R034"
+      ],
+      "source_level": "D",
+      "source_ref": [
+        "D38:对应中文印刷条目",
+        "B01:p12"
+      ],
+      "comparison_status": "MATCH",
+      "transcription_status": "CHECK_REQUIRED",
+      "note": "中文版原文佐证（D级第三方照片；不升级为官方A/B来源）"
+    },
+    {
+      "id": "REF06",
+      "claim_zh": "杀手遇木板：移除，原地，不能交互",
+      "rule_ids": [
+        "R047"
+      ],
+      "source_level": "D",
+      "source_ref": [
+        "D38:对应中文印刷条目",
+        "B01:p14"
+      ],
+      "comparison_status": "MATCH",
+      "transcription_status": "CHECK_REQUIRED",
+      "note": "中文版原文佐证（D级第三方照片；不升级为官方A/B来源）"
+    },
+    {
+      "id": "REF07",
+      "claim_zh": "发电机：成功1/大成功2/失败0，封顶3，完成移轨",
+      "rule_ids": [
+        "R029"
+      ],
+      "source_level": "D",
+      "source_ref": [
+        "D38:对应中文印刷条目",
+        "B01:p12"
+      ],
+      "comparison_status": "MATCH",
+      "transcription_status": "CHECK_REQUIRED",
+      "note": "中文版原文佐证（D级第三方照片；不升级为官方A/B来源）"
+    },
+    {
+      "id": "REF08",
+      "claim_zh": "钩子：放恶灵，本轮末移除；中文省略该钩不能交互",
+      "rule_ids": [
+        "R036",
+        "R062"
+      ],
+      "source_level": "D",
+      "source_ref": [
+        "D38:对应中文印刷条目",
+        "B01:p13/p16"
+      ],
+      "comparison_status": "MATCH_WITH_OMISSION",
+      "transcription_status": "CHECK_REQUIRED",
+      "note": "中文版原文佐证（D级第三方照片；不升级为官方A/B来源）"
+    },
+    {
+      "id": "REF09",
+      "claim_zh": "救人：获得1血点，救者先移，被救者后移",
+      "rule_ids": [
+        "R036",
+        "R037"
+      ],
+      "source_level": "D",
+      "source_ref": [
+        "D38:对应中文印刷条目",
+        "B01:p13"
+      ],
+      "comparison_status": "MATCH",
+      "transcription_status": "CHECK_REQUIRED",
+      "note": "中文版原文佐证（D级第三方照片；不升级为官方A/B来源）"
+    },
+    {
+      "id": "REF10",
+      "claim_zh": "出口：完成4发电机才通电，成功+1，达3获胜",
+      "rule_ids": [
+        "R035"
+      ],
+      "source_level": "D",
+      "source_ref": [
+        "D38:对应中文印刷条目",
+        "B01:p13"
+      ],
+      "comparison_status": "MATCH",
+      "transcription_status": "CHECK_REQUIRED",
+      "note": "中文版原文佐证（D级第三方照片；不升级为官方A/B来源）"
+    },
+    {
+      "id": "REF11",
+      "claim_zh": "厄咒图腾：成功移除并得2血点",
+      "rule_ids": [
+        "R038"
+      ],
+      "source_level": "D",
+      "source_ref": [
+        "D38:对应中文印刷条目",
+        "B01:p13"
+      ],
+      "comparison_status": "MATCH",
+      "transcription_status": "CHECK_REQUIRED",
+      "note": "中文版原文佐证（D级第三方照片；不升级为官方A/B来源）"
+    },
+    {
+      "id": "REF12",
+      "claim_zh": "治疗：另一位受伤逃生者成功变健康",
+      "rule_ids": [
+        "R039"
+      ],
+      "source_level": "D",
+      "source_ref": [
+        "D38:对应中文印刷条目",
+        "B01:p13"
+      ],
+      "comparison_status": "MATCH",
+      "transcription_status": "CHECK_REQUIRED",
+      "note": "中文版原文佐证（D级第三方照片；不升级为官方A/B来源）"
+    },
+    {
+      "id": "REF13",
+      "claim_zh": "杀手仅搜被占用储物柜",
+      "rule_ids": [
+        "R032"
+      ],
+      "source_level": "D",
+      "source_ref": [
+        "D39:对应中文印刷条目",
+        "B01:p14"
+      ],
+      "comparison_status": "MATCH",
+      "transcription_status": "CHECK_REQUIRED",
+      "note": "中文版原文佐证（D级第三方照片；不升级为官方A/B来源）"
+    },
+    {
+      "id": "REF14",
+      "claim_zh": "搜柜：失败抓取，包括健康者；成功移除柜",
+      "rule_ids": [
+        "R043"
+      ],
+      "source_level": "D",
+      "source_ref": [
+        "D39:对应中文印刷条目",
+        "B01:p14"
+      ],
+      "comparison_status": "MATCH",
+      "transcription_status": "CHECK_REQUIRED",
+      "note": "中文版原文佐证（D级第三方照片；不升级为官方A/B来源）"
+    },
+    {
+      "id": "REF15",
+      "claim_zh": "侦察乌鸦：移除并+1血点",
+      "rule_ids": [
+        "R044"
+      ],
+      "source_level": "D",
+      "source_ref": [
+        "D39:对应中文印刷条目",
+        "B01:p14"
+      ],
+      "comparison_status": "MATCH",
+      "transcription_status": "CHECK_REQUIRED",
+      "note": "中文版原文佐证（D级第三方照片；不升级为官方A/B来源）"
+    },
+    {
+      "id": "REF16",
+      "claim_zh": "破坏发电机：移除所有进度",
+      "rule_ids": [
+        "R045"
+      ],
+      "source_level": "D",
+      "source_ref": [
+        "D39:对应中文印刷条目",
+        "B01:p14"
+      ],
+      "comparison_status": "MATCH",
+      "transcription_status": "CHECK_REQUIRED",
+      "note": "中文版原文佐证（D级第三方照片；不升级为官方A/B来源）"
+    },
+    {
+      "id": "REF17",
+      "claim_zh": "敬拜图腾：+2血点",
+      "rule_ids": [
+        "R046"
+      ],
+      "source_level": "D",
+      "source_ref": [
+        "D39:对应中文印刷条目",
+        "B01:p14"
+      ],
+      "comparison_status": "MATCH",
+      "transcription_status": "CHECK_REQUIRED",
+      "note": "中文版原文佐证（D级第三方照片；不升级为官方A/B来源）"
+    },
+    {
+      "id": "REF18",
+      "claim_zh": "攻击健康逃生者：受伤并放环",
+      "rule_ids": [
+        "R041"
+      ],
+      "source_level": "D",
+      "source_ref": [
+        "D39:对应中文印刷条目",
+        "B01:p14"
+      ],
+      "comparison_status": "MATCH",
+      "transcription_status": "CHECK_REQUIRED",
+      "note": "中文版原文佐证（D级第三方照片；不升级为官方A/B来源）"
+    },
+    {
+      "id": "REF19",
+      "claim_zh": "抓取受伤者：不能抓本轮受伤者",
+      "rule_ids": [
+        "R042"
+      ],
+      "source_level": "D",
+      "source_ref": [
+        "D39:对应中文印刷条目",
+        "B01:p15"
+      ],
+      "comparison_status": "MATCH",
+      "transcription_status": "CHECK_REQUIRED",
+      "note": "中文版原文佐证（D级第三方照片；不升级为官方A/B来源）"
+    },
+    {
+      "id": "REF20",
+      "claim_zh": "同空间有未占钩必须立刻献祭",
+      "rule_ids": [
+        "R049"
+      ],
+      "source_level": "D",
+      "source_ref": [
+        "D39:对应中文印刷条目",
+        "B01:p15/p18"
+      ],
+      "comparison_status": "MATCH",
+      "transcription_status": "CHECK_REQUIRED",
+      "note": "中文版原文佐证（D级第三方照片；不升级为官方A/B来源）"
+    },
+    {
+      "id": "REF21",
+      "claim_zh": "无未占钩要搬运，不用移动牌",
+      "rule_ids": [
+        "R050"
+      ],
+      "source_level": "D",
+      "source_ref": [
+        "D39:对应中文印刷条目",
+        "B01:p15"
+      ],
+      "comparison_status": "MATCH",
+      "transcription_status": "CHECK_REQUIRED",
+      "note": "中文版原文佐证（D级第三方照片；不升级为官方A/B来源）"
+    },
+    {
+      "id": "REF22",
+      "claim_zh": "选至多4骰，任一大成功原地挣脱",
+      "rule_ids": [
+        "R050"
+      ],
+      "source_level": "D",
+      "source_ref": [
+        "D39:对应中文印刷条目",
+        "B01:p15"
+      ],
+      "comparison_status": "MATCH",
+      "transcription_status": "CHECK_REQUIRED",
+      "note": "中文版原文佐证（D级第三方照片；不升级为官方A/B来源）"
+    },
+    {
+      "id": "REF23",
+      "claim_zh": "无大成功每骰至多移动1空间；未达钩于终点挣脱",
+      "rule_ids": [
+        "R051"
+      ],
+      "source_level": "D",
+      "source_ref": [
+        "D39:对应中文印刷条目",
+        "B01:p15"
+      ],
+      "comparison_status": "MATCH",
+      "transcription_status": "CHECK_REQUIRED",
+      "note": "中文版原文佐证（D级第三方照片；不升级为官方A/B来源）"
+    },
+    {
+      "id": "REF24",
+      "claim_zh": "搬运不能穿木板/墙、不能力量/交互",
+      "rule_ids": [
+        "R052"
+      ],
+      "source_level": "D",
+      "source_ref": [
+        "D39:对应中文印刷条目",
+        "B01:p15"
+      ],
+      "comparison_status": "MATCH",
+      "transcription_status": "CHECK_REQUIRED",
+      "note": "中文版原文佐证（D级第三方照片；不升级为官方A/B来源）"
+    },
+    {
+      "id": "REF25",
+      "claim_zh": "终点有未占钩放上；个人献祭进度移全局轨",
+      "rule_ids": [
+        "R049",
+        "R053"
+      ],
+      "source_level": "D",
+      "source_ref": [
+        "D39:对应中文印刷条目",
+        "B01:p15"
+      ],
+      "comparison_status": "MATCH",
+      "transcription_status": "CHECK_REQUIRED",
+      "note": "中文版原文佐证（D级第三方照片；不升级为官方A/B来源）"
+    },
+    {
+      "id": "REF26",
+      "claim_zh": "搬运中不翻道具；英文FAQ明确搬运移动仍翻",
+      "rule_ids": [
+        "R064"
+      ],
+      "source_level": "D",
+      "source_ref": [
+        "D39:对应中文印刷条目",
+        "B01:p10/p18"
+      ],
+      "comparison_status": "CONFLICT",
+      "transcription_status": "CHECK_REQUIRED",
+      "note": "Q08，等待用户裁定或A级版本证据"
+    },
+    {
+      "id": "REF27",
+      "claim_zh": "四色类别与数量，与既有B01图例相符",
+      "rule_ids": [
+        "R082"
+      ],
+      "source_level": "D",
+      "source_ref": [
+        "D38:对应中文印刷条目",
+        "B01:p3/p17"
+      ],
+      "comparison_status": "MATCH",
+      "transcription_status": "CHECK_REQUIRED",
+      "note": "中文版原文佐证（D级第三方照片；不升级为官方A/B来源）"
+    },
+    {
+      "id": "REF28",
+      "claim_zh": "人物板每轮四阶段公共文字",
+      "rule_ids": [
+        "R012"
+      ],
+      "source_level": "D",
+      "source_ref": [
+        "D51:对应中文印刷条目",
+        "B01:p8"
+      ],
+      "comparison_status": "MATCH",
+      "transcription_status": "CHECK_REQUIRED",
+      "note": "中文版原文佐证（D级第三方照片；不升级为官方A/B来源）"
+    },
+    {
+      "id": "REF29",
+      "claim_zh": "初始/上限：逃生者2/6、杀手4/12",
+      "rule_ids": [
+        "R007"
+      ],
+      "source_level": "D",
+      "source_ref": [
+        "D41:对应中文印刷条目",
+        "B01:p4"
+      ],
+      "comparison_status": "MATCH",
+      "transcription_status": "CHECK_REQUIRED",
+      "note": "中文版原文佐证（D级第三方照片；不升级为官方A/B来源）"
+    },
+    {
+      "id": "REF30",
+      "claim_zh": "杀手第二回合后消耗4执行额外回合",
+      "rule_ids": [
+        "R025"
+      ],
+      "source_level": "D",
+      "source_ref": [
+        "D41:对应中文印刷条目",
+        "B01:p10"
+      ],
+      "comparison_status": "MATCH",
+      "transcription_status": "CHECK_REQUIRED",
+      "note": "中文版原文佐证（D级第三方照片；不升级为官方A/B来源）"
+    }
+  ],
+  "current_resolution": {
+    "source_ref": "U02:Q08",
+    "adopted_reveal_props_during_carry": false,
+    "status": "CLOSED_USER_RULING",
+    "note": "保留历史比较与原始D级来源；当前按已接受中文版正文采用，不等候日文。"
+  }
+}

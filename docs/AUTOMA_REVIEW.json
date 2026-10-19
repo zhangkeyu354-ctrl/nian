@@ -1,0 +1,26 @@
+{
+  "title": "[Solo] Free web automa helper for Dead by Daylight: The Board Game",
+  "author": "bluekms21",
+  "source_level": "D",
+  "source_ref": [
+    "D24",
+    "D25",
+    "D26"
+  ],
+  "status": "CHECK_REQUIRED",
+  "thread_url": null,
+  "thread_body_read": false,
+  "thread_body_blocker": "Direct reads unavailable; normal browser showed security verification; no challenge completed.",
+  "candidate_tool_url": "https://bluekms.github.io/dbd-boardgame-automa-helper/",
+  "thread_to_tool_link_verified": false,
+  "observed_content_categories": {
+    "automa_movement_card_or_dice_ui": "PRESENT",
+    "automa_rules_and_killer_power_reminders": "PRESENT",
+    "original_52_perk_card_database": "NOT_ESTABLISHED",
+    "original_16_item_card_database": "NOT_ESTABLISHED",
+    "complete_map_nodes_and_edges": "NOT_OBSERVED_IN_INSPECTED_UI"
+  },
+  "scope_note": "候选工具是solo/automa内容，已查看力量面板明确区分自动模式与人物板正常能力；不可用作基础版力量/次数规则。",
+  "actions": "只通过公开界面读取首页、杀人鬼选择、规则与力量面板；未复制卡牌/地图原文、代码、图片或数据，未克隆仓库。",
+  "no_absence_claim": "未在已查看界面见地图数据，不等于已审计整个工具并证明没有。"
+}

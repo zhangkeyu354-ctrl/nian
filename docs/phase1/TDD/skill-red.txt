@@ -1,0 +1,95 @@
+
+> dbd-boardgame-private@0.1.0 test
+> vitest run --reporter=verbose
+
+
+ RUN  v5.0.5 E:/DBD-BoardGame-Web
+
+ ✓ packages/game-engine/test/core.test.ts > U02 / B01 engine foundation > sets up a real 44-prop map deterministically without mutating options 9ms
+ ✓ packages/game-engine/test/core.test.ts > U02 / B01 engine foundation > Q02 counts all failures including discarded dice; different actions use different success amounts 1ms
+ ✓ packages/game-engine/test/core.test.ts > U02 / B01 engine foundation > Q09 shared icon is a one-step clique but blocker belongs to the icon 1ms
+ ✓ packages/game-engine/test/core.test.ts > U02 / B01 engine foundation > Q01 carrying respects one-way and blocks walls, unlike normal killer movement 1ms
+ ✓ packages/game-engine/test/core.test.ts > U02 / B01 engine foundation > requires four explicit survivor setup reveals and preserves input on errors 8ms
+ ✓ packages/game-engine/test/core.test.ts > U02 / B01 engine foundation > unresolved Q11 and Phase4 items fail explicitly 1ms
+ ✓ packages/game-engine/test/rules.test.ts > B01 and U02 state-machine regressions > R019 invalid commands roll back completely, including random stream and log 12ms
+ ✓ packages/game-engine/test/rules.test.ts > B01 and U02 state-machine regressions > R010 commits cards from shared PLAYER hand, not one deck per character 5ms
+ ✓ packages/game-engine/test/rules.test.ts > B01 and U02 state-machine regressions > R018 a failed legal-card attempt loses interaction; cannot voluntarily stay if route exists 4ms
+ ✓ packages/game-engine/test/rules.test.ts > B01 and U02 state-machine regressions > R047 killer destroys a pallet but stays and loses interaction; R048 wall instead permits movement 3ms
+ ✓ packages/game-engine/test/rules.test.ts > B01 and U02 state-machine regressions > Q09 pallet blocks every killer branch but survivors pass; a single wall is shared by all branches 1ms
+ ✓ packages/game-engine/test/rules.test.ts > B01 and U02 state-machine regressions > R035 requires four generators, then exit skill checks count great success as ONE and win immediately 4ms
+ ✓ packages/game-engine/test/rules.test.ts > B01 and U02 state-machine regressions > R042 prohibits grabbing a survivor wounded THIS ROUND 2ms
+ ✓ packages/game-engine/test/rules.test.ts > B01 and U02 state-machine regressions > Q08 carry moves both figures, never reveals props; Q01 rejects illegal route without consuming dice 5ms
+ ✓ packages/game-engine/test/rules.test.ts > B01 and U02 state-machine regressions > R049 immediate unoccupied hook transfers personal progress; no dice roll or optional carry 2ms
+ ✓ packages/game-engine/test/rules.test.ts > B01 and U02 state-machine regressions > R036 rescue moves rescuer THEN rescued and single Entity blocks only the latest hook 3ms
+ ✓ packages/game-engine/test/rules.test.ts > B01 and U02 state-machine regressions > R026 cleanup progresses hooks before clearing entity, rotates CHARACTER marker and restores shared hands 1ms
+ ✓ packages/game-engine/test/rules.test.ts > B01 and U02 state-machine regressions > R061 response order is survivors in turn order then killer; R059 zero-cost perks still once/round 2ms
+ ✓ packages/game-engine/test/rules.test.ts > B01 and U02 state-machine regressions > Phase4 unresolved effects report CHECK_REQUIRED even when no response window exists 2ms
+ ✓ packages/game-engine/test/skills.test.ts > Chinese retail board abilities: source photos in PERK_DATA.board_perks > Dwight #1 replaces the actor and chosen interaction, not an extra free normal turn 9ms
+ ✓ packages/game-engine/test/skills.test.ts > Chinese retail board abilities: source photos in PERK_DATA.board_perks > Dwight #2 follows the actual path from the mover previous room 3ms
+ ✓ packages/game-engine/test/skills.test.ts > Chinese retail board abilities: source photos in PERK_DATA.board_perks > Dwight #3 changes one skill die into two and keeps only one result 1ms
+ ✓ packages/game-engine/test/skills.test.ts > Chinese retail board abilities: source photos in PERK_DATA.board_perks > Meg #2 grants a survivor turn at cleanup after generator completion 2ms
+ ✓ packages/game-engine/test/skills.test.ts > Chinese retail board abilities: source photos in PERK_DATA.board_perks > Meg #3 hides before the entering killer can interact 2ms
+ ✓ packages/game-engine/test/skills.test.ts > Chinese retail board abilities: source photos in PERK_DATA.board_perks > Claudette #1 rolls the danger die for another survivor without spending her interaction 2ms
+ ✓ packages/game-engine/test/skills.test.ts > Chinese retail board abilities: source photos in PERK_DATA.board_perks > Claudette #2 transfers exactly one bloodpoint only with consent; zero cost still once/round 3ms
+ ✓ packages/game-engine/test/skills.test.ts > Chinese retail board abilities: source photos in PERK_DATA.board_perks > Claudette #3 uses danger die on herself at turn start 3ms
+ ✓ packages/game-engine/test/skills.test.ts > Chinese retail board abilities: source photos in PERK_DATA.board_perks > Jake #1 success conversion preserves failure bloodpoint credit 2ms
+ ✓ packages/game-engine/test/skills.test.ts > Chinese retail board abilities: source photos in PERK_DATA.board_perks > Jake #2 moves a crow and replaces the pending interaction 2ms
+ ✓ packages/game-engine/test/skills.test.ts > Chinese retail board abilities: source photos in PERK_DATA.board_perks > Jake #3 explicitly pays the additional two bloodpoints for bonus choice 1ms
+ ✓ packages/game-engine/test/skills.test.ts > Chinese retail board abilities: source photos in PERK_DATA.board_perks > Nea #1 replaces interaction with reverse one-way movement then gains blood 2ms
+ ✓ packages/game-engine/test/skills.test.ts > Chinese retail board abilities: source photos in PERK_DATA.board_perks > Nea #2 removes a wall for this exact survivor turn, not permanently 1ms
+ ✓ packages/game-engine/test/skills.test.ts > Chinese retail board abilities: source photos in PERK_DATA.board_perks > Nea #3 preserves the chest after rummaging 2ms
+ ✓ packages/game-engine/test/skills.test.ts > Chinese retail board abilities: source photos in PERK_DATA.board_perks > Ace #1 reveals precisely one committed killer card 2ms
+ ✓ packages/game-engine/test/skills.test.ts > Chinese retail board abilities: source photos in PERK_DATA.board_perks > Ace #2 swaps same-category props between connected spaces, refuses generator with progress 3ms
+ ✓ packages/game-engine/test/skills.test.ts > Chinese retail board abilities: source photos in PERK_DATA.board_perks > Ace #3 suspends the original continuation until bonus turn ends, then killer gains two 5ms
+ ✓ packages/game-engine/test/skills.test.ts > Chinese retail board abilities: source photos in PERK_DATA.board_perks > Feng #2 moves in response to a killer destroying a blocker 3ms
+ ✓ packages/game-engine/test/skills.test.ts > Chinese retail board abilities: source photos in PERK_DATA.board_perks > Feng #3 failed generator check allows another target only 4ms
+ ✓ packages/game-engine/test/skills.test.ts > Chinese retail board abilities: source photos in PERK_DATA.board_perks > Trapper #1 pushes wounded victim through a blocker and destroys it 3ms
+ ✓ packages/game-engine/test/skills.test.ts > Chinese retail board abilities: source photos in PERK_DATA.board_perks > Trapper #2 substitutes danger die in nearby skill check 2ms
+ ✓ packages/game-engine/test/skills.test.ts > Chinese retail board abilities: source photos in PERK_DATA.board_perks > Trapper #3 moves self after attack 2ms
+ ✓ packages/game-engine/test/skills.test.ts > Chinese retail board abilities: source photos in PERK_DATA.board_perks > Wraith #1 commits a third normal card but prohibits any killer bonus this round 1ms
+ ✓ packages/game-engine/test/skills.test.ts > Chinese retail board abilities: source photos in PERK_DATA.board_perks > Wraith #2 gains blood even if the sacrificed target cannot lose any 1ms
+ ✓ packages/game-engine/test/skills.test.ts > Chinese retail board abilities: source photos in PERK_DATA.board_perks > Hillbilly #1 reveals his committed card and gains one 1ms
+ × packages/game-engine/test/skills.test.ts > Chinese retail board abilities: source photos in PERK_DATA.board_perks > Hillbilly #2 destroys pallet before move and emits the blocker trigger for Feng 13ms
+   → expected false to be true // Object.is equality
+ ✓ packages/game-engine/test/skills.test.ts > Chinese retail board abilities: source photos in PERK_DATA.board_perks > Hillbilly #3 returns a future committed card to hand and swaps in another 1ms
+ ✓ packages/game-engine/test/skills.test.ts > Chinese retail board abilities: source photos in PERK_DATA.board_perks > Nurse #1 forces wounded target to plan publicly before anyone else 2ms
+ ✓ packages/game-engine/test/skills.test.ts > Chinese retail board abilities: source photos in PERK_DATA.board_perks > Nurse #2 only affects skill checks, not carry/phantasm dice rolls 1ms
+ ✓ packages/game-engine/test/skills.test.ts > Chinese retail board abilities: source photos in PERK_DATA.board_perks > Nurse #3 gains two when a survivor becomes healthy 1ms
+ ✓ packages/game-engine/test/skills.test.ts > Chinese retail board abilities: source photos in PERK_DATA.board_perks > Hag #2 grants the sole permitted killer bonus, including at cleanup 0ms
+ ✓ packages/game-engine/test/skills.test.ts > Chinese retail board abilities: source photos in PERK_DATA.board_perks > Hag #3 removes one generator progress only in a survivor-free room 1ms
+ ✓ packages/game-engine/test/skills.test.ts > Chinese retail board abilities: source photos in PERK_DATA.board_perks > Doctor #1 gains one only when nobody is hooked at cleanup 1ms
+ ✓ packages/game-engine/test/skills.test.ts > Chinese retail board abilities: source photos in PERK_DATA.board_perks > Doctor #2 wounds one nearby survivor after damaging generator 1ms
+ ✓ packages/game-engine/test/skills.test.ts > six base powers and three passives, Chinese board sources > Trapper power places one of four traps once per round on a clear connected path 2ms
+ ✓ packages/game-engine/test/skills.test.ts > six base powers and three passives, Chinese board sources > Wraith travels only to a nonconnected different room 1ms
+ ✓ packages/game-engine/test/skills.test.ts > six base powers and three passives, Chinese board sources > Hillbilly discards a non-Wait movement card, traverses clear matching path, wounds destination survivor 1ms
+ ✓ packages/game-engine/test/skills.test.ts > six base powers and three passives, Chinese board sources > Nurse reverses one-way and ignores but does not destroy wall/pallet 1ms
+ ✓ packages/game-engine/test/skills.test.ts > six base powers and three passives, Chinese board sources > Hag places one phantasm in a room and gains one for its hex totem 1ms
+ ✓ packages/game-engine/test/skills.test.ts > six base powers and three passives, Chinese board sources > Doctor gives each affected survivor a separate pay/effect choice 1ms
+ ✓ packages/game-engine/test/skills.test.ts > six base powers and three passives, Chinese board sources > Trapper passive failure removes trap; an already wounded victim gives sacrifice progress 2ms
+ ✓ packages/game-engine/test/skills.test.ts > six base powers and three passives, Chinese board sources > Hag passive removes trap and offers blood versus value-priced teleport/interaction 2ms
+ ✓ packages/game-engine/test/skills.test.ts > six base powers and three passives, Chinese board sources > Doctor passive substitutes danger die on madness skill checks and removes madness on failure 3ms
+ ✓ packages/game-engine/test/skills.test.ts > six base powers and three passives, Chinese board sources > all 13 selectable identities have exactly three linked board perks; deferred effects never masquerade as implementations 4ms
+ ✓ packages/game-engine/test/simulation.test.ts > finishes and replays three seeded games on real maps with both winners (Phase1 acceptance) 354ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  packages/game-engine/test/skills.test.ts > Chinese retail board abilities: source photos in PERK_DATA.board_perks > Hillbilly #2 destroys pallet before move and emits the blocker trigger for Feng
+AssertionError: expected false to be true // Object.is equality
+
+- Expected
++ Received
+
+- true
++ false
+
+ ❯ packages/game-engine/test/skills.test.ts:101:232
+
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+
+ Test Files  1 failed | 3 passed (4)
+      Tests  1 failed | 63 passed (64)
+   Start at  13:59:23
+   Duration  903ms (tests 43%, import 30%, transform 24%, worker 3%)
+
