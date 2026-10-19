@@ -21,15 +21,18 @@ export function useShareUrl(code: string | null) {
     const local = ["localhost", "127.0.0.1", "[::1]"].includes(
       location.hostname,
     );
-    if (!local) return setUrl(location.origin + path);
+    // 优先使用外网链接；其次在本机打开时换成局域网地址；否则用当前网址
     fetch("/api/info")
       .then((r) => r.json())
-      .then((info: { port: number; lan: string[] }) =>
-        setUrl(
-          info.lan[0]
-            ? `http://${info.lan[0]}:${info.port}${path}`
-            : location.origin + path,
-        ),
+      .then(
+        (info: { port: number; lan: string[]; publicUrl?: string | null }) =>
+          setUrl(
+            info.publicUrl
+              ? info.publicUrl + path
+              : local && info.lan[0]
+                ? `http://${info.lan[0]}:${info.port}${path}`
+                : location.origin + path,
+          ),
       )
       .catch(() => setUrl(location.origin + path));
   }, [code]);

@@ -20,6 +20,8 @@ const HOST = process.env.HOST ?? "0.0.0.0";
 const WEB = resolve(process.env.DBD_WEB_DIR ?? join(root, "dist/web"));
 const DATA = resolve(process.env.DBD_DATA_DIR ?? join(root, "data/rooms"));
 const allowFixedSeed = process.env.DBD_ALLOW_FIXED_SEED === "1";
+/** 外网链接（例如一键隧道生成的 https 地址）；设置后邀请二维码优先使用它 */
+const PUBLIC_URL = (process.env.DBD_PUBLIC_URL ?? "").replace(/\/+$/, "");
 
 export function lanAddresses() {
   return Object.values(networkInterfaces())
@@ -46,7 +48,13 @@ const http = createServer((req, res) => {
   const url = new URL(req.url ?? "/", "http://x");
   if (url.pathname === "/api/info") {
     res.setHeader("content-type", "application/json; charset=utf-8");
-    res.end(JSON.stringify({ port: PORT, lan: lanAddresses() }));
+    res.end(
+      JSON.stringify({
+        port: PORT,
+        lan: lanAddresses(),
+        publicUrl: PUBLIC_URL || null,
+      }),
+    );
     return;
   }
   if (url.pathname === "/api/qr") {
@@ -186,12 +194,23 @@ http.listen(PORT, HOST, async () => {
   const urls = lanAddresses().map((ip) => `http://${ip}:${PORT}/`);
   console.log("\n  黎明杀机桌游 · 联机服务器已启动");
   console.log(`  本机打开：http://localhost:${PORT}/`);
-  for (const u of urls) console.log(`  同一 Wi-Fi 的手机打开：${u}`);
-  if (urls[0])
+  if (PUBLIC_URL) {
+    console.log(`\n  ★ 外网链接（手机流量、外地朋友都能打开）：${PUBLIC_URL}/`);
     console.log(
       "\n" +
-        (await QRCode.toString(urls[0], { type: "terminal", small: true })),
+        (await QRCode.toString(PUBLIC_URL + "/", {
+          type: "terminal",
+          small: true,
+        })),
     );
+  } else {
+    for (const u of urls) console.log(`  同一 Wi-Fi 的手机打开：${u}`);
+    if (urls[0])
+      console.log(
+        "\n" +
+          (await QRCode.toString(urls[0], { type: "terminal", small: true })),
+      );
+  }
   if (allowFixedSeed) console.log("  [测试模式] 允许固定种子");
   console.log("  关闭此窗口即停止服务器。\n");
 });
