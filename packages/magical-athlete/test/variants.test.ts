@@ -66,29 +66,33 @@ describe("2 人：比赛", () => {
     expect(() => reduceMA(s, { type: "CHOOSE", player: "p1", racers: [h[0]] })).toThrow();
     expect(() => reduceMA(s, { type: "CHOOSE", player: "p1", racers: [h[0], h[0]] })).toThrow();
   });
-  it("第一个回合只选一名选手行动；之后每回合两名都行动，顺序自选", () => {
+  it("赛前把两名选手按行动顺序摆好；第一个回合只选一名；之后每回合按摆好的顺序两名都动", () => {
     let s = twoPlayerRace(["legs", "alchemist"], ["twin", "lovable_loser"]);
     expect(s.race!.tokens).toHaveLength(4);
+    // 2026-08：赛前摆顺序（每名玩家各一次）
+    expect(s.pending?.kind).toBe("lineup");
+    s = answer(s, "alchemist"); // p1：炼金术士先、大长腿后
+    expect(s.pending?.kind).toBe("lineup");
+    s = answer(s, "twin");
+    // p1 第一个回合：只用一名
     expect(s.pending?.kind).toBe("order");
-    expect(s.pending?.options).toHaveLength(2);
     s = answer(s, "legs");
     s = answer(s, "legs"); // 大长腿：直接走 5
     expect(tok(s, "legs").pos).toBe(5);
     expect(tok(s, "alchemist").pos).toBe(0);
     expect(s.race!.current).toBe("p2");
-    // p2 第一回合也只用一名
     expect(s.pending?.kind).toBe("order");
     s = answer(s, "twin");
     s = answer(s, "roll");
     expect(s.race!.current).toBe("p1");
-    // p1 第二回合：两名都要动，先问顺序
-    expect(s.pending?.kind).toBe("order");
-    expect(s.pending?.prompt).toContain("先动");
-    s = answer(s, "alchemist");
+    // p1 第二个回合：不再问顺序，按摆好的顺序（炼金术士先）
+    expect(s.pending?.kind).not.toBe("order");
     expect(s.pending?.racer).toBe("alchemist");
   });
   it("「其他选手」包括自己的另一名选手：自己的跟班在自己另一名掷 6 时也会跑", () => {
     let s = twoPlayerRace(["lackey", "twin"], ["legs", "lovable_loser"], [6]);
+    s = answer(s, "lackey");
+    s = answer(s, "legs");
     s = answer(s, "twin");
     s = answer(s, "roll");
     expect(tok(s, "lackey").pos).toBe(2);
@@ -106,8 +110,12 @@ describe("3 人双选手：比赛", () => {
     s = reduceMA(s, { type: "CHOOSE", player: "p2", racers: pick(1) });
     s = reduceMA(s, { type: "CHOOSE", player: "p3", racers: pick(2) });
     expect(s.race!.tokens).toHaveLength(6);
-    // 第一回合也要两名都动（与 2 人变体不同）
-    expect(s.pending?.kind).toBe("order");
-    expect(s.pending?.prompt).toContain("两名选手都要行动");
+    // 赛前三名玩家各摆一次顺序，然后第一回合两名都按顺序动（与 2 人变体不同，不问「只用一名」）
+    for (let k = 0; k < 3; k++) {
+      expect(s.pending?.kind).toBe("lineup");
+      s = answer(s);
+    }
+    expect(s.pending?.kind).not.toBe("order");
+    expect(s.pending?.racer).toBe(s.race!.tokens.find((x) => x.owner === "p1")!.racer);
   });
 });

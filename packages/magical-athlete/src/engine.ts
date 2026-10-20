@@ -306,9 +306,9 @@ function hugeBaby(s: MAState, c: Ctx, t: Token) {
  *
  * 吸盘鱼「和对方一起移动」：规则书 Fiddly Details #3 —— 一起到达同一格时，与「停在同一格」有关的能力照样触发；
  * 浪漫者说明 —— 两人一起移动时触发两次（每人一次）。所以跟随者在出发前决定，和移动者**同时**到达，
- * 到达后才逐个结算停格能力（此时两人已经在同一格）。2026-08 规则更新是否改动此处：见 CHECK_REQUIRED MA-U01。
+ * 到达后才逐个结算（此时两人已经在同一格）。2026-08 规则更新：同时到达时「停在格子上」的能力不触发（见 react）。
  */
-function move(s: MAState, c: Ctx, t: Token, n: number, main: boolean, why: string) {
+function move(s: MAState, c: Ctx, t: Token, n: number, main: boolean, why: string, together: Token[] = []) {
   if (!active(t) || n === 0) return;
   const L = trackOf(s).length;
   const from = t.pos;
@@ -363,11 +363,16 @@ function move(s: MAState, c: Ctx, t: Token, n: number, main: boolean, why: strin
   }
   for (let k = 0; k < skips; k++) fire(s, c, t, `${rname(t)}【踩头过河】：跳过一个有人的格子。`);
 
-  // 3) 一起到达
-  const group = [t, ...riders];
+  // 3) 一起到达（together：同一个效果让同一格的几个人一起移动，如啦啦队长让并列最后的人一起走 2）
+  const group = [t, ...together.filter((x) => active(x) && x.pos === from && x !== t), ...riders];
+  // 经过 = 出发时在自己前面、停下后在自己后面（巨婴把人挤到身后也算被经过，设计师在 BGG 裁定巨婴 × 香蕉会摔倒）
+  const before = new Map(race(s).tokens.map((o) => [o, o.pos]));
   const passedOf = (g: Token) =>
-    n < 0 ? [] : others(s, g).filter((o) => !group.includes(o) && o.pos > from && (p >= L || o.pos < p));
-  const passed = new Map(group.map((g) => [g, passedOf(g)]));
+    n < 0
+      ? []
+      : others(s, g).filter(
+          (o) => !group.includes(o) && (before.get(o) ?? 0) > from && (g.place !== null || o.pos < g.pos),
+        );
   for (const f of riders) log(s, `${rname(f)}【吸附蹭车】跟着 ${rname(t)} 一起移动。`);
   if (p >= L) {
     for (const g of group) if (active(g)) finish(s, g);
@@ -383,7 +388,8 @@ function move(s: MAState, c: Ctx, t: Token, n: number, main: boolean, why: strin
   // 4) 到达后：巨婴调整位置，再逐个结算停格能力（按当前玩家 → 顺时针）
   const arrivals = inOrder(s).filter((x) => group.includes(x));
   for (const g of arrivals) hugeBaby(s, c, g);
-  for (const g of arrivals) react(s, c, g, passed.get(g) ?? []);
+  const passed = new Map(group.map((g) => [g, passedOf(g)]));
+  for (const g of arrivals) react(s, c, g, passed.get(g) ?? [], group.length > 1);
   for (const f of riders) if (active(f)) fire(s, c, f, `${rname(f)}【吸附蹭车】发动。`);
 }
 
@@ -396,7 +402,13 @@ function warp(s: MAState, c: Ctx, t: Token, to: number) {
 }
 
 /** 停在格子上之后：先结算赛道格，再按「当前玩家 → 顺时针」结算能力 */
-function react(s: MAState, c: Ctx, t: Token, passed: Token[]) {
+/**
+ * simultaneous：这名选手是与别人**同时到达**的（吸盘鱼一起走、派对咖同时吸引、人字拖同时交换）。
+ * 2026-08 规则更新（设计师 Alex Hague，BGG 帖 3754599）：
+ * “Stopping on a space” powers DON'T trigger if racers arrive simultaneously, like in the case of Party Animal.
+ * → 浪漫者、血盆大口、芭芭雅嘎这类「停在格子上」的能力对同时到达者不触发。赛道格（箭头/石头/星星）不是能力，照常生效（CHECK_REQUIRED MA-U01b）。
+ */
+function react(s: MAState, c: Ctx, t: Token, passed: Token[], simultaneous = false) {
   if (!active(t)) return;
   const pos = t.pos;
   const sp = trackOf(s).specials[pos];
@@ -427,7 +439,7 @@ function react(s: MAState, c: Ctx, t: Token, passed: Token[]) {
         move(s, c, o, -2, false, "尥蹶子");
         fire(s, c, x, `${rname(x)}【尥蹶子】：${rname(o)} 被踢后退 2 格。`);
       }
-    } else if (p === "baba_yaga" && t.pos === pos) {
+    } else if (p === "baba_yaga" && t.pos === pos && !simultaneous) {
       if (x !== t && x.pos === pos) {
         trip(s, t);
         fire(s, c, x, `${rname(x)}【鸡脚小屋】：${rname(t)} 停到她的格子，摔倒。`);
@@ -436,16 +448,16 @@ function react(s: MAState, c: Ctx, t: Token, passed: Token[]) {
           trip(s, o);
           fire(s, c, x, `${rname(x)}【鸡脚小屋】：停到 ${rname(o)} 的格子，${rname(o)} 摔倒。`);
         }
-    } else if (p === "mouth" && x === t) {
+    } else if (p === "mouth" && x === t && !simultaneous) {
       const o = onSpace(s, pos).filter((o) => o !== t);
       if (o.length === 1) {
         fire(s, c, x, `${rname(x)}【一口吞人】：${rname(o[0])} 被吞掉，淘汰出本场比赛！`);
         eliminate(s, o[0]);
       }
-    } else if (p === "romantic" && t.pos === pos && onSpace(s, pos).length === 2) {
+    } else if (p === "romantic" && t.pos === pos && !simultaneous && onSpace(s, pos).length === 2) {
       move(s, c, x, 2, false, "见不得成双");
       fire(s, c, x, `${rname(x)}【见不得成双】：${rname(t)} 停进了两人格子，移动 2 格。`);
-    } else if (p === "duelist" && t.pos === pos) {
+    } else if (p === "duelist" && t.pos === pos && !simultaneous) {
       const foes =
         x === t ? onSpace(s, pos).filter((o) => o !== x) : x.pos === pos ? [t] : [];
       if (!foes.length) continue;
@@ -528,8 +540,8 @@ function mainMove(s: MAState, c: Ctx, t: Token, f: TurnFlags) {
     o.pos = a;
     hugeBaby(s, c, t);
     hugeBaby(s, c, o);
-    react(s, c, t, []);
-    react(s, c, o, []);
+    react(s, c, t, [], true);
+    react(s, c, o, [], true);
     return;
   }
   let base: number;
@@ -697,7 +709,7 @@ function beforeMain(s: MAState, c: Ctx, t: Token) {
     if (arrivals.length)
       log(s, arrivals.map((o) => `${rname(o)} → 第 ${o.pos} 格`).join("，") + "（人气磁铁，同时移动）");
     for (const o of arrivals) hugeBaby(s, c, o);
-    for (const o of arrivals) react(s, c, o, []);
+    for (const o of arrivals) react(s, c, o, [], arrivals.length > 1);
   }
   if (has(s, t, "cheerleader")) {
     const act = race(s).tokens.filter(active);
@@ -715,7 +727,8 @@ function beforeMain(s: MAState, c: Ctx, t: Token) {
     });
     if (a === "yes") {
       fire(s, c, t, `${rname(t)}【加油打气】！`);
-      for (const o of last) move(s, c, o, 2, false, "加油打气");
+      // 并列最后的人同时移动 2（同一格出发、同一格到达）→ 属于同时到达
+      move(s, c, last[0], 2, false, "加油打气", last.slice(1));
       move(s, c, t, 1, false, "加油打气");
     }
   }
@@ -850,18 +863,18 @@ function turnUnit(s: MAState, c: Ctx) {
   const f: TurnFlags = { extra: false, skipper: null };
   const mine = () => inOrder(s).filter((x) => x.owner === r.current && active(x));
   try {
+    // 2026-08 规则：多名选手按赛前摆好的顺序（顺时针）行动，不再每回合重选顺序
     let seq = mine();
-    if (seq.length > 1) {
-      const firstOnly = s.seats.length === 2 && !r.firstTurnDone.includes(r.current);
+    if (seq.length > 1 && s.seats.length === 2 && !r.firstTurnDone.includes(r.current)) {
+      // 2 人变体：每名玩家的第一个回合只用一名选手（2025-09 规则书 p26；2026-08 版是否保留见 CHECK_REQUIRED MA-U02b）
       const a = ask(s, c, {
         player: r.current,
         racer: null,
         kind: "order",
-        prompt: firstOnly ? "你的第一个回合只用一名选手：用哪一名？" : "这回合两名选手都要行动：先动哪一名？",
-        options: seq.map((x) => ({ value: x.racer, label: firstOnly ? rname(x) : `先动 ${rname(x)}` })),
+        prompt: "你的第一个回合只用一名选手：用哪一名？",
+        options: seq.map((x) => ({ value: x.racer, label: rname(x) })),
       });
-      const firstT = seq.find((x) => x.racer === a)!;
-      seq = firstOnly ? [firstT] : [firstT, ...seq.filter((x) => x !== firstT)];
+      seq = seq.filter((x) => x.racer === a);
     }
     if (!r.firstTurnDone.includes(r.current)) r.firstTurnDone.push(r.current);
     for (const t of seq) if (active(t)) racerTurn(s, c, t, f);
@@ -894,6 +907,26 @@ function nextTurn(s: MAState, f: TurnFlags) {
 /** 赛前：神秘蛋、双胞胎、西西弗斯 */
 function setupUnit(s: MAState, c: Ctx) {
   const r = race(s);
+  // 双选手：赛前每名玩家把自己的两名选手按想要的行动顺序摆在面前（2026-08 规则更新 #2）
+  if (s.settings.variant === "double")
+    for (const pid of r.order) {
+      const mineT = r.tokens.filter((x) => x.owner === pid);
+      if (mineT.length < 2) continue;
+      const a = ask(s, c, {
+        player: pid,
+        racer: null,
+        kind: "lineup",
+        prompt: "把两名选手按行动顺序摆好：本场每回合谁先动？",
+        options: mineT.map((x) => ({ value: x.racer, label: `${rname(x)} 先动` })),
+      });
+      const first = mineT.find((x) => x.racer === a)!;
+      const rest = r.tokens.filter((x) => x.owner !== pid);
+      const ordered = [first, ...mineT.filter((x) => x !== first)];
+      // 保持座位顺序：把这名玩家的两名选手按新顺序放回原位置
+      const idx = r.tokens.findIndex((x) => x.owner === pid);
+      r.tokens = [...rest.slice(0, idx), ...ordered, ...rest.slice(idx)];
+      log(s, `${pname(s, pid)} 的出场顺序：${ordered.map(rname).join(" → ")}。`);
+    }
   for (const t of inOrder(s)) {
     if (t.racer === "egg") {
       const draw = s.deck.splice(0, 3);

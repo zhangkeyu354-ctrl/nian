@@ -3,7 +3,11 @@
 | ID | 内容 | 来源 | 来源等级 | 项目处理 |
 |---|---|---|---|---|
 | ERR-01 西西弗斯 | 掷出 6：传送回起点、失去 1 枚积分筹码，**这次主移动被替代**，不再移动、不重掷；没有筹码时仍回起点。规则书旁注「传送后仍有主移动」是印刷错误，后续印刷修正。 | 设计师 Alex Hague 于 BGG 回复 “You lose the main move and go back to the start!”：https://boardgamegeek.com/thread/3598591/sisyphus-conflict-between-card-rule-and-rulebook-c （用户转述，2026-10-20 裁定采用） | C（设计师在 BGG 的回答）；本会话无法直接打开该帖，原文由用户提供 | 已按此实现；测试 audit「西西弗斯：筹码已经没有时掷 6 仍回起点」「掷 6 后这次主移动被替代」、racers「西西弗斯」 |
-| ERR-02 2026-08 规则修订 | 多名选手同时到达同一格时的停格能力触发；一名玩家控制多名选手时的行动顺序。 | https://boardgamegeek.com/thread/3754599/a-couple-august-2026-rules-updates 、更新版规则书 https://boardgamegeek.com/filepage/307679/how-to-play-magical-athlete （2026-08-17） | 未读到 | **未采用、未猜测**。现行实现依据 2025-09 规则书，见 CHECK_REQUIRED MA-U01/U02 |
+| ERR-02 同时到达 | 「停在格子上」类能力在选手**同时到达**时不触发（例：派对咖）。设计师补充：“any time any number of racers arrive simultaneously onto a space, they don't trigger … no one is ‘on’ the space as they arrive”；“powers like Party Animal's where all the racers get moved simultaneously not triggering e.g. Baba Yaga”；这条更新关掉了浪漫者/吸盘鱼组合，挪挪/吸盘鱼组合保留。 | 设计师 Alex Hague，BGG 帖 3754599 首帖（2026-08-18）及第 3 页回复（2026-09-01）；规则书文件页评论（2026-08-18） | C（设计师在 BGG） | 已实现：吸盘鱼一起走、派对咖吸引（2 人以上）、人字拖交换、啦啦队长让并列最后的人一起走 → 芭芭雅嘎、血盆大口、浪漫者、决斗者对这些到达不触发。取代 2025-09 版 Fiddly Details #3 |
+| ERR-03 多选手顺序 | 控制多名选手时，赛前把它们按想要的行动顺序摆在面前，顺时针依次行动。 | 同上首帖第 2 条 | C | 已实现：赛前每名玩家摆一次顺序（lineup），之后每回合按顺序行动，不再每回合重选 |
+| ERR-04 巨婴 × 香蕉 | 巨婴停到香蕉的格子、把香蕉挤到身后 → 巨婴算经过香蕉，会摔倒（规则书如此写，设计师确认以规则书为准）。 | 规则书文件页评论（2025-12-09，Alex Hague） | C | 已实现：「经过」改为比较出发前与停下后（含巨婴调整）的前后位置 |
+| ERR-05 时机能力 | Fiddly Detail #3 指「我的回合开始时」「比赛结束时」等有具体时机的能力；没有具体时机的能力可多次触发（如挪挪在浪漫者回合触发两次）。 | 规则书文件页评论（2026-08-18，Alex Hague） | C | 现行实现一致，无需修改 |
+| ERR-06 2026-08 版卡面文字 | 有玩家指出更新版规则书里部分角色卡文字略有改动。 | 规则书文件页评论（2026-09-30） | 未读到 | 更新版 PDF 需要登录 BGG 才能下载，未取得；见 CHECK_REQUIRED MA-U03 |
 
 ## 2025-09 规则书中与本项目相关的明确条文（作为现行依据）
 - Fiddly Details #1：重掷后，之前的点数视为从未发生，不触发任何能力。

@@ -189,11 +189,11 @@ describe("应当触发 / 不应触发", () => {
       expect(chips(s, "p1")).toBe(4);
     }
   });
-  it("人字拖：交换后两人都算停在新格子（芭芭雅嘎照样绊倒）", () => {
+  it("人字拖：交换是两人同时到达，「停在格子上」的能力不触发（2026-08 更新：芭芭雅嘎不绊倒）", () => {
     const s = answer(race(["flip_flop", "baba_yaga", G], [3, 10, 3], []), "flip:baba_yaga");
     expect(tok(s, "flip_flop").pos).toBe(10);
     expect(tok(s, "baba_yaga").pos).toBe(3);
-    expect(tok(s, G).tripped).toBe(true);
+    expect(tok(s, G).tripped).toBe(false);
   });
   it("天才：猜错不再行动", () => {
     let s = answer(race(["genius", F, G], [0, 20, 20], [3]), "5");
@@ -312,12 +312,46 @@ describe("命令校验与重复提交", () => {
   });
 });
 
-describe("同时到达（规则书 Fiddly Details #3 + 浪漫者说明）", () => {
-  it("浪漫者 × 吸盘鱼：两人一起停到空格（恰好两人），浪漫者触发两次", () => {
+describe("同时到达（2026-08 规则更新：同时到达时「停在格子上」的能力不触发）", () => {
+  it("浪漫者 × 吸盘鱼：两人一起停到空格，浪漫者不触发（设计师：这条更新关掉了浪漫者/吸盘鱼组合）", () => {
     let s = roll(race([F, "suckerfish", "romantic"], [4, 4, 20], [3]));
     s = answer(s, "yes");
     expect(tok(s, "suckerfish").pos).toBe(7);
-    expect(tok(s, "romantic").pos).toBe(24);
+    expect(tok(s, "romantic").pos).toBe(20);
+  });
+  it("挪挪 × 吸盘鱼的连锁仍然存在（设计师：Scoocher/Suckerfish remains）", () => {
+    let s = roll(race([F, "scoocher", "suckerfish", "gunk"], [0, 5, 5, 20], [3]));
+    let n = 0;
+    while (s.pending?.kind === "suckerfish" && n++ < 60) s = answer(s, "yes");
+    expect(tok(s, "suckerfish").pos).toBeGreaterThan(5);
+  });
+  it("派对咖把人吸到芭芭雅嘎格子：同时移动，不绊倒（设计师在 BGG 举的例子）", () => {
+    const s = race(["party_animal", "baba_yaga", F, G], [9, 5, 4, 20], [1]);
+    expect(tok(s, F).pos).toBe(5);
+    expect(tok(s, F).tripped).toBe(false);
+  });
+  it("只有一人被派对咖吸动时不算同时到达，照常触发", () => {
+    const s = race(["party_animal", "baba_yaga", F], [9, 9, 8], [1]);
+    expect(tok(s, F).pos).toBe(9);
+    expect(tok(s, F).tripped).toBe(true);
+  });
+  it("啦啦队长：并列最后的人一起走 2 格（同时到达不触发浪漫者）；啦啦队长自己再走 1 是另一次移动", () => {
+    let s = race(["cheerleader", F, G, "romantic"], [5, 0, 0, 20], []);
+    s = answer(s, "yes");
+    expect(tok(s, F).pos).toBe(2);
+    expect(tok(s, G).pos).toBe(2);
+    expect(tok(s, "romantic").pos).toBe(20);
+    expect(tok(s, "cheerleader").pos).toBe(6);
+  });
+  it("决斗者：别人同时到达它的格子时不能喊决斗", () => {
+    let s = roll(race([F, "suckerfish", "duelist"], [0, 0, 3], [3]));
+    s = answer(s, "yes");
+    expect(s.pending?.kind).not.toBe("duel");
+  });
+  it("巨婴 × 香蕉：巨婴停到香蕉格，香蕉被挤到身后 → 巨婴算经过香蕉，摔倒（设计师在 BGG 确认规则书「会摔倒」）", () => {
+    const s = roll(race(["huge_baby", "banana", G], [0, 4, 20], [4]));
+    expect(tok(s, "banana").pos).toBe(3);
+    expect(tok(s, "huge_baby").tripped).toBe(true);
   });
   it("血盆大口 × 吸盘鱼：一起到达有一人的格子 → 格子上有两名其他选手，不吞", () => {
     let s = roll(race(["mouth", "suckerfish", G], [0, 0, 3], [3]));
