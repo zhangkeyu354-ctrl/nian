@@ -71,7 +71,7 @@ export function eventText(s: GameState, e: Event) {
     perks.board_perks.find((p) => p.id === d.perkId)?.name_zh ?? "板载技能";
   switch (e.type) {
     case "GAME_CREATED":
-      return "对局已建立，请依次翻开起始道具。";
+      return "对局已建立：从先手逃生者开始，依次掷出生骰（杀手最后）。";
     case "PROP_REVEALED":
       return `${a}翻开了${propNames[d.kind] ?? "道具"}。`;
     case "SPAWNED":

@@ -3,7 +3,7 @@ import { createGame, reduce } from "../src/index.ts";
 import { getControls, previewRoutes, publicProps } from "../src/controls.ts";
 import { simulateGame } from "../../../scripts/simulation.ts";
 describe("Hotseat engine queries", () => {
-  it("offers setup choices without leaking hidden prop identities or advancing RNG", () => {
+  it("开局只给先手逃生者一个掷出生骰按钮；不泄露道具、不推进随机数", () => {
     const s = createGame({
       seed: 1701,
       mapId: "macmillan_estate",
@@ -13,7 +13,8 @@ describe("Hotseat engine queries", () => {
     const before = JSON.stringify(s);
     const v = getControls(s);
     expect(v.actorId).toBe("dwight");
-    expect(v.actions).toHaveLength(44);
+    expect(v.actions).toHaveLength(1);
+    expect(v.actions[0].command).toEqual({ type: "SELECT", actorId: "dwight" });
     expect(publicProps(s).every((p) => p.kind === null)).toBe(true);
     for (const a of v.actions) expect(() => reduce(s, a.command)).not.toThrow();
     expect(JSON.stringify(s)).toBe(before);

@@ -90,20 +90,6 @@ try {
   await page.getByLabel("返回行动", { exact: true }).tap();
   await page.waitForFunction(() => !document.querySelector(".board-overview"));
   await page.waitForTimeout(100);
-  for (let i = 0; i < 4; i++) {
-    await drainUI(page);
-    const actorId = state.survivors[state.setupIndex],
-      propId = state.props.find((p) => !p.revealed)!.id;
-    const c = { type: "SETUP_REVEAL", actorId, propId };
-    await tapPhoneCommand(page, c);
-    state = reduce(state, c);
-    await drainUI(page);
-    assert.equal(
-      JSON.parse(await page.evaluate(() => window.render_game_to_text()))
-        .events,
-      state.events.length,
-    );
-  }
   // 出生：从先手玩家起每个角色自己点掷骰
   while (state.choice?.kind === "SPAWN_ROLL") {
     await drainUI(page);

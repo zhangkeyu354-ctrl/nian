@@ -187,10 +187,10 @@ describe("房间：地图与选角色", () => {
     expect(s.actors[s.killerId].ownerId).toBe("p3");
     expect(r.file.seats.find((x) => x.seatId === "p1")!.actors).toHaveLength(2);
     // 用自己的凭证提交命令
-    const first = s.survivors[s.setupIndex];
+    const first = s.choice!.actorId; // 开局第一步：先手逃生者掷出生骰
     const owner = s.actors[first].ownerId;
     const tok = t[["p1", "p2", "p3"].indexOf(owner)];
-    r.apply(tok, 0, { type: "SETUP_REVEAL", actorId: first, propId: s.props[0].id });
+    r.apply(tok, 0, { type: "SELECT", actorId: first });
     expect(r.file.commands).toHaveLength(1);
   });
   it("开局后不能再改阵营或加入", () => {

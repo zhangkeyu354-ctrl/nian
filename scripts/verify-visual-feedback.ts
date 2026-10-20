@@ -143,16 +143,13 @@ await page.goto("http://127.0.0.1:5173/");
 assert.equal(await page.locator("html").getAttribute("data-motion"), "off");
 await page.getByTestId("start").click();
 await page.getByTestId("uncover").click();
-const staticTarget = page.locator(".actionable-prop").first();
-const staticRoom = await staticTarget.evaluate((el) =>
-  el.closest("[data-room-container]")!.getAttribute("data-room-container")!,
-);
-await page.getByLabel("查看房间", { exact: true }).selectOption(staticRoom);
-await staticTarget.locator(":scope > rect").click();
-await page.getByTestId("ack-feedback").waitFor();
+// 开局第一步是先手逃生者掷出生骰（家规 U-NO-SETUP-REVEAL）：关闭动画时掷骰结果静态显示
+await page.locator('[data-command*="SELECT"]').first().click();
+await page.getByTestId("ack-dice").waitFor();
+await page.getByTestId("dice-result").waitFor();
 assert.equal(
   await page
-    .locator(".feedback-overlay")
+    .locator(".dice-overlay")
     .evaluate((el) => el.getAnimations({ subtree: true }).length),
   0,
 );
@@ -160,7 +157,7 @@ await page.screenshot({
   path: out + "/关闭动画_静态反馈.png",
   animations: "disabled",
 });
-await page.getByTestId("ack-feedback").click();
+await page.getByTestId("ack-dice").click();
 await drainUI(page);
 await page.getByTestId("settings").click();
 await page.getByTestId("animations-setting").check();

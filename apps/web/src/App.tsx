@@ -362,7 +362,8 @@ export function App({ net }: { net?: NetBinding } = {}) {
     const n = ((dice[0].data.faces as unknown[]) ?? [0]).length;
     const t = setTimeout(
       () => setDice((v) => v.slice(1)),
-      settings.effectiveAnimations ? 1600 + n * 220 : 80,
+      // 落定后再停留约 2.5 秒，让旁观者看清掷出的数字
+      settings.effectiveAnimations ? 1300 + n * 220 + 2500 : 2500,
     );
     return () => clearTimeout(t);
   }, [watching, dice, settings.effectiveAnimations]);
@@ -1512,6 +1513,16 @@ export function App({ net }: { net?: NetBinding } = {}) {
               ),
             )}
           </div>
+          <DiceResult
+            key={dice[0].seq}
+            faces={(dice[0].data.faces ?? [dice[0].data.face]) as number[]}
+            spawnRoom={
+              dice[0].type === "SPAWNED" && state
+                ? roomName(state, String(dice[0].data.room))
+                : null
+            }
+            animate={settings.effectiveAnimations}
+          />
           {!watching && (
             <button
               className="primary"
@@ -1523,6 +1534,46 @@ export function App({ net }: { net?: NetBinding } = {}) {
             </button>
           )}
         </div>
+      )}
+    </div>
+  );
+}
+
+/** 骰子落定后的大号结果：出生骰显示数字和出生房间，检定骰显示每颗的数字与成败 */
+function DiceResult({
+  faces,
+  spawnRoom,
+  animate,
+}: {
+  faces: number[];
+  spawnRoom: string | null;
+  animate: boolean;
+}) {
+  const [shown, setShown] = useState(!animate);
+  useEffect(() => {
+    if (!animate) return setShown(true);
+    const t = setTimeout(() => setShown(true), 1100 + (faces.length - 1) * 220);
+    return () => clearTimeout(t);
+  }, [animate, faces.length]);
+  if (!shown) return <div className="dice-result pending" aria-hidden="true" />;
+  return (
+    <div className="dice-result" data-testid="dice-result" role="status">
+      {spawnRoom ? (
+        <>
+          <strong>掷出 {faces[0]}</strong>
+          <span>出生在「{spawnRoom}」</span>
+        </>
+      ) : (
+        <>
+          <strong>
+            {faces
+              .map((f) => (f === 0 ? "✗ 失败" : f === 5 ? "★ 大成功" : `✓ ${f}`))
+              .join("　")}
+          </strong>
+          <span>
+            {faces.length > 1 ? "共 " + faces.length + " 颗骰子" : faceName(faces[0])}
+          </span>
+        </>
       )}
     </div>
   );

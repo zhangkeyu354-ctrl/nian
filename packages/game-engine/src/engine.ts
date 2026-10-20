@@ -308,6 +308,11 @@ export function createGame(o: CreateOptions): GameState {
     killer: o.killer,
     unresolvedAbilities: s.unresolvedAbilities,
   });
+  // 用户家规 U-NO-SETUP-REVEAL（2026-10-20）：不做 B01 p6 的"逃生者各翻开一个道具"，
+  // 开局直接从先手逃生者起依次掷出生骰，杀手最后。
+  s.setupIndex = 4;
+  const order = [...orderedSurvivors(s), s.killerId];
+  s.choice = { kind: "SPAWN_ROLL", actorId: order[0], order, index: 0 };
   return s;
 }
 function orderedSurvivors(s: GameState) {

@@ -12,26 +12,6 @@
   },
   "commands": [
     {
-      "type": "SETUP_REVEAL",
-      "actorId": "dwight",
-      "propId": "wreckers_garage_north:boldness:0"
-    },
-    {
-      "type": "SETUP_REVEAL",
-      "actorId": "meg",
-      "propId": "maze:boldness:0"
-    },
-    {
-      "type": "SETUP_REVEAL",
-      "actorId": "jake",
-      "propId": "scrap_pile:boldness:0"
-    },
-    {
-      "type": "SETUP_REVEAL",
-      "actorId": "claudette",
-      "propId": "main_garage:boldness:0"
-    },
-    {
       "type": "SELECT",
       "actorId": "dwight"
     },

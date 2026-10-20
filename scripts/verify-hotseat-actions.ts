@@ -1,4 +1,4 @@
-import { clickUI } from "./hotseat-driver.ts";
+import { clickUI, startUI } from "./hotseat-driver.ts";
 import { chromium } from "playwright";
 import { strict as assert } from "node:assert";
 import { writeFileSync } from "node:fs";
@@ -19,8 +19,9 @@ page.on("pageerror", (e) => errors.push(String(e)));
 page.on("console", (m) => {
   if (m.type() === "error") errors.push(m.text());
 });
+// 种子 1：开局不翻道具（家规）后，约 130 步内既能摸到物品又能用到设陷者力量
 const o = {
-  seed: 1701,
+  seed: 1,
   mapId: "macmillan_estate",
   survivors: ["dwight", "claudette", "jake", "ace"],
   killer: "trapper",
@@ -29,8 +30,7 @@ let state = createGame(o),
   itemChecked = false,
   powerChecked = false;
 const commands: Command[] = [];
-await page.goto("http://127.0.0.1:5173");
-await page.getByTestId("start").click();
+await startUI(page, o);
 async function uncover() {
   while (await page.getByTestId("ack-dice").count())
     await page.getByTestId("ack-dice").click();
@@ -39,7 +39,7 @@ async function uncover() {
   if (await page.getByTestId("uncover").count())
     await page.getByTestId("uncover").click();
 }
-for (let i = 0; i < 350 && !(itemChecked && powerChecked); i++) {
+for (let i = 0; i < 400 && !(itemChecked && powerChecked) && !state.winner; i++) {
   await uncover();
   const actor = getControls(state).actorId!;
   const held = state.actors[actor].item;
@@ -170,7 +170,7 @@ writeFileSync(
       itemDrawAndLegalControls: itemChecked,
       powerFormExecuted: powerChecked,
       consoleErrors: errors,
-      note: "Focused legal-command scenario; not counted among full-game acceptance runs. Setup deliberately selects chest IDs to exercise item UI.",
+      note: "Focused legal-command scenario; not counted among full-game acceptance runs. Seed chosen so an item and the trapper power both occur early.",
     },
     null,
     2,

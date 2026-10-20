@@ -85,19 +85,17 @@ describe("U02 / B01 engine foundation", () => {
       ),
     ).toBe(false);
   });
-  it("requires four explicit survivor setup reveals and preserves input on errors", () => {
+  it("开局直接逐人掷出生骰，不做准备翻牌（家规 U-NO-SETUP-REVEAL）；错误输入不改变状态", () => {
     let s = createGame(options);
     const before = structuredClone(s);
     expect(() =>
       reduce(s, { type: "PLAN", actorId: "dwight", cards: ["red"] }),
     ).toThrow();
+    expect(() =>
+      reduce(s, { type: "SETUP_REVEAL", actorId: "dwight", propId: s.props[0].id }),
+    ).toThrow();
     expect(s).toEqual(before);
-    for (const actorId of options.survivors)
-      s = reduce(s, {
-        type: "SETUP_REVEAL",
-        actorId,
-        propId: s.props.find((x) => !x.revealed)!.id,
-      });
+    expect(s.props.every((p) => !p.revealed)).toBe(true);
     // 出生：从先手玩家起，逃生者依次、最后杀手，各自掷骰
     expect(s.choice).toMatchObject({ kind: "SPAWN_ROLL", actorId: options.survivors[0] });
     const rolled: string[] = [];

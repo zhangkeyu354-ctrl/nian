@@ -21,15 +21,13 @@ const types = (ev: Event[]) => ev.map((e) => e.type);
 describe.each([1701, 2903, 4111])("回放 %i 的流程顺序", (seed) => {
   const { s, firstPlayers } = replay(seed);
   const ev = s.events;
-  it("准备（B01 p6）：按顺序每位逃生者翻开一个道具 → 所有人掷骰出生 → 进入第 1 轮计划", () => {
+  it("准备：不翻道具（家规 U-NO-SETUP-REVEAL），从先手逃生者起逐人掷出生骰、杀手最后 → 进入第 1 轮计划", () => {
     const t = types(ev);
     const firstPlan = t.indexOf("PLANNING_START");
     const setup = ev.slice(0, firstPlan);
-    expect(setup.filter((e) => e.type === "PROP_REVEALED").map((e) => e.data.actorId)).toEqual(s.survivors);
-    const lastReveal = t.lastIndexOf("PROP_REVEALED", firstPlan);
+    expect(setup.filter((e) => e.type === "PROP_REVEALED")).toHaveLength(0);
     const spawns = setup.filter((e) => e.type === "SPAWNED");
-    expect(spawns).toHaveLength(5);
-    expect(spawns.every((e) => e.seq > ev[lastReveal].seq)).toBe(true);
+    expect(spawns.map((e) => e.data.actorId)).toEqual([...s.survivors, s.killerId]);
   });
   it("每一轮：计划 → 逃生者按先手顺序行动 → 杀手按牌序行动 → 清理（B01 p8–p11）", () => {
     for (let round = 1; round <= s.round; round++) {

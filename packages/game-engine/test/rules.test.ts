@@ -15,6 +15,7 @@ function fixture(
   });
   s.phase = "ACTING";
   s.jobs = [];
+  s.choice = null; // 跳过开局出生掷骰，直接构造对局中状态
   for (const a of Object.values(s.actors)) {
     a.room = "foundry_upper_floor";
     a.blood = a.side === "killer" ? 12 : 6;
@@ -177,12 +178,6 @@ describe("B01 and U02 state-machine regressions", () => {
         trapper: "three",
       },
     });
-    for (const id of s.survivors)
-      s = reduce(s, {
-        type: "SETUP_REVEAL",
-        actorId: id,
-        propId: s.props.find((p) => !p.revealed)!.id,
-      });
     while (s.choice?.kind === "SPAWN_ROLL")
       s = reduce(s, { type: "SELECT", actorId: s.choice.actorId });
     s = settle(s);

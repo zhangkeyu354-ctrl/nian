@@ -4,9 +4,9 @@
       "seed": 1701,
       "mapId": "macmillan_estate",
       "winner": "survivor",
-      "rounds": 6,
-      "commands": 210,
-      "events": 408,
+      "rounds": 7,
+      "commands": 228,
+      "events": 450,
       "usedBoardAbilities": [
         "board_ace_1",
         "board_dwight_3"
@@ -16,9 +16,9 @@
       "seed": 2903,
       "mapId": "autohaven_wreckers",
       "winner": "survivor",
-      "rounds": 7,
-      "commands": 244,
-      "events": 477,
+      "rounds": 8,
+      "commands": 268,
+      "events": 535,
       "usedBoardAbilities": [
         "board_ace_1"
       ]
@@ -28,8 +28,8 @@
       "mapId": "autohaven_wreckers",
       "winner": "killer",
       "rounds": 5,
-      "commands": 113,
-      "events": 227,
+      "commands": 109,
+      "events": 223,
       "usedBoardAbilities": [
         "board_doctor_1"
       ]

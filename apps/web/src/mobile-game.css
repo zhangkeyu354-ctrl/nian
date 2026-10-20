@@ -466,7 +466,7 @@ body.phone-inmatch {
 .phone-game .dice-overlay {
   z-index: 70;
   padding: 20px;
-  background: #122024f5;
+  background: #122024;
 }
 .phone-game .dice-overlay .dice-faces {
   margin: 12px 0;

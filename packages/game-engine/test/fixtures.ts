@@ -13,6 +13,7 @@ export function fixture(
   });
   s.phase = "ACTING";
   s.jobs = [];
+  s.choice = null; // 跳过开局出生掷骰，直接构造对局中状态
   for (const a of Object.values(s.actors)) {
     a.room = "foundry_upper_floor";
     a.blood = a.side === "killer" ? 12 : 6;

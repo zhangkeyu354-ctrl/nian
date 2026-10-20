@@ -1211,3 +1211,10 @@ legend {
 .character-detail p { margin: 0; font-size: 13px; line-height: 1.55; }
 .character-detail .cd-power h4 { color: #f0a990; }
 .draft-confirm { width: 100%; min-height: 52px; font-size: 16px; }
+/* 掷骰结果：落定后大号显示（2026-10-20） */
+.dice-result { min-height: 92px; display: grid; gap: 4px; justify-items: center; margin: 4px 0 14px; }
+.dice-result strong { font-size: 40px; line-height: 1.15; color: #f3e3b0; letter-spacing: 1px; text-align: center; }
+.dice-result span { font-size: 18px; color: #d9cfae; }
+.dice-result:not(.pending) { animation: dice-result-in 0.25s ease-out; }
+@keyframes dice-result-in { from { transform: scale(0.7); opacity: 0; } to { transform: none; opacity: 1; } }
+[data-motion="off"] .dice-result { animation: none; }
