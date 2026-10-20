@@ -80,9 +80,9 @@ try {
     // 待决定事项只有决定人看得到选项：别人的面板里不能有选项按钮
     for (const q of pages)
       assert.equal(await q.locator(".ma-decide:not(.you) .ma-options button").count(), 0, "旁人看到了别人的选项");
-    const sub = host.locator(".ma-infield-sub");
-    const raceNow = (await sub.count()) ? await sub.textContent() : null;
-    if (raceNow && !raceNow.includes(String(races))) {
+    const board = host.locator(".ma-board-art");
+    const label = (await board.count()) ? await board.getAttribute("aria-label") : null;
+    if (label && !label.includes(`第 ${races} 场`)) {
       races++;
       await host.screenshot({ path: `${out}/2_第${races}场.png`, fullPage: true });
     }
