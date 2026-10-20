@@ -685,11 +685,19 @@ function beforeMain(s: MAState, c: Ctx, t: Token) {
   }
   if (has(s, t, "party_animal")) {
     fire(s, c, t, `${rname(t)}【人气磁铁】：所有选手向它移动 1 格。`);
-    for (const o of others(s, t)) {
-      if (!active(t)) break;
-      if (o.pos < t.pos) move(s, c, o, 1, false, "人气磁铁");
-      else if (o.pos > t.pos) move(s, c, o, -1, false, "人气磁铁");
+    // 所有人同时各移动 1 格（规则书 Fiddly Details #3：同时到达照样触发停格能力，按到达后的局面判断）
+    const movers = others(s, t).filter((o) => o.pos !== t.pos);
+    const arrivals: Token[] = [];
+    for (const o of movers) {
+      const to = Math.max(0, o.pos + (o.pos < t.pos ? 1 : -1));
+      if (to === o.pos) continue;
+      o.pos = to;
+      arrivals.push(o);
     }
+    if (arrivals.length)
+      log(s, arrivals.map((o) => `${rname(o)} → 第 ${o.pos} 格`).join("，") + "（人气磁铁，同时移动）");
+    for (const o of arrivals) hugeBaby(s, c, o);
+    for (const o of arrivals) react(s, c, o, []);
   }
   if (has(s, t, "cheerleader")) {
     const act = race(s).tokens.filter(active);

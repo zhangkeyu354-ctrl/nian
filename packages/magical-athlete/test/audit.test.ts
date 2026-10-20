@@ -343,3 +343,24 @@ describe("同时到达（规则书 Fiddly Details #3 + 浪漫者说明）", () =
     expect(tok(s, "scoocher").pos).toBe(11);
   });
 });
+
+describe("派对咖：所有人同时向它移动 1 格", () => {
+  it("两人同时被吸到派对咖格子（3 人同格）→ 浪漫者不触发", () => {
+    const s = race(["party_animal", F, G, "romantic"], [5, 4, 4, 20], [1]);
+    expect(tok(s, F).pos).toBe(5);
+    expect(tok(s, G).pos).toBe(5);
+    expect(tok(s, "romantic").pos).toBe(19);
+  });
+  it("血盆大口与另一人同时被吸到派对咖格子：格子上有两名其他选手，不吞", () => {
+    const s = race(["party_animal", "mouth", G], [5, 4, 6], [1]);
+    expect(tok(s, "mouth").pos).toBe(5);
+    expect(tok(s, G).pos).toBe(5);
+    expect(tok(s, G).out).toBe(false);
+    expect(tok(s, "party_animal").out).toBe(false);
+  });
+  it("巨婴被吸到派对咖格子：格子上其他人都被放到后一格", () => {
+    const s = race(["party_animal", "huge_baby", G], [5, 4, 9], [1]);
+    expect(tok(s, "huge_baby").pos).toBe(5);
+    expect(tok(s, "party_animal").pos).toBe(4);
+  });
+});
