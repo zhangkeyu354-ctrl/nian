@@ -12,6 +12,7 @@ import {
 import { MotionIcon } from "./MotionIcon.tsx";
 import { useSettings } from "./Settings.tsx";
 import { Token } from "./Token.tsx";
+import { TapButton, suppressCompatibilityClick } from "./TapButton.tsx";
 import layoutData from "./layout.json" with { type: "json" };
 const colors: Record<string, string> = {
   blue: "#62b5de",
@@ -28,6 +29,7 @@ export function Board({
   selected,
   focusRoom,
   actionable = [],
+  phone = false,
 }: {
   state: GameState;
   highlight: Array<{ pathId: string; to: string }>;
@@ -37,6 +39,7 @@ export function Board({
   selected: string | null;
   focusRoom?: string | null;
   actionable?: string[];
+  phone?: boolean;
 }) {
   const map = maps.maps.find((m) => m.id === state.mapId)!;
   const layout = (
@@ -52,27 +55,30 @@ export function Board({
   const height = map.id === "macmillan_estate" ? 1520 : 1320;
   const settings = useSettings();
   const [expanded, setExpanded] = useState(false);
+  const [overview, setOverview] = useState(false);
   const [toolsOpen, setToolsOpen] = useState(false);
   const [size, setSize] = useState({ width: 1540, height });
   const yScale = 1;
   const [view, setView] = useState({ x: 0, y: 0, w: 1540, h: height });
   const viewRef = useRef(view);
+  const touchHandled = useRef(0);
   viewRef.current = view;
   const el = useRef<HTMLDivElement>(null),
     pointers = useRef(new Map<number, { x: number; y: number }>()),
     last = useRef<{ x: number; y: number; distance: number } | null>(null),
     drag = useRef(false);
   useEffect(() => {
-    if (!expanded) return;
+    if (!expanded && !overview) return;
     const old = document.body.style.overflow;
     document.body.style.overflow = "hidden";
     return () => {
       document.body.style.overflow = old;
     };
-  }, [expanded]);
+  }, [expanded, overview]);
   const reset = () => setView({ x: 0, y: 0, w: 1540, h: height });
   // 定位：让当前房间及其全部相邻房间同时可见（保留四周安全边距）
   function focus(id = focusRoom) {
+    if (size.width <= 0 || size.height <= 0) return;
     const roomId = id && layout.rooms[id] ? id : Object.keys(layout.rooms)[0];
     const ids = new Set([roomId]);
     for (const e of map.edges as Array<{
@@ -107,15 +113,17 @@ export function Board({
     const node = el.current!;
     const ro = new ResizeObserver(([entry]) => {
       const { width, height: h } = entry.contentRect;
+      if (width <= 0 || h <= 0) return;
       setSize({ width, height: h });
     });
     ro.observe(node);
     return () => ro.disconnect();
   }, []);
   useEffect(() => {
-    if (size.width < 950) focus();
+    if (overview || (phone && !focusRoom)) reset();
+    else if (size.width < 950 || phone) focus();
     else reset();
-  }, [map.id, focusRoom, size.width, size.height]);
+  }, [map.id, focusRoom, size.width, size.height, phone, overview]);
   // 手机上地图缩得很小时，第一次点击只放大到该房间（防误触），放大后再点才执行操作
   const tiny = size.width < 950 && view.w / Math.max(1, size.width) > 1.4;
   function zoomRoom(id: string) {
@@ -199,6 +207,7 @@ export function Board({
     <div
       className={
         "board-shell" +
+        (overview ? " board-overview" : "") +
         (expanded ? " board-expanded" : "") +
         (toolsOpen ? " tools-open" : " tools-collapsed")
       }
@@ -206,37 +215,53 @@ export function Board({
       <div className="board-top">
         <span>{map.name_zh}</span>
         <div className="zoom-controls">
-          <button onClick={() => focus()} aria-label="定位当前角色">
+          <TapButton onClick={() => focus()} aria-label="定位当前角色">
             定位
-          </button>
-          <button
+          </TapButton>
+          {overview && (
+            <TapButton onClick={() => setOverview(false)} aria-label="返回行动">
+              返回
+            </TapButton>
+          )}
+          <TapButton
             onClick={() => setExpanded((v) => !v)}
             aria-label="横屏查看棋盘"
           >
             {expanded ? "退出横屏" : "横屏"}
-          </button>
-          <button
+          </TapButton>
+          <TapButton
             className="tools-toggle"
             aria-label="显示图例与房间列表"
             aria-expanded={toolsOpen}
             onClick={() => setToolsOpen((v) => !v)}
           >
             {toolsOpen ? "收起" : "图例"}
-          </button>
-          <button aria-label="缩小地图" onClick={() => zoom(1.25)}>
+          </TapButton>
+          <TapButton aria-label="缩小地图" onClick={() => zoom(1.25)}>
             −
-          </button>
-          <button onClick={reset} aria-label="复位地图">
+          </TapButton>
+          <TapButton
+            onClick={() => {
+              if (phone) setOverview(true);
+              reset();
+            }}
+            aria-label="复位地图"
+          >
             全图
-          </button>
-          <button aria-label="放大地图" onClick={() => zoom(0.8)}>
+          </TapButton>
+          <TapButton aria-label="放大地图" onClick={() => zoom(0.8)}>
             ＋
-          </button>
+          </TapButton>
         </div>
       </div>
       <div
         className="map-viewport"
-        style={{ "--board-ratio": `1540/${height}` } as React.CSSProperties}
+        style={
+          {
+            "--board-ratio": `1540/${height}`,
+            "--board-height": height,
+          } as React.CSSProperties
+        }
         ref={el}
         onPointerDown={(e) => pointer(e, "down")}
         onPointerMove={(e) => pointer(e, "move")}
@@ -249,6 +274,33 @@ export function Board({
           viewBox={`${view.x} ${view.y} ${view.w} ${view.h}`}
           role="img"
           aria-label={`${map.name_zh}数字棋盘，房间和道具可点击`}
+          onPointerUp={(e) => {
+            if (!phone || e.pointerType !== "touch") return;
+            touchHandled.current = Date.now();
+            if (drag.current) return;
+            const target = (e.target as Element).closest(
+              "[data-actor],[data-prop],[data-room]",
+            );
+            if (target) {
+              suppressCompatibilityClick();
+              e.preventDefault();
+              target.dispatchEvent(
+                new MouseEvent("click", { bubbles: true, cancelable: true }),
+              );
+            }
+          }}
+          onClickCapture={(e) => {
+            if (
+              phone &&
+              e.nativeEvent.isTrusted &&
+              (e.nativeEvent as PointerEvent).pointerType === "touch" &&
+              Date.now() - touchHandled.current < 800
+            ) {
+              suppressCompatibilityClick();
+              e.preventDefault();
+              e.stopPropagation();
+            }
+          }}
         >
           <defs>
             <pattern
@@ -475,6 +527,18 @@ export function Board({
             const slotHit = Math.min(62, slotGap);
             const slotIcon = Math.min(50, slotGap - 6);
             const reachable = highlight.some((r) => r.to === n.id);
+            const screenScale = Math.max(
+              0.001,
+              Math.min(
+                size.width / Math.max(1, view.w),
+                size.height / Math.max(1, view.h),
+              ),
+            );
+            const roomHitW = phone ? Math.max(260, 48 / screenScale) : 260;
+            const roomHitH = phone ? Math.max(200, 48 / screenScale) : 200;
+            const actorInteractive = !phone || 62 * screenScale >= 48;
+            const propInteractive =
+              !phone || Math.min(slotHit, 62) * screenScale >= 48;
             return (
               <g
                 key={n.id}
@@ -488,7 +552,13 @@ export function Board({
                   data-room={n.id}
                   onClick={() =>
                     click(() =>
-                      tiny && !reachable ? zoomRoom(n.id) : onRoom(n.id),
+                      tiny &&
+                      !reachable &&
+                      (!phone ||
+                        (state.phase !== "SETUP" &&
+                          state.choice?.kind !== "MAP_REVEAL"))
+                        ? zoomRoom(n.id)
+                        : onRoom(n.id),
                     )
                   }
                   onKeyDown={(e) => {
@@ -496,6 +566,12 @@ export function Board({
                   }}
                   className="room-node"
                 >
+                  {phone && (
+                    <path
+                      d={`M${-roomHitW / 2} ${18 - roomHitH / 2}h${roomHitW}v${roomHitH}h${-roomHitW}z`}
+                      fill="transparent"
+                    />
+                  )}
                   <rect
                     x="-130"
                     y="-82"
@@ -535,7 +611,7 @@ export function Board({
                       {settings.art && (
                         <image
                           data-room-art={n.id}
-                          href={`/assets/rooms/${n.id}.png`}
+                          href={`/assets/${phone ? "mobile" : "desktop"}/rooms/${n.id}.webp`}
                           x="-127"
                           y="-46"
                           width="254"
@@ -611,12 +687,19 @@ export function Board({
                       transform={`translate(${tokenStart + i * tokenGap} 10)`}
                       data-actor={a.id}
                       data-actor-state={a.state}
-                      role="button"
-                      tabIndex={0}
+                      role={actorInteractive ? "button" : "img"}
+                      tabIndex={actorInteractive ? 0 : undefined}
+                      pointerEvents={actorInteractive ? undefined : "none"}
                       aria-label={"棋子：" + a.label}
                       onClick={(e) => {
                         e.stopPropagation();
-                        click(() => (tiny ? zoomRoom(n.id) : onActor?.(a.id)));
+                        click(() =>
+                          phone && reachable
+                            ? onRoom(n.id)
+                            : tiny
+                              ? zoomRoom(n.id)
+                              : onActor?.(a.id),
+                        );
                       }}
                       onKeyDown={(e) => {
                         if (e.key === "Enter") {
@@ -667,8 +750,9 @@ export function Board({
                   return (
                     <g
                       key={p.id}
-                      role="button"
-                      tabIndex={0}
+                      role={propInteractive ? "button" : "img"}
+                      tabIndex={propInteractive ? 0 : undefined}
+                      pointerEvents={propInteractive ? undefined : "none"}
                       data-prop={p.id}
                       data-prop-state={p.state}
                       aria-label={
@@ -680,7 +764,13 @@ export function Board({
                       }
                       onClick={(e) => {
                         e.stopPropagation();
-                        click(() => (tiny ? zoomRoom(n.id) : onProp(p.id)));
+                        click(() =>
+                          phone && reachable
+                            ? onRoom(n.id)
+                            : tiny && !available
+                              ? zoomRoom(n.id)
+                              : onProp(p.id),
+                        );
                       }}
                       onKeyDown={(e) => {
                         if (e.key === "Enter") onProp(p.id);

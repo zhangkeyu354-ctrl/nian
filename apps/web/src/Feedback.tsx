@@ -40,16 +40,18 @@ function EffectArt({ effect: e }: { effect: Effect }) {
 export function FeedbackPanel({
   effects,
   onDone,
+  toast = false,
 }: {
   effects: Effect[];
   onDone: () => void;
+  toast?: boolean;
 }) {
   if (!effects.length) return null;
   return (
     <div
-      className="feedback-overlay"
-      role="dialog"
-      aria-modal="true"
+      className={"feedback-overlay" + (toast ? " toast-feedback" : "")}
+      role={toast ? "status" : "dialog"}
+      aria-modal={toast ? undefined : true}
       aria-label="操作反馈"
     >
       <p className="eyebrow">棋盘上的变化</p>
@@ -73,9 +75,11 @@ export function FeedbackPanel({
           </article>
         ))}
       </div>
-      <button className="primary" data-testid="ack-feedback" onClick={onDone}>
-        已查看变化，继续
-      </button>
+      {!toast && (
+        <button className="primary" data-testid="ack-feedback" onClick={onDone}>
+          已查看变化，继续
+        </button>
+      )}
     </div>
   );
 }

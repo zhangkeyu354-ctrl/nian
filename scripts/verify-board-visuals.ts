@@ -7,6 +7,7 @@ import {
   assertFullBoardShot,
   visibleCounts,
   waitForBoardImages,
+  assertUiShot,
 } from "./screenshot-check.ts";
 const out = "output/playwright/phase2c";
 mkdirSync(out, { recursive: true });
@@ -136,33 +137,25 @@ for (const seed of [1701, 2903]) {
     assert(svgBox && svgBox.height > 200, "visible SVG canvas");
     const base = `${seed}_${screen.name}_中局`;
     await waitForBoardImages(p);
-    await p.screenshot({
-      path: `${out}/${base}.png`,
-      fullPage: screen.name === "电脑",
-      animations: "disabled",
-    });
+    await assertUiShot(p, `${out}/${base}.png`, ".map-viewport");
     if (screen.name === "电脑")
       await p
         .locator(".board-shell")
         .screenshot({ path: `${out}/${seed}_棋盘全图.png` });
     if (screen.name === "手机竖屏") {
-      // 默认视图显示当前房间与相邻房间；点一下道具先放大到该房间，再检查点击区域
       assert((await visibleCounts(p)).rooms >= 2, "定位视图应包含相邻房间");
-      await p.locator("[data-prop] > rect").first().click();
-      await p.waitForTimeout(150);
-      const rect = await p
-        .locator("[data-prop] > rect")
-        .first()
-        .evaluate((el) => {
-          const b = el.getBoundingClientRect();
-          return { width: b.width, height: b.height };
-        });
-      assert(rect.width >= 44 && rect.height >= 44, JSON.stringify(rect));
-      const old = await p.getByTestId("board").getAttribute("viewBox");
-      await p.getByRole("button", { name: "放大地图", exact: true }).click();
-      assert.notEqual(
-        await p.getByTestId("board").getAttribute("viewBox"),
-        old,
+      const small = await p.locator("button:visible").evaluateAll((els) =>
+        els
+          .filter((el) => {
+            const r = el.getBoundingClientRect();
+            return r.width < 48 || r.height < 48;
+          })
+          .map((el) => el.textContent),
+      );
+      assert.deepEqual(
+        small,
+        [],
+        "phone buttons >=48px; small prop images have large dock actions",
       );
       await p.getByLabel("定位当前角色", { exact: true }).click();
       await p.getByLabel("横屏查看棋盘", { exact: true }).click();
@@ -214,6 +207,8 @@ for (const seed of [1701, 2903]) {
       `${out}/${seed}_${screen.name}_全图验收.png`,
       expected,
     );
+    if (await p.getByLabel("返回行动", { exact: true }).count())
+      await p.getByLabel("返回行动", { exact: true }).click();
     if (screen.name === "手机横屏")
       await p.getByLabel("横屏查看棋盘", { exact: true }).click();
     records.push({

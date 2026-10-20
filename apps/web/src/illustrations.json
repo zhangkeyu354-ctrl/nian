@@ -1,0 +1,314 @@
+[
+  {
+    "id": "toolbox",
+    "category": "items",
+    "file": "items/toolbox.webp",
+    "svg": "svg/items/toolbox.svg",
+    "source": "AI 生成",
+    "states": [
+      "neutral"
+    ],
+    "transparent": true,
+    "original_size": [
+      1254,
+      1254
+    ],
+    "size": [
+      256,
+      256
+    ],
+    "provider": "built-in image_gen",
+    "generation_prompt": "Original isolated compact battered metal toolbox, charcoal brushwork, bone-white rim light, tarnished brass, transparent exterior; no lettering, official art or logos.",
+    "original_file": "assets/mobile-originals/items/toolbox.png",
+    "sha256": "2e61a2bc7a317b471527e706c593c9a86066a2dac2a8c81e5957033acaeb9c5d",
+    "bytes": 23574,
+    "official_reference_input": false
+  },
+  {
+    "id": "commodious_toolbox",
+    "category": "items",
+    "file": "items/commodious_toolbox.webp",
+    "svg": "svg/items/commodious_toolbox.svg",
+    "source": "AI 生成",
+    "states": [
+      "neutral"
+    ],
+    "transparent": true,
+    "original_size": [
+      1254,
+      1254
+    ],
+    "size": [
+      256,
+      256
+    ],
+    "provider": "built-in image_gen",
+    "generation_prompt": "One original inventory illustration: a wide battered metal toolbox with two clasps, open layered compartments, distinctly wider than tall. Cold damp horror tabletop style, rough charcoal brushwork, bone-white rim light, restrained tarnished brass. Centered isolated object occupying 75% of square, bold silhouette readable at 48px. Transparent exterior. No frame, text, numerals, logo, watermark, UI, official game art or tracing. Neutral idle state.",
+    "original_file": "assets/mobile-originals/items/commodious_toolbox.png",
+    "sha256": "12457079e4cfe79b236c60b37dca564765d7a2aba1abfd8d7b069c1d7510d983",
+    "bytes": 18424,
+    "official_reference_input": false
+  },
+  {
+    "id": "firecracker",
+    "category": "items",
+    "file": "items/firecracker.webp",
+    "svg": "svg/items/firecracker.svg",
+    "source": "AI 生成",
+    "states": [
+      "neutral"
+    ],
+    "transparent": true,
+    "original_size": [
+      1254,
+      1254
+    ],
+    "size": [
+      256,
+      256
+    ],
+    "provider": "built-in image_gen",
+    "generation_prompt": "One original inventory illustration: a tied bundle of small paper firecracker cylinders with a clear winding fuse, intact and unlit. Cold damp horror tabletop style, rough charcoal brushwork, bone-white rim light, restrained tarnished brass. Centered isolated object occupying 75% of square, bold silhouette readable at 48px. Transparent exterior. No frame, text, numerals, logo, watermark, UI, official game art or tracing. Neutral idle state.",
+    "original_file": "assets/mobile-originals/items/firecracker.png",
+    "sha256": "fc3e9f15b0a7902cdcedfbd997642539d6dbbd557a4d1b15f74190642cd87518",
+    "bytes": 22546,
+    "official_reference_input": false
+  },
+  {
+    "id": "map",
+    "category": "items",
+    "file": "items/map.webp",
+    "svg": "svg/items/map.svg",
+    "source": "AI 生成",
+    "states": [
+      "neutral"
+    ],
+    "transparent": true,
+    "original_size": [
+      1254,
+      1254
+    ],
+    "size": [
+      256,
+      256
+    ],
+    "provider": "built-in image_gen",
+    "generation_prompt": "One original inventory illustration: an old folded parchment map with strong fold lines and faint abstract hatching, no readable routes or lettering. Cold damp horror tabletop style, rough charcoal brushwork, bone-white rim light, restrained tarnished brass. Centered isolated object occupying 75% of square, bold silhouette readable at 48px. Transparent exterior. No frame, text, numerals, logo, watermark, UI, official game art or tracing. Neutral idle state.",
+    "original_file": "assets/mobile-originals/items/map.png",
+    "sha256": "674b60b3bc83f5c24cf837a5f09a4e486764f9d918c2c9effcd3b57d5ec6ec12",
+    "bytes": 25120,
+    "official_reference_input": false
+  },
+  {
+    "id": "rainbow_map",
+    "category": "items",
+    "file": "items/rainbow_map.webp",
+    "svg": "svg/items/rainbow_map.svg",
+    "source": "AI 生成",
+    "states": [
+      "neutral"
+    ],
+    "transparent": true,
+    "original_size": [
+      1254,
+      1254
+    ],
+    "size": [
+      256,
+      256
+    ],
+    "provider": "built-in image_gen",
+    "generation_prompt": "One original inventory illustration: a rolled and partly opened layered parchment map with scalloped corners, restrained multicolor edge threads and bronze scroll rod, no lettering. Cold damp horror tabletop style, rough charcoal brushwork, bone-white rim light, restrained tarnished brass. Centered isolated object occupying 75% of square, bold silhouette readable at 48px. Transparent exterior. No frame, text, numerals, logo, watermark, UI, official game art or tracing. Neutral idle state.",
+    "original_file": "assets/mobile-originals/items/rainbow_map.png",
+    "sha256": "a073da6a3969e7bcb2f4f60049cdd28f79ed10b7a954b932c8dc5245d0fe9da1",
+    "bytes": 23018,
+    "official_reference_input": false
+  },
+  {
+    "id": "flashlight",
+    "category": "items",
+    "file": "items/flashlight.webp",
+    "svg": "svg/items/flashlight.svg",
+    "source": "占位",
+    "states": [
+      "neutral"
+    ],
+    "transparent": true
+  },
+  {
+    "id": "first_aid_kit",
+    "category": "items",
+    "file": "items/first_aid_kit.webp",
+    "svg": "svg/items/first_aid_kit.svg",
+    "source": "占位",
+    "states": [
+      "neutral"
+    ],
+    "transparent": true
+  },
+  {
+    "id": "broken_key",
+    "category": "items",
+    "file": "items/broken_key.webp",
+    "svg": "svg/items/broken_key.svg",
+    "source": "占位",
+    "states": [
+      "neutral"
+    ],
+    "transparent": true
+  },
+  {
+    "id": "dull_key",
+    "category": "items",
+    "file": "items/dull_key.webp",
+    "svg": "svg/items/dull_key.svg",
+    "source": "占位",
+    "states": [
+      "neutral"
+    ],
+    "transparent": true
+  },
+  {
+    "id": "skeleton_key",
+    "category": "items",
+    "file": "items/skeleton_key.webp",
+    "svg": "svg/items/skeleton_key.svg",
+    "source": "占位",
+    "states": [
+      "neutral"
+    ],
+    "transparent": true
+  },
+  {
+    "id": "macmillan_estate_cover",
+    "category": "maps",
+    "file": "maps/macmillan_estate_cover.webp",
+    "svg": "svg/maps/macmillan_estate_cover.svg",
+    "source": "占位",
+    "states": [
+      "neutral"
+    ],
+    "transparent": false
+  },
+  {
+    "id": "autohaven_wreckers_cover",
+    "category": "maps",
+    "file": "maps/autohaven_wreckers_cover.webp",
+    "svg": "svg/maps/autohaven_wreckers_cover.svg",
+    "source": "占位",
+    "states": [
+      "neutral"
+    ],
+    "transparent": false
+  },
+  {
+    "id": "lobby",
+    "category": "modules",
+    "file": "modules/lobby.webp",
+    "svg": "svg/modules/lobby.svg",
+    "source": "占位",
+    "states": [
+      "module"
+    ],
+    "transparent": false
+  },
+  {
+    "id": "characters",
+    "category": "modules",
+    "file": "modules/characters.webp",
+    "svg": "svg/modules/characters.svg",
+    "source": "占位",
+    "states": [
+      "module"
+    ],
+    "transparent": false
+  },
+  {
+    "id": "plan",
+    "category": "modules",
+    "file": "modules/plan.webp",
+    "svg": "svg/modules/plan.svg",
+    "source": "占位",
+    "states": [
+      "module"
+    ],
+    "transparent": false
+  },
+  {
+    "id": "move",
+    "category": "modules",
+    "file": "modules/move.webp",
+    "svg": "svg/modules/move.svg",
+    "source": "占位",
+    "states": [
+      "module"
+    ],
+    "transparent": false
+  },
+  {
+    "id": "interact",
+    "category": "modules",
+    "file": "modules/interact.webp",
+    "svg": "svg/modules/interact.svg",
+    "source": "占位",
+    "states": [
+      "module"
+    ],
+    "transparent": false
+  },
+  {
+    "id": "skill",
+    "category": "modules",
+    "file": "modules/skill.webp",
+    "svg": "svg/modules/skill.svg",
+    "source": "占位",
+    "states": [
+      "module"
+    ],
+    "transparent": false
+  },
+  {
+    "id": "waiting",
+    "category": "modules",
+    "file": "modules/waiting.webp",
+    "svg": "svg/modules/waiting.svg",
+    "source": "占位",
+    "states": [
+      "module"
+    ],
+    "transparent": false
+  },
+  {
+    "id": "dice",
+    "category": "modules",
+    "file": "modules/dice.webp",
+    "svg": "svg/modules/dice.svg",
+    "source": "占位",
+    "states": [
+      "module"
+    ],
+    "transparent": false
+  },
+  {
+    "id": "carry",
+    "category": "modules",
+    "file": "modules/carry.webp",
+    "svg": "svg/modules/carry.svg",
+    "source": "占位",
+    "states": [
+      "module"
+    ],
+    "transparent": false
+  },
+  {
+    "id": "results",
+    "category": "modules",
+    "file": "modules/results.webp",
+    "svg": "svg/modules/results.svg",
+    "source": "占位",
+    "states": [
+      "module"
+    ],
+    "transparent": false
+  }
+]

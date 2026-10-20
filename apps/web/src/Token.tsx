@@ -9,12 +9,12 @@ export function Art({ id }: { id: string }) {
   const entry =
     manifest.assets.find((a) => a.id === id) ??
     manifest.assets.find((a) => a.id === "portrait_anonymous")!;
-  const png =
-    settings.art && entry.source === "AI 生成" && failed !== entry.file;
+  const file = entry.mobile_file;
+  const png = settings.art && entry.source === "AI 生成" && failed !== file;
   return (
     <g
       data-asset={id}
-      data-fallback={!png || loaded !== entry.file ? "true" : "false"}
+      data-fallback={!png || loaded !== file ? "true" : "false"}
     >
       <image
         className="asset-svg"
@@ -22,16 +22,16 @@ export function Art({ id }: { id: string }) {
         href={"/assets/" + entry.svg}
         width="128"
         height="128"
-        opacity={png && loaded === entry.file ? 0 : 1}
+        opacity={png && loaded === file ? 0 : 1}
       />
       {png && (
         <image
           className="asset-png"
-          href={"/assets/" + entry.file}
+          href={"/assets/" + file}
           width="128"
           height="128"
-          onLoad={() => setLoaded(entry.file)}
-          onError={() => setFailed(entry.file)}
+          onLoad={() => setLoaded(file)}
+          onError={() => setFailed(file)}
         />
       )}
     </g>

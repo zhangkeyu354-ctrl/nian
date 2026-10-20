@@ -26,3 +26,4 @@ createRoot(document.getElementById("root")!).render(
   </SettingsProvider>,
 );
 import "./board-visuals.css";
+import "./mobile-game.css";

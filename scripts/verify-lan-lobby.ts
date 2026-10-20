@@ -7,6 +7,7 @@ import { tmpdir } from "node:os";
 import { join } from "node:path";
 import { strict as assert } from "node:assert";
 import { chromium, devices, type Page } from "playwright";
+import { assertUiShot } from "./screenshot-check.ts";
 
 const PORT = 3324;
 const BASE = `http://127.0.0.1:${PORT}`;
@@ -15,10 +16,19 @@ mkdirSync(out, { recursive: true });
 
 let server: ChildProcess | undefined;
 async function startServer() {
-  server = spawn(process.execPath, ["--import", "tsx", "apps/server/src/main.ts"], {
-    env: { ...process.env, PORT: String(PORT), HOST: "127.0.0.1", DBD_DATA_DIR: mkdtempSync(join(tmpdir(), "dbd-lobbyui-")) },
-    stdio: ["ignore", "ignore", "inherit"],
-  });
+  server = spawn(
+    process.execPath,
+    ["--import", "tsx", "apps/server/src/main.ts"],
+    {
+      env: {
+        ...process.env,
+        PORT: String(PORT),
+        HOST: "127.0.0.1",
+        DBD_DATA_DIR: mkdtempSync(join(tmpdir(), "dbd-lobbyui-")),
+      },
+      stdio: ["ignore", "ignore", "inherit"],
+    },
+  );
   for (let i = 0; ; i++) {
     try {
       if ((await fetch(`${BASE}/api/info`)).ok) return;
@@ -27,12 +37,55 @@ async function startServer() {
     await new Promise((r) => setTimeout(r, 50));
   }
 }
-const text = async (p: Page) => JSON.parse(await p.evaluate(() => window.render_game_to_text()));
+async function checkPhone(p: Page) {
+  const layout = await p.evaluate(() => ({
+    scroll:
+      document.documentElement.scrollHeight > innerHeight + 1 ||
+      document.documentElement.scrollWidth > innerWidth + 1,
+    dropdowns: document.querySelectorAll("select").length,
+    clipped: [...document.querySelectorAll("button:not([disabled])")]
+      .filter((e) => {
+        const b = e.getBoundingClientRect();
+        return (
+          b.width > 0 &&
+          b.height > 0 &&
+          (b.width < 48 ||
+            b.height < 48 ||
+            b.top < 0 ||
+            b.bottom > innerHeight + 1)
+        );
+      })
+      .map((e) => e.textContent),
+  }));
+  assert.equal(layout.scroll, false);
+  assert.equal(layout.dropdowns, 0);
+  assert.deepEqual(layout.clipped, []);
+}
+const text = async (p: Page) =>
+  JSON.parse(await p.evaluate(() => window.render_game_to_text()));
 
 const scenarios = [
-  { name: "5人_两人想当杀手", count: 5, start: 4, sides: ["killer", "survivor", "killer", "survivor", "survivor"], volunteer: -1 },
-  { name: "4人_没人选杀手_一人报名控两名", count: 4, start: 4, sides: ["survivor", "survivor", "survivor", "survivor"], volunteer: 2 },
-  { name: "3人", count: 3, start: 3, sides: ["survivor", "killer", "survivor"], volunteer: -1 },
+  {
+    name: "5人_两人想当杀手",
+    count: 5,
+    start: 4,
+    sides: ["killer", "survivor", "killer", "survivor", "survivor"],
+    volunteer: -1,
+  },
+  {
+    name: "4人_没人选杀手_一人报名控两名",
+    count: 4,
+    start: 4,
+    sides: ["survivor", "survivor", "survivor", "survivor"],
+    volunteer: 2,
+  },
+  {
+    name: "3人",
+    count: 3,
+    start: 3,
+    sides: ["survivor", "killer", "survivor"],
+    volunteer: -1,
+  },
 ] as const;
 
 await startServer();
@@ -43,7 +96,9 @@ try {
     const errors: string[] = [];
     const pages: Page[] = [];
     for (let i = 0; i < sc.count; i++) {
-      const ctx = await browser.newContext({ ...devices[i % 2 ? "Pixel 7" : "iPhone 13"] });
+      const ctx = await browser.newContext({
+        ...devices[i % 2 ? "Pixel 7" : "iPhone 13"],
+      });
       const p = await ctx.newPage();
       p.on("pageerror", (e) => errors.push(String(e)));
       pages.push(p);
@@ -58,13 +113,14 @@ try {
     await host.getByTestId("player-name").fill("房主");
     await host.getByTestId("join-room").tap();
     await host.getByTestId("lobby-room").waitFor();
-    if (sc.start !== sc.count) await host.getByTestId("count-" + sc.count).tap();
+    if (sc.start !== sc.count)
+      await host.getByTestId("count-" + sc.count).tap();
     // 2) 其他人用房间号加入
     for (let i = 1; i < sc.count; i++) {
       const p = pages[i];
       await p.goto(`${BASE}/?online=1`);
       await p.getByTestId("join-code").fill(code);
-      await p.getByTestId("join-code").press("Enter");
+      await p.getByRole("button", { name: "加入", exact: true }).tap();
       await p.getByTestId("player-name").fill("玩家" + (i + 1));
       await p.getByTestId("join-room").tap();
       await p.getByTestId("lobby-room").waitFor();
@@ -75,35 +131,62 @@ try {
       if (i === sc.volunteer) {
         // 勾选状态以服务器为准，等服务器确认后才显示为已勾选
         await pages[i].getByTestId("volunteer").tap();
-        await pages[i].waitForFunction(() => document.querySelector<HTMLInputElement>('[data-testid="volunteer"]')?.checked);
+        await pages[i].waitForFunction(
+          () =>
+            document.querySelector<HTMLInputElement>(
+              '[data-testid="volunteer"]',
+            )?.checked,
+        );
       }
     }
-    await host.waitForFunction(() => !document.querySelector<HTMLButtonElement>('[data-testid="start-draft"]')?.disabled);
-    await host.screenshot({ path: `${out}/${sc.name}_房间.png` });
+    await host.waitForFunction(
+      () =>
+        !document.querySelector<HTMLButtonElement>(
+          '[data-testid="start-draft"]',
+        )?.disabled,
+    );
+    await checkPhone(host);
+    await assertUiShot(host, `${out}/${sc.name}_房间.png`);
     // 非房主看不到"开始"
     assert.equal(await pages[1].getByTestId("start-draft").count(), 0);
     await host.getByTestId("start-draft").tap();
     // 4) 选角色：每个人点自己第一个可选项，直到都选完
     for (const p of pages) await p.getByTestId("draft-room").waitFor();
-    await pages[1].screenshot({ path: `${out}/${sc.name}_选角色.png` });
+    await checkPhone(pages[1]);
+    await assertUiShot(pages[1], `${out}/${sc.name}_选角色.png`);
     let killerOptions = 0;
     for (let round = 0; round < 3; round++)
       for (const p of pages) {
         const opts = p.locator('[data-testid^="pick-"]:not([disabled])');
-        if (round === 0 && (await p.locator('[data-testid^="pick-k-"]').count())) killerOptions = await p.locator('[data-testid^="pick-k-"]').count();
+        if (
+          round === 0 &&
+          (await p.locator('[data-testid^="pick-k-"]').count())
+        )
+          killerOptions = await p.locator('[data-testid^="pick-k-"]').count();
         if (await opts.count()) await opts.first().tap();
+        else {
+          const tabs = p.locator(".draft-tabs button");
+          if (await tabs.count()) await tabs.last().tap();
+          if (await opts.count()) await opts.first().tap();
+        }
         await p.waitForTimeout(150);
       }
     assert.equal(killerOptions, 3, "杀手三选一");
     // 5) 所有人进入同一局
-    for (const p of pages) await p.getByTestId("board").waitFor({ timeout: 15000 });
+    for (const p of pages)
+      await p.getByTestId("board").waitFor({ timeout: 15000 });
     const t = await Promise.all(pages.map(text));
     const seats = t.map((x) => x.online.seat);
     assert.equal(new Set(seats).size, sc.count, "每人一个座位");
     for (const x of t) assert.equal(x.online.version, 0);
-    await pages[0].screenshot({ path: `${out}/${sc.name}_开局.png` });
+    await assertUiShot(pages[0], `${out}/${sc.name}_开局.png`);
     assert.deepEqual(errors, [], errors.join("\n"));
-    summary.push({ scenario: sc.name, room: code, players: sc.count, killerOptions });
+    summary.push({
+      scenario: sc.name,
+      room: code,
+      players: sc.count,
+      killerOptions,
+    });
     for (const p of pages) await p.context().close();
   }
 } finally {

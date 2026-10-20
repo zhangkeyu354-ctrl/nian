@@ -5,7 +5,11 @@ import {
   cardNames,
 } from "../../../packages/game-engine/src/index.ts";
 import { perks, items } from "../../../packages/game-engine/src/data.ts";
-import type { GameState, Event } from "../../../packages/shared/src/types.ts";
+import type {
+  GameState,
+  Event,
+  Card,
+} from "../../../packages/shared/src/types.ts";
 export const phases: Record<string, string> = {
   SETUP: "准备",
   PLANNING: "秘密计划",
@@ -57,7 +61,7 @@ export const faceName = (n: number) =>
   n === 0 ? "失败" : n === 5 ? "大成功" : "成功";
 export function itemInfo(id: string | null) {
   const p = items.physical_cards.find((p) => p.id === id);
-  return items.definitions.find((d) => d.id === p?.definition_id);
+  return items.definitions.find((d) => d.id === (p?.definition_id ?? id));
 }
 export function eventText(s: GameState, e: Event) {
   const d = e.data as Record<string, any>,
@@ -84,9 +88,9 @@ export function eventText(s: GameState, e: Event) {
     case "BLOODPOINTS":
       return `${a}${d.delta >= 0 ? "获得" : "失去"}${Math.abs(d.delta)}血点，现有${d.value}。`;
     case "DICE_ROLLED":
-      return `${d.kind==='locker'?'被占用的储物柜':a}进行${checkNames[d.kind] ?? "检定"}：${d.faces.map((f: number) => f + "（" + faceName(f) + "）").join("、")}。`;
+      return `${d.kind === "locker" ? "被占用的储物柜" : a}进行${checkNames[d.kind] ?? "检定"}：${d.faces.map((f: number) => f + "（" + faceName(f) + "）").join("、")}。`;
     case "CHECK_RESOLVED":
-      return `${d.kind==='locker'?'被占用的储物柜':a}检定结算：${({ failure: "失败", success: "成功", great_success: "大成功" } as Record<string, string>)[d.result] ?? "已结算"}。`;
+      return `${d.kind === "locker" ? "被占用的储物柜" : a}检定结算：${({ failure: "失败", success: "成功", great_success: "大成功" } as Record<string, string>)[d.result] ?? "已结算"}。`;
     case "PROP_PROGRESS":
       return `道具进度变为${d.progress}。`;
     case "GENERATOR_COMPLETED":
@@ -107,10 +111,25 @@ export function eventText(s: GameState, e: Event) {
     case "CARRIED":
       return `${a}被搬运；途中不翻开道具。`;
     case "HIDDEN_IN_LOCKER":
-      return '一处储物柜被占用。';
-    case 'CROW_STARTLED':return '乌鸦被惊飞。';
+      return "一处储物柜被占用。";
+    case "CROW_STARTLED":
+      return "乌鸦被惊飞。";
     case "ITEM_DRAWN":
       return `${a}摸到${itemInfo(d.item)?.name_zh ?? "一张物品"}。`;
+    case "ITEM_USED":
+      return `${a}打出「${itemInfo(d.item)?.name_zh ?? "物品"}」。`;
+    case "ITEM_NEGATED":
+      return `「${itemInfo(d.item)?.name_zh ?? "物品"}」未产生效果。`;
+    case "DIE_REROLLED":
+      return `${actorName(String(d.by ?? d.actorId))}重掷第${Number(d.index) + 1}颗骰子，结果为${d.face}（${faceName(Number(d.face))}）。`;
+    case "WALL_REMOVED":
+      return `${a}移除了可破坏墙壁。`;
+    case "INTERACTION_PREVENTED":
+      return `${a}的本次交互被阻止。`;
+    case "SEALED_MOVE_FAILED":
+      return `${a}的${cardNames[d.card as keyof typeof cardNames] ?? "移动牌"}受到第三封印，无法移动与交互。`;
+    case "KILLER_CARDS_REVEALED":
+      return `杀手的移动牌已公开：${(d.hand ?? []).map((c: Card) => cardNames[c]).join("、")}。`;
     case "PERK_USED":
       return `${a}使用「${skill()}」。`;
     case "POWER_USED":

@@ -8,6 +8,7 @@ import {
   getControls,
   canCommand,
   legalRoutes,
+  itemActions,
 } from "../packages/game-engine/src/index.ts";
 import { nextCommand, route } from "./simulation.ts";
 import type { Command, Card } from "../packages/shared/src/types.ts";
@@ -44,20 +45,26 @@ for (let i = 0; i < 350 && !(itemChecked && powerChecked); i++) {
   const held = state.actors[actor].item;
   if (held && !itemChecked) {
     const events = state.events.length;
-    await page.getByRole("button", { name: "使用物品", exact: true }).click();
-    // Phase 4A：物品效果已实现。旧界面的"使用物品"按钮只发送不带参数的命令，
-    // 引擎必须拒绝且不改变状态（正式按钮由 itemActions 提供，见 docs/phase4）。
-    await page.getByRole("alert").waitFor();
+    const expected = itemActions(state, actor).map((a) => a.command);
+    const actual = await page
+      .locator(".item-row [data-command]")
+      .evaluateAll((els) =>
+        els.map((el) => JSON.parse(el.getAttribute("data-command")!)),
+      );
+    assert.deepEqual(
+      actual,
+      expected,
+      "desktop item buttons use complete engine commands",
+    );
     assert.equal(
       JSON.parse(await page.evaluate(() => window.render_game_to_text()))
         .events,
       events,
     );
     await page.screenshot({
-      path: "output/playwright/phase2/物品_缺参数被拒.png",
+      path: "output/playwright/phase2/物品_合法入口.png",
       fullPage: true,
     });
-    await page.getByRole("button", { name: "关闭提示", exact: true }).click();
     itemChecked = true;
   }
   let c = nextCommand(state, "survivor");
@@ -160,7 +167,7 @@ writeFileSync(
     {
       options: o,
       commands,
-      itemDrawAndRejectedUse: itemChecked,
+      itemDrawAndLegalControls: itemChecked,
       powerFormExecuted: powerChecked,
       consoleErrors: errors,
       note: "Focused legal-command scenario; not counted among full-game acceptance runs. Setup deliberately selects chest IDs to exercise item UI.",
@@ -171,6 +178,6 @@ writeFileSync(
 );
 await browser.close();
 console.log(
-  "ACTIONS_PASS item,error,power,all-command-events-match",
+  "ACTIONS_PASS item-controls,power,all-command-events-match",
   commands.length,
 );

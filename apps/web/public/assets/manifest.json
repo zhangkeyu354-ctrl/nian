@@ -37,7 +37,8 @@
       "sha256": "0b4a6c89031062ec64d597282aec7b853c426bc796d8cc1c8cf88e9ef01377dd",
       "generation_prompt": "Create exactly one ORIGINAL game prop icon: a compact improvised mechanical generator with a large circular flywheel on left, rectangular machine housing, two unequal exhaust tubes, and broad squat feet. Not the icon or design from any existing game. Worn charcoal hand-painted cut-paper silhouette with bone-white engraved highlights and tiny oxidized brass scratches. Clear readable bold simple shapes at small size. Centered inside ONE weathered hexagonal token rim, charcoal interior, genuinely transparent outside the hexagon. Square 1024x1024 RGBA. No scenery, no text, no numbers, no logo, no watermark, no skull, no franchise motifs. UI progress and states will be added separately in code; show neutral idle machine only. Asset file intended: generator.png.",
       "svg_source": "占位",
-      "svg_creator": "original_code"
+      "svg_creator": "original_code",
+      "mobile_file": "mobile/generator.webp"
     },
     {
       "id": "exit_gate",
@@ -72,7 +73,8 @@
       "sha256": "8c746cca2b0df09bcf0a257e8ee6d0d72b955e8d3c9a80c14c32518202812d92",
       "generation_prompt": "Create exactly ONE standalone original game token icon: a heavy two-panel barred industrial exit door, rectangular arch, one round latch. Cohesive worn charcoal hand-painted cut-paper with bone-white engraved highlights, subdued oxidized brass scratches, dark fog atmosphere. Strong simple readable shapes. Centered inside ONE weathered hexagonal token rim with charcoal interior; genuinely transparent outside the hexagon, no external shadow. Square RGBA, requested 1024x1024. Neutral base object only; progress, power, damage, and occupancy are separate code overlays. No text, no numbers, no letters, no logos, no tally marks, no skull emblems, no watermark. Do not copy, trace or recreate official art from any existing game. Asset filename: exit_gate.png.",
       "svg_source": "占位",
-      "svg_creator": "original_code"
+      "svg_creator": "original_code",
+      "mobile_file": "mobile/exit_gate.webp"
     },
     {
       "id": "hook",
@@ -105,7 +107,8 @@
       "sha256": "b0dc889e41b2b5ae120be04ef81798b56388167bebbb5245ec5cf90f5ec0b9a7",
       "generation_prompt": "Create exactly ONE standalone original game token icon: a rough timber upright gallows-like hook stand, one curved metal hook, not a human body. Cohesive worn charcoal hand-painted cut-paper with bone-white engraved highlights, subdued oxidized brass scratches, dark fog atmosphere. Strong simple readable shapes. Centered inside ONE weathered hexagonal token rim with charcoal interior; genuinely transparent outside the hexagon, no external shadow. Square RGBA, requested 1024x1024. Neutral base object only; progress, power, damage, and occupancy are separate code overlays. No text, no numbers, no letters, no logos, no tally marks, no skull emblems, no watermark. Do not copy, trace or recreate official art from any existing game. Asset filename: hook.png.",
       "svg_source": "占位",
-      "svg_creator": "original_code"
+      "svg_creator": "original_code",
+      "mobile_file": "mobile/hook.webp"
     },
     {
       "id": "hex_totem",
@@ -137,7 +140,8 @@
       "sha256": "b9e69fef8e1a4d70077e10b4937af4d2ac3156c262187b8ea2b74ff53b0401dc",
       "generation_prompt": "Create exactly ONE standalone original game token icon: an invented stacked angular stone talisman sculpture with a diamond glass prism, no skull, not any existing game totem. Cohesive worn charcoal hand-painted cut-paper with bone-white engraved highlights, subdued oxidized brass scratches, dark fog atmosphere. Strong simple readable shapes. Centered inside ONE weathered hexagonal token rim with charcoal interior; genuinely transparent outside the hexagon, no external shadow. Square RGBA, requested 1024x1024. Neutral base object only; progress, power, damage, and occupancy are separate code overlays. No text, no numbers, no letters, no logos, no tally marks, no skull emblems, no watermark. Do not copy, trace or recreate official art from any existing game. Asset filename: hex_totem.png.",
       "svg_source": "占位",
-      "svg_creator": "original_code"
+      "svg_creator": "original_code",
+      "mobile_file": "mobile/hex_totem.webp"
     },
     {
       "id": "chest",
@@ -169,7 +173,8 @@
       "sha256": "f03512d8f06f7e345ca1cdd6ec2553d54f831ca563e774453fba01a6dc6e32d4",
       "generation_prompt": "Create exactly ONE standalone original game token icon: a small closed arched wooden utility chest with two metal bands and a simple central padlock. Cohesive worn charcoal hand-painted cut-paper with bone-white engraved highlights, subdued oxidized brass scratches, dark fog atmosphere. Strong simple readable shapes. Centered inside ONE weathered hexagonal token rim with charcoal interior; genuinely transparent outside the hexagon, no external shadow. Square RGBA, requested 1024x1024. Neutral base object only; progress, power, damage, and occupancy are separate code overlays. No text, no numbers, no letters, no logos, no tally marks, no skull emblems, no watermark. Do not copy, trace or recreate official art from any existing game. Asset filename: chest.png.",
       "svg_source": "占位",
-      "svg_creator": "original_code"
+      "svg_creator": "original_code",
+      "mobile_file": "mobile/chest.webp"
     },
     {
       "id": "locker",
@@ -202,7 +207,8 @@
       "sha256": "7d32055d4cf81018bc91ffa817f9b83855c64c3785b1be83a6d2c99d113c12e5",
       "generation_prompt": "Create exactly ONE standalone original game token icon: a tall narrow single-door metal locker with three horizontal ventilation slots and round handle. Cohesive worn charcoal hand-painted cut-paper with bone-white engraved highlights, subdued oxidized brass scratches, dark fog atmosphere. Strong simple readable shapes. Centered inside ONE weathered hexagonal token rim with charcoal interior; genuinely transparent outside the hexagon, no external shadow. Square RGBA, requested 1024x1024. Neutral base object only; progress, power, damage, and occupancy are separate code overlays. No text, no numbers, no letters, no logos, no tally marks, no skull emblems, no watermark. Do not copy, trace or recreate official art from any existing game. Asset filename: locker.png.",
       "svg_source": "占位",
-      "svg_creator": "original_code"
+      "svg_creator": "original_code",
+      "mobile_file": "mobile/locker.webp"
     },
     {
       "id": "pallet",
@@ -235,7 +241,8 @@
       "sha256": "c54aff78737249386a72d1e0117ed9049e91c9f5ac02f1ddc2500e0d6fd0b584",
       "generation_prompt": "Create exactly ONE standalone original game token icon: three thick uneven timber planks fastened diagonally into a loose wood barrier. Cohesive worn charcoal hand-painted cut-paper with bone-white engraved highlights, subdued oxidized brass scratches, dark fog atmosphere. Strong simple readable shapes. Centered inside ONE weathered hexagonal token rim with charcoal interior; genuinely transparent outside the hexagon, no external shadow. Square RGBA, requested 1024x1024. Neutral base object only; progress, power, damage, and occupancy are separate code overlays. No text, no numbers, no letters, no logos, no tally marks, no skull emblems, no watermark. Do not copy, trace or recreate official art from any existing game. Asset filename: pallet.png.",
       "svg_source": "占位",
-      "svg_creator": "original_code"
+      "svg_creator": "original_code",
+      "mobile_file": "mobile/pallet.webp"
     },
     {
       "id": "crow",
@@ -267,7 +274,8 @@
       "sha256": "d78224c3eb7cd16b4accb31de59208249e22ef3d792cd1f1a72e8854aa80b8ae",
       "generation_prompt": "Create exactly ONE standalone original game token icon: one perched black corvid bird in profile, beak and folded angular wings, no franchise silhouette. Cohesive worn charcoal hand-painted cut-paper with bone-white engraved highlights, subdued oxidized brass scratches, dark fog atmosphere. Strong simple readable shapes. Centered inside ONE weathered hexagonal token rim with charcoal interior; genuinely transparent outside the hexagon, no external shadow. Square RGBA, requested 1024x1024. Neutral base object only; progress, power, damage, and occupancy are separate code overlays. No text, no numbers, no letters, no logos, no tally marks, no skull emblems, no watermark. Do not copy, trace or recreate official art from any existing game. Asset filename: crow.png.",
       "svg_source": "占位",
-      "svg_creator": "original_code"
+      "svg_creator": "original_code",
+      "mobile_file": "mobile/crow.webp"
     },
     {
       "id": "wall",
@@ -300,7 +308,8 @@
       "sha256": "bd7c47134f670413c15cf597026692001269838dbfe14289cd66da49a1324b29",
       "generation_prompt": "Create exactly ONE standalone original game token icon: a short jagged old brick wall with three missing bricks at the top. Cohesive worn charcoal hand-painted cut-paper with bone-white engraved highlights, subdued oxidized brass scratches, dark fog atmosphere. Strong simple readable shapes. Centered inside ONE weathered hexagonal token rim with charcoal interior; genuinely transparent outside the hexagon, no external shadow. Square RGBA, requested 1024x1024. Neutral base object only; progress, power, damage, and occupancy are separate code overlays. No text, no numbers, no letters, no logos, no tally marks, no skull emblems, no watermark. Do not copy, trace or recreate official art from any existing game. Asset filename: wall.png.",
       "svg_source": "占位",
-      "svg_creator": "original_code"
+      "svg_creator": "original_code",
+      "mobile_file": "mobile/wall.webp"
     },
     {
       "id": "bear_trap",
@@ -331,7 +340,8 @@
       "sha256": "9da78bb4804ee127853d7e3a97d535fd15f0432d8dd58d1c85b6735f1d88819a",
       "generation_prompt": "Create exactly ONE standalone original game token icon: a simple circular mechanical spring trap lying open, two opposing toothed jaws, no gore. Cohesive worn charcoal hand-painted cut-paper with bone-white engraved highlights, subdued oxidized brass scratches, dark fog atmosphere. Strong simple readable shapes. Centered inside ONE weathered hexagonal token rim with charcoal interior; genuinely transparent outside the hexagon, no external shadow. Square RGBA, requested 1024x1024. Neutral base object only; progress, power, damage, and occupancy are separate code overlays. No text, no numbers, no letters, no logos, no tally marks, no skull emblems, no watermark. Do not copy, trace or recreate official art from any existing game. Asset filename: bear_trap.png.",
       "svg_source": "占位",
-      "svg_creator": "original_code"
+      "svg_creator": "original_code",
+      "mobile_file": "mobile/bear_trap.webp"
     },
     {
       "id": "phantasm",
@@ -362,7 +372,8 @@
       "sha256": "6eb6f4391f72f03594ac829115c25f436a621ddaa58c85d4e3bcba63de75ea56",
       "generation_prompt": "Create exactly ONE standalone original game token icon: an original abstract triangle echo rune with three nested asymmetrical ripple triangles. Cohesive worn charcoal hand-painted cut-paper with bone-white engraved highlights, subdued oxidized brass scratches, dark fog atmosphere. Strong simple readable shapes. Centered inside ONE weathered hexagonal token rim with charcoal interior; genuinely transparent outside the hexagon, no external shadow. Square RGBA, requested 1024x1024. Neutral base object only; progress, power, damage, and occupancy are separate code overlays. No text, no numbers, no letters, no logos, no tally marks, no skull emblems, no watermark. Do not copy, trace or recreate official art from any existing game. Asset filename: phantasm.png.",
       "svg_source": "占位",
-      "svg_creator": "original_code"
+      "svg_creator": "original_code",
+      "mobile_file": "mobile/phantasm.webp"
     },
     {
       "id": "madness",
@@ -393,7 +404,8 @@
       "sha256": "c5ca777641ef13ebbae7b5c92790e4ba6eea96a6e8f35de1392e1a3eaea864ba",
       "generation_prompt": "Create exactly ONE standalone original game token icon: an anonymous side-profile head containing a single zigzag line, abstract mental disruption symbol. Cohesive worn charcoal hand-painted cut-paper with bone-white engraved highlights, subdued oxidized brass scratches, dark fog atmosphere. Strong simple readable shapes. Centered inside ONE weathered hexagonal token rim with charcoal interior; genuinely transparent outside the hexagon, no external shadow. Square RGBA, requested 1024x1024. Neutral base object only; progress, power, damage, and occupancy are separate code overlays. No text, no numbers, no letters, no logos, no tally marks, no skull emblems, no watermark. Do not copy, trace or recreate official art from any existing game. Asset filename: madness.png.",
       "svg_source": "占位",
-      "svg_creator": "original_code"
+      "svg_creator": "original_code",
+      "mobile_file": "mobile/madness.webp"
     },
     {
       "id": "entity",
@@ -424,7 +436,8 @@
       "sha256": "2c52d1143e72f5f21a64ab121101df961ed5fab4052e2de8d7de99fb34c20087",
       "generation_prompt": "Create exactly ONE standalone original game token icon: an invented floating four-point twisted crystal with asymmetric branches, no tentacled franchise emblem. Cohesive worn charcoal hand-painted cut-paper with bone-white engraved highlights, subdued oxidized brass scratches, dark fog atmosphere. Strong simple readable shapes. Centered inside ONE weathered hexagonal token rim with charcoal interior; genuinely transparent outside the hexagon, no external shadow. Square RGBA, requested 1024x1024. Neutral base object only; progress, power, damage, and occupancy are separate code overlays. No text, no numbers, no letters, no logos, no tally marks, no skull emblems, no watermark. Do not copy, trace or recreate official art from any existing game. Asset filename: entity.png.",
       "svg_source": "占位",
-      "svg_creator": "original_code"
+      "svg_creator": "original_code",
+      "mobile_file": "mobile/entity.webp"
     },
     {
       "id": "brand_lantern",
@@ -455,7 +468,8 @@
       "sha256": "00be2f1d89e1b4a7eefd5997acf142fd82e898e5dc6bf3bd56c5744847390dce",
       "generation_prompt": "Create exactly ONE standalone original game token icon: one unique original small hanging square lantern with an arched handle and simple warm vertical flame, no letters or tally-mark logo. Cohesive worn charcoal hand-painted cut-paper with bone-white engraved highlights, subdued oxidized brass scratches, dark fog atmosphere. Strong simple readable shapes. Centered inside ONE weathered hexagonal token rim with charcoal interior; genuinely transparent outside the hexagon, no external shadow. Square RGBA, requested 1024x1024. Neutral base object only; progress, power, damage, and occupancy are separate code overlays. No text, no numbers, no letters, no logos, no tally marks, no skull emblems, no watermark. Do not copy, trace or recreate official art from any existing game. Asset filename: brand_lantern.png.",
       "svg_source": "占位",
-      "svg_creator": "original_code"
+      "svg_creator": "original_code",
+      "mobile_file": "mobile/brand_lantern.webp"
     },
     {
       "id": "back_objective",
@@ -486,7 +500,8 @@
       "sha256": "48219594e4c7538715cb1c6275c4bf0e3af7f42c9cc32cb92a6985a72b3bc480",
       "generation_prompt": "Create exactly ONE standalone original game token icon: a centered sun-compass motif with four rays, dominant muted ochre-yellow #d8b95c. Cohesive worn charcoal hand-painted cut-paper with bone-white engraved highlights, subdued oxidized brass scratches, dark fog atmosphere. Strong simple readable shapes. Centered inside ONE weathered hexagonal token rim with charcoal interior; genuinely transparent outside the hexagon, no external shadow. Square RGBA, requested 1024x1024. Neutral base object only; progress, power, damage, and occupancy are separate code overlays. No text, no numbers, no letters, no logos, no tally marks, no skull emblems, no watermark. Do not copy, trace or recreate official art from any existing game. Asset filename: back_objective.png.",
       "svg_source": "占位",
-      "svg_creator": "original_code"
+      "svg_creator": "original_code",
+      "mobile_file": "mobile/back_objective.webp"
     },
     {
       "id": "back_boldness",
@@ -517,7 +532,8 @@
       "sha256": "0b78c4320d7238b88fa4ed052ce1157e5db67b93c42c409be9aed04ca7c429ea",
       "generation_prompt": "Create exactly ONE standalone original game token icon: a centered angular lightning motif, dominant muted clay-red #bb6458. Cohesive worn charcoal hand-painted cut-paper with bone-white engraved highlights, subdued oxidized brass scratches, dark fog atmosphere. Strong simple readable shapes. Centered inside ONE weathered hexagonal token rim with charcoal interior; genuinely transparent outside the hexagon, no external shadow. Square RGBA, requested 1024x1024. Neutral base object only; progress, power, damage, and occupancy are separate code overlays. No text, no numbers, no letters, no logos, no tally marks, no skull emblems, no watermark. Do not copy, trace or recreate official art from any existing game. Asset filename: back_boldness.png.",
       "svg_source": "占位",
-      "svg_creator": "original_code"
+      "svg_creator": "original_code",
+      "mobile_file": "mobile/back_boldness.webp"
     },
     {
       "id": "back_survival",
@@ -548,7 +564,8 @@
       "sha256": "a7b0054d67f1c8f0c1be0d4131a3b83e75e7267859c6c9e913f009267ed7c02b",
       "generation_prompt": "Create exactly ONE standalone original game token icon: a centered winding outward arrow motif, dominant muted steel-blue #609cb7. Cohesive worn charcoal hand-painted cut-paper with bone-white engraved highlights, subdued oxidized brass scratches, dark fog atmosphere. Strong simple readable shapes. Centered inside ONE weathered hexagonal token rim with charcoal interior; genuinely transparent outside the hexagon, no external shadow. Square RGBA, requested 1024x1024. Neutral base object only; progress, power, damage, and occupancy are separate code overlays. No text, no numbers, no letters, no logos, no tally marks, no skull emblems, no watermark. Do not copy, trace or recreate official art from any existing game. Asset filename: back_survival.png.",
       "svg_source": "占位",
-      "svg_creator": "original_code"
+      "svg_creator": "original_code",
+      "mobile_file": "mobile/back_survival.webp"
     },
     {
       "id": "back_altruism",
@@ -579,7 +596,8 @@
       "sha256": "60b53726b96f26f082178c95fe557676dadb83d8e12d92dff1aca6e3fbe94f6e",
       "generation_prompt": "Create exactly ONE standalone original game token icon: a centered two cupped palms around a small light motif, dominant muted sage-green #7da579. Cohesive worn charcoal hand-painted cut-paper with bone-white engraved highlights, subdued oxidized brass scratches, dark fog atmosphere. Strong simple readable shapes. Centered inside ONE weathered hexagonal token rim with charcoal interior; genuinely transparent outside the hexagon, no external shadow. Square RGBA, requested 1024x1024. Neutral base object only; progress, power, damage, and occupancy are separate code overlays. No text, no numbers, no letters, no logos, no tally marks, no skull emblems, no watermark. Do not copy, trace or recreate official art from any existing game. Asset filename: back_altruism.png.",
       "svg_source": "占位",
-      "svg_creator": "original_code"
+      "svg_creator": "original_code",
+      "mobile_file": "mobile/back_altruism.webp"
     },
     {
       "id": "portrait_anonymous",
@@ -614,7 +632,8 @@
       "sha256": "958918e50d162fd4c9a17c6e442e05ac4704a25e814c16be8dec9482bda5ce36",
       "generation_prompt": "Create exactly ONE standalone original head-and-shoulders silhouette portrait: a completely featureless anonymous human bust in a simple round collar, neutral front view. Cohesive worn charcoal hand-painted cut-paper with bone-white engraved highlights, subdued oxidized brass scratches, dark fog atmosphere. Strong simple readable shapes. Centered inside ONE weathered hexagonal token rim with charcoal interior; genuinely transparent outside the hexagon, no external shadow. Square RGBA, requested 1024x1024. The figure is an original anonymous archetype, not a portrait of an existing character. Face entirely in shadow, no facial likeness. No text, no numbers, no letters, no logos, no tally marks, no skull emblems, no watermark. Do not copy, trace or recreate official art from any existing game. Asset filename: portrait_anonymous.png.",
       "svg_source": "占位",
-      "svg_creator": "original_code"
+      "svg_creator": "original_code",
+      "mobile_file": "mobile/portrait_anonymous.webp"
     },
     {
       "id": "portrait_dwight",
@@ -649,7 +668,8 @@
       "sha256": "8085052dd00d4bc8ae73eba70bbaf0f7dbe9b8df5880fb5f389e5b885467dcb1",
       "generation_prompt": "Create exactly ONE standalone original head-and-shoulders silhouette portrait: an invented slim adult male silhouette, asymmetrical short hair, high soft collar, front three-quarter view. Cohesive worn charcoal hand-painted cut-paper with bone-white engraved highlights, subdued oxidized brass scratches, dark fog atmosphere. Strong simple readable shapes. Centered inside ONE weathered hexagonal token rim with charcoal interior; genuinely transparent outside the hexagon, no external shadow. Square RGBA, requested 1024x1024. The figure is an original anonymous archetype, not a portrait of an existing character. Face entirely in shadow, no facial likeness. No text, no numbers, no letters, no logos, no tally marks, no skull emblems, no watermark. Do not copy, trace or recreate official art from any existing game. Asset filename: portrait_dwight.png.",
       "svg_source": "占位",
-      "svg_creator": "original_code"
+      "svg_creator": "original_code",
+      "mobile_file": "mobile/portrait_dwight.webp"
     },
     {
       "id": "portrait_meg",
@@ -684,7 +704,8 @@
       "sha256": "90e932ce0146c54c98b75b2a55ca0f27c00d096e798ce36f111d9a3d50e5e25b",
       "generation_prompt": "Create exactly ONE standalone original head-and-shoulders silhouette portrait: an invented adult female silhouette with a short swept-back hairstyle and plain scarf, side three-quarter view. Cohesive worn charcoal hand-painted cut-paper with bone-white engraved highlights, subdued oxidized brass scratches, dark fog atmosphere. Strong simple readable shapes. Centered inside ONE weathered hexagonal token rim with charcoal interior; genuinely transparent outside the hexagon, no external shadow. Square RGBA, requested 1024x1024. The figure is an original anonymous archetype, not a portrait of an existing character. Face entirely in shadow, no facial likeness. No text, no numbers, no letters, no logos, no tally marks, no skull emblems, no watermark. Do not copy, trace or recreate official art from any existing game. Asset filename: portrait_meg.png.",
       "svg_source": "占位",
-      "svg_creator": "original_code"
+      "svg_creator": "original_code",
+      "mobile_file": "mobile/portrait_meg.webp"
     },
     {
       "id": "portrait_claudette",
@@ -719,7 +740,8 @@
       "sha256": "b8b91c02fdae4441721b72465b0c7c81e21b70e6589b52ab707e8c6f360be668",
       "generation_prompt": "Create exactly ONE standalone original head-and-shoulders silhouette portrait: an invented adult female silhouette with rounded textured hair, loose plain jacket, front three-quarter view. Cohesive worn charcoal hand-painted cut-paper with bone-white engraved highlights, subdued oxidized brass scratches, dark fog atmosphere. Strong simple readable shapes. Centered inside ONE weathered hexagonal token rim with charcoal interior; genuinely transparent outside the hexagon, no external shadow. Square RGBA, requested 1024x1024. The figure is an original anonymous archetype, not a portrait of an existing character. Face entirely in shadow, no facial likeness. No text, no numbers, no letters, no logos, no tally marks, no skull emblems, no watermark. Do not copy, trace or recreate official art from any existing game. Asset filename: portrait_claudette.png.",
       "svg_source": "占位",
-      "svg_creator": "original_code"
+      "svg_creator": "original_code",
+      "mobile_file": "mobile/portrait_claudette.webp"
     },
     {
       "id": "portrait_jake",
@@ -754,7 +776,8 @@
       "sha256": "c9d2760778a053502de1993ceeded0e26b9df960c52a8d176f0eda81990fd977",
       "generation_prompt": "Create exactly ONE standalone original head-and-shoulders silhouette portrait: an invented adult male silhouette with tied-back wavy hair, plain work shirt, left three-quarter view. Cohesive worn charcoal hand-painted cut-paper with bone-white engraved highlights, subdued oxidized brass scratches, dark fog atmosphere. Strong simple readable shapes. Centered inside ONE weathered hexagonal token rim with charcoal interior; genuinely transparent outside the hexagon, no external shadow. Square RGBA, requested 1024x1024. The figure is an original anonymous archetype, not a portrait of an existing character. Face entirely in shadow, no facial likeness. No text, no numbers, no letters, no logos, no tally marks, no skull emblems, no watermark. Do not copy, trace or recreate official art from any existing game. Asset filename: portrait_jake.png.",
       "svg_source": "占位",
-      "svg_creator": "original_code"
+      "svg_creator": "original_code",
+      "mobile_file": "mobile/portrait_jake.webp"
     },
     {
       "id": "portrait_nea",
@@ -789,7 +812,8 @@
       "sha256": "d950930e4659b6ed306af22418eceb82c0963ec3cf5226850020d34a7c57388a",
       "generation_prompt": "Create exactly ONE standalone original head-and-shoulders silhouette portrait: an invented adult female silhouette with cropped geometric haircut and simple hood resting on shoulders, right profile. Cohesive worn charcoal hand-painted cut-paper with bone-white engraved highlights, subdued oxidized brass scratches, dark fog atmosphere. Strong simple readable shapes. Centered inside ONE weathered hexagonal token rim with charcoal interior; genuinely transparent outside the hexagon, no external shadow. Square RGBA, requested 1024x1024. The figure is an original anonymous archetype, not a portrait of an existing character. Face entirely in shadow, no facial likeness. No text, no numbers, no letters, no logos, no tally marks, no skull emblems, no watermark. Do not copy, trace or recreate official art from any existing game. Asset filename: portrait_nea.png.",
       "svg_source": "占位",
-      "svg_creator": "original_code"
+      "svg_creator": "original_code",
+      "mobile_file": "mobile/portrait_nea.webp"
     },
     {
       "id": "portrait_ace",
@@ -824,7 +848,8 @@
       "sha256": "60ef3d1a1ecdf7190b70aa924feaaa128ec24cdfda6ffc036fc325293b3992fe",
       "generation_prompt": "Create exactly ONE standalone original head-and-shoulders silhouette portrait: an invented middle-aged male silhouette with a broad flat hat and plain lapel coat, left three-quarter view. Cohesive worn charcoal hand-painted cut-paper with bone-white engraved highlights, subdued oxidized brass scratches, dark fog atmosphere. Strong simple readable shapes. Centered inside ONE weathered hexagonal token rim with charcoal interior; genuinely transparent outside the hexagon, no external shadow. Square RGBA, requested 1024x1024. The figure is an original anonymous archetype, not a portrait of an existing character. Face entirely in shadow, no facial likeness. No text, no numbers, no letters, no logos, no tally marks, no skull emblems, no watermark. Do not copy, trace or recreate official art from any existing game. Asset filename: portrait_ace.png.",
       "svg_source": "占位",
-      "svg_creator": "original_code"
+      "svg_creator": "original_code",
+      "mobile_file": "mobile/portrait_ace.webp"
     },
     {
       "id": "portrait_feng_min",
@@ -859,7 +884,8 @@
       "sha256": "04b499251cbc3ab8b548a45d883c2bb09c13f7a5a0d97e3139d32a46add4b304",
       "generation_prompt": "Create exactly ONE standalone original head-and-shoulders silhouette portrait: an invented adult female silhouette with chin-length straight bob and standing collar, front view. Cohesive worn charcoal hand-painted cut-paper with bone-white engraved highlights, subdued oxidized brass scratches, dark fog atmosphere. Strong simple readable shapes. Centered inside ONE weathered hexagonal token rim with charcoal interior; genuinely transparent outside the hexagon, no external shadow. Square RGBA, requested 1024x1024. The figure is an original anonymous archetype, not a portrait of an existing character. Face entirely in shadow, no facial likeness. No text, no numbers, no letters, no logos, no tally marks, no skull emblems, no watermark. Do not copy, trace or recreate official art from any existing game. Asset filename: portrait_feng_min.png.",
       "svg_source": "占位",
-      "svg_creator": "original_code"
+      "svg_creator": "original_code",
+      "mobile_file": "mobile/portrait_feng_min.webp"
     },
     {
       "id": "portrait_trapper",
@@ -894,7 +920,8 @@
       "sha256": "6b64d9f3b70d71ab7b28eb91bb6af1412a870474a0cd4532a19910c1823d8060",
       "generation_prompt": "Create exactly ONE standalone original head-and-shoulders silhouette portrait: an invented imposing broad-shouldered figure wearing a plain layered canvas cowl, no mask, no weapons, no franchise costume. Cohesive worn charcoal hand-painted cut-paper with bone-white engraved highlights, subdued oxidized brass scratches, dark fog atmosphere. Strong simple readable shapes. Centered inside ONE weathered hexagonal token rim with charcoal interior; genuinely transparent outside the hexagon, no external shadow. Square RGBA, requested 1024x1024. The figure is an original anonymous archetype, not a portrait of an existing character. Face entirely in shadow, no facial likeness. No text, no numbers, no letters, no logos, no tally marks, no skull emblems, no watermark. Do not copy, trace or recreate official art from any existing game. Asset filename: portrait_trapper.png.",
       "svg_source": "占位",
-      "svg_creator": "original_code"
+      "svg_creator": "original_code",
+      "mobile_file": "mobile/portrait_trapper.webp"
     },
     {
       "id": "portrait_wraith",
@@ -929,7 +956,8 @@
       "sha256": "1370411751c486f9804fde2285038b9fb84960114a592002fbd3330c4aed20c9",
       "generation_prompt": "Create exactly ONE standalone original head-and-shoulders silhouette portrait: an invented slender figure with a tall folded cloth collar and swept hair, no skeletal face, no bell, no weapons. Cohesive worn charcoal hand-painted cut-paper with bone-white engraved highlights, subdued oxidized brass scratches, dark fog atmosphere. Strong simple readable shapes. Centered inside ONE weathered hexagonal token rim with charcoal interior; genuinely transparent outside the hexagon, no external shadow. Square RGBA, requested 1024x1024. The figure is an original anonymous archetype, not a portrait of an existing character. Face entirely in shadow, no facial likeness. No text, no numbers, no letters, no logos, no tally marks, no skull emblems, no watermark. Do not copy, trace or recreate official art from any existing game. Asset filename: portrait_wraith.png.",
       "svg_source": "占位",
-      "svg_creator": "original_code"
+      "svg_creator": "original_code",
+      "mobile_file": "mobile/portrait_wraith.webp"
     },
     {
       "id": "portrait_hillbilly",
@@ -964,7 +992,8 @@
       "sha256": "e94cc3ae93a23f23f5dccbbf922a3805c678d55a984e8aefe60db98ade1d2859",
       "generation_prompt": "Create exactly ONE standalone original head-and-shoulders silhouette portrait: an invented large stocky figure with a heavy work coat and smooth featureless face in shadow, no deformity, no chainsaw. Cohesive worn charcoal hand-painted cut-paper with bone-white engraved highlights, subdued oxidized brass scratches, dark fog atmosphere. Strong simple readable shapes. Centered inside ONE weathered hexagonal token rim with charcoal interior; genuinely transparent outside the hexagon, no external shadow. Square RGBA, requested 1024x1024. The figure is an original anonymous archetype, not a portrait of an existing character. Face entirely in shadow, no facial likeness. No text, no numbers, no letters, no logos, no tally marks, no skull emblems, no watermark. Do not copy, trace or recreate official art from any existing game. Asset filename: portrait_hillbilly.png.",
       "svg_source": "占位",
-      "svg_creator": "original_code"
+      "svg_creator": "original_code",
+      "mobile_file": "mobile/portrait_hillbilly.webp"
     },
     {
       "id": "portrait_nurse",
@@ -999,7 +1028,8 @@
       "sha256": "b49d61ef674b5228f4a3ea4624c96625e27f30b2f1a705e346f392e58b4ef4c0",
       "generation_prompt": "Create exactly ONE standalone original head-and-shoulders silhouette portrait: an invented tall anonymous female silhouette with a flowing plain shawl and low bun, no nurse uniform, no bandages, no weapons. Cohesive worn charcoal hand-painted cut-paper with bone-white engraved highlights, subdued oxidized brass scratches, dark fog atmosphere. Strong simple readable shapes. Centered inside ONE weathered hexagonal token rim with charcoal interior; genuinely transparent outside the hexagon, no external shadow. Square RGBA, requested 1024x1024. The figure is an original anonymous archetype, not a portrait of an existing character. Face entirely in shadow, no facial likeness. No text, no numbers, no letters, no logos, no tally marks, no skull emblems, no watermark. Do not copy, trace or recreate official art from any existing game. Asset filename: portrait_nurse.png.",
       "svg_source": "占位",
-      "svg_creator": "original_code"
+      "svg_creator": "original_code",
+      "mobile_file": "mobile/portrait_nurse.webp"
     },
     {
       "id": "portrait_hag",
@@ -1034,7 +1064,8 @@
       "sha256": "5db45c0fc2bccc0420d45913c969b61690dd798bf033bd57b4a6be9a70a613b9",
       "generation_prompt": "Create exactly ONE standalone original head-and-shoulders silhouette portrait: an invented wiry anonymous figure with a windswept ragged mantle and narrow head, no monster face, no claws. Cohesive worn charcoal hand-painted cut-paper with bone-white engraved highlights, subdued oxidized brass scratches, dark fog atmosphere. Strong simple readable shapes. Centered inside ONE weathered hexagonal token rim with charcoal interior; genuinely transparent outside the hexagon, no external shadow. Square RGBA, requested 1024x1024. The figure is an original anonymous archetype, not a portrait of an existing character. Face entirely in shadow, no facial likeness. No text, no numbers, no letters, no logos, no tally marks, no skull emblems, no watermark. Do not copy, trace or recreate official art from any existing game. Asset filename: portrait_hag.png.",
       "svg_source": "占位",
-      "svg_creator": "original_code"
+      "svg_creator": "original_code",
+      "mobile_file": "mobile/portrait_hag.webp"
     },
     {
       "id": "portrait_doctor",
@@ -1069,7 +1100,8 @@
       "sha256": "af5f88dd913426250e53c22d0b9f87b6f90016c8b28bd8f311e5ef60d1bb58b0",
       "generation_prompt": "Create exactly ONE standalone original head-and-shoulders silhouette portrait: an invented anonymous figure with a stiff standing collar and squared shoulders, no medical headgear, no electrodes, no weapons. Cohesive worn charcoal hand-painted cut-paper with bone-white engraved highlights, subdued oxidized brass scratches, dark fog atmosphere. Strong simple readable shapes. Centered inside ONE weathered hexagonal token rim with charcoal interior; genuinely transparent outside the hexagon, no external shadow. Square RGBA, requested 1024x1024. The figure is an original anonymous archetype, not a portrait of an existing character. Face entirely in shadow, no facial likeness. No text, no numbers, no letters, no logos, no tally marks, no skull emblems, no watermark. Do not copy, trace or recreate official art from any existing game. Asset filename: portrait_doctor.png.",
       "svg_source": "占位",
-      "svg_creator": "original_code"
+      "svg_creator": "original_code",
+      "mobile_file": "mobile/portrait_doctor.webp"
     }
   ],
   "rooms": [
@@ -1088,7 +1120,9 @@
       "sha256": "31e1026f77215385e19f555959683aac62a3fea9ff73f465242e5b8b443f96ed",
       "source_file": "exec-969b4d2c-ca89-4711-aca0-2bf39ee6cfd1.png",
       "official_reference_input": false,
-      "fallback": "code-painted charcoal room surface"
+      "fallback": "code-painted charcoal room surface",
+      "mobile_file": "mobile/rooms/mine_depths.webp",
+      "desktop_file": "desktop/rooms/mine_depths.webp"
     },
     {
       "id": "mine_entrance",
@@ -1105,7 +1139,9 @@
       "sha256": "30f810e55e04fb3c50f4d110acbaadf30e69fd281dad0457470d4e350ff5ee87",
       "source_file": "exec-ccbfdc0e-8651-4bd5-a1ee-54ea9da00414.png",
       "official_reference_input": false,
-      "fallback": "code-painted charcoal room surface"
+      "fallback": "code-painted charcoal room surface",
+      "mobile_file": "mobile/rooms/mine_entrance.webp",
+      "desktop_file": "desktop/rooms/mine_entrance.webp"
     },
     {
       "id": "coal_tower_upper",
@@ -1122,7 +1158,9 @@
       "sha256": "b19a6b037be476afc726be1f858e0a0e8a55df598df2e5af06b5d644bc34d17b",
       "source_file": "exec-f883e9ad-06fc-43ac-83d0-031bbbf29a86.png",
       "official_reference_input": false,
-      "fallback": "code-painted charcoal room surface"
+      "fallback": "code-painted charcoal room surface",
+      "mobile_file": "mobile/rooms/coal_tower_upper.webp",
+      "desktop_file": "desktop/rooms/coal_tower_upper.webp"
     },
     {
       "id": "foundry_upper_floor",
@@ -1139,7 +1177,9 @@
       "sha256": "fa3c820a6d9d7d4a8cb829bd043a97c0918a16ff6b2137ad1cb52d6d1d76615f",
       "source_file": "exec-20507540-18cf-4fa3-8775-c2918d8a1eae.png",
       "official_reference_input": false,
-      "fallback": "code-painted charcoal room surface"
+      "fallback": "code-painted charcoal room surface",
+      "mobile_file": "mobile/rooms/foundry_upper_floor.webp",
+      "desktop_file": "desktop/rooms/foundry_upper_floor.webp"
     },
     {
       "id": "foundry_lower_floor",
@@ -1156,7 +1196,9 @@
       "sha256": "90f042be13c30c7f6d21434da325c6a4af149655e23685bf6267970cfffad64f",
       "source_file": "exec-a1f7c37c-82e3-414d-9189-25a86c605cc9.png",
       "official_reference_input": false,
-      "fallback": "code-painted charcoal room surface"
+      "fallback": "code-painted charcoal room surface",
+      "mobile_file": "mobile/rooms/foundry_lower_floor.webp",
+      "desktop_file": "desktop/rooms/foundry_lower_floor.webp"
     },
     {
       "id": "ancient_tree",
@@ -1173,7 +1215,9 @@
       "sha256": "3f2a782959c86d62ee9694c2b24c101b82aed03bd45212f1a423c14eefe1be3b",
       "source_file": "exec-15a911ce-c0c7-4d1a-8072-88f0dea7a45e.png",
       "official_reference_input": false,
-      "fallback": "code-painted charcoal room surface"
+      "fallback": "code-painted charcoal room surface",
+      "mobile_file": "mobile/rooms/ancient_tree.webp",
+      "desktop_file": "desktop/rooms/ancient_tree.webp"
     },
     {
       "id": "coal_tower_ground",
@@ -1190,7 +1234,9 @@
       "sha256": "010514f043b36066ad215f5d51d76df219abe6a9dd80ffe6f5aa15adc90e9d9c",
       "source_file": "exec-049af72c-f8e0-4929-bece-c0b160747cc6.png",
       "official_reference_input": false,
-      "fallback": "code-painted charcoal room surface"
+      "fallback": "code-painted charcoal room surface",
+      "mobile_file": "mobile/rooms/coal_tower_ground.webp",
+      "desktop_file": "desktop/rooms/coal_tower_ground.webp"
     },
     {
       "id": "scrapyard",
@@ -1207,7 +1253,9 @@
       "sha256": "e554a14b31aaa67c04de5b05c623cdc8d0fff74128b0c4229d1854552f7dc7b0",
       "source_file": "exec-5a8da415-c5f7-4411-bbf6-db4941067491.png",
       "official_reference_input": false,
-      "fallback": "code-painted charcoal room surface"
+      "fallback": "code-painted charcoal room surface",
+      "mobile_file": "mobile/rooms/scrapyard.webp",
+      "desktop_file": "desktop/rooms/scrapyard.webp"
     },
     {
       "id": "shack",
@@ -1224,7 +1272,9 @@
       "sha256": "e13231af893fff8fbf19c9c948513493674683ce12f11ec5361d1e83754eb88c",
       "source_file": "exec-231b098c-c068-4ff0-a3f7-5d99ca6e5541.png",
       "official_reference_input": false,
-      "fallback": "code-painted charcoal room surface"
+      "fallback": "code-painted charcoal room surface",
+      "mobile_file": "mobile/rooms/shack.webp",
+      "desktop_file": "desktop/rooms/shack.webp"
     },
     {
       "id": "foundry_basement",
@@ -1241,7 +1291,9 @@
       "sha256": "6eed68dbfdac0580dc3d9ee6714c3341177c39941c6ccb480ab27853e35fe063",
       "source_file": "exec-1915a736-9337-4258-a712-b14677a8cfd5.png",
       "official_reference_input": false,
-      "fallback": "code-painted charcoal room surface"
+      "fallback": "code-painted charcoal room surface",
+      "mobile_file": "mobile/rooms/foundry_basement.webp",
+      "desktop_file": "desktop/rooms/foundry_basement.webp"
     },
     {
       "id": "backlot",
@@ -1258,7 +1310,9 @@
       "sha256": "7736937b8d8d4038ef28cade82de15d0755f844b22114771dd664b92aebfac0a",
       "source_file": "exec-b877f35d-da40-47de-9a79-3bbf945af810.png",
       "official_reference_input": false,
-      "fallback": "code-painted charcoal room surface"
+      "fallback": "code-painted charcoal room surface",
+      "mobile_file": "mobile/rooms/backlot.webp",
+      "desktop_file": "desktop/rooms/backlot.webp"
     },
     {
       "id": "maze",
@@ -1275,7 +1329,9 @@
       "sha256": "2a06c1836d6906423691785626dea1166c790a6eb1677afa0d9eea539c2d5da0",
       "source_file": "exec-185d6028-6150-43f2-9d00-9a6021044b6d.png",
       "official_reference_input": false,
-      "fallback": "code-painted charcoal room surface"
+      "fallback": "code-painted charcoal room surface",
+      "mobile_file": "mobile/rooms/maze.webp",
+      "desktop_file": "desktop/rooms/maze.webp"
     },
     {
       "id": "wreckers_garage_north",
@@ -1292,7 +1348,9 @@
       "sha256": "e531d27e91ad09ace844123c222244e6418ad22c4d22781777bc0d4c894c7863",
       "source_file": "exec-7cc2f937-0d52-4d85-a64b-e584e65e6bcd.png",
       "official_reference_input": false,
-      "fallback": "code-painted charcoal room surface"
+      "fallback": "code-painted charcoal room surface",
+      "mobile_file": "mobile/rooms/wreckers_garage_north.webp",
+      "desktop_file": "desktop/rooms/wreckers_garage_north.webp"
     },
     {
       "id": "scrap_pile",
@@ -1309,7 +1367,9 @@
       "sha256": "56e57a1026112e3a88403a2cc5a31dba86497679484db406edb1b9210210647d",
       "source_file": "exec-0f569bc7-e107-4b89-9be4-f01da7de33da.png",
       "official_reference_input": false,
-      "fallback": "code-painted charcoal room surface"
+      "fallback": "code-painted charcoal room surface",
+      "mobile_file": "mobile/rooms/scrap_pile.webp",
+      "desktop_file": "desktop/rooms/scrap_pile.webp"
     },
     {
       "id": "main_garage",
@@ -1326,7 +1386,9 @@
       "sha256": "a23fa098272a15433611f9c7d97bfd7ea20b7b5c67470ca72f92fd9bad4b009a",
       "source_file": "exec-9de5c568-0f9f-49fe-ae11-bddbd2677c13.png",
       "official_reference_input": false,
-      "fallback": "code-painted charcoal room surface"
+      "fallback": "code-painted charcoal room surface",
+      "mobile_file": "mobile/rooms/main_garage.webp",
+      "desktop_file": "desktop/rooms/main_garage.webp"
     },
     {
       "id": "diner",
@@ -1343,7 +1405,9 @@
       "sha256": "9cd9a44099e10826dc2dbe0abd88630a80a927525feea6e62fd58eebc5551678",
       "source_file": "exec-cac0957b-1e06-43a0-b73c-9070c1070d6f.png",
       "official_reference_input": false,
-      "fallback": "code-painted charcoal room surface"
+      "fallback": "code-painted charcoal room surface",
+      "mobile_file": "mobile/rooms/diner.webp",
+      "desktop_file": "desktop/rooms/diner.webp"
     },
     {
       "id": "wreckers_garage_south",
@@ -1360,7 +1424,9 @@
       "sha256": "fa06d3fc3c39c3e8570736f6658a0d28681b21a3d7b648e81d3866b127b5d6bd",
       "source_file": "exec-aa783e65-6783-43a8-85e8-b517670166a1.png",
       "official_reference_input": false,
-      "fallback": "code-painted charcoal room surface"
+      "fallback": "code-painted charcoal room surface",
+      "mobile_file": "mobile/rooms/wreckers_garage_south.webp",
+      "desktop_file": "desktop/rooms/wreckers_garage_south.webp"
     },
     {
       "id": "barn",
@@ -1377,7 +1443,9 @@
       "sha256": "3b14b328d636a294981604a90187c6011db7077783298d04b9ac5fb0c26151da",
       "source_file": "exec-f369f907-e8d0-49bb-ab1b-eee54b4d373b.png",
       "official_reference_input": false,
-      "fallback": "code-painted charcoal room surface"
+      "fallback": "code-painted charcoal room surface",
+      "mobile_file": "mobile/rooms/barn.webp",
+      "desktop_file": "desktop/rooms/barn.webp"
     },
     {
       "id": "cottage",
@@ -1394,7 +1462,9 @@
       "sha256": "38c6f170f5ebc2ba50b32109cc052502d1f245a539c6c0de7e34db1c79b74d7b",
       "source_file": "exec-730c3fa1-1cdb-46e6-8899-cfca1d16b733.png",
       "official_reference_input": false,
-      "fallback": "code-painted charcoal room surface"
+      "fallback": "code-painted charcoal room surface",
+      "mobile_file": "mobile/rooms/cottage.webp",
+      "desktop_file": "desktop/rooms/cottage.webp"
     },
     {
       "id": "gas_pump",
@@ -1411,7 +1481,9 @@
       "sha256": "5013f24ba58554e3cacfb5711fb7a6927c1c1f1fa148dcae3f7cf50470e34a2f",
       "source_file": "exec-0a5b1015-29ff-4a16-98f2-aa59a2f6a388.png",
       "official_reference_input": false,
-      "fallback": "code-painted charcoal room surface"
+      "fallback": "code-painted charcoal room surface",
+      "mobile_file": "mobile/rooms/gas_pump.webp",
+      "desktop_file": "desktop/rooms/gas_pump.webp"
     },
     {
       "id": "old_cabin",
@@ -1428,7 +1500,996 @@
       "sha256": "2fcdc331e14a189805aab8dab1cb694eab944c81eeec104d2f572de6bc2d5082",
       "source_file": "exec-de2822eb-6c16-4b8c-9f5b-762e79db4de8.png",
       "official_reference_input": false,
-      "fallback": "code-painted charcoal room surface"
+      "fallback": "code-painted charcoal room surface",
+      "mobile_file": "mobile/rooms/old_cabin.webp",
+      "desktop_file": "desktop/rooms/old_cabin.webp"
+    }
+  ],
+  "mobile_derivatives": {
+    "generator": "scripts/prepare-mobile-art.py",
+    "format": "WebP",
+    "originals_preserved": true,
+    "files": [
+      {
+        "file": "mobile/generator.webp",
+        "size": [
+          256,
+          256
+        ],
+        "bytes": 19136,
+        "sha256": "d58bb3c821b75c78957c6c625da4d9838aa28cf3e826b6eb1d2115c0509691c7"
+      },
+      {
+        "file": "mobile/exit_gate.webp",
+        "size": [
+          256,
+          256
+        ],
+        "bytes": 18794,
+        "sha256": "5e448421392bdc36feef3f841b9039867dea9d039e7e8b4fd255311ff911fd4a"
+      },
+      {
+        "file": "mobile/hook.webp",
+        "size": [
+          256,
+          256
+        ],
+        "bytes": 14650,
+        "sha256": "0a5fcad71a51565cca16920472b789dc6935f4eb6fc1934c7387c4490ec1783a"
+      },
+      {
+        "file": "mobile/hex_totem.webp",
+        "size": [
+          256,
+          256
+        ],
+        "bytes": 15004,
+        "sha256": "2a809b7ae5a1efd4f1a51a9f694088633625b91dea22feaf93708bad2e23e12a"
+      },
+      {
+        "file": "mobile/chest.webp",
+        "size": [
+          256,
+          256
+        ],
+        "bytes": 17664,
+        "sha256": "52cd118470600af79443f8a4ce7b127d3a54c0456d704f70e844eadc4d9f93df"
+      },
+      {
+        "file": "mobile/locker.webp",
+        "size": [
+          256,
+          256
+        ],
+        "bytes": 16270,
+        "sha256": "89f6edf7be2b765e07e8921fabfec645e6b5ad03961e4d5e1f0b12e50812d3c4"
+      },
+      {
+        "file": "mobile/pallet.webp",
+        "size": [
+          256,
+          256
+        ],
+        "bytes": 19802,
+        "sha256": "cd2ec89119c42701ceb017b328cc90d4e73d30e7d47f1fd9418632a31d564c3d"
+      },
+      {
+        "file": "mobile/crow.webp",
+        "size": [
+          256,
+          256
+        ],
+        "bytes": 17756,
+        "sha256": "f1f69b2af47a94254911dbcd096d5a85e0a1bf12e5e0bd9340485ada30944e00"
+      },
+      {
+        "file": "mobile/wall.webp",
+        "size": [
+          256,
+          256
+        ],
+        "bytes": 18020,
+        "sha256": "faa5e83442d2b268f16e2305012d4188002a75e4c3f470b0e9aab59187fbb32e"
+      },
+      {
+        "file": "mobile/bear_trap.webp",
+        "size": [
+          256,
+          256
+        ],
+        "bytes": 17306,
+        "sha256": "94821c68871535012bb6fd47f0f170b7a277944ca7ef81aff9679cc4b0496584"
+      },
+      {
+        "file": "mobile/phantasm.webp",
+        "size": [
+          256,
+          256
+        ],
+        "bytes": 17948,
+        "sha256": "fbe93775f5c260c25b692c50514a22033e25e98cf11bbe7f8ea3a3c68accea0e"
+      },
+      {
+        "file": "mobile/madness.webp",
+        "size": [
+          256,
+          256
+        ],
+        "bytes": 15964,
+        "sha256": "eba5c740e7f6ac55c68901d350e948f7fc95801b0b20c27c0b22123db1770f93"
+      },
+      {
+        "file": "mobile/entity.webp",
+        "size": [
+          256,
+          256
+        ],
+        "bytes": 16918,
+        "sha256": "6aaf389720e9af4c4e9120f67a31950c64ea293f3e5f8b5fef755370685b0044"
+      },
+      {
+        "file": "mobile/brand_lantern.webp",
+        "size": [
+          256,
+          256
+        ],
+        "bytes": 17350,
+        "sha256": "ccc274dc7285ee32b22b6e4076ffd63a30082db8bc6e552aadf9749104f019c2"
+      },
+      {
+        "file": "mobile/back_objective.webp",
+        "size": [
+          256,
+          256
+        ],
+        "bytes": 19824,
+        "sha256": "184f3ba9fb8eaaba7fdf606e59633d1cdcadf57cbae96e2beb1d6b486e489306"
+      },
+      {
+        "file": "mobile/back_boldness.webp",
+        "size": [
+          256,
+          256
+        ],
+        "bytes": 18564,
+        "sha256": "1e4ba59af3a92d8478bf08bde0f2a987813738117244d30da8c015d9d66dedb5"
+      },
+      {
+        "file": "mobile/back_survival.webp",
+        "size": [
+          256,
+          256
+        ],
+        "bytes": 19470,
+        "sha256": "deb3089ce234e821fdfed9077a8b1ef53628c7ebcd3c3e77e39aa812dbbd3ec9"
+      },
+      {
+        "file": "mobile/back_altruism.webp",
+        "size": [
+          256,
+          256
+        ],
+        "bytes": 16944,
+        "sha256": "54a1d99cdb67de21ee63abff3939212cb7bf37c8fdfe7195074fd018ef296d0b"
+      },
+      {
+        "file": "mobile/portrait_anonymous.webp",
+        "size": [
+          256,
+          256
+        ],
+        "bytes": 16142,
+        "sha256": "ec1ca3cce959974b9fb12a5f9716ed91e1aa7a6862d84d0ff523bcc9e23ecae0"
+      },
+      {
+        "file": "mobile/portrait_dwight.webp",
+        "size": [
+          256,
+          256
+        ],
+        "bytes": 14932,
+        "sha256": "fe03cb33d47a278938bf22ed921c77fce6a543a27befdf6823f33118840fa06e"
+      },
+      {
+        "file": "mobile/portrait_meg.webp",
+        "size": [
+          256,
+          256
+        ],
+        "bytes": 18566,
+        "sha256": "6e218a9b36bfd2783937c95bfd0f10deaf08ff71cef9ad51956518e9bd142e61"
+      },
+      {
+        "file": "mobile/portrait_claudette.webp",
+        "size": [
+          256,
+          256
+        ],
+        "bytes": 16860,
+        "sha256": "c995bd048da617bc4d1b26ce654f65ec6aed6b14148e4d6204a107520b0c6ba1"
+      },
+      {
+        "file": "mobile/portrait_jake.webp",
+        "size": [
+          256,
+          256
+        ],
+        "bytes": 18270,
+        "sha256": "8f2f9540fc71e0e4267a2e27a4b841ea658a83a099afbb1977798e05caccd097"
+      },
+      {
+        "file": "mobile/portrait_nea.webp",
+        "size": [
+          256,
+          256
+        ],
+        "bytes": 15342,
+        "sha256": "0c7f6afa9a35087e40ab1492baafdf10519e40656f21eeeb07c5419bf9fdf536"
+      },
+      {
+        "file": "mobile/portrait_ace.webp",
+        "size": [
+          256,
+          256
+        ],
+        "bytes": 16960,
+        "sha256": "eb38500779f676fe69ebc051cf2e1f87fd4e3edf80020fc5944e0a72bedad6ba"
+      },
+      {
+        "file": "mobile/portrait_feng_min.webp",
+        "size": [
+          256,
+          256
+        ],
+        "bytes": 15058,
+        "sha256": "0bb4a4bd8030f00fbdcfbf91102c2f1efdd2462e0e2c3f0deeff629f52d2cf8e"
+      },
+      {
+        "file": "mobile/portrait_trapper.webp",
+        "size": [
+          256,
+          256
+        ],
+        "bytes": 15650,
+        "sha256": "e6ccad4f85beb4510d16ec90897354f5dee5927364e58c3aa657811ddcc2b795"
+      },
+      {
+        "file": "mobile/portrait_wraith.webp",
+        "size": [
+          256,
+          256
+        ],
+        "bytes": 17876,
+        "sha256": "294470588f6e3fb6ad3f848f92002b06a1fd30860a0d880d8fda8cf8a43fbca5"
+      },
+      {
+        "file": "mobile/portrait_hillbilly.webp",
+        "size": [
+          256,
+          256
+        ],
+        "bytes": 16226,
+        "sha256": "648b1b790c91b4d6f6cca0ca7956f92a387ec31287b38a0762cca9e5959b0ac4"
+      },
+      {
+        "file": "mobile/portrait_nurse.webp",
+        "size": [
+          256,
+          256
+        ],
+        "bytes": 17052,
+        "sha256": "c78fcaaeb9c5612b34f39f13acb96a4ad9caa99fe8c3cdb5385a364e313851ac"
+      },
+      {
+        "file": "mobile/portrait_hag.webp",
+        "size": [
+          256,
+          256
+        ],
+        "bytes": 19426,
+        "sha256": "8988c1f195e95c4b638cd0ca02793b2b83b2e44f5cfd4c688fa155f58b1dd1de"
+      },
+      {
+        "file": "mobile/portrait_doctor.webp",
+        "size": [
+          256,
+          256
+        ],
+        "bytes": 17520,
+        "sha256": "81eb02beb8f586fb5af208a1efcfc9259eaac257c6967ef8cf5e4f2cd28c9fa1"
+      },
+      {
+        "file": "mobile/rooms/mine_depths.webp",
+        "size": [
+          600,
+          400
+        ],
+        "bytes": 38074,
+        "sha256": "07a532f7a12e69dfb025638d3fe5504ac8169f856d7196ffae8b0369e1b0236a"
+      },
+      {
+        "file": "desktop/rooms/mine_depths.webp",
+        "size": [
+          1000,
+          667
+        ],
+        "bytes": 94550,
+        "sha256": "2395ffb3fd23974efb76a36dc9caa7442b2c2950d8d7657f978afedbd233d44b"
+      },
+      {
+        "file": "mobile/rooms/mine_entrance.webp",
+        "size": [
+          600,
+          400
+        ],
+        "bytes": 55238,
+        "sha256": "b9c621bd03c3ac0e761ebc7b9409b53f1c26af27127ef5f3ec1f28e94a2fceb2"
+      },
+      {
+        "file": "desktop/rooms/mine_entrance.webp",
+        "size": [
+          1000,
+          667
+        ],
+        "bytes": 142324,
+        "sha256": "dbae84628bd64f7b960c1e874e003c62ea2a89cf01e72bf934b818be97184696"
+      },
+      {
+        "file": "mobile/rooms/coal_tower_upper.webp",
+        "size": [
+          600,
+          400
+        ],
+        "bytes": 44824,
+        "sha256": "bd305b2aecddd68a3d61c6679b08434acc26dcc83e28bd020c4e590f0d2c07c8"
+      },
+      {
+        "file": "desktop/rooms/coal_tower_upper.webp",
+        "size": [
+          1000,
+          667
+        ],
+        "bytes": 107972,
+        "sha256": "3d7d48afc2e01efc86758c69404ecb03921ee67d830ec4d619cd7e1004f81888"
+      },
+      {
+        "file": "mobile/rooms/foundry_upper_floor.webp",
+        "size": [
+          600,
+          400
+        ],
+        "bytes": 48924,
+        "sha256": "0b5d90d9cb791ed19b547794088c901ba216c088c2af4eb69da2dadd7cfaeaf0"
+      },
+      {
+        "file": "desktop/rooms/foundry_upper_floor.webp",
+        "size": [
+          1000,
+          667
+        ],
+        "bytes": 118792,
+        "sha256": "d51bb06419aaae5ccb577a198c0351ccf9ae7ad75287c105d41830e5a2346c97"
+      },
+      {
+        "file": "mobile/rooms/foundry_lower_floor.webp",
+        "size": [
+          600,
+          400
+        ],
+        "bytes": 52636,
+        "sha256": "98fe59368f79495929654fa954426a4ed851e2aa3fd364622c84c6574b419133"
+      },
+      {
+        "file": "desktop/rooms/foundry_lower_floor.webp",
+        "size": [
+          1000,
+          667
+        ],
+        "bytes": 135612,
+        "sha256": "858dd4c929f1924041eb793030feed8cea1ea0663beb4a380c5b6d2dd0b12cd6"
+      },
+      {
+        "file": "mobile/rooms/ancient_tree.webp",
+        "size": [
+          600,
+          400
+        ],
+        "bytes": 50848,
+        "sha256": "23d5090dca1b079bee22d3dd87c2575f51c0a1e57ee9ffb996439eab155e6690"
+      },
+      {
+        "file": "desktop/rooms/ancient_tree.webp",
+        "size": [
+          1000,
+          667
+        ],
+        "bytes": 130904,
+        "sha256": "ba8ee4a940209ab8546b34a88279de0c843e8f49ebff810c8c352d9ba892810e"
+      },
+      {
+        "file": "mobile/rooms/coal_tower_ground.webp",
+        "size": [
+          600,
+          400
+        ],
+        "bytes": 47420,
+        "sha256": "dd68c03067bbb0e1bb80bd6d9485e72fc2dca050f538dd6793745e9286e024ca"
+      },
+      {
+        "file": "desktop/rooms/coal_tower_ground.webp",
+        "size": [
+          1000,
+          667
+        ],
+        "bytes": 117420,
+        "sha256": "a965087d5ff34ae0270aab991eff5f67b84a986dd081b699350f7c0c90bc191c"
+      },
+      {
+        "file": "mobile/rooms/scrapyard.webp",
+        "size": [
+          600,
+          400
+        ],
+        "bytes": 57064,
+        "sha256": "d385daa9862b2b7b226c39a6f8e24973719028e95ce6f4827f6fb3d74dde1740"
+      },
+      {
+        "file": "desktop/rooms/scrapyard.webp",
+        "size": [
+          1000,
+          667
+        ],
+        "bytes": 148884,
+        "sha256": "6a346c239b656650fdc596ca0712bff3351861a02516b7f12b386b5cc93f614c"
+      },
+      {
+        "file": "mobile/rooms/shack.webp",
+        "size": [
+          600,
+          400
+        ],
+        "bytes": 44000,
+        "sha256": "a2f961915f6de328a03cc4fa567aba39e8958b82bcde2694000d75e9032f6229"
+      },
+      {
+        "file": "desktop/rooms/shack.webp",
+        "size": [
+          1000,
+          667
+        ],
+        "bytes": 110270,
+        "sha256": "9eb0b5f373405b4d438366cadc7bb61071068927209d1ca707bdcebc190cbafd"
+      },
+      {
+        "file": "mobile/rooms/foundry_basement.webp",
+        "size": [
+          600,
+          400
+        ],
+        "bytes": 46054,
+        "sha256": "c4d3e846473d4c2d392d1aa45901dbb4cea94ca5358df91af5d63a6a6dd0f15b"
+      },
+      {
+        "file": "desktop/rooms/foundry_basement.webp",
+        "size": [
+          1000,
+          667
+        ],
+        "bytes": 118174,
+        "sha256": "dc6072aa02745db2d29c8203cbd78c8dd84446928c602777b97ce5f894a7c6c9"
+      },
+      {
+        "file": "mobile/rooms/backlot.webp",
+        "size": [
+          600,
+          400
+        ],
+        "bytes": 49346,
+        "sha256": "f625fc69e09ab8b75ac62be6fc6e823bd8e73c5a89312edb7108a387371d0258"
+      },
+      {
+        "file": "desktop/rooms/backlot.webp",
+        "size": [
+          1000,
+          667
+        ],
+        "bytes": 137886,
+        "sha256": "15cdc2126d5c8d123e1b2fa924c12038f55f8b99c57b906d9f8863412e78c5d2"
+      },
+      {
+        "file": "mobile/rooms/maze.webp",
+        "size": [
+          600,
+          400
+        ],
+        "bytes": 55076,
+        "sha256": "34d15c1d119c207c07d5750274b24069abc84d72363cfba839aeaff39793de11"
+      },
+      {
+        "file": "desktop/rooms/maze.webp",
+        "size": [
+          1000,
+          667
+        ],
+        "bytes": 148022,
+        "sha256": "ae35af8502858d0f4a5b4586c9c77f68af4bfa9a78eb44e1cd8af31469540e18"
+      },
+      {
+        "file": "mobile/rooms/wreckers_garage_north.webp",
+        "size": [
+          600,
+          400
+        ],
+        "bytes": 57290,
+        "sha256": "7f38ec9da0c2337d2785497c9077f7045c7a4ddfdc5d5c8d26bb35cc67653a02"
+      },
+      {
+        "file": "desktop/rooms/wreckers_garage_north.webp",
+        "size": [
+          1000,
+          667
+        ],
+        "bytes": 151464,
+        "sha256": "4766898d84b44a829cee6a996816d6017f3b207a6e22d803b389a6a57f9fde2a"
+      },
+      {
+        "file": "mobile/rooms/scrap_pile.webp",
+        "size": [
+          600,
+          400
+        ],
+        "bytes": 59054,
+        "sha256": "9676746e773a14d074a5b8893c5224c35ef8d727b72ed366d62ea35433b1c841"
+      },
+      {
+        "file": "desktop/rooms/scrap_pile.webp",
+        "size": [
+          1000,
+          667
+        ],
+        "bytes": 150734,
+        "sha256": "b5c7e37d7ec324ad33799caf88e59508158b6d7be30f33c9b06a6ce56c9f930d"
+      },
+      {
+        "file": "mobile/rooms/main_garage.webp",
+        "size": [
+          600,
+          400
+        ],
+        "bytes": 54444,
+        "sha256": "cfc4d255341593d767a85f88fcb306ea4474c6b5934c6147639303becd1b338c"
+      },
+      {
+        "file": "desktop/rooms/main_garage.webp",
+        "size": [
+          1000,
+          667
+        ],
+        "bytes": 139274,
+        "sha256": "4ff9abd83e755e354cb194119b32670f64568963cc09be0222c7b787fc6aa4ac"
+      },
+      {
+        "file": "mobile/rooms/diner.webp",
+        "size": [
+          600,
+          400
+        ],
+        "bytes": 47486,
+        "sha256": "814b7175978708503f561ad7d9c79435a14a9eb2444215ba1dd52f7a7b6dddcc"
+      },
+      {
+        "file": "desktop/rooms/diner.webp",
+        "size": [
+          1000,
+          667
+        ],
+        "bytes": 124452,
+        "sha256": "56f80fae3ae858634891099d59facb925cc89032f726cff9ba95df8e680c2ddb"
+      },
+      {
+        "file": "mobile/rooms/wreckers_garage_south.webp",
+        "size": [
+          600,
+          400
+        ],
+        "bytes": 59642,
+        "sha256": "d05946421394af7a9485b9cee7a832dd32e1706ac8ff041780ab8ca0a4cedcf2"
+      },
+      {
+        "file": "desktop/rooms/wreckers_garage_south.webp",
+        "size": [
+          1000,
+          667
+        ],
+        "bytes": 156684,
+        "sha256": "29389b8d54b6fe78700a236e815ccbfe74c2cb280b227f15d06070a99d33383f"
+      },
+      {
+        "file": "mobile/rooms/barn.webp",
+        "size": [
+          600,
+          400
+        ],
+        "bytes": 53784,
+        "sha256": "da021a92980b5c886c51e0ddeaa6a04782a7b501897aa97c0c3408101705cd70"
+      },
+      {
+        "file": "desktop/rooms/barn.webp",
+        "size": [
+          1000,
+          667
+        ],
+        "bytes": 139616,
+        "sha256": "c26c55db76c39389acf6239f8cc4855e6ea9030c521714d21a78e63f884cca0b"
+      },
+      {
+        "file": "mobile/rooms/cottage.webp",
+        "size": [
+          600,
+          400
+        ],
+        "bytes": 59514,
+        "sha256": "61b3f03924f65f05fc129b06bbeb7a1b383fe774c87f294b2d4699331634d325"
+      },
+      {
+        "file": "desktop/rooms/cottage.webp",
+        "size": [
+          1000,
+          667
+        ],
+        "bytes": 155066,
+        "sha256": "2491aad65fa12436694b9221f39588ee4c9ecad9deacc6fe726c50b338799835"
+      },
+      {
+        "file": "mobile/rooms/gas_pump.webp",
+        "size": [
+          600,
+          400
+        ],
+        "bytes": 53372,
+        "sha256": "47d37370b73d5f67fd228b751d63379e26130113f6a0fdde196d92db7da60d59"
+      },
+      {
+        "file": "desktop/rooms/gas_pump.webp",
+        "size": [
+          1000,
+          667
+        ],
+        "bytes": 140824,
+        "sha256": "202398542815f92c60d3ee7ecf51b03b20a1185998c46257e390608292054f66"
+      },
+      {
+        "file": "mobile/rooms/old_cabin.webp",
+        "size": [
+          600,
+          400
+        ],
+        "bytes": 54070,
+        "sha256": "86061ccf600f539bba5a27168dfb49d99158b3048321a74c1933b71422cdb21b"
+      },
+      {
+        "file": "desktop/rooms/old_cabin.webp",
+        "size": [
+          1000,
+          667
+        ],
+        "bytes": 133336,
+        "sha256": "affc10bc5c07a1e674bee153d1f0b206f996b63fa3d2b4065cd678a7843431d3"
+      }
+    ]
+  },
+  "illustrations": [
+    {
+      "id": "toolbox",
+      "category": "items",
+      "file": "items/toolbox.webp",
+      "svg": "svg/items/toolbox.svg",
+      "source": "AI 生成",
+      "states": [
+        "neutral"
+      ],
+      "transparent": true,
+      "original_size": [
+        1254,
+        1254
+      ],
+      "size": [
+        256,
+        256
+      ],
+      "provider": "built-in image_gen",
+      "generation_prompt": "Original isolated compact battered metal toolbox, charcoal brushwork, bone-white rim light, tarnished brass, transparent exterior; no lettering, official art or logos.",
+      "original_file": "assets/mobile-originals/items/toolbox.png",
+      "sha256": "2e61a2bc7a317b471527e706c593c9a86066a2dac2a8c81e5957033acaeb9c5d",
+      "bytes": 23574,
+      "official_reference_input": false
+    },
+    {
+      "id": "commodious_toolbox",
+      "category": "items",
+      "file": "items/commodious_toolbox.webp",
+      "svg": "svg/items/commodious_toolbox.svg",
+      "source": "AI 生成",
+      "states": [
+        "neutral"
+      ],
+      "transparent": true,
+      "original_size": [
+        1254,
+        1254
+      ],
+      "size": [
+        256,
+        256
+      ],
+      "provider": "built-in image_gen",
+      "generation_prompt": "One original inventory illustration: a wide battered metal toolbox with two clasps, open layered compartments, distinctly wider than tall. Cold damp horror tabletop style, rough charcoal brushwork, bone-white rim light, restrained tarnished brass. Centered isolated object occupying 75% of square, bold silhouette readable at 48px. Transparent exterior. No frame, text, numerals, logo, watermark, UI, official game art or tracing. Neutral idle state.",
+      "original_file": "assets/mobile-originals/items/commodious_toolbox.png",
+      "sha256": "12457079e4cfe79b236c60b37dca564765d7a2aba1abfd8d7b069c1d7510d983",
+      "bytes": 18424,
+      "official_reference_input": false
+    },
+    {
+      "id": "firecracker",
+      "category": "items",
+      "file": "items/firecracker.webp",
+      "svg": "svg/items/firecracker.svg",
+      "source": "AI 生成",
+      "states": [
+        "neutral"
+      ],
+      "transparent": true,
+      "original_size": [
+        1254,
+        1254
+      ],
+      "size": [
+        256,
+        256
+      ],
+      "provider": "built-in image_gen",
+      "generation_prompt": "One original inventory illustration: a tied bundle of small paper firecracker cylinders with a clear winding fuse, intact and unlit. Cold damp horror tabletop style, rough charcoal brushwork, bone-white rim light, restrained tarnished brass. Centered isolated object occupying 75% of square, bold silhouette readable at 48px. Transparent exterior. No frame, text, numerals, logo, watermark, UI, official game art or tracing. Neutral idle state.",
+      "original_file": "assets/mobile-originals/items/firecracker.png",
+      "sha256": "fc3e9f15b0a7902cdcedfbd997642539d6dbbd557a4d1b15f74190642cd87518",
+      "bytes": 22546,
+      "official_reference_input": false
+    },
+    {
+      "id": "map",
+      "category": "items",
+      "file": "items/map.webp",
+      "svg": "svg/items/map.svg",
+      "source": "AI 生成",
+      "states": [
+        "neutral"
+      ],
+      "transparent": true,
+      "original_size": [
+        1254,
+        1254
+      ],
+      "size": [
+        256,
+        256
+      ],
+      "provider": "built-in image_gen",
+      "generation_prompt": "One original inventory illustration: an old folded parchment map with strong fold lines and faint abstract hatching, no readable routes or lettering. Cold damp horror tabletop style, rough charcoal brushwork, bone-white rim light, restrained tarnished brass. Centered isolated object occupying 75% of square, bold silhouette readable at 48px. Transparent exterior. No frame, text, numerals, logo, watermark, UI, official game art or tracing. Neutral idle state.",
+      "original_file": "assets/mobile-originals/items/map.png",
+      "sha256": "674b60b3bc83f5c24cf837a5f09a4e486764f9d918c2c9effcd3b57d5ec6ec12",
+      "bytes": 25120,
+      "official_reference_input": false
+    },
+    {
+      "id": "rainbow_map",
+      "category": "items",
+      "file": "items/rainbow_map.webp",
+      "svg": "svg/items/rainbow_map.svg",
+      "source": "AI 生成",
+      "states": [
+        "neutral"
+      ],
+      "transparent": true,
+      "original_size": [
+        1254,
+        1254
+      ],
+      "size": [
+        256,
+        256
+      ],
+      "provider": "built-in image_gen",
+      "generation_prompt": "One original inventory illustration: a rolled and partly opened layered parchment map with scalloped corners, restrained multicolor edge threads and bronze scroll rod, no lettering. Cold damp horror tabletop style, rough charcoal brushwork, bone-white rim light, restrained tarnished brass. Centered isolated object occupying 75% of square, bold silhouette readable at 48px. Transparent exterior. No frame, text, numerals, logo, watermark, UI, official game art or tracing. Neutral idle state.",
+      "original_file": "assets/mobile-originals/items/rainbow_map.png",
+      "sha256": "a073da6a3969e7bcb2f4f60049cdd28f79ed10b7a954b932c8dc5245d0fe9da1",
+      "bytes": 23018,
+      "official_reference_input": false
+    },
+    {
+      "id": "flashlight",
+      "category": "items",
+      "file": "items/flashlight.webp",
+      "svg": "svg/items/flashlight.svg",
+      "source": "占位",
+      "states": [
+        "neutral"
+      ],
+      "transparent": true
+    },
+    {
+      "id": "first_aid_kit",
+      "category": "items",
+      "file": "items/first_aid_kit.webp",
+      "svg": "svg/items/first_aid_kit.svg",
+      "source": "占位",
+      "states": [
+        "neutral"
+      ],
+      "transparent": true
+    },
+    {
+      "id": "broken_key",
+      "category": "items",
+      "file": "items/broken_key.webp",
+      "svg": "svg/items/broken_key.svg",
+      "source": "占位",
+      "states": [
+        "neutral"
+      ],
+      "transparent": true
+    },
+    {
+      "id": "dull_key",
+      "category": "items",
+      "file": "items/dull_key.webp",
+      "svg": "svg/items/dull_key.svg",
+      "source": "占位",
+      "states": [
+        "neutral"
+      ],
+      "transparent": true
+    },
+    {
+      "id": "skeleton_key",
+      "category": "items",
+      "file": "items/skeleton_key.webp",
+      "svg": "svg/items/skeleton_key.svg",
+      "source": "占位",
+      "states": [
+        "neutral"
+      ],
+      "transparent": true
+    },
+    {
+      "id": "macmillan_estate_cover",
+      "category": "maps",
+      "file": "maps/macmillan_estate_cover.webp",
+      "svg": "svg/maps/macmillan_estate_cover.svg",
+      "source": "占位",
+      "states": [
+        "neutral"
+      ],
+      "transparent": false
+    },
+    {
+      "id": "autohaven_wreckers_cover",
+      "category": "maps",
+      "file": "maps/autohaven_wreckers_cover.webp",
+      "svg": "svg/maps/autohaven_wreckers_cover.svg",
+      "source": "占位",
+      "states": [
+        "neutral"
+      ],
+      "transparent": false
+    },
+    {
+      "id": "lobby",
+      "category": "modules",
+      "file": "modules/lobby.webp",
+      "svg": "svg/modules/lobby.svg",
+      "source": "占位",
+      "states": [
+        "module"
+      ],
+      "transparent": false
+    },
+    {
+      "id": "characters",
+      "category": "modules",
+      "file": "modules/characters.webp",
+      "svg": "svg/modules/characters.svg",
+      "source": "占位",
+      "states": [
+        "module"
+      ],
+      "transparent": false
+    },
+    {
+      "id": "plan",
+      "category": "modules",
+      "file": "modules/plan.webp",
+      "svg": "svg/modules/plan.svg",
+      "source": "占位",
+      "states": [
+        "module"
+      ],
+      "transparent": false
+    },
+    {
+      "id": "move",
+      "category": "modules",
+      "file": "modules/move.webp",
+      "svg": "svg/modules/move.svg",
+      "source": "占位",
+      "states": [
+        "module"
+      ],
+      "transparent": false
+    },
+    {
+      "id": "interact",
+      "category": "modules",
+      "file": "modules/interact.webp",
+      "svg": "svg/modules/interact.svg",
+      "source": "占位",
+      "states": [
+        "module"
+      ],
+      "transparent": false
+    },
+    {
+      "id": "skill",
+      "category": "modules",
+      "file": "modules/skill.webp",
+      "svg": "svg/modules/skill.svg",
+      "source": "占位",
+      "states": [
+        "module"
+      ],
+      "transparent": false
+    },
+    {
+      "id": "waiting",
+      "category": "modules",
+      "file": "modules/waiting.webp",
+      "svg": "svg/modules/waiting.svg",
+      "source": "占位",
+      "states": [
+        "module"
+      ],
+      "transparent": false
+    },
+    {
+      "id": "dice",
+      "category": "modules",
+      "file": "modules/dice.webp",
+      "svg": "svg/modules/dice.svg",
+      "source": "占位",
+      "states": [
+        "module"
+      ],
+      "transparent": false
+    },
+    {
+      "id": "carry",
+      "category": "modules",
+      "file": "modules/carry.webp",
+      "svg": "svg/modules/carry.svg",
+      "source": "占位",
+      "states": [
+        "module"
+      ],
+      "transparent": false
+    },
+    {
+      "id": "results",
+      "category": "modules",
+      "file": "modules/results.webp",
+      "svg": "svg/modules/results.svg",
+      "source": "占位",
+      "states": [
+        "module"
+      ],
+      "transparent": false
     }
   ]
 }

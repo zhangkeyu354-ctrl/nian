@@ -1,0 +1,24 @@
+2026-10-20，合并基线 d8e28df，真实运行结果摘要（非伪造完整终端日志）
+npm test: Test Files 13 passed (13); Tests 208 passed (208)
+npm run typecheck: exit 0
+npm run build: exit 0 (main bundle >500kB warning retained)
+verify:replays: all 3 reproduced, SHA256 unchanged
+verify:hotseat: FULL_GAME_PASS 1701 survivor 188; 2903 survivor 218; 4111 killer 107
+verify:actions: ACTIONS_PASS item-controls,power,all-command-events-match 35
+verify:mobile: MOBILE_PASS touch-pinch,drag,privacy,unavailable-skill
+verify:mobile-surface: MOBILE_SURFACE_PASS
+verify:board: PHASE2C_PASS 6 midgame views 26 board reveals 15 board interactions
+verify:visuals: VISUAL_FEEDBACK_PASS 41 states; flip/dice/progress/hook/attack sequences; settings; fallback
+verify:mobile-preview: MOBILE_PREVIEW_PASS 6 views; 2/1/2 taps; killer 3 taps; 48px; no scrolling; blank rejected; no real room connection
+verify:lan-protocol: LAN_PROTOCOL_PASS 1701 188/408; 2903 218/477; 4111 107/227; view checks 2565
+verify:lan-browsers: LAN_BROWSERS_PASS 4111 107 killer 5 browsers 110 frames 5 fullmap shots; 1701 188 survivor 5 browsers 191 frames 5 fullmap shots
+verify:lan-lobby: LAN_LOBBY_PASS 5/4/3 players, killerOptions 3 each; no scrolling/dropdowns, enabled buttons >=48 and inside viewport
+verify:mobile-interfaces: capture tests 196 passed, UI_SCENARIOS_COLLECTED 64, MOBILE_INTERFACES_PASS 64
+verify:mobile-taps: MOBILE_GAME_PASS 4111 107 killer; MOBILE_GAME_PASS 1701 188 survivor; MOBILE_TAPS_PASS
+standard develop-web-game client: 2 iterations, real App harness, screenshot + render_game_to_text; no error file
+scope: 45 protected files match d8e28df (line-ending normalization), SHA256 stored in implementation/SCOPE_GUARD.json
+reference: only README.md and seven .gitkeep files tracked
+
+Initial failing runs were repaired and rerun: item drawer click-through triggered unintended END_TURN; shared-seat draft required explicit tab selection; room header pushed start off-screen; old browser drain returned before spectator dice auto-dismissed. Only later successful screenshots are delivered.
+
+Limits: complex multi-field skill target wizard can require up to22 taps, not counted as 1-tap skill usage; extra spawn/carry dice acknowledgements are separately recorded. No claim that strict universal 1-tap skill target selection is achieved. 17 new illustration slots remain SVG placeholders. Browser emulation is not physical-device Safari/Android testing.

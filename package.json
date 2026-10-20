@@ -21,6 +21,9 @@
     "verify:lan-browsers": "tsx scripts/verify-lan-browsers.ts",
     "verify:lan-lobby": "tsx scripts/verify-lan-lobby.ts",
     "verify:mobile-preview": "tsx scripts/verify-mobile-preview.ts",
+    "verify:mobile-taps": "tsx scripts/verify-mobile-taps.ts",
+    "verify:mobile-surface": "tsx scripts/verify-mobile-surface.ts",
+    "verify:mobile-interfaces": "vitest run --config apps/web/test/capture.config.ts && tsx scripts/collect-ui-scenarios.ts && tsx scripts/verify-mobile-interfaces.ts",
     "audit:mobile": "tsx scripts/audit-current-mobile.ts"
   },
   "devDependencies": {

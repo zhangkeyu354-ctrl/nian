@@ -25,3 +25,4 @@ output/
 __pycache__/
 data/
 tools/
+apps/web/test/scenarios.generated.json

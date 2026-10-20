@@ -56,11 +56,14 @@ const text = async (p: Page) =>
 /** 关掉所有浏览器上的骰子与反馈弹窗（观看者也会看到） */
 async function drain(p: Page) {
   // 观看者的弹窗会自动关闭，所以点击可能扑空；扑空不算错误
-  for (let i = 0; i < 30; i++) {
+  for (let i = 0; i < 120; i++) {
     const dice = p.getByTestId("ack-dice"),
       fb = p.getByTestId("ack-feedback");
     if (await dice.count()) await dice.click({ timeout: 1500 }).catch(() => {});
-    else if (await fb.count()) await fb.click({ timeout: 1500 }).catch(() => {});
+    else if (await fb.count())
+      await fb.click({ timeout: 1500 }).catch(() => {});
+    else if (await p.locator(".dice-overlay").count())
+      await p.waitForTimeout(100);
     else return;
   }
 }
@@ -112,8 +115,14 @@ try {
     // 1) 第一个浏览器在界面上创建房间
     const host = pages[0];
     // 2026-10-20 起房间默认走"选阵营/选角色"；按回放逐步对照时用测试专用的固定配置
-    const preset = [r.options.mapId, ...r.options.survivors, r.options.killer].join(",");
-    await host.goto(`${BASE}/?online=1&seed=${r.options.seed}&preset=${preset}`);
+    const preset = [
+      r.options.mapId,
+      ...r.options.survivors,
+      r.options.killer,
+    ].join(",");
+    await host.goto(
+      `${BASE}/?online=1&seed=${r.options.seed}&preset=${preset}`,
+    );
     await host.getByTestId("create-room").click();
     await host.waitForURL(/room=/);
     const code = new URL(host.url()).searchParams.get("room")!;
@@ -189,6 +198,8 @@ try {
               ? { rooms: 11, routes: 22 }
               : { rooms: 10, routes: 19 },
           );
+          if (await p.getByLabel("返回行动", { exact: true }).count())
+            await p.getByLabel("返回行动", { exact: true }).click();
           await p.getByLabel("定位当前角色", { exact: true }).click();
           shots++;
         }

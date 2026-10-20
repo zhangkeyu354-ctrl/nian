@@ -1,0 +1,20 @@
+[
+  {
+    "scenario": "5人_两人想当杀手",
+    "room": "AQ9B",
+    "players": 5,
+    "killerOptions": 3
+  },
+  {
+    "scenario": "4人_没人选杀手_一人报名控两名",
+    "room": "HK7J",
+    "players": 4,
+    "killerOptions": 3
+  },
+  {
+    "scenario": "3人",
+    "room": "V2SL",
+    "players": 3,
+    "killerOptions": 3
+  }
+]

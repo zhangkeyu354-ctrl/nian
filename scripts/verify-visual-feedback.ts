@@ -173,7 +173,7 @@ await page.getByTestId("settings").click();
 await page.getByTestId("art-setting").check();
 await page.getByTestId("close-settings").click();
 // Force one PNG to fail. SVG remains visible and no application exception is raised.
-await page.route("**/assets/generator.png", (r) => r.abort());
+await page.route("**/assets/mobile/generator.webp", (r) => r.abort());
 await page.reload();
 await page.waitForTimeout(250);
 assert.equal(

@@ -1,8 +1,15 @@
 import type { Page } from "playwright";
 import type { Command, CreateOptions } from "../packages/shared/src/types.ts";
 import { strict as assert } from "node:assert";
+import { tapPhoneCommand } from "./mobile-ui-driver.ts";
+import { configurePhoneSetup } from "./setup-driver.ts";
 export async function startUI(page: Page, o: CreateOptions) {
   await page.goto("http://127.0.0.1:5173/");
+  if (await page.getByTestId("phone-setup").count()) {
+    await configurePhoneSetup(page, o);
+    await page.getByTestId("start").tap();
+    return;
+  }
   await page.getByTestId("map-select").selectOption(o.mapId);
   await page.getByTestId("seed-input").fill(String(o.seed));
   for (let i = 0; i < 4; i++)
@@ -37,6 +44,8 @@ export async function openRoomSelect(page: Page) {
   return select;
 }
 export async function clickUI(page: Page, c: Command) {
+  if (await page.getByTestId("mobile-dock").count())
+    return tapPhoneCommand(page, c);
   if (c.type === "SETUP_REVEAL" || (c.type === "SELECT" && c.propId)) {
     const target = page.locator(`[data-prop="${c.propId}"]`);
     const room = await target.evaluate((el) =>

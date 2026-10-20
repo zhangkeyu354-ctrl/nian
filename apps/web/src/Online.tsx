@@ -4,6 +4,8 @@ import { actorName } from "../../../packages/game-engine/src/index.ts";
 import { App } from "./App.tsx";
 import { SettingsButton } from "./Settings.tsx";
 import { Token } from "./Token.tsx";
+import { usePhone } from "./MobileDock.tsx";
+import { TapButton } from "./TapButton.tsx";
 import { createRoom, useRoom, type NetBinding } from "./net.ts";
 
 const params = () => new URLSearchParams(location.search);
@@ -65,9 +67,9 @@ export function InvitePanel({
       <p className="small">手机扫码，或在浏览器打开</p>
       <code className="share-url">{url}</code>
       {onClose && (
-        <button className="primary" onClick={onClose}>
+        <TapButton className="primary" onClick={onClose}>
           关闭
-        </button>
+        </TapButton>
       )}
     </div>
   );
@@ -122,13 +124,16 @@ function CreateOrJoin() {
   async function create() {
     setBusy(true);
     const preset = presetFromUrl();
-    const res = await createRoom({ playerCount, ...(preset ? { preset } : {}) });
+    const res = await createRoom({
+      playerCount,
+      ...(preset ? { preset } : {}),
+    });
     setBusy(false);
     if (!res.ok) return setError(res.error);
     goto(`/?room=${res.code}`);
   }
   return (
-    <main className="lobby">
+    <main className="lobby room-flow">
       <Brand line="开一个房间，大家用自己的手机加入。每个人只看得到自己的秘密移动牌。" />
       <section className="setup">
         <h2>加入房间</h2>
@@ -147,26 +152,28 @@ function CreateOrJoin() {
             value={code}
             onChange={(e) => setCode(e.target.value.toUpperCase())}
           />
-          <button className="primary" type="submit">
+          <TapButton className="primary" type="submit">
             加入
-          </button>
+          </TapButton>
         </form>
         <h2>创建房间</h2>
         <CountPicker value={playerCount} onChange={setPlayerCount} />
-        <p className="small muted">进房后每人自己选阵营；地图每局随机。人数之后还能改。</p>
+        <p className="small muted">
+          进房后每人自己选阵营；地图每局随机。人数之后还能改。
+        </p>
         {error && (
           <div role="alert" className="error">
             {error}
           </div>
         )}
-        <button
+        <TapButton
           className="primary start-button"
           data-testid="create-room"
           disabled={busy}
           onClick={create}
         >
           创建房间 <span>→</span>
-        </button>
+        </TapButton>
       </section>
     </main>
   );
@@ -191,7 +198,7 @@ function CountPicker({
   return (
     <div className="count-picker" role="radiogroup" aria-label="玩家人数">
       {([3, 4, 5] as const).map((n) => (
-        <button
+        <TapButton
           key={n}
           role="radio"
           aria-checked={value === n}
@@ -202,20 +209,26 @@ function CountPicker({
         >
           <strong>{n} 人</strong>
           <small>{countText[n].split(" · ")[1]}</small>
-        </button>
+        </TapButton>
       ))}
     </div>
   );
 }
 
 /** 加入（lobby 房间）：只填昵称 */
-function JoinRoom({ room, code }: { room: ReturnType<typeof useRoom>; code: string }) {
+function JoinRoom({
+  room,
+  code,
+}: {
+  room: ReturnType<typeof useRoom>;
+  code: string;
+}) {
   const [name, setName] = useState("");
   const [error, setError] = useState("");
   const l = room.snap!.lobby;
   const full = l.players.length >= l.playerCount;
   return (
-    <main className="lobby">
+    <main className="lobby room-flow">
       <Brand line={`房间 ${code} · ${l.players.length}/${l.playerCount} 人`} />
       <section className="setup">
         {l.stage !== "lobby" ? (
@@ -234,7 +247,7 @@ function JoinRoom({ room, code }: { room: ReturnType<typeof useRoom>; code: stri
                 onChange={(e) => setName(e.target.value)}
               />
             </label>
-            <button
+            <TapButton
               className="primary start-button"
               data-testid="join-room"
               disabled={full}
@@ -244,7 +257,7 @@ function JoinRoom({ room, code }: { room: ReturnType<typeof useRoom>; code: stri
               }}
             >
               {full ? "房间已满" : "加入房间"} <span>→</span>
-            </button>
+            </TapButton>
           </>
         )}
         {error && (
@@ -252,7 +265,7 @@ function JoinRoom({ room, code }: { room: ReturnType<typeof useRoom>; code: stri
             {error}
           </div>
         )}
-        <button onClick={() => goto("/?online=1")}>返回</button>
+        <TapButton onClick={() => goto("/?online=1")}>返回</TapButton>
       </section>
     </main>
   );
@@ -261,8 +274,15 @@ function JoinRoom({ room, code }: { room: ReturnType<typeof useRoom>; code: stri
 const sideName = { survivor: "逃生者", killer: "杀手" } as const;
 
 /** 房间：选阵营、报名控两名、房主改人数并开始 */
-function LobbyRoom({ room, code }: { room: ReturnType<typeof useRoom>; code: string }) {
+function LobbyRoom({
+  room,
+  code,
+}: {
+  room: ReturnType<typeof useRoom>;
+  code: string;
+}) {
   const [error, setError] = useState("");
+  const [invite, setInvite] = useState(false);
   const snap = room.snap!;
   const l = snap.lobby;
   const me = l.players.find((p) => p.playerId === snap.mySeat)!;
@@ -274,14 +294,22 @@ function LobbyRoom({ room, code }: { room: ReturnType<typeof useRoom>; code: str
   const ready = full && l.players.every((p) => p.side);
   const killers = l.players.filter((p) => p.side === "killer").length;
   return (
-    <main className="lobby">
+    <main className="lobby room-flow">
       <Brand line={`房间 ${code} · ${l.players.length}/${l.playerCount} 人`} />
       <section className="setup" data-testid="lobby-room">
-        <InvitePanel code={code} />
+        <div className="room-title">
+          <strong>房间 {code}</strong>
+          <TapButton onClick={() => setInvite(true)}>邀请朋友</TapButton>
+        </div>
+        {invite && (
+          <div className="handoff" role="dialog" aria-label="邀请朋友">
+            <InvitePanel code={code} onClose={() => setInvite(false)} />
+          </div>
+        )}
         <h2>你的阵营</h2>
         <div className="side-picker" role="radiogroup" aria-label="选择阵营">
           {(["survivor", "killer"] as const).map((side) => (
-            <button
+            <TapButton
               key={side}
               role="radio"
               aria-checked={me.side === side}
@@ -290,7 +318,7 @@ function LobbyRoom({ room, code }: { room: ReturnType<typeof useRoom>; code: str
               onClick={() => act({ type: "SET_SIDE", side })}
             >
               {sideName[side]}
-            </button>
+            </TapButton>
           ))}
         </div>
         <p className="small muted">
@@ -302,14 +330,18 @@ function LobbyRoom({ room, code }: { room: ReturnType<typeof useRoom>; code: str
               type="checkbox"
               data-testid="volunteer"
               checked={me.volunteer}
-              onChange={(e) => act({ type: "SET_VOLUNTEER", volunteer: e.target.checked })}
+              onChange={(e) =>
+                act({ type: "SET_VOLUNTEER", volunteer: e.target.checked })
+              }
             />
             我愿意一个人操控两名逃生者（没人报名就随机）
           </label>
         )}
         <h2>
           玩家 {l.players.length}/{l.playerCount}
-          {killers > 1 && <small className="muted"> · {killers} 人想当杀手，开始时随机</small>}
+          {killers > 1 && (
+            <small className="muted"> · {killers} 人想当杀手，开始时随机</small>
+          )}
         </h2>
         <ul className="player-list" data-testid="player-list">
           {l.players.map((p) => (
@@ -340,19 +372,28 @@ function LobbyRoom({ room, code }: { room: ReturnType<typeof useRoom>; code: str
             <CountPicker
               value={l.playerCount}
               min={Math.max(3, l.players.length)}
-              onChange={(n) => act({ type: "SET_PLAYER_COUNT", playerCount: n })}
+              onChange={(n) =>
+                act({ type: "SET_PLAYER_COUNT", playerCount: n })
+              }
             />
-            <button
+            <TapButton
               className="primary start-button"
               data-testid="start-draft"
               disabled={!ready}
               onClick={() => act({ type: "START" })}
             >
-              {!full ? "等人到齐" : !ready ? "等所有人选好阵营" : "开始：分配阵营和地图"} <span>→</span>
-            </button>
+              {!full
+                ? "等人到齐"
+                : !ready
+                  ? "等所有人选好阵营"
+                  : "开始：分配阵营和地图"}{" "}
+              <span>→</span>
+            </TapButton>
           </>
         ) : (
-          <p className="muted">{ready ? "等房主开始…" : "人到齐、都选好阵营后，由房主开始。"}</p>
+          <p className="muted">
+            {ready ? "等房主开始…" : "人到齐、都选好阵营后，由房主开始。"}
+          </p>
         )}
         {error && (
           <div role="alert" className="error">
@@ -365,62 +406,94 @@ function LobbyRoom({ room, code }: { room: ReturnType<typeof useRoom>; code: str
 }
 
 /** 选角色：杀手三选一，逃生者每个名额二选一 */
-function DraftRoom({ room, code }: { room: ReturnType<typeof useRoom>; code: string }) {
+function DraftRoom({
+  room,
+  code,
+}: {
+  room: ReturnType<typeof useRoom>;
+  code: string;
+}) {
   const [error, setError] = useState("");
   const snap = room.snap!;
   const l = snap.lobby;
   const d = l.draft!;
-  const name = (id: string) => l.players.find((p) => p.playerId === id)?.name ?? "玩家";
+  const name = (id: string) =>
+    l.players.find((p) => p.playerId === id)?.name ?? "玩家";
   const mine = d.slots.filter((s) => s.playerId === snap.mySeat);
+  const [slotIndex, setSlotIndex] = useState(0);
+  const phone = usePhone();
   const mapName = maps.maps.find((m) => m.id === d.mapId)?.name_zh;
   return (
-    <main className="lobby">
+    <main className="lobby room-flow">
       <Brand line={`房间 ${code} · 地图：${mapName}`} />
       <section className="setup" data-testid="draft-room">
         <p className="draft-banner">
           杀手是 <strong>{name(d.killerPlayer)}</strong>
           {d.killerPlayer === snap.mySeat && "（你）"}
         </p>
-        {mine.map((s, i) => (
-          <div key={s.slotId} className="draft-slot">
-            <h2>
-              {s.side === "killer"
-                ? "选你的杀手（三选一）"
-                : mine.length > 1
-                  ? `选你的第 ${i + 1} 名逃生者（二选一）`
-                  : "选你的逃生者（二选一）"}
-            </h2>
-            <div className="draft-options">
-              {(s.options ?? []).map((c) => (
-                <button
-                  key={c}
-                  data-testid={`pick-${s.slotId}-${c}`}
-                  className={"draft-option" + (s.pick === c ? " on" : "")}
-                  disabled={!!s.pick}
-                  onClick={async () => {
-                    const err = await room.lobby({ type: "PICK", slotId: s.slotId, characterId: c });
-                    setError(err ?? "");
-                  }}
-                >
-                  <Token
-                    token={{
-                      id: c,
-                      kind: "actor",
-                      state: "healthy",
-                      asset: "portrait_" + c,
-                      label: actorName(c),
-                      location: "room",
-                    }}
-                    size={72}
-                  />
-                  <strong>{actorName(c)}</strong>
-                  <small>{chars.characters.find((x) => x.id === c)?.power?.name_zh ?? ""}</small>
-                </button>
-              ))}
-            </div>
+        {phone && mine.length > 1 && (
+          <div className="draft-tabs">
+            {mine.map((s, i) => (
+              <TapButton
+                key={s.slotId}
+                onClick={() => setSlotIndex(i)}
+                aria-pressed={slotIndex === i}
+              >
+                第 {i + 1} 名{s.pick ? " · 已选" : " · 待选"}
+              </TapButton>
+            ))}
           </div>
-        ))}
-        <h2>大家的选择</h2>
+        )}
+        {mine.map(
+          (s, i) =>
+            (!phone || slotIndex === i) && (
+              <div key={s.slotId} className="draft-slot">
+                <h2>
+                  {s.side === "killer"
+                    ? "选你的杀手（三选一）"
+                    : mine.length > 1
+                      ? `选你的第 ${i + 1} 名逃生者（二选一）`
+                      : "选你的逃生者（二选一）"}
+                </h2>
+                <div className="draft-options">
+                  {(s.options ?? []).map((c) => (
+                    <TapButton
+                      key={c}
+                      data-testid={`pick-${s.slotId}-${c}`}
+                      className={"draft-option" + (s.pick === c ? " on" : "")}
+                      disabled={!!s.pick}
+                      onClick={async () => {
+                        const err = await room.lobby({
+                          type: "PICK",
+                          slotId: s.slotId,
+                          characterId: c,
+                        });
+                        setError(err ?? "");
+                      }}
+                    >
+                      <Token
+                        token={{
+                          id: c,
+                          kind: "actor",
+                          state: "healthy",
+                          asset: "portrait_" + c,
+                          label: actorName(c),
+                          location: "room",
+                        }}
+                        size={72}
+                      />
+                      <strong>{actorName(c)}</strong>
+                      <small>
+                        {chars.characters.find((x) => x.id === c)?.power
+                          ?.name_zh ?? ""}
+                      </small>
+                    </TapButton>
+                  ))}
+                </div>
+              </div>
+            ),
+        )}
+        <h2 className="draft-status-title">大家的选择</h2>
         <ul className="player-list">
           {d.slots.map((s) => (
             <li key={s.slotId}>
@@ -447,11 +520,75 @@ function SeatPicker({
   room: ReturnType<typeof useRoom>;
   code: string;
 }) {
+  const phone = usePhone();
+  const [showInvite, setShowInvite] = useState(false);
   const [name, setName] = useState("");
   const [error, setError] = useState("");
   const seats = room.snap!.seats;
+  if (phone)
+    return (
+      <main className="phone-seat">
+        <header>
+          <strong>房间 {code}</strong>
+          <TapButton data-testid="invite" onClick={() => setShowInvite(true)}>
+            邀请朋友
+          </TapButton>
+        </header>
+        <h1>选择你的座位</h1>
+        <label>
+          昵称
+          <input
+            data-testid="player-name"
+            value={name}
+            maxLength={16}
+            placeholder="可留空"
+            onChange={(e) => setName(e.target.value)}
+          />
+        </label>
+        <div className="phone-seats">
+          {seats.map((s) => (
+            <TapButton
+              key={s.seatId}
+              data-testid={"seat-" + s.seatId}
+              disabled={s.claimed}
+              onClick={async () => {
+                const err = await room.claim(s.seatId, name);
+                if (err) setError(err);
+              }}
+            >
+              <span>
+                {s.actors.map((id) => (
+                  <Token
+                    key={id}
+                    size={48}
+                    token={{
+                      id,
+                      kind: "actor",
+                      state: "healthy",
+                      asset: "portrait_" + id,
+                      label: actorName(id),
+                      location: "room",
+                    }}
+                  />
+                ))}
+              </span>
+              <div>
+                <strong>{s.actors.map(actorName).join(" · ")}</strong>
+                <small>{s.claimed ? "已有玩家" : "空位 · 点击加入"}</small>
+              </div>
+            </TapButton>
+          ))}
+        </div>
+        {error && <p role="alert">{error}</p>}
+        {showInvite && (
+          <div className="handoff" role="dialog" aria-label="邀请朋友">
+            <InvitePanel code={code} onClose={() => setShowInvite(false)} />
+          </div>
+        )}
+      </main>
+    );
   return (
-    <main className="lobby">
+    <main className="lobby room-flow">
       <Brand line="选择你要扮演的座位。同一座位只能有一个人，刷新页面会自动回到原座位。" />
       <section className="setup">
         <InvitePanel code={code} />
@@ -468,7 +605,7 @@ function SeatPicker({
         </label>
         <div className="seat-list">
           {seats.map((s) => (
-            <button
+            <TapButton
               key={s.seatId}
               className={"seat " + s.side + (s.claimed ? " taken" : "")}
               data-testid={"seat-" + s.seatId}
@@ -487,7 +624,7 @@ function SeatPicker({
                   ? `${s.name ?? "已有玩家"}${s.connected ? " · 在线" : " · 离线"}`
                   : "空位 · 点击加入"}
               </small>
-            </button>
+            </TapButton>
           ))}
         </div>
         {error && (
@@ -504,32 +641,34 @@ function RoomView({ code }: { code: string }) {
   const room = useRoom(code);
   if (room.error && !room.snap)
     return (
-      <main className="lobby">
+      <main className="lobby room-flow">
         <Brand line="" />
         <section className="setup">
           <div role="alert" className="error">
             {room.error}
           </div>
-          <button className="primary" onClick={() => goto("/?online=1")}>
+          <TapButton className="primary" onClick={() => goto("/?online=1")}>
             返回联机大厅
-          </button>
+          </TapButton>
         </section>
       </main>
     );
   if (!room.snap)
     return (
-      <main className="lobby">
+      <main className="lobby room-flow">
         <p className="muted">正在连接房间 {code} …</p>
       </main>
     );
   const l = room.snap.lobby;
-  if (l.mode === "preset" && !room.snap.mySeat) return <SeatPicker room={room} code={code} />;
-  if (l.mode === "lobby" && !room.snap.mySeat) return <JoinRoom room={room} code={code} />;
+  if (l.mode === "preset" && !room.snap.mySeat)
+    return <SeatPicker room={room} code={code} />;
+  if (l.mode === "lobby" && !room.snap.mySeat)
+    return <JoinRoom room={room} code={code} />;
   if (l.stage === "lobby") return <LobbyRoom room={room} code={code} />;
   if (l.stage === "draft") return <DraftRoom room={room} code={code} />;
   if (!room.snap.view || !room.snap.mySeat)
     return (
-      <main className="lobby">
+      <main className="lobby room-flow">
         <p className="muted">正在进入对局…</p>
       </main>
     );

@@ -1,8 +1,16 @@
+import { TapButton } from "./TapButton.tsx";
 import React, { createContext, useContext, useEffect, useState } from "react";
-type Settings = { animations: boolean; art: boolean };
+type Settings = {
+  animations: boolean;
+  art: boolean;
+  sound: boolean;
+  vibration: boolean;
+};
 const Context = createContext({
   animations: true,
   art: true,
+  sound: true,
+  vibration: true,
   effectiveAnimations: true,
   set: (_k: keyof Settings, _v: boolean) => {},
 });
@@ -12,10 +20,12 @@ export function SettingsProvider({ children }: { children: React.ReactNode }) {
       return {
         animations: true,
         art: true,
+        sound: true,
+        vibration: true,
         ...JSON.parse(localStorage.getItem("dbd-visual-settings") ?? "{}"),
       };
     } catch {
-      return { animations: true, art: true };
+      return { animations: true, art: true, sound: true, vibration: true };
     }
   });
   const [reduced, setReduced] = useState(
@@ -32,7 +42,11 @@ export function SettingsProvider({ children }: { children: React.ReactNode }) {
     document.documentElement.dataset.motion = effectiveAnimations
       ? "on"
       : "off";
-    localStorage.setItem("dbd-visual-settings", JSON.stringify(settings));
+    try {
+      localStorage.setItem("dbd-visual-settings", JSON.stringify(settings));
+    } catch {
+      /* Settings remain usable when browser storage is unavailable. */
+    }
   }, [settings, effectiveAnimations]);
   return (
     <Context
@@ -52,9 +66,9 @@ export function SettingsButton() {
     [open, setOpen] = useState(false);
   return (
     <>
-      <button data-testid="settings" onClick={() => setOpen(true)}>
+      <TapButton data-testid="settings" onClick={() => setOpen(true)}>
         设置
-      </button>
+      </TapButton>
       {open && (
         <div
           className="settings-overlay"
@@ -80,7 +94,23 @@ export function SettingsButton() {
                 checked={s.art}
                 onChange={(e) => s.set("art", e.target.checked)}
               />
-              使用PNG美术
+              使用原创美术
+            </label>
+            <label>
+              <input
+                type="checkbox"
+                checked={s.sound}
+                onChange={(e) => s.set("sound", e.target.checked)}
+              />
+              轮到我时提示音
+            </label>
+            <label>
+              <input
+                type="checkbox"
+                checked={s.vibration}
+                onChange={(e) => s.set("vibration", e.target.checked)}
+              />
+              轮到我时震动
             </label>
             <p className="muted">
               设置保存在本设备。关闭动画仍显示静态结果，系统减少动态效果设置优先。
@@ -88,9 +118,12 @@ export function SettingsButton() {
             <a href="/?view=props" target="_blank" rel="noreferrer">
               查看道具状态一览 ↗
             </a>
-            <button onClick={() => setOpen(false)} data-testid="close-settings">
+            <TapButton
+              onClick={() => setOpen(false)}
+              data-testid="close-settings"
+            >
               完成
-            </button>
+            </TapButton>
           </section>
         </div>
       )}

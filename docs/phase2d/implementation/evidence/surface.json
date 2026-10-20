@@ -1,0 +1,42 @@
+[
+  {
+    "device": "iPhone 13",
+    "layout": {
+      "scroll": false,
+      "small": []
+    },
+    "screenshot": {
+      "scope": "Visible UI / prototype region, not a full-map-count claim",
+      "region": {
+        "x": 0,
+        "y": 0,
+        "width": 390,
+        "height": 664
+      },
+      "pixels": {
+        "busy": 0.08983970068307418,
+        "std": 29.84408819656294
+      }
+    }
+  },
+  {
+    "device": "Pixel 7",
+    "layout": {
+      "scroll": false,
+      "small": []
+    },
+    "screenshot": {
+      "scope": "Visible UI / prototype region, not a full-map-count claim",
+      "region": {
+        "x": 0,
+        "y": 0,
+        "width": 412,
+        "height": 839
+      },
+      "pixels": {
+        "busy": 0.11719012203144089,
+        "std": 32.207736440437316
+      }
+    }
+  }
+]

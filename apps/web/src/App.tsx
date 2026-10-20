@@ -15,6 +15,7 @@ import {
   cardNames,
   pathLabel,
   feedbackEvents,
+  itemActions,
 } from "../../../packages/game-engine/src/index.ts";
 import type {
   GameState,
@@ -24,13 +25,18 @@ import type {
   Event as GameEvent,
 } from "../../../packages/shared/src/types.ts";
 import { maps, chars } from "../../../packages/game-engine/src/data.ts";
-import { SettingsButton } from "./Settings.tsx";
+import { SettingsButton, useSettings } from "./Settings.tsx";
 import { Token } from "./Token.tsx";
 import { FeedbackPanel, CompletedGenerators } from "./Feedback.tsx";
 import type { Feedback } from "../../../packages/game-engine/src/presentation.ts";
 import { MotionIcon } from "./MotionIcon.tsx";
 import { Dice } from "./Dice.tsx";
 import { Board } from "./Board.tsx";
+import { MobileDock, MobileParameters, usePhone } from "./MobileDock.tsx";
+import { usePhoneExperience } from "./phone-experience.ts";
+import { skillRouteActions } from "./ui-actions.ts";
+import { ItemUseNotice } from "./ItemUseNotice.tsx";
+import { PhoneSetup } from "./PhoneSetup.tsx";
 import type { NetBinding } from "./net.ts";
 import { InvitePanel } from "./Online.tsx";
 import {
@@ -269,6 +275,10 @@ function WaitingPanel({
   );
 }
 export function App({ net }: { net?: NetBinding } = {}) {
+  const phone = usePhone();
+  const settings = useSettings();
+  const [pending, setPending] = useState(false);
+  const sending = useRef(false);
   const [effects, setEffects] = useState<Feedback[]>([]);
   const [localState, setState] = useState<GameState | null>(null);
   // 联机时以服务器发来的视图为准，避免本地副本与版本号短暂不一致
@@ -328,13 +338,34 @@ export function App({ net }: { net?: NetBinding } = {}) {
     !net && !!state && !state.winner && (locked || viewer !== owner);
   // 联机：掷骰和棋盘变化所有人同时看到。观看者的弹窗在动画播完后自动关闭，
   // 只有行动者需要点"已查看"，这样不会挡住别人的屏幕。
-  const watching = !!net && waiting;
+  const rollActor = dice.length
+    ? state?.actors[String(dice[0].data.actorId)]
+    : null;
+  const watching =
+    !!net && (rollActor ? rollActor.ownerId !== net.seat : waiting);
+  usePhoneExperience(
+    !!state,
+    !!state && !waiting && !masked && !state.winner,
+    id,
+  );
+  useEffect(() => {
+    document.body.classList.toggle("phone-inmatch", phone && !!state);
+    return () => document.body.classList.remove("phone-inmatch");
+  }, [phone, !!state]);
+  useEffect(() => {
+    if (!phone || !effects.length || dice.length) return;
+    const timer = setTimeout(() => setEffects([]), 1800);
+    return () => clearTimeout(timer);
+  }, [phone, effects, dice.length]);
   useEffect(() => {
     if (!watching || !dice.length) return;
     const n = ((dice[0].data.faces as unknown[]) ?? [0]).length;
-    const t = setTimeout(() => setDice((v) => v.slice(1)), 2600 + n * 220);
+    const t = setTimeout(
+      () => setDice((v) => v.slice(1)),
+      settings.effectiveAnimations ? 1600 + n * 220 : 80,
+    );
     return () => clearTimeout(t);
-  }, [watching, dice]);
+  }, [watching, dice, settings.effectiveAnimations]);
   useEffect(() => {
     if (!watching || dice.length || !effects.length) return;
     const t = setTimeout(() => setEffects([]), 2600);
@@ -386,19 +417,45 @@ export function App({ net }: { net?: NetBinding } = {}) {
     }
   }
   function send(c: Command) {
-    if (!state || masked || waiting || dice.length || effects.length) return;
+    const ownInterrupt =
+      !!state &&
+      c.type === "USE_ITEM" &&
+      !!c.actorId &&
+      state.actors[c.actorId]?.ownerId === (net?.seat ?? viewer) &&
+      itemActions(state, c.actorId).some(
+        (a) => JSON.stringify(a.command) === JSON.stringify(c),
+      );
+    if (
+      !state ||
+      masked ||
+      (waiting && !ownInterrupt) ||
+      dice.length ||
+      (!phone && effects.length) ||
+      sending.current ||
+      (net && !net.connected)
+    )
+      return;
     if (net) {
-      void net.send(c).then((err) => {
-        if (err) setError(err);
-        else {
-          setPlan([]);
-          setSelected(null);
-          setForm(null);
-          setRoute([]);
-          setDiceCount(0);
-          setError("");
-        }
-      });
+      sending.current = true;
+      setPending(true);
+      void net
+        .send(c)
+        .then((err) => {
+          if (err) setError(err);
+          else {
+            setPlan([]);
+            setSelected(null);
+            setForm(null);
+            setRoute([]);
+            setDiceCount(0);
+            setError("");
+          }
+        })
+        .catch(() => setError("连接中断，请等待重新同步。"))
+        .finally(() => {
+          sending.current = false;
+          setPending(false);
+        });
       return;
     }
     try {
@@ -423,15 +480,21 @@ export function App({ net }: { net?: NetBinding } = {}) {
       );
     }
   }
+  const perkRoutes = useMemo(
+    () => (state && form ? skillRouteActions(state, form.kind, form.id) : []),
+    [state, form],
+  );
   const highlights = useMemo(() => {
     if (!state || !id || masked || waiting) return [];
+    if (perkRoutes.length)
+      return perkRoutes.map((a) => ({ pathId: a.pathId, to: a.to }));
     if (state.choice?.kind === "CARRY") return carrySteps(state, route);
     if (state.phase === "PLANNING" && plan.length)
       return previewRoutes(state, id, plan[0]);
     return control!.actions
       .filter((a) => a.roomId && a.pathId)
       .map((a) => ({ pathId: a.pathId!, to: a.roomId! }));
-  }, [state, id, masked, waiting, route, plan, control]);
+  }, [state, id, masked, waiting, route, plan, control, perkRoutes]);
   const visibleLogs = useMemo(
     () =>
       state?.events.filter(
@@ -454,6 +517,12 @@ export function App({ net }: { net?: NetBinding } = {}) {
   );
   function pick(kind: string, target: string) {
     if (!state || !control) return;
+    if (form && perkRoutes.length && kind === "room") {
+      const actions = perkRoutes.filter((a) => a.to === target);
+      if (actions.length === 1) send(actions[0].command);
+      else setSelected(target);
+      return;
+    }
     if (state.choice?.kind === "CARRY" && kind === "room") {
       const steps = carrySteps(state, route).filter((r) => r.to === target);
       if (steps.length === 1) {
@@ -524,6 +593,10 @@ export function App({ net }: { net?: NetBinding } = {}) {
                         KEEP_ITEM: "保留物品",
                         PHANTASM: "幻影反应",
                         OPTIONAL_MOVE: "可选移动",
+                        MAP_REVEAL: "地图翻开道具",
+                        PHANTASM_TARGET: "重新选择幻影目标",
+                        CARRY_REROUTE: "搬运改道",
+                        REPLAN: "重新放置移动牌",
                       } as Record<string, string>
                     )[state.choice.kind]
                   : null,
@@ -562,6 +635,10 @@ export function App({ net }: { net?: NetBinding } = {}) {
             OPTIONAL_MOVE: "选择移动或留在原地",
             CARRY: "依次选择搬运路线",
             PHANTASM: "幻影反应",
+            MAP_REVEAL: "点击背面道具，至多翻开三个；也可提前结束",
+            PHANTASM_TARGET: "重新选择同一房间内的交互目标",
+            CARRY_REROUTE: "点击合法房间改道，或选择停下",
+            REPLAN: "从剩余手牌重新放置一张移动牌",
           } as Record<string, string>
         )[state.choice.kind]
       : state?.turn
@@ -571,6 +648,17 @@ export function App({ net }: { net?: NetBinding } = {}) {
           : state
             ? phases[state.phase]
             : "";
+  if (!state && phone)
+    return (
+      <PhoneSetup
+        options={options}
+        setOptions={setOptions}
+        count={Number(playerCount)}
+        setCount={(n) => setPlayerCount(String(n))}
+        start={start}
+        error={error}
+      />
+    );
   if (!state)
     return (
       <>
@@ -719,76 +807,123 @@ export function App({ net }: { net?: NetBinding } = {}) {
       </>
     );
   return (
-    <div className="game">
-      <header className="game-header">
-        <div className="brand">
-          <span className="mini-tally">
-            <Token
-              token={{
-                id: "brand",
-                kind: "brand_lantern",
-                state: "normal",
-                asset: "brand_lantern",
-                label: "原创灯笼",
-                location: "room",
-              }}
-              size={42}
-            />
-          </span>
-          <h1>
-            黎明杀机 <small>桌游版</small>
-          </h1>
-        </div>
-        <div className="header-meta">
-          <span>{net ? `联机 · 房间 ${net.code}` : "热座"}</span>
-          <strong>第 {state.round} 轮</strong>
-          <span>{phases[state.phase]}</span>
-        </div>
-        <div className="header-buttons">
-          <SettingsButton />
-          {net ? (
-            <>
-              <span
-                className={"net-status" + (net.connected ? " on" : "")}
-                data-testid="net-status"
+    <div className={"game" + (phone ? " phone-game" : "")}>
+      {phone && !masked && (
+        <MobileDock
+          state={state}
+          id={id}
+          control={control!}
+          waiting={waiting}
+          net={net}
+          status={status}
+          plan={plan}
+          setPlan={setPlan}
+          send={send}
+          pending={pending || !!dice.length}
+          error={error}
+          route={route}
+          diceCount={diceCount}
+          setDiceCount={setDiceCount}
+          clearRoute={() => {
+            setRoute([]);
+            setDiceCount(0);
+          }}
+          leave={() => {
+            if (net) net.leave();
+            else {
+              setState(null);
+              setViewer(null);
+            }
+          }}
+          onForm={(kind, id) => setForm({ kind, id })}
+          selected={selected}
+          clearSelected={() => setSelected(null)}
+          onInvite={() => setInvite(true)}
+        />
+      )}
+      {phone && !masked && form && (
+        <MobileParameters
+          key={form.kind + form.id + state.events.length}
+          state={state}
+          kind={form.kind}
+          id={form.id}
+          send={send}
+          close={() => setForm(null)}
+        />
+      )}
+      {!phone && (
+        <header className="game-header">
+          <div className="brand">
+            <span className="mini-tally">
+              <Token
+                token={{
+                  id: "brand",
+                  kind: "brand_lantern",
+                  state: "normal",
+                  asset: "brand_lantern",
+                  label: "原创灯笼",
+                  location: "room",
+                }}
+                size={42}
+              />
+            </span>
+            <h1>
+              黎明杀机 <small>桌游版</small>
+            </h1>
+          </div>
+          <div className="header-meta">
+            <span>{net ? `联机 · 房间 ${net.code}` : "热座"}</span>
+            <strong>第 {state.round} 轮</strong>
+            <span>{phases[state.phase]}</span>
+          </div>
+          <div className="header-buttons">
+            <SettingsButton />
+            {net ? (
+              <>
+                <span
+                  className={"net-status" + (net.connected ? " on" : "")}
+                  data-testid="net-status"
+                >
+                  {net.connected ? "已连接" : "重新连接中…"}
+                </span>
+                <button onClick={() => setInvite(true)} aria-label="邀请朋友">
+                  邀请
+                </button>
+              </>
+            ) : (
+              <button
+                onClick={() => {
+                  setLocked(true);
+                  setViewer(null);
+                }}
+                disabled={!!state.winner}
+                aria-label="遮挡并交接设备"
               >
-                {net.connected ? "已连接" : "重新连接中…"}
-              </span>
-              <button onClick={() => setInvite(true)} aria-label="邀请朋友">
-                邀请
+                交接设备
               </button>
-            </>
-          ) : (
-            <button
-              onClick={() => {
-                setLocked(true);
-                setViewer(null);
-              }}
-              disabled={!!state.winner}
-              aria-label="遮挡并交接设备"
-            >
-              交接设备
-            </button>
-          )}
-        </div>
-      </header>
+            )}
+          </div>
+        </header>
+      )}
       {((!masked && !dice.length) || !!state.winner) && (
         <>
-          <section className="score-strip">
-            <Track
-              name="发电机进度"
-              value={state.completedGenerators}
-              max={4}
-            />
-            <Track name="献祭进度" value={state.sacrifice} max={8} />
-            <CompletedGenerators state={state} />
-            <div className="objective-text">
-              {state.completedGenerators >= 4
-                ? "出口大门已通电"
-                : "完成4台发电机，让出口大门通电"}
-              <small>发电机与出口大门上的标记记录各自修理进度</small>
-            </div>
-          </section>
+          {!phone && (
+            <section className="score-strip">
+              <Track
+                name="发电机进度"
+                value={state.completedGenerators}
+                max={4}
+              />
+              <Track name="献祭进度" value={state.sacrifice} max={8} />
+              <CompletedGenerators state={state} />
+              <div className="objective-text">
+                {state.completedGenerators >= 4
+                  ? "出口大门已通电"
+                  : "完成4台发电机，让出口大门通电"}
+                <small>发电机与出口大门上的标记记录各自修理进度</small>
+              </div>
+            </section>
+          )}
           <div className="workspace">
             <div className="play-column">
               <Board
@@ -798,7 +933,16 @@ export function App({ net }: { net?: NetBinding } = {}) {
                 onProp={(id) => pick("prop", id)}
                 onActor={(id) => pick("prop", id)}
                 selected={selected}
-                focusRoom={current?.room}
+                focusRoom={
+                  route.at(-1)?.to ??
+                  ((state.phase === "SETUP" ||
+                    state.choice?.kind === "MAP_REVEAL") &&
+                  selected &&
+                  !state.props.some((p) => p.id === selected)
+                    ? selected
+                    : current?.room)
+                }
+                phone={phone}
                 actionable={
                   waiting
                     ? []
@@ -807,433 +951,447 @@ export function App({ net }: { net?: NetBinding } = {}) {
                         .map((a) => a.targetId!)
                 }
               />
-              <section className="control-panel" data-testid="control-panel">
-                {state.winner ? (
-                  <div className="victory">
-                    <p className="eyebrow">对局结束</p>
-                    <h2>
-                      {state.winner === "survivor" ? "逃生者获胜" : "杀手获胜"}
-                    </h2>
-                    <p>
-                      {state.winner === "survivor"
-                        ? "出口大门已开启。"
-                        : "献祭进度已完成。"}
-                    </p>
-                    <button
-                      onClick={() => {
-                        if (net) return net.leave();
-                        setState(null);
-                        setViewer(null);
-                      }}
-                      data-testid="new-game"
-                    >
-                      {net ? "返回联机大厅" : "再开一局"}
-                    </button>
-                  </div>
-                ) : waiting ? (
-                  <WaitingPanel state={state} net={net!} actorId={id} />
-                ) : (
-                  current && (
-                    <>
-                      <div className="actor-line">
-                        <div>
-                          <p className="eyebrow">
-                            {current.side === "killer" ? "杀手" : "逃生者"} ·
-                            当前操作者
-                          </p>
-                          <h2>
-                            {actorName(id!)}{" "}
-                            <small>
-                              {current.room
-                                ? roomName(state, current.room)
-                                : "准备入场"}
-                            </small>
-                          </h2>
-                        </div>
-                        <div className="actor-stats">
-                          <span>
-                            血点 <strong>{current.blood}</strong>
-                          </span>
-                          <span>
-                            {current.side === "killer"
-                              ? "杀手"
-                              : current.health === "healthy"
-                                ? "健康"
-                                : "受伤"}
-                            {current.hookId
-                              ? " · 挂钩"
-                              : current.lockerId
-                                ? " · 躲藏"
-                                : ""}
-                            {current.madness ? " · 疯狂" : ""}
-                          </span>
-                        </div>
-                      </div>
-                      <p className="instruction" role="status">
-                        {status}
+              {!phone && (
+                <section className="control-panel" data-testid="control-panel">
+                  {state.winner ? (
+                    <div className="victory">
+                      <p className="eyebrow">对局结束</p>
+                      <h2>
+                        {state.winner === "survivor"
+                          ? "逃生者获胜"
+                          : "杀手获胜"}
+                      </h2>
+                      <p>
+                        {state.winner === "survivor"
+                          ? "出口大门已开启。"
+                          : "献祭进度已完成。"}
                       </p>
-                      {error && (
-                        <div role="alert" className="error">
-                          {error}
-                          <button
-                            aria-label="关闭提示"
-                            onClick={() => setError("")}
-                          >
-                            ×
-                          </button>
-                        </div>
-                      )}
-                      {state.phase === "PLANNING" &&
-                        !state.window &&
-                        !state.choice && (
-                          <div className="planning">
-                            <p className="small muted">
-                              {state.publicPlans.includes(id!)
-                                ? "本次计划公开"
-                                : "秘密选择"}{" "}
-                              {control!.planCount}{" "}
-                              张移动牌，按选择顺序执行。点选后棋盘高亮该牌的合法路线。
+                      <button
+                        onClick={() => {
+                          if (net) return net.leave();
+                          setState(null);
+                          setViewer(null);
+                        }}
+                        data-testid="new-game"
+                      >
+                        {net ? "返回联机大厅" : "再开一局"}
+                      </button>
+                    </div>
+                  ) : waiting ? (
+                    <WaitingPanel state={state} net={net!} actorId={id} />
+                  ) : (
+                    current && (
+                      <>
+                        <div className="actor-line">
+                          <div>
+                            <p className="eyebrow">
+                              {current.side === "killer" ? "杀手" : "逃生者"} ·
+                              当前操作者
                             </p>
-                            <div
-                              className="movement-hand"
-                              data-testid="movement-hand"
+                            <h2>
+                              {actorName(id!)}{" "}
+                              <small>
+                                {current.room
+                                  ? roomName(state, current.room)
+                                  : "准备入场"}
+                              </small>
+                            </h2>
+                          </div>
+                          <div className="actor-stats">
+                            <span>
+                              血点 <strong>{current.blood}</strong>
+                            </span>
+                            <span>
+                              {current.side === "killer"
+                                ? "杀手"
+                                : current.health === "healthy"
+                                  ? "健康"
+                                  : "受伤"}
+                              {current.hookId
+                                ? " · 挂钩"
+                                : current.lockerId
+                                  ? " · 躲藏"
+                                  : ""}
+                              {current.madness ? " · 疯狂" : ""}
+                            </span>
+                          </div>
+                        </div>
+                        <p className="instruction" role="status">
+                          {status}
+                        </p>
+                        {error && (
+                          <div role="alert" className="error">
+                            {error}
+                            <button
+                              aria-label="关闭提示"
+                              onClick={() => setError("")}
                             >
-                              {control!.hand.map((c, i) => (
+                              ×
+                            </button>
+                          </div>
+                        )}
+                        {state.phase === "PLANNING" &&
+                          !state.window &&
+                          !state.choice && (
+                            <div className="planning">
+                              <p className="small muted">
+                                {state.publicPlans.includes(id!)
+                                  ? "本次计划公开"
+                                  : "秘密选择"}{" "}
+                                {control!.planCount}{" "}
+                                张移动牌，按选择顺序执行。点选后棋盘高亮该牌的合法路线。
+                              </p>
+                              <div
+                                className="movement-hand"
+                                data-testid="movement-hand"
+                              >
+                                {control!.hand.map((c, i) => (
+                                  <button
+                                    key={i}
+                                    data-card={c}
+                                    className={
+                                      "move-card " +
+                                      c +
+                                      (plan.includes(c) ? " chosen" : "")
+                                    }
+                                    onClick={() =>
+                                      setPlan((p) =>
+                                        p.includes(c)
+                                          ? p.filter((v) => v !== c)
+                                          : p.length < control!.planCount
+                                            ? [...p, c]
+                                            : [c],
+                                      )
+                                    }
+                                  >
+                                    <span className="card-symbol">
+                                      <MotionIcon card={c} size={40} />
+                                    </span>
+                                    <span>{cardNames[c]}</span>
+                                    {plan.includes(c) && (
+                                      <b>{plan.indexOf(c) + 1}</b>
+                                    )}
+                                  </button>
+                                ))}
+                              </div>
+                              <button
+                                className="primary"
+                                data-testid="confirm-plan"
+                                disabled={plan.length !== control!.planCount}
+                                onClick={() =>
+                                  send({
+                                    type: "PLAN",
+                                    actorId: id!,
+                                    cards: plan,
+                                  })
+                                }
+                              >
+                                确认秘密计划
+                                {state.publicPlans.includes(id!)
+                                  ? "（公开）"
+                                  : ""}
+                              </button>
+                            </div>
+                          )}
+                        {state.turn?.card && state.phase === "ACTING" && (
+                          <p className="small">
+                            当前移动牌：
+                            <strong>{cardNames[state.turn.card]}</strong>
+                          </p>
+                        )}
+                        {state.choice?.kind === "CARRY" && (
+                          <div className="carry-builder">
+                            <p>
+                              搬运路线：
+                              {route.length
+                                ? route
+                                    .map((r) => roomName(state, r.to))
+                                    .join(" → ")
+                                : "尚未移动"}
+                              （{route.length}步）
+                            </p>
+                            <div className="action-grid">
+                              {carrySteps(state, route).map((r) => (
                                 <button
-                                  key={i}
-                                  data-card={c}
-                                  className={
-                                    "move-card " +
-                                    c +
-                                    (plan.includes(c) ? " chosen" : "")
-                                  }
-                                  onClick={() =>
-                                    setPlan((p) =>
-                                      p.includes(c)
-                                        ? p.filter((v) => v !== c)
-                                        : p.length < control!.planCount
-                                          ? [...p, c]
-                                          : [c],
-                                    )
-                                  }
+                                  key={r.pathId + r.to}
+                                  data-carry-path={r.pathId}
+                                  data-carry-to={r.to}
+                                  onClick={() => {
+                                    setRoute((v) => [...v, r]);
+                                    setDiceCount((v) =>
+                                      Math.max(v, route.length + 1),
+                                    );
+                                  }}
                                 >
-                                  <span className="card-symbol">
-                                    <MotionIcon card={c} size={40} />
-                                  </span>
-                                  <span>{cardNames[c]}</span>
-                                  {plan.includes(c) && (
-                                    <b>{plan.indexOf(c) + 1}</b>
-                                  )}
+                                  前往{roomName(state, r.to)}
+                                  <small>{pathLabel(state, r.pathId)}</small>
                                 </button>
                               ))}
                             </div>
-                            <button
-                              className="primary"
-                              data-testid="confirm-plan"
-                              disabled={plan.length !== control!.planCount}
-                              onClick={() =>
-                                send({
-                                  type: "PLAN",
-                                  actorId: id!,
-                                  cards: plan,
-                                })
-                              }
-                            >
-                              确认秘密计划
-                              {state.publicPlans.includes(id!)
-                                ? "（公开）"
-                                : ""}
-                            </button>
-                          </div>
-                        )}
-                      {state.turn?.card && state.phase === "ACTING" && (
-                        <p className="small">
-                          当前移动牌：
-                          <strong>{cardNames[state.turn.card]}</strong>
-                        </p>
-                      )}
-                      {state.choice?.kind === "CARRY" && (
-                        <div className="carry-builder">
-                          <p>
-                            搬运路线：
-                            {route.length
-                              ? route
-                                  .map((r) => roomName(state, r.to))
-                                  .join(" → ")
-                              : "尚未移动"}
-                            （{route.length}步）
-                          </p>
-                          <div className="action-grid">
-                            {carrySteps(state, route).map((r) => (
+                            <div className="button-row">
                               <button
-                                key={r.pathId + r.to}
-                                data-carry-path={r.pathId}
-                                data-carry-to={r.to}
                                 onClick={() => {
-                                  setRoute((v) => [...v, r]);
-                                  setDiceCount((v) =>
-                                    Math.max(v, route.length + 1),
-                                  );
+                                  setRoute([]);
+                                  setDiceCount(0);
                                 }}
                               >
-                                前往{roomName(state, r.to)}
-                                <small>{pathLabel(state, r.pathId)}</small>
+                                清空路线
                               </button>
-                            ))}
-                          </div>
-                          <div className="button-row">
-                            <button
-                              onClick={() => {
-                                setRoute([]);
-                                setDiceCount(0);
-                              }}
-                            >
-                              清空路线
-                            </button>
-                            <label>
-                              挣脱骰子数量
-                              <select
-                                data-testid="carry-dice"
-                                value={diceCount}
-                                onChange={(e) =>
-                                  setDiceCount(Number(e.target.value))
+                              <label>
+                                挣脱骰子数量
+                                <select
+                                  data-testid="carry-dice"
+                                  value={diceCount}
+                                  onChange={(e) =>
+                                    setDiceCount(Number(e.target.value))
+                                  }
+                                >
+                                  {[0, 1, 2, 3, 4].map((n) => (
+                                    <option key={n} value={n}>
+                                      {n}颗
+                                    </option>
+                                  ))}
+                                </select>
+                              </label>
+                              <button
+                                className="primary"
+                                data-testid="confirm-carry"
+                                onClick={() =>
+                                  send({
+                                    type: "SELECT",
+                                    actorId: id!,
+                                    dice: diceCount,
+                                    route,
+                                  })
                                 }
                               >
-                                {[0, 1, 2, 3, 4].map((n) => (
-                                  <option key={n} value={n}>
-                                    {n}颗
-                                  </option>
-                                ))}
-                              </select>
-                            </label>
-                            <button
-                              className="primary"
-                              data-testid="confirm-carry"
-                              onClick={() =>
-                                send({
-                                  type: "SELECT",
-                                  actorId: id!,
-                                  dice: diceCount,
-                                  route,
-                                })
-                              }
-                            >
-                              确认搬运
+                                确认搬运
+                              </button>
+                            </div>
+                          </div>
+                        )}
+                        {selected && (
+                          <div className="selection-line">
+                            <span>
+                              {state.props.some((p) => p.id === selected)
+                                ? propLabel(state, selected)
+                                : state.actors[selected]
+                                  ? actorName(selected)
+                                  : roomName(state, selected)}
+                            </span>
+                            <button onClick={() => setSelected(null)}>
+                              显示全部操作
                             </button>
                           </div>
+                        )}
+                        <div className="action-grid" data-testid="actions">
+                          {control!.actions
+                            .filter(
+                              (a) =>
+                                (!a.targetId ||
+                                  (!!selected && a.targetId === selected)) &&
+                                (!selected ||
+                                  a.targetId === selected ||
+                                  a.roomId === selected ||
+                                  (!a.targetId && !a.roomId)),
+                            )
+                            .map((a, i) => (
+                              <button
+                                key={i}
+                                className={
+                                  ["PASS", "END_TURN"].includes(a.command.type)
+                                    ? "primary"
+                                    : ""
+                                }
+                                data-command={JSON.stringify(a.command)}
+                                onClick={() => send(a.command)}
+                              >
+                                {a.label}
+                              </button>
+                            ))}
                         </div>
-                      )}
-                      {selected && (
-                        <div className="selection-line">
-                          <span>
-                            {state.props.some((p) => p.id === selected)
-                              ? propLabel(state, selected)
-                              : state.actors[selected]
-                                ? actorName(selected)
-                                : roomName(state, selected)}
-                          </span>
-                          <button onClick={() => setSelected(null)}>
-                            显示全部操作
+                        {state.choice?.kind === "PHANTASM" && (
+                          <button
+                            onClick={() =>
+                              setForm({ kind: "PHANTASM", id: "phantasm" })
+                            }
+                          >
+                            传送并交互
                           </button>
+                        )}
+                        {state.window?.event === "WOULD_INTERACT" && (
+                          <button
+                            onClick={() =>
+                              setForm({
+                                kind: "REVISE_INTERACTION",
+                                id: "revise",
+                              })
+                            }
+                          >
+                            重新选择交互目标
+                          </button>
+                        )}
+                        <div className="skills-header">
+                          <h3>板载技能</h3>
+                          <span className="muted small">
+                            点击查看全文与目标选择
+                          </span>
                         </div>
-                      )}
-                      <div className="action-grid" data-testid="actions">
-                        {control!.actions
-                          .filter(
-                            (a) =>
-                              (!a.targetId ||
-                                (!!selected && a.targetId === selected)) &&
-                              (!selected ||
-                                a.targetId === selected ||
-                                a.roomId === selected ||
-                                (!a.targetId && !a.roomId)),
-                          )
-                          .map((a, i) => (
-                            <button
-                              key={i}
-                              className={
-                                ["PASS", "END_TURN"].includes(a.command.type)
-                                  ? "primary"
-                                  : ""
-                              }
-                              data-command={JSON.stringify(a.command)}
-                              onClick={() => send(a.command)}
-                            >
-                              {a.label}
-                            </button>
+                        <div className="skill-grid">
+                          {availableSkills(state, id!).map((p) => (
+                            <details key={p.id} open>
+                              <summary>
+                                <span>{p.name}</span>
+                                <b>{p.cost} 血点</b>
+                              </summary>
+                              <p>{p.text}</p>
+                              <button
+                                data-perk={p.id}
+                                disabled={
+                                  !p.available && p.status !== "CHECK_REQUIRED"
+                                }
+                                onClick={() =>
+                                  p.status === "CHECK_REQUIRED"
+                                    ? send({
+                                        type: "USE_PERK",
+                                        actorId: id!,
+                                        perkId: p.id,
+                                      })
+                                    : setForm({ kind: "PERK", id: p.id })
+                                }
+                              >
+                                {p.status === "CHECK_REQUIRED"
+                                  ? "尝试使用"
+                                  : p.available
+                                    ? "使用技能"
+                                    : "尚未到使用时机"}
+                              </button>
+                            </details>
                           ))}
-                      </div>
-                      {state.choice?.kind === "PHANTASM" && (
-                        <button
-                          onClick={() =>
-                            setForm({ kind: "PHANTASM", id: "phantasm" })
-                          }
-                        >
-                          传送并交互
-                        </button>
-                      )}
-                      {state.window?.event === "WOULD_INTERACT" && (
-                        <button
-                          onClick={() =>
-                            setForm({
-                              kind: "REVISE_INTERACTION",
-                              id: "revise",
-                            })
-                          }
-                        >
-                          重新选择交互目标
-                        </button>
-                      )}
-                      <div className="skills-header">
-                        <h3>板载技能</h3>
-                        <span className="muted small">
-                          点击查看全文与目标选择
-                        </span>
-                      </div>
-                      <div className="skill-grid">
-                        {availableSkills(state, id!).map((p) => (
-                          <details key={p.id} open>
+                        </div>
+                        {current.side === "killer" && (
+                          <details className="power">
                             <summary>
-                              <span>{p.name}</span>
-                              <b>{p.cost} 血点</b>
-                            </summary>
-                            <p>{p.text}</p>
-                            <button
-                              data-perk={p.id}
-                              disabled={
-                                !p.available && p.status !== "CHECK_REQUIRED"
+                              杀手力量：
+                              {
+                                chars.characters.find((c) => c.id === id)?.power
+                                  ?.name_zh
                               }
+                            </summary>
+                            <p>
+                              {
+                                chars.characters.find((c) => c.id === id)?.power
+                                  ?.text_original_zh
+                              }
+                            </p>
+                            <button
+                              data-testid="power"
                               onClick={() =>
-                                p.status === "CHECK_REQUIRED"
-                                  ? send({
-                                      type: "USE_PERK",
-                                      actorId: id!,
-                                      perkId: p.id,
-                                    })
-                                  : setForm({ kind: "PERK", id: p.id })
+                                setForm({ kind: "POWER", id: id! })
                               }
                             >
-                              {p.status === "CHECK_REQUIRED"
-                                ? "尝试使用"
-                                : p.available
-                                  ? "使用技能"
-                                  : "尚未到使用时机"}
+                              选择力量目标
                             </button>
                           </details>
-                        ))}
-                      </div>
-                      {current.side === "killer" && (
-                        <details className="power">
-                          <summary>
-                            杀手力量：
-                            {
-                              chars.characters.find((c) => c.id === id)?.power
-                                ?.name_zh
-                            }
-                          </summary>
-                          <p>
-                            {
-                              chars.characters.find((c) => c.id === id)?.power
-                                ?.text_original_zh
-                            }
-                          </p>
-                          <button
-                            data-testid="power"
-                            onClick={() => setForm({ kind: "POWER", id: id! })}
-                          >
-                            选择力量目标
-                          </button>
-                        </details>
-                      )}
-                      {chars.characters.find((c) => c.id === id)?.passive && (
-                        <details className="power" open>
-                          <summary>板载被动</summary>
-                          <p>
-                            {
-                              chars.characters.find((c) => c.id === id)?.passive
-                                ?.text_original_zh
-                            }
-                          </p>
-                          <small className="muted">
-                            满足条件时由规则引擎自动处理
-                          </small>
-                        </details>
-                      )}
-                      <div className="item-row">
-                        <h3>物品</h3>
-                        {current.item ? (
-                          <>
-                            <div>
-                              <strong>{itemInfo(current.item)?.name_zh}</strong>
-                              <p>{itemInfo(current.item)?.text_original_zh}</p>
-                            </div>
-                            <button
-                              onClick={() =>
-                                send({ type: "USE_ITEM", actorId: id! })
-                              }
-                            >
-                              使用物品
-                            </button>
-                          </>
-                        ) : (
-                          <span className="muted">未持有物品</span>
                         )}
-                      </div>
-                      {form && (
-                        <div className="form-drawer">
-                          <h3>
-                            {form.kind === "PERK"
-                              ? availableSkills(state, id!).find(
-                                  (p) => p.id === form.id,
-                                )?.name
-                              : form.kind === "POWER"
-                                ? "杀手力量"
-                                : form.kind === "PHANTASM"
-                                  ? "幻影反应"
-                                  : "重新选择交互"}
-                          </h3>
-                          <ParameterForm
-                            key={form.kind + form.id + state.events.length}
-                            state={state}
-                            form={form}
-                            onSubmit={send}
-                            onClose={() => setForm(null)}
-                          />
+                        {chars.characters.find((c) => c.id === id)?.passive && (
+                          <details className="power" open>
+                            <summary>板载被动</summary>
+                            <p>
+                              {
+                                chars.characters.find((c) => c.id === id)
+                                  ?.passive?.text_original_zh
+                              }
+                            </p>
+                            <small className="muted">
+                              满足条件时由规则引擎自动处理
+                            </small>
+                          </details>
+                        )}
+                        <div className="item-row">
+                          <h3>物品</h3>
+                          {current.item ? (
+                            <>
+                              <div>
+                                <strong>
+                                  {itemInfo(current.item)?.name_zh}
+                                </strong>
+                                <p>
+                                  {itemInfo(current.item)?.text_original_zh}
+                                </p>
+                              </div>
+                              {itemActions(state, id!).map((a, i) => (
+                                <button
+                                  key={i}
+                                  data-command={JSON.stringify(a.command)}
+                                  onClick={() => send(a.command)}
+                                >
+                                  {a.label}
+                                </button>
+                              ))}
+                            </>
+                          ) : (
+                            <span className="muted">未持有物品</span>
+                          )}
                         </div>
-                      )}
-                    </>
-                  )
-                )}
-              </section>
+                        {form && (
+                          <div className="form-drawer">
+                            <h3>
+                              {form.kind === "PERK"
+                                ? availableSkills(state, id!).find(
+                                    (p) => p.id === form.id,
+                                  )?.name
+                                : form.kind === "POWER"
+                                  ? "杀手力量"
+                                  : form.kind === "PHANTASM"
+                                    ? "幻影反应"
+                                    : "重新选择交互"}
+                            </h3>
+                            <ParameterForm
+                              key={form.kind + form.id + state.events.length}
+                              state={state}
+                              form={form}
+                              onSubmit={send}
+                              onClose={() => setForm(null)}
+                            />
+                          </div>
+                        )}
+                      </>
+                    )
+                  )}
+                </section>
+              )}
             </div>
-            <aside className="journal">
-              <div className="journal-title">
-                <h2>事件日志</h2>
-                <span>{visibleLogs.length} 条</span>
-              </div>
-              <div className="journal-scroll" data-testid="event-log">
-                {[...visibleLogs].reverse().map((e) => (
-                  <div
-                    key={e.seq}
-                    className={
-                      "log-entry " +
-                      (e.type === "DICE_ROLLED" ? "roll-entry" : "")
-                    }
-                  >
-                    <span>
-                      第{e.round}轮 <small>#{e.seq}</small>
-                    </span>
-                    <p>{eventText(state, e)}</p>
-                  </div>
-                ))}
-              </div>
-              <details className="dice-history">
-                <summary>全部掷骰记录（{recentRolls.length}）</summary>
-                {[...recentRolls].reverse().map((e) => (
-                  <p key={e.seq}>{eventText(state, e)}</p>
-                ))}
-              </details>
-            </aside>
+            {!phone && (
+              <aside className="journal">
+                <div className="journal-title">
+                  <h2>事件日志</h2>
+                  <span>{visibleLogs.length} 条</span>
+                </div>
+                <div className="journal-scroll" data-testid="event-log">
+                  {[...visibleLogs].reverse().map((e) => (
+                    <div
+                      key={e.seq}
+                      className={
+                        "log-entry " +
+                        (e.type === "DICE_ROLLED" ? "roll-entry" : "")
+                      }
+                    >
+                      <span>
+                        第{e.round}轮 <small>#{e.seq}</small>
+                      </span>
+                      <p>{eventText(state, e)}</p>
+                    </div>
+                  ))}
+                </div>
+                <details className="dice-history">
+                  <summary>全部掷骰记录（{recentRolls.length}）</summary>
+                  {[...recentRolls].reverse().map((e) => (
+                    <p key={e.seq}>{eventText(state, e)}</p>
+                  ))}
+                </details>
+              </aside>
+            )}
           </div>
         </>
       )}
@@ -1287,8 +1445,36 @@ export function App({ net }: { net?: NetBinding } = {}) {
           <InvitePanel code={net.code} onClose={() => setInvite(false)} />
         </div>
       )}
+      {!masked && <ItemUseNotice events={state.events} />}
+      {!phone && net && (
+        <details className="desktop-inventory">
+          <summary>我的物品</summary>
+          {Object.values(state.actors)
+            .filter((a) => a.ownerId === net.seat)
+            .map((a) => (
+              <section key={a.id}>
+                <h3>{actorName(a.id)}</h3>
+                <p>{itemInfo(a.item)?.name_zh ?? "未持有物品"}</p>
+                {itemActions(state, a.id).map((action, i) => (
+                  <button
+                    key={i}
+                    disabled={pending || !net.connected}
+                    data-command={JSON.stringify(action.command)}
+                    onClick={() => send(action.command)}
+                  >
+                    {action.label}
+                  </button>
+                ))}
+              </section>
+            ))}
+        </details>
+      )}
       {!!effects.length && !dice.length && (
-        <FeedbackPanel effects={effects} onDone={() => setEffects([])} />
+        <FeedbackPanel
+          effects={effects}
+          onDone={() => setEffects([])}
+          toast={phone}
+        />
       )}
       {!!dice.length && (
         <div
@@ -1320,13 +1506,16 @@ export function App({ net }: { net?: NetBinding } = {}) {
               ),
             )}
           </div>
-          <button
-            className="primary"
-            data-testid="ack-dice"
-            onClick={() => setDice((v) => v.slice(1))}
-          >
-            已查看，继续{dice.length > 1 ? `（还有${dice.length - 1}次）` : ""}
-          </button>
+          {!watching && (
+            <button
+              className="primary"
+              data-testid="ack-dice"
+              onClick={() => setDice((v) => v.slice(1))}
+            >
+              已查看，继续
+              {dice.length > 1 ? `（还有${dice.length - 1}次）` : ""}
+            </button>
+          )}
         </div>
       )}
     </div>
