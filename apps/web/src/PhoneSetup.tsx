@@ -45,7 +45,7 @@ export function PhoneSetup({
         <strong>
           黎明杀机<span>桌游版</span>
         </strong>
-        <a href={online ? "/" : "/?online=1"}>
+        <a href={online ? "/?hotseat=1" : "/?online=1"}>
           {online ? "热座模式" : "联机对战"}
         </a>
       </header>

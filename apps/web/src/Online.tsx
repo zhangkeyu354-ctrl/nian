@@ -101,7 +101,7 @@ function Brand({ line }: { line: string }) {
       <p>{line}</p>
       <div className="lobby-line" />
       <p className="muted">
-        <a href="/">← 本机热座模式</a>
+        <a href="/?hotseat=1">← 本机热座模式</a>
       </p>
     </div>
   );

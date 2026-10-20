@@ -19,7 +19,7 @@ export function Gallery() {
           </p>
         </div>
         <SettingsButton />
-        <a href="/">返回热座</a>
+        <a href="/?hotseat=1">返回热座</a>
       </header>
       {Object.entries(visualCatalog).map(([kind, states]) => (
         <section key={kind}>
