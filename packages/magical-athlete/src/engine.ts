@@ -197,18 +197,35 @@ function ask(s: MAState, c: Ctx, d: Decision): string {
   throw new Need(d);
 }
 
+/** 局面指纹：所有选手的位置、摔倒、名次、淘汰（判断「真正重复、不改变状态」的无限循环） */
+function stateKey(s: MAState) {
+  return race(s)
+    .tokens.map((t) => `${t.pos}${t.tripped ? "T" : ""}${t.place ?? ""}${t.out ? "X" : ""}`)
+    .join(",");
+}
+/**
+ * 循环判定：同一个触发（同一来源 → 同一对象）在**完全相同的局面**下第二次出现，才是规则书说的无限循环
+ * （「按发生顺序结算一轮后停止」）。局面在变化的长连锁（如挪挪 × 吸盘鱼一路往前）是合法的，继续结算。
+ * 没有任何次数上限作为规则；SAFETY 只是防止程序本身出错的保险丝，触发时会报错而不是悄悄停止。
+ */
+const SAFETY = 20000;
+function loopCheck(s: MAState, c: Ctx, trigger: string, what: string): boolean {
+  if (++c.depth > SAFETY) fail("ENGINE_SAFETY", "连锁结算超过程序保险上限，请把这局的记录发给开发者。");
+  const key = `${trigger}|${stateKey(s)}`;
+  if (!c.guard.has(key)) {
+    c.guard.add(key);
+    return false;
+  }
+  log(s, `（循环：${what}。同一触发在相同局面下再次出现，已按发生顺序结算一轮，到此停止）`);
+  return true;
+}
+
 /** 某个能力发动了：记录，并让挪挪各蹭 1 格 */
 function fire(s: MAState, c: Ctx, src: Token, text: string) {
   log(s, text);
   for (const sc of holders(s, "scoocher")) {
     if (sc === src) continue;
-    const key = `${src.racer}>${sc.racer}@${sc.pos}`;
-    if (c.guard.has(key) || c.depth > 400) {
-      log(s, `（${rname(sc)} 与 ${rname(src)} 形成循环，按规则结算一轮后停止）`);
-      continue;
-    }
-    c.guard.add(key);
-    c.depth++;
+    if (loopCheck(s, c, `scooch:${src.racer}>${sc.racer}`, `${rname(sc)} 与 ${rname(src)} 互相触发`)) continue;
     move(s, c, sc, 1, false, "蹭局王");
     if (active(sc)) fire(s, c, sc, `${rname(sc)}【蹭局王】：因 ${rname(src)} 的能力移动 1 格。`);
   }
@@ -355,12 +372,7 @@ function react(s: MAState, c: Ctx, t: Token, passed: Token[]) {
       log(s, `${rname(t)} 停在星星上，获得 1 分筹码。`);
     } else {
       // 例：巨婴在 12、箭头 11（+1）→ 被放回 11 → 再走箭头……按「循环结算一轮后停止」
-      const key = `arrow:${t.racer}@${pos}`;
-      if (c.guard.has(key)) {
-        log(s, `（${rname(t)} 与第 ${pos} 格箭头形成循环，按规则结算一轮后停止）`);
-        return;
-      }
-      c.guard.add(key);
+      if (loopCheck(s, c, `arrow:${t.racer}@${pos}`, `${rname(t)} 与第 ${pos} 格箭头`)) return;
       log(s, `${rname(t)} 停在箭头上：额外移动 ${sp.steps} 格。`);
       move(s, c, t, sp.steps, false, "箭头");
       return;
@@ -387,7 +399,7 @@ function react(s: MAState, c: Ctx, t: Token, passed: Token[]) {
           trip(s, o);
           fire(s, c, x, `${rname(x)}【鸡脚小屋】：停到 ${rname(o)} 的格子，${rname(o)} 摔倒。`);
         }
-    } else if (p === "mouth" && x === t && pos > 0) {
+    } else if (p === "mouth" && x === t) {
       const o = onSpace(s, pos).filter((o) => o !== t);
       if (o.length === 1) {
         fire(s, c, x, `${rname(x)}【一口吞人】：${rname(o[0])} 被吞掉，淘汰出本场比赛！`);
