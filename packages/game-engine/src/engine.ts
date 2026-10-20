@@ -1297,6 +1297,21 @@ function select(s: GameState, c: Command) {
   const choice = s.choice!;
   requireThat(c.actorId === choice.actorId, "choice owner");
   s.choice = null;
+  if (choice.kind === "SPAWN_ROLL") {
+    const map = maps.maps.find((m) => m.id === s.mapId)!;
+    const a = actor(s, choice.actorId);
+    const face = random(s, 6);
+    const n = map.nodes.find((n) => (n.spawn_faces as number[]).includes(face));
+    requireThat(n, "missing spawn face");
+    a.room = n.id;
+    log(s, "SPAWNED", { actorId: a.id, face, room: n.id });
+    const order = choice.order as string[],
+      index = (choice.index as number) + 1;
+    if (index < order.length)
+      s.choice = { kind: "SPAWN_ROLL", actorId: order[index], order, index };
+    else startPlanning(s);
+    return;
+  }
   if (choice.kind === "REVEAL") {
     const p = prop(s, text(c, "propId"));
     requireThat(
@@ -1523,17 +1538,10 @@ export function reduce(state: GameState, c: Command): GameState {
     reveal(s, text(c, "propId"), c.actorId!);
     s.setupIndex++;
     if (s.setupIndex === 4) {
-      const map = maps.maps.find((m) => m.id === s.mapId)!;
-      for (const a of Object.values(s.actors)) {
-        const face = random(s, 6);
-        const n = map.nodes.find((n) =>
-          (n.spawn_faces as number[]).includes(face),
-        );
-        requireThat(n, "missing spawn face");
-        a.room = n.id;
-        log(s, "SPAWNED", { actorId: a.id, face, room: n.id });
-      }
-      startPlanning(s);
+      // B01 p6：每个角色掷黑骰决定出生空间。从先手玩家起按座位顺序（逃生者依次，最后杀手），
+      // 每人自己点"掷骰"（用户 2026-10-20 要求）。
+      const order = [...orderedSurvivors(s), s.killerId];
+      s.choice = { kind: "SPAWN_ROLL", actorId: order[0], order, index: 0 };
     }
   } else if (c.type === "PLAN") {
     requireThat(s.phase === "PLANNING", "not planning");

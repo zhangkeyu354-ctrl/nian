@@ -104,6 +104,14 @@ try {
       state.events.length,
     );
   }
+  // 出生：从先手玩家起每个角色自己点掷骰
+  while (state.choice?.kind === "SPAWN_ROLL") {
+    await drainUI(page);
+    const c = { type: "SELECT", actorId: state.choice.actorId };
+    await tapPhoneCommand(page, c);
+    state = reduce(state, c);
+  }
+  await drainUI(page);
   await page.locator(".mobile-dock [data-card=blue]").tap();
   await assertUiShot(page, `${out}/手机_秘密移动牌.png`);
   await page.getByTestId("confirm-plan").tap();

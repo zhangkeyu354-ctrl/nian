@@ -182,6 +182,8 @@ describe("B01 and U02 state-machine regressions", () => {
         actorId: id,
         propId: s.props.find((p) => !p.revealed)!.id,
       });
+    while (s.choice?.kind === "SPAWN_ROLL")
+      s = reduce(s, { type: "SELECT", actorId: s.choice.actorId });
     s = settle(s);
     s = reduce(s, { type: "PLAN", actorId: "dwight", cards: ["blue"] });
     expect(() =>

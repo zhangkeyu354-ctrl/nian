@@ -68,7 +68,7 @@ for (let i = 0; i < 350 && !(itemChecked && powerChecked); i++) {
     itemChecked = true;
   }
   let c = nextCommand(state, "survivor");
-  if (state.phase === "SETUP") {
+  if (state.phase === "SETUP" && !state.choice) {
     const chest = state.props.find((p) => p.kind === "chest" && !p.revealed);
     if (chest) c = { type: "SETUP_REVEAL", actorId: actor, propId: chest.id };
   } else if (

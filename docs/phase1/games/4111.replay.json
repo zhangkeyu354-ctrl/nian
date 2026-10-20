@@ -32,6 +32,26 @@
       "propId": "main_garage:boldness:0"
     },
     {
+      "type": "SELECT",
+      "actorId": "dwight"
+    },
+    {
+      "type": "SELECT",
+      "actorId": "meg"
+    },
+    {
+      "type": "SELECT",
+      "actorId": "jake"
+    },
+    {
+      "type": "SELECT",
+      "actorId": "claudette"
+    },
+    {
+      "type": "SELECT",
+      "actorId": "doctor"
+    },
+    {
       "type": "PLAN",
       "actorId": "dwight",
       "cards": [

@@ -98,6 +98,14 @@ describe("U02 / B01 engine foundation", () => {
         actorId,
         propId: s.props.find((x) => !x.revealed)!.id,
       });
+    // 出生：从先手玩家起，逃生者依次、最后杀手，各自掷骰
+    expect(s.choice).toMatchObject({ kind: "SPAWN_ROLL", actorId: options.survivors[0] });
+    const rolled: string[] = [];
+    while (s.choice?.kind === "SPAWN_ROLL") {
+      rolled.push(s.choice.actorId);
+      s = reduce(s, { type: "SELECT", actorId: s.choice.actorId });
+    }
+    expect(rolled).toEqual([...options.survivors, options.killer]);
     expect(s.phase).toBe("PLANNING");
     expect(s.actors.dwight.room).toBeTruthy();
   });

@@ -32,6 +32,26 @@
       "propId": "main_garage:objective:0"
     },
     {
+      "type": "SELECT",
+      "actorId": "meg"
+    },
+    {
+      "type": "SELECT",
+      "actorId": "nea"
+    },
+    {
+      "type": "SELECT",
+      "actorId": "feng_min"
+    },
+    {
+      "type": "SELECT",
+      "actorId": "ace"
+    },
+    {
+      "type": "SELECT",
+      "actorId": "nurse"
+    },
+    {
       "type": "PASS",
       "actorId": "nurse"
     },

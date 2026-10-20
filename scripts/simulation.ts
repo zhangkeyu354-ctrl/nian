@@ -177,6 +177,9 @@ export function nextCommand(
         route: path.slice(0, 4),
       };
     }
+    if (c.kind === "SPAWN_ROLL") return { type: "SELECT", actorId: id };
+    if (c.kind === "DOCTOR_SHOCK")
+      return { type: "SELECT", actorId: id, option: s.actors[id].blood >= 2 ? "pay" : "effect" };
     throw new Error("unhandled simulation choice " + c.kind);
   }
   if (s.phase === "SETUP") {

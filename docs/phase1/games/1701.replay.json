@@ -32,6 +32,26 @@
       "propId": "coal_tower_upper:objective:0"
     },
     {
+      "type": "SELECT",
+      "actorId": "dwight"
+    },
+    {
+      "type": "SELECT",
+      "actorId": "claudette"
+    },
+    {
+      "type": "SELECT",
+      "actorId": "jake"
+    },
+    {
+      "type": "SELECT",
+      "actorId": "ace"
+    },
+    {
+      "type": "SELECT",
+      "actorId": "trapper"
+    },
+    {
       "type": "PLAN",
       "actorId": "dwight",
       "cards": [
