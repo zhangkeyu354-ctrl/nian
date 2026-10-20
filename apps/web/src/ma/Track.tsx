@@ -1,6 +1,7 @@
 import React, { useEffect, useRef, useState } from "react";
 import { racerName, TRACKS } from "../../../../packages/magical-athlete/src/index.ts";
 import type { RaceState } from "../../../../packages/magical-athlete/src/types.ts";
+import type { Special } from "../../../../packages/magical-athlete/src/tracks.ts";
 import coords from "../../public/assets/magical-athlete/boards/coordinates.json" with { type: "json" };
 
 export const PLAYER_COLORS = ["#e8443a", "#2f7fd8", "#f2b705", "#8a4fd6", "#1fa37a", "#f07c1e"];
@@ -36,9 +37,29 @@ export function useVerticalBoard() {
 
 const BOARDS = new Map((coords.boards as unknown as BoardCoords[]).map((b) => [b.id, b]));
 
+/** 手机「清晰棋盘」：5 列，0–14 从左到右、15–29 从右到左（和原版两条长边方向一致，箭头格的箭头方向不会反） */
+export const GRID_COLS = 5;
+export const GRID_ROWS = 7; // 6 行格子 + 1 行终点领奖台
+export function gridCell(pos: number) {
+  if (pos <= 14) return { col: pos % 5, row: Math.floor(pos / 5) };
+  const q = pos - 15;
+  return { col: 4 - (q % 5), row: 3 + Math.floor(q / 5) };
+}
+
+type Tok = RaceState["tokens"][number];
+
+/** 同一格多人时：每人的偏移（单位：格宽 / 格高）和缩放 */
+function crowd(k: number, n: number): { dx: number; dy: number; scale: number } {
+  if (n <= 1) return { dx: 0, dy: 0, scale: 1 };
+  if (n === 2) return { dx: (k - 0.5) * 0.46, dy: 0, scale: 0.8 };
+  if (n <= 4) return { dx: ((k % 2) - 0.5) * 0.46, dy: (Math.floor(k / 2) - 0.5) * 0.3, scale: 0.64 };
+  return { dx: ((k % 3) - 1) * 0.3, dy: (Math.floor(k / 3) - 0.5) * 0.3, scale: 0.5 };
+}
+
 /**
- * 原版棋盘（Codex 美术包）+ 格位坐标。棋子用原版透明立绘，脚下垫玩家颜色。
- * 规则一律来自引擎；这里只负责把 tokens[].pos 画到对应格子上。
+ * 赛道。规则一律来自引擎；这里只负责把 tokens[].pos 画到对应格子上。
+ * - layout="art"：原版棋盘（Codex 美术包）+ 格位坐标；手机竖屏时整张转成竖版。
+ * - layout="grid"：手机用的清晰棋盘——每格从原版棋盘图上裁下来，5 列排开，一屏放得下且格子大。
  */
 export function Track({
   race: raceIn,
@@ -48,6 +69,7 @@ export function Track({
   moving = [],
   onPawn,
   fit = true,
+  layout = "art",
 }: {
   race: RaceState;
   colorOf: (playerId: string) => string;
@@ -57,8 +79,9 @@ export function Track({
   /** 正在走的选手：镜头跟着它，棋子有走路动画 */
   moving?: string[];
   onPawn?: (racer: string) => void;
-  /** true：整条赛道缩放到一屏内（默认）；false：放大，可滑动 */
+  /** 原版棋盘：true 整条赛道缩放到一屏内；false 放大，可滑动 */
   fit?: boolean;
+  layout?: "art" | "grid";
 }) {
   const race: RaceState = shown
     ? { ...raceIn, tokens: raceIn.tokens.map((t) => ({ ...t, ...(shown.get(t.racer) ?? {}) })) }
@@ -67,102 +90,180 @@ export function Track({
   const board = BOARDS.get(race.track)!;
   const [w, h] = board.canvas;
   const scroller = useRef<HTMLDivElement>(null);
+  const vertical = useVerticalBoard() && layout === "art";
 
-  // 同格的棋子并排；冲线的站到领奖台
+  // 同格的棋子分组；冲线的站到领奖台（按名次）
   const groups = new Map<number, string[]>();
   for (const t of race.tokens)
     if (!t.out) {
       const key = t.place !== null ? -1 : t.pos;
       groups.set(key, [...(groups.get(key) ?? []), t.racer]);
     }
+  const podium = (groups.get(-1) ?? [])
+    .map((r) => race.tokens.find((t) => t.racer === r)!)
+    .sort((a, b) => (a.place ?? 0) - (b.place ?? 0))
+    .map((t) => t.racer);
+  if (podium.length) groups.set(-1, podium);
 
-  const vertical = useVerticalBoard();
-  // 自动滚到正在行动的选手附近（横版左右滚，竖版上下滚）
+  // 自动滚到正在行动的选手附近（只有原版棋盘放大时需要）
   const current =
     race.tokens.find((t) => moving.includes(t.racer)) ?? race.tokens.find((t) => t.owner === race.current);
   const focus = current && current.place === null && !current.out ? board.spaces[Math.min(current.pos, board.spaces.length - 1)] : null;
   useEffect(() => {
     const el = scroller.current;
-    if (!el || !focus) return;
+    if (!el || !focus || layout === "grid") return;
     if (vertical) {
-      // 顺时针旋转后：棋盘 x → 屏幕纵向
       if (el.scrollHeight > el.clientHeight)
         el.scrollTo({ top: focus.x * el.scrollHeight - el.clientHeight / 2, behavior: "smooth" });
     } else if (el.scrollWidth > el.clientWidth)
       el.scrollTo({ left: focus.x * el.scrollWidth - el.clientWidth / 2, behavior: "smooth" });
-  }, [focus?.index, race.current, vertical, moving.join()]);
+  }, [focus?.index, race.current, vertical, moving.join(), layout]);
 
-  const art = (
-      <div
-        className="ma-board-art"
-        style={
-          vertical
-            ? { width: `${(w / h) * 100}%`, aspectRatio: `${w} / ${h}` }
-            : fit
-              ? { aspectRatio: `${w} / ${h}`, width: `min(100%, calc(var(--ma-board-h) * ${(w / h).toFixed(4)}))`, margin: "0 auto" }
-              : { aspectRatio: `${w} / ${h}` }
-        }
-        role="img"
-        aria-label={`${track.zh}，第 ${race.index + 1} 场`}
-      >
-        {vertical ? (
-          // 竖版放大后需要清晰的原图
-          <img className="ma-board-img" src={`${ART}/${board.assets.webp}`} alt="" draggable={false} />
-        ) : (
-          <picture>
-            <source media="(max-width: 760px)" srcSet={`${ART}/${board.assets.mobile}`} />
-            <img className="ma-board-img" src={`${ART}/${board.assets.webp}`} alt="" draggable={false} />
-          </picture>
-        )}
-        {[...groups].map(([pos, racers]) => {
-          const sp = pos === -1 ? null : board.spaces[pos];
-          const cx = sp ? sp.x : board.finish_podium.x;
-          const cy = sp ? sp.y : board.finish_podium.y;
-          const cellW = board.spaces[1].width;
-          return racers.map((rid, k) => {
-            const t = race.tokens.find((x) => x.racer === rid)!;
-            // 同格多人：横向错开，每人占格宽的一部分
-            const spread = Math.min(cellW * 0.42, (cellW * 1.1) / racers.length);
-            let dx = (k - (racers.length - 1) / 2) * spread;
-            let dy = 0;
-            if (vertical && racers.length > 1) {
-              // 竖版格子是方的：同格多人排成两列网格，免得叠成一团
-              const cellH = board.spaces[1].height;
-              const rows = Math.ceil(racers.length / 2);
-              const lastAlone = racers.length % 2 === 1 && k === racers.length - 1;
-              dx = (Math.floor(k / 2) - (rows - 1) / 2) * cellW * (rows > 2 ? 0.3 : 0.42);
-              dy = lastAlone ? 0 : ((k % 2) - 0.5) * cellH * 0.45;
-            }
+  /** 每个棋子画在哪（相对容器的 0–1 坐标）和缩放 */
+  const place = (pos: number, k: number, n: number) => {
+    if (layout === "grid") {
+      if (pos === -1) {
+        // 领奖台一行：奖杯在左，冲线的人按名次往右站
+        return { x: 0.36 + k * 0.15, y: (GRID_ROWS - 1 + 0.5) / GRID_ROWS + 0.2 / GRID_ROWS, scale: n > 3 ? 0.75 : 0.9 };
+      }
+      const { col, row } = gridCell(pos);
+      const c = crowd(k, n);
+      return {
+        x: (col + 0.5 + c.dx) / GRID_COLS,
+        // 脚踩在格子中间偏下一点
+        y: (row + 0.5 + 0.2 + c.dy) / GRID_ROWS,
+        scale: c.scale,
+      };
+    }
+    const sp = pos === -1 ? null : board.spaces[pos];
+    const cellW = board.spaces[1].width;
+    const cellH = board.spaces[1].height;
+    if (!sp) {
+      // 原版领奖台：冲线的人在奖杯区上下排开
+      return { x: board.finish_podium.x + (k % 2 ? 0.012 : -0.012), y: board.finish_podium.y - 0.1 + k * 0.2, scale: 0.68 };
+    }
+    const c = crowd(k, n);
+    // 竖版时棋盘转了 90°：屏幕上的横向 = 原图的纵向，所以把错开方向对调
+    return vertical
+      ? { x: sp.x + c.dy * cellW, y: sp.y - c.dx * cellH, scale: c.scale }
+      : { x: sp.x + c.dx * cellW, y: sp.y + c.dy * cellH, scale: c.scale };
+  };
+
+  const pawns = [...groups].flatMap(([pos, racers]) =>
+    racers.map((rid, k) => {
+      const t: Tok = race.tokens.find((x) => x.racer === rid)!;
+      const at = place(pos, k, racers.length);
+      return (
+        <div
+          key={rid}
+          className={
+            "ma-pawn" +
+            (t.owner === me ? " mine" : "") +
+            (race.current === t.owner && !race.over ? " turn" : "") +
+            (t.tripped ? " tripped" : "") +
+            (moving.includes(rid) ? " walking" : "")
+          }
+          role={onPawn ? "button" : undefined}
+          onClick={onPawn ? () => onPawn(rid) : undefined}
+          style={{
+            left: `${at.x * 100}%`,
+            top: `${at.y * 100}%`,
+            ["--pc" as string]: colorOf(t.owner),
+            ["--ps" as string]: at.scale,
+            zIndex: (t.owner === me ? 30 : 10) + k,
+          }}
+          title={`${racerName(rid)}${t.place ? ` · 第 ${t.place} 名` : ` · 第 ${t.pos} 格`}${t.tripped ? " · 摔倒" : ""}`}
+        >
+          {t.owner === me && <span className="ma-halo" aria-hidden="true" />}
+          {t.owner === me && <span className="ma-me-tag">我</span>}
+          <span className="ma-pawn-base" />
+          <img src={`${ART}/tokens/${rid}.png`} alt={racerName(rid)} draggable={false} />
+          {t.tripped && <img className="ma-pawn-trip" src={`${ART}/icons/trip.svg`} alt="摔倒" />}
+        </div>
+      );
+    }),
+  );
+
+  if (layout === "grid") {
+    const img = `url(${ART}/${board.assets.webp})`;
+    const crop = (cx: number, cy: number, cw: number, ch: number): React.CSSProperties => ({
+      backgroundImage: img,
+      backgroundSize: `${100 / cw}% ${100 / ch}%`,
+      backgroundPosition: `${((cx - cw / 2) / (1 - cw)) * 100}% ${((cy - ch / 2) / (1 - ch)) * 100}%`,
+    });
+    const active = new Set(race.tokens.filter((t) => !t.out && t.place === null).map((t) => t.pos));
+    const fp = board.finish_podium;
+    return (
+      <div className="ma-board-scroll grid">
+        <div
+          className="ma-grid"
+          role="img"
+          aria-label={`${track.zh}，第 ${race.index + 1} 场`}
+          style={{ aspectRatio: `${GRID_COLS} / ${GRID_ROWS}` }}
+        >
+          {board.spaces.map((sp) => {
+            const { col, row } = gridCell(sp.index);
+            const special = track.specials[sp.index];
             return (
               <div
-                key={rid}
-                className={
-                  "ma-pawn" +
-                  (t.owner === me ? " mine" : "") +
-                  (race.current === t.owner && !race.over ? " turn" : "") +
-                  (t.tripped ? " tripped" : "") +
-                  (moving.includes(rid) ? " walking" : "")
-                }
-                role={onPawn ? "button" : undefined}
-                onClick={onPawn ? () => onPawn(rid) : undefined}
+                key={sp.index}
+                className={"ma-cell" + (active.has(sp.index) ? " occupied" : "")}
                 style={{
-                  left: `${(cx + dx) * 100}%`,
-                  top: `${(cy + dy) * 100}%`,
-                  ["--pc" as string]: colorOf(t.owner),
-                  zIndex: 10 + k,
+                  left: `${(col / GRID_COLS) * 100}%`,
+                  top: `${(row / GRID_ROWS) * 100}%`,
+                  width: `${100 / GRID_COLS}%`,
+                  height: `${100 / GRID_ROWS}%`,
                 }}
-                title={`${racerName(rid)}${t.place ? ` · 第 ${t.place} 名` : ` · 第 ${t.pos} 格`}${t.tripped ? " · 摔倒" : ""}`}
               >
-                {t.owner === me && <span className="ma-halo" aria-hidden="true" />}
-                {t.owner === me && <span className="ma-me-tag">我</span>}
-                <span className="ma-pawn-base" />
-                <img src={`${ART}/tokens/${rid}.png`} alt={racerName(rid)} draggable={false} />
-                {t.tripped && <img className="ma-pawn-trip" src={`${ART}/icons/trip.svg`} alt="摔倒" />}
+                {sp.index === 0 ? (
+                  <div className="ma-cell-art start">起点</div>
+                ) : (
+                  <div className="ma-cell-art" style={crop(sp.x, sp.y, sp.width * 0.97, sp.height * 0.97)} />
+                )}
+                <span className="ma-cell-no">{sp.index}</span>
+                {special && <span className={"ma-cell-tag " + special.kind}>{specialLabel(special)}</span>}
               </div>
             );
-          });
-        })}
+          })}
+          <div
+            className="ma-cell finish"
+            style={{ left: 0, top: `${((GRID_ROWS - 1) / GRID_ROWS) * 100}%`, width: "100%", height: `${100 / GRID_ROWS}%` }}
+          >
+            <div className="ma-cell-art podium">
+              <span className="ma-cell-trophy" style={crop(fp.x, 0.5, 0.075, 0.42)} />
+              <b>终点 · 领奖台</b>
+            </div>
+          </div>
+          {pawns}
+        </div>
       </div>
+    );
+  }
+
+  const art = (
+    <div
+      className="ma-board-art"
+      style={
+        vertical
+          ? { width: `${(w / h) * 100}%`, aspectRatio: `${w} / ${h}` }
+          : fit
+            ? { aspectRatio: `${w} / ${h}`, width: `min(100%, calc(var(--ma-board-h) * ${(w / h).toFixed(4)}))`, margin: "0 auto" }
+            : { aspectRatio: `${w} / ${h}` }
+      }
+      role="img"
+      aria-label={`${track.zh}，第 ${race.index + 1} 场`}
+    >
+      {vertical ? (
+        // 竖版放大后需要清晰的原图
+        <img className="ma-board-img" src={`${ART}/${board.assets.webp}`} alt="" draggable={false} />
+      ) : (
+        <picture>
+          <source media="(max-width: 760px)" srcSet={`${ART}/${board.assets.mobile}`} />
+          <img className="ma-board-img" src={`${ART}/${board.assets.webp}`} alt="" draggable={false} />
+        </picture>
+      )}
+      {pawns}
+    </div>
   );
   return (
     <div className={"ma-board-scroll" + (vertical ? " vertical" : "") + (fit ? " fit" : " zoomed")} ref={scroller}>
@@ -171,7 +272,6 @@ export function Track({
           className="ma-board-rot"
           style={{
             aspectRatio: `${h} / ${w}`,
-            // 整屏：按可用高度反推宽度，让整条竖版赛道一屏放得下
             ...(fit ? { width: `min(100%, calc(var(--ma-board-h) * ${(h / w).toFixed(4)}))` } : {}),
           }}
         >
@@ -182,4 +282,10 @@ export function Track({
       )}
     </div>
   );
+}
+
+function specialLabel(sp: Special) {
+  if (sp.kind === "star") return "★+1分";
+  if (sp.kind === "rock") return "摔倒";
+  return sp.steps > 0 ? `前进${sp.steps}` : `后退${-sp.steps}`;
 }

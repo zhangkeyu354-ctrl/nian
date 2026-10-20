@@ -1046,9 +1046,18 @@ function endRace(s: MAState) {
   if (second)
     player(s, owner(second)).chips.push({ kind: "silver", value: pts.silver, race: r.index });
   else log(s, "没有第二名，银牌作废。");
+  // 领奖台（只是展示用）：第 3 名 = 还在场上、位置最靠前的选手（同格按本场行动顺序）；不计分
+  const places: Array<{ racer: string; owner: string; place: number; points: number }> = [];
+  if (first) places.push({ racer: first, owner: owner(first), place: 1, points: pts.gold });
+  if (second) places.push({ racer: second, owner: owner(second), place: 2, points: pts.silver });
+  const rest = r.tokens
+    .filter((t) => active(t) && !r.finishers.includes(t.racer))
+    .sort((a, b) => b.pos - a.pos || r.order.indexOf(a.owner) - r.order.indexOf(b.owner));
+  if (rest[0] && places.length === 2) places.push({ racer: rest[0].racer, owner: rest[0].owner, place: 3, points: 0 });
   log(
     s,
     `第 ${r.index + 1} 场结束：冠军 ${first ? racerName(first) : "无"}（+${pts.gold}），亚军 ${second ? racerName(second) : "无"}${second ? `（+${pts.silver}）` : ""}。`,
+    { kind: "podium", race: r.index, places },
   );
   // 下一场先手：上一场最落后的选手（或第一个被淘汰的）；2 人变体：上一场得分较少的玩家，平分掷骰
   let next: string;
@@ -1075,7 +1084,11 @@ function endRace(s: MAState) {
     s.phase = "over";
     const totals = s.players.map((p) => ({ p, v: total(p.chips) }));
     const max = Math.max(...totals.map((x) => x.v));
-    log(s, `🏆 比赛结束！获胜：${totals.filter((x) => x.v === max).map((x) => x.p.name).join("、")}（${max} 分）`);
+    log(s, `🏆 比赛结束！获胜：${totals.filter((x) => x.v === max).map((x) => x.p.name).join("、")}（${max} 分）`, {
+      kind: "champion",
+      winners: totals.filter((x) => x.v === max).map((x) => x.p.id),
+      totals: totals.map((x) => ({ player: x.p.id, total: x.v })),
+    });
   } else {
     s.phase = "choose";
     s.nextFirst = next;

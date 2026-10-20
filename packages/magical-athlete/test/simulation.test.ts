@@ -104,6 +104,36 @@ describe("魔法运动员 · 整局模拟", () => {
       expect(hands.size).toBeGreaterThan(20);
     }, 120_000);
 
+  it("每场结束有领奖台（1、2 名拿分，第 3 名不计分），最后一场后有总冠军", () => {
+    for (const n of [2, 3, 4, 6])
+      for (let seed = 1; seed <= 8; seed++) {
+        const s = playGame(seed * 7 + n, n);
+        const pods = s.log.flatMap((l) => (l.fx?.kind === "podium" ? [l.fx] : []));
+        expect(pods).toHaveLength(4);
+        pods.forEach((pd, i) => {
+          expect(pd.race).toBe(i);
+          const gold = pd.places.find((x) => x.place === 1)!;
+          expect(gold.points).toBe(s.settings.points[i].gold);
+          const silver = pd.places.find((x) => x.place === 2);
+          if (silver) expect(silver.points).toBe(s.settings.points[i].silver);
+          const third = pd.places.find((x) => x.place === 3);
+          if (third) expect(third.points).toBe(0);
+          // 同一名选手占两个名次，只可能是军师预测自己猜中（同时拿第 1、2 名，卡面规则）
+          const [p1, p2] = [pd.places.find((x) => x.place === 1), pd.places.find((x) => x.place === 2)];
+          if (p1 && p2 && p1.racer === p2.racer) expect(p1.racer).toBe("mastermind");
+          else expect(new Set(pd.places.map((x) => x.racer)).size).toBe(pd.places.length);
+          // 拿分的人确实拿到了这场的奖牌
+          for (const x of pd.places.filter((x) => x.points > 0))
+            expect(s.players.find((p) => p.id === x.owner)!.chips.some((c) => c.race === i && c.value === x.points)).toBe(true);
+        });
+        const champs = s.log.flatMap((l) => (l.fx?.kind === "champion" ? [l.fx] : []));
+        expect(champs).toHaveLength(1);
+        expect(s.log.at(-1)!.fx?.kind).toBe("champion");
+        const max = Math.max(...s.players.map((p) => total(p.chips)));
+        expect(champs[0].winners.sort()).toEqual(s.players.filter((p) => total(p.chips) === max).map((p) => p.id).sort());
+      }
+  }, 120_000);
+
   it("36 名选手全部进入选秀池", () => {
     expect(DRAFTABLE).toHaveLength(36);
   });

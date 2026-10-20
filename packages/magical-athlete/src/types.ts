@@ -75,7 +75,11 @@ export type Fx =
   | { kind: "finish"; racer: string; place: number }
   | { kind: "out"; racer: string }
   | { kind: "chip"; player: string; value: number }
-  | { kind: "start"; race: number; track: string };
+  | { kind: "start"; race: number; track: string }
+  /** 每场结束的领奖台：第 1、2 名（冲线，拿奖牌）＋第 3 名（场上最靠前的未冲线选手，不计分） */
+  | { kind: "podium"; race: number; places: Array<{ racer: string; owner: string; place: number; points: number }> }
+  /** 全部比赛结束：总冠军（可能并列）与所有人总分 */
+  | { kind: "champion"; winners: string[]; totals: Array<{ player: string; total: number }> };
 
 export interface LogEntry {
   text: string;

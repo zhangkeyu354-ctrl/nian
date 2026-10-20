@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo, useState } from "react";
+import React, { useEffect, useMemo, useRef, useState } from "react";
 import {
   RACER_BY_ID,
   racerName,
@@ -9,7 +9,8 @@ import {
 } from "../../../../packages/magical-athlete/src/index.ts";
 import type { MARoomSnapshot } from "../../../../packages/shared/src/ma-protocol.ts";
 import { createMARoom, savedName, useMARoom } from "./ma-net.ts";
-import { ART, PLAYER_COLORS, Track } from "./Track.tsx";
+import { ART, PLAYER_COLORS, Track, useVerticalBoard } from "./Track.tsx";
+import { installAudioUnlock, onMutedChange, setSfxMuted, sfxMuted, sfxTap, sfxYourTurn, vibrate } from "./sfx.ts";
 import { usePlayback, type Show } from "./playback.ts";
 import "./ma.css";
 
@@ -23,6 +24,7 @@ export function MagicalAthlete() {
   const [room, setRoom] = useState(roomFromUrl);
   useEffect(() => {
     document.title = "魔法运动员 · 桌游合集";
+    installAudioUnlock();
     const on = () => setRoom(roomFromUrl());
     addEventListener("popstate", on);
     return () => removeEventListener("popstate", on);
@@ -333,20 +335,73 @@ function Game({ snap, view, send, connected }: { snap: MARoomSnapshot; view: MAV
     return (id: string) => m.get(id) ?? "#888";
   }, [view.seats]);
   const name = (id: string) => view.players.find((p) => p.id === id)?.name ?? id;
-  const act = async (c: Parameters<Send>[0]) => setError((await send(c)) ?? "");
+  // 操作手感：按下就有声音/震动；点了之后按钮转圈、其他按钮暂时点不了，直到服务器回应
+  const lastBtn = useRef<HTMLElement | null>(null);
+  const [sending, setSending] = useState(false);
+  const act = async (c: Parameters<Send>[0]) => {
+    const b = lastBtn.current;
+    b?.classList.add("sending");
+    setSending(true);
+    const err = await send(c);
+    b?.classList.remove("sending");
+    setSending(false);
+    setError(err ?? "");
+    if (err) vibrate([30, 40, 30]);
+  };
+  const onPress = (e: React.PointerEvent) => {
+    const b = (e.target as Element).closest<HTMLElement>("button, a.ma-go, [role=button]");
+    lastBtn.current = b;
+    if (b && !(b as HTMLButtonElement).disabled) sfxTap();
+  };
   useEffect(() => setError(""), [snap.version]);
   const pb = usePlayback(view);
+  // 轮到你：响一声、震一下、底部弹出提醒（动画播完才算）
+  const mine = view.players.find((p) => p.id === me);
+  const myTurn =
+    !!me &&
+    !pb.busy &&
+    ((view.phase === "draft" && view.draft?.order[view.draft.step] === me) ||
+      (view.phase === "choose" && !!mine && !mine.choices.length) ||
+      (view.phase === "race" && view.pending?.player === me));
+  const [toast, setToast] = useState(false);
+  const wasTurn = useRef(false);
+  useEffect(() => {
+    if (myTurn && !wasTurn.current) {
+      sfxYourTurn();
+      setToast(true);
+      const id = setTimeout(() => setToast(false), 2600);
+      wasTurn.current = true;
+      return () => clearTimeout(id);
+    }
+    if (!myTurn) {
+      wasTurn.current = false;
+      setToast(false);
+    }
+  }, [myTurn]);
   const [card, setCard] = useState<string | null>(null);
   // 比赛刚结束时，等动画（冲线、颁奖）播完再切到下一场的选人界面
   const showRace = !!view.race && (view.phase === "race" || view.phase === "over" || (view.phase === "choose" && pb.busy));
   return (
-    <main className={"ma-game phase-" + view.phase}>
+    <main className={"ma-game phase-" + view.phase + (sending ? " is-sending" : "")} onPointerDownCapture={onPress}>
       {pb.show && <Overlay show={pb.show} view={view} name={name} colorOf={colorOf} me={me} onSkip={pb.skip} />}
+      {toast && !pb.show && (
+        <button
+          type="button"
+          className="ma-turn-toast"
+          onClick={() => {
+            setToast(false);
+            document.querySelector(".ma-decide.you, .ma-banner.you")?.scrollIntoView({ behavior: "smooth", block: "center" });
+          }}
+        >
+          👉 轮到你了！
+        </button>
+      )}
       {card && <CardLightbox id={card} onClose={() => setCard(null)} />}
       <div className="ma-topbar">
         <a className="ma-back" href="/">← 合集</a>
         <strong>魔法运动员</strong>
         <span className="ma-muted">房间 {snap.code}{!connected && " · 重新连接中…"}</span>
+        <SoundToggle />
       </div>
       <Scores view={view} me={me} colorOf={colorOf} compact={showRace} />
       {error && <p className="ma-error" role="alert">{error}</p>}
@@ -358,6 +413,16 @@ function Game({ snap, view, send, connected }: { snap: MARoomSnapshot; view: MAV
       {view.phase === "over" && <Final view={view} />}
       <Log view={view} />
     </main>
+  );
+}
+
+function SoundToggle() {
+  const [m, setM] = useState(sfxMuted);
+  useEffect(() => onMutedChange(setM), []);
+  return (
+    <button type="button" className="ma-sound" onClick={() => setSfxMuted(!m)} aria-label={m ? "打开声音" : "关闭声音"} data-testid="ma-sound">
+      {m ? "🔇" : "🔊"}
+    </button>
   );
 }
 
@@ -491,6 +556,26 @@ function Race({
   const mine = race.tokens.filter((t) => t.owner === me);
   const shownOf = (racer: string) => pb.shown?.get(racer);
   const [fit, setFit] = useState(true);
+  // 手机竖屏：默认「清晰棋盘」（格子大、一屏放得下），可切到原版棋盘（放大、可上下滑）
+  const portrait = useVerticalBoard();
+  const [layout, setLayout] = useState<"grid" | "art">(() => {
+    try {
+      return localStorage.getItem("ma-board-layout") === "art" ? "art" : "grid";
+    } catch {
+      return "grid";
+    }
+  });
+  const flipLayout = () =>
+    setLayout((l) => {
+      const n = l === "grid" ? "art" : "grid";
+      try {
+        localStorage.setItem("ma-board-layout", n);
+      } catch {
+        /* 忽略 */
+      }
+      return n;
+    });
+  const useGrid = portrait && layout === "grid";
   return (
     <section className="ma-race">
       {mine.length > 0 && (
@@ -528,12 +613,18 @@ function Race({
           </div>
         </Fold>
       )}
-      <div className="ma-board">
+      <div className={"ma-board" + (useGrid ? " grid-mode" : "")}>
         <div className="ma-board-head">
           <b>第 {race.index + 1} 场 · {track.zh}</b>
-          <button type="button" className="ma-zoom" onClick={() => setFit((f) => !f)} data-testid="ma-zoom">
-            {fit ? "🔍 放大赛道" : "🗺 看整条赛道"}
-          </button>
+          {portrait ? (
+            <button type="button" className="ma-zoom" onClick={flipLayout} data-testid="ma-zoom">
+              {useGrid ? "🖼 原版棋盘" : "🔲 清晰棋盘"}
+            </button>
+          ) : (
+            <button type="button" className="ma-zoom" onClick={() => setFit((f) => !f)} data-testid="ma-zoom">
+              {fit ? "🔍 放大赛道" : "🗺 看整条赛道"}
+            </button>
+          )}
           {race.track === "wild" ? (
             <span className="ma-legend">
               <i className="star">★</i>星星 +1 分 <i className="rock">▲</i>石头摔倒 <i className="arrow">➜</i>箭头额外前进/后退
@@ -542,11 +633,20 @@ function Race({
             <span className="ma-legend">普通赛道，没有特殊格</span>
           )}
         </div>
-        <Track race={race} colorOf={colorOf} me={me} shown={pb.shown} moving={pb.moving} onPawn={openCard} fit={fit} />
+        <Track
+          race={race}
+          colorOf={colorOf}
+          me={me}
+          shown={pb.shown}
+          moving={pb.moving}
+          onPawn={openCard}
+          fit={portrait ? false : fit}
+          layout={useGrid ? "grid" : "art"}
+        />
       </div>
       <div className="ma-side">
         {p && !race.over && (
-          <div className={"ma-decide" + (p.player === me ? " you" : "")} data-testid="ma-decide">
+          <div className={"ma-decide" + (p.player === me ? " you" : "") + (pb.busy ? " waiting" : "")} data-testid="ma-decide">
             <p className="ma-who">
               <span className="ma-dot" style={{ background: colorOf(p.player) }} />
               {p.player === me ? "你" : name(p.player)}
@@ -733,6 +833,66 @@ function Overlay({
         </div>
       </div>
     );
+  } else if (show.kind === "podium") {
+    const at = (n: number) => show.places.find((x) => x.place === n);
+    body = (
+      <div className="ma-ov-podium">
+        <Confetti n={28} />
+        <small>第 {show.race + 1} 场 · 颁奖</small>
+        <div className="ma-podium">
+          {[2, 1, 3].map((n) => {
+            const pl = at(n);
+            return (
+              <div key={n} className={"ma-step p" + n + (pl ? "" : " empty")} style={{ ["--pc" as string]: pl ? colorOf(pl.owner) : "#999" }}>
+                {pl && (
+                  <div className="ma-step-who">
+                    {n === 1 && <span className="ma-crown">👑</span>}
+                    <img src={`${ART}/tokens/${pl.racer}.png`} alt="" />
+                    <b>{racerName(pl.racer)}</b>
+                    <small>
+                      {pl.owner === me ? "你" : name(pl.owner)}
+                      {n === 2 && at(1)?.racer === pl.racer && " · 军师猜中，再拿亚军"}
+                    </small>
+                  </div>
+                )}
+                <div className="ma-step-block">
+                  <span>{n}</span>
+                  {pl && <em>{pl.points ? `+${pl.points} 分` : "不计分"}</em>}
+                </div>
+              </div>
+            );
+          })}
+        </div>
+      </div>
+    );
+  } else if (show.kind === "champion") {
+    const rows = [...show.totals].sort((a, b) => b.total - a.total);
+    const iWon = me !== null && show.winners.includes(me);
+    body = (
+      <div className="ma-ov-champion">
+        <Confetti n={70} />
+        <div className="ma-trophy">🏆</div>
+        <small>4 场比赛全部结束 · 总冠军</small>
+        <b className="ma-champ-name">
+          {show.winners.map((id) => (
+            <span key={id} style={{ ["--pc" as string]: colorOf(id) }}>
+              {id === me ? "你" : name(id)}
+            </span>
+          ))}
+        </b>
+        <p className="ma-champ-sub">{iWon ? "恭喜你拿下总冠军！🎉" : "全场欢呼！"}</p>
+        <ol className="ma-champ-rank">
+          {rows.map((r, i) => (
+            <li key={r.player} className={show.winners.includes(r.player) ? "win" : ""}>
+              <span className="ma-dot" style={{ background: colorOf(r.player) }} />
+              <i>{i + 1}</i>
+              {r.player === me ? `${name(r.player)}（你）` : name(r.player)}
+              <b>{r.total} 分</b>
+            </li>
+          ))}
+        </ol>
+      </div>
+    );
   } else if (show.kind === "start") {
     const tr = TRACKS[show.track as "mild" | "wild"];
     body = (
@@ -760,7 +920,36 @@ function Overlay({
   return (
     <div className={"ma-overlay ov-" + show.kind} onClick={onSkip} role="status" aria-live="polite" title="点一下跳过动画">
       {body}
-      <span className="ma-ov-skip">点屏幕跳过动画</span>
+      <span className="ma-ov-skip">{show.kind === "champion" ? "点屏幕查看成绩" : show.kind === "podium" ? "点屏幕继续" : "点屏幕跳过动画"}</span>
+    </div>
+  );
+}
+
+/** 彩带：纯 CSS 下落，位置和颜色固定（不用随机数，重渲染不跳） */
+function Confetti({ n }: { n: number }) {
+  const colors = ["#e8443a", "#2f7fd8", "#f2b705", "#8a4fd6", "#1fa37a", "#f07c1e", "#ffffff"];
+  return (
+    <div className="ma-confetti" aria-hidden="true">
+      {Array.from({ length: n }, (_, i) => {
+        const x = (i * 37 + 11) % 100;
+        const delay = ((i * 53) % 100) / 60;
+        const dur = 2.2 + ((i * 29) % 100) / 70;
+        const rot = (i * 71) % 360;
+        return (
+          <i
+            key={i}
+            style={{
+              left: `${x}%`,
+              background: colors[i % colors.length],
+              animationDelay: `${delay}s`,
+              animationDuration: `${dur}s`,
+              transform: `rotate(${rot}deg)`,
+              width: i % 3 ? 8 : 12,
+              height: i % 3 ? 14 : 8,
+            }}
+          />
+        );
+      })}
     </div>
   );
 }

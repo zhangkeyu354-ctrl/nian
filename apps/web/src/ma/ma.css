@@ -1186,3 +1186,539 @@
     font-size: 12px;
   }
 }
+
+/* ---------- 领奖台（每场结束） ---------- */
+.ma-overlay.ov-podium,
+.ma-overlay.ov-champion {
+  background:
+    radial-gradient(circle at 50% 38%, rgba(255, 205, 46, 0.4), transparent 60%),
+    rgba(16, 22, 44, 0.94);
+  overflow: hidden;
+}
+.ma-ov-podium {
+  position: relative;
+  width: min(94vw, 520px);
+  text-align: center;
+  color: #fff;
+}
+.ma-ov-podium > small {
+  display: inline-block;
+  font-size: 18px;
+  font-weight: 900;
+  background: var(--tartan);
+  border: 3px solid var(--ink);
+  border-radius: 99px;
+  padding: 4px 18px;
+  box-shadow: 0 4px 0 var(--ink);
+  animation: ma-pop 0.4s cubic-bezier(0.2, 1.5, 0.4, 1);
+}
+.ma-podium {
+  display: grid;
+  grid-template-columns: 1fr 1.1fr 1fr;
+  align-items: end;
+  gap: 6px;
+  margin-top: 18px;
+}
+.ma-step {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.ma-step-block {
+  width: 100%;
+  border: 3px solid var(--ink);
+  border-bottom: 0;
+  border-radius: 12px 12px 0 0;
+  background: linear-gradient(#fff, #dfe3ea);
+  color: var(--ink);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  padding-top: 6px;
+  transform-origin: bottom;
+  animation: ma-rise 0.5s cubic-bezier(0.2, 1.3, 0.4, 1) both;
+}
+.ma-step-block span {
+  font-size: 40px;
+  font-weight: 900;
+  line-height: 1;
+}
+.ma-step-block em {
+  font-style: normal;
+  font-weight: 900;
+  font-size: 14px;
+  margin-top: 4px;
+  background: var(--pc);
+  color: #fff;
+  border: 2px solid var(--ink);
+  border-radius: 99px;
+  padding: 1px 8px;
+}
+.ma-step.p1 .ma-step-block {
+  height: 150px;
+  background: linear-gradient(#ffe27a, var(--sun));
+  animation-delay: 0.1s;
+}
+.ma-step.p2 .ma-step-block {
+  height: 110px;
+  background: linear-gradient(#f4f6fa, #bfc6d4);
+  animation-delay: 0.05s;
+}
+.ma-step.p3 .ma-step-block {
+  height: 80px;
+  background: linear-gradient(#f3c9a0, #d58a4e);
+}
+.ma-step.empty .ma-step-block {
+  opacity: 0.4;
+}
+@keyframes ma-rise {
+  from {
+    transform: scaleY(0);
+  }
+}
+/* 选手依次跳上台：先第 3 名、再第 2 名、最后冠军 */
+.ma-step-who {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 4px;
+  animation: ma-jump-on 0.6s cubic-bezier(0.2, 1.6, 0.4, 1) both;
+}
+.ma-step.p3 .ma-step-who {
+  animation-delay: 0.6s;
+}
+.ma-step.p2 .ma-step-who {
+  animation-delay: 1.2s;
+}
+.ma-step.p1 .ma-step-who {
+  animation-delay: 1.9s;
+}
+@keyframes ma-jump-on {
+  0% {
+    transform: translateY(-140px) scale(0.6);
+    opacity: 0;
+  }
+  60% {
+    opacity: 1;
+  }
+}
+.ma-step-who img {
+  height: 92px;
+  width: auto;
+  filter: drop-shadow(0 4px 0 rgba(0, 0, 0, 0.6));
+}
+.ma-step.p1 .ma-step-who img {
+  height: 120px;
+  animation: ma-bounce 0.8s ease-in-out 2.6s infinite;
+}
+@keyframes ma-bounce {
+  50% {
+    transform: translateY(-10px);
+  }
+}
+.ma-step-who b {
+  font-size: 15px;
+  font-weight: 900;
+  background: var(--pc);
+  border: 2px solid var(--ink);
+  border-radius: 8px;
+  padding: 0 8px;
+  margin-top: 2px;
+  white-space: nowrap;
+}
+.ma-step-who small {
+  font-weight: 800;
+  font-size: 13px;
+  text-shadow: 0 1px 2px #000;
+}
+.ma-crown {
+  font-size: 34px;
+  line-height: 1;
+  margin-bottom: -6px;
+  animation: ma-bounce 0.8s ease-in-out 2.6s infinite;
+}
+
+/* ---------- 总冠军 ---------- */
+.ma-ov-champion {
+  position: relative;
+  width: min(94vw, 480px);
+  text-align: center;
+  color: #fff;
+  animation: ma-pop 0.5s cubic-bezier(0.2, 1.5, 0.4, 1);
+}
+.ma-trophy {
+  font-size: 96px;
+  line-height: 1.05;
+  animation: ma-trophy 1.6s ease-in-out infinite;
+  filter: drop-shadow(0 0 24px rgba(255, 205, 46, 0.9));
+}
+@keyframes ma-trophy {
+  50% {
+    transform: scale(1.12) rotate(-6deg);
+  }
+}
+.ma-ov-champion > small {
+  font-weight: 800;
+  font-size: 15px;
+  opacity: 0.9;
+}
+.ma-champ-name {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  justify-content: center;
+  margin: 8px 0 4px;
+}
+.ma-champ-name span {
+  font-size: clamp(36px, 11vw, 56px);
+  font-weight: 900;
+  line-height: 1.1;
+  color: var(--sun);
+  text-shadow:
+    0 4px 0 var(--ink),
+    0 0 20px var(--pc);
+  animation: ma-land 0.6s cubic-bezier(0.2, 1.6, 0.4, 1) 0.3s both;
+}
+.ma-champ-sub {
+  margin: 0 0 12px;
+  font-weight: 800;
+  font-size: 18px;
+}
+.ma-champ-rank {
+  list-style: none;
+  margin: 0 auto;
+  padding: 10px;
+  background: var(--chalk);
+  color: var(--ink);
+  border: 3px solid var(--ink);
+  border-radius: 14px;
+  box-shadow: 0 5px 0 var(--ink);
+  text-align: left;
+}
+.ma-champ-rank li {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  padding: 5px 4px;
+  font-weight: 700;
+  animation: ma-pop 0.4s ease-out both;
+}
+.ma-champ-rank li:nth-child(2) {
+  animation-delay: 0.1s;
+}
+.ma-champ-rank li:nth-child(3) {
+  animation-delay: 0.2s;
+}
+.ma-champ-rank li + li {
+  border-top: 1px dashed var(--line);
+}
+.ma-champ-rank li i {
+  font-style: normal;
+  font-weight: 900;
+  width: 1.4em;
+  text-align: center;
+}
+.ma-champ-rank li b {
+  margin-left: auto;
+}
+.ma-champ-rank li.win {
+  background: #fff4c7;
+  border-radius: 8px;
+}
+
+/* 彩带 */
+.ma-confetti {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  overflow: hidden;
+  z-index: -1;
+}
+.ma-confetti i {
+  position: absolute;
+  top: -20px;
+  border-radius: 2px;
+  animation-name: ma-fall;
+  animation-timing-function: linear;
+  animation-iteration-count: infinite;
+}
+@keyframes ma-fall {
+  to {
+    top: 105%;
+    transform: rotate(720deg) translateX(40px);
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .ma-confetti,
+  .ma-trophy,
+  .ma-step-who,
+  .ma-step-block {
+    animation: none !important;
+  }
+}
+
+/* ---------- 操作手感 ---------- */
+.ma-app button,
+.ma-app .ma-go,
+.ma-app [role="button"] {
+  touch-action: manipulation;
+  -webkit-tap-highlight-color: transparent;
+  user-select: none;
+  -webkit-user-select: none;
+  transition:
+    transform 0.08s ease-out,
+    box-shadow 0.08s ease-out,
+    background-color 0.15s,
+    opacity 0.15s;
+}
+.ma-app .ma-go:active {
+  transform: translateY(3px) scale(0.98);
+  box-shadow: 0 0 0 var(--ink);
+}
+.ma-app button:focus-visible,
+.ma-app .ma-go:focus-visible {
+  outline: 3px solid var(--sun);
+  outline-offset: 2px;
+}
+.ma-app button:disabled,
+.ma-app .ma-go[aria-disabled="true"] {
+  opacity: 0.55;
+  cursor: not-allowed;
+  transform: none;
+}
+/* 已经点了、等服务器回应：按钮上转个小圈，防止重复点 */
+.ma-app button.sending {
+  position: relative;
+  color: transparent !important;
+  pointer-events: none;
+}
+.ma-app button.sending::after {
+  content: "";
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 18px;
+  height: 18px;
+  margin: -9px 0 0 -9px;
+  border: 3px solid var(--ink);
+  border-right-color: transparent;
+  border-radius: 50%;
+  animation: ma-spin 0.6s linear infinite;
+}
+@keyframes ma-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+/* 轮到你：操作区发光、轻轻跳动，一眼看到 */
+.ma-decide.you:not(.waiting) {
+  animation: ma-your-turn 1.4s ease-in-out infinite;
+}
+@keyframes ma-your-turn {
+  50% {
+    box-shadow:
+      0 0 0 4px var(--sun),
+      0 0 22px 6px rgba(255, 205, 46, 0.8);
+  }
+}
+.ma-decide.you:not(.waiting) .ma-go {
+  animation: ma-nudge 1.4s ease-in-out infinite;
+}
+/* 只让光晕跳动，不改变按钮大小（手指好点，按钮不会「躲」） */
+@keyframes ma-nudge {
+  50% {
+    box-shadow:
+      0 3px 0 var(--ink),
+      0 0 0 5px rgba(255, 255, 255, 0.95),
+      0 0 18px 8px rgba(255, 205, 46, 0.9);
+  }
+}
+.ma-error {
+  animation: ma-shake 0.35s;
+}
+@keyframes ma-shake {
+  25% {
+    transform: translateX(-6px);
+  }
+  75% {
+    transform: translateX(6px);
+  }
+}
+.ma-topbar {
+  align-items: center;
+}
+.ma-sound {
+  flex: none;
+  min-height: 36px !important;
+  padding: 2px 10px !important;
+  font-size: 16px;
+}
+/* 手机底部的「轮到你」提醒条 */
+.ma-app .ma-turn-toast {
+  position: fixed;
+  left: 50%;
+  top: calc(10px + env(safe-area-inset-top));
+  transform: translateX(-50%);
+  z-index: 80;
+  background: var(--sun);
+  color: var(--ink);
+  border: 3px solid var(--ink);
+  border-radius: 99px;
+  box-shadow: 0 4px 0 var(--ink);
+  padding: 8px 18px;
+  font-weight: 900;
+  white-space: nowrap;
+  animation: ma-toast 0.35s cubic-bezier(0.2, 1.5, 0.4, 1);
+}
+@keyframes ma-toast {
+  from {
+    transform: translate(-50%, -24px) scale(0.85);
+    opacity: 0;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .ma-decide.you,
+  .ma-decide.you .ma-go,
+  .ma-error {
+    animation: none;
+  }
+}
+
+/* ---------- 棋子站在格子正中（脚踩格子，不压线） ---------- */
+.ma-pawn {
+  transform: translate(-50%, -84%) scale(var(--ps, 1));
+  transform-origin: 50% 84%;
+}
+.ma-board-scroll.vertical .ma-pawn {
+  /* 竖版：棋盘转了 90°，往「屏幕上方」挪 0.34 个身高（= 0.68 个身宽），脚落在格子中间 */
+  transform: translate(-125%, -50%) rotate(-90deg) scale(var(--ps, 1));
+  transform-origin: 50% 50%;
+}
+
+/* ---------- 手机清晰棋盘（每格从原版棋盘裁下来，5 列） ---------- */
+.ma-board-scroll.grid {
+  overflow: visible;
+  background: transparent;
+}
+.ma-grid {
+  position: relative;
+  /* 一屏里同时放下：顶栏 + 比分 + 我的选手 + 棋盘 + 下面的操作区（约 140px） */
+  width: max(240px, min(100%, calc((100dvh - 390px) * 5 / 7)));
+  margin: 0 auto;
+  background: #111;
+  border: 3px solid var(--ink);
+  border-radius: 18px;
+  box-shadow: 0 4px 0 var(--ink);
+  padding: 0;
+}
+.ma-cell {
+  position: absolute;
+  padding: 3px;
+  box-sizing: border-box;
+}
+.ma-cell-art {
+  width: 100%;
+  height: 100%;
+  border-radius: 9px;
+  border: 2px solid #fff;
+  background-repeat: no-repeat;
+  box-sizing: border-box;
+}
+.ma-cell-art.start {
+  display: grid;
+  place-items: center;
+  background: #5b9bd5;
+  color: #e8443a;
+  font-weight: 900;
+  font-size: 19px;
+  -webkit-text-stroke: 1px #111;
+}
+.ma-cell.occupied .ma-cell-art {
+  border-color: var(--sun);
+}
+.ma-cell-no {
+  position: absolute;
+  left: 6px;
+  top: 5px;
+  min-width: 18px;
+  height: 18px;
+  padding: 0 3px;
+  border-radius: 9px;
+  background: rgba(0, 0, 0, 0.72);
+  color: #fff;
+  font-size: 11px;
+  font-weight: 800;
+  line-height: 18px;
+  text-align: center;
+  pointer-events: none;
+}
+.ma-cell-tag {
+  position: absolute;
+  right: 5px;
+  bottom: 5px;
+  border-radius: 6px;
+  padding: 0 4px;
+  font-size: 10px;
+  font-weight: 900;
+  line-height: 16px;
+  background: #fff;
+  color: var(--ink);
+  border: 1px solid #111;
+  pointer-events: none;
+}
+.ma-cell-tag.star {
+  background: var(--sun);
+}
+.ma-cell-tag.rock {
+  background: #e8443a;
+  color: #fff;
+}
+.ma-cell-tag.arrow {
+  background: #1fa37a;
+  color: #fff;
+}
+.ma-cell.finish .ma-cell-art.podium {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 0 10px;
+  background: repeating-conic-gradient(#111 0 25%, #fff 0 50%) 0 0 / 16px 16px;
+  border-color: var(--sun);
+}
+.ma-cell-art.podium b {
+  background: var(--sun);
+  color: var(--ink);
+  border: 2px solid #111;
+  border-radius: 8px;
+  padding: 0 8px;
+  font-size: 13px;
+  white-space: nowrap;
+}
+.ma-cell-trophy {
+  display: block;
+  height: 88%;
+  aspect-ratio: 0.75;
+  border-radius: 8px;
+  border: 2px solid #111;
+  background-repeat: no-repeat;
+  flex: none;
+}
+.ma-grid .ma-pawn {
+  width: 10%;
+}
+.ma-grid .ma-me-tag {
+  font-size: 10px;
+  padding: 2px 5px;
+}
+/* 已经发出操作、等服务器：其他操作按钮暂时不能点 */
+.ma-game.is-sending .ma-decide button:not(.sending),
+.ma-game.is-sending [data-testid^="pick-"]:not(.sending) {
+  pointer-events: none;
+  opacity: 0.55;
+}
+
+/* 清晰棋盘每格自带特殊格标签，上面的图例就不占地方了 */
+.ma-board.grid-mode .ma-legend {
+  display: none;
+}

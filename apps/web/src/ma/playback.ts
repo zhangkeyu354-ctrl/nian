@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import type { Fx, LogEntry, Token } from "../../../../packages/magical-athlete/src/types.ts";
 import type { MAView } from "../../../../packages/magical-athlete/src/index.ts";
+import { sfxCheer, sfxFanfare, sfxFinish, sfxLand, sfxOops, sfxPower, sfxRoll, sfxStep } from "./sfx.ts";
 
 /** 屏幕上正在播放的东西 */
 export type Show =
@@ -9,7 +10,9 @@ export type Show =
   | { kind: "power"; racer: string; power: string; text: string }
   | { kind: "finish"; racer: string; place: number; text: string }
   | { kind: "start"; race: number; track: string; text: string }
-  | { kind: "note"; racer: string; text: string };
+  | { kind: "note"; racer: string; text: string }
+  | { kind: "podium"; race: number; places: Array<{ racer: string; owner: string; place: number; points: number }> }
+  | { kind: "champion"; winners: string[]; totals: Array<{ player: string; total: number }> };
 
 export interface ShownToken {
   racer: string;
@@ -32,6 +35,7 @@ export function usePlayback(view: MAView) {
   const queue = useRef<LogEntry[]>([]);
   const running = useRef(false);
   const skip = useRef(false);
+  const wakers = useRef(new Set<() => void>());
   const [busy, setBusy] = useState(false);
   const [show, setShow] = useState<Show | null>(null);
   const [moving, setMoving] = useState<string[]>([]);
@@ -62,16 +66,31 @@ export function usePlayback(view: MAView) {
   async function run() {
     running.current = true;
     setBusy(true);
-    skip.current = false;
     // 播放起点：上一次播放结束时的位置（或当前比赛开始时）
     let cur = shownRef.current ?? null;
     while (queue.current.length) {
       const e = queue.current.shift()!;
       const fx = e.fx;
       if (!fx) continue;
-      const fast = skip.current || reduced();
-      const k = fast ? 0 : queue.current.length > 12 ? 0.45 : queue.current.length > 6 ? 0.7 : 1;
-      const wait = (ms: number) => (k === 0 ? Promise.resolve() : sleep(ms * k));
+      // 点屏幕只跳过「当前这一段」动画；领奖台、总冠军不会被之前的点击连带跳过
+      skip.current = false;
+      const k = reduced() ? 0 : queue.current.length > 12 ? 0.45 : queue.current.length > 6 ? 0.7 : 1;
+      const wait = (ms: number) =>
+        k === 0 || skip.current
+          ? Promise.resolve()
+          : new Promise<void>((res) => {
+              const done = () => {
+                clearTimeout(id);
+                wakers.current.delete(done);
+                res();
+              };
+              const id = setTimeout(done, ms * k);
+              wakers.current.add(done);
+            });
+      /** 快进（点屏幕跳过 / 积压太多）时不出声 */
+      const play = (f: () => void) => {
+        if (k > 0.6 && !skip.current) f();
+      };
       const setPos = (racer: string, patch: Partial<ShownToken>) => {
         if (!cur) return;
         const t = cur.get(racer);
@@ -93,18 +112,23 @@ export function usePlayback(view: MAView) {
         }
         case "roll":
           setShow({ ...fx, rolling: true });
+          play(sfxRoll);
           await wait(750);
           setShow({ ...fx, rolling: false });
+          play(() => sfxLand(fx.value));
           await wait(1100);
           break;
         case "duel":
           setShow({ ...fx, rolling: true });
+          play(sfxRoll);
           await wait(750);
           setShow({ ...fx, rolling: false });
+          play(() => sfxLand());
           await wait(1300);
           break;
         case "power":
           setShow({ kind: "power", racer: fx.racer, power: fx.power, text: e.text });
+          play(sfxPower);
           await wait(1700);
           break;
         case "move": {
@@ -113,6 +137,7 @@ export function usePlayback(view: MAView) {
           setMoving(fx.racers);
           for (let p = fx.from + dir; dir > 0 ? p <= fx.to : p >= fx.to; p += dir) {
             for (const r of fx.racers) setPos(r, { pos: p });
+            play(sfxStep);
             await wait(230);
           }
           setMoving([]);
@@ -129,20 +154,41 @@ export function usePlayback(view: MAView) {
         case "trip":
           setPos(fx.racer, { tripped: true });
           setShow({ kind: "note", racer: fx.racer, text: "摔倒了！下次主移动跳过" });
+          play(sfxOops);
           await wait(900);
           break;
         case "out":
           setPos(fx.racer, { out: true });
           setShow({ kind: "note", racer: fx.racer, text: "被淘汰出本场比赛！" });
+          play(sfxOops);
           await wait(1100);
           break;
         case "finish":
           setPos(fx.racer, { place: fx.place });
           setShow({ kind: "finish", racer: fx.racer, place: fx.place, text: e.text });
+          play(sfxFinish);
           await wait(1800);
           break;
         case "chip":
           await wait(300);
+          break;
+        case "podium":
+          // 领奖台：3、2、1 依次登台（CSS 里按名次延迟），号角 + 一小段欢呼
+          setShow({ kind: "podium", race: fx.race, places: fx.places });
+          play(() => {
+            sfxFanfare();
+            setTimeout(() => sfxCheer(2.2), 900);
+          });
+          await wait(4800);
+          break;
+        case "champion":
+          // 总冠军：大号角 + 长欢呼；画面停留到有人点一下（或 9 秒后）
+          setShow({ kind: "champion", winners: fx.winners, totals: fx.totals });
+          play(() => {
+            sfxFanfare(true);
+            setTimeout(() => sfxCheer(5), 700);
+          });
+          await wait(9000);
           break;
       }
       setShow(null);
@@ -162,6 +208,7 @@ export function usePlayback(view: MAView) {
     shown,
     skip: () => {
       skip.current = true;
+      [...wakers.current].forEach((f) => f());
     },
   };
 }
