@@ -1,5 +1,7 @@
 # 第一部分：项目总纲（保存为 AGENTS.md）
 
+> **多个 AI 共用本仓库：开工前先读 `docs/handoff/协作规则_多个AI共用仓库.md`。**
+
 ## 1. 项目定义
 
 - 游戏：Dead by Daylight: The Board Game（Level 99 Games 出品的实体桌游，基础版）
