@@ -87,6 +87,8 @@ export interface Settings {
   races: number;
   /** standard：每人每场 1 名；double：2 人局 / 3 人双选手变体，每人每场 2 名 */
   variant: "standard" | "double";
+  /** draft：蛇形选秀（规则书）；random：随机模式，每人直接随机发 4 名，全场不重复 */
+  deal?: "draft" | "random";
   schedule: TrackId[];
   /** 每场金牌、银牌分值（待核对，房主可改） */
   points: Array<{ gold: number; silver: number }>;

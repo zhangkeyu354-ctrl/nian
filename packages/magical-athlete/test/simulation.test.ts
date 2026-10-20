@@ -5,7 +5,7 @@ import { DRAFTABLE } from "../src/racers.ts";
 import type { MAState } from "../src/types.ts";
 
 /** 用固定种子的伪随机数替玩家做所有选择，完整打完一整局 */
-function playGame(seed: number, n: number, variant: "standard" | "double" = "standard") {
+function playGame(seed: number, n: number, variant: "standard" | "double" = "standard", deal: "draft" | "random" = "draft") {
   let rnd = seed * 7919 + 1;
   const rand = (k: number) => {
     rnd = (rnd * 1103515245 + 12345) % 2147483648;
@@ -14,7 +14,7 @@ function playGame(seed: number, n: number, variant: "standard" | "double" = "sta
   let s: MAState = createMAGame({
     players: Array.from({ length: n }, (_, i) => ({ id: "p" + i, name: "P" + i })),
     seed,
-    settings: { variant },
+    settings: { variant, deal },
   });
   let steps = 0;
   while (s.phase !== "over") {
@@ -77,6 +77,31 @@ describe("魔法运动员 · 整局模拟", () => {
           expect(new Set(p.used).size).toBe(8);
         }
       }
+    }, 120_000);
+
+  for (const n of [2, 3, 4, 5, 6])
+    it(`随机模式 ${n} 人：开局每人随机 4 名、全场不重复，25 局都能打完`, () => {
+      const hands = new Set<string>();
+      for (let seed = 1; seed <= 25; seed++) {
+        const s0 = createMAGame({
+          players: Array.from({ length: n }, (_, i) => ({ id: "p" + i, name: "P" + i })),
+          seed: seed * 31 + n,
+          settings: { deal: "random" },
+        });
+        expect(s0.phase).toBe("choose");
+        expect(s0.draft).toBeNull();
+        const all = s0.players.flatMap((p) => p.hand);
+        for (const p of s0.players) expect(p.hand).toHaveLength(4);
+        expect(new Set(all).size).toBe(4 * n); // 没有任何两人拿到同一名选手
+        for (const r of all) expect(DRAFTABLE).toContain(r);
+        expect(s0.deck).toHaveLength(36 - 4 * n);
+        hands.add(s0.players[0].hand.join());
+        const s = playGame(seed * 31 + n, n, "standard", "random");
+        expect(s.phase).toBe("over");
+        for (const p of s.players) expect(new Set(p.used).size).toBe(4);
+      }
+      // 不同种子发到的牌不同（确实是随机）
+      expect(hands.size).toBeGreaterThan(20);
     }, 120_000);
 
   it("36 名选手全部进入选秀池", () => {

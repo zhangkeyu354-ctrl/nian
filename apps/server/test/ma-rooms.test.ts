@@ -58,4 +58,27 @@ describe("魔法运动员房间", () => {
       expect(room.state!.draft!.pool).toHaveLength(2 * n);
     }
   });
+
+  it("随机模式：房主切换后开局直接每人随机 4 名、不重复；只有房主能切；重启后恢复一致", () => {
+    const dir = mkdtempSync(join(tmpdir(), "ma-"));
+    const store = new MARoomStore(dir);
+    const room = store.create();
+    const t = room.claim("房主");
+    const t2 = room.claim("二");
+    room.claim("三");
+    expect(room.snapshot(null).deal).toBe("draft");
+    expect(() => room.lobby(t2, { type: "SET_DEAL", deal: "random" })).toThrow("HOST_ONLY");
+    expect(() => room.lobby(t, { type: "SET_DEAL", deal: "x" as "random" })).toThrow("BAD_ACTION");
+    room.lobby(t, { type: "SET_DEAL", deal: "random" });
+    expect(room.snapshot(null).deal).toBe("random");
+    room.lobby(t, { type: "START" });
+    const s = room.state!;
+    expect(s.phase).toBe("choose");
+    const all = s.players.flatMap((p) => p.hand);
+    expect(all).toHaveLength(12);
+    expect(new Set(all).size).toBe(12);
+    store.save(room);
+    const again = new MARoomStore(dir).rooms.get(room.code)!;
+    expect(JSON.stringify(again.state)).toBe(JSON.stringify(room.state));
+  });
 });

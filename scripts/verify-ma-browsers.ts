@@ -51,9 +51,29 @@ try {
     await p.getByTestId("ma-claim").click();
     await p.getByTestId("ma-code").waitFor();
   }
+  const random = process.env.MA_DEAL === "random";
+  if (random) {
+    await host.getByTestId("ma-deal-random").click();
+    // 其他人的房间页也同步显示「随机模式」被选中
+    await pages[1].locator('[data-testid="ma-deal-random"][aria-checked="true"]').waitFor();
+  }
   await host.getByTestId("ma-start").click();
-  await host.locator(".ma-order").waitFor();
-  await host.screenshot({ path: `${out}/1_选秀.png`, fullPage: true });
+  if (random) {
+    // 不选秀：每人直接拿到 4 名，全场不重复
+    const all: string[] = [];
+    for (const p of pages) {
+      await p.locator('[data-testid^="pick-"]').first().waitFor();
+      const ids = await p.locator('[data-testid^="pick-"]').evaluateAll((els) => els.map((e) => e.getAttribute("data-testid")!));
+      assert.equal(ids.length, 4, "随机模式每人应该拿到 4 名");
+      all.push(...ids);
+    }
+    assert.equal(new Set(all).size, all.length, "随机模式有两人拿到同一名选手");
+    assert.equal(await host.locator(".ma-order").count(), 0, "随机模式不应出现选秀");
+    await host.screenshot({ path: `${out}/1_随机发牌.png`, fullPage: true });
+  } else {
+    await host.locator(".ma-order").waitFor();
+    await host.screenshot({ path: `${out}/1_选秀.png`, fullPage: true });
+  }
 
   let steps = 0;
   let races = 0;
@@ -101,7 +121,7 @@ try {
   }
   await host.screenshot({ path: `${out}/3_最终成绩.png`, fullPage: true });
   assert.deepEqual(errors, []);
-  console.log("MA_BROWSERS_PASS", JSON.stringify({ players: pages.length, steps, racesSeen: races }));
+  console.log("MA_BROWSERS_PASS", JSON.stringify({ players: pages.length, deal: random ? "random" : "draft", steps, racesSeen: races }));
   assert.equal(races, 4, "应当看到 4 场比赛");
 } finally {
   await browser.close();

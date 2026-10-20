@@ -245,13 +245,34 @@ function Lobby({ snap, lobby }: { snap: MARoomSnapshot; lobby: (a: Parameters<Re
         <p className="ma-muted">赛道顺序：温和 → 狂野 → 温和 → 狂野。<a href={`${ART}/docs/skillbook.pdf`} target="_blank" rel="noreferrer">36 名选手技能书（PDF）</a></p>
       </section>
       <section className="ma-panel">
-        <h2>规则</h2>
-        <p className="ma-muted">每人选秀 4 名选手，共 4 场，每场每人派 1 名上场（2 人局也一样）。</p>
+        <h2>怎么拿选手</h2>
+        <div className="ma-variant" role="radiogroup" aria-label="怎么拿选手">
+          {([
+            ["draft", "轮流选秀", "翻开一排选手，大家蛇形轮流挑，每人挑 4 名。"],
+            ["random", "🎲 随机模式", "不选秀，系统直接给每人随机发 4 名，全场不会有人拿到同一名选手。"],
+          ] as const).map(([k, label, hint]) => (
+            <button
+              key={k}
+              role="radio"
+              aria-checked={snap.deal === k}
+              data-testid={`ma-deal-${k}`}
+              className={snap.deal === k ? "on" : ""}
+              disabled={!host}
+              onClick={() => run({ type: "SET_DEAL", deal: k })}
+            >
+              <b>{label}</b>
+              <br />
+              <small>{hint}</small>
+            </button>
+          ))}
+        </div>
+        {!host && <p className="ma-muted">由房主决定。</p>}
+        <p className="ma-muted">共 4 场，每场每人派 1 名上场（2 人局也一样）。</p>
       </section>
       {error && <p className="ma-error" role="alert">{error}</p>}
       {host ? (
         <button className="ma-go" data-testid="ma-start" disabled={snap.players.length < 2} onClick={() => run({ type: "START" })}>
-          {snap.players.length < 2 ? "还差 1 人才能开始" : "人齐了，开始选秀"}
+          {snap.players.length < 2 ? "还差 1 人才能开始" : snap.deal === "random" ? "人齐了，随机发选手" : "人齐了，开始选秀"}
         </button>
       ) : (
         <p className="ma-wait">等房主开始…</p>

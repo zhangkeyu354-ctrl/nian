@@ -24,6 +24,8 @@ export interface MARoomSnapshot {
   points: MAPointsSetting[];
   /** 3 人房可选双选手变体；2 人房固定双选手 */
   variant: "standard" | "double";
+  /** draft：轮流选秀；random：随机模式，每人随机发 4 名、全场不重复 */
+  deal: "draft" | "random";
   /** 已执行命令数，提交时带上防止重复/过期 */
   version: number;
   view: MAView | null;
@@ -31,7 +33,8 @@ export interface MARoomSnapshot {
 
 export type MALobbyAction =
   | { type: "START" }
-  | { type: "SET_POINTS"; points: MAPointsSetting[] };
+  | { type: "SET_POINTS"; points: MAPointsSetting[] }
+  | { type: "SET_DEAL"; deal: "draft" | "random" };
 
 /** 浏览器提交的命令：player 由服务器按凭证填写 */
 export type MAClientCommand =

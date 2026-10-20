@@ -78,9 +78,12 @@ export function createMAGame(opts: CreateMAOptions): MAState {
   for (const t of schedule)
     if (!PLAYABLE_TRACKS.includes(t))
       fail("TRACK_UNCONFIRMED", `${TRACKS[t].zh}：${TRACKS[t].missing}。`);
+  const deal: "draft" | "random" =
+    opts.settings?.deal === "random" && variant === "standard" ? "random" : "draft";
   const settings: Settings = {
     races,
     variant,
+    deal,
     schedule,
     points:
       opts.settings?.points ??
@@ -113,6 +116,17 @@ export function createMAGame(opts: CreateMAOptions): MAState {
     version: 0,
   };
   s.deck = shuffle(s, DRAFTABLE);
+  if (deal === "random") {
+    // 随机模式（用户 2026-10-20）：不选秀，从洗好的牌堆里给每人发 4 名。
+    // 牌堆里每名选手只有一张，所以全场不会有两人拿到同一名选手。
+    const each = 4;
+    for (const p of s.players) p.hand = s.deck.splice(0, each);
+    s.phase = "choose";
+    log(s, `随机模式：每人随机发 ${each} 名选手（全场不重复）。`);
+    for (const p of s.players) log(s, `${p.name} 拿到：${p.hand.map(racerName).join("、")}。`);
+    log(s, "请秘密选择第 1 场的出场选手。");
+    return s;
+  }
   const start = rollOff(s, s.seats, "决定选秀先手");
   startDraftRound(s, 0, start);
   return s;
