@@ -18,7 +18,7 @@ import {
   paramActions,
 } from "../../../packages/game-engine/src/index.ts";
 import { chars } from "../../../packages/game-engine/src/data.ts";
-import { itemInfo, eventText, phases } from "./labels.ts";
+import { itemInfo, eventText, phases, triggerNames } from "./labels.ts";
 import { Token } from "./Token.tsx";
 import { MotionIcon } from "./MotionIcon.tsx";
 import { SettingsButton } from "./Settings.tsx";
@@ -382,6 +382,23 @@ export function MobileDock({
         Object.keys(a.command).every((k) => ["type", "actorId"].includes(k))),
   );
   const pagedActs = acts.filter((a) => !terminal.includes(a));
+  // 等待别人时说清楚在等谁、等什么，避免以为卡住了
+  const who = id ? actorName(id) : "其他玩家";
+  const waitingReason = state.window
+    ? `${who}正在决定是否使用技能或物品（${triggerNames[state.window.event] ?? "响应"}）`
+    : state.choice
+      ? ({
+          ROLL_DICE: `${who}正在掷骰`,
+          SPAWN_ROLL: `${who}正在掷出生骰`,
+          REVEAL: `${who}正在翻开道具`,
+          KEEP: `${who}正在选择保留的骰子`,
+          DOCTOR_SHOCK: `${who}正在决定：付血点还是承受电火花`,
+          CARRY: "杀手正在选择搬运路线",
+          CARRY_REROUTE: "杀手正在改道",
+        } as Record<string, string>)[state.choice.kind] ?? `${who}正在选择`
+      : state.phase === "PLANNING"
+        ? "其他玩家正在秘密选择移动牌"
+        : `${who}正在行动`;
   const visuals = boardVisuals(state);
   const last = state.events.at(-1);
   useEffect(() => {
@@ -509,7 +526,9 @@ export function MobileDock({
                     ? actorName(id)
                     : "请稍候"}
             </strong>
-            <p role="status">{pending ? "正在提交…" : status}</p>
+            <p role="status">
+              {pending ? "正在提交…" : waiting ? waitingReason : status}
+            </p>
           </div>
           {current && !waiting && (
             <span className="dock-blood">

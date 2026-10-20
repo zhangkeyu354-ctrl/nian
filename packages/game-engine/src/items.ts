@@ -48,8 +48,8 @@ const SURVIVOR_TURN_ITEMS = [
   "first_aid_kit",
 ];
 
-/** 物品反应点：这些信号会给"所在位置相关、且手里有物品"的逃生者一个响应机会。
- * 只看"有没有物品"（这是公开信息），不看具体是哪张，避免窗口本身泄露手牌。 */
+/** 物品反应点：只给此刻物品真的能用的逃生者一个响应机会（用户 2026-10-20 选择：
+ * 速度优先，接受"暂停时别人能猜到他拿的是钥匙/手电筒/鞭炮"这一信息代价）。 */
 export function itemResponders(
   s: GameState,
   event: string,
@@ -59,8 +59,12 @@ export function itemResponders(
     const a = s.actors[id];
     return a.item && !a.hookId;
   });
+  // 用户 2026-10-20：只询问此刻物品真的能用的人（避免每次掷骰都要所有持物者点"继续"）
+  const holding = (id: string, items: string[]) => items.includes(s.actors[id].item!);
   if (event === "KILLER_WOULD_ENTER")
-    return holders.filter((id) => s.actors[id].room === context.to);
+    return holders.filter(
+      (id) => s.actors[id].room === context.to && holding(id, ["firecracker"]),
+    );
   if (
     event === "WOULD_INTERACT" &&
     context.actorId === s.killerId &&
@@ -68,7 +72,9 @@ export function itemResponders(
     s.turn?.actorId === s.killerId
   ) {
     const room = s.actors[s.killerId].room;
-    return holders.filter((id) => s.actors[id].room === room);
+    return holders.filter(
+      (id) => s.actors[id].room === room && holding(id, ["flashlight"]),
+    );
   }
   if (
     event === "AFTER_ROLL" &&
@@ -76,7 +82,9 @@ export function itemResponders(
     // 钥匙"重掷任意一颗骰子"：每次掷骰都可以（不只失败时），重掷过的那颗除外
     s.roll.faces.some((_, i) => !(s.roll!.rerolled ?? []).includes(i))
   )
-    return holders;
+    return holders.filter((id) =>
+      holding(id, ["broken_key", "dull_key", "skeleton_key"]),
+    );
   return [];
 }
 

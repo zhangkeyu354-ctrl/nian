@@ -658,14 +658,14 @@ describe("物品：在可以用的时机都能用，不能用的时机不出现"
     expect(r.offers.some((o) => o.actor === "ace")).toBe(false);
     expect(r.s.actors.jake.health).toBe("wounded");
   });
-  it("鞭炮：杀手要进入你的空间时询问；也会问同空间其他持有物品的人（不泄露是哪张）", () => {
+  it("鞭炮：杀手要进入你的空间时询问；同空间拿着用不上的物品（地图）的人不被询问（用户 2026-10-20）", () => {
     const s = turnOf(table(), "trapper");
     for (const id of ["dwight", "jake"]) s.actors[id].room = L;
     s.actors.dwight.item = "firecracker";
     s.actors.jake.item = "map";
     const r = play(s, moveL("trapper"), { actor: "dwight", item: { option: "block" } });
     // 每人只问一次（用完不再追问）
-    expect(r.offers.filter((o) => o.event === "KILLER_WOULD_ENTER").map((o) => o.actor).sort()).toEqual(["dwight", "jake"]);
+    expect(r.offers.filter((o) => o.event === "KILLER_WOULD_ENTER").map((o) => o.actor).sort()).toEqual(["dwight"]);
     expect(r.used).toBe(true);
     expect(r.s.actors.trapper.room).toBe(F);
   });
