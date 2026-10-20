@@ -467,14 +467,41 @@
   min-width: 640px;
 }
 .ma-board-art picture,
-.ma-board-art > picture img {
+.ma-board-img {
   display: block;
   width: 100%;
   height: 100%;
 }
-.ma-board-art > picture img {
+.ma-board-img {
   object-fit: contain;
   user-select: none;
+}
+/* 竖版：外层按旋转后的宽高占位，里层原图顺时针转 90° */
+.ma-board-scroll.vertical {
+  overflow-x: hidden;
+  overflow-y: auto;
+  max-height: 64vh;
+  max-height: 64dvh;
+  overscroll-behavior-y: contain;
+}
+.ma-board-rot {
+  position: relative;
+  width: 100%;
+}
+.ma-board-scroll.vertical .ma-board-art {
+  position: absolute;
+  top: 0;
+  left: 100%;
+  min-width: 0;
+  transform-origin: top left;
+  transform: rotate(90deg);
+}
+.ma-board-scroll.vertical .ma-pawn {
+  width: 3.6%;
+  transform: translate(-50%, -50%) rotate(-90deg);
+}
+.ma-board-scroll.vertical .ma-pawn.tripped > img:not(.ma-pawn-trip) {
+  transform: rotate(80deg) translate(28%, 10%);
 }
 .ma-pawn {
   position: absolute;
