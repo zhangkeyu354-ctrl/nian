@@ -311,3 +311,35 @@ describe("命令校验与重复提交", () => {
     expect(s.race!.current).toBe("p2");
   });
 });
+
+describe("同时到达（规则书 Fiddly Details #3 + 浪漫者说明）", () => {
+  it("浪漫者 × 吸盘鱼：两人一起停到空格（恰好两人），浪漫者触发两次", () => {
+    let s = roll(race([F, "suckerfish", "romantic"], [4, 4, 20], [3]));
+    s = answer(s, "yes");
+    expect(tok(s, "suckerfish").pos).toBe(7);
+    expect(tok(s, "romantic").pos).toBe(24);
+  });
+  it("血盆大口 × 吸盘鱼：一起到达有一人的格子 → 格子上有两名其他选手，不吞", () => {
+    let s = roll(race(["mouth", "suckerfish", G], [0, 0, 3], [3]));
+    s = answer(s, "yes");
+    expect(tok(s, G).out).toBe(false);
+    expect(tok(s, "suckerfish").out).toBe(false);
+  });
+  it("巨婴：两人一起到达它的格子，都被放到它身后", () => {
+    let s = roll(race([F, "suckerfish", "huge_baby"], [2, 2, 5], [3]));
+    s = answer(s, "yes");
+    expect(tok(s, F).pos).toBe(4);
+    expect(tok(s, "suckerfish").pos).toBe(4);
+  });
+  it("吸盘鱼跟随时同样会被香蕉绊倒（它也经过了香蕉）", () => {
+    let s = roll(race([F, "suckerfish", "banana"], [0, 0, 2], [4]));
+    s = answer(s, "yes");
+    expect(tok(s, F).tripped).toBe(true);
+    expect(tok(s, "suckerfish").tripped).toBe(true);
+  });
+  it("挪挪 × 浪漫者：浪漫者每次发动，挪挪都蹭 1 格", () => {
+    const s = roll(race([F, "romantic", "scoocher", G], [0, 20, 10, 3], [3]));
+    expect(tok(s, "romantic").pos).toBe(22);
+    expect(tok(s, "scoocher").pos).toBe(11);
+  });
+});

@@ -285,69 +285,90 @@ function hugeBaby(s: MAState, c: Ctx, t: Token) {
 }
 
 /** 移动（main = 主移动）。n 可正可负；0 不算移动。 */
+/**
+ * 移动（main = 主移动；其余为技能移动 / 赛道移动，都算「移动」，会经过别人）。n 可正可负；0 不算移动。
+ *
+ * 吸盘鱼「和对方一起移动」：规则书 Fiddly Details #3 —— 一起到达同一格时，与「停在同一格」有关的能力照样触发；
+ * 浪漫者说明 —— 两人一起移动时触发两次（每人一次）。所以跟随者在出发前决定，和移动者**同时**到达，
+ * 到达后才逐个结算停格能力（此时两人已经在同一格）。2026-08 规则更新是否改动此处：见 CHECK_REQUIRED MA-U01。
+ */
 function move(s: MAState, c: Ctx, t: Token, n: number, main: boolean, why: string) {
   if (!active(t) || n === 0) return;
   const L = trackOf(s).length;
   const from = t.pos;
-  const followers = holders(s, "suckerfish").filter((x) => x !== t && x.pos === from);
+
+  // 1) 算出终点（跳跳蟾跳过有人的格子；较真怪要求恰好冲线）
+  let p: number;
+  let skips = 0;
+  let overshoot = false;
   if (n < 0) {
-    const to = Math.max(0, from + n);
-    if (to === from) return;
-    t.pos = to;
-    log(s, `${rname(t)} 后退到第 ${to} 格（${why}）。`);
-    hugeBaby(s, c, t);
-    react(s, c, t, []);
+    p = Math.max(0, from + n);
+    if (p === from) return;
   } else {
-    // 先模拟路径：跳跳蟾跳过有人的格子，较真怪要求恰好冲线
     const leap = has(s, t, "leaptoad");
-    let p = from,
-      rem = n,
-      skips = 0;
+    let rem = n;
+    p = from;
     while (rem > 0 && p < L) {
       p++;
       if (p < L && leap && onSpace(s, p).some((x) => x !== t)) skips++;
       else rem--;
     }
-    if (p >= L && rem > 0) {
+    overshoot = p >= L && rem > 0;
+    if (overshoot) {
       const st = holders(s, "stickler").find((x) => x !== t);
       if (st) {
         fire(s, c, st, `${rname(st)}【分毫不差】：${rname(t)} 会走过头，不移动。`);
         return;
       }
     }
-    for (let k = 0; k < skips; k++)
-      fire(s, c, t, `${rname(t)}【踩头过河】：跳过一个有人的格子。`);
-    const passed = others(s, t).filter((o) => o.pos > from && (p >= L || o.pos < p));
-    if (p >= L) {
-      finish(s, t);
-    } else {
-      t.pos = p;
-      log(s, `${rname(t)} ${main ? "主移动" : "移动"} ${n} 格，到第 ${p} 格（${why}）。`);
-      hugeBaby(s, c, t);
-      react(s, c, t, passed);
-    }
   }
-  // 吸盘鱼：同格的人移动后可以跟去
-  for (const f of followers) {
-    if (!active(f) || f.pos !== from) continue;
-    const target = t.place !== null ? L : t.pos;
-    if (target === f.pos) continue;
+
+  // 2) 同格的吸盘鱼在出发前决定要不要一起走
+  const riders: Token[] = [];
+  for (const f of holders(s, "suckerfish")) {
+    if (f === t || f.pos !== from) continue;
     const v = ask(s, c, {
       player: f.owner,
       racer: f.racer,
       kind: "suckerfish",
-      prompt: `${rname(f)}【吸附蹭车】：要跟着 ${rname(t)} 移动到${t.place !== null ? "终点" : `第 ${target} 格`}吗？`,
+      prompt: `${rname(f)}【吸附蹭车】：要跟着 ${rname(t)} 一起移动到${p >= L ? "终点" : `第 ${p} 格`}吗？`,
       options: [
         { value: "yes", label: "跟上" },
         { value: "no", label: "不跟" },
       ],
     });
-    if (v === "yes") {
-      log(s, `${rname(f)}【吸附蹭车】跟着 ${rname(t)} 移动。`);
-      move(s, c, f, target - f.pos, false, "吸附蹭车");
-      fire(s, c, f, `${rname(f)}【吸附蹭车】发动。`);
+    if (v !== "yes") continue;
+    // 移动者自己是较真怪且走过头：跟着的吸盘鱼也会走过头，被较真怪拦下
+    if (overshoot && holders(s, "stickler").some((x) => x !== f)) {
+      log(s, `${rname(f)} 想跟上，但会走过头冲线，被【分毫不差】拦下。`);
+      continue;
     }
+    riders.push(f);
   }
+  for (let k = 0; k < skips; k++) fire(s, c, t, `${rname(t)}【踩头过河】：跳过一个有人的格子。`);
+
+  // 3) 一起到达
+  const group = [t, ...riders];
+  const passedOf = (g: Token) =>
+    n < 0 ? [] : others(s, g).filter((o) => !group.includes(o) && o.pos > from && (p >= L || o.pos < p));
+  const passed = new Map(group.map((g) => [g, passedOf(g)]));
+  for (const f of riders) log(s, `${rname(f)}【吸附蹭车】跟着 ${rname(t)} 一起移动。`);
+  if (p >= L) {
+    for (const g of group) if (active(g)) finish(s, g);
+    return;
+  }
+  for (const g of group) g.pos = p;
+  log(
+    s,
+    n < 0
+      ? `${group.map(rname).join("、")} 后退到第 ${p} 格（${why}）。`
+      : `${group.map(rname).join("、")} ${main ? "主移动" : "移动"} ${n} 格，到第 ${p} 格（${why}）。`,
+  );
+  // 4) 到达后：巨婴调整位置，再逐个结算停格能力（按当前玩家 → 顺时针）
+  const arrivals = inOrder(s).filter((x) => group.includes(x));
+  for (const g of arrivals) hugeBaby(s, c, g);
+  for (const g of arrivals) react(s, c, g, passed.get(g) ?? []);
+  for (const f of riders) if (active(f)) fire(s, c, f, `${rname(f)}【吸附蹭车】发动。`);
 }
 
 /** 传送：放到新格子，不算移动，不经过任何人 */
