@@ -5,7 +5,7 @@ import { DRAFTABLE } from "../src/racers.ts";
 import type { MAState } from "../src/types.ts";
 
 /** 用固定种子的伪随机数替玩家做所有选择，完整打完一整局 */
-function playGame(seed: number, n: number) {
+function playGame(seed: number, n: number, variant: "standard" | "double" = "standard") {
   let rnd = seed * 7919 + 1;
   const rand = (k: number) => {
     rnd = (rnd * 1103515245 + 12345) % 2147483648;
@@ -14,6 +14,7 @@ function playGame(seed: number, n: number) {
   let s: MAState = createMAGame({
     players: Array.from({ length: n }, (_, i) => ({ id: "p" + i, name: "P" + i })),
     seed,
+    settings: { variant },
   });
   let steps = 0;
   while (s.phase !== "over") {
@@ -22,9 +23,11 @@ function playGame(seed: number, n: number) {
       const d = s.draft!;
       s = reduceMA(s, { type: "DRAFT", player: d.order[d.step], racer: d.pool[rand(d.pool.length)] });
     } else if (s.phase === "choose") {
-      const p = s.players.find((p) => !p.choice)!;
+      const p = s.players.find((p) => !p.choices.length)!;
       const left = p.hand.filter((r) => !p.used.includes(r));
-      s = reduceMA(s, { type: "CHOOSE", player: p.id, racer: left[rand(left.length)] });
+      const a = left.splice(rand(left.length), 1)[0];
+      const picks = s.settings.variant === "double" ? [a, left[rand(left.length)]] : [a];
+      s = reduceMA(s, { type: "CHOOSE", player: p.id, racers: picks });
     } else {
       const p = s.pending!;
       expect(p, "比赛中必须有待决定事项").toBeTruthy();
@@ -58,6 +61,18 @@ describe("魔法运动员 · 整局模拟", () => {
         const gold = s.players.flatMap((p) => p.chips).filter((c) => c.kind === "gold");
         expect(gold.length).toBeLessThanOrEqual(4);
         expect(s.players.every((p) => total(p.chips) >= 0)).toBe(true);
+      }
+    }, 120_000);
+
+  for (const [n, label] of [[2, "2 人"], [3, "3 人双选手"]] as const)
+    it(`${label}：25 局随机对局都能打完，每人 8 名选手、每场派 2 名`, () => {
+      for (let seed = 1; seed <= 25; seed++) {
+        const s = playGame(seed * 17 + n, n, "double");
+        expect(s.phase).toBe("over");
+        for (const p of s.players) {
+          expect(p.hand).toHaveLength(8);
+          expect(new Set(p.used).size).toBe(8);
+        }
       }
     }, 120_000);
 

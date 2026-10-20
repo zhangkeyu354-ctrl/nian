@@ -61,8 +61,10 @@ export const DEFAULT_POINTS = { gold: 3, silver: 1 };
 
 export function createMAGame(opts: CreateMAOptions): MAState {
   const n = opts.players.length;
-  if (n < 3 || n > 6)
-    fail("PLAYER_COUNT", "魔法运动员标准规则支持 3–6 人（2 人变体尚未实现）。");
+  if (n < 2 || n > 6) fail("PLAYER_COUNT", "魔法运动员支持 2–6 人。");
+  // 2 人局必须用双选手；3 人可选「双选手变体」；4–6 人只有标准规则
+  const variant: Settings["variant"] =
+    n === 2 ? "double" : n === 3 && opts.settings?.variant === "double" ? "double" : "standard";
   if (new Set(opts.players.map((p) => p.id)).size !== n)
     fail("DUP_PLAYER", "玩家 id 重复。");
   const races = opts.settings?.races ?? 4;
@@ -76,6 +78,7 @@ export function createMAGame(opts: CreateMAOptions): MAState {
       fail("TRACK_UNCONFIRMED", `${TRACKS[t].zh}：${TRACKS[t].missing}。`);
   const settings: Settings = {
     races,
+    variant,
     schedule,
     points:
       opts.settings?.points ??
@@ -92,7 +95,7 @@ export function createMAGame(opts: CreateMAOptions): MAState {
         hand: [],
         used: [],
         chips: [],
-        choice: null,
+        choices: [],
       }),
     ),
     seats: opts.players.map((p) => p.id),
@@ -133,19 +136,32 @@ function rollOff(s: MAState, ids: string[], why: string): string {
   return left[0];
 }
 
+/**
+ * 选秀（规则书 p12 与 p26）：
+ * - 标准：翻 2×人数 张，蛇形；两轮，第二轮从先手左边的人开始 → 每人 4 名。
+ * - 2 人：翻 8 张，ABBAABBA；再翻 8 张，顺序反过来（BAABBAAB）→ 每人 8 名。
+ * - 3 人双选手：翻 6 张，正常蛇形；共 4 轮，轮流先选 → 每人 8 名。
+ */
+const draftRounds = (s: MAState) =>
+  s.settings.variant === "standard" ? 2 : s.seats.length === 2 ? 2 : 4;
+
 function startDraftRound(s: MAState, round: number, startPlayer: string) {
   const n = s.seats.length;
   const si = s.seats.indexOf(startPlayer);
-  const first = (si + round) % n;
-  const seq = Array.from({ length: n }, (_, i) => s.seats[(first + i) % n]);
-  s.draft = {
-    round,
-    pool: s.deck.splice(0, 2 * n),
-    order: [...seq, ...[...seq].reverse()],
-    step: 0,
-    startPlayer,
-  };
-  log(s, `第 ${round + 1} 轮选秀：翻开 ${2 * n} 名选手，${pname(s, seq[0])} 先选（蛇形）。`);
+  let order: string[];
+  let flip: number;
+  if (n === 2) {
+    const [a, b] = round === 0 ? [startPlayer, s.seats[(si + 1) % 2]] : [s.seats[(si + 1) % 2], startPlayer];
+    order = [a, b, b, a, a, b, b, a];
+    flip = 8;
+  } else {
+    const first = (si + round) % n;
+    const seq = Array.from({ length: n }, (_, i) => s.seats[(first + i) % n]);
+    order = [...seq, ...[...seq].reverse()];
+    flip = 2 * n;
+  }
+  s.draft = { round, pool: s.deck.splice(0, flip), order, step: 0, startPlayer };
+  log(s, `第 ${round + 1} 轮选秀：翻开 ${flip} 名选手，${pname(s, order[0])} 先选（蛇形）。`);
 }
 
 // ---------------------------------------------------------------- 比赛中的工具
@@ -745,13 +761,12 @@ function beforeMain(s: MAState, c: Ctx, t: Token) {
 const turnStart = new WeakMap<Token, number>();
 const turnStartPos = (t: Token) => turnStart.get(t) ?? t.pos;
 
-function turnUnit(s: MAState, c: Ctx) {
+/** 一名选手的回合（双选手变体里，一名玩家的回合包含两名选手各自的回合，先后完整进行） */
+function racerTurn(s: MAState, c: Ctx, t: Token, f: TurnFlags) {
   const r = race(s);
-  const t = r.tokens.find((x) => x.owner === r.current && active(x))!;
   const startPos = t.pos;
   turnStart.set(t, startPos);
-  const f: TurnFlags = { extra: false, skipper: null };
-  try {
+  {
     if (!t.started) {
       t.started = true;
       if (has(s, t, "mastermind") && r.mastermindPick === null) {
@@ -813,18 +828,47 @@ function turnUnit(s: MAState, c: Ctx) {
           fire(s, c, h, `${rname(h)}【幸灾乐祸】：${rname(t)} 这回合几乎没动，移动 2 格。`);
           move(s, c, h, 2, false, "幸灾乐祸");
         }
-  } catch (e) {
-    // 等人决定时回合还没结束，不能换人；比赛结束时照常记下一位
-    if (!(e instanceof Need)) nextTurn(s, t, f);
-    throw e;
   }
-  nextTurn(s, t, f);
 }
 
-function nextTurn(s: MAState, t: Token, f: TurnFlags) {
+/**
+ * 一名玩家的回合。
+ * - 标准：唯一的选手行动。
+ * - 双选手（规则书 p26）：3 人变体「按你想要的顺序移动两名选手，完整结束一名再动另一名」；
+ *   2 人变体「每名玩家的第一个回合选一名选手行动，之后每回合按想要的顺序使用每名选手」。
+ */
+function turnUnit(s: MAState, c: Ctx) {
+  const r = race(s);
+  const f: TurnFlags = { extra: false, skipper: null };
+  const mine = () => inOrder(s).filter((x) => x.owner === r.current && active(x));
+  try {
+    let seq = mine();
+    if (seq.length > 1) {
+      const firstOnly = s.seats.length === 2 && !r.firstTurnDone.includes(r.current);
+      const a = ask(s, c, {
+        player: r.current,
+        racer: null,
+        kind: "order",
+        prompt: firstOnly ? "你的第一个回合只用一名选手：用哪一名？" : "这回合两名选手都要行动：先动哪一名？",
+        options: seq.map((x) => ({ value: x.racer, label: firstOnly ? rname(x) : `先动 ${rname(x)}` })),
+      });
+      const firstT = seq.find((x) => x.racer === a)!;
+      seq = firstOnly ? [firstT] : [firstT, ...seq.filter((x) => x !== firstT)];
+    }
+    if (!r.firstTurnDone.includes(r.current)) r.firstTurnDone.push(r.current);
+    for (const t of seq) if (active(t)) racerTurn(s, c, t, f);
+  } catch (e) {
+    // 等人决定时回合还没结束，不能换人；比赛结束时照常记下一位
+    if (!(e instanceof Need)) nextTurn(s, f);
+    throw e;
+  }
+  nextTurn(s, f);
+}
+
+function nextTurn(s: MAState, f: TurnFlags) {
   const r = race(s);
   const live = (id: string) => r.tokens.some((x) => x.owner === id && active(x));
-  if (f.extra && active(t)) return;
+  if (f.extra && live(r.current)) return;
   if (f.skipper && live(f.skipper)) {
     r.current = f.skipper;
     return;
@@ -936,9 +980,18 @@ function endRace(s: MAState) {
     s,
     `第 ${r.index + 1} 场结束：冠军 ${first ? racerName(first) : "无"}（+${pts.gold}），亚军 ${second ? racerName(second) : "无"}${second ? `（+${pts.silver}）` : ""}。`,
   );
-  // 下一场先手：上一场最落后的选手（或第一个被淘汰的）
+  // 下一场先手：上一场最落后的选手（或第一个被淘汰的）；2 人变体：上一场得分较少的玩家，平分掷骰
   let next: string;
-  if (r.eliminated.length) next = r.eliminated[0];
+  if (s.seats.length === 2) {
+    const got = s.seats.map((id) => ({
+      id,
+      v: total(player(s, id).chips.filter((ch) => ch.race === r.index)),
+    }));
+    next =
+      got[0].v === got[1].v
+        ? rollOff(s, s.seats, "上一场得分相同，掷骰决定下一场先手")
+        : got[0].v < got[1].v ? got[0].id : got[1].id;
+  } else if (r.eliminated.length) next = r.eliminated[0];
   else {
     const left = r.tokens.filter(active);
     if (left.length) {
@@ -947,7 +1000,7 @@ function endRace(s: MAState) {
       next = back.length > 1 ? rollOff(s, back, "并列最落后，掷骰决定下一场先手") : back[0];
     } else next = r.order[0];
   }
-  for (const p of s.players) p.choice = null;
+  for (const p of s.players) p.choices = [];
   if (r.index + 1 >= s.settings.races) {
     s.phase = "over";
     const totals = s.players.map((p) => ({ p, v: total(p.chips) }));
@@ -974,9 +1027,8 @@ function startRace(s: MAState) {
     track,
     order,
     current: first,
-    tokens: order.map((id) => {
-      const racer = player(s, id).choice!;
-      return {
+    tokens: order.flatMap((id) =>
+      player(s, id).choices.map((racer) => ({
         racer,
         owner: id,
         pos: 0,
@@ -986,18 +1038,17 @@ function startRace(s: MAState) {
         base: racer,
         copyPick: null,
         started: false,
-      };
-    }),
+      })),
+    ),
     finishers: [],
     eliminated: [],
     mastermindPick: null,
     lastRoll: null,
     over: false,
     setup: false,
+    firstTurnDone: [],
   };
-  for (const p of s.players) {
-    p.used.push(p.choice!);
-  }
+  for (const p of s.players) p.used.push(...p.choices);
   s.phase = "race";
   log(
     s,
@@ -1020,7 +1071,7 @@ export function reduceMA(prev: MAState, cmd: MACommand): MAState {
     d.step++;
     if (d.step >= d.order.length) {
       s.deck.push(...d.pool);
-      if (d.round === 0) startDraftRound(s, 1, d.startPlayer);
+      if (d.round + 1 < draftRounds(s)) startDraftRound(s, d.round + 1, d.startPlayer);
       else {
         s.draft = null;
         s.phase = "choose";
@@ -1029,10 +1080,15 @@ export function reduceMA(prev: MAState, cmd: MACommand): MAState {
     }
   } else if (cmd.type === "CHOOSE") {
     if (s.phase !== "choose") fail("PHASE", "现在不是选择出场选手的阶段。");
-    if (!me.hand.includes(cmd.racer) || me.used.includes(cmd.racer))
-      fail("NOT_AVAILABLE", "这名选手不能出场（不在手上或已经用过）。");
-    me.choice = cmd.racer;
-    if (s.players.every((p) => p.choice)) {
+    const need = s.settings.variant === "double" ? 2 : 1;
+    const picks = cmd.racers ?? (cmd.racer ? [cmd.racer] : []);
+    if (picks.length !== need) fail("PICK_COUNT", `这一场要派 ${need} 名选手。`);
+    if (new Set(picks).size !== picks.length) fail("PICK_DUP", "要派两名不同的选手。");
+    for (const racer of picks)
+      if (!me.hand.includes(racer) || me.used.includes(racer))
+        fail("NOT_AVAILABLE", "这名选手不能出场（不在手上或已经用过）。");
+    me.choices = [...picks];
+    if (s.players.every((p) => p.choices.length === need)) {
       startRace(s);
       s = advance(s);
     }
@@ -1061,7 +1117,7 @@ export function reduceMA(prev: MAState, cmd: MACommand): MAState {
 /** 当前需要谁做什么（大厅/界面用） */
 export function waitingFor(s: MAState): string[] {
   if (s.phase === "draft" && s.draft) return [s.draft.order[s.draft.step]];
-  if (s.phase === "choose") return s.players.filter((p) => !p.choice).map((p) => p.id);
+  if (s.phase === "choose") return s.players.filter((p) => !p.choices.length).map((p) => p.id);
   if (s.pending) return [s.pending.player];
   return [];
 }
@@ -1087,7 +1143,7 @@ export function testRace(opts: {
   s.winners = opts.winners ?? [];
   s.players.forEach((p, i) => {
     p.hand = [opts.racers[i]];
-    p.choice = opts.racers[i];
+    p.choices = [opts.racers[i]];
   });
   s.nextFirst = "p1";
   if (opts.track) s.settings.schedule = [opts.track, opts.track, opts.track, opts.track];

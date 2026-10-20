@@ -21,7 +21,7 @@ import type { Ack } from "../../../packages/shared/src/protocol.ts";
 
 const CODE_CHARS = "ABCDEFGHJKLMNPQRSTUVWXYZ23456789";
 const MAX_PLAYERS = 6;
-const MIN_PLAYERS = 3;
+const MIN_PLAYERS = 2;
 const RACES = 4;
 
 interface MAPlayerFile {
@@ -38,6 +38,8 @@ export interface MARoomFile {
   hostId: string | null;
   players: MAPlayerFile[];
   points: MAPointsSetting[];
+  /** 只在 3 人时有意义（2 人固定双选手） */
+  variant?: "standard" | "double";
   seed: number;
   commands: MACommand[];
 }
@@ -59,7 +61,7 @@ export class MARoom {
     return createMAGame({
       players: this.file.players.map((p) => ({ id: p.playerId, name: p.name })),
       seed: this.file.seed,
-      settings: { races: RACES, points: this.file.points },
+      settings: { races: RACES, points: this.file.points, variant: this.file.variant ?? "standard" },
     });
   }
   idByToken(token: string | null | undefined) {
@@ -88,6 +90,9 @@ export class MARoom {
         gold: clampPoint(p?.gold),
         silver: clampPoint(p?.silver),
       }));
+    } else if (action?.type === "SET_VARIANT") {
+      if (action.variant !== "standard" && action.variant !== "double") throw new Error("BAD_ACTION");
+      this.file.variant = action.variant;
     } else if (action?.type === "START") {
       if (this.file.players.length < MIN_PLAYERS) throw new Error("MA_NEED_PLAYERS");
       this.file.seed = randomInt(2 ** 31);
@@ -102,8 +107,11 @@ export class MARoom {
     if (!this.state) throw new Error("NOT_STARTED");
     if (version !== this.file.commands.length) throw new Error("STALE");
     let full: MACommand;
-    if (cmd?.type === "DRAFT" || cmd?.type === "CHOOSE")
-      full = { type: cmd.type, player: me, racer: String(cmd.racer) };
+    if (cmd?.type === "DRAFT") full = { type: "DRAFT", player: me, racer: String(cmd.racer) };
+    else if (cmd?.type === "CHOOSE")
+      full = Array.isArray(cmd.racers)
+        ? { type: "CHOOSE", player: me, racers: cmd.racers.slice(0, 2).map(String) }
+        : { type: "CHOOSE", player: me, racer: String(cmd.racer) };
     else if (cmd?.type === "ANSWER") full = { type: "ANSWER", player: me, value: String(cmd.value) };
     else throw new Error("BAD_ACTION");
     this.state = reduceMA(this.state, full);
@@ -121,6 +129,7 @@ export class MARoom {
       })),
       mySeat: me,
       points: this.file.points,
+      variant: this.file.players.length === 2 ? "double" : this.file.players.length === 3 ? (this.file.variant ?? "standard") : "standard",
       version: this.file.commands.length,
       view: this.state ? viewForMA(this.state, me) : null,
     };
@@ -193,7 +202,7 @@ export function maErrorText(e: unknown): { error: string; code: string } {
     HOST_ONLY: "只有房主可以这样做。",
     NOT_STARTED: "游戏还没开始。",
     NAME_REQUIRED: "请填写昵称。",
-    MA_NEED_PLAYERS: "至少需要 3 人才能开始（2 人变体尚未实现）。",
+    MA_NEED_PLAYERS: "至少需要 2 人才能开始。",
     TOO_MANY_ROOMS: "服务器上的房间太多了，请稍后再试。",
     BAD_ACTION: "操作无效。",
   };

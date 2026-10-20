@@ -39,7 +39,7 @@ function Masthead({ small }: { small?: boolean }) {
       {!small && (
         <>
           <img className="ma-cover" src={`${ART}/lobby/cover.webp`} alt="" />
-          <p>3–6 名玩家各自选秀 4 名怪咖选手，比四场赛跑。掷骰、发动能力、把别人绊倒——前两个冲线的拿奖牌。</p>
+          <p>2–6 名玩家各自选秀怪咖选手，比四场赛跑。掷骰、发动能力、把别人绊倒——前两个冲线的拿奖牌。</p>
         </>
       )}
     </header>
@@ -55,7 +55,7 @@ function Home() {
       <Masthead />
       <section className="ma-panel">
         <h2>开一场比赛</h2>
-        <p className="ma-muted">建好房间后把房间号或二维码发给朋友，每人用自己的手机加入。目前支持 3–6 人。</p>
+        <p className="ma-muted">建好房间后把房间号或二维码发给朋友，每人用自己的手机加入。2–6 人都能玩。</p>
         {error && <p className="ma-error" role="alert">{error}</p>}
         <button
           className="ma-go"
@@ -243,10 +243,32 @@ function Lobby({ snap, lobby }: { snap: MARoomSnapshot; lobby: (a: Parameters<Re
         </table>
         <p className="ma-muted">赛道顺序：温和 → 狂野 → 温和 → 狂野。<a href={`${ART}/docs/skillbook.pdf`} target="_blank" rel="noreferrer">36 名选手技能书（PDF）</a></p>
       </section>
+      {snap.players.length <= 3 && snap.players.length >= 2 && (
+        <section className="ma-panel">
+          <h2>规则</h2>
+          {snap.players.length === 2 ? (
+            <p className="ma-muted">2 人局用双选手规则：每人选秀 8 名，每场派 2 名；你的第一个回合只动一名，之后每回合两名都动。</p>
+          ) : (
+            <div className="ma-variant">
+              {(["standard", "double"] as const).map((v) => (
+                <button
+                  key={v}
+                  type="button"
+                  className={snap.variant === v ? "on" : ""}
+                  disabled={!host}
+                  onClick={() => run({ type: "SET_VARIANT", variant: v })}
+                >
+                  {v === "standard" ? "标准：每人 4 名，每场 1 名" : "双选手：每人 8 名，每场 2 名"}
+                </button>
+              ))}
+            </div>
+          )}
+        </section>
+      )}
       {error && <p className="ma-error" role="alert">{error}</p>}
       {host ? (
-        <button className="ma-go" data-testid="ma-start" disabled={snap.players.length < 3} onClick={() => run({ type: "START" })}>
-          {snap.players.length < 3 ? `还差 ${3 - snap.players.length} 人才能开始` : "人齐了，开始选秀"}
+        <button className="ma-go" data-testid="ma-start" disabled={snap.players.length < 2} onClick={() => run({ type: "START" })}>
+          {snap.players.length < 2 ? "还差 1 人才能开始" : "人齐了，开始选秀"}
         </button>
       ) : (
         <p className="ma-wait">等房主开始…</p>
@@ -333,14 +355,14 @@ function Scores({ view, me, colorOf }: { view: MAView; me: string | null; colorO
   return (
     <ul className="ma-scores">
       {view.players.map((p) => {
-        const runner = view.race && !view.race.over ? view.race.tokens.find((t) => t.owner === p.id) : null;
+        const runners = view.race && !view.race.over ? view.race.tokens.filter((t) => t.owner === p.id) : [];
         return (
           <li key={p.id} className={p.id === me ? "me" : ""} style={{ borderColor: colorOf(p.id) }}>
             <span className="ma-dot" style={{ background: colorOf(p.id) }} />
             <span className="ma-pname">{p.name}</span>
             <b className="ma-total">{total(p.chips)}</b>
             <small>
-              {runner ? racerName(runner.racer) : view.phase === "choose" ? (p.choice ? "已选好" : "选择中") : `${p.hand.length} 名选手`}
+              {runners.length ? runners.map((r) => racerName(r.racer)).join("、") : view.phase === "choose" ? (p.choices.length ? "已选好" : "选择中") : `${p.hand.length} 名选手`}
             </small>
           </li>
         );
@@ -384,30 +406,49 @@ function Choose({ view, me, act }: { view: MAView; me: string | null; act: (c: P
   const idx = view.race ? view.race.index + 1 : 0;
   const track = TRACKS[view.settings.schedule[idx] ?? "mild"];
   const pts = view.settings.points[idx];
+  const need = view.settings.variant === "double" ? 2 : 1;
+  const [sel, setSel] = useState<string[]>([]);
+  useEffect(() => setSel([]), [idx]);
+  const sent = mine?.choices.filter((c) => c !== HIDDEN_CHOICE) ?? [];
   return (
     <section className="ma-stage">
       <h2>第 {idx + 1} 场 · {track.zh}</h2>
-      <p className="ma-muted">本场冠军 {pts.gold} 分、亚军 {pts.silver} 分。大家秘密选好后同时公开，每名选手只能上场一次。</p>
+      <p className="ma-muted">
+        本场冠军 {pts.gold} 分、亚军 {pts.silver} 分。大家秘密选好后同时公开，每名选手只能上场一次。
+        {need === 2 && " 双选手规则：这一场派 2 名不同的选手。"}
+      </p>
       {mine ? (
-        mine.choice && mine.choice !== HIDDEN_CHOICE ? (
-          <p className="ma-banner">你派出了 {racerName(mine.choice)}，等其他人选好…</p>
+        sent.length ? (
+          <p className="ma-banner">你派出了 {sent.map(racerName).join("、")}，等其他人选好…</p>
         ) : (
-          <p className="ma-banner you">选出本场的选手</p>
+          <p className="ma-banner you">{need === 2 ? `选出本场的 2 名选手（已选 ${sel.length}/2）` : "选出本场的选手"}</p>
         )
       ) : (
         <p className="ma-banner">观战中</p>
+      )}
+      {need === 2 && mine && !sent.length && sel.length === 2 && (
+        <button className="ma-go" data-testid="ma-choose-confirm" onClick={() => act({ type: "CHOOSE", racers: sel })}>
+          派 {sel.map(racerName).join("、")} 上场
+        </button>
       )}
       {mine && (
         <div className="ma-cards">
           {mine.hand.map((id) => {
             const used = mine.used.includes(id);
+            const picked = need === 2 ? sel.includes(id) : sent.includes(id);
             return (
               <RacerCard
                 key={id}
                 id={id}
                 dim={used}
-                onPick={used ? undefined : () => act({ type: "CHOOSE", racer: id })}
-                pickLabel={mine.choice === id ? "已选（可改）" : "派它上场"}
+                onPick={
+                  used
+                    ? undefined
+                    : need === 1
+                      ? () => act({ type: "CHOOSE", racer: id })
+                      : () => setSel((v) => (v.includes(id) ? v.filter((x) => x !== id) : [...v, id].slice(-2)))
+                }
+                pickLabel={picked ? (need === 2 ? "已选（再点取消）" : "已选（可改）") : "派它上场"}
               />
             );
           })}

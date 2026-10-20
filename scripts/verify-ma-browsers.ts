@@ -40,7 +40,9 @@ try {
   await host.waitForURL(/room=/);
   const url = host.url();
   const pages: Page[] = [host];
-  for (const p of [host, await phone(), await phone(), await phone()]) {
+  const N = Number(process.env.MA_PLAYERS ?? 4);
+  const extra = await Promise.all(Array.from({ length: N - 1 }, () => phone()));
+  for (const p of [host, ...extra]) {
     if (p !== host) {
       await p.goto(url);
       pages.push(p);
@@ -60,16 +62,21 @@ try {
     if (await host.locator(".ma-final").count()) break;
     let acted = false;
     for (const p of pages) {
-      const pick = p.locator('[data-testid^="pick-"]').first();
+      const pick = p.locator('[data-testid^="pick-"]', { hasText: /选它|派它上场/ }).first();
       const opt = p.locator(".ma-decide.you .ma-options button").first();
-      if (await opt.count()) {
+      const confirm = p.getByTestId("ma-choose-confirm");
+      if (await confirm.count()) {
+        await confirm.click();
+        acted = true;
+      } else if (await opt.count()) {
         await opt.click();
         acted = true;
       } else if ((await pick.count()) && !(await p.locator(".ma-banner", { hasText: "你派出了" }).count())) {
         await pick.click();
         acted = true;
       } else continue;
-      if (process.env.MA_DEBUG) console.log(steps, pages.indexOf(p), Date.now() % 100000);
+      if (process.env.MA_DEBUG && steps < 60)
+        console.log(steps, pages.indexOf(p), await p.evaluate(() => [document.querySelector(".ma-error")?.textContent, document.querySelector(".ma-banner, .ma-prompt")?.textContent].join(" | ")));
       await p.waitForTimeout(60);
       break;
     }
@@ -90,6 +97,7 @@ try {
   await host.screenshot({ path: `${out}/3_最终成绩.png`, fullPage: true });
   assert.deepEqual(errors, []);
   console.log("MA_BROWSERS_PASS", JSON.stringify({ players: pages.length, steps, racesSeen: races }));
+  assert.equal(races, 4, "应当看到 4 场比赛");
 } finally {
   await browser.close();
   server.kill();

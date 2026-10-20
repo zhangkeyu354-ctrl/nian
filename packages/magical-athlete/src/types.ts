@@ -15,8 +15,8 @@ export interface MAPlayer {
   /** 已经出场过的角色 */
   used: string[];
   chips: Chip[];
-  /** 本场秘密选择（隐藏信息） */
-  choice: string | null;
+  /** 本场秘密选择（隐藏信息）；标准 1 名，双选手变体 2 名；未选为空数组 */
+  choices: string[];
 }
 
 export interface Token {
@@ -51,6 +51,8 @@ export interface RaceState {
   over: boolean;
   /** 赛前能力（神秘蛋、双胞胎、西西弗斯）是否已结算 */
   setup: boolean;
+  /** 2 人变体：已经进行过第一回合的玩家（第一回合只用一名选手） */
+  firstTurnDone: string[];
 }
 
 export interface Decision {
@@ -69,6 +71,8 @@ export interface LogEntry {
 
 export interface Settings {
   races: number;
+  /** standard：每人每场 1 名；double：2 人局 / 3 人双选手变体，每人每场 2 名 */
+  variant: "standard" | "double";
   schedule: TrackId[];
   /** 每场金牌、银牌分值（待核对，房主可改） */
   points: Array<{ gold: number; silver: number }>;
@@ -110,7 +114,7 @@ export interface MAState {
 
 export type MACommand =
   | { type: "DRAFT"; player: string; racer: string }
-  | { type: "CHOOSE"; player: string; racer: string }
+  | { type: "CHOOSE"; player: string; racer?: string; racers?: string[] }
   | { type: "ANSWER"; player: string; value: string };
 
 export interface CreateMAOptions {

@@ -12,7 +12,7 @@ export function viewForMA(s: MAState, playerId: string | null): MAView {
   const { deck, turn: _turn, rng: _rng, forcedRolls: _f, ...rest } = structuredClone(s);
   const v: MAView = { ...rest, deckCount: deck.length };
   for (const p of v.players)
-    if (p.id !== playerId && p.choice) p.choice = HIDDEN_CHOICE;
+    if (p.id !== playerId) p.choices = p.choices.map(() => HIDDEN_CHOICE);
   // 待决定事项：只有决定人看得到选项（例如神秘蛋抽到的 3 张）
   if (v.pending && v.pending.player !== playerId)
     v.pending = { ...v.pending, options: [] };

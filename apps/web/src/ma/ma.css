@@ -713,3 +713,11 @@
     transition: none;
   }
 }
+
+.ma-variant {
+  display: grid;
+  gap: 8px;
+}
+.ma-app .ma-variant button.on {
+  background: var(--sun);
+}
