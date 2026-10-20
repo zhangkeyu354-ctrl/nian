@@ -112,7 +112,7 @@ try {
     // 待决定事项只有决定人看得到选项：别人的面板里不能有选项按钮
     for (const q of pages)
       assert.equal(await q.locator(".ma-decide:not(.you) .ma-options button").count(), 0, "旁人看到了别人的选项");
-    const board = host.locator(".ma-board-art");
+    const board = host.locator(".ma-board-art, .ma-grid").first();
     const label = (await board.count()) ? await board.getAttribute("aria-label") : null;
     if (label && !label.includes(`第 ${races} 场`)) {
       races++;
