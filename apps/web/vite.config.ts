@@ -4,6 +4,12 @@ import { fileURLToPath } from "node:url";
 export default defineConfig({
   root: fileURLToPath(new URL(".", import.meta.url)),
   plugins: [tailwindcss()],
+  // 版本号：Render 构建时取提交号，本地为 local（设置页面底部显示）
+  define: {
+    __APP_VERSION__: JSON.stringify(
+      (process.env.RENDER_GIT_COMMIT ?? "").slice(0, 7) || "local",
+    ),
+  },
   server: {
     host: "127.0.0.1",
     port: 5173,

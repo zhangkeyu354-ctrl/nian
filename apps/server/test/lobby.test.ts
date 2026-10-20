@@ -219,3 +219,22 @@ describe("房间：存档恢复", () => {
     expect(again.idByToken(t[2])).toBe("p3");
   });
 });
+
+describe("闲置房间清理（上线准备）", () => {
+  it("超过时限且没人在线的房间被删除，有人在线的保留", async () => {
+    const { mkdtempSync, existsSync } = await import("node:fs");
+    const { tmpdir } = await import("node:os");
+    const { join } = await import("node:path");
+    const { RoomStore } = await import("../src/rooms.ts");
+    const dir = mkdtempSync(join(tmpdir(), "dbd-prune-"));
+    const store = new RoomStore(dir);
+    const a = store.create({ playerCount: 3 }, false);
+    const b = store.create({ playerCount: 3 }, false);
+    const later = Date.now() + 25 * 3600_000;
+    expect(store.prune(24 * 3600_000, (c) => c === b.code, later)).toBe(1);
+    expect(store.rooms.has(a.code)).toBe(false);
+    expect(existsSync(join(dir, a.code + ".json"))).toBe(false);
+    expect(store.rooms.has(b.code)).toBe(true);
+    expect(store.prune(24 * 3600_000)).toBe(0);
+  });
+});

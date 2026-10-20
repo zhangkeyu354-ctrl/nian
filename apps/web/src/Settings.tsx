@@ -1,3 +1,4 @@
+declare const __APP_VERSION__: string;
 import { TapButton } from "./TapButton.tsx";
 import React, { createContext, useContext, useEffect, useState } from "react";
 type Settings = {
@@ -124,6 +125,7 @@ export function SettingsButton() {
             >
               完成
             </TapButton>
+            <small className="app-version">版本 {__APP_VERSION__}</small>
           </section>
         </div>
       )}

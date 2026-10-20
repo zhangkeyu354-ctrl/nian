@@ -5,6 +5,8 @@ import {
   readFileSync,
   writeFileSync,
   renameSync,
+  statSync,
+  rmSync,
 } from "node:fs";
 import { join } from "node:path";
 import {
@@ -345,6 +347,8 @@ const CODE_CHARS = "ABCDEFGHJKLMNPQRSTUVWXYZ23456789";
 
 export class RoomStore {
   rooms = new Map<string, Room>();
+  /** 每个房间最后一次有改动的时间（毫秒） */
+  touched = new Map<string, number>();
   constructor(
     private dir: string,
     private rand: Rand = cryptoRand,
@@ -354,6 +358,7 @@ export class RoomStore {
       try {
         const room = new Room(JSON.parse(readFileSync(join(dir, f), "utf8")), rand);
         this.rooms.set(room.code, room);
+        this.touched.set(room.code, statSync(join(dir, f)).mtimeMs);
       } catch (e) {
         console.warn("跳过无法恢复的房间存档", f, e instanceof Error ? e.message : e);
       }
@@ -413,7 +418,20 @@ export class RoomStore {
       seats: [...seats.values()].sort((a, b) => (a.side === b.side ? 0 : a.side === "killer" ? 1 : -1)),
     };
   }
+  /** 删除超过 maxIdleMs 没有改动、且没人在线的房间；返回删除数量 */
+  prune(maxIdleMs: number, busy: (code: string) => boolean = () => false, now = Date.now()) {
+    let n = 0;
+    for (const code of [...this.rooms.keys()]) {
+      if (busy(code) || now - (this.touched.get(code) ?? now) < maxIdleMs) continue;
+      this.rooms.delete(code);
+      this.touched.delete(code);
+      rmSync(join(this.dir, code + ".json"), { force: true });
+      n++;
+    }
+    return n;
+  }
   save(room: Room) {
+    this.touched.set(room.code, Date.now());
     const target = join(this.dir, room.code + ".json");
     writeFileSync(target + ".tmp", JSON.stringify(room.file));
     renameSync(target + ".tmp", target);
@@ -442,6 +460,7 @@ export function errorText(e: unknown): { error: string; code: string } {
     NOT_AN_OPTION: "只能从发给你的角色里选。",
     NOT_STARTED: "游戏还没开始。",
     PRESET_TEST_ONLY: "测试房间只能在测试服务器上创建。",
+    TOO_MANY_ROOMS: "服务器上的房间太多了，请稍后再试。",
     NOT_LOBBY_ROOM: "这个房间没有选阵营环节。",
     BAD_ACTION: "操作无效。",
   };

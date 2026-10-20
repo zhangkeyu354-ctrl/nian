@@ -1,0 +1,18 @@
+# Render 一键部署（Blueprint）。免费网页服务，新加坡机房（离日本/中国较近）。
+services:
+  - type: web
+    name: dbd-boardgame
+    runtime: node
+    plan: free
+    region: singapore
+    buildCommand: npm ci --ignore-scripts --no-audit --no-fund && npm run build
+    startCommand: npm run server
+    healthCheckPath: /api/health
+    autoDeploy: true
+    envVars:
+      - key: NODE_VERSION
+        value: "24"
+      - key: PLAYWRIGHT_SKIP_BROWSER_DOWNLOAD
+        value: "1"
+      - key: DBD_ROOM_IDLE_HOURS
+        value: "24"
