@@ -6,6 +6,7 @@ import { SettingsButton } from "./Settings.tsx";
 import { Token } from "./Token.tsx";
 import { usePhone } from "./MobileDock.tsx";
 import { TapButton } from "./TapButton.tsx";
+import { CharacterDetail } from "./CharacterDetail.tsx";
 import { createRoom, useRoom, type NetBinding } from "./net.ts";
 
 const params = () => new URLSearchParams(location.search);
@@ -421,6 +422,8 @@ function DraftRoom({
     l.players.find((p) => p.playerId === id)?.name ?? "玩家";
   const mine = d.slots.filter((s) => s.playerId === snap.mySeat);
   const [slotIndex, setSlotIndex] = useState(0);
+  /** 每个名额当前正在查看的角色（先看技能再确认） */
+  const [looking, setLooking] = useState<Record<string, string>>({});
   const phone = usePhone();
   const mapName = maps.maps.find((m) => m.id === d.mapId)?.name_zh;
   return (
@@ -456,40 +459,68 @@ function DraftRoom({
                       : "选你的逃生者（二选一）"}
                 </h2>
                 <div className="draft-options">
-                  {(s.options ?? []).map((c) => (
-                    <TapButton
-                      key={c}
-                      data-testid={`pick-${s.slotId}-${c}`}
-                      className={"draft-option" + (s.pick === c ? " on" : "")}
-                      disabled={!!s.pick}
-                      onClick={async () => {
-                        const err = await room.lobby({
-                          type: "PICK",
-                          slotId: s.slotId,
-                          characterId: c,
-                        });
-                        setError(err ?? "");
-                      }}
-                    >
-                      <Token
-                        token={{
-                          id: c,
-                          kind: "actor",
-                          state: "healthy",
-                          asset: "portrait_" + c,
-                          label: actorName(c),
-                          location: "room",
-                        }}
-                        size={72}
-                      />
-                      <strong>{actorName(c)}</strong>
-                      <small>
-                        {chars.characters.find((x) => x.id === c)?.power
-                          ?.name_zh ?? ""}
-                      </small>
-                    </TapButton>
-                  ))}
+                  {(s.options ?? []).map((c) => {
+                    const seen = s.pick ?? looking[s.slotId] ?? s.options![0];
+                    return (
+                      <TapButton
+                        key={c}
+                        data-testid={`look-${s.slotId}-${c}`}
+                        className={
+                          "draft-option" +
+                          (s.pick === c ? " on" : "") +
+                          (seen === c ? " looking" : "")
+                        }
+                        aria-pressed={seen === c}
+                        disabled={!!s.pick}
+                        onClick={() =>
+                          setLooking((v) => ({ ...v, [s.slotId]: c }))
+                        }
+                      >
+                        <Token
+                          token={{
+                            id: c,
+                            kind: "actor",
+                            state: "healthy",
+                            asset: "portrait_" + c,
+                            label: actorName(c),
+                            location: "room",
+                          }}
+                          size={72}
+                        />
+                        <strong>{actorName(c)}</strong>
+                        <small>
+                          {chars.characters.find((x) => x.id === c)?.power
+                            ?.name_zh ?? ""}
+                        </small>
+                      </TapButton>
+                    );
+                  })}
                 </div>
+                {(() => {
+                  const c = s.pick ?? looking[s.slotId] ?? s.options?.[0];
+                  if (!c) return null;
+                  return (
+                    <>
+                      <CharacterDetail id={c} />
+                      {!s.pick && (
+                        <TapButton
+                          className="primary draft-confirm"
+                          data-testid={`pick-${s.slotId}-${c}`}
+                          onClick={async () => {
+                            const err = await room.lobby({
+                              type: "PICK",
+                              slotId: s.slotId,
+                              characterId: c,
+                            });
+                            setError(err ?? "");
+                          }}
+                        >
+                          选择 {actorName(c)}
+                        </TapButton>
+                      )}
+                    </>
+                  );
+                })()}
               </div>
             ),
         )}

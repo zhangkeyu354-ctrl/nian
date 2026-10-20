@@ -1466,3 +1466,58 @@ body.phone-inmatch {
     max-height: 32px;
   }
 }
+/* 选角页：手机上技能介绍在页面内滚动，卡片变小（2026-10-20） */
+@media (max-width: 700px), (pointer: coarse) and (max-height: 600px) {
+  .room-flow [data-testid="draft-room"] {
+    flex: 1;
+    min-height: 0;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+  }
+  .room-flow .draft-slot {
+    flex: 1;
+    min-height: 0;
+    display: flex;
+    flex-direction: column;
+  }
+  .room-flow .draft-slot h2 {
+    margin: 4px 0;
+    font-size: 15px;
+  }
+  .room-flow .draft-option {
+    min-height: 0;
+    padding: 6px 4px;
+    gap: 2px;
+  }
+  .room-flow .draft-option svg {
+    width: 52px;
+    height: 52px;
+  }
+  .room-flow .character-detail {
+    flex: 1;
+    min-height: 0;
+    overflow-y: auto;
+    overscroll-behavior: contain;
+    margin: 6px 0;
+    padding: 8px 10px;
+  }
+  .room-flow .draft-confirm {
+    flex: none;
+  }
+  .room-flow .draft-status-title {
+    margin: 4px 0 2px;
+    font-size: 13px;
+  }
+  .room-flow [data-testid="draft-room"] .player-list {
+    flex: none;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 4px;
+    font-size: 11px;
+  }
+  .room-flow [data-testid="draft-room"] .player-list li {
+    padding: 2px 6px;
+    min-height: 0;
+  }
+}

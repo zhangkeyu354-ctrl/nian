@@ -160,9 +160,15 @@ try {
         const opts = p.locator('[data-testid^="pick-"]:not([disabled])');
         if (
           round === 0 &&
-          (await p.locator('[data-testid^="pick-k-"]').count())
-        )
-          killerOptions = await p.locator('[data-testid^="pick-k-"]').count();
+          (await p.locator('[data-testid^="look-k-"]').count())
+        ) {
+          killerOptions = await p.locator('[data-testid^="look-k-"]').count();
+          // 先看第二个杀手的介绍，确认介绍跟着切换
+          const second = p.locator('[data-testid^="look-k-"]').nth(1);
+          const id = (await second.getAttribute("data-testid"))!.split("-").pop();
+          await second.tap();
+          await p.getByTestId("character-detail-" + id).waitFor();
+        }
         if (await opts.count()) await opts.first().tap();
         else {
           const tabs = p.locator(".draft-tabs button");

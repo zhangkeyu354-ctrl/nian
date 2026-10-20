@@ -1199,3 +1199,15 @@ legend {
 .draft-option svg { width: 72px; height: 72px; }
 .draft-option.on { border-color: #d8b95c; box-shadow: 0 0 0 2px rgba(216, 185, 92, 0.35) inset; }
 .draft-option small { opacity: 0.7; font-size: 11px; }
+/* 选角：技能介绍（2026-10-20） */
+.draft-option.looking { border-color: #c3ac73; background: #26363a; }
+.character-detail { margin: 10px 0 8px; padding: 12px; border: 1px solid #4d5a55; border-radius: 6px; background: #162124; color: #e8e0c8; }
+.character-detail header { display: grid; gap: 2px; margin-bottom: 8px; }
+.character-detail header strong { font-size: 17px; }
+.character-detail header small { color: #b9bcae; font-size: 12px; }
+.character-detail section { padding: 8px 0; border-top: 1px solid #2e3b3b; }
+.character-detail h4 { margin: 0 0 4px; font-size: 14px; color: #e6cf94; display: flex; justify-content: space-between; gap: 8px; }
+.character-detail h4 span { color: #e6b6a6; font-weight: normal; font-size: 12px; white-space: nowrap; }
+.character-detail p { margin: 0; font-size: 13px; line-height: 1.55; }
+.character-detail .cd-power h4 { color: #f0a990; }
+.draft-confirm { width: 100%; min-height: 52px; font-size: 16px; }

@@ -842,6 +842,16 @@ export function MobileDock({
                     }
                   </p>
                 )}
+                {(chars.characters.find((c) => c.id === own.id) as any)?.passive
+                  ?.text_original_zh && (
+                  <p className="skill-full">
+                    被动：
+                    {
+                      (chars.characters.find((c) => c.id === own.id) as any)
+                        .passive.text_original_zh
+                    }
+                  </p>
+                )}
                 <div className="sheet-item">
                   {own.item ? (
                     <>
