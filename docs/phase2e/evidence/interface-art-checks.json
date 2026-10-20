@@ -1,0 +1,57 @@
+[
+  {
+    "scope": "Visible UI / prototype region, not a full-map-count claim",
+    "region": {
+      "x": 0,
+      "y": 0,
+      "width": 390,
+      "height": 664
+    },
+    "pixels": {
+      "busy": 0.19477225139875742,
+      "std": 37.445446003846484
+    }
+  },
+  {
+    "id": "flashlight",
+    "source": "AI 生成",
+    "loaded": true
+  },
+  {
+    "id": "first_aid_kit",
+    "source": "AI 生成",
+    "loaded": true
+  },
+  {
+    "id": "broken_key",
+    "source": "AI 生成",
+    "loaded": true
+  },
+  {
+    "id": "dull_key",
+    "source": "AI 生成",
+    "loaded": true
+  },
+  {
+    "id": "skeleton_key",
+    "source": "AI 生成",
+    "loaded": true
+  },
+  {
+    "scope": "Visible UI / prototype region, not a full-map-count claim",
+    "region": {
+      "x": 0,
+      "y": 0,
+      "width": 390,
+      "height": 664
+    },
+    "pixels": {
+      "busy": 0.19240037071362373,
+      "std": 37.50156351262884
+    }
+  },
+  {
+    "fallback": true,
+    "errors": []
+  }
+]

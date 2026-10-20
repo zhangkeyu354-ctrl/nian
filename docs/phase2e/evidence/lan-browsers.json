@@ -1,0 +1,20 @@
+[
+  {
+    "seed": 4111,
+    "room": "HVPQ",
+    "commands": 107,
+    "winner": "killer",
+    "browsers": 5,
+    "killerFramesChecked": 110,
+    "screenshotsChecked": 5
+  },
+  {
+    "seed": 1701,
+    "room": "RZPT",
+    "commands": 188,
+    "winner": "survivor",
+    "browsers": 5,
+    "killerFramesChecked": 191,
+    "screenshotsChecked": 5
+  }
+]

@@ -36,3 +36,5 @@ Original prompt: 阅读AGENTS.md，先提交Phase 1并排除原版reference图�
 - 热座手机双指缩放/拖动/遮挡已通过新触屏处理；旧verify脚本正按新界面入口迁移，不能把过渡中HMR重载失败算验收。最终报告与Git提交尚未完成。
 
 - 2026-10-20 Phase 2D：按最新指令合并 claude/room-flow d8e28df，保留data-testid，手机正式联机基于JoinRoom/LobbyRoom/DraftRoom；PhoneSetup仅热座。208测试、全部verify通过；两局五手机107/188命令、64接线场景；冷进入≤1,671,296字节。修复抽屉/全图触摸穿透，规则/协议/服务端/数据合并后无改动。完整报告docs/phase2d/Phase_2D_报告.md。复杂技能多目标选择最多22次未达到严格一键目标；17插画占位待用户美术。提交本批并按要求停止。
+
+- 2026-10-20 Phase 2E：内置image_gen完成17张原创PNG（5物品、2封面、10模块），原图未改画，WebP质量80，illustrations22项全部AI、零占位；封面接入热座选图。要求验收全部通过，手机五浏览器两局重跑通过，冷进入1.735–1.768MB。报告docs/phase2e/Phase_2E_报告.md。未修改规则/协议/服务器/数据；选做机制图标和背面未做，未部署。提交后停止。

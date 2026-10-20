@@ -21,7 +21,7 @@ for category,ids in names.items():
   rel=f'svg/{category}/{ident}.svg';dest=public/rel;dest.parent.mkdir(parents=True,exist_ok=True)
   shape=shapes.get(ident,'<path d="M15 105l25-48 20 25 20-56 33 79M62 91V53h24v38zM68 53V41h12v12"/>')
   dest.write_text(f'<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128"><g fill="none" stroke="#cbbd91" stroke-width="5" stroke-linecap="round" stroke-linejoin="round">{shape}</g></svg>',encoding='utf-8')
-  catalog.append({'id':ident,'category':category,'file':f'{category}/{ident}.webp','svg':rel,'source':'占位','states':['module' if category=='modules' else 'neutral'],'transparent':category=='items'})
+  catalog.append({'id':ident,'category':category,'file':f'{category}/{ident}.webp','svg':rel,'source':'占位','states':['module' if category=='modules' else 'neutral'],'transparent':category!='maps'})
 sources=root/'work/mobile-implementation/generated-art.json'
 manifest_path=root/'assets/manifest.json';manifest=json.loads(manifest_path.read_text(encoding='utf-8'))
 specs={e['id']:{'id':e['id'],'source_path':str(root/e['original_file']),'prompt':e['generation_prompt']} for e in manifest.get('illustrations',[]) if e.get('source')=='AI 生成' and (root/e.get('original_file','')).is_file()}

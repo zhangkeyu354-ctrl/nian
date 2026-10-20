@@ -1,0 +1,780 @@
+[
+  {
+    "id": "board_ace_1",
+    "passed": true,
+    "taps": 1,
+    "command": {
+      "type": "USE_PERK",
+      "actorId": "ace",
+      "perkId": "board_ace_1",
+      "index": 0
+    },
+    "events": 23
+  },
+  {
+    "id": "board_dwight_3",
+    "passed": true,
+    "taps": 1,
+    "command": {
+      "type": "USE_PERK",
+      "actorId": "dwight",
+      "perkId": "board_dwight_3"
+    },
+    "events": 45
+  },
+  {
+    "id": "board_doctor_1",
+    "passed": true,
+    "taps": 1,
+    "command": {
+      "type": "USE_PERK",
+      "actorId": "doctor",
+      "perkId": "board_doctor_1"
+    },
+    "events": 60
+  },
+  {
+    "id": "item_toolbox",
+    "passed": true,
+    "taps": 2,
+    "command": {
+      "type": "USE_ITEM",
+      "actorId": "dwight",
+      "itemId": "toolbox",
+      "propId": "mine_depths:objective:0"
+    },
+    "events": 4
+  },
+  {
+    "id": "item_commodious_toolbox",
+    "passed": true,
+    "taps": 2,
+    "command": {
+      "type": "USE_ITEM",
+      "actorId": "claudette",
+      "itemId": "commodious_toolbox",
+      "propId": "mine_depths:objective:0"
+    },
+    "events": 5
+  },
+  {
+    "id": "item_first_aid_kit",
+    "passed": true,
+    "taps": 2,
+    "command": {
+      "type": "USE_ITEM",
+      "actorId": "ace",
+      "itemId": "first_aid_kit",
+      "targetId": "jake"
+    },
+    "events": 4
+  },
+  {
+    "id": "item_map",
+    "passed": true,
+    "taps": 2,
+    "command": {
+      "type": "USE_ITEM",
+      "actorId": "dwight",
+      "itemId": "map",
+      "option": "reveal"
+    },
+    "events": 3
+  },
+  {
+    "id": "choice_MAP_REVEAL",
+    "passed": true,
+    "taps": 2,
+    "command": {
+      "type": "SELECT",
+      "actorId": "dwight",
+      "propId": "mine_depths:objective:0"
+    },
+    "events": 4
+  },
+  {
+    "id": "item_rainbow_map",
+    "passed": true,
+    "taps": 2,
+    "command": {
+      "type": "USE_ITEM",
+      "actorId": "dwight",
+      "itemId": "rainbow_map",
+      "option": "killer_cards"
+    },
+    "events": 6
+  },
+  {
+    "id": "item_flashlight",
+    "passed": true,
+    "taps": 2,
+    "command": {
+      "type": "USE_ITEM",
+      "actorId": "jake",
+      "itemId": "flashlight"
+    },
+    "events": 5
+  },
+  {
+    "id": "item_firecracker",
+    "passed": true,
+    "taps": 2,
+    "command": {
+      "type": "USE_ITEM",
+      "actorId": "jake",
+      "itemId": "firecracker",
+      "option": "block"
+    },
+    "events": 5
+  },
+  {
+    "id": "item_skeleton_key",
+    "passed": true,
+    "taps": 2,
+    "command": {
+      "type": "USE_ITEM",
+      "actorId": "ace",
+      "itemId": "skeleton_key",
+      "option": "reroll",
+      "index": 0
+    },
+    "events": 12
+  },
+  {
+    "id": "item_broken_key",
+    "passed": true,
+    "taps": 2,
+    "command": {
+      "type": "USE_ITEM",
+      "actorId": "dwight",
+      "itemId": "broken_key",
+      "option": "blood",
+      "targetId": "claudette"
+    },
+    "events": 4
+  },
+  {
+    "id": "item_dull_key",
+    "passed": true,
+    "taps": 2,
+    "command": {
+      "type": "USE_ITEM",
+      "actorId": "dwight",
+      "itemId": "dull_key",
+      "option": "blood",
+      "targetId": "claudette"
+    },
+    "events": 4
+  },
+  {
+    "id": "board_doctor_3",
+    "passed": true,
+    "taps": 1,
+    "command": {
+      "type": "USE_PERK",
+      "actorId": "doctor",
+      "perkId": "board_doctor_3"
+    },
+    "events": 11
+  },
+  {
+    "id": "board_dwight_2",
+    "passed": true,
+    "taps": 1,
+    "command": {
+      "type": "USE_PERK",
+      "actorId": "dwight",
+      "perkId": "board_dwight_2",
+      "targetId": "claudette"
+    },
+    "events": 5
+  },
+  {
+    "id": "board_claudette_1",
+    "passed": true,
+    "taps": 1,
+    "command": {
+      "type": "USE_PERK",
+      "actorId": "claudette",
+      "perkId": "board_claudette_1",
+      "targetId": "dwight"
+    },
+    "events": 9
+  },
+  {
+    "id": "board_meg_3",
+    "passed": true,
+    "taps": 1,
+    "command": {
+      "type": "USE_PERK",
+      "actorId": "meg",
+      "perkId": "board_meg_3",
+      "propId": "foundry_upper_floor:survival:0"
+    },
+    "events": 8
+  },
+  {
+    "id": "choice_PHANTASM_TARGET",
+    "passed": true,
+    "taps": 1,
+    "command": {
+      "type": "SELECT",
+      "actorId": "hag",
+      "action": "attack",
+      "targetId": "jake"
+    },
+    "events": 10
+  },
+  {
+    "id": "power_hillbilly",
+    "passed": true,
+    "taps": 2,
+    "command": {
+      "type": "INTERACT",
+      "actorId": "hillbilly",
+      "action": "power",
+      "card": "yellow",
+      "pathId": "mm_p02",
+      "to": "mine_entrance"
+    },
+    "events": 5
+  },
+  {
+    "id": "power_hag",
+    "passed": true,
+    "taps": 2,
+    "command": {
+      "type": "INTERACT",
+      "actorId": "hag",
+      "action": "power"
+    },
+    "events": 3
+  },
+  {
+    "id": "board_ace_2",
+    "passed": true,
+    "taps": 2,
+    "command": {
+      "type": "USE_PERK",
+      "actorId": "ace",
+      "perkId": "board_ace_2",
+      "propId": "mine_depths:objective:0",
+      "otherPropId": "coal_tower_upper:objective:0"
+    },
+    "events": 4
+  },
+  {
+    "id": "board_jake_1",
+    "passed": true,
+    "taps": 1,
+    "command": {
+      "type": "USE_PERK",
+      "actorId": "jake",
+      "perkId": "board_jake_1",
+      "index": 0
+    },
+    "events": 10
+  },
+  {
+    "id": "board_dwight_1",
+    "passed": true,
+    "taps": 4,
+    "command": {
+      "type": "USE_PERK",
+      "actorId": "dwight",
+      "perkId": "board_dwight_1",
+      "targetId": "jake",
+      "action": "heal",
+      "interactionTargetId": "claudette"
+    },
+    "events": 3
+  },
+  {
+    "id": "board_meg_2",
+    "passed": true,
+    "taps": 1,
+    "command": {
+      "type": "USE_PERK",
+      "actorId": "meg",
+      "perkId": "board_meg_2"
+    },
+    "events": 4
+  },
+  {
+    "id": "board_claudette_2",
+    "passed": true,
+    "taps": 2,
+    "command": {
+      "type": "USE_PERK",
+      "actorId": "claudette",
+      "perkId": "board_claudette_2",
+      "targetId": "dwight",
+      "option": "give",
+      "consent": true
+    },
+    "events": 5
+  },
+  {
+    "id": "board_claudette_3",
+    "passed": true,
+    "taps": 1,
+    "command": {
+      "type": "USE_PERK",
+      "actorId": "claudette",
+      "perkId": "board_claudette_3"
+    },
+    "events": 9
+  },
+  {
+    "id": "board_jake_2",
+    "passed": true,
+    "taps": 3,
+    "command": {
+      "type": "USE_PERK",
+      "actorId": "jake",
+      "perkId": "board_jake_2",
+      "propId": "mine_entrance:altruism:1",
+      "to": "backlot"
+    },
+    "events": 3
+  },
+  {
+    "id": "board_jake_3",
+    "passed": true,
+    "taps": 1,
+    "command": {
+      "type": "USE_PERK",
+      "actorId": "jake",
+      "perkId": "board_jake_3",
+      "option": "bonus"
+    },
+    "events": 5
+  },
+  {
+    "id": "board_nea_1",
+    "passed": true,
+    "taps": 2,
+    "command": {
+      "type": "USE_PERK",
+      "actorId": "nea",
+      "perkId": "board_nea_1",
+      "pathId": "mm_p02",
+      "to": "foundry_upper_floor"
+    },
+    "events": 6
+  },
+  {
+    "id": "board_nea_2",
+    "passed": true,
+    "taps": 1,
+    "command": {
+      "type": "USE_PERK",
+      "actorId": "nea",
+      "perkId": "board_nea_2",
+      "pathId": "mm_p05"
+    },
+    "events": 3
+  },
+  {
+    "id": "board_nea_3",
+    "passed": true,
+    "taps": 1,
+    "command": {
+      "type": "USE_PERK",
+      "actorId": "nea",
+      "perkId": "board_nea_3"
+    },
+    "events": 3
+  },
+  {
+    "id": "board_ace_3",
+    "passed": true,
+    "taps": 1,
+    "command": {
+      "type": "USE_PERK",
+      "actorId": "ace",
+      "perkId": "board_ace_3"
+    },
+    "events": 4
+  },
+  {
+    "id": "board_feng_min_2",
+    "passed": true,
+    "taps": 2,
+    "command": {
+      "type": "USE_PERK",
+      "actorId": "feng_min",
+      "perkId": "board_feng_min_2",
+      "pathId": "mm_p07",
+      "to": "foundry_lower_floor"
+    },
+    "events": 5
+  },
+  {
+    "id": "board_feng_min_3",
+    "passed": true,
+    "taps": 3,
+    "command": {
+      "type": "USE_PERK",
+      "actorId": "feng_min",
+      "perkId": "board_feng_min_3",
+      "action": "heal",
+      "targetId": "dwight"
+    },
+    "events": 4
+  },
+  {
+    "id": "board_trapper_1",
+    "passed": true,
+    "taps": 2,
+    "command": {
+      "type": "USE_PERK",
+      "actorId": "trapper",
+      "perkId": "board_trapper_1",
+      "pathId": "mm_p07",
+      "to": "foundry_lower_floor"
+    },
+    "events": 7
+  },
+  {
+    "id": "board_trapper_2",
+    "passed": true,
+    "taps": 1,
+    "command": {
+      "type": "USE_PERK",
+      "actorId": "trapper",
+      "perkId": "board_trapper_2"
+    },
+    "events": 3
+  },
+  {
+    "id": "board_trapper_3",
+    "passed": true,
+    "taps": 2,
+    "command": {
+      "type": "USE_PERK",
+      "actorId": "trapper",
+      "perkId": "board_trapper_3",
+      "pathId": "mm_p07",
+      "to": "foundry_lower_floor"
+    },
+    "events": 5
+  },
+  {
+    "id": "board_wraith_1",
+    "passed": true,
+    "taps": 1,
+    "command": {
+      "type": "USE_PERK",
+      "actorId": "wraith",
+      "perkId": "board_wraith_1",
+      "card": "green"
+    },
+    "events": 3
+  },
+  {
+    "id": "board_wraith_2",
+    "passed": true,
+    "taps": 1,
+    "command": {
+      "type": "USE_PERK",
+      "actorId": "wraith",
+      "perkId": "board_wraith_2"
+    },
+    "events": 5
+  },
+  {
+    "id": "board_hillbilly_1",
+    "passed": true,
+    "taps": 1,
+    "command": {
+      "type": "USE_PERK",
+      "actorId": "hillbilly",
+      "perkId": "board_hillbilly_1",
+      "index": 0
+    },
+    "events": 5
+  },
+  {
+    "id": "board_hillbilly_2",
+    "passed": true,
+    "taps": 1,
+    "command": {
+      "type": "USE_PERK",
+      "actorId": "hillbilly",
+      "perkId": "board_hillbilly_2"
+    },
+    "events": 5
+  },
+  {
+    "id": "board_hillbilly_3",
+    "passed": true,
+    "taps": 2,
+    "command": {
+      "type": "USE_PERK",
+      "actorId": "hillbilly",
+      "perkId": "board_hillbilly_3",
+      "index": 1,
+      "card": "green"
+    },
+    "events": 3
+  },
+  {
+    "id": "board_nurse_1",
+    "passed": true,
+    "taps": 1,
+    "command": {
+      "type": "USE_PERK",
+      "actorId": "nurse",
+      "perkId": "board_nurse_1",
+      "targetId": "jake"
+    },
+    "events": 3
+  },
+  {
+    "id": "board_nurse_2",
+    "passed": true,
+    "taps": 1,
+    "command": {
+      "type": "USE_PERK",
+      "actorId": "nurse",
+      "perkId": "board_nurse_2"
+    },
+    "events": 3
+  },
+  {
+    "id": "board_nurse_3",
+    "passed": true,
+    "taps": 1,
+    "command": {
+      "type": "USE_PERK",
+      "actorId": "nurse",
+      "perkId": "board_nurse_3"
+    },
+    "events": 4
+  },
+  {
+    "id": "board_hag_2",
+    "passed": true,
+    "taps": 1,
+    "command": {
+      "type": "USE_PERK",
+      "actorId": "hag",
+      "perkId": "board_hag_2"
+    },
+    "events": 4
+  },
+  {
+    "id": "board_hag_3",
+    "passed": true,
+    "taps": 1,
+    "command": {
+      "type": "USE_PERK",
+      "actorId": "hag",
+      "perkId": "board_hag_3",
+      "propId": "mine_depths:objective:0"
+    },
+    "events": 3
+  },
+  {
+    "id": "board_doctor_2",
+    "passed": true,
+    "taps": 1,
+    "command": {
+      "type": "USE_PERK",
+      "actorId": "doctor",
+      "perkId": "board_doctor_2",
+      "targetId": "dwight"
+    },
+    "events": 4
+  },
+  {
+    "id": "power_trapper",
+    "passed": true,
+    "taps": 2,
+    "command": {
+      "type": "INTERACT",
+      "actorId": "trapper",
+      "action": "power",
+      "pathId": "mm_p07"
+    },
+    "events": 4
+  },
+  {
+    "id": "power_wraith",
+    "passed": true,
+    "taps": 2,
+    "command": {
+      "type": "INTERACT",
+      "actorId": "wraith",
+      "action": "power",
+      "to": "shack"
+    },
+    "events": 5
+  },
+  {
+    "id": "power_nurse",
+    "passed": true,
+    "taps": 2,
+    "command": {
+      "type": "INTERACT",
+      "actorId": "nurse",
+      "action": "power",
+      "pathId": "mm_p02",
+      "to": "foundry_upper_floor"
+    },
+    "events": 5
+  },
+  {
+    "id": "power_doctor",
+    "passed": true,
+    "taps": 9,
+    "command": {
+      "type": "INTERACT",
+      "actorId": "doctor",
+      "action": "power",
+      "to": "foundry_upper_floor",
+      "choices": {
+        "dwight": "effect",
+        "claudette": "pay",
+        "jake": "effect",
+        "ace": "pay"
+      }
+    },
+    "events": 6
+  },
+  {
+    "id": "board_meg_1",
+    "passed": true,
+    "taps": 2,
+    "command": {
+      "type": "USE_PERK",
+      "actorId": "meg",
+      "perkId": "board_meg_1",
+      "pathId": "mm_p06",
+      "to": "mine_entrance"
+    },
+    "events": 7
+  },
+  {
+    "id": "board_feng_min_1",
+    "passed": true,
+    "taps": 2,
+    "command": {
+      "type": "USE_PERK",
+      "actorId": "feng_min",
+      "perkId": "board_feng_min_1",
+      "pathId": "mm_p06",
+      "to": "mine_entrance"
+    },
+    "events": 7
+  },
+  {
+    "id": "board_wraith_3",
+    "passed": true,
+    "taps": 1,
+    "command": {
+      "type": "USE_PERK",
+      "actorId": "wraith",
+      "perkId": "board_wraith_3",
+      "targetId": "jake"
+    },
+    "events": 10
+  },
+  {
+    "id": "choice_REPLAN",
+    "passed": true,
+    "taps": 1,
+    "command": {
+      "type": "SELECT",
+      "actorId": "jake",
+      "card": "green"
+    },
+    "events": 11
+  },
+  {
+    "id": "board_hag_1",
+    "passed": true,
+    "taps": 1,
+    "command": {
+      "type": "USE_PERK",
+      "actorId": "hag",
+      "perkId": "board_hag_1",
+      "card": "blue"
+    },
+    "events": 8
+  },
+  {
+    "id": "choice_CARRY_REROUTE",
+    "passed": true,
+    "taps": 1,
+    "command": {
+      "type": "SELECT",
+      "actorId": "trapper",
+      "pathId": "mm_p02",
+      "to": "mine_entrance",
+      "color": "yellow"
+    },
+    "events": 13
+  },
+  {
+    "id": "out_of_turn_commodious_toolbox",
+    "passed": true,
+    "taps": 2,
+    "command": {
+      "type": "USE_ITEM",
+      "actorId": "claudette",
+      "itemId": "commodious_toolbox",
+      "propId": "mine_depths:objective:0"
+    },
+    "events": 5
+  },
+  {
+    "id": "out_of_turn_first_aid_kit",
+    "passed": true,
+    "taps": 2,
+    "command": {
+      "type": "USE_ITEM",
+      "actorId": "ace",
+      "itemId": "first_aid_kit",
+      "targetId": "jake"
+    },
+    "events": 4
+  },
+  {
+    "id": "out_of_turn_map",
+    "passed": true,
+    "taps": 2,
+    "command": {
+      "type": "USE_ITEM",
+      "actorId": "dwight",
+      "itemId": "map",
+      "option": "reveal"
+    },
+    "events": 3
+  },
+  {
+    "id": "out_of_turn_rainbow_map",
+    "passed": true,
+    "taps": 2,
+    "command": {
+      "type": "USE_ITEM",
+      "actorId": "dwight",
+      "itemId": "rainbow_map",
+      "option": "killer_cards"
+    },
+    "events": 6
+  },
+  {
+    "id": "shared_seat_inventory",
+    "passed": true,
+    "taps": 2,
+    "command": {
+      "type": "USE_ITEM",
+      "actorId": "claudette",
+      "itemId": "first_aid_kit",
+      "targetId": "jake"
+    },
+    "events": 4
+  }
+]

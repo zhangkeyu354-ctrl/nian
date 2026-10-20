@@ -1,0 +1,14 @@
+Phase 2E actual-run summary, 2026-10-20
+Initial baseline 8c5b212: npm test 208 passed; mobile interfaces64 passed.
+Claude committed55ae974 during generation: final npm test209 passed.
+All required checks passed: typecheck; build; verify:replays(3 unchanged SHA256); verify:visuals(41 states + fallback); verify:board(6 views); verify:mobile-surface; verify:mobile-interfaces(64); verify:lan-browsers(2 games5 browsers107/188 commands,110/191 hidden-state frames,10 fullmap checks).
+PHASE2E_ART_PASS:17 originals,22 AI entries,0 placeholders, dimensions/alpha/hash/fallback paths.
+PHASE2E_EVIDENCE_PASS:5 new item images loaded in actual App inventory, failed flashlight WebP request fell back to SVG.
+PHASE2E_COLD_PASS:10 contexts, HTTP encoded bytes + both WS text directions, cache off, network idle and decoded board art;1,734,920–1,768,050 bytes.
+Supplementary mobile-taps run initially failed with host ERR_NO_BUFFER_SPACE while multiple browser suites ran. After other suites finished, a fresh serial run passed:
+MOBILE_GAME_PASS4111 107 killer
+MOBILE_GAME_PASS1701 188 survivor
+MOBILE_TAPS_PASS
+No failure counted as success; test thresholds unchanged.
+SCOPE_GUARD:45 protected source files match existing55ae974; none changed by Phase2E.
+Raw data in evidence/*.json; originals and every exact prompt catalogued. No official image inputs. No deployment. Optional mechanism icons/back not attempted.

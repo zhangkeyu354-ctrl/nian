@@ -2309,187 +2309,425 @@
       "category": "items",
       "file": "items/flashlight.webp",
       "svg": "svg/items/flashlight.svg",
-      "source": "占位",
+      "source": "AI 生成",
       "states": [
         "neutral"
       ],
-      "transparent": true
+      "transparent": true,
+      "original_size": [
+        1254,
+        1254
+      ],
+      "size": [
+        256,
+        256
+      ],
+      "provider": "built-in image_gen",
+      "generation_prompt": "One original inventory illustration: a chunky vintage handheld flashlight with a broad circular reflector and short ribbed grip, diagonally centered, one single flashlight, no emitted beam. Cold damp horror tabletop style, rough charcoal brushwork, bone-white rim light, restrained tarnished brass. Centered isolated object occupying 75% of square, bold silhouette readable at 48px. True transparent exterior and generous padding. No frame, text, numerals, logo, watermark, UI, official game art or tracing. Neutral idle state. Square production asset.",
+      "original_file": "assets/mobile-originals/items/flashlight.png",
+      "sha256": "fde7629491c5a29c9e68dcf079ca6aae71f69fc843c5d358db79ae0c82c23ad3",
+      "bytes": 15460,
+      "official_reference_input": false
     },
     {
       "id": "first_aid_kit",
       "category": "items",
       "file": "items/first_aid_kit.webp",
       "svg": "svg/items/first_aid_kit.svg",
-      "source": "占位",
+      "source": "AI 生成",
       "states": [
         "neutral"
       ],
-      "transparent": true
+      "transparent": true,
+      "original_size": [
+        1254,
+        1254
+      ],
+      "size": [
+        256,
+        256
+      ],
+      "provider": "built-in image_gen",
+      "generation_prompt": "One original inventory illustration: a compact battered rectangular first-aid satchel with one thick top handle, aged canvas and dark metal clasp, a plain bone-white broad cross-shaped stitched patch with no letters. Cold damp horror tabletop style, rough charcoal brushwork, bone-white rim light, restrained tarnished brass. Centered isolated single object occupying central 75% of square, bold simple silhouette readable at 48px. True transparent exterior, generous empty padding. No frame, text, numerals, logo, watermark, UI, official game art or tracing. Neutral idle state. Square production asset.",
+      "original_file": "assets/mobile-originals/items/first_aid_kit.png",
+      "sha256": "fabcb50cddadb27659985c7e1b9a682f09071faad0da9e5f2ec2d52a1742c721",
+      "bytes": 20528,
+      "official_reference_input": false
     },
     {
       "id": "broken_key",
       "category": "items",
       "file": "items/broken_key.webp",
       "svg": "svg/items/broken_key.svg",
-      "source": "占位",
+      "source": "AI 生成",
       "states": [
         "neutral"
       ],
-      "transparent": true
+      "transparent": true,
+      "original_size": [
+        1254,
+        1254
+      ],
+      "size": [
+        256,
+        256
+      ],
+      "provider": "built-in image_gen",
+      "generation_prompt": "One original inventory illustration: one visibly broken old iron key, large simple ring bow, short shaft ending in a conspicuous jagged snapped tip, missing lower half, no detached pieces. Cold damp horror tabletop style, rough charcoal brushwork, bone-white rim light, restrained tarnished brass. Centered isolated single object occupying central 75% of square, bold simple silhouette readable at 48px. True transparent exterior, generous empty padding. No frame, text, numerals, logo, watermark, UI, official game art or tracing. Neutral idle state. Square production asset.",
+      "original_file": "assets/mobile-originals/items/broken_key.png",
+      "sha256": "6f458239a92b2c4315f75945fa4599580e350f74d1cc92ee24fdabe1e8579e64",
+      "bytes": 10184,
+      "official_reference_input": false
     },
     {
       "id": "dull_key",
       "category": "items",
       "file": "items/dull_key.webp",
       "svg": "svg/items/dull_key.svg",
-      "source": "占位",
+      "source": "AI 生成",
       "states": [
         "neutral"
       ],
-      "transparent": true
+      "transparent": true,
+      "original_size": [
+        1254,
+        1254
+      ],
+      "size": [
+        256,
+        256
+      ],
+      "provider": "built-in image_gen",
+      "generation_prompt": "One original inventory illustration: one intact worn flat brass key with a solid rounded-square bow with small square hole, long thick shaft and two distinctly blunt rounded teeth; no cracks, no skeleton imagery. Cold damp horror tabletop style, rough charcoal brushwork, bone-white rim light, restrained tarnished brass. Centered isolated single object occupying central 75% of square, bold simple silhouette readable at 48px. True transparent exterior, generous empty padding. No frame, text, numerals, logo, watermark, UI, official game art or tracing. Neutral idle state. Square production asset.",
+      "original_file": "assets/mobile-originals/items/dull_key.png",
+      "sha256": "510269b5b372732614281fd572010551bfa0034fdd0f59148f7b7ed5e156ae35",
+      "bytes": 11732,
+      "official_reference_input": false
     },
     {
       "id": "skeleton_key",
       "category": "items",
       "file": "items/skeleton_key.webp",
       "svg": "svg/items/skeleton_key.svg",
-      "source": "占位",
+      "source": "AI 生成",
       "states": [
         "neutral"
       ],
-      "transparent": true
+      "transparent": true,
+      "original_size": [
+        1254,
+        1254
+      ],
+      "size": [
+        256,
+        256
+      ],
+      "provider": "built-in image_gen",
+      "generation_prompt": "One original inventory illustration: one pale carved bone skeleton master key, elongated bone shaft, broad three-lobed hollow bow like joined bone loops, two large angular bit teeth, clearly ivory-colored; no skull face, no metal ring. Cold damp horror tabletop style, rough charcoal brushwork, bone-white rim light, restrained tarnished brass. Centered isolated single object occupying central 75% of square, bold simple silhouette readable at 48px. True transparent exterior, generous empty padding. No frame, text, numerals, logo, watermark, UI, official game art or tracing. Neutral idle state. Square production asset.",
+      "original_file": "assets/mobile-originals/items/skeleton_key.png",
+      "sha256": "2683facf35805526dea51d86ced646d45947e53987d11902481f8757581d47fc",
+      "bytes": 15342,
+      "official_reference_input": false
     },
     {
       "id": "macmillan_estate_cover",
       "category": "maps",
       "file": "maps/macmillan_estate_cover.webp",
       "svg": "svg/maps/macmillan_estate_cover.svg",
-      "source": "占位",
+      "source": "AI 生成",
       "states": [
         "neutral"
       ],
-      "transparent": false
+      "transparent": false,
+      "original_size": [
+        1536,
+        1024
+      ],
+      "size": [
+        768,
+        512
+      ],
+      "provider": "built-in image_gen",
+      "generation_prompt": "Use case: stylized-concept. Asset type: original horror tabletop map cover. Original wide cover landscape: an abandoned coal-mining foundry among dense crooked woodland, one monumental weathered brick furnace chimney, dark mine entrance, cold low mist, small muted amber furnace glow, damp rails leading obliquely toward the furnace, cinematic asymmetrical composition. Entirely invented architecture and arrangement, no characters. Landscape aspect 3:2, fully opaque scene filling edge to edge. Dark foggy charcoal hand-painted cut-paper style, bold bone-white edge highlights, restrained tarnished brass, charcoal black and cold desaturated teal. Atmospheric but legible, no interface or map diagram. No text, letters, numbers, logo, watermark, official game images, tracing or recognizable official compositions.",
+      "original_file": "assets/mobile-originals/maps/macmillan_estate_cover.png",
+      "sha256": "15b2f84cd7496366abd71d2c10f4c3d8d6b675c36eec1534c68b641406b65c07",
+      "bytes": 101266,
+      "official_reference_input": false
     },
     {
       "id": "autohaven_wreckers_cover",
       "category": "maps",
       "file": "maps/autohaven_wreckers_cover.webp",
       "svg": "svg/maps/autohaven_wreckers_cover.svg",
-      "source": "占位",
+      "source": "AI 生成",
       "states": [
         "neutral"
       ],
-      "transparent": false
+      "transparent": false,
+      "original_size": [
+        1536,
+        1024
+      ],
+      "size": [
+        768,
+        512
+      ],
+      "provider": "built-in image_gen",
+      "generation_prompt": "Use case: stylized-concept. Asset type: original horror tabletop map cover. Original wide cover landscape: a fogbound vehicle scrapyard at dusk, a weathered corrugated salvage shed and a large tilted crane hook, irregular silhouettes of stacked wrecked vintage cars, pooled rain and cold pine trees, one restrained amber workshop light. Entirely invented arrangement and architecture, no recognizable real brands, no characters. Landscape aspect 3:2, fully opaque scene filling edge to edge. Dark foggy charcoal hand-painted cut-paper style, bold bone-white edge highlights, restrained tarnished brass, charcoal black and cold desaturated teal. Atmospheric but legible, no interface or map diagram. No text, letters, numbers, logo, watermark, official game images, tracing or recognizable official compositions.",
+      "original_file": "assets/mobile-originals/maps/autohaven_wreckers_cover.png",
+      "sha256": "cd1736a571ab18cbc42476aab3acf98baa7919a2c4100edda639c51901ac6d4f",
+      "bytes": 89892,
+      "official_reference_input": false
     },
     {
       "id": "lobby",
       "category": "modules",
       "file": "modules/lobby.webp",
       "svg": "svg/modules/lobby.svg",
-      "source": "占位",
+      "source": "AI 生成",
       "states": [
         "module"
       ],
-      "transparent": false
+      "transparent": true,
+      "original_size": [
+        1254,
+        1254
+      ],
+      "size": [
+        512,
+        512
+      ],
+      "provider": "built-in image_gen",
+      "generation_prompt": "Use case: stylized-concept. Asset type: small action dock module illustration readable at 36px. One simple iconic weathered iron doorway with a single warm hanging lantern in its arch; isolated bold silhouette. Symbol of entering a shared game room. No surrounding building or scene. Dark foggy charcoal hand-painted cut-paper style, bold bone-white edge highlights, restrained tarnished brass, charcoal black and cold desaturated teal. Centered single grouped subject occupies central 75%, thick simple forms and very few interior details, genuine transparent exterior, no frame, no backdrop, no particle cloud. Square composition. No text, letters, numbers, logo, watermark, official game images, tracing or recognizable official compositions.",
+      "original_file": "assets/mobile-originals/modules/lobby.png",
+      "sha256": "e63834d63d2ecec4f7c4d4a195bd77a911d2d5aa277eb2c7e9eebb295b0201cf",
+      "bytes": 71940,
+      "official_reference_input": false
     },
     {
       "id": "characters",
       "category": "modules",
       "file": "modules/characters.webp",
       "svg": "svg/modules/characters.svg",
-      "source": "占位",
+      "source": "AI 生成",
       "states": [
         "module"
       ],
-      "transparent": false
+      "transparent": true,
+      "original_size": [
+        1254,
+        1254
+      ],
+      "size": [
+        512,
+        512
+      ],
+      "provider": "built-in image_gen",
+      "generation_prompt": "Use case: stylized-concept. Asset type: small action dock module illustration readable at 36px. One simple iconic pair of overlapping blank head-and-shoulder silhouette medallions, one bone-white foreground and one tarnished brass behind, no facial features. Symbol of choosing characters. No scene. Dark foggy charcoal hand-painted cut-paper style, bold bone-white edge highlights, restrained tarnished brass, charcoal black and cold desaturated teal. Centered single grouped subject occupies central 75%, thick simple forms and very few interior details, genuine transparent exterior, no frame, no backdrop, no particle cloud. Square composition. No text, letters, numbers, logo, watermark, official game images, tracing or recognizable official compositions.",
+      "original_file": "assets/mobile-originals/modules/characters.png",
+      "sha256": "8861c32312ad8bfed6d66fb9699c24e09776065d4ce201bc69e89531129bfad7",
+      "bytes": 51570,
+      "official_reference_input": false
     },
     {
       "id": "plan",
       "category": "modules",
       "file": "modules/plan.webp",
       "svg": "svg/modules/plan.svg",
-      "source": "占位",
+      "source": "AI 生成",
       "states": [
         "module"
       ],
-      "transparent": false
+      "transparent": true,
+      "original_size": [
+        1254,
+        1254
+      ],
+      "size": [
+        512,
+        512
+      ],
+      "provider": "built-in image_gen",
+      "generation_prompt": "Use case: stylized-concept. Original small action dock module illustration, readable at 36px: a single fan of three blank thick charcoal playing cards, the front card has one large simple bone-white branching path mark, no lettering or colored move information. Dark foggy horror tabletop style, hand-painted cut-paper, charcoal outlines, bone-white faces and restrained tarnished brass edge highlights, cold desaturated teal shadows. Centered isolated single grouped subject fills central 75% of square. Broad simple shapes, strong light-dark contrast, very few interior marks. Genuine transparent exterior. No scene, background panel, border, frame, text, letters, numerals, logo, watermark, official game art, copying or tracing.",
+      "original_file": "assets/mobile-originals/modules/plan.png",
+      "sha256": "9ad266732413361428e2c3d4581e527c7e38eb99046a1aeb30c0d973140ef995",
+      "bytes": 56194,
+      "official_reference_input": false
     },
     {
       "id": "move",
       "category": "modules",
       "file": "modules/move.webp",
       "svg": "svg/modules/move.svg",
-      "source": "占位",
+      "source": "AI 生成",
       "states": [
         "module"
       ],
-      "transparent": false
+      "transparent": true,
+      "original_size": [
+        1254,
+        1254
+      ],
+      "size": [
+        512,
+        512
+      ],
+      "provider": "built-in image_gen",
+      "generation_prompt": "Use case: stylized-concept. Original small action dock module illustration, readable at 36px: a single bold bone-white bootprint angled forward with a short thick tarnished brass directional arrow attached to its heel, simple readable walking symbol. Dark foggy horror tabletop style, hand-painted cut-paper, charcoal outlines, bone-white faces and restrained tarnished brass edge highlights, cold desaturated teal shadows. Centered isolated single grouped subject fills central 75% of square. Broad simple shapes, strong light-dark contrast, very few interior marks. Genuine transparent exterior. No scene, background panel, border, frame, text, letters, numerals, logo, watermark, official game art, copying or tracing.",
+      "original_file": "assets/mobile-originals/modules/move.png",
+      "sha256": "e780ef84ac6b62d41303772d0d2d543e9a832603b72b7bc0c7389a95ad1032a7",
+      "bytes": 40602,
+      "official_reference_input": false
     },
     {
       "id": "interact",
       "category": "modules",
       "file": "modules/interact.webp",
       "svg": "svg/modules/interact.svg",
-      "source": "占位",
+      "source": "AI 生成",
       "states": [
         "module"
       ],
-      "transparent": false
+      "transparent": true,
+      "original_size": [
+        1254,
+        1254
+      ],
+      "size": [
+        512,
+        512
+      ],
+      "provider": "built-in image_gen",
+      "generation_prompt": "Use case: stylized-concept. Original small action dock module illustration, readable at 36px: one simplified bone-white open hand gripping a small thick brass cogwheel, a single compact interaction emblem, no arm or person. Dark foggy horror tabletop style, hand-painted cut-paper, charcoal outlines, bone-white faces and restrained tarnished brass edge highlights, cold desaturated teal shadows. Centered isolated single grouped subject fills central 75% of square. Broad simple shapes, strong light-dark contrast, very few interior marks. Genuine transparent exterior. No scene, background panel, border, frame, text, letters, numerals, logo, watermark, official game art, copying or tracing.",
+      "original_file": "assets/mobile-originals/modules/interact.png",
+      "sha256": "f320f718b087d8b4d58376aa275f18b3c8622b8c6127d498017303b5823e99df",
+      "bytes": 52908,
+      "official_reference_input": false
     },
     {
       "id": "skill",
       "category": "modules",
       "file": "modules/skill.webp",
       "svg": "svg/modules/skill.svg",
-      "source": "占位",
+      "source": "AI 生成",
       "states": [
         "module"
       ],
-      "transparent": false
+      "transparent": true,
+      "original_size": [
+        1254,
+        1254
+      ],
+      "size": [
+        512,
+        512
+      ],
+      "provider": "built-in image_gen",
+      "generation_prompt": "Use case: stylized-concept. Original small action dock module illustration, readable at 36px: one tall angular tarnished brass spark with a bone-white bright center, a bold single lightning-shaped cut-paper charm, no complicated radiating rays. Dark foggy horror tabletop style, hand-painted cut-paper, charcoal outlines, bone-white faces and restrained tarnished brass edge highlights, cold desaturated teal shadows. Centered isolated single grouped subject fills central 75% of square. Broad simple shapes, strong light-dark contrast, very few interior marks. Genuine transparent exterior. No scene, background panel, border, frame, text, letters, numerals, logo, watermark, official game art, copying or tracing.",
+      "original_file": "assets/mobile-originals/modules/skill.png",
+      "sha256": "43f2faadeadc5737f0b263d943961336c83e8aa2c3e87b0b9bce0331f9c553c9",
+      "bytes": 24112,
+      "official_reference_input": false
     },
     {
       "id": "waiting",
       "category": "modules",
       "file": "modules/waiting.webp",
       "svg": "svg/modules/waiting.svg",
-      "source": "占位",
+      "source": "AI 生成",
       "states": [
         "module"
       ],
-      "transparent": false
+      "transparent": true,
+      "original_size": [
+        1254,
+        1254
+      ],
+      "size": [
+        512,
+        512
+      ],
+      "provider": "built-in image_gen",
+      "generation_prompt": "Use case: stylized-concept. Original small action dock module illustration, clearly readable at 36px: one simple upright hourglass, two stout tarnished brass posts and bone-white sand in broad glass bulbs; strong hourglass silhouette, no small grains outside. Hand-painted cut-paper horror tabletop style with broad flat shapes, charcoal outlines, bone-white and tarnished brass dominant colors, cold desaturated teal shadows. Centered isolated single grouped subject within central 75% of square, generous transparent margin. Very few interior details, bold high contrast. True transparent exterior. No scene, background panel, border, text, letters, numbers, watermark, logo, official game art, reference or tracing.",
+      "original_file": "assets/mobile-originals/modules/waiting.png",
+      "sha256": "153b408e538a010595928b0cbfb9228542781eac6cc003318fc45f407eaa21d3",
+      "bytes": 54646,
+      "official_reference_input": false
     },
     {
       "id": "dice",
       "category": "modules",
       "file": "modules/dice.webp",
       "svg": "svg/modules/dice.svg",
-      "source": "占位",
+      "source": "AI 生成",
       "states": [
         "module"
       ],
-      "transparent": false
+      "transparent": true,
+      "original_size": [
+        1254,
+        1254
+      ],
+      "size": [
+        512,
+        512
+      ],
+      "provider": "built-in image_gen",
+      "generation_prompt": "Use case: stylized-concept. Original small action dock module illustration, clearly readable at 36px: one chunky black six-sided die in three-quarter view, each visible face carries a single large ivory inlaid geometric mark: a cross, a check, a star; decorative module symbol only, no dots or numbers. Hand-painted cut-paper horror tabletop style with broad flat shapes, charcoal outlines, bone-white and tarnished brass dominant colors, cold desaturated teal shadows. Centered isolated single grouped subject within central 75% of square, generous transparent margin. Very few interior details, bold high contrast. True transparent exterior. No scene, background panel, border, text, letters, numbers, watermark, logo, official game art, reference or tracing.",
+      "original_file": "assets/mobile-originals/modules/dice.png",
+      "sha256": "ae10f6461917b533e138f5cb684b0f826efb6114393480b92a6665df52b6078a",
+      "bytes": 49964,
+      "official_reference_input": false
     },
     {
       "id": "carry",
       "category": "modules",
       "file": "modules/carry.webp",
       "svg": "svg/modules/carry.svg",
-      "source": "占位",
+      "source": "AI 生成",
       "states": [
         "module"
       ],
-      "transparent": false
+      "transparent": true,
+      "original_size": [
+        1254,
+        1254
+      ],
+      "size": [
+        512,
+        512
+      ],
+      "provider": "built-in image_gen",
+      "generation_prompt": "Use case: stylized-concept. Original small action dock module illustration, clearly readable at 36px: one simple charcoal faceless human silhouette carrying a smaller bone-white faceless human silhouette sideways over one shoulder, both compact and clearly separated by light-dark contrast, minimal limbs, no wounds or weapons. Hand-painted cut-paper horror tabletop style with broad flat shapes, charcoal outlines, bone-white and tarnished brass dominant colors, cold desaturated teal shadows. Centered isolated single grouped subject within central 75% of square, generous transparent margin. Very few interior details, bold high contrast. True transparent exterior. No scene, background panel, border, text, letters, numbers, watermark, logo, official game art, reference or tracing.",
+      "original_file": "assets/mobile-originals/modules/carry.png",
+      "sha256": "9eda895faeacd2741e1fe4fb902bfe146e10a052b07fdc96243a2c40383a842a",
+      "bytes": 38542,
+      "official_reference_input": false
     },
     {
       "id": "results",
       "category": "modules",
       "file": "modules/results.webp",
       "svg": "svg/modules/results.svg",
-      "source": "占位",
+      "source": "AI 生成",
       "states": [
         "module"
       ],
-      "transparent": false
+      "transparent": true,
+      "original_size": [
+        1254,
+        1254
+      ],
+      "size": [
+        512,
+        512
+      ],
+      "provider": "built-in image_gen",
+      "generation_prompt": "Use case: stylized-concept. Original small action dock module illustration, clearly readable at 36px: one broad tarnished brass laurel half-wreath embracing a single large bone-white four-point star, simple victory emblem, no cup, no ribbons or text. Hand-painted cut-paper horror tabletop style with broad flat shapes, charcoal outlines, bone-white and tarnished brass dominant colors, cold desaturated teal shadows. Centered isolated single grouped subject within central 75% of square, generous transparent margin. Very few interior details, bold high contrast. True transparent exterior. No scene, background panel, border, text, letters, numbers, watermark, logo, official game art, reference or tracing.",
+      "original_file": "assets/mobile-originals/modules/results.png",
+      "sha256": "c0aa27f947e17259d97424f93ff29d4299cb6a626ee0514af1bfa7014374141f",
+      "bytes": 66534,
+      "official_reference_input": false
     }
   ]
 }

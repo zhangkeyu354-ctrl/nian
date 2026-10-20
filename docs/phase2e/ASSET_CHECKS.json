@@ -1,0 +1,274 @@
+[
+  {
+    "id": "flashlight",
+    "original_size": [
+      1254,
+      1254
+    ],
+    "webp_size": [
+      256,
+      256
+    ],
+    "bytes": 15460,
+    "transparent": true,
+    "regenerated": false,
+    "original_sha256": "f77b17d5ed7a790cac5b43ae61ed59c46a55e382d4c5e9231482f283c5372faf",
+    "passed": true
+  },
+  {
+    "id": "first_aid_kit",
+    "original_size": [
+      1254,
+      1254
+    ],
+    "webp_size": [
+      256,
+      256
+    ],
+    "bytes": 20528,
+    "transparent": true,
+    "regenerated": false,
+    "original_sha256": "b3c9b4995010b32e4f9ef3813028700c4d8674938ad5e4fab7fa3d441c7146ba",
+    "passed": true
+  },
+  {
+    "id": "broken_key",
+    "original_size": [
+      1254,
+      1254
+    ],
+    "webp_size": [
+      256,
+      256
+    ],
+    "bytes": 10184,
+    "transparent": true,
+    "regenerated": false,
+    "original_sha256": "c910fc734f3a50f76efffbfb82e93e8fb2954977f99f774a89e92f8ce1a63828",
+    "passed": true
+  },
+  {
+    "id": "dull_key",
+    "original_size": [
+      1254,
+      1254
+    ],
+    "webp_size": [
+      256,
+      256
+    ],
+    "bytes": 11732,
+    "transparent": true,
+    "regenerated": false,
+    "original_sha256": "eb9f1f3cc4fd6a44d6588198779928cedf933c6f8572782510170a7daf0606bd",
+    "passed": true
+  },
+  {
+    "id": "skeleton_key",
+    "original_size": [
+      1254,
+      1254
+    ],
+    "webp_size": [
+      256,
+      256
+    ],
+    "bytes": 15342,
+    "transparent": true,
+    "regenerated": false,
+    "original_sha256": "edb5fdb4dbea0f39d07cdc804f4e4f90a5561b15f30e973c1c1486f049cece3d",
+    "passed": true
+  },
+  {
+    "id": "macmillan_estate_cover",
+    "original_size": [
+      1536,
+      1024
+    ],
+    "webp_size": [
+      768,
+      512
+    ],
+    "bytes": 101266,
+    "transparent": false,
+    "regenerated": false,
+    "original_sha256": "0a0e9a9e7b6d51b2721a5112a59fc0edb21cc2eea038213bace3475929688d3f",
+    "passed": true
+  },
+  {
+    "id": "autohaven_wreckers_cover",
+    "original_size": [
+      1536,
+      1024
+    ],
+    "webp_size": [
+      768,
+      512
+    ],
+    "bytes": 89892,
+    "transparent": false,
+    "regenerated": false,
+    "original_sha256": "73ab35d7414057f6c01e07658900b5b0b984c9c63ef338c14ea33b39f3a438bf",
+    "passed": true
+  },
+  {
+    "id": "lobby",
+    "original_size": [
+      1254,
+      1254
+    ],
+    "webp_size": [
+      512,
+      512
+    ],
+    "bytes": 71940,
+    "transparent": true,
+    "regenerated": false,
+    "original_sha256": "f52440e82a2f1f93e4e9aa126c9cb08a5b110c6419ee2501c42d40f191ed91df",
+    "passed": true
+  },
+  {
+    "id": "characters",
+    "original_size": [
+      1254,
+      1254
+    ],
+    "webp_size": [
+      512,
+      512
+    ],
+    "bytes": 51570,
+    "transparent": true,
+    "regenerated": false,
+    "original_sha256": "fbe86f7503df6691a8832a85b81879a65886aadc02179ffd81b758c6e88fa70b",
+    "passed": true
+  },
+  {
+    "id": "plan",
+    "original_size": [
+      1254,
+      1254
+    ],
+    "webp_size": [
+      512,
+      512
+    ],
+    "bytes": 56194,
+    "transparent": true,
+    "regenerated": false,
+    "original_sha256": "da22fa591c91e3040ce492634f7c4671e744d960f49dd571720f3810d46c8d89",
+    "passed": true
+  },
+  {
+    "id": "move",
+    "original_size": [
+      1254,
+      1254
+    ],
+    "webp_size": [
+      512,
+      512
+    ],
+    "bytes": 40602,
+    "transparent": true,
+    "regenerated": false,
+    "original_sha256": "0d6658afe9ac9f95be0335f4c01747867ba2844fa888bbadecbcb36709a908a3",
+    "passed": true
+  },
+  {
+    "id": "skill",
+    "original_size": [
+      1254,
+      1254
+    ],
+    "webp_size": [
+      512,
+      512
+    ],
+    "bytes": 24112,
+    "transparent": true,
+    "regenerated": false,
+    "original_sha256": "23c6a763d3bc4b2170166307caec16b5fcf4b6fa64b752844cc1862567246fd2",
+    "passed": true
+  },
+  {
+    "id": "interact",
+    "original_size": [
+      1254,
+      1254
+    ],
+    "webp_size": [
+      512,
+      512
+    ],
+    "bytes": 52908,
+    "transparent": true,
+    "regenerated": false,
+    "original_sha256": "1ac528f12d55cd108233686d07902e2989ff75d879aed8daaab40edee10ef743",
+    "passed": true
+  },
+  {
+    "id": "waiting",
+    "original_size": [
+      1254,
+      1254
+    ],
+    "webp_size": [
+      512,
+      512
+    ],
+    "bytes": 54646,
+    "transparent": true,
+    "regenerated": false,
+    "original_sha256": "9cb971bc9b9eff72bbcd5af4a89b9b6a2c24a5a609f7d180c48a3164be02b4ff",
+    "passed": true
+  },
+  {
+    "id": "dice",
+    "original_size": [
+      1254,
+      1254
+    ],
+    "webp_size": [
+      512,
+      512
+    ],
+    "bytes": 49964,
+    "transparent": true,
+    "regenerated": false,
+    "original_sha256": "b02e8aa9af674cde8180ffebdf2c69e0dde3126139a2a1fbdc895cde2d30c3f8",
+    "passed": true
+  },
+  {
+    "id": "carry",
+    "original_size": [
+      1254,
+      1254
+    ],
+    "webp_size": [
+      512,
+      512
+    ],
+    "bytes": 38542,
+    "transparent": true,
+    "regenerated": false,
+    "original_sha256": "a79708694ce2360e6a01d0f8abbad903e80906594165b8477baf0e5a0a0fcc53",
+    "passed": true
+  },
+  {
+    "id": "results",
+    "original_size": [
+      1254,
+      1254
+    ],
+    "webp_size": [
+      512,
+      512
+    ],
+    "bytes": 66534,
+    "transparent": true,
+    "regenerated": false,
+    "original_sha256": "873bad801db4ef33a42a1f9e0ca1307c4d338c98625b7b4715bd74a802c95011",
+    "passed": true
+  }
+]

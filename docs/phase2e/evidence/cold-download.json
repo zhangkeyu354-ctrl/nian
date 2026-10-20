@@ -1,0 +1,94 @@
+[
+  {
+    "seed": 4111,
+    "devices": [
+      {
+        "device": "iPhone 13",
+        "cold": {
+          "http": 1702411,
+          "websocket": 65639,
+          "total": 1768050
+        }
+      },
+      {
+        "device": "Pixel 7",
+        "cold": {
+          "http": 1685881,
+          "websocket": 65458,
+          "total": 1751339
+        }
+      },
+      {
+        "device": "iPhone 13",
+        "cold": {
+          "http": 1685881,
+          "websocket": 65477,
+          "total": 1751358
+        }
+      },
+      {
+        "device": "Pixel 7",
+        "cold": {
+          "http": 1685881,
+          "websocket": 65512,
+          "total": 1751393
+        }
+      },
+      {
+        "device": "iPhone 13",
+        "cold": {
+          "http": 1685881,
+          "websocket": 65509,
+          "total": 1751390
+        }
+      }
+    ],
+    "errors": []
+  },
+  {
+    "seed": 1701,
+    "devices": [
+      {
+        "device": "iPhone 13",
+        "cold": {
+          "http": 1679853,
+          "websocket": 71758,
+          "total": 1751611
+        }
+      },
+      {
+        "device": "Pixel 7",
+        "cold": {
+          "http": 1663323,
+          "websocket": 71602,
+          "total": 1734925
+        }
+      },
+      {
+        "device": "iPhone 13",
+        "cold": {
+          "http": 1663323,
+          "websocket": 71597,
+          "total": 1734920
+        }
+      },
+      {
+        "device": "Pixel 7",
+        "cold": {
+          "http": 1663323,
+          "websocket": 71608,
+          "total": 1734931
+        }
+      },
+      {
+        "device": "iPhone 13",
+        "cold": {
+          "http": 1663323,
+          "websocket": 71633,
+          "total": 1734956
+        }
+      }
+    ],
+    "errors": []
+  }
+]

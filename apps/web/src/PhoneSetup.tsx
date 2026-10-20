@@ -37,7 +37,10 @@ export function PhoneSetup({
   ];
   return (
     <main className="phone-setup" data-testid="phone-setup">
-      <Illustration id="lobby" className="setup-atmosphere" />
+      <Illustration
+        id={step === 1 || step === 2 ? "characters" : "lobby"}
+        className="setup-atmosphere"
+      />
       <header>
         <strong>
           黎明杀机<span>桌游版</span>
@@ -63,10 +66,7 @@ export function PhoneSetup({
                   aria-pressed={options.mapId === m.id}
                   onClick={() => setOptions({ ...options, mapId: m.id })}
                 >
-                  <img
-                    src={`/assets/mobile/rooms/${m.id === "macmillan_estate" ? "mine_entrance" : "wreckers_garage_north"}.webp`}
-                    alt=""
-                  />
+                  <Illustration id={`${m.id}_cover`} />
                   <strong>{m.name_zh}</strong>
                   <span>{m.nodes.length}个房间</span>
                 </TapButton>
