@@ -352,7 +352,8 @@ export function MobileDock({
     state.phase === "PLANNING" && !state.window && !state.choice && !waiting;
   const moving = state.turn?.stage === "MOVE" && !state.window && !state.choice;
   const globalReveal =
-    state.phase === "SETUP" || state.choice?.kind === "MAP_REVEAL";
+    (state.phase === "SETUP" && !state.choice) ||
+    state.choice?.kind === "MAP_REVEAL";
   const stage = state.winner
     ? "results"
     : waiting
@@ -608,6 +609,9 @@ export function MobileDock({
           ) : (
             <>
               {moving && <p className="dock-hint">点击棋盘上发光的房间移动</p>}
+              {["ROLL_DICE", "SPAWN_ROLL"].includes(state.choice?.kind ?? "") && (
+                <p className="dock-hint">轮到你掷骰：点下方按钮，所有人会同时看到结果。</p>
+              )}
               {globalReveal && !selected && (
                 <p className="dock-hint">
                   先点棋盘上的一个房间，再选要翻开的道具。

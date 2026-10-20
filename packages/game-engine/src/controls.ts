@@ -231,11 +231,11 @@ export function getControls(s: GameState) {
     }
     if (c.kind === "ROLL_DICE")
       add(
-        `掷${c.count}颗${c.die === "danger" ? "危险骰" : "技能检定骰"}`,
+        `🎲 掷${c.count}颗${c.die === "danger" ? "危险骰" : "技能检定骰"}`,
         { type: "SELECT", ...base },
       );
     if (c.kind === "SPAWN_ROLL")
-      add("掷骰决定出生空间", { type: "SELECT", ...base });
+      add("🎲 掷骰决定出生空间", { type: "SELECT", ...base });
     if (c.kind === "DOCTOR_SHOCK") {
       add("支付1血点", { type: "SELECT", ...base, option: "pay" });
       add(
