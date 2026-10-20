@@ -28,8 +28,8 @@ export function GameLobby() {
           id="ma"
           title="魔法运动员"
           sub="Magical Athlete"
-          meta="3–6 人 · 4 场赛跑"
-          blurb="选秀 4 名怪咖选手，每场派一名上场。香蕉让人滑倒、巨婴挡住整条跑道，前两个冲线的拿奖牌。"
+          meta="2–6 人 · 4 场赛跑"
+          blurb="选秀怪咖选手，每场派上场比赛。香蕉让人滑倒、巨婴挡住整条跑道，前两个冲线的拿奖牌。"
           art={<img className="box-cover" src="/assets/magical-athlete/lobby/cover.webp" alt="" />}
           online="/?game=ma"
           join={(code) => `/?game=ma&room=${code}`}
