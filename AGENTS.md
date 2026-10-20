@@ -171,3 +171,9 @@ tests/
 - 规则引擎现已完整：13 角色、39 板载技能、6 力量、3 被动、10 物品全部实现并测试（196 项）。用户裁定见 `docs/HOUSE_RULES.md`（U-ITEM-TIMING、Q11 用户裁定）。Phase 2D 期间**不改**规则引擎、联机协议、游戏数据；规则问题写入 `docs/RULE_QUESTIONS.md`。
 - 交接与界面需要接上的接口变化：`docs/handoff/CODEX_交接_2026-10-20.md`（必读）。
 - Q15 已裁定：两种弃牌不公开。未定：52 张技能卡组缺卡文；Phase 5 上云未开始。
+
+## 19. 上线（Phase 5，2026-10-20）
+
+- 部署到 Render 免费网页服务（Blueprint `render.yaml`，新加坡），GitHub 仓库 `zhangkeyu354-ctrl/nian` 的 `main` 推送即自动部署。方案见 `docs/phase5/上线方案.md`。
+- 用户 2026-10-20 明确表示仓库**公开没事**，第 8 节"仓库必须私有"按用户决定放宽；`reference/` 原版扫描/照片仍不得提交（`.gitignore` 已排除）。
+- 推送前必须跑全部测试；对局进行中推送会让房间断开，尽量在没人玩时推送。
