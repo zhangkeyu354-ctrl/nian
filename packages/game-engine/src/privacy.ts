@@ -27,7 +27,7 @@ export function viewFor(full: GameState, seat: string | null): GameState {
   s.seed = 0;
   s.rng = 0;
 
-  // 第三封印弃掉的牌：是否公开待核（CHECK_REQUIRED_PUBLIC_DISCARD），暂时只有杀手自己看得到；
+  // 第三封印弃掉的牌：按用户裁定 Q15 不公开，只有杀手自己看得到；
   // 一旦封住某位逃生者（SEALED_MOVE_FAILED 带出颜色）就公开
   if (s.sealedCard && !mine(s.killerId)) {
     const shown = s.events.some(

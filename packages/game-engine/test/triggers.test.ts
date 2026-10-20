@@ -809,7 +809,7 @@ describe("Q11 四个技能：自然触发", () => {
     expect(r.used).toBe(true);
     expect(r.s.choice).toMatchObject({ kind: "REPLAN", actorId: "jake" });
     expect(r.s.hands.jake).not.toContain("blue");
-    // 别人看不到新牌，也看不到弃掉的是哪张（CHECK_REQUIRED_PUBLIC_DISCARD）
+    // 别人看不到新牌，也看不到弃掉的是哪张（用户裁定 Q15：不公开）
     const t = play(r.s, { type: "SELECT", actorId: "jake", card: "green" });
     expect(t.s.plans.jake).toEqual(["green"]);
     expect(t.s.hands.jake).toEqual(["red", "yellow"]);
