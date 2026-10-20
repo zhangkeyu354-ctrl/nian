@@ -1,0 +1,696 @@
+{
+  "edition": "2025 CMYK base",
+  "base_url_after_copy": "/assets/magical-athlete/",
+  "copy_into": "apps/web/public/assets/magical-athlete/",
+  "asset_only": true,
+  "engine_changed": false,
+  "framework_alignment": {
+    "branch": "origin/magical-athlete",
+    "commit": "a11126dd1c6ea100a460caecce44e55e51c7ab6c",
+    "id_and_display_names": "all 36 matched racers.ts; game code unmodified"
+  },
+  "characters": [
+    {
+      "id": "alchemist",
+      "name_zh": "炼金术士",
+      "name_en": "Alchemist",
+      "assets": {
+        "card_zh": "cards/zh/alchemist.svg",
+        "card_zh_mobile": "cards/zh/alchemist.webp",
+        "card_en": "cards/en/alchemist.webp",
+        "portrait": "portraits/alchemist.webp",
+        "token": "tokens/alchemist.svg",
+        "token_png": "tokens/alchemist.png"
+      },
+      "translation_status": "DRAFT",
+      "token_native_size": [
+        118,
+        238
+      ]
+    },
+    {
+      "id": "blimp",
+      "name_zh": "飞艇",
+      "name_en": "Blimp",
+      "assets": {
+        "card_zh": "cards/zh/blimp.svg",
+        "card_zh_mobile": "cards/zh/blimp.webp",
+        "card_en": "cards/en/blimp.webp",
+        "portrait": "portraits/blimp.webp",
+        "token": "tokens/blimp.svg",
+        "token_png": "tokens/blimp.png"
+      },
+      "translation_status": "DRAFT",
+      "token_native_size": [
+        116,
+        237
+      ]
+    },
+    {
+      "id": "coach",
+      "name_zh": "教练",
+      "name_en": "Coach",
+      "assets": {
+        "card_zh": "cards/zh/coach.svg",
+        "card_zh_mobile": "cards/zh/coach.webp",
+        "card_en": "cards/en/coach.webp",
+        "portrait": "portraits/coach.webp",
+        "token": "tokens/coach.svg",
+        "token_png": "tokens/coach.png"
+      },
+      "translation_status": "DRAFT",
+      "token_native_size": [
+        132,
+        239
+      ]
+    },
+    {
+      "id": "baba_yaga",
+      "name_zh": "芭芭雅嘎",
+      "name_en": "Baba Yaga",
+      "assets": {
+        "card_zh": "cards/zh/baba_yaga.svg",
+        "card_zh_mobile": "cards/zh/baba_yaga.webp",
+        "card_en": "cards/en/baba_yaga.webp",
+        "portrait": "portraits/baba_yaga.webp",
+        "token": "tokens/baba_yaga.svg",
+        "token_png": "tokens/baba_yaga.png"
+      },
+      "translation_status": "DRAFT",
+      "token_native_size": [
+        121,
+        239
+      ]
+    },
+    {
+      "id": "centaur",
+      "name_zh": "半人马",
+      "name_en": "Centaur",
+      "assets": {
+        "card_zh": "cards/zh/centaur.svg",
+        "card_zh_mobile": "cards/zh/centaur.webp",
+        "card_en": "cards/en/centaur.webp",
+        "portrait": "portraits/centaur.webp",
+        "token": "tokens/centaur.svg",
+        "token_png": "tokens/centaur.png"
+      },
+      "translation_status": "DRAFT",
+      "token_native_size": [
+        119,
+        239
+      ]
+    },
+    {
+      "id": "copycat",
+      "name_zh": "山寨猫",
+      "name_en": "Copycat",
+      "assets": {
+        "card_zh": "cards/zh/copycat.svg",
+        "card_zh_mobile": "cards/zh/copycat.webp",
+        "card_en": "cards/en/copycat.webp",
+        "portrait": "portraits/copycat.webp",
+        "token": "tokens/copycat.svg",
+        "token_png": "tokens/copycat.png"
+      },
+      "translation_status": "DRAFT",
+      "token_native_size": [
+        119,
+        239
+      ]
+    },
+    {
+      "id": "banana",
+      "name_zh": "香蕉",
+      "name_en": "Banana",
+      "assets": {
+        "card_zh": "cards/zh/banana.svg",
+        "card_zh_mobile": "cards/zh/banana.webp",
+        "card_en": "cards/en/banana.webp",
+        "portrait": "portraits/banana.webp",
+        "token": "tokens/banana.svg",
+        "token_png": "tokens/banana.png"
+      },
+      "translation_status": "DRAFT",
+      "token_native_size": [
+        118,
+        239
+      ]
+    },
+    {
+      "id": "cheerleader",
+      "name_zh": "啦啦队长",
+      "name_en": "Cheerleader",
+      "assets": {
+        "card_zh": "cards/zh/cheerleader.svg",
+        "card_zh_mobile": "cards/zh/cheerleader.webp",
+        "card_en": "cards/en/cheerleader.webp",
+        "portrait": "portraits/cheerleader.webp",
+        "token": "tokens/cheerleader.svg",
+        "token_png": "tokens/cheerleader.png"
+      },
+      "translation_status": "DRAFT",
+      "token_native_size": [
+        124,
+        239
+      ]
+    },
+    {
+      "id": "dicemonger",
+      "name_zh": "骰贩子",
+      "name_en": "Dicemonger",
+      "assets": {
+        "card_zh": "cards/zh/dicemonger.svg",
+        "card_zh_mobile": "cards/zh/dicemonger.webp",
+        "card_en": "cards/en/dicemonger.webp",
+        "portrait": "portraits/dicemonger.webp",
+        "token": "tokens/dicemonger.svg",
+        "token_png": "tokens/dicemonger.png"
+      },
+      "translation_status": "DRAFT",
+      "token_native_size": [
+        117,
+        239
+      ]
+    },
+    {
+      "id": "duelist",
+      "name_zh": "决斗者",
+      "name_en": "Duelist",
+      "assets": {
+        "card_zh": "cards/zh/duelist.svg",
+        "card_zh_mobile": "cards/zh/duelist.webp",
+        "card_en": "cards/en/duelist.webp",
+        "portrait": "portraits/duelist.webp",
+        "token": "tokens/duelist.svg",
+        "token_png": "tokens/duelist.png"
+      },
+      "translation_status": "DRAFT",
+      "token_native_size": [
+        125,
+        239
+      ]
+    },
+    {
+      "id": "genius",
+      "name_zh": "天才",
+      "name_en": "Genius",
+      "assets": {
+        "card_zh": "cards/zh/genius.svg",
+        "card_zh_mobile": "cards/zh/genius.webp",
+        "card_en": "cards/en/genius.webp",
+        "portrait": "portraits/genius.webp",
+        "token": "tokens/genius.svg",
+        "token_png": "tokens/genius.png"
+      },
+      "translation_status": "DRAFT",
+      "token_native_size": [
+        128,
+        239
+      ]
+    },
+    {
+      "id": "heckler",
+      "name_zh": "毒舌喷子",
+      "name_en": "Heckler",
+      "assets": {
+        "card_zh": "cards/zh/heckler.svg",
+        "card_zh_mobile": "cards/zh/heckler.webp",
+        "card_en": "cards/en/heckler.webp",
+        "portrait": "portraits/heckler.webp",
+        "token": "tokens/heckler.svg",
+        "token_png": "tokens/heckler.png"
+      },
+      "translation_status": "DRAFT",
+      "token_native_size": [
+        132,
+        239
+      ]
+    },
+    {
+      "id": "egg",
+      "name_zh": "神秘蛋",
+      "name_en": "Egg",
+      "assets": {
+        "card_zh": "cards/zh/egg.svg",
+        "card_zh_mobile": "cards/zh/egg.webp",
+        "card_en": "cards/en/egg.webp",
+        "portrait": "portraits/egg.webp",
+        "token": "tokens/egg.svg",
+        "token_png": "tokens/egg.png"
+      },
+      "translation_status": "DRAFT",
+      "token_native_size": [
+        125,
+        237
+      ]
+    },
+    {
+      "id": "gunk",
+      "name_zh": "黏黏怪",
+      "name_en": "Gunk",
+      "assets": {
+        "card_zh": "cards/zh/gunk.svg",
+        "card_zh_mobile": "cards/zh/gunk.webp",
+        "card_en": "cards/en/gunk.webp",
+        "portrait": "portraits/gunk.webp",
+        "token": "tokens/gunk.svg",
+        "token_png": "tokens/gunk.png"
+      },
+      "translation_status": "DRAFT",
+      "token_native_size": [
+        122,
+        239
+      ]
+    },
+    {
+      "id": "huge_baby",
+      "name_zh": "巨婴",
+      "name_en": "Huge Baby",
+      "assets": {
+        "card_zh": "cards/zh/huge_baby.svg",
+        "card_zh_mobile": "cards/zh/huge_baby.webp",
+        "card_en": "cards/en/huge_baby.webp",
+        "portrait": "portraits/huge_baby.webp",
+        "token": "tokens/huge_baby.svg",
+        "token_png": "tokens/huge_baby.png"
+      },
+      "translation_status": "DRAFT",
+      "token_native_size": [
+        187,
+        172
+      ]
+    },
+    {
+      "id": "flip_flop",
+      "name_zh": "人字拖",
+      "name_en": "Flip Flop",
+      "assets": {
+        "card_zh": "cards/zh/flip_flop.svg",
+        "card_zh_mobile": "cards/zh/flip_flop.webp",
+        "card_en": "cards/en/flip_flop.webp",
+        "portrait": "portraits/flip_flop.webp",
+        "token": "tokens/flip_flop.svg",
+        "token_png": "tokens/flip_flop.png"
+      },
+      "translation_status": "DRAFT",
+      "token_native_size": [
+        115,
+        237
+      ]
+    },
+    {
+      "id": "hare",
+      "name_zh": "兔子",
+      "name_en": "Hare",
+      "assets": {
+        "card_zh": "cards/zh/hare.svg",
+        "card_zh_mobile": "cards/zh/hare.webp",
+        "card_en": "cards/en/hare.webp",
+        "portrait": "portraits/hare.webp",
+        "token": "tokens/hare.svg",
+        "token_png": "tokens/hare.png"
+      },
+      "translation_status": "DRAFT",
+      "token_native_size": [
+        118,
+        239
+      ]
+    },
+    {
+      "id": "hypnotist",
+      "name_zh": "催眠师",
+      "name_en": "Hypnotist",
+      "assets": {
+        "card_zh": "cards/zh/hypnotist.svg",
+        "card_zh_mobile": "cards/zh/hypnotist.webp",
+        "card_en": "cards/en/hypnotist.webp",
+        "portrait": "portraits/hypnotist.webp",
+        "token": "tokens/hypnotist.svg",
+        "token_png": "tokens/hypnotist.png"
+      },
+      "translation_status": "DRAFT",
+      "token_native_size": [
+        119,
+        239
+      ]
+    },
+    {
+      "id": "inchworm",
+      "name_zh": "尺蠖",
+      "name_en": "Inchworm",
+      "assets": {
+        "card_zh": "cards/zh/inchworm.svg",
+        "card_zh_mobile": "cards/zh/inchworm.webp",
+        "card_en": "cards/en/inchworm.webp",
+        "portrait": "portraits/inchworm.webp",
+        "token": "tokens/inchworm.svg",
+        "token_png": "tokens/inchworm.png"
+      },
+      "translation_status": "DRAFT",
+      "token_native_size": [
+        120,
+        237
+      ]
+    },
+    {
+      "id": "legs",
+      "name_zh": "大长腿",
+      "name_en": "Legs",
+      "assets": {
+        "card_zh": "cards/zh/legs.svg",
+        "card_zh_mobile": "cards/zh/legs.webp",
+        "card_en": "cards/en/legs.webp",
+        "portrait": "portraits/legs.webp",
+        "token": "tokens/legs.svg",
+        "token_png": "tokens/legs.png"
+      },
+      "translation_status": "DRAFT",
+      "token_native_size": [
+        121,
+        356
+      ]
+    },
+    {
+      "id": "mastermind",
+      "name_zh": "军师",
+      "name_en": "Mastermind",
+      "assets": {
+        "card_zh": "cards/zh/mastermind.svg",
+        "card_zh_mobile": "cards/zh/mastermind.webp",
+        "card_en": "cards/en/mastermind.webp",
+        "portrait": "portraits/mastermind.webp",
+        "token": "tokens/mastermind.svg",
+        "token_png": "tokens/mastermind.png"
+      },
+      "translation_status": "DRAFT",
+      "token_native_size": [
+        119,
+        239
+      ]
+    },
+    {
+      "id": "lackey",
+      "name_zh": "跟班",
+      "name_en": "Lackey",
+      "assets": {
+        "card_zh": "cards/zh/lackey.svg",
+        "card_zh_mobile": "cards/zh/lackey.webp",
+        "card_en": "cards/en/lackey.webp",
+        "portrait": "portraits/lackey.webp",
+        "token": "tokens/lackey.svg",
+        "token_png": "tokens/lackey.png"
+      },
+      "translation_status": "DRAFT",
+      "token_native_size": [
+        131,
+        239
+      ]
+    },
+    {
+      "id": "lovable_loser",
+      "name_zh": "可爱废柴",
+      "name_en": "Lovable Loser",
+      "assets": {
+        "card_zh": "cards/zh/lovable_loser.svg",
+        "card_zh_mobile": "cards/zh/lovable_loser.webp",
+        "card_en": "cards/en/lovable_loser.webp",
+        "portrait": "portraits/lovable_loser.webp",
+        "token": "tokens/lovable_loser.svg",
+        "token_png": "tokens/lovable_loser.png"
+      },
+      "translation_status": "DRAFT",
+      "token_native_size": [
+        123,
+        239
+      ]
+    },
+    {
+      "id": "mouth",
+      "name_zh": "血盆大口",
+      "name_en": "M.O.U.T.H.",
+      "assets": {
+        "card_zh": "cards/zh/mouth.svg",
+        "card_zh_mobile": "cards/zh/mouth.webp",
+        "card_en": "cards/en/mouth.webp",
+        "portrait": "portraits/mouth.webp",
+        "token": "tokens/mouth.svg",
+        "token_png": "tokens/mouth.png"
+      },
+      "translation_status": "DRAFT",
+      "token_native_size": [
+        132,
+        238
+      ]
+    },
+    {
+      "id": "leaptoad",
+      "name_zh": "跳跳蟾",
+      "name_en": "Leaptoad",
+      "assets": {
+        "card_zh": "cards/zh/leaptoad.svg",
+        "card_zh_mobile": "cards/zh/leaptoad.webp",
+        "card_en": "cards/en/leaptoad.webp",
+        "portrait": "portraits/leaptoad.webp",
+        "token": "tokens/leaptoad.svg",
+        "token_png": "tokens/leaptoad.png"
+      },
+      "translation_status": "DRAFT",
+      "token_native_size": [
+        121,
+        239
+      ]
+    },
+    {
+      "id": "magician",
+      "name_zh": "魔术师",
+      "name_en": "Magician",
+      "assets": {
+        "card_zh": "cards/zh/magician.svg",
+        "card_zh_mobile": "cards/zh/magician.webp",
+        "card_en": "cards/en/magician.webp",
+        "portrait": "portraits/magician.webp",
+        "token": "tokens/magician.svg",
+        "token_png": "tokens/magician.png"
+      },
+      "translation_status": "DRAFT",
+      "token_native_size": [
+        118,
+        238
+      ]
+    },
+    {
+      "id": "party_animal",
+      "name_zh": "派对咖",
+      "name_en": "Party Animal",
+      "assets": {
+        "card_zh": "cards/zh/party_animal.svg",
+        "card_zh_mobile": "cards/zh/party_animal.webp",
+        "card_en": "cards/en/party_animal.webp",
+        "portrait": "portraits/party_animal.webp",
+        "token": "tokens/party_animal.svg",
+        "token_png": "tokens/party_animal.png"
+      },
+      "translation_status": "DRAFT",
+      "token_native_size": [
+        122,
+        239
+      ]
+    },
+    {
+      "id": "rocket_scientist",
+      "name_zh": "火箭科学家",
+      "name_en": "Rocket Scientist",
+      "assets": {
+        "card_zh": "cards/zh/rocket_scientist.svg",
+        "card_zh_mobile": "cards/zh/rocket_scientist.webp",
+        "card_en": "cards/en/rocket_scientist.webp",
+        "portrait": "portraits/rocket_scientist.webp",
+        "token": "tokens/rocket_scientist.svg",
+        "token_png": "tokens/rocket_scientist.png"
+      },
+      "translation_status": "DRAFT",
+      "token_native_size": [
+        125,
+        239
+      ]
+    },
+    {
+      "id": "sisyphus",
+      "name_zh": "西西弗斯",
+      "name_en": "Sisyphus",
+      "assets": {
+        "card_zh": "cards/zh/sisyphus.svg",
+        "card_zh_mobile": "cards/zh/sisyphus.webp",
+        "card_en": "cards/en/sisyphus.webp",
+        "portrait": "portraits/sisyphus.webp",
+        "token": "tokens/sisyphus.svg",
+        "token_png": "tokens/sisyphus.png"
+      },
+      "translation_status": "DRAFT",
+      "token_native_size": [
+        170,
+        252
+      ]
+    },
+    {
+      "id": "suckerfish",
+      "name_zh": "吸盘鱼",
+      "name_en": "Suckerfish",
+      "assets": {
+        "card_zh": "cards/zh/suckerfish.svg",
+        "card_zh_mobile": "cards/zh/suckerfish.webp",
+        "card_en": "cards/en/suckerfish.webp",
+        "portrait": "portraits/suckerfish.webp",
+        "token": "tokens/suckerfish.svg",
+        "token_png": "tokens/suckerfish.png"
+      },
+      "translation_status": "DRAFT",
+      "token_native_size": [
+        124,
+        236
+      ]
+    },
+    {
+      "id": "romantic",
+      "name_zh": "浪漫者",
+      "name_en": "Romantic",
+      "assets": {
+        "card_zh": "cards/zh/romantic.svg",
+        "card_zh_mobile": "cards/zh/romantic.webp",
+        "card_en": "cards/en/romantic.webp",
+        "portrait": "portraits/romantic.webp",
+        "token": "tokens/romantic.svg",
+        "token_png": "tokens/romantic.png"
+      },
+      "translation_status": "DRAFT",
+      "token_native_size": [
+        133,
+        239
+      ]
+    },
+    {
+      "id": "skipper",
+      "name_zh": "船长",
+      "name_en": "Skipper",
+      "assets": {
+        "card_zh": "cards/zh/skipper.svg",
+        "card_zh_mobile": "cards/zh/skipper.webp",
+        "card_en": "cards/en/skipper.webp",
+        "portrait": "portraits/skipper.webp",
+        "token": "tokens/skipper.svg",
+        "token_png": "tokens/skipper.png"
+      },
+      "translation_status": "DRAFT",
+      "token_native_size": [
+        127,
+        239
+      ]
+    },
+    {
+      "id": "third_wheel",
+      "name_zh": "电灯泡",
+      "name_en": "Third Wheel",
+      "assets": {
+        "card_zh": "cards/zh/third_wheel.svg",
+        "card_zh_mobile": "cards/zh/third_wheel.webp",
+        "card_en": "cards/en/third_wheel.webp",
+        "portrait": "portraits/third_wheel.webp",
+        "token": "tokens/third_wheel.svg",
+        "token_png": "tokens/third_wheel.png"
+      },
+      "translation_status": "DRAFT",
+      "token_native_size": [
+        126,
+        236
+      ]
+    },
+    {
+      "id": "scoocher",
+      "name_zh": "挪挪",
+      "name_en": "Scoocher",
+      "assets": {
+        "card_zh": "cards/zh/scoocher.svg",
+        "card_zh_mobile": "cards/zh/scoocher.webp",
+        "card_en": "cards/en/scoocher.webp",
+        "portrait": "portraits/scoocher.webp",
+        "token": "tokens/scoocher.svg",
+        "token_png": "tokens/scoocher.png"
+      },
+      "translation_status": "DRAFT",
+      "token_native_size": [
+        130,
+        236
+      ]
+    },
+    {
+      "id": "stickler",
+      "name_zh": "较真怪",
+      "name_en": "Stickler",
+      "assets": {
+        "card_zh": "cards/zh/stickler.svg",
+        "card_zh_mobile": "cards/zh/stickler.webp",
+        "card_en": "cards/en/stickler.webp",
+        "portrait": "portraits/stickler.webp",
+        "token": "tokens/stickler.svg",
+        "token_png": "tokens/stickler.png"
+      },
+      "translation_status": "DRAFT",
+      "token_native_size": [
+        131,
+        276
+      ]
+    },
+    {
+      "id": "twin",
+      "name_zh": "双胞胎",
+      "name_en": "Twin",
+      "assets": {
+        "card_zh": "cards/zh/twin.svg",
+        "card_zh_mobile": "cards/zh/twin.webp",
+        "card_en": "cards/en/twin.webp",
+        "portrait": "portraits/twin.webp",
+        "token": "tokens/twin.svg",
+        "token_png": "tokens/twin.png"
+      },
+      "translation_status": "DRAFT",
+      "token_native_size": [
+        135,
+        239
+      ]
+    }
+  ],
+  "boards": "boards/coordinates.json",
+  "track_ids": [
+    "mild",
+    "wild"
+  ],
+  "lobby": "lobby/cover.webp",
+  "logo": "icons/title-original.png",
+  "cards": {
+    "viewbox": [
+      720,
+      1032
+    ],
+    "hidden": "backs/card-back-zh.svg",
+    "object_fit": "contain",
+    "preferred_list_format": "card_zh_mobile"
+  },
+  "tokens": {
+    "viewbox": [
+      256,
+      384
+    ],
+    "object_fit": "contain",
+    "anchor": "bottom center",
+    "tripped": "rotate existing piece face-down or use the uniform back; retain player indicator"
+  },
+  "player_colors": [
+    "#e8443a",
+    "#2f7fd8",
+    "#f2b705",
+    "#8a4fd6",
+    "#1fa37a",
+    "#f07c1e"
+  ],
+  "note": "All 36 IDs, Chinese names and power names match origin/magical-athlete at a11126d. SVGs embed source art and outline Chinese labels, with no remote fonts. Public serving and app changes are not performed here."
+}

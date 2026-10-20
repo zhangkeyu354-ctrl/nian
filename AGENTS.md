@@ -186,3 +186,4 @@ tests/
 - 第 1–19 节是黎明杀机专用规定；魔法运动员同样遵守「不编造、缺数据标 CHECK_REQUIRED、问题写进问题清单」。它的资料、问题与交接在 `docs/magical-athlete/`。
 - 魔法运动员代码只在 `packages/magical-athlete/`、`apps/server/src/ma-rooms.ts`、`packages/shared/src/ma-protocol.ts`、`apps/web/src/ma/`；不得改动黎明杀机规则引擎。
 - 推送前额外运行 `npm run verify:ma-browsers`（先 `npm run build`）。
+- 魔法运动员使用原版美术（CMYK，取自规则书）：用户 2026-10-20 明确决定公开上线，第 8 节对该游戏放宽；`reference/` 原始 PDF 仍不提交。

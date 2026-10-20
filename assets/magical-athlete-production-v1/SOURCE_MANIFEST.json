@@ -1,0 +1,57 @@
+{
+  "source_pdf": {
+    "url": "https://gamers-hq.de/media/pdf/g0/6d/14/How-to-play-MAGICAL-ATHLETE.pdf",
+    "local": "E:\\DBD-BoardGame-Web\\reference\\magical-athlete\\How-to-play-MAGICAL-ATHLETE.pdf",
+    "sha256": "6a14158f26d60e15b40360b678cb1a9917f4f5389a803f90815ab6fa4d5546dd",
+    "pages": 28,
+    "role": "Publisher-authored rulebook, downloaded from vendor mirror. Visible final card composites were used."
+  },
+  "artwork_credit": "Angela Kirkwood / CMYK. Original material reused for local private project; not claimed original generated artwork.",
+  "references_reviewed": [
+    {
+      "url": "https://www.cmyk.games/products/magical-athlete",
+      "role": "Publisher version and component confirmation"
+    },
+    {
+      "url": "https://angelakirkwood.com/Magical-Athlete",
+      "role": "Original artist and visual reference"
+    },
+    {
+      "url": "https://www.rulespal.com/magical-athlete/rulebook",
+      "role": "Auxiliary searchable text; not preferred over final visible PDF card"
+    },
+    {
+      "url": "https://github.com/no2ooo/magical-athlete-gallery",
+      "role": "Rejected as visual authority: its pictured character artwork differs from CMYK retail."
+    },
+    {
+      "url": "https://github.com/cameronnayeri/magical-athlete",
+      "role": "Rejected as board authority: contains custom boards and rules from memory."
+    }
+  ],
+  "source_conflicts": [
+    {
+      "id": "ART-RULE-01",
+      "character": "sisyphus",
+      "page": 25,
+      "status": "CHECK_REQUIRED",
+      "detail": "Visible card says instead of moving on a 6; adjacent note says main move remains after warping. Card art uses visible final card; engine decision deferred."
+    }
+  ],
+  "mild_stitch": {
+    "left_xref": 127,
+    "right_xref": 317,
+    "overlap_px": 9,
+    "result_size": [
+      3190,
+      975
+    ]
+  },
+  "wild_source": {
+    "xref": 136,
+    "native_size": [
+      1799,
+      550
+    ]
+  }
+}

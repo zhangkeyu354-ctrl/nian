@@ -125,3 +125,15 @@
   color: #1c2340;
   border: 2px solid #1c2340;
 }
+
+.box-ma .box-art {
+  height: auto;
+  margin: -20px -20px 4px;
+}
+.box-cover {
+  display: block;
+  width: 100%;
+  aspect-ratio: 1599 / 884;
+  object-fit: cover;
+  border-bottom: 2px solid #1c2340;
+}

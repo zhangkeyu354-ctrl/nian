@@ -1,0 +1,63 @@
+{
+  "for_branch": "magical-athlete @ a11126d",
+  "status": "ART_SOURCE_CHECKED_NOT_APPLIED",
+  "answers": {
+    "MA-Q02": "Wild specials verified directly against the complete original board image embedded in the rulebook.",
+    "MA-Q03": "Second corner is index 13 on both sides.",
+    "MA-Q04": "30 spaces including Start: indices 0..29, finish threshold 30."
+  },
+  "proposed_track_fields": {
+    "mild": {
+      "length": 30,
+      "secondCorner": 13,
+      "specials": {}
+    },
+    "wild": {
+      "length": 30,
+      "secondCorner": 13,
+      "specials": {
+        "1": {
+          "kind": "star"
+        },
+        "5": {
+          "kind": "rock"
+        },
+        "7": {
+          "kind": "arrow",
+          "steps": 3
+        },
+        "11": {
+          "kind": "arrow",
+          "steps": 1
+        },
+        "13": {
+          "kind": "star"
+        },
+        "16": {
+          "kind": "arrow",
+          "steps": -3
+        },
+        "18": {
+          "kind": "rock"
+        },
+        "23": {
+          "kind": "arrow",
+          "steps": 2
+        },
+        "24": {
+          "kind": "arrow",
+          "steps": -3
+        },
+        "26": {
+          "kind": "rock"
+        }
+      }
+    }
+  },
+  "sources": [
+    "SOURCE_MANIFEST.json",
+    "previews/mild-mile-coordinates.png",
+    "previews/wild-wilds-coordinates.png"
+  ],
+  "note": "Evidence handoff only; no game data or engine was modified. MA-Q01 medal values remain unresolved; trophy artwork has no fixed score."
+}

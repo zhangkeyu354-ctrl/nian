@@ -42,3 +42,10 @@
 ## 待办
 见 `RULE_QUESTIONS.md`：奖牌分值、狂野赛道格子、第二弯道（飞艇）、2/3 人双选手变体，以及几条需要裁定的边界情况。
 中文译名来自第三方图鉴，标 DRAFT，等你确认。
+
+## 美术（2026-10-20 接入 Codex 美术包）
+- 来源包：`assets/magical-athlete-production-v1/`（只提交了说明、清单、坐标与校验脚本；图片在下面的运行时目录，避免重复）。Codex 交接：`docs/handoff/魔法运动员_美术资源交接_2026-10-20.md`。
+- 运行时素材：`apps/web/public/assets/magical-athlete/`（中英卡 WebP、头像、透明棋子、两面棋盘 WebP + 手机版、坐标 JSON、骰面、标记、卡背、大厅封面、技能书 PDF），共约 14 MB。
+- 原版插画：CMYK / Angela Kirkwood。用户决定公开上线（见 RULE_QUESTIONS MA-ART）。
+- `Track.tsx` 改为原版横长棋盘 + `boards/coordinates.json` 定位；手机上棋盘左右滑动并自动跟随当前选手。棋子身份始终用 `racer`（神秘蛋/双胞胎/山寨猫不换棋子）。
+- `assets/magical-athlete-generated-v1/`（原创风格候选）没有提交，仍留在用户电脑。

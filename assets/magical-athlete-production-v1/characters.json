@@ -1,0 +1,1100 @@
+{
+  "edition": "2025 CMYK base game",
+  "source_pdf": "reference/magical-athlete/How-to-play-MAGICAL-ATHLETE.pdf",
+  "source_url": "https://gamers-hq.de/media/pdf/g0/6d/14/How-to-play-MAGICAL-ATHLETE.pdf",
+  "translation_status": "DRAFT",
+  "characters": [
+    {
+      "id": "alchemist",
+      "name_zh": "炼金术士",
+      "name_en": "Alchemist",
+      "skill_zh": "点石成金",
+      "ability_zh": "主移动掷出 1 或 2 时，我可以改为移动 4 格。",
+      "note_zh": "可选；改变移动格数，不改骰子点数。",
+      "source_ref": "CMYK rulebook p22",
+      "page": 22,
+      "row": 0,
+      "col": 0,
+      "token_xref": 162,
+      "translation_status": "DRAFT",
+      "status": "SOURCE_CHECKED",
+      "token_native_size": [
+        118,
+        238
+      ],
+      "assets": {
+        "card_zh": "cards/zh/alchemist.svg",
+        "card_zh_mobile": "cards/zh/alchemist.webp",
+        "card_en": "cards/en/alchemist.webp",
+        "portrait": "portraits/alchemist.webp",
+        "token": "tokens/alchemist.svg",
+        "token_png": "tokens/alchemist.png"
+      },
+      "art_source": "CMYK rulebook visible card and token raster; not generated",
+      "art_resolution_note": "Cards contain native ~261px source raster artwork; Chinese lettering and frame are vectors. Token native size is recorded.",
+      "skill_en": "Transmute 'N' Scoot"
+    },
+    {
+      "id": "blimp",
+      "name_zh": "飞艇",
+      "name_en": "Blimp",
+      "skill_zh": "冲劲",
+      "ability_zh": "回合开始时，若我还没到赛道第二个弯角，主移动 +3；在该弯角或之后，主移动 -1。",
+      "note_zh": "以回合开始时的位置判断；第二个弯角就是第 13 格。",
+      "source_ref": "CMYK rulebook p22",
+      "page": 22,
+      "row": 0,
+      "col": 1,
+      "token_xref": 154,
+      "translation_status": "DRAFT",
+      "status": "SOURCE_CHECKED",
+      "token_native_size": [
+        116,
+        237
+      ],
+      "assets": {
+        "card_zh": "cards/zh/blimp.svg",
+        "card_zh_mobile": "cards/zh/blimp.webp",
+        "card_en": "cards/en/blimp.webp",
+        "portrait": "portraits/blimp.webp",
+        "token": "tokens/blimp.svg",
+        "token_png": "tokens/blimp.png"
+      },
+      "art_source": "CMYK rulebook visible card and token raster; not generated",
+      "art_resolution_note": "Cards contain native ~261px source raster artwork; Chinese lettering and frame are vectors. Token native size is recorded.",
+      "skill_en": "Blow It"
+    },
+    {
+      "id": "coach",
+      "name_zh": "教练",
+      "name_en": "Coach",
+      "skill_zh": "团队激励",
+      "ability_zh": "与我同格的所有选手主移动 +1，包括我自己。",
+      "note_zh": "这是移动加值，不改变骰子点数。",
+      "source_ref": "CMYK rulebook p22",
+      "page": 22,
+      "row": 0,
+      "col": 2,
+      "token_xref": 282,
+      "translation_status": "DRAFT",
+      "status": "SOURCE_CHECKED",
+      "token_native_size": [
+        132,
+        239
+      ],
+      "assets": {
+        "card_zh": "cards/zh/coach.svg",
+        "card_zh_mobile": "cards/zh/coach.webp",
+        "card_en": "cards/en/coach.webp",
+        "portrait": "portraits/coach.webp",
+        "token": "tokens/coach.svg",
+        "token_png": "tokens/coach.png"
+      },
+      "art_source": "CMYK rulebook visible card and token raster; not generated",
+      "art_resolution_note": "Cards contain native ~261px source raster artwork; Chinese lettering and frame are vectors. Token native size is recorded.",
+      "skill_en": "Good Hustle"
+    },
+    {
+      "id": "baba_yaga",
+      "name_zh": "芭芭雅嘎",
+      "name_en": "Baba Yaga",
+      "skill_zh": "鸡脚小屋",
+      "ability_zh": "其他选手停到我的格子，或我停到他们的格子时，他们摔倒。",
+      "note_zh": "无论由哪一方抵达同格，其他选手都摔倒；仍可被决斗或催眠影响。",
+      "source_ref": "CMYK rulebook p22",
+      "page": 22,
+      "row": 1,
+      "col": 0,
+      "token_xref": 206,
+      "translation_status": "DRAFT",
+      "status": "SOURCE_CHECKED",
+      "token_native_size": [
+        121,
+        239
+      ],
+      "assets": {
+        "card_zh": "cards/zh/baba_yaga.svg",
+        "card_zh_mobile": "cards/zh/baba_yaga.webp",
+        "card_en": "cards/en/baba_yaga.webp",
+        "portrait": "portraits/baba_yaga.webp",
+        "token": "tokens/baba_yaga.svg",
+        "token_png": "tokens/baba_yaga.png"
+      },
+      "art_source": "CMYK rulebook visible card and token raster; not generated",
+      "art_resolution_note": "Cards contain native ~261px source raster artwork; Chinese lettering and frame are vectors. Token native size is recorded.",
+      "previous_asset_id": "baba-yaga",
+      "skill_en": "Leg It"
+    },
+    {
+      "id": "centaur",
+      "name_zh": "半人马",
+      "name_en": "Centaur",
+      "skill_zh": "尥蹶子",
+      "ability_zh": "当我超越一名选手时，那名选手后退 2 格。",
+      "note_zh": "超越指一次移动从对方身后到身前；不能后退到起点之前。",
+      "source_ref": "CMYK rulebook p22",
+      "page": 22,
+      "row": 1,
+      "col": 1,
+      "token_xref": 274,
+      "translation_status": "DRAFT",
+      "status": "SOURCE_CHECKED",
+      "token_native_size": [
+        119,
+        239
+      ],
+      "assets": {
+        "card_zh": "cards/zh/centaur.svg",
+        "card_zh_mobile": "cards/zh/centaur.webp",
+        "card_en": "cards/en/centaur.webp",
+        "portrait": "portraits/centaur.webp",
+        "token": "tokens/centaur.svg",
+        "token_png": "tokens/centaur.png"
+      },
+      "art_source": "CMYK rulebook visible card and token raster; not generated",
+      "art_resolution_note": "Cards contain native ~261px source raster artwork; Chinese lettering and frame are vectors. Token native size is recorded.",
+      "skill_en": "Hoofwhack"
+    },
+    {
+      "id": "copycat",
+      "name_zh": "山寨猫",
+      "name_en": "Copycat",
+      "skill_zh": "抄作业",
+      "ability_zh": "我拥有当前领先选手的能力；若领先者并列，由我选择。",
+      "note_zh": "持续生效，不限我的回合；不复制赛前能力；冲突时被复制者优先。",
+      "source_ref": "CMYK rulebook p22",
+      "page": 22,
+      "row": 1,
+      "col": 2,
+      "token_xref": 158,
+      "translation_status": "DRAFT",
+      "status": "SOURCE_CHECKED",
+      "token_native_size": [
+        119,
+        239
+      ],
+      "assets": {
+        "card_zh": "cards/zh/copycat.svg",
+        "card_zh_mobile": "cards/zh/copycat.webp",
+        "card_en": "cards/en/copycat.webp",
+        "portrait": "portraits/copycat.webp",
+        "token": "tokens/copycat.svg",
+        "token_png": "tokens/copycat.png"
+      },
+      "art_source": "CMYK rulebook visible card and token raster; not generated",
+      "art_resolution_note": "Cards contain native ~261px source raster artwork; Chinese lettering and frame are vectors. Token native size is recorded.",
+      "skill_en": "Copy That"
+    },
+    {
+      "id": "banana",
+      "name_zh": "香蕉",
+      "name_en": "Banana",
+      "skill_zh": "香蕉皮",
+      "ability_zh": "任何超越我的选手都会摔倒。",
+      "note_zh": "须从我身后开始移动，并在我身前结束；先走完本次移动再摔倒。",
+      "source_ref": "CMYK rulebook p22",
+      "page": 22,
+      "row": 2,
+      "col": 0,
+      "token_xref": 250,
+      "translation_status": "DRAFT",
+      "status": "SOURCE_CHECKED",
+      "token_native_size": [
+        118,
+        239
+      ],
+      "assets": {
+        "card_zh": "cards/zh/banana.svg",
+        "card_zh_mobile": "cards/zh/banana.webp",
+        "card_en": "cards/en/banana.webp",
+        "portrait": "portraits/banana.webp",
+        "token": "tokens/banana.svg",
+        "token_png": "tokens/banana.png"
+      },
+      "art_source": "CMYK rulebook visible card and token raster; not generated",
+      "art_resolution_note": "Cards contain native ~261px source raster artwork; Chinese lettering and frame are vectors. Token native size is recorded.",
+      "skill_en": "The Slip"
+    },
+    {
+      "id": "cheerleader",
+      "name_zh": "啦啦队长",
+      "name_en": "Cheerleader",
+      "skill_zh": "加油打气",
+      "ability_zh": "主移动前，我可以让所有垫底选手前进 2 格；若这样做，我前进 1 格。",
+      "note_zh": "并列垫底者都要移动；我只额外前进 1 格。若给自己加油，两次移动分开结算。",
+      "source_ref": "CMYK rulebook p22",
+      "page": 22,
+      "row": 2,
+      "col": 1,
+      "token_xref": 278,
+      "translation_status": "DRAFT",
+      "status": "SOURCE_CHECKED",
+      "token_native_size": [
+        124,
+        239
+      ],
+      "assets": {
+        "card_zh": "cards/zh/cheerleader.svg",
+        "card_zh_mobile": "cards/zh/cheerleader.webp",
+        "card_en": "cards/en/cheerleader.webp",
+        "portrait": "portraits/cheerleader.webp",
+        "token": "tokens/cheerleader.svg",
+        "token_png": "tokens/cheerleader.png"
+      },
+      "art_source": "CMYK rulebook visible card and token raster; not generated",
+      "art_resolution_note": "Cards contain native ~261px source raster artwork; Chinese lettering and frame are vectors. Token native size is recorded.",
+      "skill_en": "Rah Rah"
+    },
+    {
+      "id": "dicemonger",
+      "name_zh": "骰贩子",
+      "name_en": "Dicemonger",
+      "skill_zh": "开放重掷",
+      "ability_zh": "每名选手每回合都可以重掷一次主移动骰；其他选手这样做时，我前进 1 格。",
+      "note_zh": "重掷后只用新结果；每次实际重掷均可触发相应能力。",
+      "source_ref": "CMYK rulebook p22",
+      "page": 22,
+      "row": 2,
+      "col": 2,
+      "token_xref": 254,
+      "translation_status": "DRAFT",
+      "status": "SOURCE_CHECKED",
+      "token_native_size": [
+        117,
+        239
+      ],
+      "assets": {
+        "card_zh": "cards/zh/dicemonger.svg",
+        "card_zh_mobile": "cards/zh/dicemonger.webp",
+        "card_en": "cards/en/dicemonger.webp",
+        "portrait": "portraits/dicemonger.webp",
+        "token": "tokens/dicemonger.svg",
+        "token_png": "tokens/dicemonger.png"
+      },
+      "art_source": "CMYK rulebook visible card and token raster; not generated",
+      "art_resolution_note": "Cards contain native ~261px source raster artwork; Chinese lettering and frame are vectors. Token native size is recorded.",
+      "skill_en": "Dicey Deals"
+    },
+    {
+      "id": "duelist",
+      "name_zh": "决斗者",
+      "name_en": "Duelist",
+      "skill_zh": "单挑",
+      "ability_zh": "有人与我同格时，我可以发起决斗：双方掷骰，点数高者前进 2 格；平局我获胜。",
+      "note_zh": "可在别人回合发起，也可一回合多次发起；不能打断尚未完成的动作。",
+      "source_ref": "CMYK rulebook p23",
+      "page": 23,
+      "row": 0,
+      "col": 0,
+      "token_xref": 286,
+      "translation_status": "DRAFT",
+      "status": "SOURCE_CHECKED",
+      "token_native_size": [
+        125,
+        239
+      ],
+      "assets": {
+        "card_zh": "cards/zh/duelist.svg",
+        "card_zh_mobile": "cards/zh/duelist.webp",
+        "card_en": "cards/en/duelist.webp",
+        "portrait": "portraits/duelist.webp",
+        "token": "tokens/duelist.svg",
+        "token_png": "tokens/duelist.png"
+      },
+      "art_source": "CMYK rulebook visible card and token raster; not generated",
+      "art_resolution_note": "Cards contain native ~261px source raster artwork; Chinese lettering and frame are vectors. Token native size is recorded.",
+      "skill_en": "Duel!"
+    },
+    {
+      "id": "genius",
+      "name_zh": "天才",
+      "name_en": "Genius",
+      "skill_zh": "预判自己",
+      "ability_zh": "我可以预测自己的主移动骰点数；若猜中，本回合结束后再进行一个回合。",
+      "note_zh": "先预测，再掷骰；额外回合结束后恢复正常顺序。",
+      "source_ref": "CMYK rulebook p23",
+      "page": 23,
+      "row": 0,
+      "col": 1,
+      "token_xref": 174,
+      "translation_status": "DRAFT",
+      "status": "SOURCE_CHECKED",
+      "token_native_size": [
+        128,
+        239
+      ],
+      "assets": {
+        "card_zh": "cards/zh/genius.svg",
+        "card_zh_mobile": "cards/zh/genius.webp",
+        "card_en": "cards/en/genius.webp",
+        "portrait": "portraits/genius.webp",
+        "token": "tokens/genius.svg",
+        "token_png": "tokens/genius.png"
+      },
+      "art_source": "CMYK rulebook visible card and token raster; not generated",
+      "art_resolution_note": "Cards contain native ~261px source raster artwork; Chinese lettering and frame are vectors. Token native size is recorded.",
+      "skill_en": "Think Good"
+    },
+    {
+      "id": "heckler",
+      "name_zh": "毒舌喷子",
+      "name_en": "Heckler",
+      "skill_zh": "幸灾乐祸",
+      "ability_zh": "有选手结束回合时，若其位置距该回合起点不超过 1 格，我前进 2 格。",
+      "note_zh": "从摔倒中恢复、没有主移动的回合也适用。",
+      "source_ref": "CMYK rulebook p23",
+      "page": 23,
+      "row": 0,
+      "col": 2,
+      "token_xref": 214,
+      "translation_status": "DRAFT",
+      "status": "SOURCE_CHECKED",
+      "token_native_size": [
+        132,
+        239
+      ],
+      "assets": {
+        "card_zh": "cards/zh/heckler.svg",
+        "card_zh_mobile": "cards/zh/heckler.webp",
+        "card_en": "cards/en/heckler.webp",
+        "portrait": "portraits/heckler.webp",
+        "token": "tokens/heckler.svg",
+        "token_png": "tokens/heckler.png"
+      },
+      "art_source": "CMYK rulebook visible card and token raster; not generated",
+      "art_resolution_note": "Cards contain native ~261px source raster artwork; Chinese lettering and frame are vectors. Token native size is recorded.",
+      "skill_en": "Schadenfreude"
+    },
+    {
+      "id": "egg",
+      "name_zh": "神秘蛋",
+      "name_en": "Egg",
+      "skill_zh": "开盲盒",
+      "ability_zh": "比赛开始前，抽 3 张新的选手卡并选 1 张；我拥有该选手的能力。",
+      "note_zh": "仍使用蛋的棋子；所选选手的赛前能力也会生效。",
+      "source_ref": "CMYK rulebook p23",
+      "page": 23,
+      "row": 1,
+      "col": 0,
+      "token_xref": 166,
+      "translation_status": "DRAFT",
+      "status": "SOURCE_CHECKED",
+      "token_native_size": [
+        125,
+        237
+      ],
+      "assets": {
+        "card_zh": "cards/zh/egg.svg",
+        "card_zh_mobile": "cards/zh/egg.webp",
+        "card_en": "cards/en/egg.webp",
+        "portrait": "portraits/egg.webp",
+        "token": "tokens/egg.svg",
+        "token_png": "tokens/egg.png"
+      },
+      "art_source": "CMYK rulebook visible card and token raster; not generated",
+      "art_resolution_note": "Cards contain native ~261px source raster artwork; Chinese lettering and frame are vectors. Token native size is recorded.",
+      "skill_en": "Scramble"
+    },
+    {
+      "id": "gunk",
+      "name_zh": "黏黏怪",
+      "name_en": "Gunk",
+      "skill_zh": "全场减速",
+      "ability_zh": "其他所有选手的主移动 -1。",
+      "note_zh": "只减少移动格数，不改变骰点；掷出的 6 仍会触发跟班。",
+      "source_ref": "CMYK rulebook p23",
+      "page": 23,
+      "row": 1,
+      "col": 1,
+      "token_xref": 178,
+      "translation_status": "DRAFT",
+      "status": "SOURCE_CHECKED",
+      "token_native_size": [
+        122,
+        239
+      ],
+      "assets": {
+        "card_zh": "cards/zh/gunk.svg",
+        "card_zh_mobile": "cards/zh/gunk.webp",
+        "card_en": "cards/en/gunk.webp",
+        "portrait": "portraits/gunk.webp",
+        "token": "tokens/gunk.svg",
+        "token_png": "tokens/gunk.png"
+      },
+      "art_source": "CMYK rulebook visible card and token raster; not generated",
+      "art_resolution_note": "Cards contain native ~261px source raster artwork; Chinese lettering and frame are vectors. Token native size is recorded.",
+      "skill_en": "Goop 'Em"
+    },
+    {
+      "id": "huge_baby",
+      "name_zh": "巨婴",
+      "name_en": "Huge Baby",
+      "skill_zh": "块头太大",
+      "ability_zh": "除起点外，其他选手不能与我同格；将要同格时，把对方放到我身后一格。",
+      "note_zh": "这种重新放置不算移动，视为停在后方格子。",
+      "source_ref": "CMYK rulebook p23",
+      "page": 23,
+      "row": 1,
+      "col": 2,
+      "token_xref": 222,
+      "translation_status": "DRAFT",
+      "status": "SOURCE_CHECKED",
+      "token_native_size": [
+        187,
+        172
+      ],
+      "assets": {
+        "card_zh": "cards/zh/huge_baby.svg",
+        "card_zh_mobile": "cards/zh/huge_baby.webp",
+        "card_en": "cards/en/huge_baby.webp",
+        "portrait": "portraits/huge_baby.webp",
+        "token": "tokens/huge_baby.svg",
+        "token_png": "tokens/huge_baby.png"
+      },
+      "art_source": "CMYK rulebook visible card and token raster; not generated",
+      "art_resolution_note": "Cards contain native ~261px source raster artwork; Chinese lettering and frame are vectors. Token native size is recorded.",
+      "previous_asset_id": "huge-baby",
+      "skill_en": "Really Huge"
+    },
+    {
+      "id": "flip_flop",
+      "name_zh": "人字拖",
+      "name_en": "Flip Flop",
+      "skill_zh": "瞬间换位",
+      "ability_zh": "我可以不掷主移动骰，改为与另一名选手同时交换位置。",
+      "note_zh": "这属于传送，不算移动；交换过程不视为双方同格。",
+      "source_ref": "CMYK rulebook p23",
+      "page": 23,
+      "row": 2,
+      "col": 0,
+      "token_xref": 170,
+      "translation_status": "DRAFT",
+      "status": "SOURCE_CHECKED",
+      "token_native_size": [
+        115,
+        237
+      ],
+      "assets": {
+        "card_zh": "cards/zh/flip_flop.svg",
+        "card_zh_mobile": "cards/zh/flip_flop.webp",
+        "card_en": "cards/en/flip_flop.webp",
+        "portrait": "portraits/flip_flop.webp",
+        "token": "tokens/flip_flop.svg",
+        "token_png": "tokens/flip_flop.png"
+      },
+      "art_source": "CMYK rulebook visible card and token raster; not generated",
+      "art_resolution_note": "Cards contain native ~261px source raster artwork; Chinese lettering and frame are vectors. Token native size is recorded.",
+      "previous_asset_id": "flip-flop",
+      "skill_en": "Flop Flip"
+    },
+    {
+      "id": "hare",
+      "name_zh": "兔子",
+      "name_en": "Hare",
+      "skill_zh": "骄兵必败",
+      "ability_zh": "我的主移动 +2；若回合开始时我独自领先，跳过这次主移动。",
+      "note_zh": "以最终可见的规则书卡文为准；没有额外得分。",
+      "source_ref": "CMYK rulebook p23",
+      "page": 23,
+      "row": 2,
+      "col": 1,
+      "token_xref": 182,
+      "translation_status": "DRAFT",
+      "status": "SOURCE_CHECKED",
+      "token_native_size": [
+        118,
+        239
+      ],
+      "assets": {
+        "card_zh": "cards/zh/hare.svg",
+        "card_zh_mobile": "cards/zh/hare.webp",
+        "card_en": "cards/en/hare.webp",
+        "portrait": "portraits/hare.webp",
+        "token": "tokens/hare.svg",
+        "token_png": "tokens/hare.png"
+      },
+      "art_source": "CMYK rulebook visible card and token raster; not generated",
+      "art_resolution_note": "Cards contain native ~261px source raster artwork; Chinese lettering and frame are vectors. Token native size is recorded.",
+      "skill_en": "Hubris"
+    },
+    {
+      "id": "hypnotist",
+      "name_zh": "催眠师",
+      "name_en": "Hypnotist",
+      "skill_zh": "招之即来",
+      "ability_zh": "主移动前，我可以把一名选手传送到我的格子。",
+      "note_zh": "传送不触发超越或移动类能力，但仍会结算抵达同格的效果。",
+      "source_ref": "CMYK rulebook p23",
+      "page": 23,
+      "row": 2,
+      "col": 2,
+      "token_xref": 186,
+      "translation_status": "DRAFT",
+      "status": "SOURCE_CHECKED",
+      "token_native_size": [
+        119,
+        239
+      ],
+      "assets": {
+        "card_zh": "cards/zh/hypnotist.svg",
+        "card_zh_mobile": "cards/zh/hypnotist.webp",
+        "card_en": "cards/en/hypnotist.webp",
+        "portrait": "portraits/hypnotist.webp",
+        "token": "tokens/hypnotist.svg",
+        "token_png": "tokens/hypnotist.png"
+      },
+      "art_source": "CMYK rulebook visible card and token raster; not generated",
+      "art_resolution_note": "Cards contain native ~261px source raster artwork; Chinese lettering and frame are vectors. Token native size is recorded.",
+      "skill_en": "Hssssst"
+    },
+    {
+      "id": "inchworm",
+      "name_zh": "尺蠖",
+      "name_en": "Inchworm",
+      "skill_zh": "雁过拔毛",
+      "ability_zh": "其他选手主移动掷出 1 时，跳过那次主移动，我前进 1 格。",
+      "note_zh": "若船长也在比赛，先结算我的 1 格移动，再进入船长的回合。",
+      "source_ref": "CMYK rulebook p24",
+      "page": 24,
+      "row": 0,
+      "col": 0,
+      "token_xref": 190,
+      "translation_status": "DRAFT",
+      "status": "SOURCE_CHECKED",
+      "token_native_size": [
+        120,
+        237
+      ],
+      "assets": {
+        "card_zh": "cards/zh/inchworm.svg",
+        "card_zh_mobile": "cards/zh/inchworm.webp",
+        "card_en": "cards/en/inchworm.webp",
+        "portrait": "portraits/inchworm.webp",
+        "token": "tokens/inchworm.svg",
+        "token_png": "tokens/inchworm.png"
+      },
+      "art_source": "CMYK rulebook visible card and token raster; not generated",
+      "art_resolution_note": "Cards contain native ~261px source raster artwork; Chinese lettering and frame are vectors. Token native size is recorded.",
+      "skill_en": "Wriggle"
+    },
+    {
+      "id": "legs",
+      "name_zh": "大长腿",
+      "name_en": "Legs",
+      "skill_zh": "稳定输出",
+      "ability_zh": "我可以不掷主移动骰，改为前进 5 格。",
+      "note_zh": "这仍是主移动，会受到黏黏怪的减值和教练的加值。",
+      "source_ref": "CMYK rulebook p24",
+      "page": 24,
+      "row": 0,
+      "col": 1,
+      "token_xref": 218,
+      "translation_status": "DRAFT",
+      "status": "SOURCE_CHECKED",
+      "token_native_size": [
+        121,
+        356
+      ],
+      "assets": {
+        "card_zh": "cards/zh/legs.svg",
+        "card_zh_mobile": "cards/zh/legs.webp",
+        "card_en": "cards/en/legs.webp",
+        "portrait": "portraits/legs.webp",
+        "token": "tokens/legs.svg",
+        "token_png": "tokens/legs.png"
+      },
+      "art_source": "CMYK rulebook visible card and token raster; not generated",
+      "art_resolution_note": "Cards contain native ~261px source raster artwork; Chinese lettering and frame are vectors. Token native size is recorded.",
+      "skill_en": "Jog"
+    },
+    {
+      "id": "mastermind",
+      "name_zh": "军师",
+      "name_en": "Mastermind",
+      "skill_zh": "开局下注",
+      "ability_zh": "我的第一个回合开始时，预测本场冠军；若猜中，比赛立即结束，我获得第二名。",
+      "note_zh": "若预测自己并获胜，可同时获得第一名和第二名。",
+      "source_ref": "CMYK rulebook p24",
+      "page": 24,
+      "row": 0,
+      "col": 2,
+      "token_xref": 210,
+      "translation_status": "DRAFT",
+      "status": "SOURCE_CHECKED",
+      "token_native_size": [
+        119,
+        239
+      ],
+      "assets": {
+        "card_zh": "cards/zh/mastermind.svg",
+        "card_zh_mobile": "cards/zh/mastermind.webp",
+        "card_en": "cards/en/mastermind.webp",
+        "portrait": "portraits/mastermind.webp",
+        "token": "tokens/mastermind.svg",
+        "token_png": "tokens/mastermind.png"
+      },
+      "art_source": "CMYK rulebook visible card and token raster; not generated",
+      "art_resolution_note": "Cards contain native ~261px source raster artwork; Chinese lettering and frame are vectors. Token native size is recorded.",
+      "skill_en": "Know-It-All"
+    },
+    {
+      "id": "lackey",
+      "name_zh": "跟班",
+      "name_en": "Lackey",
+      "skill_zh": "点头哈腰",
+      "ability_zh": "其他选手主移动掷出 6 时，在对方移动前，我先前进 2 格。",
+      "note_zh": "根据骰点触发；移动格数的加减不会把 6 改成其他点数。",
+      "source_ref": "CMYK rulebook p24",
+      "page": 24,
+      "row": 1,
+      "col": 0,
+      "token_xref": 226,
+      "translation_status": "DRAFT",
+      "status": "SOURCE_CHECKED",
+      "token_native_size": [
+        131,
+        239
+      ],
+      "assets": {
+        "card_zh": "cards/zh/lackey.svg",
+        "card_zh_mobile": "cards/zh/lackey.webp",
+        "card_en": "cards/en/lackey.webp",
+        "portrait": "portraits/lackey.webp",
+        "token": "tokens/lackey.svg",
+        "token_png": "tokens/lackey.png"
+      },
+      "art_source": "CMYK rulebook visible card and token raster; not generated",
+      "art_resolution_note": "Cards contain native ~261px source raster artwork; Chinese lettering and frame are vectors. Token native size is recorded.",
+      "skill_en": "Very Good Sire"
+    },
+    {
+      "id": "lovable_loser",
+      "name_zh": "可爱废柴",
+      "name_en": "Lovable Loser",
+      "skill_zh": "惨兮兮",
+      "ability_zh": "主移动前，若我独自垫底，获得 1 分筹码。",
+      "note_zh": "并列垫底不触发；时点是主移动之前。",
+      "source_ref": "CMYK rulebook p24",
+      "page": 24,
+      "row": 1,
+      "col": 1,
+      "token_xref": 198,
+      "translation_status": "DRAFT",
+      "status": "SOURCE_CHECKED",
+      "token_native_size": [
+        123,
+        239
+      ],
+      "assets": {
+        "card_zh": "cards/zh/lovable_loser.svg",
+        "card_zh_mobile": "cards/zh/lovable_loser.webp",
+        "card_en": "cards/en/lovable_loser.webp",
+        "portrait": "portraits/lovable_loser.webp",
+        "token": "tokens/lovable_loser.svg",
+        "token_png": "tokens/lovable_loser.png"
+      },
+      "art_source": "CMYK rulebook visible card and token raster; not generated",
+      "art_resolution_note": "Cards contain native ~261px source raster artwork; Chinese lettering and frame are vectors. Token native size is recorded.",
+      "previous_asset_id": "lovable-loser",
+      "skill_en": "D'Aww"
+    },
+    {
+      "id": "mouth",
+      "name_zh": "血盆大口",
+      "name_en": "M.O.U.T.H.",
+      "skill_zh": "一口吞人",
+      "ability_zh": "当我停在恰好有另一名选手的格子时，那名选手被淘汰出本场比赛。",
+      "note_zh": "必须只有一名其他选手；若无人能成为第二名，本场不颁发银章。",
+      "source_ref": "CMYK rulebook p24",
+      "page": 24,
+      "row": 1,
+      "col": 2,
+      "token_xref": 238,
+      "translation_status": "DRAFT",
+      "status": "SOURCE_CHECKED",
+      "token_native_size": [
+        132,
+        238
+      ],
+      "assets": {
+        "card_zh": "cards/zh/mouth.svg",
+        "card_zh_mobile": "cards/zh/mouth.webp",
+        "card_en": "cards/en/mouth.webp",
+        "portrait": "portraits/mouth.webp",
+        "token": "tokens/mouth.svg",
+        "token_png": "tokens/mouth.png"
+      },
+      "art_source": "CMYK rulebook visible card and token raster; not generated",
+      "art_resolution_note": "Cards contain native ~261px source raster artwork; Chinese lettering and frame are vectors. Token native size is recorded.",
+      "skill_en": "Chomp"
+    },
+    {
+      "id": "leaptoad",
+      "name_zh": "跳跳蟾",
+      "name_en": "Leaptoad",
+      "skill_zh": "踩头过河",
+      "ability_zh": "移动时，我跳过所有已有其他选手的格子。",
+      "note_zh": "跳过的占用格不消耗步数；连续两个占用格按两次跳过处理。",
+      "source_ref": "CMYK rulebook p24",
+      "page": 24,
+      "row": 2,
+      "col": 0,
+      "token_xref": 194,
+      "translation_status": "DRAFT",
+      "status": "SOURCE_CHECKED",
+      "token_native_size": [
+        121,
+        239
+      ],
+      "assets": {
+        "card_zh": "cards/zh/leaptoad.svg",
+        "card_zh_mobile": "cards/zh/leaptoad.webp",
+        "card_en": "cards/en/leaptoad.webp",
+        "portrait": "portraits/leaptoad.webp",
+        "token": "tokens/leaptoad.svg",
+        "token_png": "tokens/leaptoad.png"
+      },
+      "art_source": "CMYK rulebook visible card and token raster; not generated",
+      "art_resolution_note": "Cards contain native ~261px source raster artwork; Chinese lettering and frame are vectors. Token native size is recorded.",
+      "skill_en": "Jumpfrog"
+    },
+    {
+      "id": "magician",
+      "name_zh": "魔术师",
+      "name_en": "Magician",
+      "skill_zh": "变两次",
+      "ability_zh": "我的主移动骰最多可以重掷 2 次。",
+      "note_zh": "必须使用最后一次结果；被替换的旧点数不触发骰点效果。",
+      "source_ref": "CMYK rulebook p24",
+      "page": 24,
+      "row": 2,
+      "col": 1,
+      "token_xref": 202,
+      "translation_status": "DRAFT",
+      "status": "SOURCE_CHECKED",
+      "token_native_size": [
+        118,
+        238
+      ],
+      "assets": {
+        "card_zh": "cards/zh/magician.svg",
+        "card_zh_mobile": "cards/zh/magician.webp",
+        "card_en": "cards/en/magician.webp",
+        "portrait": "portraits/magician.webp",
+        "token": "tokens/magician.svg",
+        "token_png": "tokens/magician.png"
+      },
+      "art_source": "CMYK rulebook visible card and token raster; not generated",
+      "art_resolution_note": "Cards contain native ~261px source raster artwork; Chinese lettering and frame are vectors. Token native size is recorded.",
+      "skill_en": "Poof"
+    },
+    {
+      "id": "party_animal",
+      "name_zh": "派对咖",
+      "name_en": "Party Animal",
+      "skill_zh": "人气磁铁",
+      "ability_zh": "主移动前，所有选手向我移动 1 格；每名与我同格的其他选手使我的主移动 +1。",
+      "note_zh": "若巨婴来到我所在格，那里其他选手按巨婴规则放到她身后一格。",
+      "source_ref": "CMYK rulebook p24",
+      "page": 24,
+      "row": 2,
+      "col": 2,
+      "token_xref": 270,
+      "translation_status": "DRAFT",
+      "status": "SOURCE_CHECKED",
+      "token_native_size": [
+        122,
+        239
+      ],
+      "assets": {
+        "card_zh": "cards/zh/party_animal.svg",
+        "card_zh_mobile": "cards/zh/party_animal.webp",
+        "card_en": "cards/en/party_animal.webp",
+        "portrait": "portraits/party_animal.webp",
+        "token": "tokens/party_animal.svg",
+        "token_png": "tokens/party_animal.png"
+      },
+      "art_source": "CMYK rulebook visible card and token raster; not generated",
+      "art_resolution_note": "Cards contain native ~261px source raster artwork; Chinese lettering and frame are vectors. Token native size is recorded.",
+      "previous_asset_id": "party-animal",
+      "skill_en": "Animal Magnetism"
+    },
+    {
+      "id": "rocket_scientist",
+      "name_zh": "火箭科学家",
+      "name_en": "Rocket Scientist",
+      "skill_zh": "一键加速",
+      "ability_zh": "掷出主移动骰后，我可以移动该点数的两倍；若这样做，移动结束后我摔倒。",
+      "note_zh": "先掷骰再决定；走完本次移动后摔倒，不在途中停止。",
+      "source_ref": "CMYK rulebook p25",
+      "page": 25,
+      "row": 0,
+      "col": 0,
+      "token_xref": 266,
+      "translation_status": "DRAFT",
+      "status": "SOURCE_CHECKED",
+      "token_native_size": [
+        125,
+        239
+      ],
+      "assets": {
+        "card_zh": "cards/zh/rocket_scientist.svg",
+        "card_zh_mobile": "cards/zh/rocket_scientist.webp",
+        "card_en": "cards/en/rocket_scientist.webp",
+        "portrait": "portraits/rocket_scientist.webp",
+        "token": "tokens/rocket_scientist.svg",
+        "token_png": "tokens/rocket_scientist.png"
+      },
+      "art_source": "CMYK rulebook visible card and token raster; not generated",
+      "art_resolution_note": "Cards contain native ~261px source raster artwork; Chinese lettering and frame are vectors. Token native size is recorded.",
+      "previous_asset_id": "rocket-scientist",
+      "skill_en": "Kablooey"
+    },
+    {
+      "id": "sisyphus",
+      "name_zh": "西西弗斯",
+      "name_en": "Sisyphus",
+      "skill_zh": "推石头",
+      "ability_zh": "比赛开始前获得 4 分筹码。主移动掷出 6 时，改为传送回起点并失去 1 分筹码。",
+      "note_zh": "有分数筹码时，每次掷出 6 都继续扣。规则书最终可见卡文写作替代移动；同页旁注却说传送后仍有主移动，两者矛盾，须请规则负责人核定。",
+      "source_ref": "CMYK rulebook p25",
+      "page": 25,
+      "row": 0,
+      "col": 1,
+      "token_xref": 290,
+      "translation_status": "DRAFT",
+      "status": "SOURCE_CHECKED",
+      "token_native_size": [
+        170,
+        252
+      ],
+      "assets": {
+        "card_zh": "cards/zh/sisyphus.svg",
+        "card_zh_mobile": "cards/zh/sisyphus.webp",
+        "card_en": "cards/en/sisyphus.webp",
+        "portrait": "portraits/sisyphus.webp",
+        "token": "tokens/sisyphus.svg",
+        "token_png": "tokens/sisyphus.png"
+      },
+      "art_source": "CMYK rulebook visible card and token raster; not generated",
+      "art_resolution_note": "Cards contain native ~261px source raster artwork; Chinese lettering and frame are vectors. Token native size is recorded.",
+      "skill_en": "Keep Rollin'"
+    },
+    {
+      "id": "suckerfish",
+      "name_zh": "吸盘鱼",
+      "name_en": "Suckerfish",
+      "skill_zh": "吸附蹭车",
+      "ability_zh": "与我同格的选手移动时，我可以跟随到对方的新格子。",
+      "note_zh": "跟随开始后必须走完整次移动；可以借此冲过终点。",
+      "source_ref": "CMYK rulebook p25",
+      "page": 25,
+      "row": 0,
+      "col": 2,
+      "token_xref": 242,
+      "translation_status": "DRAFT",
+      "status": "SOURCE_CHECKED",
+      "token_native_size": [
+        124,
+        236
+      ],
+      "assets": {
+        "card_zh": "cards/zh/suckerfish.svg",
+        "card_zh_mobile": "cards/zh/suckerfish.webp",
+        "card_en": "cards/en/suckerfish.webp",
+        "portrait": "portraits/suckerfish.webp",
+        "token": "tokens/suckerfish.svg",
+        "token_png": "tokens/suckerfish.png"
+      },
+      "art_source": "CMYK rulebook visible card and token raster; not generated",
+      "art_resolution_note": "Cards contain native ~261px source raster artwork; Chinese lettering and frame are vectors. Token native size is recorded.",
+      "skill_en": "Sucker!"
+    },
+    {
+      "id": "romantic",
+      "name_zh": "浪漫者",
+      "name_en": "Romantic",
+      "skill_zh": "见不得成双",
+      "ability_zh": "任何选手停在恰好有另一名选手的格子时，我前进 2 格。",
+      "note_zh": "两名选手一起抵达时，分别触发一次，合计两次。",
+      "source_ref": "CMYK rulebook p25",
+      "page": 25,
+      "row": 1,
+      "col": 0,
+      "token_xref": 262,
+      "translation_status": "DRAFT",
+      "status": "SOURCE_CHECKED",
+      "token_native_size": [
+        133,
+        239
+      ],
+      "assets": {
+        "card_zh": "cards/zh/romantic.svg",
+        "card_zh_mobile": "cards/zh/romantic.webp",
+        "card_en": "cards/en/romantic.webp",
+        "portrait": "portraits/romantic.webp",
+        "token": "tokens/romantic.svg",
+        "token_png": "tokens/romantic.png"
+      },
+      "art_source": "CMYK rulebook visible card and token raster; not generated",
+      "art_resolution_note": "Cards contain native ~261px source raster artwork; Chinese lettering and frame are vectors. Token native size is recorded.",
+      "skill_en": "Ah, Love!"
+    },
+    {
+      "id": "skipper",
+      "name_zh": "船长",
+      "name_en": "Skipper",
+      "skill_zh": "插队上",
+      "ability_zh": "任何选手主移动掷出 1 时，接下来轮到我进行回合。",
+      "note_zh": "我的回合结束后，从我左侧继续；若我又掷出 1，我可以再次行动。",
+      "source_ref": "CMYK rulebook p25",
+      "page": 25,
+      "row": 1,
+      "col": 1,
+      "token_xref": 246,
+      "translation_status": "DRAFT",
+      "status": "SOURCE_CHECKED",
+      "token_native_size": [
+        127,
+        239
+      ],
+      "assets": {
+        "card_zh": "cards/zh/skipper.svg",
+        "card_zh_mobile": "cards/zh/skipper.webp",
+        "card_en": "cards/en/skipper.webp",
+        "portrait": "portraits/skipper.webp",
+        "token": "tokens/skipper.svg",
+        "token_png": "tokens/skipper.png"
+      },
+      "art_source": "CMYK rulebook visible card and token raster; not generated",
+      "art_resolution_note": "Cards contain native ~261px source raster artwork; Chinese lettering and frame are vectors. Token native size is recorded.",
+      "skill_en": "Salty Dog"
+    },
+    {
+      "id": "third_wheel",
+      "name_zh": "电灯泡",
+      "name_en": "Third Wheel",
+      "skill_zh": "插足小情侣",
+      "ability_zh": "主移动前，我可以传送到恰好有两名选手的格子。",
+      "note_zh": "传送后仍可进行主移动；必须恰好有两名其他选手。",
+      "source_ref": "CMYK rulebook p25",
+      "page": 25,
+      "row": 1,
+      "col": 2,
+      "token_xref": 234,
+      "translation_status": "DRAFT",
+      "status": "SOURCE_CHECKED",
+      "token_native_size": [
+        126,
+        236
+      ],
+      "assets": {
+        "card_zh": "cards/zh/third_wheel.svg",
+        "card_zh_mobile": "cards/zh/third_wheel.webp",
+        "card_en": "cards/en/third_wheel.webp",
+        "portrait": "portraits/third_wheel.webp",
+        "token": "tokens/third_wheel.svg",
+        "token_png": "tokens/third_wheel.png"
+      },
+      "art_source": "CMYK rulebook visible card and token raster; not generated",
+      "art_resolution_note": "Cards contain native ~261px source raster artwork; Chinese lettering and frame are vectors. Token native size is recorded.",
+      "previous_asset_id": "third-wheel",
+      "skill_en": "Roll Through"
+    },
+    {
+      "id": "scoocher",
+      "name_zh": "挪挪",
+      "name_en": "Scoocher",
+      "skill_zh": "蹭局王",
+      "ability_zh": "其他选手的能力生效时，我前进 1 格。",
+      "note_zh": "黏黏怪每次减速、骰子商人每次重掷、跳跳蟾每跳过一格分别触发。魔术师的每次重掷也触发。",
+      "source_ref": "CMYK rulebook p25",
+      "page": 25,
+      "row": 2,
+      "col": 0,
+      "token_xref": 258,
+      "translation_status": "DRAFT",
+      "status": "SOURCE_CHECKED",
+      "token_native_size": [
+        130,
+        236
+      ],
+      "assets": {
+        "card_zh": "cards/zh/scoocher.svg",
+        "card_zh_mobile": "cards/zh/scoocher.webp",
+        "card_en": "cards/en/scoocher.webp",
+        "portrait": "portraits/scoocher.webp",
+        "token": "tokens/scoocher.svg",
+        "token_png": "tokens/scoocher.png"
+      },
+      "art_source": "CMYK rulebook visible card and token raster; not generated",
+      "art_resolution_note": "Cards contain native ~261px source raster artwork; Chinese lettering and frame are vectors. Token native size is recorded.",
+      "skill_en": "Scooch Scooch"
+    },
+    {
+      "id": "stickler",
+      "name_zh": "较真怪",
+      "name_en": "Stickler",
+      "skill_zh": "分毫不差",
+      "ability_zh": "其他选手只有移动格数恰好够冲过终点时才能完赛；若超过，他们不移动。",
+      "note_zh": "限制适用于主移动、能力等所有移动；不限制我自己。",
+      "source_ref": "CMYK rulebook p25",
+      "page": 25,
+      "row": 2,
+      "col": 1,
+      "token_xref": 294,
+      "translation_status": "DRAFT",
+      "status": "SOURCE_CHECKED",
+      "token_native_size": [
+        131,
+        276
+      ],
+      "assets": {
+        "card_zh": "cards/zh/stickler.svg",
+        "card_zh_mobile": "cards/zh/stickler.webp",
+        "card_en": "cards/en/stickler.webp",
+        "portrait": "portraits/stickler.webp",
+        "token": "tokens/stickler.svg",
+        "token_png": "tokens/stickler.png"
+      },
+      "art_source": "CMYK rulebook visible card and token raster; not generated",
+      "art_resolution_note": "Cards contain native ~261px source raster artwork; Chinese lettering and frame are vectors. Token native size is recorded.",
+      "skill_en": "Actually..."
+    },
+    {
+      "id": "twin",
+      "name_zh": "双胞胎",
+      "name_en": "Twin",
+      "skill_zh": "复刻冠军",
+      "ability_zh": "比赛开始前，我可以选择一名曾赢得之前比赛的选手，用其能力参加本场比赛。",
+      "note_zh": "可选任意之前比赛的冠军，不限上一场；仍用双胞胎棋子，赛前能力也生效。",
+      "source_ref": "CMYK rulebook p25",
+      "page": 25,
+      "row": 2,
+      "col": 2,
+      "token_xref": 230,
+      "translation_status": "DRAFT",
+      "status": "SOURCE_CHECKED",
+      "token_native_size": [
+        135,
+        239
+      ],
+      "assets": {
+        "card_zh": "cards/zh/twin.svg",
+        "card_zh_mobile": "cards/zh/twin.webp",
+        "card_en": "cards/en/twin.webp",
+        "portrait": "portraits/twin.webp",
+        "token": "tokens/twin.svg",
+        "token_png": "tokens/twin.png"
+      },
+      "art_source": "CMYK rulebook visible card and token raster; not generated",
+      "art_resolution_note": "Cards contain native ~261px source raster artwork; Chinese lettering and frame are vectors. Token native size is recorded.",
+      "skill_en": "Double Dip"
+    }
+  ],
+  "framework_alignment": {
+    "branch": "origin/magical-athlete",
+    "commit": "a11126dd1c6ea100a460caecce44e55e51c7ab6c",
+    "id_and_display_names": "all 36 matched racers.ts; game code unmodified"
+  }
+}

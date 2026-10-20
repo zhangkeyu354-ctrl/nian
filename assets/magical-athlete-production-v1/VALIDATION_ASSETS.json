@@ -1,0 +1,20 @@
+{
+  "characters": 36,
+  "all_referenced_assets_present": true,
+  "png_webp_decode": "passed",
+  "svg_xml": "passed",
+  "transparent_original_tokens": 36,
+  "pdf_pages": 22,
+  "pdf_text_inside_page": true,
+  "formats_checked": {
+    ".png": 56,
+    ".svg": 128,
+    ".webp": 115
+  },
+  "framework_alignment": {
+    "branch": "origin/magical-athlete",
+    "commit": "a11126dd1c6ea100a460caecce44e55e51c7ab6c",
+    "id_and_display_names": "all 36 matched racers.ts; game code unmodified"
+  },
+  "game_code_changed": false
+}

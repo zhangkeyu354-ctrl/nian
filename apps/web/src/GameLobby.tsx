@@ -30,7 +30,7 @@ export function GameLobby() {
           sub="Magical Athlete"
           meta="3–6 人 · 4 场赛跑"
           blurb="选秀 4 名怪咖选手，每场派一名上场。香蕉让人滑倒、巨婴挡住整条跑道，前两个冲线的拿奖牌。"
-          art={<MiniTrack />}
+          art={<img className="box-cover" src="/assets/magical-athlete/lobby/cover.webp" alt="" />}
           online="/?game=ma"
           join={(code) => `/?game=ma&room=${code}`}
         />
@@ -83,18 +83,5 @@ function GameBox(props: {
       </form>
       {props.extra && <p className="box-extra">{props.extra}</p>}
     </section>
-  );
-}
-
-/** 魔法运动员的盒盖小图：一圈红色跑道 */
-function MiniTrack() {
-  return (
-    <svg viewBox="0 0 120 84" width={120} height={84}>
-      <rect x="6" y="6" width="108" height="72" rx="36" fill="#3f8f4b" />
-      <rect x="14" y="14" width="92" height="56" rx="28" fill="none" stroke="#c4452c" strokeWidth="12" />
-      <rect x="14" y="14" width="92" height="56" rx="28" fill="none" stroke="#fff" strokeWidth="1.5" strokeDasharray="5 6" />
-      <circle cx="40" cy="20" r="6" fill="#ffcd2e" stroke="#1c2340" strokeWidth="2" />
-      <circle cx="78" cy="64" r="6" fill="#2f7fd8" stroke="#1c2340" strokeWidth="2" />
-    </svg>
   );
 }

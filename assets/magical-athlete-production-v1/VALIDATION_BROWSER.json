@@ -1,0 +1,79 @@
+{
+  "asset_paths": "passed",
+  "unique_characters": 36,
+  "boards": 2,
+  "viewports": [
+    {
+      "label": "desktop",
+      "width": 1440,
+      "height": 1000,
+      "decoded_images": 89,
+      "filter_and_token": "passed",
+      "horizontal_overflow": false,
+      "errors": [],
+      "failed": [],
+      "topShot": {
+        "scope": "Visible UI / prototype region, not a full-map-count claim",
+        "region": {
+          "x": 0,
+          "y": 0,
+          "width": 1440,
+          "height": 1000
+        },
+        "pixels": {
+          "busy": 0.6442583333333334,
+          "std": 82.51250695807956
+        }
+      },
+      "cardShot": {
+        "scope": "Visible UI / prototype region, not a full-map-count claim",
+        "region": {
+          "x": 0,
+          "y": 0,
+          "width": 1440,
+          "height": 1000
+        },
+        "pixels": {
+          "busy": 0.9013972222222222,
+          "std": 78.24919293802145
+        }
+      }
+    },
+    {
+      "label": "phone",
+      "width": 390,
+      "height": 844,
+      "decoded_images": 89,
+      "filter_and_token": "passed",
+      "horizontal_overflow": false,
+      "errors": [],
+      "failed": [],
+      "topShot": {
+        "scope": "Visible UI / prototype region, not a full-map-count claim",
+        "region": {
+          "x": 0,
+          "y": 0,
+          "width": 390,
+          "height": 844
+        },
+        "pixels": {
+          "busy": 0.6812856969255073,
+          "std": 78.87814548102348
+        }
+      },
+      "cardShot": {
+        "scope": "Visible UI / prototype region, not a full-map-count claim",
+        "region": {
+          "x": 0,
+          "y": 0,
+          "width": 390,
+          "height": 844
+        },
+        "pixels": {
+          "busy": 0.8748572122979706,
+          "std": 77.34484398933643
+        }
+      }
+    }
+  ]
+}

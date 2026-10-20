@@ -1,0 +1,634 @@
+{
+  "edition": "2025 CMYK",
+  "convention": "0=Start, 1..29=track squares; crossing from 29 reaches finish threshold 30. Podium is not a playable square. Coordinates are visual centers, not engine logic.",
+  "boards": [
+    {
+      "id": "mild",
+      "asset_key": "mild-mile",
+      "name_zh": "温和赛道",
+      "source": "CMYK rulebook p10-11, embedded xrefs 127/317 and 136",
+      "canvas": [
+        3190,
+        975
+      ],
+      "space_count_including_start": 30,
+      "track_indices": [
+        1,
+        29
+      ],
+      "start_index": 0,
+      "finish_threshold": 30,
+      "second_corner_index": 13,
+      "spaces": [
+        {
+          "index": 0,
+          "x": 0.115987,
+          "y": 0.181538,
+          "width": 0.059561,
+          "height": 0.194872,
+          "kind": "start",
+          "special": null
+        },
+        {
+          "index": 1,
+          "x": 0.246708,
+          "y": 0.181538,
+          "width": 0.059561,
+          "height": 0.194872,
+          "kind": "track",
+          "special": null
+        },
+        {
+          "index": 2,
+          "x": 0.310345,
+          "y": 0.181538,
+          "width": 0.059561,
+          "height": 0.194872,
+          "kind": "track",
+          "special": null
+        },
+        {
+          "index": 3,
+          "x": 0.373668,
+          "y": 0.181538,
+          "width": 0.059561,
+          "height": 0.194872,
+          "kind": "track",
+          "special": null
+        },
+        {
+          "index": 4,
+          "x": 0.437304,
+          "y": 0.181538,
+          "width": 0.059561,
+          "height": 0.194872,
+          "kind": "track",
+          "special": null
+        },
+        {
+          "index": 5,
+          "x": 0.500627,
+          "y": 0.181538,
+          "width": 0.059561,
+          "height": 0.194872,
+          "kind": "track",
+          "special": null
+        },
+        {
+          "index": 6,
+          "x": 0.56395,
+          "y": 0.181538,
+          "width": 0.059561,
+          "height": 0.194872,
+          "kind": "track",
+          "special": null
+        },
+        {
+          "index": 7,
+          "x": 0.627586,
+          "y": 0.181538,
+          "width": 0.059561,
+          "height": 0.194872,
+          "kind": "track",
+          "special": null
+        },
+        {
+          "index": 8,
+          "x": 0.690909,
+          "y": 0.181538,
+          "width": 0.059561,
+          "height": 0.194872,
+          "kind": "track",
+          "special": null
+        },
+        {
+          "index": 9,
+          "x": 0.754232,
+          "y": 0.181538,
+          "width": 0.059561,
+          "height": 0.194872,
+          "kind": "track",
+          "special": null
+        },
+        {
+          "index": 10,
+          "x": 0.817868,
+          "y": 0.181538,
+          "width": 0.059561,
+          "height": 0.194872,
+          "kind": "track",
+          "special": null
+        },
+        {
+          "index": 11,
+          "x": 0.881191,
+          "y": 0.181538,
+          "width": 0.059561,
+          "height": 0.194872,
+          "kind": "track",
+          "special": null
+        },
+        {
+          "index": 12,
+          "x": 0.943574,
+          "y": 0.181538,
+          "width": 0.059561,
+          "height": 0.194872,
+          "kind": "track",
+          "special": null
+        },
+        {
+          "index": 13,
+          "x": 0.943574,
+          "y": 0.393846,
+          "width": 0.059561,
+          "height": 0.194872,
+          "kind": "track",
+          "special": null
+        },
+        {
+          "index": 14,
+          "x": 0.943574,
+          "y": 0.602051,
+          "width": 0.059561,
+          "height": 0.194872,
+          "kind": "track",
+          "special": null
+        },
+        {
+          "index": 15,
+          "x": 0.944828,
+          "y": 0.820513,
+          "width": 0.059561,
+          "height": 0.194872,
+          "kind": "track",
+          "special": null
+        },
+        {
+          "index": 16,
+          "x": 0.881191,
+          "y": 0.820513,
+          "width": 0.059561,
+          "height": 0.194872,
+          "kind": "track",
+          "special": null
+        },
+        {
+          "index": 17,
+          "x": 0.817868,
+          "y": 0.820513,
+          "width": 0.059561,
+          "height": 0.194872,
+          "kind": "track",
+          "special": null
+        },
+        {
+          "index": 18,
+          "x": 0.754232,
+          "y": 0.820513,
+          "width": 0.059561,
+          "height": 0.194872,
+          "kind": "track",
+          "special": null
+        },
+        {
+          "index": 19,
+          "x": 0.690909,
+          "y": 0.820513,
+          "width": 0.059561,
+          "height": 0.194872,
+          "kind": "track",
+          "special": null
+        },
+        {
+          "index": 20,
+          "x": 0.627586,
+          "y": 0.820513,
+          "width": 0.059561,
+          "height": 0.194872,
+          "kind": "track",
+          "special": null
+        },
+        {
+          "index": 21,
+          "x": 0.56395,
+          "y": 0.820513,
+          "width": 0.059561,
+          "height": 0.194872,
+          "kind": "track",
+          "special": null
+        },
+        {
+          "index": 22,
+          "x": 0.500627,
+          "y": 0.820513,
+          "width": 0.059561,
+          "height": 0.194872,
+          "kind": "track",
+          "special": null
+        },
+        {
+          "index": 23,
+          "x": 0.437304,
+          "y": 0.820513,
+          "width": 0.059561,
+          "height": 0.194872,
+          "kind": "track",
+          "special": null
+        },
+        {
+          "index": 24,
+          "x": 0.373668,
+          "y": 0.820513,
+          "width": 0.059561,
+          "height": 0.194872,
+          "kind": "track",
+          "special": null
+        },
+        {
+          "index": 25,
+          "x": 0.310345,
+          "y": 0.820513,
+          "width": 0.059561,
+          "height": 0.194872,
+          "kind": "track",
+          "special": null
+        },
+        {
+          "index": 26,
+          "x": 0.246708,
+          "y": 0.820513,
+          "width": 0.059561,
+          "height": 0.194872,
+          "kind": "track",
+          "special": null
+        },
+        {
+          "index": 27,
+          "x": 0.183386,
+          "y": 0.820513,
+          "width": 0.059561,
+          "height": 0.194872,
+          "kind": "track",
+          "special": null
+        },
+        {
+          "index": 28,
+          "x": 0.120063,
+          "y": 0.820513,
+          "width": 0.059561,
+          "height": 0.194872,
+          "kind": "track",
+          "special": null
+        },
+        {
+          "index": 29,
+          "x": 0.05674,
+          "y": 0.820513,
+          "width": 0.059561,
+          "height": 0.194872,
+          "kind": "track",
+          "special": null
+        }
+      ],
+      "finish_podium": {
+        "x": 0.05642633228840126,
+        "y": 0.4
+      },
+      "assets": {
+        "svg": "boards/mild-mile.svg",
+        "webp": "boards/mild-mile.webp",
+        "mobile": "boards/mild-mile-mobile.webp"
+      }
+    },
+    {
+      "id": "wild",
+      "asset_key": "wild-wilds",
+      "name_zh": "狂野赛道",
+      "source": "CMYK rulebook p10-11, embedded xrefs 127/317 and 136",
+      "canvas": [
+        1799,
+        550
+      ],
+      "space_count_including_start": 30,
+      "track_indices": [
+        1,
+        29
+      ],
+      "start_index": 0,
+      "finish_threshold": 30,
+      "second_corner_index": 13,
+      "spaces": [
+        {
+          "index": 0,
+          "x": 0.11562,
+          "y": 0.178182,
+          "width": 0.060033,
+          "height": 0.196364,
+          "kind": "start",
+          "special": null
+        },
+        {
+          "index": 1,
+          "x": 0.246804,
+          "y": 0.178182,
+          "width": 0.060033,
+          "height": 0.196364,
+          "kind": "track",
+          "special": {
+            "type": "star",
+            "value": 1
+          }
+        },
+        {
+          "index": 2,
+          "x": 0.310172,
+          "y": 0.178182,
+          "width": 0.060033,
+          "height": 0.196364,
+          "kind": "track",
+          "special": null
+        },
+        {
+          "index": 3,
+          "x": 0.373541,
+          "y": 0.178182,
+          "width": 0.060033,
+          "height": 0.196364,
+          "kind": "track",
+          "special": null
+        },
+        {
+          "index": 4,
+          "x": 0.436909,
+          "y": 0.178182,
+          "width": 0.060033,
+          "height": 0.196364,
+          "kind": "track",
+          "special": null
+        },
+        {
+          "index": 5,
+          "x": 0.500278,
+          "y": 0.178182,
+          "width": 0.060033,
+          "height": 0.196364,
+          "kind": "track",
+          "special": {
+            "type": "trip",
+            "value": 0
+          }
+        },
+        {
+          "index": 6,
+          "x": 0.563646,
+          "y": 0.178182,
+          "width": 0.060033,
+          "height": 0.196364,
+          "kind": "track",
+          "special": null
+        },
+        {
+          "index": 7,
+          "x": 0.627015,
+          "y": 0.178182,
+          "width": 0.060033,
+          "height": 0.196364,
+          "kind": "track",
+          "special": {
+            "type": "move",
+            "value": 3
+          }
+        },
+        {
+          "index": 8,
+          "x": 0.690384,
+          "y": 0.178182,
+          "width": 0.060033,
+          "height": 0.196364,
+          "kind": "track",
+          "special": null
+        },
+        {
+          "index": 9,
+          "x": 0.753752,
+          "y": 0.178182,
+          "width": 0.060033,
+          "height": 0.196364,
+          "kind": "track",
+          "special": null
+        },
+        {
+          "index": 10,
+          "x": 0.817121,
+          "y": 0.178182,
+          "width": 0.060033,
+          "height": 0.196364,
+          "kind": "track",
+          "special": null
+        },
+        {
+          "index": 11,
+          "x": 0.880489,
+          "y": 0.178182,
+          "width": 0.060033,
+          "height": 0.196364,
+          "kind": "track",
+          "special": {
+            "type": "move",
+            "value": 1
+          }
+        },
+        {
+          "index": 12,
+          "x": 0.943858,
+          "y": 0.178182,
+          "width": 0.060033,
+          "height": 0.196364,
+          "kind": "track",
+          "special": null
+        },
+        {
+          "index": 13,
+          "x": 0.944969,
+          "y": 0.392727,
+          "width": 0.060033,
+          "height": 0.196364,
+          "kind": "track",
+          "special": {
+            "type": "star",
+            "value": 1
+          }
+        },
+        {
+          "index": 14,
+          "x": 0.944969,
+          "y": 0.607273,
+          "width": 0.060033,
+          "height": 0.196364,
+          "kind": "track",
+          "special": null
+        },
+        {
+          "index": 15,
+          "x": 0.944969,
+          "y": 0.82,
+          "width": 0.060033,
+          "height": 0.196364,
+          "kind": "track",
+          "special": null
+        },
+        {
+          "index": 16,
+          "x": 0.881601,
+          "y": 0.82,
+          "width": 0.060033,
+          "height": 0.196364,
+          "kind": "track",
+          "special": {
+            "type": "move",
+            "value": -3
+          }
+        },
+        {
+          "index": 17,
+          "x": 0.818232,
+          "y": 0.82,
+          "width": 0.060033,
+          "height": 0.196364,
+          "kind": "track",
+          "special": null
+        },
+        {
+          "index": 18,
+          "x": 0.754864,
+          "y": 0.82,
+          "width": 0.060033,
+          "height": 0.196364,
+          "kind": "track",
+          "special": {
+            "type": "trip",
+            "value": 0
+          }
+        },
+        {
+          "index": 19,
+          "x": 0.691495,
+          "y": 0.82,
+          "width": 0.060033,
+          "height": 0.196364,
+          "kind": "track",
+          "special": null
+        },
+        {
+          "index": 20,
+          "x": 0.628127,
+          "y": 0.82,
+          "width": 0.060033,
+          "height": 0.196364,
+          "kind": "track",
+          "special": null
+        },
+        {
+          "index": 21,
+          "x": 0.564758,
+          "y": 0.82,
+          "width": 0.060033,
+          "height": 0.196364,
+          "kind": "track",
+          "special": null
+        },
+        {
+          "index": 22,
+          "x": 0.50139,
+          "y": 0.82,
+          "width": 0.060033,
+          "height": 0.196364,
+          "kind": "track",
+          "special": null
+        },
+        {
+          "index": 23,
+          "x": 0.438021,
+          "y": 0.82,
+          "width": 0.060033,
+          "height": 0.196364,
+          "kind": "track",
+          "special": {
+            "type": "move",
+            "value": 2
+          }
+        },
+        {
+          "index": 24,
+          "x": 0.374653,
+          "y": 0.82,
+          "width": 0.060033,
+          "height": 0.196364,
+          "kind": "track",
+          "special": {
+            "type": "move",
+            "value": -3
+          }
+        },
+        {
+          "index": 25,
+          "x": 0.311284,
+          "y": 0.82,
+          "width": 0.060033,
+          "height": 0.196364,
+          "kind": "track",
+          "special": null
+        },
+        {
+          "index": 26,
+          "x": 0.247916,
+          "y": 0.82,
+          "width": 0.060033,
+          "height": 0.196364,
+          "kind": "track",
+          "special": {
+            "type": "trip",
+            "value": 0
+          }
+        },
+        {
+          "index": 27,
+          "x": 0.184547,
+          "y": 0.82,
+          "width": 0.060033,
+          "height": 0.196364,
+          "kind": "track",
+          "special": null
+        },
+        {
+          "index": 28,
+          "x": 0.121178,
+          "y": 0.82,
+          "width": 0.060033,
+          "height": 0.196364,
+          "kind": "track",
+          "special": null
+        },
+        {
+          "index": 29,
+          "x": 0.05781,
+          "y": 0.82,
+          "width": 0.060033,
+          "height": 0.196364,
+          "kind": "track",
+          "special": null
+        }
+      ],
+      "finish_podium": {
+        "x": 0.057809894385769875,
+        "y": 0.44727272727272727
+      },
+      "assets": {
+        "svg": "boards/wild-wilds.svg",
+        "webp": "boards/wild-wilds.webp",
+        "mobile": "boards/wild-wilds-mobile.webp"
+      }
+    }
+  ]
+}

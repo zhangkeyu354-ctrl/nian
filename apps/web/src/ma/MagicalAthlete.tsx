@@ -9,7 +9,7 @@ import {
 } from "../../../../packages/magical-athlete/src/index.ts";
 import type { MARoomSnapshot } from "../../../../packages/shared/src/ma-protocol.ts";
 import { createMARoom, savedName, useMARoom } from "./ma-net.ts";
-import { PLAYER_COLORS, Track } from "./Track.tsx";
+import { ART, PLAYER_COLORS, Track } from "./Track.tsx";
 import "./ma.css";
 
 const roomFromUrl = () => new URLSearchParams(location.search).get("room")?.toUpperCase() ?? null;
@@ -37,7 +37,10 @@ function Masthead({ small }: { small?: boolean }) {
       </a>
       <h1>魔法运动员</h1>
       {!small && (
-        <p>2–6 名玩家各自选秀 4 名怪咖选手，比四场赛跑。掷骰、发动能力、把别人绊倒——前两个冲线的拿奖牌。</p>
+        <>
+          <img className="ma-cover" src={`${ART}/lobby/cover.webp`} alt="" />
+          <p>3–6 名玩家各自选秀 4 名怪咖选手，比四场赛跑。掷骰、发动能力、把别人绊倒——前两个冲线的拿奖牌。</p>
+        </>
       )}
     </header>
   );
@@ -238,7 +241,7 @@ function Lobby({ snap, lobby }: { snap: MARoomSnapshot; lobby: (a: Parameters<Re
             ))}
           </tbody>
         </table>
-        <p className="ma-muted">四场都在温和赛道：狂野赛道的格子位置还没核实，暂不开放。</p>
+        <p className="ma-muted">赛道顺序：温和 → 狂野 → 温和 → 狂野。<a href={`${ART}/docs/skillbook.pdf`} target="_blank" rel="noreferrer">36 名选手技能书（PDF）</a></p>
       </section>
       {error && <p className="ma-error" role="alert">{error}</p>}
       {host ? (
@@ -269,24 +272,28 @@ function RacerCard({
   compact?: boolean;
 }) {
   const r = RACER_BY_ID.get(id);
+  const [zoom, setZoom] = useState(false);
   if (!r) return null;
   return (
     <article className={"ma-card" + (dim ? " dim" : "") + (compact ? " compact" : "")}>
-      <div className="ma-card-head">
-        <span className="ma-glyph" aria-hidden="true">{r.zh.slice(0, 1)}</span>
-        <div>
-          <h3>{r.zh}</h3>
-          <small>{r.en}</small>
-        </div>
-      </div>
-      <p className="ma-power">
-        <b>{r.powerZh}</b> {r.text}
-      </p>
-      {!compact && r.notes && <p className="ma-notes">{r.notes}</p>}
+      <button type="button" className="ma-card-art" onClick={() => setZoom(true)} aria-label={`放大查看 ${r.zh}`}>
+        <img src={`${ART}/cards/zh/${id}.webp`} alt={`${r.zh}：${r.powerZh}。${r.text}`} loading="lazy" />
+      </button>
       {onPick && (
         <button className="ma-go small" onClick={onPick} data-testid={"pick-" + id}>
           {pickLabel ?? "选它"}
         </button>
+      )}
+      {zoom && (
+        <div className="ma-lightbox" role="dialog" aria-label={r.zh} onClick={() => setZoom(false)}>
+          <img src={`${ART}/cards/zh/${id}.webp`} alt="" />
+          <div className="ma-lightbox-text">
+            <h3>{r.zh} <small>{r.en}</small></h3>
+            <p><b>{r.powerZh}</b> {r.text}</p>
+            {r.notes && <p className="ma-notes">{r.notes}</p>}
+            <button type="button">关闭</button>
+          </div>
+        </div>
       )}
     </article>
   );
@@ -431,9 +438,12 @@ function Race({
       <div className="ma-board">
         <Track race={race} colorOf={colorOf} me={me} />
         {roll && (
-          <div key={roll.seq} className="ma-die" style={{ background: colorOf(roll.player) }} aria-label={`${name(roll.player)} 掷出 ${roll.value}`}>
-            {roll.value}
-          </div>
+          <img
+            key={roll.seq}
+            className="ma-die"
+            src={`${ART}/dice/player-${(view.seats.indexOf(roll.player) % 6) + 1}-${roll.value}.svg`}
+            alt={`${name(roll.player)} 掷出 ${roll.value}`}
+          />
         )}
       </div>
       <div className="ma-side">
@@ -463,8 +473,8 @@ function Race({
             const r = RACER_BY_ID.get(t.racer)!;
             const copied = t.base !== t.racer ? `（能力：${racerName(t.base)}）` : "";
             return (
-              <li key={t.racer} className={t.out ? "out" : ""}>
-                <span className="ma-dot" style={{ background: colorOf(t.owner) }} />
+              <li key={t.racer} className={t.out ? "out" : ""} style={{ borderLeftColor: colorOf(t.owner) }}>
+                <img className="ma-portrait" src={`${ART}/portraits/${t.racer}.webp`} alt="" />
                 <div>
                   <b>{r.zh}</b> <small>{name(t.owner)}</small>
                   <small className="ma-state">

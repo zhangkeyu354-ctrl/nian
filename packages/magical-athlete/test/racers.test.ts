@@ -259,4 +259,26 @@ describe("魔法运动员 · 36 名选手能力", () => {
     const s = race([F, "lackey", "inchworm"], [3, 0, 0], [], { tripped: [true, false, false] });
     expect(s.pending?.kind).toBe("standup");
   });
+
+  it("飞艇：回合开始时在第 15 格（第二弯道）之前 +3，之后 −1", () => {
+    let s = roll(race(["blimp", F, "lackey"], [14, 0, 0], [2]));
+    expect(tok(s, "blimp").pos).toBe(19);
+    s = roll(race(["blimp", F, "lackey"], [15, 0, 0], [2]));
+    expect(tok(s, "blimp").pos).toBe(16);
+  });
+
+  it("狂野赛道：箭头额外移动、石头摔倒、星星得 1 分", () => {
+    const wild = (pos: number, r: number) =>
+      roll(testRace({ racers: [F, "lackey", "inchworm"], pos: [pos, 0, 0], rolls: [r], skipSetup: true, track: "wild" }));
+    expect(tok(wild(4, 3), F).pos).toBe(10); // 停在 7（+3）→ 10
+    expect(tok(wild(14, 2), F).pos).toBe(13); // 停在 16（−3）→ 13，再得星星
+    expect(chips(wild(14, 2), "p1")).toBe(1);
+    expect(tok(wild(3, 2), F).tripped).toBe(true); // 石头 5
+  });
+
+  it("巨婴挡在箭头终点：循环结算一轮后停止（狂野 11 号 +1 → 12 号巨婴）", () => {
+    const s = roll(testRace({ racers: [F, "huge_baby", "lackey"], pos: [9, 12, 0], rolls: [2], skipSetup: true, track: "wild" }));
+    expect(tok(s, F).pos).toBe(11);
+    expect(logText(s)).toContain("循环");
+  });
 });

@@ -61,9 +61,8 @@ describe("魔法运动员 · 整局模拟", () => {
       }
     }, 120_000);
 
-  it("选秀池只包含已确认的 35 名选手（飞艇待确认）", () => {
-    expect(DRAFTABLE).toHaveLength(35);
-    expect(DRAFTABLE).not.toContain("blimp");
+  it("36 名选手全部进入选秀池", () => {
+    expect(DRAFTABLE).toHaveLength(36);
   });
 
   it("相同种子与相同操作得到相同结果（可重放）", () => {

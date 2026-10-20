@@ -354,6 +354,13 @@ function react(s: MAState, c: Ctx, t: Token, passed: Token[]) {
       gainChip(s, t.owner, 1);
       log(s, `${rname(t)} 停在星星上，获得 1 分筹码。`);
     } else {
+      // 例：巨婴在 12、箭头 11（+1）→ 被放回 11 → 再走箭头……按「循环结算一轮后停止」
+      const key = `arrow:${t.racer}@${pos}`;
+      if (c.guard.has(key)) {
+        log(s, `（${rname(t)} 与第 ${pos} 格箭头形成循环，按规则结算一轮后停止）`);
+        return;
+      }
+      c.guard.add(key);
       log(s, `${rname(t)} 停在箭头上：额外移动 ${sp.steps} 格。`);
       move(s, c, t, sp.steps, false, "箭头");
       return;
@@ -588,6 +595,12 @@ function mainMove(s: MAState, c: Ctx, t: Token, f: TurnFlags) {
     }
   }
   let dist = base;
+  if (has(s, t, "blimp")) {
+    const corner = trackOf(s).secondCorner ?? fail("CHECK_REQUIRED", "第二个弯道位置未确认。");
+    const before = turnStartPos(t) < corner;
+    dist += before ? 3 : -1;
+    fire(s, c, t, `${rname(t)}【冲劲】：回合开始时${before ? "还没到第二个弯道，主移动 +3" : "已过第二个弯道，主移动 −1"}。`);
+  }
   if (has(s, t, "hare")) {
     dist += 2;
     fire(s, c, t, `${rname(t)}【骄兵必败】：主移动 +2。`);
@@ -695,10 +708,15 @@ function beforeMain(s: MAState, c: Ctx, t: Token) {
   }
 }
 
+/** 本回合开始时的位置（飞艇用；每个单元都从快照重建，所以放在内存里即可） */
+const turnStart = new WeakMap<Token, number>();
+const turnStartPos = (t: Token) => turnStart.get(t) ?? t.pos;
+
 function turnUnit(s: MAState, c: Ctx) {
   const r = race(s);
   const t = r.tokens.find((x) => x.owner === r.current && active(x))!;
   const startPos = t.pos;
+  turnStart.set(t, startPos);
   const f: TurnFlags = { extra: false, skipper: null };
   try {
     if (!t.started) {
@@ -1025,6 +1043,7 @@ export function testRace(opts: {
   skipSetup?: boolean;
   /** 接下来的骰子点数（测试用） */
   rolls?: number[];
+  track?: "mild" | "wild";
 }): MAState {
   const players = opts.racers.map((_, i) => ({ id: "p" + (i + 1), name: "玩家" + (i + 1) }));
   const s = createMAGame({ players: players.length >= 3 ? players : [...players, ...[{ id: "x1", name: "x" }, { id: "x2", name: "y" }].slice(0, 3 - players.length)], seed: opts.seed ?? 1 });
@@ -1038,6 +1057,7 @@ export function testRace(opts: {
     p.choice = opts.racers[i];
   });
   s.nextFirst = "p1";
+  if (opts.track) s.settings.schedule = [opts.track, opts.track, opts.track, opts.track];
   s.race = { index: -1 } as RaceState;
   startRace(s);
   const r = s.race!;
