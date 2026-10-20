@@ -6,6 +6,7 @@ import { fileURLToPath } from "node:url";
 import { Server } from "socket.io";
 import QRCode from "qrcode";
 import { RoomStore, errorText, type Room } from "./rooms.ts";
+import { attachMagicalAthlete } from "./ma-rooms.ts";
 import {
   EVENTS,
   type Ack,
@@ -67,7 +68,7 @@ const http = createServer((req, res) => {
   res.setHeader("x-robots-tag", "noindex, nofollow");
   if (url.pathname === "/api/health") {
     res.setHeader("content-type", "application/json; charset=utf-8");
-    res.end(JSON.stringify({ ok: true, version: VERSION, rooms: store.rooms.size }));
+    res.end(JSON.stringify({ ok: true, version: VERSION, rooms: store.rooms.size, maRooms: maStore.rooms.size }));
     return;
   }
   if (url.pathname === "/robots.txt") {
@@ -126,6 +127,11 @@ const http = createServer((req, res) => {
 });
 
 const io = new Server(http, { cors: { origin: true } });
+/** 第二款游戏：魔法运动员（独立房间与存档，事件名带 ma: 前缀） */
+const maStore = attachMagicalAthlete(io, resolve(process.env.MA_DATA_DIR ?? join(DATA, "../ma-rooms")), {
+  maxRooms: MAX_ROOMS,
+  idleMs: ROOM_IDLE_MS,
+});
 
 function broadcast(room: Room) {
   for (const s of io.sockets.adapter.rooms.get(room.code) ?? []) {
@@ -257,7 +263,7 @@ io.on("connection", (socket) => {
 
 http.listen(PORT, HOST, async () => {
   const urls = lanAddresses().map((ip) => `http://${ip}:${PORT}/`);
-  console.log("\n  黎明杀机桌游 · 联机服务器已启动（版本 " + VERSION + "）");
+  console.log("\n  桌游合集（黎明杀机 · 魔法运动员）· 联机服务器已启动（版本 " + VERSION + "）");
   console.log(`  本机打开：http://localhost:${PORT}/`);
   if (PUBLIC_URL) {
     console.log(`\n  ★ 外网链接（手机流量、外地朋友都能打开）：${PUBLIC_URL}/`);

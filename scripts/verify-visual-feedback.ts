@@ -139,7 +139,7 @@ assert.deepEqual([...recorded].sort(), [
 await page.getByTestId("settings").click();
 await page.getByTestId("animations-setting").uncheck();
 await page.getByTestId("close-settings").click();
-await page.goto("http://127.0.0.1:5173/");
+await page.goto("http://127.0.0.1:5173/?hotseat=1");
 assert.equal(await page.locator("html").getAttribute("data-motion"), "off");
 await page.getByTestId("start").click();
 await page.getByTestId("uncover").click();
@@ -182,7 +182,7 @@ assert.equal(
 assert.equal(await page.getByRole("alert").count(), 0);
 const reduced = await browser.newContext({ reducedMotion: "reduce" });
 const rp = await reduced.newPage();
-await rp.goto("http://127.0.0.1:5173/");
+await rp.goto("http://127.0.0.1:5173/?hotseat=1");
 assert.equal(await rp.locator("html").getAttribute("data-motion"), "off");
 await reduced.close();
 assert.deepEqual(errors, []);

@@ -179,3 +179,10 @@ tests/
 - 正式网址 https://dbd-boardgame-8qky.onrender.com 。部署到 Render 免费网页服务（Blueprint `render.yaml`，新加坡），GitHub 仓库 `zhangkeyu354-ctrl/nian` 的 `main` 推送即自动部署。方案见 `docs/phase5/上线方案.md`。
 - 用户 2026-10-20 明确表示仓库**公开没事**，第 8 节"仓库必须私有"按用户决定放宽；`reference/` 原版扫描/照片仍不得提交（`.gitignore` 已排除）。
 - 推送前必须跑全部测试；对局进行中推送会让房间断开，尽量在没人玩时推送。
+
+## 20. 第二款游戏：魔法运动员 + 桌游合集大厅（2026-10-20，Claude）
+
+- 用户要求把魔法运动员（Magical Athlete，CMYK 2025 版）放到同一网站，并加游戏选择大厅。首页 `/` 现为大厅；黎明杀机原入口参数不变（本机热座改用 `/?hotseat=1`）。
+- 第 1–19 节是黎明杀机专用规定；魔法运动员同样遵守「不编造、缺数据标 CHECK_REQUIRED、问题写进问题清单」。它的资料、问题与交接在 `docs/magical-athlete/`。
+- 魔法运动员代码只在 `packages/magical-athlete/`、`apps/server/src/ma-rooms.ts`、`packages/shared/src/ma-protocol.ts`、`apps/web/src/ma/`；不得改动黎明杀机规则引擎。
+- 推送前额外运行 `npm run verify:ma-browsers`（先 `npm run build`）。

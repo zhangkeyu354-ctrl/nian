@@ -67,7 +67,7 @@ for (const seed of [1701, 2903, 4111]) {
   const data = JSON.parse(
     readFileSync(`docs/phase1/games/${seed}.replay.json`, "utf8"),
   ) as { options: CreateOptions; commands: Command[] };
-  await page.goto("http://127.0.0.1:5173");
+  await page.goto("http://127.0.0.1:5173/?hotseat=1");
   await page.getByTestId("map-select").selectOption(data.options.mapId);
   await page.getByTestId("seed-input").fill(String(seed));
   for (let i = 0; i < 4; i++)

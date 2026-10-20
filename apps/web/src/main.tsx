@@ -10,10 +10,18 @@ const MobilePreview = lazy(() =>
 );
 import { Online } from "./Online.tsx";
 const q = new URLSearchParams(location.search);
-/** 部署到公网（例如 Render）时，首页直接进入联机；本机/局域网开发仍默认热座 */
-const publicHost =
-  !location.port &&
-  !/^(localhost|127\.|10\.|192\.168\.|172\.(1[6-9]|2\d|3[01])\.|\[)/.test(location.hostname);
+import { GameLobby } from "./GameLobby.tsx";
+const MagicalAthlete = lazy(() =>
+  import("./ma/MagicalAthlete.tsx").then((m) => ({ default: m.MagicalAthlete })),
+);
+/**
+ * 路由：
+ *   /                  桌游合集首页（选游戏）
+ *   /?game=ma[&room=]  魔法运动员
+ *   /?online=1、/?room=XXXX   黎明杀机联机（原有入口不变）
+ *   /?hotseat=1        黎明杀机本机热座
+ *   /?view=...         样稿与图鉴
+ */
 createRoot(document.getElementById("root")!).render(
   <SettingsProvider>
     {q.get("view") === "mobile-preview" ? (
@@ -22,10 +30,16 @@ createRoot(document.getElementById("root")!).render(
       </Suspense>
     ) : q.get("view") === "props" ? (
       <Gallery />
-    ) : !q.has("hotseat") && (q.has("room") || q.has("online") || publicHost) ? (
+    ) : q.get("game") === "ma" ? (
+      <Suspense fallback={<p>正在打开魔法运动员…</p>}>
+        <MagicalAthlete />
+      </Suspense>
+    ) : q.has("hotseat") ? (
+      <App />
+    ) : q.has("room") || q.has("online") ? (
       <Online />
     ) : (
-      <App />
+      <GameLobby />
     )}
   </SettingsProvider>,
 );

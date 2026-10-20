@@ -1,0 +1,127 @@
+/* 桌游合集首页：两个游戏盒盖并排，各自保留自己游戏的配色 */
+.hall {
+  min-height: 100vh;
+  padding: 28px 16px 48px;
+  max-width: 960px;
+  margin: 0 auto;
+}
+.hall-head h1 {
+  margin: 0;
+  font-size: clamp(34px, 9vw, 56px);
+  font-weight: 900;
+  line-height: 1.1;
+}
+.hall-head p {
+  max-width: 36em;
+  color: #b8bfb3;
+  margin: 10px 0 24px;
+}
+.hall-boxes {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 18px;
+}
+.hall-box {
+  border-radius: 16px;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  position: relative;
+  overflow: hidden;
+}
+.hall-box h2 {
+  margin: 4px 0 0;
+  font-size: 32px;
+  font-weight: 900;
+  line-height: 1.1;
+}
+.hall-box h2 small {
+  display: block;
+  font-size: 14px;
+  font-weight: 600;
+  opacity: 0.75;
+  margin-top: 4px;
+}
+.box-meta {
+  margin: 0;
+  font-weight: 700;
+}
+.box-blurb {
+  margin: 0 0 8px;
+  opacity: 0.9;
+}
+.box-art {
+  height: 84px;
+}
+.box-open {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 52px;
+  border-radius: 10px;
+  font-weight: 800;
+  font-size: 18px;
+  text-decoration: none;
+}
+.box-join {
+  display: flex;
+  gap: 8px;
+}
+.box-join input {
+  flex: 1;
+  min-width: 0;
+  min-height: 44px;
+  border-radius: 8px;
+  padding: 0 12px;
+  letter-spacing: 0.12em;
+}
+.box-extra {
+  margin: 0;
+  font-size: 14px;
+}
+.box-extra a {
+  color: inherit;
+}
+
+/* 黎明杀机：沿用原有的暗色与金色 */
+.box-dbd {
+  background: radial-gradient(circle at 80% 0%, #3b2a24, #1a201f 60%);
+  border: 1px solid #59635b;
+  color: #ece9dc;
+}
+.box-dbd h2 {
+  font-family: serif;
+}
+.box-dbd .box-open {
+  background: #dfc589;
+  color: #282a20;
+}
+.box-dbd input {
+  background: #101515;
+  border: 1px solid #59635b;
+  color: #ece9dc;
+}
+
+/* 魔法运动员：草坪绿与跑道红 */
+.box-ma {
+  background: repeating-linear-gradient(90deg, #2d6b3c 0 40px, #337544 40px 80px);
+  border: 2px solid #1c2340;
+  color: #fff;
+}
+.box-ma .box-open {
+  background: #ffcd2e;
+  color: #1c2340;
+  border: 2px solid #1c2340;
+  box-shadow: 0 3px 0 #1c2340;
+}
+.box-ma input {
+  background: #fff;
+  border: 2px solid #1c2340;
+  color: #1c2340;
+}
+.box-ma button {
+  background: #fff;
+  color: #1c2340;
+  border: 2px solid #1c2340;
+}
