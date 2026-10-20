@@ -105,33 +105,31 @@ function Brand({ line }: { line: string }) {
   );
 }
 
+/** 测试用：?preset=地图,逃生者1,逃生者2,逃生者3,逃生者4,杀手&seed=N（只有测试服务器接受） */
+function presetFromUrl() {
+  const raw = params().get("preset");
+  const seed = Number(params().get("seed"));
+  if (!raw || !seed) return undefined;
+  const [mapId, a, b, c, d, killer] = raw.split(",");
+  return { mapId, survivors: [a, b, c, d], killer, seed };
+}
+
 function CreateOrJoin() {
-  const survivors = chars.characters.filter((c) => c.side === "survivor");
-  const killers = chars.characters.filter((c) => c.side === "killer");
-  const [mapId, setMapId] = useState(maps.maps[0].id);
   const [playerCount, setPlayerCount] = useState<3 | 4 | 5>(5);
-  const [picked, setPicked] = useState(["dwight", "meg", "claudette", "jake"]);
-  const [killer, setKiller] = useState("trapper");
   const [code, setCode] = useState("");
   const [error, setError] = useState("");
   const [busy, setBusy] = useState(false);
   async function create() {
     setBusy(true);
-    const seed = Number(params().get("seed")); // 仅测试服务器接受
-    const res = await createRoom({
-      mapId,
-      playerCount,
-      survivors: picked,
-      killer,
-      ...(seed ? { seed } : {}),
-    });
+    const preset = presetFromUrl();
+    const res = await createRoom({ playerCount, ...(preset ? { preset } : {}) });
     setBusy(false);
     if (!res.ok) return setError(res.error);
     goto(`/?room=${res.code}`);
   }
   return (
     <main className="lobby">
-      <Brand line="一台电脑开房间，大家用自己的手机加入。每个人只看得到自己的秘密移动牌。" />
+      <Brand line="开一个房间，大家用自己的手机加入。每个人只看得到自己的秘密移动牌。" />
       <section className="setup">
         <h2>加入房间</h2>
         <form
@@ -154,73 +152,8 @@ function CreateOrJoin() {
           </button>
         </form>
         <h2>创建房间</h2>
-        <label>
-          地图
-          <select
-            data-testid="map-select"
-            value={mapId}
-            onChange={(e) => setMapId(e.target.value)}
-          >
-            {maps.maps.map((m) => (
-              <option key={m.id} value={m.id}>
-                {m.name_zh}
-              </option>
-            ))}
-          </select>
-        </label>
-        <label>
-          玩家人数
-          <select
-            value={playerCount}
-            data-testid="player-count"
-            onChange={(e) =>
-              setPlayerCount(Number(e.target.value) as 3 | 4 | 5)
-            }
-          >
-            <option value={5}>5人 · 各控一个角色</option>
-            <option value={4}>4人 · 一人兼控两名逃生者</option>
-            <option value={3}>3人 · 两人各控两名逃生者</option>
-          </select>
-        </label>
-        <fieldset>
-          <legend>逃生者</legend>
-          <div className="setup-row">
-            {picked.map((v, i) => (
-              <label key={i}>
-                角色 {i + 1}
-                <select
-                  data-testid={"survivor-" + i}
-                  value={v}
-                  onChange={(e) =>
-                    setPicked((p) =>
-                      p.map((x, j) => (i === j ? e.target.value : x)),
-                    )
-                  }
-                >
-                  {survivors.map((c) => (
-                    <option key={c.id} value={c.id}>
-                      {c.name_zh}
-                    </option>
-                  ))}
-                </select>
-              </label>
-            ))}
-          </div>
-        </fieldset>
-        <label>
-          杀手
-          <select
-            data-testid="killer-select"
-            value={killer}
-            onChange={(e) => setKiller(e.target.value)}
-          >
-            {killers.map((c) => (
-              <option key={c.id} value={c.id}>
-                {c.name_zh}
-              </option>
-            ))}
-          </select>
-        </label>
+        <CountPicker value={playerCount} onChange={setPlayerCount} />
+        <p className="small muted">进房后每人自己选阵营；地图每局随机。人数之后还能改。</p>
         {error && (
           <div role="alert" className="error">
             {error}
@@ -234,6 +167,274 @@ function CreateOrJoin() {
         >
           创建房间 <span>→</span>
         </button>
+      </section>
+    </main>
+  );
+}
+
+const countText: Record<3 | 4 | 5, string> = {
+  5: "5 人 · 各控一个角色",
+  4: "4 人 · 一人兼控两名逃生者",
+  3: "3 人 · 两人各控两名逃生者",
+};
+function CountPicker({
+  value,
+  onChange,
+  disabled,
+  min = 3,
+}: {
+  value: 3 | 4 | 5;
+  onChange: (n: 3 | 4 | 5) => void;
+  disabled?: boolean;
+  min?: number;
+}) {
+  return (
+    <div className="count-picker" role="radiogroup" aria-label="玩家人数">
+      {([3, 4, 5] as const).map((n) => (
+        <button
+          key={n}
+          role="radio"
+          aria-checked={value === n}
+          data-testid={"count-" + n}
+          className={value === n ? "on" : ""}
+          disabled={disabled || n < min}
+          onClick={() => onChange(n)}
+        >
+          <strong>{n} 人</strong>
+          <small>{countText[n].split(" · ")[1]}</small>
+        </button>
+      ))}
+    </div>
+  );
+}
+
+/** 加入（lobby 房间）：只填昵称 */
+function JoinRoom({ room, code }: { room: ReturnType<typeof useRoom>; code: string }) {
+  const [name, setName] = useState("");
+  const [error, setError] = useState("");
+  const l = room.snap!.lobby;
+  const full = l.players.length >= l.playerCount;
+  return (
+    <main className="lobby">
+      <Brand line={`房间 ${code} · ${l.players.length}/${l.playerCount} 人`} />
+      <section className="setup">
+        {l.stage !== "lobby" ? (
+          <div role="alert" className="error">
+            这个房间的游戏已经开始了。
+          </div>
+        ) : (
+          <>
+            <label>
+              你的昵称
+              <input
+                data-testid="player-name"
+                value={name}
+                maxLength={16}
+                placeholder="让朋友认得出你"
+                onChange={(e) => setName(e.target.value)}
+              />
+            </label>
+            <button
+              className="primary start-button"
+              data-testid="join-room"
+              disabled={full}
+              onClick={async () => {
+                const err = await room.claim(undefined, name);
+                if (err) setError(err);
+              }}
+            >
+              {full ? "房间已满" : "加入房间"} <span>→</span>
+            </button>
+          </>
+        )}
+        {error && (
+          <div role="alert" className="error">
+            {error}
+          </div>
+        )}
+        <button onClick={() => goto("/?online=1")}>返回</button>
+      </section>
+    </main>
+  );
+}
+
+const sideName = { survivor: "逃生者", killer: "杀手" } as const;
+
+/** 房间：选阵营、报名控两名、房主改人数并开始 */
+function LobbyRoom({ room, code }: { room: ReturnType<typeof useRoom>; code: string }) {
+  const [error, setError] = useState("");
+  const snap = room.snap!;
+  const l = snap.lobby;
+  const me = l.players.find((p) => p.playerId === snap.mySeat)!;
+  const act = async (a: Parameters<typeof room.lobby>[0]) => {
+    const err = await room.lobby(a);
+    setError(err ?? "");
+  };
+  const full = l.players.length === l.playerCount;
+  const ready = full && l.players.every((p) => p.side);
+  const killers = l.players.filter((p) => p.side === "killer").length;
+  return (
+    <main className="lobby">
+      <Brand line={`房间 ${code} · ${l.players.length}/${l.playerCount} 人`} />
+      <section className="setup" data-testid="lobby-room">
+        <InvitePanel code={code} />
+        <h2>你的阵营</h2>
+        <div className="side-picker" role="radiogroup" aria-label="选择阵营">
+          {(["survivor", "killer"] as const).map((side) => (
+            <button
+              key={side}
+              role="radio"
+              aria-checked={me.side === side}
+              data-testid={"side-" + side}
+              className={"side-" + side + (me.side === side ? " on" : "")}
+              onClick={() => act({ type: "SET_SIDE", side })}
+            >
+              {sideName[side]}
+            </button>
+          ))}
+        </div>
+        <p className="small muted">
+          多人选杀手时随机一位当杀手，其余当逃生者；没人选杀手时从所有人里随机一位。
+        </p>
+        {l.playerCount === 4 && me.side !== "killer" && (
+          <label className="volunteer">
+            <input
+              type="checkbox"
+              data-testid="volunteer"
+              checked={me.volunteer}
+              onChange={(e) => act({ type: "SET_VOLUNTEER", volunteer: e.target.checked })}
+            />
+            我愿意一个人操控两名逃生者（没人报名就随机）
+          </label>
+        )}
+        <h2>
+          玩家 {l.players.length}/{l.playerCount}
+          {killers > 1 && <small className="muted"> · {killers} 人想当杀手，开始时随机</small>}
+        </h2>
+        <ul className="player-list" data-testid="player-list">
+          {l.players.map((p) => (
+            <li key={p.playerId} className={p.connected ? "" : "offline"}>
+              <strong>
+                {p.name ?? "玩家"}
+                {p.playerId === snap.mySeat && "（你）"}
+              </strong>
+              {p.host && <span className="tag">房主</span>}
+              <span className={"tag " + (p.side ?? "none")}>
+                {p.side ? sideName[p.side] : "未选阵营"}
+              </span>
+              {l.playerCount === 4 && p.volunteer && p.side !== "killer" && (
+                <span className="tag">愿控两名</span>
+              )}
+              {!p.connected && <small className="muted">离线</small>}
+            </li>
+          ))}
+          {Array.from({ length: l.playerCount - l.players.length }, (_, i) => (
+            <li key={"empty" + i} className="empty">
+              等待加入…
+            </li>
+          ))}
+        </ul>
+        {me.host ? (
+          <>
+            <h2>人数（房主可改）</h2>
+            <CountPicker
+              value={l.playerCount}
+              min={Math.max(3, l.players.length)}
+              onChange={(n) => act({ type: "SET_PLAYER_COUNT", playerCount: n })}
+            />
+            <button
+              className="primary start-button"
+              data-testid="start-draft"
+              disabled={!ready}
+              onClick={() => act({ type: "START" })}
+            >
+              {!full ? "等人到齐" : !ready ? "等所有人选好阵营" : "开始：分配阵营和地图"} <span>→</span>
+            </button>
+          </>
+        ) : (
+          <p className="muted">{ready ? "等房主开始…" : "人到齐、都选好阵营后，由房主开始。"}</p>
+        )}
+        {error && (
+          <div role="alert" className="error">
+            {error}
+          </div>
+        )}
+      </section>
+    </main>
+  );
+}
+
+/** 选角色：杀手三选一，逃生者每个名额二选一 */
+function DraftRoom({ room, code }: { room: ReturnType<typeof useRoom>; code: string }) {
+  const [error, setError] = useState("");
+  const snap = room.snap!;
+  const l = snap.lobby;
+  const d = l.draft!;
+  const name = (id: string) => l.players.find((p) => p.playerId === id)?.name ?? "玩家";
+  const mine = d.slots.filter((s) => s.playerId === snap.mySeat);
+  const mapName = maps.maps.find((m) => m.id === d.mapId)?.name_zh;
+  return (
+    <main className="lobby">
+      <Brand line={`房间 ${code} · 地图：${mapName}`} />
+      <section className="setup" data-testid="draft-room">
+        <p className="draft-banner">
+          杀手是 <strong>{name(d.killerPlayer)}</strong>
+          {d.killerPlayer === snap.mySeat && "（你）"}
+        </p>
+        {mine.map((s, i) => (
+          <div key={s.slotId} className="draft-slot">
+            <h2>
+              {s.side === "killer"
+                ? "选你的杀手（三选一）"
+                : mine.length > 1
+                  ? `选你的第 ${i + 1} 名逃生者（二选一）`
+                  : "选你的逃生者（二选一）"}
+            </h2>
+            <div className="draft-options">
+              {(s.options ?? []).map((c) => (
+                <button
+                  key={c}
+                  data-testid={`pick-${s.slotId}-${c}`}
+                  className={"draft-option" + (s.pick === c ? " on" : "")}
+                  disabled={!!s.pick}
+                  onClick={async () => {
+                    const err = await room.lobby({ type: "PICK", slotId: s.slotId, characterId: c });
+                    setError(err ?? "");
+                  }}
+                >
+                  <Token
+                    token={{
+                      id: c,
+                      kind: "actor",
+                      state: "healthy",
+                      asset: "portrait_" + c,
+                      label: actorName(c),
+                      location: "room",
+                    }}
+                    size={72}
+                  />
+                  <strong>{actorName(c)}</strong>
+                  <small>{chars.characters.find((x) => x.id === c)?.power?.name_zh ?? ""}</small>
+                </button>
+              ))}
+            </div>
+          </div>
+        ))}
+        <h2>大家的选择</h2>
+        <ul className="player-list">
+          {d.slots.map((s) => (
+            <li key={s.slotId}>
+              <strong>{name(s.playerId)}</strong>
+              <span className={"tag " + s.side}>{sideName[s.side]}</span>
+              <span>{s.pick ? actorName(s.pick) : "选择中…"}</span>
+            </li>
+          ))}
+        </ul>
+        {error && (
+          <div role="alert" className="error">
+            {error}
+          </div>
+        )}
       </section>
     </main>
   );
@@ -321,7 +522,17 @@ function RoomView({ code }: { code: string }) {
         <p className="muted">正在连接房间 {code} …</p>
       </main>
     );
-  if (!room.snap.mySeat) return <SeatPicker room={room} code={code} />;
+  const l = room.snap.lobby;
+  if (l.mode === "preset" && !room.snap.mySeat) return <SeatPicker room={room} code={code} />;
+  if (l.mode === "lobby" && !room.snap.mySeat) return <JoinRoom room={room} code={code} />;
+  if (l.stage === "lobby") return <LobbyRoom room={room} code={code} />;
+  if (l.stage === "draft") return <DraftRoom room={room} code={code} />;
+  if (!room.snap.view || !room.snap.mySeat)
+    return (
+      <main className="lobby">
+        <p className="muted">正在进入对局…</p>
+      </main>
+    );
   const net: NetBinding = {
     code,
     seat: room.snap.mySeat,

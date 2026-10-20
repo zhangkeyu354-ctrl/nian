@@ -111,13 +111,9 @@ try {
     }
     // 1) 第一个浏览器在界面上创建房间
     const host = pages[0];
-    await host.goto(`${BASE}/?online=1&seed=${r.options.seed}`);
-    await host.getByTestId("map-select").selectOption(r.options.mapId);
-    for (let i = 0; i < 4; i++)
-      await host
-        .getByTestId("survivor-" + i)
-        .selectOption(r.options.survivors[i]);
-    await host.getByTestId("killer-select").selectOption(r.options.killer);
+    // 2026-10-20 起房间默认走"选阵营/选角色"；按回放逐步对照时用测试专用的固定配置
+    const preset = [r.options.mapId, ...r.options.survivors, r.options.killer].join(",");
+    await host.goto(`${BASE}/?online=1&seed=${r.options.seed}&preset=${preset}`);
     await host.getByTestId("create-room").click();
     await host.waitForURL(/room=/);
     const code = new URL(host.url()).searchParams.get("room")!;

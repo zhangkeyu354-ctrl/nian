@@ -98,7 +98,8 @@ try {
     const host = client();
     sockets.push(host);
     const made = await call(host, EVENTS.create, {
-      ...item.options,
+      // 2026-10-20 起房间默认走"选阵营/选角色"；按回放对照时用测试专用的固定配置
+      preset: item.options,
       playerCount: 5,
     });
     assert(made.ok);

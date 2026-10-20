@@ -11,6 +11,7 @@ import {
   type Ack,
   type CommandRequest,
   type CreateRoomRequest,
+  type LobbyRequest,
   type RoomSnapshot,
 } from "../../../packages/shared/src/protocol.ts";
 
@@ -147,9 +148,9 @@ io.on("connection", (socket) => {
     ) => {
       const room = store.rooms.get(String(req?.code ?? "").toUpperCase());
       if (!room) return ack({ ok: false, ...errorText(new Error("NO_ROOM")) });
-      const seat = room.seatByToken(req.token);
-      attach(room, seat?.seatId ?? null);
-      ack({ ok: true, snapshot: room.snapshot(seat?.seatId ?? null) });
+      const me = room.idByToken(req.token);
+      attach(room, me);
+      ack({ ok: true, snapshot: room.snapshot(me) });
       broadcast(room);
     },
   );
@@ -157,7 +158,7 @@ io.on("connection", (socket) => {
   socket.on(
     EVENTS.claim,
     (
-      req: { code: string; seatId: string; name: string },
+      req: { code: string; seatId?: string; name: string },
       ack: (a: Ack<{ token: string }>) => void,
     ) => {
       const room = store.rooms.get(String(req?.code ?? "").toUpperCase());
@@ -165,7 +166,7 @@ io.on("connection", (socket) => {
       try {
         const token = room.claim(req.seatId, String(req.name ?? ""));
         store.save(room);
-        attach(room, req.seatId);
+        attach(room, room.idByToken(token));
         ack({ ok: true, token });
         broadcast(room);
       } catch (e) {
@@ -174,6 +175,19 @@ io.on("connection", (socket) => {
     },
   );
 
+  // 房间内（对局开始前）的操作：选阵营、报名控两名、改人数、开始、选角色
+  socket.on(EVENTS.lobby, (req: LobbyRequest, ack: (a: Ack) => void) => {
+    const room = store.rooms.get(String(req?.code ?? "").toUpperCase());
+    if (!room) return ack({ ok: false, ...errorText(new Error("NO_ROOM")) });
+    try {
+      room.lobby(req.token, req.action);
+      store.save(room);
+      ack({ ok: true });
+      broadcast(room);
+    } catch (e) {
+      ack({ ok: false, ...errorText(e) });
+    }
+  });
   socket.on(EVENTS.command, (req: CommandRequest, ack: (a: Ack) => void) => {
     const room = store.rooms.get(String(req?.code ?? "").toUpperCase());
     if (!room) return ack({ ok: false, ...errorText(new Error("NO_ROOM")) });

@@ -77,7 +77,8 @@ for (const seed of [1701, 2903, 4111]) {
   );
   const host = client();
   const created = await emit<any>(host.s, EVENTS.create, {
-    ...r.options,
+    // 2026-10-20 起房间默认走"选阵营/选角色"；按回放对照时用测试专用的固定配置
+    preset: r.options,
     playerCount: 5,
   });
   assert(created.ok, JSON.stringify(created));

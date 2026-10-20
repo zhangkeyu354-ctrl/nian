@@ -5,6 +5,7 @@ import {
   EVENTS,
   type Ack,
   type CreateRoomRequest,
+  type LobbyAction,
   type RoomSnapshot,
 } from "../../../packages/shared/src/protocol.ts";
 
@@ -98,7 +99,8 @@ export function useRoom(code: string | null) {
     };
   }, [code]);
 
-  async function claim(seatId: string, name: string) {
+  /** preset 房间：认领座位；lobby 房间：不带 seatId，以昵称加入 */
+  async function claim(seatId: string | undefined, name: string) {
     if (!code) return "缺少房间号";
     const res = await call<{ token: string }>(EVENTS.claim, {
       code,
@@ -118,6 +120,15 @@ export function useRoom(code: string | null) {
     return null;
   }
 
+  /** 房间内操作（选阵营、报名、改人数、开始、选角色）；成功返回 null */
+  async function lobby(action: LobbyAction) {
+    if (!code) return "缺少房间号";
+    const token = loadToken(code);
+    if (!token) return "请先加入房间";
+    const res = await call(EVENTS.lobby, { code, token, action });
+    return res.ok ? null : res.error;
+  }
+
   async function send(c: Command) {
     if (!code || !latest.current) return "尚未连接房间";
     const token = loadToken(code);
@@ -130,5 +141,5 @@ export function useRoom(code: string | null) {
     });
     return res.ok ? null : res.error;
   }
-  return { snap, error, connected, claim, send };
+  return { snap, error, connected, claim, lobby, send };
 }

@@ -1170,3 +1170,32 @@ legend {
 .seat-status li.on {
   color: #d9d3b8;
 }
+
+/* 房间：人数 / 阵营 / 选角色（2026-10-20） */
+.count-picker, .side-picker { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; margin: 6px 0 4px; }
+.side-picker { grid-template-columns: 1fr 1fr; }
+.count-picker button, .side-picker button {
+  min-height: 56px; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 2px;
+  border-radius: 10px; border: 1px solid rgba(232, 222, 200, 0.25); background: rgba(20, 20, 22, 0.6); color: inherit;
+}
+.count-picker button small { opacity: 0.7; font-size: 11px; }
+.count-picker button.on, .side-picker button.on { border-color: #d8b95c; box-shadow: 0 0 0 2px rgba(216, 185, 92, 0.35) inset; }
+.side-picker button { font-size: 18px; font-weight: 700; min-height: 64px; }
+.side-picker .side-killer.on { border-color: #bb6458; box-shadow: 0 0 0 2px rgba(187, 100, 88, 0.4) inset; }
+.setup label.volunteer { display: flex; flex-direction: row; gap: 10px; align-items: center; min-height: 48px; text-align: left; }
+.setup label.volunteer input { width: 24px; height: 24px; flex: none; margin: 0; }
+.player-list { list-style: none; padding: 0; margin: 6px 0; display: grid; gap: 6px; }
+.player-list li { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; min-height: 44px; padding: 6px 10px;
+  border-radius: 8px; background: rgba(20, 20, 22, 0.5); }
+.player-list li.empty { opacity: 0.5; font-style: italic; }
+.player-list li.offline { opacity: 0.6; }
+.player-list .tag { font-size: 12px; padding: 2px 8px; border-radius: 99px; border: 1px solid rgba(232, 222, 200, 0.3); }
+.player-list .tag.killer { border-color: #bb6458; color: #e8a59b; }
+.player-list .tag.survivor { border-color: #609cb7; color: #a8d0e3; }
+.draft-banner { font-size: 18px; text-align: center; margin: 4px 0 8px; }
+.draft-options { display: grid; grid-template-columns: repeat(auto-fit, minmax(96px, 1fr)); gap: 8px; }
+.draft-option { min-height: 140px; display: flex; flex-direction: column; align-items: center; gap: 4px; padding: 8px;
+  border-radius: 10px; border: 1px solid rgba(232, 222, 200, 0.25); background: rgba(20, 20, 22, 0.6); color: inherit; }
+.draft-option svg { width: 72px; height: 72px; }
+.draft-option.on { border-color: #d8b95c; box-shadow: 0 0 0 2px rgba(216, 185, 92, 0.35) inset; }
+.draft-option small { opacity: 0.7; font-size: 11px; }
