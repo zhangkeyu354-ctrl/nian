@@ -1,4 +1,4 @@
-import type { GameState, Command, Card } from "../../shared/src/types.ts";
+import type { GameState, Command, Card, Payload } from "../../shared/src/types.ts";
 import { reduce, validateInteraction, phantasmTargets } from "./engine.ts";
 import { itemCommands } from "./items.ts";
 import { legalRoutes } from "./graph.ts";
@@ -521,4 +521,185 @@ export function availableSkills(s: GameState, id: string) {
         !!s.window?.eligible[id]?.includes(pid) && !s.usedPerks.includes(pid),
     };
   });
+}
+
+/**
+ * 把需要多个参数的技能 / 杀手力量 / 妖巫传送 / 改选交互，直接列成"完整命令"按钮（2026-10-20）。
+ * 界面一次点击即可提交，不再逐个字段选择。只列引擎 canCommand 通过的组合；
+ * 组合太多或需要别人表态（医生电火花）时返回 null，界面退回逐项选择。
+ */
+export function paramActions(
+  s: GameState,
+  kind: string,
+  id: string,
+): ControlAction[] | null {
+  const actorId = currentActor(s);
+  if (!actorId) return null;
+  const base: Command =
+    kind === "PERK"
+      ? { type: "USE_PERK", actorId, perkId: id }
+      : kind === "POWER"
+        ? { type: "INTERACT", actorId, action: "power" }
+        : kind === "PHANTASM"
+          ? { type: "SELECT", actorId, option: "teleport" }
+          : { type: "REVISE_INTERACTION", actorId };
+  const fields = commandFields(s, kind, id);
+  if (!fields.length) return canCommand(s, base) ? [{ label: "确认", command: base }] : [];
+  const label = (c: Payload) =>
+    fields
+      .map((f) => {
+        const v = f.key.startsWith("choices.") ? undefined : c[f.key];
+        if (v === undefined || v === "") return null;
+        if (f.key === "consent") return "（对方已同意）";
+        return f.options.find((o) => o.value === String(v))?.label ?? null;
+      })
+      .filter((x, i, arr) => x && x !== arr[i - 1])
+      .join(" · ");
+  const cands = special(s, kind, id, actorId);
+  let list: Payload[];
+  if (cands) list = cands;
+  else {
+    if (fields.some((f) => f.key.startsWith("choices."))) return null;
+    let size = 1;
+    for (const f of fields) size *= f.options.length + (f.optional ? 1 : 0);
+    if (size > 400) return null;
+    list = [{}];
+    for (const f of fields) {
+      const vals: unknown[] = f.options.map((o) =>
+        f.number ? Number(o.value) : f.boolean ? o.value === "true" : o.value,
+      );
+      if (f.key === "consent") vals.splice(0, vals.length, true);
+      if (f.optional) vals.unshift(undefined);
+      list = list.flatMap((p) =>
+        vals.map((v) => (v === undefined ? p : { ...p, [f.key]: v })),
+      );
+    }
+  }
+  const out: ControlAction[] = [];
+  const seen = new Set<string>();
+  for (const p of list) {
+    const command = { ...base, ...p } as Command;
+    const key = JSON.stringify(command);
+    if (seen.has(key) || !canCommand(s, command)) continue;
+    seen.add(key);
+    out.push({
+      label: label(p) || "确认",
+      command,
+      targetId:
+        typeof p.interactionTargetId === "string"
+          ? p.interactionTargetId
+          : typeof p.targetId === "string"
+            ? p.targetId
+            : typeof p.propId === "string"
+              ? p.propId
+              : undefined,
+      roomId: typeof p.to === "string" ? p.to : undefined,
+      pathId: typeof p.pathId === "string" ? p.pathId : undefined,
+    });
+  }
+  return out;
+}
+
+/** 某角色在当前空间可以发起的全部交互参数（不含 power） */
+function interactionParams(s: GameState, who: string): Payload[] {
+  const a = s.actors[who];
+  if (!a?.room) return [];
+  const out: Payload[] = [];
+  const targets = [
+    ...s.props.filter((p) => p.room === a.room && p.revealed && !p.removed).map((p) => p.id),
+    ...Object.keys(s.actors),
+  ];
+  for (const targetId of targets)
+    for (const action of Object.keys(actionNames)) {
+      if (action === "power") continue;
+      if (action === "pallet") {
+        for (const pathId of Object.keys(s.paths))
+          if (s.paths[pathId].rooms.includes(a.room)) out.push({ action, targetId, pathId });
+        continue;
+      }
+      try {
+        validateInteraction(s, { actorId: who, action, targetId });
+        out.push({ action, targetId });
+      } catch {}
+    }
+  return out;
+}
+
+/** 参数组合太多的几种，按规则缩小候选范围；最终仍由 canCommand 判定合法 */
+function special(s: GameState, kind: string, id: string, actorId: string): Payload[] | null {
+  const a = s.actors[actorId];
+  const roomsOf = () => maps.maps.find((m) => m.id === s.mapId)!.nodes.map((n) => n.id);
+  if (kind === "REVISE_INTERACTION") {
+    const who = String(s.pendingAction?.actorId ?? actorId);
+    return interactionParams(s, who);
+  }
+  if (kind === "PHANTASM")
+    return s.survivors.flatMap((targetId) =>
+      ["attack", "pickup"].map((action) => ({ targetId, action })),
+    );
+  if (kind === "POWER") {
+    if (!a?.room) return [];
+    if (id === "trapper") {
+      const traps = Object.values(s.paths).filter((p) => p.bearTrap).map((p) => p.id);
+      const adj = Object.values(s.paths).filter((p) => p.rooms.includes(a.room!)).map((p) => p.id);
+      return adj.flatMap((pathId) =>
+        traps.length < 4 ? [{ pathId }] : traps.map((removeTrapId) => ({ pathId, removeTrapId })),
+      );
+    }
+    if (id === "nurse")
+      return legalRoutes(s, a.room, "killer", undefined, false, true, true).map((r) => ({
+        pathId: r.pathId,
+        to: r.to,
+      }));
+    if (id === "hillbilly")
+      return s.hands[a.ownerId]
+        .filter((c) => c !== "wait")
+        .flatMap((card) =>
+          legalRoutes(s, a.room!, "killer", card).flatMap((r) => {
+            const present = s.survivors.filter(
+              (v) => s.actors[v].room === r.to && !s.actors[v].hookId && !s.actors[v].lockerId,
+            );
+            return [
+              ...present.map((targetId) => ({ card, pathId: r.pathId, to: r.to, targetId })),
+              { card, pathId: r.pathId, to: r.to },
+            ];
+          }),
+        );
+    if (id === "wraith") return roomsOf().map((to) => ({ to }));
+    return null; // 医生：每位逃生者自己表态，保留逐项选择
+  }
+  if (kind !== "PERK") return null;
+  switch (id) {
+    case "board_dwight_1":
+      return s.survivors
+        .filter((t) => t !== actorId)
+        .flatMap((targetId) =>
+          interactionParams(s, targetId).map((p) => ({
+            targetId,
+            action: p.action,
+            interactionTargetId: p.targetId,
+            ...(p.pathId ? { pathId: p.pathId } : {}),
+          })),
+        );
+    case "board_feng_min_3":
+      return interactionParams(s, actorId);
+    case "board_jake_2":
+      return s.props
+        .filter((p) => p.kind === "crow" && p.room === a?.room && p.revealed && !p.removed)
+        .flatMap((p) => roomsOf().map((to) => ({ propId: p.id, to })));
+    case "board_ace_2": {
+      const here = s.props.filter((p) => p.room === a?.room && !p.removed);
+      return here.flatMap((p) =>
+        s.props
+          .filter((q) => q.category === p.category && q.room !== p.room && !q.removed)
+          .map((q) => ({ propId: p.id, otherPropId: q.id })),
+      );
+    }
+    case "board_claudette_2":
+      return s.survivors.flatMap((targetId) =>
+        ["give", "take"].map((option) => ({ targetId, option, consent: true })),
+      );
+    default:
+      return null;
+  }
 }

@@ -15,6 +15,7 @@ import {
   boardVisuals,
   itemActions,
   canCommand,
+  paramActions,
 } from "../../../packages/game-engine/src/index.ts";
 import { chars } from "../../../packages/game-engine/src/data.ts";
 import { itemInfo, eventText, phases } from "./labels.ts";
@@ -138,6 +139,89 @@ export function MobileParameters({
       else c[f.key] = val;
     }
     send(c);
+  }
+  const complete = React.useMemo(
+    () => (routes.length ? null : paramActions(state, kind, id)),
+    [state, kind, id, routes.length],
+  );
+  const [group, setGroup] = useState<string[]>([]);
+  if (!routes.length && complete) {
+    // 选项多时按标签逐段分组（例如 先选队友 → 再选交互 → 再选对象），每层最多 8 个
+    const seg = (l: string) => l.split(" · ");
+    const inGroup = complete.filter((a) =>
+      group.every((g, i) => seg(a.label)[i] === g),
+    );
+    const next = [
+      ...new Set(
+        inGroup
+          .filter((a) => seg(a.label).length > group.length + 1)
+          .map((a) => seg(a.label)[group.length]),
+      ),
+    ];
+    const grouped = inGroup.length > 8 && next.length > 1;
+    const rest = (a: (typeof complete)[number]) =>
+      seg(a.label).slice(group.length).join(" · ") || a.label;
+    return (
+      <div
+        className="phone-sheet"
+        role="dialog"
+        aria-modal="true"
+        aria-label="选择技能目标"
+      >
+        <div className="sheet-heading">
+          <h2>
+            {!complete.length
+              ? "现在没有可用目标"
+              : group.length
+                ? group.join(" · ")
+                : "选择要执行的效果"}
+          </h2>
+          {group.length ? (
+            <TapButton onClick={() => setGroup(group.slice(0, -1))}>
+              返回
+            </TapButton>
+          ) : (
+            <TapButton onClick={close}>取消</TapButton>
+          )}
+        </div>
+        {grouped ? (
+          <Pages
+            key={"groups" + group.join("|")}
+            size={8}
+            items={next}
+            render={(g) => (
+              <TapButton
+                key={g}
+                data-group={g}
+                data-group-commands={JSON.stringify(
+                  inGroup
+                    .filter((a) => seg(a.label)[group.length] === g)
+                    .map((a) => a.command),
+                )}
+                onClick={() => setGroup([...group, g])}
+              >
+                {g}
+              </TapButton>
+            )}
+          />
+        ) : (
+          <Pages
+            key={"list" + group.join("|")}
+            size={8}
+            items={inGroup}
+            render={(a, i) => (
+              <TapButton
+                key={i}
+                data-command={JSON.stringify(a.command)}
+                onClick={() => send(a.command)}
+              >
+                {rest(a)}
+              </TapButton>
+            )}
+          />
+        )}
+      </div>
+    );
   }
   if (routes.length)
     return (
@@ -301,6 +385,32 @@ export function MobileDock({
   useEffect(() => {
     setSheet(null);
   }, [id, state.phase, state.choice?.kind]);
+  // 竖屏：操作坞按内容自适应高度，棋盘占满其余全部空间（2026-10-20）
+  const dockRef = React.useRef<HTMLElement>(null);
+  const [collapsed, setCollapsed] = useState(false);
+  useEffect(() => {
+    setCollapsed(false);
+  }, [id, stage, state.turn?.actorId, state.choice?.kind, !!state.window]);
+  useEffect(() => {
+    const dock = dockRef.current,
+      game = dock?.closest<HTMLElement>(".phone-game");
+    if (!dock || !game) return;
+    const portrait = matchMedia("(orientation: portrait)");
+    const apply = () => {
+      if (portrait.matches)
+        game.style.setProperty("--dock-height", dock.offsetHeight + "px");
+      else game.style.removeProperty("--dock-height");
+    };
+    const ro = new ResizeObserver(apply);
+    ro.observe(dock);
+    portrait.addEventListener("change", apply);
+    apply();
+    return () => {
+      ro.disconnect();
+      portrait.removeEventListener("change", apply);
+      game.style.removeProperty("--dock-height");
+    };
+  }, []);
   function skill(perk: (typeof skills)[number]) {
     const fields = commandFields(state, "PERK", perk.id);
     if (!fields.length)
@@ -309,38 +419,22 @@ export function MobileDock({
   }
   function skillButtons(perk: (typeof skills)[number]) {
     const fields = commandFields(state, "PERK", perk.id);
-    if (
-      fields.length === 1 &&
-      !fields[0].optional &&
-      fields[0].options.length <= 6
-    ) {
-      const f = fields[0];
-      return f.options
-        .map((o) => {
-          const value = f.number
-            ? Number(o.value)
-            : f.boolean
-              ? o.value === "true"
-              : o.value;
-          const command: Command = {
-            type: "USE_PERK",
-            actorId: id!,
-            perkId: perk.id,
-            [f.key]: value,
-          };
-          return canCommand(state, command) ? (
-            <TapButton
-              key={perk.id + o.value}
-              data-perk={perk.id}
-              data-command={JSON.stringify(command)}
-              onClick={() => send(command)}
-            >
-              {perk.name} · {o.label} · {perk.cost}血点
-            </TapButton>
-          ) : null;
-        })
-        .filter(Boolean);
-    }
+    // 选项不多时直接把完整效果摆在操作坞上，一次点击即用（路线类技能仍在棋盘上点）
+    const complete =
+      fields.length && !skillRouteActions(state, "PERK", perk.id).length
+        ? paramActions(state, "PERK", perk.id)
+        : null;
+    if (complete && complete.length && complete.length <= 4)
+      return complete.map((a) => (
+        <TapButton
+          key={perk.id + JSON.stringify(a.command)}
+          data-perk={perk.id}
+          data-command={JSON.stringify(a.command)}
+          onClick={() => send(a.command)}
+        >
+          {perk.name} · {a.label} · {perk.cost}血点
+        </TapButton>
+      ));
     return (
       <TapButton key={perk.id} data-perk={perk.id} onClick={() => skill(perk)}>
         {perk.name} · {perk.cost}血点
@@ -393,7 +487,10 @@ export function MobileDock({
         {last ? eventText(state, last) : "等待棋盘布置"} <span>›</span>
       </TapButton>
       <section
-        className={"mobile-dock stage-" + stage}
+        ref={dockRef}
+        className={
+          "mobile-dock stage-" + stage + (collapsed ? " collapsed" : "")
+        }
         data-testid="mobile-dock"
         data-stage={stage}
         aria-label="当前行动"
@@ -417,6 +514,16 @@ export function MobileDock({
               {current.blood}
               <small>血点</small>
             </span>
+          )}
+          {!state.winner && !waiting && (
+            <TapButton
+              className="dock-collapse"
+              aria-label={collapsed ? "展开操作栏" : "收起操作栏看地图"}
+              aria-expanded={!collapsed}
+              onClick={() => setCollapsed(!collapsed)}
+            >
+              {collapsed ? "▲" : "▼"}
+            </TapButton>
           )}
         </div>
         {error && (

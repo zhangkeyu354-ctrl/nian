@@ -31,6 +31,7 @@ export {
   pathLabel,
   itemActions,
   itemLabel,
+  paramActions,
   itemNames,
 } from "./controls.ts";
 export { itemCommands, ITEM_IDS } from "./items.ts";

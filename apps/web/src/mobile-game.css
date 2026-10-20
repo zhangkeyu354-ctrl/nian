@@ -1345,3 +1345,124 @@ body.phone-inmatch {
     height: 48px;
   }
 }
+
+/* ===== 竖屏：棋盘优先（2026-10-20 Claude）=====
+   顶部只留一条 52px 状态栏；最新事件和地图按钮浮在棋盘上；
+   操作坞按内容自适应高度（MobileDock 实测后写入 --dock-height），可收起。 */
+.dock-collapse {
+  display: none;
+}
+@media (orientation: portrait) {
+  .phone-game .phone-status {
+    height: calc(52px + env(safe-area-inset-top, 0px));
+    gap: 6px;
+    padding-left: 6px;
+    padding-right: 6px;
+  }
+  .phone-game .phone-status .phone-avatar {
+    height: 48px;
+  }
+  .phone-game .workspace {
+    inset: calc(52px + env(safe-area-inset-top, 0px)) 0 var(--dock-height);
+  }
+  .phone-game .board-shell {
+    position: relative;
+  }
+  .phone-game .board-shell:not(.board-overview):not(.board-expanded) > .board-top {
+    position: absolute;
+    z-index: 4;
+    top: 6px;
+    right: 6px;
+    left: auto;
+    min-height: 0;
+    padding: 0;
+    background: transparent;
+    border: 0;
+    pointer-events: none;
+  }
+  .phone-game .board-shell:not(.board-overview):not(.board-expanded) > .board-top > span {
+    display: none;
+  }
+  .phone-game .board-shell:not(.board-overview):not(.board-expanded) > .board-top button {
+    pointer-events: auto;
+    background: #152023d9;
+    border: 1px solid #66736b;
+    box-shadow: 0 2px 8px #0008;
+  }
+  .phone-game .phone-latest {
+    top: auto;
+    bottom: calc(var(--dock-height) + 6px);
+    left: 6px;
+    right: auto;
+    width: auto;
+    max-width: calc(100% - 12px);
+    height: 48px;
+    min-height: 48px;
+    border: 1px solid #4d5a55;
+    border-radius: 24px;
+    background: #192326e0;
+    box-shadow: 0 2px 10px #0009;
+  }
+  .phone-game .mobile-dock {
+    height: auto;
+    max-height: 52dvh;
+    overflow-y: auto;
+    overscroll-behavior: contain;
+    padding-top: 8px;
+  }
+  .phone-game .mobile-dock .dock-heading {
+    min-height: 40px;
+    margin-bottom: 6px;
+  }
+  .phone-game .mobile-dock .module-art {
+    width: 36px;
+    height: 36px;
+  }
+  .phone-game .mobile-dock .dock-grid button {
+    min-height: 48px;
+  }
+  .phone-game .mobile-dock.stage-waiting .dock-waiting {
+    display: none;
+  }
+  .phone-game .mobile-dock.stage-waiting .dock-heading {
+    margin-bottom: 0;
+  }
+  .phone-game .dock-collapse {
+    display: block;
+    flex: none;
+    background: #253236;
+    color: #e8dcbc;
+    border: 1px solid #66736b;
+  }
+  .phone-game .mobile-dock.collapsed > :not(.dock-heading) {
+    display: none !important;
+  }
+  .phone-game .mobile-dock.collapsed .dock-heading {
+    margin-bottom: 0;
+  }
+  .phone-game .public-actor-card {
+    bottom: calc(var(--dock-height) + 54px);
+  }
+}
+@media (orientation: portrait) {
+  .item-use-notice {
+    top: calc(60px + env(safe-area-inset-top, 0px));
+  }
+}
+@media (orientation: portrait) {
+  .phone-game .phone-latest {
+    align-items: center;
+    gap: 6px;
+    max-width: min(78%, calc(100% - 12px));
+    padding: 0 14px;
+  }
+  .phone-game .mobile-dock .dock-grid button {
+    padding-top: 2px;
+    padding-bottom: 2px;
+  }
+  .phone-game .mobile-dock .dock-grid button svg,
+  .phone-game .mobile-dock .dock-grid button img {
+    max-width: 32px;
+    max-height: 32px;
+  }
+}

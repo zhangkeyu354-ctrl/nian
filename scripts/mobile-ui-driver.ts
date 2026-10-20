@@ -150,6 +150,41 @@ export async function tapPhoneCommand(
     }
     if (!(await page.getByRole("dialog", { name: "选择技能目标" }).count()))
       return;
+    // 完整效果列表：可能先选一组，再点完整命令
+    const match = (cmd: Record<string, unknown>) =>
+      Object.entries(c).every(
+        ([k, v]) => JSON.stringify(cmd[k]) === JSON.stringify(v),
+      );
+    const sheet = page.locator(".phone-sheet");
+    if ((await sheet.locator("[data-group]").count()) || (await sheet.locator("[data-command]").count())) {
+      for (let n = 0; n < 40; n++) {
+        const groups = sheet.locator("[data-group]");
+        const gi = await groups.evaluateAll(
+          (els, c) =>
+            els.findIndex((el) =>
+              (JSON.parse(el.getAttribute("data-group-commands")!) as Array<Record<string, unknown>>).some((cmd) =>
+                Object.entries(c).every(([k, v]) => JSON.stringify(cmd[k]) === JSON.stringify(v)),
+              ),
+            ),
+          c,
+        );
+        if (gi >= 0) {
+          await tap(groups.nth(gi));
+          continue;
+        }
+        const buttons = sheet.locator("[data-command]");
+        const all = await buttons.evaluateAll((els) => els.map((el) => JSON.parse(el.getAttribute("data-command")!)));
+        const i = all.findIndex(match);
+        if (i >= 0) {
+          await tap(buttons.nth(i));
+          return;
+        }
+        const next = sheet.getByLabel("下一页操作", { exact: true });
+        if (!(await next.count()) || !(await next.isEnabled()))
+          throw new Error("No complete parameter action " + JSON.stringify(c));
+        await tap(next);
+      }
+    }
     const entries = Object.entries(c).flatMap(([k, v]) =>
       k === "choices"
         ? Object.entries(v as object).map(([x, y]) => [
