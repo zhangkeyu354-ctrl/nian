@@ -1,7 +1,7 @@
 import type { GameState, Command, Card, Payload } from "../../shared/src/types.ts";
 import { reduce, validateInteraction, phantasmTargets } from "./engine.ts";
 import { itemCommands } from "./items.ts";
-import { legalRoutes } from "./graph.ts";
+import { legalRoutes, connected } from "./graph.ts";
 import { maps, roster, boardPerks } from "./data.ts";
 export const cardNames: Record<Card, string> = {
   blue: "潜行（蓝）",
@@ -229,6 +229,13 @@ export function getControls(s: GameState) {
           );
       add("停下（被搬运者在这里挣脱，除非这里有空钩子）", { type: "SELECT", ...base });
     }
+    if (c.kind === "DOCTOR_SHOCK") {
+      add("支付1血点", { type: "SELECT", ...base, option: "pay" });
+      add(
+        a.madness ? "变为受伤（已神经紊乱）" : "获得神经紊乱",
+        { type: "SELECT", ...base, option: "effect" },
+      );
+    }
     if (c.kind === "REPLAN")
       for (const card of s.hands[a.ownerId])
         add("重新放置：" + cardNames[card], { type: "SELECT", ...base, card });
@@ -423,16 +430,7 @@ export function commandFields(s: GameState, kind: string, id: string): Field[] {
         }),
       ];
     if (id === "nurse") return [path(), to()];
-    if (id === "doctor")
-      return [
-        to(),
-        ...s.survivors.map((v) =>
-          field("choices." + v, actorName(v) + "的决定", [
-            { value: "effect", label: "接受疯狂／受伤" },
-            { value: "pay", label: "支付1血点" },
-          ]),
-        ),
-      ];
+    if (id === "doctor") return [to()];
     return [];
   }
   switch (id) {
@@ -666,7 +664,11 @@ function special(s: GameState, kind: string, id: string, actorId: string): Paylo
           }),
         );
     if (id === "wraith") return roomsOf().map((to) => ({ to }));
-    return null; // 医生：每位逃生者自己表态，保留逐项选择
+    if (id === "doctor")
+      return roomsOf()
+        .filter((to) => to === a.room || connected(s, a.room!, to))
+        .map((to) => ({ to }));
+    return null;
   }
   if (kind !== "PERK") return null;
   switch (id) {

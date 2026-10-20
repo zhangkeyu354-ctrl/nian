@@ -643,21 +643,13 @@ export function applyPower(s: GameState, c: Payload) {
         room === a.room || connected(s, a.room!, room),
         "doctor range",
       );
-      const choices = c.choices as Record<string, string> | undefined;
-      requireThat(
-        choices && typeof choices === "object",
-        "each survivor chooses response",
+      // 每位逃生者在自己的手机上决定付 1 血点还是承受效果（按逃生者顺序依次询问）
+      enqueue(
+        s,
+        ...s.survivors
+          .filter((v) => s.actors[v].room === room && active(s.actors[v]))
+          .map((v) => ({ kind: "DOCTOR_SHOCK", actorId: v, room })),
       );
-      for (const v of Object.values(s.actors).filter(
-        (v) => v.side === "survivor" && v.room === room && active(v),
-      )) {
-        if (choices[v.id] === "pay") spend(s, v.id, 1);
-        else {
-          requireThat(choices[v.id] === "effect", "pay/effect choice");
-          if (v.madness) wounded(s, v.id);
-          else v.madness = true;
-        }
-      }
       break;
     }
     default:

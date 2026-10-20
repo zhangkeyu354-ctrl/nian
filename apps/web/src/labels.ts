@@ -152,6 +152,10 @@ export function eventText(s: GameState, e: Event) {
       return `${a}完成奖励行动。`;
     case "ROUND_CLEANUP":
       return "本轮清理完成。";
+    case "MADNESS_GAINED":
+      return `${a}被电火花击中，获得疯狂。`;
+    case "DOCTOR_SHOCK_PAID":
+      return `${a}支付1血点躲过电火花。`;
     case "MADNESS_REMOVED":
       return `${a}移除疯狂。`;
     case "INTERACTION_REVISED":

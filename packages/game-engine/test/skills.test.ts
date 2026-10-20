@@ -657,13 +657,15 @@ describe("six base powers and three passives, Chinese board sources", () => {
       actorId: "doctor",
       action: "power",
       to: "foundry_upper_floor",
-      choices: {
-        dwight: "effect",
-        jake: "effect",
-        claudette: "pay",
-        ace: "pay",
-      },
     });
+    const answer: Record<string, string> = { jake: "effect", claudette: "pay", ace: "pay" };
+    const asked: string[] = [];
+    while (s.choice?.kind === "DOCTOR_SHOCK") {
+      asked.push(s.choice.actorId);
+      s = act(s, { type: "SELECT", actorId: s.choice.actorId, option: answer[s.choice.actorId] });
+    }
+    // 德怀特没有血点，不用问，直接获得疯狂
+    expect(asked).not.toContain("dwight");
     expect(s.actors.dwight.madness).toBe(true);
     expect(s.actors.jake.health).toBe("wounded");
     expect(s.actors.claudette.blood).toBe(5);

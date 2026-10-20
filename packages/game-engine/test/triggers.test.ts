@@ -579,19 +579,28 @@ describe("杀手技能与力量：自然触发", () => {
     const r = play(s, interact("trapper", "power", "", { pathId: "mm_p07" }));
     expect(r.s.paths.mm_p07.bearTrap).toBe(true);
   });
-  it("医生力量卡特的电火花：空间里的逃生者各自选择付血点或神经紊乱/受伤", () => {
+  it("医生力量卡特的电火花：杀手只选空间，空间里的逃生者各自在自己手机上选择", () => {
     const s = turnOf(table("doctor"), "doctor", "INTERACT");
     s.actors.dwight.madness = true;
-    const r = play(
-      s,
-      interact("doctor", "power", "", {
-        to: F,
-        choices: { dwight: "effect", claudette: "effect", jake: "pay", ace: "effect" },
-      }),
-    );
+    s.actors.ace.blood = 0;
+    let r = play(s, interact("doctor", "power", "", { to: F }));
+    // 依次询问德怀特、克劳黛特、杰克（埃斯没血点，直接获得疯狂）
+    expect(r.s.choice).toMatchObject({ kind: "DOCTOR_SHOCK", actorId: "dwight" });
+    // 杀手不能替逃生者回答
+    expect(() =>
+      reduce(r.s, { type: "SELECT", actorId: "doctor", option: "pay" }),
+    ).toThrow();
+    r = play(r.s, { type: "SELECT", actorId: "dwight", option: "effect" });
+    expect(r.s.choice).toMatchObject({ actorId: "claudette" });
+    r = play(r.s, { type: "SELECT", actorId: "claudette", option: "effect" });
+    const jakeBlood = r.s.actors.jake.blood;
+    r = play(r.s, { type: "SELECT", actorId: "jake", option: "pay" });
+    expect(r.s.choice?.kind).not.toBe("DOCTOR_SHOCK");
     expect(r.s.actors.dwight.health).toBe("wounded");
     expect(r.s.actors.claudette.madness).toBe(true);
     expect(r.s.actors.jake.madness).toBe(false);
+    expect(r.s.actors.jake.blood).toBe(jakeBlood - 1);
+    expect(r.s.actors.ace.madness).toBe(true);
   });
   it("杀手额外回合：第二个回合之后可付 4 血点；医生按神经紊乱人数减费", () => {
     const s = turnOf(table("doctor"), "doctor", "INTERACT");

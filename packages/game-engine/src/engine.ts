@@ -121,6 +121,15 @@ export function sacrificeProgress(s: GameState, n: number) {
 export function signal(s: GameState, event: string, context: Payload = {}) {
   enqueue(s, { kind: "SIGNAL", event, context });
 }
+/** 卡特的电火花：没有神经紊乱 → 获得神经紊乱；已经神经紊乱 → 变为受伤 */
+function doctorEffect(s: GameState, id: string) {
+  const v = actor(s, id);
+  if (v.madness) wounded(s, id);
+  else {
+    v.madness = true;
+    log(s, "MADNESS_GAINED", { actorId: id });
+  }
+}
 export function wounded(s: GameState, id: string) {
   const a = actor(s, id);
   if (a.health === "healthy") {
@@ -1203,6 +1212,13 @@ function run(s: GameState) {
       s.turn = null;
       s.cursor++;
       startTurn(s);
+    } else if (j.kind === "DOCTOR_SHOCK") {
+      const v = actor(s, text(j, "actorId"));
+      if (v.room === j.room && active(v)) {
+        if (v.blood >= 1)
+          s.choice = { kind: "DOCTOR_SHOCK", actorId: v.id, room: j.room };
+        else doctorEffect(s, v.id);
+      }
     } else if (j.kind === "DRAW_ITEM") {
       const a = actor(s, text(j, "actorId"));
       requireThat(
@@ -1292,6 +1308,12 @@ function select(s: GameState, c: Command) {
     const i = number(c, "index");
     requireThat(s.roll && i >= 0 && i < s.roll.faces.length, "keep index");
     s.roll.keep = i;
+  } else if (choice.kind === "DOCTOR_SHOCK") {
+    requireThat(c.option === "pay" || c.option === "effect", "pay/effect choice");
+    if (c.option === "pay") {
+      spend(s, choice.actorId, 1);
+      log(s, "DOCTOR_SHOCK_PAID", { actorId: choice.actorId });
+    } else doctorEffect(s, choice.actorId);
   } else if (choice.kind === "KEEP_ITEM") {
     const a = actor(s, choice.actorId);
     requireThat(c.option === "old" || c.option === "new", "keep item option");
