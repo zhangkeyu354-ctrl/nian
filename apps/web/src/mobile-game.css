@@ -1563,3 +1563,47 @@ body.phone-inmatch {
 @media (max-height: 600px) and (orientation: landscape) {
   .turn-steps { display: none; }
 }
+
+/* ===== 2026-10-21 现在在发生什么：阶段标题 + 一句话 + 行动顺序条 + 阶段切换大字 ===== */
+.phone-orderbar { display: none; }
+.phone-game .phone-orderbar {
+  display: flex; align-items: center; gap: 6px;
+  position: fixed; z-index: 14; left: 0; right: 0;
+  top: calc(52px + env(safe-area-inset-top, 0px));
+  height: 36px; padding: 0 8px;
+  background: #182529; border-bottom: 1px solid #3c5054;
+}
+.phone-game .phone-status strong[data-testid="phase-title"] { font-size: 14px; color: #ffe39a; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.phone-game .phone-status small[data-testid="now-doing"] { font-size: 12.5px; color: #f2f5ea; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.order-strip { display: flex; gap: 4px; margin: 0; padding: 0; list-style: none; flex: 1; min-width: 0; overflow-x: auto; scrollbar-width: none; }
+.order-strip li { flex: none; display: flex; align-items: center; gap: 4px; padding: 3px 8px; border-radius: 999px; font-size: 12px; color: #c9d3cc; background: #243337; border: 1px solid #3a4c50; white-space: nowrap; }
+.order-strip li i { width: 9px; height: 9px; border-radius: 50%; background: var(--c); box-shadow: 0 0 6px var(--c); }
+.order-strip li.os-done { opacity: .6; }
+.order-strip li.os-now { color: #160f02; background: var(--c); border-color: #fff; font-weight: 800; box-shadow: 0 0 12px var(--c); }
+.order-strip li.os-now i { background: #160f02; box-shadow: none; }
+.order-strip li.os-out { opacity: .35; text-decoration: line-through; }
+.ob-score { flex: none; font-size: 12px; color: #e9dcae; }
+@media (orientation: portrait) {
+  .phone-game .workspace { inset: calc(88px + env(safe-area-inset-top, 0px)) 0 var(--dock-height); }
+}
+@media (max-height: 600px) and (orientation: landscape) {
+  .phone-game .phone-orderbar { top: 64px; left: 0; right: auto; max-width: 60vw; height: 32px; border-radius: 0 0 8px 0; }
+}
+.phase-splash { position: fixed; z-index: 72; left: 0; right: 0; top: 30%; display: grid; justify-items: center; gap: 6px; padding: 18px 16px; pointer-events: none; text-align: center; background: linear-gradient(90deg, transparent, #0d1719f0 15%, #0d1719f0 85%, transparent); border-top: 2px solid currentColor; border-bottom: 2px solid currentColor; animation: splash-in 1.9s ease forwards; }
+.phase-splash strong { font-size: 40px; letter-spacing: 6px; }
+.phase-splash span { font-size: 15px; color: #f0ecd8; }
+.phase-splash.tone-plan { color: #6fc8ff; }
+.phase-splash.tone-act { color: #7dea5a; }
+.phase-splash.tone-you { color: #ffd23a; }
+.phase-splash.tone-killer { color: #ff4d3d; }
+.phase-splash.tone-cleanup { color: #c9b6ff; }
+@keyframes splash-in { 0% { opacity: 0; transform: scaleY(.4); } 10% { opacity: 1; transform: none; } 80% { opacity: 1; } 100% { opacity: 0; } }
+[data-motion="off"] .phase-splash { animation: none; }
+.order-strip { gap: 3px; }
+.order-strip li { padding: 2px 6px; font-size: 11.5px; gap: 3px; }
+.order-strip li i { width: 8px; height: 8px; }
+/* 顺序条只是显示，不拦截点击（横屏时它浮在棋盘上） */
+.phone-game .phone-orderbar { pointer-events: none; }
+@media (max-height: 600px) and (orientation: landscape) {
+  .phone-game .phone-orderbar { background: #182529d9; }
+}

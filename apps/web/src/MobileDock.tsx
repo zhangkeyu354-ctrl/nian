@@ -26,6 +26,7 @@ import type { NetBinding } from "./net.ts";
 import { Illustration } from "./Illustration.tsx";
 import { skillRouteActions } from "./ui-actions.ts";
 import { actorColor } from "./playerColors.ts";
+import { phaseTitle, nowDoing, OrderStrip, PhaseSplash } from "./GameStatus.tsx";
 
 export function usePhone() {
   const query = "(max-width: 700px), (pointer: coarse) and (max-height: 600px)";
@@ -409,7 +410,7 @@ export function MobileDock({
                 : "interact";
   const acts = control.actions.filter(
     (a) =>
-      !(moving && a.pathId && a.roomId) &&
+      // 移动：除了点棋盘上发光的房间，也在操作栏列出可去的房间（2026-10-21）
       (!globalReveal || !a.targetId || (!!selected && a.roomId === selected)),
   );
   const terminal = acts.filter(
@@ -437,7 +438,10 @@ export function MobileDock({
         ? "其他玩家正在秘密选择移动牌"
         : `${who}正在行动`;
   const visuals = boardVisuals(state);
-  const last = state.events.at(-1);
+  // 最新事件条只显示"真正发生的事"，跳过"移动后/检定前"之类的时机信号
+  const last = [...state.events]
+    .reverse()
+    .find((e) => !triggerNames[e.type] && !["BLOODPOINTS"].includes(e.type) || e.type === "BLOODPOINTS" && Number(e.data.delta) !== 0);
   useEffect(() => {
     setSheet(null);
   }, [id, state.phase, state.choice?.kind]);
@@ -512,13 +516,9 @@ export function MobileDock({
           {own ? <Portrait id={own.id} /> : <span>角色</span>}
         </TapButton>
         <div>
-          <strong>
-            第{state.round}轮 · {phases[state.phase]}
-          </strong>
-          <small>
-            {net && !net.connected
-              ? "重新连接中…"
-              : `发电机 ${state.completedGenerators}/4　献祭 ${state.sacrifice}/8`}
+          <strong data-testid="phase-title">{phaseTitle(state)}</strong>
+          <small data-testid="now-doing">
+            {net && !net.connected ? "重新连接中…" : nowDoing(state)}
           </small>
         </div>
         <TapButton
@@ -535,6 +535,13 @@ export function MobileDock({
         )}
         <SettingsButton />
       </header>
+      <div className="phone-orderbar">
+        <OrderStrip state={state} />
+        <span className="ob-score">
+          ⚙{state.completedGenerators}/4　☠{state.sacrifice}/8
+        </span>
+      </div>
+      <PhaseSplash state={state} myActors={mine.map((a) => a.id)} />
       <TapButton
         className="phone-latest"
         aria-label="查看事件日志"
@@ -645,7 +652,7 @@ export function MobileDock({
             </>
           ) : (
             <>
-              {moving && <p className="dock-hint">点击棋盘上发光的房间移动</p>}
+              {moving && <p className="dock-hint">点棋盘上发光的房间，或点下方按钮移动</p>}
               {["ROLL_DICE", "SPAWN_ROLL"].includes(state.choice?.kind ?? "") && (
                 <p className="dock-hint">轮到你掷骰：点下方按钮，所有人会同时看到结果。</p>
               )}
