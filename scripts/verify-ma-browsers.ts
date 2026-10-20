@@ -81,6 +81,11 @@ try {
       break;
     }
     if (!acted) {
+      // 动画播放中：点一下屏幕跳过（真实玩家也可以这样做）
+      for (const q of pages) {
+        const ov = q.locator(".ma-overlay:not(.ov-power):not(.ov-note)");
+        if (await ov.count()) await ov.first().click({ force: true }).catch(() => {});
+      }
       await host.waitForTimeout(150);
       continue;
     }

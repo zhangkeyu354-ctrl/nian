@@ -721,3 +721,331 @@
 .ma-app .ma-variant button.on {
   background: var(--sun);
 }
+
+/* ---------- 比赛动画：大骰子、技能弹出、开场、冲线 ---------- */
+.ma-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 90;
+  display: grid;
+  place-items: center;
+  padding: 16px;
+  background: rgba(16, 22, 44, 0.55);
+  cursor: pointer;
+  animation: ma-fade 0.18s ease-out;
+}
+/* 技能、摔倒等提示：顶部横幅，不挡住棋盘 */
+.ma-overlay.ov-power,
+.ma-overlay.ov-note {
+  background: transparent;
+  place-items: start center;
+  padding-top: 72px;
+  pointer-events: none;
+}
+.ma-overlay.ov-power .ma-ov-skip,
+.ma-overlay.ov-note .ma-ov-skip {
+  display: none;
+}
+@keyframes ma-fade {
+  from {
+    opacity: 0;
+  }
+}
+.ma-ov-skip {
+  position: absolute;
+  bottom: 18px;
+  left: 0;
+  right: 0;
+  text-align: center;
+  color: #fff;
+  opacity: 0.7;
+  font-size: 13px;
+}
+.ma-ov-roll {
+  text-align: center;
+  color: #fff;
+}
+.ma-ov-roll > p:first-child {
+  display: inline-flex;
+  gap: 8px;
+  align-items: center;
+  background: rgba(0, 0, 0, 0.45);
+  padding: 6px 14px;
+  border-radius: 99px;
+  font-weight: 800;
+  font-size: 17px;
+  margin: 0 0 12px;
+}
+.ma-bigdie {
+  width: min(46vw, 200px);
+  aspect-ratio: 1;
+  margin: 0 auto;
+  filter: drop-shadow(0 10px 0 rgba(0, 0, 0, 0.45));
+}
+.ma-bigdie img {
+  width: 100%;
+  height: 100%;
+}
+.ma-bigdie.rolling {
+  animation: ma-tumble 0.25s linear infinite;
+}
+.ma-bigdie.landed {
+  animation: ma-land 0.45s cubic-bezier(0.2, 1.6, 0.4, 1);
+}
+@keyframes ma-tumble {
+  0% {
+    transform: rotate(0deg) translateY(0) scale(0.9);
+  }
+  50% {
+    transform: rotate(180deg) translateY(-18px) scale(1);
+  }
+  100% {
+    transform: rotate(360deg) translateY(0) scale(0.9);
+  }
+}
+@keyframes ma-land {
+  0% {
+    transform: scale(1.5) rotate(-12deg);
+  }
+  100% {
+    transform: scale(1) rotate(0);
+  }
+}
+.ma-ov-big {
+  margin: 12px 0 0;
+  font-size: clamp(44px, 14vw, 84px);
+  font-weight: 900;
+  line-height: 1;
+  color: var(--sun);
+  text-shadow:
+    0 4px 0 var(--ink),
+    0 0 18px rgba(0, 0, 0, 0.5);
+  animation: ma-land 0.45s cubic-bezier(0.2, 1.6, 0.4, 1);
+}
+.ma-duel {
+  display: flex;
+  gap: 18px;
+  justify-content: center;
+}
+.ma-duel .ma-bigdie {
+  width: min(34vw, 150px);
+}
+.ma-duel small {
+  display: block;
+  margin-top: 6px;
+  font-weight: 800;
+}
+.ma-ov-power {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+  width: min(92vw, 520px);
+  background: var(--chalk);
+  border: 3px solid var(--ink);
+  border-left: 12px solid var(--pc);
+  border-radius: 16px;
+  padding: 10px 14px;
+  box-shadow: 0 6px 0 var(--ink);
+  animation: ma-pop 0.35s cubic-bezier(0.2, 1.5, 0.4, 1);
+  color: var(--ink);
+}
+.ma-ov-power img {
+  width: 76px;
+  height: 58px;
+  object-fit: cover;
+  border-radius: 10px;
+  border: 2px solid var(--ink);
+  flex: none;
+}
+.ma-ov-power small {
+  display: block;
+  color: #5b6178;
+  font-weight: 700;
+}
+.ma-ov-power b {
+  display: block;
+  font-size: 22px;
+  font-weight: 900;
+  color: var(--tartan);
+  line-height: 1.2;
+}
+.ma-ov-power p {
+  margin: 2px 0 0;
+  font-weight: 700;
+}
+.ma-ov-power.finish b {
+  color: var(--ink);
+}
+.ma-ov-power.note b {
+  color: var(--ink);
+  font-size: 18px;
+}
+@keyframes ma-pop {
+  0% {
+    transform: translateY(-24px) scale(0.85);
+    opacity: 0;
+  }
+}
+.ma-ov-start {
+  text-align: center;
+  background: var(--chalk);
+  border: 3px solid var(--ink);
+  border-radius: 20px;
+  padding: 20px 26px;
+  box-shadow: 0 6px 0 var(--ink);
+  max-width: 440px;
+  animation: ma-pop 0.4s cubic-bezier(0.2, 1.5, 0.4, 1);
+}
+.ma-ov-start small {
+  font-weight: 800;
+  color: #5b6178;
+}
+.ma-ov-start b {
+  display: block;
+  font-size: 40px;
+  font-weight: 900;
+  color: var(--tartan);
+}
+.ma-ov-start p {
+  margin: 6px 0 0;
+}
+
+/* 我的选手：比赛中一直看得到自己的技能 */
+.ma-mine {
+  grid-column: 1 / -1;
+  display: grid;
+  gap: 8px;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+}
+.ma-app .ma-mine-card {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  text-align: left;
+  background: var(--sun);
+  border: 2px solid var(--ink);
+  border-radius: 14px;
+  padding: 8px 10px;
+  box-shadow: 0 3px 0 var(--ink);
+  font-weight: 400;
+}
+.ma-mine-card img {
+  width: 64px;
+  height: 48px;
+  object-fit: cover;
+  border-radius: 8px;
+  border: 2px solid var(--ink);
+  flex: none;
+}
+.ma-mine-card small {
+  display: block;
+  font-size: 12px;
+  font-weight: 700;
+  color: #4a4320;
+}
+.ma-mine-card b {
+  display: block;
+  font-size: 17px;
+  font-weight: 900;
+}
+.ma-mine-card em {
+  display: block;
+  font-style: normal;
+  font-size: 13px;
+  line-height: 1.4;
+}
+.ma-board-head {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px 12px;
+  align-items: baseline;
+  color: var(--chalk);
+  margin-bottom: 6px;
+}
+.ma-board-head b {
+  font-size: 17px;
+  font-weight: 900;
+}
+.ma-legend {
+  font-size: 13px;
+  opacity: 0.95;
+}
+.ma-legend i {
+  font-style: normal;
+  display: inline-block;
+  margin: 0 2px 0 6px;
+}
+.ma-legend .star {
+  color: var(--sun);
+}
+.ma-legend .rock {
+  color: #ffb199;
+}
+.ma-runners li {
+  cursor: pointer;
+}
+.ma-runners li.me {
+  box-shadow: 0 0 0 3px var(--sun);
+}
+
+/* 自己棋子脚下的光环 */
+.ma-halo {
+  position: absolute;
+  left: 50%;
+  bottom: -14%;
+  width: 190%;
+  height: 46%;
+  transform: translateX(-50%);
+  border-radius: 50%;
+  background: radial-gradient(closest-side, #fff 0%, #fff 30%, var(--pc) 62%, transparent 100%);
+  box-shadow: 0 0 14px 5px var(--pc);
+  animation: ma-halo 1.4s ease-in-out infinite;
+  pointer-events: none;
+}
+@keyframes ma-halo {
+  50% {
+    transform: translateX(-50%) scale(1.18);
+    opacity: 0.75;
+  }
+}
+/* 一格一格走：每步一跳 */
+.ma-pawn {
+  transition:
+    left 0.2s ease-out,
+    top 0.2s ease-out;
+}
+.ma-pawn.walking > img:not(.ma-pawn-trip) {
+  animation: ma-hop 0.23s ease-in-out infinite;
+}
+@keyframes ma-hop {
+  50% {
+    transform: translateY(-22%);
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .ma-bigdie.rolling,
+  .ma-halo,
+  .ma-pawn.walking > img:not(.ma-pawn-trip),
+  .ma-ov-power,
+  .ma-ov-start {
+    animation: none;
+  }
+}
+
+.ma-me-tag {
+  position: absolute;
+  left: 50%;
+  top: -22%;
+  transform: translateX(-50%);
+  background: var(--pc);
+  color: #fff;
+  border: 2px solid var(--ink);
+  border-radius: 99px;
+  font-size: 11px;
+  font-weight: 900;
+  line-height: 1;
+  padding: 3px 6px;
+  white-space: nowrap;
+  z-index: 2;
+  pointer-events: none;
+}

@@ -282,3 +282,18 @@ describe("魔法运动员 · 36 名选手能力", () => {
     expect(logText(s)).toContain("循环");
   });
 });
+
+describe("给界面播放的结构化事件", () => {
+  it("一次主移动依次产生：掷骰 → 移动（起点、终点）；技能发动带选手与技能 id", () => {
+    const s = roll(testRace({ racers: [F, "gunk", "lackey"], pos: [0, 20, 10], rolls: [6], skipSetup: true }));
+    const fx = s.log.map((l) => l.fx).filter(Boolean);
+    expect(fx).toContainEqual({ kind: "roll", player: "p1", racer: F, value: 6 });
+    expect(fx).toContainEqual({ kind: "power", racer: "lackey", power: "lackey" });
+    expect(fx).toContainEqual({ kind: "power", racer: "gunk", power: "gunk" });
+    expect(fx).toContainEqual({ kind: "move", racers: [F], from: 0, to: 5 });
+    expect(fx).toContainEqual({ kind: "move", racers: ["lackey"], from: 10, to: 12 });
+    const i = fx.findIndex((f) => f!.kind === "roll");
+    const j = fx.findIndex((f) => f!.kind === "move" && (f as { racers: string[] }).racers[0] === F);
+    expect(i).toBeLessThan(j);
+  });
+});

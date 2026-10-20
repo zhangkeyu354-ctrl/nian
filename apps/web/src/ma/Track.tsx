@@ -41,14 +41,25 @@ const BOARDS = new Map((coords.boards as unknown as BoardCoords[]).map((b) => [b
  * 规则一律来自引擎；这里只负责把 tokens[].pos 画到对应格子上。
  */
 export function Track({
-  race,
+  race: raceIn,
   colorOf,
   me,
+  shown,
+  moving = [],
+  onPawn,
 }: {
   race: RaceState;
   colorOf: (playerId: string) => string;
   me: string | null;
+  /** 动画中的位置（覆盖服务器状态） */
+  shown?: Map<string, { pos: number; tripped: boolean; out: boolean; place: number | null }> | null;
+  /** 正在走的选手：镜头跟着它，棋子有走路动画 */
+  moving?: string[];
+  onPawn?: (racer: string) => void;
 }) {
+  const race: RaceState = shown
+    ? { ...raceIn, tokens: raceIn.tokens.map((t) => ({ ...t, ...(shown.get(t.racer) ?? {}) })) }
+    : raceIn;
   const track = TRACKS[race.track];
   const board = BOARDS.get(race.track)!;
   const [w, h] = board.canvas;
@@ -64,8 +75,9 @@ export function Track({
 
   const vertical = useVerticalBoard();
   // 自动滚到正在行动的选手附近（横版左右滚，竖版上下滚）
-  const current = race.tokens.find((t) => t.owner === race.current);
-  const focus = current && current.place === null ? board.spaces[current.pos] : null;
+  const current =
+    race.tokens.find((t) => moving.includes(t.racer)) ?? race.tokens.find((t) => t.owner === race.current);
+  const focus = current && current.place === null && !current.out ? board.spaces[Math.min(current.pos, board.spaces.length - 1)] : null;
   useEffect(() => {
     const el = scroller.current;
     if (!el || !focus) return;
@@ -75,7 +87,7 @@ export function Track({
         el.scrollTo({ top: focus.x * el.scrollHeight - el.clientHeight / 2, behavior: "smooth" });
     } else if (el.scrollWidth > el.clientWidth)
       el.scrollTo({ left: focus.x * el.scrollWidth - el.clientWidth / 2, behavior: "smooth" });
-  }, [focus?.index, race.current, vertical]);
+  }, [focus?.index, race.current, vertical, moving.join()]);
 
   const art = (
       <div
@@ -119,8 +131,11 @@ export function Track({
                   "ma-pawn" +
                   (t.owner === me ? " mine" : "") +
                   (race.current === t.owner && !race.over ? " turn" : "") +
-                  (t.tripped ? " tripped" : "")
+                  (t.tripped ? " tripped" : "") +
+                  (moving.includes(rid) ? " walking" : "")
                 }
+                role={onPawn ? "button" : undefined}
+                onClick={onPawn ? () => onPawn(rid) : undefined}
                 style={{
                   left: `${(cx + dx) * 100}%`,
                   top: `${(cy + dy) * 100}%`,
@@ -129,6 +144,8 @@ export function Track({
                 }}
                 title={`${racerName(rid)}${t.place ? ` · 第 ${t.place} 名` : ` · 第 ${t.pos} 格`}${t.tripped ? " · 摔倒" : ""}`}
               >
+                {t.owner === me && <span className="ma-halo" aria-hidden="true" />}
+                {t.owner === me && <span className="ma-me-tag">我</span>}
                 <span className="ma-pawn-base" />
                 <img src={`${ART}/tokens/${rid}.png`} alt={racerName(rid)} draggable={false} />
                 {t.tripped && <img className="ma-pawn-trip" src={`${ART}/icons/trip.svg`} alt="摔倒" />}

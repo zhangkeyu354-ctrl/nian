@@ -11,6 +11,7 @@ import { PLAYABLE_TRACKS, TRACKS } from "./tracks.ts";
 import type {
   Chip,
   CreateMAOptions,
+  Fx,
   Decision,
   MACommand,
   MAPlayer,
@@ -120,8 +121,8 @@ const pname = (s: MAState, id: string) =>
   s.players.find((p) => p.id === id)?.name ?? id;
 const player = (s: MAState, id: string) =>
   s.players.find((p) => p.id === id) ?? fail("NO_PLAYER", "没有这名玩家。");
-function log(s: MAState, text: string) {
-  s.log.push({ text, race: s.race ? s.race.index : null });
+function log(s: MAState, text: string, fx?: Fx) {
+  s.log.push({ text, race: s.race ? s.race.index : null, ...(fx ? { fx } : {}) });
 }
 
 /** 掷骰比大：最高者胜，平局者重掷 */
@@ -238,7 +239,7 @@ function loopCheck(s: MAState, c: Ctx, trigger: string, what: string): boolean {
 
 /** 某个能力发动了：记录，并让挪挪各蹭 1 格 */
 function fire(s: MAState, c: Ctx, src: Token, text: string) {
-  log(s, text);
+  log(s, text, { kind: "power", racer: src.racer, power: powerOf(s, src) ?? src.base });
   for (const sc of holders(s, "scoocher")) {
     if (sc === src) continue;
     if (loopCheck(s, c, `scooch:${src.racer}>${sc.racer}`, `${rname(sc)} 与 ${rname(src)} 互相触发`)) continue;
@@ -248,10 +249,13 @@ function fire(s: MAState, c: Ctx, src: Token, text: string) {
 }
 
 function trip(s: MAState, t: Token) {
-  if (active(t)) t.tripped = true;
+  if (!active(t)) return;
+  t.tripped = true;
+  log(s, "", { kind: "trip", racer: t.racer });
 }
 function gainChip(s: MAState, owner: string, value: number) {
   player(s, owner).chips.push({ kind: "bronze", value, race: race(s).index });
+  log(s, "", { kind: "chip", player: owner, value });
 }
 
 function finish(s: MAState, t: Token) {
@@ -259,7 +263,7 @@ function finish(s: MAState, t: Token) {
   t.pos = trackOf(s).length;
   r.finishers.push(t.racer);
   t.place = r.finishers.length;
-  log(s, `🏁 ${rname(t)}（${pname(s, t.owner)}）第 ${t.place} 个冲过终点！`);
+  log(s, `🏁 ${rname(t)}（${pname(s, t.owner)}）第 ${t.place} 个冲过终点！`, { kind: "finish", racer: t.racer, place: t.place });
   if (t.place === 1 && r.mastermindPick === t.racer) {
     const mm = r.tokens.find((x) => x.base === "mastermind" && !x.out);
     if (mm) {
@@ -279,6 +283,7 @@ function checkEnd(s: MAState) {
 }
 function eliminate(s: MAState, t: Token) {
   t.out = true;
+  log(s, "", { kind: "out", racer: t.racer });
   race(s).eliminated.push(t.owner);
   checkEnd(s);
 }
@@ -289,6 +294,7 @@ function hugeBaby(s: MAState, c: Ctx, t: Token) {
   for (const hb of holders(s, "huge_baby")) {
     if (hb !== t && hb.pos === t.pos && t.pos > 0) {
       t.pos -= 1;
+      log(s, "", { kind: "warp", racer: t.racer, from: t.pos + 1, to: t.pos });
       fire(s, c, hb, `${rname(hb)}【块头太大】：${rname(t)} 被放到它身后一格。`);
     }
   }
@@ -296,6 +302,7 @@ function hugeBaby(s: MAState, c: Ctx, t: Token) {
     for (const o of others(s, t))
       if (o.pos === t.pos) {
         o.pos -= 1;
+        log(s, "", { kind: "warp", racer: o.racer, from: o.pos + 1, to: o.pos });
         fire(s, c, t, `${rname(t)}【块头太大】：${rname(o)} 被挤到它身后一格。`);
       }
 }
@@ -374,6 +381,7 @@ function move(s: MAState, c: Ctx, t: Token, n: number, main: boolean, why: strin
           (o) => !group.includes(o) && (before.get(o) ?? 0) > from && (g.place !== null || o.pos < g.pos),
         );
   for (const f of riders) log(s, `${rname(f)}【吸附蹭车】跟着 ${rname(t)} 一起移动。`);
+  log(s, "", { kind: "move", racers: group.map((g) => g.racer), from, to: Math.min(p, L) });
   if (p >= L) {
     for (const g of group) if (active(g)) finish(s, g);
     return;
@@ -396,7 +404,9 @@ function move(s: MAState, c: Ctx, t: Token, n: number, main: boolean, why: strin
 /** 传送：放到新格子，不算移动，不经过任何人 */
 function warp(s: MAState, c: Ctx, t: Token, to: number) {
   if (!active(t)) return;
+  const from = t.pos;
   t.pos = Math.max(0, Math.min(trackOf(s).length - 1, to));
+  log(s, "", { kind: "warp", racer: t.racer, from, to: t.pos });
   hugeBaby(s, c, t);
   react(s, c, t, []);
 }
@@ -476,6 +486,7 @@ function react(s: MAState, c: Ctx, t: Token, passed: Token[], simultaneous = fal
         const a = d6(s),
           b = d6(s);
         const winner = a >= b ? x : o;
+        log(s, "", { kind: "duel", a: { racer: x.racer, value: a }, b: { racer: o.racer, value: b } });
         fire(s, c, x, `${rname(x)}【单挑】：${rname(x)} 掷 ${a}，${rname(o)} 掷 ${b}，${rname(winner)} 赢！`);
         move(s, c, winner, 2, false, "决斗获胜");
       }
@@ -538,6 +549,8 @@ function mainMove(s: MAState, c: Ctx, t: Token, f: TurnFlags) {
     fire(s, c, t, `${rname(t)}【瞬间换位】：与 ${rname(o)} 交换位置。`);
     t.pos = b;
     o.pos = a;
+    log(s, "", { kind: "warp", racer: t.racer, from: a, to: b });
+    log(s, "", { kind: "warp", racer: o.racer, from: b, to: a });
     hugeBaby(s, c, t);
     hugeBaby(s, c, o);
     react(s, c, t, [], true);
@@ -555,7 +568,7 @@ function mainMove(s: MAState, c: Ctx, t: Token, f: TurnFlags) {
       return v;
     };
     let v = roll();
-    log(s, `${pname(s, t.owner)} 为 ${rname(t)} 掷出 ${v}。`);
+    log(s, `${pname(s, t.owner)} 为 ${rname(t)} 掷出 ${v}。`, { kind: "roll", player: t.owner, racer: t.racer, value: v });
     let magic = has(s, t, "magician") ? 2 : 0;
     let diceUsed = false;
     for (;;) {
@@ -582,7 +595,7 @@ function mainMove(s: MAState, c: Ctx, t: Token, f: TurnFlags) {
         if (dm !== t) move(s, c, dm, 1, false, "开放重掷");
       }
       v = roll();
-      log(s, `重掷结果：${v}。`);
+      log(s, `重掷结果：${v}。`, { kind: "roll", player: t.owner, racer: t.racer, value: v, reroll: true });
     }
     if (prediction !== null) {
       if (prediction === v) {
@@ -703,6 +716,7 @@ function beforeMain(s: MAState, c: Ctx, t: Token) {
     for (const o of movers) {
       const to = Math.max(0, o.pos + (o.pos < t.pos ? 1 : -1));
       if (to === o.pos) continue;
+      log(s, "", { kind: "move", racers: [o.racer], from: o.pos, to });
       o.pos = to;
       arrivals.push(o);
     }
@@ -1095,6 +1109,7 @@ function startRace(s: MAState) {
     s,
     `第 ${idx + 1} 场（${TRACKS[track].zh}）开始！出场：` +
       s.race.tokens.map((t) => `${pname(s, t.owner)}·${rname(t)}`).join("，"),
+    { kind: "start", race: idx, track },
   );
 }
 

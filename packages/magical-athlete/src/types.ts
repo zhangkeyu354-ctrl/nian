@@ -64,9 +64,23 @@ export interface Decision {
   options: Array<{ value: string; label: string }>;
 }
 
+/** 给界面播放动画用的结构化事件（掷骰、技能发动、移动路径……）；text 为空的条目只用于动画，不显示在记录里 */
+export type Fx =
+  | { kind: "roll"; player: string; racer: string; value: number; reroll?: boolean }
+  | { kind: "duel"; a: { racer: string; value: number }; b: { racer: string; value: number } }
+  | { kind: "power"; racer: string; power: string }
+  | { kind: "move"; racers: string[]; from: number; to: number }
+  | { kind: "warp"; racer: string; from: number; to: number }
+  | { kind: "trip"; racer: string }
+  | { kind: "finish"; racer: string; place: number }
+  | { kind: "out"; racer: string }
+  | { kind: "chip"; player: string; value: number }
+  | { kind: "start"; race: number; track: string };
+
 export interface LogEntry {
   text: string;
   race: number | null;
+  fx?: Fx;
 }
 
 export interface Settings {

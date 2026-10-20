@@ -10,6 +10,7 @@ import {
 import type { MARoomSnapshot } from "../../../../packages/shared/src/ma-protocol.ts";
 import { createMARoom, savedName, useMARoom } from "./ma-net.ts";
 import { ART, PLAYER_COLORS, Track } from "./Track.tsx";
+import { usePlayback, type Show } from "./playback.ts";
 import "./ma.css";
 
 const roomFromUrl = () => new URLSearchParams(location.search).get("room")?.toUpperCase() ?? null;
@@ -331,8 +332,14 @@ function Game({ snap, view, send, connected }: { snap: MARoomSnapshot; view: MAV
   const name = (id: string) => view.players.find((p) => p.id === id)?.name ?? id;
   const act = async (c: Parameters<Send>[0]) => setError((await send(c)) ?? "");
   useEffect(() => setError(""), [snap.version]);
+  const pb = usePlayback(view);
+  const [card, setCard] = useState<string | null>(null);
+  // 比赛刚结束时，等动画（冲线、颁奖）播完再切到下一场的选人界面
+  const showRace = !!view.race && (view.phase === "race" || view.phase === "over" || (view.phase === "choose" && pb.busy));
   return (
     <main className={"ma-game phase-" + view.phase}>
+      {pb.show && <Overlay show={pb.show} view={view} name={name} colorOf={colorOf} me={me} onSkip={pb.skip} />}
+      {card && <CardLightbox id={card} onClose={() => setCard(null)} />}
       <div className="ma-topbar">
         <a className="ma-back" href="/">← 合集</a>
         <strong>魔法运动员</strong>
@@ -341,9 +348,9 @@ function Game({ snap, view, send, connected }: { snap: MARoomSnapshot; view: MAV
       <Scores view={view} me={me} colorOf={colorOf} />
       {error && <p className="ma-error" role="alert">{error}</p>}
       {view.phase === "draft" && <Draft view={view} me={me} name={name} act={act} />}
-      {view.phase === "choose" && <Choose view={view} me={me} act={act} />}
-      {(view.phase === "race" || view.phase === "over") && view.race && (
-        <Race view={view} me={me} name={name} colorOf={colorOf} act={act} />
+      {view.phase === "choose" && !showRace && <Choose view={view} me={me} act={act} />}
+      {showRace && (
+        <Race view={view} me={me} name={name} colorOf={colorOf} act={act} pb={pb} openCard={setCard} />
       )}
       {view.phase === "over" && <Final view={view} />}
       <Log view={view} />
@@ -464,31 +471,60 @@ function Race({
   name,
   colorOf,
   act,
+  pb,
+  openCard,
 }: {
   view: MAView;
   me: string | null;
   name: (id: string) => string;
   colorOf: (id: string) => string;
   act: (c: Parameters<Send>[0]) => void;
+  pb: ReturnType<typeof usePlayback>;
+  openCard: (id: string) => void;
 }) {
   const race = view.race!;
   const p = view.pending;
-  const roll = race.lastRoll;
+  const track = TRACKS[race.track];
+  const mine = race.tokens.filter((t) => t.owner === me);
+  const shownOf = (racer: string) => pb.shown?.get(racer);
   return (
     <section className="ma-race">
+      {mine.length > 0 && (
+        <div className="ma-mine" data-testid="ma-mine">
+          {mine.map((t) => {
+            const r = RACER_BY_ID.get(t.racer)!;
+            const power = RACER_BY_ID.get(t.base);
+            return (
+              <button key={t.racer} type="button" className="ma-mine-card" onClick={() => openCard(t.racer)}>
+                <img src={`${ART}/portraits/${t.racer}.webp`} alt="" />
+                <span>
+                  <small>我的选手 · 点开看卡</small>
+                  <b>{r.zh}</b>
+                  <em>
+                    【{power?.powerZh}】{power?.text}
+                    {t.base !== t.racer && `（来自${racerName(t.base)}）`}
+                  </em>
+                </span>
+              </button>
+            );
+          })}
+        </div>
+      )}
       <div className="ma-board">
-        <Track race={race} colorOf={colorOf} me={me} />
-        {roll && (
-          <img
-            key={roll.seq}
-            className="ma-die"
-            src={`${ART}/dice/player-${(view.seats.indexOf(roll.player) % 6) + 1}-${roll.value}.svg`}
-            alt={`${name(roll.player)} 掷出 ${roll.value}`}
-          />
-        )}
+        <div className="ma-board-head">
+          <b>第 {race.index + 1} 场 · {track.zh}</b>
+          {race.track === "wild" ? (
+            <span className="ma-legend">
+              <i className="star">★</i>星星 +1 分 <i className="rock">▲</i>石头摔倒 <i className="arrow">➜</i>箭头额外前进/后退
+            </span>
+          ) : (
+            <span className="ma-legend">普通赛道，没有特殊格</span>
+          )}
+        </div>
+        <Track race={race} colorOf={colorOf} me={me} shown={pb.shown} moving={pb.moving} onPawn={openCard} />
       </div>
       <div className="ma-side">
-        {p && (
+        {p && !race.over && (
           <div className={"ma-decide" + (p.player === me ? " you" : "")} data-testid="ma-decide">
             <p className="ma-who">
               <span className="ma-dot" style={{ background: colorOf(p.player) }} />
@@ -496,7 +532,9 @@ function Race({
               {p.racer && ` · ${racerName(p.racer)}`}
             </p>
             <p className="ma-prompt">{p.prompt}</p>
-            {p.player === me ? (
+            {pb.busy ? (
+              <p className="ma-muted">动画播放中…</p>
+            ) : p.player === me ? (
               <div className="ma-options">
                 {p.options.map((o) => (
                   <button key={o.value} className={o.value === "roll" ? "ma-go" : ""} onClick={() => act({ type: "ANSWER", value: o.value })}>
@@ -510,18 +548,24 @@ function Race({
           </div>
         )}
         <ul className="ma-runners">
-          {race.tokens.map((t) => {
+          {race.tokens.map((t0) => {
+            const t = { ...t0, ...(shownOf(t0.racer) ?? {}) };
             const r = RACER_BY_ID.get(t.racer)!;
             const copied = t.base !== t.racer ? `（能力：${racerName(t.base)}）` : "";
             return (
-              <li key={t.racer} className={t.out ? "out" : ""} style={{ borderLeftColor: colorOf(t.owner) }}>
+              <li
+                key={t.racer}
+                className={(t.out ? "out" : "") + (t.owner === me ? " me" : "")}
+                style={{ borderLeftColor: colorOf(t.owner) }}
+                onClick={() => openCard(t.racer)}
+              >
                 <img className="ma-portrait" src={`${ART}/portraits/${t.racer}.webp`} alt="" />
                 <div>
                   <b>{r.zh}</b> <small>{name(t.owner)}</small>
                   <small className="ma-state">
                     {t.place ? `🏁 第 ${t.place} 名` : t.out ? "已淘汰" : `第 ${t.pos} 格${t.tripped ? " · 摔倒" : ""}`}
                   </small>
-                  <p>{r.powerZh}：{r.text}{copied}</p>
+                  <p>{RACER_BY_ID.get(t.base)?.powerZh ?? r.powerZh}：{RACER_BY_ID.get(t.base)?.text ?? r.text}{copied}</p>
                 </div>
               </li>
             );
@@ -529,6 +573,141 @@ function Race({
         </ul>
       </div>
     </section>
+  );
+}
+
+function CardLightbox({ id, onClose }: { id: string; onClose: () => void }) {
+  const r = RACER_BY_ID.get(id);
+  if (!r) return null;
+  return (
+    <div className="ma-lightbox" role="dialog" aria-label={r.zh} onClick={onClose}>
+      <img src={`${ART}/cards/zh/${id}.webp`} alt="" />
+      <div className="ma-lightbox-text">
+        <h3>{r.zh} <small>{r.en}</small></h3>
+        <p><b>{r.powerZh}</b> {r.text}</p>
+        {r.notes && <p className="ma-notes">{r.notes}</p>}
+        <button type="button">关闭</button>
+      </div>
+    </div>
+  );
+}
+
+/** 屏幕中央的大骰子 / 技能发动 / 冲线 / 开场提示：所有人同时看到 */
+function Overlay({
+  show,
+  view,
+  name,
+  colorOf,
+  me,
+  onSkip,
+}: {
+  show: Show;
+  view: MAView;
+  name: (id: string) => string;
+  colorOf: (id: string) => string;
+  me: string | null;
+  onSkip: () => void;
+}) {
+  const owner = (racer: string) => view.race?.tokens.find((t) => t.racer === racer)?.owner ?? "";
+  const seatNo = (pid: string) => (view.seats.indexOf(pid) % 6) + 1;
+  let body: React.ReactNode;
+  if (show.kind === "roll") {
+    body = (
+      <div className="ma-ov-roll">
+        <p>
+          <span className="ma-dot" style={{ background: colorOf(show.player) }} />
+          {show.player === me ? "你" : name(show.player)} 为 {racerName(show.racer)}{show.reroll ? " 重掷" : " 掷骰"}
+        </p>
+        <RollingDie pid={show.player} value={show.value} rolling={show.rolling} seatNo={seatNo} />
+        {!show.rolling && <p className="ma-ov-big">掷出 {show.value}</p>}
+      </div>
+    );
+  } else if (show.kind === "duel") {
+    body = (
+      <div className="ma-ov-roll">
+        <p>⚔️ 决斗！</p>
+        <div className="ma-duel">
+          {[show.a, show.b].map((d, i) => (
+            <div key={i}>
+              <RollingDie pid={owner(d.racer)} value={d.value} rolling={show.rolling} seatNo={seatNo} />
+              <small>{racerName(d.racer)}</small>
+            </div>
+          ))}
+        </div>
+        {!show.rolling && (
+          <p className="ma-ov-big">
+            {show.a.value} : {show.b.value}
+          </p>
+        )}
+      </div>
+    );
+  } else if (show.kind === "power") {
+    const r = RACER_BY_ID.get(show.power);
+    const pid = owner(show.racer);
+    body = (
+      <div className="ma-ov-power" style={{ ["--pc" as string]: colorOf(pid) }}>
+        <img src={`${ART}/portraits/${show.racer}.webp`} alt="" />
+        <div>
+          <small>{name(pid)} 的 {racerName(show.racer)} 发动技能</small>
+          <b>【{r?.powerZh ?? show.power}】</b>
+          <p>{show.text.replace(/^[^】]*】：?/, "")}</p>
+        </div>
+      </div>
+    );
+  } else if (show.kind === "finish") {
+    body = (
+      <div className="ma-ov-power finish" style={{ ["--pc" as string]: colorOf(owner(show.racer)) }}>
+        <img src={`${ART}/portraits/${show.racer}.webp`} alt="" />
+        <div>
+          <small>{name(owner(show.racer))}</small>
+          <b>🏁 {racerName(show.racer)} 第 {show.place} 个冲线！</b>
+        </div>
+      </div>
+    );
+  } else if (show.kind === "start") {
+    const tr = TRACKS[show.track as "mild" | "wild"];
+    body = (
+      <div className="ma-ov-start">
+        <small>第 {show.race + 1} 场</small>
+        <b>{tr?.zh ?? show.track}</b>
+        {show.track === "wild" ? (
+          <p>第二张地图：特殊赛道！停在 ★ 得 1 分，停在石头上摔倒，停在箭头上额外前进或后退。</p>
+        ) : (
+          <p>普通赛道，前两个冲线的拿奖牌。</p>
+        )}
+      </div>
+    );
+  } else {
+    body = (
+      <div className="ma-ov-power note" style={{ ["--pc" as string]: colorOf(owner(show.racer)) }}>
+        <img src={`${ART}/portraits/${show.racer}.webp`} alt="" />
+        <div>
+          <b>{racerName(show.racer)}</b>
+          <p>{show.text}</p>
+        </div>
+      </div>
+    );
+  }
+  return (
+    <div className={"ma-overlay ov-" + show.kind} onClick={onSkip} role="status" aria-live="polite" title="点一下跳过动画">
+      {body}
+      <span className="ma-ov-skip">点屏幕跳过动画</span>
+    </div>
+  );
+}
+
+/** 转动中的骰子：每 90ms 换一面，落定后显示真实点数 */
+function RollingDie({ pid, value, rolling, seatNo }: { pid: string; value: number; rolling: boolean; seatNo: (p: string) => number }) {
+  const [face, setFace] = useState(1);
+  useEffect(() => {
+    if (!rolling) return;
+    const id = setInterval(() => setFace((f) => (f % 6) + 1), 90);
+    return () => clearInterval(id);
+  }, [rolling]);
+  return (
+    <div className={"ma-bigdie" + (rolling ? " rolling" : " landed")}>
+      <img src={`${ART}/dice/player-${seatNo(pid)}-${rolling ? face : value}.svg`} alt={rolling ? "骰子转动中" : `${value} 点`} />
+    </div>
   );
 }
 
@@ -554,7 +733,7 @@ function Final({ view }: { view: MAView }) {
 }
 
 function Log({ view }: { view: MAView }) {
-  const entries = view.log.slice(-40).reverse();
+  const entries = view.log.filter((l) => l.text).slice(-40).reverse();
   return (
     <details className="ma-log" open>
       <summary>比赛记录</summary>
