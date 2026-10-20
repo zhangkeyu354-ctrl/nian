@@ -25,6 +25,7 @@ import { SettingsButton } from "./Settings.tsx";
 import type { NetBinding } from "./net.ts";
 import { Illustration } from "./Illustration.tsx";
 import { skillRouteActions } from "./ui-actions.ts";
+import { actorColor } from "./playerColors.ts";
 
 export function usePhone() {
   const query = "(max-width: 700px), (pointer: coarse) and (max-height: 600px)";
@@ -93,6 +94,41 @@ function Pages<T>({
         </div>
       )}
     </>
+  );
+}
+/** 回合步骤条：翻牌 → 移动 → 翻开道具 → 交互 → 掷骰 → 结束，当前一步高亮（2026-10-21） */
+function TurnSteps({ state }: { state: GameState }) {
+  const t = state.turn;
+  if (!t || state.phase !== "ACTING" || t.stage === "SELECT_BONUS") return null;
+  const killer = t.actorId === state.killerId;
+  const steps = ["翻牌", "移动", "翻道具", "交互", "掷骰", "结束"];
+  const k = state.choice?.kind;
+  const at =
+    t.stage === "MOVE"
+      ? 1
+      : k === "REVEAL"
+        ? 2
+        : state.roll || k === "ROLL_DICE" || k === "KEEP"
+          ? 4
+          : t.stage === "INTERACT" && !t.interactionSpent
+            ? 3
+            : 5;
+  return (
+    <ol className="turn-steps" aria-label="回合步骤" data-step={at}>
+      <li className="who" style={{ color: actorColor(state, t.actorId) }}>
+        {actorName(t.actorId)}
+        {killer ? `（第${t.index + 1}张牌）` : ""}
+      </li>
+      {steps.map((x, i) => (
+        <li
+          key={x}
+          className={i < at ? "done" : i === at ? "now" : undefined}
+          aria-current={i === at ? "step" : undefined}
+        >
+          {x}
+        </li>
+      ))}
+    </ol>
   );
 }
 export function MobileParameters({
@@ -515,6 +551,7 @@ export function MobileDock({
         data-stage={stage}
         aria-label="当前行动"
       >
+        <TurnSteps state={state} />
         <div className="dock-heading">
           <Illustration className="module-art" id={stage} />
           <div>

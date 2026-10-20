@@ -33,6 +33,7 @@ import { MotionIcon } from "./MotionIcon.tsx";
 import { Dice } from "./Dice.tsx";
 import { Board } from "./Board.tsx";
 import { MobileDock, MobileParameters, usePhone } from "./MobileDock.tsx";
+import { VerdictBanner, verdictsFrom, type VerdictInfo } from "./Verdict.tsx";
 import { usePhoneExperience } from "./phone-experience.ts";
 import { skillRouteActions } from "./ui-actions.ts";
 import { ItemUseNotice } from "./ItemUseNotice.tsx";
@@ -280,6 +281,7 @@ export function App({ net }: { net?: NetBinding } = {}) {
   const [pending, setPending] = useState(false);
   const sending = useRef(false);
   const [effects, setEffects] = useState<Feedback[]>([]);
+  const [verdicts, setVerdicts] = useState<VerdictInfo[]>([]);
   const [localState, setState] = useState<GameState | null>(null);
   // 联机时以服务器发来的视图为准，避免本地副本与版本号短暂不一致
   const state = net ? net.view : localState;
@@ -381,6 +383,7 @@ export function App({ net }: { net?: NetBinding } = {}) {
     prevView.current = next;
     if (prev && next.events.length > prev.events.length) {
       setEffects(feedbackEvents(prev, next));
+      setVerdicts((v) => [...v, ...verdictsFrom(next, next.events.slice(prev.events.length))]);
       setDice(
         next.events
           .slice(prev.events.length)
@@ -412,6 +415,7 @@ export function App({ net }: { net?: NetBinding } = {}) {
       setError("");
       setDice([]);
       setEffects([]);
+      setVerdicts([]);
       setSelected(null);
     } catch {
       setError("请选择四位不同的逃生者、一位杀手及有效的对局种子。");
@@ -466,6 +470,7 @@ export function App({ net }: { net?: NetBinding } = {}) {
         .filter((e) => e.type === "DICE_ROLLED" || e.type === "SPAWNED");
       setState(next);
       setEffects(feedbackEvents(state, next));
+      setVerdicts((v) => [...v, ...verdictsFrom(next, next.events.slice(state.events.length))]);
       setDice(rolls);
       setPlan([]);
       setSelected(null);
@@ -1481,6 +1486,15 @@ export function App({ net }: { net?: NetBinding } = {}) {
           effects={effects}
           onDone={() => setEffects([])}
           toast={phone}
+        />
+      )}
+      {!dice.length && !!verdicts.length && state && (
+        <VerdictBanner
+          key={verdicts[0].seq}
+          state={state}
+          verdict={verdicts[0]}
+          animate={settings.effectiveAnimations}
+          onDone={() => setVerdicts((v) => v.slice(1))}
         />
       )}
       {!!dice.length && (

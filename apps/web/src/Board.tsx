@@ -14,11 +14,13 @@ import { useSettings } from "./Settings.tsx";
 import { Token } from "./Token.tsx";
 import { TapButton, suppressCompatibilityClick } from "./TapButton.tsx";
 import layoutData from "./layout.json" with { type: "json" };
+import { actorColor, ROOM_ACCENTS } from "./playerColors.ts";
+// 路线颜色：提高饱和度与亮度，并在下面垫一条深色描边，保证在棋盘上清楚可辨（2026-10-21）
 const colors: Record<string, string> = {
-  blue: "#62b5de",
-  green: "#83bc8e",
-  red: "#d98176",
-  yellow: "#f1ca62",
+  blue: "#33a8ff",
+  green: "#2fd65c",
+  red: "#ff4d3d",
+  yellow: "#ffd21f",
 };
 export function Board({
   state,
@@ -42,6 +44,11 @@ export function Board({
   phone?: boolean;
 }) {
   const map = maps.maps.find((m) => m.id === state.mapId)!;
+  const currentId =
+    state.choice?.actorId ??
+    (state.window ? state.window.actors[state.window.index] : null) ??
+    state.turn?.actorId ??
+    null;
   const layout = (
     layoutData as Record<
       string,
@@ -323,8 +330,8 @@ export function Board({
               />
             </pattern>
             <linearGradient id="room-shade" x2="0" y2="1">
-              <stop offset="0" stopColor="#111a1c" stopOpacity="0" />
-              <stop offset="1" stopColor="#0e1518" stopOpacity=".96" />
+              <stop offset="0.45" stopColor="#111a1c" stopOpacity="0" />
+              <stop offset="1" stopColor="#0e1518" stopOpacity=".72" />
             </linearGradient>
             {map.nodes.map((n) => (
               <clipPath key={n.id} id={"clip-" + n.id}>
@@ -363,7 +370,7 @@ export function Board({
             y={view.y}
             width={view.w}
             height={view.h}
-            fill="#151d20"
+            fill="#223035"
           />
           <rect
             x={view.x}
@@ -444,9 +451,17 @@ export function Board({
                     <polyline
                       points={points}
                       fill="none"
+                      stroke="#05090a"
+                      strokeWidth={lit ? 14 : 11}
+                      opacity={0.85}
+                      strokeLinejoin="round"
+                    />
+                    <polyline
+                      points={points}
+                      fill="none"
                       stroke={colors[p.color]}
-                      strokeWidth={lit ? 8 : 5}
-                      opacity={lit ? 1 : 0.62}
+                      strokeWidth={lit ? 9 : 6.5}
+                      opacity={lit ? 1 : 0.92}
                       strokeLinejoin="round"
                       markerEnd={
                         p.direction !== "both"
@@ -468,9 +483,9 @@ export function Board({
                     width="54"
                     height="54"
                     rx="2"
-                    fill="#182020"
+                    fill="#0d1416"
                     stroke={colors[p.color]}
-                    strokeWidth="4"
+                    strokeWidth="5"
                   />
                   {map.edges.find((e) => e.id === p.id)?.jagged && (
                     <path
@@ -513,7 +528,8 @@ export function Board({
               </g>
             );
           })}
-          {map.nodes.map((n) => {
+          {map.nodes.map((n, roomIndex) => {
+            const accent = ROOM_ACCENTS[roomIndex % ROOM_ACCENTS.length];
             const [x, sourceY] = layout.rooms[n.id];
             const y = sourceY * yScale;
             const occupants = visuals.actors.filter((a) => a.room === n.id);
@@ -578,15 +594,16 @@ export function Board({
                     width="260"
                     height="200"
                     rx="4"
-                    fill="#1c2729"
+                    fill="#2a383b"
                     stroke={
                       reachable
-                        ? "#f1d47c"
+                        ? "#fff1a8"
                         : selected === n.id
-                          ? "#d6bb78"
-                          : "#736e59"
+                          ? "#ffe39a"
+                          : accent
                     }
-                    strokeWidth={reachable ? 6 : 3}
+                    strokeWidth={reachable ? 8 : 4}
+                    className={reachable ? "room-reachable" : undefined}
                   />
                   <g pointerEvents="none">
                     <g clipPath={`url(#clip-${n.id})`}>
@@ -610,6 +627,7 @@ export function Board({
                       />
                       {settings.art && (
                         <image
+                          className="room-art"
                           data-room-art={n.id}
                           href={`/assets/${phone ? "mobile" : "desktop"}/rooms/${n.id}.webp`}
                           x="-127"
@@ -630,9 +648,17 @@ export function Board({
                         fill="url(#room-shade)"
                       />
                     </g>
+                    <rect
+                      x="-127"
+                      y="-79"
+                      width="254"
+                      height="33"
+                      fill={accent}
+                      opacity=".9"
+                    />
                     <text
                       x="0"
-                      y="-56"
+                      y="-53"
                       textAnchor="middle"
                       className="room-label"
                     >
@@ -718,16 +744,43 @@ export function Board({
                         stroke={actionable.includes(a.id) ? "#e6d294" : "none"}
                         strokeWidth="2"
                       />
+                      {/* 脚下光环：逃生者各自一种亮色，杀手为更大的红色危险光环 */}
+                      <ellipse
+                        className={
+                          "foot-halo" +
+                          (a.id === state.killerId ? " killer-halo" : "") +
+                          (a.id === currentId ? " current-halo" : "")
+                        }
+                        cx="0"
+                        cy={tokenSize / 2 - 3}
+                        rx={tokenSize * (a.id === state.killerId ? 0.78 : 0.56)}
+                        ry={tokenSize * (a.id === state.killerId ? 0.24 : 0.18)}
+                        fill={actorColor(state, a.id)}
+                        stroke={actorColor(state, a.id)}
+                      />
+                      <circle
+                        cx="0"
+                        cy="0"
+                        r={tokenSize / 2 + (a.id === state.killerId ? 4 : 2)}
+                        fill="none"
+                        stroke={actorColor(state, a.id)}
+                        strokeWidth={a.id === state.killerId ? 5 : 3.5}
+                        className={a.id === currentId ? "current-ring" : undefined}
+                      />
                       <g
                         transform={`translate(${-tokenSize / 2} ${-tokenSize / 2})`}
                       >
                         <Token token={a} size={tokenSize} />
                       </g>
                       <text
-                        y="35"
+                        y="40"
                         textAnchor="middle"
-                        fill="#f2e9cb"
-                        fontSize="12"
+                        fill={actorColor(state, a.id)}
+                        fontSize="14"
+                        fontWeight="700"
+                        stroke="#071012"
+                        strokeWidth="3"
+                        paintOrder="stroke"
                       >
                         {a.label.replace("·", "").slice(0, 3)}
                       </text>

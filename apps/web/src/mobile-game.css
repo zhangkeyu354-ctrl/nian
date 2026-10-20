@@ -1521,3 +1521,45 @@ body.phone-inmatch {
     min-height: 0;
   }
 }
+
+/* ===== 2026-10-21 界面强化：更亮的配色、更清楚的按钮与步骤条 ===== */
+.phone-game { background: #1b272b; }
+.phone-game .phone-status { background: #1f2d31; border-bottom-color: #4d6062; }
+.phone-game .mobile-dock { background: linear-gradient(#1f2e32, #172326); border-top: 2px solid #c9a95a; }
+.phone-game .dock-heading strong { font-size: 18px; color: #fff3cf; }
+.phone-game .dock-heading p { font-size: 13px; color: #d6dccb; }
+.turn-steps { display: flex; flex-wrap: wrap; gap: 4px; list-style: none; margin: 0 0 8px; padding: 0; font-size: 12px; align-items: center; }
+.turn-steps li { padding: 3px 8px; border-radius: 999px; background: #2a3a3e; color: #8fa19c; border: 1px solid #3e5155; }
+.turn-steps li.done { color: #c9d6c6; background: #24413a; border-color: #3f7a63; }
+.turn-steps li.done::before { content: "✓ "; }
+.turn-steps li.now { color: #1b1405; background: #ffd75e; border-color: #ffe9a3; font-weight: 800; box-shadow: 0 0 10px #ffd75e88; }
+.turn-steps li.who { background: none; border: 0; font-weight: 800; padding-left: 0; }
+.phone-game .dock-grid button,
+.phone-game .dock-terminal button,
+.phone-game .phone-sheet .dock-grid button {
+  background: linear-gradient(#34484c, #283a3e);
+  color: #fdf6e0;
+  border: 1px solid #7b9188;
+  border-radius: 10px;
+  font-size: 14px;
+  font-weight: 600;
+  box-shadow: 0 3px 0 #0b1314, inset 0 1px 0 #ffffff1f;
+  transition: transform .06s ease, box-shadow .06s ease, background .15s;
+}
+.phone-game button.primary,
+.phone-game .dock-terminal button.primary {
+  background: linear-gradient(#ffe08a, #e8b948) !important;
+  color: #2a1d05 !important;
+  border-color: #fff0b8 !important;
+  font-weight: 800;
+  box-shadow: 0 4px 0 #8a6516, 0 0 16px #ffd75e55 !important;
+}
+.phone-game button:active:not(:disabled) { transform: translateY(2px); box-shadow: 0 1px 0 #0b1314 !important; }
+.phone-game button:disabled { opacity: .45; filter: grayscale(.4); }
+.phone-game .dock-hint { color: #ffe08a; font-weight: 700; font-size: 14px; margin: 2px 0 8px; }
+.phone-game .phone-latest { background: #24363bea; color: #f0f2e6; border-color: #6d8580; }
+.turn-steps { flex-wrap: nowrap; overflow-x: auto; scrollbar-width: none; }
+.turn-steps li { white-space: nowrap; padding: 2px 7px; }
+@media (max-height: 600px) and (orientation: landscape) {
+  .turn-steps { display: none; }
+}
