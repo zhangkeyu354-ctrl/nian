@@ -61,7 +61,8 @@ export class MARoom {
     return createMAGame({
       players: this.file.players.map((p) => ({ id: p.playerId, name: p.name })),
       seed: this.file.seed,
-      settings: { races: RACES, points: this.file.points, variant: this.file.variant ?? "standard" },
+      // 用户房规 HR-MA-01：每人每场只出 1 名选手（不开放双选手变体）
+      settings: { races: RACES, points: this.file.points, variant: "standard" },
     });
   }
   idByToken(token: string | null | undefined) {
@@ -90,9 +91,6 @@ export class MARoom {
         gold: clampPoint(p?.gold),
         silver: clampPoint(p?.silver),
       }));
-    } else if (action?.type === "SET_VARIANT") {
-      if (action.variant !== "standard" && action.variant !== "double") throw new Error("BAD_ACTION");
-      this.file.variant = action.variant;
     } else if (action?.type === "START") {
       if (this.file.players.length < MIN_PLAYERS) throw new Error("MA_NEED_PLAYERS");
       this.file.seed = randomInt(2 ** 31);
@@ -129,7 +127,7 @@ export class MARoom {
       })),
       mySeat: me,
       points: this.file.points,
-      variant: this.file.players.length === 2 ? "double" : this.file.players.length === 3 ? (this.file.variant ?? "standard") : "standard",
+      variant: "standard",
       version: this.file.commands.length,
       view: this.state ? viewForMA(this.state, me) : null,
     };

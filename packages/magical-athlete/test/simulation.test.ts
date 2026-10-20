@@ -31,7 +31,10 @@ function playGame(seed: number, n: number, variant: "standard" | "double" = "sta
     } else {
       const p = s.pending!;
       expect(p, "比赛中必须有待决定事项").toBeTruthy();
-      s = reduceMA(s, { type: "ANSWER", player: p.player, value: p.options[rand(p.options.length)].value });
+      // 随机玩家：可选能力多数时候不用（全随机时 2 人局会出现催眠师来回拉人、几百回合打不完的局面）
+      const no = p.options.find((o) => o.value === "no");
+      const value = no && rand(10) < 7 ? no.value : p.options[rand(p.options.length)].value;
+      s = reduceMA(s, { type: "ANSWER", player: p.player, value });
       // 隐私：别人看不到待决定选项、牌堆与重放快照
       const other = s.players.find((x) => x.id !== s.pending?.player)!;
       const v = viewForMA(s, other.id) as Record<string, unknown>;
@@ -48,7 +51,7 @@ function playGame(seed: number, n: number, variant: "standard" | "double" = "sta
 }
 
 describe("魔法运动员 · 整局模拟", () => {
-  for (const n of [3, 4, 5, 6])
+  for (const n of [2, 3, 4, 5, 6])
     it(`${n} 人：25 局随机对局都能打完，每人用完 4 名不同选手`, () => {
       for (let seed = 1; seed <= 25; seed++) {
         const s = playGame(seed * 13 + n, n);

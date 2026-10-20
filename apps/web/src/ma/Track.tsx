@@ -47,6 +47,7 @@ export function Track({
   shown,
   moving = [],
   onPawn,
+  fit = true,
 }: {
   race: RaceState;
   colorOf: (playerId: string) => string;
@@ -56,6 +57,8 @@ export function Track({
   /** 正在走的选手：镜头跟着它，棋子有走路动画 */
   moving?: string[];
   onPawn?: (racer: string) => void;
+  /** true：整条赛道缩放到一屏内（默认）；false：放大，可滑动 */
+  fit?: boolean;
 }) {
   const race: RaceState = shown
     ? { ...raceIn, tokens: raceIn.tokens.map((t) => ({ ...t, ...(shown.get(t.racer) ?? {}) })) }
@@ -92,7 +95,13 @@ export function Track({
   const art = (
       <div
         className="ma-board-art"
-        style={vertical ? { width: `${(w / h) * 100}%`, aspectRatio: `${w} / ${h}` } : { aspectRatio: `${w} / ${h}` }}
+        style={
+          vertical
+            ? { width: `${(w / h) * 100}%`, aspectRatio: `${w} / ${h}` }
+            : fit
+              ? { aspectRatio: `${w} / ${h}`, width: `min(100%, calc(var(--ma-board-h) * ${(w / h).toFixed(4)}))`, margin: "0 auto" }
+              : { aspectRatio: `${w} / ${h}` }
+        }
         role="img"
         aria-label={`${track.zh}，第 ${race.index + 1} 场`}
       >
@@ -156,9 +165,16 @@ export function Track({
       </div>
   );
   return (
-    <div className={"ma-board-scroll" + (vertical ? " vertical" : "")} ref={scroller}>
+    <div className={"ma-board-scroll" + (vertical ? " vertical" : "") + (fit ? " fit" : " zoomed")} ref={scroller}>
       {vertical ? (
-        <div className="ma-board-rot" style={{ aspectRatio: `${h} / ${w}` }}>
+        <div
+          className="ma-board-rot"
+          style={{
+            aspectRatio: `${h} / ${w}`,
+            // 整屏：按可用高度反推宽度，让整条竖版赛道一屏放得下
+            ...(fit ? { width: `min(100%, calc(var(--ma-board-h) * ${(h / w).toFixed(4)}))` } : {}),
+          }}
+        >
           {art}
         </div>
       ) : (

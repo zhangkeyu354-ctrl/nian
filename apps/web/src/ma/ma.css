@@ -1049,3 +1049,140 @@
   z-index: 2;
   pointer-events: none;
 }
+
+/* ---------- 整屏赛道、折叠区块、放大按钮 ---------- */
+.ma-game {
+  /* 赛道可用高度：屏幕高度减去顶栏、比分、操作区 */
+  --ma-board-h: calc(100dvh - 250px);
+}
+@media (min-width: 761px) {
+  .ma-game {
+    --ma-board-h: calc(100vh - 220px);
+  }
+}
+.ma-board-scroll.fit {
+  overflow: hidden;
+  max-height: none;
+}
+.ma-board-scroll.vertical.fit {
+  overflow: hidden;
+  max-height: none;
+  background: transparent;
+}
+.ma-board-scroll.vertical.fit .ma-board-rot {
+  margin: 0 auto;
+  border-radius: 14px;
+  overflow: hidden;
+  background: #000;
+}
+.ma-board-scroll.fit .ma-board-art {
+  min-width: 0;
+}
+.ma-board-scroll.vertical.zoomed {
+  max-height: 72dvh;
+}
+.ma-app .ma-zoom {
+  min-height: 34px;
+  padding: 2px 10px;
+  font-size: 13px;
+  border-radius: 99px;
+  box-shadow: 0 2px 0 var(--ink);
+  margin-left: auto;
+}
+.ma-board-scroll.vertical.fit .ma-pawn {
+  width: 4.2%;
+}
+.ma-fold {
+  grid-column: 1 / -1;
+}
+.ma-app .ma-fold-head {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  min-height: 40px;
+  padding: 6px 12px;
+  border-radius: 12px;
+  text-align: left;
+  box-shadow: 0 2px 0 var(--ink);
+}
+.ma-fold-head > span {
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.ma-fold-head i {
+  font-style: normal;
+  font-size: 12px;
+  flex: none;
+  color: #5b6178;
+}
+.ma-fold.open .ma-fold-head {
+  border-bottom-left-radius: 4px;
+  border-bottom-right-radius: 4px;
+}
+.ma-fold-body {
+  margin-top: 6px;
+}
+.ma-app .ma-mine-fold .ma-fold-head {
+  background: var(--sun);
+}
+.ma-mine-title {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 14px;
+}
+.ma-mine-title img {
+  width: 30px;
+  height: 24px;
+  object-fit: cover;
+  border-radius: 6px;
+  border: 2px solid var(--ink);
+}
+.ma-log.ma-fold {
+  background: none;
+  border: 0;
+  padding: 0;
+}
+.ma-log.ma-fold ol {
+  background: rgba(255, 255, 255, 0.92);
+  border: 2px solid var(--ink);
+  border-radius: 12px;
+  padding: 6px 12px;
+}
+/* 比赛中比分条压成一行，可左右滑 */
+.ma-scores.compact {
+  display: flex;
+  overflow-x: auto;
+  gap: 6px;
+  padding-bottom: 2px;
+}
+.ma-scores.compact li {
+  flex: none;
+  padding: 2px 10px;
+  border-radius: 99px;
+  grid-template-columns: auto auto auto;
+  min-width: 0;
+}
+.ma-scores.compact small {
+  display: none;
+}
+.ma-scores.compact .ma-total {
+  font-size: 17px;
+}
+@media (max-width: 760px) {
+  .ma-game {
+    gap: 8px;
+    padding-top: 6px;
+  }
+  .ma-board-head {
+    margin-bottom: 4px;
+  }
+  .ma-board-head .ma-legend {
+    width: 100%;
+    font-size: 12px;
+  }
+}

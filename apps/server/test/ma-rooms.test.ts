@@ -42,20 +42,20 @@ describe("魔法运动员房间", () => {
     const t = room.claim("房主");
     expect(() => room.lobby(t, { type: "START" })).toThrow("MA_NEED_PLAYERS");
     room.claim("二");
-    expect(room.snapshot(null).variant).toBe("double");
+    expect(room.snapshot(null).variant).toBe("standard");
     for (const n of ["三", "四", "五", "六"]) room.claim(n);
     expect(() => room.claim("七")).toThrow("ROOM_FULL");
   });
 
-  it("3 人房房主可以选双选手变体，开局后每人选秀 8 名", () => {
-    const store = new MARoomStore(mkdtempSync(join(tmpdir(), "ma-")));
-    const room = store.create();
-    const t = room.claim("房主");
-    room.claim("二");
-    room.claim("三");
-    room.lobby(t, { type: "SET_VARIANT", variant: "double" });
-    room.lobby(t, { type: "START" });
-    expect(room.state!.settings.variant).toBe("double");
-    expect(room.state!.draft!.pool).toHaveLength(6);
+  it("房规：2 人、3 人也是每人选秀 4 名、每场 1 名（不开放双选手）", () => {
+    for (const n of [2, 3]) {
+      const store = new MARoomStore(mkdtempSync(join(tmpdir(), "ma-")));
+      const room = store.create();
+      const t = room.claim("房主");
+      for (let i = 1; i < n; i++) room.claim("玩家" + i);
+      room.lobby(t, { type: "START" });
+      expect(room.state!.settings.variant).toBe("standard");
+      expect(room.state!.draft!.pool).toHaveLength(2 * n);
+    }
   });
 });

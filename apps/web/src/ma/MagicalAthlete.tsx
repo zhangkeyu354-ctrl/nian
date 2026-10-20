@@ -244,28 +244,10 @@ function Lobby({ snap, lobby }: { snap: MARoomSnapshot; lobby: (a: Parameters<Re
         </table>
         <p className="ma-muted">赛道顺序：温和 → 狂野 → 温和 → 狂野。<a href={`${ART}/docs/skillbook.pdf`} target="_blank" rel="noreferrer">36 名选手技能书（PDF）</a></p>
       </section>
-      {snap.players.length <= 3 && snap.players.length >= 2 && (
-        <section className="ma-panel">
-          <h2>规则</h2>
-          {snap.players.length === 2 ? (
-            <p className="ma-muted">2 人局用双选手规则：每人选秀 8 名，每场派 2 名；你的第一个回合只动一名，之后每回合两名都动。</p>
-          ) : (
-            <div className="ma-variant">
-              {(["standard", "double"] as const).map((v) => (
-                <button
-                  key={v}
-                  type="button"
-                  className={snap.variant === v ? "on" : ""}
-                  disabled={!host}
-                  onClick={() => run({ type: "SET_VARIANT", variant: v })}
-                >
-                  {v === "standard" ? "标准：每人 4 名，每场 1 名" : "双选手：每人 8 名，每场 2 名"}
-                </button>
-              ))}
-            </div>
-          )}
-        </section>
-      )}
+      <section className="ma-panel">
+        <h2>规则</h2>
+        <p className="ma-muted">每人选秀 4 名选手，共 4 场，每场每人派 1 名上场（2 人局也一样）。</p>
+      </section>
       {error && <p className="ma-error" role="alert">{error}</p>}
       {host ? (
         <button className="ma-go" data-testid="ma-start" disabled={snap.players.length < 2} onClick={() => run({ type: "START" })}>
@@ -345,7 +327,7 @@ function Game({ snap, view, send, connected }: { snap: MARoomSnapshot; view: MAV
         <strong>魔法运动员</strong>
         <span className="ma-muted">房间 {snap.code}{!connected && " · 重新连接中…"}</span>
       </div>
-      <Scores view={view} me={me} colorOf={colorOf} />
+      <Scores view={view} me={me} colorOf={colorOf} compact={showRace} />
       {error && <p className="ma-error" role="alert">{error}</p>}
       {view.phase === "draft" && <Draft view={view} me={me} name={name} act={act} />}
       {view.phase === "choose" && !showRace && <Choose view={view} me={me} act={act} />}
@@ -358,9 +340,9 @@ function Game({ snap, view, send, connected }: { snap: MARoomSnapshot; view: MAV
   );
 }
 
-function Scores({ view, me, colorOf }: { view: MAView; me: string | null; colorOf: (id: string) => string }) {
+function Scores({ view, me, colorOf, compact }: { view: MAView; me: string | null; colorOf: (id: string) => string; compact?: boolean }) {
   return (
-    <ul className="ma-scores">
+    <ul className={"ma-scores" + (compact ? " compact" : "")}>
       {view.players.map((p) => {
         const runners = view.race && !view.race.over ? view.race.tokens.filter((t) => t.owner === p.id) : [];
         return (
@@ -487,32 +469,50 @@ function Race({
   const track = TRACKS[race.track];
   const mine = race.tokens.filter((t) => t.owner === me);
   const shownOf = (racer: string) => pb.shown?.get(racer);
+  const [fit, setFit] = useState(true);
   return (
     <section className="ma-race">
       {mine.length > 0 && (
-        <div className="ma-mine" data-testid="ma-mine">
-          {mine.map((t) => {
-            const r = RACER_BY_ID.get(t.racer)!;
-            const power = RACER_BY_ID.get(t.base);
-            return (
-              <button key={t.racer} type="button" className="ma-mine-card" onClick={() => openCard(t.racer)}>
-                <img src={`${ART}/portraits/${t.racer}.webp`} alt="" />
-                <span>
-                  <small>我的选手 · 点开看卡</small>
-                  <b>{r.zh}</b>
-                  <em>
-                    【{power?.powerZh}】{power?.text}
-                    {t.base !== t.racer && `（来自${racerName(t.base)}）`}
-                  </em>
-                </span>
-              </button>
-            );
-          })}
-        </div>
+        <Fold
+          id="mine"
+          className="ma-mine-fold"
+          defaultOpen={!isPhone()}
+          title={
+            <span className="ma-mine-title">
+              {mine.map((t) => (
+                <img key={t.racer} src={`${ART}/portraits/${t.racer}.webp`} alt="" />
+              ))}
+              我的选手：{mine.map((t) => `${racerName(t.racer)}【${RACER_BY_ID.get(t.base)?.powerZh}】`).join("、")}
+            </span>
+          }
+        >
+          <div className="ma-mine" data-testid="ma-mine">
+            {mine.map((t) => {
+              const r = RACER_BY_ID.get(t.racer)!;
+              const power = RACER_BY_ID.get(t.base);
+              return (
+                <button key={t.racer} type="button" className="ma-mine-card" onClick={() => openCard(t.racer)}>
+                  <img src={`${ART}/portraits/${t.racer}.webp`} alt="" />
+                  <span>
+                    <small>点开看卡</small>
+                    <b>{r.zh}</b>
+                    <em>
+                      【{power?.powerZh}】{power?.text}
+                      {t.base !== t.racer && `（来自${racerName(t.base)}）`}
+                    </em>
+                  </span>
+                </button>
+              );
+            })}
+          </div>
+        </Fold>
       )}
       <div className="ma-board">
         <div className="ma-board-head">
           <b>第 {race.index + 1} 场 · {track.zh}</b>
+          <button type="button" className="ma-zoom" onClick={() => setFit((f) => !f)} data-testid="ma-zoom">
+            {fit ? "🔍 放大赛道" : "🗺 看整条赛道"}
+          </button>
           {race.track === "wild" ? (
             <span className="ma-legend">
               <i className="star">★</i>星星 +1 分 <i className="rock">▲</i>石头摔倒 <i className="arrow">➜</i>箭头额外前进/后退
@@ -521,7 +521,7 @@ function Race({
             <span className="ma-legend">普通赛道，没有特殊格</span>
           )}
         </div>
-        <Track race={race} colorOf={colorOf} me={me} shown={pb.shown} moving={pb.moving} onPawn={openCard} />
+        <Track race={race} colorOf={colorOf} me={me} shown={pb.shown} moving={pb.moving} onPawn={openCard} fit={fit} />
       </div>
       <div className="ma-side">
         {p && !race.over && (
@@ -547,6 +547,7 @@ function Race({
             )}
           </div>
         )}
+        <Fold id="runners" title="场上选手（点选手看卡）" defaultOpen={!isPhone()}>
         <ul className="ma-runners">
           {race.tokens.map((t0) => {
             const t = { ...t0, ...(shownOf(t0.racer) ?? {}) };
@@ -571,10 +572,57 @@ function Race({
             );
           })}
         </ul>
+        </Fold>
       </div>
     </section>
   );
 }
+
+/** 可以收起 / 展开的区块（手机上省地方，把屏幕留给赛道） */
+function Fold({
+  id,
+  title,
+  defaultOpen,
+  children,
+  className = "",
+}: {
+  id: string;
+  title: React.ReactNode;
+  defaultOpen: boolean;
+  children: React.ReactNode;
+  className?: string;
+}) {
+  const key = "ma-fold-" + id;
+  const [open, setOpen] = useState(() => {
+    try {
+      const v = localStorage.getItem(key);
+      return v === null ? defaultOpen : v === "1";
+    } catch {
+      return defaultOpen;
+    }
+  });
+  const toggle = () => {
+    setOpen((o) => {
+      try {
+        localStorage.setItem(key, o ? "0" : "1");
+      } catch {
+        /* 忽略 */
+      }
+      return !o;
+    });
+  };
+  return (
+    <section className={"ma-fold " + className + (open ? " open" : "")}>
+      <button type="button" className="ma-fold-head" onClick={toggle} aria-expanded={open} data-testid={"fold-" + id}>
+        <span>{title}</span>
+        <i>{open ? "收起 ▲" : "展开 ▼"}</i>
+      </button>
+      {open && <div className="ma-fold-body">{children}</div>}
+    </section>
+  );
+}
+
+const isPhone = () => typeof matchMedia === "function" && matchMedia("(max-width: 760px)").matches;
 
 function CardLightbox({ id, onClose }: { id: string; onClose: () => void }) {
   const r = RACER_BY_ID.get(id);
@@ -735,13 +783,12 @@ function Final({ view }: { view: MAView }) {
 function Log({ view }: { view: MAView }) {
   const entries = view.log.filter((l) => l.text).slice(-40).reverse();
   return (
-    <details className="ma-log" open>
-      <summary>比赛记录</summary>
+    <Fold id="log" title="比赛记录" defaultOpen={!isPhone()} className="ma-log">
       <ol>
         {entries.map((l, i) => (
           <li key={view.log.length - i}>{l.text}</li>
         ))}
       </ol>
-    </details>
+    </Fold>
   );
 }

@@ -1,4 +1,4 @@
-/** 2 人变体与 3 人双选手变体（规则书 p26，2025-09 版） */
+/** 2 人变体与 3 人双选手变体（规则书 p26）。用户房规 HR-MA-01 下房间不开放，引擎仍保留，测试显式开启。 */
 import { describe, expect, it } from "vitest";
 import { createMAGame, reduceMA } from "../src/engine.ts";
 import type { MAState } from "../src/types.ts";
@@ -13,9 +13,23 @@ const draftAll = (s: MAState) => {
 };
 const players = (n: number) => Array.from({ length: n }, (_, i) => ({ id: "p" + (i + 1), name: "P" + (i + 1) }));
 
+describe("房规 HR-MA-01（默认）", () => {
+  it("2 人局默认标准规则：每轮翻 4 张蛇形，每人 4 名，每场 1 名", () => {
+    const s0 = createMAGame({ players: players(2), seed: 3 });
+    expect(s0.settings.variant).toBe("standard");
+    expect(s0.draft!.pool).toHaveLength(4);
+    const s = draftAll(s0);
+    expect(s.players.map((p) => p.hand.length)).toEqual([4, 4]);
+    const h = s.players[0].hand;
+    expect(() => reduceMA(s, { type: "CHOOSE", player: "p1", racers: [h[0], h[1]] })).toThrow();
+    const s2 = reduceMA(s, { type: "CHOOSE", player: "p1", racer: h[0] });
+    expect(s2.players[0].choices).toEqual([h[0]]);
+  });
+});
+
 describe("选秀", () => {
   it("2 人：翻 8 张 ABBAABBA，再翻 8 张反过来 BAABBAAB，每人 8 名", () => {
-    let s = createMAGame({ players: players(2), seed: 3 });
+    let s = createMAGame({ players: players(2), seed: 3, settings: { variant: "double" } });
     const a = s.draft!.order[0];
     const b = a === "p1" ? "p2" : "p1";
     expect(s.draft!.pool).toHaveLength(8);
@@ -49,7 +63,7 @@ describe("选秀", () => {
 
 /** 摆好一场 2 人比赛：p1 派 a1,a2；p2 派 b1,b2 */
 function twoPlayerRace(a: [string, string], b: [string, string], rolls: number[] = []) {
-  let s = draftAll(createMAGame({ players: players(2), seed: 9 }));
+  let s = draftAll(createMAGame({ players: players(2), seed: 9, settings: { variant: "double" } }));
   s.players[0].hand = [...a, "x1", "x2", "x3", "x4", "x5", "x6"];
   s.players[1].hand = [...b, "y1", "y2", "y3", "y4", "y5", "y6"];
   s.nextFirst = "p1";
@@ -61,7 +75,7 @@ function twoPlayerRace(a: [string, string], b: [string, string], rolls: number[]
 
 describe("2 人：比赛", () => {
   it("每场必须派 2 名不同的选手", () => {
-    const s = draftAll(createMAGame({ players: players(2), seed: 9 }));
+    const s = draftAll(createMAGame({ players: players(2), seed: 9, settings: { variant: "double" } }));
     const h = s.players[0].hand;
     expect(() => reduceMA(s, { type: "CHOOSE", player: "p1", racers: [h[0]] })).toThrow();
     expect(() => reduceMA(s, { type: "CHOOSE", player: "p1", racers: [h[0], h[0]] })).toThrow();

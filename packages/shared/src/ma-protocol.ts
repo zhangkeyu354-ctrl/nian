@@ -31,8 +31,7 @@ export interface MARoomSnapshot {
 
 export type MALobbyAction =
   | { type: "START" }
-  | { type: "SET_POINTS"; points: MAPointsSetting[] }
-  | { type: "SET_VARIANT"; variant: "standard" | "double" };
+  | { type: "SET_POINTS"; points: MAPointsSetting[] };
 
 /** 浏览器提交的命令：player 由服务器按凭证填写 */
 export type MAClientCommand =
