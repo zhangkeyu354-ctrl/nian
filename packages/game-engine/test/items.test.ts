@@ -1,6 +1,7 @@
 // Phase 4 物品效果 + 审计缺陷 AUDIT-B01/B02 的回归测试（Claude 2026-10-19）
 import { describe, it, expect } from "vitest";
-import { reduce, getControls, viewFor, HIDDEN } from "../src/index.ts";
+import { getControls, viewFor, HIDDEN } from "../src/index.ts";
+import { reduce } from "./autoroll.ts";
 import { itemActions } from "../src/controls.ts";
 import { legalRoutes } from "../src/graph.ts";
 import { fixture, settle, act, put } from "./fixtures.ts";

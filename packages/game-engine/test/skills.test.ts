@@ -1,5 +1,5 @@
 import { describe, it, expect } from "vitest";
-import { reduce } from "../src/index.ts";
+import { reduce } from "./autoroll.ts";
 import { matches } from "../src/skills.ts";
 import { fixture, act, settle, put } from "./fixtures.ts";
 import { roster } from "../src/data.ts";

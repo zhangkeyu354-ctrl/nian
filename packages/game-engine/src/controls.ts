@@ -229,6 +229,11 @@ export function getControls(s: GameState) {
           );
       add("停下（被搬运者在这里挣脱，除非这里有空钩子）", { type: "SELECT", ...base });
     }
+    if (c.kind === "ROLL_DICE")
+      add(
+        `掷${c.count}颗${c.die === "danger" ? "危险骰" : "技能检定骰"}`,
+        { type: "SELECT", ...base },
+      );
     if (c.kind === "SPAWN_ROLL")
       add("掷骰决定出生空间", { type: "SELECT", ...base });
     if (c.kind === "DOCTOR_SHOCK") {

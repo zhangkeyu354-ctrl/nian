@@ -365,7 +365,9 @@ export function MobileDock({
             ? "carry"
             : moving
               ? "move"
-              : state.choice?.kind === "KEEP"
+              : ["KEEP", "ROLL_DICE", "SPAWN_ROLL"].includes(
+                    state.choice?.kind ?? "",
+                  )
                 ? "dice"
                 : "interact";
   const acts = control.actions.filter(

@@ -123,6 +123,10 @@
       "targetId": "gas_pump:objective:0"
     },
     {
+      "type": "SELECT",
+      "actorId": "meg"
+    },
+    {
       "type": "END_TURN",
       "actorId": "meg"
     },
@@ -152,6 +156,10 @@
       "actorId": "nea"
     },
     {
+      "type": "SELECT",
+      "actorId": "nea"
+    },
+    {
       "type": "END_TURN",
       "actorId": "nea"
     },
@@ -175,6 +183,10 @@
       "actorId": "feng_min",
       "action": "repair",
       "targetId": "gas_pump:objective:0"
+    },
+    {
+      "type": "SELECT",
+      "actorId": "feng_min"
     },
     {
       "type": "END_TURN",
@@ -203,6 +215,10 @@
     },
     {
       "type": "PASS",
+      "actorId": "ace"
+    },
+    {
+      "type": "SELECT",
       "actorId": "ace"
     },
     {
@@ -309,6 +325,10 @@
       "actorId": "nea"
     },
     {
+      "type": "SELECT",
+      "actorId": "nea"
+    },
+    {
       "type": "END_TURN",
       "actorId": "nea"
     },
@@ -334,6 +354,10 @@
       "targetId": "wreckers_garage_south:objective:0"
     },
     {
+      "type": "SELECT",
+      "actorId": "feng_min"
+    },
+    {
       "type": "END_TURN",
       "actorId": "feng_min"
     },
@@ -357,6 +381,10 @@
       "actorId": "ace",
       "action": "repair",
       "targetId": "scrap_pile:objective:0"
+    },
+    {
+      "type": "SELECT",
+      "actorId": "ace"
     },
     {
       "type": "END_TURN",
@@ -386,6 +414,10 @@
       "actorId": "meg",
       "action": "repair",
       "targetId": "wreckers_garage_south:objective:0"
+    },
+    {
+      "type": "SELECT",
+      "actorId": "meg"
     },
     {
       "type": "END_TURN",
@@ -481,6 +513,10 @@
       "targetId": "gas_pump:objective:0"
     },
     {
+      "type": "SELECT",
+      "actorId": "feng_min"
+    },
+    {
       "type": "END_TURN",
       "actorId": "feng_min"
     },
@@ -504,6 +540,10 @@
       "actorId": "ace",
       "action": "repair",
       "targetId": "barn:objective:0"
+    },
+    {
+      "type": "SELECT",
+      "actorId": "ace"
     },
     {
       "type": "END_TURN",
@@ -535,6 +575,10 @@
       "targetId": "cottage:objective:0"
     },
     {
+      "type": "SELECT",
+      "actorId": "meg"
+    },
+    {
       "type": "END_TURN",
       "actorId": "meg"
     },
@@ -561,6 +605,10 @@
     },
     {
       "type": "PASS",
+      "actorId": "nea"
+    },
+    {
+      "type": "SELECT",
       "actorId": "nea"
     },
     {
@@ -661,6 +709,10 @@
       "targetId": "scrap_pile:objective:0"
     },
     {
+      "type": "SELECT",
+      "actorId": "ace"
+    },
+    {
       "type": "END_TURN",
       "actorId": "ace"
     },
@@ -683,6 +735,10 @@
       "actorId": "meg",
       "action": "repair",
       "targetId": "wreckers_garage_south:objective:0"
+    },
+    {
+      "type": "SELECT",
+      "actorId": "meg"
     },
     {
       "type": "END_TURN",
@@ -714,6 +770,10 @@
       "actorId": "nea"
     },
     {
+      "type": "SELECT",
+      "actorId": "nea"
+    },
+    {
       "type": "END_TURN",
       "actorId": "nea"
     },
@@ -732,6 +792,10 @@
       "actorId": "feng_min",
       "action": "repair",
       "targetId": "wreckers_garage_south:objective:0"
+    },
+    {
+      "type": "SELECT",
+      "actorId": "feng_min"
     },
     {
       "type": "END_TURN",
@@ -853,6 +917,10 @@
       "actorId": "nea"
     },
     {
+      "type": "SELECT",
+      "actorId": "nea"
+    },
+    {
       "type": "END_TURN",
       "actorId": "nea"
     },
@@ -895,6 +963,10 @@
       "actorId": "ace",
       "action": "exit",
       "targetId": "maze:objective:0"
+    },
+    {
+      "type": "SELECT",
+      "actorId": "ace"
     },
     {
       "type": "END_TURN",
@@ -989,6 +1061,10 @@
       "actorId": "nea"
     },
     {
+      "type": "SELECT",
+      "actorId": "nea"
+    },
+    {
       "type": "END_TURN",
       "actorId": "nea"
     },
@@ -1031,6 +1107,10 @@
       "actorId": "ace",
       "action": "exit",
       "targetId": "main_garage:objective:0"
+    },
+    {
+      "type": "SELECT",
+      "actorId": "ace"
     },
     {
       "type": "END_TURN",
@@ -1159,6 +1239,10 @@
       "actorId": "feng_min",
       "action": "exit",
       "targetId": "maze:objective:0"
+    },
+    {
+      "type": "SELECT",
+      "actorId": "feng_min"
     }
   ]
 }

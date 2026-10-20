@@ -3,7 +3,7 @@
 // （移动、交互、结束行动、计划……），检查引擎是否在"正确的时机、给正确的人"
 // 提供该技能或物品，用掉之后效果是否正确；以及在不该触发时不会出现。
 import { describe, it, expect } from "vitest";
-import { reduce } from "../src/index.ts";
+import { reduce } from "./autoroll.ts";
 import { itemActions } from "../src/controls.ts";
 import { legalRoutes } from "../src/graph.ts";
 import { fixture, put } from "./fixtures.ts";
@@ -915,5 +915,23 @@ describe("物品规则更新（2026-10-20 用户裁定）", () => {
     });
     expect(r.used).toBe(true);
     expect(r.s.paths.mm_p07.bearTrap).toBe(false);
+  });
+});
+
+describe("掷骰必须由掷骰者自己操作（用户 2026-10-20）", () => {
+  it("修发电机：先停在 ROLL_DICE，只有修理者本人能掷，掷完才出现结果", async () => {
+    const { reduce: raw } = await import("../src/index.ts");
+    let s = turnOf(table(), "dwight", "INTERACT");
+    const g = prop(s, "generator");
+    s = raw(s, interact("dwight", "repair", g.id));
+    for (let i = 0; i < 20 && s.window; i++)
+      s = raw(s, { type: "PASS", actorId: s.window.actors[s.window.index] });
+    expect(s.choice).toMatchObject({ kind: "ROLL_DICE", actorId: "dwight" });
+    expect(s.roll!.faces).toEqual([]);
+    expect(() => raw(s, { type: "SELECT", actorId: "trapper" })).toThrow();
+    const before = s.events.length;
+    s = raw(s, { type: "SELECT", actorId: "dwight" });
+    expect(s.events.slice(before).some((e) => e.type === "DICE_ROLLED")).toBe(true);
+    expect(s.roll?.faces.length ?? 1).toBeGreaterThan(0);
   });
 });

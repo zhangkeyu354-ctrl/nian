@@ -1,5 +1,6 @@
 import { describe, it, expect } from "vitest";
-import { createGame, reduce, legalRoutes, RuleError } from "../src/index.ts";
+import { createGame, legalRoutes, RuleError } from "../src/index.ts";
+import { reduce } from "./autoroll.ts";
 import type { GameState, Command } from "../../shared/src/types.ts";
 
 function fixture(

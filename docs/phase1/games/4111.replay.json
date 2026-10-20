@@ -465,6 +465,10 @@
       ]
     },
     {
+      "type": "SELECT",
+      "actorId": "jake"
+    },
+    {
       "type": "END_TURN",
       "actorId": "doctor"
     },

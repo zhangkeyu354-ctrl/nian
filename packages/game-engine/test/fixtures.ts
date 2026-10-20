@@ -1,4 +1,5 @@
-import { createGame, reduce } from "../src/index.ts";
+import { createGame } from "../src/index.ts";
+import { reduce } from "./autoroll.ts";
 import type { GameState, Command } from "../../shared/src/types.ts";
 export function fixture(
   killer = "trapper",

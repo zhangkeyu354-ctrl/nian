@@ -123,6 +123,10 @@
       "actorId": "trapper"
     },
     {
+      "type": "SELECT",
+      "actorId": "dwight"
+    },
+    {
       "type": "PASS",
       "actorId": "jake"
     },
@@ -174,6 +178,10 @@
     },
     {
       "type": "SELECT",
+      "actorId": "claudette"
+    },
+    {
+      "type": "SELECT",
       "actorId": "claudette",
       "index": 0
     },
@@ -220,6 +228,10 @@
     {
       "type": "PASS",
       "actorId": "trapper"
+    },
+    {
+      "type": "SELECT",
+      "actorId": "ace"
     },
     {
       "type": "END_TURN",
@@ -335,6 +347,10 @@
     },
     {
       "type": "SELECT",
+      "actorId": "claudette"
+    },
+    {
+      "type": "SELECT",
       "actorId": "claudette",
       "index": 0
     },
@@ -368,6 +384,10 @@
       "actorId": "trapper"
     },
     {
+      "type": "SELECT",
+      "actorId": "jake"
+    },
+    {
       "type": "END_TURN",
       "actorId": "jake"
     },
@@ -386,6 +406,10 @@
     {
       "type": "PASS",
       "actorId": "trapper"
+    },
+    {
+      "type": "SELECT",
+      "actorId": "ace"
     },
     {
       "type": "END_TURN",
@@ -407,6 +431,10 @@
       "actorId": "dwight",
       "action": "repair",
       "targetId": "scrapyard:objective:0"
+    },
+    {
+      "type": "SELECT",
+      "actorId": "dwight"
     },
     {
       "type": "END_TURN",
@@ -497,6 +525,10 @@
       "actorId": "trapper"
     },
     {
+      "type": "SELECT",
+      "actorId": "jake"
+    },
+    {
       "type": "END_TURN",
       "actorId": "jake"
     },
@@ -515,6 +547,10 @@
     {
       "type": "PASS",
       "actorId": "trapper"
+    },
+    {
+      "type": "SELECT",
+      "actorId": "ace"
     },
     {
       "type": "END_TURN",
@@ -562,6 +598,10 @@
     {
       "type": "PASS",
       "actorId": "trapper"
+    },
+    {
+      "type": "SELECT",
+      "actorId": "claudette"
     },
     {
       "type": "END_TURN",
@@ -653,6 +693,10 @@
       "actorId": "trapper"
     },
     {
+      "type": "SELECT",
+      "actorId": "ace"
+    },
+    {
       "type": "END_TURN",
       "actorId": "ace"
     },
@@ -676,6 +720,10 @@
     {
       "type": "PASS",
       "actorId": "trapper"
+    },
+    {
+      "type": "SELECT",
+      "actorId": "dwight"
     },
     {
       "type": "END_TURN",
@@ -715,6 +763,10 @@
       "actorId": "trapper"
     },
     {
+      "type": "SELECT",
+      "actorId": "claudette"
+    },
+    {
       "type": "PASS",
       "actorId": "jake"
     },
@@ -746,6 +798,10 @@
     {
       "type": "PASS",
       "actorId": "trapper"
+    },
+    {
+      "type": "SELECT",
+      "actorId": "jake"
     },
     {
       "type": "END_TURN",
@@ -955,6 +1011,10 @@
       "actorId": "trapper"
     },
     {
+      "type": "SELECT",
+      "actorId": "claudette"
+    },
+    {
       "type": "END_TURN",
       "actorId": "claudette"
     },
@@ -984,6 +1044,10 @@
       "actorId": "trapper"
     },
     {
+      "type": "SELECT",
+      "actorId": "jake"
+    },
+    {
       "type": "END_TURN",
       "actorId": "jake"
     },
@@ -1002,6 +1066,10 @@
     {
       "type": "PASS",
       "actorId": "trapper"
+    },
+    {
+      "type": "SELECT",
+      "actorId": "ace"
     }
   ]
 }

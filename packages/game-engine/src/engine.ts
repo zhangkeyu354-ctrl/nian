@@ -1188,16 +1188,14 @@ function run(s: GameState) {
     else if (j.kind === "ROLL") {
       const r = s.roll!;
       requireThat(r.count >= 1 && r.count <= 4, "dice count");
-      const faces = dice.dice.find((d) => d.id === r.die)!.faces;
-      r.faces = Array.from({ length: r.count }, () => faces[random(s, 6)]);
-      r.classes = r.faces.map(resultClass);
-      r.failureCredit = r.faces.map((f) => f === 0);
-      log(s, "DICE_ROLLED", {
+      // 掷骰必须由掷骰的玩家自己点（用户 2026-10-20）：先停下等他按"掷骰"
+      s.choice = {
+        kind: "ROLL_DICE",
         actorId: r.actorId,
         die: r.die,
-        faces: r.faces,
-        kind: r.kind,
-      });
+        count: r.count,
+        checkKind: r.kind,
+      };
     } else if (j.kind === "KEEP") {
       const r = s.roll!;
       if (r.kind === "carry" || r.faces.length === 1) r.keep = 0;
@@ -1297,6 +1295,20 @@ function select(s: GameState, c: Command) {
   const choice = s.choice!;
   requireThat(c.actorId === choice.actorId, "choice owner");
   s.choice = null;
+  if (choice.kind === "ROLL_DICE") {
+    const r = s.roll!;
+    const faces = dice.dice.find((d) => d.id === r.die)!.faces;
+    r.faces = Array.from({ length: r.count }, () => faces[random(s, 6)]);
+    r.classes = r.faces.map(resultClass);
+    r.failureCredit = r.faces.map((f) => f === 0);
+    log(s, "DICE_ROLLED", {
+      actorId: r.actorId,
+      die: r.die,
+      faces: r.faces,
+      kind: r.kind,
+    });
+    return;
+  }
   if (choice.kind === "SPAWN_ROLL") {
     const map = maps.maps.find((m) => m.id === s.mapId)!;
     const a = actor(s, choice.actorId);

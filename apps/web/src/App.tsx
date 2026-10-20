@@ -598,6 +598,7 @@ export function App({ net }: { net?: NetBinding } = {}) {
                         CARRY_REROUTE: "搬运改道",
                         REPLAN: "重新放置移动牌",
                         SPAWN_ROLL: "掷出生骰",
+                        ROLL_DICE: "掷骰",
                         DOCTOR_SHOCK: "电火花：付血点或承受",
                       } as Record<string, string>
                     )[state.choice.kind]
@@ -642,6 +643,7 @@ export function App({ net }: { net?: NetBinding } = {}) {
             CARRY_REROUTE: "点击合法房间改道，或选择停下",
             REPLAN: "从剩余手牌重新放置一张移动牌",
             SPAWN_ROLL: "轮到你掷出生骰：骰面对应房间上的出生标记",
+            ROLL_DICE: "轮到你掷骰",
             DOCTOR_SHOCK: "医生的电火花：支付1血点，或承受效果",
           } as Record<string, string>
         )[state.choice.kind]
