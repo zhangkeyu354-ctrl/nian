@@ -1,0 +1,937 @@
+/*
+ * 行动代号：「特工档案」风格——深色办公桌、纸质词卡、绯红对钴蓝。
+ * 所有美术都是可选的背景图（/assets/codenames/...）。图还没做出来时，显示下面的纯色/纹理后备。
+ * 美术清单见 docs/instructions/行动代号_美术资源.md
+ */
+.cn-app {
+  --cn-desk: #1b1f24;
+  --cn-desk2: #252b31;
+  --cn-ink: #1f1a14;
+  --cn-paper: #efe5cf;
+  --cn-paper2: #e2d5b8;
+  --cn-red: #c4313b;
+  --cn-red-deep: #8e1f27;
+  --cn-blue: #2a5db3;
+  --cn-blue-deep: #1b3d78;
+  --cn-neutral: #cbb994;
+  --cn-assassin: #15151a;
+  --cn-text: #f1ece0;
+  --cn-muted: #a9b0b5;
+  --cn-ok: #3fa565;
+  min-height: 100vh;
+  min-height: 100dvh;
+  background:
+    url("/assets/codenames/desk.webp") center / cover fixed,
+    radial-gradient(circle at 50% -10%, #2f3740, var(--cn-desk) 65%);
+  background-color: var(--cn-desk);
+  color: var(--cn-text);
+  font-family: system-ui, "PingFang SC", "Microsoft YaHei", "Noto Sans SC", sans-serif;
+  -webkit-tap-highlight-color: transparent;
+}
+.cn-app button {
+  font: inherit;
+  cursor: pointer;
+}
+.cn-app button:disabled {
+  cursor: default;
+}
+
+/* ---------- 首页 / 房间页 ---------- */
+.cn-home {
+  max-width: 560px;
+  margin: 0 auto;
+  padding: 16px 16px 40px;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+.cn-mast h1 {
+  margin: 8px 0 4px;
+  font-size: clamp(36px, 11vw, 52px);
+  font-weight: 900;
+  letter-spacing: 0.06em;
+  line-height: 1.05;
+}
+.cn-mast h1 small {
+  display: block;
+  font-size: 14px;
+  letter-spacing: 0.2em;
+  color: var(--cn-muted);
+  font-weight: 600;
+  margin-top: 6px;
+}
+.cn-mast.small h1 {
+  font-size: 28px;
+}
+.cn-mast.small h1 small {
+  display: none;
+}
+.cn-mast p {
+  color: #cfd3cf;
+  margin: 8px 0 0;
+  line-height: 1.6;
+}
+.cn-back {
+  color: var(--cn-muted);
+  text-decoration: none;
+  font-size: 15px;
+}
+.cn-panel {
+  background: rgba(239, 229, 207, 0.06);
+  border: 1px solid rgba(239, 229, 207, 0.16);
+  border-radius: 14px;
+  padding: 16px;
+}
+.cn-panel h2 {
+  margin: 0 0 8px;
+  font-size: 19px;
+}
+.cn-muted {
+  color: var(--cn-muted);
+  margin: 4px 0;
+  font-size: 14px;
+  line-height: 1.5;
+}
+.cn-center {
+  text-align: center;
+}
+.cn-error {
+  background: #5a1f22;
+  border: 1px solid #c4313b;
+  color: #ffe3e1;
+  border-radius: 10px;
+  padding: 10px 12px;
+  margin: 6px 0;
+  font-size: 15px;
+}
+.cn-offline {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 50;
+  margin: 0;
+  padding: 6px;
+  text-align: center;
+  background: #8e1f27;
+  font-size: 14px;
+}
+.cn-go {
+  display: block;
+  width: 100%;
+  min-height: 52px;
+  border-radius: 12px;
+  border: 0;
+  background: var(--cn-paper);
+  color: var(--cn-ink);
+  font-weight: 800;
+  font-size: 18px;
+  box-shadow: 0 3px 0 #9c8d6c;
+}
+.cn-go:disabled {
+  opacity: 0.55;
+  box-shadow: none;
+}
+.cn-go:not(:disabled):active {
+  transform: translateY(2px);
+  box-shadow: 0 1px 0 #9c8d6c;
+}
+.cn-mini {
+  min-height: 40px;
+  padding: 0 14px;
+  border-radius: 10px;
+  border: 1px solid rgba(239, 229, 207, 0.35);
+  background: rgba(239, 229, 207, 0.08);
+  color: var(--cn-text);
+  font-size: 15px;
+  font-weight: 600;
+}
+.cn-mini:disabled {
+  opacity: 0.5;
+}
+.cn-join,
+.cn-claim {
+  display: flex;
+  gap: 8px;
+}
+.cn-claim {
+  flex-direction: column;
+}
+.cn-join input,
+.cn-claim input,
+.cn-cluelabel input {
+  flex: 1;
+  min-width: 0;
+  min-height: 48px;
+  border-radius: 10px;
+  border: 1px solid #6b6556;
+  background: #fffaf0;
+  color: var(--cn-ink);
+  padding: 0 14px;
+  font-size: 18px;
+}
+.cn-join button {
+  min-width: 84px;
+  border-radius: 10px;
+  border: 0;
+  background: var(--cn-paper);
+  color: var(--cn-ink);
+  font-weight: 800;
+}
+.cn-invite {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+.cn-invite img {
+  background: #fff;
+  border-radius: 8px;
+  padding: 4px;
+}
+.cn-code {
+  margin: 0;
+  font-size: 46px;
+  font-weight: 900;
+  letter-spacing: 0.16em;
+  font-variant-numeric: tabular-nums;
+}
+.cn-link {
+  margin-top: 6px;
+  border: 0;
+  background: none;
+  color: #9fc3ff;
+  padding: 6px 0;
+  text-decoration: underline;
+  font-size: 15px;
+}
+.cn-seg {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 6px;
+  background: rgba(0, 0, 0, 0.25);
+  padding: 4px;
+  border-radius: 12px;
+}
+.cn-seg button {
+  min-height: 44px;
+  border-radius: 9px;
+  border: 0;
+  background: transparent;
+  color: var(--cn-text);
+  font-weight: 700;
+}
+.cn-seg button.on {
+  background: var(--cn-paper);
+  color: var(--cn-ink);
+}
+.cn-teams {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+}
+.cn-teamcol {
+  border-radius: 14px;
+  padding: 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  min-height: 180px;
+}
+.cn-teamcol.team-red {
+  background: linear-gradient(180deg, var(--cn-red), var(--cn-red-deep));
+}
+.cn-teamcol.team-blue {
+  background: linear-gradient(180deg, var(--cn-blue), var(--cn-blue-deep));
+}
+.cn-teamcol h2 {
+  margin: 0;
+  font-size: 22px;
+}
+.cn-teamcol h2 small {
+  font-size: 14px;
+  opacity: 0.8;
+}
+.cn-teamcol ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  flex: 1;
+}
+.cn-teamcol li {
+  background: rgba(0, 0, 0, 0.2);
+  border-radius: 8px;
+  padding: 6px 8px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  font-size: 15px;
+}
+.cn-teamcol li.off {
+  opacity: 0.6;
+}
+.cn-teamcol li em {
+  font-style: normal;
+  opacity: 0.75;
+  font-size: 13px;
+  margin-left: 4px;
+}
+.cn-teamcol .cn-mini {
+  min-height: 32px;
+  font-size: 13px;
+  align-self: flex-start;
+}
+.cn-capbadge {
+  display: inline-block;
+  background: var(--cn-paper);
+  color: var(--cn-ink);
+  border-radius: 6px;
+  padding: 0 6px;
+  margin-right: 6px;
+  font-size: 12px;
+}
+.cn-teambtn {
+  min-height: 46px;
+  border-radius: 10px;
+  border: 0;
+  background: var(--cn-paper);
+  color: var(--cn-ink);
+  font-weight: 800;
+}
+.cn-teambtn.ghost {
+  background: rgba(255, 255, 255, 0.15);
+  color: #fff;
+}
+.cn-watchers {
+  margin: 0 0 8px;
+}
+.cn-hostbar {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 8px;
+  position: sticky;
+  bottom: 8px;
+}
+
+/* ---------- 游戏 ---------- */
+.cn-game {
+  --turn: var(--cn-red);
+  --turn-deep: var(--cn-red-deep);
+  max-width: 620px;
+  margin: 0 auto;
+  padding: 0 8px calc(16px + env(safe-area-inset-bottom));
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.cn-game.turn-blue {
+  --turn: var(--cn-blue);
+  --turn-deep: var(--cn-blue-deep);
+}
+.cn-status {
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  margin: 0 -8px;
+  padding: 8px 12px 0;
+  background: linear-gradient(180deg, var(--turn), var(--turn-deep));
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.35);
+  transition: background 0.4s;
+}
+.cn-status .cn-back {
+  position: absolute;
+  left: 10px;
+  top: 10px;
+  color: #fff;
+  font-size: 20px;
+  padding: 2px 6px;
+}
+.cn-status-main {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 14px;
+  min-height: 44px;
+  padding: 0 30px;
+}
+.cn-status-main strong {
+  font-size: 20px;
+  letter-spacing: 0.04em;
+}
+.cn-timer {
+  font-size: 30px;
+  font-weight: 900;
+  font-variant-numeric: tabular-nums;
+  min-width: 2.2em;
+  text-align: center;
+  background: rgba(0, 0, 0, 0.28);
+  border-radius: 10px;
+  padding: 0 8px;
+}
+.cn-timer.hurry {
+  background: #fff;
+  color: var(--cn-red);
+  animation: cn-pulse 1s infinite;
+}
+@keyframes cn-pulse {
+  50% {
+    transform: scale(1.08);
+  }
+}
+.cn-bar {
+  height: 6px;
+  margin: 8px -12px 0;
+  background: rgba(0, 0, 0, 0.3);
+}
+.cn-bar i {
+  display: block;
+  height: 100%;
+  background: #fff;
+  transition: width 0.2s linear;
+}
+.cn-score {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+}
+.cn-sc {
+  border-radius: 12px;
+  padding: 6px 10px;
+  display: grid;
+  grid-template-columns: auto 1fr;
+  grid-template-areas: "num name" "num sub" "ex ex";
+  column-gap: 10px;
+  align-items: center;
+  opacity: 0.75;
+  border: 2px solid transparent;
+}
+.cn-sc.active {
+  opacity: 1;
+  border-color: #fff;
+}
+.cn-sc.team-red {
+  background: var(--cn-red-deep);
+}
+.cn-sc.team-blue {
+  background: var(--cn-blue-deep);
+}
+.cn-sc-name {
+  grid-area: name;
+  font-weight: 800;
+}
+.cn-sc-num {
+  grid-area: num;
+  font-size: 36px;
+  font-weight: 900;
+  line-height: 1;
+}
+.cn-sc-sub {
+  grid-area: sub;
+  font-size: 12px;
+  opacity: 0.8;
+}
+.cn-sc-extra {
+  grid-area: ex;
+  font-size: 12px;
+  margin-top: 4px;
+  color: #ffe9a8;
+}
+.cn-sc-extra.used {
+  color: rgba(255, 255, 255, 0.5);
+  text-decoration: line-through;
+}
+.cn-role {
+  margin: 0;
+  font-size: 14px;
+  text-align: center;
+  color: #d8dcd6;
+}
+.cn-role.captain {
+  background: var(--cn-paper);
+  color: var(--cn-ink);
+  border-radius: 10px;
+  padding: 6px 10px;
+  font-weight: 700;
+}
+.cn-clue {
+  min-height: 52px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  background: var(--cn-paper);
+  color: var(--cn-ink);
+  border-radius: 12px;
+  padding: 6px 12px;
+  border-left: 8px solid var(--turn);
+}
+.cn-clue .cn-muted {
+  color: #5f584a;
+}
+.cn-clue-word {
+  font-size: 26px;
+  font-weight: 900;
+  letter-spacing: 0.06em;
+}
+.cn-clue-num {
+  font-size: 22px;
+  font-weight: 900;
+  background: var(--turn);
+  color: #fff;
+  border-radius: 999px;
+  min-width: 36px;
+  height: 36px;
+  display: grid;
+  place-items: center;
+}
+.cn-clue-left {
+  margin-left: auto;
+  font-size: 14px;
+  font-weight: 700;
+  color: #5f584a;
+}
+
+/* 棋盘：手机竖屏 5 列铺满宽度 */
+.cn-board {
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  gap: 6px;
+}
+.cn-card {
+  position: relative;
+  aspect-ratio: 1 / 0.82;
+  border-radius: 9px;
+  border: 0;
+  padding: 4px 2px;
+  background:
+    url("/assets/codenames/card-paper.webp") center / cover,
+    linear-gradient(180deg, var(--cn-paper), var(--cn-paper2));
+  color: var(--cn-ink);
+  box-shadow:
+    0 2px 0 #9c8d6c,
+    0 4px 8px rgba(0, 0, 0, 0.25);
+  display: grid;
+  place-items: center;
+  overflow: hidden;
+  transition:
+    transform 0.15s,
+    box-shadow 0.15s;
+}
+.cn-card:disabled {
+  opacity: 1;
+}
+.cn-word {
+  font-size: clamp(15px, 4.6vw, 22px);
+  font-weight: 900;
+  line-height: 1.1;
+  word-break: keep-all;
+  text-align: center;
+}
+.cn-card.tappable:active {
+  transform: scale(0.95);
+}
+.cn-card.mine {
+  box-shadow:
+    0 0 0 3px #ffd34d,
+    0 4px 8px rgba(0, 0, 0, 0.25);
+}
+.cn-card.selected {
+  transform: translateY(-3px);
+  box-shadow:
+    0 0 0 4px #ffd34d,
+    0 8px 14px rgba(0, 0, 0, 0.45);
+}
+.cn-marks {
+  position: absolute;
+  top: 3px;
+  right: 3px;
+  min-width: 20px;
+  height: 20px;
+  border-radius: 999px;
+  background: #ffd34d;
+  color: var(--cn-ink);
+  font-size: 12px;
+  font-weight: 900;
+  display: grid;
+  place-items: center;
+  padding: 0 4px;
+}
+
+/* 队长视角：未揭晓牌带颜色边框和底纹 */
+.cn-card.secret.role-red {
+  background:
+    repeating-linear-gradient(135deg, rgba(196, 49, 59, 0.22) 0 6px, transparent 6px 12px),
+    linear-gradient(180deg, var(--cn-paper), var(--cn-paper2));
+  box-shadow:
+    inset 0 0 0 4px var(--cn-red),
+    0 2px 0 #9c8d6c;
+}
+.cn-card.secret.role-blue {
+  background:
+    repeating-linear-gradient(135deg, rgba(42, 93, 179, 0.22) 0 6px, transparent 6px 12px),
+    linear-gradient(180deg, var(--cn-paper), var(--cn-paper2));
+  box-shadow:
+    inset 0 0 0 4px var(--cn-blue),
+    0 2px 0 #9c8d6c;
+}
+.cn-card.secret.role-neutral {
+  background: linear-gradient(180deg, #e9dfc8, #d8ccb0);
+  color: #6e6553;
+}
+.cn-card.secret.role-assassin {
+  background: var(--cn-assassin);
+  color: #f3f0e6;
+  box-shadow:
+    inset 0 0 0 3px #d4af37,
+    0 2px 0 #000;
+}
+.cn-skull {
+  position: absolute;
+  bottom: 3px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 18px;
+  height: 18px;
+  background:
+    url("/assets/codenames/icon-assassin.webp") center / contain no-repeat,
+    radial-gradient(circle, #d4af37 35%, transparent 37%);
+}
+
+/* 已揭晓：整张换成身份色 + 角色图（图没做好之前是纯色+图标） */
+.cn-card.revealed {
+  box-shadow: inset 0 0 0 2px rgba(0, 0, 0, 0.25);
+  animation: cn-flip 0.45s ease-out;
+}
+.cn-card.revealed .cn-word {
+  font-size: clamp(11px, 3vw, 14px);
+  background: rgba(255, 255, 255, 0.85);
+  color: var(--cn-ink);
+  border-radius: 6px;
+  padding: 1px 5px;
+  align-self: end;
+  margin-bottom: 2px;
+}
+.cn-card.revealed.role-red {
+  background:
+    url("/assets/codenames/agent-red.webp") center / cover,
+    radial-gradient(circle at 50% 35%, #e05a62, var(--cn-red) 60%, var(--cn-red-deep));
+}
+.cn-card.revealed.role-blue {
+  background:
+    url("/assets/codenames/agent-blue.webp") center / cover,
+    radial-gradient(circle at 50% 35%, #5585d6, var(--cn-blue) 60%, var(--cn-blue-deep));
+}
+.cn-card.revealed.role-neutral {
+  background:
+    url("/assets/codenames/bystander.webp") center / cover,
+    radial-gradient(circle at 50% 35%, #e3d4b2, var(--cn-neutral));
+}
+.cn-card.revealed.role-assassin {
+  background:
+    url("/assets/codenames/assassin.webp") center / cover,
+    radial-gradient(circle at 50% 35%, #3a3a44, var(--cn-assassin));
+}
+.cn-card.last {
+  outline: 3px solid #fff;
+  outline-offset: 1px;
+}
+@keyframes cn-flip {
+  from {
+    transform: rotateY(90deg) scale(0.9);
+  }
+  to {
+    transform: none;
+  }
+}
+/* 结束后：没被翻开的牌半透明 + 斜纹 */
+.cn-card.unguessed {
+  opacity: 0.88;
+}
+.cn-card.unguessed.role-red {
+  box-shadow: inset 0 0 0 4px var(--cn-red);
+}
+.cn-card.unguessed.role-blue {
+  box-shadow: inset 0 0 0 4px var(--cn-blue);
+}
+.cn-card.unguessed.role-assassin {
+  background: var(--cn-assassin);
+  color: #fff;
+}
+
+/* 底部操作区 */
+.cn-dock {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-top: 4px;
+}
+.cn-wait {
+  margin: 0;
+  text-align: center;
+  padding: 12px;
+  border-radius: 12px;
+  background: rgba(0, 0, 0, 0.25);
+  color: #d8dcd6;
+}
+.cn-clueform {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  background: rgba(239, 229, 207, 0.08);
+  border: 2px solid var(--turn);
+  border-radius: 14px;
+  padding: 10px;
+}
+.cn-cluelabel {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  font-size: 13px;
+  color: var(--cn-muted);
+}
+.cn-cluelabel input {
+  font-size: 22px;
+  font-weight: 800;
+}
+.cn-nums {
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  gap: 6px;
+}
+.cn-nums button {
+  min-height: 44px;
+  border-radius: 10px;
+  border: 1px solid rgba(239, 229, 207, 0.35);
+  background: rgba(0, 0, 0, 0.2);
+  color: var(--cn-text);
+  font-size: 20px;
+  font-weight: 900;
+}
+.cn-nums button.on {
+  background: var(--cn-paper);
+  color: var(--cn-ink);
+}
+.cn-numhelp {
+  margin: 0;
+  font-size: 13px;
+  color: var(--cn-muted);
+}
+.cn-guessdock {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.cn-reveal {
+  background: #ffd34d;
+  min-height: 56px;
+  font-size: 19px;
+}
+.cn-notop {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: rgba(0, 0, 0, 0.25);
+  border-radius: 12px;
+  padding: 8px 10px;
+}
+.cn-notop p {
+  margin: 0;
+  flex: 1;
+  font-size: 14px;
+}
+.cn-row {
+  display: flex;
+  gap: 8px;
+}
+.cn-row > * {
+  flex: 1;
+}
+.cn-extra {
+  border-color: #ffd34d;
+  color: #ffe9a8;
+}
+.cn-extra.confirm {
+  background: #ffd34d;
+  color: var(--cn-ink);
+}
+.cn-toast {
+  position: fixed;
+  left: 12px;
+  right: 12px;
+  bottom: calc(14px + env(safe-area-inset-bottom));
+  z-index: 40;
+  max-width: 560px;
+  margin: 0 auto;
+}
+.cn-tabs {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+}
+.cn-tabs button {
+  min-height: 40px;
+  border-radius: 10px;
+  border: 1px solid rgba(239, 229, 207, 0.2);
+  background: transparent;
+  color: var(--cn-muted);
+}
+.cn-tabs button.on {
+  color: var(--cn-text);
+  background: rgba(239, 229, 207, 0.1);
+}
+.cn-log,
+.cn-plist {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+.cn-log li,
+.cn-plist li {
+  border-radius: 10px;
+  padding: 8px 10px;
+  background: rgba(0, 0, 0, 0.25);
+  border-left: 6px solid #777;
+}
+.cn-log li.team-red,
+.cn-plist li.team-red {
+  border-left-color: var(--cn-red);
+}
+.cn-log li.team-blue,
+.cn-plist li.team-blue {
+  border-left-color: var(--cn-blue);
+}
+.cn-plist li.off {
+  opacity: 0.6;
+}
+.cn-log-clue {
+  font-weight: 800;
+  margin-right: 8px;
+}
+.cn-log-reveals {
+  display: inline-flex;
+  flex-wrap: wrap;
+  gap: 4px;
+}
+.cn-log .chip {
+  font-size: 13px;
+  border-radius: 6px;
+  padding: 1px 6px;
+  background: #555;
+}
+.cn-log .chip.role-red {
+  background: var(--cn-red);
+}
+.cn-log .chip.role-blue {
+  background: var(--cn-blue);
+}
+.cn-log .chip.role-neutral {
+  background: var(--cn-neutral);
+  color: var(--cn-ink);
+}
+.cn-log .chip.role-assassin {
+  background: #000;
+  outline: 1px solid #d4af37;
+}
+.cn-log .chip.extra {
+  background: #ffd34d;
+  color: var(--cn-ink);
+}
+.cn-log-end {
+  display: block;
+  font-size: 12px;
+  color: var(--cn-muted);
+  margin-top: 2px;
+}
+.cn-result {
+  border-radius: 14px;
+  padding: 14px;
+  text-align: center;
+  background: linear-gradient(180deg, var(--cn-red), var(--cn-red-deep));
+}
+.cn-result.team-blue {
+  background: linear-gradient(180deg, var(--cn-blue), var(--cn-blue-deep));
+}
+.cn-result p {
+  margin: 4px 0 10px;
+}
+.cn-result-big {
+  font-size: 30px;
+  font-weight: 900;
+}
+.cn-result .cn-muted {
+  color: #f0f0f0;
+}
+
+/* 新线索大字闪现 */
+.cn-flash {
+  position: fixed;
+  inset: 0;
+  z-index: 30;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+  pointer-events: none;
+  background: rgba(0, 0, 0, 0.45);
+  animation: cn-flash 1.6s ease-out forwards;
+}
+.cn-flash span {
+  background: var(--cn-paper);
+  color: var(--cn-ink);
+  font-size: clamp(40px, 13vw, 72px);
+  font-weight: 900;
+  padding: 8px 22px;
+  border-radius: 14px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+}
+.cn-flash b {
+  font-size: clamp(40px, 13vw, 72px);
+  color: #fff;
+  background: var(--cn-red);
+  border-radius: 999px;
+  min-width: 1.4em;
+  height: 1.4em;
+  display: grid;
+  place-items: center;
+}
+.cn-flash.team-blue b {
+  background: var(--cn-blue);
+}
+@keyframes cn-flash {
+  0% {
+    opacity: 0;
+    transform: scale(0.8);
+  }
+  15% {
+    opacity: 1;
+    transform: scale(1);
+  }
+  80% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+  }
+}
+
+@media (min-width: 700px) {
+  .cn-board {
+    gap: 10px;
+  }
+  .cn-word {
+    font-size: 22px;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .cn-card.revealed,
+  .cn-flash,
+  .cn-timer.hurry {
+    animation: none;
+  }
+}

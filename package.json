@@ -25,7 +25,8 @@
     "verify:mobile-surface": "tsx scripts/verify-mobile-surface.ts",
     "verify:mobile-interfaces": "vitest run --config apps/web/test/capture.config.ts && tsx scripts/collect-ui-scenarios.ts && tsx scripts/verify-mobile-interfaces.ts",
     "audit:mobile": "tsx scripts/audit-current-mobile.ts",
-    "verify:ma-browsers": "tsx scripts/verify-ma-browsers.ts"
+    "verify:ma-browsers": "tsx scripts/verify-ma-browsers.ts",
+    "verify:cn-protocol": "tsx scripts/verify-cn-protocol.ts"
   },
   "devDependencies": {
     "@tailwindcss/vite": "4.3.3",

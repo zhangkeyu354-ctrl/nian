@@ -137,3 +137,34 @@
   object-fit: cover;
   border-bottom: 2px solid #1c2340;
 }
+
+/* 行动代号：深色办公桌 + 纸质词卡，红蓝对峙 */
+.box-cn {
+  background:
+    linear-gradient(135deg, rgba(196, 49, 59, 0.55) 0 50%, rgba(42, 93, 179, 0.55) 50% 100%),
+    #1b1f24;
+  border: 1px solid #5d6670;
+  color: #f1ece0;
+}
+.box-cn .box-open {
+  background: #efe5cf;
+  color: #1f1a14;
+  box-shadow: 0 3px 0 #9c8d6c;
+}
+.box-cn input {
+  background: #fffaf0;
+  border: 1px solid #6b6556;
+  color: #1f1a14;
+}
+.box-cn button {
+  background: #efe5cf;
+  color: #1f1a14;
+  border: 0;
+  border-radius: 8px;
+  font-weight: 800;
+}
+.box-cn-art {
+  display: block;
+  height: 84px;
+  background: url("/assets/codenames/lobby-cover.webp") left center / contain no-repeat;
+}
