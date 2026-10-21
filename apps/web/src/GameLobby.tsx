@@ -10,16 +10,42 @@ export function GameLobby() {
     <main className="hall">
       <header className="hall-head">
         <h1>今晚玩哪个？</h1>
-        <p>和朋友一起玩的桌游合集。开房后把房间号发给大家，每人用自己的手机加入，同一个 Wi-Fi 或外网都行。</p>
+        <p>
+          和朋友一起玩的桌游合集。开房后把房间号发给大家，每人用自己的手机加入，同一个
+          Wi-Fi 或外网都行。
+        </p>
       </header>
       <div className="hall-boxes">
+        <GameBox
+          id="dm"
+          title="请留遗言"
+          sub="Dying Message"
+          meta="4–10人 · 熟人圆桌推理"
+          blurb="死者留下一张真实线索，杀手混入假遗言。按座位轮流发言，从图片中找出杀手。"
+          art={
+            <img
+              className="box-dm-art"
+              src="/assets/dying-message/DM176.webp"
+              alt=""
+            />
+          }
+          online="/?game=dm"
+          join={(code) => "/?game=dm&room=" + code}
+        />
         <GameBox
           id="dbd"
           title="黎明杀机"
           sub="桌游版"
           meta="3–5 人 · 1 名杀手对 4 名逃生者"
           blurb="逃生者修好发电机逃出大门，杀手要把他们挂上钩子。每个人只看得到自己的秘密移动牌。"
-          art={<img src="/assets/brand_lantern.png" alt="" width={84} height={84} />}
+          art={
+            <img
+              src="/assets/brand_lantern.png"
+              alt=""
+              width={84}
+              height={84}
+            />
+          }
           online="/?online=1"
           join={(code) => `/?room=${code}`}
           extra={<a href="/?hotseat=1">同一台设备轮流玩</a>}
@@ -30,7 +56,13 @@ export function GameLobby() {
           sub="Magical Athlete"
           meta="2–6 人 · 4 场赛跑"
           blurb="选秀怪咖选手，每场派上场比赛。香蕉让人滑倒、巨婴挡住整条跑道，前两个冲线的拿奖牌。"
-          art={<img className="box-cover" src="/assets/magical-athlete/lobby/cover.webp" alt="" />}
+          art={
+            <img
+              className="box-cover"
+              src="/assets/magical-athlete/lobby/cover.webp"
+              alt=""
+            />
+          }
           online="/?game=ma"
           join={(code) => `/?game=ma&room=${code}`}
         />
@@ -62,7 +94,10 @@ function GameBox(props: {
 }) {
   const [code, setCode] = useState("");
   return (
-    <section className={"hall-box box-" + props.id} data-testid={"game-" + props.id}>
+    <section
+      className={"hall-box box-" + props.id}
+      data-testid={"game-" + props.id}
+    >
       <div className="box-art" aria-hidden="true">
         {props.art}
       </div>
@@ -72,14 +107,19 @@ function GameBox(props: {
       </h2>
       <p className="box-meta">{props.meta}</p>
       <p className="box-blurb">{props.blurb}</p>
-      <a className="box-open" href={props.online} data-testid={"open-" + props.id}>
+      <a
+        className="box-open"
+        href={props.online}
+        data-testid={"open-" + props.id}
+      >
         开房间
       </a>
       <form
         className="box-join"
         onSubmit={(e) => {
           e.preventDefault();
-          if (code.trim().length === 4) location.href = props.join(code.trim().toUpperCase());
+          if (code.trim().length === 4)
+            location.href = props.join(code.trim().toUpperCase());
         }}
       >
         <input

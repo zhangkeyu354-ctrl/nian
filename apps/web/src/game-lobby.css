@@ -168,3 +168,5 @@
   height: 84px;
   background: url("/assets/codenames/lobby-cover.webp") left center / contain no-repeat;
 }
+
+.box-dm{background:#fff8e9;color:#302c28;border:2px solid #564536}.box-dm .box-open,.box-dm button{background:#bd3f32;color:#fff}.box-dm input{background:#fff;color:#302c28}.box-dm .box-art{height:120px}.box-dm-art{height:120px;width:90px;object-fit:cover;border-radius:6px;transform:rotate(-8deg)}
