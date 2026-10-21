@@ -41,3 +41,5 @@ Original prompt: 阅读AGENTS.md，先提交Phase 1并排除原版reference图�
 
 - 2026-10-21 用户要求将请留遗言加入现有网站，并指定圆桌编号、可编辑角色池、随机发身份、按序每人5分钟发言再投票。已在dying-message分支独立接入dm引擎/服务器/协议/圆桌，153张派生WebP（原图未动）。4手机真实整局通过；其余游戏回归及数据边界见docs/dying-message/ACCEPTANCE_2026-10-21.md。未推main、不触发公网部署。后续待11–15人帮助卡、可选全员跳过投票、热座和更多高级组合真机试玩。
 - 2026-10-21：用户否定低清照片裁片，授权高清复刻或网络查找。已检查SYNKA同版官方图库/PDF，使用内置image_gen参照原卡复刻15人物（三张1254方形图集），牌背改SVG、卡名/阵营改原生文字，保留153无字证据。手机/电脑视觉、四人完整对局、411项测试、类型检查和构建通过；详见docs/dying-message/visual-v2/HD_ACCEPTANCE.md。无规则变更，未推送部署。
+
+- 2026-10-22 绘画派对首版（用户现已授权实施，3–8人，不仅8人）：独立codex/drawing-party工作树基于origin/main 91f8927；完成传话与伪画家自动主持改编、共用Pointer Canvas/IndexedDB草稿、dp独立房间/增量日志、隐私投影、回放与导出。线上UI沿用操作结构，独立代码/CSS，不复制品牌素材。456测试、typecheck/build、两款各3–8协议闭环、三人Chromium触控完整局/离线恢复/横竖屏/导出、旧64手机界面/回放/LAN协议/LAN浏览器/LAN大厅通过。8人本地200包短测P95 6.67ms，仅本机，不是Render。新增22测试含答案位置泄露与接任房主回归。未做真机、WebKit、Render；未交付真人出题者模式/长期云存储。交接docs/drawing-party/README.md；未推送或部署。

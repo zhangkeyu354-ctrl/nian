@@ -17,6 +17,8 @@ export function GameLobby() {
         </p>
       </header>
       <div className="hall-boxes">
+        <GameBox id="tp" title="传情画意" sub="绘画派对 · 画猜传话" meta="3–8人 · 同时画画" blurb="一句话变成一幅画，再变成一句话。最后一起翻开跑偏的传话本。" art={<span style={{fontSize:64}}>✎</span>} online="/?game=tp" join={code=>"/?game=tp&room="+code}/>
+        <GameBox id="fa" title="纽约伪画家" sub="绘画派对 · 自动主持改编" meta="3–8人 · 卧底画画" blurb="大家轮流在同一张纸上画一笔，只有一人不知道题目。你能找出伪画家吗？" art={<span style={{fontSize:64}}>?</span>} online="/?game=fa" join={code=>"/?game=fa&room="+code}/>
         <GameBox
           id="rr"
           title="眼疾手快"

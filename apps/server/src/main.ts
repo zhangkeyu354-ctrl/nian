@@ -5,6 +5,7 @@ import { networkInterfaces } from "node:os";
 import { fileURLToPath } from "node:url";
 import { Server } from "socket.io";
 import QRCode from "qrcode";
+import { attachDrawingParty } from "./drawing-rooms.ts";
 import { RoomStore, errorText, type Room } from "./rooms.ts";
 import { attachMagicalAthlete } from "./ma-rooms.ts";
 import { attachDyingMessage } from "./dm-rooms.ts";
@@ -140,6 +141,7 @@ const http = createServer((req, res) => {
 });
 
 const io = new Server(http, { cors: { origin: true } });
+const dpStore = attachDrawingParty(io, resolve(process.env.DP_DATA_DIR ?? join(DATA, "../dp-rooms")));
 /** 第二款游戏：魔法运动员（独立房间与存档，事件名带 ma: 前缀） */
 const dmStore = attachDyingMessage(
   io,
@@ -193,6 +195,7 @@ io.on("connection", (socket) => {
   let windowStart = Date.now(),
     count = 0;
   socket.use((_packet, next) => {
+    if (_packet[0] === "dp:stroke") return next(); // Drawing endpoint has independent limits
     const now = Date.now();
     if (now - windowStart > 10_000) ((windowStart = now), (count = 0));
     if (++count > 120) return next(new Error("RATE_LIMIT"));
