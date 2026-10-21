@@ -651,14 +651,31 @@ export function DyingMessage() {
                             你被选为命运之人，其中一方死亡，另一方也会死亡。
                           </p>
                         )}
-                        {v.killers.length > 0 && (!v.me.alive || reveal) && (
-                          <p data-testid="dm-killers">
-                            {v.me.alive ? "杀手同伴" : "你看到的杀手"}：
-                            {v.killers
-                              .map((k) => k.seat + "号 " + k.name)
-                              .join("、")}
-                          </p>
-                        )}
+                        {v.killers.length > 0 &&
+                          (!v.me.alive || reveal) &&
+                          (() => {
+                            const isKiller = v.killers.some(
+                              (k) => k.id === v.me.id,
+                            );
+                            const shown = isKiller
+                              ? v.killers.filter((k) => k.id !== v.me.id)
+                              : v.killers;
+                            const label = isKiller
+                              ? "杀手同伴"
+                              : v.killers.length > 1
+                                ? "你看到的杀手（共 " + v.killers.length + " 人）"
+                                : "你看到的杀手";
+                            return (
+                              <p data-testid="dm-killers">
+                                {label}：
+                                {shown.length
+                                  ? shown
+                                      .map((k) => k.seat + "号 " + k.name)
+                                      .join("、")
+                                  : "无，你是唯一的杀手"}
+                              </p>
+                            );
+                          })()}
                       </section>
                       <section className="dm-controls" aria-label="当前行动">
                         {v.active &&

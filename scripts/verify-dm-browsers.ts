@@ -88,6 +88,11 @@ try {
     .getByRole("button", { name: "查看我的秘密角色", exact: true })
     .click();
   await shot(pages[killer], "killer-roundtable");
+  // 唯一的杀手不应把自己显示成同伴
+  await pages[killer]
+    .getByTestId("dm-killers")
+    .getByText("杀手同伴：无，你是唯一的杀手")
+    .waitFor();
   const victimSeat = views[victim].view.players.find(
     (p: any) => p.id === views[victim].view.me.id,
   ).seat;
