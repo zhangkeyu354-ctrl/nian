@@ -327,6 +327,7 @@ export function Board({
         <svg
           data-testid="board"
           data-zoom={view.w / Math.max(1, size.width) > 2.4 ? "far" : "near"}
+          data-full={view.w >= 1400 || view.h >= height * 0.9 ? "1" : undefined}
           viewBox={`${view.x} ${view.y} ${view.w} ${view.h}`}
           role="img"
           aria-label={`${map.name_zh}数字棋盘，房间和道具可点击`}
@@ -344,7 +345,7 @@ export function Board({
               for (const room of e.currentTarget.querySelectorAll(
                 "[data-room]",
               )) {
-                const r = room.querySelector("rect")?.getBoundingClientRect();
+                const r = room.querySelector(":scope > rect")?.getBoundingClientRect();
                 if (!r) continue;
                 const dx = Math.abs(e.clientX - (r.left + r.width / 2));
                 const dy = Math.abs(e.clientY - (r.top + r.height / 2));
@@ -400,6 +401,17 @@ export function Board({
                 opacity=".22"
               />
             </pattern>
+            <filter id="soft-shadow" x="-30%" y="-30%" width="160%" height="160%">
+              <feGaussianBlur stdDeviation="12" />
+            </filter>
+            <linearGradient id="wall-shade" x2="0" y2="1">
+              <stop offset="0.5" stopColor="#000" stopOpacity=".35" />
+              <stop offset="1" stopColor="#000" stopOpacity=".72" />
+            </linearGradient>
+            <radialGradient id="board-floor" cx="50%" cy="40%" r="80%">
+              <stop offset="0" stopColor="#2c3e42" />
+              <stop offset="1" stopColor="#141d20" />
+            </radialGradient>
             <radialGradient id="board-vignette" cx="50%" cy="45%" r="75%">
               <stop offset="0.6" stopColor="#000" stopOpacity="0" />
               <stop offset="1" stopColor="#000" stopOpacity=".45" />
@@ -445,15 +457,7 @@ export function Board({
             y={view.y}
             width={view.w}
             height={view.h}
-            fill="#223035"
-          />
-          <rect
-            x={view.x}
-            y={view.y}
-            width={view.w}
-            height={view.h}
-            fill="url(#weather)"
-            opacity=".42"
+            fill="url(#board-floor)"
           />
           {Object.values(state.paths).map((p) => {
             const segments = (layout.paths[p.id] ?? []).map((segment) =>
@@ -553,11 +557,11 @@ export function Board({
                   aria-label={cardNames[p.color] + "路线"}
                 >
                   <rect
-                    x="-27"
-                    y="-27"
-                    width="54"
-                    height="54"
-                    rx="2"
+                    x="-22"
+                    y="-22"
+                    width="44"
+                    height="44"
+                    rx="22"
                     fill="#0d1416"
                     stroke={colors[p.color]}
                     strokeWidth="5"
@@ -570,8 +574,8 @@ export function Board({
                       strokeWidth="3"
                     />
                   )}
-                  <g transform="translate(-22 -22)" color="#f4efdb">
-                    <MotionIcon card={p.color} size={44} />
+                  <g transform="translate(-16 -16)" color="#f4efdb">
+                    <MotionIcon card={p.color} size={32} />
                   </g>
                 </g>
                 {visuals.paths
@@ -613,6 +617,7 @@ export function Board({
             const crowded = occupants.length > 4;
             const tokenSize = crowded ? 44 : 54;
             const tokenGap = crowded ? 40 : 48;
+            const showSpawn = state.phase === "SETUP" && !!n.spawn_faces.length;
             const tokenStart = n.spawn_faces.length ? -62 : -92;
             const slotGap = Math.min(51, 250 / Math.max(1, slots.length));
             const slotHit = Math.min(62, slotGap);
@@ -662,27 +667,10 @@ export function Board({
                     />
                   )}
                   {/* 2.5D：房间像一块有厚度的板块——下方投影 + 底边厚度（2026-10-21） */}
-                  <g pointerEvents="none">
-                  <rect
-                    x="-122"
-                    y="-70"
-                    width="262"
-                    height="202"
-                    rx="8"
-                    fill="#03070a"
-                    opacity=".6"
-                    pointerEvents="none"
-                  />
-                  <rect
-                    x="-130"
-                    y="104"
-                    width="260"
-                    height="24"
-                    rx="5"
-                    fill={accent}
-                    opacity=".55"
-                    pointerEvents="none"
-                  />
+                  <g pointerEvents="none" className="room-extrude">
+                    <rect x="-112" y="-50" width="268" height="222" rx="14" fill="#000" opacity=".5" />
+                    <rect x="-130" y="80" width="260" height="70" rx="6" fill={accent} />
+                    <rect x="-130" y="80" width="260" height="70" rx="6" fill="url(#wall-shade)" />
                   </g>
                   <rect
                     x="-130"
@@ -760,7 +748,7 @@ export function Board({
                     >
                       {n.name_zh}
                     </text>
-                    {!!n.spawn_faces.length && (
+                    {showSpawn && (
                       <g
                         transform="translate(-117 -38)"
                         data-spawn={n.spawn_faces.join(",")}

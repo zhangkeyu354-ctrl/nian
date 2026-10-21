@@ -1619,3 +1619,8 @@ body.phone-inmatch {
 .room-sheet-people li small, .room-sheet-exits li small { margin-left: auto; color: #d6dccb; font-size: 12px; background: #34484c; padding: 2px 6px; border-radius: 4px; }
 .room-sheet-exits li b { color: #081012; padding: 2px 8px; border-radius: 4px; font-size: 13px; }
 .room-sheet .muted { color: #9aa79f; font-size: 13px; margin: 0; }
+
+/* 降噪（2026-10-22）：地图按钮半透明、播报出现时收起底部日志条 */
+.phone-game .zoom-controls button { background: rgba(8, 14, 16, .5) !important; border-color: rgba(255, 255, 255, .16) !important; color: #e9ecdf; font-size: 16px; min-width: 56px; backdrop-filter: blur(6px); box-shadow: none; }
+body:has(.action-callout) .phone-game .phone-latest,
+body:has(.major-notice) .phone-game .phone-latest { opacity: 0; transition: opacity .2s; }

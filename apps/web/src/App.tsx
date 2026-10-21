@@ -38,6 +38,7 @@ import { EventJournal } from "./EventJournal.tsx";
 import { MobileDock, MobileParameters, usePhone } from "./MobileDock.tsx";
 import { VerdictBanner, verdictsFrom, type VerdictInfo } from "./Verdict.tsx";
 import { RoomSheet } from "./RoomSheet.tsx";
+import { ActionCallouts } from "./BoardFx.tsx";
 import { usePhoneExperience } from "./phone-experience.ts";
 import { skillRouteActions } from "./ui-actions.ts";
 import { ItemUseNotice } from "./ItemUseNotice.tsx";
@@ -1525,6 +1526,7 @@ export function App({ net }: { net?: NetBinding } = {}) {
           toast={phone}
         />
       )}
+      {state && <ActionCallouts state={state} />}
       {phone && inspect && state && (
         <RoomSheet state={state} roomId={inspect} close={() => setInspect(null)} />
       )}

@@ -6,12 +6,14 @@ type Settings = {
   art: boolean;
   sound: boolean;
   vibration: boolean;
+  tilt: boolean;
 };
 const Context = createContext({
   animations: true,
   art: true,
   sound: true,
   vibration: true,
+  tilt: true,
   effectiveAnimations: true,
   set: (_k: keyof Settings, _v: boolean) => {},
 });
@@ -23,10 +25,11 @@ export function SettingsProvider({ children }: { children: React.ReactNode }) {
         art: true,
         sound: true,
         vibration: true,
+        tilt: true,
         ...JSON.parse(localStorage.getItem("dbd-visual-settings") ?? "{}"),
       };
     } catch {
-      return { animations: true, art: true, sound: true, vibration: true };
+      return { animations: true, art: true, sound: true, vibration: true, tilt: true };
     }
   });
   const [reduced, setReduced] = useState(
@@ -43,6 +46,7 @@ export function SettingsProvider({ children }: { children: React.ReactNode }) {
     document.documentElement.dataset.motion = effectiveAnimations
       ? "on"
       : "off";
+    document.documentElement.dataset.tilt = settings.tilt ? "on" : "off";
     try {
       localStorage.setItem("dbd-visual-settings", JSON.stringify(settings));
     } catch {
@@ -112,6 +116,15 @@ export function SettingsButton() {
                 onChange={(e) => s.set("vibration", e.target.checked)}
               />
               游戏震动
+            </label>
+            <label>
+              <input
+                type="checkbox"
+                data-testid="tilt-setting"
+                checked={s.tilt}
+                onChange={(e) => s.set("tilt", e.target.checked)}
+              />
+              立体地图（2.5D 倾斜视角）
             </label>
             <p className="muted">
               设置保存在本设备。关闭动画仍显示静态结果，系统减少动态效果设置优先。
