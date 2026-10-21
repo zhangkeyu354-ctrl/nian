@@ -390,7 +390,7 @@ function Game({ snap, view, send, connected }: { snap: MARoomSnapshot; view: MAV
           className="ma-turn-toast"
           onClick={() => {
             setToast(false);
-            document.querySelector(".ma-decide.you, .ma-banner.you")?.scrollIntoView({ behavior: "smooth", block: "center" });
+            document.querySelector(".ma-cc.you, .ma-decide.you, .ma-banner.you")?.scrollIntoView({ behavior: "smooth", block: "center" });
           }}
         >
           👉 轮到你了！
@@ -586,7 +586,33 @@ function Race({
     io.observe(el);
     return () => io.disconnect();
   });
-  const showBar = !!p && !race.over && p.player === me && !pb.busy && !decideSeen;
+  // 竖版原版棋盘：操作放在赛道中间空白处，下面的操作区隐藏，棋盘更大
+  const centerMode = portrait && !useGrid;
+  const showBar = !centerMode && !!p && !race.over && p.player === me && !pb.busy && !decideSeen;
+  const centerCard =
+    centerMode && p && !race.over ? (
+      <div className={"ma-cc" + (p.player === me ? " you" : "") + (pb.busy ? " waiting" : "")}>
+        <p className="ma-who">
+          <span className="ma-dot" style={{ background: colorOf(p.player) }} />
+          {p.player === me ? "你" : name(p.player)}
+          {p.racer && ` · ${racerName(p.racer)}`}
+        </p>
+        <p className="ma-cc-prompt">{p.prompt}</p>
+        {pb.busy ? (
+          <p className="ma-muted">动画播放中…</p>
+        ) : p.player === me ? (
+          <div className="ma-options">
+            {p.options.map((o) => (
+              <button key={o.value} className={o.value === "roll" ? "ma-go" : ""} onClick={() => act({ type: "ANSWER", value: o.value })}>
+                {o.label}
+              </button>
+            ))}
+          </div>
+        ) : (
+          <p className="ma-muted">等待对方操作…</p>
+        )}
+      </div>
+    ) : null;
   return (
     <section className="ma-race">
       {mine.length > 0 && (
@@ -653,6 +679,7 @@ function Race({
           onPawn={openCard}
           fit={portrait ? false : fit}
           layout={useGrid ? "grid" : "art"}
+          center={centerCard}
         />
       </div>
       {showBar && p && (
@@ -667,7 +694,7 @@ function Race({
           </div>
         </div>
       )}
-      <div className="ma-side">
+      <div className={"ma-side" + (centerMode ? " center-mode" : "")}>
         {p && !race.over && (
           <div ref={decideRef} className={"ma-decide" + (p.player === me ? " you" : "") + (pb.busy ? " waiting" : "")} data-testid="ma-decide">
             <p className="ma-who">

@@ -1755,3 +1755,78 @@
     transform: translateY(120%);
   }
 }
+
+/* ---------- 竖版原版棋盘：不再有自己的滚动框（整页滚动，棋盘更大），操作卡放赛道中间 ---------- */
+.ma-board-scroll.vertical.zoomed {
+  max-height: none;
+  overflow: hidden;
+  overflow: clip;
+}
+/* 原图中间是插画（两条赛道之间），转成竖版后大约在屏幕横向 31%–69% */
+.ma-center-lane {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 31%;
+  width: 38%;
+  z-index: 40;
+  pointer-events: none;
+}
+.ma-center-card {
+  position: sticky;
+  top: calc(50dvh - 90px);
+  margin-top: 40px;
+  pointer-events: auto;
+}
+.ma-cc {
+  background: rgba(255, 255, 255, 0.96);
+  color: var(--ink);
+  border: 3px solid var(--ink);
+  border-radius: 14px;
+  box-shadow: 0 4px 0 var(--ink);
+  padding: 8px;
+  font-size: 13px;
+  line-height: 1.35;
+  max-height: 60dvh;
+  overflow: auto;
+}
+.ma-cc.you:not(.waiting) {
+  background: var(--sun);
+  animation: ma-your-turn 1.4s ease-in-out infinite;
+}
+.ma-cc .ma-who {
+  margin: 0 0 4px;
+  font-weight: 800;
+  display: flex;
+  gap: 4px;
+  align-items: center;
+  flex-wrap: wrap;
+}
+.ma-cc-prompt {
+  margin: 0 0 6px;
+  font-weight: 700;
+}
+.ma-cc .ma-muted {
+  margin: 0;
+}
+.ma-cc .ma-options {
+  flex-direction: column;
+  gap: 6px;
+}
+.ma-app .ma-cc .ma-options button {
+  width: 100%;
+  min-height: 40px;
+  padding: 4px 6px;
+  font-size: 13px;
+}
+.ma-app .ma-cc .ma-go {
+  background: var(--chalk);
+  font-size: 16px;
+}
+.ma-cc.you:not(.waiting) .ma-go {
+  animation: ma-nudge 1.4s ease-in-out infinite;
+}
+/* 操作已经在赛道中间了，下面的操作区就不重复显示 */
+.ma-side.center-mode .ma-decide {
+  display: none;
+}

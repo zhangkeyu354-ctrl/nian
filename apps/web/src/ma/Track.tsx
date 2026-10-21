@@ -70,6 +70,7 @@ export function Track({
   onPawn,
   fit = true,
   layout = "art",
+  center,
 }: {
   race: RaceState;
   colorOf: (playerId: string) => string;
@@ -82,6 +83,8 @@ export function Track({
   /** 原版棋盘：true 整条赛道缩放到一屏内；false 放大，可滑动 */
   fit?: boolean;
   layout?: "art" | "grid";
+  /** 手机竖版原版棋盘：放在赛道中间空白处的操作卡（跟着页面滚动停在屏幕中间） */
+  center?: React.ReactNode;
 }) {
   const race: RaceState = shown
     ? { ...raceIn, tokens: raceIn.tokens.map((t) => ({ ...t, ...(shown.get(t.racer) ?? {}) })) }
@@ -113,7 +116,11 @@ export function Track({
     const el = scroller.current;
     if (!el || !focus || layout === "grid") return;
     if (vertical) {
-      if (el.scrollHeight > el.clientHeight)
+      if (!fit) {
+        // 竖版放大：整页滚动（棋盘不再有自己的滚动框），把行动的选手滚到屏幕中间
+        const r = el.getBoundingClientRect();
+        window.scrollTo({ top: window.scrollY + r.top + focus.x * r.height - window.innerHeight / 2, behavior: "smooth" });
+      } else if (el.scrollHeight > el.clientHeight)
         el.scrollTo({ top: focus.x * el.scrollHeight - el.clientHeight / 2, behavior: "smooth" });
     } else if (el.scrollWidth > el.clientWidth)
       el.scrollTo({ left: focus.x * el.scrollWidth - el.clientWidth / 2, behavior: "smooth" });
@@ -276,6 +283,11 @@ export function Track({
           }}
         >
           {art}
+          {center && (
+            <div className="ma-center-lane">
+              <div className="ma-center-card">{center}</div>
+            </div>
+          )}
         </div>
       ) : (
         art
