@@ -10,6 +10,7 @@ import { attachMagicalAthlete } from "./ma-rooms.ts";
 import { attachDyingMessage } from "./dm-rooms.ts";
 import { attachCodenames } from "./cn-rooms.ts";
 import { attachReflexRace } from "./rr-rooms.ts";
+import { attachWitchTown } from "./wt-rooms.ts";
 import {
   EVENTS,
   type Ack,
@@ -80,6 +81,9 @@ const http = createServer((req, res) => {
         cnRooms: cnStore.rooms.size,
         dmRooms: dmStore.rooms.size,
         rrRooms: rrStore.rooms.size,
+        ...(wtStore
+          ? { witchTown: { milestone: "M1_SETUP_ONLY", rooms: wtStore.size, fullGame: false } }
+          : {}),
       }),
     );
     return;
@@ -140,6 +144,14 @@ const http = createServer((req, res) => {
 });
 
 const io = new Server(http, { cors: { origin: true } });
+/** M1 local engineering entry; disabled by default until complete game acceptance. */
+const wtStore = process.env.WT_ENABLE_M1 === "1"
+  ? attachWitchTown(
+      io,
+      resolve(process.env.WT_DATA_DIR ?? join(DATA, "../wt-rooms")),
+      { maxRooms: MAX_ROOMS, allowCandidateCounts: process.env.WT_ALLOW_CANDIDATE_COUNTS === "1" },
+    )
+  : null;
 /** 第二款游戏：魔法运动员（独立房间与存档，事件名带 ma: 前缀） */
 const dmStore = attachDyingMessage(
   io,

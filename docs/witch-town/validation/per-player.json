@@ -1,0 +1,87 @@
+{
+  "totalRandomSetupIterations": 9000,
+  "actualRandomFullGames": 0,
+  "rows": [
+    {
+      "players": 4,
+      "randomSetupIterations": 1000,
+      "passedIterations": 1000,
+      "setupTests": 4,
+      "actualFullGames": 0,
+      "countsProfile": "candidate-59",
+      "officialTypeCountsVerified": false
+    },
+    {
+      "players": 5,
+      "randomSetupIterations": 1000,
+      "passedIterations": 1000,
+      "setupTests": 4,
+      "actualFullGames": 0,
+      "countsProfile": "candidate-59",
+      "officialTypeCountsVerified": false
+    },
+    {
+      "players": 6,
+      "randomSetupIterations": 1000,
+      "passedIterations": 1000,
+      "setupTests": 4,
+      "actualFullGames": 0,
+      "countsProfile": "candidate-59",
+      "officialTypeCountsVerified": false
+    },
+    {
+      "players": 7,
+      "randomSetupIterations": 1000,
+      "passedIterations": 1000,
+      "setupTests": 4,
+      "actualFullGames": 0,
+      "countsProfile": "candidate-59",
+      "officialTypeCountsVerified": false
+    },
+    {
+      "players": 8,
+      "randomSetupIterations": 1000,
+      "passedIterations": 1000,
+      "setupTests": 4,
+      "actualFullGames": 0,
+      "countsProfile": "candidate-59",
+      "officialTypeCountsVerified": false
+    },
+    {
+      "players": 9,
+      "randomSetupIterations": 1000,
+      "passedIterations": 1000,
+      "setupTests": 4,
+      "actualFullGames": 0,
+      "countsProfile": "candidate-59",
+      "officialTypeCountsVerified": false
+    },
+    {
+      "players": 10,
+      "randomSetupIterations": 1000,
+      "passedIterations": 1000,
+      "setupTests": 4,
+      "actualFullGames": 0,
+      "countsProfile": "candidate-59",
+      "officialTypeCountsVerified": false
+    },
+    {
+      "players": 11,
+      "randomSetupIterations": 1000,
+      "passedIterations": 1000,
+      "setupTests": 4,
+      "actualFullGames": 0,
+      "countsProfile": "candidate-59",
+      "officialTypeCountsVerified": false
+    },
+    {
+      "players": 12,
+      "randomSetupIterations": 1000,
+      "passedIterations": 1000,
+      "setupTests": 4,
+      "actualFullGames": 0,
+      "countsProfile": "candidate-59",
+      "officialTypeCountsVerified": false
+    }
+  ]
+}
