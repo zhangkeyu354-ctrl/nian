@@ -1,0 +1,78 @@
+{
+  "version": "3439662",
+  "assetsVerified": 11,
+  "room": "HFXV",
+  "contexts": 4,
+  "phones": 2,
+  "cards": 25,
+  "privacy": true,
+  "refresh": true,
+  "gameOver": true,
+  "evidence": [
+    {
+      "scope": "Visible UI / prototype region, not a full-map-count claim",
+      "region": {
+        "x": 0,
+        "y": 0,
+        "width": 390,
+        "height": 844
+      },
+      "pixels": {
+        "busy": 0.6340867663142544,
+        "std": 89.76432863297686
+      }
+    },
+    {
+      "scope": "Visible UI / prototype region, not a full-map-count claim",
+      "region": {
+        "x": 0,
+        "y": 0,
+        "width": 390,
+        "height": 844
+      },
+      "pixels": {
+        "busy": 0.615846396889051,
+        "std": 95.65925044641774
+      }
+    },
+    {
+      "scope": "Visible UI / prototype region, not a full-map-count claim",
+      "region": {
+        "x": 0,
+        "y": 0,
+        "width": 1280,
+        "height": 900
+      },
+      "pixels": {
+        "busy": 0.5224166666666666,
+        "std": 83.09042827326549
+      }
+    },
+    {
+      "scope": "Visible UI / prototype region, not a full-map-count claim",
+      "region": {
+        "x": 0,
+        "y": 0,
+        "width": 1280,
+        "height": 900
+      },
+      "pixels": {
+        "busy": 0.52521875,
+        "std": 89.11602971195937
+      }
+    },
+    {
+      "scope": "Visible UI / prototype region, not a full-map-count claim",
+      "region": {
+        "x": 0,
+        "y": 0,
+        "width": 390,
+        "height": 844
+      },
+      "pixels": {
+        "busy": 0.7491797302223843,
+        "std": 77.41233880804032
+      }
+    }
+  ]
+}
