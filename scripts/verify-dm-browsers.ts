@@ -5,7 +5,7 @@ import { assertUiShot } from "./screenshot-check.ts";
 const base = process.env.DM_URL ?? "http://127.0.0.1:3184";
 const out = process.env.DM_SCREEN_DIR ?? "docs/dying-message/screens";
 mkdirSync(out, { recursive: true });
-const browser = await chromium.launch({ headless: true });
+const browser = await chromium.launch({ headless: true, executablePath: process.env.PW_CHROME });
 const contexts = await Promise.all(
   Array.from({ length: 4 }, () =>
     browser.newContext({
