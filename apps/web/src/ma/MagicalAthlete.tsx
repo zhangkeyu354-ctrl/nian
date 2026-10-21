@@ -576,6 +576,17 @@ function Race({
       return n;
     });
   const useGrid = portrait && layout === "grid";
+  // 棋盘占满屏宽后，操作区可能在屏幕下面：轮到你且看不到操作区时，底部浮出一条操作栏
+  const decideRef = useRef<HTMLDivElement>(null);
+  const [decideSeen, setDecideSeen] = useState(true);
+  useEffect(() => {
+    const el = decideRef.current;
+    if (!el || typeof IntersectionObserver === "undefined") return;
+    const io = new IntersectionObserver(([e]) => setDecideSeen(e.isIntersecting), { threshold: 0.6 });
+    io.observe(el);
+    return () => io.disconnect();
+  });
+  const showBar = !!p && !race.over && p.player === me && !pb.busy && !decideSeen;
   return (
     <section className="ma-race">
       {mine.length > 0 && (
@@ -644,9 +655,21 @@ function Race({
           layout={useGrid ? "grid" : "art"}
         />
       </div>
+      {showBar && p && (
+        <div className="ma-actbar" role="region" aria-label="轮到你操作">
+          <p>{p.racer && !p.prompt.includes(racerName(p.racer)) ? `${racerName(p.racer)}：` : ""}{p.prompt}</p>
+          <div className="ma-options">
+            {p.options.map((o) => (
+              <button key={o.value} className={o.value === "roll" ? "ma-go" : ""} onClick={() => act({ type: "ANSWER", value: o.value })}>
+                {o.label}
+              </button>
+            ))}
+          </div>
+        </div>
+      )}
       <div className="ma-side">
         {p && !race.over && (
-          <div className={"ma-decide" + (p.player === me ? " you" : "") + (pb.busy ? " waiting" : "")} data-testid="ma-decide">
+          <div ref={decideRef} className={"ma-decide" + (p.player === me ? " you" : "") + (pb.busy ? " waiting" : "")} data-testid="ma-decide">
             <p className="ma-who">
               <span className="ma-dot" style={{ background: colorOf(p.player) }} />
               {p.player === me ? "你" : name(p.player)}

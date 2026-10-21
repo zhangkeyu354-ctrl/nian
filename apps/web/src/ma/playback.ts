@@ -66,6 +66,8 @@ export function usePlayback(view: MAView) {
   async function run() {
     running.current = true;
     setBusy(true);
+    // 先把棋盘「冻结」在动画开始前的位置：骰子转完、真正走的时候才动
+    if (shownRef.current) setShown(shownRef.current);
     // 播放起点：上一次播放结束时的位置（或当前比赛开始时）
     let cur = shownRef.current ?? null;
     while (queue.current.length) {
@@ -201,11 +203,14 @@ export function usePlayback(view: MAView) {
     setBusy(false);
   }
 
+  // 服务器的新状态刚到、动画还没开始的那一瞬间，也继续显示旧位置（否则会先闪一下终点位置）
+  const unplayed = seen.current !== null && view.log.length > seen.current;
+  const frozen = shown ?? (running.current || unplayed ? shownRef.current : null);
   return {
-    busy,
+    busy: busy || unplayed,
     show,
     moving,
-    shown,
+    shown: frozen,
     skip: () => {
       skip.current = true;
       [...wakers.current].forEach((f) => f());

@@ -1603,8 +1603,8 @@
 }
 .ma-grid {
   position: relative;
-  /* 一屏里同时放下：顶栏 + 比分 + 我的选手 + 棋盘 + 下面的操作区（约 140px） */
-  width: max(240px, min(100%, calc((100dvh - 390px) * 5 / 7)));
+  /* 用户要求（2026-10-21）：手机上棋盘占满屏幕宽度，不按高度缩小 */
+  width: 100%;
   margin: 0 auto;
   background: #111;
   border: 3px solid var(--ink);
@@ -1721,4 +1721,37 @@
 /* 清晰棋盘每格自带特殊格标签，上面的图例就不占地方了 */
 .ma-board.grid-mode .ma-legend {
   display: none;
+}
+/* 轮到你、但操作区在屏幕外：底部浮动操作栏 */
+.ma-actbar {
+  position: fixed;
+  left: 8px;
+  right: 8px;
+  bottom: calc(8px + env(safe-area-inset-bottom));
+  z-index: 70;
+  background: var(--sun);
+  border: 3px solid var(--ink);
+  border-radius: 16px;
+  box-shadow: 0 5px 0 var(--ink), 0 0 24px rgba(0, 0, 0, 0.35);
+  padding: 8px 10px 10px;
+  max-height: 42vh;
+  overflow: auto;
+  animation: ma-bar-in 0.25s ease-out;
+}
+.ma-actbar p {
+  margin: 0 0 6px;
+  font-weight: 800;
+  font-size: 15px;
+  line-height: 1.35;
+}
+.ma-actbar .ma-options button {
+  flex: 1 1 auto;
+}
+.ma-app .ma-actbar .ma-go {
+  background: var(--chalk);
+}
+@keyframes ma-bar-in {
+  from {
+    transform: translateY(120%);
+  }
 }
