@@ -81,4 +81,40 @@ describe("魔法运动员房间", () => {
     const again = new MARoomStore(dir).rooms.get(room.code)!;
     expect(JSON.stringify(again.state)).toBe(JSON.stringify(room.state));
   });
+
+  it("同名重进：离线时直接接回原位置（大厅和游戏中都行），在线时要确认；不会多出同名玩家", () => {
+    const store = new MARoomStore(mkdtempSync(join(tmpdir(), "ma-")));
+    const room = store.create();
+    const host = room.claim("房主");
+    const rj = room.claim("RJ");
+    // 微信退出、本机记录丢了：再输入同一个名字 → 拿回同一个位置
+    expect(room.claim("RJ")).toBe(rj);
+    expect(room.claim(" RJ ")).toBe(rj);
+    expect(room.file.players).toHaveLength(2);
+    // 旧窗口还连着：需要本人确认
+    const id = room.idByToken(rj)!;
+    room.connections.set(id, 1);
+    expect(() => room.claim("RJ")).toThrow("NAME_TAKEN");
+    expect(room.claim("RJ", true)).toBe(rj);
+    room.connections.set(id, 0);
+    // 开局后：新名字不能加入，原玩家可以接回
+    room.lobby(host, { type: "START" });
+    expect(() => room.claim("路人")).toThrow("ALREADY_STARTED");
+    expect(room.claim("RJ")).toBe(rj);
+    expect(room.file.players).toHaveLength(2);
+  });
+
+  it("房主可以在开局前移出多余的玩家；不能移出自己；别人不能移", () => {
+    const store = new MARoomStore(mkdtempSync(join(tmpdir(), "ma-")));
+    const room = store.create();
+    const host = room.claim("房主");
+    const a = room.claim("阿");
+    room.claim("多余");
+    const extra = room.file.players[2].playerId;
+    expect(() => room.lobby(a, { type: "KICK", playerId: extra })).toThrow("HOST_ONLY");
+    expect(() => room.lobby(host, { type: "KICK", playerId: room.idByToken(host)! })).toThrow("BAD_ACTION");
+    room.lobby(host, { type: "KICK", playerId: extra });
+    expect(room.file.players.map((p) => p.name)).toEqual(["房主", "阿"]);
+  });
 });
+

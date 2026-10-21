@@ -93,8 +93,8 @@ export function useMARoom(code: string) {
     };
   }, [code]);
 
-  async function claim(name: string) {
-    const res = await call<{ token: string }>(MA_EVENTS.claim, { code, name });
+  async function claim(name: string, takeover = false) {
+    const res = await call<{ token: string }>(MA_EVENTS.claim, { code, name, takeover });
     if (!res.ok) return res.error;
     saveToken(code, res.token);
     saveName(name);

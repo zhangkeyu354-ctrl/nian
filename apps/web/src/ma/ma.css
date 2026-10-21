@@ -1945,3 +1945,49 @@
   max-height: 70dvh;
   font-size: 13px;
 }
+/* 重进房间：点自己的名字接回位置 */
+.ma-rejoin {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin: 6px 0 12px;
+}
+.ma-rejoin button {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+.ma-rejoin em,
+.ma-players em.off {
+  font-style: normal;
+}
+.ma-rejoin em {
+  font-size: 11px;
+  color: #c4452c;
+  border: 1px solid currentColor;
+  border-radius: 99px;
+  padding: 0 6px;
+}
+.ma-taken {
+  background: #fff4c7;
+  border: 2px solid var(--ink);
+  border-radius: 12px;
+  padding: 10px;
+  margin-bottom: 12px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  align-items: center;
+}
+.ma-taken p {
+  margin: 0;
+  width: 100%;
+  font-weight: 700;
+}
+.ma-app .ma-kick {
+  min-height: 28px;
+  padding: 0 10px;
+  font-size: 12px;
+  margin-left: auto;
+  box-shadow: 0 2px 0 var(--ink);
+}

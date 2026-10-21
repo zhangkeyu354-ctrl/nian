@@ -122,6 +122,7 @@ function useShareUrl(code: string) {
 function Room({ code }: { code: string }) {
   const net = useMARoom(code);
   const snap = net.snap;
+  const [watching, setWatching] = useState(false);
   if (!snap)
     return (
       <main className="ma-home">
@@ -138,36 +139,92 @@ function Room({ code }: { code: string }) {
         </section>
       </main>
     );
-  if (!snap.mySeat && snap.stage === "lobby") return <JoinForm snap={snap} claim={net.claim} />;
+  if (!snap.mySeat && !watching && (snap.stage === "lobby" || snap.players.length > 0))
+    return <JoinForm snap={snap} claim={net.claim} onWatch={snap.stage === "game" ? () => setWatching(true) : undefined} />;
   if (snap.stage === "lobby" || !snap.view) return <Lobby snap={snap} lobby={net.lobby} />;
   return <Game snap={snap} view={snap.view} send={net.send} connected={net.connected} />;
 }
 
-function JoinForm({ snap, claim }: { snap: MARoomSnapshot; claim: (n: string) => Promise<string | null> }) {
+function JoinForm({
+  snap,
+  claim,
+  onWatch,
+}: {
+  snap: MARoomSnapshot;
+  claim: (n: string, takeover?: boolean) => Promise<string | null>;
+  onWatch?: () => void;
+}) {
   const [name, setName] = useState(savedName);
   const [error, setError] = useState("");
+  const [taken, setTaken] = useState<string | null>(null);
+  const lobby = snap.stage === "lobby";
   const full = snap.players.length >= 6;
+  const join = async (n: string, takeover = false) => {
+    setError("");
+    const err = await claim(n, takeover);
+    if (!err) return;
+    if (err.includes("已经在房间里")) setTaken(n.trim());
+    else setError(err);
+  };
   return (
     <main className="ma-home">
       <Masthead small />
       <section className="ma-panel">
-        <h2>加入房间 {snap.code}</h2>
-        <p className="ma-muted">
-          已在房间：{snap.players.map((p) => p.name).join("、") || "还没有人"}
-        </p>
-        <form
-          className="ma-join"
-          onSubmit={async (e) => {
-            e.preventDefault();
-            const err = await claim(name);
-            if (err) setError(err);
-          }}
-        >
-          <input data-testid="ma-name" aria-label="昵称" placeholder="你的昵称" maxLength={12} value={name} onChange={(e) => setName(e.target.value)} />
-          <button type="submit" className="ma-go" disabled={full || !name.trim()} data-testid="ma-claim">
-            {full ? "房间已满" : "加入"}
+        <h2>{lobby ? `加入房间 ${snap.code}` : `房间 ${snap.code} 已经开始了`}</h2>
+        {snap.players.length > 0 && (
+          <>
+            <p className="ma-muted">
+              {lobby ? "之前进过这个房间（换了浏览器、退出微信后再进）？点自己的名字接回位置：" : "你是这局的玩家吗？点自己的名字接回位置："}
+            </p>
+            <div className="ma-rejoin">
+              {snap.players.map((p, i) => (
+                <button
+                  key={p.playerId}
+                  type="button"
+                  data-testid={"rejoin-" + i}
+                  onClick={() => (p.connected ? setTaken(p.name) : void join(p.name))}
+                >
+                  <span className="ma-dot" style={{ background: PLAYER_COLORS[i % PLAYER_COLORS.length] }} />
+                  我是 {p.name}
+                  {!p.connected && <em>离线</em>}
+                </button>
+              ))}
+            </div>
+          </>
+        )}
+        {taken && (
+          <div className="ma-taken" role="alert">
+            <p>「{taken}」现在显示在线（可能是你之前没关的窗口）。确定是你本人吗？</p>
+            <button type="button" className="ma-go small" data-testid="ma-takeover" onClick={() => void join(taken, true)}>
+              是我，接回这个位置
+            </button>
+            <button type="button" onClick={() => setTaken(null)}>
+              不是我
+            </button>
+          </div>
+        )}
+        {lobby && (
+          <>
+            <p className="ma-muted">{snap.players.length > 0 ? "第一次来？输入昵称加入：" : "输入昵称加入："}</p>
+            <form
+              className="ma-join"
+              onSubmit={async (e) => {
+                e.preventDefault();
+                await join(name);
+              }}
+            >
+              <input data-testid="ma-name" aria-label="昵称" placeholder="你的昵称" maxLength={12} value={name} onChange={(e) => setName(e.target.value)} />
+              <button type="submit" className="ma-go" disabled={full || !name.trim()} data-testid="ma-claim">
+                {full ? "房间已满" : "加入"}
+              </button>
+            </form>
+          </>
+        )}
+        {onWatch && (
+          <button type="button" onClick={onWatch} data-testid="ma-watch">
+            我只是来观战
           </button>
-        </form>
+        )}
         {error && <p className="ma-error" role="alert">{error}</p>}
       </section>
     </main>
@@ -202,6 +259,17 @@ function Lobby({ snap, lobby }: { snap: MARoomSnapshot; lobby: (a: Parameters<Re
               {p.host && <em>房主</em>}
               {p.playerId === snap.mySeat && <em>你</em>}
               {!p.connected && <em className="off">离线</em>}
+              {host && p.playerId !== snap.mySeat && (
+                <button
+                  type="button"
+                  className="ma-kick"
+                  data-testid={"kick-" + i}
+                  aria-label={`移出 ${p.name}`}
+                  onClick={() => void run({ type: "KICK", playerId: p.playerId })}
+                >
+                  移出
+                </button>
+              )}
             </li>
           ))}
         </ul>

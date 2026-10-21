@@ -70,9 +70,19 @@ export class MARoom {
   idByToken(token: string | null | undefined) {
     return token ? (this.file.players.find((p) => p.token === token)?.playerId ?? null) : null;
   }
-  claim(name: string) {
+  /**
+   * 加入房间。同名玩家已在房间里（换了浏览器、微信退出后再进、浮窗……本机记录丢了）时，
+   * 直接接回原来的位置，不新增一个同名玩家；游戏开始后也只能这样接回。
+   */
+  claim(name: string, takeover = false) {
     const clean = name.trim().slice(0, 12);
     if (!clean) throw new Error("NAME_REQUIRED");
+    const same = this.file.players.find((p) => p.name === clean);
+    if (same) {
+      // 原来那个还连着（比如旧浮窗没关）：要本人确认「我就是 TA」才接回，免得两个人撞名
+      if ((this.connections.get(same.playerId) ?? 0) > 0 && !takeover) throw new Error("NAME_TAKEN");
+      return same.token;
+    }
     if (this.file.stage !== "lobby") throw new Error("ALREADY_STARTED");
     if (this.file.players.length >= MAX_PLAYERS) throw new Error("ROOM_FULL");
     const playerId = "p" + (this.file.players.length + 1) + randomBytes(2).toString("hex");
@@ -93,6 +103,13 @@ export class MARoom {
         gold: clampPoint(p?.gold),
         silver: clampPoint(p?.silver),
       }));
+    } else if (action?.type === "KICK") {
+      // 房主在开局前移除多出来的玩家（比如重进时多出的同名玩家）
+      const id = String(action.playerId);
+      if (id === me) throw new Error("BAD_ACTION");
+      const before = this.file.players.length;
+      this.file.players = this.file.players.filter((p) => p.playerId !== id);
+      if (this.file.players.length === before) throw new Error("BAD_ACTION");
     } else if (action?.type === "SET_DEAL") {
       if (action.deal !== "draft" && action.deal !== "random") throw new Error("BAD_ACTION");
       this.file.deal = action.deal;
@@ -202,7 +219,8 @@ export function maErrorText(e: unknown): { error: string; code: string } {
     NOT_SEATED: "请先加入房间。",
     STALE: "比赛已经更新，请看清最新状态后再操作。",
     ROOM_FULL: "房间已满（最多 6 人）。",
-    ALREADY_STARTED: "游戏已经开始了。",
+    ALREADY_STARTED: "游戏已经开始了。如果你本来就在这局里，请点上面自己的名字接回位置。",
+    NAME_TAKEN: "这个名字已经在房间里了。",
     HOST_ONLY: "只有房主可以这样做。",
     NOT_STARTED: "游戏还没开始。",
     NAME_REQUIRED: "请填写昵称。",
@@ -290,9 +308,9 @@ export function attachMagicalAthlete(
     );
     socket.on(
       MA_EVENTS.claim,
-      guarded((req: { code: string; name: string }) => {
+      guarded((req: { code: string; name: string; takeover?: boolean }) => {
         const room = find(req?.code) ?? fail("NO_ROOM");
-        const token = room.claim(String(req.name ?? ""));
+        const token = room.claim(String(req.name ?? ""), req.takeover === true);
         store.save(room);
         attach(room, room.idByToken(token));
         broadcast(room);
