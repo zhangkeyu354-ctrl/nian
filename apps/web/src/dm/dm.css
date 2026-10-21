@@ -901,3 +901,77 @@
 .dm-printed-card .dm-card-eye[data-closed] {
   color: white;
 }
+/* 房间内角色组合：按阵营分组，每张附能力说明 */
+.dm-pool {
+  margin: 14px 0;
+}
+.dm-pool h3 {
+  font-size: 16px;
+  margin: 0 0 6px;
+}
+.dm-pool-note {
+  font-size: 13px;
+  opacity: 0.8;
+  margin: 0 0 8px;
+}
+.dm-pool-group {
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  border-radius: 10px;
+  padding: 10px 12px;
+  margin: 10px 0;
+}
+.dm-pool-killer,
+.dm-pool-guilty {
+  border-color: rgba(232, 48, 104, 0.6);
+  background: rgba(232, 48, 104, 0.08);
+}
+.dm-pool-group h4 {
+  margin: 0 0 8px;
+  font-size: 15px;
+  display: flex;
+  gap: 8px;
+  align-items: baseline;
+  flex-wrap: wrap;
+}
+.dm-pool-group h4 small {
+  font-weight: 400;
+  font-size: 12px;
+  opacity: 0.75;
+}
+.dm-pool-group ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: 10px;
+}
+.dm-pool-slot {
+  display: flex;
+  gap: 10px;
+  align-items: flex-start;
+}
+.dm-pool-slot > .dm-printed-card.dm-pool-thumb {
+  width: 48px;
+  flex-shrink: 0;
+  border-width: 2px;
+}
+.dm-pool-thumb .dm-card-name,
+.dm-pool-thumb .dm-card-faction,
+.dm-pool-thumb .dm-card-english,
+.dm-pool-thumb .dm-card-eye {
+  display: none;
+}
+.dm-pool-text {
+  flex: 1;
+  min-width: 0;
+}
+.dm-pool-text select {
+  width: 100%;
+  min-height: 44px;
+}
+.dm-pool-text p {
+  margin: 4px 0 0;
+  font-size: 13px;
+  line-height: 1.5;
+  opacity: 0.85;
+}

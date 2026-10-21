@@ -40,6 +40,118 @@ function request(socket: Socket, event: string, data: unknown): Promise<any> {
       );
   });
 }
+type PoolGroup = {
+  key: string;
+  title: string;
+  hint: string;
+  match: (r: (typeof roles)[number]) => boolean;
+};
+const poolGroups: PoolGroup[] = [
+  {
+    key: "killer",
+    title: "杀手",
+    hint: "有罪阵营，每晚行凶",
+    match: (r) => r.canKill,
+  },
+  {
+    key: "guilty",
+    title: "有罪同伙",
+    hint: "有罪阵营，不能杀人",
+    match: (r) => r.faction === "GUILTY" && !r.canKill,
+  },
+  {
+    key: "innocent",
+    title: "无罪",
+    hint: "找出杀手并投票处决",
+    match: (r) => r.faction === "INNOCENT",
+  },
+];
+const roleOf = (id: string) => roles.find((r) => r.roleId === id)!;
+/** 按阵营分组的角色组合：杀手只能换成杀手类，无罪只能换成无罪类，改动立即生效。 */
+function PoolEditor({
+  pool,
+  editable,
+  onChange,
+}: {
+  pool: string[];
+  editable: boolean;
+  onChange: (pool: string[]) => void;
+}) {
+  const groups = poolGroups.map((g) => ({
+    ...g,
+    ids: pool.filter((id) => roleOf(id) && g.match(roleOf(id))),
+  }));
+  const replace = (gi: number, si: number, value: string) => {
+    const next = groups.map((g, i) =>
+      i === gi ? g.ids.map((x, j) => (j === si ? value : x)) : g.ids,
+    );
+    onChange(next.flat());
+  };
+  return (
+    <section className="dm-pool" aria-label="本局角色组合">
+      <h3>本局角色（{pool.length} 张，开局随机发给每人一张）</h3>
+      {editable && (
+        <p className="dm-pool-note">
+          房主可以更换每张角色；杀手、有罪同伙、无罪的人数按人数配置固定。改动立即生效，所有人需要重新准备。
+        </p>
+      )}
+      {groups.map((g, gi) =>
+        g.ids.length === 0 ? null : (
+          <div
+            key={g.key}
+            className={"dm-pool-group dm-pool-" + g.key}
+            data-testid={"dm-pool-" + g.key}
+          >
+            <h4>
+              {g.title} × {g.ids.length}
+              <small>{g.hint}</small>
+            </h4>
+            <ul>
+              {g.ids.map((id, si) => {
+                const r = roleOf(id);
+                return (
+                  <li key={si} className="dm-pool-slot">
+                    <RoleArt id={id} className="dm-pool-thumb" />
+                    <div className="dm-pool-text">
+                      {editable ? (
+                        <select
+                          aria-label={g.title + " " + (si + 1)}
+                          value={id}
+                          onChange={(e) => replace(gi, si, e.target.value)}
+                        >
+                          {roles.filter(g.match).map((o) => {
+                            const used = pool.filter(
+                              (x) => x === o.roleId,
+                            ).length;
+                            const full =
+                              o.roleId !== id && used >= o.count;
+                            return (
+                              <option
+                                key={o.roleId}
+                                value={o.roleId}
+                                disabled={full}
+                              >
+                                {o.name}
+                                {full ? "（卡已用完）" : ""}
+                              </option>
+                            );
+                          })}
+                        </select>
+                      ) : (
+                        <strong>{r.name}</strong>
+                      )}
+                      <p>{r.ability}</p>
+                    </div>
+                  </li>
+                );
+              })}
+            </ul>
+          </div>
+        ),
+      )}
+    </section>
+  );
+}
 export function DyingMessage() {
   const [code, setCode] = useState(
     () => new URLSearchParams(location.search).get("room")?.toUpperCase() ?? "",
@@ -125,8 +237,8 @@ export function DyingMessage() {
     if (r.ok) setSnap(r.snapshot);
     else setError(r.error);
   }
-  async function action(a: DMAction) {
-    if (!snap || busy || !connected) return;
+  async function action(a: DMAction): Promise<boolean> {
+    if (!snap || busy || !connected) return false;
     setBusy(true);
     try {
       const r = await request(socket, DM_EVENTS.action, {
@@ -137,6 +249,7 @@ export function DyingMessage() {
       });
       if (!r.ok) setError(r.error);
       else if (r.snapshot) setSnap(r.snapshot);
+      return !!r.ok;
     } finally {
       setBusy(false);
     }
@@ -466,47 +579,6 @@ export function DyingMessage() {
                               ))}
                             </select>
                           </label>
-                          <details>
-                            <summary>调整本局角色组合</summary>
-                            <p>
-                              角色随机发放给玩家。必须保留对应人数的杀手数与有罪阵营数。
-                            </p>
-                            <div className="dm-rolepool">
-                              {editedPool.map((id, i) => (
-                                <label key={i}>
-                                  角色卡 {i + 1}
-                                  <select
-                                    aria-label={"角色卡 " + (i + 1)}
-                                    value={id}
-                                    onChange={(e) =>
-                                      setEditedPool((a) =>
-                                        a.map((x, j) =>
-                                          i === j ? e.target.value : x,
-                                        ),
-                                      )
-                                    }
-                                  >
-                                    {roles.map((r) => (
-                                      <option key={r.roleId} value={r.roleId}>
-                                        {r.name} ·{" "}
-                                        {r.faction === "GUILTY"
-                                          ? "有罪"
-                                          : "无罪"}
-                                      </option>
-                                    ))}
-                                  </select>
-                                </label>
-                              ))}
-                            </div>
-                            <button
-                              disabled={disabled}
-                              onClick={() =>
-                                action({ type: "SET_POOL", pool: editedPool })
-                              }
-                            >
-                              保存角色组合
-                            </button>
-                          </details>
                           <button
                             data-testid="dm-start"
                             disabled={
@@ -520,12 +592,16 @@ export function DyingMessage() {
                           </button>
                         </>
                       )}
-                      <p>当前角色：{snap.pool.map(roleName).join("、")}</p>
-                      <div className="dm-pool-preview">
-                        {snap.pool.map((id, i) => (
-                          <RoleArt key={i} id={id} />
-                        ))}
-                      </div>
+                      <PoolEditor
+                        pool={editedPool}
+                        editable={!!host && !disabled}
+                        onChange={async (next) => {
+                          const before = snap.pool;
+                          setEditedPool(next);
+                          if (!(await action({ type: "SET_POOL", pool: next })))
+                            setEditedPool(before);
+                        }}
+                      />
                     </section>
                   ) : (
                     <>

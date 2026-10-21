@@ -51,14 +51,28 @@ try {
     await pages[i].getByRole("button", { name: "入座", exact: true }).click();
     await pages[i].getByTestId("dm-ready").waitFor();
   }
-  await pages[0].getByText("调整本局角色组合", { exact: true }).click();
+  await pages[0].waitForFunction(
+    () => JSON.parse((window as any).render_game_to_text()).seats?.length === 4,
+  );
+  // 杀手栏只能换成杀手类角色，无罪栏只能换成无罪角色
+  const killerOptions = await pages[0]
+    .getByLabel("杀手 1", { exact: true })
+    .locator("option")
+    .allTextContents();
+  assert.deepEqual(killerOptions, ["杀手", "职业杀手", "连环杀手"]);
   await pages[0]
-    .getByLabel("角色卡 2", { exact: true })
+    .getByLabel("无罪 1", { exact: true })
     .selectOption("private-detective");
-  await pages[0]
-    .getByRole("button", { name: "保存角色组合", exact: true })
-    .click();
-  await pages[0].getByText("当前角色：杀手、私家侦探、市民、市民").waitFor();
+  // 改动立即生效：其他玩家也马上看到新组合和能力说明
+  await pages[1]
+    .getByTestId("dm-pool-innocent")
+    .locator("strong", { hasText: "私家侦探" })
+    .waitFor();
+  await pages[1]
+    .getByTestId("dm-pool-innocent")
+    .getByText("在杀手放置假遗言之前，确认死者真正的遗言。")
+    .first()
+    .waitFor();
   for (const p of pages) await p.getByTestId("dm-ready").click();
   await pages[0].getByTestId("dm-start").click();
   await Promise.all(pages.map((p) => wait(p, "KILLER_SELECTION")));
