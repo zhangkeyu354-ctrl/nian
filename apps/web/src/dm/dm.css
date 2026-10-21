@@ -456,11 +456,13 @@
   overflow: auto;
   padding-bottom: 10px;
 }
-.dm-pool-preview img {
+.dm-pool-preview img,
+.dm-pool-preview .dm-printed-card {
   width: 54px;
   aspect-ratio: 7/10;
   object-fit: cover;
   border-radius: 4px;
+  flex-shrink: 0;
 }
 .dm-cards {
   display: grid;
@@ -791,4 +793,111 @@
     animation: none !important;
     transition: none !important;
   }
+}
+/* Restored illustrations use one atlas cell; lettering is browser-rendered. */
+.dm-printed-card {
+  display: block;
+  position: relative;
+  width: 224px;
+  aspect-ratio: 2 / 3;
+  overflow: hidden;
+  border: 7px solid #111016;
+  border-radius: 8px;
+  background: #252139;
+  container-type: inline-size;
+  isolation: isolate;
+  flex-shrink: 0;
+}
+.dm-restored-portrait {
+  display: block;
+  position: absolute;
+  inset: 0;
+  background-size: 300% 200%;
+  background-repeat: no-repeat;
+}
+.dm-printed-card .dm-card-name,
+.dm-printed-card .dm-card-faction {
+  position: absolute;
+  top: 18%;
+  left: 3%;
+  writing-mode: vertical-rl;
+  font:
+    700 8cqw/1.15 "Microsoft YaHei",
+    "PingFang SC",
+    sans-serif;
+  letter-spacing: 0.08em;
+  color: white;
+  text-shadow: 0 1px 2px #16131b;
+}
+.dm-printed-card .dm-card-faction {
+  left: auto;
+  right: 2%;
+  top: 4%;
+  color: #6dd8fc;
+  font-size: 6cqw;
+}
+.dm-printed-card[data-faction="GUILTY"] .dm-card-faction {
+  color: #fd596c;
+}
+.dm-printed-card .dm-card-english {
+  position: absolute;
+  bottom: 1%;
+  left: 0;
+  width: 100%;
+  color: #f32c9a;
+  text-align: center;
+  font:
+    950 7.5cqw/0.95 Georgia,
+    serif;
+  letter-spacing: -0.04em;
+  text-shadow: 0 1px 1px #111;
+}
+.dm-printed-card .dm-card-eye {
+  position: absolute;
+  top: 2%;
+  left: 3%;
+  color: #ee389a;
+  font-size: 12cqw;
+  line-height: 1;
+}
+.dm-rule-role > .dm-printed-card {
+  width: 144px;
+}
+.dm-pool-preview > .dm-printed-card {
+  width: 54px;
+  border-width: 2px;
+}
+.dm-seat-portrait > .dm-printed-card {
+  width: 100%;
+  height: 100%;
+  border: 0;
+  border-radius: 0;
+}
+.dm-seat-portrait .dm-card-name,
+.dm-seat-portrait .dm-card-faction,
+.dm-seat-portrait .dm-card-english,
+.dm-seat-portrait .dm-card-eye,
+.dm-pool-preview .dm-card-name,
+.dm-pool-preview .dm-card-faction,
+.dm-pool-preview .dm-card-english,
+.dm-pool-preview .dm-card-eye {
+  display: none;
+}
+@media (max-width: 700px) {
+  .dm-role-art.dm-printed-card {
+    width: 200px;
+  }
+  .dm-rule-role > .dm-printed-card {
+    width: 112px;
+    border-width: 4px;
+  }
+}
+.dm-card-eye svg {
+  display: block;
+  width: 1em;
+  height: 0.65em;
+  overflow: visible;
+}
+.dm-printed-card .dm-card-eye[data-closed] {
+  color: white;
 }

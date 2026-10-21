@@ -18,14 +18,19 @@
       "usage": "无",
       "effectHandler": "DM_REDUCER:civilian",
       "implementationStatus": "IMPLEMENTED_CORE_EFFECT",
-      "imageResource": "/assets/dying-message-original/civilian.webp",
-      "imageStatus": "LOCAL_USER_PHOTO_RECTIFIED",
+      "imageResource": "/assets/dying-message-hd/atlas-1.webp",
+      "imageStatus": "REFERENCE_GUIDED_REDRAW_NOT_OFFICIAL_ORIGINAL",
       "ruleSources": ["S06", "S04"],
       "verification": {
         "abilityText": "CONFIRMED_FROM_PHOTO",
         "executionDetails": "TEXT_CONFIRMED_NOT_ENGINE_TESTED",
         "questions": [],
         "additionalSource": "SYNKA 同版36人物104证据官方说明书，第3–8页"
+      },
+      "imageAtlasCell": {
+        "columns": 3,
+        "rows": 2,
+        "index": 0
       }
     },
     {
@@ -42,14 +47,19 @@
       "usage": "每次符合条件的行凶阶段",
       "effectHandler": "DM_REDUCER:private-detective",
       "implementationStatus": "IMPLEMENTED_CORE_EFFECT",
-      "imageResource": "/assets/dying-message-original/private-detective.webp",
-      "imageStatus": "LOCAL_USER_PHOTO_RECTIFIED",
+      "imageResource": "/assets/dying-message-hd/atlas-1.webp",
+      "imageStatus": "REFERENCE_GUIDED_REDRAW_NOT_OFFICIAL_ORIGINAL",
       "ruleSources": ["S06", "S04"],
       "verification": {
         "abilityText": "CONFIRMED_FROM_PHOTO",
         "executionDetails": "CHECK_REQUIRED",
         "questions": ["贵族造成多张真遗言时的展示方式需核对完整规则。"],
         "additionalSource": "SYNKA 同版36人物104证据官方说明书，第3–8页"
+      },
+      "imageAtlasCell": {
+        "columns": 3,
+        "rows": 2,
+        "index": 1
       }
     },
     {
@@ -66,14 +76,19 @@
       "usage": "每个角色实例在符合条件死亡时触发",
       "effectHandler": "DM_REDUCER:muay-thai",
       "implementationStatus": "IMPLEMENTED_CORE_EFFECT",
-      "imageResource": "/assets/dying-message-original/muay-thai.webp",
-      "imageStatus": "LOCAL_USER_PHOTO_RECTIFIED",
+      "imageResource": "/assets/dying-message-hd/atlas-1.webp",
+      "imageStatus": "REFERENCE_GUIDED_REDRAW_NOT_OFFICIAL_ORIGINAL",
       "ruleSources": ["S06", "S04"],
       "verification": {
         "abilityText": "CONFIRMED_FROM_PHOTO",
         "executionDetails": "CHECK_REQUIRED",
         "questions": ["两名泰拳手同夜死亡是否累计跳过次数。"],
         "additionalSource": "SYNKA 同版36人物104证据官方说明书，第3–8页"
+      },
+      "imageAtlasCell": {
+        "columns": 3,
+        "rows": 2,
+        "index": 2
       }
     },
     {
@@ -90,14 +105,19 @@
       "usage": "死亡条件触发",
       "effectHandler": "DM_REDUCER:celebrity",
       "implementationStatus": "IMPLEMENTED_CORE_EFFECT",
-      "imageResource": "/assets/dying-message-original/celebrity.webp",
-      "imageStatus": "LOCAL_USER_PHOTO_RECTIFIED",
+      "imageResource": "/assets/dying-message-hd/atlas-2.webp",
+      "imageStatus": "REFERENCE_GUIDED_REDRAW_NOT_OFFICIAL_ORIGINAL",
       "ruleSources": ["S08", "S04"],
       "verification": {
         "abilityText": "CONFIRMED_FROM_PHOTO",
         "executionDetails": "CHECK_REQUIRED",
         "questions": ["两名名人同夜死亡的叠加及假遗言下限。"],
         "additionalSource": "SYNKA 同版36人物104证据官方说明书，第3–8页"
+      },
+      "imageAtlasCell": {
+        "columns": 3,
+        "rows": 2,
+        "index": 1
       }
     },
     {
@@ -114,14 +134,19 @@
       "usage": "死亡条件触发",
       "effectHandler": "DM_REDUCER:noble",
       "implementationStatus": "IMPLEMENTED_CORE_EFFECT",
-      "imageResource": "/assets/dying-message-original/noble.webp",
-      "imageStatus": "LOCAL_USER_PHOTO_RECTIFIED",
+      "imageResource": "/assets/dying-message-hd/atlas-2.webp",
+      "imageStatus": "REFERENCE_GUIDED_REDRAW_NOT_OFFICIAL_ORIGINAL",
       "ruleSources": ["S08", "S04"],
       "verification": {
         "abilityText": "CONFIRMED_FROM_PHOTO",
         "executionDetails": "CHECK_REQUIRED",
         "questions": ["多名贵族死亡的叠加、共同选牌的决定程序。"],
         "additionalSource": "SYNKA 同版36人物104证据官方说明书，第3–8页"
+      },
+      "imageAtlasCell": {
+        "columns": 3,
+        "rows": 2,
+        "index": 2
       }
     },
     {
@@ -138,14 +163,19 @@
       "usage": "符合条件的死亡回合",
       "effectHandler": "DM_REDUCER:janitor",
       "implementationStatus": "IMPLEMENTED_CORE_EFFECT",
-      "imageResource": "/assets/dying-message-original/janitor.webp",
-      "imageStatus": "LOCAL_USER_PHOTO_RECTIFIED",
+      "imageResource": "/assets/dying-message-hd/atlas-2.webp",
+      "imageStatus": "REFERENCE_GUIDED_REDRAW_NOT_OFFICIAL_ORIGINAL",
       "ruleSources": ["S08", "S04"],
       "verification": {
         "abilityText": "CONFIRMED_FROM_PHOTO",
         "executionDetails": "CHECK_REQUIRED",
         "questions": ["弃牌堆为空、可见范围、与其他死者共同选择时如何处理。"],
         "additionalSource": "SYNKA 同版36人物104证据官方说明书，第3–8页"
+      },
+      "imageAtlasCell": {
+        "columns": 3,
+        "rows": 2,
+        "index": 3
       }
     },
     {
@@ -164,8 +194,8 @@
       "usage": "每实例死亡时",
       "effectHandler": "DM_REDUCER:forensic-scientist",
       "implementationStatus": "IMPLEMENTED_CORE_EFFECT",
-      "imageResource": "/assets/dying-message-original/forensic-scientist.webp",
-      "imageStatus": "LOCAL_USER_PHOTO_RECTIFIED",
+      "imageResource": "/assets/dying-message-hd/atlas-1.webp",
+      "imageStatus": "REFERENCE_GUIDED_REDRAW_NOT_OFFICIAL_ORIGINAL",
       "ruleSources": ["S07", "S04"],
       "verification": {
         "abilityText": "CONFIRMED_FROM_PHOTO",
@@ -174,6 +204,11 @@
           "第一轮没有历史遗言时；上一次有多名死者时的合法目标；自身本轮遗言是否包含在上一次中。"
         ],
         "additionalSource": "SYNKA 同版36人物104证据官方说明书，第3–8页"
+      },
+      "imageAtlasCell": {
+        "columns": 3,
+        "rows": 2,
+        "index": 3
       }
     },
     {
@@ -190,8 +225,8 @@
       "usage": "每实例死亡时",
       "effectHandler": "DM_REDUCER:hostage",
       "implementationStatus": "IMPLEMENTED_CORE_EFFECT",
-      "imageResource": "/assets/dying-message-original/hostage.webp",
-      "imageStatus": "LOCAL_USER_PHOTO_RECTIFIED",
+      "imageResource": "/assets/dying-message-hd/atlas-2.webp",
+      "imageStatus": "REFERENCE_GUIDED_REDRAW_NOT_OFFICIAL_ORIGINAL",
       "ruleSources": ["S07", "S04"],
       "verification": {
         "abilityText": "CONFIRMED_FROM_PHOTO",
@@ -200,6 +235,11 @@
           "邻座是否指固定座位还是存活者邻座；多个人质连锁和证据修正交互。"
         ],
         "additionalSource": "SYNKA 同版36人物104证据官方说明书，第3–8页"
+      },
+      "imageAtlasCell": {
+        "columns": 3,
+        "rows": 2,
+        "index": 0
       }
     },
     {
@@ -216,8 +256,8 @@
       "usage": "每个存活的行凶阶段",
       "effectHandler": "DM_REDUCER:wonder-dog",
       "implementationStatus": "IMPLEMENTED_CORE_EFFECT",
-      "imageResource": "/assets/dying-message-original/wonder-dog.webp",
-      "imageStatus": "LOCAL_USER_PHOTO_RECTIFIED",
+      "imageResource": "/assets/dying-message-hd/atlas-2.webp",
+      "imageStatus": "REFERENCE_GUIDED_REDRAW_NOT_OFFICIAL_ORIGINAL",
       "ruleSources": ["S10", "S04"],
       "verification": {
         "abilityText": "CONFIRMED_FROM_PHOTO",
@@ -226,6 +266,11 @@
           "能否连续保护同一目标；保护者同夜死亡后保护是否保持；是否阻止连带死亡。"
         ],
         "additionalSource": "SYNKA 同版36人物104证据官方说明书，第3–8页"
+      },
+      "imageAtlasCell": {
+        "columns": 3,
+        "rows": 2,
+        "index": 4
       }
     },
     {
@@ -242,14 +287,19 @@
       "usage": "首次行凶阶段建立一次关系；死亡关联持续",
       "effectHandler": "DM_REDUCER:soulmate",
       "implementationStatus": "IMPLEMENTED_CORE_EFFECT",
-      "imageResource": "/assets/dying-message-original/soulmate.webp",
-      "imageStatus": "LOCAL_USER_PHOTO_RECTIFIED",
+      "imageResource": "/assets/dying-message-hd/atlas-1.webp",
+      "imageStatus": "REFERENCE_GUIDED_REDRAW_NOT_OFFICIAL_ORIGINAL",
       "ruleSources": ["S07", "S04"],
       "verification": {
         "abilityText": "CONFIRMED_FROM_PHOTO",
         "executionDetails": "CHECK_REQUIRED",
         "questions": ["与人质、胜负检查、证据共享及延迟公布死亡的精确顺序。"],
         "additionalSource": "SYNKA 同版36人物104证据官方说明书，第3–8页"
+      },
+      "imageAtlasCell": {
+        "columns": 3,
+        "rows": 2,
+        "index": 4
       }
     },
     {
@@ -266,8 +316,8 @@
       "usage": "每个允许执行的行凶阶段",
       "effectHandler": "DM_REDUCER:killer",
       "implementationStatus": "IMPLEMENTED_CORE_EFFECT",
-      "imageResource": "/assets/dying-message-original/killer.webp",
-      "imageStatus": "LOCAL_USER_PHOTO_RECTIFIED",
+      "imageResource": "/assets/dying-message-hd/atlas-3.webp",
+      "imageStatus": "REFERENCE_GUIDED_REDRAW_NOT_OFFICIAL_ORIGINAL",
       "ruleSources": ["S10", "S04"],
       "verification": {
         "abilityText": "CONFIRMED_FROM_PHOTO",
@@ -276,6 +326,11 @@
           "多杀手是否共同只选一名；目标阵营及互杀限制；未显示的完整行凶文字页。"
         ],
         "additionalSource": "SYNKA 同版36人物104证据官方说明书，第3–8页"
+      },
+      "imageAtlasCell": {
+        "columns": 3,
+        "rows": 2,
+        "index": 3
       }
     },
     {
@@ -292,14 +347,19 @@
       "usage": "存活期间持续修正",
       "effectHandler": "DM_REDUCER:professional-killer",
       "implementationStatus": "IMPLEMENTED_CORE_EFFECT",
-      "imageResource": "/assets/dying-message-original/professional-killer.webp",
-      "imageStatus": "LOCAL_USER_PHOTO_RECTIFIED",
+      "imageResource": "/assets/dying-message-hd/atlas-3.webp",
+      "imageStatus": "REFERENCE_GUIDED_REDRAW_NOT_OFFICIAL_ORIGINAL",
       "ruleSources": ["S09", "S04"],
       "verification": {
         "abilityText": "CONFIRMED_FROM_PHOTO",
         "executionDetails": "CHECK_REQUIRED",
         "questions": ["多名职业杀手的加成是否叠加；与名人同夜死亡的结算顺序。"],
         "additionalSource": "SYNKA 同版36人物104证据官方说明书，第3–8页"
+      },
+      "imageAtlasCell": {
+        "columns": 3,
+        "rows": 2,
+        "index": 0
       }
     },
     {
@@ -316,8 +376,8 @@
       "usage": "存活期间允许额外击杀",
       "effectHandler": "DM_REDUCER:serial-killer",
       "implementationStatus": "IMPLEMENTED_CORE_EFFECT",
-      "imageResource": "/assets/dying-message-original/serial-killer.webp",
-      "imageStatus": "LOCAL_USER_PHOTO_RECTIFIED",
+      "imageResource": "/assets/dying-message-hd/atlas-3.webp",
+      "imageStatus": "REFERENCE_GUIDED_REDRAW_NOT_OFFICIAL_ORIGINAL",
       "ruleSources": ["S10", "S04"],
       "verification": {
         "abilityText": "CONFIRMED_FROM_PHOTO",
@@ -326,6 +386,11 @@
           "额外击杀由谁决定、是否可不使用；多个连环杀手是否叠加；共同选牌程序。"
         ],
         "additionalSource": "SYNKA 同版36人物104证据官方说明书，第3–8页"
+      },
+      "imageAtlasCell": {
+        "columns": 3,
+        "rows": 2,
+        "index": 4
       }
     },
     {
@@ -342,14 +407,19 @@
       "usage": "每次符合条件的行凶阶段",
       "effectHandler": "DM_REDUCER:mastermind",
       "implementationStatus": "IMPLEMENTED_CORE_EFFECT",
-      "imageResource": "/assets/dying-message-original/mastermind.webp",
-      "imageStatus": "LOCAL_USER_PHOTO_RECTIFIED",
+      "imageResource": "/assets/dying-message-hd/atlas-3.webp",
+      "imageStatus": "REFERENCE_GUIDED_REDRAW_NOT_OFFICIAL_ORIGINAL",
       "ruleSources": ["S09", "S04"],
       "verification": {
         "abilityText": "CONFIRMED_FROM_PHOTO",
         "executionDetails": "CHECK_REQUIRED",
         "questions": ["与私家侦探相同的多真遗言展示边界。"],
         "additionalSource": "SYNKA 同版36人物104证据官方说明书，第3–8页"
+      },
+      "imageAtlasCell": {
+        "columns": 3,
+        "rows": 2,
+        "index": 1
       }
     },
     {
@@ -366,8 +436,8 @@
       "usage": "无",
       "effectHandler": "DM_REDUCER:accomplice",
       "implementationStatus": "IMPLEMENTED_CORE_EFFECT",
-      "imageResource": "/assets/dying-message-original/accomplice.webp",
-      "imageStatus": "LOCAL_USER_PHOTO_RECTIFIED",
+      "imageResource": "/assets/dying-message-hd/atlas-3.webp",
+      "imageStatus": "REFERENCE_GUIDED_REDRAW_NOT_OFFICIAL_ORIGINAL",
       "ruleSources": ["S09", "S04"],
       "verification": {
         "abilityText": "CONFIRMED_FROM_PHOTO",
@@ -376,6 +446,11 @@
           "阵营成员相互知情范围需完整说明书，不能采用玩家整理图的笼统描述。"
         ],
         "additionalSource": "SYNKA 同版36人物104证据官方说明书，第3–8页"
+      },
+      "imageAtlasCell": {
+        "columns": 3,
+        "rows": 2,
+        "index": 2
       }
     }
   ],

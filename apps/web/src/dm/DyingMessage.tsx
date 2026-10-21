@@ -10,6 +10,7 @@ import {
   defaultPool,
 } from "../../../../packages/dying-message/src/index.ts";
 import "./dm.css";
+import { RoleArt } from "./RoleArt.tsx";
 const titles: Record<string, string> = {
   NIGHT_PREPARATION: "夜幕降临",
   KILLER_SELECTION: "杀手正在行动",
@@ -25,7 +26,10 @@ const titles: Record<string, string> = {
 };
 const roleName = (id: string) => roles.find((r) => r.roleId === id)?.name ?? id;
 const image = (id: string) => "/assets/dying-message/" + id + ".webp";
-const uiArt = (id: string) => "/assets/dying-message-original/" + id + ".webp";
+const uiArt = (id: string) =>
+  id === "card-back"
+    ? "/assets/dying-message-hd/card-back.svg"
+    : "/assets/dying-message-original/" + id + ".webp";
 const roomURL = (code: string) => "/?game=dm&room=" + code;
 function request(socket: Socket, event: string, data: unknown): Promise<any> {
   return new Promise((resolve) => {
@@ -224,7 +228,7 @@ export function DyingMessage() {
                 玩法与角色
               </button>
             </div>
-            <img src={uiArt("card-back")} alt="照片中的原版粉色牌背" />
+            <img src={uiArt("card-back")} alt="请留遗言粉色牌背" />
           </section>
         </>
       ) : !snap ? (
@@ -403,14 +407,11 @@ export function DyingMessage() {
                         }
                       >
                         <span className="dm-seat-portrait" aria-hidden="true">
-                          <img
-                            src={uiArt(
-                              vp?.roleId && (!vp.alive || v?.winner)
-                                ? vp.roleId
-                                : "card-back",
-                            )}
-                            alt=""
-                          />
+                          {vp?.roleId && (!vp.alive || v?.winner) ? (
+                            <RoleArt id={vp.roleId} />
+                          ) : (
+                            <img src={uiArt("card-back")} alt="" />
+                          )}
                           <b>{i + 1}</b>
                         </span>
                         <span>{p?.name ?? "空座位"}</span>
@@ -522,13 +523,7 @@ export function DyingMessage() {
                       <p>当前角色：{snap.pool.map(roleName).join("、")}</p>
                       <div className="dm-pool-preview">
                         {snap.pool.map((id, i) => (
-                          <img
-                            key={i}
-                            src={uiArt(id)}
-                            alt={roleName(id)}
-                            title={roleName(id)}
-                            loading="lazy"
-                          />
+                          <RoleArt key={i} id={id} />
                         ))}
                       </div>
                     </section>
@@ -557,11 +552,7 @@ export function DyingMessage() {
                             className="dm-role-card"
                             data-faction={myRole?.faction}
                           >
-                            <img
-                              className="dm-role-art"
-                              src={uiArt(v.me.roleId)}
-                              alt={(myRole?.name ?? "角色") + "身份插画"}
-                            />
+                            <RoleArt className="dm-role-art" id={v.me.roleId} />
                             <div className="dm-role-description">
                               <h2>
                                 {myRole?.name}{" "}
@@ -885,11 +876,7 @@ export function DyingMessage() {
                 {r.name} ×{r.count}
               </summary>
               <div className="dm-rule-role">
-                <img
-                  src={uiArt(r.roleId)}
-                  alt={r.name + "角色插画"}
-                  loading="lazy"
-                />
+                <RoleArt id={r.roleId} />
                 <p>{r.ability}</p>
               </div>
             </details>
