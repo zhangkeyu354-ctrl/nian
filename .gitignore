@@ -26,3 +26,6 @@ __pycache__/
 data/
 tools/
 apps/web/test/scenarios.generated.json
+
+# Dying Message original-photo derivatives (local private references)
+apps/web/public/assets/dying-message-original/

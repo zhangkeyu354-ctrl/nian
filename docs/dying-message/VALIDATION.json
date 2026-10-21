@@ -1,0 +1,54 @@
+{
+  "date": "2026-10-21",
+  "unitTests": {
+    "files": 24,
+    "total": 411,
+    "passed": 411,
+    "newGameTests": 27
+  },
+  "typecheck": "PASS",
+  "build": "PASS",
+  "dmBrowsers": {
+    "pass": true,
+    "players": 4,
+    "code": "SHZA",
+    "roles": "random, host configured detective",
+    "speechOrder": [
+      2,
+      3,
+      4
+    ],
+    "refreshRestored": true,
+    "privacy": true,
+    "twoVotes": true,
+    "winner": "INNOCENT",
+    "restart": true,
+    "consoleErrors": []
+  },
+  "assets": {
+    "assets": 153,
+    "allHTTP200": true,
+    "allWebP": true,
+    "desktop": "1440x1000",
+    "phone": "360x800",
+    "overflow": false
+  },
+  "regressions": {
+    "dbdReplays": [
+      1701,
+      2903,
+      4111
+    ],
+    "dbdProtocolViews": 3025,
+    "dbdBrowserGames": 2,
+    "dbdLobbyScenarios": 3,
+    "mobileInterfaces": 64,
+    "ma": {
+      "players": 4,
+      "steps": 1845,
+      "races": 4
+    },
+    "cnProtocolGroups": 12
+  },
+  "onlineDeployment": "NOT_CHANGED"
+}

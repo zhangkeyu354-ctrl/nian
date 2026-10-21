@@ -9,11 +9,18 @@ const MobilePreview = lazy(() =>
   import("./MobilePreview.tsx").then((m) => ({ default: m.MobilePreview })),
 );
 import { Online } from "./Online.tsx";
+const DyingMessage = lazy(() =>
+  import("./dm/DyingMessage.tsx").then((m) => ({ default: m.DyingMessage })),
+);
 const q = new URLSearchParams(location.search);
 import { GameLobby } from "./GameLobby.tsx";
-const Codenames = lazy(() => import("./cn/Codenames.tsx").then((m) => ({ default: m.Codenames })));
+const Codenames = lazy(() =>
+  import("./cn/Codenames.tsx").then((m) => ({ default: m.Codenames })),
+);
 const MagicalAthlete = lazy(() =>
-  import("./ma/MagicalAthlete.tsx").then((m) => ({ default: m.MagicalAthlete })),
+  import("./ma/MagicalAthlete.tsx").then((m) => ({
+    default: m.MagicalAthlete,
+  })),
 );
 /**
  * 路由：
@@ -32,6 +39,10 @@ createRoot(document.getElementById("root")!).render(
       </Suspense>
     ) : q.get("view") === "props" ? (
       <Gallery />
+    ) : q.get("game") === "dm" ? (
+      <Suspense fallback={<p>正在打开请留遗言…</p>}>
+        <DyingMessage />
+      </Suspense>
     ) : q.get("game") === "ma" ? (
       <Suspense fallback={<p>正在打开魔法运动员…</p>}>
         <MagicalAthlete />

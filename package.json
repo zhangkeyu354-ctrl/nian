@@ -27,7 +27,8 @@
     "audit:mobile": "tsx scripts/audit-current-mobile.ts",
     "verify:ma-browsers": "tsx scripts/verify-ma-browsers.ts",
     "verify:cn-protocol": "tsx scripts/verify-cn-protocol.ts",
-    "verify:cn-browsers": "tsx scripts/verify-cn-browsers.ts"
+    "verify:cn-browsers": "tsx scripts/verify-cn-browsers.ts",
+    "verify:dm-browsers": "tsx scripts/verify-dm-browsers.ts"
   },
   "devDependencies": {
     "@tailwindcss/vite": "4.3.3",

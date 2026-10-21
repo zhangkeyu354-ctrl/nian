@@ -1,0 +1,51 @@
+{
+  "method": "built-in image_gen; reference-guided redraw, not official digital originals",
+  "referenceUrls": [
+    "https://www.synkagames.jp/dyingmessage",
+    "https://www.synkagames.jp/_files/ugd/7f318b_121e099419c545d5a0ca7287d2b67f91.pdf"
+  ],
+  "referenceFiles": [
+    "reference/dying-message/original-cards-review.png",
+    "reference/dying-message/official-gallery/3.png"
+  ],
+  "promptBase": "Use case: identity-preserve. Create ONE production illustration atlas, a perfectly regular 3-column by 2-row grid, square canvas ideally 2048x2048 or larger. Each cell is exactly 1/3 width and 1/2 height, portrait 2:3. Five illustrated character portraits, sixth bottom-right cell empty solid same background. No gaps or dividers, no text, no letters, no numbers, no card borders, no logos. This is a faithful crisp DIGITAL RESTORATION of the character designs in reference images, not a creative reinterpretation. Match their original small graphic hand-drawn cartoon illustration, pale faces and entirely black/shadowed hidden eyes, restrained flat colors, clean ink contours, few hard-edged shadows, simple shapes. Preserve identity, clothing, original objects, pose and proportions. NOT photorealism, NOT 3D, NOT ornate, NO golden trim, NO cinematic lighting, NO gradients, NO glossy AI concept art, NO realistic skin, NO paper grain, NO halftone dots, NO photographic blur. Each original character appears once centered in its own cell, head and torso fully inside cell with comfortable 10% safe margins. Solid dark-purple #252139 background for every cell. No extra objects or people. Source full-card photo is a supporting reference only: do not reproduce card lettering or paper texture. ",
+  "groups": [
+    {
+      "ids": [
+        "civilian",
+        "private-detective",
+        "muay-thai",
+        "forensic-scientist",
+        "soulmate"
+      ],
+      "prompt": "READING ORDER: top-left CIVILIAN: original young woman, long slate blue side-swept hair hiding eyes, salmon-pink blazer, white shirt, holding a dark smartphone with both hands close to chest. top-middle PRIVATE DETECTIVE: brown deerstalker cap and matching brown coat, black eyes obscured under brim, smiling pale lower face, holding round magnifying glass. top-right MUAY THAI: original short-haired male fighter, curly brown hair, red headband, black-shadow eye area, bare muscular chest, red hand wraps, raised fists. bottom-left FORENSIC SCIENTIST: original short dark brown hair, rectangular glasses, pale face, white lab coat, purple gloves, holding a narrow purple sample vial and tool. bottom-middle SOULMATE: original purple bob-haired man with shadowed eyes and mischievous smile, burgundy suit, white shirt, purple tie, one hand raised making finger circle near his face. bottom-right EMPTY. Use only these five original characters."
+    },
+    {
+      "ids": [
+        "hostage",
+        "celebrity",
+        "noble",
+        "janitor",
+        "wonder-dog"
+      ],
+      "prompt": "READING ORDER: top-left HOSTAGE: original blond young man, black blindfold over eyes, white collared shirt and red tie, thick brown rope binding upper body, head bowed. top-middle CELEBRITY: original brown side-parted hair, black sunglasses, pale face, black shirt, gold chain and pendant, one arm extended showing small round object. top-right NOBLE: original green wide-brimmed hat with gold band and pink flowers, short auburn hair, dark shadow over eyes, green formal outfit and yellow gloves, holding gold teacup with saucer. bottom-left JANITOR: original man in dark gray cap and light-blue work overalls, head turned toward left, white face mask, dark shirt, holding black garbage bag. bottom-middle WONDER DOG: original smiling orange-and-white Shiba Inu, triangular upright ears, white muzzle and chest, dark collar, cheerful open mouth. bottom-right EMPTY. Use only these five original characters."
+    },
+    {
+      "ids": [
+        "professional-killer",
+        "mastermind",
+        "accomplice",
+        "killer",
+        "serial-killer"
+      ],
+      "prompt": "READING ORDER: top-left PROFESSIONAL KILLER: original slim androgynous figure, chin-length dark green-black bob covering one eye and the other eye hidden in shadow, pale face, black turtleneck, one arm across upper chest holding narrow silver knife horizontally near neck. top-middle MASTERMIND: original anonymous black-suited figure in broad black fedora with purple band, face hidden by brim, purple necktie, one gloved hand raised to chin. top-right ACCOMPLICE: original short black-haired man in purple long-sleeved shirt, entirely shadowed eyes, pale lower face, both gloved hands raised in front of mouth. bottom-left KILLER: original man wearing brown wide-brimmed hat, black face shadow and white sinister smile, white long-sleeved shirt, right forearm raised horizontally across mouth, small restrained red blood marks only on shirt. bottom-middle SERIAL KILLER: original heavy dark-clothed man wearing pale beige hockey mask with round black eye holes, short dark hair, holding broad long brown chainsaw diagonally across torso. bottom-right EMPTY. Use only these five original characters."
+    }
+  ],
+  "cardBack": "SVG native typography matching the original simple pink/white layout. Not a photograph.",
+  "expectedAtlasGrid": {
+    "columns": 3,
+    "rows": 2,
+    "emptyCell": 5
+  },
+  "evidence": "153 wordless evidence images unchanged"
+}

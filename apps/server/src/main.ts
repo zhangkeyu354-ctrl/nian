@@ -7,6 +7,7 @@ import { Server } from "socket.io";
 import QRCode from "qrcode";
 import { RoomStore, errorText, type Room } from "./rooms.ts";
 import { attachMagicalAthlete } from "./ma-rooms.ts";
+import { attachDyingMessage } from "./dm-rooms.ts";
 import { attachCodenames } from "./cn-rooms.ts";
 import {
   EVENTS,
@@ -69,7 +70,16 @@ const http = createServer((req, res) => {
   res.setHeader("x-robots-tag", "noindex, nofollow");
   if (url.pathname === "/api/health") {
     res.setHeader("content-type", "application/json; charset=utf-8");
-    res.end(JSON.stringify({ ok: true, version: VERSION, rooms: store.rooms.size, maRooms: maStore.rooms.size, cnRooms: cnStore.rooms.size }));
+    res.end(
+      JSON.stringify({
+        ok: true,
+        version: VERSION,
+        rooms: store.rooms.size,
+        maRooms: maStore.rooms.size,
+        cnRooms: cnStore.rooms.size,
+        dmRooms: dmStore.rooms.size,
+      }),
+    );
     return;
   }
   if (url.pathname === "/robots.txt") {
@@ -129,16 +139,29 @@ const http = createServer((req, res) => {
 
 const io = new Server(http, { cors: { origin: true } });
 /** 第二款游戏：魔法运动员（独立房间与存档，事件名带 ma: 前缀） */
-const maStore = attachMagicalAthlete(io, resolve(process.env.MA_DATA_DIR ?? join(DATA, "../ma-rooms")), {
-  maxRooms: MAX_ROOMS,
-  idleMs: ROOM_IDLE_MS,
-});
+const dmStore = attachDyingMessage(
+  io,
+  resolve(process.env.DM_DATA_DIR ?? join(DATA, "../dm-rooms")),
+  { maxRooms: MAX_ROOMS, idleMs: ROOM_IDLE_MS },
+);
+const maStore = attachMagicalAthlete(
+  io,
+  resolve(process.env.MA_DATA_DIR ?? join(DATA, "../ma-rooms")),
+  {
+    maxRooms: MAX_ROOMS,
+    idleMs: ROOM_IDLE_MS,
+  },
+);
 
 /** 第三款游戏：行动代号（独立房间与存档，事件名带 cn: 前缀） */
-const cnStore = attachCodenames(io, resolve(process.env.CN_DATA_DIR ?? join(DATA, "../cn-rooms")), {
-  maxRooms: MAX_ROOMS,
-  idleMs: ROOM_IDLE_MS,
-});
+const cnStore = attachCodenames(
+  io,
+  resolve(process.env.CN_DATA_DIR ?? join(DATA, "../cn-rooms")),
+  {
+    maxRooms: MAX_ROOMS,
+    idleMs: ROOM_IDLE_MS,
+  },
+);
 
 function broadcast(room: Room) {
   for (const s of io.sockets.adapter.rooms.get(room.code) ?? []) {
@@ -148,7 +171,8 @@ function broadcast(room: Room) {
 }
 
 /** 房间里还有人连着就不清理 */
-const busy = (code: string) => (io.sockets.adapter.rooms.get(code)?.size ?? 0) > 0;
+const busy = (code: string) =>
+  (io.sockets.adapter.rooms.get(code)?.size ?? 0) > 0;
 setInterval(() => {
   const removed = store.prune(ROOM_IDLE_MS, busy);
   if (removed) console.log(`清理闲置房间 ${removed} 个`);
@@ -161,7 +185,7 @@ io.on("connection", (socket) => {
     count = 0;
   socket.use((_packet, next) => {
     const now = Date.now();
-    if (now - windowStart > 10_000) (windowStart = now), (count = 0);
+    if (now - windowStart > 10_000) ((windowStart = now), (count = 0));
     if (++count > 120) return next(new Error("RATE_LIMIT"));
     next();
   });
@@ -270,7 +294,11 @@ io.on("connection", (socket) => {
 
 http.listen(PORT, HOST, async () => {
   const urls = lanAddresses().map((ip) => `http://${ip}:${PORT}/`);
-  console.log("\n  桌游合集（黎明杀机 · 魔法运动员 · 行动代号）· 联机服务器已启动（版本 " + VERSION + "）");
+  console.log(
+    "\n  桌游合集（黎明杀机 · 魔法运动员 · 行动代号 · 请留遗言）· 联机服务器已启动（版本 " +
+      VERSION +
+      "）",
+  );
   console.log(`  本机打开：http://localhost:${PORT}/`);
   if (PUBLIC_URL) {
     console.log(`\n  ★ 外网链接（手机流量、外地朋友都能打开）：${PUBLIC_URL}/`);

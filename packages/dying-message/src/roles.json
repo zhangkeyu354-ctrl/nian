@@ -1,0 +1,650 @@
+{
+  "schemaVersion": 1,
+  "gameId": "dying-message",
+  "scope": "PHOTO_RULE_INTAKE_ONLY",
+  "sourcePriority": "说明书照片优先于玩家整理图；尚未核对印次和官方勘误",
+  "roles": [
+    {
+      "roleId": "civilian",
+      "name": "市民",
+      "englishName": "CIVILIAN",
+      "faction": "INNOCENT",
+      "roleType": "INNOCENT",
+      "count": 10,
+      "canKill": false,
+      "ability": "无特殊能力。",
+      "triggerPhase": "NONE",
+      "targetRestrictions": [],
+      "usage": "无",
+      "effectHandler": "DM_REDUCER:civilian",
+      "implementationStatus": "IMPLEMENTED_CORE_EFFECT",
+      "imageResource": "/assets/dying-message-hd/atlas-1.webp",
+      "imageStatus": "REFERENCE_GUIDED_REDRAW_NOT_OFFICIAL_ORIGINAL",
+      "ruleSources": ["S06", "S04"],
+      "verification": {
+        "abilityText": "CONFIRMED_FROM_PHOTO",
+        "executionDetails": "TEXT_CONFIRMED_NOT_ENGINE_TESTED",
+        "questions": [],
+        "additionalSource": "SYNKA 同版36人物104证据官方说明书，第3–8页"
+      },
+      "imageAtlasCell": {
+        "columns": 3,
+        "rows": 2,
+        "index": 0
+      }
+    },
+    {
+      "roleId": "private-detective",
+      "name": "私家侦探",
+      "englishName": "PRIVATE DETECTIVE",
+      "faction": "INNOCENT",
+      "roleType": "INNOCENT",
+      "count": 1,
+      "canKill": false,
+      "ability": "在杀手放置假遗言之前，确认死者真正的遗言。",
+      "triggerPhase": "SPECIAL_INFORMATION",
+      "targetRestrictions": ["按流程图须存活；只获得真遗言，不获得杀手身份"],
+      "usage": "每次符合条件的行凶阶段",
+      "effectHandler": "DM_REDUCER:private-detective",
+      "implementationStatus": "IMPLEMENTED_CORE_EFFECT",
+      "imageResource": "/assets/dying-message-hd/atlas-1.webp",
+      "imageStatus": "REFERENCE_GUIDED_REDRAW_NOT_OFFICIAL_ORIGINAL",
+      "ruleSources": ["S06", "S04"],
+      "verification": {
+        "abilityText": "CONFIRMED_FROM_PHOTO",
+        "executionDetails": "CHECK_REQUIRED",
+        "questions": ["贵族造成多张真遗言时的展示方式需核对完整规则。"],
+        "additionalSource": "SYNKA 同版36人物104证据官方说明书，第3–8页"
+      },
+      "imageAtlasCell": {
+        "columns": 3,
+        "rows": 2,
+        "index": 1
+      }
+    },
+    {
+      "roleId": "muay-thai",
+      "name": "泰拳手",
+      "englishName": "MUAY THAI",
+      "faction": "INNOCENT",
+      "roleType": "INNOCENT",
+      "count": 2,
+      "canKill": false,
+      "ability": "在行凶阶段被杀手杀死时，跳过下一次行凶阶段。",
+      "triggerPhase": "NIGHT_DEATH",
+      "targetRestrictions": ["须在行凶阶段被杀手杀死，不能泛化为任意死亡"],
+      "usage": "每个角色实例在符合条件死亡时触发",
+      "effectHandler": "DM_REDUCER:muay-thai",
+      "implementationStatus": "IMPLEMENTED_CORE_EFFECT",
+      "imageResource": "/assets/dying-message-hd/atlas-1.webp",
+      "imageStatus": "REFERENCE_GUIDED_REDRAW_NOT_OFFICIAL_ORIGINAL",
+      "ruleSources": ["S06", "S04"],
+      "verification": {
+        "abilityText": "CONFIRMED_FROM_PHOTO",
+        "executionDetails": "CHECK_REQUIRED",
+        "questions": ["两名泰拳手同夜死亡是否累计跳过次数。"],
+        "additionalSource": "SYNKA 同版36人物104证据官方说明书，第3–8页"
+      },
+      "imageAtlasCell": {
+        "columns": 3,
+        "rows": 2,
+        "index": 2
+      }
+    },
+    {
+      "roleId": "celebrity",
+      "name": "名人",
+      "englishName": "CELEBRITY",
+      "faction": "INNOCENT",
+      "roleType": "INNOCENT",
+      "count": 2,
+      "canKill": false,
+      "ability": "在行凶阶段被杀手杀死时，该回合假遗言减少1张。",
+      "triggerPhase": "NIGHT_DEATH_EVIDENCE_MODIFIER",
+      "targetRestrictions": ["限该回合；须被杀手杀死"],
+      "usage": "死亡条件触发",
+      "effectHandler": "DM_REDUCER:celebrity",
+      "implementationStatus": "IMPLEMENTED_CORE_EFFECT",
+      "imageResource": "/assets/dying-message-hd/atlas-2.webp",
+      "imageStatus": "REFERENCE_GUIDED_REDRAW_NOT_OFFICIAL_ORIGINAL",
+      "ruleSources": ["S08", "S04"],
+      "verification": {
+        "abilityText": "CONFIRMED_FROM_PHOTO",
+        "executionDetails": "CHECK_REQUIRED",
+        "questions": ["两名名人同夜死亡的叠加及假遗言下限。"],
+        "additionalSource": "SYNKA 同版36人物104证据官方说明书，第3–8页"
+      },
+      "imageAtlasCell": {
+        "columns": 3,
+        "rows": 2,
+        "index": 1
+      }
+    },
+    {
+      "roleId": "noble",
+      "name": "贵族",
+      "englishName": "NOBLE",
+      "faction": "INNOCENT",
+      "roleType": "INNOCENT",
+      "count": 2,
+      "canKill": false,
+      "ability": "在行凶阶段被杀手杀死时，该回合真遗言增加1张。",
+      "triggerPhase": "NIGHT_DEATH_EVIDENCE_MODIFIER",
+      "targetRestrictions": ["限该回合；须被杀手杀死"],
+      "usage": "死亡条件触发",
+      "effectHandler": "DM_REDUCER:noble",
+      "implementationStatus": "IMPLEMENTED_CORE_EFFECT",
+      "imageResource": "/assets/dying-message-hd/atlas-2.webp",
+      "imageStatus": "REFERENCE_GUIDED_REDRAW_NOT_OFFICIAL_ORIGINAL",
+      "ruleSources": ["S08", "S04"],
+      "verification": {
+        "abilityText": "CONFIRMED_FROM_PHOTO",
+        "executionDetails": "CHECK_REQUIRED",
+        "questions": ["多名贵族死亡的叠加、共同选牌的决定程序。"],
+        "additionalSource": "SYNKA 同版36人物104证据官方说明书，第3–8页"
+      },
+      "imageAtlasCell": {
+        "columns": 3,
+        "rows": 2,
+        "index": 2
+      }
+    },
+    {
+      "roleId": "janitor",
+      "name": "垃圾清扫员",
+      "englishName": "JANITOR",
+      "faction": "INNOCENT",
+      "roleType": "INNOCENT",
+      "count": 2,
+      "canKill": false,
+      "ability": "在行凶阶段被杀手杀死时，该回合可以改从弃牌堆选择遗言。",
+      "triggerPhase": "VICTIM_EVIDENCE",
+      "targetRestrictions": ["从弃牌堆改选是可选能力；不能自行解释为额外抽9张"],
+      "usage": "符合条件的死亡回合",
+      "effectHandler": "DM_REDUCER:janitor",
+      "implementationStatus": "IMPLEMENTED_CORE_EFFECT",
+      "imageResource": "/assets/dying-message-hd/atlas-2.webp",
+      "imageStatus": "REFERENCE_GUIDED_REDRAW_NOT_OFFICIAL_ORIGINAL",
+      "ruleSources": ["S08", "S04"],
+      "verification": {
+        "abilityText": "CONFIRMED_FROM_PHOTO",
+        "executionDetails": "CHECK_REQUIRED",
+        "questions": ["弃牌堆为空、可见范围、与其他死者共同选择时如何处理。"],
+        "additionalSource": "SYNKA 同版36人物104证据官方说明书，第3–8页"
+      },
+      "imageAtlasCell": {
+        "columns": 3,
+        "rows": 2,
+        "index": 3
+      }
+    },
+    {
+      "roleId": "forensic-scientist",
+      "name": "鉴定专家",
+      "englishName": "FORENSIC SCIENTIST",
+      "faction": "INNOCENT",
+      "roleType": "INNOCENT",
+      "count": 2,
+      "canKill": false,
+      "ability": "死亡时，选择上一次被杀手杀害玩家面前的一张遗言，由该玩家宣布其真假；行凶阶段死亡则在调查阶段执行。",
+      "triggerPhase": "DEATH_OR_INVESTIGATION",
+      "targetRestrictions": [
+        "目标是上一次被杀手杀害玩家面前的遗言，不是任意历史卡"
+      ],
+      "usage": "每实例死亡时",
+      "effectHandler": "DM_REDUCER:forensic-scientist",
+      "implementationStatus": "IMPLEMENTED_CORE_EFFECT",
+      "imageResource": "/assets/dying-message-hd/atlas-1.webp",
+      "imageStatus": "REFERENCE_GUIDED_REDRAW_NOT_OFFICIAL_ORIGINAL",
+      "ruleSources": ["S07", "S04"],
+      "verification": {
+        "abilityText": "CONFIRMED_FROM_PHOTO",
+        "executionDetails": "CHECK_REQUIRED",
+        "questions": [
+          "第一轮没有历史遗言时；上一次有多名死者时的合法目标；自身本轮遗言是否包含在上一次中。"
+        ],
+        "additionalSource": "SYNKA 同版36人物104证据官方说明书，第3–8页"
+      },
+      "imageAtlasCell": {
+        "columns": 3,
+        "rows": 2,
+        "index": 3
+      }
+    },
+    {
+      "roleId": "hostage",
+      "name": "人质",
+      "englishName": "HOSTAGE",
+      "faction": "INNOCENT",
+      "roleType": "INNOCENT",
+      "count": 2,
+      "canKill": false,
+      "ability": "死亡时，座位左右两侧玩家同时死亡；行凶阶段死亡时，三人共同选择一张真遗言；若所有玩家死亡，有罪阵营胜利。",
+      "triggerPhase": "ANY_DEATH",
+      "targetRestrictions": ["按座位左右相邻，非任意目标；线上座位必须固定"],
+      "usage": "每实例死亡时",
+      "effectHandler": "DM_REDUCER:hostage",
+      "implementationStatus": "IMPLEMENTED_CORE_EFFECT",
+      "imageResource": "/assets/dying-message-hd/atlas-2.webp",
+      "imageStatus": "REFERENCE_GUIDED_REDRAW_NOT_OFFICIAL_ORIGINAL",
+      "ruleSources": ["S07", "S04"],
+      "verification": {
+        "abilityText": "CONFIRMED_FROM_PHOTO",
+        "executionDetails": "CHECK_REQUIRED",
+        "questions": [
+          "邻座是否指固定座位还是存活者邻座；多个人质连锁和证据修正交互。"
+        ],
+        "additionalSource": "SYNKA 同版36人物104证据官方说明书，第3–8页"
+      },
+      "imageAtlasCell": {
+        "columns": 3,
+        "rows": 2,
+        "index": 0
+      }
+    },
+    {
+      "roleId": "wonder-dog",
+      "name": "名犬",
+      "englishName": "WONDER DOG",
+      "faction": "INNOCENT",
+      "roleType": "INNOCENT",
+      "count": 2,
+      "canKill": false,
+      "ability": "行凶阶段存活时可保护一名其他玩家，杀手不能杀害被保护者；不能保护自己或其他名犬，杀手可以杀害名犬。",
+      "triggerPhase": "NIGHT_PREPARATION",
+      "targetRestrictions": ["不得选自己", "不得选其他名犬"],
+      "usage": "每个存活的行凶阶段",
+      "effectHandler": "DM_REDUCER:wonder-dog",
+      "implementationStatus": "IMPLEMENTED_CORE_EFFECT",
+      "imageResource": "/assets/dying-message-hd/atlas-2.webp",
+      "imageStatus": "REFERENCE_GUIDED_REDRAW_NOT_OFFICIAL_ORIGINAL",
+      "ruleSources": ["S10", "S04"],
+      "verification": {
+        "abilityText": "CONFIRMED_FROM_PHOTO",
+        "executionDetails": "CHECK_REQUIRED",
+        "questions": [
+          "能否连续保护同一目标；保护者同夜死亡后保护是否保持；是否阻止连带死亡。"
+        ],
+        "additionalSource": "SYNKA 同版36人物104证据官方说明书，第3–8页"
+      },
+      "imageAtlasCell": {
+        "columns": 3,
+        "rows": 2,
+        "index": 4
+      }
+    },
+    {
+      "roleId": "soulmate",
+      "name": "灵魂伴侣",
+      "englishName": "SOULMATE",
+      "faction": "INNOCENT",
+      "roleType": "INNOCENT",
+      "count": 1,
+      "canKill": false,
+      "ability": "第一回合行凶阶段选择一名其他玩家作为命运之人；对方知道被选中但不知道谁是灵魂伴侣。任一方死亡，另一方同时死亡。",
+      "triggerPhase": "FIRST_NIGHT_AND_ANY_LINKED_DEATH",
+      "targetRestrictions": ["只能选其他玩家；给命运之人的通知不得暴露选择者"],
+      "usage": "首次行凶阶段建立一次关系；死亡关联持续",
+      "effectHandler": "DM_REDUCER:soulmate",
+      "implementationStatus": "IMPLEMENTED_CORE_EFFECT",
+      "imageResource": "/assets/dying-message-hd/atlas-1.webp",
+      "imageStatus": "REFERENCE_GUIDED_REDRAW_NOT_OFFICIAL_ORIGINAL",
+      "ruleSources": ["S07", "S04"],
+      "verification": {
+        "abilityText": "CONFIRMED_FROM_PHOTO",
+        "executionDetails": "CHECK_REQUIRED",
+        "questions": ["与人质、胜负检查、证据共享及延迟公布死亡的精确顺序。"],
+        "additionalSource": "SYNKA 同版36人物104证据官方说明书，第3–8页"
+      },
+      "imageAtlasCell": {
+        "columns": 3,
+        "rows": 2,
+        "index": 4
+      }
+    },
+    {
+      "roleId": "killer",
+      "name": "杀手",
+      "englishName": "KILLER",
+      "faction": "GUILTY",
+      "roleType": "KILLER",
+      "count": 3,
+      "canKill": true,
+      "ability": "在行凶阶段杀死一名玩家。",
+      "triggerPhase": "KILLER_SELECTION",
+      "targetRestrictions": ["不能杀害名犬已保护的目标"],
+      "usage": "每个允许执行的行凶阶段",
+      "effectHandler": "DM_REDUCER:killer",
+      "implementationStatus": "IMPLEMENTED_CORE_EFFECT",
+      "imageResource": "/assets/dying-message-hd/atlas-3.webp",
+      "imageStatus": "REFERENCE_GUIDED_REDRAW_NOT_OFFICIAL_ORIGINAL",
+      "ruleSources": ["S10", "S04"],
+      "verification": {
+        "abilityText": "CONFIRMED_FROM_PHOTO",
+        "executionDetails": "CHECK_REQUIRED",
+        "questions": [
+          "多杀手是否共同只选一名；目标阵营及互杀限制；未显示的完整行凶文字页。"
+        ],
+        "additionalSource": "SYNKA 同版36人物104证据官方说明书，第3–8页"
+      },
+      "imageAtlasCell": {
+        "columns": 3,
+        "rows": 2,
+        "index": 3
+      }
+    },
+    {
+      "roleId": "professional-killer",
+      "name": "职业杀手",
+      "englishName": "PROFESSIONAL KILLER",
+      "faction": "GUILTY",
+      "roleType": "KILLER",
+      "count": 2,
+      "canKill": true,
+      "ability": "属于杀手；行凶阶段杀死一名玩家。只要职业杀手存活，杀手选择的假遗言增加1张。",
+      "triggerPhase": "KILLER_SELECTION_AND_FAKE_EVIDENCE",
+      "targetRestrictions": ["增假条件是职业杀手存活，不是必须由职业杀手行凶"],
+      "usage": "存活期间持续修正",
+      "effectHandler": "DM_REDUCER:professional-killer",
+      "implementationStatus": "IMPLEMENTED_CORE_EFFECT",
+      "imageResource": "/assets/dying-message-hd/atlas-3.webp",
+      "imageStatus": "REFERENCE_GUIDED_REDRAW_NOT_OFFICIAL_ORIGINAL",
+      "ruleSources": ["S09", "S04"],
+      "verification": {
+        "abilityText": "CONFIRMED_FROM_PHOTO",
+        "executionDetails": "CHECK_REQUIRED",
+        "questions": ["多名职业杀手的加成是否叠加；与名人同夜死亡的结算顺序。"],
+        "additionalSource": "SYNKA 同版36人物104证据官方说明书，第3–8页"
+      },
+      "imageAtlasCell": {
+        "columns": 3,
+        "rows": 2,
+        "index": 0
+      }
+    },
+    {
+      "roleId": "serial-killer",
+      "name": "连环杀手",
+      "englishName": "SERIAL KILLER",
+      "faction": "GUILTY",
+      "roleType": "KILLER",
+      "count": 2,
+      "canKill": true,
+      "ability": "属于杀手；行凶阶段可杀死一名玩家。只要连环杀手存活便可额外杀死一名。没有贵族影响时，即使多人被杀也只选择一张真遗言。",
+      "triggerPhase": "KILLER_SELECTION_AND_VICTIM_EVIDENCE",
+      "targetRestrictions": ["多人死者不能各自默认产生1真2假"],
+      "usage": "存活期间允许额外击杀",
+      "effectHandler": "DM_REDUCER:serial-killer",
+      "implementationStatus": "IMPLEMENTED_CORE_EFFECT",
+      "imageResource": "/assets/dying-message-hd/atlas-3.webp",
+      "imageStatus": "REFERENCE_GUIDED_REDRAW_NOT_OFFICIAL_ORIGINAL",
+      "ruleSources": ["S10", "S04"],
+      "verification": {
+        "abilityText": "CONFIRMED_FROM_PHOTO",
+        "executionDetails": "CHECK_REQUIRED",
+        "questions": [
+          "额外击杀由谁决定、是否可不使用；多个连环杀手是否叠加；共同选牌程序。"
+        ],
+        "additionalSource": "SYNKA 同版36人物104证据官方说明书，第3–8页"
+      },
+      "imageAtlasCell": {
+        "columns": 3,
+        "rows": 2,
+        "index": 4
+      }
+    },
+    {
+      "roleId": "mastermind",
+      "name": "主谋",
+      "englishName": "MASTERMIND",
+      "faction": "GUILTY",
+      "roleType": "NON_KILLING_GUILTY",
+      "count": 1,
+      "canKill": false,
+      "ability": "不属于杀手；杀手放置假遗言之前，确认死者真正的遗言。",
+      "triggerPhase": "SPECIAL_INFORMATION",
+      "targetRestrictions": ["按流程图须存活；不具备杀人能力"],
+      "usage": "每次符合条件的行凶阶段",
+      "effectHandler": "DM_REDUCER:mastermind",
+      "implementationStatus": "IMPLEMENTED_CORE_EFFECT",
+      "imageResource": "/assets/dying-message-hd/atlas-3.webp",
+      "imageStatus": "REFERENCE_GUIDED_REDRAW_NOT_OFFICIAL_ORIGINAL",
+      "ruleSources": ["S09", "S04"],
+      "verification": {
+        "abilityText": "CONFIRMED_FROM_PHOTO",
+        "executionDetails": "CHECK_REQUIRED",
+        "questions": ["与私家侦探相同的多真遗言展示边界。"],
+        "additionalSource": "SYNKA 同版36人物104证据官方说明书，第3–8页"
+      },
+      "imageAtlasCell": {
+        "columns": 3,
+        "rows": 2,
+        "index": 1
+      }
+    },
+    {
+      "roleId": "accomplice",
+      "name": "共犯",
+      "englishName": "ACCOMPLICE",
+      "faction": "GUILTY",
+      "roleType": "NON_KILLING_GUILTY",
+      "count": 2,
+      "canKill": false,
+      "ability": "不属于杀手；无特殊能力，协助有罪阵营获胜。",
+      "triggerPhase": "NONE",
+      "targetRestrictions": [],
+      "usage": "无",
+      "effectHandler": "DM_REDUCER:accomplice",
+      "implementationStatus": "IMPLEMENTED_CORE_EFFECT",
+      "imageResource": "/assets/dying-message-hd/atlas-3.webp",
+      "imageStatus": "REFERENCE_GUIDED_REDRAW_NOT_OFFICIAL_ORIGINAL",
+      "ruleSources": ["S09", "S04"],
+      "verification": {
+        "abilityText": "CONFIRMED_FROM_PHOTO",
+        "executionDetails": "CHECK_REQUIRED",
+        "questions": [
+          "阵营成员相互知情范围需完整说明书，不能采用玩家整理图的笼统描述。"
+        ],
+        "additionalSource": "SYNKA 同版36人物104证据官方说明书，第3–8页"
+      },
+      "imageAtlasCell": {
+        "columns": 3,
+        "rows": 2,
+        "index": 2
+      }
+    }
+  ],
+  "instances": [
+    {
+      "roleCardId": "civilian-01",
+      "roleId": "civilian"
+    },
+    {
+      "roleCardId": "civilian-02",
+      "roleId": "civilian"
+    },
+    {
+      "roleCardId": "civilian-03",
+      "roleId": "civilian"
+    },
+    {
+      "roleCardId": "civilian-04",
+      "roleId": "civilian"
+    },
+    {
+      "roleCardId": "civilian-05",
+      "roleId": "civilian"
+    },
+    {
+      "roleCardId": "civilian-06",
+      "roleId": "civilian"
+    },
+    {
+      "roleCardId": "civilian-07",
+      "roleId": "civilian"
+    },
+    {
+      "roleCardId": "civilian-08",
+      "roleId": "civilian"
+    },
+    {
+      "roleCardId": "civilian-09",
+      "roleId": "civilian"
+    },
+    {
+      "roleCardId": "civilian-10",
+      "roleId": "civilian"
+    },
+    {
+      "roleCardId": "private-detective-01",
+      "roleId": "private-detective"
+    },
+    {
+      "roleCardId": "muay-thai-01",
+      "roleId": "muay-thai"
+    },
+    {
+      "roleCardId": "muay-thai-02",
+      "roleId": "muay-thai"
+    },
+    {
+      "roleCardId": "celebrity-01",
+      "roleId": "celebrity"
+    },
+    {
+      "roleCardId": "celebrity-02",
+      "roleId": "celebrity"
+    },
+    {
+      "roleCardId": "noble-01",
+      "roleId": "noble"
+    },
+    {
+      "roleCardId": "noble-02",
+      "roleId": "noble"
+    },
+    {
+      "roleCardId": "janitor-01",
+      "roleId": "janitor"
+    },
+    {
+      "roleCardId": "janitor-02",
+      "roleId": "janitor"
+    },
+    {
+      "roleCardId": "forensic-scientist-01",
+      "roleId": "forensic-scientist"
+    },
+    {
+      "roleCardId": "forensic-scientist-02",
+      "roleId": "forensic-scientist"
+    },
+    {
+      "roleCardId": "hostage-01",
+      "roleId": "hostage"
+    },
+    {
+      "roleCardId": "hostage-02",
+      "roleId": "hostage"
+    },
+    {
+      "roleCardId": "wonder-dog-01",
+      "roleId": "wonder-dog"
+    },
+    {
+      "roleCardId": "wonder-dog-02",
+      "roleId": "wonder-dog"
+    },
+    {
+      "roleCardId": "soulmate-01",
+      "roleId": "soulmate"
+    },
+    {
+      "roleCardId": "killer-01",
+      "roleId": "killer"
+    },
+    {
+      "roleCardId": "killer-02",
+      "roleId": "killer"
+    },
+    {
+      "roleCardId": "killer-03",
+      "roleId": "killer"
+    },
+    {
+      "roleCardId": "professional-killer-01",
+      "roleId": "professional-killer"
+    },
+    {
+      "roleCardId": "professional-killer-02",
+      "roleId": "professional-killer"
+    },
+    {
+      "roleCardId": "serial-killer-01",
+      "roleId": "serial-killer"
+    },
+    {
+      "roleCardId": "serial-killer-02",
+      "roleId": "serial-killer"
+    },
+    {
+      "roleCardId": "mastermind-01",
+      "roleId": "mastermind"
+    },
+    {
+      "roleCardId": "accomplice-01",
+      "roleId": "accomplice"
+    },
+    {
+      "roleCardId": "accomplice-02",
+      "roleId": "accomplice"
+    }
+  ],
+  "confirmedRules": [
+    {
+      "id": "R01",
+      "sources": ["S04"],
+      "text": "胜负用杀手定义仅为杀手、职业杀手、连环杀手。共犯和主谋不计入杀手人数。"
+    },
+    {
+      "id": "R02",
+      "sources": ["S04"],
+      "text": "存活杀手人数大于等于存活无罪阵营人数时，有罪阵营获胜；全部杀手死亡时，无罪阵营获胜。零人同时死亡的通用优先级未显示，人质全灭例外见R07。"
+    },
+    {
+      "id": "R03",
+      "sources": ["S04", "S05"],
+      "text": "准备时洗证据牌并取9张公共证据池；死者先选真遗言，私家侦探后主谋确认真遗言，再由杀手选2张假遗言。不得误称候选9张本身在原版就是保密信息。"
+    },
+    {
+      "id": "R04",
+      "sources": ["S05", "S07", "S10"],
+      "text": "第一回合先处理灵魂伴侣，名犬保护在杀手选目标之前；名犬收回手的线下动作不等于线上公开身份。"
+    },
+    {
+      "id": "R05",
+      "sources": ["S10"],
+      "text": "没有贵族影响时，多人夜间被杀共同只选一张真遗言，不能机械地为每名死者建立独立1真2假。"
+    },
+    {
+      "id": "R06",
+      "sources": ["S09"],
+      "text": "职业杀手存活即增加假遗言，不限实际行凶者为职业杀手。"
+    },
+    {
+      "id": "R07",
+      "sources": ["S07"],
+      "text": "人质全灭例外：如果所有玩家死亡，视为有罪阵营胜利。"
+    },
+    {
+      "id": "R08",
+      "sources": ["S07"],
+      "text": "人质在行凶阶段死亡时，左右两侧同时死亡的玩家与其共同选择一张真遗言。"
+    }
+  ],
+  "implementation": {
+    "roleTypesImplemented": 15,
+    "scope": "CORE_EFFECTS_WITH_UNIT_TESTS",
+    "reference": "See docs/dying-message for exact acceptance and remaining edge cases"
+  }
+}

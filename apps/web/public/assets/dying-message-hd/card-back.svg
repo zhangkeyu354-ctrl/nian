@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="700" height="1000" viewBox="0 0 700 1000">
+  <rect width="700" height="1000" rx="22" fill="#e52760"/>
+  <g fill="#fff" text-anchor="middle" font-family="Microsoft YaHei,PingFang SC,Noto Sans SC,sans-serif" font-weight="900">
+    <text x="350" y="518" font-size="108" letter-spacing="-5">请留遗言</text>
+    <text x="350" y="562" font-size="30" letter-spacing="1">Dying message</text>
+  </g>
+</svg>

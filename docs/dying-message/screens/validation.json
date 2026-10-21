@@ -1,0 +1,17 @@
+{
+  "pass": true,
+  "players": 4,
+  "code": "SHZA",
+  "roles": "random, host configured detective",
+  "speechOrder": [
+    2,
+    3,
+    4
+  ],
+  "refreshRestored": true,
+  "privacy": true,
+  "twoVotes": true,
+  "winner": "INNOCENT",
+  "restart": true,
+  "consoleErrors": []
+}

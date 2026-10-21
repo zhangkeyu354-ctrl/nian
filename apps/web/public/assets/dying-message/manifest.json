@@ -1,0 +1,1385 @@
+{
+  "total": 153,
+  "width": 600,
+  "height": 800,
+  "source": "Original approved 153 PNG assets, retained unchanged in original workspace.",
+  "assets": [
+    {
+      "id": "DM001",
+      "name": "腿毛很多的腿",
+      "category": "A",
+      "imagePath": "/assets/dying-message/DM001.webp",
+      "enabled": true,
+      "sourceFile": "images/DM001.png",
+      "assetStatus": "DERIVED_FROM_APPROVED_PNG"
+    },
+    {
+      "id": "DM002",
+      "name": "个子很高的人",
+      "category": "A",
+      "imagePath": "/assets/dying-message/DM002.webp",
+      "enabled": true,
+      "sourceFile": "images/DM002.png",
+      "assetStatus": "DERIVED_FROM_APPROVED_PNG"
+    },
+    {
+      "id": "DM003",
+      "name": "很翘的屁股蛋",
+      "category": "A",
+      "imagePath": "/assets/dying-message/DM003.webp",
+      "enabled": true,
+      "sourceFile": "images/DM003.png",
+      "assetStatus": "DERIVED_FROM_APPROVED_PNG"
+    },
+    {
+      "id": "DM004",
+      "name": "炸鸡",
+      "category": "F",
+      "imagePath": "/assets/dying-message/DM004.webp",
+      "enabled": true,
+      "sourceFile": "images/DM004.png",
+      "assetStatus": "DERIVED_FROM_APPROVED_PNG"
+    },
+    {
+      "id": "DM005",
+      "name": "裁缝",
+      "category": "G",
+      "imagePath": "/assets/dying-message/DM005.webp",
+      "enabled": true,
+      "sourceFile": "images/DM005.png",
+      "assetStatus": "DERIVED_FROM_APPROVED_PNG"
+    },
+    {
+      "id": "DM006",
+      "name": "王子",
+      "category": "G",
+      "imagePath": "/assets/dying-message/DM006.webp",
+      "enabled": true,
+      "sourceFile": "images/DM006.png",
+      "assetStatus": "DERIVED_FROM_APPROVED_PNG"
+    },
+    {
+      "id": "DM007",
+      "name": "硬汉",
+      "category": "G",
+      "imagePath": "/assets/dying-message/DM007.webp",
+      "enabled": true,
+      "sourceFile": "images/DM007.png",
+      "assetStatus": "DERIVED_FROM_APPROVED_PNG"
+    },
+    {
+      "id": "DM008",
+      "name": "鸟",
+      "category": "E",
+      "imagePath": "/assets/dying-message/DM008.webp",
+      "enabled": true,
+      "sourceFile": "images/DM008.png",
+      "assetStatus": "DERIVED_FROM_APPROVED_PNG"
+    },
+    {
+      "id": "DM009",
+      "name": "狗",
+      "category": "E",
+      "imagePath": "/assets/dying-message/DM009.webp",
+      "enabled": true,
+      "sourceFile": "images/DM009.png",
+      "assetStatus": "DERIVED_FROM_APPROVED_PNG"
+    },
+    {
+      "id": "DM010",
+      "name": "猫",
+      "category": "E",
+      "imagePath": "/assets/dying-message/DM010.webp",
+      "enabled": true,
+      "sourceFile": "images/DM010.png",
+      "assetStatus": "DERIVED_FROM_APPROVED_PNG"
+    },
+    {
+      "id": "DM011",
+      "name": "程序员",
+      "category": "G",
+      "imagePath": "/assets/dying-message/DM011.webp",
+      "enabled": true,
+      "sourceFile": "images/DM011.png",
+      "assetStatus": "DERIVED_FROM_APPROVED_PNG"
+    },
+    {
+      "id": "DM012",
+      "name": "Nintendo Switch",
+      "category": "H",
+      "imagePath": "/assets/dying-message/DM012.webp",
+      "enabled": true,
+      "sourceFile": "images/DM012.png",
+      "assetStatus": "DERIVED_FROM_APPROVED_PNG"
+    },
+    {
+      "id": "DM013",
+      "name": "婴儿",
+      "category": "G",
+      "imagePath": "/assets/dying-message/DM013.webp",
+      "enabled": true,
+      "sourceFile": "images/DM013.png",
+      "assetStatus": "DERIVED_FROM_APPROVED_PNG"
+    },
+    {
+      "id": "DM014",
+      "name": "攀岩",
+      "category": "I",
+      "imagePath": "/assets/dying-message/DM014.webp",
+      "enabled": true,
+      "sourceFile": "images/DM014.png",
+      "assetStatus": "DERIVED_FROM_APPROVED_PNG"
+    },
+    {
+      "id": "DM015",
+      "name": "奶粉",
+      "category": "F",
+      "imagePath": "/assets/dying-message/DM015.webp",
+      "enabled": true,
+      "sourceFile": "images/DM015.png",
+      "assetStatus": "DERIVED_FROM_APPROVED_PNG"
+    },
+    {
+      "id": "DM016",
+      "name": "布料",
+      "category": "J",
+      "imagePath": "/assets/dying-message/DM016.webp",
+      "enabled": true,
+      "sourceFile": "images/DM016.png",
+      "assetStatus": "DERIVED_FROM_APPROVED_PNG"
+    },
+    {
+      "id": "DM017",
+      "name": "大眼睛",
+      "category": "A",
+      "imagePath": "/assets/dying-message/DM017.webp",
+      "enabled": true,
+      "sourceFile": "images/DM017.png",
+      "assetStatus": "DERIVED_FROM_APPROVED_PNG"
+    },
+    {
+      "id": "DM018",
+      "name": "小眼睛",
+      "category": "A",
+      "imagePath": "/assets/dying-message/DM018.webp",
+      "enabled": true,
+      "sourceFile": "images/DM018.png",
+      "assetStatus": "DERIVED_FROM_APPROVED_PNG"
+    },
+    {
+      "id": "DM019",
+      "name": "放屁",
+      "category": "D",
+      "imagePath": "/assets/dying-message/DM019.webp",
+      "enabled": true,
+      "sourceFile": "images/DM019.png",
+      "assetStatus": "DERIVED_FROM_APPROVED_PNG"
+    },
+    {
+      "id": "DM020",
+      "name": "火爆脾气",
+      "category": "C",
+      "imagePath": "/assets/dying-message/DM020.webp",
+      "enabled": true,
+      "sourceFile": "images/DM020.png",
+      "assetStatus": "DERIVED_FROM_APPROVED_PNG"
+    },
+    {
+      "id": "DM021",
+      "name": "沉默寡言",
+      "category": "C",
+      "imagePath": "/assets/dying-message/DM021.webp",
+      "enabled": true,
+      "sourceFile": "images/DM021.png",
+      "assetStatus": "DERIVED_FROM_APPROVED_PNG"
+    },
+    {
+      "id": "DM022",
+      "name": "秃顶",
+      "category": "A",
+      "imagePath": "/assets/dying-message/DM022.webp",
+      "enabled": true,
+      "sourceFile": "images/DM022.png",
+      "assetStatus": "DERIVED_FROM_APPROVED_PNG"
+    },
+    {
+      "id": "DM023",
+      "name": "爆炸头",
+      "category": "A",
+      "imagePath": "/assets/dying-message/DM023.webp",
+      "enabled": true,
+      "sourceFile": "images/DM023.png",
+      "assetStatus": "DERIVED_FROM_APPROVED_PNG"
+    },
+    {
+      "id": "DM024",
+      "name": "络腮胡",
+      "category": "A",
+      "imagePath": "/assets/dying-message/DM024.webp",
+      "enabled": true,
+      "sourceFile": "images/DM024.png",
+      "assetStatus": "DERIVED_FROM_APPROVED_PNG"
+    },
+    {
+      "id": "DM025",
+      "name": "龅牙",
+      "category": "A",
+      "imagePath": "/assets/dying-message/DM025.webp",
+      "enabled": true,
+      "sourceFile": "images/DM025.png",
+      "assetStatus": "DERIVED_FROM_APPROVED_PNG"
+    },
+    {
+      "id": "DM026",
+      "name": "雀斑脸",
+      "category": "A",
+      "imagePath": "/assets/dying-message/DM026.webp",
+      "enabled": true,
+      "sourceFile": "images/DM026.png",
+      "assetStatus": "DERIVED_FROM_APPROVED_PNG"
+    },
+    {
+      "id": "DM027",
+      "name": "招风耳",
+      "category": "A",
+      "imagePath": "/assets/dying-message/DM027.webp",
+      "enabled": true,
+      "sourceFile": "images/DM027.png",
+      "assetStatus": "DERIVED_FROM_APPROVED_PNG"
+    },
+    {
+      "id": "DM028",
+      "name": "酒窝",
+      "category": "A",
+      "imagePath": "/assets/dying-message/DM028.webp",
+      "enabled": true,
+      "sourceFile": "images/DM028.png",
+      "assetStatus": "DERIVED_FROM_APPROVED_PNG"
+    },
+    {
+      "id": "DM029",
+      "name": "啤酒肚",
+      "category": "A",
+      "imagePath": "/assets/dying-message/DM029.webp",
+      "enabled": true,
+      "sourceFile": "images/DM029.png",
+      "assetStatus": "DERIVED_FROM_APPROVED_PNG"
+    },
+    {
+      "id": "DM030",
+      "name": "肌肉手臂",
+      "category": "A",
+      "imagePath": "/assets/dying-message/DM030.webp",
+      "enabled": true,
+      "sourceFile": "images/DM030.png",
+      "assetStatus": "DERIVED_FROM_APPROVED_PNG"
+    },
+    {
+      "id": "DM031",
+      "name": "双下巴",
+      "category": "A",
+      "imagePath": "/assets/dying-message/DM031.webp",
+      "enabled": true,
+      "sourceFile": "images/DM031.png",
+      "assetStatus": "DERIVED_FROM_APPROVED_PNG"
+    },
+    {
+      "id": "DM032",
+      "name": "长指甲",
+      "category": "A",
+      "imagePath": "/assets/dying-message/DM032.webp",
+      "enabled": true,
+      "sourceFile": "images/DM032.png",
+      "assetStatus": "DERIVED_FROM_APPROVED_PNG"
+    },
+    {
+      "id": "DM033",
+      "name": "一字眉",
+      "category": "A",
+      "imagePath": "/assets/dying-message/DM033.webp",
+      "enabled": true,
+      "sourceFile": "images/DM033.png",
+      "assetStatus": "DERIVED_FROM_APPROVED_PNG"
+    },
+    {
+      "id": "DM034",
+      "name": "虎牙",
+      "category": "A",
+      "imagePath": "/assets/dying-message/DM034.webp",
+      "enabled": true,
+      "sourceFile": "images/DM034.png",
+      "assetStatus": "DERIVED_FROM_APPROVED_PNG"
+    },
+    {
+      "id": "DM035",
+      "name": "长辫子",
+      "category": "A",
+      "imagePath": "/assets/dying-message/DM035.webp",
+      "enabled": true,
+      "sourceFile": "images/DM035.png",
+      "assetStatus": "DERIVED_FROM_APPROVED_PNG"
+    },
+    {
+      "id": "DM037",
+      "name": "熬夜",
+      "category": "B",
+      "imagePath": "/assets/dying-message/DM037.webp",
+      "enabled": true,
+      "sourceFile": "images/DM037.png",
+      "assetStatus": "DERIVED_FROM_APPROVED_PNG"
+    },
+    {
+      "id": "DM038",
+      "name": "打呼噜",
+      "category": "B",
+      "imagePath": "/assets/dying-message/DM038.webp",
+      "enabled": true,
+      "sourceFile": "images/DM038.png",
+      "assetStatus": "DERIVED_FROM_APPROVED_PNG"
+    },
+    {
+      "id": "DM039",
+      "name": "抖腿",
+      "category": "B",
+      "imagePath": "/assets/dying-message/DM039.webp",
+      "enabled": true,
+      "sourceFile": "images/DM039.png",
+      "assetStatus": "DERIVED_FROM_APPROVED_PNG"
+    },
+    {
+      "id": "DM040",
+      "name": "咬指甲",
+      "category": "B",
+      "imagePath": "/assets/dying-message/DM040.webp",
+      "enabled": true,
+      "sourceFile": "images/DM040.png",
+      "assetStatus": "DERIVED_FROM_APPROVED_PNG"
+    },
+    {
+      "id": "DM041",
+      "name": "囤货",
+      "category": "B",
+      "imagePath": "/assets/dying-message/DM041.webp",
+      "enabled": true,
+      "sourceFile": "images/DM041.png",
+      "assetStatus": "DERIVED_FROM_APPROVED_PNG"
+    },
+    {
+      "id": "DM042",
+      "name": "拖延",
+      "category": "B",
+      "imagePath": "/assets/dying-message/DM042.webp",
+      "enabled": true,
+      "sourceFile": "images/DM042.png",
+      "assetStatus": "DERIVED_FROM_APPROVED_PNG"
+    },
+    {
+      "id": "DM043",
+      "name": "洁癖",
+      "category": "B",
+      "imagePath": "/assets/dying-message/DM043.webp",
+      "enabled": true,
+      "sourceFile": "images/DM043.png",
+      "assetStatus": "DERIVED_FROM_APPROVED_PNG"
+    },
+    {
+      "id": "DM044",
+      "name": "早起",
+      "category": "B",
+      "imagePath": "/assets/dying-message/DM044.webp",
+      "enabled": true,
+      "sourceFile": "images/DM044.png",
+      "assetStatus": "DERIVED_FROM_APPROVED_PNG"
+    },
+    {
+      "id": "DM045",
+      "name": "偷吃",
+      "category": "B",
+      "imagePath": "/assets/dying-message/DM045.webp",
+      "enabled": true,
+      "sourceFile": "images/DM045.png",
+      "assetStatus": "DERIVED_FROM_APPROVED_PNG"
+    },
+    {
+      "id": "DM046",
+      "name": "边走边看手机",
+      "category": "B",
+      "imagePath": "/assets/dying-message/DM046.webp",
+      "enabled": true,
+      "sourceFile": "images/DM046.png",
+      "assetStatus": "DERIVED_FROM_APPROVED_PNG"
+    },
+    {
+      "id": "DM047",
+      "name": "整理收纳",
+      "category": "B",
+      "imagePath": "/assets/dying-message/DM047.webp",
+      "enabled": true,
+      "sourceFile": "images/DM047.png",
+      "assetStatus": "DERIVED_FROM_APPROVED_PNG"
+    },
+    {
+      "id": "DM050",
+      "name": "挑食",
+      "category": "B",
+      "imagePath": "/assets/dying-message/DM050.webp",
+      "enabled": true,
+      "sourceFile": "images/DM050.png",
+      "assetStatus": "DERIVED_FROM_APPROVED_PNG"
+    },
+    {
+      "id": "DM052",
+      "name": "爱吹牛",
+      "category": "C",
+      "imagePath": "/assets/dying-message/DM052.webp",
+      "enabled": true,
+      "sourceFile": "images/DM052.png",
+      "assetStatus": "DERIVED_FROM_APPROVED_PNG"
+    },
+    {
+      "id": "DM053",
+      "name": "胆小",
+      "category": "C",
+      "imagePath": "/assets/dying-message/DM053.webp",
+      "enabled": true,
+      "sourceFile": "images/DM053.png",
+      "assetStatus": "DERIVED_FROM_APPROVED_PNG"
+    },
+    {
+      "id": "DM054",
+      "name": "爱显摆",
+      "category": "C",
+      "imagePath": "/assets/dying-message/DM054.webp",
+      "enabled": true,
+      "sourceFile": "images/DM054.png",
+      "assetStatus": "DERIVED_FROM_APPROVED_PNG"
+    },
+    {
+      "id": "DM055",
+      "name": "选择困难",
+      "category": "C",
+      "imagePath": "/assets/dying-message/DM055.webp",
+      "enabled": true,
+      "sourceFile": "images/DM055.png",
+      "assetStatus": "DERIVED_FROM_APPROVED_PNG"
+    },
+    {
+      "id": "DM056",
+      "name": "爱管闲事",
+      "category": "C",
+      "imagePath": "/assets/dying-message/DM056.webp",
+      "enabled": true,
+      "sourceFile": "images/DM056.png",
+      "assetStatus": "DERIVED_FROM_APPROVED_PNG"
+    },
+    {
+      "id": "DM057",
+      "name": "粗心大意",
+      "category": "C",
+      "imagePath": "/assets/dying-message/DM057.webp",
+      "enabled": true,
+      "sourceFile": "images/DM057.png",
+      "assetStatus": "DERIVED_FROM_APPROVED_PNG"
+    },
+    {
+      "id": "DM058",
+      "name": "小气",
+      "category": "C",
+      "imagePath": "/assets/dying-message/DM058.webp",
+      "enabled": true,
+      "sourceFile": "images/DM058.png",
+      "assetStatus": "DERIVED_FROM_APPROVED_PNG"
+    },
+    {
+      "id": "DM061",
+      "name": "嘴硬",
+      "category": "C",
+      "imagePath": "/assets/dying-message/DM061.webp",
+      "enabled": true,
+      "sourceFile": "images/DM061.png",
+      "assetStatus": "DERIVED_FROM_APPROVED_PNG"
+    },
+    {
+      "id": "DM064",
+      "name": "爱较劲",
+      "category": "C",
+      "imagePath": "/assets/dying-message/DM064.webp",
+      "enabled": true,
+      "sourceFile": "images/DM064.png",
+      "assetStatus": "DERIVED_FROM_APPROVED_PNG"
+    },
+    {
+      "id": "DM066",
+      "name": "马桶王座",
+      "category": "D",
+      "imagePath": "/assets/dying-message/DM066.webp",
+      "enabled": true,
+      "sourceFile": "images/DM066.png",
+      "assetStatus": "DERIVED_FROM_APPROVED_PNG"
+    },
+    {
+      "id": "DM070",
+      "name": "袜子臭到升天",
+      "category": "D",
+      "imagePath": "/assets/dying-message/DM070.webp",
+      "enabled": true,
+      "sourceFile": "images/DM070.png",
+      "assetStatus": "DERIVED_FROM_APPROVED_PNG"
+    },
+    {
+      "id": "DM080",
+      "name": "泡面头盔",
+      "category": "D",
+      "imagePath": "/assets/dying-message/DM080.webp",
+      "enabled": true,
+      "sourceFile": "images/DM080.png",
+      "assetStatus": "DERIVED_FROM_APPROVED_PNG"
+    },
+    {
+      "id": "DM082",
+      "name": "兔子",
+      "category": "E",
+      "imagePath": "/assets/dying-message/DM082.webp",
+      "enabled": true,
+      "sourceFile": "images/DM082.png",
+      "assetStatus": "DERIVED_FROM_APPROVED_PNG"
+    },
+    {
+      "id": "DM083",
+      "name": "乌龟",
+      "category": "E",
+      "imagePath": "/assets/dying-message/DM083.webp",
+      "enabled": true,
+      "sourceFile": "images/DM083.png",
+      "assetStatus": "DERIVED_FROM_APPROVED_PNG"
+    },
+    {
+      "id": "DM084",
+      "name": "刺猬",
+      "category": "E",
+      "imagePath": "/assets/dying-message/DM084.webp",
+      "enabled": true,
+      "sourceFile": "images/DM084.png",
+      "assetStatus": "DERIVED_FROM_APPROVED_PNG"
+    },
+    {
+      "id": "DM085",
+      "name": "仓鼠",
+      "category": "E",
+      "imagePath": "/assets/dying-message/DM085.webp",
+      "enabled": true,
+      "sourceFile": "images/DM085.png",
+      "assetStatus": "DERIVED_FROM_APPROVED_PNG"
+    },
+    {
+      "id": "DM086",
+      "name": "鹦鹉",
+      "category": "E",
+      "imagePath": "/assets/dying-message/DM086.webp",
+      "enabled": true,
+      "sourceFile": "images/DM086.png",
+      "assetStatus": "DERIVED_FROM_APPROVED_PNG"
+    },
+    {
+      "id": "DM087",
+      "name": "金鱼",
+      "category": "E",
+      "imagePath": "/assets/dying-message/DM087.webp",
+      "enabled": true,
+      "sourceFile": "images/DM087.png",
+      "assetStatus": "DERIVED_FROM_APPROVED_PNG"
+    },
+    {
+      "id": "DM088",
+      "name": "蛇",
+      "category": "E",
+      "imagePath": "/assets/dying-message/DM088.webp",
+      "enabled": true,
+      "sourceFile": "images/DM088.png",
+      "assetStatus": "DERIVED_FROM_APPROVED_PNG"
+    },
+    {
+      "id": "DM089",
+      "name": "猪",
+      "category": "E",
+      "imagePath": "/assets/dying-message/DM089.webp",
+      "enabled": true,
+      "sourceFile": "images/DM089.png",
+      "assetStatus": "DERIVED_FROM_APPROVED_PNG"
+    },
+    {
+      "id": "DM090",
+      "name": "企鹅",
+      "category": "E",
+      "imagePath": "/assets/dying-message/DM090.webp",
+      "enabled": true,
+      "sourceFile": "images/DM090.png",
+      "assetStatus": "DERIVED_FROM_APPROVED_PNG"
+    },
+    {
+      "id": "DM091",
+      "name": "树懒",
+      "category": "E",
+      "imagePath": "/assets/dying-message/DM091.webp",
+      "enabled": true,
+      "sourceFile": "images/DM091.png",
+      "assetStatus": "DERIVED_FROM_APPROVED_PNG"
+    },
+    {
+      "id": "DM092",
+      "name": "狐狸",
+      "category": "E",
+      "imagePath": "/assets/dying-message/DM092.webp",
+      "enabled": true,
+      "sourceFile": "images/DM092.png",
+      "assetStatus": "DERIVED_FROM_APPROVED_PNG"
+    },
+    {
+      "id": "DM093",
+      "name": "章鱼",
+      "category": "E",
+      "imagePath": "/assets/dying-message/DM093.webp",
+      "enabled": true,
+      "sourceFile": "images/DM093.png",
+      "assetStatus": "DERIVED_FROM_APPROVED_PNG"
+    },
+    {
+      "id": "DM094",
+      "name": "浣熊",
+      "category": "E",
+      "imagePath": "/assets/dying-message/DM094.webp",
+      "enabled": true,
+      "sourceFile": "images/DM094.png",
+      "assetStatus": "DERIVED_FROM_APPROVED_PNG"
+    },
+    {
+      "id": "DM095",
+      "name": "河豚",
+      "category": "E",
+      "imagePath": "/assets/dying-message/DM095.webp",
+      "enabled": true,
+      "sourceFile": "images/DM095.png",
+      "assetStatus": "DERIVED_FROM_APPROVED_PNG"
+    },
+    {
+      "id": "DM096",
+      "name": "螃蟹",
+      "category": "E",
+      "imagePath": "/assets/dying-message/DM096.webp",
+      "enabled": true,
+      "sourceFile": "images/DM096.png",
+      "assetStatus": "DERIVED_FROM_APPROVED_PNG"
+    },
+    {
+      "id": "DM097",
+      "name": "火锅",
+      "category": "F",
+      "imagePath": "/assets/dying-message/DM097.webp",
+      "enabled": true,
+      "sourceFile": "images/DM097.png",
+      "assetStatus": "DERIVED_FROM_APPROVED_PNG"
+    },
+    {
+      "id": "DM098",
+      "name": "螺蛳粉",
+      "category": "F",
+      "imagePath": "/assets/dying-message/DM098.webp",
+      "enabled": true,
+      "sourceFile": "images/DM098.png",
+      "assetStatus": "DERIVED_FROM_APPROVED_PNG"
+    },
+    {
+      "id": "DM099",
+      "name": "臭豆腐",
+      "category": "F",
+      "imagePath": "/assets/dying-message/DM099.webp",
+      "enabled": true,
+      "sourceFile": "images/DM099.png",
+      "assetStatus": "DERIVED_FROM_APPROVED_PNG"
+    },
+    {
+      "id": "DM100",
+      "name": "香菜",
+      "category": "F",
+      "imagePath": "/assets/dying-message/DM100.webp",
+      "enabled": true,
+      "sourceFile": "images/DM100.png",
+      "assetStatus": "DERIVED_FROM_APPROVED_PNG"
+    },
+    {
+      "id": "DM101",
+      "name": "榴莲",
+      "category": "F",
+      "imagePath": "/assets/dying-message/DM101.webp",
+      "enabled": true,
+      "sourceFile": "images/DM101.png",
+      "assetStatus": "DERIVED_FROM_APPROVED_PNG"
+    },
+    {
+      "id": "DM102",
+      "name": "奶茶",
+      "category": "F",
+      "imagePath": "/assets/dying-message/DM102.webp",
+      "enabled": true,
+      "sourceFile": "images/DM102.png",
+      "assetStatus": "DERIVED_FROM_APPROVED_PNG"
+    },
+    {
+      "id": "DM103",
+      "name": "咖啡",
+      "category": "F",
+      "imagePath": "/assets/dying-message/DM103.webp",
+      "enabled": true,
+      "sourceFile": "images/DM103.png",
+      "assetStatus": "DERIVED_FROM_APPROVED_PNG"
+    },
+    {
+      "id": "DM104",
+      "name": "啤酒",
+      "category": "F",
+      "imagePath": "/assets/dying-message/DM104.webp",
+      "enabled": true,
+      "sourceFile": "images/DM104.png",
+      "assetStatus": "DERIVED_FROM_APPROVED_PNG"
+    },
+    {
+      "id": "DM105",
+      "name": "辣椒",
+      "category": "F",
+      "imagePath": "/assets/dying-message/DM105.webp",
+      "enabled": true,
+      "sourceFile": "images/DM105.png",
+      "assetStatus": "DERIVED_FROM_APPROVED_PNG"
+    },
+    {
+      "id": "DM106",
+      "name": "冰淇淋",
+      "category": "F",
+      "imagePath": "/assets/dying-message/DM106.webp",
+      "enabled": true,
+      "sourceFile": "images/DM106.png",
+      "assetStatus": "DERIVED_FROM_APPROVED_PNG"
+    },
+    {
+      "id": "DM107",
+      "name": "西瓜",
+      "category": "F",
+      "imagePath": "/assets/dying-message/DM107.webp",
+      "enabled": true,
+      "sourceFile": "images/DM107.png",
+      "assetStatus": "DERIVED_FROM_APPROVED_PNG"
+    },
+    {
+      "id": "DM108",
+      "name": "寿司",
+      "category": "F",
+      "imagePath": "/assets/dying-message/DM108.webp",
+      "enabled": true,
+      "sourceFile": "images/DM108.png",
+      "assetStatus": "DERIVED_FROM_APPROVED_PNG"
+    },
+    {
+      "id": "DM109",
+      "name": "泡面",
+      "category": "F",
+      "imagePath": "/assets/dying-message/DM109.webp",
+      "enabled": true,
+      "sourceFile": "images/DM109.png",
+      "assetStatus": "DERIVED_FROM_APPROVED_PNG"
+    },
+    {
+      "id": "DM110",
+      "name": "生日蛋糕",
+      "category": "F",
+      "imagePath": "/assets/dying-message/DM110.webp",
+      "enabled": true,
+      "sourceFile": "images/DM110.png",
+      "assetStatus": "DERIVED_FROM_APPROVED_PNG"
+    },
+    {
+      "id": "DM111",
+      "name": "柠檬",
+      "category": "F",
+      "imagePath": "/assets/dying-message/DM111.webp",
+      "enabled": true,
+      "sourceFile": "images/DM111.png",
+      "assetStatus": "DERIVED_FROM_APPROVED_PNG"
+    },
+    {
+      "id": "DM112",
+      "name": "爆米花",
+      "category": "F",
+      "imagePath": "/assets/dying-message/DM112.webp",
+      "enabled": true,
+      "sourceFile": "images/DM112.png",
+      "assetStatus": "DERIVED_FROM_APPROVED_PNG"
+    },
+    {
+      "id": "DM114",
+      "name": "厨师",
+      "category": "G",
+      "imagePath": "/assets/dying-message/DM114.webp",
+      "enabled": true,
+      "sourceFile": "images/DM114.png",
+      "assetStatus": "DERIVED_FROM_APPROVED_PNG"
+    },
+    {
+      "id": "DM115",
+      "name": "医生",
+      "category": "G",
+      "imagePath": "/assets/dying-message/DM115.webp",
+      "enabled": true,
+      "sourceFile": "images/DM115.png",
+      "assetStatus": "DERIVED_FROM_APPROVED_PNG"
+    },
+    {
+      "id": "DM116",
+      "name": "老师",
+      "category": "G",
+      "imagePath": "/assets/dying-message/DM116.webp",
+      "enabled": true,
+      "sourceFile": "images/DM116.png",
+      "assetStatus": "DERIVED_FROM_APPROVED_PNG"
+    },
+    {
+      "id": "DM120",
+      "name": "魔术师",
+      "category": "G",
+      "imagePath": "/assets/dying-message/DM120.webp",
+      "enabled": true,
+      "sourceFile": "images/DM120.png",
+      "assetStatus": "DERIVED_FROM_APPROVED_PNG"
+    },
+    {
+      "id": "DM122",
+      "name": "国王",
+      "category": "G",
+      "imagePath": "/assets/dying-message/DM122.webp",
+      "enabled": true,
+      "sourceFile": "images/DM122.png",
+      "assetStatus": "DERIVED_FROM_APPROVED_PNG"
+    },
+    {
+      "id": "DM123",
+      "name": "侦探",
+      "category": "G",
+      "imagePath": "/assets/dying-message/DM123.webp",
+      "enabled": true,
+      "sourceFile": "images/DM123.png",
+      "assetStatus": "DERIVED_FROM_APPROVED_PNG"
+    },
+    {
+      "id": "DM124",
+      "name": "保安",
+      "category": "G",
+      "imagePath": "/assets/dying-message/DM124.webp",
+      "enabled": true,
+      "sourceFile": "images/DM124.png",
+      "assetStatus": "DERIVED_FROM_APPROVED_PNG"
+    },
+    {
+      "id": "DM125",
+      "name": "老板",
+      "category": "G",
+      "imagePath": "/assets/dying-message/DM125.webp",
+      "enabled": true,
+      "sourceFile": "images/DM125.png",
+      "assetStatus": "DERIVED_FROM_APPROVED_PNG"
+    },
+    {
+      "id": "DM126",
+      "name": "手柄",
+      "category": "H",
+      "imagePath": "/assets/dying-message/DM126.webp",
+      "enabled": true,
+      "sourceFile": "images/DM126.png",
+      "assetStatus": "DERIVED_FROM_APPROVED_PNG"
+    },
+    {
+      "id": "DM127",
+      "name": "键盘",
+      "category": "H",
+      "imagePath": "/assets/dying-message/DM127.webp",
+      "enabled": true,
+      "sourceFile": "images/DM127.png",
+      "assetStatus": "DERIVED_FROM_APPROVED_PNG"
+    },
+    {
+      "id": "DM129",
+      "name": "掉线",
+      "category": "H",
+      "imagePath": "/assets/dying-message/DM129.webp",
+      "enabled": true,
+      "sourceFile": "images/DM129.png",
+      "assetStatus": "DERIVED_FROM_APPROVED_PNG"
+    },
+    {
+      "id": "DM130",
+      "name": "加载转圈",
+      "category": "H",
+      "imagePath": "/assets/dying-message/DM130.webp",
+      "enabled": true,
+      "sourceFile": "images/DM130.png",
+      "assetStatus": "DERIVED_FROM_APPROVED_PNG"
+    },
+    {
+      "id": "DM131",
+      "name": "游戏宝箱",
+      "category": "H",
+      "imagePath": "/assets/dying-message/DM131.webp",
+      "enabled": true,
+      "sourceFile": "images/DM131.png",
+      "assetStatus": "DERIVED_FROM_APPROVED_PNG"
+    },
+    {
+      "id": "DM136",
+      "name": "静音麦克风",
+      "category": "H",
+      "imagePath": "/assets/dying-message/DM136.webp",
+      "enabled": true,
+      "sourceFile": "images/DM136.png",
+      "assetStatus": "DERIVED_FROM_APPROVED_PNG"
+    },
+    {
+      "id": "DM137",
+      "name": "篮球",
+      "category": "I",
+      "imagePath": "/assets/dying-message/DM137.webp",
+      "enabled": true,
+      "sourceFile": "images/DM137.png",
+      "assetStatus": "DERIVED_FROM_APPROVED_PNG"
+    },
+    {
+      "id": "DM138",
+      "name": "足球",
+      "category": "I",
+      "imagePath": "/assets/dying-message/DM138.webp",
+      "enabled": true,
+      "sourceFile": "images/DM138.png",
+      "assetStatus": "DERIVED_FROM_APPROVED_PNG"
+    },
+    {
+      "id": "DM139",
+      "name": "羽毛球",
+      "category": "I",
+      "imagePath": "/assets/dying-message/DM139.webp",
+      "enabled": true,
+      "sourceFile": "images/DM139.png",
+      "assetStatus": "DERIVED_FROM_APPROVED_PNG"
+    },
+    {
+      "id": "DM140",
+      "name": "游泳",
+      "category": "I",
+      "imagePath": "/assets/dying-message/DM140.webp",
+      "enabled": true,
+      "sourceFile": "images/DM140.png",
+      "assetStatus": "DERIVED_FROM_APPROVED_PNG"
+    },
+    {
+      "id": "DM141",
+      "name": "跑步",
+      "category": "I",
+      "imagePath": "/assets/dying-message/DM141.webp",
+      "enabled": true,
+      "sourceFile": "images/DM141.png",
+      "assetStatus": "DERIVED_FROM_APPROVED_PNG"
+    },
+    {
+      "id": "DM142",
+      "name": "瑜伽",
+      "category": "I",
+      "imagePath": "/assets/dying-message/DM142.webp",
+      "enabled": true,
+      "sourceFile": "images/DM142.png",
+      "assetStatus": "DERIVED_FROM_APPROVED_PNG"
+    },
+    {
+      "id": "DM143",
+      "name": "钓鱼",
+      "category": "I",
+      "imagePath": "/assets/dying-message/DM143.webp",
+      "enabled": true,
+      "sourceFile": "images/DM143.png",
+      "assetStatus": "DERIVED_FROM_APPROVED_PNG"
+    },
+    {
+      "id": "DM144",
+      "name": "露营",
+      "category": "I",
+      "imagePath": "/assets/dying-message/DM144.webp",
+      "enabled": true,
+      "sourceFile": "images/DM144.png",
+      "assetStatus": "DERIVED_FROM_APPROVED_PNG"
+    },
+    {
+      "id": "DM145",
+      "name": "摄影",
+      "category": "I",
+      "imagePath": "/assets/dying-message/DM145.webp",
+      "enabled": true,
+      "sourceFile": "images/DM145.png",
+      "assetStatus": "DERIVED_FROM_APPROVED_PNG"
+    },
+    {
+      "id": "DM146",
+      "name": "吉他",
+      "category": "I",
+      "imagePath": "/assets/dying-message/DM146.webp",
+      "enabled": true,
+      "sourceFile": "images/DM146.png",
+      "assetStatus": "DERIVED_FROM_APPROVED_PNG"
+    },
+    {
+      "id": "DM147",
+      "name": "唱歌",
+      "category": "I",
+      "imagePath": "/assets/dying-message/DM147.webp",
+      "enabled": true,
+      "sourceFile": "images/DM147.png",
+      "assetStatus": "DERIVED_FROM_APPROVED_PNG"
+    },
+    {
+      "id": "DM148",
+      "name": "桌游骰子",
+      "category": "I",
+      "imagePath": "/assets/dying-message/DM148.webp",
+      "enabled": true,
+      "sourceFile": "images/DM148.png",
+      "assetStatus": "DERIVED_FROM_APPROVED_PNG"
+    },
+    {
+      "id": "DM149",
+      "name": "拼图",
+      "category": "I",
+      "imagePath": "/assets/dying-message/DM149.webp",
+      "enabled": true,
+      "sourceFile": "images/DM149.png",
+      "assetStatus": "DERIVED_FROM_APPROVED_PNG"
+    },
+    {
+      "id": "DM150",
+      "name": "跳舞踩脚",
+      "category": "I",
+      "imagePath": "/assets/dying-message/DM150.webp",
+      "enabled": true,
+      "sourceFile": "images/DM150.png",
+      "assetStatus": "DERIVED_FROM_APPROVED_PNG"
+    },
+    {
+      "id": "DM151",
+      "name": "举铁失败",
+      "category": "I",
+      "imagePath": "/assets/dying-message/DM151.webp",
+      "enabled": true,
+      "sourceFile": "images/DM151.png",
+      "assetStatus": "DERIVED_FROM_APPROVED_PNG"
+    },
+    {
+      "id": "DM152",
+      "name": "圆框眼镜",
+      "category": "J",
+      "imagePath": "/assets/dying-message/DM152.webp",
+      "enabled": true,
+      "sourceFile": "images/DM152.png",
+      "assetStatus": "DERIVED_FROM_APPROVED_PNG"
+    },
+    {
+      "id": "DM153",
+      "name": "墨镜",
+      "category": "J",
+      "imagePath": "/assets/dying-message/DM153.webp",
+      "enabled": true,
+      "sourceFile": "images/DM153.png",
+      "assetStatus": "DERIVED_FROM_APPROVED_PNG"
+    },
+    {
+      "id": "DM154",
+      "name": "口罩",
+      "category": "J",
+      "imagePath": "/assets/dying-message/DM154.webp",
+      "enabled": true,
+      "sourceFile": "images/DM154.png",
+      "assetStatus": "DERIVED_FROM_APPROVED_PNG"
+    },
+    {
+      "id": "DM155",
+      "name": "高跟鞋",
+      "category": "J",
+      "imagePath": "/assets/dying-message/DM155.webp",
+      "enabled": true,
+      "sourceFile": "images/DM155.png",
+      "assetStatus": "DERIVED_FROM_APPROVED_PNG"
+    },
+    {
+      "id": "DM156",
+      "name": "拖鞋",
+      "category": "J",
+      "imagePath": "/assets/dying-message/DM156.webp",
+      "enabled": true,
+      "sourceFile": "images/DM156.png",
+      "assetStatus": "DERIVED_FROM_APPROVED_PNG"
+    },
+    {
+      "id": "DM157",
+      "name": "领带",
+      "category": "J",
+      "imagePath": "/assets/dying-message/DM157.webp",
+      "enabled": true,
+      "sourceFile": "images/DM157.png",
+      "assetStatus": "DERIVED_FROM_APPROVED_PNG"
+    },
+    {
+      "id": "DM158",
+      "name": "围裙",
+      "category": "J",
+      "imagePath": "/assets/dying-message/DM158.webp",
+      "enabled": true,
+      "sourceFile": "images/DM158.png",
+      "assetStatus": "DERIVED_FROM_APPROVED_PNG"
+    },
+    {
+      "id": "DM159",
+      "name": "雨伞",
+      "category": "J",
+      "imagePath": "/assets/dying-message/DM159.webp",
+      "enabled": true,
+      "sourceFile": "images/DM159.png",
+      "assetStatus": "DERIVED_FROM_APPROVED_PNG"
+    },
+    {
+      "id": "DM160",
+      "name": "保温杯",
+      "category": "J",
+      "imagePath": "/assets/dying-message/DM160.webp",
+      "enabled": true,
+      "sourceFile": "images/DM160.png",
+      "assetStatus": "DERIVED_FROM_APPROVED_PNG"
+    },
+    {
+      "id": "DM161",
+      "name": "化妆镜",
+      "category": "J",
+      "imagePath": "/assets/dying-message/DM161.webp",
+      "enabled": true,
+      "sourceFile": "images/DM161.png",
+      "assetStatus": "DERIVED_FROM_APPROVED_PNG"
+    },
+    {
+      "id": "DM162",
+      "name": "创可贴",
+      "category": "J",
+      "imagePath": "/assets/dying-message/DM162.webp",
+      "enabled": true,
+      "sourceFile": "images/DM162.png",
+      "assetStatus": "DERIVED_FROM_APPROVED_PNG"
+    },
+    {
+      "id": "DM163",
+      "name": "卷尺",
+      "category": "J",
+      "imagePath": "/assets/dying-message/DM163.webp",
+      "enabled": true,
+      "sourceFile": "images/DM163.png",
+      "assetStatus": "DERIVED_FROM_APPROVED_PNG"
+    },
+    {
+      "id": "DM164",
+      "name": "充电宝",
+      "category": "J",
+      "imagePath": "/assets/dying-message/DM164.webp",
+      "enabled": true,
+      "sourceFile": "images/DM164.png",
+      "assetStatus": "DERIVED_FROM_APPROVED_PNG"
+    },
+    {
+      "id": "DM165",
+      "name": "遥控器",
+      "category": "J",
+      "imagePath": "/assets/dying-message/DM165.webp",
+      "enabled": true,
+      "sourceFile": "images/DM165.png",
+      "assetStatus": "DERIVED_FROM_APPROVED_PNG"
+    },
+    {
+      "id": "DM166",
+      "name": "耳塞",
+      "category": "J",
+      "imagePath": "/assets/dying-message/DM166.webp",
+      "enabled": true,
+      "sourceFile": "images/DM166.png",
+      "assetStatus": "DERIVED_FROM_APPROVED_PNG"
+    },
+    {
+      "id": "DM167",
+      "name": "闹钟",
+      "category": "J",
+      "imagePath": "/assets/dying-message/DM167.webp",
+      "enabled": true,
+      "sourceFile": "images/DM167.png",
+      "assetStatus": "DERIVED_FROM_APPROVED_PNG"
+    },
+    {
+      "id": "DM168",
+      "name": "搓衣板",
+      "category": "J",
+      "imagePath": "/assets/dying-message/DM168.webp",
+      "enabled": true,
+      "sourceFile": "images/DM168.png",
+      "assetStatus": "DERIVED_FROM_APPROVED_PNG"
+    },
+    {
+      "id": "DM170",
+      "name": "破洞袜",
+      "category": "J",
+      "imagePath": "/assets/dying-message/DM170.webp",
+      "enabled": true,
+      "sourceFile": "images/DM170.png",
+      "assetStatus": "DERIVED_FROM_APPROVED_PNG"
+    },
+    {
+      "id": "DM171",
+      "name": "行李箱",
+      "category": "J",
+      "imagePath": "/assets/dying-message/DM171.webp",
+      "enabled": true,
+      "sourceFile": "images/DM171.png",
+      "assetStatus": "DERIVED_FROM_APPROVED_PNG"
+    },
+    {
+      "id": "DM176",
+      "name": "面具",
+      "category": "K",
+      "imagePath": "/assets/dying-message/DM176.webp",
+      "enabled": true,
+      "sourceFile": "images/DM176.png",
+      "assetStatus": "DERIVED_FROM_APPROVED_PNG"
+    },
+    {
+      "id": "DM178",
+      "name": "绿帽子",
+      "category": "K",
+      "imagePath": "/assets/dying-message/DM178.webp",
+      "enabled": true,
+      "sourceFile": "images/DM178.png",
+      "assetStatus": "DERIVED_FROM_APPROVED_PNG"
+    },
+    {
+      "id": "DM179",
+      "name": "白旗",
+      "category": "K",
+      "imagePath": "/assets/dying-message/DM179.webp",
+      "enabled": true,
+      "sourceFile": "images/DM179.png",
+      "assetStatus": "DERIVED_FROM_APPROVED_PNG"
+    },
+    {
+      "id": "DM181",
+      "name": "聚光灯",
+      "category": "K",
+      "imagePath": "/assets/dying-message/DM181.webp",
+      "enabled": true,
+      "sourceFile": "images/DM181.png",
+      "assetStatus": "DERIVED_FROM_APPROVED_PNG"
+    },
+    {
+      "id": "DM187",
+      "name": "吸尘器",
+      "category": "L",
+      "imagePath": "/assets/dying-message/DM187.webp",
+      "enabled": true,
+      "sourceFile": "images/DM187.png",
+      "assetStatus": "DERIVED_FROM_APPROVED_PNG"
+    },
+    {
+      "id": "DM188",
+      "name": "仙人掌",
+      "category": "L",
+      "imagePath": "/assets/dying-message/DM188.webp",
+      "enabled": true,
+      "sourceFile": "images/DM188.png",
+      "assetStatus": "DERIVED_FROM_APPROVED_PNG"
+    },
+    {
+      "id": "DM189",
+      "name": "向日葵",
+      "category": "L",
+      "imagePath": "/assets/dying-message/DM189.webp",
+      "enabled": true,
+      "sourceFile": "images/DM189.png",
+      "assetStatus": "DERIVED_FROM_APPROVED_PNG"
+    },
+    {
+      "id": "DM192",
+      "name": "火山",
+      "category": "L",
+      "imagePath": "/assets/dying-message/DM192.webp",
+      "enabled": true,
+      "sourceFile": "images/DM192.png",
+      "assetStatus": "DERIVED_FROM_APPROVED_PNG"
+    },
+    {
+      "id": "DM193",
+      "name": "幽灵",
+      "category": "L",
+      "imagePath": "/assets/dying-message/DM193.webp",
+      "enabled": true,
+      "sourceFile": "images/DM193.png",
+      "assetStatus": "DERIVED_FROM_APPROVED_PNG"
+    },
+    {
+      "id": "DM194",
+      "name": "外星人",
+      "category": "L",
+      "imagePath": "/assets/dying-message/DM194.webp",
+      "enabled": true,
+      "sourceFile": "images/DM194.png",
+      "assetStatus": "DERIVED_FROM_APPROVED_PNG"
+    },
+    {
+      "id": "DM195",
+      "name": "独角兽",
+      "category": "L",
+      "imagePath": "/assets/dying-message/DM195.webp",
+      "enabled": true,
+      "sourceFile": "images/DM195.png",
+      "assetStatus": "DERIVED_FROM_APPROVED_PNG"
+    },
+    {
+      "id": "DM196",
+      "name": "机器人",
+      "category": "L",
+      "imagePath": "/assets/dying-message/DM196.webp",
+      "enabled": true,
+      "sourceFile": "images/DM196.png",
+      "assetStatus": "DERIVED_FROM_APPROVED_PNG"
+    },
+    {
+      "id": "DM197",
+      "name": "自动贩卖机",
+      "category": "L",
+      "imagePath": "/assets/dying-message/DM197.webp",
+      "enabled": true,
+      "sourceFile": "images/DM197.png",
+      "assetStatus": "DERIVED_FROM_APPROVED_PNG"
+    },
+    {
+      "id": "DM198",
+      "name": "弹簧拳套",
+      "category": "L",
+      "imagePath": "/assets/dying-message/DM198.webp",
+      "enabled": true,
+      "sourceFile": "images/DM198.png",
+      "assetStatus": "DERIVED_FROM_APPROVED_PNG"
+    },
+    {
+      "id": "DM199",
+      "name": "橡皮鸡",
+      "category": "L",
+      "imagePath": "/assets/dying-message/DM199.webp",
+      "enabled": true,
+      "sourceFile": "images/DM199.png",
+      "assetStatus": "DERIVED_FROM_APPROVED_PNG"
+    }
+  ]
+}
