@@ -39,6 +39,19 @@ export function ReflexRace() {
 function Title() {
   return (
     <header className="rr-title">
+      <div className="rr-scene" aria-hidden="true">
+        <div className="rr-scene-plate">
+          <ObjectArt obj={2} color={0} />
+          <ObjectArt obj={3} color={1} />
+        </div>
+        <div className="rr-scene-cards">
+          {[0, 1, 4].map((o) => (
+            <div key={o}>
+              <ObjectArt obj={o} color={o} />
+            </div>
+          ))}
+        </div>
+      </div>
       <a className="rr-back" href="/">
         ← 桌游合集
       </a>
@@ -163,6 +176,70 @@ function useShareUrl(code: string) {
 }
 
 type Net = ReturnType<typeof useRRRoom>;
+
+// Audio is unlocked by a player gesture; unavailable browser APIs stay silent.
+let audio: AudioContext | undefined;
+function unlockAudio() {
+  try {
+    audio ??= new AudioContext();
+    void audio.resume().catch(() => {});
+  } catch {}
+}
+function chime(correct: boolean) {
+  try {
+    if (!audio || audio.state !== "running") return;
+    const oscillator = audio.createOscillator(),
+      gain = audio.createGain();
+    oscillator.type = correct ? "sine" : "triangle";
+    const t = audio.currentTime;
+    oscillator.frequency.setValueAtTime(correct ? 880 : 220, t);
+    oscillator.frequency.exponentialRampToValueAtTime(
+      correct ? 1320 : 110,
+      t + 0.12,
+    );
+    gain.gain.setValueAtTime(0.12, t);
+    gain.gain.exponentialRampToValueAtTime(0.001, t + 0.19);
+    oscillator.connect(gain);
+    gain.connect(audio.destination);
+    oscillator.start();
+    oscillator.stop(t + 0.2);
+    oscillator.onended = () => {
+      oscillator.disconnect();
+      gain.disconnect();
+    };
+  } catch {}
+}
+
+function Score({ score, id }: { score: number; id: string }) {
+  const previous = useRef(score);
+  const [delta, setDelta] = useState(0);
+  useEffect(() => {
+    const change = score - previous.current;
+    previous.current = score;
+    setDelta(change);
+    const timer = setTimeout(() => setDelta(0), 650);
+    return () => clearTimeout(timer);
+  }, [score]);
+  return (
+    <>
+      <b
+        key={score}
+        className={delta ? "rr-score-pop" : ""}
+        data-testid={"rr-score-" + id}
+      >
+        {score}
+      </b>
+      {delta !== 0 && (
+        <span
+          key={score + "delta"}
+          className={"rr-delta " + (delta > 0 ? "up" : "down")}
+        >
+          {delta > 0 ? "+1" : "−1"}
+        </span>
+      )}
+    </>
+  );
+}
 
 function Room({ code }: { code: string }) {
   const net = useRRRoom(code);
@@ -402,6 +479,9 @@ function Game({
   const showing = view.phase !== "live" || t >= view.revealAt;
   const locked = !!me && view.locked.includes(me);
   const [pending, setPending] = useState<number | null>(null);
+  const [sound, setSound] = useState(
+    () => localStorage.getItem("rr-sound") !== "off",
+  );
   /** 本张图里我点错的按钮（做抖动和 −1 提示） */
   const [missed, setMissed] = useState<{ card: number; obj: number } | null>(
     null,
@@ -428,6 +508,7 @@ function Game({
   async function tap(obj: number) {
     if (!canTap || inFlight.current) return;
     inFlight.current = true;
+    if (sound) unlockAudio();
     setPending(obj);
     const cardNo = view.cardNo;
     const res = await net.tap({ type: "TAP", obj }, cardNo);
@@ -436,8 +517,11 @@ function Game({
     if (res.tap && !res.tap.correct) {
       setMissed({ card: cardNo, obj });
       navigator.vibrate?.(180);
-    } else if (res.tap?.correct) navigator.vibrate?.(40);
-    else if (res.error) setError(res.error);
+      if (sound) chime(false);
+    } else if (res.tap?.correct) {
+      navigator.vibrate?.(40);
+      if (sound) chime(true);
+    } else if (res.error) setError(res.error);
   }
 
   const answer = view.card.answer;
@@ -458,7 +542,11 @@ function Game({
       data-card={view.cardNo}
     >
       <header className="rr-bar">
-        <ol className="rr-scores" data-testid="rr-scores">
+        <ol
+          className="rr-scores"
+          data-testid="rr-scores"
+          style={{ "--players": view.players.length } as React.CSSProperties}
+        >
           {view.players.map((p) => (
             <li
               key={p.id}
@@ -469,10 +557,23 @@ function Game({
               style={{ "--seat": colorOf[p.id] } as React.CSSProperties}
             >
               <span className="n">{p.id === me ? "我" : p.name}</span>
-              <b data-testid={"rr-score-" + p.id}>{view.scores[p.id]}</b>
+              <Score score={view.scores[p.id]} id={p.id} />
             </li>
           ))}
         </ol>
+        <button
+          className="rr-sound"
+          aria-label={sound ? "关闭音效" : "开启音效"}
+          aria-pressed={sound}
+          onClick={() => {
+            const next = !sound;
+            setSound(next);
+            localStorage.setItem("rr-sound", next ? "on" : "off");
+            if (next) unlockAudio();
+          }}
+        >
+          {sound ? "♪" : "静音"}
+        </button>
         <button
           className="rr-exit"
           onClick={() => {
@@ -522,9 +623,15 @@ function Game({
           )}
           {view.phase !== "live" && (
             <div className="rr-verdict" data-testid="rr-verdict">
-              <div>
+              <div
+                style={
+                  view.cardWinner
+                    ? { background: colorOf[view.cardWinner] }
+                    : undefined
+                }
+              >
                 {view.cardWinner ? (
-                  <p style={{ color: colorOf[view.cardWinner] }}>
+                  <p>
                     {view.cardWinner === me
                       ? "你抢到了！"
                       : `${nameOf(view.cardWinner)} 抢到了`}
@@ -587,6 +694,13 @@ function Game({
       {view.phase === "over" && (
         <div className="rr-over" data-testid="rr-over">
           <div className="rr-over-card">
+            <div className="rr-confetti" aria-hidden="true">
+              {Array.from({ length: 12 }, (_, i) => (
+                <i key={i} style={{ "--i": i } as React.CSSProperties}>
+                  ★
+                </i>
+              ))}
+            </div>
             <p className="crown">🏆</p>
             <h2>
               {view.winner === me

@@ -10,6 +10,7 @@ import { join } from "node:path";
 import { strict as assert } from "node:assert";
 import { chromium, type Page } from "playwright";
 import { solve, type Obj } from "../packages/reflex-race/src/engine.ts";
+import { assertUiShot } from "./screenshot-check.ts";
 
 const PORT = 3332;
 const base = `http://127.0.0.1:${PORT}`;
@@ -27,7 +28,7 @@ let server: ChildProcess | undefined = spawn(
       HOST: "127.0.0.1",
       DBD_DATA_DIR: join(data, "dbd"),
       RR_DATA_DIR: join(data, "rr"),
-      RR_TIMING: "1500,8000,900",
+      RR_TIMING: "1500,8000,5000",
     },
     stdio: ["ignore", "ignore", "inherit"],
   },
@@ -51,6 +52,8 @@ const sizes = [
   { width: 390, height: 844 },
   { width: 360, height: 640 },
 ];
+if (process.env.RR_PLAYERS === "6")
+  sizes.push({ width: 360, height: 640 }, { width: 390, height: 844 });
 const pages: Page[] = [];
 for (const viewport of sizes) {
   const ctx = await browser.newContext({
@@ -70,8 +73,24 @@ pages.forEach((p, i) => {
   );
 });
 const step = (m: string) => console.log("  ✓ " + m);
-const shot = (p: Page, name: string) =>
-  p.screenshot({ path: `${out}/${name}.png` });
+const shot = (p: Page, name: string) => assertUiShot(p, `${out}/${name}.png`);
+async function pair(p: Page, name: string) {
+  const original = p.viewportSize()!;
+  for (const viewport of [
+    { width: 390, height: 844 },
+    { width: 360, height: 640 },
+  ]) {
+    await p.setViewportSize(viewport);
+    await shot(p, `${name}-${viewport.width}x${viewport.height}`);
+    if (name === "home" || name === "lobby")
+      await p.screenshot({
+        path: `${out}/${name}-full-${viewport.width}x${viewport.height}.png`,
+        fullPage: true,
+        animations: "disabled",
+      });
+  }
+  await p.setViewportSize(original);
+}
 
 /** 读出屏幕上的图（只用玩家能看到的信息） */
 async function readCard(p: Page) {
@@ -119,6 +138,7 @@ try {
   await host.getByTestId("open-rr").click();
   await host.getByTestId("rr-create").waitFor();
   await shot(host, "01-home");
+  await pair(host, "home");
   await host.getByTestId("rr-create").click();
   await host.getByTestId("rr-name").fill("房主");
   await host.getByTestId("rr-claim").click();
@@ -131,9 +151,12 @@ try {
   await host.locator(".rr-quick button", { hasText: /^3$/ }).click();
   for (const p of pages)
     await p.getByTestId("rr-target").filter({ hasText: "3" }).waitFor();
-  await host.getByText("开始（4 人）").waitFor();
+  await host.getByText(`开始（${pages.length} 人）`).waitFor();
   await shot(host, "02-lobby");
-  step(`建房 ${code}，4 部手机加入，房主把目标分设为 3，所有人同步看到`);
+  await pair(host, "lobby");
+  step(
+    `建房 ${code}，${pages.length} 部手机加入，房主把目标分设为 3，所有人同步看到`,
+  );
 
   await host.getByTestId("rr-start").click();
   await pages[1].getByTestId("rr-ready").waitFor();
@@ -155,8 +178,9 @@ try {
   }
   await shot(pages[0], "04-card-390x844");
   await shot(pages[3], "05-card-360x640");
+  await pair(host, "game");
   step(
-    "开局：准备 → 4 部手机同时显示同一张图；按钮和圆盘在 390×844、360×640 上都完整显示，不用滚动",
+    `开局：准备 → ${pages.length} 部手机同时显示同一张图；按钮和圆盘在 390×844、360×640 上都完整显示，不用滚动`,
   );
 
   // 第 1 张：朋友1 点错，朋友2 点对
@@ -165,6 +189,29 @@ try {
   await pages[1].getByTestId("rr-btn-" + wrong).tap();
   await pages[1].locator(".rr-btn.wrong .minus").waitFor();
   await shot(pages[1], "06-wrong");
+  await pair(pages[1], "wrong");
+  if (process.env.RR_UPGRADE_CHECKS) {
+    assert.equal(
+      await pages[1]
+        .getByTestId("rr-btn-" + ans)
+        .evaluate((el) => getComputedStyle(el).opacity),
+      "1",
+      "锁定卡片保持不透明",
+    );
+    assert.equal(
+      await pages[1]
+        .getByTestId("rr-btn-" + ans)
+        .evaluate((el) => getComputedStyle(el).backgroundColor),
+      "rgb(255, 255, 255)",
+      "锁定卡片保持白色",
+    );
+    await host.getByRole("button", { name: "关闭音效" }).click();
+    assert.equal(
+      await host.evaluate(() => localStorage.getItem("rr-sound")),
+      "off",
+    );
+    await host.getByRole("button", { name: "开启音效" }).click();
+  }
   assert.equal(
     await pages[1].getByTestId("rr-btn-" + ans).isDisabled(),
     true,
@@ -174,8 +221,9 @@ try {
   for (const p of pages) await p.getByTestId("rr-verdict").waitFor();
   await pages[0].locator(".rr-btn.answer").waitFor();
   await shot(pages[0], "07-reveal");
+  await pair(host, "reveal");
   const s1 = await scoreOf(pages[0]);
-  assert.deepEqual(s1, [0, -1, 1, 0]);
+  assert.deepEqual(s1, [0, -1, 1, ...Array(pages.length - 3).fill(0)]);
   step(
     "朋友1 点错：按钮变红抖动、显示 −1、本张锁定；朋友2 点对 +1；所有人看到公布和正确答案",
   );
@@ -198,6 +246,7 @@ try {
   for (const p of pages) await p.getByTestId("rr-over").waitFor();
   await shot(pages[3], "08-over-winner");
   await shot(pages[0], "09-over-host");
+  await pair(host, "over");
   assert.match(
     (await pages[3].getByTestId("rr-over").textContent())!,
     /你赢了/,
@@ -215,7 +264,7 @@ try {
       .or(p.getByTestId("rr-items"))
       .first()
       .waitFor();
-  assert.deepEqual(await scoreOf(pages[2]), [0, 0, 0, 0]);
+  assert.deepEqual(await scoreOf(pages[2]), Array(pages.length).fill(0));
   step("房主「再来一局」：分数清零，直接开下一局");
 
   assert.deepEqual(errors, [], "页面没有报错");

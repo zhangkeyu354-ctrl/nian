@@ -29,3 +29,6 @@ apps/web/test/scenarios.generated.json
 
 # Dying Message original-photo derivatives (local private references)
 apps/web/public/assets/dying-message-original/
+
+# Local-only review board containing user reference screenshots
+docs/reflex-race/screens/reference-comparison.png

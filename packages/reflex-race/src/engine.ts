@@ -173,7 +173,7 @@ export function makeCard(r: Rand): RRCard {
   if (r.f() < 0.5) pairs.reverse();
   // 两个物品放在圆心两侧，随机角度与旋转（和参考截图一样歪歪斜斜）
   const theta = r.f() * Math.PI * 2;
-  const dist = 0.2 + r.f() * 0.04;
+  const dist = 0.15 + r.f() * 0.01;
   const items = pairs.map(([obj, color], i) => {
     const t = theta + i * Math.PI + (r.f() - 0.5) * 0.5;
     return {
@@ -182,7 +182,7 @@ export function makeCard(r: Rand): RRCard {
       x: +(0.5 + Math.cos(t) * dist).toFixed(3),
       y: +(0.5 + Math.sin(t) * dist).toFixed(3),
       rot: Math.round(r.f() * 360 - 180),
-      scale: +(0.9 + r.f() * 0.2).toFixed(2),
+      scale: +(0.96 + r.f() * 0.02).toFixed(2),
     };
   }) as [RRItem, RRItem];
   const answer = solve(items);

@@ -59,6 +59,20 @@ describe("出题", () => {
   it("同一个种子出同样的题（服务器重启可以重放）", () => {
     expect(game(9).card).toEqual(game(9).card);
   });
+  it("放大后的物品即使旋转，整个 SVG 方框也留在白色圆盘内", () => {
+    for (let seed = 1; seed <= 1000; seed++) {
+      for (const item of game(seed).card.items) {
+        const half = (0.49 * item.scale) / 2;
+        const a = (item.rot * Math.PI) / 180;
+        for (const x of [-half, half])
+          for (const y of [-half, half]) {
+            const px = item.x - 0.5 + x * Math.cos(a) - y * Math.sin(a);
+            const py = item.y - 0.5 + x * Math.sin(a) + y * Math.cos(a);
+            expect(Math.hypot(px, py)).toBeLessThan(0.5);
+          }
+      }
+    }
+  });
 });
 
 describe("计分", () => {
