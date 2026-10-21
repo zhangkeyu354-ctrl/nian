@@ -20,7 +20,7 @@ import {
 import type { Ack } from "../../../packages/shared/src/protocol.ts";
 
 const CODE_CHARS = "ABCDEFGHJKLMNPQRSTUVWXYZ23456789";
-const MAX_PLAYERS = 6;
+const MAX_PLAYERS = 8;
 const MIN_PLAYERS = 2;
 const RACES = 4;
 
@@ -218,7 +218,7 @@ export function maErrorText(e: unknown): { error: string; code: string } {
     NO_ROOM: "房间不存在，请检查房间号。",
     NOT_SEATED: "请先加入房间。",
     STALE: "比赛已经更新，请看清最新状态后再操作。",
-    ROOM_FULL: "房间已满（最多 6 人）。",
+    ROOM_FULL: "房间已满（最多 8 人）。",
     ALREADY_STARTED: "游戏已经开始了。如果你本来就在这局里，请点上面自己的名字接回位置。",
     NAME_TAKEN: "这个名字已经在房间里了。",
     HOST_ONLY: "只有房主可以这样做。",

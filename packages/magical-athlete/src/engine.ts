@@ -62,7 +62,8 @@ export const DEFAULT_POINTS = { gold: 3, silver: 1 };
 
 export function createMAGame(opts: CreateMAOptions): MAState {
   const n = opts.players.length;
-  if (n < 2 || n > 6) fail("PLAYER_COUNT", "魔法运动员支持 2–6 人。");
+  // 用户房规（2026-10-22）：上限放宽到 8 人（官方 2–6 人）；36 名选手够 8 人各 4 名
+  if (n < 2 || n > 8) fail("PLAYER_COUNT", "魔法运动员支持 2–8 人。");
   // 用户房规（2026-10-20 HR-MA-01）：不论几人，每人每场只出 1 名选手、共 4 场 → 一律标准规则。
   // 规则书的 2 人 / 3 人双选手变体仍保留在引擎里，只有明确传 variant: "double" 时才用（测试用）。
   const variant: Settings["variant"] =

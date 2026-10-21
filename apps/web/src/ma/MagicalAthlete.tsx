@@ -42,7 +42,7 @@ function Masthead({ small }: { small?: boolean }) {
       {!small && (
         <>
           <img className="ma-cover" src={`${ART}/lobby/cover.webp`} alt="" />
-          <p>2–6 名玩家各自选秀怪咖选手，比四场赛跑。掷骰、发动能力、把别人绊倒——前两个冲线的拿奖牌。</p>
+          <p>2–8 名玩家各自选秀怪咖选手，比四场赛跑。掷骰、发动能力、把别人绊倒——前两个冲线的拿奖牌。</p>
         </>
       )}
     </header>
@@ -58,7 +58,7 @@ function Home() {
       <Masthead />
       <section className="ma-panel">
         <h2>开一场比赛</h2>
-        <p className="ma-muted">建好房间后把房间号或二维码发给朋友，每人用自己的手机加入。2–6 人都能玩。</p>
+        <p className="ma-muted">建好房间后把房间号或二维码发给朋友，每人用自己的手机加入。2–8 人都能玩。</p>
         {error && <p className="ma-error" role="alert">{error}</p>}
         <button
           className="ma-go"
@@ -158,7 +158,7 @@ function JoinForm({
   const [error, setError] = useState("");
   const [taken, setTaken] = useState<string | null>(null);
   const lobby = snap.stage === "lobby";
-  const full = snap.players.length >= 6;
+  const full = snap.players.length >= 8;
   const join = async (n: string, takeover = false) => {
     setError("");
     const err = await claim(n, takeover);
@@ -250,7 +250,7 @@ function Lobby({ snap, lobby }: { snap: MARoomSnapshot; lobby: (a: Parameters<Re
         {url && <img src={`/api/qr?text=${encodeURIComponent(url)}`} alt="扫码加入房间" width={150} height={150} />}
       </section>
       <section className="ma-panel">
-        <h2>选手们（{snap.players.length}/6）</h2>
+        <h2>选手们（{snap.players.length}/8）</h2>
         <ul className="ma-players">
           {snap.players.map((p, i) => (
             <li key={p.playerId}>

@@ -51,7 +51,7 @@ function playGame(seed: number, n: number, variant: "standard" | "double" = "sta
 }
 
 describe("魔法运动员 · 整局模拟", () => {
-  for (const n of [2, 3, 4, 5, 6])
+  for (const n of [2, 3, 4, 5, 6, 7, 8])
     it(`${n} 人：25 局随机对局都能打完，每人用完 4 名不同选手`, () => {
       for (let seed = 1; seed <= 25; seed++) {
         const s = playGame(seed * 13 + n, n);
@@ -79,7 +79,7 @@ describe("魔法运动员 · 整局模拟", () => {
       }
     }, 120_000);
 
-  for (const n of [2, 3, 4, 5, 6])
+  for (const n of [2, 3, 4, 5, 6, 7, 8])
     it(`随机模式 ${n} 人：开局每人随机 4 名、全场不重复，25 局都能打完`, () => {
       const hands = new Set<string>();
       for (let seed = 1; seed <= 25; seed++) {

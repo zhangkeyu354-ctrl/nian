@@ -4,7 +4,8 @@ import type { RaceState } from "../../../../packages/magical-athlete/src/types.t
 import type { Special } from "../../../../packages/magical-athlete/src/tracks.ts";
 import coords from "../../public/assets/magical-athlete/boards/coordinates.json" with { type: "json" };
 
-export const PLAYER_COLORS = ["#e8443a", "#2f7fd8", "#f2b705", "#8a4fd6", "#1fa37a", "#f07c1e"];
+// 第 7、8 位玩家：粉色、青色（骰子图沿用 1、2 号的样式）
+export const PLAYER_COLORS = ["#e8443a", "#2f7fd8", "#f2b705", "#8a4fd6", "#1fa37a", "#f07c1e", "#e05aa8", "#20b2c8"];
 export const ART = "/assets/magical-athlete";
 
 interface Space {
@@ -53,7 +54,9 @@ function crowd(k: number, n: number): { dx: number; dy: number; scale: number } 
   if (n <= 1) return { dx: 0, dy: 0, scale: 1 };
   if (n === 2) return { dx: (k - 0.5) * 0.46, dy: 0, scale: 0.8 };
   if (n <= 4) return { dx: ((k % 2) - 0.5) * 0.46, dy: (Math.floor(k / 2) - 0.5) * 0.3, scale: 0.64 };
-  return { dx: ((k % 3) - 1) * 0.3, dy: (Math.floor(k / 3) - 0.5) * 0.3, scale: 0.5 };
+  if (n <= 6) return { dx: ((k % 3) - 1) * 0.3, dy: (Math.floor(k / 3) - 0.5) * 0.3, scale: 0.5 };
+  // 7–8 人挤在同一格（起点）：4 列 2 排，再小一点
+  return { dx: ((k % 4) - 1.5) * 0.23, dy: (Math.floor(k / 4) - 0.5) * 0.32, scale: 0.42 };
 }
 
 /**

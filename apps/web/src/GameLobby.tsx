@@ -70,7 +70,7 @@ export function GameLobby() {
           id="ma"
           title="魔法运动员"
           sub="Magical Athlete"
-          meta="2–6 人 · 4 场赛跑"
+          meta="2–8 人 · 4 场赛跑"
           blurb="选秀怪咖选手，每场派上场比赛。香蕉让人滑倒、巨婴挡住整条跑道，前两个冲线的拿奖牌。"
           art={
             <img
