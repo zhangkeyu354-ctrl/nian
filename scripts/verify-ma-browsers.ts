@@ -79,7 +79,22 @@ try {
   let steps = 0;
   let races = 0;
   for (;;) {
-    assert.ok(++steps < 4000, "对局没有在 4000 步内结束");
+    if (++steps >= 4000) {
+      // 诊断：卡住时把每个人看到的界面和最近的比赛记录打出来
+      for (const p of pages) if (!(await p.locator(".ma-log li").count())) await p.getByTestId("fold-log").click().catch(() => {});
+      for (const p of pages)
+        console.log(
+          "STUCK", pages.indexOf(p),
+          JSON.stringify(await p.evaluate(() => ({
+            decide: document.querySelector(".ma-decide")?.className,
+            prompt: document.querySelector(".ma-decide .ma-prompt")?.textContent,
+            buttons: [...document.querySelectorAll(".ma-decide button, [data-testid^=pick-]")].map((b) => b.textContent),
+            overlay: document.querySelector(".ma-overlay")?.className,
+            log: [...document.querySelectorAll(".ma-log li")].slice(0, 12).map((l) => l.textContent),
+          }))),
+        );
+      assert.fail("对局没有在 4000 步内结束");
+    }
     if (await host.locator(".ma-final").count()) break;
     let acted = false;
     for (const p of pages) {
