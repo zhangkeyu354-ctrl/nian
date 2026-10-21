@@ -3,7 +3,7 @@ import { strict as assert } from "node:assert";
 import { mkdirSync, writeFileSync } from "node:fs";
 import { assertUiShot } from "./screenshot-check.ts";
 const base = process.env.DM_URL ?? "http://127.0.0.1:3184";
-const out = "docs/dying-message/screens";
+const out = process.env.DM_SCREEN_DIR ?? "docs/dying-message/screens";
 mkdirSync(out, { recursive: true });
 const browser = await chromium.launch({ headless: true });
 const contexts = await Promise.all(

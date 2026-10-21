@@ -25,6 +25,7 @@ const titles: Record<string, string> = {
 };
 const roleName = (id: string) => roles.find((r) => r.roleId === id)?.name ?? id;
 const image = (id: string) => "/assets/dying-message/" + id + ".webp";
+const uiArt = (id: string) => "/assets/dying-message-original/" + id + ".webp";
 const roomURL = (code: string) => "/?game=dm&room=" + code;
 function request(socket: Socket, event: string, data: unknown): Promise<any> {
   return new Promise((resolve) => {
@@ -169,7 +170,9 @@ export function DyingMessage() {
     Math.ceil(((v?.deadline ?? 0) - now - offset.current) / 1000),
   );
   return (
-    <main className="dm-app">
+    <main
+      className={"dm-app dm-photo-v2 " + (code ? "dm-in-room" : "dm-at-home")}
+    >
       <header className="dm-header">
         <a href="/">← 桌游合集</a>
         <strong>请留遗言</strong>
@@ -186,11 +189,7 @@ export function DyingMessage() {
           <section className="dm-home">
             <div>
               <p className="dm-eyebrow">熟人之间的视觉推理</p>
-              <h1>
-                最后一张图，
-                <br />
-                指向谁？
-              </h1>
+              <h1>请留遗言</h1>
               <p>
                 留下真实的遗言，混入两张假线索。
                 <br />
@@ -225,7 +224,7 @@ export function DyingMessage() {
                 玩法与角色
               </button>
             </div>
-            <img src={image("DM176")} alt="一张半遮面的卡通面具插画" />
+            <img src={uiArt("card-back")} alt="照片中的原版粉色牌背" />
           </section>
         </>
       ) : !snap ? (
@@ -307,7 +306,7 @@ export function DyingMessage() {
                 <p className="dm-eyebrow">
                   {v ? "第 " + v.round + " 轮" : "准备大厅"}
                 </p>
-                <h1>{v ? titles[v.phase] : "朋友到齐，开始推理"}</h1>
+                <h1>{v ? titles[v.phase] : "准备大厅"}</h1>
                 <p>
                   {!v
                     ? "房主选择角色组合，开局随机秘密发放。"
@@ -322,478 +321,547 @@ export function DyingMessage() {
                         : "你已死亡。请勿发言或提供额外线索。"}
                 </p>
               </section>
-              <section className="dm-table" aria-label="圆桌座位">
-                <div className="dm-tabletop">
-                  <span>
-                    {v?.speaker
-                      ? `${snap.players.find((p) => p.id === v.speaker)?.seat}号发言`
-                      : v
-                        ? "请留遗言"
-                        : "等待朋友"}
-                  </span>
-                  {v?.deadline && (
-                    <strong data-testid="dm-countdown">
-                      {Math.floor(left / 60)}:
-                      {String(left % 60).padStart(2, "0")}
-                    </strong>
-                  )}
-                  <small>
-                    {phase === "INVESTIGATION"
-                      ? "每人最多5分钟"
-                      : `${snap.players.length}人圆桌`}
-                  </small>
-                  {v && v.history.length > 0 && (
-                    <div
-                      className="dm-center-evidence"
-                      aria-label="本轮公开遗言"
-                    >
-                      {v.history.at(-1)!.cards.map((id, i) => (
-                        <button
-                          key={id}
-                          onClick={() => setZoom(id)}
-                          aria-label={"放大公开遗言 " + (i + 1)}
-                        >
-                          <img src={image(id)} alt={"公开遗言 " + (i + 1)} />
-                        </button>
-                      ))}
-                    </div>
-                  )}
-                </div>
-                {Array.from({ length: snap.count }, (_, i) => {
-                  const p = snap.players[i],
-                    vp = v?.players.find((x) => x.id === p?.id),
-                    target =
-                      p &&
-                      v?.active &&
-                      v.legalTargets.includes(p.id) &&
-                      [
-                        "NIGHT_PREPARATION",
-                        "KILLER_SELECTION",
-                        "FIRST_VOTE",
-                        "SECOND_VOTE",
-                      ].includes(phase ?? "");
-                  const angle = (2 * Math.PI * i) / snap.count - Math.PI / 2;
-                  return (
-                    <button
-                      key={i}
-                      data-testid={"dm-seat-" + (i + 1)}
-                      style={{
-                        left: 50 + 42 * Math.cos(angle) + "%",
-                        top: 50 + 40 * Math.sin(angle) + "%",
-                      }}
-                      disabled={!target || disabled}
-                      aria-pressed={p ? selection.includes(p.id) : false}
-                      className={
-                        "dm-seat " +
-                        (vp && !vp.alive ? "dead " : "") +
-                        (p?.id === v?.speaker ? "speaking " : "") +
-                        (p?.id === snap.mySeat ? "self" : "")
-                      }
-                      onClick={() =>
-                        p &&
-                        toggle(
-                          p.id,
-                          phase === "KILLER_SELECTION" ? v!.required : 1,
-                        )
-                      }
-                    >
-                      <b>{i + 1}</b>
-                      <span>{p?.name ?? "空座位"}</span>
-                      <small>
-                        {vp
-                          ? vp.alive
-                            ? vp.roleId && v?.winner
-                              ? roleName(vp.roleId)
-                              : p.id === snap.mySeat
-                                ? "你"
-                                : "存活"
-                            : roleName(vp.roleId ?? "") + " · 已死亡"
-                          : p
-                            ? p.ready
-                              ? "已准备"
-                              : p.connected
-                                ? "未准备"
-                                : "离线"
-                            : "等待入座"}
-                      </small>
-                    </button>
-                  );
-                })}
-              </section>
-              {!v ? (
-                <section className="dm-controls">
-                  <button
-                    data-testid="dm-ready"
-                    disabled={disabled}
-                    onClick={() => action({ type: "READY" })}
-                  >
-                    {me?.ready ? "取消准备" : "我准备好了"}
-                  </button>
-                  {host && (
-                    <>
-                      <label>
-                        本局人数
-                        <select
-                          aria-label="本局人数"
-                          value={snap.count}
-                          disabled={disabled}
-                          onChange={(e) =>
-                            action({
-                              type: "SET_COUNT",
-                              count: Number(e.target.value),
-                            })
-                          }
-                        >
-                          {[4, 5, 6, 7, 8, 9, 10].map((n) => (
-                            <option key={n}>{n}</option>
-                          ))}
-                        </select>
-                      </label>
-                      <details>
-                        <summary>调整本局角色组合</summary>
-                        <p>
-                          角色随机发放给玩家。必须保留对应人数的杀手数与有罪阵营数。
-                        </p>
-                        <div className="dm-rolepool">
-                          {editedPool.map((id, i) => (
-                            <label key={i}>
-                              角色卡 {i + 1}
-                              <select
-                                aria-label={"角色卡 " + (i + 1)}
-                                value={id}
-                                onChange={(e) =>
-                                  setEditedPool((a) =>
-                                    a.map((x, j) =>
-                                      i === j ? e.target.value : x,
-                                    ),
-                                  )
-                                }
-                              >
-                                {roles.map((r) => (
-                                  <option key={r.roleId} value={r.roleId}>
-                                    {r.name} ·{" "}
-                                    {r.faction === "GUILTY" ? "有罪" : "无罪"}
-                                  </option>
-                                ))}
-                              </select>
-                            </label>
-                          ))}
-                        </div>
-                        <button
-                          disabled={disabled}
-                          onClick={() =>
-                            action({ type: "SET_POOL", pool: editedPool })
-                          }
-                        >
-                          保存角色组合
-                        </button>
-                      </details>
-                      <button
-                        data-testid="dm-start"
-                        disabled={
-                          disabled ||
-                          snap.players.length !== snap.count ||
-                          snap.players.some((p) => !p.ready)
-                        }
-                        onClick={() => action({ type: "START" })}
+              <div className="dm-play-layout">
+                <section
+                  className={
+                    "dm-table " + (snap.count >= 8 ? "dm-table-dense" : "")
+                  }
+                  aria-label="圆桌座位"
+                >
+                  <div className="dm-tabletop">
+                    <span>
+                      {v?.speaker
+                        ? `${snap.players.find((p) => p.id === v.speaker)?.seat}号发言`
+                        : v
+                          ? "请留遗言"
+                          : "等待朋友"}
+                    </span>
+                    {v?.deadline && (
+                      <strong data-testid="dm-countdown">
+                        {Math.floor(left / 60)}:
+                        {String(left % 60).padStart(2, "0")}
+                      </strong>
+                    )}
+                    <small>
+                      {phase === "INVESTIGATION"
+                        ? "每人最多5分钟"
+                        : `${snap.players.length}人圆桌`}
+                    </small>
+                    {v && v.history.length > 0 && (
+                      <div
+                        className="dm-center-evidence"
+                        aria-label="本轮公开遗言"
                       >
-                        随机发牌并开始
-                      </button>
-                    </>
-                  )}
-                  <p>当前角色：{snap.pool.map(roleName).join("、")}</p>
-                </section>
-              ) : (
-                <>
-                  <section className="dm-private">
-                    <button
-                      className="dm-link"
-                      onClick={() => setReveal(!reveal)}
-                    >
-                      {reveal ? "收起我的角色" : "查看我的秘密角色"}
-                    </button>
-                    {reveal && (
-                      <div>
-                        <h2>
-                          {myRole?.name}{" "}
-                          <small>
-                            {myRole?.faction === "GUILTY"
-                              ? "有罪阵营"
-                              : "无罪阵营"}
-                          </small>
-                        </h2>
-                        <p>{myRole?.ability}</p>
-                      </div>
-                    )}
-                    {v.me.fated && (
-                      <p>你被选为命运之人，其中一方死亡，另一方也会死亡。</p>
-                    )}
-                    {v.killers.length > 0 && (!v.me.alive || reveal) && (
-                      <p data-testid="dm-killers">
-                        {v.me.alive ? "杀手同伴" : "你看到的杀手"}：
-                        {v.killers
-                          .map((k) => k.seat + "号 " + k.name)
-                          .join("、")}
-                      </p>
-                    )}
-                  </section>
-                  <section className="dm-controls" aria-label="当前行动">
-                    {v.active &&
-                      v.teamChoices
-                        .filter((p) => p.playerId !== v.me.id)
-                        .map((p) => (
+                        {v.history.at(-1)!.cards.map((id, i) => (
                           <button
-                            className="dm-link"
-                            key={p.playerId}
-                            onClick={() => setSelection(p.choices)}
+                            key={id}
+                            onClick={() => setZoom(id)}
+                            aria-label={"放大公开遗言 " + (i + 1)}
                           >
-                            采用
-                            {
-                              snap.players.find((x) => x.id === p.playerId)
-                                ?.seat
-                            }
-                            号已提交的共同选择
+                            <img src={image(id)} alt={"公开遗言 " + (i + 1)} />
                           </button>
                         ))}
-                    {v.forensic ? (
-                      <>
-                        <h2>鉴定上一轮的一张遗言</h2>
-                        <Cards
-                          ids={v.forensicCards}
-                          selected={selection}
-                          onSelect={(id) => toggle(id, 1)}
-                          disabled={disabled}
-                        />
-                        <button
-                          disabled={disabled || selection.length !== 1}
-                          onClick={() =>
-                            action({ type: "FORENSIC", card: selection[0] })
-                          }
-                        >
-                          宣布这张遗言的真假
-                        </button>
-                      </>
-                    ) : null}
-                    {v.active && phase === "NIGHT_PREPARATION" && (
-                      <>
-                        <p>
-                          {v.me.roleId === "soulmate"
-                            ? "点击圆桌上一名其他玩家，选择命运之人。"
-                            : "点击圆桌选择要保护的玩家。不能保护自己或其他名犬。"}
-                        </p>
-                        <button
-                          disabled={disabled || selection.length !== 1}
-                          onClick={() =>
-                            action({ type: "PREPARE", target: selection[0] })
-                          }
-                        >
-                          确认选择
-                        </button>
-                      </>
+                      </div>
                     )}
-                    {v.active && phase === "KILLER_SELECTION" && (
-                      <>
-                        <p>
-                          点击玩家图标，选择 {v.required}{" "}
-                          名目标。所有杀手须提交相同目标。
-                        </p>
-                        <button
-                          data-testid="dm-kill"
-                          disabled={disabled || selection.length !== v.required}
-                          onClick={() =>
-                            action({ type: "KILL", targets: selection })
-                          }
-                        >
-                          确认行凶
-                        </button>
-                      </>
-                    )}
-                    {v.active &&
-                      ["VICTIM_EVIDENCE", "KILLER_FAKE_EVIDENCE"].includes(
-                        phase!,
-                      ) && (
-                        <>
-                          <h2>
-                            {phase === "VICTIM_EVIDENCE"
-                              ? "留下真实遗言"
-                              : "混入假遗言"}
-                          </h2>
-                          <p>
-                            选择 {v.required} 张。
-                            {phase === "VICTIM_EVIDENCE"
-                              ? "若有多位死者，需共同选择。"
-                              : "所有存活杀手需选择相同的组合。"}
-                          </p>
-                          {v.selection.length > 0 && (
-                            <p role="status">
-                              已提交选择，等待其他人一致；仍可调整后重新提交。
-                            </p>
-                          )}
-                          <Cards
-                            ids={v.pool}
-                            selected={selection}
-                            onSelect={(id) => toggle(id, v.required)}
-                            disabled={disabled}
+                  </div>
+                  {Array.from({ length: snap.count }, (_, i) => {
+                    const p = snap.players[i],
+                      vp = v?.players.find((x) => x.id === p?.id),
+                      target =
+                        p &&
+                        v?.active &&
+                        v.legalTargets.includes(p.id) &&
+                        [
+                          "NIGHT_PREPARATION",
+                          "KILLER_SELECTION",
+                          "FIRST_VOTE",
+                          "SECOND_VOTE",
+                        ].includes(phase ?? "");
+                    const angle = (2 * Math.PI * i) / snap.count - Math.PI / 2;
+                    return (
+                      <button
+                        key={i}
+                        data-testid={"dm-seat-" + (i + 1)}
+                        style={{
+                          left: 50 + 40 * Math.cos(angle) + "%",
+                          top: 50 + 39 * Math.sin(angle) + "%",
+                        }}
+                        disabled={!target || disabled}
+                        aria-pressed={p ? selection.includes(p.id) : false}
+                        className={
+                          "dm-seat " +
+                          (vp && !vp.alive ? "dead " : "") +
+                          (p?.id === v?.speaker ? "speaking " : "") +
+                          (p?.id === snap.mySeat ? "self" : "")
+                        }
+                        onClick={() =>
+                          p &&
+                          toggle(
+                            p.id,
+                            phase === "KILLER_SELECTION" ? v!.required : 1,
+                          )
+                        }
+                      >
+                        <span className="dm-seat-portrait" aria-hidden="true">
+                          <img
+                            src={uiArt(
+                              vp?.roleId && (!vp.alive || v?.winner)
+                                ? vp.roleId
+                                : "card-back",
+                            )}
+                            alt=""
                           />
+                          <b>{i + 1}</b>
+                        </span>
+                        <span>{p?.name ?? "空座位"}</span>
+                        <small>
+                          {vp
+                            ? vp.alive
+                              ? vp.roleId && v?.winner
+                                ? roleName(vp.roleId)
+                                : p.id === snap.mySeat
+                                  ? "你"
+                                  : "存活"
+                              : roleName(vp.roleId ?? "") + " · 已死亡"
+                            : p
+                              ? p.ready
+                                ? "已准备"
+                                : p.connected
+                                  ? "未准备"
+                                  : "离线"
+                              : "等待入座"}
+                        </small>
+                      </button>
+                    );
+                  })}
+                </section>
+                <aside className="dm-sidebar">
+                  {!v ? (
+                    <section className="dm-controls">
+                      <button
+                        data-testid="dm-ready"
+                        disabled={disabled}
+                        onClick={() => action({ type: "READY" })}
+                      >
+                        {me?.ready ? "取消准备" : "我准备好了"}
+                      </button>
+                      {host && (
+                        <>
+                          <label>
+                            本局人数
+                            <select
+                              aria-label="本局人数"
+                              value={snap.count}
+                              disabled={disabled}
+                              onChange={(e) =>
+                                action({
+                                  type: "SET_COUNT",
+                                  count: Number(e.target.value),
+                                })
+                              }
+                            >
+                              {[4, 5, 6, 7, 8, 9, 10].map((n) => (
+                                <option key={n}>{n}</option>
+                              ))}
+                            </select>
+                          </label>
+                          <details>
+                            <summary>调整本局角色组合</summary>
+                            <p>
+                              角色随机发放给玩家。必须保留对应人数的杀手数与有罪阵营数。
+                            </p>
+                            <div className="dm-rolepool">
+                              {editedPool.map((id, i) => (
+                                <label key={i}>
+                                  角色卡 {i + 1}
+                                  <select
+                                    aria-label={"角色卡 " + (i + 1)}
+                                    value={id}
+                                    onChange={(e) =>
+                                      setEditedPool((a) =>
+                                        a.map((x, j) =>
+                                          i === j ? e.target.value : x,
+                                        ),
+                                      )
+                                    }
+                                  >
+                                    {roles.map((r) => (
+                                      <option key={r.roleId} value={r.roleId}>
+                                        {r.name} ·{" "}
+                                        {r.faction === "GUILTY"
+                                          ? "有罪"
+                                          : "无罪"}
+                                      </option>
+                                    ))}
+                                  </select>
+                                </label>
+                              ))}
+                            </div>
+                            <button
+                              disabled={disabled}
+                              onClick={() =>
+                                action({ type: "SET_POOL", pool: editedPool })
+                              }
+                            >
+                              保存角色组合
+                            </button>
+                          </details>
                           <button
-                            data-testid="dm-evidence-confirm"
+                            data-testid="dm-start"
                             disabled={
-                              disabled || selection.length !== v.required
+                              disabled ||
+                              snap.players.length !== snap.count ||
+                              snap.players.some((p) => !p.ready)
                             }
-                            onClick={() =>
-                              action({
-                                type:
-                                  phase === "VICTIM_EVIDENCE" ? "TRUE" : "FAKE",
-                                cards: selection,
-                              })
-                            }
+                            onClick={() => action({ type: "START" })}
                           >
-                            确认这组遗言
+                            随机发牌并开始
                           </button>
                         </>
                       )}
-                    {v.active && phase === "SPECIAL_INFORMATION" && (
-                      <>
-                        <h2>这是死者真正的遗言</h2>
-                        <p>查看窗口：最多5秒</p>
-                        <Cards ids={v.trueCards} />
-                        <button
-                          data-testid="dm-info-ack"
-                          disabled={disabled}
-                          onClick={() => action({ type: "INFO_ACK" })}
-                        >
-                          已查看，继续
-                        </button>
-                      </>
-                    )}
-                    {phase === "INVESTIGATION" && !v.forensic && (
-                      <>
-                        <p>
-                          {snap.players.find((p) => p.id === v.speaker)?.seat}
-                          号正在发言。按座位号轮流，每人最多5分钟，全部结束后投票。
-                        </p>
-                        {v.active && (
-                          <button
-                            data-testid="dm-speech-end"
-                            disabled={disabled}
-                            onClick={() => action({ type: "SPEAK_END" })}
-                          >
-                            我说完了，下一位
-                          </button>
-                        )}
-                      </>
-                    )}
-                    {["FIRST_VOTE", "SECOND_VOTE"].includes(phase!) && (
-                      <>
-                        <p>
-                          点击圆桌玩家投票。
-                          {phase === "SECOND_VOTE"
-                            ? "只有同一人再次过半才会处决。"
-                            : "超过存活人数的一半才进入辩解。"}
-                          已提交 {v.voted} 票。
-                        </p>
-                        {v.active ? (
-                          <button
-                            data-testid="dm-vote"
-                            disabled={disabled || selection.length !== 1}
-                            onClick={() =>
-                              action({ type: "VOTE", target: selection[0] })
-                            }
-                          >
-                            确认投票
-                          </button>
-                        ) : (
-                          v.myVote && <p>你已投票，等待统一结算。</p>
-                        )}
-                      </>
-                    )}
-                    {phase === "DEFENSE" && (
-                      <>
-                        <p>
-                          {snap.players.find((p) => p.id === v.suspect)?.seat}
-                          号获得一次辩解机会。
-                        </p>
-                        {v.active && (
-                          <button
-                            data-testid="dm-defense-end"
-                            disabled={disabled}
-                            onClick={() => action({ type: "DEFENSE_END" })}
-                          >
-                            辩解结束，开始第二次投票
-                          </button>
-                        )}
-                      </>
-                    )}
-                    {phase === "ROUND_END" && (
-                      <>
-                        <p>
-                          本轮已结算。
-                          {v.suspect
-                            ? "查看圆桌玩家存活状态。"
-                            : "无人连续两次获得过半票。"}
-                        </p>
-                        {v.active && !v.forensic && (
-                          <button
-                            data-testid="dm-next"
-                            disabled={disabled}
-                            onClick={() => action({ type: "NEXT" })}
-                          >
-                            下一轮
-                          </button>
-                        )}
-                      </>
-                    )}
-                    {v.winner && host && (
-                      <button
-                        data-testid="dm-restart"
-                        disabled={disabled}
-                        onClick={() => action({ type: "RESTART" })}
-                      >
-                        再来一局
-                      </button>
-                    )}
-                  </section>
-                  {v.history.length > 0 && (
-                    <section className="dm-history">
-                      <h2>公开遗言</h2>
-                      {[...v.history].reverse().map((h) => (
-                        <div key={h.round}>
-                          <h3>
-                            第{h.round}轮 ·{" "}
-                            {h.victims
-                              .map(
-                                (id) =>
-                                  snap.players.find((p) => p.id === id)?.seat +
-                                  "号",
-                              )
-                              .join("、")}
-                          </h3>
-                          <Cards ids={h.cards} revealed={h.revealed} />
-                        </div>
-                      ))}
+                      <p>当前角色：{snap.pool.map(roleName).join("、")}</p>
+                      <div className="dm-pool-preview">
+                        {snap.pool.map((id, i) => (
+                          <img
+                            key={i}
+                            src={uiArt(id)}
+                            alt={roleName(id)}
+                            title={roleName(id)}
+                            loading="lazy"
+                          />
+                        ))}
+                      </div>
                     </section>
+                  ) : (
+                    <>
+                      <section
+                        className={
+                          "dm-private " + (reveal ? "revealed" : "sealed")
+                        }
+                      >
+                        {!reveal && (
+                          <img
+                            className="dm-sealed-back"
+                            src={uiArt("card-back")}
+                            alt="隐藏的身份牌"
+                          />
+                        )}
+                        <button
+                          className="dm-link"
+                          onClick={() => setReveal(!reveal)}
+                        >
+                          {reveal ? "收起我的角色" : "查看我的秘密角色"}
+                        </button>
+                        {reveal && (
+                          <div
+                            className="dm-role-card"
+                            data-faction={myRole?.faction}
+                          >
+                            <img
+                              className="dm-role-art"
+                              src={uiArt(v.me.roleId)}
+                              alt={(myRole?.name ?? "角色") + "身份插画"}
+                            />
+                            <div className="dm-role-description">
+                              <h2>
+                                {myRole?.name}{" "}
+                                <small>
+                                  {myRole?.faction === "GUILTY"
+                                    ? "有罪阵营"
+                                    : "无罪阵营"}
+                                </small>
+                              </h2>
+                              <p>{myRole?.ability}</p>
+                            </div>
+                          </div>
+                        )}
+                        {v.me.fated && (
+                          <p>
+                            你被选为命运之人，其中一方死亡，另一方也会死亡。
+                          </p>
+                        )}
+                        {v.killers.length > 0 && (!v.me.alive || reveal) && (
+                          <p data-testid="dm-killers">
+                            {v.me.alive ? "杀手同伴" : "你看到的杀手"}：
+                            {v.killers
+                              .map((k) => k.seat + "号 " + k.name)
+                              .join("、")}
+                          </p>
+                        )}
+                      </section>
+                      <section className="dm-controls" aria-label="当前行动">
+                        {v.active &&
+                          v.teamChoices
+                            .filter((p) => p.playerId !== v.me.id)
+                            .map((p) => (
+                              <button
+                                className="dm-link"
+                                key={p.playerId}
+                                onClick={() => setSelection(p.choices)}
+                              >
+                                采用
+                                {
+                                  snap.players.find((x) => x.id === p.playerId)
+                                    ?.seat
+                                }
+                                号已提交的共同选择
+                              </button>
+                            ))}
+                        {v.forensic ? (
+                          <>
+                            <h2>鉴定上一轮的一张遗言</h2>
+                            <Cards
+                              ids={v.forensicCards}
+                              selected={selection}
+                              onSelect={(id) => toggle(id, 1)}
+                              disabled={disabled}
+                            />
+                            <button
+                              disabled={disabled || selection.length !== 1}
+                              onClick={() =>
+                                action({ type: "FORENSIC", card: selection[0] })
+                              }
+                            >
+                              宣布这张遗言的真假
+                            </button>
+                          </>
+                        ) : null}
+                        {v.active && phase === "NIGHT_PREPARATION" && (
+                          <>
+                            <p>
+                              {v.me.roleId === "soulmate"
+                                ? "点击圆桌上一名其他玩家，选择命运之人。"
+                                : "点击圆桌选择要保护的玩家。不能保护自己或其他名犬。"}
+                            </p>
+                            <button
+                              disabled={disabled || selection.length !== 1}
+                              onClick={() =>
+                                action({
+                                  type: "PREPARE",
+                                  target: selection[0],
+                                })
+                              }
+                            >
+                              确认选择
+                            </button>
+                          </>
+                        )}
+                        {v.active && phase === "KILLER_SELECTION" && (
+                          <>
+                            <p>
+                              点击玩家图标，选择 {v.required}{" "}
+                              名目标。所有杀手须提交相同目标。
+                            </p>
+                            <button
+                              data-testid="dm-kill"
+                              disabled={
+                                disabled || selection.length !== v.required
+                              }
+                              onClick={() =>
+                                action({ type: "KILL", targets: selection })
+                              }
+                            >
+                              确认行凶
+                            </button>
+                          </>
+                        )}
+                        {v.active &&
+                          ["VICTIM_EVIDENCE", "KILLER_FAKE_EVIDENCE"].includes(
+                            phase!,
+                          ) && (
+                            <>
+                              <h2>
+                                {phase === "VICTIM_EVIDENCE"
+                                  ? "留下真实遗言"
+                                  : "混入假遗言"}
+                              </h2>
+                              <p>
+                                选择 {v.required} 张。
+                                {phase === "VICTIM_EVIDENCE"
+                                  ? "若有多位死者，需共同选择。"
+                                  : "所有存活杀手需选择相同的组合。"}
+                              </p>
+                              {v.selection.length > 0 && (
+                                <p role="status">
+                                  已提交选择，等待其他人一致；仍可调整后重新提交。
+                                </p>
+                              )}
+                              <Cards
+                                ids={v.pool}
+                                selected={selection}
+                                onSelect={(id) => toggle(id, v.required)}
+                                disabled={disabled}
+                              />
+                              <button
+                                data-testid="dm-evidence-confirm"
+                                disabled={
+                                  disabled || selection.length !== v.required
+                                }
+                                onClick={() =>
+                                  action({
+                                    type:
+                                      phase === "VICTIM_EVIDENCE"
+                                        ? "TRUE"
+                                        : "FAKE",
+                                    cards: selection,
+                                  })
+                                }
+                              >
+                                确认这组遗言
+                              </button>
+                            </>
+                          )}
+                        {v.active && phase === "SPECIAL_INFORMATION" && (
+                          <>
+                            <h2>这是死者真正的遗言</h2>
+                            <p>查看窗口：最多5秒</p>
+                            <Cards ids={v.trueCards} />
+                            <button
+                              data-testid="dm-info-ack"
+                              disabled={disabled}
+                              onClick={() => action({ type: "INFO_ACK" })}
+                            >
+                              已查看，继续
+                            </button>
+                          </>
+                        )}
+                        {phase === "INVESTIGATION" && !v.forensic && (
+                          <>
+                            <p>
+                              {
+                                snap.players.find((p) => p.id === v.speaker)
+                                  ?.seat
+                              }
+                              号正在发言。按座位号轮流，每人最多5分钟，全部结束后投票。
+                            </p>
+                            {v.active && (
+                              <button
+                                data-testid="dm-speech-end"
+                                disabled={disabled}
+                                onClick={() => action({ type: "SPEAK_END" })}
+                              >
+                                我说完了，下一位
+                              </button>
+                            )}
+                          </>
+                        )}
+                        {["FIRST_VOTE", "SECOND_VOTE"].includes(phase!) && (
+                          <>
+                            <p>
+                              点击圆桌玩家投票。
+                              {phase === "SECOND_VOTE"
+                                ? "只有同一人再次过半才会处决。"
+                                : "超过存活人数的一半才进入辩解。"}
+                              已提交 {v.voted} 票。
+                            </p>
+                            {v.active ? (
+                              <button
+                                data-testid="dm-vote"
+                                disabled={disabled || selection.length !== 1}
+                                onClick={() =>
+                                  action({ type: "VOTE", target: selection[0] })
+                                }
+                              >
+                                确认投票
+                              </button>
+                            ) : (
+                              v.myVote && <p>你已投票，等待统一结算。</p>
+                            )}
+                          </>
+                        )}
+                        {phase === "DEFENSE" && (
+                          <>
+                            <p>
+                              {
+                                snap.players.find((p) => p.id === v.suspect)
+                                  ?.seat
+                              }
+                              号获得一次辩解机会。
+                            </p>
+                            {v.active && (
+                              <button
+                                data-testid="dm-defense-end"
+                                disabled={disabled}
+                                onClick={() => action({ type: "DEFENSE_END" })}
+                              >
+                                辩解结束，开始第二次投票
+                              </button>
+                            )}
+                          </>
+                        )}
+                        {phase === "ROUND_END" && (
+                          <>
+                            <p>
+                              本轮已结算。
+                              {v.suspect
+                                ? "查看圆桌玩家存活状态。"
+                                : "无人连续两次获得过半票。"}
+                            </p>
+                            {v.active && !v.forensic && (
+                              <button
+                                data-testid="dm-next"
+                                disabled={disabled}
+                                onClick={() => action({ type: "NEXT" })}
+                              >
+                                下一轮
+                              </button>
+                            )}
+                          </>
+                        )}
+                        {v.winner && host && (
+                          <button
+                            data-testid="dm-restart"
+                            disabled={disabled}
+                            onClick={() => action({ type: "RESTART" })}
+                          >
+                            再来一局
+                          </button>
+                        )}
+                      </section>
+                      {v.history.length > 0 && (
+                        <section className="dm-history">
+                          <h2>公开遗言</h2>
+                          {[...v.history].reverse().map((h) => (
+                            <div key={h.round}>
+                              <h3>
+                                第{h.round}轮 ·{" "}
+                                {h.victims
+                                  .map(
+                                    (id) =>
+                                      snap.players.find((p) => p.id === id)
+                                        ?.seat + "号",
+                                  )
+                                  .join("、")}
+                              </h3>
+                              <Cards ids={h.cards} revealed={h.revealed} />
+                            </div>
+                          ))}
+                        </section>
+                      )}
+                      {v.voteResults.length > 0 && (
+                        <details className="dm-log">
+                          <summary>投票记录</summary>
+                          {v.voteResults.map((r, i) => (
+                            <p key={i}>
+                              第{r.round}轮第{r.ballot}次：
+                              {Object.entries(r.tally)
+                                .map(
+                                  ([id, n]) =>
+                                    snap.players.find((p) => p.id === id)
+                                      ?.seat +
+                                    "号 " +
+                                    n +
+                                    "票",
+                                )
+                                .join("，")}
+                            </p>
+                          ))}
+                        </details>
+                      )}
+                    </>
                   )}
-                  {v.voteResults.length > 0 && (
-                    <details className="dm-log">
-                      <summary>投票记录</summary>
-                      {v.voteResults.map((r, i) => (
-                        <p key={i}>
-                          第{r.round}轮第{r.ballot}次：
-                          {Object.entries(r.tally)
-                            .map(
-                              ([id, n]) =>
-                                snap.players.find((p) => p.id === id)?.seat +
-                                "号 " +
-                                n +
-                                "票",
-                            )
-                            .join("，")}
-                        </p>
-                      ))}
-                    </details>
-                  )}
-                </>
-              )}
+                </aside>
+              </div>
             </>
           )}
         </>
@@ -816,7 +884,14 @@ export function DyingMessage() {
               <summary>
                 {r.name} ×{r.count}
               </summary>
-              <p>{r.ability}</p>
+              <div className="dm-rule-role">
+                <img
+                  src={uiArt(r.roleId)}
+                  alt={r.name + "角色插画"}
+                  loading="lazy"
+                />
+                <p>{r.ability}</p>
+              </div>
             </details>
           ))}
         </section>
