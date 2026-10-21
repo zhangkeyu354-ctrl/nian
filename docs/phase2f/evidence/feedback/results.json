@@ -1,0 +1,89 @@
+[
+  {
+    "scope": "Visible UI / prototype region, not a full-map-count claim",
+    "region": {
+      "x": 0,
+      "y": 0,
+      "width": 390,
+      "height": 664
+    },
+    "pixels": {
+      "busy": 0.2896165860021282,
+      "std": 48.41158151652829
+    }
+  },
+  {
+    "scope": "Visible UI / prototype region, not a full-map-count claim",
+    "region": {
+      "x": 0,
+      "y": 0,
+      "width": 390,
+      "height": 664
+    },
+    "pixels": {
+      "busy": 0.20927813819380084,
+      "std": 39.90232550852957
+    }
+  },
+  {
+    "scope": "Visible UI / prototype region, not a full-map-count claim",
+    "region": {
+      "x": 0,
+      "y": 0,
+      "width": 390,
+      "height": 664
+    },
+    "pixels": {
+      "busy": 0.22047334637696084,
+      "std": 51.04083479665339
+    }
+  },
+  {
+    "scope": "Visible UI / prototype region, not a full-map-count claim",
+    "region": {
+      "x": 0,
+      "y": 0,
+      "width": 390,
+      "height": 664
+    },
+    "pixels": {
+      "busy": 0.05098685339649195,
+      "std": 34.148459949476056
+    }
+  },
+  {
+    "scope": "Visible UI / prototype region, not a full-map-count claim",
+    "region": {
+      "x": 0,
+      "y": 0,
+      "width": 390,
+      "height": 664
+    },
+    "pixels": {
+      "busy": 0.3127055229464868,
+      "std": 54.90711017916043
+    }
+  },
+  {
+    "scope": "Visible UI / prototype region, not a full-map-count claim",
+    "region": {
+      "x": 0,
+      "y": 0,
+      "width": 390,
+      "height": 664
+    },
+    "pixels": {
+      "busy": 0.2998438197233378,
+      "std": 44.38714106441617
+    }
+  },
+  {
+    "motion": true,
+    "spatialContact": true,
+    "ownerInjury": true,
+    "notices": true,
+    "rejected": true,
+    "reducedMotion": true,
+    "errors": []
+  }
+]

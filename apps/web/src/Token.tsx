@@ -91,7 +91,7 @@ export function Token({
         />
       )}
       {["generator", "exit_gate"].includes(token.kind) && (
-        <g className="token-progress">
+        <g className="token-progress" key={token.progress}>
           {[0, 1, 2].map((i) => (
             <rect
               key={i}
@@ -100,6 +100,7 @@ export function Token({
               width="20"
               height="9"
               rx="2"
+              className={i < (token.progress ?? 0) ? "progress-filled" : ""}
               fill={i < (token.progress ?? 0) ? "#f1d47c" : "#4b5650"}
             />
           ))}

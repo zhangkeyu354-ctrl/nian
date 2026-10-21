@@ -103,7 +103,7 @@ export function SettingsButton() {
                 checked={s.sound}
                 onChange={(e) => s.set("sound", e.target.checked)}
               />
-              轮到我时提示音
+              游戏音效
             </label>
             <label>
               <input
@@ -111,7 +111,7 @@ export function SettingsButton() {
                 checked={s.vibration}
                 onChange={(e) => s.set("vibration", e.target.checked)}
               />
-              轮到我时震动
+              游戏震动
             </label>
             <p className="muted">
               设置保存在本设备。关闭动画仍显示静态结果，系统减少动态效果设置优先。
