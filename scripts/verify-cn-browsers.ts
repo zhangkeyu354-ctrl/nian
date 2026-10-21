@@ -48,10 +48,11 @@ async function privacy() {
 }
 async function clue(n: string) {
   const t = await status(); const p = await captain(t);
-  await p.getByTestId("cn-clue-input").fill("联络暗语");
+  await p.getByTestId("cn-clue-input").fill("联络暗语星辰晨光山川远航");
   await click(p, "cn-num-" + n); await click(p, "cn-send-clue");
   await (await operative(t)).getByTestId("cn-reveal").waitFor();
   await (await operative(t)).locator(".cn-flash").waitFor();
+  assert.ok(await (await operative(t)).evaluate(() => document.documentElement.scrollWidth <= innerWidth), "Long clue overflows");
   return t;
 }
 async function reveal(team: string, role: string) {
@@ -101,7 +102,7 @@ try {
   assert.equal(await pages[1].getByTestId("cn-role").innerText(), before);
   let t = await clue("1"); const op = await operative(t);
   assert.ok(await op.getByTestId("cn-end-turn").isDisabled());
-  await shot(op, "clue-flash");
+  await shot(op, "guessing");
   await click(op, "cn-extra"); await click(op, "cn-extra");
   await wait(async () => await op.getByTestId("cn-extra").isDisabled());
   await reveal(t, t); await reveal(t, t);
@@ -115,7 +116,11 @@ try {
   await pages[0].locator(".cn-timer.hurry").waitFor({ timeout: 22000 });
   await shot(pages[0], "last-ten-seconds");
   await wait(async () => (await status()) !== timed, 16000);
-  t = await clue("inf"); await privacy(); await reveal(t, "assassin");
+  t = await clue("inf"); await privacy(); await reveal(t, "neutral");
+  await wait(async () => (await status()) !== t);
+  t = await clue("inf");
+  await wait(async () => (await status()) !== t, 34000);
+  t = await clue("inf"); await reveal(t, "assassin");
   for (const p of pages) await p.getByTestId("cn-result").waitFor();
   await shot(pages[1], "result"); await click(pages[0], "cn-next");
   await pages[0].getByTestId("cn-mode-random").waitFor(); await click(pages[0], "cn-mode-random");

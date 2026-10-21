@@ -7,6 +7,7 @@ const samples = JSON.parse(
   readFileSync("apps/web/test/scenarios.generated.json", "utf8"),
 );
 const browser = await chromium.launch();
+const base = process.env.DBD_TEST_BASE_URL ?? "http://127.0.0.1:5173";
 const results: any[] = [];
 mkdirSync("output/mobile-implementation/interfaces", { recursive: true });
 try {
@@ -27,7 +28,7 @@ try {
   const errors: string[] = [];
   p.on("pageerror", (e) => errors.push(String(e)));
   for (const sample of samples) {
-    await p.goto("http://127.0.0.1:5173/test/interface.html?case=" + sample.id);
+    await p.goto(base + "/test/interface.html?case=" + sample.id);
     await p.getByTestId("mobile-dock").waitFor();
     const taps: string[] = [];
     if (

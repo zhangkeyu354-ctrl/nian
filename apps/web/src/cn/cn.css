@@ -21,6 +21,7 @@
   min-height: 100vh;
   min-height: 100dvh;
   background:
+    linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)),
     url("/assets/codenames/desk.webp") center / cover fixed,
     radial-gradient(circle at 50% -10%, #2f3740, var(--cn-desk) 65%);
   background-color: var(--cn-desk);
