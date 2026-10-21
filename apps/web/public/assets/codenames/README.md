@@ -1,30 +1,24 @@
-# 行动代号原创素材（2026-10-21）
+# 行动代号美术（2026-10-21，官方漫画风格修订）
 
-使用内置 imagegen 生成，Pillow 仅作缩放、裁切与 WebP 压缩。未取用官方素材。
-用户本次另行允许为朋友私人游玩使用官方美术；本套原创已经生成，因此继续使用。
+用户在本次对话明确允许使用原游戏美术，随后要求「只说美术」：手机布局与操作保持，人物、词卡、配色和背景按原游戏风格调整。
 
-|文件|尺寸|字节|
-|---|---|---|
-|agent-red.webp|400×330|13172|
-|agent-blue.webp|400×330|14738|
-|bystander.webp|400×330|28894|
-|assassin.webp|400×330|7144|
-|card-paper.webp|400×330|4150|
-|desk.webp|1080×1920|154224|
-|lobby-cover.webp|1600×880|104462|
-|icon-assassin.webp|64×64，透明|2592|
+## 当前素材
 
-每种人物一个版本，没有待接入的轮换变体。
+- `agent-red.webp`、`agent-blue.webp`、`bystander.webp`、`assassin.webp`：codenames.game 官方默认人物原文件（335×256，透明）。
+- `scene-red.webp`、`scene-blue.webp`、`scene-neutral.webp`、`scene-assassin.webp`：官方对应场景原文件（502×324），通过 CSS 在人物下方分层显示。
+- `desk.webp`：官方城市背景（1920×1080）；沿用原消费路径，已不再是上一版的办公桌。
+- `lobby-cover.webp`：官方 loading illustration（1440×1024）。
+- `icon-assassin.webp`：与官方刺客人物同源，CSS 显示为白色轮廓以适应深色队长卡。
+- `card-paper.webp`：保留上一版极淡原创纸纹，配合奶油色与描边绘制词卡，不含人物或官方词库。
 
-## 提示词
+素材未重新绘制、裁切或缩放，CSS 按现有手机卡牌尺寸呈现；全部单文件小于 120 KB。原生成版可从 Git 历史 `006edb7` 取回。本次未调用图像生成。
 
-所有提示词前缀：`Use case: illustration-story. Asset type: original web boardgame bitmap asset.`
+## 来源与记录
 
-- agent-red: Original editorial spy dossier illustration, one woman field agent with short curly hair and red jacket, centered upper 65 percent, muted vermilion #c4313b background, subtle kraft paper printmaking texture, lower quarter mostly empty solid red. Landscape 400:330 composition. No text, lettering, logos, weapons, no resemblance to Codenames official illustrations or packaging.
-- agent-blue: Original editorial spy dossier illustration, one East Asian male field analyst with round glasses and cobalt blue jacket, centered upper 65 percent, cobalt #2a5db3 background, subtle kraft paper printmaking texture, lower quarter mostly empty solid blue. Landscape 400:330 composition. No text, lettering, logos, weapons, no resemblance to Codenames official illustrations or packaging.
-- bystander: Original editorial dossier illustration, older female civilian florist holding a small plant, centered upper 65 percent, muted beige background, kraft paper printmaking texture, lower quarter empty beige. Landscape 400:330 composition. No text, logos, no resemblance to Codenames illustrations.
-- assassin: Original noir dossier illustration, anonymous person in a high collared black coat, face completely in shadow, upper center, near black charcoal background and restrained gold rim light, screenprint paper texture, lower quarter empty dark. Landscape 400:330 composition. No text, logos, weapons, no resemblance to Codenames official illustrations.
-- card-paper: Flat seamless very pale warm ivory kraft paper texture for Chinese word cards, extremely subtle fiber, uniform low contrast, no creases, objects, borders, stains, text, shadows or markings. Landscape 400:330.
-- desk: Top down very dark charcoal office desk with archival folders barely visible at edges, very dim neutral light, subtle grain, center empty, portrait 1080:1920. Low contrast background behind a word game. No text logos letters or bright colors.
-- lobby-cover: Original cinematic editorial illustration for a Chinese spy word association board game, wide 1600:880 composition: deep charcoal archival desk, kraft dossier folders and blank word cards, red #c4313b and blue #2a5db3 translucent tabs, black shadow profile and brass paper clips, restrained screenprint texture, center with generous dark space. No text letters numbers logos or official Codenames imagery or packaging.
-- icon-assassin: Single simple gold noir high collar silhouette emblem, face featureless dark void, bold readable tiny icon, centered isolated on genuinely transparent background, square, no text letters logos borders.
+- 官方入口：https://codenames.game/
+- 官方素材 CDN：`https://cdn2.codenames.game/cno/main-64161e0c4e34/`
+- 每个文件的完整来源 URL、尺寸、字节数与 SHA-256 见 `official-sources.json`。
+- 只接入官方图片，未复制官网应用代码、词库、字体或布局。
+- 权利归原权利人所有；用户决定在本项目采用不等于取得权利人许可。
+
+之前原创版本的提示词与生成方式保留在上述 Git 历史中。本次范围不改变服务器、联机协议、游戏规则、DOM 或交互。

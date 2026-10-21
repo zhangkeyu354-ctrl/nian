@@ -48,7 +48,12 @@ async function privacy() {
 }
 async function clue(n: string) {
   const t = await status(); const p = await captain(t);
-  await p.getByTestId("cn-clue-input").fill("联络暗语星辰晨光山川远航");
+  // The board is random: a fixed clue may contain a live word (e.g. 山).
+  const words = await p.locator('.cn-card[data-revealed="0"]').evaluateAll(els => els.map(el => el.getAttribute('data-word')!));
+  const sample = ["联络暗语星辰晨光山川远航", "远方密语晨曦联络夜幕来临", "霁谧翎翊霁谧翎翊霁谧翎翊"]
+    .find(s => !words.some(w => s.includes(w)))!;
+  assert.ok(sample, "Need a clue that does not contain a board word");
+  await p.getByTestId("cn-clue-input").fill(sample);
   await click(p, "cn-num-" + n); await click(p, "cn-send-clue");
   await (await operative(t)).getByTestId("cn-reveal").waitFor();
   await (await operative(t)).locator(".cn-flash").waitFor();

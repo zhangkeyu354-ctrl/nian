@@ -1,0 +1,101 @@
+[
+  {
+    "file": "agent-red.webp",
+    "source": "https://cdn2.codenames.game/cno/main-64161e0c4e34/themes/default/chars/red-0.webp",
+    "width": 335,
+    "height": 256,
+    "bytes": 8190,
+    "sha256": "487f1a6e129e91e1418a2eaaaedb76ff36fed415a5ac1e6a50e69c113a822c16",
+    "method": "official file, unchanged"
+  },
+  {
+    "file": "agent-blue.webp",
+    "source": "https://cdn2.codenames.game/cno/main-64161e0c4e34/themes/default/chars/blue-0.webp",
+    "width": 335,
+    "height": 256,
+    "bytes": 8630,
+    "sha256": "a31dea0bfedf8bd1e127b81b51507e9cd74629ad2571c7fa3d98f445b35c27aa",
+    "method": "official file, unchanged"
+  },
+  {
+    "file": "bystander.webp",
+    "source": "https://cdn2.codenames.game/cno/main-64161e0c4e34/themes/default/chars/neutral-0.webp",
+    "width": 335,
+    "height": 256,
+    "bytes": 11828,
+    "sha256": "2bcb18ebaba8892a49d6d3bee5a6178683583b8fa19db0e7c671785d344962e9",
+    "method": "official file, unchanged"
+  },
+  {
+    "file": "assassin.webp",
+    "source": "https://cdn2.codenames.game/cno/main-64161e0c4e34/themes/default/chars/black-0.webp",
+    "width": 335,
+    "height": 256,
+    "bytes": 7766,
+    "sha256": "32dafa535ba856bf5a4e756e0ac76a3b7269e61a3bab776dcd709c4430dc8f21",
+    "method": "official file, unchanged"
+  },
+  {
+    "file": "icon-assassin.webp",
+    "source": "https://cdn2.codenames.game/cno/main-64161e0c4e34/themes/default/chars/black-0.webp",
+    "width": 335,
+    "height": 256,
+    "bytes": 7766,
+    "sha256": "32dafa535ba856bf5a4e756e0ac76a3b7269e61a3bab776dcd709c4430dc8f21",
+    "method": "official file, unchanged"
+  },
+  {
+    "file": "desk.webp",
+    "source": "https://cdn2.codenames.game/cno/main-64161e0c4e34/home/bg-homepage.webp",
+    "width": 1920,
+    "height": 1080,
+    "bytes": 20694,
+    "sha256": "9aad555a729e60e15472863970f8861490ce47fa2545af4d63ae33596ac8794a",
+    "method": "official file, unchanged"
+  },
+  {
+    "file": "lobby-cover.webp",
+    "source": "https://cdn2.codenames.game/cno/main-64161e0c4e34/loading-bg.webp",
+    "width": 1440,
+    "height": 1024,
+    "bytes": 81916,
+    "sha256": "5f6e699ec7b24817e323e32c58f3d3304b5d94677e6d9a8db00f24bcbadfbce8",
+    "method": "official file, unchanged"
+  },
+  {
+    "file": "scene-red.webp",
+    "source": "https://cdn2.codenames.game/cno/main-64161e0c4e34/themes/default/cover-bg/red.webp",
+    "width": 502,
+    "height": 324,
+    "bytes": 13468,
+    "sha256": "1c6be078669679103b7e89ee301bedef48eb6e6514123e50aaf482915ace2b58",
+    "method": "official file, unchanged"
+  },
+  {
+    "file": "scene-blue.webp",
+    "source": "https://cdn2.codenames.game/cno/main-64161e0c4e34/themes/default/cover-bg/blue.webp",
+    "width": 502,
+    "height": 324,
+    "bytes": 6622,
+    "sha256": "58f2df1d7b9eaf87310e514dad1c874dbf38006e76e04ba3c0e1392a0b1f6bf8",
+    "method": "official file, unchanged"
+  },
+  {
+    "file": "scene-neutral.webp",
+    "source": "https://cdn2.codenames.game/cno/main-64161e0c4e34/themes/default/cover-bg/neutral.webp",
+    "width": 502,
+    "height": 324,
+    "bytes": 3046,
+    "sha256": "f67206d532232d75e74a84156ea6a7fc3e0dd1eb9a0f621f14cb18f40278bd36",
+    "method": "official file, unchanged"
+  },
+  {
+    "file": "scene-assassin.webp",
+    "source": "https://cdn2.codenames.game/cno/main-64161e0c4e34/themes/default/cover-bg/black.webp",
+    "width": 502,
+    "height": 324,
+    "bytes": 1910,
+    "sha256": "b9507e5c063558d43b87135f03d2b70a86bea6fb9879b4c54edba916bee76b73",
+    "method": "official file, unchanged"
+  }
+]

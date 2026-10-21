@@ -1,5 +1,5 @@
 /*
- * 行动代号：「特工档案」风格——深色办公桌、纸质词卡、绯红对钴蓝。
+ * 行动代号：官方漫画特工、城市场景与奶油色词卡。
  * 所有美术都是可选的背景图（/assets/codenames/...）。图还没做出来时，显示下面的纯色/纹理后备。
  * 美术清单见 docs/instructions/行动代号_美术资源.md
  */
@@ -7,12 +7,12 @@
   --cn-desk: #1b1f24;
   --cn-desk2: #252b31;
   --cn-ink: #1f1a14;
-  --cn-paper: #efe5cf;
-  --cn-paper2: #e2d5b8;
-  --cn-red: #c4313b;
-  --cn-red-deep: #8e1f27;
-  --cn-blue: #2a5db3;
-  --cn-blue-deep: #1b3d78;
+  --cn-paper: #fff0d6;
+  --cn-paper2: #e8cfaa;
+  --cn-red: #c43e2b;
+  --cn-red-deep: #85271e;
+  --cn-blue: #287ba5;
+  --cn-blue-deep: #174966;
   --cn-neutral: #cbb994;
   --cn-assassin: #15151a;
   --cn-text: #f1ece0;
@@ -516,6 +516,7 @@
     linear-gradient(180deg, var(--cn-paper), var(--cn-paper2));
   color: var(--cn-ink);
   box-shadow:
+    inset 0 0 0 2px #c9ab80,
     0 2px 0 #9c8d6c,
     0 4px 8px rgba(0, 0, 0, 0.25);
   display: grid;
@@ -603,11 +604,11 @@
   width: 18px;
   height: 18px;
   background:
-    url("/assets/codenames/icon-assassin.webp") center / contain no-repeat,
-    radial-gradient(circle, #d4af37 35%, transparent 37%);
+    url("/assets/codenames/icon-assassin.webp") center / contain no-repeat;
+  filter: brightness(0) invert(1);
 }
 
-/* 已揭晓：整张换成身份色 + 角色图（图没做好之前是纯色+图标） */
+/* 官方透明人物叠在对应场景上；手机底部词条继续保持清楚。 */
 .cn-card.revealed {
   box-shadow: inset 0 0 0 2px rgba(0, 0, 0, 0.25);
   animation: cn-flip 0.45s ease-out;
@@ -623,22 +624,26 @@
 }
 .cn-card.revealed.role-red {
   background:
-    url("/assets/codenames/agent-red.webp") center / cover,
+    url("/assets/codenames/agent-red.webp") center top / cover no-repeat,
+    url("/assets/codenames/scene-red.webp") center / cover,
     radial-gradient(circle at 50% 35%, #e05a62, var(--cn-red) 60%, var(--cn-red-deep));
 }
 .cn-card.revealed.role-blue {
   background:
-    url("/assets/codenames/agent-blue.webp") center / cover,
+    url("/assets/codenames/agent-blue.webp") center top / cover no-repeat,
+    url("/assets/codenames/scene-blue.webp") center / cover,
     radial-gradient(circle at 50% 35%, #5585d6, var(--cn-blue) 60%, var(--cn-blue-deep));
 }
 .cn-card.revealed.role-neutral {
   background:
-    url("/assets/codenames/bystander.webp") center / cover,
+    url("/assets/codenames/bystander.webp") center top / cover no-repeat,
+    url("/assets/codenames/scene-neutral.webp") center / cover,
     radial-gradient(circle at 50% 35%, #e3d4b2, var(--cn-neutral));
 }
 .cn-card.revealed.role-assassin {
   background:
-    url("/assets/codenames/assassin.webp") center / cover,
+    url("/assets/codenames/assassin.webp") center top / cover no-repeat,
+    url("/assets/codenames/scene-assassin.webp") center / cover,
     radial-gradient(circle at 50% 35%, #3a3a44, var(--cn-assassin));
 }
 .cn-card.last {
