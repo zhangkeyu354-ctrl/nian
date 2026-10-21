@@ -610,15 +610,17 @@ function Race({
   // 竖版原版棋盘：操作放在赛道中间空白处，下面的操作区隐藏，棋盘更大
   const centerMode = portrait && !useGrid;
   const showBar = !centerMode && !!p && !race.over && p.player === me && !pb.busy && !decideSeen;
+  // 普通掷骰（只有「掷骰」一个选项）：不需要说明文字，只留「谁在动」和骰子按钮
+  const rollOnly = !!p && p.options.length === 1 && p.options[0].value === "roll";
   const centerCard =
     centerMode && p && !race.over ? (
-      <div className={"ma-cc" + (p.player === me ? " you" : "") + (pb.busy ? " waiting" : "")}>
+      <div className={"ma-cc" + (p.player === me ? " you" : "") + (pb.busy ? " waiting" : "") + (rollOnly ? " roll-only" : "")}>
         <p className="ma-who">
           <span className="ma-dot" style={{ background: colorOf(p.player) }} />
           {p.player === me ? "你" : name(p.player)}
           {p.racer && ` · ${racerName(p.racer)}`}
         </p>
-        <p className="ma-cc-prompt">{p.prompt}</p>
+        {!rollOnly && <p className="ma-cc-prompt">{p.prompt}</p>}
         {pb.busy ? (
           <p className="ma-muted">动画播放中…</p>
         ) : p.player === me ? (
@@ -703,7 +705,7 @@ function Race({
       </div>
       {showBar && p && (
         <div className="ma-actbar" role="region" aria-label="轮到你操作">
-          <p>{p.racer && !p.prompt.includes(racerName(p.racer)) ? `${racerName(p.racer)}：` : ""}{p.prompt}</p>
+          <p>{rollOnly ? `你 · ${p.racer ? racerName(p.racer) : ""}` : `${p.racer && !p.prompt.includes(racerName(p.racer)) ? `${racerName(p.racer)}：` : ""}${p.prompt}`}</p>
           <div className="ma-options">
             {p.options.map((o) => (
               <OptionButton key={o.value} o={o} onPick={() => act({ type: "ANSWER", value: o.value })} />
