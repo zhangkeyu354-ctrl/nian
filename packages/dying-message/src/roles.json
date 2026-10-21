@@ -321,10 +321,9 @@
       "ruleSources": ["S10", "S04"],
       "verification": {
         "abilityText": "CONFIRMED_FROM_PHOTO",
-        "executionDetails": "CHECK_REQUIRED",
-        "questions": [
-          "多杀手是否共同只选一名；目标阵营及互杀限制；未显示的完整行凶文字页。"
-        ],
+        "executionDetails": "CONFIRMED_OFFICIAL_RULEBOOK_P3",
+        "questions": [],
+        "resolution": "官方说明书第3页：杀手们同时睁眼，全员共同只选1人（每个存活的连环杀手追加1人）；被害者确认所有杀手。用户2026-10-21确认按原版：必须选同一人，不加私聊、不随机。",
         "additionalSource": "SYNKA 同版36人物104证据官方说明书，第3–8页"
       },
       "imageAtlasCell": {

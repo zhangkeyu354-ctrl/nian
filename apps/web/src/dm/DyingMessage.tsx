@@ -692,7 +692,19 @@ export function DyingMessage() {
                                   snap.players.find((x) => x.id === p.playerId)
                                     ?.seat
                                 }
-                                号已提交的共同选择
+                                号的选择：
+                                {p.choices.every((c) =>
+                                  v.players.some((x) => x.id === c),
+                                )
+                                  ? p.choices
+                                      .map((c) => {
+                                        const t = v.players.find(
+                                          (x) => x.id === c,
+                                        )!;
+                                        return t.seat + "号 " + t.name;
+                                      })
+                                      .join("、")
+                                  : p.choices.length + " 张遗言"}
                               </button>
                             ))}
                         {v.forensic ? (
