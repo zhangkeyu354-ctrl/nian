@@ -56,8 +56,22 @@ console.log(await op.getByTestId("cn-card-3").evaluate((e) => { const s = getCom
 const leak = await op.$$eval('[data-revealed="0"]', (els) => els.filter((e) => e.getAttribute("data-role")).length);
 console.log("operative unrevealed with role:", leak);
 if (leak !== 0) throw new Error("队员页面泄露了秘密身份");
+// 先翻一张本队的牌（从队长页面读身份），看「猜对了」横幅；再翻刺客看特效
+const myTeam = turnRed ? "red" : "blue";
+const roles = await cap.$$eval("[data-testid^=cn-card-]", (els) => els.map((e) => [e.getAttribute("data-role"), e.getAttribute("data-revealed")]));
+const good = roles.findIndex(([r, rv]) => r === myTeam && rv === "0");
+const bad = roles.findIndex(([r]) => r === "assassin");
+await op.getByTestId("cn-card-" + good).click();
 await op.getByTestId("cn-reveal").click();
-await sleep(800);
-await oop.screenshot({ path: join(out, "5-other-team.png"), fullPage: true });
+await sleep(500);
+await op.screenshot({ path: join(out, "5-feedback-good.png") });
+await sleep(2200);
+await op.getByTestId("cn-card-" + bad).click();
+await op.getByTestId("cn-reveal").click();
+await sleep(700);
+await op.screenshot({ path: join(out, "6-assassin.png") });
+await sleep(2800);
+await oop.screenshot({ path: join(out, "7-winner-party.png") });
+await op.screenshot({ path: join(out, "8-loser.png") });
 await browser.close();
 srv.kill();

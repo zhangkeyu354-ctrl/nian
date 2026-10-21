@@ -21,20 +21,20 @@ export interface CNPlayer {
 }
 
 export interface CNTiming {
-  /** 队长出线索时限（毫秒），HR 2.2 = 60 秒 */
+  /** 队长出线索时限（毫秒），用户 2026-10-21 改为 180 秒 */
   clueMs: number;
-  /** 猜词时限（毫秒），HR 2.3 = 120 秒 */
+  /** 猜词时限（毫秒），用户 2026-10-21 改为 180 秒 */
   guessMs: number;
-  /** 每队一次加时（毫秒），HR 2.5 = 30 秒 */
+  /** 每队一次加时（毫秒），用户 2026-10-21 改为 60 秒 */
   extraMs: number;
 }
-export const DEFAULT_TIMING: CNTiming = { clueMs: 60_000, guessMs: 120_000, extraMs: 30_000 };
+export const DEFAULT_TIMING: CNTiming = { clueMs: 180_000, guessMs: 180_000, extraMs: 60_000 };
 
 export type TurnEnd =
   | "wrong" // 翻到中立或对方
   | "limit" // 达到 N+1 上限
   | "stop" // 主动结束
-  | "clue-timeout" // 60 秒没出线索
+  | "clue-timeout" // 时限内没出线索
   | "guess-timeout" // 猜词时间到
   | "assassin"
   | "win";
