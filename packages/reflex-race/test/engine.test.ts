@@ -1,5 +1,6 @@
 import { describe, expect, it } from "vitest";
 import {
+  ITEM_SIZE,
   createRRGame,
   DEFAULT_TIMING,
   reduceRR,
@@ -56,22 +57,23 @@ describe("出题", () => {
     expect([...kinds].sort()).toEqual(["match", "missing"]);
     expect(answers.size).toBe(5);
   });
+  it("两个物品互不遮挡：中心距离不小于一个物品宽", () => {
+    for (let seed = 1; seed <= 1000; seed++) {
+      const [a, b] = game(seed).card.items;
+      expect(Math.hypot(a.x - b.x, a.y - b.y)).toBeGreaterThanOrEqual(
+        ITEM_SIZE,
+      );
+    }
+  });
   it("同一个种子出同样的题（服务器重启可以重放）", () => {
     expect(game(9).card).toEqual(game(9).card);
   });
-  it("放大后的物品即使旋转，整个 SVG 方框也留在白色圆盘内", () => {
-    for (let seed = 1; seed <= 1000; seed++) {
-      for (const item of game(seed).card.items) {
-        const half = (0.49 * item.scale) / 2;
-        const a = (item.rot * Math.PI) / 180;
-        for (const x of [-half, half])
-          for (const y of [-half, half]) {
-            const px = item.x - 0.5 + x * Math.cos(a) - y * Math.sin(a);
-            const py = item.y - 0.5 + x * Math.sin(a) + y * Math.cos(a);
-            expect(Math.hypot(px, py)).toBeLessThan(0.5);
-          }
-      }
-    }
+  it("物品画面（方框内切圆，四角是空白）任意旋转都留在白色圆盘内", () => {
+    for (let seed = 1; seed <= 1000; seed++)
+      for (const item of game(seed).card.items)
+        expect(
+          Math.hypot(item.x - 0.5, item.y - 0.5) + (ITEM_SIZE * item.scale) / 2,
+        ).toBeLessThan(0.48);
   });
 });
 

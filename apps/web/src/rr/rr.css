@@ -803,7 +803,8 @@
   box-shadow: 0 0 0 min(3.5vw, 17px) #2b2136;
 }
 .rr-item {
-  width: 49%;
+  /* 与引擎 ITEM_SIZE 一致：两个物品各自完整、互不遮挡 */
+  width: 44%;
 }
 .rr-items {
   animation: rr-snap 0.15s cubic-bezier(0.2, 0.8, 0.3, 1.3);

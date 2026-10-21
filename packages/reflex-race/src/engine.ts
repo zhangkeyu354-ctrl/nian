@@ -56,6 +56,8 @@ export const DEFAULT_TIMING: RRTiming = {
   cardMs: 15_000,
   revealMs: 1800,
 };
+/** 圆盘中每个物品方框的宽度（占圆盘直径的比例），界面 CSS 与此一致 */
+export const ITEM_SIZE = 0.44;
 export const MIN_PLAYERS = 2;
 export const MAX_PLAYERS = 6;
 export const MIN_TARGET = 1;
@@ -171,9 +173,10 @@ export function makeCard(r: Rand): RRCard {
     ];
   }
   if (r.f() < 0.5) pairs.reverse();
-  // 两个物品放在圆心两侧，随机角度与旋转（和参考截图一样歪歪斜斜）
+  // 两个物品放在圆心两侧，随机角度与旋转（和参考截图一样歪歪斜斜）；
+  // 物品框宽 = 圆盘的 ITEM_SIZE，两者中心至少相隔一个物品宽，互不遮挡
   const theta = r.f() * Math.PI * 2;
-  const dist = 0.15 + r.f() * 0.01;
+  const dist = 0.235 + r.f() * 0.01;
   const items = pairs.map(([obj, color], i) => {
     const t = theta + i * Math.PI + (r.f() - 0.5) * 0.5;
     return {
