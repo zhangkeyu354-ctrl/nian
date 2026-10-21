@@ -1,3 +1,4 @@
+import { Token } from "./Token.tsx";
 import { chars, boardPerks } from "../../../packages/game-engine/src/data.ts";
 
 /** 角色资料：选角时与对局中查看用。全部文字来自 game-data（中文版人物板），不在界面里另写规则。 */
@@ -12,9 +13,14 @@ export function characterInfo(id: string) {
     blood: c.bp_initial as number | undefined,
     bloodMax: c.bp_max as number | undefined,
     power: c.power
-      ? { name: c.power.name_zh as string, text: c.power.text_original_zh as string }
+      ? {
+          name: c.power.name_zh as string,
+          text: c.power.text_original_zh as string,
+        }
       : null,
-    passive: c.passive?.text_original_zh ? (c.passive.text_original_zh as string) : null,
+    passive: c.passive?.text_original_zh
+      ? (c.passive.text_original_zh as string)
+      : null,
     perks: (c.starting_perks as string[]).map((pid) => {
       const p = boardPerks.get(pid) as any;
       return {
@@ -31,19 +37,35 @@ export function CharacterDetail({ id }: { id: string }) {
   const c = characterInfo(id);
   if (!c) return null;
   return (
-    <article className="character-detail" data-testid={"character-detail-" + id}>
+    <article
+      className="character-detail"
+      data-testid={"character-detail-" + id}
+    >
       <header>
-        <strong>{c.name}</strong>
-        <small>
-          {[c.subtitle, c.difficulty && "难度：" + c.difficulty]
-            .filter(Boolean)
-            .join(" · ")}
-        </small>
-        {c.blood !== undefined && (
+        <Token
+          token={{
+            id,
+            kind: "actor",
+            state: "healthy",
+            asset: "portrait_" + id,
+            label: c.name,
+            location: "room",
+          }}
+          size={76}
+        />
+        <div>
+          <strong>{c.name}</strong>
           <small>
-            初始血点 {c.blood} · 上限 {c.bloodMax}
+            {[c.subtitle, c.difficulty && "难度：" + c.difficulty]
+              .filter(Boolean)
+              .join(" · ")}
           </small>
-        )}
+          {c.blood !== undefined && (
+            <small>
+              初始血点 {c.blood} · 上限 {c.bloodMax}
+            </small>
+          )}
+        </div>
       </header>
       {c.power && (
         <section className="cd-power">

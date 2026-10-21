@@ -105,7 +105,10 @@ export async function tapPhoneCommand(
     (c.type === "SELECT" && c.pathId && c.to)
   ) {
     const room = String(c.to ?? c.roomId);
-    await tap(page.locator(`[data-room="${room}"] > rect`));
+    const roomTarget = page.locator(`[data-room="${room}"] > rect`);
+    const bounds = await roomTarget.boundingBox();
+    if (bounds && (bounds.width < 48 || bounds.height < 48)) await direct();
+    else await tap(roomTarget);
     return;
   }
   if (c.type === "SELECT" && Array.isArray(c.route)) {
@@ -145,7 +148,10 @@ export async function tapPhoneCommand(
     else
       await tap(page.getByRole("button", { name: "传送并交互", exact: true }));
     if (await page.getByRole("region", { name: "选择技能路线" }).count()) {
-      await tap(page.locator(`[data-room="${c.to}"] > rect`));
+      const roomTarget = page.locator(`[data-room="${c.to}"] > rect`);
+      const bounds = await roomTarget.boundingBox();
+      if (bounds && (bounds.width < 48 || bounds.height < 48)) await direct();
+      else await tap(roomTarget);
       return;
     }
     if (!(await page.getByRole("dialog", { name: "选择技能目标" }).count()))
@@ -156,14 +162,23 @@ export async function tapPhoneCommand(
         ([k, v]) => JSON.stringify(cmd[k]) === JSON.stringify(v),
       );
     const sheet = page.locator(".phone-sheet");
-    if ((await sheet.locator("[data-group]").count()) || (await sheet.locator("[data-command]").count())) {
+    if (
+      (await sheet.locator("[data-group]").count()) ||
+      (await sheet.locator("[data-command]").count())
+    ) {
       for (let n = 0; n < 40; n++) {
         const groups = sheet.locator("[data-group]");
         const gi = await groups.evaluateAll(
           (els, c) =>
             els.findIndex((el) =>
-              (JSON.parse(el.getAttribute("data-group-commands")!) as Array<Record<string, unknown>>).some((cmd) =>
-                Object.entries(c).every(([k, v]) => JSON.stringify(cmd[k]) === JSON.stringify(v)),
+              (
+                JSON.parse(el.getAttribute("data-group-commands")!) as Array<
+                  Record<string, unknown>
+                >
+              ).some((cmd) =>
+                Object.entries(c).every(
+                  ([k, v]) => JSON.stringify(cmd[k]) === JSON.stringify(v),
+                ),
               ),
             ),
           c,
@@ -173,7 +188,9 @@ export async function tapPhoneCommand(
           continue;
         }
         const buttons = sheet.locator("[data-command]");
-        const all = await buttons.evaluateAll((els) => els.map((el) => JSON.parse(el.getAttribute("data-command")!)));
+        const all = await buttons.evaluateAll((els) =>
+          els.map((el) => JSON.parse(el.getAttribute("data-command")!)),
+        );
         const i = all.findIndex(match);
         if (i >= 0) {
           await tap(buttons.nth(i));

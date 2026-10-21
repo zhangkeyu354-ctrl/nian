@@ -45,7 +45,7 @@ describe("开局（R03–R05）", () => {
       expect(count("assassin")).toBe(1);
       expect(s.turn).toBe(s.first);
       expect(s.phase).toBe("clue");
-      expect(s.deadline).toBe(T0 + 60_000);
+      expect(s.deadline).toBe(T0 + 180_000);
       // 没有互相包含的词
       for (const a of s.cards) for (const b of s.cards) if (a !== b) expect(a.word.includes(b.word)).toBe(false);
     }
@@ -89,7 +89,7 @@ describe("队长分配（R02）", () => {
 });
 
 describe("出线索（R06–R07、R18、R19）", () => {
-  it("只有当前队长能出线索；提交后进入猜词，120 秒", () => {
+  it("只有当前队长能出线索；提交后进入猜词，180 秒", () => {
     const s = game();
     expect(() => reduceCN(s, { type: "GIVE_CLUE", player: op(s), at: T0 + 1, word: CLUE, number: 1 })).toThrow(
       /队长/,
@@ -98,7 +98,7 @@ describe("出线索（R06–R07、R18、R19）", () => {
     expect(() => reduceCN(s, { type: "GIVE_CLUE", player: other, at: T0 + 1, word: CLUE, number: 1 })).toThrow();
     const g = clue(s, 2, T0 + 5000);
     expect(g.phase).toBe("guess");
-    expect(g.deadline).toBe(T0 + 5000 + 120_000);
+    expect(g.deadline).toBe(T0 + 5000 + 180_000);
     expect(g.limit).toBe(3);
     expect(g.log.at(-1)!.clue).toEqual({ word: CLUE, number: 2 });
   });
@@ -132,14 +132,14 @@ describe("出线索（R06–R07、R18、R19）", () => {
     expect(() => clue(s, 0)).not.toThrow();
     expect(() => clue(s, "inf")).not.toThrow();
   });
-  it("队长 60 秒不出线索：超时自动换边（R19）", () => {
+  it("队长 180 秒不出线索：超时自动换边（R19）", () => {
     const s = game();
-    expect(() => reduceCN(s, { type: "TIMEOUT", at: T0 + 59_999 })).toThrow(/还没到/);
-    expect(() => clue(s, 1, T0 + 60_000)).toThrow(/时间到/);
-    const t = reduceCN(s, { type: "TIMEOUT", at: T0 + 60_000 });
+    expect(() => reduceCN(s, { type: "TIMEOUT", at: T0 + 179_999 })).toThrow(/还没到/);
+    expect(() => clue(s, 1, T0 + 180_000)).toThrow(/时间到/);
+    const t = reduceCN(s, { type: "TIMEOUT", at: T0 + 180_000 });
     expect(t.turn).not.toBe(s.turn);
     expect(t.phase).toBe("clue");
-    expect(t.deadline).toBe(T0 + 120_000);
+    expect(t.deadline).toBe(T0 + 360_000);
     expect(t.log[0].end).toBe("clue-timeout");
   });
 });
@@ -176,9 +176,9 @@ describe("猜词（R09–R18、R20–R22）", () => {
       expect(s.phase).toBe("guess");
     }
   });
-  it("0 和 ∞ 也受 120 秒限制", () => {
+  it("0 和 ∞ 也受 180 秒限制", () => {
     const s = clue(game(), "inf", T0 + 1000);
-    const t = reduceCN(s, { type: "TIMEOUT", at: T0 + 1000 + 120_000 });
+    const t = reduceCN(s, { type: "TIMEOUT", at: T0 + 1000 + 180_000 });
     expect(t.turn).not.toBe(s.turn);
     expect(t.log[0].end).toBe("guess-timeout");
   });
@@ -240,8 +240,8 @@ describe("猜词（R09–R18、R20–R22）", () => {
   });
   it("猜词超时：即使一张没翻也自动换边", () => {
     const s = clue(game(), 2, T0 + 1000);
-    expect(() => reveal(s, s.turn, T0 + 121_000)).toThrow(/时间到/);
-    const t = reduceCN(s, { type: "TIMEOUT", at: T0 + 121_000 });
+    expect(() => reveal(s, s.turn, T0 + 181_000)).toThrow(/时间到/);
+    const t = reduceCN(s, { type: "TIMEOUT", at: T0 + 181_000 });
     expect(t.turn).not.toBe(s.turn);
     expect(t.phase).toBe("clue");
   });
@@ -288,7 +288,7 @@ describe("猜词（R09–R18、R20–R22）", () => {
 });
 
 describe("加时（R21）", () => {
-  it("+30 秒、每队一局一次、只能在本队猜词阶段", () => {
+  it("+60 秒、每队一局一次、只能在本队猜词阶段", () => {
     let s = game();
     expect(() => reduceCN(s, { type: "EXTRA_TIME", player: op(s), at: T0 + 1000 })).toThrow(/猜词阶段/);
     s = clue(s, 1, T0 + 1000);
@@ -296,7 +296,7 @@ describe("加时（R21）", () => {
     // 剩 15 秒时加时 → 45 秒
     const at = before - 15_000;
     s = reduceCN(s, { type: "EXTRA_TIME", player: op(s), at });
-    expect(s.deadline - at).toBe(45_000);
+    expect(s.deadline - at).toBe(75_000);
     expect(s.extraUsed[s.turn]).toBe(true);
     expect(s.limit).toBe(2); // 不增加猜词次数
     expect(() => reduceCN(s, { type: "EXTRA_TIME", player: op(s), at: at + 1 })).toThrow(/用过/);

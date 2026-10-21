@@ -7,6 +7,7 @@ import type {
   CNRoomSnapshot,
 } from "../../../../packages/shared/src/cn-protocol.ts";
 import { createCNRoom, savedName, useCNRoom } from "./cn-net.ts";
+import { EndFX, FeedbackBanner } from "./cn-fx.tsx";
 import "./cn.css";
 
 const TEAM_NAME: Record<Team, string> = { red: "红队", blue: "蓝队" };
@@ -416,13 +417,7 @@ function Game({ snap, view, net }: { snap: CNRoomSnapshot; view: CNView; net: Ne
   useEffect(() => {
     if (!guessing) setSelected(null);
   }, [guessing]);
-  // 轮到自己时震动提醒
-  const prevKey = useRef("");
-  useEffect(() => {
-    const key = view.turn + view.phase;
-    if (prevKey.current && prevKey.current !== key && (giving || guessing)) navigator.vibrate?.(120);
-    prevKey.current = key;
-  }, [view.turn, view.phase, giving, guessing]);
+  // 轮到自己的提醒（声音/震动/横幅）由 FeedbackBanner 负责
 
   const status = over
     ? view.endReason === "assassin"
@@ -446,7 +441,7 @@ function Game({ snap, view, net }: { snap: CNRoomSnapshot; view: CNView; net: Ne
         <div className="cn-status-main">
           <strong data-testid="cn-status">{status}</strong>
           {!over && (
-            <span className={"cn-timer" + (left <= 10_000 ? " hurry" : "")} data-testid="cn-timer">
+            <span className={"cn-timer" + (left <= 20_000 ? " hurry" : "")} data-testid="cn-timer">
               {Math.ceil(left / 1000)}
             </span>
           )}
@@ -557,6 +552,8 @@ function Game({ snap, view, net }: { snap: CNRoomSnapshot; view: CNView; net: Ne
         {drawer === "players" && <Players snap={snap} view={view} />}
       </footer>
       <ClueFlash view={view} />
+      <FeedbackBanner view={view} me={me} myTeam={myTeam} name={name} />
+      <EndFX view={view} myTeam={myTeam} />
     </main>
   );
 }
@@ -744,7 +741,7 @@ function GuessDock(props: {
             props.run({ type: "EXTRA_TIME" });
           }}
         >
-          {extraUsed ? "本队加时已用" : confirmExtra ? "确定？本局只有一次" : "⏱ +30 秒"}
+          {extraUsed ? "本队加时已用" : confirmExtra ? "确定？本局只有一次" : "⏱ 加时卡 +1 分钟"}
         </button>
       </div>
     </div>
@@ -776,7 +773,7 @@ function Log({ view, name }: { view: CNView; name: (id: string) => string }) {
                 {r.word}
               </span>
             ))}
-            {l.extra && <span className="chip extra">+30秒</span>}
+            {l.extra && <span className="chip extra">+1分钟</span>}
           </span>
           {l.end && <span className="cn-log-end">{END_TEXT[l.end]}</span>}
         </li>

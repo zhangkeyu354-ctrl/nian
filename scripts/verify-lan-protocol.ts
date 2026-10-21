@@ -223,10 +223,7 @@ assert.equal(
   (report.at(-1) as any).events,
 );
 after.s.close();
-await new Promise<void>((done) => {
-  server!.once("exit", () => done());
-  server!.kill();
-});
+server!.kill();
 
 mkdirSync("output/lan", { recursive: true });
 writeFileSync(
@@ -243,5 +240,6 @@ console.log(
   "view checks",
   leakChecks,
 );
-// Let closed socket/child-process handles drain before Node shuts down on Windows.
+// Let libuv close socket and child-process handles before exiting on Windows.
 process.exitCode = 0;
+

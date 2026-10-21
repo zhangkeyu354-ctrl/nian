@@ -1,0 +1,443 @@
+/* DBD-only presentation. No state, legality, timing or MA layout changes. */
+.game button,
+.room-flow button,
+.phone-setup button {
+  transition:
+    transform 0.12s ease,
+    opacity 0.12s ease;
+  touch-action: manipulation;
+}
+.game button:active:not(:disabled),
+.room-flow button:active:not(:disabled),
+.phone-setup button:active:not(:disabled) {
+  transform: translateY(2px) scale(0.97);
+  opacity: 0.8;
+}
+.game[data-pending] button[data-command] {
+  pointer-events: none;
+  opacity: 0.55;
+}
+.game[data-rejected] button:focus {
+  animation: command-nudge 0.3s ease-out;
+}
+.game .send-status,
+.game .command-rejected {
+  position: fixed;
+  z-index: 110;
+  top: 104px;
+  left: 50%;
+  transform: translateX(-50%);
+  padding: 10px 16px;
+  background: #0e171cf5;
+  color: #fff0cc;
+  border: 1px solid #aa9062;
+  border-radius: 4px;
+  pointer-events: none;
+  max-width: 90vw;
+  font-size: 14px;
+}
+.game .command-rejected {
+  top: auto;
+  bottom: 18px;
+  border-color: #e68e75;
+}
+.send-status i {
+  display: inline-block;
+  width: 14px;
+  height: 14px;
+  border: 2px solid #b9a773;
+  border-top-color: transparent;
+  border-radius: 50%;
+  margin-right: 8px;
+  animation: send-spin 0.65s linear infinite;
+}
+.danger-edge,
+.injury-edge {
+  position: fixed;
+  inset: 0;
+  z-index: 26;
+  pointer-events: none;
+  box-shadow: inset 0 0 65px 5px #b7352740;
+}
+.danger-edge.danger-same {
+  box-shadow: inset 0 0 85px 9px #e0494755;
+  animation: danger-breathe 1.6s ease-in-out infinite;
+}
+.danger-edge span {
+  position: absolute;
+  top: 112px;
+  left: 12px;
+  padding: 4px 9px;
+  border-left: 3px solid #e87c63;
+  background: #201c1dd9;
+  color: #ffd6c5;
+  font-size: 12px;
+}
+.injury-edge {
+  z-index: 80;
+  box-shadow: inset 0 0 130px 15px #fa2a2877;
+  animation: experience-injury-flash 1s ease-out both;
+}
+.injury-edge strong {
+  position: absolute;
+  top: 30%;
+  right: 10%;
+  font-size: 34px;
+  padding: 4px 18px;
+  border: 3px solid #ef9b7c;
+  color: #ffd0b3;
+  transform: rotate(-9deg);
+}
+.major-notice {
+  position: fixed;
+  z-index: 75;
+  top: 20%;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  background: #111b1ef2;
+  border-left: 4px solid #e2c887;
+  padding: 18px 26px;
+  color: #f7e6bc;
+  box-shadow: 0 12px 50px #0008;
+  max-width: calc(100vw - 28px);
+  width: max-content;
+  box-sizing: border-box;
+  pointer-events: none;
+  animation: notice-arrive 0.3s ease-out;
+}
+.major-notice > span {
+  font-size: 42px;
+  color: #d9ba78;
+}
+.major-notice strong {
+  font-size: 28px;
+  letter-spacing: 2px;
+}
+.major-notice p {
+  font-size: 13px;
+  margin: 6px 0 0;
+  color: #d8d9cf;
+}
+.notice-WOUNDED,
+.notice-HOOKED,
+.notice-SACRIFICE_PROGRESS {
+  border-color: #df866b;
+}
+.game .verdict-banner {
+  pointer-events: none;
+}
+.interaction-link {
+  fill: none;
+  stroke: #ffedb8;
+  stroke-width: 4;
+  stroke-dasharray: 9 6;
+  animation: contact-fade 0.7s ease-out both;
+}
+.interaction-ring {
+  fill: none;
+  stroke: #ffdb83;
+  stroke-width: 5;
+  animation: contact-fade 0.7s ease-out both;
+}
+.travel-trace {
+  fill: none;
+  stroke-width: 10;
+  stroke-linejoin: round;
+  stroke-linecap: round;
+  opacity: 0.85;
+  animation: travel-fade 0.5s ease-out both;
+}
+.game .visual-token .progress-filled {
+  transform-box: fill-box;
+  transform-origin: left;
+}
+.game .prop-node[data-prop-state="covered"] .visual-token {
+  opacity: 0.85;
+}
+.game .prop-node:not([data-prop-state="covered"]) .visual-token {
+  filter: drop-shadow(0 1px 1px #000);
+}
+.game .room-reachable {
+  filter: drop-shadow(0 0 9px #ffe590);
+  stroke-dasharray: 16 6;
+}
+.threatened-halo {
+  fill: #f65d44 !important;
+  stroke: #ffd1a5 !important;
+  stroke-width: 4;
+  animation: danger-breathe 1.6s ease-in-out infinite;
+}
+.event-rounds h3 {
+  font-size: 13px;
+  color: #c3ad7f;
+  letter-spacing: 2px;
+  padding: 10px 0;
+  border-bottom: 1px solid #64726855;
+  position: sticky;
+  top: 0;
+  background: #182327f5;
+  z-index: 1;
+}
+.event-rounds .log-entry {
+  display: grid;
+  grid-template-columns: 8px 1fr auto;
+  align-items: baseline;
+  gap: 9px;
+  border: 0;
+  padding: 8px 0;
+  color: #bdc8c3;
+  font-size: 13px;
+}
+.event-rounds .log-entry i {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  display: block;
+}
+.event-rounds .log-entry p {
+  margin: 0;
+  line-height: 1.6;
+}
+.event-rounds .log-entry small {
+  font-size: 10px;
+  opacity: 0.6;
+}
+.event-rounds .important-event p {
+  font-weight: 750;
+  color: #ffdf9e;
+}
+.phone-sheet .event-rounds {
+  overflow: auto;
+  max-height: calc(70dvh - 85px);
+  padding: 0 8px 8px;
+}
+.game .dock-skills button,
+.game .skill-tabs button {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: center;
+  gap: 3px;
+}
+.game .dock-skills small,
+.game .skill-tabs small {
+  font-size: 11px;
+  line-height: 1.3;
+  font-weight: 400;
+  display: block;
+  max-width: 100%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.game .phone-hand .move-card {
+  position: relative;
+  border-width: 2px;
+  border-bottom-width: 5px;
+  border-radius: 6px 6px 2px 2px;
+  background: linear-gradient(150deg, #33423f, #121f23);
+  transition:
+    transform 0.18s ease,
+    opacity 0.18s ease;
+}
+.game .phone-hand .move-card.chosen {
+  transform: translateY(-7px) rotate(-2deg);
+  box-shadow:
+    0 5px 0 #091013,
+    0 0 0 1px #eed79d;
+}
+.game .phone-hand .move-card b {
+  position: absolute;
+  top: 3px;
+  right: 5px;
+  font-size: 23px;
+  color: #fff0bd;
+}
+.room-flow {
+  background:
+    radial-gradient(ellipse at 20% 0, #253a3c, transparent 65%), #101a1e;
+}
+.room-flow .setup {
+  border-top-color: #b79e71;
+}
+.room-flow .draft-option {
+  border-radius: 2px;
+  background: linear-gradient(145deg, #31403c, #122024);
+  border-color: #748275;
+  border-bottom: 4px solid #9e8b65;
+  transition: transform 0.15s ease;
+}
+.room-flow .draft-option.looking {
+  box-shadow: 0 0 0 2px #dcc18c inset;
+  transform: translateY(-2px);
+}
+.room-flow .character-detail header {
+  border-bottom: 1px solid #8c865866;
+  padding-bottom: 8px;
+  display: flex;
+  gap: 12px;
+  align-items: center;
+}
+.room-flow .character-detail h4 {
+  color: #e6cd97;
+}
+.room-flow .character-detail p {
+  color: #c0cac6;
+  line-height: 1.5;
+}
+@keyframes command-nudge {
+  0%,
+  100% {
+    transform: translateX(0);
+  }
+  25% {
+    transform: translateX(-5px);
+  }
+  75% {
+    transform: translateX(5px);
+  }
+}
+@keyframes send-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+@keyframes danger-breathe {
+  0%,
+  100% {
+    opacity: 0.45;
+  }
+  50% {
+    opacity: 0.9;
+  }
+}
+@keyframes experience-injury-flash {
+  0%,
+  40% {
+    opacity: 0.95;
+  }
+  100% {
+    opacity: 0;
+  }
+}
+@keyframes notice-arrive {
+  from {
+    opacity: 0;
+    transform: translate(-50%, 10px);
+  }
+  to {
+    opacity: 1;
+    transform: translate(-50%, 0);
+  }
+}
+@keyframes contact-fade {
+  0% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+  }
+}
+@keyframes travel-fade {
+  0%,
+  55% {
+    opacity: 0.9;
+  }
+  100% {
+    opacity: 0.2;
+  }
+}
+@keyframes prop-contact {
+  0%,
+  100% {
+    transform: scale(1);
+  }
+  45% {
+    transform: scale(1.18);
+  }
+}
+@keyframes progress-fill {
+  from {
+    transform: scaleX(0.05);
+  }
+  to {
+    transform: scaleX(1);
+  }
+}
+@media (max-height: 600px) and (orientation: landscape) {
+  .major-notice {
+    top: 22%;
+    padding: 10px 18px;
+  }
+  .major-notice strong {
+    font-size: 23px;
+  }
+  .danger-edge span {
+    top: 86px;
+    font-size: 11px;
+  }
+  .game .phone-hand .move-card {
+    min-height: 64px;
+  }
+  .game .dock-skills button small {
+    max-width: 160px;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .game *,
+  .room-flow *,
+  .phone-setup * {
+    animation: none !important;
+    transition: none !important;
+  }
+}
+[data-motion="off"] .game *,
+[data-motion="off"] .room-flow *,
+[data-motion="off"] .phone-setup * {
+  animation: none !important;
+  transition: none !important;
+}
+
+.game .skill-readiness {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 6px;
+  margin: 6px 0;
+  min-width: 0;
+}
+.game .skill-readiness > button {
+  min-width: 48px;
+  min-height: 48px;
+}
+.game .skill-readiness button:disabled {
+  opacity: 0.45;
+}
+.game .phone-sheet:has(.skill-readiness) {
+  overflow: auto;
+  max-height: 80dvh;
+}
+
+.room-flow .draft-skill-names {
+  display: grid;
+  gap: 1px;
+  color: #d7c69a;
+  font-size: 10px;
+  line-height: 1.3;
+}
+@media (max-width: 700px) {
+  .room-flow .draft-option {
+    min-height: 175px;
+    gap: 2px;
+    padding: 6px 3px;
+  }
+  .room-flow .draft-option svg {
+    width: 58px;
+    height: 58px;
+  }
+  .room-flow .draft-skill-names small {
+    font-size: 10px;
+  }
+}

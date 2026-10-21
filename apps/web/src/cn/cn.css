@@ -949,3 +949,209 @@
     animation: none;
   }
 }
+
+/* 防止站内其它页面的全局 .selected 样式把选中的词卡染成别的颜色 */
+.cn-board .cn-card.selected:not(.revealed):not(.secret) {
+  background: linear-gradient(180deg, #fff6dc, var(--cn-paper2));
+  color: var(--cn-ink);
+}
+
+/* ---------- 即时反馈横幅（翻牌对错、换边、超时） ---------- */
+.cn-fb {
+  position: fixed;
+  left: 50%;
+  top: 74px;
+  z-index: 35;
+  transform: translateX(-50%);
+  width: min(92vw, 520px);
+  border-radius: 14px;
+  padding: 12px 16px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
+  text-align: center;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.45);
+  animation: cn-fb 2.2s ease-out forwards;
+  pointer-events: none;
+}
+.cn-fb b {
+  font-size: 22px;
+  font-weight: 900;
+}
+.cn-fb span {
+  font-size: 14px;
+  opacity: 0.9;
+}
+.cn-fb.tone-good {
+  background: #2f9a58;
+  color: #fff;
+}
+.cn-fb.tone-bad {
+  background: #b3202c;
+  color: #fff;
+}
+.cn-fb.tone-neutral {
+  background: var(--cn-paper);
+  color: var(--cn-ink);
+}
+.cn-fb.tone-turn {
+  background: #ffd34d;
+  color: var(--cn-ink);
+}
+@keyframes cn-fb {
+  0% { opacity: 0; transform: translate(-50%, -16px) scale(0.92); }
+  10% { opacity: 1; transform: translate(-50%, 0) scale(1.04); }
+  18% { transform: translate(-50%, 0) scale(1); }
+  82% { opacity: 1; }
+  100% { opacity: 0; transform: translate(-50%, -8px); }
+}
+
+/* ---------- 结束全屏特效 ---------- */
+.cn-fx {
+  position: fixed;
+  inset: 0;
+  z-index: 60;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  overflow: hidden;
+  cursor: pointer;
+}
+.cn-fx-big {
+  margin: 0;
+  font-size: clamp(64px, 22vw, 120px);
+  font-weight: 900;
+  letter-spacing: 0.08em;
+  line-height: 1;
+  text-shadow: 0 6px 24px rgba(0, 0, 0, 0.5);
+}
+.cn-fx-sub {
+  margin: 14px 0 0;
+  font-size: 20px;
+  font-weight: 700;
+}
+.cn-fx-tap {
+  position: absolute;
+  bottom: calc(28px + env(safe-area-inset-bottom));
+  font-size: 14px;
+  opacity: 0.7;
+}
+.cn-fx-emoji {
+  font-size: clamp(56px, 18vw, 96px);
+  animation: cn-pop 0.7s cubic-bezier(0.2, 1.6, 0.4, 1) both;
+}
+/* 胜利 */
+.cn-fx-party {
+  background: radial-gradient(circle at 50% 40%, rgba(255, 211, 77, 0.55), rgba(196, 49, 59, 0.92) 70%);
+  color: #fff;
+  animation: cn-fadein 0.3s ease-out;
+}
+.cn-fx-party.team-blue {
+  background: radial-gradient(circle at 50% 40%, rgba(255, 211, 77, 0.55), rgba(42, 93, 179, 0.92) 70%);
+}
+.cn-fx-party .cn-fx-big {
+  animation: cn-pop 0.8s 0.15s cubic-bezier(0.2, 1.6, 0.4, 1) both;
+  color: #fff6c8;
+}
+.cn-fx-sad {
+  background: rgba(10, 12, 16, 0.86);
+  color: #d8dcd6;
+  animation: cn-fadein 0.5s ease-out;
+}
+.cn-fx-sad .cn-fx-big {
+  font-size: clamp(54px, 18vw, 96px);
+  color: #9aa3ab;
+}
+.cn-confetti {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+.cn-confetti i {
+  position: absolute;
+  top: -20px;
+  border-radius: 2px;
+  animation-name: cn-fall;
+  animation-timing-function: cubic-bezier(0.3, 0.6, 0.6, 1);
+  animation-fill-mode: forwards;
+}
+@keyframes cn-fall {
+  to {
+    transform: translate(var(--drift), 110vh) rotate(var(--rot));
+    opacity: 0.9;
+  }
+}
+@keyframes cn-pop {
+  0% { transform: scale(0.2); opacity: 0; }
+  100% { transform: scale(1); opacity: 1; }
+}
+@keyframes cn-fadein {
+  from { opacity: 0; }
+}
+/* 刺客：黑红闪光 + 重击落下 + 裂痕 + 全屏震动 */
+.cn-fx-assassin {
+  background: #000;
+  color: #fff;
+  animation: cn-redflash 2.6s ease-out forwards;
+}
+.cn-fx-assassin .cn-fx-big {
+  color: #ff2a36;
+  font-size: clamp(80px, 28vw, 150px);
+  animation: cn-slam 0.55s cubic-bezier(0.5, 0, 0.75, 0) both;
+  text-shadow: 0 0 30px rgba(255, 0, 20, 0.8), 0 8px 0 #2a0004;
+}
+.cn-fx-assassin .cn-fx-sub {
+  animation: cn-fadein 0.6s 0.7s both;
+}
+.cn-fx-skull {
+  font-size: clamp(70px, 24vw, 120px);
+  color: #e8e1d0;
+  animation: cn-slam 0.5s 0.12s cubic-bezier(0.5, 0, 0.75, 0) both;
+  filter: drop-shadow(0 0 20px rgba(255, 0, 0, 0.7));
+}
+.cn-crack {
+  position: absolute;
+  inset: 0;
+  background:
+    linear-gradient(115deg, transparent 48.6%, rgba(255, 255, 255, 0.55) 49%, transparent 49.4%),
+    linear-gradient(62deg, transparent 49.3%, rgba(255, 255, 255, 0.4) 49.6%, transparent 50%),
+    linear-gradient(160deg, transparent 49.5%, rgba(255, 255, 255, 0.35) 49.8%, transparent 50.1%);
+  opacity: 0;
+  animation: cn-crack 2.6s 0.5s forwards;
+}
+@keyframes cn-crack {
+  0% { opacity: 0; }
+  5% { opacity: 1; }
+  100% { opacity: 0.5; }
+}
+@keyframes cn-slam {
+  0% { transform: scale(3.2); opacity: 0; }
+  100% { transform: scale(1); opacity: 1; }
+}
+@keyframes cn-redflash {
+  0% { background: #000; }
+  18% { background: #7a0009; }
+  22% { background: #e0101e; }
+  30% { background: #3a0004; }
+  100% { background: rgba(8, 0, 1, 0.95); }
+}
+html.cn-shake body {
+  animation: cn-shake 0.85s cubic-bezier(0.36, 0.07, 0.19, 0.97);
+}
+@keyframes cn-shake {
+  10%, 90% { transform: translate(-2px, 1px); }
+  20%, 80% { transform: translate(6px, -3px); }
+  30%, 50%, 70% { transform: translate(-12px, 4px) rotate(-1deg); }
+  40%, 60% { transform: translate(12px, -4px) rotate(1deg); }
+}
+/* 结算条也更显眼：获胜方颜色 + 轻微呼吸 */
+.cn-result {
+  animation: cn-pop 0.5s ease-out;
+}
+@media (prefers-reduced-motion: reduce) {
+  .cn-fb, .cn-fx, .cn-fx *, html.cn-shake body { animation: none !important; }
+  .cn-confetti { display: none; }
+}

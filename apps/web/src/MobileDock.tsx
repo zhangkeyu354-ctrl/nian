@@ -1,3 +1,5 @@
+import { EventJournal } from "./EventJournal.tsx";
+import { skillReason } from "./experience-model.ts";
 import { TapButton } from "./TapButton.tsx";
 import React, { useEffect, useState } from "react";
 import type {
@@ -26,7 +28,12 @@ import type { NetBinding } from "./net.ts";
 import { Illustration } from "./Illustration.tsx";
 import { skillRouteActions } from "./ui-actions.ts";
 import { actorColor } from "./playerColors.ts";
-import { phaseTitle, nowDoing, OrderStrip, PhaseSplash } from "./GameStatus.tsx";
+import {
+  phaseTitle,
+  nowDoing,
+  OrderStrip,
+  PhaseSplash,
+} from "./GameStatus.tsx";
 
 export function usePhone() {
   const query = "(max-width: 700px), (pointer: coarse) and (max-height: 600px)";
@@ -411,7 +418,7 @@ export function MobileDock({
   const acts = control.actions.filter(
     (a) =>
       // 移动：除了点棋盘上发光的房间，也在操作栏列出可去的房间（2026-10-21）
-      (!globalReveal || !a.targetId || (!!selected && a.roomId === selected)),
+      !globalReveal || !a.targetId || (!!selected && a.roomId === selected),
   );
   const terminal = acts.filter(
     (a) =>
@@ -425,15 +432,17 @@ export function MobileDock({
   const waitingReason = state.window
     ? `${who}正在决定是否使用技能或物品（${triggerNames[state.window.event] ?? "响应"}）`
     : state.choice
-      ? ({
-          ROLL_DICE: `${who}正在掷骰`,
-          SPAWN_ROLL: `${who}正在掷出生骰`,
-          REVEAL: `${who}正在翻开道具`,
-          KEEP: `${who}正在选择保留的骰子`,
-          DOCTOR_SHOCK: `${who}正在决定：付血点还是承受电火花`,
-          CARRY: "杀手正在选择搬运路线",
-          CARRY_REROUTE: "杀手正在改道",
-        } as Record<string, string>)[state.choice.kind] ?? `${who}正在选择`
+      ? ((
+          {
+            ROLL_DICE: `${who}正在掷骰`,
+            SPAWN_ROLL: `${who}正在掷出生骰`,
+            REVEAL: `${who}正在翻开道具`,
+            KEEP: `${who}正在选择保留的骰子`,
+            DOCTOR_SHOCK: `${who}正在决定：付血点还是承受电火花`,
+            CARRY: "杀手正在选择搬运路线",
+            CARRY_REROUTE: "杀手正在改道",
+          } as Record<string, string>
+        )[state.choice.kind] ?? `${who}正在选择`)
       : state.phase === "PLANNING"
         ? "其他玩家正在秘密选择移动牌"
         : `${who}正在行动`;
@@ -441,7 +450,11 @@ export function MobileDock({
   // 最新事件条只显示"真正发生的事"，跳过"移动后/检定前"之类的时机信号
   const last = [...state.events]
     .reverse()
-    .find((e) => !triggerNames[e.type] && !["BLOODPOINTS"].includes(e.type) || e.type === "BLOODPOINTS" && Number(e.data.delta) !== 0);
+    .find(
+      (e) =>
+        (!triggerNames[e.type] && !["BLOODPOINTS"].includes(e.type)) ||
+        (e.type === "BLOODPOINTS" && Number(e.data.delta) !== 0),
+    );
   useEffect(() => {
     setSheet(null);
   }, [id, state.phase, state.choice?.kind]);
@@ -492,12 +505,18 @@ export function MobileDock({
           data-command={JSON.stringify(a.command)}
           onClick={() => send(a.command)}
         >
-          {perk.name} · {a.label} · {perk.cost}血点
+          <strong>
+            {perk.name} · {perk.cost}血点
+          </strong>
+          <small>{a.label}</small>
         </TapButton>
       ));
     return (
       <TapButton key={perk.id} data-perk={perk.id} onClick={() => skill(perk)}>
-        {perk.name} · {perk.cost}血点
+        <strong>
+          {perk.name} · {perk.cost}血点
+        </strong>
+        <small>{perk.text.split(/[。；]/)[0]}</small>
       </TapButton>
     );
   }
@@ -634,7 +653,9 @@ export function MobileDock({
                   >
                     <MotionIcon card={c} size={32} />
                     <span>{cardNames[c].split("（")[0]}</span>
-                    {plan.includes(c) && <b>{plan.indexOf(c) + 1}</b>}
+                    {plan.includes(c) && (
+                      <b>{plan.indexOf(c) === 0 ? "①" : "②"}</b>
+                    )}
                   </TapButton>
                 ))}
               </div>
@@ -652,9 +673,17 @@ export function MobileDock({
             </>
           ) : (
             <>
-              {moving && <p className="dock-hint">点棋盘上发光的房间，或点下方按钮移动</p>}
-              {["ROLL_DICE", "SPAWN_ROLL"].includes(state.choice?.kind ?? "") && (
-                <p className="dock-hint">轮到你掷骰：点下方按钮，所有人会同时看到结果。</p>
+              {moving && (
+                <p className="dock-hint">
+                  点棋盘上发光的房间，或点下方按钮移动
+                </p>
+              )}
+              {["ROLL_DICE", "SPAWN_ROLL"].includes(
+                state.choice?.kind ?? "",
+              ) && (
+                <p className="dock-hint">
+                  轮到你掷骰：点下方按钮，所有人会同时看到结果。
+                </p>
               )}
               {globalReveal && !selected && (
                 <p className="dock-hint">
@@ -855,15 +884,7 @@ export function MobileDock({
               )}
             />
           ) : sheet === "journal" ? (
-            <Pages
-              items={[...state.events].reverse()}
-              size={3}
-              render={(e) => (
-                <p className="sheet-log" key={e.seq}>
-                  {eventText(state, e)}
-                </p>
-              )}
-            />
+            <EventJournal state={state} events={state.events} />
           ) : (
             own && (
               <>
@@ -880,13 +901,25 @@ export function MobileDock({
                 </div>
                 <div className="skill-tabs">
                   {shownSkills.map((s, i) => (
-                    <TapButton
-                      key={s.id}
-                      aria-pressed={skillIndex === i}
-                      onClick={() => setSkillIndex(i)}
-                    >
-                      {s.name}
-                    </TapButton>
+                    <div key={s.id} className="skill-readiness">
+                      <TapButton
+                        aria-pressed={skillIndex === i}
+                        onClick={() => setSkillIndex(i)}
+                      >
+                        {s.name}
+                        <small>
+                          {s.cost}血点 · {s.text.split(/[。；]/)[0]}
+                        </small>
+                      </TapButton>
+                      <TapButton
+                        disabled={!s.available || waiting || own.id !== id}
+                        data-perk={s.id}
+                        onClick={() => skill(s)}
+                      >
+                        {skillReason(s, own.blood, state.usedPerks) ??
+                          (waiting ? "等待轮到你" : "使用技能")}
+                      </TapButton>
+                    </div>
                   ))}
                 </div>
                 {shownSkills[skillIndex] && (
@@ -899,7 +932,11 @@ export function MobileDock({
                     <small>
                       {shownSkills[skillIndex].status === "CHECK_REQUIRED"
                         ? "该功能尚未实现"
-                        : "使用时机到来时，操作坞会显示按钮"}
+                        : (skillReason(
+                            shownSkills[skillIndex],
+                            own.blood,
+                            state.usedPerks,
+                          ) ?? "现在可以使用")}
                     </small>
                   </article>
                 )}
