@@ -15,6 +15,7 @@ import { Token } from "./Token.tsx";
 import { TapButton, suppressCompatibilityClick } from "./TapButton.tsx";
 import layoutData from "./layout.json" with { type: "json" };
 import { BoardMotion } from "./BoardMotion.tsx";
+import { BoardFx } from "./BoardFx.tsx";
 import { threatFor } from "./experience-model.ts";
 import { actorColor, ROOM_ACCENTS } from "./playerColors.ts";
 // 路线颜色：提高饱和度与亮度，并在下面垫一条深色描边，保证在棋盘上清楚可辨（2026-10-21）
@@ -87,12 +88,38 @@ export function Board({
       document.body.style.overflow = old;
     };
   }, [expanded, overview]);
-  const reset = () => setView({ x: 0, y: 0, w: 1540, h: height });
+  // 镜头平滑移动（2026-10-21）：自动定位时不再"跳"过去；关闭动画时直接到位
+  const anim = useRef(0);
+  function moveView(target: { x: number; y: number; w: number; h: number }) {
+    cancelAnimationFrame(anim.current);
+    const from = viewRef.current;
+    if (!(target.w > 0 && target.h > 0)) return;
+    if (!settings.effectiveAnimations || !(from.w > 0 && from.h > 0)) return setView(target);
+    const t0 = performance.now(),
+      dur = 380;
+    const step = (t: number) => {
+      const k = Math.max(0, Math.min(1, (t - t0) / dur)),
+        e = 1 - Math.pow(1 - k, 3);
+      setView({
+        x: from.x + (target.x - from.x) * e,
+        y: from.y + (target.y - from.y) * e,
+        w: Math.max(1, from.w + (target.w - from.w) * e),
+        h: Math.max(1, from.h + (target.h - from.h) * e),
+      });
+      if (k < 1) anim.current = requestAnimationFrame(step);
+    };
+    anim.current = requestAnimationFrame(step);
+  }
+  const reset = () => moveView({ x: 0, y: 0, w: 1540, h: height });
   // 定位：让当前房间及其全部相邻房间同时可见（保留四周安全边距）
   function focus(id = focusRoom) {
     if (size.width <= 0 || size.height <= 0) return;
     const roomId = id && layout.rooms[id] ? id : Object.keys(layout.rooms)[0];
     const ids = new Set([roomId]);
+    // 有可去的房间时，镜头要把它们全部框进来（移动时不能看不到目的地）
+    const targets = highlight.map((r) => r.to).filter((r) => layout.rooms[r]);
+    targets.forEach((r) => ids.add(r));
+    if (!targets.length)
     for (const e of map.edges as Array<{
       from?: string | null;
       to?: string | null;
@@ -109,12 +136,17 @@ export function Board({
       y1 = Math.max(...pts.map((p) => p[1])) + 118 + pad;
     const aspect = size.width / Math.max(1, size.height);
     let w = Math.max(x1 - x0, (y1 - y0) * aspect, 420);
+    // 手机：邻居房间太分散时不再缩到看不清，最多显示约 2.5 个房间宽，以当前房间为中心
+    const cap = targets.length ? Infinity : phone || size.width < 600 ? 980 : Infinity;
+    const capped = w > cap;
+    if (capped) w = cap;
     let h = w / aspect;
-    const cx = (x0 + x1) / 2,
-      cy = (y0 + y1) / 2;
+    const here = layout.rooms[roomId];
+    const cx = capped ? here[0] : (x0 + x1) / 2,
+      cy = capped ? here[1] + 18 : (y0 + y1) / 2;
     const clamp = (v: number, lo: number, hi: number) =>
       hi < lo ? (lo + hi) / 2 : Math.max(lo, Math.min(hi, v));
-    setView({
+    moveView({
       x: clamp(cx - w / 2, -pad, 1540 + pad - w),
       y: clamp(cy - h / 2, -pad, height + pad - h),
       w,
@@ -135,7 +167,15 @@ export function Board({
     if (overview || (phone && !focusRoom)) reset();
     else if (size.width < 950 || phone) focus();
     else reset();
-  }, [map.id, focusRoom, size.width, size.height, phone, overview]);
+  }, [
+    map.id,
+    focusRoom,
+    size.width,
+    size.height,
+    phone,
+    overview,
+    highlight.map((r) => r.to).join(","),
+  ]);
   // 手机上地图缩得很小时，第一次点击只放大到该房间（防误触），放大后再点才执行操作
   const tiny = size.width < 950 && view.w / Math.max(1, size.width) > 1.4;
   function zoomRoom(id: string) {
@@ -145,12 +185,14 @@ export function Board({
     const h = (w * size.height) / Math.max(1, size.width);
     setView({ x: r[0] - w / 2, y: r[1] + 18 - h / 2, w, h });
   }
-  const zoom = (factor: number) =>
+  const zoom = (factor: number) => {
+    cancelAnimationFrame(anim.current);
     setView((v) => {
       const w = Math.min(2000, Math.max(380, v.w * factor));
       const h = (w * size.height) / size.width;
       return { x: v.x + (v.w - w) / 2, y: v.y + (v.h - h) / 2, w, h };
     });
+  };
   useEffect(() => {
     const node = el.current!;
     const f = (e: WheelEvent) => {
@@ -193,6 +235,7 @@ export function Board({
         dy = center.y - prev.y;
       if (Math.abs(dx) + Math.abs(dy) > 2) drag.current = true;
       const rect = el.current!.getBoundingClientRect();
+      cancelAnimationFrame(anim.current);
       setView((v) => {
         const factor =
           prev.distance && center.distance
@@ -283,6 +326,7 @@ export function Board({
       >
         <svg
           data-testid="board"
+          data-zoom={view.w / Math.max(1, size.width) > 2.4 ? "far" : "near"}
           viewBox={`${view.x} ${view.y} ${view.w} ${view.h}`}
           role="img"
           aria-label={`${map.name_zh}数字棋盘，房间和道具可点击`}
@@ -356,6 +400,10 @@ export function Board({
                 opacity=".22"
               />
             </pattern>
+            <radialGradient id="board-vignette" cx="50%" cy="45%" r="75%">
+              <stop offset="0.6" stopColor="#000" stopOpacity="0" />
+              <stop offset="1" stopColor="#000" stopOpacity=".45" />
+            </radialGradient>
             <linearGradient id="room-shade" x2="0" y2="1">
               <stop offset="0.45" stopColor="#111a1c" stopOpacity="0" />
               <stop offset="1" stopColor="#0e1518" stopOpacity=".72" />
@@ -595,11 +643,8 @@ export function Board({
                   data-room={n.id}
                   onClick={() =>
                     click(() =>
-                      tiny &&
-                      !reachable &&
-                      (!phone ||
-                        (state.phase !== "SETUP" &&
-                          state.choice?.kind !== "MAP_REVEAL"))
+                      // 手机：点房间直接交给上层（能操作就操作，否则弹出房间详情），不再先放大
+                      tiny && !reachable && !phone
                         ? zoomRoom(n.id)
                         : onRoom(n.id),
                     )
@@ -616,6 +661,29 @@ export function Board({
                       pointerEvents="none"
                     />
                   )}
+                  {/* 2.5D：房间像一块有厚度的板块——下方投影 + 底边厚度（2026-10-21） */}
+                  <g pointerEvents="none">
+                  <rect
+                    x="-122"
+                    y="-70"
+                    width="262"
+                    height="202"
+                    rx="8"
+                    fill="#03070a"
+                    opacity=".6"
+                    pointerEvents="none"
+                  />
+                  <rect
+                    x="-130"
+                    y="104"
+                    width="260"
+                    height="24"
+                    rx="5"
+                    fill={accent}
+                    opacity=".55"
+                    pointerEvents="none"
+                  />
+                  </g>
                   <rect
                     x="-130"
                     y="-82"
@@ -751,7 +819,9 @@ export function Board({
                           phone && reachable
                             ? onRoom(n.id)
                             : tiny
-                              ? zoomRoom(n.id)
+                              ? phone
+                                ? onRoom(n.id)
+                                : zoomRoom(n.id)
                               : onActor?.(a.id),
                         );
                       }}
@@ -854,7 +924,9 @@ export function Board({
                           phone && reachable
                             ? onRoom(n.id)
                             : tiny && !available
-                              ? zoomRoom(n.id)
+                              ? phone
+                                ? onRoom(n.id)
+                                : zoomRoom(n.id)
                               : onProp(p.id),
                         );
                       }}
@@ -904,6 +976,15 @@ export function Board({
             );
           })}
           <BoardMotion state={state} />
+          <BoardFx state={state} />
+          <rect
+            x={view.x}
+            y={view.y}
+            width={view.w}
+            height={view.h}
+            fill="url(#board-vignette)"
+            pointerEvents="none"
+          />
         </svg>
       </div>
       <div className="board-navigation">

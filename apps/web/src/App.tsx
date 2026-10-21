@@ -37,6 +37,7 @@ import { GameExperience } from "./GameExperience.tsx";
 import { EventJournal } from "./EventJournal.tsx";
 import { MobileDock, MobileParameters, usePhone } from "./MobileDock.tsx";
 import { VerdictBanner, verdictsFrom, type VerdictInfo } from "./Verdict.tsx";
+import { RoomSheet } from "./RoomSheet.tsx";
 import { usePhoneExperience } from "./phone-experience.ts";
 import { skillRouteActions } from "./ui-actions.ts";
 import { ItemUseNotice } from "./ItemUseNotice.tsx";
@@ -285,6 +286,7 @@ export function App({ net }: { net?: NetBinding } = {}) {
   const sending = useRef(false);
   const [effects, setEffects] = useState<Feedback[]>([]);
   const [verdicts, setVerdicts] = useState<VerdictInfo[]>([]);
+  const [inspect, setInspect] = useState<string | null>(null);
   const [localState, setState] = useState<GameState | null>(null);
   // 联机时以服务器发来的视图为准，避免本地副本与版本号短暂不一致
   const state = net ? net.view : localState;
@@ -551,6 +553,24 @@ export function App({ net }: { net?: NetBinding } = {}) {
       kind === "prop" ? a.targetId === target : a.roomId === target,
     );
     if (choices.length === 1) send(choices[0].command);
+    // 手机：点一个现在不能操作的房间 → 弹出房间详情，看清里面有谁、有什么
+    else if (phone && !choices.length && !form) {
+      const room =
+        kind === "room"
+          ? target
+          : (state.actors[target]?.room ??
+            state.props.find((p) => p.id === target)?.room);
+      // 这个房间里有当前可做的操作（例如翻开道具）时，保持原来的选择流程，不弹详情
+      const related = control.actions.some(
+        (a) =>
+          a.roomId === room ||
+          (a.targetId &&
+            (state.props.find((p) => p.id === a.targetId)?.room === room ||
+              state.actors[a.targetId]?.room === room)),
+      );
+      if (room && !related) setInspect(room);
+      else setSelected(target);
+    }
     else setSelected(target);
   }
   useEffect(() => {
@@ -966,7 +986,13 @@ export function App({ net }: { net?: NetBinding } = {}) {
                   selected &&
                   !state.props.some((p) => p.id === selected)
                     ? selected
-                    : current?.room)
+                    : state.choice?.kind === "MAP_REVEAL"
+                      ? null // 地图可以翻开任意位置的道具：显示整张地图
+                      : (current?.room ??
+                      // 没人行动时（计划阶段等）镜头对准自己的角色
+                      Object.values(state.actors).find(
+                        (a) => a.room && (net ? a.ownerId === net.seat : true),
+                      )?.room))
                 }
                 phone={phone}
                 actionable={
@@ -1498,6 +1524,9 @@ export function App({ net }: { net?: NetBinding } = {}) {
           onDone={() => setEffects([])}
           toast={phone}
         />
+      )}
+      {phone && inspect && state && (
+        <RoomSheet state={state} roomId={inspect} close={() => setInspect(null)} />
       )}
       {!dice.length && !!verdicts.length && state && (
         <VerdictBanner

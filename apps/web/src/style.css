@@ -1230,3 +1230,6 @@ legend {
 [data-motion="off"] .verdict-banner { animation: none; }
 /* 结果播报显示时，把同时出现的小提示淡出，避免叠在一起 */
 body:has(.verdict-banner) .toast-feedback { opacity: 0; transition: opacity .15s; }
+/* 大号播报出现时，淡出同时弹出的小提示，避免两层叠在一起 */
+body:has(.major-notice) .toast-feedback,
+body:has(.major-notice) .verdict-banner { opacity: 0; transition: opacity .15s; }

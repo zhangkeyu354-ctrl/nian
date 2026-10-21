@@ -480,3 +480,9 @@
 @keyframes current-ring { 0%,100% { stroke-opacity: 1; } 50% { stroke-opacity: .35; } }
 @keyframes room-reach { 0%,100% { stroke-opacity: 1; } 50% { stroke-opacity: .45; } }
 [data-motion="off"] .killer-halo, [data-motion="off"] .current-halo, [data-motion="off"] .current-ring, [data-motion="off"] .room-reachable { animation: none; }
+/* 缩得很小时（看全图）：房间名和人名放大，细节淡化，避免糊成一片 */
+svg[data-zoom="far"] .room-label { font-size: 30px !important; }
+svg[data-zoom="far"] [data-actor] text { font-size: 22px; }
+svg[data-zoom="far"] .prop-node { opacity: .8; }
+/* 2.5D：棋子像立在棋盘上的立牌，有投影 */
+[data-actor] .visual-token { filter: drop-shadow(0 6px 4px rgba(0,0,0,.65)); }
