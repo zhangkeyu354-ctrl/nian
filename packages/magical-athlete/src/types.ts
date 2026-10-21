@@ -69,7 +69,7 @@ export type Fx =
   | { kind: "roll"; player: string; racer: string; value: number; reroll?: boolean }
   | { kind: "duel"; a: { racer: string; value: number }; b: { racer: string; value: number } }
   | { kind: "power"; racer: string; power: string }
-  | { kind: "move"; racers: string[]; from: number; to: number }
+  | { kind: "move"; racers: string[]; from: number; to: number; /** 移动原因（主移动 / 箭头 / 技能名），给界面飘字用 */ why?: string }
   | { kind: "warp"; racer: string; from: number; to: number }
   | { kind: "trip"; racer: string }
   | { kind: "finish"; racer: string; place: number }

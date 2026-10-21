@@ -769,6 +769,8 @@ function Race({
           fit={portrait ? false : fit}
           layout={useGrid ? "grid" : "art"}
           center={centerCard}
+          floats={pb.floats}
+          link={pb.link}
         />
       </div>
       {showBar && p && (

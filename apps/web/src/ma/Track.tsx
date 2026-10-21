@@ -74,6 +74,8 @@ export function Track({
   fit = true,
   layout = "art",
   center,
+  floats,
+  link,
 }: {
   race: RaceState;
   colorOf: (playerId: string) => string;
@@ -88,6 +90,10 @@ export function Track({
   layout?: "art" | "grid";
   /** 手机竖版原版棋盘：放在赛道中间空白处的操作卡（跟着页面滚动停在屏幕中间） */
   center?: React.ReactNode;
+  /** 小人头顶飘字 */
+  floats?: Map<string, { id: number; text: string; tone: string }>;
+  /** 技能连线：from 的技能影响了 to */
+  link?: { id: number; from: string; to: string } | null;
 }) {
   const race: RaceState = shown
     ? { ...raceIn, tokens: raceIn.tokens.map((t) => ({ ...t, ...(shown.get(t.racer) ?? {}) })) }
@@ -159,10 +165,15 @@ export function Track({
       : { x: sp.x + c.dx * cellW, y: sp.y + c.dy * cellH, scale: c.scale };
   };
 
+  const spots = new Map<string, { x: number; y: number }>();
   const pawns = [...groups].flatMap(([pos, racers]) =>
     racers.map((rid, k) => {
       const t: Tok = race.tokens.find((x) => x.racer === rid)!;
       const at = place(pos, k, racers.length);
+      spots.set(rid, at);
+      const fl = floats?.get(rid);
+      // 2.5D：越靠近屏幕下方（竖版是原图越往右）的小人越在前面
+      const depth = Math.round((vertical ? at.x : at.y) * 100);
       return (
         <div
           key={rid}
@@ -171,7 +182,9 @@ export function Track({
             (t.owner === me ? " mine" : "") +
             (race.current === t.owner && !race.over ? " turn" : "") +
             (t.tripped ? " tripped" : "") +
-            (moving.includes(rid) ? " walking" : "")
+            (moving.includes(rid) ? " walking" : "") +
+            (fl ? " has-float" : "") +
+            (link && (link.from === rid || link.to === rid) ? (link.from === rid ? " link-from" : " link-to") : "")
           }
           role={onPawn ? "button" : undefined}
           onClick={onPawn ? () => onPawn(rid) : undefined}
@@ -180,7 +193,7 @@ export function Track({
             top: `${at.y * 100}%`,
             ["--pc" as string]: colorOf(t.owner),
             ["--ps" as string]: at.scale,
-            zIndex: (t.owner === me ? 30 : 10) + k,
+            zIndex: 10 + depth + (fl ? 200 : 0),
           }}
           title={`${racerName(rid)}${t.place ? ` · 第 ${t.place} 名` : ` · 第 ${t.pos} 格`}${t.tripped ? " · 摔倒" : ""}`}
         >
@@ -189,10 +202,31 @@ export function Track({
           <span className="ma-pawn-base" />
           <img src={`${ART}/tokens/${rid}.png`} alt={racerName(rid)} draggable={false} />
           {t.tripped && <img className="ma-pawn-trip" src={`${ART}/icons/trip.svg`} alt="摔倒" />}
+          {fl && (
+            <span key={fl.id} className={"ma-float " + fl.tone}>
+              {fl.text}
+            </span>
+          )}
         </div>
       );
     }),
   );
+
+  const a = link ? spots.get(link.from) : undefined;
+  const b = link ? spots.get(link.to) : undefined;
+  const linkLayer =
+    link && a && b ? (
+      <>
+        <svg key={link.id} className="ma-link" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true">
+          <path
+            d={`M ${a.x * 100} ${a.y * 100} Q ${((a.x + b.x) / 2) * 100} ${Math.min(a.y, b.y) * 100 - 6} ${b.x * 100} ${b.y * 100}`}
+            vectorEffect="non-scaling-stroke"
+          />
+        </svg>
+        <span key={"r" + link.id} className="ma-link-ring from" style={{ left: `${a.x * 100}%`, top: `${a.y * 100}%` }} />
+        <span key={"t" + link.id} className="ma-link-ring to" style={{ left: `${b.x * 100}%`, top: `${b.y * 100}%` }} />
+      </>
+    ) : null;
 
   if (layout === "grid") {
     const img = `url(${ART}/${board.assets.webp})`;
@@ -244,6 +278,7 @@ export function Track({
               <b>终点 · 领奖台</b>
             </div>
           </div>
+          {linkLayer}
           {pawns}
         </div>
       </div>
@@ -272,6 +307,7 @@ export function Track({
           <img className="ma-board-img" src={`${ART}/${board.assets.webp}`} alt="" draggable={false} />
         </picture>
       )}
+      {linkLayer}
       {pawns}
     </div>
   );

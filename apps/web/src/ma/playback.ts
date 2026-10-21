@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import type { Fx, LogEntry, Token } from "../../../../packages/magical-athlete/src/types.ts";
-import type { MAView } from "../../../../packages/magical-athlete/src/index.ts";
+import { RACER_BY_ID, type MAView } from "../../../../packages/magical-athlete/src/index.ts";
 import { sfxCheer, sfxFanfare, sfxFinish, sfxLand, sfxOops, sfxPower, sfxRoll, sfxStep } from "./sfx.ts";
 
 /** 屏幕上正在播放的东西 */
@@ -13,6 +13,19 @@ export type Show =
   | { kind: "note"; racer: string; text: string }
   | { kind: "podium"; race: number; places: Array<{ racer: string; owner: string; place: number; points: number }> }
   | { kind: "champion"; winners: string[]; totals: Array<{ player: string; total: number }> };
+
+/** 小人头顶飘出的字（「🎲 +5」「箭头 +3」「摔倒！」…） */
+export interface Float {
+  id: number;
+  text: string;
+  tone: "roll" | "power" | "good" | "bad" | "info";
+}
+/** 技能连线：谁的技能影响了谁 */
+export interface Link {
+  id: number;
+  from: string;
+  to: string;
+}
 
 export interface ShownToken {
   racer: string;
@@ -41,6 +54,9 @@ export function usePlayback(view: MAView) {
   const [busy, setBusy] = useState(false);
   const [show, setShow] = useState<Show | null>(null);
   const [moving, setMoving] = useState<string[]>([]);
+  const [floats, setFloats] = useState<Map<string, Float>>(new Map());
+  const [link, setLink] = useState<Link | null>(null);
+  const fxId = useRef(0);
   const [shown, setShown] = useState<Map<string, ShownToken> | null>(null);
   /** 动画里的当前位置；不播放时等于上一段动画结束时（= 当时服务器）的位置 */
   const shownRef = useRef<Map<string, ShownToken> | null>(null);
@@ -74,6 +90,20 @@ export function usePlayback(view: MAView) {
     if (shownRef.current) setShown(shownRef.current);
     // 播放起点：上一次播放结束时的位置（或当前比赛开始时）
     let cur = shownRef.current ?? null;
+    /** 最近发动技能的选手：之后别人被移动 / 传送 / 绊倒，就从它拉一条线过去 */
+    let lastPower: string | null = null;
+    const float = (racer: string, text: string, tone: Float["tone"]) => {
+      const f = { id: ++fxId.current, text, tone };
+      setFloats((m) => new Map(m).set(racer, f));
+      setTimeout(() => setFloats((m) => (m.get(racer)?.id === f.id ? (m.delete(racer), new Map(m)) : m)), 1700);
+    };
+    const linkTo = (racer: string) => {
+      if (!lastPower || lastPower === racer) return;
+      const l = { id: ++fxId.current, from: lastPower, to: racer };
+      setLink(l);
+      setTimeout(() => setLink((x) => (x?.id === l.id ? null : x)), 1600);
+    };
+    const signed = (n: number) => (n >= 0 ? `+${n}` : `${n}`);
     while (queue.current.length) {
       const e = queue.current.shift()!;
       const fx = e.fx;
@@ -117,6 +147,7 @@ export function usePlayback(view: MAView) {
           break;
         }
         case "roll":
+          lastPower = null;
           setShow({ ...fx, rolling: true });
           play(sfxRoll);
           await wait(750);
@@ -135,12 +166,24 @@ export function usePlayback(view: MAView) {
         case "power":
           setShow({ kind: "power", racer: fx.racer, power: fx.power, text: e.text });
           play(sfxPower);
+          lastPower = fx.racer;
+          float(fx.racer, `✨${RACER_BY_ID.get(fx.power)?.powerZh ?? "技能"}`, "power");
           await wait(1700);
           break;
         case "move": {
           if (!cur) cur = fromRace(latest.current.race?.tokens ?? []);
           const dir = fx.to >= fx.from ? 1 : -1;
           setMoving(fx.racers);
+          {
+            const d = signed(fx.to - fx.from);
+            const why = fx.why ?? "";
+            const label = why === "主移动" ? `🎲 ${d}` : why ? `${why} ${d}` : d;
+            const tone: Float["tone"] = why === "主移动" ? "roll" : fx.to >= fx.from ? "good" : "bad";
+            for (const r of fx.racers) {
+              float(r, label, tone);
+              linkTo(r);
+            }
+          }
           for (let p = fx.from + dir; dir > 0 ? p <= fx.to : p >= fx.to; p += dir) {
             for (const r of fx.racers) setPos(r, { pos: p });
             play(sfxStep);
@@ -153,17 +196,23 @@ export function usePlayback(view: MAView) {
         case "warp":
           if (!cur) cur = fromRace(latest.current.race?.tokens ?? []);
           setMoving([fx.racer]);
+          float(fx.racer, `传送 → 第 ${fx.to} 格`, "info");
+          linkTo(fx.racer);
           setPos(fx.racer, { pos: fx.to });
           await wait(450);
           setMoving([]);
           break;
         case "trip":
           setPos(fx.racer, { tripped: true });
+          float(fx.racer, "摔倒！", "bad");
+          linkTo(fx.racer);
           setShow({ kind: "note", racer: fx.racer, text: "摔倒了！下次主移动跳过" });
           play(sfxOops);
           await wait(900);
           break;
         case "out":
+          float(fx.racer, "淘汰！", "bad");
+          linkTo(fx.racer);
           setPos(fx.racer, { out: true });
           setShow({ kind: "note", racer: fx.racer, text: "被淘汰出本场比赛！" });
           play(sfxOops);
@@ -175,9 +224,12 @@ export function usePlayback(view: MAView) {
           play(sfxFinish);
           await wait(1800);
           break;
-        case "chip":
+        case "chip": {
+          const tok = latest.current.race?.tokens.find((x) => x.owner === fx.player && !x.out);
+          if (tok) float(tok.racer, `★ +${fx.value} 分`, "good");
           await wait(300);
           break;
+        }
         case "podium":
           // 领奖台：3、2、1 依次登台（CSS 里按名次延迟），号角 + 一小段欢呼
           setShow({ kind: "podium", race: fx.race, places: fx.places });
@@ -215,6 +267,8 @@ export function usePlayback(view: MAView) {
     show,
     moving,
     shown: frozen,
+    floats,
+    link,
     skip: () => {
       skip.current = true;
       [...wakers.current].forEach((f) => f());

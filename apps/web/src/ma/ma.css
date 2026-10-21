@@ -1991,3 +1991,222 @@
   margin-left: auto;
   box-shadow: 0 2px 0 var(--ink);
 }
+
+/* ---------- 头顶飘字 ---------- */
+.ma-float {
+  position: absolute;
+  left: 50%;
+  bottom: 104%;
+  transform: translateX(-50%);
+  white-space: nowrap;
+  font-weight: 900;
+  font-size: 13px;
+  line-height: 1;
+  padding: 4px 8px;
+  border-radius: 99px;
+  border: 2px solid var(--ink);
+  background: var(--chalk);
+  color: var(--ink);
+  box-shadow: 0 3px 0 var(--ink);
+  pointer-events: none;
+  z-index: 5;
+  animation: ma-float-up 1.7s ease-out forwards;
+}
+.ma-float.roll {
+  background: var(--sun);
+}
+.ma-float.power {
+  background: #8a4fd6;
+  color: #fff;
+}
+.ma-float.good {
+  background: #1fa37a;
+  color: #fff;
+}
+.ma-float.bad {
+  background: #e8443a;
+  color: #fff;
+}
+.ma-float.info {
+  background: #2f7fd8;
+  color: #fff;
+}
+@keyframes ma-float-up {
+  0% {
+    opacity: 0;
+    transform: translate(-50%, 10px) scale(0.6);
+  }
+  12% {
+    opacity: 1;
+    transform: translate(-50%, -4px) scale(1.12);
+  }
+  22% {
+    transform: translate(-50%, 0) scale(1);
+  }
+  80% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+    transform: translate(-50%, -26px);
+  }
+}
+/* 小人很小（同格多人缩小）时，字也跟着缩小了：反向放大一点保证看得清 */
+.ma-pawn .ma-float {
+  font-size: calc(13px / var(--ps, 1));
+}
+
+/* ---------- 技能连线：谁的技能影响了谁 ---------- */
+.ma-link {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+  pointer-events: none;
+  z-index: 300;
+}
+.ma-link path {
+  fill: none;
+  stroke: #ffe14d;
+  stroke-width: 5;
+  stroke-linecap: round;
+  stroke-dasharray: 10 8;
+  filter: drop-shadow(0 0 4px #ff9d00) drop-shadow(0 0 1px #000);
+  animation: ma-link-flow 0.5s linear infinite, ma-link-in 1.6s ease-out forwards;
+}
+@keyframes ma-link-flow {
+  to {
+    stroke-dashoffset: -18;
+  }
+}
+@keyframes ma-link-in {
+  0% {
+    opacity: 0;
+  }
+  10%,
+  80% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+  }
+}
+.ma-link-ring {
+  position: absolute;
+  width: 9%;
+  aspect-ratio: 1;
+  border-radius: 50%;
+  transform: translate(-50%, -50%);
+  pointer-events: none;
+  z-index: 299;
+  border: 3px solid #ffe14d;
+  box-shadow: 0 0 12px 3px #ff9d00;
+  animation: ma-ring 0.8s ease-out 2;
+}
+.ma-board-art .ma-link-ring {
+  width: 4.5%;
+}
+.ma-link-ring.to {
+  border-color: #fff;
+  box-shadow: 0 0 14px 4px #ff4d4d;
+}
+@keyframes ma-ring {
+  from {
+    transform: translate(-50%, -50%) scale(0.4);
+    opacity: 1;
+  }
+  to {
+    transform: translate(-50%, -50%) scale(1.6);
+    opacity: 0;
+  }
+}
+.ma-pawn.link-from > img:not(.ma-pawn-trip),
+.ma-pawn.link-to > img:not(.ma-pawn-trip) {
+  filter: drop-shadow(0 0 6px #ffe14d) drop-shadow(0 2px 0 rgba(0, 0, 0, 0.6));
+}
+
+/* ---------- 2.5D（不用真正的 3D 倾斜，避免小人被棋盘「切掉」）：
+   棋盘像一块有厚度的板子、格子微微凸起；小人有影子、呼吸、跳跃挤压，靠下的站在前面 ---------- */
+.ma-grid {
+  box-shadow:
+    0 4px 0 var(--ink),
+    0 10px 0 #0b0f1f,
+    0 16px 22px rgba(0, 0, 0, 0.45);
+}
+.ma-cell-art {
+  box-shadow:
+    inset 0 -5px 0 rgba(0, 0, 0, 0.22),
+    inset 0 3px 0 rgba(255, 255, 255, 0.35),
+    0 3px 0 rgba(0, 0, 0, 0.55);
+}
+.ma-board-scroll:not(.grid) {
+  box-shadow: 0 10px 0 #0b0f1f, 0 16px 22px rgba(0, 0, 0, 0.4);
+}
+.ma-pawn > img:not(.ma-pawn-trip) {
+  filter: drop-shadow(2px 3px 0 rgba(0, 0, 0, 0.55)) drop-shadow(0 0 1px #000);
+}
+/* 脚下的影子：跳起来时变小变淡 */
+.ma-pawn::after {
+  content: "";
+  position: absolute;
+  left: 50%;
+  bottom: -9%;
+  width: 135%;
+  height: 16%;
+  transform: translateX(-50%);
+  border-radius: 50%;
+  background: radial-gradient(closest-side, rgba(0, 0, 0, 0.55), transparent);
+  z-index: -1;
+  pointer-events: none;
+}
+.ma-pawn.walking::after {
+  animation: ma-shadow 0.23s ease-in-out infinite;
+}
+@keyframes ma-shadow {
+  50% {
+    transform: translateX(-50%) scale(0.6);
+    opacity: 0.5;
+  }
+}
+/* 站着时轻轻呼吸（每个小人节奏不同） */
+.ma-pawn:not(.tripped):not(.walking) > img:not(.ma-pawn-trip) {
+  transform-origin: 50% 100%;
+  animation: ma-breathe 2.6s ease-in-out infinite;
+}
+.ma-pawn:nth-child(3n) > img:not(.ma-pawn-trip) {
+  animation-delay: -0.9s;
+}
+.ma-pawn:nth-child(3n + 1) > img:not(.ma-pawn-trip) {
+  animation-delay: -1.7s;
+}
+@keyframes ma-breathe {
+  50% {
+    transform: scale(1.025, 0.975);
+  }
+}
+/* 走路：起跳前压扁、空中拉长、落地再压扁，身体略往前倾 */
+.ma-pawn.walking > img:not(.ma-pawn-trip) {
+  transform-origin: 50% 100%;
+  animation: ma-hop25 0.23s ease-in-out infinite;
+}
+@keyframes ma-hop25 {
+  0% {
+    transform: translateY(0) scale(1.08, 0.9) rotate(-3deg);
+  }
+  45% {
+    transform: translateY(-26%) scale(0.94, 1.07) rotate(-6deg);
+  }
+  100% {
+    transform: translateY(0) scale(1.08, 0.9) rotate(-3deg);
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .ma-pawn > img,
+  .ma-pawn::after,
+  .ma-float,
+  .ma-link path,
+  .ma-link-ring {
+    animation: none !important;
+  }
+}

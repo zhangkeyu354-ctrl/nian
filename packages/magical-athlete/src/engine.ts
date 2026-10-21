@@ -397,7 +397,7 @@ function move(s: MAState, c: Ctx, t: Token, n: number, main: boolean, why: strin
           (o) => !group.includes(o) && (before.get(o) ?? 0) > from && (g.place !== null || o.pos < g.pos),
         );
   for (const f of riders) log(s, `${rname(f)}【吸附蹭车】跟着 ${rname(t)} 一起移动。`);
-  log(s, "", { kind: "move", racers: group.map((g) => g.racer), from, to: Math.min(p, L) });
+  log(s, "", { kind: "move", racers: group.map((g) => g.racer), from, to: Math.min(p, L), why });
   if (p >= L) {
     for (const g of group) if (active(g)) finish(s, g);
     return;
@@ -732,7 +732,7 @@ function beforeMain(s: MAState, c: Ctx, t: Token) {
     for (const o of movers) {
       const to = Math.max(0, o.pos + (o.pos < t.pos ? 1 : -1));
       if (to === o.pos) continue;
-      log(s, "", { kind: "move", racers: [o.racer], from: o.pos, to });
+      log(s, "", { kind: "move", racers: [o.racer], from: o.pos, to, why: "人气磁铁" });
       o.pos = to;
       arrivals.push(o);
     }
