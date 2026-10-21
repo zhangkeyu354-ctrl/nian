@@ -935,3 +935,9 @@
     animation: none;
   }
 }
+
+/* 防止站内其它页面的全局 .selected 样式把选中的词卡染成别的颜色 */
+.cn-board .cn-card.selected:not(.revealed):not(.secret) {
+  background: linear-gradient(180deg, #fff6dc, var(--cn-paper2));
+  color: var(--cn-ink);
+}
