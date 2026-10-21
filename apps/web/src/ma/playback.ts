@@ -32,6 +32,8 @@ const reduced = () => typeof matchMedia === "function" && matchMedia("(prefers-r
  */
 export function usePlayback(view: MAView) {
   const seen = useRef<number | null>(null);
+  /** 和 seen 一样，但放在 state 里：更新后会重新渲染（否则「还没播放」的判断会停在旧值，界面卡在「动画播放中」） */
+  const [seenLen, setSeenLen] = useState<number | null>(null);
   const queue = useRef<LogEntry[]>([]);
   const running = useRef(false);
   const skip = useRef(false);
@@ -52,12 +54,14 @@ export function usePlayback(view: MAView) {
     const log = view.log;
     if (seen.current === null) {
       seen.current = log.length; // 第一次打开：不重播历史
+      setSeenLen(log.length);
       shownRef.current = view.race ? fromRace(view.race.tokens) : null;
       return;
     }
     if (log.length <= seen.current) return;
     const fresh = log.slice(seen.current);
     seen.current = log.length;
+    setSeenLen(log.length);
     queue.current.push(...fresh);
     if (!running.current) void run();
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -66,6 +70,8 @@ export function usePlayback(view: MAView) {
   async function run() {
     running.current = true;
     setBusy(true);
+    // 先把棋盘「冻结」在动画开始前的位置：骰子转完、真正走的时候才动
+    if (shownRef.current) setShown(shownRef.current);
     // 播放起点：上一次播放结束时的位置（或当前比赛开始时）
     let cur = shownRef.current ?? null;
     while (queue.current.length) {
@@ -201,11 +207,14 @@ export function usePlayback(view: MAView) {
     setBusy(false);
   }
 
+  // 服务器的新状态刚到、动画还没开始的那一瞬间，也继续显示旧位置（否则会先闪一下终点位置）
+  const unplayed = seenLen !== null && view.log.length > seenLen;
+  const frozen = shown ?? (running.current || unplayed ? shownRef.current : null);
   return {
-    busy,
+    busy: busy || unplayed,
     show,
     moving,
-    shown,
+    shown: frozen,
     skip: () => {
       skip.current = true;
       [...wakers.current].forEach((f) => f());

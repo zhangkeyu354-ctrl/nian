@@ -390,7 +390,7 @@ function Game({ snap, view, send, connected }: { snap: MARoomSnapshot; view: MAV
           className="ma-turn-toast"
           onClick={() => {
             setToast(false);
-            document.querySelector(".ma-decide.you, .ma-banner.you")?.scrollIntoView({ behavior: "smooth", block: "center" });
+            document.querySelector(".ma-cc.you, .ma-decide.you, .ma-banner.you")?.scrollIntoView({ behavior: "smooth", block: "center" });
           }}
         >
           👉 轮到你了！
@@ -413,6 +413,27 @@ function Game({ snap, view, send, connected }: { snap: MARoomSnapshot; view: MAV
       {view.phase === "over" && <Final view={view} />}
       <Log view={view} />
     </main>
+  );
+}
+
+/** 决定选项按钮：选项是一名选手时（神秘蛋三选一、军师预测等），直接显示它的头像和技能介绍 */
+function OptionButton({ o, onPick }: { o: { value: string; label: string }; onPick: () => void }) {
+  const r = RACER_BY_ID.get(o.value);
+  if (!r)
+    return (
+      <button className={o.value === "roll" ? "ma-go" : ""} onClick={onPick}>
+        {o.label}
+      </button>
+    );
+  return (
+    <button className="ma-opt-racer" onClick={onPick} data-racer={r.id}>
+      <img src={`${ART}/portraits/${r.id}.webp`} alt="" />
+      <span>
+        <b>{o.label}</b>
+        <em>【{r.powerZh}】</em>
+        <small>{r.text}</small>
+      </span>
+    </button>
   );
 }
 
@@ -576,6 +597,43 @@ function Race({
       return n;
     });
   const useGrid = portrait && layout === "grid";
+  // 棋盘占满屏宽后，操作区可能在屏幕下面：轮到你且看不到操作区时，底部浮出一条操作栏
+  const decideRef = useRef<HTMLDivElement>(null);
+  const [decideSeen, setDecideSeen] = useState(true);
+  useEffect(() => {
+    const el = decideRef.current;
+    if (!el || typeof IntersectionObserver === "undefined") return;
+    const io = new IntersectionObserver(([e]) => setDecideSeen(e.isIntersecting), { threshold: 0.6 });
+    io.observe(el);
+    return () => io.disconnect();
+  });
+  // 竖版原版棋盘：操作放在赛道中间空白处，下面的操作区隐藏，棋盘更大
+  const centerMode = portrait && !useGrid;
+  const showBar = !centerMode && !!p && !race.over && p.player === me && !pb.busy && !decideSeen;
+  // 普通掷骰（只有「掷骰」一个选项）：不需要说明文字，只留「谁在动」和骰子按钮
+  const rollOnly = !!p && p.options.length === 1 && p.options[0].value === "roll";
+  const centerCard =
+    centerMode && p && !race.over ? (
+      <div className={"ma-cc" + (p.player === me ? " you" : "") + (pb.busy ? " waiting" : "") + (rollOnly ? " roll-only" : "")}>
+        <p className="ma-who">
+          <span className="ma-dot" style={{ background: colorOf(p.player) }} />
+          {p.player === me ? "你" : name(p.player)}
+          {p.racer && ` · ${racerName(p.racer)}`}
+        </p>
+        {!rollOnly && <p className="ma-cc-prompt">{p.prompt}</p>}
+        {pb.busy ? (
+          <p className="ma-muted">动画播放中…</p>
+        ) : p.player === me ? (
+          <div className="ma-options">
+            {p.options.map((o) => (
+              <OptionButton key={o.value} o={o} onPick={() => act({ type: "ANSWER", value: o.value })} />
+            ))}
+          </div>
+        ) : (
+          <p className="ma-muted">等待对方操作…</p>
+        )}
+      </div>
+    ) : null;
   return (
     <section className="ma-race">
       {mine.length > 0 && (
@@ -642,11 +700,22 @@ function Race({
           onPawn={openCard}
           fit={portrait ? false : fit}
           layout={useGrid ? "grid" : "art"}
+          center={centerCard}
         />
       </div>
-      <div className="ma-side">
+      {showBar && p && (
+        <div className="ma-actbar" role="region" aria-label="轮到你操作">
+          <p>{rollOnly ? `你 · ${p.racer ? racerName(p.racer) : ""}` : `${p.racer && !p.prompt.includes(racerName(p.racer)) ? `${racerName(p.racer)}：` : ""}${p.prompt}`}</p>
+          <div className="ma-options">
+            {p.options.map((o) => (
+              <OptionButton key={o.value} o={o} onPick={() => act({ type: "ANSWER", value: o.value })} />
+            ))}
+          </div>
+        </div>
+      )}
+      <div className={"ma-side" + (centerMode ? " center-mode" : "")}>
         {p && !race.over && (
-          <div className={"ma-decide" + (p.player === me ? " you" : "") + (pb.busy ? " waiting" : "")} data-testid="ma-decide">
+          <div ref={decideRef} className={"ma-decide" + (p.player === me ? " you" : "") + (pb.busy ? " waiting" : "")} data-testid="ma-decide">
             <p className="ma-who">
               <span className="ma-dot" style={{ background: colorOf(p.player) }} />
               {p.player === me ? "你" : name(p.player)}
@@ -658,9 +727,7 @@ function Race({
             ) : p.player === me ? (
               <div className="ma-options">
                 {p.options.map((o) => (
-                  <button key={o.value} className={o.value === "roll" ? "ma-go" : ""} onClick={() => act({ type: "ANSWER", value: o.value })}>
-                    {o.label}
-                  </button>
+                  <OptionButton key={o.value} o={o} onPick={() => act({ type: "ANSWER", value: o.value })} />
                 ))}
               </div>
             ) : (
