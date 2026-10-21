@@ -472,11 +472,14 @@
   color: #5f584a;
 }
 .cn-clue-word {
+  min-width: 0;
+  overflow-wrap: anywhere;
   font-size: 26px;
   font-weight: 900;
   letter-spacing: 0.06em;
 }
 .cn-clue-num {
+  flex-shrink: 0;
   font-size: 22px;
   font-weight: 900;
   background: var(--turn);
@@ -488,6 +491,7 @@
   place-items: center;
 }
 .cn-clue-left {
+  flex-shrink: 0;
   margin-left: auto;
   font-size: 14px;
   font-weight: 700;
@@ -527,7 +531,9 @@
   font-size: clamp(15px, 4.6vw, 22px);
   font-weight: 900;
   line-height: 1.1;
-  word-break: keep-all;
+  min-width: 0;
+  max-width: 100%;
+  overflow-wrap: anywhere;
   text-align: center;
 }
 .cn-card.tappable:active {
@@ -882,6 +888,8 @@
   animation: cn-flash 1.6s ease-out forwards;
 }
 .cn-flash span {
+  max-width: calc(100vw - 120px);
+  overflow-wrap: anywhere;
   background: var(--cn-paper);
   color: var(--cn-ink);
   font-size: clamp(40px, 13vw, 72px);

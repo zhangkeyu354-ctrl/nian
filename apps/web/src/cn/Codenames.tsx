@@ -429,7 +429,9 @@ function Game({ snap, view, net }: { snap: CNRoomSnapshot; view: CNView; net: Ne
       ? `${TEAM_NAME[other(view.winner!)]}踩中刺客 · ${TEAM_NAME[view.winner!]}获胜`
       : `${TEAM_NAME[view.winner!]}获胜`
     : `${TEAM_NAME[view.turn]} · ${view.phase === "clue" ? "队长出线索" : "猜词"}`;
-  const roleText = amCaptain
+  const roleText = over
+    ? "本局结束 · 所有身份已公开"
+    : amCaptain
     ? `你是${TEAM_NAME[myTeam!]}队长：只有你看得到颜色，不要用表情和语气提示！`
     : myTeam
       ? `你是${TEAM_NAME[myTeam]}猜词队员${view.operators[myTeam] === me ? "（负责确认翻牌）" : ""}`

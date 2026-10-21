@@ -1,0 +1,117 @@
+[
+  {
+    "fourCharacterWordFits": true
+  },
+  {
+    "name": "red-captain",
+    "scope": "Visible UI / prototype region, not a full-map-count claim",
+    "region": {
+      "x": 0,
+      "y": 0,
+      "width": 390,
+      "height": 844
+    },
+    "pixels": {
+      "busy": 0.6225786851379268,
+      "std": 83.45903501704701
+    }
+  },
+  {
+    "name": "red-operative",
+    "scope": "Visible UI / prototype region, not a full-map-count claim",
+    "region": {
+      "x": 0,
+      "y": 0,
+      "width": 390,
+      "height": 844
+    },
+    "pixels": {
+      "busy": 0.5363956738364322,
+      "std": 87.75005954137055
+    }
+  },
+  {
+    "name": "blue-captain",
+    "scope": "Visible UI / prototype region, not a full-map-count claim",
+    "region": {
+      "x": 0,
+      "y": 0,
+      "width": 1280,
+      "height": 900
+    },
+    "pixels": {
+      "busy": 0.34169444444444447,
+      "std": 75.5386749696766
+    }
+  },
+  {
+    "name": "blue-operative",
+    "scope": "Visible UI / prototype region, not a full-map-count claim",
+    "region": {
+      "x": 0,
+      "y": 0,
+      "width": 1280,
+      "height": 900
+    },
+    "pixels": {
+      "busy": 0.33095138888888886,
+      "std": 79.94582707866694
+    }
+  },
+  {
+    "name": "clue-flash",
+    "scope": "Visible UI / prototype region, not a full-map-count claim",
+    "region": {
+      "x": 0,
+      "y": 0,
+      "width": 390,
+      "height": 844
+    },
+    "pixels": {
+      "busy": 0.5554259326771175,
+      "std": 84.1507145083098
+    }
+  },
+  {
+    "name": "last-ten-seconds",
+    "scope": "Visible UI / prototype region, not a full-map-count claim",
+    "region": {
+      "x": 0,
+      "y": 0,
+      "width": 390,
+      "height": 844
+    },
+    "pixels": {
+      "busy": 0.6244015068659619,
+      "std": 83.1407444380773
+    }
+  },
+  {
+    "name": "result",
+    "scope": "Visible UI / prototype region, not a full-map-count claim",
+    "region": {
+      "x": 0,
+      "y": 0,
+      "width": 390,
+      "height": 844
+    },
+    "pixels": {
+      "busy": 0.5837039737513671,
+      "std": 69.92224036066679
+    }
+  },
+  {
+    "name": "random-captain-win",
+    "scope": "Visible UI / prototype region, not a full-map-count claim",
+    "region": {
+      "x": 0,
+      "y": 0,
+      "width": 390,
+      "height": 844
+    },
+    "pixels": {
+      "busy": 0.7773848584275125,
+      "std": 70.14820667606386
+    }
+  }
+]
