@@ -120,6 +120,9 @@ try {
     if (!acted) {
       // 动画播放中：点一下屏幕跳过（真实玩家也可以这样做）
       for (const q of pages) {
+        // 点跳过时动画刚好结束，会点到下面的小人、打开选手卡：关掉它
+        const box = q.locator(".ma-lightbox");
+        if (await box.count()) await box.first().click({ force: true, timeout: 1000 }).catch(() => {});
         const ov = q.locator(".ma-overlay:not(.ov-power):not(.ov-note)");
         if (await ov.count()) await ov.first().click({ force: true }).catch(() => {});
       }

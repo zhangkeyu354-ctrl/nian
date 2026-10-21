@@ -290,8 +290,8 @@ describe("给界面播放的结构化事件", () => {
     expect(fx).toContainEqual({ kind: "roll", player: "p1", racer: F, value: 6 });
     expect(fx).toContainEqual({ kind: "power", racer: "lackey", power: "lackey" });
     expect(fx).toContainEqual({ kind: "power", racer: "gunk", power: "gunk" });
-    expect(fx).toContainEqual({ kind: "move", racers: [F], from: 0, to: 5 });
-    expect(fx).toContainEqual({ kind: "move", racers: ["lackey"], from: 10, to: 12 });
+    expect(fx).toContainEqual({ kind: "move", racers: [F], from: 0, to: 5, why: "主移动" });
+    expect(fx).toContainEqual({ kind: "move", racers: ["lackey"], from: 10, to: 12, why: "点头哈腰" });
     const i = fx.findIndex((f) => f!.kind === "roll");
     const j = fx.findIndex((f) => f!.kind === "move" && (f as { racers: string[] }).racers[0] === F);
     expect(i).toBeLessThan(j);
