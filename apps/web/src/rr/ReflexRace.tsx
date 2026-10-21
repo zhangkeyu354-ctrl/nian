@@ -526,9 +526,19 @@ function Game({
 
   const answer = view.card.answer;
   const myWrong = missed && missed.card === view.cardNo ? missed.obj : null;
+  // 最终排名：赢家第一，其余按分数，同分同名次（同分时点错少的排前面）
   const ranking = [...view.players].sort(
-    (a, b) => view.scores[b.id] - view.scores[a.id],
+    (a, b) =>
+      Number(b.id === view.winner) - Number(a.id === view.winner) ||
+      view.scores[b.id] - view.scores[a.id] ||
+      view.stats[a.id].wrong - view.stats[b.id].wrong,
   );
+  const rankOf = (i: number): number =>
+    i > 0 &&
+    ranking[i].id !== view.winner &&
+    view.scores[ranking[i].id] === view.scores[ranking[i - 1].id]
+      ? rankOf(i - 1)
+      : i + 1;
   const wrongTaps = view.taps.filter((x) => !x.correct);
 
   return (
@@ -556,7 +566,10 @@ function Game({
               }
               style={{ "--seat": colorOf[p.id] } as React.CSSProperties}
             >
-              <span className="n">{p.id === me ? "我" : p.name}</span>
+              <span className="n">
+                <i />
+                {p.id === me ? "我" : p.name}
+              </span>
               <Score score={view.scores[p.id]} id={p.id} />
             </li>
           ))}
@@ -701,24 +714,48 @@ function Game({
                 </i>
               ))}
             </div>
-            <p className="crown">🏆</p>
+            <p className="rr-over-kicker">最终排名</p>
             <h2>
               {view.winner === me
                 ? "你赢了！"
                 : `${nameOf(view.winner)} 赢了！`}
             </h2>
-            <ol>
-              {ranking.map((p, i) => (
-                <li key={p.id} className={p.id === me ? "me" : ""}>
-                  <span className="rank">{i + 1}</span>
-                  <i style={{ background: colorOf[p.id] }} />
-                  <span className="who">{p.name}</span>
-                  <span className="stat">
-                    对 {view.stats[p.id].right} · 错 {view.stats[p.id].wrong}
-                  </span>
-                  <b>{view.scores[p.id]}</b>
-                </li>
-              ))}
+            <p className="rr-over-sub">
+              先到 {view.target} 分 · 共 {view.cardNo} 张图
+            </p>
+            <ol className="rr-board" data-testid="rr-board">
+              {ranking.map((p, i) => {
+                const rank = rankOf(i);
+                return (
+                  <li
+                    key={p.id}
+                    className={"rank-" + rank + (p.id === me ? " me" : "")}
+                    style={{ "--seat": colorOf[p.id] } as React.CSSProperties}
+                  >
+                    <span className="rank">
+                      {rank === 1
+                        ? "🏆"
+                        : rank === 2
+                          ? "🥈"
+                          : rank === 3
+                            ? "🥉"
+                            : rank}
+                    </span>
+                    <span className="who">
+                      <span className="name">
+                        <i />
+                        {p.name}
+                        {p.id === me && <em>我</em>}
+                      </span>
+                      <span className="stat">
+                        点对 {view.stats[p.id].right} 次 · 点错{" "}
+                        {view.stats[p.id].wrong} 次
+                      </span>
+                    </span>
+                    <b data-testid={"rr-final-" + p.id}>{view.scores[p.id]}</b>
+                  </li>
+                );
+              })}
             </ol>
             {host ? (
               <div className="rr-over-actions">

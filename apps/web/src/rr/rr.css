@@ -1009,3 +1009,189 @@
 .rr-app .rr-quick button.on:hover {
   background: #e6f1fb;
 }
+
+/* ---------- 2026-10-21 用户反馈：分数不要关在框框里；结束后是一整页排名表 ---------- */
+.rr-app .rr-bar {
+  align-items: center;
+}
+.rr-app .rr-scores {
+  gap: 2px;
+}
+.rr-app .rr-scores li,
+.rr-app .rr-scores li.me,
+.rr-app .rr-scores li.win {
+  background: none;
+  border: 0;
+  box-shadow: none;
+  outline: 0;
+  border-radius: 0;
+  padding: 0 2px;
+  transform: none;
+  text-align: center;
+  color: #fff;
+}
+.rr-app .rr-scores .n {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+  font-size: 13px;
+  opacity: 0.8;
+}
+.rr-app .rr-scores .n i {
+  flex: none;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--seat);
+}
+.rr-app .rr-scores li.me .n {
+  opacity: 1;
+  color: var(--seat);
+}
+.rr-app .rr-scores b,
+.rr-app .rr-scores li.me b {
+  display: block;
+  font-size: 40px;
+  line-height: 1;
+  color: #fff;
+  -webkit-text-stroke: 0;
+  text-shadow: 0 3px 0 rgba(0, 0, 0, 0.28);
+  font-variant-numeric: tabular-nums;
+}
+/* 自己：分数用自己的颜色，下面一条短横线 */
+.rr-app .rr-scores li.me b {
+  color: var(--seat);
+}
+.rr-app .rr-scores li.me::after {
+  content: "";
+  display: block;
+  width: 26px;
+  height: 4px;
+  margin: 3px auto 0;
+  border-radius: 2px;
+  background: var(--seat);
+}
+/* 这张图抢到的人：分数发光 */
+.rr-app .rr-scores li.win b {
+  text-shadow:
+    0 0 14px var(--seat),
+    0 3px 0 rgba(0, 0, 0, 0.28);
+}
+.rr-app .rr-delta {
+  left: 50%;
+  right: auto;
+  top: 14px;
+  margin-left: 18px;
+  font-size: 22px;
+}
+@media (max-height: 700px) {
+  .rr-app .rr-scores b,
+  .rr-app .rr-scores li.me b {
+    font-size: 32px;
+  }
+}
+
+/* 终局：整页排名表（不再盖在游戏画面上） */
+.rr-app .rr-over {
+  background: var(--bg);
+  align-items: start;
+  overflow-y: auto;
+  padding: max(20px, env(safe-area-inset-top)) 16px 24px;
+}
+.rr-app .rr-over-card {
+  max-height: none;
+  overflow: hidden;
+  margin: 0 auto;
+}
+.rr-over-kicker {
+  margin: 0;
+  font-size: 15px;
+  letter-spacing: 4px;
+  color: #8a8195;
+}
+.rr-app .rr-over-card h2 {
+  margin: 2px 0 2px;
+  font-size: 30px;
+}
+.rr-over-sub {
+  margin: 0 0 14px;
+  color: #8a8195;
+  font-size: 14px;
+}
+.rr-app .rr-board li,
+.rr-app .rr-board li:first-child {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 12px;
+  border: 0;
+  border-left: 6px solid var(--seat);
+  background: #f4f1f7;
+  border-radius: 14px;
+}
+.rr-app .rr-board li.rank-1 {
+  background: #fff1b8;
+  padding-block: 16px;
+  box-shadow: 0 0 0 2px #edbd36 inset;
+}
+.rr-app .rr-board li.me {
+  outline: 3px solid var(--accent);
+  outline-offset: -1px;
+}
+.rr-app .rr-board .rank {
+  width: 32px;
+  text-align: center;
+  font-size: 22px;
+  color: #8a8195;
+  flex: none;
+}
+.rr-app .rr-board .who {
+  flex: 1;
+  min-width: 0;
+  display: grid;
+  gap: 2px;
+}
+.rr-app .rr-board .name {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 18px;
+  font-weight: 900;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.rr-app .rr-board .name i {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: var(--seat);
+  flex: none;
+}
+.rr-app .rr-board .name em {
+  font-style: normal;
+  font-size: 12px;
+  background: var(--accent);
+  color: #fff;
+  border-radius: 6px;
+  padding: 1px 6px;
+}
+.rr-app .rr-board .stat {
+  font-size: 12px;
+  color: #8a8195;
+}
+.rr-app .rr-board li b,
+.rr-app .rr-board li:first-child b {
+  font-size: 30px;
+  min-width: 2.2ch;
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+}
+.rr-app .rr-board li.rank-1 .name,
+.rr-app .rr-board li.rank-1 b {
+  font-size: 24px;
+}
+.rr-app .rr-board li.rank-1 b {
+  font-size: 38px;
+}
