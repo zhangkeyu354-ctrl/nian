@@ -160,7 +160,23 @@ try {
     await pages[i].getByTestId("dm-vote").click();
   }
   await Promise.all(pages.map((p) => wait(p, "GAME_OVER")));
+  // 每个人都自动弹出结算画面，写明胜负与自己输赢
+  for (let i = 0; i < 4; i++) {
+    const r = pages[i].getByTestId("dm-result");
+    await r.waitFor();
+    await r.getByText("无罪阵营获胜", { exact: true }).waitFor();
+    await r
+      .getByText(i === killer ? "你输了" : "你赢了！", { exact: true })
+      .waitFor();
+  }
+  await pages[killer].waitForTimeout(700);
+  await pages[killer].screenshot({ path: out + "/result-loser.png" });
+  await shot(pages[0], "result-screen");
+  await pages[0].getByTestId("dm-result-close").click();
   await shot(pages[0], "innocent-victory");
+  await pages[0].getByTestId("dm-show-result").click();
+  await pages[0].getByTestId("dm-result").waitFor();
+  await pages[0].getByTestId("dm-result-close").click();
   assert.equal((await state(pages[0])).view.winner, "INNOCENT");
   for (const p of pages)
     assert.equal(

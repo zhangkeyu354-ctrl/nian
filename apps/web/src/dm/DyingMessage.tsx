@@ -167,7 +167,8 @@ export function DyingMessage() {
     [now, setNow] = useState(Date.now()),
     [editedPool, setEditedPool] = useState<string[]>([]),
     [showRules, setShowRules] = useState(false),
-    [zoom, setZoom] = useState<string | null>(null);
+    [zoom, setZoom] = useState<string | null>(null),
+    [hideResult, setHideResult] = useState(false);
   const socket = useMemo(() => io({ autoConnect: false }), []),
     codeRef = useRef(code);
   codeRef.current = code;
@@ -204,6 +205,9 @@ export function DyingMessage() {
     setSelection([]);
     setReveal(false);
   }, [snap?.view?.phase, snap?.view?.round]);
+  useEffect(() => {
+    setHideResult(false);
+  }, [snap?.view?.winner]);
   useEffect(() => {
     if (snap) setEditedPool(snap.pool);
   }, [snap?.pool.join(",")]);
@@ -875,6 +879,14 @@ export function DyingMessage() {
                             )}
                           </>
                         )}
+                        {v.winner && (
+                          <button
+                            data-testid="dm-show-result"
+                            onClick={() => setHideResult(false)}
+                          >
+                            查看结算
+                          </button>
+                        )}
                         {v.winner && host && (
                           <button
                             data-testid="dm-restart"
@@ -934,6 +946,15 @@ export function DyingMessage() {
         </>
       )}
       {zoom && <EvidenceZoom id={zoom} onClose={() => setZoom(null)} />}
+      {snap?.view?.winner && !hideResult && !zoom && (
+        <ResultScreen
+          view={snap.view}
+          host={!!host}
+          busy={busy || !connected}
+          onClose={() => setHideResult(true)}
+          onRestart={() => action({ type: "RESTART" })}
+        />
+      )}
       {showRules && (
         <section className="dm-rules">
           <h2>玩法与角色</h2>
@@ -1014,5 +1035,114 @@ function EvidenceZoom({ id, onClose }: { id: string; onClose: () => void }) {
       </button>
       <img src={image(id)} alt="放大的公开遗言" />
     </dialog>
+  );
+}
+
+/** 终局结算：谁赢了、为什么赢、每个人的身份，一眼看清。 */
+function ResultScreen({
+  view,
+  host,
+  busy,
+  onClose,
+  onRestart,
+}: {
+  view: NonNullable<DMSnapshot["view"]>;
+  host: boolean;
+  busy: boolean;
+  onClose: () => void;
+  onRestart: () => void;
+}) {
+  const winner = view.winner!;
+  const faction = (roleId?: string) =>
+    roles.find((r) => r.roleId === roleId)?.faction;
+  const myFaction = faction(view.me.roleId);
+  const iWon = myFaction === winner;
+  const alive = view.players.filter((p) => p.alive);
+  const reason =
+    winner === "INNOCENT"
+      ? "所有杀手都已出局"
+      : alive.length === 0
+        ? "人质连锁，全员死亡"
+        : "杀手人数追平了存活的无罪玩家";
+  const sides: ("INNOCENT" | "GUILTY")[] =
+    winner === "INNOCENT" ? ["INNOCENT", "GUILTY"] : ["GUILTY", "INNOCENT"];
+  const ref = useRef<HTMLDivElement>(null);
+  useEffect(() => {
+    ref.current?.focus();
+  }, []);
+  return (
+    <div
+      className={"dm-result dm-result-" + winner.toLowerCase()}
+      role="dialog"
+      aria-modal="true"
+      aria-labelledby="dm-result-title"
+      data-testid="dm-result"
+    >
+      <div className="dm-result-card" ref={ref} tabIndex={-1}>
+        <p className="dm-result-round">第 {view.round} 轮 · 真相揭晓</p>
+        <h2 id="dm-result-title">
+          {winner === "INNOCENT" ? "无罪阵营获胜" : "有罪阵营获胜"}
+        </h2>
+        <p className="dm-result-reason">{reason}</p>
+        <p className={"dm-result-me " + (iWon ? "won" : "lost")}>
+          {iWon ? "你赢了！" : "你输了"}
+        </p>
+        {sides.map((side) => {
+          const list = view.players
+            .filter((p) => faction(p.roleId) === side)
+            .sort((a, b) => a.seat - b.seat);
+          return (
+            <section
+              key={side}
+              className={
+                "dm-result-side " + (side === winner ? "win" : "lose")
+              }
+            >
+              <h3>
+                {side === "INNOCENT" ? "无罪阵营" : "有罪阵营"}
+                <small>{side === winner ? "胜利" : "失败"}</small>
+              </h3>
+              <ul>
+                {list.map((p) => (
+                  <li
+                    key={p.id}
+                    className={p.id === view.me.id ? "is-me" : ""}
+                  >
+                    <RoleArt id={p.roleId!} className="dm-result-thumb" />
+                    <span className="dm-result-name">
+                      <b>
+                        {p.seat}号 {p.name}
+                        {p.id === view.me.id ? "（你）" : ""}
+                      </b>
+                      <span>
+                        {roleName(p.roleId ?? "")} ·{" "}
+                        {p.alive ? "存活" : "已死亡"}
+                      </span>
+                    </span>
+                  </li>
+                ))}
+              </ul>
+            </section>
+          );
+        })}
+        <div className="dm-result-actions">
+          {host ? (
+            <button
+              className="primary"
+              disabled={busy}
+              onClick={onRestart}
+              data-testid="dm-result-restart"
+            >
+              再来一局
+            </button>
+          ) : (
+            <p>等待房主开始下一局</p>
+          )}
+          <button onClick={onClose} data-testid="dm-result-close">
+            查看圆桌与遗言
+          </button>
+        </div>
+      </div>
+    </div>
   );
 }
