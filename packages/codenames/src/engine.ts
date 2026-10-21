@@ -147,6 +147,7 @@ function endTurn(s: CNState, at: number, why: TurnEnd) {
   s.limit = null;
   s.guessesMade = 0;
   s.marks = {};
+  s.report = null;
   s.log.push({ team: s.turn, clue: null, reveals: [], extra: false, end: null });
 }
 function finish(s: CNState, winner: Team, reason: "all" | "assassin", why: TurnEnd) {
@@ -156,6 +157,7 @@ function finish(s: CNState, winner: Team, reason: "all" | "assassin", why: TurnE
   s.phase = "over";
   s.deadline = 0;
   s.marks = {};
+  s.report = null;
 }
 
 /** 纯函数：返回新状态，不合法时抛 CNRuleError */
@@ -233,6 +235,29 @@ export function reduceCN(prev: CNState, cmd: CNCommand): CNState {
       s.extraUsed[s.turn] = true;
       s.deadline += s.timing.extraMs;
       curLog(s).extra = true;
+      return s;
+    }
+    case "REPORT": {
+      // 对方的猜词队员举报当前队长的线索违规（给了太多信息等）
+      if (s.phase !== "guess") fail("CN_PHASE", "队长出了线索之后才能举报。");
+      if (team === s.turn) fail("CN_REPORT_OWN", "只能举报对方队长。");
+      if (isCaptain(s, me)) fail("CN_REPORT_CAPTAIN", "队长不能举报，请让队员来。");
+      if (s.report) fail("CN_REPORT_PENDING", "已经有一个举报在等对方确认了。");
+      if (s.reportClosed === s.log.length) fail("CN_REPORT_CLOSED", "这条线索的举报已经被驳回，不能再举报。");
+      s.report = { by: me, against: s.turn };
+      return s;
+    }
+    case "CONFIRM_REPORT":
+    case "REJECT_REPORT": {
+      if (!s.report) fail("CN_NO_REPORT", "现在没有举报。");
+      if (team !== s.report!.against || isCaptain(s, me))
+        fail("CN_REPORT_JUDGE", "要由被举报一方的猜词队员来确认。");
+      if (cmd.type === "CONFIRM_REPORT") {
+        endTurn(s, cmd.at, "foul"); // 违规成立：本队回合立即结束，轮到举报方
+      } else {
+        s.report = null;
+        s.reportClosed = s.log.length;
+      }
       return s;
     }
     case "TAKE_OPERATOR": {

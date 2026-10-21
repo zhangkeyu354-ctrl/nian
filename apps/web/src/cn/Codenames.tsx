@@ -540,6 +540,7 @@ function Game({ snap, view, net }: { snap: CNRoomSnapshot; view: CNView; net: Ne
           </p>
         )}
         {over && <Result snap={snap} view={view} net={net} />}
+        {!over && <ReportBar view={view} me={me} myTeam={myTeam} amCaptain={amCaptain} name={name} busy={cmd.busy} run={cmd.run} />}
         <nav className="cn-tabs">
           <button className={drawer === "log" ? "on" : ""} onClick={() => setDrawer(drawer === "log" ? "" : "log")}>
             线索记录
@@ -755,6 +756,7 @@ const END_TEXT: Record<string, string> = {
   "clue-timeout": "队长超时",
   "guess-timeout": "猜词超时",
   assassin: "踩中刺客",
+  foul: "队长违规（被举报，本队确认）",
   win: "获胜",
 };
 function Log({ view, name }: { view: CNView; name: (id: string) => string }) {
@@ -851,5 +853,66 @@ function ClueFlash({ view }: { view: CNView }) {
       <span>{l.clue.word}</span>
       <b>{numText(l.clue.number)}</b>
     </div>
+  );
+}
+
+/** 违规举报：对方队员举报 → 被举报队的队员确认（直接换边）或驳回 */
+function ReportBar(props: {
+  view: CNView;
+  me: string | null;
+  myTeam: Team | null;
+  amCaptain: boolean;
+  name: (id: string) => string;
+  busy: boolean;
+  run: (c: CNClientCommand) => void;
+}) {
+  const { view, myTeam } = props;
+  const [arm, setArm] = useState(false);
+  useEffect(() => {
+    if (!arm) return;
+    const id = setTimeout(() => setArm(false), 4000);
+    return () => clearTimeout(id);
+  }, [arm]);
+  const rep = view.report ?? null;
+  if (view.phase !== "guess" || !myTeam) return null;
+  if (rep) {
+    const accused = rep.against;
+    if (myTeam === accused && !props.amCaptain)
+      return (
+        <div className="cn-report judge" role="alertdialog" data-testid="cn-report-judge">
+          <p>
+            🚩 <b>{props.name(rep.by)}</b>（{TEAM_NAME[other(accused)]}）举报你们队长的线索违规（给了太多信息）。
+          </p>
+          <p className="cn-report-small">确认违规 = 本回合立刻结束，轮到{TEAM_NAME[other(accused)]}。</p>
+          <div className="cn-row">
+            <button className="cn-mini" disabled={props.busy} data-testid="cn-report-reject" onClick={() => props.run({ type: "REJECT_REPORT" })}>
+              不算违规，继续
+            </button>
+            <button className="cn-mini cn-report-yes" disabled={props.busy} data-testid="cn-report-confirm" onClick={() => props.run({ type: "CONFIRM_REPORT" })}>
+              确认违规
+            </button>
+          </div>
+        </div>
+      );
+    return (
+      <p className="cn-report wait" data-testid="cn-report-wait">
+        🚩 {props.name(rep.by)} 举报了{TEAM_NAME[accused]}队长的线索，等{TEAM_NAME[accused]}队员确认…
+      </p>
+    );
+  }
+  if (myTeam === view.turn || props.amCaptain || view.reportClosed === view.log.length) return null;
+  return (
+    <button
+      className={"cn-mini cn-report-btn" + (arm ? " armed" : "")}
+      disabled={props.busy}
+      data-testid="cn-report"
+      onClick={() => {
+        if (!arm) return setArm(true);
+        setArm(false);
+        props.run({ type: "REPORT" });
+      }}
+    >
+      {arm ? "确定举报？对方队员确认后直接跳过他们的回合" : "🚩 举报对方队长线索违规"}
+    </button>
   );
 }

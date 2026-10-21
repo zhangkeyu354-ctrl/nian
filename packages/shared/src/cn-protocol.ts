@@ -55,4 +55,7 @@ export type CNClientCommand =
   | { type: "REVEAL"; index: number }
   | { type: "END_GUESSING" }
   | { type: "EXTRA_TIME" }
-  | { type: "TAKE_OPERATOR" };
+  | { type: "TAKE_OPERATOR" }
+  | { type: "REPORT" }
+  | { type: "CONFIRM_REPORT" }
+  | { type: "REJECT_REPORT" };

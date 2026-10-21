@@ -37,7 +37,8 @@ export type TurnEnd =
   | "clue-timeout" // 时限内没出线索
   | "guess-timeout" // 猜词时间到
   | "assassin"
-  | "win";
+  | "win"
+  | "foul"; // 线索违规被举报并由本队确认（用户房规 2026-10-21）
 
 export interface CNReveal {
   index: number;
@@ -76,6 +77,10 @@ export interface CNState {
   log: CNTurnLog[];
   winner: Team | null;
   endReason: "all" | "assassin" | null;
+  /** 违规举报：对方队员举报当前队长的线索，等当前队伍的队员确认或驳回 */
+  report?: { by: string; against: Team } | null;
+  /** 本条线索的举报已被驳回（存 log 长度），同一条线索不能再举报 */
+  reportClosed?: number;
 }
 
 export type CNCommand =
@@ -85,6 +90,9 @@ export type CNCommand =
   | { type: "END_GUESSING"; player: string; at: number }
   | { type: "EXTRA_TIME"; player: string; at: number }
   | { type: "TAKE_OPERATOR"; player: string; at: number }
+  | { type: "REPORT"; player: string; at: number }
+  | { type: "CONFIRM_REPORT"; player: string; at: number }
+  | { type: "REJECT_REPORT"; player: string; at: number }
   | { type: "TIMEOUT"; at: number };
 
 export interface CNSetup {

@@ -56,6 +56,14 @@ console.log(await op.getByTestId("cn-card-3").evaluate((e) => { const s = getCom
 const leak = await op.$$eval('[data-revealed="0"]', (els) => els.filter((e) => e.getAttribute("data-role")).length);
 console.log("operative unrevealed with role:", leak);
 if (leak !== 0) throw new Error("队员页面泄露了秘密身份");
+// 违规举报：对方队员举报 → 截图 → 被举报方队员看到确认框 → 先驳回
+await oop.getByTestId("cn-report").click();
+await oop.getByTestId("cn-report").click();
+await op.getByTestId("cn-report-judge").waitFor();
+await sleep(500);
+await op.screenshot({ path: join(out, "4b-report-judge.png") });
+await op.getByTestId("cn-report-reject").click();
+await sleep(400);
 // 先翻一张本队的牌（从队长页面读身份），看「猜对了」横幅；再翻刺客看特效
 const myTeam = turnRed ? "red" : "blue";
 const roles = await cap.$$eval("[data-testid^=cn-card-]", (els) => els.map((e) => [e.getAttribute("data-role"), e.getAttribute("data-revealed")]));

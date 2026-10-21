@@ -336,3 +336,49 @@ describe("隐私（R25、指令 2.1）", () => {
     expect(viewForCN(s, "r2").cards.every((c) => c.role)).toBe(true);
   });
 });
+
+describe("违规举报（用户房规 2026-10-21）", () => {
+  // 让红队先手：红队 r1 队长、r2/r3 队员；蓝队 b1 队长、b2 队员
+  const redTurn = () => {
+    let s = game();
+    while (s.turn !== "red") s = reduceCN(s, { type: "TIMEOUT", at: s.deadline });
+    return clue(s, 2, s.deadline - 100_000);
+  };
+  it("蓝队员举报 → 红队员确认 → 直接跳到蓝队回合", () => {
+    let s = redTurn();
+    const at = s.deadline - 1000;
+    s = reduceCN(s, { type: "REPORT", player: "b2", at });
+    expect(s.report).toEqual({ by: "b2", against: "red" });
+    s = reduceCN(s, { type: "CONFIRM_REPORT", player: "r3", at });
+    expect(s.turn).toBe("blue");
+    expect(s.phase).toBe("clue");
+    expect(s.report).toBeNull();
+    expect(s.log.at(-2)!.end).toBe("foul");
+  });
+  it("谁能举报、谁能确认", () => {
+    const s = redTurn();
+    const at = s.deadline - 1000;
+    expect(() => reduceCN(s, { type: "REPORT", player: "r2", at })).toThrow(/对方/);
+    expect(() => reduceCN(s, { type: "REPORT", player: "b1", at })).toThrow(/队长/);
+    expect(() => reduceCN(s, { type: "CONFIRM_REPORT", player: "r2", at })).toThrow(/没有举报/);
+    const r = reduceCN(s, { type: "REPORT", player: "b2", at });
+    expect(() => reduceCN(r, { type: "REPORT", player: "b2", at })).toThrow(/已经有/);
+    for (const who of ["b2", "b1", "r1"]) expect(() => reduceCN(r, { type: "CONFIRM_REPORT", player: who, at })).toThrow();
+  });
+  it("出线索前不能举报", () => {
+    let s = game();
+    while (s.turn !== "red") s = reduceCN(s, { type: "TIMEOUT", at: s.deadline });
+    expect(() => reduceCN(s, { type: "REPORT", player: "b2", at: s.deadline - 1 })).toThrow(/线索之后/);
+  });
+  it("驳回：游戏继续，同一条线索不能再举报；换回合后举报清空", () => {
+    let s = redTurn();
+    const at = s.deadline - 1000;
+    s = reduceCN(s, { type: "REPORT", player: "b2", at });
+    s = reduceCN(s, { type: "REJECT_REPORT", player: "r2", at });
+    expect(s.report).toBeNull();
+    expect(s.turn).toBe("red");
+    expect(() => reduceCN(s, { type: "REPORT", player: "b2", at })).toThrow(/驳回/);
+    s = reduceCN(s, { type: "TIMEOUT", at: s.deadline });
+    expect(s.report).toBeNull();
+  });
+});

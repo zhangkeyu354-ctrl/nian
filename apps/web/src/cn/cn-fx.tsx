@@ -92,7 +92,7 @@ export function FeedbackBanner({ view, me, myTeam, name }: { view: CNView; me: s
     } else if (p.key !== key) {
       const mine = myTeam === view.turn;
       const ended = view.log.at(-2)?.end;
-      const why = ended === "clue-timeout" ? "队长超时 · " : ended === "guess-timeout" ? "猜词超时 · " : ended === "stop" ? "主动结束 · " : "";
+      const why = ended === "clue-timeout" ? "队长超时 · " : ended === "guess-timeout" ? "猜词超时 · " : ended === "stop" ? "主动结束 · " : ended === "foul" ? "🚩 违规成立 · " : "";
       if (view.phase === "clue" && mine) {
         b = { id: Date.now(), tone: "turn", title: amCaptain ? "轮到你出线索了" : "轮到你们队了", sub: why + (amCaptain ? "3 分钟内给出一个词 + 数字" : "等队长出线索") };
         sfx.turn();

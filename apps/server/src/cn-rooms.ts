@@ -197,6 +197,9 @@ export class CNRoom {
       case "END_GUESSING":
       case "EXTRA_TIME":
       case "TAKE_OPERATOR":
+      case "REPORT":
+      case "CONFIRM_REPORT":
+      case "REJECT_REPORT":
         full = { type: cmd.type, ...base };
         break;
       default:

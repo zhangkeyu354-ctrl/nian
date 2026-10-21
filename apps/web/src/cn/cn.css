@@ -1165,3 +1165,55 @@ html.cn-shake body {
   .cn-fx .cn-fx-skull { font-size: 64px; line-height: 1.1; }
   .cn-fx .cn-fx-tap { bottom: calc(10px + env(safe-area-inset-bottom)); }
 }
+
+/* 违规举报 */
+.cn-report-btn {
+  border-color: #e0a100;
+  color: #ffd34d;
+}
+.cn-report-btn.armed {
+  background: #ffd34d;
+  color: var(--cn-ink);
+}
+.cn-report {
+  margin: 0;
+  border-radius: 12px;
+  padding: 10px 12px;
+  font-size: 15px;
+}
+.cn-report.wait {
+  background: rgba(255, 211, 77, 0.15);
+  border: 1px solid #e0a100;
+  text-align: center;
+}
+.cn-report.judge {
+  background: #ffd34d;
+  color: var(--cn-ink);
+  box-shadow: 0 0 0 3px #fff, 0 8px 20px rgba(0, 0, 0, 0.4);
+  animation: cn-pop 0.35s ease-out;
+}
+.cn-report.judge p {
+  margin: 0 0 6px;
+}
+.cn-report-small {
+  font-size: 13px;
+}
+.cn-report.judge .cn-mini {
+  color: var(--cn-ink);
+  border-color: rgba(0, 0, 0, 0.35);
+  background: rgba(255, 255, 255, 0.6);
+}
+.cn-report.judge .cn-report-yes {
+  background: #b3202c;
+  color: #fff;
+  border-color: #b3202c;
+}
+.cn-report.judge {
+  position: fixed;
+  left: 50%;
+  top: 120px;
+  z-index: 36;
+  width: min(92vw, 520px);
+  transform: translateX(-50%);
+  animation: cn-fadein 0.25s ease-out;
+}
