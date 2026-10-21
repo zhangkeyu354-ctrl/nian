@@ -4,7 +4,7 @@ import { strict as assert } from "node:assert";
 import { tapPhoneCommand } from "./mobile-ui-driver.ts";
 import { configurePhoneSetup } from "./setup-driver.ts";
 export async function startUI(page: Page, o: CreateOptions) {
-  await page.goto("http://127.0.0.1:5173/?hotseat=1");
+  await page.goto((process.env.DBD_UI_BASE ?? "http://127.0.0.1:5173") + "/?hotseat=1");
   if (await page.getByTestId("phone-setup").count()) {
     await configurePhoneSetup(page, o);
     await page.getByTestId("start").tap();

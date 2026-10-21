@@ -15,7 +15,7 @@ def export(source,dest,width):
         im.save(dest,'WEBP',quality=78,method=6)
         stats.append({'file':str(dest.relative_to(public)).replace('\\','/'),'size':list(im.size),'bytes':dest.stat().st_size,'sha256':hashlib.sha256(dest.read_bytes()).hexdigest()})
 for entry in manifest['assets']:
-    entry['mobile_file']='mobile/'+Path(entry['file']).stem+'.webp'
+    entry['mobile_file']=entry.get('mobile_file','mobile/'+Path(entry['file']).stem+'.webp')
     export(public/entry['file'],public/entry['mobile_file'],256)
 for entry in manifest['rooms']:
     for variant,width in [('mobile',600),('desktop',1000)]:

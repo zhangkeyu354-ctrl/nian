@@ -37,6 +37,7 @@ export function TapButton({
       type="button"
       {...props}
       onPointerDown={(e) => {
+        if (!props.disabled) e.currentTarget.focus({ preventScroll: true });
         origin.current = { x: e.clientX, y: e.clientY };
         onPointerDown?.(e);
       }}

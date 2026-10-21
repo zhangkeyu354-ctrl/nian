@@ -6,7 +6,7 @@ import { SettingsButton } from "./Settings.tsx";
 import { Token } from "./Token.tsx";
 import { usePhone } from "./MobileDock.tsx";
 import { TapButton } from "./TapButton.tsx";
-import { CharacterDetail } from "./CharacterDetail.tsx";
+import { CharacterDetail, characterInfo } from "./CharacterDetail.tsx";
 import { createRoom, useRoom, type NetBinding } from "./net.ts";
 
 const params = () => new URLSearchParams(location.search);
@@ -488,6 +488,17 @@ function DraftRoom({
                           size={72}
                         />
                         <strong>{actorName(c)}</strong>
+                        <small>
+                          {characterInfo(c)?.subtitle ??
+                            (s.side === "killer" ? "杀手" : "逃生者")}
+                        </small>
+                        <span className="draft-skill-names">
+                          {characterInfo(c)?.perks.map((p) => (
+                            <small key={p.id}>
+                              {p.name} · {p.cost}血点
+                            </small>
+                          ))}
+                        </span>
                         <small>
                           {chars.characters.find((x) => x.id === c)?.power
                             ?.name_zh ?? ""}

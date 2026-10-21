@@ -637,7 +637,7 @@
     },
     {
       "id": "portrait_dwight",
-      "file": "portrait_dwight.png",
+      "file": "portraits/phase2f/portrait_dwight.png",
       "svg": "svg/portrait_dwight.svg",
       "source": "AI 生成",
       "states": [
@@ -653,8 +653,8 @@
       ],
       "transparent": true,
       "name_zh": "德怀特·费菲尔德原创剪影",
-      "prompt_zh": "原创德怀特·费菲尔德原创剪影的独立游戏素材，做旧炭笔与骨白刻线，黑暗迷雾气质，居中简洁构图；透明RGBA背景，正方形1024像素。原创匿名头肩剪影，不还原任何既有角色面貌、服装、武器。禁止官方素材、描摹、标志、文字、水印。",
-      "prompt_en": "Original standalone 德怀特·费菲尔德原创剪影 game asset. Worn charcoal and bone-white engraved brushwork, dark fog mood, simple readable centered composition. Square 1024px transparent RGBA background. An anonymous invented head-and-shoulders silhouette, no recognizable existing character face, costume or weapon. No official game art, no tracing, no franchise iconography, no letters, no logo, no watermark.",
+      "prompt_zh": "原创轮廓：tall swept-up angular quiff hairstyle, narrow neck, asymmetrical pale scarf and slim triangular shoulders",
+      "prompt_en": "Use case: stylized-concept. One original survivor portrait asset for a dark foggy tabletop game. Bust-only shoulder silhouette: tall swept-up angular quiff hairstyle, narrow neck, asymmetrical pale scarf and slim triangular shoulders. Readability is paramount: bold outer contour, just 3 or 4 broad tonal masses, distinctly recognizable at 36 pixels. Calm but wary upright composition; bone-white clothing masses, charcoal hair and dark faceless face, restrained cold teal and tarnished brass accents. Hand-painted weathered cut-paper and charcoal medium; graphic illustration rather than a realistic face. Centered head and shoulders fully inside central 80 percent of a square, generous transparent margin; do not crop hair or shoulders. Genuine transparent exterior. No text, lettering, numerals, watermark, logo, medallion border, UI, weapons, identifiable celebrity, official game characters, official costumes or tracing. Entirely invented design, no reference image.",
       "provider": "built-in image_gen",
       "requested_size": [
         1024,
@@ -664,16 +664,18 @@
         384,
         384
       ],
-      "source_file": "exec-7db537de-5243-4353-a1b6-27c6e27451d2.png",
-      "sha256": "8085052dd00d4bc8ae73eba70bbaf0f7dbe9b8df5880fb5f389e5b885467dcb1",
-      "generation_prompt": "Create exactly ONE standalone original head-and-shoulders silhouette portrait: an invented slim adult male silhouette, asymmetrical short hair, high soft collar, front three-quarter view. Cohesive worn charcoal hand-painted cut-paper with bone-white engraved highlights, subdued oxidized brass scratches, dark fog atmosphere. Strong simple readable shapes. Centered inside ONE weathered hexagonal token rim with charcoal interior; genuinely transparent outside the hexagon, no external shadow. Square RGBA, requested 1024x1024. The figure is an original anonymous archetype, not a portrait of an existing character. Face entirely in shadow, no facial likeness. No text, no numbers, no letters, no logos, no tally marks, no skull emblems, no watermark. Do not copy, trace or recreate official art from any existing game. Asset filename: portrait_dwight.png.",
+      "source_file": "exec-c74eed89-f72b-458b-91cb-8ab4b372336e.png",
+      "sha256": "cfcf732d82c052a718a51bb7cefa7e8c8876ec905d897b195ecb89e214f7d334",
+      "generation_prompt": "Use case: stylized-concept. One original survivor portrait asset for a dark foggy tabletop game. Bust-only shoulder silhouette: tall swept-up angular quiff hairstyle, narrow neck, asymmetrical pale scarf and slim triangular shoulders. Readability is paramount: bold outer contour, just 3 or 4 broad tonal masses, distinctly recognizable at 36 pixels. Calm but wary upright composition; bone-white clothing masses, charcoal hair and dark faceless face, restrained cold teal and tarnished brass accents. Hand-painted weathered cut-paper and charcoal medium; graphic illustration rather than a realistic face. Centered head and shoulders fully inside central 80 percent of a square, generous transparent margin; do not crop hair or shoulders. Genuine transparent exterior. No text, lettering, numerals, watermark, logo, medallion border, UI, weapons, identifiable celebrity, official game characters, official costumes or tracing. Entirely invented design, no reference image.",
       "svg_source": "占位",
       "svg_creator": "original_code",
-      "mobile_file": "mobile/portrait_dwight.webp"
+      "mobile_file": "mobile/phase2f/portrait_dwight.webp",
+      "original_file": "assets/portraits/phase2f/portrait_dwight.png",
+      "official_reference_input": false
     },
     {
       "id": "portrait_meg",
-      "file": "portrait_meg.png",
+      "file": "portraits/phase2f/portrait_meg.png",
       "svg": "svg/portrait_meg.svg",
       "source": "AI 生成",
       "states": [
@@ -689,8 +691,8 @@
       ],
       "transparent": true,
       "name_zh": "梅格·托马斯原创剪影",
-      "prompt_zh": "原创梅格·托马斯原创剪影的独立游戏素材，做旧炭笔与骨白刻线，黑暗迷雾气质，居中简洁构图；透明RGBA背景，正方形1024像素。原创匿名头肩剪影，不还原任何既有角色面貌、服装、武器。禁止官方素材、描摹、标志、文字、水印。",
-      "prompt_en": "Original standalone 梅格·托马斯原创剪影 game asset. Worn charcoal and bone-white engraved brushwork, dark fog mood, simple readable centered composition. Square 1024px transparent RGBA background. An anonymous invented head-and-shoulders silhouette, no recognizable existing character face, costume or weapon. No official game art, no tracing, no franchise iconography, no letters, no logo, no watermark.",
+      "prompt_zh": "原创轮廓：single thick side braid projecting to the right, close-cropped hair on the other side, squared sleeveless athletic vest",
+      "prompt_en": "Use case: stylized-concept. One original survivor portrait asset for a dark foggy tabletop game. Bust-only shoulder silhouette: single thick side braid projecting to the right, close-cropped hair on the other side, squared sleeveless athletic vest. Readability is paramount: bold outer contour, just 3 or 4 broad tonal masses, distinctly recognizable at 36 pixels. Calm but wary upright composition; bone-white clothing masses, charcoal hair and dark faceless face, restrained cold teal and tarnished brass accents. Hand-painted weathered cut-paper and charcoal medium; graphic illustration rather than a realistic face. Centered head and shoulders fully inside central 80 percent of a square, generous transparent margin; do not crop hair or shoulders. Genuine transparent exterior. No text, lettering, numerals, watermark, logo, medallion border, UI, weapons, identifiable celebrity, official game characters, official costumes or tracing. Entirely invented design, no reference image.",
       "provider": "built-in image_gen",
       "requested_size": [
         1024,
@@ -700,16 +702,18 @@
         384,
         384
       ],
-      "source_file": "exec-14882ad0-59b9-4d97-a63f-53cb1e69cd28.png",
-      "sha256": "90e932ce0146c54c98b75b2a55ca0f27c00d096e798ce36f111d9a3d50e5e25b",
-      "generation_prompt": "Create exactly ONE standalone original head-and-shoulders silhouette portrait: an invented adult female silhouette with a short swept-back hairstyle and plain scarf, side three-quarter view. Cohesive worn charcoal hand-painted cut-paper with bone-white engraved highlights, subdued oxidized brass scratches, dark fog atmosphere. Strong simple readable shapes. Centered inside ONE weathered hexagonal token rim with charcoal interior; genuinely transparent outside the hexagon, no external shadow. Square RGBA, requested 1024x1024. The figure is an original anonymous archetype, not a portrait of an existing character. Face entirely in shadow, no facial likeness. No text, no numbers, no letters, no logos, no tally marks, no skull emblems, no watermark. Do not copy, trace or recreate official art from any existing game. Asset filename: portrait_meg.png.",
+      "source_file": "exec-b461decf-9b32-4a5e-813a-48a8d4ab54a0.png",
+      "sha256": "dcb5a7510b8b7019661a72fb7682bc3577e118cdcdad770c649114a6ffc8a6d8",
+      "generation_prompt": "Use case: stylized-concept. One original survivor portrait asset for a dark foggy tabletop game. Bust-only shoulder silhouette: single thick side braid projecting to the right, close-cropped hair on the other side, squared sleeveless athletic vest. Readability is paramount: bold outer contour, just 3 or 4 broad tonal masses, distinctly recognizable at 36 pixels. Calm but wary upright composition; bone-white clothing masses, charcoal hair and dark faceless face, restrained cold teal and tarnished brass accents. Hand-painted weathered cut-paper and charcoal medium; graphic illustration rather than a realistic face. Centered head and shoulders fully inside central 80 percent of a square, generous transparent margin; do not crop hair or shoulders. Genuine transparent exterior. No text, lettering, numerals, watermark, logo, medallion border, UI, weapons, identifiable celebrity, official game characters, official costumes or tracing. Entirely invented design, no reference image.",
       "svg_source": "占位",
       "svg_creator": "original_code",
-      "mobile_file": "mobile/portrait_meg.webp"
+      "mobile_file": "mobile/phase2f/portrait_meg.webp",
+      "original_file": "assets/portraits/phase2f/portrait_meg.png",
+      "official_reference_input": false
     },
     {
       "id": "portrait_claudette",
-      "file": "portrait_claudette.png",
+      "file": "portraits/phase2f/portrait_claudette.png",
       "svg": "svg/portrait_claudette.svg",
       "source": "AI 生成",
       "states": [
@@ -725,8 +729,8 @@
       ],
       "transparent": true,
       "name_zh": "克劳黛特·莫莱原创剪影",
-      "prompt_zh": "原创克劳黛特·莫莱原创剪影的独立游戏素材，做旧炭笔与骨白刻线，黑暗迷雾气质，居中简洁构图；透明RGBA背景，正方形1024像素。原创匿名头肩剪影，不还原任何既有角色面貌、服装、武器。禁止官方素材、描摹、标志、文字、水印。",
-      "prompt_en": "Original standalone 克劳黛特·莫莱原创剪影 game asset. Worn charcoal and bone-white engraved brushwork, dark fog mood, simple readable centered composition. Square 1024px transparent RGBA background. An anonymous invented head-and-shoulders silhouette, no recognizable existing character face, costume or weapon. No official game art, no tracing, no franchise iconography, no letters, no logo, no watermark.",
+      "prompt_zh": "原创轮廓：large rounded halo of tightly curled hair, broad soft pale shawl, rounded shoulder silhouette, no hood",
+      "prompt_en": "Use case: stylized-concept. One original survivor portrait asset for a dark foggy tabletop game. Bust-only shoulder silhouette: large rounded halo of tightly curled hair, broad soft pale shawl, rounded shoulder silhouette, no hood. Readability is paramount: bold outer contour, just 3 or 4 broad tonal masses, distinctly recognizable at 36 pixels. Calm but wary upright composition; bone-white clothing masses, charcoal hair and dark faceless face, restrained cold teal and tarnished brass accents. Hand-painted weathered cut-paper and charcoal medium; graphic illustration rather than a realistic face. Centered head and shoulders fully inside central 80 percent of a square, generous transparent margin; do not crop hair or shoulders. Genuine transparent exterior. No text, lettering, numerals, watermark, logo, medallion border, UI, weapons, identifiable celebrity, official game characters, official costumes or tracing. Entirely invented design, no reference image.",
       "provider": "built-in image_gen",
       "requested_size": [
         1024,
@@ -736,16 +740,18 @@
         384,
         384
       ],
-      "source_file": "exec-65dc4b52-e845-4843-8b7b-4e89cf0043dd.png",
-      "sha256": "b8b91c02fdae4441721b72465b0c7c81e21b70e6589b52ab707e8c6f360be668",
-      "generation_prompt": "Create exactly ONE standalone original head-and-shoulders silhouette portrait: an invented adult female silhouette with rounded textured hair, loose plain jacket, front three-quarter view. Cohesive worn charcoal hand-painted cut-paper with bone-white engraved highlights, subdued oxidized brass scratches, dark fog atmosphere. Strong simple readable shapes. Centered inside ONE weathered hexagonal token rim with charcoal interior; genuinely transparent outside the hexagon, no external shadow. Square RGBA, requested 1024x1024. The figure is an original anonymous archetype, not a portrait of an existing character. Face entirely in shadow, no facial likeness. No text, no numbers, no letters, no logos, no tally marks, no skull emblems, no watermark. Do not copy, trace or recreate official art from any existing game. Asset filename: portrait_claudette.png.",
+      "source_file": "exec-53e81824-a143-4e31-9bc3-099fab72fbcb.png",
+      "sha256": "c8e8df26f43c9e76267304874208c007256f04feeab0e47b8a83ac485290a725",
+      "generation_prompt": "Use case: stylized-concept. One original survivor portrait asset for a dark foggy tabletop game. Bust-only shoulder silhouette: large rounded halo of tightly curled hair, broad soft pale shawl, rounded shoulder silhouette, no hood. Readability is paramount: bold outer contour, just 3 or 4 broad tonal masses, distinctly recognizable at 36 pixels. Calm but wary upright composition; bone-white clothing masses, charcoal hair and dark faceless face, restrained cold teal and tarnished brass accents. Hand-painted weathered cut-paper and charcoal medium; graphic illustration rather than a realistic face. Centered head and shoulders fully inside central 80 percent of a square, generous transparent margin; do not crop hair or shoulders. Genuine transparent exterior. No text, lettering, numerals, watermark, logo, medallion border, UI, weapons, identifiable celebrity, official game characters, official costumes or tracing. Entirely invented design, no reference image.",
       "svg_source": "占位",
       "svg_creator": "original_code",
-      "mobile_file": "mobile/portrait_claudette.webp"
+      "mobile_file": "mobile/phase2f/portrait_claudette.webp",
+      "original_file": "assets/portraits/phase2f/portrait_claudette.png",
+      "official_reference_input": false
     },
     {
       "id": "portrait_jake",
-      "file": "portrait_jake.png",
+      "file": "portraits/phase2f/portrait_jake.png",
       "svg": "svg/portrait_jake.svg",
       "source": "AI 生成",
       "states": [
@@ -761,8 +767,8 @@
       ],
       "transparent": true,
       "name_zh": "杰克·朴原创剪影",
-      "prompt_zh": "原创杰克·朴原创剪影的独立游戏素材，做旧炭笔与骨白刻线，黑暗迷雾气质，居中简洁构图；透明RGBA背景，正方形1024像素。原创匿名头肩剪影，不还原任何既有角色面貌、服装、武器。禁止官方素材、描摹、标志、文字、水印。",
-      "prompt_en": "Original standalone 杰克·朴原创剪影 game asset. Worn charcoal and bone-white engraved brushwork, dark fog mood, simple readable centered composition. Square 1024px transparent RGBA background. An anonymous invented head-and-shoulders silhouette, no recognizable existing character face, costume or weapon. No official game art, no tracing, no franchise iconography, no letters, no logo, no watermark.",
+      "prompt_zh": "原创轮廓：wide angular peaked field hat, low triangular poncho, strong flat shoulder line",
+      "prompt_en": "Use case: stylized-concept. One original survivor portrait asset for a dark foggy tabletop game. Bust-only shoulder silhouette: wide angular peaked field hat, low triangular poncho, strong flat shoulder line. Readability is paramount: bold outer contour, just 3 or 4 broad tonal masses, distinctly recognizable at 36 pixels. Calm but wary upright composition; bone-white clothing masses, charcoal hair and dark faceless face, restrained cold teal and tarnished brass accents. Hand-painted weathered cut-paper and charcoal medium; graphic illustration rather than a realistic face. Centered head and shoulders fully inside central 80 percent of a square, generous transparent margin; do not crop hair or shoulders. Genuine transparent exterior. No text, lettering, numerals, watermark, logo, medallion border, UI, weapons, identifiable celebrity, official game characters, official costumes or tracing. Entirely invented design, no reference image.",
       "provider": "built-in image_gen",
       "requested_size": [
         1024,
@@ -772,16 +778,18 @@
         384,
         384
       ],
-      "source_file": "exec-f236e3fe-fdf1-410a-b4fa-1e586096c0e2.png",
-      "sha256": "c9d2760778a053502de1993ceeded0e26b9df960c52a8d176f0eda81990fd977",
-      "generation_prompt": "Create exactly ONE standalone original head-and-shoulders silhouette portrait: an invented adult male silhouette with tied-back wavy hair, plain work shirt, left three-quarter view. Cohesive worn charcoal hand-painted cut-paper with bone-white engraved highlights, subdued oxidized brass scratches, dark fog atmosphere. Strong simple readable shapes. Centered inside ONE weathered hexagonal token rim with charcoal interior; genuinely transparent outside the hexagon, no external shadow. Square RGBA, requested 1024x1024. The figure is an original anonymous archetype, not a portrait of an existing character. Face entirely in shadow, no facial likeness. No text, no numbers, no letters, no logos, no tally marks, no skull emblems, no watermark. Do not copy, trace or recreate official art from any existing game. Asset filename: portrait_jake.png.",
+      "source_file": "exec-b34cc97d-4258-45fc-b7d5-54a5e671b8b3.png",
+      "sha256": "f83fa19d8b3843f279b39947c891cc9ef7218a014c0b47fa1fc7324e179b9f82",
+      "generation_prompt": "Use case: stylized-concept. One original survivor portrait asset for a dark foggy tabletop game. Bust-only shoulder silhouette: wide angular peaked field hat, low triangular poncho, strong flat shoulder line. Readability is paramount: bold outer contour, just 3 or 4 broad tonal masses, distinctly recognizable at 36 pixels. Calm but wary upright composition; bone-white clothing masses, charcoal hair and dark faceless face, restrained cold teal and tarnished brass accents. Hand-painted weathered cut-paper and charcoal medium; graphic illustration rather than a realistic face. Centered head and shoulders fully inside central 80 percent of a square, generous transparent margin; do not crop hair or shoulders. Genuine transparent exterior. No text, lettering, numerals, watermark, logo, medallion border, UI, weapons, identifiable celebrity, official game characters, official costumes or tracing. Entirely invented design, no reference image.",
       "svg_source": "占位",
       "svg_creator": "original_code",
-      "mobile_file": "mobile/portrait_jake.webp"
+      "mobile_file": "mobile/phase2f/portrait_jake.webp",
+      "original_file": "assets/portraits/phase2f/portrait_jake.png",
+      "official_reference_input": false
     },
     {
       "id": "portrait_nea",
-      "file": "portrait_nea.png",
+      "file": "portraits/phase2f/portrait_nea.png",
       "svg": "svg/portrait_nea.svg",
       "source": "AI 生成",
       "states": [
@@ -797,8 +805,8 @@
       ],
       "transparent": true,
       "name_zh": "妮娅·卡尔森原创剪影",
-      "prompt_zh": "原创妮娅·卡尔森原创剪影的独立游戏素材，做旧炭笔与骨白刻线，黑暗迷雾气质，居中简洁构图；透明RGBA背景，正方形1024像素。原创匿名头肩剪影，不还原任何既有角色面貌、服装、武器。禁止官方素材、描摹、标志、文字、水印。",
-      "prompt_en": "Original standalone 妮娅·卡尔森原创剪影 game asset. Worn charcoal and bone-white engraved brushwork, dark fog mood, simple readable centered composition. Square 1024px transparent RGBA background. An anonymous invented head-and-shoulders silhouette, no recognizable existing character face, costume or weapon. No official game art, no tracing, no franchise iconography, no letters, no logo, no watermark.",
+      "prompt_zh": "原创轮廓：short sharp blunt bob with an off-center fringe, upright pointed collar, compact boxy jacket silhouette",
+      "prompt_en": "Use case: stylized-concept. One original survivor portrait asset for a dark foggy tabletop game. Bust-only shoulder silhouette: short sharp blunt bob with an off-center fringe, upright pointed collar, compact boxy jacket silhouette. Readability is paramount: bold outer contour, just 3 or 4 broad tonal masses, distinctly recognizable at 36 pixels. Calm but wary upright composition; bone-white clothing masses, charcoal hair and dark faceless face, restrained cold teal and tarnished brass accents. Hand-painted weathered cut-paper and charcoal medium; graphic illustration rather than a realistic face. Centered head and shoulders fully inside central 80 percent of a square, generous transparent margin; do not crop hair or shoulders. Genuine transparent exterior. No text, lettering, numerals, watermark, logo, medallion border, UI, weapons, identifiable celebrity, official game characters, official costumes or tracing. Entirely invented design, no reference image.",
       "provider": "built-in image_gen",
       "requested_size": [
         1024,
@@ -808,16 +816,18 @@
         384,
         384
       ],
-      "source_file": "exec-55aaae52-adfe-4527-b84a-728ebd4503bc.png",
-      "sha256": "d950930e4659b6ed306af22418eceb82c0963ec3cf5226850020d34a7c57388a",
-      "generation_prompt": "Create exactly ONE standalone original head-and-shoulders silhouette portrait: an invented adult female silhouette with cropped geometric haircut and simple hood resting on shoulders, right profile. Cohesive worn charcoal hand-painted cut-paper with bone-white engraved highlights, subdued oxidized brass scratches, dark fog atmosphere. Strong simple readable shapes. Centered inside ONE weathered hexagonal token rim with charcoal interior; genuinely transparent outside the hexagon, no external shadow. Square RGBA, requested 1024x1024. The figure is an original anonymous archetype, not a portrait of an existing character. Face entirely in shadow, no facial likeness. No text, no numbers, no letters, no logos, no tally marks, no skull emblems, no watermark. Do not copy, trace or recreate official art from any existing game. Asset filename: portrait_nea.png.",
+      "source_file": "exec-8eab3e35-f179-42aa-bd6b-dcc227bf06fd.png",
+      "sha256": "335188c7cea604afe69e00de0c163ccd1ce79609a05b317318d51f1d88b4f6c0",
+      "generation_prompt": "Use case: stylized-concept. One original survivor portrait asset for a dark foggy tabletop game. Bust-only shoulder silhouette: short sharp blunt bob with an off-center fringe, upright pointed collar, compact boxy jacket silhouette. Readability is paramount: bold outer contour, just 3 or 4 broad tonal masses, distinctly recognizable at 36 pixels. Calm but wary upright composition; bone-white clothing masses, charcoal hair and dark faceless face, restrained cold teal and tarnished brass accents. Hand-painted weathered cut-paper and charcoal medium; graphic illustration rather than a realistic face. Centered head and shoulders fully inside central 80 percent of a square, generous transparent margin; do not crop hair or shoulders. Genuine transparent exterior. No text, lettering, numerals, watermark, logo, medallion border, UI, weapons, identifiable celebrity, official game characters, official costumes or tracing. Entirely invented design, no reference image.",
       "svg_source": "占位",
       "svg_creator": "original_code",
-      "mobile_file": "mobile/portrait_nea.webp"
+      "mobile_file": "mobile/phase2f/portrait_nea.webp",
+      "original_file": "assets/portraits/phase2f/portrait_nea.png",
+      "official_reference_input": false
     },
     {
       "id": "portrait_ace",
-      "file": "portrait_ace.png",
+      "file": "portraits/phase2f/portrait_ace.png",
       "svg": "svg/portrait_ace.svg",
       "source": "AI 生成",
       "states": [
@@ -833,8 +843,8 @@
       ],
       "transparent": true,
       "name_zh": "埃斯·维斯孔蒂原创剪影",
-      "prompt_zh": "原创埃斯·维斯孔蒂原创剪影的独立游戏素材，做旧炭笔与骨白刻线，黑暗迷雾气质，居中简洁构图；透明RGBA背景，正方形1024像素。原创匿名头肩剪影，不还原任何既有角色面貌、服装、武器。禁止官方素材、描摹、标志、文字、水印。",
-      "prompt_en": "Original standalone 埃斯·维斯孔蒂原创剪影 game asset. Worn charcoal and bone-white engraved brushwork, dark fog mood, simple readable centered composition. Square 1024px transparent RGBA background. An anonymous invented head-and-shoulders silhouette, no recognizable existing character face, costume or weapon. No official game art, no tracing, no franchise iconography, no letters, no logo, no watermark.",
+      "prompt_zh": "原创轮廓：low round knitted cap, wide cheek outline, broad double lapel and a small simple bow tie, no glasses",
+      "prompt_en": "Use case: stylized-concept. One original survivor portrait asset for a dark foggy tabletop game. Bust-only shoulder silhouette: low round knitted cap, wide cheek outline, broad double lapel and a small simple bow tie, no glasses. Readability is paramount: bold outer contour, just 3 or 4 broad tonal masses, distinctly recognizable at 36 pixels. Calm but wary upright composition; bone-white clothing masses, charcoal hair and dark faceless face, restrained cold teal and tarnished brass accents. Hand-painted weathered cut-paper and charcoal medium; graphic illustration rather than a realistic face. Centered head and shoulders fully inside central 80 percent of a square, generous transparent margin; do not crop hair or shoulders. Genuine transparent exterior. No text, lettering, numerals, watermark, logo, medallion border, UI, weapons, identifiable celebrity, official game characters, official costumes or tracing. Entirely invented design, no reference image.",
       "provider": "built-in image_gen",
       "requested_size": [
         1024,
@@ -844,16 +854,18 @@
         384,
         384
       ],
-      "source_file": "exec-295d2579-db7d-4a34-a13e-46676591e8e0.png",
-      "sha256": "60ef3d1a1ecdf7190b70aa924feaaa128ec24cdfda6ffc036fc325293b3992fe",
-      "generation_prompt": "Create exactly ONE standalone original head-and-shoulders silhouette portrait: an invented middle-aged male silhouette with a broad flat hat and plain lapel coat, left three-quarter view. Cohesive worn charcoal hand-painted cut-paper with bone-white engraved highlights, subdued oxidized brass scratches, dark fog atmosphere. Strong simple readable shapes. Centered inside ONE weathered hexagonal token rim with charcoal interior; genuinely transparent outside the hexagon, no external shadow. Square RGBA, requested 1024x1024. The figure is an original anonymous archetype, not a portrait of an existing character. Face entirely in shadow, no facial likeness. No text, no numbers, no letters, no logos, no tally marks, no skull emblems, no watermark. Do not copy, trace or recreate official art from any existing game. Asset filename: portrait_ace.png.",
+      "source_file": "exec-9d79bc2c-c0d7-4f75-ba7d-3732636a0876.png",
+      "sha256": "5ba5f796999345bea5d1a707cd1f9c0c49d96b9dbc3ae224ca457b1afb86e1f3",
+      "generation_prompt": "Use case: stylized-concept. One original survivor portrait asset for a dark foggy tabletop game. Bust-only shoulder silhouette: low round knitted cap, wide cheek outline, broad double lapel and a small simple bow tie, no glasses. Readability is paramount: bold outer contour, just 3 or 4 broad tonal masses, distinctly recognizable at 36 pixels. Calm but wary upright composition; bone-white clothing masses, charcoal hair and dark faceless face, restrained cold teal and tarnished brass accents. Hand-painted weathered cut-paper and charcoal medium; graphic illustration rather than a realistic face. Centered head and shoulders fully inside central 80 percent of a square, generous transparent margin; do not crop hair or shoulders. Genuine transparent exterior. No text, lettering, numerals, watermark, logo, medallion border, UI, weapons, identifiable celebrity, official game characters, official costumes or tracing. Entirely invented design, no reference image.",
       "svg_source": "占位",
       "svg_creator": "original_code",
-      "mobile_file": "mobile/portrait_ace.webp"
+      "mobile_file": "mobile/phase2f/portrait_ace.webp",
+      "original_file": "assets/portraits/phase2f/portrait_ace.png",
+      "official_reference_input": false
     },
     {
       "id": "portrait_feng_min",
-      "file": "portrait_feng_min.png",
+      "file": "portraits/phase2f/portrait_feng_min.png",
       "svg": "svg/portrait_feng_min.svg",
       "source": "AI 生成",
       "states": [
@@ -869,8 +881,8 @@
       ],
       "transparent": true,
       "name_zh": "凤敏原创剪影",
-      "prompt_zh": "原创凤敏原创剪影的独立游戏素材，做旧炭笔与骨白刻线，黑暗迷雾气质，居中简洁构图；透明RGBA背景，正方形1024像素。原创匿名头肩剪影，不还原任何既有角色面貌、服装、武器。禁止官方素材、描摹、标志、文字、水印。",
-      "prompt_en": "Original standalone 凤敏原创剪影 game asset. Worn charcoal and bone-white engraved brushwork, dark fog mood, simple readable centered composition. Square 1024px transparent RGBA background. An anonymous invented head-and-shoulders silhouette, no recognizable existing character face, costume or weapon. No official game art, no tracing, no franchise iconography, no letters, no logo, no watermark.",
+      "prompt_zh": "原创轮廓：two widely spaced high round hair buns, short blunt fringe, short wide cape with a simple central clasp",
+      "prompt_en": "Use case: stylized-concept. One original survivor portrait asset for a dark foggy tabletop game. Bust-only shoulder silhouette: two widely spaced high round hair buns, short blunt fringe, short wide cape with a simple central clasp. Readability is paramount: bold outer contour, just 3 or 4 broad tonal masses, distinctly recognizable at 36 pixels. Calm but wary upright composition; bone-white clothing masses, charcoal hair and dark faceless face, restrained cold teal and tarnished brass accents. Hand-painted weathered cut-paper and charcoal medium; graphic illustration rather than a realistic face. Centered head and shoulders fully inside central 80 percent of a square, generous transparent margin; do not crop hair or shoulders. Genuine transparent exterior. No text, lettering, numerals, watermark, logo, medallion border, UI, weapons, identifiable celebrity, official game characters, official costumes or tracing. Entirely invented design, no reference image.",
       "provider": "built-in image_gen",
       "requested_size": [
         1024,
@@ -880,16 +892,18 @@
         384,
         384
       ],
-      "source_file": "exec-276f7e5f-9485-4ca8-931f-26ce221692b9.png",
-      "sha256": "04b499251cbc3ab8b548a45d883c2bb09c13f7a5a0d97e3139d32a46add4b304",
-      "generation_prompt": "Create exactly ONE standalone original head-and-shoulders silhouette portrait: an invented adult female silhouette with chin-length straight bob and standing collar, front view. Cohesive worn charcoal hand-painted cut-paper with bone-white engraved highlights, subdued oxidized brass scratches, dark fog atmosphere. Strong simple readable shapes. Centered inside ONE weathered hexagonal token rim with charcoal interior; genuinely transparent outside the hexagon, no external shadow. Square RGBA, requested 1024x1024. The figure is an original anonymous archetype, not a portrait of an existing character. Face entirely in shadow, no facial likeness. No text, no numbers, no letters, no logos, no tally marks, no skull emblems, no watermark. Do not copy, trace or recreate official art from any existing game. Asset filename: portrait_feng_min.png.",
+      "source_file": "exec-785e8396-99b1-4de3-b329-eead68278b0e.png",
+      "sha256": "89bbbcd812500966711e870cc65988279367a817789d95790317b5377e8c8027",
+      "generation_prompt": "Use case: stylized-concept. One original survivor portrait asset for a dark foggy tabletop game. Bust-only shoulder silhouette: two widely spaced high round hair buns, short blunt fringe, short wide cape with a simple central clasp. Readability is paramount: bold outer contour, just 3 or 4 broad tonal masses, distinctly recognizable at 36 pixels. Calm but wary upright composition; bone-white clothing masses, charcoal hair and dark faceless face, restrained cold teal and tarnished brass accents. Hand-painted weathered cut-paper and charcoal medium; graphic illustration rather than a realistic face. Centered head and shoulders fully inside central 80 percent of a square, generous transparent margin; do not crop hair or shoulders. Genuine transparent exterior. No text, lettering, numerals, watermark, logo, medallion border, UI, weapons, identifiable celebrity, official game characters, official costumes or tracing. Entirely invented design, no reference image.",
       "svg_source": "占位",
       "svg_creator": "original_code",
-      "mobile_file": "mobile/portrait_feng_min.webp"
+      "mobile_file": "mobile/phase2f/portrait_feng_min.webp",
+      "original_file": "assets/portraits/phase2f/portrait_feng_min.png",
+      "official_reference_input": false
     },
     {
       "id": "portrait_trapper",
-      "file": "portrait_trapper.png",
+      "file": "portraits/phase2f/portrait_trapper.png",
       "svg": "svg/portrait_trapper.svg",
       "source": "AI 生成",
       "states": [
@@ -905,8 +919,8 @@
       ],
       "transparent": true,
       "name_zh": "设陷者原创剪影",
-      "prompt_zh": "原创设陷者原创剪影的独立游戏素材，做旧炭笔与骨白刻线，黑暗迷雾气质，居中简洁构图；透明RGBA背景，正方形1024像素。原创匿名头肩剪影，不还原任何既有角色面貌、服装、武器。禁止官方素材、描摹、标志、文字、水印。",
-      "prompt_en": "Original standalone 设陷者原创剪影 game asset. Worn charcoal and bone-white engraved brushwork, dark fog mood, simple readable centered composition. Square 1024px transparent RGBA background. An anonymous invented head-and-shoulders silhouette, no recognizable existing character face, costume or weapon. No official game art, no tracing, no franchise iconography, no letters, no logo, no watermark.",
+      "prompt_zh": "原创轮廓：huge rectangular shoulders, opaque angular dark steel visor with a single horizontal bone-white slit, thick trapezoid head, heavy riveted shoulder plates, no weapons",
+      "prompt_en": "Use case: stylized-concept. One original killer portrait asset for a dark foggy tabletop game. Bust-only shoulder silhouette: huge rectangular shoulders, opaque angular dark steel visor with a single horizontal bone-white slit, thick trapezoid head, heavy riveted shoulder plates, no weapons. Readability is paramount: bold outer contour, just 3 or 4 broad tonal masses, distinctly recognizable at 36 pixels. Oppressive looming low-angle composition; dominant charcoal black silhouette, bone-white rim accents, extremely restrained dark rust-red accent. Hand-painted weathered cut-paper and charcoal medium; graphic illustration rather than a realistic face. Centered head and shoulders fully inside central 80 percent of a square, generous transparent margin; do not crop hair or shoulders. Genuine transparent exterior. No text, lettering, numerals, watermark, logo, medallion border, UI, weapons, identifiable celebrity, official game characters, official costumes or tracing. Entirely invented design, no reference image.",
       "provider": "built-in image_gen",
       "requested_size": [
         1024,
@@ -916,16 +930,18 @@
         384,
         384
       ],
-      "source_file": "exec-969408d1-cb57-400e-bb6e-a110bf90f192.png",
-      "sha256": "6b64d9f3b70d71ab7b28eb91bb6af1412a870474a0cd4532a19910c1823d8060",
-      "generation_prompt": "Create exactly ONE standalone original head-and-shoulders silhouette portrait: an invented imposing broad-shouldered figure wearing a plain layered canvas cowl, no mask, no weapons, no franchise costume. Cohesive worn charcoal hand-painted cut-paper with bone-white engraved highlights, subdued oxidized brass scratches, dark fog atmosphere. Strong simple readable shapes. Centered inside ONE weathered hexagonal token rim with charcoal interior; genuinely transparent outside the hexagon, no external shadow. Square RGBA, requested 1024x1024. The figure is an original anonymous archetype, not a portrait of an existing character. Face entirely in shadow, no facial likeness. No text, no numbers, no letters, no logos, no tally marks, no skull emblems, no watermark. Do not copy, trace or recreate official art from any existing game. Asset filename: portrait_trapper.png.",
+      "source_file": "exec-f9d3d756-abc5-4be1-bf19-200d5b666cf0.png",
+      "sha256": "29f1e22eb71b1986c034d206e168ecb83071330b4f31f5f88f19c0c82036dcac",
+      "generation_prompt": "Use case: stylized-concept. One original killer portrait asset for a dark foggy tabletop game. Bust-only shoulder silhouette: huge rectangular shoulders, opaque angular dark steel visor with a single horizontal bone-white slit, thick trapezoid head, heavy riveted shoulder plates, no weapons. Readability is paramount: bold outer contour, just 3 or 4 broad tonal masses, distinctly recognizable at 36 pixels. Oppressive looming low-angle composition; dominant charcoal black silhouette, bone-white rim accents, extremely restrained dark rust-red accent. Hand-painted weathered cut-paper and charcoal medium; graphic illustration rather than a realistic face. Centered head and shoulders fully inside central 80 percent of a square, generous transparent margin; do not crop hair or shoulders. Genuine transparent exterior. No text, lettering, numerals, watermark, logo, medallion border, UI, weapons, identifiable celebrity, official game characters, official costumes or tracing. Entirely invented design, no reference image.",
       "svg_source": "占位",
       "svg_creator": "original_code",
-      "mobile_file": "mobile/portrait_trapper.webp"
+      "mobile_file": "mobile/phase2f/portrait_trapper.webp",
+      "original_file": "assets/portraits/phase2f/portrait_trapper.png",
+      "official_reference_input": false
     },
     {
       "id": "portrait_wraith",
-      "file": "portrait_wraith.png",
+      "file": "portraits/phase2f/portrait_wraith.png",
       "svg": "svg/portrait_wraith.svg",
       "source": "AI 生成",
       "states": [
@@ -941,8 +957,8 @@
       ],
       "transparent": true,
       "name_zh": "幽灵原创剪影",
-      "prompt_zh": "原创幽灵原创剪影的独立游戏素材，做旧炭笔与骨白刻线，黑暗迷雾气质，居中简洁构图；透明RGBA背景，正方形1024像素。原创匿名头肩剪影，不还原任何既有角色面貌、服装、武器。禁止官方素材、描摹、标志、文字、水印。",
-      "prompt_en": "Original standalone 幽灵原创剪影 game asset. Worn charcoal and bone-white engraved brushwork, dark fog mood, simple readable centered composition. Square 1024px transparent RGBA background. An anonymous invented head-and-shoulders silhouette, no recognizable existing character face, costume or weapon. No official game art, no tracing, no franchise iconography, no letters, no logo, no watermark.",
+      "prompt_zh": "原创轮廓：unnaturally tall narrow hood with one off-center crescent peak, featureless black oval face, long tapering thin shoulders, no weapons",
+      "prompt_en": "Use case: stylized-concept. One original killer portrait asset for a dark foggy tabletop game. Bust-only shoulder silhouette: unnaturally tall narrow hood with one off-center crescent peak, featureless black oval face, long tapering thin shoulders, no weapons. Readability is paramount: bold outer contour, just 3 or 4 broad tonal masses, distinctly recognizable at 36 pixels. Oppressive looming low-angle composition; dominant charcoal black silhouette, bone-white rim accents, extremely restrained dark rust-red accent. Hand-painted weathered cut-paper and charcoal medium; graphic illustration rather than a realistic face. Centered head and shoulders fully inside central 80 percent of a square, generous transparent margin; do not crop hair or shoulders. Genuine transparent exterior. No text, lettering, numerals, watermark, logo, medallion border, UI, weapons, identifiable celebrity, official game characters, official costumes or tracing. Entirely invented design, no reference image.",
       "provider": "built-in image_gen",
       "requested_size": [
         1024,
@@ -952,16 +968,18 @@
         384,
         384
       ],
-      "source_file": "exec-67394698-c954-42c5-9217-91fbfc6eb782.png",
-      "sha256": "1370411751c486f9804fde2285038b9fb84960114a592002fbd3330c4aed20c9",
-      "generation_prompt": "Create exactly ONE standalone original head-and-shoulders silhouette portrait: an invented slender figure with a tall folded cloth collar and swept hair, no skeletal face, no bell, no weapons. Cohesive worn charcoal hand-painted cut-paper with bone-white engraved highlights, subdued oxidized brass scratches, dark fog atmosphere. Strong simple readable shapes. Centered inside ONE weathered hexagonal token rim with charcoal interior; genuinely transparent outside the hexagon, no external shadow. Square RGBA, requested 1024x1024. The figure is an original anonymous archetype, not a portrait of an existing character. Face entirely in shadow, no facial likeness. No text, no numbers, no letters, no logos, no tally marks, no skull emblems, no watermark. Do not copy, trace or recreate official art from any existing game. Asset filename: portrait_wraith.png.",
+      "source_file": "exec-d72ed5b1-eb85-478a-952f-157ec6bce4e4.png",
+      "sha256": "9fcefc2758e80ca57d42320f2374356e8044f472e1767fcf7600664938b931d9",
+      "generation_prompt": "Use case: stylized-concept. One original killer portrait asset for a dark foggy tabletop game. Bust-only shoulder silhouette: unnaturally tall narrow hood with one off-center crescent peak, featureless black oval face, long tapering thin shoulders, no weapons. Readability is paramount: bold outer contour, just 3 or 4 broad tonal masses, distinctly recognizable at 36 pixels. Oppressive looming low-angle composition; dominant charcoal black silhouette, bone-white rim accents, extremely restrained dark rust-red accent. Hand-painted weathered cut-paper and charcoal medium; graphic illustration rather than a realistic face. Centered head and shoulders fully inside central 80 percent of a square, generous transparent margin; do not crop hair or shoulders. Genuine transparent exterior. No text, lettering, numerals, watermark, logo, medallion border, UI, weapons, identifiable celebrity, official game characters, official costumes or tracing. Entirely invented design, no reference image.",
       "svg_source": "占位",
       "svg_creator": "original_code",
-      "mobile_file": "mobile/portrait_wraith.webp"
+      "mobile_file": "mobile/phase2f/portrait_wraith.webp",
+      "original_file": "assets/portraits/phase2f/portrait_wraith.png",
+      "official_reference_input": false
     },
     {
       "id": "portrait_hillbilly",
-      "file": "portrait_hillbilly.png",
+      "file": "portraits/phase2f/portrait_hillbilly.png",
       "svg": "svg/portrait_hillbilly.svg",
       "source": "AI 生成",
       "states": [
@@ -977,8 +995,8 @@
       ],
       "transparent": true,
       "name_zh": "农场主原创剪影",
-      "prompt_zh": "原创农场主原创剪影的独立游戏素材，做旧炭笔与骨白刻线，黑暗迷雾气质，居中简洁构图；透明RGBA背景，正方形1024像素。原创匿名头肩剪影，不还原任何既有角色面貌、服装、武器。禁止官方素材、描摹、标志、文字、水印。",
-      "prompt_en": "Original standalone 农场主原创剪影 game asset. Worn charcoal and bone-white engraved brushwork, dark fog mood, simple readable centered composition. Square 1024px transparent RGBA background. An anonymous invented head-and-shoulders silhouette, no recognizable existing character face, costume or weapon. No official game art, no tracing, no franchise iconography, no letters, no logo, no watermark.",
+      "prompt_zh": "原创轮廓：massive asymmetrical angular shaggy hair silhouette, heavy left shoulder and lower right shoulder, very broad jaw outline, dark face without detail, no weapons",
+      "prompt_en": "Use case: stylized-concept. One original killer portrait asset for a dark foggy tabletop game. Bust-only shoulder silhouette: massive asymmetrical angular shaggy hair silhouette, heavy left shoulder and lower right shoulder, very broad jaw outline, dark face without detail, no weapons. Readability is paramount: bold outer contour, just 3 or 4 broad tonal masses, distinctly recognizable at 36 pixels. Oppressive looming low-angle composition; dominant charcoal black silhouette, bone-white rim accents, extremely restrained dark rust-red accent. Hand-painted weathered cut-paper and charcoal medium; graphic illustration rather than a realistic face. Centered head and shoulders fully inside central 80 percent of a square, generous transparent margin; do not crop hair or shoulders. Genuine transparent exterior. No text, lettering, numerals, watermark, logo, medallion border, UI, weapons, identifiable celebrity, official game characters, official costumes or tracing. Entirely invented design, no reference image.",
       "provider": "built-in image_gen",
       "requested_size": [
         1024,
@@ -988,16 +1006,18 @@
         384,
         384
       ],
-      "source_file": "exec-a2935ece-550d-459b-b863-c85b3b234fb9.png",
-      "sha256": "e94cc3ae93a23f23f5dccbbf922a3805c678d55a984e8aefe60db98ade1d2859",
-      "generation_prompt": "Create exactly ONE standalone original head-and-shoulders silhouette portrait: an invented large stocky figure with a heavy work coat and smooth featureless face in shadow, no deformity, no chainsaw. Cohesive worn charcoal hand-painted cut-paper with bone-white engraved highlights, subdued oxidized brass scratches, dark fog atmosphere. Strong simple readable shapes. Centered inside ONE weathered hexagonal token rim with charcoal interior; genuinely transparent outside the hexagon, no external shadow. Square RGBA, requested 1024x1024. The figure is an original anonymous archetype, not a portrait of an existing character. Face entirely in shadow, no facial likeness. No text, no numbers, no letters, no logos, no tally marks, no skull emblems, no watermark. Do not copy, trace or recreate official art from any existing game. Asset filename: portrait_hillbilly.png.",
+      "source_file": "exec-c6ca0e69-7914-4578-a9d8-a8fa84cb73d8.png",
+      "sha256": "56997035c97d504018417418f0e57cee040ef2d03eb6b5008bc5218048905297",
+      "generation_prompt": "Use case: stylized-concept. One original killer portrait asset for a dark foggy tabletop game. Bust-only shoulder silhouette: massive asymmetrical angular shaggy hair silhouette, heavy left shoulder and lower right shoulder, very broad jaw outline, dark face without detail, no weapons. Readability is paramount: bold outer contour, just 3 or 4 broad tonal masses, distinctly recognizable at 36 pixels. Oppressive looming low-angle composition; dominant charcoal black silhouette, bone-white rim accents, extremely restrained dark rust-red accent. Hand-painted weathered cut-paper and charcoal medium; graphic illustration rather than a realistic face. Centered head and shoulders fully inside central 80 percent of a square, generous transparent margin; do not crop hair or shoulders. Genuine transparent exterior. No text, lettering, numerals, watermark, logo, medallion border, UI, weapons, identifiable celebrity, official game characters, official costumes or tracing. Entirely invented design, no reference image.",
       "svg_source": "占位",
       "svg_creator": "original_code",
-      "mobile_file": "mobile/portrait_hillbilly.webp"
+      "mobile_file": "mobile/phase2f/portrait_hillbilly.webp",
+      "original_file": "assets/portraits/phase2f/portrait_hillbilly.png",
+      "official_reference_input": false
     },
     {
       "id": "portrait_nurse",
-      "file": "portrait_nurse.png",
+      "file": "portraits/phase2f/portrait_nurse.png",
       "svg": "svg/portrait_nurse.svg",
       "source": "AI 生成",
       "states": [
@@ -1013,8 +1033,8 @@
       ],
       "transparent": true,
       "name_zh": "护士原创剪影",
-      "prompt_zh": "原创护士原创剪影的独立游戏素材，做旧炭笔与骨白刻线，黑暗迷雾气质，居中简洁构图；透明RGBA背景，正方形1024像素。原创匿名头肩剪影，不还原任何既有角色面貌、服装、武器。禁止官方素材、描摹、标志、文字、水印。",
-      "prompt_en": "Original standalone 护士原创剪影 game asset. Worn charcoal and bone-white engraved brushwork, dark fog mood, simple readable centered composition. Square 1024px transparent RGBA background. An anonymous invented head-and-shoulders silhouette, no recognizable existing character face, costume or weapon. No official game art, no tracing, no franchise iconography, no letters, no logo, no watermark.",
+      "prompt_zh": "原创轮廓：tall rigid inverted-crescent veil headdress, face fully hidden in black, elongated narrow torso with sharply splayed pale collar, no medical logos or bandages",
+      "prompt_en": "Use case: stylized-concept. One original killer portrait asset for a dark foggy tabletop game. Bust-only shoulder silhouette: tall rigid inverted-crescent veil headdress, face fully hidden in black, elongated narrow torso with sharply splayed pale collar, no medical logos or bandages. Readability is paramount: bold outer contour, just 3 or 4 broad tonal masses, distinctly recognizable at 36 pixels. Oppressive looming low-angle composition; dominant charcoal black silhouette, bone-white rim accents, extremely restrained dark rust-red accent. Hand-painted weathered cut-paper and charcoal medium; graphic illustration rather than a realistic face. Centered head and shoulders fully inside central 80 percent of a square, generous transparent margin; do not crop hair or shoulders. Genuine transparent exterior. No text, lettering, numerals, watermark, logo, medallion border, UI, weapons, identifiable celebrity, official game characters, official costumes or tracing. Entirely invented design, no reference image.",
       "provider": "built-in image_gen",
       "requested_size": [
         1024,
@@ -1024,16 +1044,18 @@
         384,
         384
       ],
-      "source_file": "exec-3ebe9106-6215-401d-b398-497c7b4c4e65.png",
-      "sha256": "b49d61ef674b5228f4a3ea4624c96625e27f30b2f1a705e346f392e58b4ef4c0",
-      "generation_prompt": "Create exactly ONE standalone original head-and-shoulders silhouette portrait: an invented tall anonymous female silhouette with a flowing plain shawl and low bun, no nurse uniform, no bandages, no weapons. Cohesive worn charcoal hand-painted cut-paper with bone-white engraved highlights, subdued oxidized brass scratches, dark fog atmosphere. Strong simple readable shapes. Centered inside ONE weathered hexagonal token rim with charcoal interior; genuinely transparent outside the hexagon, no external shadow. Square RGBA, requested 1024x1024. The figure is an original anonymous archetype, not a portrait of an existing character. Face entirely in shadow, no facial likeness. No text, no numbers, no letters, no logos, no tally marks, no skull emblems, no watermark. Do not copy, trace or recreate official art from any existing game. Asset filename: portrait_nurse.png.",
+      "source_file": "exec-a355d1b9-69c4-4e95-889b-b87c5b88624e.png",
+      "sha256": "deafd2712a870318a4ccf628a702d4bbd900b182148c591fe59a653536322dce",
+      "generation_prompt": "Use case: stylized-concept. One original killer portrait asset for a dark foggy tabletop game. Bust-only shoulder silhouette: tall rigid inverted-crescent veil headdress, face fully hidden in black, elongated narrow torso with sharply splayed pale collar, no medical logos or bandages. Readability is paramount: bold outer contour, just 3 or 4 broad tonal masses, distinctly recognizable at 36 pixels. Oppressive looming low-angle composition; dominant charcoal black silhouette, bone-white rim accents, extremely restrained dark rust-red accent. Hand-painted weathered cut-paper and charcoal medium; graphic illustration rather than a realistic face. Centered head and shoulders fully inside central 80 percent of a square, generous transparent margin; do not crop hair or shoulders. Genuine transparent exterior. No text, lettering, numerals, watermark, logo, medallion border, UI, weapons, identifiable celebrity, official game characters, official costumes or tracing. Entirely invented design, no reference image.",
       "svg_source": "占位",
       "svg_creator": "original_code",
-      "mobile_file": "mobile/portrait_nurse.webp"
+      "mobile_file": "mobile/phase2f/portrait_nurse.webp",
+      "original_file": "assets/portraits/phase2f/portrait_nurse.png",
+      "official_reference_input": false
     },
     {
       "id": "portrait_hag",
-      "file": "portrait_hag.png",
+      "file": "portraits/phase2f/portrait_hag.png",
       "svg": "svg/portrait_hag.svg",
       "source": "AI 生成",
       "states": [
@@ -1049,8 +1071,8 @@
       ],
       "transparent": true,
       "name_zh": "妖巫原创剪影",
-      "prompt_zh": "原创妖巫原创剪影的独立游戏素材，做旧炭笔与骨白刻线，黑暗迷雾气质，居中简洁构图；透明RGBA背景，正方形1024像素。原创匿名头肩剪影，不还原任何既有角色面貌、服装、武器。禁止官方素材、描摹、标志、文字、水印。",
-      "prompt_en": "Original standalone 妖巫原创剪影 game asset. Worn charcoal and bone-white engraved brushwork, dark fog mood, simple readable centered composition. Square 1024px transparent RGBA background. An anonymous invented head-and-shoulders silhouette, no recognizable existing character face, costume or weapon. No official game art, no tracing, no franchise iconography, no letters, no logo, no watermark.",
+      "prompt_zh": "原创轮廓：crooked narrow head topped by three thick irregular branchlike spikes, bent neck, frayed triangular shoulder mantle, no detailed face or weapons",
+      "prompt_en": "Use case: stylized-concept. One original killer portrait asset for a dark foggy tabletop game. Bust-only shoulder silhouette: crooked narrow head topped by three thick irregular branchlike spikes, bent neck, frayed triangular shoulder mantle, no detailed face or weapons. Readability is paramount: bold outer contour, just 3 or 4 broad tonal masses, distinctly recognizable at 36 pixels. Oppressive looming low-angle composition; dominant charcoal black silhouette, bone-white rim accents, extremely restrained dark rust-red accent. Hand-painted weathered cut-paper and charcoal medium; graphic illustration rather than a realistic face. Centered head and shoulders fully inside central 80 percent of a square, generous transparent margin; do not crop hair or shoulders. Genuine transparent exterior. No text, lettering, numerals, watermark, logo, medallion border, UI, weapons, identifiable celebrity, official game characters, official costumes or tracing. Entirely invented design, no reference image.",
       "provider": "built-in image_gen",
       "requested_size": [
         1024,
@@ -1060,16 +1082,18 @@
         384,
         384
       ],
-      "source_file": "exec-a42c3d9e-b340-4b97-9c64-4c30447aba9f.png",
-      "sha256": "5db45c0fc2bccc0420d45913c969b61690dd798bf033bd57b4a6be9a70a613b9",
-      "generation_prompt": "Create exactly ONE standalone original head-and-shoulders silhouette portrait: an invented wiry anonymous figure with a windswept ragged mantle and narrow head, no monster face, no claws. Cohesive worn charcoal hand-painted cut-paper with bone-white engraved highlights, subdued oxidized brass scratches, dark fog atmosphere. Strong simple readable shapes. Centered inside ONE weathered hexagonal token rim with charcoal interior; genuinely transparent outside the hexagon, no external shadow. Square RGBA, requested 1024x1024. The figure is an original anonymous archetype, not a portrait of an existing character. Face entirely in shadow, no facial likeness. No text, no numbers, no letters, no logos, no tally marks, no skull emblems, no watermark. Do not copy, trace or recreate official art from any existing game. Asset filename: portrait_hag.png.",
+      "source_file": "exec-7174bd1d-71cc-40f8-96c0-3104cc9ef00d.png",
+      "sha256": "029e0b5c67a46c95c636fa25a72a32759325625c1a0026bb7daee1aa012ab3da",
+      "generation_prompt": "Use case: stylized-concept. One original killer portrait asset for a dark foggy tabletop game. Bust-only shoulder silhouette: crooked narrow head topped by three thick irregular branchlike spikes, bent neck, frayed triangular shoulder mantle, no detailed face or weapons. Readability is paramount: bold outer contour, just 3 or 4 broad tonal masses, distinctly recognizable at 36 pixels. Oppressive looming low-angle composition; dominant charcoal black silhouette, bone-white rim accents, extremely restrained dark rust-red accent. Hand-painted weathered cut-paper and charcoal medium; graphic illustration rather than a realistic face. Centered head and shoulders fully inside central 80 percent of a square, generous transparent margin; do not crop hair or shoulders. Genuine transparent exterior. No text, lettering, numerals, watermark, logo, medallion border, UI, weapons, identifiable celebrity, official game characters, official costumes or tracing. Entirely invented design, no reference image.",
       "svg_source": "占位",
       "svg_creator": "original_code",
-      "mobile_file": "mobile/portrait_hag.webp"
+      "mobile_file": "mobile/phase2f/portrait_hag.webp",
+      "original_file": "assets/portraits/phase2f/portrait_hag.png",
+      "official_reference_input": false
     },
     {
       "id": "portrait_doctor",
-      "file": "portrait_doctor.png",
+      "file": "portraits/phase2f/portrait_doctor.png",
       "svg": "svg/portrait_doctor.svg",
       "source": "AI 生成",
       "states": [
@@ -1085,8 +1109,8 @@
       ],
       "transparent": true,
       "name_zh": "医生原创剪影",
-      "prompt_zh": "原创医生原创剪影的独立游戏素材，做旧炭笔与骨白刻线，黑暗迷雾气质，居中简洁构图；透明RGBA背景，正方形1024像素。原创匿名头肩剪影，不还原任何既有角色面貌、服装、武器。禁止官方素材、描摹、标志、文字、水印。",
-      "prompt_en": "Original standalone 医生原创剪影 game asset. Worn charcoal and bone-white engraved brushwork, dark fog mood, simple readable centered composition. Square 1024px transparent RGBA background. An anonymous invented head-and-shoulders silhouette, no recognizable existing character face, costume or weapon. No official game art, no tracing, no franchise iconography, no letters, no logo, no watermark.",
+      "prompt_zh": "原创轮廓：flat-topped rectangular opaque helmet with a single thick vertical tarnished-copper strip, very broad upright high coat collar, solid barrel shoulders, no electrodes or face details",
+      "prompt_en": "Use case: stylized-concept. One original killer portrait asset for a dark foggy tabletop game. Bust-only shoulder silhouette: flat-topped rectangular opaque helmet with a single thick vertical tarnished-copper strip, very broad upright high coat collar, solid barrel shoulders, no electrodes or face details. Readability is paramount: bold outer contour, just 3 or 4 broad tonal masses, distinctly recognizable at 36 pixels. Oppressive looming low-angle composition; dominant charcoal black silhouette, bone-white rim accents, extremely restrained dark rust-red accent. Hand-painted weathered cut-paper and charcoal medium; graphic illustration rather than a realistic face. Centered head and shoulders fully inside central 80 percent of a square, generous transparent margin; do not crop hair or shoulders. Genuine transparent exterior. No text, lettering, numerals, watermark, logo, medallion border, UI, weapons, identifiable celebrity, official game characters, official costumes or tracing. Entirely invented design, no reference image.",
       "provider": "built-in image_gen",
       "requested_size": [
         1024,
@@ -1096,12 +1120,14 @@
         384,
         384
       ],
-      "source_file": "exec-038ad650-5b17-4c6e-b514-0a604c614074.png",
-      "sha256": "af5f88dd913426250e53c22d0b9f87b6f90016c8b28bd8f311e5ef60d1bb58b0",
-      "generation_prompt": "Create exactly ONE standalone original head-and-shoulders silhouette portrait: an invented anonymous figure with a stiff standing collar and squared shoulders, no medical headgear, no electrodes, no weapons. Cohesive worn charcoal hand-painted cut-paper with bone-white engraved highlights, subdued oxidized brass scratches, dark fog atmosphere. Strong simple readable shapes. Centered inside ONE weathered hexagonal token rim with charcoal interior; genuinely transparent outside the hexagon, no external shadow. Square RGBA, requested 1024x1024. The figure is an original anonymous archetype, not a portrait of an existing character. Face entirely in shadow, no facial likeness. No text, no numbers, no letters, no logos, no tally marks, no skull emblems, no watermark. Do not copy, trace or recreate official art from any existing game. Asset filename: portrait_doctor.png.",
+      "source_file": "exec-9919fe08-24af-4b86-9561-134d4d877c3f.png",
+      "sha256": "58256603d0274bde16a0e227c692902c7b9f685190b7379ae4dfe4c3572b583c",
+      "generation_prompt": "Use case: stylized-concept. One original killer portrait asset for a dark foggy tabletop game. Bust-only shoulder silhouette: flat-topped rectangular opaque helmet with a single thick vertical tarnished-copper strip, very broad upright high coat collar, solid barrel shoulders, no electrodes or face details. Readability is paramount: bold outer contour, just 3 or 4 broad tonal masses, distinctly recognizable at 36 pixels. Oppressive looming low-angle composition; dominant charcoal black silhouette, bone-white rim accents, extremely restrained dark rust-red accent. Hand-painted weathered cut-paper and charcoal medium; graphic illustration rather than a realistic face. Centered head and shoulders fully inside central 80 percent of a square, generous transparent margin; do not crop hair or shoulders. Genuine transparent exterior. No text, lettering, numerals, watermark, logo, medallion border, UI, weapons, identifiable celebrity, official game characters, official costumes or tracing. Entirely invented design, no reference image.",
       "svg_source": "占位",
       "svg_creator": "original_code",
-      "mobile_file": "mobile/portrait_doctor.webp"
+      "mobile_file": "mobile/phase2f/portrait_doctor.webp",
+      "original_file": "assets/portraits/phase2f/portrait_doctor.png",
+      "official_reference_input": false
     }
   ],
   "rooms": [
@@ -2175,6 +2201,123 @@
         ],
         "bytes": 133336,
         "sha256": "affc10bc5c07a1e674bee153d1f0b206f996b63fa3d2b4065cd678a7843431d3"
+      },
+      {
+        "file": "mobile/phase2f/portrait_claudette.webp",
+        "size": [
+          256,
+          256
+        ],
+        "bytes": 19122,
+        "sha256": "37f5d72193d4b00821602e23c9e1b3d955904f69002754758b77a6cfc11e8d83"
+      },
+      {
+        "file": "mobile/phase2f/portrait_dwight.webp",
+        "size": [
+          256,
+          256
+        ],
+        "bytes": 14172,
+        "sha256": "58526ed4db835cab15863751255828936f8413ccf41cb8ea45933059eaa14c21"
+      },
+      {
+        "file": "mobile/phase2f/portrait_meg.webp",
+        "size": [
+          256,
+          256
+        ],
+        "bytes": 17650,
+        "sha256": "41f14a2aa3b2faf467bd93663996a2b1a2f700d0b83963a94da89ee9944cec3b"
+      },
+      {
+        "file": "mobile/phase2f/portrait_trapper.webp",
+        "size": [
+          256,
+          256
+        ],
+        "bytes": 16918,
+        "sha256": "a10514c2d01fd51a97ddaf92b473664a56271a4d39a04e69145ec9cf1918acf4"
+      },
+      {
+        "file": "mobile/phase2f/portrait_ace.webp",
+        "size": [
+          256,
+          256
+        ],
+        "bytes": 16148,
+        "sha256": "40760f8c7f07fb685982bb994e1ff413d2fefa2ea7a7ec7f0a04bcf590ec720f"
+      },
+      {
+        "file": "mobile/phase2f/portrait_feng_min.webp",
+        "size": [
+          256,
+          256
+        ],
+        "bytes": 17260,
+        "sha256": "2de280e810cbd14a53ee88d62cac3fd3759c7df1cb78c60e14cf2012b982485b"
+      },
+      {
+        "file": "mobile/phase2f/portrait_jake.webp",
+        "size": [
+          256,
+          256
+        ],
+        "bytes": 19326,
+        "sha256": "500b7f075624bca111f3d398117644d9edfe47db13c13cc80c49af7c29b876ce"
+      },
+      {
+        "file": "mobile/phase2f/portrait_nea.webp",
+        "size": [
+          256,
+          256
+        ],
+        "bytes": 16996,
+        "sha256": "e849697775ac586e9e1628edda8fde566dcf3924c585000beb8ecf09a63dd6d1"
+      },
+      {
+        "file": "mobile/phase2f/portrait_wraith.webp",
+        "size": [
+          256,
+          256
+        ],
+        "bytes": 14896,
+        "sha256": "ee27c7aed0b81db3699e2329c5609b6ff17207a5291c78f615e42311bf91679c"
+      },
+      {
+        "file": "mobile/phase2f/portrait_hillbilly.webp",
+        "size": [
+          256,
+          256
+        ],
+        "bytes": 19372,
+        "sha256": "fc3601dd693026d8572a57dd88b3bca85a78a346a9e2e3c62a6c9804ec0a3338"
+      },
+      {
+        "file": "mobile/phase2f/portrait_nurse.webp",
+        "size": [
+          256,
+          256
+        ],
+        "bytes": 22972,
+        "sha256": "689689954634da15411f3e087ecaa47334ea012a11529a4df01c146065d47589"
+      },
+      {
+        "file": "mobile/phase2f/portrait_hag.webp",
+        "size": [
+          256,
+          256
+        ],
+        "bytes": 16608,
+        "sha256": "3fa8723f5cf16cf941a967cc16ee00609a90e5e629be22fcdebe618963d2d06f"
+      },
+      {
+        "file": "mobile/phase2f/portrait_doctor.webp",
+        "size": [
+          256,
+          256
+        ],
+        "bytes": 15858,
+        "sha256": "e5aabc430d2e938dd37d558de138108f23df631f023cc6d44f9e329d6126563c"
       }
     ]
   },

@@ -240,4 +240,6 @@ console.log(
   "view checks",
   leakChecks,
 );
-process.exit(0);
+// Let libuv close socket and child-process handles before exiting on Windows.
+process.exitCode = 0;
+

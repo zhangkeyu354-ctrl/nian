@@ -1,0 +1,153 @@
+{
+  "name": "iPhone13",
+  "viewport": {
+    "width": 390,
+    "height": 664
+  },
+  "commands": 109,
+  "winner": "killer",
+  "shots": [
+    {
+      "key": "waiting",
+      "scope": "Visible UI / prototype region, not a full-map-count claim",
+      "region": {
+        "x": 0,
+        "y": 0,
+        "width": 390,
+        "height": 664
+      },
+      "pixels": {
+        "busy": 0.051424501424501425,
+        "std": 33.94137165209268
+      }
+    },
+    {
+      "key": "dice",
+      "scope": "Visible UI / prototype region, not a full-map-count claim",
+      "region": {
+        "x": 0,
+        "y": 0,
+        "width": 390,
+        "height": 664
+      },
+      "pixels": {
+        "busy": 0.06404592729893935,
+        "std": 39.018324831584366
+      }
+    },
+    {
+      "key": "plan",
+      "scope": "Visible UI / prototype region, not a full-map-count claim",
+      "region": {
+        "x": 0,
+        "y": 0,
+        "width": 390,
+        "height": 664
+      },
+      "pixels": {
+        "busy": 0.2972488243572581,
+        "std": 46.30546676645186
+      }
+    },
+    {
+      "key": "move",
+      "scope": "Visible UI / prototype region, not a full-map-count claim",
+      "region": {
+        "x": 0,
+        "y": 0,
+        "width": 390,
+        "height": 664
+      },
+      "pixels": {
+        "busy": 0.25827927092987335,
+        "std": 47.9406945831713
+      }
+    },
+    {
+      "key": "interact",
+      "scope": "Visible UI / prototype region, not a full-map-count claim",
+      "region": {
+        "x": 0,
+        "y": 0,
+        "width": 390,
+        "height": 664
+      },
+      "pixels": {
+        "busy": 0.3030000343253355,
+        "std": 56.837411397574535
+      }
+    },
+    {
+      "key": "killer",
+      "scope": "Visible UI / prototype region, not a full-map-count claim",
+      "region": {
+        "x": 0,
+        "y": 0,
+        "width": 390,
+        "height": 664
+      },
+      "pixels": {
+        "busy": 0.23494834037002713,
+        "std": 44.58670895611779
+      }
+    },
+    {
+      "key": "injury",
+      "scope": "Visible UI / prototype region, not a full-map-count claim",
+      "region": {
+        "x": 0,
+        "y": 0,
+        "width": 390,
+        "height": 664
+      },
+      "pixels": {
+        "busy": 0.21910204922253115,
+        "std": 50.441347264334055
+      }
+    },
+    {
+      "key": "hook",
+      "scope": "Visible UI / prototype region, not a full-map-count claim",
+      "region": {
+        "x": 0,
+        "y": 0,
+        "width": 390,
+        "height": 664
+      },
+      "pixels": {
+        "busy": 0.22064668932138812,
+        "std": 51.27794616281225
+      }
+    },
+    {
+      "key": "verdict",
+      "scope": "Visible UI / prototype region, not a full-map-count claim",
+      "region": {
+        "x": 0,
+        "y": 0,
+        "width": 390,
+        "height": 664
+      },
+      "pixels": {
+        "busy": 0.235482099337521,
+        "std": 52.26368416797558
+      }
+    },
+    {
+      "key": "results",
+      "scope": "Visible UI / prototype region, not a full-map-count claim",
+      "region": {
+        "x": 0,
+        "y": 0,
+        "width": 390,
+        "height": 664
+      },
+      "pixels": {
+        "busy": 0.15639652627604436,
+        "std": 44.34177967687783
+      }
+    }
+  ],
+  "errors": [],
+  "baselineLandscapeWorkaround": false
+}

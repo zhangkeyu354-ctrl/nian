@@ -14,6 +14,8 @@ import { useSettings } from "./Settings.tsx";
 import { Token } from "./Token.tsx";
 import { TapButton, suppressCompatibilityClick } from "./TapButton.tsx";
 import layoutData from "./layout.json" with { type: "json" };
+import { BoardMotion } from "./BoardMotion.tsx";
+import { threatFor } from "./experience-model.ts";
 import { actorColor, ROOM_ACCENTS } from "./playerColors.ts";
 // 路线颜色：提高饱和度与亮度，并在下面垫一条深色描边，保证在棋盘上清楚可辨（2026-10-21）
 const colors: Record<string, string> = {
@@ -32,6 +34,7 @@ export function Board({
   focusRoom,
   actionable = [],
   phone = false,
+  seat = null,
 }: {
   state: GameState;
   highlight: Array<{ pathId: string; to: string }>;
@@ -42,8 +45,10 @@ export function Board({
   focusRoom?: string | null;
   actionable?: string[];
   phone?: boolean;
+  seat?: string | null;
 }) {
   const map = maps.maps.find((m) => m.id === state.mapId)!;
+  const threatened = threatFor(state, seat);
   const currentId =
     state.choice?.actorId ??
     (state.window ? state.window.actors[state.window.index] : null) ??
@@ -285,9 +290,31 @@ export function Board({
             if (!phone || e.pointerType !== "touch") return;
             touchHandled.current = Date.now();
             if (drag.current) return;
-            const target = (e.target as Element).closest(
+            let target = (e.target as Element).closest(
               "[data-actor],[data-prop],[data-room]",
             );
+            // Extend small rooms in screen coordinates without invisible paths
+            // covering neighbouring rooms at landscape / overview scale.
+            if (!target) {
+              let nearest = Infinity;
+              for (const room of e.currentTarget.querySelectorAll(
+                "[data-room]",
+              )) {
+                const r = room.querySelector("rect")?.getBoundingClientRect();
+                if (!r) continue;
+                const dx = Math.abs(e.clientX - (r.left + r.width / 2));
+                const dy = Math.abs(e.clientY - (r.top + r.height / 2));
+                const distance = Math.hypot(dx, dy);
+                if (
+                  dx <= Math.max(24, r.width / 2) &&
+                  dy <= Math.max(24, r.height / 2) &&
+                  distance < nearest
+                ) {
+                  target = room;
+                  nearest = distance;
+                }
+              }
+            }
             if (target) {
               suppressCompatibilityClick();
               e.preventDefault();
@@ -541,7 +568,7 @@ export function Board({
             const tokenStart = n.spawn_faces.length ? -62 : -92;
             const slotGap = Math.min(51, 250 / Math.max(1, slots.length));
             const slotHit = Math.min(62, slotGap);
-            const slotIcon = Math.min(50, slotGap - 6);
+            const slotIcon = Math.min(56, slotGap - 2);
             const reachable = highlight.some((r) => r.to === n.id);
             const screenScale = Math.max(
               0.001,
@@ -582,10 +609,11 @@ export function Board({
                   }}
                   className="room-node"
                 >
-                  {phone && (
+                  {phone && roomHitW < 400 && roomHitH < 320 && (
                     <path
                       d={`M${-roomHitW / 2} ${18 - roomHitH / 2}h${roomHitW}v${roomHitH}h${-roomHitW}z`}
                       fill="transparent"
+                      pointerEvents="none"
                     />
                   )}
                   <rect
@@ -748,6 +776,9 @@ export function Board({
                       <ellipse
                         className={
                           "foot-halo" +
+                          (threatened.actors.includes(a.id)
+                            ? " threatened-halo"
+                            : "") +
                           (a.id === state.killerId ? " killer-halo" : "") +
                           (a.id === currentId ? " current-halo" : "")
                         }
@@ -765,7 +796,9 @@ export function Board({
                         fill="none"
                         stroke={actorColor(state, a.id)}
                         strokeWidth={a.id === state.killerId ? 5 : 3.5}
-                        className={a.id === currentId ? "current-ring" : undefined}
+                        className={
+                          a.id === currentId ? "current-ring" : undefined
+                        }
                       />
                       <g
                         transform={`translate(${-tokenSize / 2} ${-tokenSize / 2})`}
@@ -870,6 +903,7 @@ export function Board({
               </g>
             );
           })}
+          <BoardMotion state={state} />
         </svg>
       </div>
       <div className="board-navigation">

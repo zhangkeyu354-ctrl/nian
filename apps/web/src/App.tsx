@@ -1,3 +1,4 @@
+import "./experience.css";
 import React, { useMemo, useState, useEffect, useRef } from "react";
 import {
   createGame,
@@ -32,6 +33,8 @@ import type { Feedback } from "../../../packages/game-engine/src/presentation.ts
 import { MotionIcon } from "./MotionIcon.tsx";
 import { Dice } from "./Dice.tsx";
 import { Board } from "./Board.tsx";
+import { GameExperience } from "./GameExperience.tsx";
+import { EventJournal } from "./EventJournal.tsx";
 import { MobileDock, MobileParameters, usePhone } from "./MobileDock.tsx";
 import { VerdictBanner, verdictsFrom, type VerdictInfo } from "./Verdict.tsx";
 import { usePhoneExperience } from "./phone-experience.ts";
@@ -383,7 +386,10 @@ export function App({ net }: { net?: NetBinding } = {}) {
     prevView.current = next;
     if (prev && next.events.length > prev.events.length) {
       setEffects(feedbackEvents(prev, next));
-      setVerdicts((v) => [...v, ...verdictsFrom(next, next.events.slice(prev.events.length))]);
+      setVerdicts((v) => [
+        ...v,
+        ...verdictsFrom(next, next.events.slice(prev.events.length)),
+      ]);
       setDice(
         next.events
           .slice(prev.events.length)
@@ -470,7 +476,10 @@ export function App({ net }: { net?: NetBinding } = {}) {
         .filter((e) => e.type === "DICE_ROLLED" || e.type === "SPAWNED");
       setState(next);
       setEffects(feedbackEvents(state, next));
-      setVerdicts((v) => [...v, ...verdictsFrom(next, next.events.slice(state.events.length))]);
+      setVerdicts((v) => [
+        ...v,
+        ...verdictsFrom(next, next.events.slice(state.events.length)),
+      ]);
       setDice(rolls);
       setPlan([]);
       setSelected(null);
@@ -819,7 +828,11 @@ export function App({ net }: { net?: NetBinding } = {}) {
       </>
     );
   return (
-    <div className={"game" + (phone ? " phone-game" : "")}>
+    <div
+      className={"game" + (phone ? " phone-game" : "")}
+      data-pending={pending || undefined}
+      data-rejected={!!error || undefined}
+    >
       {phone && !masked && (
         <MobileDock
           state={state}
@@ -940,6 +953,7 @@ export function App({ net }: { net?: NetBinding } = {}) {
             <div className="play-column">
               <Board
                 state={state}
+                seat={net?.seat ?? viewer}
                 highlight={highlights}
                 onRoom={(id) => pick("room", id)}
                 onProp={(id) => pick("prop", id)}
@@ -1381,20 +1395,7 @@ export function App({ net }: { net?: NetBinding } = {}) {
                   <span>{visibleLogs.length} 条</span>
                 </div>
                 <div className="journal-scroll" data-testid="event-log">
-                  {[...visibleLogs].reverse().map((e) => (
-                    <div
-                      key={e.seq}
-                      className={
-                        "log-entry " +
-                        (e.type === "DICE_ROLLED" ? "roll-entry" : "")
-                      }
-                    >
-                      <span>
-                        第{e.round}轮 <small>#{e.seq}</small>
-                      </span>
-                      <p>{eventText(state, e)}</p>
-                    </div>
-                  ))}
+                  <EventJournal state={state} events={visibleLogs} />
                 </div>
                 <details className="dice-history">
                   <summary>全部掷骰记录（{recentRolls.length}）</summary>
@@ -1406,6 +1407,16 @@ export function App({ net }: { net?: NetBinding } = {}) {
             )}
           </div>
         </>
+      )}
+      {state && (
+        <GameExperience
+          state={state}
+          seat={net?.seat ?? viewer}
+          masked={masked}
+          error={error}
+          pending={pending}
+          busy={!!dice.length || !!verdicts.length}
+        />
       )}
       {masked && (
         <div
@@ -1581,11 +1592,15 @@ function DiceResult({
         <>
           <strong>
             {faces
-              .map((f) => (f === 0 ? "✗ 失败" : f === 5 ? "★ 大成功" : `✓ ${f}`))
+              .map((f) =>
+                f === 0 ? "✗ 失败" : f === 5 ? "★ 大成功" : `✓ ${f}`,
+              )
               .join("　")}
           </strong>
           <span>
-            {faces.length > 1 ? "共 " + faces.length + " 颗骰子" : faceName(faces[0])}
+            {faces.length > 1
+              ? "共 " + faces.length + " 颗骰子"
+              : faceName(faces[0])}
           </span>
         </>
       )}
