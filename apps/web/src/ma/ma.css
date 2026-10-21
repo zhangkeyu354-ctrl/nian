@@ -2210,3 +2210,7 @@
     animation: none !important;
   }
 }
+/* 整条赛道一屏显示时不需要滚动：允许第一排小人的头和飘字伸出棋盘上沿 */
+.ma-board-scroll.fit:not(.vertical) {
+  overflow: visible;
+}

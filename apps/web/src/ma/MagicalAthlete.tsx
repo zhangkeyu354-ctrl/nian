@@ -677,7 +677,8 @@ function Race({
   });
   // 竖版原版棋盘：操作放在赛道中间空白处，下面的操作区隐藏，棋盘更大
   const centerMode = portrait && !useGrid;
-  const showBar = !centerMode && !!p && !race.over && p.player === me && !pb.busy && !decideSeen;
+  // 底部浮动操作栏只给手机竖屏用（电脑屏幕够大，操作区本来就看得到）
+  const showBar = portrait && !centerMode && !!p && !race.over && p.player === me && !pb.busy && !decideSeen;
   // 普通掷骰（只有「掷骰」一个选项）：不需要说明文字，只留「谁在动」和骰子按钮
   const rollOnly = !!p && p.options.length === 1 && p.options[0].value === "roll";
   const centerCard =

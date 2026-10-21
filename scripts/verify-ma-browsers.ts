@@ -29,6 +29,8 @@ const errors: string[] = [];
 const phone = async () => {
   const ctx = await browser.newContext({ viewport: { width: 390, height: 844 }, deviceScaleFactor: 2,
     reducedMotion: process.env.MA_REDUCED_MOTION === "1" ? "reduce" : "no-preference" });
+  // MA_LAYOUT=art：手机用原版棋盘（操作卡在赛道中间）
+  if (process.env.MA_LAYOUT === "art") await ctx.addInitScript(() => localStorage.setItem("ma-board-layout", "art"));
   const p = await ctx.newPage();
   p.on("pageerror", (e) => errors.push(e.message));
   return p;
@@ -100,7 +102,11 @@ try {
     for (const p of pages) {
       const pick = p.locator('[data-testid^="pick-"]', { hasText: /选它|派它上场/ }).first();
       // A sending button can outlive its decision for one render; never click it twice.
-      const opt = p.locator(".ma-decide.you .ma-options button:not(.sending):not(:disabled)").first();
+      // 清晰棋盘：操作在棋盘下面；原版棋盘：操作卡在赛道中间（下面那块隐藏）
+      const opt = p
+        .locator(".ma-decide.you .ma-options button:not(.sending):not(:disabled), .ma-cc.you .ma-options button:not(.sending):not(:disabled)")
+        .filter({ visible: true })
+        .first();
       const confirm = p.getByTestId("ma-choose-confirm");
       if (await confirm.count()) {
         await confirm.click();
@@ -131,7 +137,7 @@ try {
     }
     // 待决定事项只有决定人看得到选项：别人的面板里不能有选项按钮
     for (const q of pages)
-      assert.equal(await q.locator(".ma-decide:not(.you) .ma-options button").count(), 0, "旁人看到了别人的选项");
+      assert.equal(await q.locator(".ma-decide:not(.you) .ma-options button, .ma-cc:not(.you) .ma-options button").count(), 0, "旁人看到了别人的选项");
     const board = host.locator(".ma-board-art, .ma-grid").first();
     const label = (await board.count()) ? await board.getAttribute("aria-label") : null;
     if (label && !label.includes(`第 ${races} 场`)) {
