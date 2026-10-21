@@ -9,6 +9,11 @@ services:
     startCommand: npm run server
     healthCheckPath: /api/health
     autoDeploy: true
+    # 只改文档时不重新部署（避免打断正在玩的房间）
+    buildFilter:
+      ignoredPaths:
+        - docs/**
+        - "*.md"
     envVars:
       - key: NODE_VERSION
         value: "24"
