@@ -416,6 +416,27 @@ function Game({ snap, view, send, connected }: { snap: MARoomSnapshot; view: MAV
   );
 }
 
+/** 决定选项按钮：选项是一名选手时（神秘蛋三选一、军师预测等），直接显示它的头像和技能介绍 */
+function OptionButton({ o, onPick }: { o: { value: string; label: string }; onPick: () => void }) {
+  const r = RACER_BY_ID.get(o.value);
+  if (!r)
+    return (
+      <button className={o.value === "roll" ? "ma-go" : ""} onClick={onPick}>
+        {o.label}
+      </button>
+    );
+  return (
+    <button className="ma-opt-racer" onClick={onPick} data-racer={r.id}>
+      <img src={`${ART}/portraits/${r.id}.webp`} alt="" />
+      <span>
+        <b>{o.label}</b>
+        <em>【{r.powerZh}】</em>
+        <small>{r.text}</small>
+      </span>
+    </button>
+  );
+}
+
 function SoundToggle() {
   const [m, setM] = useState(sfxMuted);
   useEffect(() => onMutedChange(setM), []);
@@ -603,9 +624,7 @@ function Race({
         ) : p.player === me ? (
           <div className="ma-options">
             {p.options.map((o) => (
-              <button key={o.value} className={o.value === "roll" ? "ma-go" : ""} onClick={() => act({ type: "ANSWER", value: o.value })}>
-                {o.label}
-              </button>
+              <OptionButton key={o.value} o={o} onPick={() => act({ type: "ANSWER", value: o.value })} />
             ))}
           </div>
         ) : (
@@ -687,9 +706,7 @@ function Race({
           <p>{p.racer && !p.prompt.includes(racerName(p.racer)) ? `${racerName(p.racer)}：` : ""}{p.prompt}</p>
           <div className="ma-options">
             {p.options.map((o) => (
-              <button key={o.value} className={o.value === "roll" ? "ma-go" : ""} onClick={() => act({ type: "ANSWER", value: o.value })}>
-                {o.label}
-              </button>
+              <OptionButton key={o.value} o={o} onPick={() => act({ type: "ANSWER", value: o.value })} />
             ))}
           </div>
         </div>
@@ -708,9 +725,7 @@ function Race({
             ) : p.player === me ? (
               <div className="ma-options">
                 {p.options.map((o) => (
-                  <button key={o.value} className={o.value === "roll" ? "ma-go" : ""} onClick={() => act({ type: "ANSWER", value: o.value })}>
-                    {o.label}
-                  </button>
+                  <OptionButton key={o.value} o={o} onPick={() => act({ type: "ANSWER", value: o.value })} />
                 ))}
               </div>
             ) : (
