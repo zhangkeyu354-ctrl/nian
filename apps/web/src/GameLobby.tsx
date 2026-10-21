@@ -34,6 +34,16 @@ export function GameLobby() {
           online="/?game=ma"
           join={(code) => `/?game=ma&room=${code}`}
         />
+        <GameBox
+          id="cn"
+          title="行动代号"
+          sub="Codenames · 中文词库"
+          meta="4–16 人 · 红蓝两队"
+          blurb="队长只能说一个词加一个数字，队友从 25 个词里找出自己人。猜错送分，踩中刺客直接输。"
+          art={<span className="box-cn-art" />}
+          online="/?game=cn"
+          join={(code) => `/?game=cn&room=${code}`}
+        />
       </div>
     </main>
   );
