@@ -170,3 +170,12 @@
 }
 
 .box-dm{background:#fff8e9;color:#302c28;border:2px solid #564536}.box-dm .box-open,.box-dm button{background:#bd3f32;color:#fff}.box-dm input{background:#fff;color:#302c28}.box-dm .box-art{height:120px}.box-dm-art{height:120px;width:90px;object-fit:cover;border-radius:6px;transform:rotate(-8deg)}
+
+/* 眼疾手快：深紫桌面 + 白色圆盘 */
+.box-rr{background:#3b2e48;color:#fff;border:2px solid #2a2034}
+.box-rr .box-open,.box-rr button{background:#2f80cf;color:#fff;border:0;border-radius:8px;font-weight:800}
+.box-rr input{background:#fff;color:#2a2433;border:1px solid #2a2034}
+.box-rr-art{display:inline-flex;align-items:center;justify-content:center;width:84px;height:84px;border-radius:50%;background:#fff;border:6px solid #f4efc9;box-sizing:border-box}
+.box-rr-art svg{width:34px;height:34px}
+.box-rr-art svg:first-child{transform:rotate(-20deg) translate(4px,-6px)}
+.box-rr-art svg:last-child{transform:rotate(24deg) translate(-4px,8px)}

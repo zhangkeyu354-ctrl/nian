@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import "./game-lobby.css";
+import { ObjectArt } from "./rr/Objects.tsx";
 
 /** 首页：选游戏。每款游戏一个「盒盖」，保持各自的风格 */
 export function GameLobby() {
@@ -16,6 +17,21 @@ export function GameLobby() {
         </p>
       </header>
       <div className="hall-boxes">
+        <GameBox
+          id="rr"
+          title="眼疾手快"
+          sub="Reflex Race"
+          meta="2–6 人 · 拼手速"
+          blurb="所有人同时看到一张图，抢先点出正确的物品。点对 +1，点错 −1，先到目标分的人赢。"
+          art={
+            <span className="box-rr-art">
+              <ObjectArt obj={3} color={1} />
+              <ObjectArt obj={2} color={0} />
+            </span>
+          }
+          online="/?game=rr"
+          join={(code) => "/?game=rr&room=" + code}
+        />
         <GameBox
           id="dm"
           title="请留遗言"

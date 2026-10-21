@@ -9,6 +9,7 @@ import { RoomStore, errorText, type Room } from "./rooms.ts";
 import { attachMagicalAthlete } from "./ma-rooms.ts";
 import { attachDyingMessage } from "./dm-rooms.ts";
 import { attachCodenames } from "./cn-rooms.ts";
+import { attachReflexRace } from "./rr-rooms.ts";
 import {
   EVENTS,
   type Ack,
@@ -78,6 +79,7 @@ const http = createServer((req, res) => {
         maRooms: maStore.rooms.size,
         cnRooms: cnStore.rooms.size,
         dmRooms: dmStore.rooms.size,
+        rrRooms: rrStore.rooms.size,
       }),
     );
     return;
@@ -161,6 +163,13 @@ const cnStore = attachCodenames(
     maxRooms: MAX_ROOMS,
     idleMs: ROOM_IDLE_MS,
   },
+);
+
+/** 第五款游戏：眼疾手快（独立房间与存档，事件名带 rr: 前缀） */
+const rrStore = attachReflexRace(
+  io,
+  resolve(process.env.RR_DATA_DIR ?? join(DATA, "../rr-rooms")),
+  { maxRooms: MAX_ROOMS, idleMs: ROOM_IDLE_MS },
 );
 
 function broadcast(room: Room) {
@@ -295,7 +304,7 @@ io.on("connection", (socket) => {
 http.listen(PORT, HOST, async () => {
   const urls = lanAddresses().map((ip) => `http://${ip}:${PORT}/`);
   console.log(
-    "\n  桌游合集（黎明杀机 · 魔法运动员 · 行动代号 · 请留遗言）· 联机服务器已启动（版本 " +
+    "\n  桌游合集（黎明杀机 · 魔法运动员 · 行动代号 · 请留遗言 · 眼疾手快）· 联机服务器已启动（版本 " +
       VERSION +
       "）",
   );

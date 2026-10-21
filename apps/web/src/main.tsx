@@ -17,6 +17,9 @@ import { GameLobby } from "./GameLobby.tsx";
 const Codenames = lazy(() =>
   import("./cn/Codenames.tsx").then((m) => ({ default: m.Codenames })),
 );
+const ReflexRace = lazy(() =>
+  import("./rr/ReflexRace.tsx").then((m) => ({ default: m.ReflexRace })),
+);
 const MagicalAthlete = lazy(() =>
   import("./ma/MagicalAthlete.tsx").then((m) => ({
     default: m.MagicalAthlete,
@@ -27,6 +30,7 @@ const MagicalAthlete = lazy(() =>
  *   /                  桌游合集首页（选游戏）
  *   /?game=ma[&room=]  魔法运动员
  *   /?game=cn[&room=]  行动代号
+ *   /?game=rr[&room=]  眼疾手快
  *   /?online=1、/?room=XXXX   黎明杀机联机（原有入口不变）
  *   /?hotseat=1        黎明杀机本机热座
  *   /?view=...         样稿与图鉴
@@ -46,6 +50,10 @@ createRoot(document.getElementById("root")!).render(
     ) : q.get("game") === "ma" ? (
       <Suspense fallback={<p>正在打开魔法运动员…</p>}>
         <MagicalAthlete />
+      </Suspense>
+    ) : q.get("game") === "rr" ? (
+      <Suspense fallback={<p>正在打开眼疾手快…</p>}>
+        <ReflexRace />
       </Suspense>
     ) : q.get("game") === "cn" ? (
       <Suspense fallback={<p>正在打开行动代号…</p>}>
