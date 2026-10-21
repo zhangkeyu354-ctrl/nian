@@ -117,7 +117,7 @@
   background: #8e1f27;
   font-size: 14px;
 }
-.cn-go {
+.cn-app .cn-go {
   display: block;
   width: 100%;
   min-height: 52px;
@@ -294,7 +294,7 @@
   margin-right: 6px;
   font-size: 12px;
 }
-.cn-teambtn {
+.cn-app .cn-teambtn {
   min-height: 46px;
   border-radius: 10px;
   border: 0;
@@ -505,7 +505,7 @@
   grid-template-columns: repeat(5, minmax(0, 1fr));
   gap: 6px;
 }
-.cn-card {
+.cn-app .cn-card {
   position: relative;
   aspect-ratio: 1 / 0.82;
   border-radius: 9px;

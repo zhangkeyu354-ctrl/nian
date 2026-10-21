@@ -85,6 +85,12 @@ try {
   await click(pages[0], "cn-start");
   for (const p of pages) await p.getByTestId("cn-board").waitFor();
   await privacy();
+  const card = pages[1].locator('.cn-card').first();
+  await pages[1].mouse.move(0, 0);
+  const paper = await card.evaluate(el => getComputedStyle(el).backgroundImage);
+  await card.hover();
+  await pages[1].waitForTimeout(200);
+  assert.equal(await card.evaluate(el => getComputedStyle(el).backgroundImage), paper, 'Hover must preserve word-card paper');
   // Four-character words and a maximum-length clue must fit on a narrow screen.
   evidence.push(await pages[1].evaluate(() => {
     const el = document.querySelector('.cn-word')!;

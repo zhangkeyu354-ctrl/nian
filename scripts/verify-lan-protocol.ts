@@ -223,7 +223,10 @@ assert.equal(
   (report.at(-1) as any).events,
 );
 after.s.close();
-server!.kill();
+await new Promise<void>((done) => {
+  server!.once("exit", () => done());
+  server!.kill();
+});
 
 mkdirSync("output/lan", { recursive: true });
 writeFileSync(
@@ -240,4 +243,5 @@ console.log(
   "view checks",
   leakChecks,
 );
-process.exit(0);
+// Let closed socket/child-process handles drain before Node shuts down on Windows.
+process.exitCode = 0;

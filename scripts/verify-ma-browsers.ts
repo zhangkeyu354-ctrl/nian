@@ -27,7 +27,8 @@ for (let i = 0; ; i++) {
 const browser = await chromium.launch();
 const errors: string[] = [];
 const phone = async () => {
-  const ctx = await browser.newContext({ viewport: { width: 390, height: 844 }, deviceScaleFactor: 2 });
+  const ctx = await browser.newContext({ viewport: { width: 390, height: 844 }, deviceScaleFactor: 2,
+    reducedMotion: process.env.MA_REDUCED_MOTION === "1" ? "reduce" : "no-preference" });
   const p = await ctx.newPage();
   p.on("pageerror", (e) => errors.push(e.message));
   return p;
@@ -83,7 +84,8 @@ try {
     let acted = false;
     for (const p of pages) {
       const pick = p.locator('[data-testid^="pick-"]', { hasText: /选它|派它上场/ }).first();
-      const opt = p.locator(".ma-decide.you .ma-options button").first();
+      // A sending button can outlive its decision for one render; never click it twice.
+      const opt = p.locator(".ma-decide.you .ma-options button:not(.sending):not(:disabled)").first();
       const confirm = p.getByTestId("ma-choose-confirm");
       if (await confirm.count()) {
         await confirm.click();
