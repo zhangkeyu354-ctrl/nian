@@ -1155,3 +1155,13 @@ html.cn-shake body {
   .cn-fb, .cn-fx, .cn-fx *, html.cn-shake body { animation: none !important; }
   .cn-confetti { display: none; }
 }
+
+/* 手机横屏：给底部继续提示留出空间，避免与结算说明重叠。 */
+@media (max-height: 500px) and (orientation: landscape) {
+  .cn-fx { padding: 12px 20px 48px; }
+  .cn-fx .cn-fx-emoji { font-size: 48px; line-height: 1.15; }
+  .cn-fx .cn-fx-big { font-size: 72px; }
+  .cn-fx .cn-fx-sub { font-size: 16px; margin-top: 10px; }
+  .cn-fx .cn-fx-skull { font-size: 64px; line-height: 1.1; }
+  .cn-fx .cn-fx-tap { bottom: calc(10px + env(safe-area-inset-bottom)); }
+}

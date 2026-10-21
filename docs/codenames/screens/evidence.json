@@ -12,8 +12,8 @@
       "height": 844
     },
     "pixels": {
-      "busy": 0.7261514157248754,
-      "std": 87.9139881593208
+      "busy": 0.7304654271478916,
+      "std": 88.46493472100705
     }
   },
   {
@@ -26,8 +26,8 @@
       "height": 844
     },
     "pixels": {
-      "busy": 0.6141937051889659,
-      "std": 95.49508171989552
+      "busy": 0.615032203183862,
+      "std": 96.33852506163039
     }
   },
   {
@@ -40,8 +40,8 @@
       "height": 900
     },
     "pixels": {
-      "busy": 0.5239930555555555,
-      "std": 80.26609040650875
+      "busy": 0.5235381944444445,
+      "std": 80.70399120907194
     }
   },
   {
@@ -54,8 +54,22 @@
       "height": 900
     },
     "pixels": {
-      "busy": 0.5248263888888889,
-      "std": 88.89647962219328
+      "busy": 0.5253229166666666,
+      "std": 89.35332676743229
+    }
+  },
+  {
+    "name": "phone-360-board",
+    "scope": "Visible UI / prototype region, not a full-map-count claim",
+    "region": {
+      "x": 0,
+      "y": 0,
+      "width": 360,
+      "height": 780
+    },
+    "pixels": {
+      "busy": 0.6293874643874644,
+      "std": 95.70610926356564
     }
   },
   {
@@ -68,8 +82,8 @@
       "height": 844
     },
     "pixels": {
-      "busy": 0.786960748572123,
-      "std": 93.10494459257174
+      "busy": 0.7885769838376473,
+      "std": 93.19656241337559
     }
   },
   {
@@ -82,8 +96,50 @@
       "height": 844
     },
     "pixels": {
-      "busy": 0.7195528010693888,
-      "std": 87.91398738623982
+      "busy": 0.7224814679790983,
+      "std": 88.15079985712184
+    }
+  },
+  {
+    "name": "phone-assassin-fx",
+    "scope": "Visible UI / prototype region, not a full-map-count claim",
+    "region": {
+      "x": 0,
+      "y": 0,
+      "width": 390,
+      "height": 844
+    },
+    "pixels": {
+      "busy": 0.10569935593632276,
+      "std": 29.81215864547697
+    }
+  },
+  {
+    "name": "phone-360-victory-fx",
+    "scope": "Visible UI / prototype region, not a full-map-count claim",
+    "region": {
+      "x": 0,
+      "y": 0,
+      "width": 360,
+      "height": 780
+    },
+    "pixels": {
+      "busy": 0.3965099715099715,
+      "std": 37.25041935549584
+    }
+  },
+  {
+    "name": "phone-landscape-victory-fx",
+    "scope": "Visible UI / prototype region, not a full-map-count claim",
+    "region": {
+      "x": 0,
+      "y": 0,
+      "width": 844,
+      "height": 390
+    },
+    "pixels": {
+      "busy": 0.45308056872037916,
+      "std": 30.173211624911243
     }
   },
   {
@@ -96,8 +152,8 @@
       "height": 844
     },
     "pixels": {
-      "busy": 0.7430915056507473,
-      "std": 78.59276057398773
+      "busy": 0.7433588528375258,
+      "std": 78.60630690593983
     }
   },
   {
@@ -110,8 +166,8 @@
       "height": 844
     },
     "pixels": {
-      "busy": 0.7439664600802042,
-      "std": 79.37509823311247
+      "busy": 0.7183861951634464,
+      "std": 76.36970622732676
     }
   }
 ]

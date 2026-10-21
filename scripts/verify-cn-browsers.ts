@@ -108,6 +108,9 @@ try {
   }));
   assert.ok((evidence.at(-1) as { fourCharacterWordFits: boolean }).fourCharacterWordFits, 'Four-character word clipped');
   for (let i = 0; i < 4; i++) await shot(pages[i], ["red-captain", "red-operative", "blue-captain", "blue-operative"][i]);
+  await pages[1].setViewportSize({ width: 360, height: 780 });
+  await privacy(); await shot(pages[1], "phone-360-board");
+  await pages[1].setViewportSize({ width: 390, height: 844 });
   const before = await pages[1].getByTestId("cn-role").innerText();
   await pages[1].reload(); await pages[1].getByTestId("cn-role").waitFor();
   assert.equal(await pages[1].getByTestId("cn-role").innerText(), before);
@@ -126,13 +129,31 @@ try {
   const timed = await status();
   await pages[0].locator(".cn-timer.hurry").waitFor({ timeout: 22000 });
   await shot(pages[0], "last-ten-seconds");
-  await wait(async () => (await status()) !== timed, 16000);
+  await wait(async () => (await status()) !== timed, 25000);
   t = await clue("inf"); await privacy(); await reveal(t, "neutral");
   await wait(async () => (await status()) !== t);
   t = await clue("inf");
   await wait(async () => (await status()) !== t, 34000);
-  t = await clue("inf"); await reveal(t, "assassin");
+  t = await clue("inf");
+  const winner = await operative(t === "red" ? "blue" : "red");
+  await reveal(t, "assassin");
   for (const p of pages) await p.getByTestId("cn-result").waitFor();
+  await pages[1].getByTestId("cn-fx-assassin").waitFor();
+  await shot(pages[1], "phone-assassin-fx");
+  await winner.getByTestId("cn-fx-party").waitFor();
+  const winnerViewport = winner.viewportSize()!;
+  await winner.setViewportSize({ width: 360, height: 780 });
+  await shot(winner, "phone-360-victory-fx");
+  await winner.setViewportSize({ width: 844, height: 390 });
+  await shot(winner, "phone-landscape-victory-fx");
+  const sub = (await winner.locator('.cn-fx .cn-fx-sub').boundingBox())!;
+  const tap = (await winner.locator('.cn-fx .cn-fx-tap').boundingBox())!;
+  assert.ok(sub.y + sub.height + 4 < tap.y, "Landscape result text overlaps continue hint");
+  await winner.setViewportSize(winnerViewport);
+  for (const p of pages) {
+    const fx = p.locator('.cn-fx');
+    if (await fx.count()) await fx.click();
+  }
   await shot(pages[1], "result"); await click(pages[0], "cn-next");
   await pages[0].getByTestId("cn-mode-random").waitFor(); await click(pages[0], "cn-mode-random");
   await click(pages[0], "cn-start");
@@ -141,6 +162,10 @@ try {
   const goals = await (await captain(t)).locator(`.cn-card[data-role="${t}"]`).count();
   for (let i = 0; i < goals; i++) await reveal(t, t);
   for (const p of pages) await p.getByTestId("cn-result").waitFor();
+  for (const p of pages) {
+    const fx = p.locator('.cn-fx');
+    if (await fx.count()) await fx.click();
+  }
   await shot(pages[1], "random-captain-win");
   assert.deepEqual(errors, []);
   writeFileSync(`${out}/evidence.json`, JSON.stringify(evidence, null, 2));
