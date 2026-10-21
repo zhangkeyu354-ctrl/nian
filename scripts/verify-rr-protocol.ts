@@ -163,14 +163,15 @@ try {
   const wrong1 = (ans1 + 1) % 5;
   const r1 = await tap(A, code, wrong1);
   assert.ok(r1.ok && r1.tap.correct === false);
-  assert.equal((await tap(A, code, ans1)).ok, false, "点错后同一张不能再点");
+  const again = await tap(A, code, (ans1 + 2) % 5);
+  assert.ok(again.ok && again.tap.correct === false, "点错后还能继续点");
   const r2 = await tap(B, code, ans1);
   assert.ok(r2.ok && r2.tap.correct);
   v = await until(C, (x) => x.view!.phase === "reveal", "公布");
-  assert.equal(v.view!.scores[A.id], -1);
+  assert.equal(v.view!.scores[A.id], -2);
   assert.equal(v.view!.scores[B.id], 1);
   assert.equal(v.view!.card.answer, ans1);
-  step("点错 −1（负分）并锁定本张；点对 +1；公布答案");
+  step("点错可以继续点，错两次 −2（负分）；点对 +1；公布答案");
 
   // 第 2 张：三人同时点对，只能一人得分
   v = await until(A, (x) => x.view!.cardNo === 2, "第 2 张");
@@ -184,7 +185,7 @@ try {
   assert.equal(rs.filter((r) => r.ok).length, 1, "同时点只有一人成功");
   v = await until(C, (x) => x.view!.phase !== "live", "第 2 张结束");
   const sum = Object.values(v.view!.scores).reduce((a, b) => a + b, 0);
-  assert.equal(sum, 1, "-1 + 1 + 1 = 1");
+  assert.equal(sum, 0, "-2 + 1 + 1 = 0");
   step("三人同时点对：只有最先到服务器的一人 +1");
 
   // 如果 B 已经 2 分就结束了；否则继续：全员点错
@@ -192,10 +193,17 @@ try {
     v = await until(A, (x) => x.view!.cardNo === 3, "第 3 张");
     v = await waitLive(A);
     const w = (answerOf(v) + 2) % 5;
+    const before3 = { ...A.last().view!.scores };
     await Promise.all([tap(A, code, w), tap(B, code, w), tap(C, code, w)]);
-    v = await until(A, (x) => x.view!.phase === "reveal", "全员点错");
+    await tap(A, code, w);
+    await sleep(100);
+    v = A.last();
+    assert.equal(v.view!.phase, "live", "全员点错也继续");
+    assert.equal(v.view!.scores[A.id], before3[A.id] - 2);
+    assert.equal(v.view!.scores[B.id], before3[B.id] - 1);
+    v = await until(A, (x) => x.view!.phase === "reveal", "超时公布", 4000);
     assert.equal(v.view!.cardWinner, null);
-    step("全员点错：直接公布答案，没人得分");
+    step("全员点错也不提前结束，可以继续点、继续扣；到时间没人点对才公布");
 
     // 旧图点击被拒
     const old = v.view!.cardNo;

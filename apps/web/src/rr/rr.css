@@ -1195,3 +1195,58 @@
 .rr-app .rr-board li.rank-1 b {
   font-size: 38px;
 }
+
+/* 公布：不再是圆盘里的提示条，直接在屏幕上浮出大字（不被圆盘裁切） */
+.rr-app .rr-stage {
+  position: relative;
+}
+.rr-app .rr-plate.revealed .rr-items {
+  opacity: 0.2;
+  transition: opacity 0.2s;
+}
+.rr-callout {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  pointer-events: none;
+  text-align: center;
+  animation: rr-callout 0.32s cubic-bezier(0.2, 0.8, 0.3, 1.4) both;
+}
+.rr-callout p {
+  margin: 0;
+  font-weight: 900;
+  line-height: 1.05;
+  color: #fff;
+  -webkit-text-stroke: 8px #231d2c;
+  paint-order: stroke fill;
+  text-shadow: 0 6px 0 rgba(0, 0, 0, 0.3);
+}
+.rr-callout .who {
+  font-size: clamp(30px, 10vw, 46px);
+  color: var(--who);
+  max-width: 92vw;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.rr-callout .who.none {
+  color: #fff;
+}
+.rr-callout .pts {
+  font-size: clamp(64px, 22vw, 104px);
+  color: #7dff9e;
+}
+.rr-callout .ans {
+  margin-top: 6px;
+  font-size: 20px;
+  -webkit-text-stroke: 6px #231d2c;
+}
+@keyframes rr-callout {
+  from {
+    transform: scale(0.4);
+    opacity: 0;
+  }
+}

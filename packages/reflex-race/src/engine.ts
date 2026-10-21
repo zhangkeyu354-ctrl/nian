@@ -5,7 +5,8 @@
  * - 2–6 人。每人屏幕上同一张图（2 个物品）+ 5 个按钮。
  * - 判定：图里如果有物品是它「原本的颜色」，就点它；
  *         否则点颜色和形状都没在图里出现过的那个。
- * - 每张图最先点对的人 +1 分；点错 −1 分（可以是负数），这张图不能再点。
+ * - 每张图最先点对的人 +1 分；每点错一次 −1 分（可以是负数），点错后可以继续点（2026-10-21 用户改规则）。
+ * - 一张图到有人点对、或者作答时间到为止。
  * - 先到目标分的人获胜，目标分由房主设定。
  */
 
@@ -85,7 +86,7 @@ export interface RRState {
   revealAt: number;
   /** 下一次自动推进的时间（live：没人答对；reveal：下一张图） */
   deadline: number;
-  /** 这张图点错过的人 */
+  /** 这张图点错过的人（只用于显示，不再锁定） */
   locked: string[];
   taps: RRTap[];
   /** 这张图抢到的人；没人答对为 null */
@@ -262,23 +263,17 @@ export function reduceRR(s: RRState, cmd: RRCommand): RRState {
   if (s.phase !== "live") fail("RR_TOO_LATE", "这张图已经结束了。");
   if (at < s.revealAt) fail("RR_TOO_EARLY", "图还没出来。");
   if (at >= s.deadline) fail("RR_TOO_LATE", "这张图已经结束了。");
-  if (s.locked.includes(player))
-    fail("RR_LOCKED", "你这张图点错过了，等下一张。");
   const correct = obj === s.card.answer;
   const tap: RRTap = { player, obj: obj as Obj, correct, at };
   const stat = s.stats[player];
   if (!correct) {
-    const locked = [...s.locked, player];
-    const allOut = s.players.every((p) => locked.includes(p.id));
+    const locked = s.locked.includes(player) ? s.locked : [...s.locked, player];
     return {
       ...s,
       scores: { ...s.scores, [player]: s.scores[player] - 1 },
       stats: { ...s.stats, [player]: { ...stat, wrong: stat.wrong + 1 } },
       locked,
       taps: [...s.taps, tap],
-      ...(allOut
-        ? { phase: "reveal" as const, deadline: at + s.timing.revealMs }
-        : {}),
     };
   }
   const score = s.scores[player] + 1;

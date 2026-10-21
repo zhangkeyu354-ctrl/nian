@@ -102,28 +102,34 @@ describe("计分", () => {
     expect(s.cardNo).toBe(2);
     expect(s.revealAt).toBeGreaterThan(live({ ...s, revealAt: T0 }));
   });
-  it("点错 −1 可以变负数，这张图不能再点，别人还能抢", () => {
+  it("点错 −1 可以变负数，点错后还能继续点，错几次扣几次", () => {
     let s = game();
     s = reduceRR(s, { type: "TAP", player: "a", obj: wrong(s), at: live(s) });
-    expect(s.scores.a).toBe(-1);
-    expect(s.phase).toBe("live");
-    expect(() =>
-      reduceRR(s, {
-        type: "TAP",
-        player: "a",
-        obj: s.card.answer,
-        at: live(s),
-      }),
-    ).toThrow(/点错过/);
     s = reduceRR(s, {
       type: "TAP",
-      player: "c",
-      obj: s.card.answer,
-      at: live(s) + 5,
+      player: "a",
+      obj: wrong(s),
+      at: live(s) + 1,
     });
-    expect(s.scores).toEqual({ a: -1, b: 0, c: 1 });
+    s = reduceRR(s, {
+      type: "TAP",
+      player: "a",
+      obj: (s.card.answer + 2) % 5,
+      at: live(s) + 2,
+    });
+    expect(s.scores.a).toBe(-3);
+    expect(s.stats.a.wrong).toBe(3);
+    expect(s.phase).toBe("live");
+    s = reduceRR(s, {
+      type: "TAP",
+      player: "a",
+      obj: s.card.answer,
+      at: live(s) + 3,
+    });
+    expect(s.scores).toEqual({ a: -2, b: 0, c: 0 });
+    expect(s.cardWinner).toBe("a");
   });
-  it("所有人都点错就直接公布答案", () => {
+  it("所有人都点错也不提前结束，继续抢，直到有人点对或时间到", () => {
     let s = game();
     for (const p of players)
       s = reduceRR(s, {
@@ -132,9 +138,16 @@ describe("计分", () => {
         obj: wrong(s),
         at: live(s),
       });
-    expect(s.phase).toBe("reveal");
-    expect(s.cardWinner).toBeNull();
+    expect(s.phase).toBe("live");
     expect(s.scores).toEqual({ a: -1, b: -1, c: -1 });
+    s = reduceRR(s, {
+      type: "TAP",
+      player: "b",
+      obj: s.card.answer,
+      at: live(s) + 9,
+    });
+    expect(s.scores).toEqual({ a: -1, b: 0, c: -1 });
+    expect(s.phase).toBe("reveal");
   });
   it("图还没出来不能点；超时没人答对就公布答案", () => {
     let s = game();

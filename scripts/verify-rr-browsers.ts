@@ -1,7 +1,7 @@
 // 眼疾手快浏览器整局验收：4 部手机（390×844 触屏）+ 1 部小屏（360×640），真实服务器进程。
 // 先 npm run build。可用 PW_CHROME 指定已安装的 Chromium。
 // 覆盖：大厅入口 → 建房 → 扫码链接加入 → 房主设目标分 → 开局 → 所有人同时看到同一张图 →
-//      点错 −1（按钮抖动、本张锁定）→ 别人点对 +1 → 公布答案 → 打到目标分 → 结算 → 再来一局。
+//      点错 −1（按钮抖动，可以继续点，错几次扣几次）→ 别人点对 +1 → 公布答案 → 打到目标分 → 结算 → 再来一局。
 //      检查 5 个按钮和圆盘都完整显示在屏幕内（不需要滚动），没有页面报错。
 import { spawn, type ChildProcess } from "node:child_process";
 import { mkdirSync, mkdtempSync } from "node:fs";
@@ -196,14 +196,14 @@ try {
         .getByTestId("rr-btn-" + ans)
         .evaluate((el) => getComputedStyle(el).opacity),
       "1",
-      "锁定卡片保持不透明",
+      "点错后卡片保持不透明",
     );
     assert.equal(
       await pages[1]
         .getByTestId("rr-btn-" + ans)
         .evaluate((el) => getComputedStyle(el).backgroundColor),
       "rgb(255, 255, 255)",
-      "锁定卡片保持白色",
+      "点错后卡片保持白色",
     );
     await host.getByRole("button", { name: "关闭音效" }).click();
     assert.equal(
@@ -214,18 +214,27 @@ try {
   }
   assert.equal(
     await pages[1].getByTestId("rr-btn-" + ans).isDisabled(),
-    true,
-    "点错后本张不能再点",
+    false,
+    "点错后还能继续点",
   );
+  // 再错一次：继续扣分
+  const wrong2 = (ans + 2) % 5;
+  await pages[1].getByTestId("rr-btn-" + wrong2).tap();
+  await pages[1]
+    .getByTestId(/^rr-score-/)
+    .filter({ hasText: "-2" })
+    .first()
+    .waitFor();
+  await pages[1].getByText("这张图点错 2 次").waitFor();
   await pages[2].getByTestId("rr-btn-" + ans).tap();
   for (const p of pages) await p.getByTestId("rr-verdict").waitFor();
   await pages[0].locator(".rr-btn.answer").waitFor();
   await shot(pages[0], "07-reveal");
   await pair(host, "reveal");
   const s1 = await scoreOf(pages[0]);
-  assert.deepEqual(s1, [0, -1, 1, ...Array(pages.length - 3).fill(0)]);
+  assert.deepEqual(s1, [0, -2, 1, ...Array(pages.length - 3).fill(0)]);
   step(
-    "朋友1 点错：按钮变红抖动、显示 −1、本张锁定；朋友2 点对 +1；所有人看到公布和正确答案",
+    "朋友1 连续点错两次：按钮变红抖动、每次 −1、还能继续点；朋友2 点对 +1；所有人看到浮在屏幕上的「朋友2 +1」和正确答案",
   );
 
   // 之后由小屏手机（朋友3）连续抢 3 张拿下

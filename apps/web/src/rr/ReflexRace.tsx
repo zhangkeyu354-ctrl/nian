@@ -94,7 +94,7 @@ function RulesCard() {
       </div>
       <p className="rr-muted">
         点对 +1，点错
-        −1（可以扣成负数），点错后这张图不能再点。先到目标分的人赢。
+        −1（可以扣成负数），点错了可以接着点，错几次扣几次。先到目标分的人赢。
       </p>
     </section>
   );
@@ -477,7 +477,6 @@ function Game({
   const me = snap.mySeat;
   const playing = !!me && view.players.some((p) => p.id === me);
   const showing = view.phase !== "live" || t >= view.revealAt;
-  const locked = !!me && view.locked.includes(me);
   const [pending, setPending] = useState<number | null>(null);
   const [sound, setSound] = useState(
     () => localStorage.getItem("rr-sound") !== "off",
@@ -503,7 +502,7 @@ function Game({
   }, [view.cardNo]);
 
   const canTap =
-    playing && showing && view.phase === "live" && !locked && pending === null;
+    playing && showing && view.phase === "live" && pending === null;
   const inFlight = useRef(false);
   async function tap(obj: number) {
     if (!canTap || inFlight.current) return;
@@ -540,14 +539,11 @@ function Game({
       ? rankOf(i - 1)
       : i + 1;
   const wrongTaps = view.taps.filter((x) => !x.correct);
+  const myWrongCount = wrongTaps.filter((x) => x.player === me).length;
 
   return (
     <main
-      className={
-        "rr-game" +
-        (locked && view.phase === "live" ? " is-locked" : "") +
-        (view.phase !== "live" ? " revealed-phase" : "")
-      }
+      className={"rr-game" + (view.phase !== "live" ? " revealed-phase" : "")}
       data-testid="rr-game"
       data-card={view.cardNo}
     >
@@ -634,40 +630,43 @@ function Game({
               />
             </div>
           )}
-          {view.phase !== "live" && (
-            <div className="rr-verdict" data-testid="rr-verdict">
-              <div
-                style={
-                  view.cardWinner
-                    ? { background: colorOf[view.cardWinner] }
-                    : undefined
-                }
-              >
-                {view.cardWinner ? (
-                  <p>
-                    {view.cardWinner === me
-                      ? "你抢到了！"
-                      : `${nameOf(view.cardWinner)} 抢到了`}
-                    <b>+1</b>
-                  </p>
-                ) : (
-                  <p className="none">没人答对</p>
-                )}
-                {answer !== null && <small>答案：{NAMES[answer]}</small>}
-              </div>
-            </div>
-          )}
         </div>
+        {view.phase !== "live" && (
+          <div
+            className="rr-callout"
+            data-testid="rr-verdict"
+            style={
+              {
+                "--who": view.cardWinner ? colorOf[view.cardWinner] : "#fff",
+              } as React.CSSProperties
+            }
+          >
+            {view.cardWinner ? (
+              <>
+                <p className="who">
+                  {view.cardWinner === me ? "你" : nameOf(view.cardWinner)}
+                </p>
+                <p className="pts">+1</p>
+              </>
+            ) : (
+              <p className="who none">没人答对</p>
+            )}
+            {answer !== null && <p className="ans">答案：{NAMES[answer]}</p>}
+          </div>
+        )}
       </div>
 
       <div className="rr-status">
         {!playing ? (
           <span>本局观战，下一局可以加入</span>
-        ) : locked && view.phase === "live" ? (
-          <span className="bad">点错了 −1，这张图等别人抢</span>
+        ) : myWrongCount > 0 && view.phase === "live" ? (
+          <span className="bad">
+            这张图点错 {myWrongCount} 次，−{myWrongCount}，继续找！
+          </span>
         ) : wrongTaps.length > 0 && view.phase === "live" ? (
           <span>
-            {wrongTaps.map((x) => nameOf(x.player)).join("、")} 点错 −1
+            {[...new Set(wrongTaps.map((x) => nameOf(x.player)))].join("、")}{" "}
+            点错扣分了
           </span>
         ) : error ? (
           <span className="bad">{error}</span>
