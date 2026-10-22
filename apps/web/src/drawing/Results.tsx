@@ -125,7 +125,7 @@ export function FakeResult(p: {
         <div className="rs-reveal">
           <div
             className="rs-suspect"
-            style={{ "--seat": COLORS[fakeIndex % 8] } as React.CSSProperties}
+            style={{ "--seat": COLORS[fakeIndex % COLORS.length] } as React.CSSProperties}
           >
             <div className="rs-suspect-face">
               <Portrait index={fakeIndex} />
@@ -175,7 +175,7 @@ export function FakeResult(p: {
                     <i
                       style={{
                         width: (100 * t.voters.length) / maxVotes + "%",
-                        background: COLORS[t.index % 8],
+                        background: COLORS[t.index % COLORS.length],
                       }}
                     />
                   </span>
@@ -245,7 +245,7 @@ export function TaleResult(p: {
               className="rs-book"
               key={a.owner.id}
               style={
-                { "--k": i, "--seat": COLORS[owner % 8] } as React.CSSProperties
+                { "--k": i, "--seat": COLORS[owner % COLORS.length] } as React.CSSProperties
               }
             >
               <header>

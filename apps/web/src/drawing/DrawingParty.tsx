@@ -395,7 +395,7 @@ export function DrawingParty({ mode }: { mode: Mode }) {
             </ol>
             <p>
               {mode === "fa"
-                ? "抬起手指即结束这一笔，不能撤销。建议先和朋友开语音。3–8 人线上自动主持改编。"
+                ? "抬起手指即结束这一笔，不能撤销。建议先和朋友开语音。3–10 人线上自动主持改编。"
                 : "提前提交后不能修改，等大家都好或到时一起传下一页。3 人是短链改编。"}
             </p>
             <button className="st-btn st-primary" onClick={() => setRules(false)}>
@@ -428,11 +428,11 @@ export function DrawingParty({ mode }: { mode: Mode }) {
                 {mode === "tp" ? "画一句 · 猜一画" : "同一张画 · 一位伪画家"}
               </p>
               <h1>{title}</h1>
-              <p className="lb-lead">3–8 位朋友，各拿一部手机，就能开始。</p>
+              <p className="lb-lead">3–10 位朋友，各拿一部手机，就能开始。</p>
               <div className="lb-field">
                 <span>这次几个人</span>
                 <div className="lb-seg" role="group" aria-label="游戏人数">
-                  {[3, 4, 5, 6, 7, 8].map((n) => (
+                  {[3, 4, 5, 6, 7, 8, 9, 10].map((n) => (
                     <button
                       key={n}
                       aria-pressed={count === n}
@@ -547,7 +547,7 @@ export function DrawingParty({ mode }: { mode: Mode }) {
                           (p.connected ? "" : "is-off ") +
                           (p.id === snap.me ? "is-me" : "")
                     }
-                    style={{ "--seat": COLORS[i % 8] } as React.CSSProperties}
+                    style={{ "--seat": COLORS[i % COLORS.length] } as React.CSSProperties}
                   >
                     {p ? (
                       <>
@@ -576,7 +576,7 @@ export function DrawingParty({ mode }: { mode: Mode }) {
                 <div className="lb-field is-inline">
                   <span>人数</span>
                   <div className="lb-seg is-small" role="group" aria-label="房间人数">
-                    {[3, 4, 5, 6, 7, 8].map((n) => (
+                    {[3, 4, 5, 6, 7, 8, 9, 10].map((n) => (
                       <button
                         key={n}
                         aria-pressed={snap.count === n}
@@ -658,7 +658,7 @@ export function DrawingParty({ mode }: { mode: Mode }) {
           <footer className="lb-footnote">
             {snap?.ephemeral
               ? "云端为临时存储：部署或服务重启可能清除对局，请及时下载作品。"
-              : "3–8 人 · 建议同时开启语音 · 作品可自行下载"}
+              : "3–10 人 · 建议同时开启语音 · 作品可自行下载"}
           </footer>
         </section>
       </div>
