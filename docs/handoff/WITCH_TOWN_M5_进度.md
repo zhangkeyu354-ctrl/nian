@@ -9,6 +9,15 @@
 - 验证：typecheck、build 已通过；全仓测试正在运行，尚未出最终结论。
 - 下一步：完成 WebKit 重试并保留失败证据，随后分别提交隐私核查和中文说明对照。生产代码与规则引擎未修改。
 
+### 第二项：联机隐私检查已完成
+
+- 新增 `scripts/verify-witch-town-privacy.ts`、独立字段白名单 `scripts/wt-privacy-audit.ts`、7 项主动注入泄露反例单测。
+- 4/8/12 人各一局完整结束，合计 266 条命令、2,495 条更新及 ACK 快照，0 次越权字段；包含各座位和未占座观察者。
+- 正常女巫协同、说书人和继承者授权数据单独验证，不把依法可见的数据误报。三局未实际触发共同分牌，报告明确保留这个覆盖缺口。
+- 原始测试网络轨迹保存在忽略目录 `output/witch-town/privacy/`，Git 仅提交聚合数据、SHA-256、脚本与报告。
+- 运行：`npx tsx scripts/verify-witch-town-privacy.ts`；单测：`npx vitest run apps/server/test/wt-wire-privacy.test.ts --maxWorkers=1`（7/7 已通过）。
+- 报告：[隐私核查](../witch-town/validation/PRIVACY_AUDIT_2026-10-22.md)。下一步提交中文规则差异表，继续 WebKit 诊断。
+
 Codex 额度用完，Claude 从 `8d3781c` 接手。只在 `codex/witch-town-m1` 工作，不碰 main，不部署。
 
 ## 已完成

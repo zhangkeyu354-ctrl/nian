@@ -1,0 +1,235 @@
+{
+  "runs": [
+    {
+      "players": 4,
+      "finished": true,
+      "commands": 98,
+      "snapshots": 601,
+      "perSeat": [
+        {
+          "updates": 102,
+          "acks": 28,
+          "preEnd": 128
+        },
+        {
+          "updates": 101,
+          "acks": 27,
+          "preEnd": 127
+        },
+        {
+          "updates": 100,
+          "acks": 23,
+          "preEnd": 122
+        },
+        {
+          "updates": 98,
+          "acks": 24,
+          "preEnd": 121
+        },
+        {
+          "updates": 97,
+          "acks": 1,
+          "preEnd": 97
+        }
+      ],
+      "phases": [
+        "dawn",
+        "day",
+        "black-event",
+        "choice",
+        "trial",
+        "over"
+      ],
+      "choices": [
+        "conspiracy-cat",
+        "conspiracy-pick",
+        "night-witch",
+        "night-constable",
+        "confession",
+        "ability",
+        "trial"
+      ],
+      "violations": 0,
+      "rawTrace": "output/witch-town/privacy/4p-wire.ndjson",
+      "sha256": "548c6a866a8f7ac2fa6f5d811110cbd97fb2740dffe28a211f757c8a4128f1be",
+      "clock": "isolated Date.now offset for server timer; no engine edits",
+      "driver": "oracle selects targets for termination; clients receive only authorized snapshots"
+    },
+    {
+      "players": 8,
+      "finished": true,
+      "commands": 92,
+      "snapshots": 900,
+      "perSeat": [
+        {
+          "updates": 95,
+          "acks": 17,
+          "preEnd": 111
+        },
+        {
+          "updates": 95,
+          "acks": 18,
+          "preEnd": 112
+        },
+        {
+          "updates": 90,
+          "acks": 5,
+          "preEnd": 94
+        },
+        {
+          "updates": 89,
+          "acks": 15,
+          "preEnd": 103
+        },
+        {
+          "updates": 88,
+          "acks": 14,
+          "preEnd": 100
+        },
+        {
+          "updates": 87,
+          "acks": 11,
+          "preEnd": 97
+        },
+        {
+          "updates": 86,
+          "acks": 11,
+          "preEnd": 96
+        },
+        {
+          "updates": 86,
+          "acks": 9,
+          "preEnd": 94
+        },
+        {
+          "updates": 83,
+          "acks": 1,
+          "preEnd": 83
+        }
+      ],
+      "phases": [
+        "dawn",
+        "day",
+        "choice",
+        "black-event",
+        "trial",
+        "over"
+      ],
+      "choices": [
+        "tituba",
+        "conspiracy-cat",
+        "ability",
+        "conspiracy-pick",
+        "night-witch",
+        "night-witch-wait",
+        "night-constable",
+        "confession",
+        "trial"
+      ],
+      "violations": 0,
+      "rawTrace": "output/witch-town/privacy/8p-wire.ndjson",
+      "sha256": "c7610d847db5ceea3ffe18779a832fa2e4551d0a22bd673e6c62a63b15a15def",
+      "clock": "isolated Date.now offset for server timer; no engine edits",
+      "driver": "oracle selects targets for termination; clients receive only authorized snapshots"
+    },
+    {
+      "players": 12,
+      "finished": true,
+      "commands": 76,
+      "snapshots": 994,
+      "perSeat": [
+        {
+          "updates": 78,
+          "acks": 11,
+          "preEnd": 87
+        },
+        {
+          "updates": 74,
+          "acks": 4,
+          "preEnd": 77
+        },
+        {
+          "updates": 73,
+          "acks": 6,
+          "preEnd": 78
+        },
+        {
+          "updates": 72,
+          "acks": 6,
+          "preEnd": 77
+        },
+        {
+          "updates": 74,
+          "acks": 8,
+          "preEnd": 81
+        },
+        {
+          "updates": 71,
+          "acks": 9,
+          "preEnd": 79
+        },
+        {
+          "updates": 70,
+          "acks": 8,
+          "preEnd": 77
+        },
+        {
+          "updates": 68,
+          "acks": 7,
+          "preEnd": 74
+        },
+        {
+          "updates": 67,
+          "acks": 8,
+          "preEnd": 74
+        },
+        {
+          "updates": 66,
+          "acks": 7,
+          "preEnd": 72
+        },
+        {
+          "updates": 65,
+          "acks": 6,
+          "preEnd": 70
+        },
+        {
+          "updates": 65,
+          "acks": 8,
+          "preEnd": 72
+        },
+        {
+          "updates": 62,
+          "acks": 1,
+          "preEnd": 62
+        }
+      ],
+      "phases": [
+        "dawn",
+        "day",
+        "choice",
+        "black-event",
+        "trial",
+        "over"
+      ],
+      "choices": [
+        "tituba",
+        "conspiracy-cat",
+        "ability",
+        "conspiracy-pick",
+        "night-witch",
+        "night-witch-wait",
+        "night-constable",
+        "confession",
+        "trial"
+      ],
+      "violations": 0,
+      "rawTrace": "output/witch-town/privacy/12p-wire.ndjson",
+      "sha256": "e15965f374596ab8802960385e80d3c9e221b0593c5d33cef7700f36e0ae54c4",
+      "clock": "isolated Date.now offset for server timer; no engine edits",
+      "driver": "oracle selects targets for termination; clients receive only authorized snapshots"
+    }
+  ],
+  "rawTracesCommitted": false,
+  "scope": "All wt:update frames plus ACK snapshots, 4/8/12 complete protocol games with independent allow-list and per-version oracle. Witches may see allied votes; other seats may not. Authorized Tituba/loot data scoped to their actors."
+}
