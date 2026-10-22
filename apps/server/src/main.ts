@@ -84,7 +84,7 @@ const http = createServer((req, res) => {
         rrRooms: rrStore.rooms.size,
         dpRooms: dpStore.rooms.size,
         ...(wtStore
-          ? { witchTown: { milestone: "M4_RULE_ENGINE", rooms: wtStore.size, fullGame: false } }
+          ? { witchTown: { milestone: "M5_PHONE_UI", rooms: wtStore.size, fullGame: true } }
           : {}),
       }),
     );
@@ -146,12 +146,12 @@ const http = createServer((req, res) => {
 });
 
 const io = new Server(http, { cors: { origin: true } });
-/** Local engineering entry; disabled by default until complete game acceptance. */
-const wtStore = process.env.WT_ENABLE_DEV === "1" || process.env.WT_ENABLE_M1 === "1"
+/** 女巫镇：M5 手机界面完成，默认开启（WT_DISABLE=1 可关闭）。张数为候选59，房间内已提示待核实。 */
+const wtStore = process.env.WT_DISABLE !== "1"
   ? attachWitchTown(
       io,
       resolve(process.env.WT_DATA_DIR ?? join(DATA, "../wt-rooms")),
-      { maxRooms: MAX_ROOMS, allowCandidateCounts: process.env.WT_ALLOW_CANDIDATE_COUNTS === "1" },
+      { maxRooms: MAX_ROOMS, allowCandidateCounts: process.env.WT_ALLOW_CANDIDATE_COUNTS !== "0" },
     )
   : null;
 const dpStore = attachDrawingParty(io, resolve(process.env.DP_DATA_DIR ?? join(DATA, "../dp-rooms")));
