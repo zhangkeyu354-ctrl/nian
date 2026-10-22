@@ -76,6 +76,12 @@ it("shared canvas turn authorization, canonical color and partial journal recove
       op: "start",
       action: { type: "START" },
     });
+    for (const p of ps)
+      r.apply(p, {
+        scope: r.scope(),
+        op: "category",
+        action: { type: "CATEGORY_VOTE", category: 2 },
+      });
     const req = {
       scope: r.scope(),
       chunk: {

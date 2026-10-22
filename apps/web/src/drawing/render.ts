@@ -4,12 +4,14 @@ import {
 } from "../../../../packages/drawing-party/src/index.ts";
 export function paint(canvas: HTMLCanvasElement, d: Drawing, limit = Infinity) {
   const g = canvas.getContext("2d")!;
-  g.setTransform(canvas.width / 1024, 0, 0, canvas.height / 1024, 0, 0);
+  g.setTransform(canvas.width / 1024, 0, 0, canvas.width / 1024, 0, 0);
   g.fillStyle = "white";
   g.fillRect(0, 0, 1024, 1024);
   let used = 0;
   for (const s of d.strokes) {
-    const pts = s.points.slice(0, Math.max(0, limit - used));
+    const pts = s.points
+      .slice(0, Math.max(0, limit - used))
+      .map((p) => [p[0], (p[1] * canvas.height) / canvas.width, p[2]]);
     used += s.points.length;
     if (!pts.length) continue;
     g.strokeStyle = COLORS[s.color] ?? COLORS[0];
@@ -38,7 +40,8 @@ export function paint(canvas: HTMLCanvasElement, d: Drawing, limit = Infinity) {
 }
 export function downloadDrawing(d: Drawing, name = "画作") {
   const c = document.createElement("canvas");
-  c.width = c.height = 2048;
+  c.width = 2048;
+  c.height = 1024;
   paint(c, d);
   c.toBlob((blob) => {
     if (!blob) return;

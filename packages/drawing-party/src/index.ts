@@ -46,6 +46,7 @@ export interface Game {
   mode: Mode;
   players: Player[];
   phase:
+    | "CATEGORY"
     | "PROMPT"
     | "TASK"
     | "DRAW"
@@ -70,8 +71,13 @@ export interface Game {
   winner?: "fake" | "artists";
   guess?: string;
   cursor: number;
+  categoryVotes?: Record<string, number>;
+  categorySeed?: number;
+  categoryOffset?: number;
+  categoryTieSeed?: number;
 }
 export type Action =
+  | { type: "CATEGORY_VOTE"; category: number }
   | { type: "TEXT"; text: string }
   | { type: "SUBMIT" }
   | { type: "VOTE"; target: string }
@@ -90,6 +96,8 @@ export interface GameView {
   deadline: number;
   completed: number;
   currentId?: string;
+  categories?: string[];
+  myCategoryVote?: number;
   task?: {
     id: string;
     chain: string;
@@ -112,72 +120,118 @@ export interface GameView {
 }
 export const WORDS = [
   {
-    category: "动物",
+    category: "职业",
     words: [
-      "章鱼",
-      "企鹅",
-      "长颈鹿",
-      "刺猬",
+      "医生",
+      "教师",
+      "消防员",
+      "厨师",
+      "警察",
+      "宇航员",
+      "画家",
+      "理发师",
+      "农民",
+      "记者",
+      "歌手",
+      "司机",
+      "邮递员",
+      "摄影师",
+      "裁缝",
+      "渔夫",
+      "飞行员",
+      "建筑工人",
+    ],
+  },
+  {
+    category: "文具 / 工具",
+    words: [
+      "剪刀",
+      "铅笔",
+      "橡皮",
+      "尺子",
+      "圆规",
+      "订书机",
+      "胶水",
+      "胶带",
+      "画笔",
+      "锤子",
+      "螺丝刀",
+      "扳手",
+      "钳子",
+      "锯子",
+      "铲子",
+      "钉子",
+      "书包",
+      "笔筒",
+    ],
+  },
+  {
+    category: "家具 / 电器",
+    words: [
+      "沙发",
+      "椅子",
+      "餐桌",
+      "书架",
+      "衣柜",
+      "床",
+      "台灯",
+      "电视",
+      "冰箱",
+      "空调",
+      "风扇",
+      "洗衣机",
+      "微波炉",
+      "烤箱",
+      "吸尘器",
+      "吹风机",
+      "镜子",
+      "钟表",
+    ],
+  },
+  {
+    category: "昆虫",
+    words: [
       "蝴蝶",
+      "蜜蜂",
+      "蚂蚁",
+      "蜻蜓",
+      "瓢虫",
+      "蚊子",
+      "苍蝇",
+      "螳螂",
+      "蝉",
+      "蟋蟀",
+      "蚱蜢",
+      "萤火虫",
+      "甲虫",
+      "蛾子",
+      "蟑螂",
+      "竹节虫",
+      "白蚁",
+      "独角仙",
+    ],
+  },
+  {
+    category: "陆栖动物",
+    words: [
+      "长颈鹿",
+      "大象",
+      "老虎",
+      "狮子",
+      "熊猫",
       "袋鼠",
-      "蜗牛",
-      "螃蟹",
-      "海马",
-      "骆驼",
-      "猫头鹰",
       "斑马",
-      "水母",
-      "海豹",
-      "蝙蝠",
-      "孔雀",
+      "骆驼",
+      "刺猬",
+      "蜗牛",
+      "兔子",
+      "松鼠",
+      "猴子",
+      "狐狸",
+      "狼",
       "乌龟",
       "鳄鱼",
-    ],
-  },
-  {
-    category: "生活物品",
-    words: [
-      "雨伞",
-      "牙刷",
-      "闹钟",
-      "剪刀",
-      "钥匙",
-      "台灯",
-      "水壶",
-      "背包",
-      "眼镜",
-      "风扇",
-      "相机",
-      "扫把",
-      "气球",
-      "枕头",
-      "手套",
-      "镜子",
-      "梳子",
-      "茶杯",
-    ],
-  },
-  {
-    category: "交通工具",
-    words: [
-      "自行车",
-      "潜水艇",
-      "直升机",
-      "热气球",
-      "帆船",
-      "火车",
-      "滑板",
-      "救护车",
-      "摩托车",
-      "挖掘机",
-      "轮船",
-      "独木舟",
-      "消防车",
-      "公交车",
-      "雪橇",
-      "缆车",
-      "卡车",
-      "三轮车",
+      "犀牛",
     ],
   },
 ];
@@ -281,7 +335,13 @@ export function startGame(
   mode: Mode,
   players: Player[],
   now: number,
-  opt: { fakeIndex: number; wordIndex: number; optionOffset?: number },
+  opt: {
+    fakeIndex: number;
+    wordIndex: number;
+    optionOffset?: number;
+    categoryVote?: boolean;
+    categoryTieSeed?: number;
+  },
 ): Game {
   if (
     !["tp", "fa"].includes(mode) ||
@@ -298,7 +358,7 @@ export function startGame(
     id: "game-" + now,
     mode,
     players: structuredClone(players),
-    phase: mode === "tp" ? "PROMPT" : "DRAW",
+    phase: mode === "tp" ? "PROMPT" : opt.categoryVote ? "CATEGORY" : "DRAW",
     step: 1,
     steps: players.length - (players.length % 2),
     turn: 0,
@@ -312,6 +372,14 @@ export function startGame(
     word: bank.words[wi],
     options,
     cursor: 0,
+    ...(mode === "fa" && opt.categoryVote
+      ? {
+          categoryVotes: {},
+          categorySeed: opt.wordIndex,
+          categoryOffset: offset,
+          categoryTieSeed: opt.categoryTieSeed ?? 0,
+        }
+      : {}),
   };
 }
 export function taskFor(s: Game, id: string) {
@@ -339,6 +407,26 @@ function nextTask(s: Game, now: number) {
   } else s.step++;
   s.done = [];
   s.deadline = now + (s.step % 2 ? 90000 : 40000);
+}
+function resolveCategory(s: Game, now: number) {
+  const totals = new Map<number, number>();
+  for (const v of Object.values(s.categoryVotes ?? {}))
+    totals.set(v, (totals.get(v) ?? 0) + 1);
+  const max = Math.max(0, ...totals.values()),
+    top = [...totals]
+      .filter(([, n]) => n === max)
+      .map(([i]) => i)
+      .sort((a, b) => a - b);
+  const seed = s.categorySeed ?? 0,
+    selected = top.length ? top[(s.categoryTieSeed ?? 0) % top.length] : -1;
+  const bank =
+    WORDS[selected < 0 ? Math.floor(seed / 18) % WORDS.length : selected];
+  s.category = bank.category;
+  s.word = bank.words[seed % 18];
+  const offset = s.categoryOffset ?? 0;
+  s.options = [...bank.words.slice(offset), ...bank.words.slice(0, offset)];
+  s.phase = "DRAW";
+  s.deadline = now + 30000;
 }
 function finishTurn(s: Game, now: number) {
   for (const stroke of s.drawings.shared.strokes) stroke.closed = true;
@@ -380,7 +468,18 @@ export function act(state: Game, id: string, a: Action, now: number): Game {
     return s;
   }
   if (s.deadline && now >= s.deadline) fail("本阶段已到时");
-  if (s.mode === "tp") {
+  if (s.phase === "CATEGORY" && a.type === "CATEGORY_VOTE") {
+    if (
+      !Number.isInteger(a.category) ||
+      a.category < -1 ||
+      a.category >= WORDS.length ||
+      Object.hasOwn(s.categoryVotes!, id)
+    )
+      fail("无效或重复主题投票");
+    s.categoryVotes![id] = a.category;
+    if (Object.keys(s.categoryVotes!).length === s.players.length)
+      resolveCategory(s, now);
+  } else if (s.mode === "tp") {
     if (s.done.includes(id)) fail("已经提交");
     if (s.phase === "PROMPT" && a.type === "TEXT") {
       const text = String(a.text).trim();
@@ -456,7 +555,8 @@ export function tick(state: Game, now: number): Game {
       }
     }
     nextTask(s, now);
-  } else if (s.phase === "DRAW") finishTurn(s, now);
+  } else if (s.phase === "CATEGORY") resolveCategory(s, now);
+  else if (s.phase === "DRAW") finishTurn(s, now);
   else if (s.phase === "DISCUSS") {
     s.phase = "VOTE";
     s.deadline = now + 30000;
@@ -515,6 +615,12 @@ export function viewFor(s: Game, id: string): GameView {
           .map(entry),
       }));
   } else {
+    if (s.phase === "CATEGORY") {
+      v.categories = [...WORDS.map((b) => b.category), "随机"];
+      v.completed = Object.keys(s.categoryVotes ?? {}).length;
+      if (me) v.myCategoryVote = s.categoryVotes?.[id];
+      return v;
+    }
     v.category = s.category;
     v.drawing = visibleDrawing(s.drawings.shared);
     if (me) {

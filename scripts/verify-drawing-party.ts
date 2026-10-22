@@ -52,6 +52,9 @@ try {
       };
       for (let i = 0; i < n; i++) await action(i, { type: "READY" });
       await action(0, { type: "START" });
+      if (mode === "fa")
+        for (let i = 0; i < n; i++)
+          await action(i, { type: "CATEGORY_VOTE", category: 2 });
       const ids = seats.map((x) => x.snapshot.me);
       if (mode === "tp") {
         for (let i = 0; i < n; i++)

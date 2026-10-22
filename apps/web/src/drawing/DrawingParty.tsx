@@ -9,6 +9,7 @@ import {
   type Chunk,
   type Drawing,
 } from "../../../../packages/drawing-party/src/index.ts";
+import { Studio } from "./Studio.tsx";
 import { Board } from "./Board.tsx";
 import { drawingId } from "./id.ts";
 import { paint } from "./render.ts";
@@ -141,7 +142,8 @@ export function DrawingParty({ mode }: { mode: Mode }) {
         me: snap?.me,
         phase: v?.phase,
         view: v,
-        coordinateSystem: "1024×1024; origin top-left; x right y down",
+        coordinateSystem:
+          "1024×1024 normalized; 2:1 paper; origin top-left; x right y down",
       });
     return () => {
       delete (window as any).render_game_to_text;
@@ -282,8 +284,50 @@ export function DrawingParty({ mode }: { mode: Mode }) {
     if (snap) offset.current = snap.serverNow - Date.now();
   }, [snap?.serverNow]);
   const seconds = v?.deadline
-    ? Math.max(0, Math.ceil((v.deadline - (now + offset.current)) / 1000))
+    ? Math.min(
+        v.phase === "TASK"
+          ? v.step % 2
+            ? 90
+            : 40
+          : v.phase === "PROMPT"
+            ? 60
+            : v.phase === "DISCUSS"
+              ? 90
+              : v.phase === "OBSERVE"
+                ? 15
+                : 30,
+        Math.max(0, Math.ceil((v.deadline - (now + offset.current)) / 1000)),
+      )
     : 0;
+  if (v && snap)
+    return (
+      <Studio
+        mode={mode}
+        v={v}
+        me={snap.me}
+        host={host}
+        connected={connected}
+        busy={busy}
+        inkBusy={inkBusy}
+        seconds={seconds}
+        code={code}
+        error={error}
+        input={input}
+        setInput={setInput}
+        submit={submit}
+        send={send}
+        edit={edit}
+        onBusy={setInkBusy}
+        invite={() => void invite()}
+        exportAlbum={exportAlbum}
+        clearError={() => setError("")}
+        takeHost={
+          !snap.players.find((p) => p.id === snap.host)?.connected
+            ? () => void submit({ type: "TAKE_HOST" })
+            : undefined
+        }
+      />
+    );
   return (
     <main className={"dp-app dp-" + mode}>
       <header className="dp-top">
@@ -808,7 +852,7 @@ function exportAlbum(a: { owner: { name: string }; entries: any[] }) {
   const c = document.createElement("canvas");
   c.width = 1000;
   c.height =
-    120 + a.entries.reduce((n, e) => n + (e.kind === "drawing" ? 940 : 180), 0);
+    120 + a.entries.reduce((n, e) => n + (e.kind === "drawing" ? 520 : 180), 0);
   const g = c.getContext("2d")!;
   g.fillStyle = "#f8f5ef";
   g.fillRect(0, 0, c.width, c.height);
@@ -822,10 +866,11 @@ function exportAlbum(a: { owner: { name: string }; entries: any[] }) {
     g.fillText(i === 0 ? "初始题目" : "第" + i + "步", 40, y + 30);
     if (e.kind === "drawing") {
       const p = document.createElement("canvas");
-      p.width = p.height = 860;
+      p.width = 860;
+      p.height = 430;
       paint(p, e.drawing ?? emptyDrawing());
       g.drawImage(p, 70, y + 50);
-      y += 940;
+      y += 520;
     } else {
       g.fillStyle = "#272336";
       g.font = "bold 30px sans-serif";

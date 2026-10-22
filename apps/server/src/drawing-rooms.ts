@@ -207,8 +207,10 @@ export class DrawingRoom {
         now,
         {
           fakeIndex: randomInt(this.file.count),
-          wordIndex: randomInt(54),
+          wordIndex: randomInt(90),
           optionOffset: randomInt(18),
+          categoryVote: true,
+          categoryTieSeed: randomInt(60),
         },
       );
       this.file.game.id = randomBytes(16).toString("hex");

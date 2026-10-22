@@ -7,6 +7,7 @@ import {
   type Point,
   type Stroke,
 } from "../../../../packages/drawing-party/src/index.ts";
+import { PaintBrush } from "./StudioArt.tsx";
 import { drawingId } from "./id.ts";
 import { paint, downloadDrawing } from "./render.ts";
 import { readDraft, saveDraft } from "./drafts.ts";
@@ -21,6 +22,8 @@ interface Props {
   send?: (c: Chunk) => Promise<void>;
   edit?: (kind: string, revision: number) => Promise<void>;
   onBusy?: (busy: boolean) => void;
+  onFocus?: () => void;
+  focused?: boolean;
 }
 export function Board(p: Props) {
   const canvas = useRef<HTMLCanvasElement>(null),
@@ -43,7 +46,9 @@ export function Board(p: Props) {
     [color, setColor] = useState(p.color ?? 0),
     [width, setWidth] = useState(8),
     [replay, setReplay] = useState(false),
-    [focus, setFocus] = useState(false);
+    [focus, setFocus] = useState(false),
+    [toolsOpen, setToolsOpen] = useState(false),
+    [brush, setBrush] = useState({ x: 0, y: 0, color: 0, visible: false });
   const redraw = () => {
     if (canvas.current) paint(canvas.current, model.current);
   };
@@ -120,6 +125,7 @@ export function Board(p: Props) {
     if (active.current) {
       packet(true);
       active.current = null;
+      setBrush((b) => ({ ...b, visible: false }));
       busy();
     }
   };
@@ -178,7 +184,7 @@ export function Board(p: Props) {
       const r = c.getBoundingClientRect(),
         dpr = Math.min(devicePixelRatio || 1, 2);
       c.width = Math.max(1, Math.round(r.width * dpr));
-      c.height = c.width;
+      c.height = Math.max(1, Math.round(r.height * dpr));
       redraw();
     });
     if (canvas.current) obs.observe(canvas.current);
@@ -203,6 +209,17 @@ export function Board(p: Props) {
     if (!active.current && !pending.current.length) {
       model.current = structuredClone(p.drawing);
       redraw();
+    }
+    if (!active.current) {
+      const last = p.drawing.strokes.at(-1),
+        pt = last?.points.at(-1);
+      if (pt)
+        setBrush({
+          x: pt[0] / 10.24,
+          y: pt[1] / 10.24,
+          color: last!.color,
+          visible: !last!.closed,
+        });
     }
   }, [p.drawing]);
   useEffect(() => {
@@ -268,6 +285,12 @@ export function Board(p: Props) {
       seq: 0,
       start: performance.now(),
     };
+    setBrush({
+      x: stroke.points[0][0] / 10.24,
+      y: stroke.points[0][1] / 10.24,
+      color: stroke.color,
+      visible: true,
+    });
     e.currentTarget.setPointerCapture(e.pointerId);
     redraw();
     busy();
@@ -285,6 +308,12 @@ export function Board(p: Props) {
       return;
     if (pt[0] === last[0] && pt[1] === last[1]) return;
     a.stroke.points.push(pt);
+    setBrush({
+      x: pt[0] / 10.24,
+      y: pt[1] / 10.24,
+      color: a.stroke.color,
+      visible: true,
+    });
     redraw();
   };
   const edit = async (kind: string) => {
@@ -308,12 +337,25 @@ export function Board(p: Props) {
           onPointerUp={(e) => {
             if (active.current?.pointer === e.pointerId) finish();
           }}
-          onPointerCancel={finish}
+          onPointerCancel={(e) => {
+            if (active.current?.pointer === e.pointerId) finish();
+          }}
           onLostPointerCapture={finish}
         />
+        <div
+          className={"st-brush-cursor " + (!p.canDraw ? "is-remote" : "")}
+          aria-hidden="true"
+          style={{
+            left: brush.x + "%",
+            top: brush.y + "%",
+            opacity: brush.visible ? 1 : 0,
+          }}
+        >
+          <PaintBrush cursor index={brush.color} />
+        </div>
         {!p.canDraw && <span className="dp-readonly">观看作品</span>}
       </div>
-      {p.canDraw && !p.single && (
+      {p.canDraw && !p.single && toolsOpen && (
         <div className="dp-tools">
           <div className="dp-palette">
             {COLORS.map((c, i) => (
@@ -322,7 +364,10 @@ export function Board(p: Props) {
                 aria-label={"颜色" + (i + 1)}
                 aria-pressed={color === i}
                 style={{ background: c }}
-                onClick={() => setColor(i)}
+                onClick={() => {
+                  setColor(i);
+                  setToolsOpen(false);
+                }}
               />
             ))}
           </div>
@@ -348,9 +393,22 @@ export function Board(p: Props) {
         </div>
       )}
       <div className="dp-board-footer">
+        {p.canDraw && !p.single && (
+          <button
+            className="st-tool-toggle"
+            aria-label="画笔工具"
+            aria-expanded={toolsOpen}
+            onClick={() => setToolsOpen(!toolsOpen)}
+          >
+            画笔 ▾
+          </button>
+        )}
         <span role="status">{p.canDraw ? status : "只读画作"}</span>
-        <button onClick={() => setFocus(!focus)}>
-          {focus ? "退出专注" : "专注"}
+        <button
+          className="st-local-focus"
+          onClick={() => (p.onFocus ? p.onFocus() : setFocus(!focus))}
+        >
+          {(p.onFocus ? p.focused : focus) ? "退出专注" : "专注"}
         </button>
         {!p.canDraw && (
           <>

@@ -43,3 +43,5 @@ Original prompt: 阅读AGENTS.md，先提交Phase 1并排除原版reference图�
 - 2026-10-21：用户否定低清照片裁片，授权高清复刻或网络查找。已检查SYNKA同版官方图库/PDF，使用内置image_gen参照原卡复刻15人物（三张1254方形图集），牌背改SVG、卡名/阵营改原生文字，保留153无字证据。手机/电脑视觉、四人完整对局、411项测试、类型检查和构建通过；详见docs/dying-message/visual-v2/HD_ACCEPTANCE.md。无规则变更，未推送部署。
 
 - 2026-10-22 绘画派对首版（用户现已授权实施，3–8人，不仅8人）：独立codex/drawing-party工作树基于origin/main 91f8927；完成传话与伪画家自动主持改编、共用Pointer Canvas/IndexedDB草稿、dp独立房间/增量日志、隐私投影、回放与导出。线上UI沿用操作结构，独立代码/CSS，不复制品牌素材。456测试、typecheck/build、两款各3–8协议闭环、三人Chromium触控完整局/离线恢复/横竖屏/导出、旧64手机界面/回放/LAN协议/LAN浏览器/LAN大厅通过。8人本地200包短测P95 6.67ms，仅本机，不是Render。新增22测试含答案位置泄露与接任房主回归。未做真机、WebKit、Render；未交付真人出题者模式/长期云存储。交接docs/drawing-party/README.md；未推送或部署。
+
+- 2026-10-22 横屏画室升级：按用户两张手机图改为伪画家桃红画架/金属画笔与题牌，传话紫色绘本；2:1宽幅画布、放大模式、真实笔刷/交棒/投票/换页/可选音效；CATEGORY真实主题投票，五类各18词，服务端独立平票随机与秘密投影。459测试/28文件通过（2workers/30秒，旧隐私默认5秒并发曾超时已记录）；3–8协议和旧LAN协议通过；三人完整手机尺寸浏览器、两款8人实房间UI通过。未真机/Render。当前预览3013，工作树codex/drawing-party；无推送部署。交接docs/drawing-party/STUDIO_UPGRADE.md，截图studio-screens。用户强调画布大于装饰，继续保持该优先级。
