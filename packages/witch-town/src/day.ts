@@ -20,6 +20,10 @@ import {
 export type WTCommand =
   | { type: "DAWN_TARGET"; targetId: string }
   | { type: "DRAW" }
+  | { type: "PARRIS_DRAW"; cardIds: string[] }
+  | { type: "TITUBA_START" }
+  | { type: "TITUBA_REORDER"; cardIds: string[] }
+  | { type: "TITUBA_FINISH" }
   | { type: "END_TURN" }
   | {
       type: "PLAY";
@@ -52,6 +56,7 @@ export type WTTask =
 export type WTPending =
   | null
   | { kind: "dawn-black-cat" }
+  | { kind: "tituba"; playerId: string; deadline: number }
   | Extract<WTTask, { kind: "trial" | "ability" }>
   | {
       kind: "black-event";
@@ -497,6 +502,25 @@ function playCard(
 }
 
 /** Transactional pure reducer: any invalid or CHECK_REQUIRED command leaves input intact. */
+export function finishTituba(s: WTState, now: number) {
+  const p = s.pending;
+  if (p?.kind !== "tituba") fail("NO_TITUBA_CHOICE");
+  s.pending = null;
+  s.phase = "day";
+  s.timerDeadline = null;
+  s.tasks.push(
+    {
+      kind: "draw",
+      playerId: p.playerId,
+      remaining: 2,
+      reason: "turn",
+      drawn: [],
+    },
+    { kind: "finish-turn", playerId: p.playerId },
+  );
+  log(s, { type: "TITUBA_COMPLETE", actorId: p.playerId });
+  drain(s, now);
+}
 export function reduceWitchTown(
   input: WTState,
   actorId: string,
@@ -509,6 +533,24 @@ export function reduceWitchTown(
   if (!cmd || typeof cmd !== "object" || typeof cmd.type !== "string")
     fail("BAD_GAME_COMMAND");
   if (s.phase === "over") fail("GAME_OVER");
+  if (s.pending?.kind === "tituba") {
+    const p = s.pending,
+      now = context.now ?? Date.now();
+    if (p.playerId !== actorId) fail("NOT_YOUR_CHOICE");
+    if (now >= p.deadline) fail("ABILITY_DEADLINE_PASSED");
+    if (cmd.type === "TITUBA_REORDER") {
+      if (
+        !Array.isArray(cmd.cardIds) ||
+        cmd.cardIds.length !== s.deck.length ||
+        new Set(cmd.cardIds).size !== s.deck.length
+      )
+        fail("BAD_DECK_ORDER");
+      const deck = new Map(s.deck.map((c) => [c.id, c]));
+      s.deck = cmd.cardIds.map((id) => deck.get(id) ?? fail("BAD_DECK_ORDER"));
+    } else if (cmd.type === "TITUBA_FINISH") finishTituba(s, now);
+    else fail("TITUBA_PENDING");
+    return s;
+  }
   if (s.phase === "black-event") {
     beginBlackEvent(s, context.now ?? Date.now());
     return commandBlackEvent(
@@ -606,7 +648,45 @@ export function reduceWitchTown(
   if (s.phase !== "day" || s.pending) fail("WRONG_PHASE");
   if (s.turnPlayerId !== actorId) fail("NOT_YOUR_TURN");
   if (cmd.type === "PLAY") playCard(s, actorId, cmd, context.now);
-  else if (cmd.type === "DRAW") {
+  else if (cmd.type === "TITUBA_START") {
+    if (s.day.played) fail("DRAW_AFTER_PLAY");
+    const actor = player(s, actorId);
+    if (effectiveCharacter(s, actorId) !== "tituba") fail("NOT_TITUBA");
+    if (actor.character === "martha_corey")
+      fail("CHECK_REQUIRED:X10:COPIED_LIMITED_ABILITY");
+    if (actor.abilityUses.tituba) fail("ABILITY_EXHAUSTED");
+    actor.abilityUses.tituba = 1;
+    const deadline = (context.now ?? Date.now()) + 60000;
+    s.pending = { kind: "tituba", playerId: actorId, deadline };
+    s.phase = "choice";
+    s.timerDeadline = deadline;
+    log(s, { type: "TITUBA_START", actorId });
+  } else if (cmd.type === "PARRIS_DRAW") {
+    if (s.day.played) fail("DRAW_AFTER_PLAY");
+    const actor = player(s, actorId);
+    if (effectiveCharacter(s, actorId) !== "samuel_parris") fail("NOT_PARRIS");
+    if (actor.character === "martha_corey")
+      fail("CHECK_REQUIRED:X10:COPIED_LIMITED_ABILITY");
+    if ((actor.abilityUses.samuel_parris ?? 0) >= 2) fail("ABILITY_EXHAUSTED");
+    if (
+      !Array.isArray(cmd.cardIds) ||
+      cmd.cardIds.length > 2 ||
+      cmd.cardIds.some((id) => typeof id !== "string") ||
+      new Set(cmd.cardIds).size !== cmd.cardIds.length
+    )
+      fail("BAD_DISCARD_SELECTION");
+    const selected = cmd.cardIds.map((id) => {
+      const card = s.discard.find((c) => c.id === id);
+      if (!card || color(card) === "black") fail("BAD_DISCARD_SELECTION");
+      return card;
+    });
+    s.discard = s.discard.filter((c) => !cmd.cardIds.includes(c.id));
+    actor.hand.push(...selected);
+    actor.abilityUses.samuel_parris =
+      (actor.abilityUses.samuel_parris ?? 0) + 1;
+    log(s, { type: "PARRIS_DRAW", actorId, count: selected.length });
+    advance(s, actorId);
+  } else if (cmd.type === "DRAW") {
     if (s.day.played) fail("DRAW_AFTER_PLAY");
     s.tasks.push(
       {
@@ -629,6 +709,8 @@ export function publicPending(s: WTState) {
   const p = s.pending;
   if (!p) return null;
   if (p.kind === "dawn-black-cat") return { kind: p.kind };
+  if (p.kind === "tituba")
+    return { kind: p.kind, playerId: p.playerId, deadline: p.deadline };
   if (p.kind === "black-event")
     return {
       kind: p.kind,
@@ -642,6 +724,8 @@ export function publicPending(s: WTState) {
 }
 export function privateChoice(s: WTState, id: string) {
   const p = s.pending;
+  if (p?.kind === "tituba" && p.playerId === id)
+    return { kind: "tituba" as const, deck: s.deck, deadline: p.deadline };
   if (p?.kind === "black-event") return eventPrivate(s, p, id);
   if (p?.kind === "trial" && p.actorId === id)
     return {

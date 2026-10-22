@@ -11,6 +11,7 @@ import {
   accusationValue,
   trialThreshold,
 } from "../src/day.ts";
+import { tickWitchTown } from "../src/events.ts";
 
 function fresh(n = 4, seed = 1) {
   let s = createWitchTown(
@@ -88,6 +89,239 @@ function conservation(s: WTState) {
   expect(cards.length).toBe(59);
   expect(new Set(cards.map((c) => c.id)).size).toBe(59);
 }
+
+describe("Samuel Parris replaces the draw action", () => {
+  function prepare(n = 4) {
+    const s = fresh(n);
+    s.players[0].character = "samuel_parris";
+    const ids = [give(s, "accusation"), give(s, "evidence")];
+    for (const id of ids) {
+      const hand = s.players[0].hand;
+      s.discard.push(
+        hand.splice(
+          hand.findIndex((c) => c.id === id),
+          1,
+        )[0],
+      );
+    }
+    return { s, ids };
+  }
+  for (let n = 4; n <= 12; n++)
+    it(`${n} players: choose discard cards, conserve deck and finish turn`, () => {
+      const { s, ids } = prepare(n),
+        deck = structuredClone(s.deck),
+        hand = s.players[0].hand.length;
+      const next = reduceWitchTown(s, "p0", {
+        type: "PARRIS_DRAW",
+        cardIds: ids,
+      } as any);
+      expect(next.players[0].hand.slice(-2).map((c) => c.id)).toEqual(ids);
+      expect(next.players[0].hand.length).toBe(hand + 2);
+      expect(next.deck).toEqual(deck);
+      expect(next.players[0].abilityUses.samuel_parris).toBe(1);
+      expect(next.turnPlayerId).toBe("p1");
+      expect(s.discard.map((c) => c.id)).toEqual(ids);
+      conservation(next);
+    });
+  it("allows at most two uses and up to two cards, including an empty selection", () => {
+    let { s, ids } = prepare();
+    s = reduceWitchTown(s, "p0", {
+      type: "PARRIS_DRAW",
+      cardIds: [ids[0]],
+    } as any);
+    s.turnPlayerId = "p0";
+    s = reduceWitchTown(s, "p0", { type: "PARRIS_DRAW", cardIds: [] } as any);
+    expect(s.players[0].abilityUses.samuel_parris).toBe(2);
+    s.turnPlayerId = "p0";
+    expect(() =>
+      reduceWitchTown(s, "p0", { type: "PARRIS_DRAW", cardIds: [] } as any),
+    ).toThrow("ABILITY_EXHAUSTED");
+  });
+  it("rejects malformed selections, black events, foreign cards and out-of-turn use atomically", () => {
+    const { s, ids } = prepare();
+    s.discard.push(
+      s.deck.splice(
+        s.deck.findIndex((c) => c.kind === "night"),
+        1,
+      )[0],
+    );
+    const original = structuredClone(s);
+    for (const cardIds of [
+      [ids[0], ids[0]],
+      [...ids, "extra"],
+      ["unknown"],
+      [s.discard.at(-1)!.id],
+      null,
+      "string",
+    ]) {
+      expect(() =>
+        reduceWitchTown(s, "p0", { type: "PARRIS_DRAW", cardIds } as any),
+      ).toThrow();
+      expect(s).toEqual(original);
+    }
+    expect(() =>
+      reduceWitchTown(s, "p1", { type: "PARRIS_DRAW", cardIds: [] } as any),
+    ).toThrow("NOT_YOUR_TURN");
+    s.day.played = 1;
+    expect(() =>
+      reduceWitchTown(s, "p0", { type: "PARRIS_DRAW", cardIds: [] } as any),
+    ).toThrow("DRAW_AFTER_PLAY");
+    s.day.played = 0;
+    s.players[0].character = "william_phips";
+    expect(() =>
+      reduceWitchTown(s, "p0", { type: "PARRIS_DRAW", cardIds: [] } as any),
+    ).toThrow("NOT_PARRIS");
+    s.players[0].character = "martha_corey";
+    s.players[3].character = "samuel_parris";
+    expect(() =>
+      reduceWitchTown(s, "p0", { type: "PARRIS_DRAW", cardIds: [] } as any),
+    ).toThrow("CHECK_REQUIRED:X10");
+  });
+});
+
+describe("Tituba private timed rearrangement", () => {
+  function start(n = 4) {
+    const s = fresh(n);
+    s.players[0].character = "tituba";
+    return reduceWitchTown(s, "p0", { type: "TITUBA_START" } as any, {
+      now: 1000,
+    });
+  }
+  for (let n = 4; n <= 12; n++)
+    it(`${n} players: only Tituba sees the deck and may move black cards`, () => {
+      let s = start(n);
+      const original = structuredClone(s);
+      const own = viewForWitchTown(s, "p0").private!.choice as any;
+      expect(own.kind).toBe("tituba");
+      expect(own.deck).toEqual(s.deck);
+      expect(own.deadline).toBe(61000);
+      for (const id of [null, ...s.players.slice(1).map((p) => p.id)]) {
+        const view = viewForWitchTown(s, id);
+        for (const c of s.deck)
+          expect(JSON.stringify(view)).not.toContain(JSON.stringify(c.id));
+        expect(view.private?.choice ?? null).toBeNull();
+      }
+      const order = s.deck.map((c) => c.id).reverse();
+      s = reduceWitchTown(
+        s,
+        "p0",
+        { type: "TITUBA_REORDER", cardIds: order } as any,
+        { now: 2000 },
+      );
+      expect(s.deck.map((c) => c.id)).toEqual(order);
+      expect(s.deck.some((c) => c.kind === "night")).toBe(true);
+      expect(s.deck.some((c) => c.kind === "conspiracy")).toBe(true);
+      expect(viewForWitchTown(s, null)).toEqual(
+        viewForWitchTown(original, null),
+      );
+      conservation(s);
+    });
+  it("finishes by drawing two and ending the turn; the once-per-game use persists", () => {
+    let s = start();
+    // Keep the draw ordinary; black interrupts have separate coverage below.
+    s.deck.sort(
+      (a, b) =>
+        Number(["night", "conspiracy"].includes(a.kind)) -
+        Number(["night", "conspiracy"].includes(b.kind)),
+    );
+    const top = s.deck.slice(0, 2).map((c) => c.id);
+    s = reduceWitchTown(s, "p0", { type: "TITUBA_FINISH" } as any, {
+      now: 2000,
+    });
+    expect(s.players[0].hand.slice(-2).map((c) => c.id)).toEqual(top);
+    expect(s.turnPlayerId).toBe("p1");
+    expect(s.timerDeadline).toBeNull();
+    s.turnPlayerId = "p0";
+    expect(() =>
+      reduceWitchTown(s, "p0", { type: "TITUBA_START" } as any),
+    ).toThrow("ABILITY_EXHAUSTED");
+  });
+  it("server timeout uses the last accepted order exactly once, including after serialization", () => {
+    const s = start();
+    s.deck.sort(
+      (a, b) =>
+        Number(["night", "conspiracy"].includes(a.kind)) -
+        Number(["night", "conspiracy"].includes(b.kind)),
+    );
+    expect(tickWitchTown(s, 60999, seededRandom(1))).toBeNull();
+    const next = tickWitchTown(
+      JSON.parse(JSON.stringify(s)),
+      61000,
+      seededRandom(1),
+    )!;
+    expect(next.players[0].hand.slice(-2)).toEqual(s.deck.slice(0, 2));
+    expect(tickWitchTown(next, 62000, seededRandom(1))).toBeNull();
+    conservation(next);
+  });
+  it("normal black events interrupt the committed draw after rearrangement", () => {
+    let s = start();
+    const idx = s.deck.findIndex((c) => c.kind === "night");
+    s.deck.unshift(s.deck.splice(idx, 1)[0]);
+    s = reduceWitchTown(s, "p0", { type: "TITUBA_FINISH" } as any, {
+      now: 2000,
+    });
+    expect(s.phase).toBe("black-event");
+    expect(s.pending?.kind === "black-event" && s.pending.card.kind).toBe(
+      "night",
+    );
+    expect(s.tasks.some((t) => t.kind === "draw" && t.remaining === 1)).toBe(
+      true,
+    );
+    conservation(s);
+  });
+  it("rejects unauthorized, expired and non-permutation edits without mutating input", () => {
+    const s = start(),
+      original = structuredClone(s),
+      order = s.deck.map((c) => c.id);
+    expect(() =>
+      reduceWitchTown(
+        s,
+        "p1",
+        { type: "TITUBA_REORDER", cardIds: order } as any,
+        { now: 2000 },
+      ),
+    ).toThrow("NOT_YOUR_CHOICE");
+    for (const cardIds of [
+      order.slice(1),
+      [...order, "fake"],
+      order.map(() => order[0]),
+      null,
+    ]) {
+      expect(() =>
+        reduceWitchTown(s, "p0", { type: "TITUBA_REORDER", cardIds } as any, {
+          now: 2000,
+        }),
+      ).toThrow("BAD_DECK_ORDER");
+      expect(s).toEqual(original);
+    }
+    expect(() =>
+      reduceWitchTown(
+        s,
+        "p0",
+        { type: "TITUBA_REORDER", cardIds: order } as any,
+        { now: 61000 },
+      ),
+    ).toThrow("ABILITY_DEADLINE_PASSED");
+    expect(() =>
+      reduceWitchTown(s, "p0", { type: "DRAW" }, { now: 2000 }),
+    ).toThrow("TITUBA_PENDING");
+    const day = fresh();
+    expect(() =>
+      reduceWitchTown(day, "p0", { type: "TITUBA_START" } as any),
+    ).toThrow("NOT_TITUBA");
+    day.players[0].character = "tituba";
+    day.day.played = 1;
+    expect(() =>
+      reduceWitchTown(day, "p0", { type: "TITUBA_START" } as any),
+    ).toThrow("DRAW_AFTER_PLAY");
+    day.day.played = 0;
+    day.players[0].character = "martha_corey";
+    day.players[3].character = "tituba";
+    expect(() =>
+      reduceWitchTown(day, "p0", { type: "TITUBA_START" } as any),
+    ).toThrow("CHECK_REQUIRED:X10");
+  });
+});
 
 describe("M2 day actions and trials", () => {
   it("Giles takes one bonus card without recursively triggering, Rebecca can actually draw her reward", () => {

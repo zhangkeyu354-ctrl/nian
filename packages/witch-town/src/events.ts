@@ -15,6 +15,7 @@ import {
   eliminate,
   fatalReveal,
   victory,
+  finishTituba,
   type WTPending,
   type WTCommand,
 } from "./day.ts";
@@ -306,6 +307,11 @@ export function tickWitchTown(
   random: Random,
 ): WTState | null {
   const s = structuredClone(upgradeWitchTown(input));
+  if (s.checkRequired) return null;
+  if (s.pending?.kind === "tituba" && now >= s.pending.deadline) {
+    finishTituba(s, now);
+    return s;
+  }
   if (s.phase !== "black-event" || s.pending?.kind !== "black-event")
     return null;
   if (s.checkRequired) return null;

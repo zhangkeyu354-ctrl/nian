@@ -1,0 +1,377 @@
+{
+  "profile": "candidate-59",
+  "townHall": "actual random 15-character pool; bots may decline optional abilities",
+  "attemptedGamesPerPlayerCount": 20,
+  "results": [
+    {
+      "players": 4,
+      "attempted": 20,
+      "completed": 20,
+      "ruleBlocked": 0,
+      "stepLimit": 0,
+      "blockedSeeds": [],
+      "failures": [],
+      "blocks": {},
+      "teams": {
+        "townspeople": 12,
+        "witches": 8
+      },
+      "commands": 4446,
+      "activeUses": {
+        "tituba": 8,
+        "samuel_parris": 12
+      }
+    },
+    {
+      "players": 5,
+      "attempted": 20,
+      "completed": 19,
+      "ruleBlocked": 1,
+      "stepLimit": 0,
+      "blockedSeeds": [
+        {
+          "seed": 50007,
+          "code": "CHECK_REQUIRED:X04:CAT_DEATH_BEFORE_TRANSMISSION"
+        }
+      ],
+      "failures": [],
+      "blocks": {
+        "CHECK_REQUIRED:X04:CAT_DEATH_BEFORE_TRANSMISSION": 1
+      },
+      "teams": {
+        "townspeople": 11,
+        "witches": 8
+      },
+      "commands": 5177,
+      "activeUses": {
+        "tituba": 6,
+        "samuel_parris": 14
+      }
+    },
+    {
+      "players": 6,
+      "attempted": 20,
+      "completed": 20,
+      "ruleBlocked": 0,
+      "stepLimit": 0,
+      "blockedSeeds": [],
+      "failures": [],
+      "blocks": {},
+      "teams": {
+        "townspeople": 7,
+        "witches": 13
+      },
+      "commands": 5770,
+      "activeUses": {
+        "tituba": 8,
+        "samuel_parris": 16
+      }
+    },
+    {
+      "players": 7,
+      "attempted": 20,
+      "completed": 17,
+      "ruleBlocked": 3,
+      "stepLimit": 0,
+      "blockedSeeds": [
+        {
+          "seed": 70003,
+          "code": "CHECK_REQUIRED:X04:CAT_DEATH_BEFORE_TRANSMISSION"
+        },
+        {
+          "seed": 70010,
+          "code": "CHECK_REQUIRED:X04:CAT_DEATH_BEFORE_TRANSMISSION"
+        },
+        {
+          "seed": 70020,
+          "code": "CHECK_REQUIRED:X04:CAT_DEATH_BEFORE_TRANSMISSION"
+        }
+      ],
+      "failures": [],
+      "blocks": {
+        "CHECK_REQUIRED:X04:CAT_DEATH_BEFORE_TRANSMISSION": 3
+      },
+      "teams": {
+        "townspeople": 8,
+        "witches": 9
+      },
+      "commands": 6769,
+      "activeUses": {
+        "tituba": 5,
+        "samuel_parris": 18
+      }
+    },
+    {
+      "players": 8,
+      "attempted": 20,
+      "completed": 14,
+      "ruleBlocked": 6,
+      "stepLimit": 0,
+      "blockedSeeds": [
+        {
+          "seed": 80005,
+          "code": "CHECK_REQUIRED:X04:CAT_DEATH_BEFORE_TRANSMISSION"
+        },
+        {
+          "seed": 80012,
+          "code": "CHECK_REQUIRED:X09:SHARED_FARMER_LOOT"
+        },
+        {
+          "seed": 80013,
+          "code": "CHECK_REQUIRED:X04:LAST_HIDDEN_WITCH_TRANSFER"
+        },
+        {
+          "seed": 80014,
+          "code": "CHECK_REQUIRED:X04:CAT_DEATH_BEFORE_TRANSMISSION"
+        },
+        {
+          "seed": 80017,
+          "code": "CHECK_REQUIRED:X04:CAT_DEATH_BEFORE_TRANSMISSION"
+        },
+        {
+          "seed": 80018,
+          "code": "CHECK_REQUIRED:X04:CAT_DEATH_BEFORE_TRANSMISSION"
+        }
+      ],
+      "failures": [],
+      "blocks": {
+        "CHECK_REQUIRED:X04:CAT_DEATH_BEFORE_TRANSMISSION": 4,
+        "CHECK_REQUIRED:X09:SHARED_FARMER_LOOT": 1,
+        "CHECK_REQUIRED:X04:LAST_HIDDEN_WITCH_TRANSFER": 1
+      },
+      "teams": {
+        "townspeople": 7,
+        "witches": 7
+      },
+      "commands": 5507,
+      "activeUses": {
+        "tituba": 11,
+        "samuel_parris": 32
+      }
+    },
+    {
+      "players": 9,
+      "attempted": 20,
+      "completed": 11,
+      "ruleBlocked": 9,
+      "stepLimit": 0,
+      "blockedSeeds": [
+        {
+          "seed": 90003,
+          "code": "CHECK_REQUIRED:X09:SHARED_FARMER_LOOT"
+        },
+        {
+          "seed": 90004,
+          "code": "CHECK_REQUIRED:X04:CAT_DEATH_BEFORE_TRANSMISSION"
+        },
+        {
+          "seed": 90005,
+          "code": "CHECK_REQUIRED:X04:CAT_DEATH_BEFORE_TRANSMISSION"
+        },
+        {
+          "seed": 90008,
+          "code": "CHECK_REQUIRED:X04:CAT_DEATH_BEFORE_TRANSMISSION"
+        },
+        {
+          "seed": 90009,
+          "code": "CHECK_REQUIRED:X04:CAT_DEATH_BEFORE_TRANSMISSION"
+        },
+        {
+          "seed": 90012,
+          "code": "CHECK_REQUIRED:X04:CAT_DEATH_BEFORE_TRANSMISSION"
+        },
+        {
+          "seed": 90014,
+          "code": "CHECK_REQUIRED:X04:CAT_DEATH_BEFORE_TRANSMISSION"
+        },
+        {
+          "seed": 90015,
+          "code": "CHECK_REQUIRED:X04:CAT_DEATH_BEFORE_TRANSMISSION"
+        },
+        {
+          "seed": 90018,
+          "code": "CHECK_REQUIRED:X04:CAT_DEATH_BEFORE_TRANSMISSION"
+        }
+      ],
+      "failures": [],
+      "blocks": {
+        "CHECK_REQUIRED:X09:SHARED_FARMER_LOOT": 1,
+        "CHECK_REQUIRED:X04:CAT_DEATH_BEFORE_TRANSMISSION": 8
+      },
+      "teams": {
+        "townspeople": 8,
+        "witches": 3
+      },
+      "commands": 6058,
+      "activeUses": {
+        "tituba": 13,
+        "samuel_parris": 20
+      }
+    },
+    {
+      "players": 10,
+      "attempted": 20,
+      "completed": 10,
+      "ruleBlocked": 10,
+      "stepLimit": 0,
+      "blockedSeeds": [
+        {
+          "seed": 100002,
+          "code": "CHECK_REQUIRED:X04:LAST_HIDDEN_WITCH_TRANSFER"
+        },
+        {
+          "seed": 100003,
+          "code": "CHECK_REQUIRED:X04:CAT_DEATH_BEFORE_TRANSMISSION"
+        },
+        {
+          "seed": 100006,
+          "code": "CHECK_REQUIRED:X04:CAT_DEATH_BEFORE_TRANSMISSION"
+        },
+        {
+          "seed": 100007,
+          "code": "CHECK_REQUIRED:X04:CAT_DEATH_BEFORE_TRANSMISSION"
+        },
+        {
+          "seed": 100008,
+          "code": "CHECK_REQUIRED:X04:CAT_DEATH_BEFORE_TRANSMISSION"
+        },
+        {
+          "seed": 100010,
+          "code": "CHECK_REQUIRED:X04:CAT_DEATH_BEFORE_TRANSMISSION"
+        },
+        {
+          "seed": 100012,
+          "code": "CHECK_REQUIRED:X04:CAT_DEATH_BEFORE_TRANSMISSION"
+        },
+        {
+          "seed": 100013,
+          "code": "CHECK_REQUIRED:X04:CAT_DEATH_BEFORE_TRANSMISSION"
+        },
+        {
+          "seed": 100014,
+          "code": "CHECK_REQUIRED:X04:CAT_DEATH_BEFORE_TRANSMISSION"
+        },
+        {
+          "seed": 100019,
+          "code": "CHECK_REQUIRED:X04:CAT_DEATH_BEFORE_TRANSMISSION"
+        }
+      ],
+      "failures": [],
+      "blocks": {
+        "CHECK_REQUIRED:X04:LAST_HIDDEN_WITCH_TRANSFER": 1,
+        "CHECK_REQUIRED:X04:CAT_DEATH_BEFORE_TRANSMISSION": 9
+      },
+      "teams": {
+        "townspeople": 9,
+        "witches": 1
+      },
+      "commands": 5390,
+      "activeUses": {
+        "tituba": 13,
+        "samuel_parris": 28
+      }
+    },
+    {
+      "players": 11,
+      "attempted": 20,
+      "completed": 12,
+      "ruleBlocked": 8,
+      "stepLimit": 0,
+      "blockedSeeds": [
+        {
+          "seed": 110002,
+          "code": "CHECK_REQUIRED:X04:CAT_DEATH_BEFORE_TRANSMISSION"
+        },
+        {
+          "seed": 110003,
+          "code": "CHECK_REQUIRED:X04:CAT_DEATH_BEFORE_TRANSMISSION"
+        },
+        {
+          "seed": 110005,
+          "code": "CHECK_REQUIRED:X04:CAT_DEATH_BEFORE_TRANSMISSION"
+        },
+        {
+          "seed": 110007,
+          "code": "CHECK_REQUIRED:X04:CAT_DEATH_BEFORE_TRANSMISSION"
+        },
+        {
+          "seed": 110015,
+          "code": "CHECK_REQUIRED:X04:CAT_DEATH_BEFORE_TRANSMISSION"
+        },
+        {
+          "seed": 110016,
+          "code": "CHECK_REQUIRED:X04:CAT_DEATH_BEFORE_TRANSMISSION"
+        },
+        {
+          "seed": 110017,
+          "code": "CHECK_REQUIRED:X04:CAT_DEATH_BEFORE_TRANSMISSION"
+        },
+        {
+          "seed": 110019,
+          "code": "CHECK_REQUIRED:X04:CAT_DEATH_BEFORE_TRANSMISSION"
+        }
+      ],
+      "failures": [],
+      "blocks": {
+        "CHECK_REQUIRED:X04:CAT_DEATH_BEFORE_TRANSMISSION": 8
+      },
+      "teams": {
+        "townspeople": 10,
+        "witches": 2
+      },
+      "commands": 6090,
+      "activeUses": {
+        "tituba": 15,
+        "samuel_parris": 32
+      }
+    },
+    {
+      "players": 12,
+      "attempted": 20,
+      "completed": 14,
+      "ruleBlocked": 6,
+      "stepLimit": 0,
+      "blockedSeeds": [
+        {
+          "seed": 120003,
+          "code": "CHECK_REQUIRED:X04:CAT_DEATH_BEFORE_TRANSMISSION"
+        },
+        {
+          "seed": 120010,
+          "code": "CHECK_REQUIRED:X04:CAT_DEATH_BEFORE_TRANSMISSION"
+        },
+        {
+          "seed": 120014,
+          "code": "CHECK_REQUIRED:X04:CAT_DEATH_BEFORE_TRANSMISSION"
+        },
+        {
+          "seed": 120016,
+          "code": "CHECK_REQUIRED:X04:CAT_DEATH_BEFORE_TRANSMISSION"
+        },
+        {
+          "seed": 120018,
+          "code": "CHECK_REQUIRED:X04:CAT_DEATH_BEFORE_TRANSMISSION"
+        },
+        {
+          "seed": 120020,
+          "code": "CHECK_REQUIRED:X04:CAT_DEATH_BEFORE_TRANSMISSION"
+        }
+      ],
+      "failures": [],
+      "blocks": {
+        "CHECK_REQUIRED:X04:CAT_DEATH_BEFORE_TRANSMISSION": 6
+      },
+      "teams": {
+        "townspeople": 11,
+        "witches": 3
+      },
+      "commands": 6168,
+      "activeUses": {
+        "tituba": 20,
+        "samuel_parris": 34
+      }
+    }
+  ],
+  "completeOriginalGameAcceptance": false,
+  "mode": "Tituba and Parris actively used; other optional abilities may be declined"
+}

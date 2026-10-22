@@ -219,9 +219,12 @@ export class WTRoomStore {
     }
     // Secret dawn ballots merge serially but do not advance the public revision.
     // Otherwise the revision gap itself reveals how many witch holders voted.
-    const secret = ["DAWN_TARGET", "NIGHT_TARGET", "CONSPIRACY_PICK"].includes(
-      req.action.type,
-    );
+    const secret = [
+      "DAWN_TARGET",
+      "NIGHT_TARGET",
+      "CONSPIRACY_PICK",
+      "TITUBA_REORDER",
+    ].includes(req.action.type);
     const privateOnly =
       secret &&
       current.state &&
@@ -366,7 +369,9 @@ export function attachWitchTown(
       const publicChanged =
         before !== JSON.stringify(store.snapshot(b.code, null));
       if (publicChanged) broadcast(b.code);
-      else if (r.request.action.type === "CONSPIRACY_PICK")
+      else if (
+        ["CONSPIRACY_PICK", "TITUBA_REORDER"].includes(r.request.action.type)
+      )
         broadcast(b.code, false, b.playerId ?? undefined);
       else if (
         r.request.action.type === "DAWN_TARGET" ||

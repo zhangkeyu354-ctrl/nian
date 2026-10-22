@@ -1,0 +1,98 @@
+{
+  "cases": 18,
+  "passed": 18,
+  "failed": 0,
+  "countsProfile": "candidate-59",
+  "results": [
+    {
+      "players": 4,
+      "role": "tituba",
+      "passed": true
+    },
+    {
+      "players": 4,
+      "role": "samuel_parris",
+      "passed": true
+    },
+    {
+      "players": 5,
+      "role": "tituba",
+      "passed": true
+    },
+    {
+      "players": 5,
+      "role": "samuel_parris",
+      "passed": true
+    },
+    {
+      "players": 6,
+      "role": "tituba",
+      "passed": true
+    },
+    {
+      "players": 6,
+      "role": "samuel_parris",
+      "passed": true
+    },
+    {
+      "players": 7,
+      "role": "tituba",
+      "passed": true
+    },
+    {
+      "players": 7,
+      "role": "samuel_parris",
+      "passed": true
+    },
+    {
+      "players": 8,
+      "role": "tituba",
+      "passed": true
+    },
+    {
+      "players": 8,
+      "role": "samuel_parris",
+      "passed": true
+    },
+    {
+      "players": 9,
+      "role": "tituba",
+      "passed": true
+    },
+    {
+      "players": 9,
+      "role": "samuel_parris",
+      "passed": true
+    },
+    {
+      "players": 10,
+      "role": "tituba",
+      "passed": true
+    },
+    {
+      "players": 10,
+      "role": "samuel_parris",
+      "passed": true
+    },
+    {
+      "players": 11,
+      "role": "tituba",
+      "passed": true
+    },
+    {
+      "players": 11,
+      "role": "samuel_parris",
+      "passed": true
+    },
+    {
+      "players": 12,
+      "role": "tituba",
+      "passed": true
+    },
+    {
+      "players": 12,
+      "role": "samuel_parris",
+      "passed": true
+    }
+  ]
+}

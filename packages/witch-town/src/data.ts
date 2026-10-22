@@ -188,7 +188,7 @@ export const CHARACTERS = [
     spec: "WITCH_TOWN_CHARACTER_MATRIX.md",
     openIssues: [],
     abilityZh: "每局一次，在自己抽牌前查看并重排整副牌堆，限60秒。",
-    implementation: "metadata-only",
+    implementation: "day-private-reorder",
   },
   {
     id: "H08",
@@ -272,7 +272,7 @@ export const CHARACTERS = [
     spec: "WITCH_TOWN_CHARACTER_MATRIX.md",
     openIssues: [],
     abilityZh: "每局两次，以从弃牌堆选至多两张非黑牌替代正常抽牌行动。",
-    implementation: "metadata-only",
+    implementation: "day-replace-draw",
   },
   {
     id: "H14",

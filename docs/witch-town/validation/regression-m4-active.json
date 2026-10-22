@@ -1,0 +1,169 @@
+{
+  "stage": "M4_ACTIVE_ROLES_PROGRESS",
+  "fullSuite": {
+    "total": 615,
+    "passed": 615,
+    "failed": 0,
+    "success": true
+  },
+  "witchTown": {
+    "total": 181,
+    "passed": 181
+  },
+  "addedTests": 34,
+  "typecheck": "passed",
+  "build": "passed",
+  "protocol": {
+    "cases": 18,
+    "passed": 18,
+    "failed": 0,
+    "countsProfile": "candidate-59",
+    "results": [
+      {
+        "players": 4,
+        "role": "tituba",
+        "passed": true
+      },
+      {
+        "players": 4,
+        "role": "samuel_parris",
+        "passed": true
+      },
+      {
+        "players": 5,
+        "role": "tituba",
+        "passed": true
+      },
+      {
+        "players": 5,
+        "role": "samuel_parris",
+        "passed": true
+      },
+      {
+        "players": 6,
+        "role": "tituba",
+        "passed": true
+      },
+      {
+        "players": 6,
+        "role": "samuel_parris",
+        "passed": true
+      },
+      {
+        "players": 7,
+        "role": "tituba",
+        "passed": true
+      },
+      {
+        "players": 7,
+        "role": "samuel_parris",
+        "passed": true
+      },
+      {
+        "players": 8,
+        "role": "tituba",
+        "passed": true
+      },
+      {
+        "players": 8,
+        "role": "samuel_parris",
+        "passed": true
+      },
+      {
+        "players": 9,
+        "role": "tituba",
+        "passed": true
+      },
+      {
+        "players": 9,
+        "role": "samuel_parris",
+        "passed": true
+      },
+      {
+        "players": 10,
+        "role": "tituba",
+        "passed": true
+      },
+      {
+        "players": 10,
+        "role": "samuel_parris",
+        "passed": true
+      },
+      {
+        "players": 11,
+        "role": "tituba",
+        "passed": true
+      },
+      {
+        "players": 11,
+        "role": "samuel_parris",
+        "passed": true
+      },
+      {
+        "players": 12,
+        "role": "tituba",
+        "passed": true
+      },
+      {
+        "players": 12,
+        "role": "samuel_parris",
+        "passed": true
+      }
+    ]
+  },
+  "dbdProtocol": {
+    "games": [
+      {
+        "seed": 1701,
+        "code": "MS63",
+        "commands": 228,
+        "winner": "survivor",
+        "events": 450,
+        "rejectedAsExpected": 24
+      },
+      {
+        "seed": 2903,
+        "code": "M8R4",
+        "commands": 268,
+        "winner": "survivor",
+        "events": 535,
+        "rejectedAsExpected": 28
+      },
+      {
+        "seed": 4111,
+        "code": "U92D",
+        "commands": 109,
+        "winner": "killer",
+        "events": 223,
+        "rejectedAsExpected": 12
+      }
+    ],
+    "viewEqualityChecks": 3025,
+    "restartRestore": true
+  },
+  "dbdBrowsers": [
+    {
+      "seed": 4111,
+      "room": "RN88",
+      "commands": 109,
+      "winner": "killer",
+      "browsers": 5,
+      "killerFramesChecked": 112,
+      "screenshotsChecked": 5
+    },
+    {
+      "seed": 1701,
+      "room": "Z3ST",
+      "commands": 228,
+      "winner": "survivor",
+      "browsers": 5,
+      "killerFramesChecked": 231,
+      "screenshotsChecked": 5
+    }
+  ],
+  "dbdLobby": {
+    "passed": true,
+    "scenarios": 3
+  },
+  "completeOriginalGameAcceptance": false
+}

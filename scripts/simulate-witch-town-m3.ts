@@ -4,6 +4,7 @@ import {
   createWitchTown,
   seededRandom,
   reduceWitchTown,
+  shuffle,
   PLAYER_CONFIGS,
   type WTState,
   type PlayingCard,
@@ -14,6 +15,7 @@ import {
 } from "../packages/witch-town/src/day.ts";
 import { tickWitchTown } from "../packages/witch-town/src/events.ts";
 const rounds = Number(process.env.WT_SIM_ROUNDS ?? 20);
+const activeRoles = process.env.WT_SIM_ACTIVE === "1";
 assert(Number.isInteger(rounds) && rounds > 0 && rounds <= 10000);
 function invariant(s: WTState, n: number) {
   const c = PLAYER_CONFIGS.find((c) => c.players === n)!;
@@ -52,6 +54,7 @@ for (let n = 4; n <= 12; n++) {
     blocks: {} as Record<string, number>,
     teams: { townspeople: 0, witches: 0 },
     commands: 0,
+    ...(activeRoles ? { activeUses: { tituba: 0, samuel_parris: 0 } } : {}),
   };
   for (let run = 1; run <= rounds; run++) {
     const seed = n * 10000 + run,
@@ -86,6 +89,17 @@ for (let n = 4; n <= 12; n++) {
       for (let step = 0; step < 2000 && !s.outcome; step++) {
         now += 100;
         const p = s.pending;
+        if (p?.kind === "tituba") {
+          apply(p.playerId, {
+            type: "TITUBA_REORDER",
+            cardIds: shuffle(
+              s.deck.map((c) => c.id),
+              rnd,
+            ),
+          });
+          apply(p.playerId, { type: "TITUBA_FINISH" });
+          continue;
+        }
         if (p?.kind === "ability") {
           apply(p.playerId, { type: "ABILITY_DECISION", use: false });
           continue;
@@ -178,6 +192,29 @@ for (let n = 4; n <= 12; n++) {
           continue;
         }
         let played = false;
+        if (
+          activeRoles &&
+          actor.character === "tituba" &&
+          !actor.abilityUses.tituba
+        ) {
+          apply(actor.id, { type: "TITUBA_START" });
+          row.activeUses!.tituba++;
+          continue;
+        }
+        if (
+          activeRoles &&
+          actor.character === "samuel_parris" &&
+          (actor.abilityUses.samuel_parris ?? 0) < 2 &&
+          s.discard.length
+        ) {
+          const cardIds = s.discard
+            .filter((c) => !["night", "conspiracy"].includes(c.kind))
+            .slice(0, 2)
+            .map((c) => c.id);
+          apply(actor.id, { type: "PARRIS_DRAW", cardIds });
+          row.activeUses!.samuel_parris++;
+          continue;
+        }
         const rebeccas = s.players.filter(
           (q) => q.alive && effectiveCharacter(s, q.id) === "rebecca_nurse",
         );
@@ -242,7 +279,10 @@ for (let n = 4; n <= 12; n++) {
     }
   }
   result.push(row);
-  console.log("WT_M3_SIM", JSON.stringify(row));
+  console.log(
+    activeRoles ? "WT_M4_ACTIVE_SIM" : "WT_M3_SIM",
+    JSON.stringify(row),
+  );
 }
 const report = {
   profile: "candidate-59",
@@ -251,10 +291,17 @@ const report = {
   attemptedGamesPerPlayerCount: rounds,
   results: result,
   completeOriginalGameAcceptance: false,
+  ...(activeRoles
+    ? {
+        mode: "Tituba and Parris actively used; other optional abilities may be declined",
+      }
+    : {}),
 };
 mkdirSync("docs/witch-town/validation", { recursive: true });
 writeFileSync(
-  "docs/witch-town/validation/simulations-m3.json",
+  activeRoles
+    ? "docs/witch-town/validation/simulations-m4-active.json"
+    : "docs/witch-town/validation/simulations-m3.json",
   JSON.stringify(report, null, 2),
 );
 assert(
