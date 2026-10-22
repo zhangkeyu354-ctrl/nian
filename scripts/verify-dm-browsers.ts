@@ -31,6 +31,12 @@ const wait = async (p: Page, phase: string) =>
     const s = JSON.parse((window as any).render_game_to_text());
     return s.view?.phase === phase;
   }, phase);
+// DM_EXTRA_SHOTS=1：额外截取横幅、选择、投票揭晓等过程画面（仅供视觉检查）
+const extra = async (p: Page, name: string, delay = 450) => {
+  if (!process.env.DM_EXTRA_SHOTS) return;
+  await p.waitForTimeout(delay);
+  await p.screenshot({ path: out + "/x-" + name + ".png" });
+};
 const shot = async (p: Page, name: string) =>
   assertUiShot(p, out + "/" + name + ".png");
 try {
@@ -97,12 +103,15 @@ try {
     (p: any) => p.id === views[victim].view.me.id,
   ).seat;
   await pages[killer].getByTestId("dm-seat-" + victimSeat).click();
+  await extra(pages[killer], "kill-picked", 2200);
   await pages[killer].getByTestId("dm-kill").click();
   await wait(pages[victim], "VICTIM_EVIDENCE");
+  await extra(pages[victim], "banner-victim", 500);
   await pages[victim].getByTestId("dm-killers").waitFor();
   assert((await state(pages[victim])).view.killers.length === 1);
   assert((await state(pages[detective])).view.killers.length === 0);
   await shot(pages[victim], "victim-sees-killer");
+  await extra(pages[detective], "night-wait", 0);
   await pages[victim].locator("[data-card]").first().click();
   await pages[victim].getByTestId("dm-evidence-confirm").click();
   await wait(pages[detective], "SPECIAL_INFORMATION");
@@ -110,6 +119,7 @@ try {
   await wait(pages[killer], "KILLER_FAKE_EVIDENCE");
   await pages[killer].locator("[data-card]").nth(0).click();
   await pages[killer].locator("[data-card]").nth(1).click();
+  await extra(pages[killer], "fake-picked", 2200);
   await pages[killer].getByTestId("dm-evidence-confirm").click();
   await Promise.all(pages.map((p) => wait(p, "INVESTIGATION")));
   views = await Promise.all(pages.map(state));
@@ -156,6 +166,8 @@ try {
     await pages[i].getByTestId("dm-seat-" + killerSeat).click();
     await pages[i].getByTestId("dm-vote").click();
   }
+  await pages[killer].getByTestId("dm-vote-reveal").waitFor();
+  await extra(pages[killer], "vote-reveal", 1500);
   await wait(pages[killer], "DEFENSE");
   await pages[killer].getByTestId("dm-defense-end").click();
   await Promise.all(pages.map((p) => wait(p, "SECOND_VOTE")));
