@@ -18,6 +18,14 @@
 - 运行：`npx tsx scripts/verify-witch-town-privacy.ts`；单测：`npx vitest run apps/server/test/wt-wire-privacy.test.ts --maxWorkers=1`（7/7 已通过）。
 - 报告：[隐私核查](../witch-town/validation/PRIVACY_AUDIT_2026-10-22.md)。下一步提交中文规则差异表，继续 WebKit 诊断。
 
+### 第三项：中文牌面与规则对照已完成
+
+- 逐项审计 15 张行动/特殊牌和 15 种人物的 `effectZh` / `abilityZh`，对照官方标准 PDF 第 12–14 页、相关基础规则页与官方 15 人物合照。
+- 法官 6、大力士 8、虔诚翻倍、部长证据 1 与现行标准版一致；官方旧行动合照的 Piety 文本存在版本差异，以现行 PDF 为准。
+- 差异表列出少女遗漏“可”、农民/裁缝残留内部编号，以及诅咒、情侣、阴谋、夜晚短文案省略的交互；完整卡面不足的条目单独标尚待确认。
+- 报告：[中文说明对照](../witch-town/validation/CHINESE_RULE_AUDIT_2026-10-22.md)。没有修改 `data.ts` 或规则引擎；展示文案修改待用户确认。
+- 下一步：收尾 WebKit 额外诊断与全仓测试，更新实际通过/失败结果，不把未完成的测试标为通过。
+
 Codex 额度用完，Claude 从 `8d3781c` 接手。只在 `codex/witch-town-m1` 工作，不碰 main，不部署。
 
 ## 已完成
