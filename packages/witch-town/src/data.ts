@@ -621,28 +621,32 @@ export const CANDIDATE_COUNT_SOURCE = {
 export const RULE_DECISIONS = [
   {
     id: "X01",
-    classification: "DEFAULT_PENDING_CONFIRM",
+    classification: "USER_ADJUDICATED",
+    adjudicatedAt: "2026-10-22",
     pages: [13],
     policy:
       "Alibi uses current accusation values, including Cotton's Evidence at 1.",
   },
   {
     id: "X02_REWARD",
-    classification: "DEFAULT_PENDING_CONFIRM",
+    classification: "USER_ADJUDICATED",
+    adjudicatedAt: "2026-10-22",
     pages: [5, 12],
     policy:
       "Reward the causal reveal; no reward for subsequent death display or confession; terminal victory wins priority.",
   },
   {
     id: "X02_CHOOSER",
-    classification: "DEFAULT_PENDING_CONFIRM",
+    classification: "USER_ADJUDICATED",
+    adjudicatedAt: "2026-10-22",
     pages: [5, 12],
     policy:
       "Skip dead trial targets; replace dead choosers by first living clockwise seat.",
   },
   {
     id: "X03",
-    classification: "DEFAULT_PENDING_CONFIRM",
+    classification: "USER_ADJUDICATED",
+    adjudicatedAt: "2026-10-22",
     pages: [13],
     policy:
       "Rescore immediately using passive defence threshold; affected player chooses when no public accuser exists.",
@@ -656,14 +660,16 @@ export const RULE_DECISIONS = [
   },
   {
     id: "X04_EXEMPTION",
-    classification: "DEFAULT_PENDING_CONFIRM",
+    classification: "USER_ADJUDICATED",
+    adjudicatedAt: "2026-10-22",
     pages: [5, 14],
     policy:
       "After simultaneous transfer eliminate revealed-Witch holders with no hidden Witch.",
   },
   {
     id: "X04_FINAL",
-    classification: "DEFAULT_PENDING_CONFIRM",
+    classification: "USER_ADJUDICATED",
+    adjudicatedAt: "2026-10-22",
     pages: [6],
     policy:
       "All simultaneous final infectees personally lose; Witch team still wins.",
@@ -677,7 +683,8 @@ export const RULE_DECISIONS = [
   },
   {
     id: "X06",
-    classification: "DEFAULT_PENDING_CONFIRM",
+    classification: "USER_ADJUDICATED",
+    adjudicatedAt: "2026-10-22",
     pages: [13],
     policy:
       "Mary retains harmless persistent cards. A prohibited second Matchmaker is rejected atomically.",
@@ -691,21 +698,24 @@ export const RULE_DECISIONS = [
   },
   {
     id: "X08",
-    classification: "DEFAULT_PENDING_CONFIRM",
+    classification: "USER_ADJUDICATED",
+    adjudicatedAt: "2026-10-22",
     pages: [8, 12],
     policy:
       "An exhausted draw draws only available cards. Night alone remains a valid rebuild; no cards are fabricated.",
   },
   {
     id: "X09",
-    classification: "DEFAULT_PENDING_CONFIRM",
+    classification: "USER_ADJUDICATED",
+    adjudicatedAt: "2026-10-22",
     pages: [12, 13],
     policy:
       "Single farmer receives all. Shared loot: John first, at most 3 each, all leftovers John. Eligibility snapshots before death; separate death pools resolve in cause order.",
   },
   {
     id: "X10",
-    classification: "DEFAULT_PENDING_CONFIRM",
+    classification: "USER_ADJUDICATED",
+    adjudicatedAt: "2026-10-22",
     pages: [12, 14],
     policy:
       "Copied limited abilities spend the copier's personal per-ability lifetime budget, never reset by changing neighbours.",
@@ -736,7 +746,7 @@ export const RULE_DECISIONS = [
     classification: "ONLINE_CONVENTION",
     pages: [2, 14],
     policy:
-      "Start commits a draw action; finish or 60-second deadline draws using last accepted private order.",
+      "User adjudication 2026-10-22: after sorting choose draw-two or resume play; only a 60-second timeout forces drawing with the last saved order. Legacy finish without an action means explicit draw. The ability window supersedes the earlier day hourglass.",
   },
   {
     id: "D_LOOT_NIGHT",

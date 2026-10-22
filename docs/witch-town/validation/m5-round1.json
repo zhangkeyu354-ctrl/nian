@@ -1,0 +1,61 @@
+{
+  "date": "2026-10-22",
+  "scope": "M5 Gate 1 visual mock only; review pending; no deployment",
+  "merge": "356a4be",
+  "unit": {
+    "earlierFullRun": {
+      "total": 781,
+      "passed": 781,
+      "failed": 0
+    },
+    "finalFullRun": {
+      "total": 781,
+      "passed": 778,
+      "failed": 3
+    },
+    "unmodifiedIsolatedRetry": {
+      "total": 81,
+      "passed": 81,
+      "failed": 0
+    },
+    "note": "Final full run had three 5000ms timeouts in game-engine privacy.test.ts (two) and witch-town day.test.ts (one). Both complete files passed unchanged in isolated single-worker retry; do not report final full run as 781/781."
+  },
+  "typecheck": "passed",
+  "build": "passed",
+  "mergeChecks": {
+    "unitPassed": 779,
+    "witchTownM4Active": 18,
+    "drawingPartyConfigurations": 12
+  },
+  "visual": {
+    "primaryScreenshots": 60,
+    "interactionScreenshots": 7,
+    "geometryConfigurations": 36,
+    "interactionGroups": 12,
+    "layoutChecks": "passed"
+  },
+  "regressions": {
+    "passed": [
+      "replays",
+      "lan-protocol",
+      "lan-lobby",
+      "cn-protocol",
+      "cn-browsers",
+      "rr-protocol isolated retry",
+      "rr-browsers",
+      "ma-browsers",
+      "dm-browsers unchanged retry",
+      "drawing-party protocol",
+      "drawing-studio-eight"
+    ],
+    "failed": [
+      "verify-lan-browsers.ts: 1701 command 141 version expected142 actual143; identically reproduced on merge baseline356a4be"
+    ],
+    "retryHistory": [
+      "RR/MA port3331 collision; isolated RR passed, runner scheduling corrected",
+      "DM initial start timeout; unchanged retry passed"
+    ],
+    "allRegressionAcceptance": false
+  },
+  "next": "Stop for Claude/user Gate1 review; do not enter Gate2"
+}

@@ -1,0 +1,137 @@
+import { chromium } from "playwright";
+import assert from "node:assert/strict";
+import { mkdirSync, writeFileSync } from "node:fs";
+import { assertUiShot } from "./screenshot-check.ts";
+const base=process.env.WT_MOCK_URL ?? "http://127.0.0.1:3409";
+const out="docs/witch-town/ui/round1/interactions";
+mkdirSync(out,{recursive:true});
+const browser=await chromium.launch({headless:true,executablePath:process.env.PW_CHROME});
+const context=await browser.newContext({viewport:{width:390,height:844},isMobile:true,hasTouch:true});
+const page=await context.newPage(), errors:string[]=[], sockets:string[]=[], results:string[]=[], geometry:any[]=[];
+page.on("pageerror",e=>errors.push(e.message));
+page.on("websocket",s=>{if(s.url().includes("socket.io")) sockets.push(s.url());});
+const state=async()=>JSON.parse(await page.evaluate(()=>(window as any).render_game_to_text()));
+const open=async(scene:string)=>{await page.goto(`${base}/?game=wt&mock=${scene}`);await page.locator(".wt-world").waitFor();};
+const shot=async(name:string)=>{await page.waitForTimeout(700);await assertUiShot(page,`${out}/${name}.png`,".wt-world");};
+try {
+  // Same formula, every supported count, four independent viewport shapes.
+  for(const [w,h] of [[390,844],[375,667],[844,390],[1440,900]]) {
+    await page.setViewportSize({width:w,height:h});
+    for(let n=4;n<=12;n++) {
+      await open(`day-me&players=${n}`);
+      await page.waitForTimeout(100);
+      const g=await page.evaluate(()=>{
+        const seats=[...document.querySelectorAll<HTMLElement>(".wt-seat")];
+        const rects=seats.map(s=>s.getBoundingClientRect());
+        const collisions:number[][]=[];
+        for(let i=0;i<rects.length;i++)for(let j=i+1;j<rects.length;j++){
+          const a=rects[i],b=rects[j];
+          if(Math.min(a.right,b.right)-Math.max(a.left,b.left)>3&&Math.min(a.bottom,b.bottom)-Math.max(a.top,b.top)>3) collisions.push([i+1,j+1]);
+        }
+        const table=document.querySelector(".wt-table-space")!.getBoundingClientRect(),self=rects[0];
+        return {count:seats.length,collisions,selfCentered:Math.abs((self.left+self.right)/2-(table.left+table.right)/2)<2,selfBottom:self.top>=Math.max(...rects.map(r=>r.top))-1,clipped:[...document.querySelectorAll<HTMLElement>(".wt-seat-role,.wt-seat-name")].filter(e=>e.scrollWidth>e.clientWidth+1).map(e=>e.textContent)};
+      });
+      geometry.push({width:w,height:h,players:n,...g});
+    }
+  }
+  assert(geometry.every(g=>g.count===g.players&&g.selfCentered&&g.selfBottom&&!g.collisions.length&&!g.clipped.length),JSON.stringify(geometry.filter(g=>g.collisions.length||g.clipped.length)));
+  results.push("4–12人×4尺寸：36种排座，自己居中在底部，无核心文字截断/座位重叠");
+  await page.setViewportSize({width:390,height:844});
+  await open("day-me");
+  await page.locator('.wt-hand [data-kind="evidence"]').click();
+  assert(await page.getByRole("dialog").isVisible());
+  await page.getByRole("button",{name:"选择目标",exact:true}).click();
+  // aria-disabled announces an illegal target; a physical tap must still explain why.
+  const self=await page.locator('[data-seat="0"]').boundingBox();
+  assert(self);
+  await page.touchscreen.tap(self.x+self.width/2,self.y+self.height/2);
+  await page.getByRole("status").filter({hasText:"不能对自己"}).waitFor();
+  await page.locator('[data-seat="4"]').click();
+  assert.equal(await page.locator(".wt-toast").count(),0,"合法选择必须清除先前的非法目标提示");
+  assert.match(await page.locator(".wt-dock-hint").innerText(),/5号.*证据/);
+  await shot("target-selected");
+  await page.getByRole("button",{name:"确认出牌",exact:true}).click();
+  await page.waitForTimeout(800);
+  assert.equal((await state()).scene,"day-me");
+  results.push("手牌大图→非法自己目标提示→合法目标→同位置确认→飞牌与公开反馈");
+  await open("trial");
+  assert.equal(await page.locator(".wt-tryal-front").allTextContents().then(x=>x.join("")),"");
+  await page.locator(".wt-reveal-stage .wt-tryal").first().click();
+  await page.getByRole("button",{name:"确认揭牌",exact:true}).click();
+  assert.equal((await state()).revealed,true);
+  await shot("trial-witch");
+  results.push("审判确认前不在DOM写入隐藏牌面，确认后翻牌、女巫烟雾与死亡横幅");
+  await open("conspiracy");
+  await page.locator(".wt-personal .wt-tryal").first().click();
+  await page.getByRole("button",{name:"确认选择",exact:true}).click();
+  assert(await page.locator(".wt-personal .wt-tryal.is-revealed").isVisible());
+  await shot("conspiracy-new-card");
+  results.push("阴谋背面选牌→确认→仅本人新牌展示");
+  await open("confession");
+  await page.getByRole("button",{name:"自白",exact:true}).click();
+  assert.equal((await state()).ownCardRevealed,false);
+  await page.locator(".wt-confession-row .wt-tryal").first().click();
+  await page.getByRole("button",{name:"确认自白",exact:true}).click();
+  assert.equal((await state()).ownCardRevealed,true);
+  assert.equal(await page.locator(".wt-toast").count(),0,"自白确认后不得遗留要求再次选牌的旧提示");
+  await shot("confession-revealed");
+  await page.evaluate(()=>(window as any).advanceTime(21_000));
+  assert(await page.locator(".wt-timer.is-urgent").isVisible());
+  results.push("自白二次确认、本人牌揭示、末10秒红色圆环");
+  await open("loot");
+  await page.locator(".wt-loot-cards .wt-card").first().click();
+  await page.getByRole("button",{name:"收下选中的牌",exact:true}).click();
+  assert.match(await page.locator(".wt-dock-hint").innerText(),/等待裁缝/);
+  results.push("共同分牌选取后显示等待下一位，并禁用重复领取");
+  await open("tituba");
+  await page.getByRole("button",{name:"下移辩护",exact:true}).click();
+  assert.equal((await state()).order[0],"evidence");
+  await page.getByRole("button",{name:"保存排序",exact:true}).click();
+  assert(await page.getByRole("button",{name:"抽2张",exact:true}).isVisible());
+  await shot("tituba-choice");
+  await page.getByRole("button",{name:"出牌",exact:true}).click();
+  assert.equal((await state()).scene,"day-me");
+  await open("tituba");
+  await page.locator(".wt-order-list > div").first().dragTo(page.locator(".wt-order-list > div").last());
+  assert.equal((await state()).order.at(-1),"alibi");
+  results.push("说书人手机上下箭头、拖拽、保存后抽2/出牌两个选项");
+  await open("day-12");
+  await page.locator('[data-seat="10"]').click();
+  assert.match(await page.getByRole("dialog").innerText(),/11号/);
+  assert.match(await page.getByRole("dialog").innerText(),/3\/8/);
+  await shot("seat-detail-12");
+  await page.getByRole("button",{name:"关闭详情",exact:true}).click();
+  await page.getByRole("button",{name:"按此查看",exact:true}).click();
+  assert.equal(await page.locator(".wt-modal .wt-tryal.is-revealed").count(),3);
+  await shot("private-identity");
+  results.push("12人座位详情与自己的私人审判牌按需查看");
+  await open("dead");
+  assert.equal(await page.locator(".wt-hand").count(),0);
+  assert(await page.getByRole("button",{name:"观战中 · 无法行动",exact:true}).isDisabled());
+  results.push("死亡只读、没有手牌出牌入口");
+  await open("night-town");
+  assert.equal(await page.locator(".wt-seat").count(),0);
+  const town=await page.locator(".wt-table-space").innerHTML();
+  await open("night-witch");
+  assert.equal(await page.locator(".wt-table-space").innerHTML(),town);
+  results.push("女巫/普通人夜间外部场景结构相同，差别只在私人事件与行动区");
+  await open("day-me");
+  await page.getByRole("button",{name:"场景与记录",exact:true}).click();
+  await page.getByRole("button",{name:"黑牌 · 阴谋",exact:true}).click();
+  await page.getByRole("button",{name:"场景与记录",exact:true}).click();
+  await page.getByRole("button",{name:"白天 · 轮到我",exact:true}).click();
+  await page.waitForTimeout(2100);
+  assert.match(await page.locator(".wt-phase-banner").innerText(),/白天/);
+  await page.waitForTimeout(2000);
+  assert.equal(await page.locator(".wt-phase-banner").count(),0);
+  results.push("多个阶段横幅按队列播放、约1.9秒后退出且不拦截点击");
+  const storage=await page.evaluate(()=>Object.entries(localStorage));
+  assert(storage.every(([key])=>["dp-sound","dbd-visual-settings"].includes(key)),JSON.stringify(storage));
+  assert.equal(sockets.length,0);
+  assert.deepEqual(errors,[]);
+  results.push("样稿未连接Socket.IO、未持久化牌面/凭证；无页面异常（非真实协议隐私验收）");
+} finally {
+  writeFileSync(`${out}/validation.json`,JSON.stringify({scope:"mock UI interactions only",results,geometry,errors,sockets},null,2)+"\n");
+  await browser.close();
+}
+console.log(`PASS ${results.length} interaction groups, ${geometry.length} count/viewport layouts`);

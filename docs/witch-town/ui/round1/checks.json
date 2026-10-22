@@ -1,0 +1,1723 @@
+{
+  "scope": "visual mock only; no real multiplayer acceptance",
+  "screenshots": 60,
+  "errors": [],
+  "results": [
+    {
+      "scene": "lobby",
+      "width": 390,
+      "height": 844,
+      "path": "docs/witch-town/ui/round1/lobby-390x844.png",
+      "issues": [],
+      "minFont": 13,
+      "disabled": [
+        {
+          "text": "房主开始",
+          "opacity": "1",
+          "color": "rgb(196, 203, 208)",
+          "background": "rgb(41, 54, 65)"
+        }
+      ],
+      "seats": 4,
+      "task": "确认昵称与人数，然后准备",
+      "pixels": {
+        "scope": "Visible UI / prototype region, not a full-map-count claim",
+        "region": {
+          "x": 0,
+          "y": 0,
+          "width": 390,
+          "height": 844
+        },
+        "pixels": {
+          "busy": 0.31182403694252037,
+          "std": 39.031002891986006
+        }
+      }
+    },
+    {
+      "scene": "day-me",
+      "width": 390,
+      "height": 844,
+      "path": "docs/witch-town/ui/round1/day-me-390x844.png",
+      "issues": [],
+      "minFont": 13,
+      "disabled": [],
+      "seats": 8,
+      "task": "轮到你了 · 抽2张，或打出至少1张牌",
+      "pixels": {
+        "scope": "Visible UI / prototype region, not a full-map-count claim",
+        "region": {
+          "x": 0,
+          "y": 0,
+          "width": 390,
+          "height": 844
+        },
+        "pixels": {
+          "busy": 0.39538218495564464,
+          "std": 60.10758174976647
+        }
+      }
+    },
+    {
+      "scene": "day-12",
+      "width": 390,
+      "height": 844,
+      "path": "docs/witch-town/ui/round1/day-12-390x844.png",
+      "issues": [],
+      "minFont": 13,
+      "disabled": [
+        {
+          "text": "等待山姆出牌…",
+          "opacity": "1",
+          "color": "rgb(196, 203, 208)",
+          "background": "rgb(41, 54, 65)"
+        }
+      ],
+      "seats": 12,
+      "task": "等待3号 山姆出牌…",
+      "pixels": {
+        "scope": "Visible UI / prototype region, not a full-map-count claim",
+        "region": {
+          "x": 0,
+          "y": 0,
+          "width": 390,
+          "height": 844
+        },
+        "pixels": {
+          "busy": 0.4103171709806781,
+          "std": 57.00682816849046
+        }
+      }
+    },
+    {
+      "scene": "target",
+      "width": 390,
+      "height": 844,
+      "path": "docs/witch-town/ui/round1/target-390x844.png",
+      "issues": [],
+      "minFont": 13,
+      "disabled": [],
+      "seats": 8,
+      "task": "对5号 林恩使用『证据』？",
+      "pixels": {
+        "scope": "Visible UI / prototype region, not a full-map-count claim",
+        "region": {
+          "x": 0,
+          "y": 0,
+          "width": 390,
+          "height": 844
+        },
+        "pixels": {
+          "busy": 0.3893911775428363,
+          "std": 60.41303998191282
+        }
+      }
+    },
+    {
+      "scene": "trial",
+      "width": 390,
+      "height": 844,
+      "path": "docs/witch-town/ui/round1/trial-390x844.png",
+      "issues": [],
+      "minFont": 13,
+      "disabled": [
+        {
+          "text": "确认揭牌",
+          "opacity": "1",
+          "color": "rgb(196, 203, 208)",
+          "background": "rgb(41, 54, 65)"
+        }
+      ],
+      "seats": 8,
+      "task": "你正在审判5号林恩，选择一张背面牌",
+      "pixels": {
+        "scope": "Visible UI / prototype region, not a full-map-count claim",
+        "region": {
+          "x": 0,
+          "y": 0,
+          "width": 390,
+          "height": 844
+        },
+        "pixels": {
+          "busy": 0.3295783205735812,
+          "std": 42.05852722943518
+        }
+      }
+    },
+    {
+      "scene": "black",
+      "width": 390,
+      "height": 844,
+      "path": "docs/witch-town/ui/round1/black-390x844.png",
+      "issues": [],
+      "minFont": 13,
+      "disabled": [],
+      "seats": 8,
+      "task": "你抽到了黑牌：阴谋，立即处理",
+      "pixels": {
+        "scope": "Visible UI / prototype region, not a full-map-count claim",
+        "region": {
+          "x": 0,
+          "y": 0,
+          "width": 390,
+          "height": 844
+        },
+        "pixels": {
+          "busy": 0.3097338680277069,
+          "std": 50.585900818265635
+        }
+      }
+    },
+    {
+      "scene": "conspiracy",
+      "width": 390,
+      "height": 844,
+      "path": "docs/witch-town/ui/round1/conspiracy-390x844.png",
+      "issues": [],
+      "minFont": 13,
+      "disabled": [
+        {
+          "text": "确认选择",
+          "opacity": "1",
+          "color": "rgb(196, 203, 208)",
+          "background": "rgb(41, 54, 65)"
+        }
+      ],
+      "seats": 8,
+      "task": "从左邻8号苏珊的背面牌中选一张",
+      "pixels": {
+        "scope": "Visible UI / prototype region, not a full-map-count claim",
+        "region": {
+          "x": 0,
+          "y": 0,
+          "width": 390,
+          "height": 844
+        },
+        "pixels": {
+          "busy": 0.34043018592781626,
+          "std": 42.454410130813216
+        }
+      }
+    },
+    {
+      "scene": "night-witch",
+      "width": 390,
+      "height": 844,
+      "path": "docs/witch-town/ui/round1/night-witch-390x844.png",
+      "issues": [],
+      "minFont": 13,
+      "disabled": [
+        {
+          "text": "秘密确认目标",
+          "opacity": "1",
+          "color": "rgb(196, 203, 208)",
+          "background": "rgb(41, 54, 65)"
+        }
+      ],
+      "seats": 0,
+      "task": "秘密商议后，选择今晚的袭击目标",
+      "pixels": {
+        "scope": "Visible UI / prototype region, not a full-map-count claim",
+        "region": {
+          "x": 0,
+          "y": 0,
+          "width": 390,
+          "height": 844
+        },
+        "pixels": {
+          "busy": 0.11454611738971929,
+          "std": 32.22395647315817
+        }
+      }
+    },
+    {
+      "scene": "night-town",
+      "width": 390,
+      "height": 844,
+      "path": "docs/witch-town/ui/round1/night-town-390x844.png",
+      "issues": [],
+      "minFont": 13,
+      "disabled": [
+        {
+          "text": "等待秘密行动…",
+          "opacity": "1",
+          "color": "rgb(196, 203, 208)",
+          "background": "rgb(41, 54, 65)"
+        }
+      ],
+      "seats": 0,
+      "task": "请闭眼 · 等待夜间秘密行动完成",
+      "pixels": {
+        "scope": "Visible UI / prototype region, not a full-map-count claim",
+        "region": {
+          "x": 0,
+          "y": 0,
+          "width": 390,
+          "height": 844
+        },
+        "pixels": {
+          "busy": 0.10923563008871066,
+          "std": 31.370631817314163
+        }
+      }
+    },
+    {
+      "scene": "confession",
+      "width": 390,
+      "height": 844,
+      "path": "docs/witch-town/ui/round1/confession-390x844.png",
+      "issues": [],
+      "minFont": 13,
+      "disabled": [],
+      "seats": 0,
+      "task": "你可以公开一张自己的审判牌进行自白",
+      "pixels": {
+        "scope": "Visible UI / prototype region, not a full-map-count claim",
+        "region": {
+          "x": 0,
+          "y": 0,
+          "width": 390,
+          "height": 844
+        },
+        "pixels": {
+          "busy": 0.11037793170494592,
+          "std": 40.44197420416302
+        }
+      }
+    },
+    {
+      "scene": "loot",
+      "width": 390,
+      "height": 844,
+      "path": "docs/witch-town/ui/round1/loot-390x844.png",
+      "issues": [],
+      "minFont": 13,
+      "disabled": [
+        {
+          "text": "收下选中的牌",
+          "opacity": "1",
+          "color": "rgb(196, 203, 208)",
+          "background": "rgb(41, 54, 65)"
+        }
+      ],
+      "seats": 8,
+      "task": "轮到你挑选 · 已选2/3张",
+      "pixels": {
+        "scope": "Visible UI / prototype region, not a full-map-count claim",
+        "region": {
+          "x": 0,
+          "y": 0,
+          "width": 390,
+          "height": 844
+        },
+        "pixels": {
+          "busy": 0.3646858670555353,
+          "std": 51.42385841144242
+        }
+      }
+    },
+    {
+      "scene": "tituba",
+      "width": 390,
+      "height": 844,
+      "path": "docs/witch-town/ui/round1/tituba-390x844.png",
+      "issues": [],
+      "minFont": 13,
+      "disabled": [
+        {
+          "text": "↑",
+          "opacity": "1",
+          "color": "rgb(196, 203, 208)",
+          "background": "rgb(41, 54, 65)"
+        },
+        {
+          "text": "↓",
+          "opacity": "1",
+          "color": "rgb(196, 203, 208)",
+          "background": "rgb(41, 54, 65)"
+        }
+      ],
+      "seats": 8,
+      "task": "调整牌序，然后选择本回合行动",
+      "pixels": {
+        "scope": "Visible UI / prototype region, not a full-map-count claim",
+        "region": {
+          "x": 0,
+          "y": 0,
+          "width": 390,
+          "height": 844
+        },
+        "pixels": {
+          "busy": 0.3046178150443553,
+          "std": 43.4002299101016
+        }
+      }
+    },
+    {
+      "scene": "dead",
+      "width": 390,
+      "height": 844,
+      "path": "docs/witch-town/ui/round1/dead-390x844.png",
+      "issues": [],
+      "minFont": 13,
+      "disabled": [
+        {
+          "text": "观战中 · 无法行动",
+          "opacity": "1",
+          "color": "rgb(196, 203, 208)",
+          "background": "rgb(41, 54, 65)"
+        }
+      ],
+      "seats": 8,
+      "task": "你已被淘汰 · 正在观战公开局势",
+      "pixels": {
+        "scope": "Visible UI / prototype region, not a full-map-count claim",
+        "region": {
+          "x": 0,
+          "y": 0,
+          "width": 390,
+          "height": 844
+        },
+        "pixels": {
+          "busy": 0.33107303439056995,
+          "std": 43.12892578364264
+        }
+      }
+    },
+    {
+      "scene": "result",
+      "width": 390,
+      "height": 844,
+      "path": "docs/witch-town/ui/round1/result-390x844.png",
+      "issues": [],
+      "minFont": 13,
+      "disabled": [],
+      "seats": 8,
+      "task": "全部女巫审判牌已揭示 · 平民获胜",
+      "pixels": {
+        "scope": "Visible UI / prototype region, not a full-map-count claim",
+        "region": {
+          "x": 0,
+          "y": 0,
+          "width": 390,
+          "height": 844
+        },
+        "pixels": {
+          "busy": 0.12644306720136103,
+          "std": 50.09269770789629
+        }
+      }
+    },
+    {
+      "scene": "day-4",
+      "width": 390,
+      "height": 844,
+      "path": "docs/witch-town/ui/round1/day-4-390x844.png",
+      "issues": [],
+      "minFont": 13,
+      "disabled": [],
+      "seats": 4,
+      "task": "轮到你了 · 抽2张，或打出至少1张牌",
+      "pixels": {
+        "scope": "Visible UI / prototype region, not a full-map-count claim",
+        "region": {
+          "x": 0,
+          "y": 0,
+          "width": 390,
+          "height": 844
+        },
+        "pixels": {
+          "busy": 0.39291529955037063,
+          "std": 58.569940296825706
+        }
+      }
+    },
+    {
+      "scene": "lobby",
+      "width": 375,
+      "height": 667,
+      "path": "docs/witch-town/ui/round1/lobby-375x667.png",
+      "issues": [],
+      "minFont": 13,
+      "disabled": [
+        {
+          "text": "房主开始",
+          "opacity": "1",
+          "color": "rgb(196, 203, 208)",
+          "background": "rgb(41, 54, 65)"
+        }
+      ],
+      "seats": 4,
+      "task": "确认昵称与人数，然后准备",
+      "pixels": {
+        "scope": "Visible UI / prototype region, not a full-map-count claim",
+        "region": {
+          "x": 0,
+          "y": 0,
+          "width": 375,
+          "height": 667
+        },
+        "pixels": {
+          "busy": 0.3125439774835284,
+          "std": 41.99392221690099
+        }
+      }
+    },
+    {
+      "scene": "day-me",
+      "width": 375,
+      "height": 667,
+      "path": "docs/witch-town/ui/round1/day-me-375x667.png",
+      "issues": [],
+      "minFont": 13,
+      "disabled": [],
+      "seats": 8,
+      "task": "轮到你了 · 抽2张，或打出至少1张牌",
+      "pixels": {
+        "scope": "Visible UI / prototype region, not a full-map-count claim",
+        "region": {
+          "x": 0,
+          "y": 0,
+          "width": 375,
+          "height": 667
+        },
+        "pixels": {
+          "busy": 0.39442205590737545,
+          "std": 63.208456201042424
+        }
+      }
+    },
+    {
+      "scene": "day-12",
+      "width": 375,
+      "height": 667,
+      "path": "docs/witch-town/ui/round1/day-12-375x667.png",
+      "issues": [],
+      "minFont": 13,
+      "disabled": [
+        {
+          "text": "等待山姆出牌…",
+          "opacity": "1",
+          "color": "rgb(196, 203, 208)",
+          "background": "rgb(41, 54, 65)"
+        }
+      ],
+      "seats": 12,
+      "task": "等待3号 山姆出牌…",
+      "pixels": {
+        "scope": "Visible UI / prototype region, not a full-map-count claim",
+        "region": {
+          "x": 0,
+          "y": 0,
+          "width": 375,
+          "height": 667
+        },
+        "pixels": {
+          "busy": 0.4440126655152562,
+          "std": 59.10651218843747
+        }
+      }
+    },
+    {
+      "scene": "target",
+      "width": 375,
+      "height": 667,
+      "path": "docs/witch-town/ui/round1/target-375x667.png",
+      "issues": [],
+      "minFont": 13,
+      "disabled": [],
+      "seats": 8,
+      "task": "对5号 林恩使用『证据』？",
+      "pixels": {
+        "scope": "Visible UI / prototype region, not a full-map-count claim",
+        "region": {
+          "x": 0,
+          "y": 0,
+          "width": 375,
+          "height": 667
+        },
+        "pixels": {
+          "busy": 0.3812767862854219,
+          "std": 63.435842477504124
+        }
+      }
+    },
+    {
+      "scene": "trial",
+      "width": 375,
+      "height": 667,
+      "path": "docs/witch-town/ui/round1/trial-375x667.png",
+      "issues": [],
+      "minFont": 13,
+      "disabled": [
+        {
+          "text": "确认揭牌",
+          "opacity": "1",
+          "color": "rgb(196, 203, 208)",
+          "background": "rgb(41, 54, 65)"
+        }
+      ],
+      "seats": 8,
+      "task": "你正在审判5号林恩，选择一张背面牌",
+      "pixels": {
+        "scope": "Visible UI / prototype region, not a full-map-count claim",
+        "region": {
+          "x": 0,
+          "y": 0,
+          "width": 375,
+          "height": 667
+        },
+        "pixels": {
+          "busy": 0.3202840145845327,
+          "std": 44.559041750500256
+        }
+      }
+    },
+    {
+      "scene": "black",
+      "width": 375,
+      "height": 667,
+      "path": "docs/witch-town/ui/round1/black-375x667.png",
+      "issues": [],
+      "minFont": 13,
+      "disabled": [],
+      "seats": 8,
+      "task": "你抽到了黑牌：阴谋，立即处理",
+      "pixels": {
+        "scope": "Visible UI / prototype region, not a full-map-count claim",
+        "region": {
+          "x": 0,
+          "y": 0,
+          "width": 375,
+          "height": 667
+        },
+        "pixels": {
+          "busy": 0.30035821659310435,
+          "std": 54.446309093035985
+        }
+      }
+    },
+    {
+      "scene": "conspiracy",
+      "width": 375,
+      "height": 667,
+      "path": "docs/witch-town/ui/round1/conspiracy-375x667.png",
+      "issues": [],
+      "minFont": 13,
+      "disabled": [
+        {
+          "text": "确认选择",
+          "opacity": "1",
+          "color": "rgb(196, 203, 208)",
+          "background": "rgb(41, 54, 65)"
+        }
+      ],
+      "seats": 8,
+      "task": "从左邻8号苏珊的背面牌中选一张",
+      "pixels": {
+        "scope": "Visible UI / prototype region, not a full-map-count claim",
+        "region": {
+          "x": 0,
+          "y": 0,
+          "width": 375,
+          "height": 667
+        },
+        "pixels": {
+          "busy": 0.3299750527729802,
+          "std": 44.860744847138356
+        }
+      }
+    },
+    {
+      "scene": "night-witch",
+      "width": 375,
+      "height": 667,
+      "path": "docs/witch-town/ui/round1/night-witch-375x667.png",
+      "issues": [],
+      "minFont": 13,
+      "disabled": [
+        {
+          "text": "秘密确认目标",
+          "opacity": "1",
+          "color": "rgb(196, 203, 208)",
+          "background": "rgb(41, 54, 65)"
+        }
+      ],
+      "seats": 0,
+      "task": "秘密商议后，选择今晚的袭击目标",
+      "pixels": {
+        "scope": "Visible UI / prototype region, not a full-map-count claim",
+        "region": {
+          "x": 0,
+          "y": 0,
+          "width": 375,
+          "height": 667
+        },
+        "pixels": {
+          "busy": 0.14878782063583446,
+          "std": 36.2164408192264
+        }
+      }
+    },
+    {
+      "scene": "night-town",
+      "width": 375,
+      "height": 667,
+      "path": "docs/witch-town/ui/round1/night-town-375x667.png",
+      "issues": [],
+      "minFont": 13,
+      "disabled": [
+        {
+          "text": "等待秘密行动…",
+          "opacity": "1",
+          "color": "rgb(196, 203, 208)",
+          "background": "rgb(41, 54, 65)"
+        }
+      ],
+      "seats": 0,
+      "task": "请闭眼 · 等待夜间秘密行动完成",
+      "pixels": {
+        "scope": "Visible UI / prototype region, not a full-map-count claim",
+        "region": {
+          "x": 0,
+          "y": 0,
+          "width": 375,
+          "height": 667
+        },
+        "pixels": {
+          "busy": 0.14117571803236742,
+          "std": 34.578948929864964
+        }
+      }
+    },
+    {
+      "scene": "confession",
+      "width": 375,
+      "height": 667,
+      "path": "docs/witch-town/ui/round1/confession-375x667.png",
+      "issues": [],
+      "minFont": 13,
+      "disabled": [],
+      "seats": 0,
+      "task": "你可以公开一张自己的审判牌进行自白",
+      "pixels": {
+        "scope": "Visible UI / prototype region, not a full-map-count claim",
+        "region": {
+          "x": 0,
+          "y": 0,
+          "width": 375,
+          "height": 667
+        },
+        "pixels": {
+          "busy": 0.13402737798247297,
+          "std": 44.4268069107634
+        }
+      }
+    },
+    {
+      "scene": "loot",
+      "width": 375,
+      "height": 667,
+      "path": "docs/witch-town/ui/round1/loot-375x667.png",
+      "issues": [],
+      "minFont": 13,
+      "disabled": [
+        {
+          "text": "收下选中的牌",
+          "opacity": "1",
+          "color": "rgb(196, 203, 208)",
+          "background": "rgb(41, 54, 65)"
+        }
+      ],
+      "seats": 8,
+      "task": "轮到你挑选 · 已选2/3张",
+      "pixels": {
+        "scope": "Visible UI / prototype region, not a full-map-count claim",
+        "region": {
+          "x": 0,
+          "y": 0,
+          "width": 375,
+          "height": 667
+        },
+        "pixels": {
+          "busy": 0.3525874752126911,
+          "std": 51.76022449496049
+        }
+      }
+    },
+    {
+      "scene": "tituba",
+      "width": 375,
+      "height": 667,
+      "path": "docs/witch-town/ui/round1/tituba-375x667.png",
+      "issues": [],
+      "minFont": 13,
+      "disabled": [
+        {
+          "text": "↑",
+          "opacity": "1",
+          "color": "rgb(196, 203, 208)",
+          "background": "rgb(41, 54, 65)"
+        },
+        {
+          "text": "↓",
+          "opacity": "1",
+          "color": "rgb(196, 203, 208)",
+          "background": "rgb(41, 54, 65)"
+        }
+      ],
+      "seats": 8,
+      "task": "调整牌序，然后选择本回合行动",
+      "pixels": {
+        "scope": "Visible UI / prototype region, not a full-map-count claim",
+        "region": {
+          "x": 0,
+          "y": 0,
+          "width": 375,
+          "height": 667
+        },
+        "pixels": {
+          "busy": 0.3728491012601548,
+          "std": 47.765044552200685
+        }
+      }
+    },
+    {
+      "scene": "dead",
+      "width": 375,
+      "height": 667,
+      "path": "docs/witch-town/ui/round1/dead-375x667.png",
+      "issues": [],
+      "minFont": 13,
+      "disabled": [
+        {
+          "text": "观战中 · 无法行动",
+          "opacity": "1",
+          "color": "rgb(196, 203, 208)",
+          "background": "rgb(41, 54, 65)"
+        }
+      ],
+      "seats": 8,
+      "task": "你已被淘汰 · 正在观战公开局势",
+      "pixels": {
+        "scope": "Visible UI / prototype region, not a full-map-count claim",
+        "region": {
+          "x": 0,
+          "y": 0,
+          "width": 375,
+          "height": 667
+        },
+        "pixels": {
+          "busy": 0.33147828311904304,
+          "std": 46.61726394736901
+        }
+      }
+    },
+    {
+      "scene": "result",
+      "width": 375,
+      "height": 667,
+      "path": "docs/witch-town/ui/round1/result-375x667.png",
+      "issues": [],
+      "minFont": 13,
+      "disabled": [],
+      "seats": 8,
+      "task": "全部女巫审判牌已揭示 · 平民获胜",
+      "pixels": {
+        "scope": "Visible UI / prototype region, not a full-map-count claim",
+        "region": {
+          "x": 0,
+          "y": 0,
+          "width": 375,
+          "height": 667
+        },
+        "pixels": {
+          "busy": 0.14429412140983816,
+          "std": 51.7507381058284
+        }
+      }
+    },
+    {
+      "scene": "day-4",
+      "width": 375,
+      "height": 667,
+      "path": "docs/witch-town/ui/round1/day-4-375x667.png",
+      "issues": [],
+      "minFont": 13,
+      "disabled": [],
+      "seats": 4,
+      "task": "轮到你了 · 抽2张，或打出至少1张牌",
+      "pixels": {
+        "scope": "Visible UI / prototype region, not a full-map-count claim",
+        "region": {
+          "x": 0,
+          "y": 0,
+          "width": 375,
+          "height": 667
+        },
+        "pixels": {
+          "busy": 0.4003230346062816,
+          "std": 61.40232095555919
+        }
+      }
+    },
+    {
+      "scene": "lobby",
+      "width": 844,
+      "height": 390,
+      "path": "docs/witch-town/ui/round1/lobby-844x390.png",
+      "issues": [],
+      "minFont": 13,
+      "disabled": [
+        {
+          "text": "房主开始",
+          "opacity": "1",
+          "color": "rgb(196, 203, 208)",
+          "background": "rgb(41, 54, 65)"
+        }
+      ],
+      "seats": 4,
+      "task": "确认昵称与人数，然后准备",
+      "pixels": {
+        "scope": "Visible UI / prototype region, not a full-map-count claim",
+        "region": {
+          "x": 0,
+          "y": 0,
+          "width": 844,
+          "height": 390
+        },
+        "pixels": {
+          "busy": 0.29067930489731436,
+          "std": 36.796997463338954
+        }
+      }
+    },
+    {
+      "scene": "day-me",
+      "width": 844,
+      "height": 390,
+      "path": "docs/witch-town/ui/round1/day-me-844x390.png",
+      "issues": [],
+      "minFont": 13,
+      "disabled": [],
+      "seats": 8,
+      "task": "轮到你了 · 抽2张，或打出至少1张牌",
+      "pixels": {
+        "scope": "Visible UI / prototype region, not a full-map-count claim",
+        "region": {
+          "x": 0,
+          "y": 0,
+          "width": 844,
+          "height": 390
+        },
+        "pixels": {
+          "busy": 0.33769595333576374,
+          "std": 54.031854106154746
+        }
+      }
+    },
+    {
+      "scene": "day-12",
+      "width": 844,
+      "height": 390,
+      "path": "docs/witch-town/ui/round1/day-12-844x390.png",
+      "issues": [],
+      "minFont": 13,
+      "disabled": [
+        {
+          "text": "等待山姆出牌…",
+          "opacity": "1",
+          "color": "rgb(196, 203, 208)",
+          "background": "rgb(41, 54, 65)"
+        }
+      ],
+      "seats": 12,
+      "task": "等待3号 山姆出牌…",
+      "pixels": {
+        "scope": "Visible UI / prototype region, not a full-map-count claim",
+        "region": {
+          "x": 0,
+          "y": 0,
+          "width": 844,
+          "height": 390
+        },
+        "pixels": {
+          "busy": 0.34356543930003647,
+          "std": 51.66888006237454
+        }
+      }
+    },
+    {
+      "scene": "target",
+      "width": 844,
+      "height": 390,
+      "path": "docs/witch-town/ui/round1/target-844x390.png",
+      "issues": [],
+      "minFont": 13,
+      "disabled": [],
+      "seats": 8,
+      "task": "对5号 林恩使用『证据』？",
+      "pixels": {
+        "scope": "Visible UI / prototype region, not a full-map-count claim",
+        "region": {
+          "x": 0,
+          "y": 0,
+          "width": 844,
+          "height": 390
+        },
+        "pixels": {
+          "busy": 0.3286426054198566,
+          "std": 54.19571373722632
+        }
+      }
+    },
+    {
+      "scene": "trial",
+      "width": 844,
+      "height": 390,
+      "path": "docs/witch-town/ui/round1/trial-844x390.png",
+      "issues": [],
+      "minFont": 13,
+      "disabled": [
+        {
+          "text": "确认揭牌",
+          "opacity": "1",
+          "color": "rgb(196, 203, 208)",
+          "background": "rgb(41, 54, 65)"
+        }
+      ],
+      "seats": 8,
+      "task": "你正在审判5号林恩，选择一张背面牌",
+      "pixels": {
+        "scope": "Visible UI / prototype region, not a full-map-count claim",
+        "region": {
+          "x": 0,
+          "y": 0,
+          "width": 844,
+          "height": 390
+        },
+        "pixels": {
+          "busy": 0.29193097581723176,
+          "std": 39.46877484103132
+        }
+      }
+    },
+    {
+      "scene": "black",
+      "width": 844,
+      "height": 390,
+      "path": "docs/witch-town/ui/round1/black-844x390.png",
+      "issues": [],
+      "minFont": 13,
+      "disabled": [],
+      "seats": 8,
+      "task": "你抽到了黑牌：阴谋，立即处理",
+      "pixels": {
+        "scope": "Visible UI / prototype region, not a full-map-count claim",
+        "region": {
+          "x": 0,
+          "y": 0,
+          "width": 844,
+          "height": 390
+        },
+        "pixels": {
+          "busy": 0.2710535909588042,
+          "std": 42.01586372042386
+        }
+      }
+    },
+    {
+      "scene": "conspiracy",
+      "width": 844,
+      "height": 390,
+      "path": "docs/witch-town/ui/round1/conspiracy-844x390.png",
+      "issues": [],
+      "minFont": 13,
+      "disabled": [
+        {
+          "text": "确认选择",
+          "opacity": "1",
+          "color": "rgb(196, 203, 208)",
+          "background": "rgb(41, 54, 65)"
+        }
+      ],
+      "seats": 8,
+      "task": "从左邻8号苏珊的背面牌中选一张",
+      "pixels": {
+        "scope": "Visible UI / prototype region, not a full-map-count claim",
+        "region": {
+          "x": 0,
+          "y": 0,
+          "width": 844,
+          "height": 390
+        },
+        "pixels": {
+          "busy": 0.2973872888564832,
+          "std": 39.89310208426496
+        }
+      }
+    },
+    {
+      "scene": "night-witch",
+      "width": 844,
+      "height": 390,
+      "path": "docs/witch-town/ui/round1/night-witch-844x390.png",
+      "issues": [],
+      "minFont": 13,
+      "disabled": [
+        {
+          "text": "秘密确认目标",
+          "opacity": "1",
+          "color": "rgb(196, 203, 208)",
+          "background": "rgb(41, 54, 65)"
+        }
+      ],
+      "seats": 0,
+      "task": "秘密商议后，选择今晚的袭击目标",
+      "pixels": {
+        "scope": "Visible UI / prototype region, not a full-map-count claim",
+        "region": {
+          "x": 0,
+          "y": 0,
+          "width": 844,
+          "height": 390
+        },
+        "pixels": {
+          "busy": 0.14581358609794629,
+          "std": 30.986960740178187
+        }
+      }
+    },
+    {
+      "scene": "night-town",
+      "width": 844,
+      "height": 390,
+      "path": "docs/witch-town/ui/round1/night-town-844x390.png",
+      "issues": [],
+      "minFont": 13,
+      "disabled": [
+        {
+          "text": "等待秘密行动…",
+          "opacity": "1",
+          "color": "rgb(196, 203, 208)",
+          "background": "rgb(41, 54, 65)"
+        }
+      ],
+      "seats": 0,
+      "task": "请闭眼 · 等待夜间秘密行动完成",
+      "pixels": {
+        "scope": "Visible UI / prototype region, not a full-map-count claim",
+        "region": {
+          "x": 0,
+          "y": 0,
+          "width": 844,
+          "height": 390
+        },
+        "pixels": {
+          "busy": 0.14046664236237696,
+          "std": 29.026282411302024
+        }
+      }
+    },
+    {
+      "scene": "confession",
+      "width": 844,
+      "height": 390,
+      "path": "docs/witch-town/ui/round1/confession-844x390.png",
+      "issues": [],
+      "minFont": 13,
+      "disabled": [],
+      "seats": 0,
+      "task": "你可以公开一张自己的审判牌进行自白",
+      "pixels": {
+        "scope": "Visible UI / prototype region, not a full-map-count claim",
+        "region": {
+          "x": 0,
+          "y": 0,
+          "width": 844,
+          "height": 390
+        },
+        "pixels": {
+          "busy": 0.16416332482683194,
+          "std": 37.208802556383894
+        }
+      }
+    },
+    {
+      "scene": "loot",
+      "width": 844,
+      "height": 390,
+      "path": "docs/witch-town/ui/round1/loot-844x390.png",
+      "issues": [],
+      "minFont": 13,
+      "disabled": [
+        {
+          "text": "收下选中的牌",
+          "opacity": "1",
+          "color": "rgb(196, 203, 208)",
+          "background": "rgb(41, 54, 65)"
+        }
+      ],
+      "seats": 8,
+      "task": "轮到你挑选 · 已选2/3张",
+      "pixels": {
+        "scope": "Visible UI / prototype region, not a full-map-count claim",
+        "region": {
+          "x": 0,
+          "y": 0,
+          "width": 844,
+          "height": 390
+        },
+        "pixels": {
+          "busy": 0.3205492769473812,
+          "std": 48.14575591562205
+        }
+      }
+    },
+    {
+      "scene": "tituba",
+      "width": 844,
+      "height": 390,
+      "path": "docs/witch-town/ui/round1/tituba-844x390.png",
+      "issues": [],
+      "minFont": 13,
+      "disabled": [
+        {
+          "text": "↑",
+          "opacity": "1",
+          "color": "rgb(196, 203, 208)",
+          "background": "rgb(41, 54, 65)"
+        },
+        {
+          "text": "↓",
+          "opacity": "1",
+          "color": "rgb(196, 203, 208)",
+          "background": "rgb(41, 54, 65)"
+        }
+      ],
+      "seats": 8,
+      "task": "调整牌序，然后选择本回合行动",
+      "pixels": {
+        "scope": "Visible UI / prototype region, not a full-map-count claim",
+        "region": {
+          "x": 0,
+          "y": 0,
+          "width": 844,
+          "height": 390
+        },
+        "pixels": {
+          "busy": 0.3949082513063556,
+          "std": 33.15488282679818
+        }
+      }
+    },
+    {
+      "scene": "dead",
+      "width": 844,
+      "height": 390,
+      "path": "docs/witch-town/ui/round1/dead-844x390.png",
+      "issues": [],
+      "minFont": 13,
+      "disabled": [
+        {
+          "text": "观战中 · 无法行动",
+          "opacity": "1",
+          "color": "rgb(196, 203, 208)",
+          "background": "rgb(41, 54, 65)"
+        }
+      ],
+      "seats": 8,
+      "task": "你已被淘汰 · 正在观战公开局势",
+      "pixels": {
+        "scope": "Visible UI / prototype region, not a full-map-count claim",
+        "region": {
+          "x": 0,
+          "y": 0,
+          "width": 844,
+          "height": 390
+        },
+        "pixels": {
+          "busy": 0.2756835581480131,
+          "std": 40.19406645853731
+        }
+      }
+    },
+    {
+      "scene": "result",
+      "width": 844,
+      "height": 390,
+      "path": "docs/witch-town/ui/round1/result-844x390.png",
+      "issues": [],
+      "minFont": 13,
+      "disabled": [],
+      "seats": 8,
+      "task": "全部女巫审判牌已揭示 · 平民获胜",
+      "pixels": {
+        "scope": "Visible UI / prototype region, not a full-map-count claim",
+        "region": {
+          "x": 0,
+          "y": 0,
+          "width": 844,
+          "height": 390
+        },
+        "pixels": {
+          "busy": 0.13481589500546848,
+          "std": 41.06985440968601
+        }
+      }
+    },
+    {
+      "scene": "day-4",
+      "width": 844,
+      "height": 390,
+      "path": "docs/witch-town/ui/round1/day-4-844x390.png",
+      "issues": [],
+      "minFont": 13,
+      "disabled": [],
+      "seats": 4,
+      "task": "轮到你了 · 抽2张，或打出至少1张牌",
+      "pixels": {
+        "scope": "Visible UI / prototype region, not a full-map-count claim",
+        "region": {
+          "x": 0,
+          "y": 0,
+          "width": 844,
+          "height": 390
+        },
+        "pixels": {
+          "busy": 0.34643334548547816,
+          "std": 52.02870628908426
+        }
+      }
+    },
+    {
+      "scene": "lobby",
+      "width": 1440,
+      "height": 900,
+      "path": "docs/witch-town/ui/round1/lobby-1440x900.png",
+      "issues": [],
+      "minFont": 13,
+      "disabled": [
+        {
+          "text": "房主开始",
+          "opacity": "1",
+          "color": "rgb(196, 203, 208)",
+          "background": "rgb(41, 54, 65)"
+        }
+      ],
+      "seats": 4,
+      "task": "确认昵称与人数，然后准备",
+      "pixels": {
+        "scope": "Visible UI / prototype region, not a full-map-count claim",
+        "region": {
+          "x": 0,
+          "y": 0,
+          "width": 1440,
+          "height": 900
+        },
+        "pixels": {
+          "busy": 0.23824074074074075,
+          "std": 25.99930801713326
+        }
+      }
+    },
+    {
+      "scene": "day-me",
+      "width": 1440,
+      "height": 900,
+      "path": "docs/witch-town/ui/round1/day-me-1440x900.png",
+      "issues": [],
+      "minFont": 13,
+      "disabled": [],
+      "seats": 8,
+      "task": "轮到你了 · 抽2张，或打出至少1张牌",
+      "pixels": {
+        "scope": "Visible UI / prototype region, not a full-map-count claim",
+        "region": {
+          "x": 0,
+          "y": 0,
+          "width": 1440,
+          "height": 900
+        },
+        "pixels": {
+          "busy": 0.25687037037037036,
+          "std": 36.027765239864856
+        }
+      }
+    },
+    {
+      "scene": "day-12",
+      "width": 1440,
+      "height": 900,
+      "path": "docs/witch-town/ui/round1/day-12-1440x900.png",
+      "issues": [],
+      "minFont": 13,
+      "disabled": [
+        {
+          "text": "等待山姆出牌…",
+          "opacity": "1",
+          "color": "rgb(196, 203, 208)",
+          "background": "rgb(41, 54, 65)"
+        }
+      ],
+      "seats": 12,
+      "task": "等待3号 山姆出牌…",
+      "pixels": {
+        "scope": "Visible UI / prototype region, not a full-map-count claim",
+        "region": {
+          "x": 0,
+          "y": 0,
+          "width": 1440,
+          "height": 900
+        },
+        "pixels": {
+          "busy": 0.25683024691358025,
+          "std": 34.78316881192987
+        }
+      }
+    },
+    {
+      "scene": "target",
+      "width": 1440,
+      "height": 900,
+      "path": "docs/witch-town/ui/round1/target-1440x900.png",
+      "issues": [],
+      "minFont": 13,
+      "disabled": [],
+      "seats": 8,
+      "task": "对5号 林恩使用『证据』？",
+      "pixels": {
+        "scope": "Visible UI / prototype region, not a full-map-count claim",
+        "region": {
+          "x": 0,
+          "y": 0,
+          "width": 1440,
+          "height": 900
+        },
+        "pixels": {
+          "busy": 0.256070987654321,
+          "std": 36.281945782086815
+        }
+      }
+    },
+    {
+      "scene": "trial",
+      "width": 1440,
+      "height": 900,
+      "path": "docs/witch-town/ui/round1/trial-1440x900.png",
+      "issues": [],
+      "minFont": 13,
+      "disabled": [
+        {
+          "text": "确认揭牌",
+          "opacity": "1",
+          "color": "rgb(196, 203, 208)",
+          "background": "rgb(41, 54, 65)"
+        }
+      ],
+      "seats": 8,
+      "task": "你正在审判5号林恩，选择一张背面牌",
+      "pixels": {
+        "scope": "Visible UI / prototype region, not a full-map-count claim",
+        "region": {
+          "x": 0,
+          "y": 0,
+          "width": 1440,
+          "height": 900
+        },
+        "pixels": {
+          "busy": 0.23929012345679013,
+          "std": 27.876296534368144
+        }
+      }
+    },
+    {
+      "scene": "black",
+      "width": 1440,
+      "height": 900,
+      "path": "docs/witch-town/ui/round1/black-1440x900.png",
+      "issues": [],
+      "minFont": 13,
+      "disabled": [],
+      "seats": 8,
+      "task": "你抽到了黑牌：阴谋，立即处理",
+      "pixels": {
+        "scope": "Visible UI / prototype region, not a full-map-count claim",
+        "region": {
+          "x": 0,
+          "y": 0,
+          "width": 1440,
+          "height": 900
+        },
+        "pixels": {
+          "busy": 0.23785185185185184,
+          "std": 29.602427873483226
+        }
+      }
+    },
+    {
+      "scene": "conspiracy",
+      "width": 1440,
+      "height": 900,
+      "path": "docs/witch-town/ui/round1/conspiracy-1440x900.png",
+      "issues": [],
+      "minFont": 13,
+      "disabled": [
+        {
+          "text": "确认选择",
+          "opacity": "1",
+          "color": "rgb(196, 203, 208)",
+          "background": "rgb(41, 54, 65)"
+        }
+      ],
+      "seats": 8,
+      "task": "从左邻8号苏珊的背面牌中选一张",
+      "pixels": {
+        "scope": "Visible UI / prototype region, not a full-map-count claim",
+        "region": {
+          "x": 0,
+          "y": 0,
+          "width": 1440,
+          "height": 900
+        },
+        "pixels": {
+          "busy": 0.24152777777777779,
+          "std": 28.058061252664906
+        }
+      }
+    },
+    {
+      "scene": "night-witch",
+      "width": 1440,
+      "height": 900,
+      "path": "docs/witch-town/ui/round1/night-witch-1440x900.png",
+      "issues": [],
+      "minFont": 13,
+      "disabled": [
+        {
+          "text": "秘密确认目标",
+          "opacity": "1",
+          "color": "rgb(196, 203, 208)",
+          "background": "rgb(41, 54, 65)"
+        }
+      ],
+      "seats": 0,
+      "task": "秘密商议后，选择今晚的袭击目标",
+      "pixels": {
+        "scope": "Visible UI / prototype region, not a full-map-count claim",
+        "region": {
+          "x": 0,
+          "y": 0,
+          "width": 1440,
+          "height": 900
+        },
+        "pixels": {
+          "busy": 0.10765432098765432,
+          "std": 19.255833807807292
+        }
+      }
+    },
+    {
+      "scene": "night-town",
+      "width": 1440,
+      "height": 900,
+      "path": "docs/witch-town/ui/round1/night-town-1440x900.png",
+      "issues": [],
+      "minFont": 13,
+      "disabled": [
+        {
+          "text": "等待秘密行动…",
+          "opacity": "1",
+          "color": "rgb(196, 203, 208)",
+          "background": "rgb(41, 54, 65)"
+        }
+      ],
+      "seats": 0,
+      "task": "请闭眼 · 等待夜间秘密行动完成",
+      "pixels": {
+        "scope": "Visible UI / prototype region, not a full-map-count claim",
+        "region": {
+          "x": 0,
+          "y": 0,
+          "width": 1440,
+          "height": 900
+        },
+        "pixels": {
+          "busy": 0.10737037037037037,
+          "std": 18.813925766782866
+        }
+      }
+    },
+    {
+      "scene": "confession",
+      "width": 1440,
+      "height": 900,
+      "path": "docs/witch-town/ui/round1/confession-1440x900.png",
+      "issues": [],
+      "minFont": 13,
+      "disabled": [],
+      "seats": 0,
+      "task": "你可以公开一张自己的审判牌进行自白",
+      "pixels": {
+        "scope": "Visible UI / prototype region, not a full-map-count claim",
+        "region": {
+          "x": 0,
+          "y": 0,
+          "width": 1440,
+          "height": 900
+        },
+        "pixels": {
+          "busy": 0.11464506172839506,
+          "std": 22.779371035874068
+        }
+      }
+    },
+    {
+      "scene": "loot",
+      "width": 1440,
+      "height": 900,
+      "path": "docs/witch-town/ui/round1/loot-1440x900.png",
+      "issues": [],
+      "minFont": 13,
+      "disabled": [
+        {
+          "text": "收下选中的牌",
+          "opacity": "1",
+          "color": "rgb(196, 203, 208)",
+          "background": "rgb(41, 54, 65)"
+        }
+      ],
+      "seats": 8,
+      "task": "轮到你挑选 · 已选2/3张",
+      "pixels": {
+        "scope": "Visible UI / prototype region, not a full-map-count claim",
+        "region": {
+          "x": 0,
+          "y": 0,
+          "width": 1440,
+          "height": 900
+        },
+        "pixels": {
+          "busy": 0.26823456790123457,
+          "std": 38.825592828128876
+        }
+      }
+    },
+    {
+      "scene": "tituba",
+      "width": 1440,
+      "height": 900,
+      "path": "docs/witch-town/ui/round1/tituba-1440x900.png",
+      "issues": [],
+      "minFont": 13,
+      "disabled": [
+        {
+          "text": "↑",
+          "opacity": "1",
+          "color": "rgb(196, 203, 208)",
+          "background": "rgb(41, 54, 65)"
+        },
+        {
+          "text": "↓",
+          "opacity": "1",
+          "color": "rgb(196, 203, 208)",
+          "background": "rgb(41, 54, 65)"
+        }
+      ],
+      "seats": 8,
+      "task": "调整牌序，然后选择本回合行动",
+      "pixels": {
+        "scope": "Visible UI / prototype region, not a full-map-count claim",
+        "region": {
+          "x": 0,
+          "y": 0,
+          "width": 1440,
+          "height": 900
+        },
+        "pixels": {
+          "busy": 0.27644444444444444,
+          "std": 29.048536830290594
+        }
+      }
+    },
+    {
+      "scene": "dead",
+      "width": 1440,
+      "height": 900,
+      "path": "docs/witch-town/ui/round1/dead-1440x900.png",
+      "issues": [],
+      "minFont": 13,
+      "disabled": [
+        {
+          "text": "观战中 · 无法行动",
+          "opacity": "1",
+          "color": "rgb(196, 203, 208)",
+          "background": "rgb(41, 54, 65)"
+        }
+      ],
+      "seats": 8,
+      "task": "你已被淘汰 · 正在观战公开局势",
+      "pixels": {
+        "scope": "Visible UI / prototype region, not a full-map-count claim",
+        "region": {
+          "x": 0,
+          "y": 0,
+          "width": 1440,
+          "height": 900
+        },
+        "pixels": {
+          "busy": 0.2408672839506173,
+          "std": 31.26393445606816
+        }
+      }
+    },
+    {
+      "scene": "result",
+      "width": 1440,
+      "height": 900,
+      "path": "docs/witch-town/ui/round1/result-1440x900.png",
+      "issues": [],
+      "minFont": 13,
+      "disabled": [],
+      "seats": 8,
+      "task": "全部女巫审判牌已揭示 · 平民获胜",
+      "pixels": {
+        "scope": "Visible UI / prototype region, not a full-map-count claim",
+        "region": {
+          "x": 0,
+          "y": 0,
+          "width": 1440,
+          "height": 900
+        },
+        "pixels": {
+          "busy": 0.24581481481481482,
+          "std": 34.02449468025188
+        }
+      }
+    },
+    {
+      "scene": "day-4",
+      "width": 1440,
+      "height": 900,
+      "path": "docs/witch-town/ui/round1/day-4-1440x900.png",
+      "issues": [],
+      "minFont": 13,
+      "disabled": [],
+      "seats": 4,
+      "task": "轮到你了 · 抽2张，或打出至少1张牌",
+      "pixels": {
+        "scope": "Visible UI / prototype region, not a full-map-count claim",
+        "region": {
+          "x": 0,
+          "y": 0,
+          "width": 1440,
+          "height": 900
+        },
+        "pixels": {
+          "busy": 0.25863888888888886,
+          "std": 35.019429933706334
+        }
+      }
+    }
+  ]
+}

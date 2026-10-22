@@ -114,7 +114,7 @@ it("P6: revealing the last Witch ends immediately without requesting transmissio
   conserved(s);
 });
 
-it("DEFAULT_PENDING_CONFIRM P5/P14: losing the hidden Witch exemption eliminates after simultaneous transfer", () => {
+it("USER_ADJUDICATED P5/P14: losing the hidden Witch exemption eliminates after simultaneous transfer", () => {
   let s = base();
   s.players[0].tryals[0].revealed = true;
   [s.players[0].tryals[1].kind, s.players[1].tryals[0].kind] = [
@@ -132,7 +132,7 @@ it("DEFAULT_PENDING_CONFIRM P5/P14: losing the hidden Witch exemption eliminates
   conserved(s);
 });
 
-it("P6: simultaneous last infections end for witches; DEFAULT_PENDING_CONFIRM excludes all final infectees personally", () => {
+it("P6: simultaneous last infections end for witches; USER_ADJUDICATED excludes all final infectees personally", () => {
   let s = base();
   for (const p of s.players) p.everWitch = !["p2", "p5"].includes(p.id);
   s.players[1].tryals[0].kind = "not_witch";
@@ -147,7 +147,7 @@ it("P6: simultaneous last infections end for witches; DEFAULT_PENDING_CONFIRM ex
   conserved(s);
 });
 
-// DEFAULT_PENDING_CONFIRM P12: John first, 3 each, remainder John; single farmer remains all.
+// USER_ADJUDICATED P12: John first, 3 each, remainder John; single farmer remains all.
 for (const size of [0, 1, 2, 5, 6, 7, 12])
   it(`shared loot ${size} cards: private alternating choice, remainder to John, conserved across serialization`, () => {
     let s = base();
@@ -260,7 +260,7 @@ it("P9 hourglass ends a played turn without drawing and cannot be restarted", ()
   conserved(s);
 });
 
-it("DEFAULT_PENDING_CONFIRM X10: copied limited abilities keep a personal budget across neighbour changes", () => {
+it("USER_ADJUDICATED X10: copied limited abilities keep a personal budget across neighbour changes", () => {
   let s = base();
   s.players[0].character = "samuel_parris";
   s.players[1].character = "martha_corey";
@@ -287,7 +287,7 @@ it("DEFAULT_PENDING_CONFIRM X10: copied limited abilities keep a personal budget
   conserved(s);
 });
 
-it("DEFAULT_PENDING_CONFIRM X06: Mary retains harmless Cat and does not reveal for its Conspiracy effect", () => {
+it("USER_ADJUDICATED X06: Mary retains harmless Cat and does not reveal for its Conspiracy effect", () => {
   let s = base();
   s.players[3].character = "mary_warren";
   const hidden = s.players[3].tryals.filter((t) => !t.revealed).length;

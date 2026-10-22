@@ -217,6 +217,35 @@ describe("Tituba private timed rearrangement", () => {
       );
       conservation(s);
     });
+  it("USER_ADJUDICATED 2026-10-22: Tituba may finish sorting and choose to play without drawing or ending her turn", () => {
+    let s = start();
+    const deck = s.deck.map(c => c.id), hand = s.players[0].hand.map(c => c.id);
+    s = reduceWitchTown(s, "p0", { type: "TITUBA_FINISH", action: "play" } as any, { now: 2000 });
+    expect(s.phase).toBe("day");
+    expect(s.pending).toBeNull();
+    expect(s.turnPlayerId).toBe("p0");
+    expect(s.deck.map(c => c.id)).toEqual(deck);
+    expect(s.players[0].hand.map(c => c.id)).toEqual(hand);
+    expect(s.players[0].abilityUses.tituba).toBe(1);
+    expect(() => reduceWitchTown(s, "p0", { type: "TITUBA_START" }, { now: 2001 })).toThrow("ABILITY_EXHAUSTED");
+    // Choosing play resumes the normal day action, with its normal validations.
+    expect(() => reduceWitchTown(s, "p0", { type: "END_TURN" }, { now: 2002 })).toThrow();
+    const id = give(s, "accusation");
+    s = reduceWitchTown(s, "p0", { type:"PLAY", cardId:id, targetId:"p1" }, { now:2003 });
+    expect(s.players[1].table.some(c => c.id === id)).toBe(true);
+    s = reduceWitchTown(s, "p0", { type:"END_TURN" }, { now:2004 });
+    expect(s.turnPlayerId).toBe("p1");
+    conservation(s);
+  });
+  it("USER_ADJUDICATED: invalid post-sort action is atomic and the 60-second deadline still draws exactly once", () => {
+    const s = start(), original = structuredClone(s);
+    expect(() => reduceWitchTown(s, "p0", { type: "TITUBA_FINISH", action: "unknown" } as any, { now: 2000 })).toThrow("BAD_TITUBA_ACTION");
+    expect(s).toEqual(original);
+    const next = tickWitchTown(JSON.parse(JSON.stringify(s)), 61000, seededRandom(1))!;
+    expect(next.players[0].hand.length).toBe(s.players[0].hand.length + 2);
+    expect(next.turnPlayerId).not.toBe("p0");
+    conservation(next);
+  });
   it("finishes by drawing two and ending the turn; the once-per-game use persists", () => {
     let s = start();
     // Keep the draw ordinary; black interrupts have separate coverage below.

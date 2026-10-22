@@ -1,3 +1,9 @@
+# 当前状态补充：2026-10-22 M5
+
+用户已同意M4交接第4节全部11项；状态已改为**用户已裁定**。精确映射见[USER_ADJUDICATIONS_2026-10-22.md](USER_ADJUDICATIONS_2026-10-22.md)，代码RULE_DECISIONS同步。下文“默认待确认”属于历史审计，不再代表这11项当前状态。X11数量与X12卡面版本证据仍待核实，不能误作用户确认了官方张数。
+
+说书人约定已改：重排后由本人明确选抽2或出牌，60秒未选才自动抽2。下文“启动代表已选抽牌”失效。
+
 # Salem 1692 标准版：C01～C25规则冲突审计
 日期2026-10-22；本轮改为官方标准第15次印刷优先。此文件替代旧“坚持CN”审计，不在旧中文版上继续打补丁。
 证据：[STD官方PDF](https://www.facadegames.com/files/rulebooks/salem-1692-rulebook-english.pdf)，[官网15人物图06](https://www.facadegames.com/images/products/salem-1692-06.jpg)，[作者AMA](https://www.reddit.com/r/boardgames/comments/112zxeu/im_the_founder_of_facade_games_and_the_inventor/)。

@@ -229,7 +229,7 @@ export function commandBlackEvent(
       if (incoming.get(id)!.kind === "witch") q.everWitch = true;
     }
     log(s, { type: "CONSPIRACY_RESOLVED" });
-    // DEFAULT_PENDING_CONFIRM P5/P14: apply every transfer first, then recheck exemptions.
+    // USER_ADJUDICATED P5/P14: apply every transfer first, then recheck exemptions.
     for (const q of s.players.filter(
       (q) =>
         q.alive &&
@@ -243,7 +243,7 @@ export function commandBlackEvent(
     }
     victory(
       s,
-      // DEFAULT_PENDING_CONFIRM P6: all simultaneous final infectees personally lose.
+      // USER_ADJUDICATED P6: all simultaneous final infectees personally lose.
       towns.length > 0 && newWitches.length === towns.length
         ? newWitches
         : undefined,
@@ -292,7 +292,7 @@ export function commandBlackEvent(
     if (cmd.useGovernor) {
       if (effectiveCharacter(s, actorId) !== "william_phips")
         fail("NOT_GOVERNOR");
-      // DEFAULT_PENDING_CONFIRM X10: copied abilities use the copier's retained budget.
+      // USER_ADJUDICATED X10: copied abilities use the copier's retained budget.
       if (q.abilityUses.william_phips) fail("ABILITY_EXHAUSTED");
       q.abilityUses.william_phips = 1;
     } else {

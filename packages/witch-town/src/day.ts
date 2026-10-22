@@ -23,7 +23,7 @@ export type WTCommand =
   | { type: "PARRIS_DRAW"; cardIds: string[] }
   | { type: "TITUBA_START" }
   | { type: "TITUBA_REORDER"; cardIds: string[] }
-  | { type: "TITUBA_FINISH" }
+  | { type: "TITUBA_FINISH"; action?: "draw" | "play" }
   | { type: "END_TURN" }
   | { type: "START_HOURGLASS" }
   | { type: "LOOT_PICK"; cardId: string }
@@ -231,7 +231,7 @@ export function fatalReveal(p: WTPlayer, index: number) {
   );
 }
 function settleLoot(s: WTState, loot: WTLoot) {
-  // DEFAULT_PENDING_CONFIRM P12: after three each, leftovers belong to John.
+  // USER_ADJUDICATED P12: after three each, leftovers belong to John.
   // At terminal state no further private choices are required; complete alternation.
   while (
     loot.pool.length &&
@@ -274,7 +274,7 @@ export function eliminate(s: WTState, root: WTPlayer) {
   )
     partner = undefined;
   const dying = [root, ...(partner ? [partner] : [])];
-  // DEFAULT_PENDING_CONFIRM P5/P12: finish prior shared pools before a recipient's
+  // USER_ADJUDICATED P5/P12: finish prior shared pools before a recipient's
   // later death, so inherited cards participate in that subsequent death's loot.
   const completed = new Set<WTTask>();
   for (const task of s.tasks) {
@@ -343,7 +343,7 @@ export function eliminate(s: WTState, root: WTPlayer) {
       effectiveCharacter(s, id) !== "cotton_mather" &&
       accusationValue(s, id) >= passiveThreshold
     ) {
-      // DEFAULT_PENDING_CONFIRM P13: no public accuser exists; target chooses own card.
+      // USER_ADJUDICATED P13: no public accuser exists; target chooses own card.
       // This avoids exposing a secret night attacker through the choice owner.
       lootTasks.push({ kind: "trial", actorId: id, targetId: id });
       log(s, { type: "COPY_RESCORING_TRIAL", targetId: id });
@@ -392,7 +392,7 @@ export function drain(s: WTState, now = Date.now()) {
       return;
     }
     if (t.kind === "trial") {
-      // DEFAULT_PENDING_CONFIRM P5/P12: skip an already dead target; otherwise
+      // USER_ADJUDICATED P5/P12: skip an already dead target; otherwise
       // a dead chooser is replaced by the first living clockwise neighbour.
       if (!player(s, t.targetId).alive) continue;
       if (!player(s, t.actorId).alive) {
@@ -425,7 +425,7 @@ export function drain(s: WTState, now = Date.now()) {
     while (t.remaining > 0) {
       const card = s.deck.shift();
       if (!card) {
-        // DEFAULT_PENDING_CONFIRM P12: draw available cards only; never invent cards.
+        // USER_ADJUDICATED P12: draw available cards only; never invent cards.
         log(s, {
           type: "DRAW_DECK_EXHAUSTED",
           actorId: t.playerId,
@@ -518,7 +518,7 @@ function playCard(
         );
         if (selected.some((c) => color(c) !== "red"))
           fail("BAD_ALIBI_SELECTION");
-        // DEFAULT_PENDING_CONFIRM X01: count accusations at their current value.
+        // USER_ADJUDICATED X01: count accusations at their current value.
         if (selected.reduce((n, c) => n + value(s, target.id, c), 0) > 3)
           fail("ALIBI_LIMIT");
         target.table = target.table.filter((c) => !ids.includes(c.id));
@@ -575,7 +575,7 @@ function playCard(
           target.table.some((c) => c.kind === "matchmaker")
         )
           fail("ALREADY_MATCHED");
-        // DEFAULT_PENDING_CONFIRM X06: immunity negates harm; persistent blue still attaches.
+        // USER_ADJUDICATED X06: immunity negates harm; persistent blue still attaches.
         target.table.push(card);
         break;
       case "stocks":
@@ -591,12 +591,20 @@ function playCard(
 }
 
 /** Transactional pure reducer: any invalid or CHECK_REQUIRED command leaves input intact. */
-export function finishTituba(s: WTState, now: number) {
+export function finishTituba(s: WTState, now: number, action: "draw" | "play" = "draw") {
   const p = s.pending;
   if (p?.kind !== "tituba") fail("NO_TITUBA_CHOICE");
+  if (action !== "draw" && action !== "play") fail("BAD_TITUBA_ACTION");
   s.pending = null;
   s.phase = "day";
   s.timerDeadline = null;
+  // USER_ADJUDICATED 2026-10-22: finish sorting may resume this turn for play.
+  // The ability's 60-second window supersedes a previously flagged day clock.
+  s.day.deadline = undefined;
+  if (action === "play") {
+    log(s, { type: "TITUBA_COMPLETE", actorId: p.playerId });
+    return;
+  }
   s.tasks.push(
     {
       kind: "draw",
@@ -698,7 +706,7 @@ export function reduceWitchTown(
         fail("BAD_DECK_ORDER");
       const deck = new Map(s.deck.map((c) => [c.id, c]));
       s.deck = cmd.cardIds.map((id) => deck.get(id) ?? fail("BAD_DECK_ORDER"));
-    } else if (cmd.type === "TITUBA_FINISH") finishTituba(s, now);
+    } else if (cmd.type === "TITUBA_FINISH") finishTituba(s, now, cmd.action);
     else fail("TITUBA_PENDING");
     return s;
   }
@@ -769,7 +777,7 @@ export function reduceWitchTown(
           q.id !== target.id &&
           effectiveCharacter(s, q.id) === "rebecca_nurse",
       );
-    // DEFAULT_PENDING_CONFIRM X02: the causal trial reveal earns a reward;
+    // USER_ADJUDICATED X02: the causal trial reveal earns a reward;
     // subsequent death-display reveals do not, and terminal victory takes priority.
     t.revealed = true;
     clearRed(s, target);
@@ -810,7 +818,7 @@ export function reduceWitchTown(
     if (s.day.played) fail("DRAW_AFTER_PLAY");
     const actor = player(s, actorId);
     if (effectiveCharacter(s, actorId) !== "tituba") fail("NOT_TITUBA");
-    // DEFAULT_PENDING_CONFIRM X10: personal per-ability budget, retained across neighbour changes.
+    // USER_ADJUDICATED X10: personal per-ability budget, retained across neighbour changes.
     if (actor.abilityUses.tituba) fail("ABILITY_EXHAUSTED");
     actor.abilityUses.tituba = 1;
     const deadline = (context.now ?? Date.now()) + 60000;
