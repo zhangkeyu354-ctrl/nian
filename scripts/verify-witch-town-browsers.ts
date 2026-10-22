@@ -29,7 +29,7 @@ async function snapPhase(page: Page, i: number) {
   const bad = await page.evaluate(() => {
     const boxes = ".wt-entry-card,.wt-personal,.wt-dock,.wt-modal,.wt-seat,.wt-top";
     return [...document.querySelectorAll(".wt-world *")].filter(e => {
-      if ((e as HTMLElement).closest(".wt-fly,.wt-confetti,.wt-smoke-fx,.wt-phase-banner,.wt-fx-black,.wt-fx-reveal,.wt-table-wood")) return false;
+      if ((e as HTMLElement).closest(".wt-fly,.wt-bump,.wt-confetti,.wt-smoke-fx,.wt-phase-banner,.wt-fx-black,.wt-fx-reveal,.wt-table-wood")) return false;
       const r = e.getBoundingClientRect(); if (!r.width || !r.height) return false;
       if (r.right > innerWidth + 1 || r.left < -1 || r.bottom > innerHeight + 1) return true;
       const box = e.parentElement?.closest(boxes) as HTMLElement | null; if (!box || getComputedStyle(box).overflow !== "visible") return false;

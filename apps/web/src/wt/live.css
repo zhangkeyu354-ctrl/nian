@@ -265,3 +265,12 @@
 @media (max-height:700px) { .wt-world.wt-live .wt-hand-fan .wt-card { width:64px; height:88px; } .wt-world.wt-live .wt-hand-fan > div:last-child { flex-basis:64px; } .wt-world.wt-live .wt-hand-fan > div { flex-basis:calc((100% - 64px) / max(1, calc(var(--wt-n) - 1))); } }
 /* "me" badge sits inside the plaque */
 .wt-world.wt-live .wt-me-inside { position:absolute; top:4px; right:4px; bottom:auto; left:auto; transform:none; width:16px; height:16px; padding:0; display:grid; place-items:center; border-radius:50%; font-size:10px; line-height:16px; }
+.wt-world.wt-live .wt-seat-public > * { flex:none; }
+.wt-world.wt-live .wt-seat-public .wt-hand-count { flex:0 1 auto; min-width:0; overflow:hidden; }
+.wt-world.wt-live .wt-more { font-size:10px; font-weight:700; color:var(--wt-phosphor); }
+.wt-world.wt-live .wt-dense .wt-seat-public .wt-effect-token:nth-of-type(2) { display:none; }
+.wt-world.wt-live .wt-top-info { margin-left:auto; }
+.wt-world.wt-live .wt-brand-live strong { font-size:20px; background:linear-gradient(180deg,#fff3d6,var(--wt-gold)); -webkit-background-clip:text; background-clip:text; color:transparent; }
+.wt-world.wt-live .wt-brand-live span { font-size:10px; letter-spacing:2px; }
+@media (max-width:380px) { .wt-world.wt-live .wt-brand-live span { display:none; } }
+.wt-world.wt-live .wt-personal::before,.wt-world .wt-entry-card::before { opacity:1; }
