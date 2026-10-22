@@ -128,6 +128,12 @@ export function usePlayback(view: MAView) {
       if (!fx) continue;
       // 点屏幕只跳过「当前这一段」动画；领奖台、总冠军不会被之前的点击连带跳过
       skip.current = false;
+      /** 这一段有没有弹窗：有的话结束后留一点空档，免得弹窗一个接一个闪 */
+      let popped = false;
+      const showIt = (v: Show) => {
+        popped = true;
+        setShow(v);
+      };
       // 用户反馈（2026-10-22）：连锁触发太快、眼花缭乱 → 不再因为排队多而加速（只有特别长的连锁才稍快一点）
       const k = reduced() ? 0 : queue.current.length > 30 ? 0.8 : 1;
       const wait = (ms: number) =>
@@ -161,11 +167,11 @@ export function usePlayback(view: MAView) {
           cur = r ? new Map(r.tokens.map((t) => [t.racer, { racer: t.racer, pos: 0, tripped: false, out: false, place: null }])) : null;
           shownRef.current = cur;
           setShown(cur);
-          setShow({ kind: "start", race: fx.race, track: fx.track, text: e.text });
+          showIt({ kind: "start", race: fx.race, track: fx.track, text: e.text });
           await wait(2200);
           // 3、2、1、开跑！
           for (const n of [3, 2, 1, 0]) {
-            setShow({ kind: "count", n });
+            showIt({ kind: "count", n });
             play(() => sfxCount(n === 0));
             await wait(n === 0 ? 700 : 600);
           }
@@ -173,23 +179,23 @@ export function usePlayback(view: MAView) {
         }
         case "roll":
           lastPower = null;
-          setShow({ ...fx, rolling: true });
+          showIt({ ...fx, rolling: true });
           play(sfxRoll);
           await wait(750);
-          setShow({ ...fx, rolling: false });
+          showIt({ ...fx, rolling: false });
           play(() => sfxLand(fx.value));
-          await wait(1100);
+          await wait(1500);
           break;
         case "duel":
-          setShow({ ...fx, rolling: true });
+          showIt({ ...fx, rolling: true });
           play(sfxRoll);
           await wait(750);
-          setShow({ ...fx, rolling: false });
+          showIt({ ...fx, rolling: false });
           play(() => sfxLand());
           await wait(1300);
           break;
         case "power":
-          setShow({ kind: "power", racer: fx.racer, power: fx.power, text: e.text });
+          showIt({ kind: "power", racer: fx.racer, power: fx.power, text: e.text });
           play(sfxPower);
           lastPower = fx.racer;
           float(fx.racer, `✨${RACER_BY_ID.get(fx.power)?.powerZh ?? "技能"}`, "power");
@@ -240,9 +246,8 @@ export function usePlayback(view: MAView) {
         case "trip":
           hitFx(fx.racer, "trip", true);
           setPos(fx.racer, { tripped: true });
-          float(fx.racer, "摔倒！", "bad");
+          float(fx.racer, "摔倒！下回合不动", "bad");
           linkTo(fx.racer);
-          setShow({ kind: "note", racer: fx.racer, text: "摔倒了！下次主移动跳过" });
           play(sfxOops);
           await wait(1400);
           break;
@@ -254,15 +259,14 @@ export function usePlayback(view: MAView) {
           play(sfxOops);
           await wait(1000);
           setPos(fx.racer, { out: true });
-          setShow({ kind: "note", racer: fx.racer, text: "被淘汰出本场比赛！" });
           play(sfxOops);
           await wait(1600);
           break;
         case "finish":
           setPos(fx.racer, { place: fx.place });
-          setShow({ kind: "finish", racer: fx.racer, place: fx.place, text: e.text });
+          showIt({ kind: "finish", racer: fx.racer, place: fx.place, text: e.text });
           play(sfxFinish);
-          await wait(1800);
+          await wait(2500);
           break;
         case "chip": {
           const tok = latest.current.race?.tokens.find((x) => x.owner === fx.player && !x.out);
@@ -272,7 +276,7 @@ export function usePlayback(view: MAView) {
         }
         case "podium":
           // 领奖台：3、2、1 依次登台（CSS 里按名次延迟），号角 + 一小段欢呼
-          setShow({ kind: "podium", race: fx.race, places: fx.places });
+          showIt({ kind: "podium", race: fx.race, places: fx.places });
           play(() => {
             sfxFanfare();
             setTimeout(() => sfxCheer(2.2), 900);
@@ -281,7 +285,7 @@ export function usePlayback(view: MAView) {
           break;
         case "champion":
           // 总冠军：大号角 + 长欢呼；画面停留到有人点一下（或 9 秒后）
-          setShow({ kind: "champion", winners: fx.winners, totals: fx.totals });
+          showIt({ kind: "champion", winners: fx.winners, totals: fx.totals });
           play(() => {
             sfxFanfare(true);
             setTimeout(() => sfxCheer(5), 700);
@@ -290,6 +294,8 @@ export function usePlayback(view: MAView) {
           break;
       }
       setShow(null);
+      // 用户反馈（2026-10-23）：弹窗太快一个接一个会眼花 → 每个弹窗之后停 0.6 秒再出下一个
+      if (popped && queue.current.length && !skip.current && !reduced()) await sleep(600);
     }
     // 播放完：对齐服务器的真实状态
     const r = latest.current.race;

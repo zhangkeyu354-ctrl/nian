@@ -732,7 +732,7 @@
   padding: 16px;
   background: rgba(16, 22, 44, 0.55);
   cursor: pointer;
-  animation: ma-fade 0.18s ease-out;
+  animation: ma-fade 0.3s ease-out;
 }
 /* 技能、摔倒等提示：顶部横幅，不挡住棋盘 */
 .ma-overlay.ov-power,
