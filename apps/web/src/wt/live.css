@@ -274,3 +274,10 @@
 .wt-world.wt-live .wt-brand-live span { font-size:10px; letter-spacing:2px; }
 @media (max-width:380px) { .wt-world.wt-live .wt-brand-live span { display:none; } }
 .wt-world.wt-live .wt-personal::before,.wt-world .wt-entry-card::before { opacity:1; }
+/* sheets never exceed the screen; on phones they rise from the bottom */
+.wt-world .wt-modal { max-height:min(85dvh,760px); overflow-y:auto; overscroll-behavior:contain; }
+@media (max-width:699px) {
+  .wt-world .wt-modal-backdrop { align-items:flex-end; padding:0; }
+  .wt-world .wt-modal { width:100%; border-radius:18px 18px 0 0; padding:22px 18px calc(18px + env(safe-area-inset-bottom)); animation:wt-sheet-up .35s var(--wt-spring) both; }
+}
+@keyframes wt-sheet-up { from { transform:translateY(60%); opacity:.4; } }
