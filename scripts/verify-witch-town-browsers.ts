@@ -30,6 +30,11 @@ async function snapPhase(page: Page, i: number) {
   await page.screenshot({ path: `${SHOTS}/${String(shot.size).padStart(2, "0")}-p${i + 1}-${key.replace(/[^a-zA-Z0-9一-龥]+/g, "_")}.png` });
 }
 
+const fxShot = new Set<string>();
+async function snapFx(page: Page, i: number) {
+  for (const [sel, name] of [[".wt-fx-reveal.is-witch", "fx-witch"], [".wt-fx-reveal:not(.is-witch)", "fx-reveal"], [".wt-fx-black", "fx-black"], [".wt-fly", "fx-fly"]] as const)
+    if (!fxShot.has(name) && await page.locator(sel).count()) { fxShot.add(name); await page.screenshot({ path: `${SHOTS}/${name}-p${i + 1}.png` }); }
+}
 async function click(page: Page, sel: string) { const el = page.locator(sel).first(); if (await el.count() && await el.isEnabled().catch(() => false)) { await el.click({ timeout: 2000 }).catch(() => {}); return true; } return false; }
 
 const stuck = new Map<number, number>();
@@ -108,6 +113,7 @@ async function main() {
       const r = await step(pages[i], i);
       if (r === "over") over = true;
       if (r === "acted") { turns++; await snapPhase(pages[i], i); }
+      await snapFx(pages[i], i);
     }
     if (over) break;
     if (!reloaded && turns > 25) { reloaded = true; await pages[1].reload(); await pages[1].waitForSelector("[data-testid=wt-world][data-phase]"); }

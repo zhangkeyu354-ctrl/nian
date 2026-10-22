@@ -56,30 +56,26 @@ function useSeatLayout(count: number, el: React.RefObject<HTMLElement | null>) {
   }, [el, count]);
   return useMemo(() => {
     const dense = count >= 9;
-    const seatW = Math.round(Math.min(dense ? 96 : 116, Math.max(dense ? 68 : 84, size.w * (dense ? .2 : .25))));
-    const seatH = dense ? (size.h < 300 ? 50 : 56) : (size.h < 320 ? 66 : 76);
-    const radiusX = Math.max(0, .5 - (seatW / 2 + 10) / size.w), radiusY = Math.max(0, .5 - (seatH / 2 + 12) / size.h);
-    const rx = size.w * radiusX, ry = size.h * radiusY;
-    let exponent = 1;
-    const curve = (a: number) => ({ x: Math.sign(Math.cos(a)) * Math.pow(Math.abs(Math.cos(a)), exponent), y: Math.sign(Math.sin(a)) * Math.pow(Math.abs(Math.sin(a)), exponent) });
-    const fit = (spacing: number) => {
-      const found = [Math.PI / 2], pts = [{ x: 0, y: ry }];
-      for (let j = 1; j <= 1440 && found.length < count; j++) {
-        const a = Math.PI / 2 + j * Math.PI * 2 / 1440, c = curve(a), p = { x: c.x * rx, y: c.y * ry };
-        if (pts.every(v => Math.abs(v.x - p.x) >= (seatW + 4) * spacing || Math.abs(v.y - p.y) >= (seatH + 8) * spacing)) { found.push(a); pts.push(p); }
-      }
-      return found.length === count ? found : null;
+    let seatW = Math.round(Math.min(dense ? 96 : 116, Math.max(dense ? 66 : 84, size.w * (dense ? .2 : .25))));
+    let seatH = dense ? (size.h < 300 ? 50 : 56) : (size.h < 320 ? 66 : 76);
+    // Seats spread at equal arc length on a superellipse (round → rounded rectangle);
+    // if nothing fits, seats shrink a little and we try again. No per-count tables.
+    const place = (e: number, w: number, h: number) => {
+      const rx = Math.max(0, size.w / 2 - w / 2 - 10), ry = Math.max(0, size.h / 2 - h / 2 - 12);
+      const pt = (t: number) => ({ x: Math.sign(Math.cos(t)) * Math.pow(Math.abs(Math.cos(t)), e) * rx, y: Math.sign(Math.sin(t)) * Math.pow(Math.abs(Math.sin(t)), e) * ry });
+      const S = 1600, pts = Array.from({ length: S + 1 }, (_, i) => pt(Math.PI / 2 + i * Math.PI * 2 / S)), len = [0];
+      for (let i = 1; i <= S; i++) len.push(len[i - 1] + Math.hypot(pts[i].x - pts[i - 1].x, pts[i].y - pts[i - 1].y));
+      const total = len[S], out: { x: number; y: number }[] = [];
+      for (let k = 0, j = 0; k < count; k++) { const want = total * k / count; while (j < S && len[j] < want) j++; out.push(pts[j]); }
+      const ok = out.every((p, i) => out.every((q, j) => i === j || Math.abs(p.x - q.x) >= w + 3 || Math.abs(p.y - q.y) >= h + 6));
+      return { out, ok, rx, ry };
     };
-    let angles = Array.from({ length: count }, (_, i) => Math.PI / 2 + i * Math.PI * 2 / count);
-    // Evenly spaced seats whenever they fit; the greedy packer is only a fallback for crowded tables.
-    const evenPts = angles.map(a => ({ x: Math.cos(a) * rx, y: Math.sin(a) * ry }));
-    const evenFits = evenPts.every((p, i) => evenPts.every((q, j) => i === j || Math.abs(p.x - q.x) >= seatW + 4 || Math.abs(p.y - q.y) >= seatH + 8));
-    if (!evenFits) for (const power of [1, .8, .6, .4, .25, .12]) {
-      exponent = power; const first = fit(1); if (!first) continue; angles = first;
-      for (let sp = 1.02; sp <= 1.5; sp += .02) { const n = fit(sp); if (!n) break; angles = n; }
-      break;
+    let best = place(1, seatW, seatH);
+    search: for (let shrink = 0; shrink < 6; shrink++) {
+      for (const e of [1, .7, .5, .35, .22]) { const r = place(e, seatW, seatH); if (r.ok) { best = r; break search; } best = r; }
+      seatW = Math.round(seatW * .93); seatH = Math.round(seatH * .95);
     }
-    return { seatW, seatH, dense, pos: angles.map(a => { const c = curve(a); return { left: 50 + radiusX * 100 * c.x, top: 50 + radiusY * 100 * c.y, a }; }) };
+    return { seatW, seatH, dense, pos: best.out.map(p => ({ left: 50 + p.x / size.w * 100, top: 50 + p.y / size.h * 100, a: Math.atan2(p.y, p.x) })) };
   }, [size, count]);
 }
 
@@ -253,9 +249,15 @@ function Table({ snap, act, busy, conn, toast, say, name, setName, claim }: any)
   const [sheet, setSheet] = useState<null | { kind: "seat"; id: string } | { kind: "card"; card: Card } | { kind: "identity" } | { kind: "records" } | { kind: "menu" } | { kind: "parris" }>(null);
   const [pick, setPick] = useState<number | null>(null);
   const [peek, setPeek] = useState(false);
+  const [peekIdx, setPeekIdx] = useState<number | null>(null);
   const [banner, setBanner] = useState<{ id: number; text: string; tone?: string } | null>(null);
-  const queue = useRef<{ id: number; text: string; tone?: string }[]>([]), bid = useRef(0);
+  const queue = useRef<{ id: number; text: string; tone?: string; at: number }[]>([]), bid = useRef(0);
   const [hits, setHits] = useState<Record<string, number>>({});
+  const [fly, setFly] = useState<{ id: number; kind: string; from: { x: number; y: number }; to: { x: number; y: number } }[]>([]);
+  const [reveal, setReveal] = useState<{ id: number; who: string; kind: string; reason: string } | null>(null);
+  const [blackCard, setBlackCard] = useState<{ id: number; kind: string; who: string } | null>(null);
+  const fxId = useRef(0);
+  const seatCenter = (id?: string) => { const el = id ? document.querySelector(`[data-player="${id}"]`) as HTMLElement | null : null; const r = el?.getBoundingClientRect(); return r ? { x: r.left + r.width / 2, y: r.top + r.height / 2 } : { x: innerWidth / 2, y: innerHeight * .8 }; };
   const [muted, setMuted] = useState(!soundOn());
   const [parrisPick, setParrisPick] = useState<string[]>([]);
   const [order, setOrder] = useState<Card[] | null>(null);
@@ -271,9 +273,10 @@ function Table({ snap, act, busy, conn, toast, say, name, setName, claim }: any)
   const myTurn = phase === "day" && !pending && v?.turnPlayerId === me && alive;
   const dayDeadline: number | undefined = phase === "day" && !pending ? v?.day?.deadline : undefined;
 
-  const announce = useCallback((text: string, tone?: string) => { queue.current.push({ id: ++bid.current, text, tone }); setBanner(b => b ?? queue.current.shift() ?? null); }, []);
+  const nextBanner = () => { const now = Date.now(); queue.current = queue.current.filter(b => now - b.at < 2500).slice(-2); return queue.current.shift() ?? null; };
+  const announce = useCallback((text: string, tone?: string) => { queue.current.push({ id: ++bid.current, text, tone, at: Date.now() }); setBanner(b => b ?? nextBanner()); }, []); // eslint-disable-line
   useEffect(() => { if (phase === "over") { queue.current = []; } }, [phase]); // eslint-disable-line
-  useEffect(() => { if (!banner) return; const t = setTimeout(() => setBanner(queue.current.shift() ?? null), 1900); return () => clearTimeout(t); }, [banner]);
+  useEffect(() => { if (!banner) return; const t = setTimeout(() => setBanner(nextBanner()), 1700); return () => clearTimeout(t); }, [banner]); // eslint-disable-line
 
   // reset local selections whenever the server moves the game forward
   const stageKey = `${phase}|${pending?.kind}|${pending?.stage}|${v?.turnPlayerId}|${choice?.kind}|${choice?.submitted}`;
@@ -289,9 +292,18 @@ function Table({ snap, act, busy, conn, toast, say, name, setName, claim }: any)
     const fresh = log.filter(e => e.seq > seenLog.current!);
     seenLog.current = last;
     for (const e of fresh) {
-      if (e.type === "PLAY" && e.targetId) { setHits(h => ({ ...h, [e.targetId]: Date.now() })); if (e.actorId !== me) feel("tap"); }
-      if (e.type === "BLACK_EVENT") { announce(e.cardKind === "night" ? "夜幕降临" : e.cardKind === "conspiracy" ? "黑牌 · 阴谋" : `黑牌 · ${cardInfo(e.cardKind).name}`, "black"); feel("tick"); }
-      if (e.type === "TRYAL_REVEALED") { const w = e.tryalKind === "witch"; announce(`${nameOf(e.targetId)} · ${tryalName(e.tryalKind)}`, w ? "witch" : undefined); feel(w ? "lose" : "submit"); if (w) try { navigator.vibrate?.([60, 40, 90]); } catch { /* unsupported */ } }
+      if (e.type === "PLAY" && e.targetId) {
+        const id = ++fxId.current, from = seatCenter(e.actorId), to = seatCenter(e.targetId);
+        setFly(f => [...f, { id, kind: e.cardKind, from, to }]);
+        setTimeout(() => { setFly(f => f.filter(x => x.id !== id)); setHits(h => ({ ...h, [e.targetId]: Date.now() })); feel(cardInfo(e.cardKind).color === "red" ? "submit" : "tap"); }, 560);
+      }
+      if (e.type === "BLACK_EVENT") { const id = ++fxId.current; setBlackCard({ id, kind: e.cardKind, who: nameOf(e.actorId) }); setTimeout(() => setBlackCard(b => b?.id === id ? null : b), 2300); feel("tick"); try { navigator.vibrate?.([30, 60, 30]); } catch { /* */ } }
+      if (e.type === "TRYAL_REVEALED") {
+        const w = e.tryalKind === "witch", id = ++fxId.current;
+        setReveal({ id, who: nameOf(e.targetId), kind: e.tryalKind, reason: "" });
+        setTimeout(() => setReveal(r => r?.id === id ? null : r), 2600);
+        setTimeout(() => { feel(w ? "lose" : "submit"); if (w) try { navigator.vibrate?.([60, 40, 90]); } catch { /* unsupported */ } }, 700);
+      }
       if (e.type === "ELIMINATED") announce(`${nameOf(e.targetId)} 被淘汰`, "death");
       if (e.type === "NIGHT_SAVED") announce(`天亮了 · ${nameOf(e.targetId)} 幸存`);
       if (e.type === "NIGHT_COMPLETE") announce("天亮了");
@@ -436,14 +448,17 @@ function Table({ snap, act, busy, conn, toast, say, name, setName, claim }: any)
       if (choice?.kind === "night-witch" || (phase === "dawn" && priv?.witchAllies)) {
         const votes = choice?.votes ?? priv?.dawnVotes ?? {}, allies: string[] = choice?.allies ?? priv?.witchAllies ?? [];
         return <><div className="wt-event-heading"><span>私人行动 · 仅女巫可见</span><h2>{phase === "dawn" ? "黎明 · 放置黑猫" : "今夜，女巫苏醒"}</h2><p>点上方座位选择 · 全体女巫一致才生效</p></div>
-          <div className="wt-night-panel wt-ally-list">{allies.map(id => <p key={id}><b>{nameOf(id)}{id === me ? "（你）" : ""}</b><span>{votes[id] ? `→ ${nameOf(votes[id])}` : "尚未选择"}</span>{id !== me && votes[id] && votes[id] !== votes[me!] && <button className="wt-follow" data-testid="wt-follow" disabled={busy} onClick={() => act(phase === "dawn" ? { type: "DAWN_TARGET", targetId: votes[id] } : { type: "NIGHT_TARGET", targetId: votes[id] })}>采用</button>}</p>)}</div></>;
+          <div className="wt-night-panel wt-ally-list">{allies.map(id => <p key={id}><b>{nameOf(id)}{id === me ? "（你）" : ""}</b><span>{votes[id] ? `→ ${nameOf(votes[id])}` : "尚未选择"}</span></p>)}
+            {(() => { const tally: Record<string, number> = {}; for (const id of allies) if (votes[id]) tally[votes[id]] = (tally[votes[id]] ?? 0) + 1;
+              const top = Object.entries(tally).sort((a, b) => b[1] - a[1] || players.findIndex(p => p.id === a[0]) - players.findIndex(p => p.id === b[0]))[0];
+              return top && votes[me!] !== top[0] ? <button className="wt-follow" data-testid="wt-follow" disabled={busy} onClick={() => act(phase === "dawn" ? { type: "DAWN_TARGET", targetId: top[0] } : { type: "NIGHT_TARGET", targetId: top[0] })}>采用最多票：{nameOf(top[0])}（{top[1]}票）</button> : null; })()}</div></>;
       }
-      if (choice?.kind === "night-constable") return <><div className="wt-event-heading"><span>私人行动 · 警长</span><h2>守护一人</h2><p>点上方座位 · 不能保护自己{choice.knownAttackTargetId ? ` · 女巫目标：${nameOf(choice.knownAttackTargetId)}` : ""}</p></div><div className="wt-night-panel"><Sigil kind="constable"/></div></>;
+      if (choice?.kind === "night-constable") return <><div className="wt-event-heading"><span>私人行动 · 警长</span><h2>守护一人</h2><p>点上方座位 · 不能保护自己{choice.knownAttackTargetId ? ` · 女巫目标：${nameOf(choice.knownAttackTargetId)}` : ""}</p></div><div className="wt-night-panel wt-night-icon"><Sigil kind="constable"/></div></>;
       return waitPanel(phase === "dawn" ? "黎明之前" : "夜色正浓", choice?.kind === "night-witch-wait" ? `目标已定：${nameOf(choice.knownAttackTargetId)} · 等待警长` : "请闭眼，静候黎明", "moon");
     }
     if (choice?.kind === "confession") return <><div className="wt-event-heading"><span>天亮之前 · 自白</span><h2>{choice.confessed ? "你已自白" : "要向小镇自白吗？"}</h2><p>{choice.confessed ? "今晚不会被女巫杀死" : "公开自己一张审判牌，可免于今晚的死亡"}{choice.knownAttackTargetId ? ` · 目标：${nameOf(choice.knownAttackTargetId)}` : ""}</p></div>
-      <div className="wt-confession-row">{choice.deadline && <Ring deadline={choice.deadline} total={30}/>}<div className="wt-tryals">{hiddenMine.map((t, i) => <Tryal key={t.id} number={i + 1} kind={t.kind} revealed={peek} selected={pick === i} onClick={choice.confessed ? undefined : () => setPick(i)} testid={`wt-pick-${i}`}/>)}</div></div>
-      {!choice.confessed && <button className="wt-peek-button" {...peekProps}>按住查看我的牌 · 松手盖回</button>}</>;
+      <div className="wt-confession-row">{choice.deadline && <Ring deadline={choice.deadline} total={30}/>}<div className="wt-tryals">{hiddenMine.map((t, i) => <span key={t.id} className="wt-hold" onPointerDown={() => setPeekIdx(i)} onPointerUp={() => setPeekIdx(null)} onPointerLeave={() => setPeekIdx(null)} onPointerCancel={() => setPeekIdx(null)} onContextMenu={e => e.preventDefault()}><Tryal number={i + 1} kind={t.kind} revealed={peekIdx === i} selected={pick === i} onClick={choice.confessed ? undefined : () => setPick(i)} testid={`wt-pick-${i}`}/></span>)}</div></div>
+      {!choice.confessed && <p className="wt-hold-tip">按住牌可偷看，松手盖回 · 点一下选择</p>}</>;
     if (pending?.kind === "black-event" && pending.stage === "confession") return waitPanel("天亮之前", "存活者正在决定是否自白", "moon", pending.deadline);
     if (loot) return <><div className="wt-event-heading"><span>继承遗物</span><h2>{loot.playerId === me ? "轮到你挑选" : `等待${nameOf(loot.playerId)}挑选`}</h2><p>{loot.recipients.map((id: string, i: number) => `${nameOf(id)} ${loot.taken[i]}/3`).join(" · ")}</p></div>
       <div className="wt-loot-cards">{loot.pool.map((c: Card, i: number) => <CardFace key={c.id} card={c} compact selected={pick === i} onClick={loot.playerId === me ? () => setPick(i) : undefined}/>)}</div></>;
@@ -460,7 +475,7 @@ function Table({ snap, act, busy, conn, toast, say, name, setName, claim }: any)
     return null;
   }
   function waitPanel(title: string, sub: string, sigil: string, deadline?: number) {
-    return <><div className="wt-event-heading"><span>{phase === "dawn" || isNight ? "私人行动" : "公开事件"}</span><h2>{title}</h2><p>{sub}</p></div><div className="wt-night-panel">{deadline ? <Ring deadline={deadline} total={30}/> : <Sigil kind={sigil}/>}<span className="wt-wait-dots">· · ·</span></div></>;
+    return <><div className="wt-event-heading"><span>{phase === "dawn" || isNight ? "私人行动" : "公开事件"}</span><h2>{title}</h2><p>{sub}</p></div><div className="wt-night-panel wt-night-icon">{deadline ? <Ring deadline={deadline} total={30}/> : <Sigil kind={sigil}/>}<span className="wt-wait-dots">· · ·</span></div></>;
   }
   function resultPanel() {
     const o = v.outcome, fin: any[] = v.final ?? [];
@@ -487,7 +502,7 @@ function Table({ snap, act, busy, conn, toast, say, name, setName, claim }: any)
   const now = useNow(true);
   const sceneClass = snap.stage === "lobby" ? "wt-scene-lobby" : phase === "over" ? "wt-scene-result" : choice?.kind === "tituba" && order ? "wt-scene-tituba" : !panel && layout.dense ? "wt-scene-day-12" : "";
 
-  return <main className={`wt-world wt-live ${sceneClass} ${isNight ? "wt-is-night" : ""} ${myTurn ? "wt-my-turn" : ""} ${sel ? "wt-selecting" : ""}`} data-testid="wt-world" data-phase={phase} onClickCapture={e => { if ((e.target as HTMLElement).closest("button")) feel("tap"); }}>
+  return <main className={`wt-world wt-live ${sceneClass} ${isNight ? "wt-is-night" : ""} ${myTurn ? "wt-my-turn" : ""} ${sel ? "wt-selecting" : ""}`} data-testid="wt-world" data-phase={phase} onClickCapture={e => { const b = (e.target as HTMLElement).closest("button"); if (b) { feel("tap"); if (b.classList.contains("wt-primary")) try { navigator.vibrate?.(10); } catch { /* */ } } }}>
     <RoomArt/>
     <header className="wt-top"><a href="/" aria-label="返回桌游合集">‹</a><div className="wt-top-info"><b>{snap.stage === "lobby" ? `房间 ${snap.code}` : phase === "over" ? "终局" : isNight ? "夜晚" : "白天"}</b><span>{v ? `牌堆 ${v.deckCount}` : `${snap.players.length}/${snap.capacity}人`}</span></div><button className="wt-icon-button" aria-label={muted ? "开启音效" : "关闭音效"} onClick={() => { setSoundOn(muted); setMuted(!muted); }}>{muted ? "静" : "声"}</button><button className="wt-icon-button" aria-label="菜单" onClick={() => setSheet({ kind: "menu" })}>☷</button></header>
     {conn !== "online" && <span className="wt-resumed wt-offline">{conn === "offline" ? "连接中断 · 正在重连…" : "正在连接…"}</span>}
@@ -510,9 +525,11 @@ function Table({ snap, act, busy, conn, toast, say, name, setName, claim }: any)
           const active = snap.stage === "game" && (v?.turnPlayerId === p.id && phase === "day" || pending?.actorId === p.id || pending?.playerId === p.id);
           return <React.Fragment key={k}><button data-testid={`wt-seat-${i}`} data-player={p.id} className={`wt-seat ${p.id === me ? "wt-self" : ""} ${active ? "wt-active" : ""} ${pickable ? "wt-pickable" : ""} ${selected ? "wt-selected" : ""} ${!p.alive ? "wt-dead-seat" : ""} ${recentHit ? (hit > 0 ? "wt-hit" : "wt-shake") : ""} ${acc >= th - 1 && snap.stage === "game" && p.alive ? "wt-near" : ""} ${lobbyP && !lobbyP.connected ? "wt-away" : ""}`} style={style} onClick={() => seatTap(p)} aria-label={`${i + 1}号${p.name}，${charName(p.character)}，${acc}/${th}点指控`}>
             <span className="wt-seat-person">{!layout.dense && <span className="wt-seat-face"><Portrait index={i}/></span>}<span className="wt-seat-text"><span className="wt-seat-name">{p.name}</span>{!layout.dense && <span className="wt-seat-role">{snap.stage === "lobby" ? (lobbyP?.ready ? "已准备" : "未准备") : charName(p.character)}</span>}</span></span>
-            {snap.stage === "game" ? <span className="wt-accuse-row"><span className={`wt-accuse ${acc >= th ? "is-full" : ""}`}><i style={{ width: `${Math.min(100, acc / th * 100)}%` }}/></span><b>{acc}/{th}</b></span> : <span className="wt-accuse-row"><b>{lobbyP?.host ? "房主" : ""}</b></span>}
-            {snap.stage === "game" && <span className="wt-seat-public">{!layout.dense && <span className="wt-hand-count">▤{p.handCount}</span>}{blues.slice(0, 3).map(c => <span key={c.id} className="wt-effect-token" title={cardInfo(c.kind).name}><Sigil kind={c.kind === "black_cat" ? "cat" : c.kind}/></span>)}{v?.gavelTargetId === p.id && <span className="wt-effect-token" title="警长木槌"><Sigil kind="constable"/></span>}{p.revealedTryals.length > 0 && <span className={`wt-public-mini ${p.revealedTryals.includes("witch") ? "is-witch" : ""}`}><Sigil kind={p.revealedTryals.includes("witch") ? "witch" : "not_witch"}/><span>{p.revealedTryals.length}</span></span>}{p.hiddenTryalCount > 0 && <span className="wt-hidden-count" title="未公开审判牌">◆{p.hiddenTryalCount}</span>}</span>}
+            {snap.stage === "game" ? <span className="wt-accuse-row"><span className={`wt-accuse ${acc >= th ? "is-full" : ""}`}><i style={{ width: `${Math.min(100, acc / th * 100)}%` }}/></span><b key={acc} className={acc ? "wt-bump" : ""}>{acc}/{th}</b></span> : <span className="wt-accuse-row"><b>{lobbyP?.host ? "房主" : ""}</b></span>}
+            {snap.stage === "game" && <span className="wt-seat-public">{!layout.dense && <span className="wt-hand-count">▤{p.handCount}</span>}{blues.slice(0, 3).map(c => <span key={c.id} className="wt-effect-token" title={cardInfo(c.kind).name}><Sigil kind={c.kind === "black_cat" ? "cat" : c.kind}/></span>)}{v?.gavelTargetId === p.id && <span className="wt-effect-token" title="警长木槌"><Sigil kind="constable"/></span>}{p.revealedTryals.length > 0 && <span className={`wt-public-mini ${p.revealedTryals.includes("witch") ? "is-witch" : ""}`}><Sigil kind={p.revealedTryals.includes("witch") ? "witch" : "not_witch"}/><span>{p.revealedTryals.length}</span></span>}{p.hiddenTryalCount > 0 && <span className="wt-hidden-count" title={`未公开审判牌${p.hiddenTryalCount}张`}><i className="wt-mini-seal"/>{p.hiddenTryalCount}</span>}</span>}
             {p.id === me && <i className="wt-me-tag">我</i>}
+            {sel && sel.targetId === p.id && sel.step !== "target" && <i className="wt-role-tag">{sel.card.kind === "robbery" ? "被抢" : sel.card.kind === "scapegoat" ? "转出" : "目标"}</i>}
+            {sel?.recipientId === p.id && <i className="wt-role-tag is-to">接收</i>}
           </button>{number}</React.Fragment>;
         })}
       </section>
@@ -521,13 +538,16 @@ function Table({ snap, act, busy, conn, toast, say, name, setName, claim }: any)
           <div className="wt-private-heading"><div><b>{alive ? "我的审判牌" : "观战"}</b><span>{me ? `${hiddenMine.length}张隐藏 · ${charName(meP?.character)}` : "仅公开信息"}</span></div>{me && <button onClick={() => setSheet({ kind: "identity" })} data-testid="wt-identity">查看私牌</button>}</div>
           {me && <div className="wt-mini-tryals">{(priv?.tryals ?? []).map((t: any, i: number) => <Tryal key={t.id} number={i + 1} kind={t.kind} revealed={t.revealed}/>)}</div>}
           <div className="wt-section-label"><b>{alive ? "我的手牌" : ""}</b><span>{alive && `手牌 ${hand.length} 张`}</span><button onClick={() => setSheet({ kind: "records" })}>记录 ↗</button></div>
-          {alive ? <div className={`wt-hand ${hand.length > 5 ? "wt-hand-many" : ""}`}>{hand.map((c, i) => <div key={c.id} style={{ "--wt-tilt": `${(i - (hand.length - 1) / 2) * 2.5}deg`, "--wt-i": i } as CSSProperties}><CardFace card={c} compact selected={sel?.card.id === c.id} onClick={() => setSheet({ kind: "card", card: c })}/></div>)}{!hand.length && <p className="wt-spectator-note">手里没有牌</p>}</div>
+          {alive ? <div className={`wt-hand ${hand.length > 5 ? "wt-hand-many" : ""}`}>{hand.map((c, i) => <div key={c.id} className="wt-hand-slot" style={{ "--wt-tilt": `${(i - (hand.length - 1) / 2) * 2.5}deg`, "--wt-i": i } as CSSProperties}><CardFace card={c} compact selected={sel?.card.id === c.id} onClick={() => setSheet({ kind: "card", card: c })}/></div>)}{!hand.length && <p className="wt-spectator-note">手里没有牌</p>}</div>
             : <p className="wt-spectator-note">你只能查看公开局势。存活玩家的手牌与隐藏身份仍然保密。</p>}
         </>}
       </aside>
     </div>
     <footer className={`wt-dock ${activeDock ? "wt-dock-active" : ""}`} aria-label="行动栏"><div className="wt-dock-hint" data-testid="wt-hint"><i/>{hint}</div><div className="wt-dock-buttons">{buttons}</div></footer>
-    {banner && <div key={banner.id} className={`wt-phase-banner ${banner.tone ? `wt-banner-${banner.tone}` : ""}`} role="status"><strong>{banner.text}</strong></div>}
+    {fly.map(f => <div key={f.id} className="wt-fly" style={{ "--fx": `${f.from.x}px`, "--fy": `${f.from.y}px`, "--tx": `${f.to.x}px`, "--ty": `${f.to.y}px` } as CSSProperties}><CardFace card={{ id: "fly", kind: f.kind }} compact/></div>)}
+    {blackCard && <div key={blackCard.id} className="wt-fx-black" role="status"><div className="wt-fx-black-card"><CardFace card={{ id: "bk", kind: blackCard.kind }}/></div><p>{blackCard.who} 抽到了</p><strong>{cardInfo(blackCard.kind).name}</strong></div>}
+    {reveal && <div key={reveal.id} className={`wt-fx-reveal ${reveal.kind === "witch" ? "is-witch" : ""}`} role="status"><p>{reveal.who} 的审判牌</p><div className="wt-fx-flip"><Tryal number={0} kind={reveal.kind} revealed/></div><strong>{tryalName(reveal.kind)}</strong>{reveal.kind === "witch" && <div className="wt-smoke-fx" aria-hidden="true">{Array.from({ length: 9 }, (_, i) => <i key={i} style={{ "--wt-i": i } as CSSProperties}/>)}</div>}</div>}
+    {banner && !reveal && !blackCard && <div key={banner.id} className={`wt-phase-banner ${banner.tone ? `wt-banner-${banner.tone}` : ""}`} role="status"><strong>{banner.text}</strong></div>}
     {toast && <div className="wt-toast" role="status">{toast}</div>}
     {sheet && <div className="wt-modal-backdrop" onClick={() => { setSheet(null); setPeek(false); }}><section className={`wt-modal ${sheet.kind === "card" ? "wt-card-sheet" : ""}`} role="dialog" aria-modal="true" onClick={e => e.stopPropagation()}>
       <div className="wt-sheet-grip" aria-hidden="true"><i/></div><button className="wt-close" aria-label="关闭" onClick={() => { setSheet(null); setPeek(false); }}>×</button>

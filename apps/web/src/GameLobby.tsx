@@ -18,6 +18,7 @@ export function GameLobby() {
         </p>
       </header>
       <div className="hall-boxes">
+        <GameBox id="wt" title="女巫镇" sub="Salem 1692" meta="4–12人 · 隐藏身份" blurb="白天互相指控，夜里女巫袭击。身份会在阴谋中悄悄转移——揭开所有女巫牌，小镇才能得救。" art={<WitchCover/>} online="/?game=wt" join={code=>"/?game=wt&room="+code.toUpperCase()} codeLength={8}/>
         <GameBox id="tp" title="传情画意" sub="绘画派对 · 画猜传话" meta="3–8人 · 同时画画" blurb="一句话变成一幅画，再变成一句话。最后一起翻开跑偏的传话本。" art={<TelephoneCover logo={false} />} online="/?game=tp" join={code=>"/?game=tp&room="+code} codeLength={6}/>
         <GameBox id="fa" title="纽约伪画家" sub="绘画派对 · 自动主持改编" meta="3–8人 · 卧底画画" blurb="大家轮流在同一张纸上画一笔，只有一人不知道题目。你能找出伪画家吗？" art={<FakeArtistCover logo={false} />} online="/?game=fa" join={code=>"/?game=fa&room="+code} codeLength={6}/>
         <GameBox
@@ -98,6 +99,18 @@ export function GameLobby() {
       </div>
     </main>
   );
+}
+
+/** 女巫镇原创封面：月夜、尖顶屋与烛光 */
+function WitchCover() {
+  return <svg className="box-wt-art" viewBox="0 0 160 110" aria-hidden="true">
+    <defs><radialGradient id="wtMoon" cx="50%" cy="50%"><stop offset="0" stopColor="#f6efd8"/><stop offset="1" stopColor="#a9c5dc"/></radialGradient><radialGradient id="wtGlow" cx="50%" cy="50%"><stop offset="0" stopColor="#ffd59a" stopOpacity=".8"/><stop offset="1" stopColor="#ffd59a" stopOpacity="0"/></radialGradient></defs>
+    <circle cx="118" cy="28" r="17" fill="url(#wtMoon)"/><circle cx="111" cy="24" r="16" fill="#192935"/>
+    <path d="M10 98V62l18-16 18 16v36zM52 98V52l22-24 22 24v46zM100 98V68l14-12 14 12v30z" fill="#0b131d" stroke="#3a4b5a"/>
+    <path d="M74 28V12" stroke="#3a4b5a" strokeWidth="2"/><rect x="68" y="62" width="12" height="16" rx="2" fill="#e3bd79"/><rect x="22" y="70" width="8" height="10" fill="#a77c3e"/>
+    <circle cx="74" cy="70" r="22" fill="url(#wtGlow)"/><path d="M0 98h160v12H0z" fill="#241e1c"/>
+    <path d="M131 44l3 6 6 1-5 4 1 6-5-3-5 3 1-6-5-4 6-1z" fill="#ad8fd5" opacity=".8"/>
+  </svg>;
 }
 
 function GameBox(props: {
