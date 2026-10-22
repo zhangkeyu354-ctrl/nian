@@ -19,8 +19,8 @@ export function GameLobby() {
       </header>
       <div className="hall-boxes">
         <GameBox id="wt" title="女巫镇" sub="Salem 1692" meta="4–12人 · 隐藏身份" blurb="白天互相指控，夜里女巫袭击。身份会在阴谋中悄悄转移——揭开所有女巫牌，小镇才能得救。" art={<WitchCover/>} online="/?game=wt" join={code=>"/?game=wt&room="+code.toUpperCase()} codeLength={8}/>
-        <GameBox id="tp" title="传情画意" sub="绘画派对 · 画猜传话" meta="3–8人 · 同时画画" blurb="一句话变成一幅画，再变成一句话。最后一起翻开跑偏的传话本。" art={<TelephoneCover logo={false} />} online="/?game=tp" join={code=>"/?game=tp&room="+code} codeLength={6}/>
-        <GameBox id="fa" title="纽约伪画家" sub="绘画派对 · 自动主持改编" meta="3–8人 · 卧底画画" blurb="大家轮流在同一张纸上画一笔，只有一人不知道题目。你能找出伪画家吗？" art={<FakeArtistCover logo={false} />} online="/?game=fa" join={code=>"/?game=fa&room="+code} codeLength={6}/>
+        <GameBox id="tp" title="传情画意" sub="绘画派对 · 画猜传话" meta="3–10人 · 同时画画" blurb="一句话变成一幅画，再变成一句话。最后一起翻开跑偏的传话本。" art={<TelephoneCover logo={false} />} online="/?game=tp" join={code=>"/?game=tp&room="+code} codeLength={6}/>
+        <GameBox id="fa" title="纽约伪画家" sub="绘画派对 · 自动主持改编" meta="3–10人 · 卧底画画" blurb="大家轮流在同一张纸上画一笔，只有一人不知道题目。你能找出伪画家吗？" art={<FakeArtistCover logo={false} />} online="/?game=fa" join={code=>"/?game=fa&room="+code} codeLength={6}/>
         <GameBox
           id="rr"
           title="眼疾手快"

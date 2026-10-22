@@ -25,7 +25,7 @@ const ok = async (s: Socket, e: string, p: object) => {
 };
 try {
   for (const mode of ["tp", "fa"]) {
-    for (let n = 3; n <= 8; n++) {
+    for (let n = 3; n <= 10; n++) {
       const clients = await Promise.all(Array.from({ length: n }, connect));
       const { code } = await ok(clients[0], "dp:create", { mode, count: n });
       const seats: any[] = [];

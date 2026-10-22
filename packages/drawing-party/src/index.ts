@@ -9,6 +9,8 @@ export const COLORS = [
   "#a658c7",
   "#ce6f30",
   "#45a9bf",
+  "#d6408f",
+  "#6f9a2a",
 ];
 export interface Stroke {
   id: string;
@@ -274,7 +276,7 @@ export function validateStroke(s: {
     s.id.length > 100 ||
     !Number.isInteger(s.color) ||
     s.color < 0 ||
-    s.color >= 8 ||
+    s.color >= COLORS.length ||
     ![4, 8, 16, 28].includes(s.width)
   )
     fail("无效画笔");
@@ -346,10 +348,10 @@ export function startGame(
   if (
     !["tp", "fa"].includes(mode) ||
     players.length < 3 ||
-    players.length > 8 ||
+    players.length > 10 ||
     new Set(players.map((p) => p.id)).size !== players.length
   )
-    fail("需要3–8位不同玩家");
+    fail("需要3–10位不同玩家");
   const bank = WORDS[Math.floor(opt.wordIndex / 18) % WORDS.length],
     wi = opt.wordIndex % 18;
   const offset = (opt.optionOffset ?? 0) % 18;

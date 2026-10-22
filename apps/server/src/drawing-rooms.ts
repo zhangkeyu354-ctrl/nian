@@ -183,10 +183,10 @@ export class DrawingRoom {
       if (
         !Number.isInteger(a.count) ||
         a.count < 3 ||
-        a.count > 8 ||
+        a.count > 10 ||
         a.count < this.file.players.length
       )
-        throw Error("人数需为3–8且不少于已入座人数");
+        throw Error("人数需为3–10且不少于已入座人数");
       this.file.count = a.count;
       this.file.players.forEach((p) => (p.ready = false));
     } else if (a.type === "READY") p.ready = !p.ready;
@@ -395,7 +395,7 @@ export function attachDrawingParty(io: Server, directory: string) {
         !["tp", "fa"].includes(req.mode) ||
         !Number.isInteger(req.count) ||
         req.count < 3 ||
-        req.count > 8
+        req.count > 10
       )
         throw Error("无效游戏或人数");
       if (rooms.size >= 20) throw Error("绘画房间已满");

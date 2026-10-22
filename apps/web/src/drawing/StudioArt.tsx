@@ -10,7 +10,7 @@ export function Portrait({ index = 0 }: { index?: number }) {
     "#e9ae89",
     "#f4c8a7",
     "#c58d66",
-  ][index % 8];
+  ][index % COLORS.length];
   const hair = [
     "#29344a",
     "#412737",
@@ -20,10 +20,10 @@ export function Portrait({ index = 0 }: { index?: number }) {
     "#704127",
     "#db8b31",
     "#37303b",
-  ][index % 8];
+  ][index % COLORS.length];
   return (
     <svg className="st-portrait" viewBox="0 0 80 80" aria-hidden="true">
-      <circle cx="40" cy="40" r="38" fill={COLORS[index % 8]} />
+      <circle cx="40" cy="40" r="38" fill={COLORS[index % COLORS.length]} />
       <path
         d="M12 80Q14 58 40 59Q66 58 69 80"
         fill={index % 2 ? "#ffc840" : "#f5f4ed"}
@@ -80,7 +80,7 @@ export function PaintBrush({
   mirrored?: boolean;
 }) {
   const id = useId().replaceAll(":", ""),
-    color = COLORS[index % 8];
+    color = COLORS[index % COLORS.length];
   return cursor ? (
     <svg viewBox="0 0 180 75" aria-hidden="true">
       <defs>

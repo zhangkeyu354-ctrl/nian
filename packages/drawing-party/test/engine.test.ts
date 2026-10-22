@@ -20,8 +20,8 @@ const line = {
     [80, 90, 20],
   ] as [number, number, number][],
 };
-describe("3–8人传话", () => {
-  for (let n = 3; n <= 8; n++)
+describe("3–10人传话", () => {
+  for (let n = 3; n <= 10; n++)
     it(n + "人分配、隐私、全链揭晓闭环", () => {
       const ps = players(n);
       let s = startGame("tp", ps, 1000, { fakeIndex: 1, wordIndex: 0 });
@@ -65,7 +65,7 @@ describe("3–8人传话", () => {
   });
 });
 describe("伪画家自动主持", () => {
-  for (let n = 3; n <= 8; n++)
+  for (let n = 3; n <= 10; n++)
     it(n + "人两圈、隐藏题目、投票及猜题", () => {
       const ps = players(n);
       let s = startGame("fa", ps, 1000, { fakeIndex: 1, wordIndex: 0 });

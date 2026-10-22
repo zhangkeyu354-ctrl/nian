@@ -156,7 +156,7 @@ export function Studio(p: Props) {
         }
         key={x.id}
         data-current={current}
-        style={{ "--seat": COLORS[i % 8] } as React.CSSProperties}
+        style={{ "--seat": COLORS[i % COLORS.length] } as React.CSSProperties}
       >
         <div className="st-player-avatar">
           <Portrait index={i} />
@@ -655,7 +655,7 @@ export function Studio(p: Props) {
                             key={x.id}
                             style={
                               {
-                                "--seat": COLORS[indexOf(x.id) % 8],
+                                "--seat": COLORS[indexOf(x.id) % COLORS.length],
                               } as React.CSSProperties
                             }
                             onClick={() => {

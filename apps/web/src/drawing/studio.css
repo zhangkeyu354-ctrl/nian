@@ -4021,3 +4021,53 @@
     padding-top: 50px;
   }
 }
+.st-world .dp-palette {
+  grid-template-columns: repeat(5, 40px);
+}
+/* 9–10 players: five seats per rail */
+@media (orientation: landscape) and (max-height: 600px) {
+  .st-players:has(.st-player:nth-child(5)) .st-player-avatar {
+    width: 30px;
+    height: 30px;
+  }
+  .st-players:has(.st-player:nth-child(5)) .st-player-brush {
+    top: 6px;
+    left: 20px;
+    width: 34px;
+  }
+  .st-right.st-players:has(.st-player:nth-child(5)) .st-player-brush {
+    left: auto;
+    right: 20px;
+  }
+  .st-players:has(.st-player:nth-child(5)) .st-player-name {
+    font-size: 9px;
+    margin-top: 1px;
+  }
+  .st-players:has(.st-player:nth-child(5)) .st-placard {
+    min-height: 50px;
+  }
+}
+@media (orientation: portrait) {
+  .st-players:has(.st-player:nth-child(5)) .st-player,
+  .st-right.st-players:has(.st-player:nth-child(5)) .st-player {
+    width: 36px;
+  }
+  .st-players:has(.st-player:nth-child(5)) .st-player-avatar {
+    width: 32px;
+    height: 32px;
+  }
+}
+@media (orientation: landscape) and (max-height: 600px) {
+  .st-placard small {
+    white-space: nowrap;
+    font-size: 8px;
+    letter-spacing: 0;
+  }
+  .st-players:has(.st-player:nth-child(5)) .st-placard {
+    width: 60px;
+  }
+  .st-players:has(.st-player:nth-child(5)) .st-category strong {
+    font-size: 11px;
+    padding-top: 4px;
+  }
+}
