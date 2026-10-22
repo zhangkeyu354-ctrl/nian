@@ -261,6 +261,15 @@ export function viewForWitchTown(state: WTState, playerId: string | null) {
     day: state.day,
     log: state.log,
     outcome: state.outcome,
+    // Game over only: every identity is public for the result screen (P15 tip; online convention).
+    final:
+      state.phase === "over"
+        ? state.players.map((p) => ({
+            id: p.id,
+            tryals: p.tryals.map((t) => t.kind),
+            everWitch: p.everWitch,
+          }))
+        : null,
     players: state.players.map((p) => ({
       id: p.id,
       name: p.name,

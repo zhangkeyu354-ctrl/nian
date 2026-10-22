@@ -17,6 +17,11 @@ export function Sigil({ kind = "seal" }: { kind?: string }) {
     stocks: <><rect x="12" y="26" width="56" height="24" rx="3"/><circle cx="40" cy="38" r="10"/><path d="M18 50v18M62 50v18M11 25h58M20 37h4m32 0h4"/></>,
     moon: <path d="M52 12C10 11 6 65 42 68c13 1 23-6 27-15-30 9-44-23-17-41z"/>,
     asylum: <><path d="M15 65V29l25-17 25 17v36zM23 32h34M30 65V41h20v24M11 65h58M40 7v14"/></>,
+    scapegoat: <><path d="M22 30c-6-10 0-18 8-16M58 30c6-10 0-18-8-16"/><path d="M26 30c0-9 28-9 28 0v14c0 12-8 20-14 20s-14-8-14-20z"/><path d="M33 42h4m6 0h4M36 54h8"/></>,
+    curse: <><path d="M40 10c-14 14 6 22-8 36s10 22 8 24"/><circle cx="40" cy="40" r="26" strokeDasharray="4 6"/><path d="M22 22l36 36"/></>,
+    arson: <><path d="M40 68c-15 0-22-10-20-22 2-10 10-14 10-26 8 6 10 14 10 20 4-4 6-10 6-16 10 8 16 18 14 26-2 12-8 18-20 18z"/><path d="M40 68c-6 0-9-5-7-10 2-4 5-6 7-12 3 6 7 8 7 13 0 5-3 9-7 9z"/></>,
+    witness: <><path d="M10 40c10-14 20-20 30-20s20 6 30 20c-10 14-20 20-30 20S20 54 10 40z"/><circle cx="40" cy="40" r="9"/><circle cx="40" cy="40" r="3"/></>,
+    night: <><path d="M48 14C18 13 14 58 42 62c11 1 19-4 23-12-24 7-35-19-17-36z"/><path d="M18 18l2 4 4 2-4 2-2 4-2-4-4-2 4-2zM62 22l1 3 3 1-3 1-1 3-1-3-3-1 3-1z"/></>,
     robbery: <><path d="M28 15l6 12h14l6-12zM32 29C10 53 15 68 40 68s31-15 9-39z"/><path d="M41 38v21M47 41c-16-7-18 11-4 10 13 0 5 15-7 6"/></>,
   };
   return <svg className="wt-sigil" viewBox="0 0 80 80" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">{drawings[kind] ?? drawings.seal}</svg>;

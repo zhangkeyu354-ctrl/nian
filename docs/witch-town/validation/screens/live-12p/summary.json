@@ -1,0 +1,27 @@
+{
+  "players": 12,
+  "room": "39177C14",
+  "finished": true,
+  "actions": 118,
+  "ms": 100323,
+  "reloaded": true,
+  "offlined": true,
+  "consoleErrors": [
+    "p9: The AudioContext encountered an error from the audio device or the WebAudio renderer.",
+    "p9: The AudioContext encountered an error from the audio device or the WebAudio renderer.",
+    "p9: The AudioContext encountered an error from the audio device or the WebAudio renderer.",
+    "p10: The AudioContext encountered an error from the audio device or the WebAudio renderer.",
+    "p10: The AudioContext encountered an error from the audio device or the WebAudio renderer.",
+    "p11: The AudioContext encountered an error from the audio device or the WebAudio renderer.",
+    "p11: The AudioContext encountered an error from the audio device or the WebAudio renderer.",
+    "p11: The AudioContext encountered an error from the audio device or the WebAudio renderer.",
+    "p12: The AudioContext encountered an error from the audio device or the WebAudio renderer.",
+    "p12: The AudioContext encountered an error from the audio device or the WebAudio renderer.",
+    "p12: The AudioContext encountered an error from the audio device or the WebAudio renderer.",
+    "p9: The AudioContext encountered an error from the audio device or the WebAudio renderer.",
+    "p10: The AudioContext encountered an error from the audio device or the WebAudio renderer.",
+    "p10: The AudioContext encountered an error from the audio device or the WebAudio renderer.",
+    "p11: The AudioContext encountered an error from the audio device or the WebAudio renderer.",
+    "p12: The AudioContext encountered an error from the audio device or the WebAudio renderer."
+  ]
+}
