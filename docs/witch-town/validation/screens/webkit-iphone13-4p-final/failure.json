@@ -1,0 +1,306 @@
+{
+  "error": "TimeoutError: locator.hover: Timeout 30000ms exceeded.\nCall log:\n\u001b[2m  - waiting for locator('[data-testid=wt-peek]')\u001b[22m\n\u001b[2m    - locator resolved to <button data-testid=\"wt-peek\" class=\"wt-peek-button\">按住查看 · 松手盖回</button>\u001b[22m\n\u001b[2m  - attempting hover action\u001b[22m\n\u001b[2m    - waiting for element to be visible and stable\u001b[22m\n\u001b[2m    - element is not stable\u001b[22m\n\u001b[2m  - retrying hover action\u001b[22m\n\u001b[2m    - waiting for element to be visible and stable\u001b[22m\n",
+  "browser": "webkit",
+  "device": "iPhone 13",
+  "consoleErrors": [],
+  "network": [
+    {
+      "seat": 1,
+      "event": "request",
+      "url": "http://127.0.0.1:3422/assets/index-h6liQyGZ.js"
+    },
+    {
+      "seat": 1,
+      "event": "request",
+      "url": "http://127.0.0.1:3422/assets/index-Ds3pZHm8.css"
+    },
+    {
+      "seat": 1,
+      "event": "finished",
+      "url": "http://127.0.0.1:3422/assets/index-h6liQyGZ.js"
+    },
+    {
+      "seat": 1,
+      "event": "finished",
+      "url": "http://127.0.0.1:3422/assets/index-Ds3pZHm8.css"
+    },
+    {
+      "seat": 1,
+      "event": "request",
+      "url": "http://127.0.0.1:3422/assets/WitchTown-Dvx_lb3g.js"
+    },
+    {
+      "seat": 1,
+      "event": "request",
+      "url": "http://127.0.0.1:3422/assets/feel-BHIcV1sV.js"
+    },
+    {
+      "seat": 1,
+      "event": "request",
+      "url": "http://127.0.0.1:3422/assets/data-uX4HZbZR.js"
+    },
+    {
+      "seat": 1,
+      "event": "request",
+      "url": "http://127.0.0.1:3422/assets/data-BTTsYx9T.css"
+    },
+    {
+      "seat": 1,
+      "event": "request",
+      "url": "http://127.0.0.1:3422/assets/WitchTown-ZVQefSMb.css"
+    },
+    {
+      "seat": 1,
+      "event": "finished",
+      "url": "http://127.0.0.1:3422/assets/data-BTTsYx9T.css"
+    },
+    {
+      "seat": 1,
+      "event": "finished",
+      "url": "http://127.0.0.1:3422/assets/WitchTown-Dvx_lb3g.js"
+    },
+    {
+      "seat": 1,
+      "event": "finished",
+      "url": "http://127.0.0.1:3422/assets/feel-BHIcV1sV.js"
+    },
+    {
+      "seat": 1,
+      "event": "finished",
+      "url": "http://127.0.0.1:3422/assets/data-uX4HZbZR.js"
+    },
+    {
+      "seat": 1,
+      "event": "finished",
+      "url": "http://127.0.0.1:3422/assets/WitchTown-ZVQefSMb.css"
+    },
+    {
+      "seat": 2,
+      "event": "request",
+      "url": "http://127.0.0.1:3422/assets/index-h6liQyGZ.js"
+    },
+    {
+      "seat": 2,
+      "event": "request",
+      "url": "http://127.0.0.1:3422/assets/index-Ds3pZHm8.css"
+    },
+    {
+      "seat": 2,
+      "event": "finished",
+      "url": "http://127.0.0.1:3422/assets/index-h6liQyGZ.js"
+    },
+    {
+      "seat": 2,
+      "event": "finished",
+      "url": "http://127.0.0.1:3422/assets/index-Ds3pZHm8.css"
+    },
+    {
+      "seat": 2,
+      "event": "request",
+      "url": "http://127.0.0.1:3422/assets/WitchTown-Dvx_lb3g.js"
+    },
+    {
+      "seat": 2,
+      "event": "request",
+      "url": "http://127.0.0.1:3422/assets/feel-BHIcV1sV.js"
+    },
+    {
+      "seat": 2,
+      "event": "request",
+      "url": "http://127.0.0.1:3422/assets/data-uX4HZbZR.js"
+    },
+    {
+      "seat": 2,
+      "event": "request",
+      "url": "http://127.0.0.1:3422/assets/data-BTTsYx9T.css"
+    },
+    {
+      "seat": 2,
+      "event": "request",
+      "url": "http://127.0.0.1:3422/assets/WitchTown-ZVQefSMb.css"
+    },
+    {
+      "seat": 2,
+      "event": "finished",
+      "url": "http://127.0.0.1:3422/assets/data-BTTsYx9T.css"
+    },
+    {
+      "seat": 2,
+      "event": "finished",
+      "url": "http://127.0.0.1:3422/assets/WitchTown-Dvx_lb3g.js"
+    },
+    {
+      "seat": 2,
+      "event": "finished",
+      "url": "http://127.0.0.1:3422/assets/feel-BHIcV1sV.js"
+    },
+    {
+      "seat": 2,
+      "event": "finished",
+      "url": "http://127.0.0.1:3422/assets/data-uX4HZbZR.js"
+    },
+    {
+      "seat": 2,
+      "event": "finished",
+      "url": "http://127.0.0.1:3422/assets/WitchTown-ZVQefSMb.css"
+    },
+    {
+      "seat": 3,
+      "event": "request",
+      "url": "http://127.0.0.1:3422/assets/index-h6liQyGZ.js"
+    },
+    {
+      "seat": 3,
+      "event": "request",
+      "url": "http://127.0.0.1:3422/assets/index-Ds3pZHm8.css"
+    },
+    {
+      "seat": 3,
+      "event": "finished",
+      "url": "http://127.0.0.1:3422/assets/index-Ds3pZHm8.css"
+    },
+    {
+      "seat": 3,
+      "event": "finished",
+      "url": "http://127.0.0.1:3422/assets/index-h6liQyGZ.js"
+    },
+    {
+      "seat": 3,
+      "event": "request",
+      "url": "http://127.0.0.1:3422/assets/WitchTown-Dvx_lb3g.js"
+    },
+    {
+      "seat": 3,
+      "event": "request",
+      "url": "http://127.0.0.1:3422/assets/feel-BHIcV1sV.js"
+    },
+    {
+      "seat": 3,
+      "event": "request",
+      "url": "http://127.0.0.1:3422/assets/data-uX4HZbZR.js"
+    },
+    {
+      "seat": 3,
+      "event": "request",
+      "url": "http://127.0.0.1:3422/assets/data-BTTsYx9T.css"
+    },
+    {
+      "seat": 3,
+      "event": "request",
+      "url": "http://127.0.0.1:3422/assets/WitchTown-ZVQefSMb.css"
+    },
+    {
+      "seat": 3,
+      "event": "finished",
+      "url": "http://127.0.0.1:3422/assets/WitchTown-Dvx_lb3g.js"
+    },
+    {
+      "seat": 3,
+      "event": "finished",
+      "url": "http://127.0.0.1:3422/assets/feel-BHIcV1sV.js"
+    },
+    {
+      "seat": 3,
+      "event": "finished",
+      "url": "http://127.0.0.1:3422/assets/data-uX4HZbZR.js"
+    },
+    {
+      "seat": 3,
+      "event": "finished",
+      "url": "http://127.0.0.1:3422/assets/data-BTTsYx9T.css"
+    },
+    {
+      "seat": 3,
+      "event": "finished",
+      "url": "http://127.0.0.1:3422/assets/WitchTown-ZVQefSMb.css"
+    },
+    {
+      "seat": 4,
+      "event": "request",
+      "url": "http://127.0.0.1:3422/assets/index-h6liQyGZ.js"
+    },
+    {
+      "seat": 4,
+      "event": "request",
+      "url": "http://127.0.0.1:3422/assets/index-Ds3pZHm8.css"
+    },
+    {
+      "seat": 4,
+      "event": "finished",
+      "url": "http://127.0.0.1:3422/assets/index-Ds3pZHm8.css"
+    },
+    {
+      "seat": 4,
+      "event": "finished",
+      "url": "http://127.0.0.1:3422/assets/index-h6liQyGZ.js"
+    },
+    {
+      "seat": 4,
+      "event": "request",
+      "url": "http://127.0.0.1:3422/assets/WitchTown-Dvx_lb3g.js"
+    },
+    {
+      "seat": 4,
+      "event": "request",
+      "url": "http://127.0.0.1:3422/assets/feel-BHIcV1sV.js"
+    },
+    {
+      "seat": 4,
+      "event": "request",
+      "url": "http://127.0.0.1:3422/assets/data-uX4HZbZR.js"
+    },
+    {
+      "seat": 4,
+      "event": "request",
+      "url": "http://127.0.0.1:3422/assets/data-BTTsYx9T.css"
+    },
+    {
+      "seat": 4,
+      "event": "request",
+      "url": "http://127.0.0.1:3422/assets/WitchTown-ZVQefSMb.css"
+    },
+    {
+      "seat": 4,
+      "event": "finished",
+      "url": "http://127.0.0.1:3422/assets/WitchTown-Dvx_lb3g.js"
+    },
+    {
+      "seat": 4,
+      "event": "finished",
+      "url": "http://127.0.0.1:3422/assets/feel-BHIcV1sV.js"
+    },
+    {
+      "seat": 4,
+      "event": "finished",
+      "url": "http://127.0.0.1:3422/assets/data-uX4HZbZR.js"
+    },
+    {
+      "seat": 4,
+      "event": "finished",
+      "url": "http://127.0.0.1:3422/assets/data-BTTsYx9T.css"
+    },
+    {
+      "seat": 4,
+      "event": "finished",
+      "url": "http://127.0.0.1:3422/assets/WitchTown-ZVQefSMb.css"
+    }
+  ],
+  "pages": [
+    {
+      "url": "http://127.0.0.1:3422/?game=wt&room=972D856A",
+      "body": "‹\n牌堆 46\n静\n☷\n2号玩家2 的回合\n玩家1\n少女\n0/7\n▤3\n5\n我1\n玩家2\n大力士\n0/8\n▤3\n5\n2\n玩家3\n地主\n0/7\n▤3\n5\n3\n玩家4\n说书人\n0/7\n▤3\n5\n4\n我的审判牌\n查看私牌\n我的手牌\n手牌 3 张\n记录 ↗\n\n行动\n嫁祸\n\n+3\n证据\n\n行动\n诅咒\n等待2号玩家2行动…\n催促 · 翻沙漏\n×\n仅你可见 · 注意身旁的人\n我的审判牌\n\n按住下方按钮查看，松手立即盖回。\n\n1\n2\n3\n4\n5\n按住查看 · 松手盖回\n我的人物：少女\n\n打出最后指控后、揭示身份前抽两张，可在该回合使用。\n\n关闭"
+    },
+    {
+      "url": "http://127.0.0.1:3422/?game=wt&room=972D856A",
+      "body": "‹\n牌堆 46\n静\n☷\n2号玩家2 的回合\n玩家2\n大力士\n0/8\n▤3\n5\n我2\n玩家3\n地主\n0/7\n▤3\n5\n3\n玩家4\n说书人\n0/7\n▤3\n5\n4\n玩家1\n少女\n0/7\n▤3\n5\n1\n我的审判牌\n查看私牌\n我的手牌\n手牌 3 张\n记录 ↗\n\n+1\n指控\n\n+1\n指控\n\n+1\n指控\n轮到你了 · 抽2张，或打出至少1张牌（点手牌）\n抽2张"
+    },
+    {
+      "url": "http://127.0.0.1:3422/?game=wt&room=972D856A",
+      "body": "‹\n牌堆 46\n静\n☷\n2号玩家2 的回合\n玩家3\n地主\n0/7\n▤3\n5\n我3\n玩家4\n说书人\n0/7\n▤3\n5\n4\n玩家1\n少女\n0/7\n▤3\n5\n1\n玩家2\n大力士\n0/8\n▤3\n5\n2\n我的审判牌\n查看私牌\n我的手牌\n手牌 3 张\n记录 ↗\n\n+1\n指控\n\n+1\n指控\n\n行动\n拘留\n等待2号玩家2行动…\n催促 · 翻沙漏"
+    },
+    {
+      "url": "http://127.0.0.1:3422/?game=wt&room=972D856A",
+      "body": "‹\n牌堆 46\n静\n☷\n2号玩家2 的回合\n玩家4\n说书人\n0/7\n▤3\n5\n我4\n玩家1\n少女\n0/7\n▤3\n5\n1\n玩家2\n大力士\n0/8\n▤3\n5\n2\n玩家3\n地主\n0/7\n▤3\n5\n3\n我的审判牌\n查看私牌\n我的手牌\n手牌 3 张\n记录 ↗\n\n+1\n指控\n\n+1\n指控\n\n行动\n纵火\n等待2号玩家2行动…\n催促 · 翻沙漏"
+    }
+  ]
+}

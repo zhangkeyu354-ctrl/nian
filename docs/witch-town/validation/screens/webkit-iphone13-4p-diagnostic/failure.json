@@ -1,0 +1,166 @@
+{
+  "error": "TimeoutError: page.waitForSelector: Timeout 15000ms exceeded.\nCall log:\n\u001b[2m  - waiting for locator('[data-testid=wt-world][data-phase=lobby]') to be visible\u001b[22m\n",
+  "browser": "webkit",
+  "device": "iPhone 13",
+  "consoleErrors": [],
+  "network": [
+    {
+      "seat": 1,
+      "event": "request",
+      "url": "http://127.0.0.1:3422/assets/index-h6liQyGZ.js"
+    },
+    {
+      "seat": 1,
+      "event": "request",
+      "url": "http://127.0.0.1:3422/assets/index-Ds3pZHm8.css"
+    },
+    {
+      "seat": 1,
+      "event": "finished",
+      "url": "http://127.0.0.1:3422/assets/index-Ds3pZHm8.css"
+    },
+    {
+      "seat": 1,
+      "event": "finished",
+      "url": "http://127.0.0.1:3422/assets/index-h6liQyGZ.js"
+    },
+    {
+      "seat": 1,
+      "event": "request",
+      "url": "http://127.0.0.1:3422/assets/WitchTown-Dvx_lb3g.js"
+    },
+    {
+      "seat": 1,
+      "event": "request",
+      "url": "http://127.0.0.1:3422/assets/feel-BHIcV1sV.js"
+    },
+    {
+      "seat": 1,
+      "event": "request",
+      "url": "http://127.0.0.1:3422/assets/data-uX4HZbZR.js"
+    },
+    {
+      "seat": 1,
+      "event": "request",
+      "url": "http://127.0.0.1:3422/assets/data-BTTsYx9T.css"
+    },
+    {
+      "seat": 1,
+      "event": "request",
+      "url": "http://127.0.0.1:3422/assets/WitchTown-ZVQefSMb.css"
+    },
+    {
+      "seat": 1,
+      "event": "finished",
+      "url": "http://127.0.0.1:3422/assets/WitchTown-Dvx_lb3g.js"
+    },
+    {
+      "seat": 1,
+      "event": "finished",
+      "url": "http://127.0.0.1:3422/assets/feel-BHIcV1sV.js"
+    },
+    {
+      "seat": 1,
+      "event": "finished",
+      "url": "http://127.0.0.1:3422/assets/data-uX4HZbZR.js"
+    },
+    {
+      "seat": 1,
+      "event": "finished",
+      "url": "http://127.0.0.1:3422/assets/data-BTTsYx9T.css"
+    },
+    {
+      "seat": 1,
+      "event": "finished",
+      "url": "http://127.0.0.1:3422/assets/WitchTown-ZVQefSMb.css"
+    },
+    {
+      "seat": 2,
+      "event": "request",
+      "url": "http://127.0.0.1:3422/assets/index-h6liQyGZ.js"
+    },
+    {
+      "seat": 2,
+      "event": "request",
+      "url": "http://127.0.0.1:3422/assets/index-Ds3pZHm8.css"
+    },
+    {
+      "seat": 2,
+      "event": "finished",
+      "url": "http://127.0.0.1:3422/assets/index-h6liQyGZ.js"
+    },
+    {
+      "seat": 2,
+      "event": "finished",
+      "url": "http://127.0.0.1:3422/assets/index-Ds3pZHm8.css"
+    },
+    {
+      "seat": 2,
+      "event": "request",
+      "url": "http://127.0.0.1:3422/assets/WitchTown-Dvx_lb3g.js"
+    },
+    {
+      "seat": 2,
+      "event": "request",
+      "url": "http://127.0.0.1:3422/assets/feel-BHIcV1sV.js"
+    },
+    {
+      "seat": 2,
+      "event": "request",
+      "url": "http://127.0.0.1:3422/assets/data-uX4HZbZR.js"
+    },
+    {
+      "seat": 2,
+      "event": "request",
+      "url": "http://127.0.0.1:3422/assets/data-BTTsYx9T.css"
+    },
+    {
+      "seat": 2,
+      "event": "request",
+      "url": "http://127.0.0.1:3422/assets/WitchTown-ZVQefSMb.css"
+    },
+    {
+      "seat": 2,
+      "event": "finished",
+      "url": "http://127.0.0.1:3422/assets/WitchTown-Dvx_lb3g.js"
+    },
+    {
+      "seat": 2,
+      "event": "finished",
+      "url": "http://127.0.0.1:3422/assets/feel-BHIcV1sV.js"
+    },
+    {
+      "seat": 2,
+      "event": "finished",
+      "url": "http://127.0.0.1:3422/assets/data-uX4HZbZR.js"
+    },
+    {
+      "seat": 2,
+      "event": "finished",
+      "url": "http://127.0.0.1:3422/assets/data-BTTsYx9T.css"
+    },
+    {
+      "seat": 2,
+      "event": "finished",
+      "url": "http://127.0.0.1:3422/assets/WitchTown-ZVQefSMb.css"
+    }
+  ],
+  "pages": [
+    {
+      "url": "http://127.0.0.1:3422/?game=wt&room=B10E47D4",
+      "body": "‹\n1/4人\n声\n☷\n小镇集会\n玩家1\n未准备\n房主\n我1\n空位\n2\n空位\n3\n空位\n4\n房间 B10E47D4\n1/4席\n邀请朋友入座 ↗\n1\n玩家1（我）\n房主 · 未准备\n已入座 1/4 · 0人已准备\n准备\n开始游戏"
+    },
+    {
+      "url": "http://127.0.0.1:3422/?game=wt&room=B10E47D4",
+      "body": "正在打开女巫镇…"
+    },
+    {
+      "url": "about:blank",
+      "body": ""
+    },
+    {
+      "url": "about:blank",
+      "body": ""
+    }
+  ]
+}

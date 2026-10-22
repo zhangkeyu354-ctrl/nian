@@ -1,0 +1,462 @@
+{
+  "error": "TimeoutError: page.click: Timeout 30000ms exceeded.\nCall log:\n\u001b[2m  - waiting for locator('[data-testid=wt-claim]')\u001b[22m\n\u001b[2m    - locator resolved to <button class=\"wt-primary\" data-testid=\"wt-claim\">入座</button>\u001b[22m\n\u001b[2m  - attempting click action\u001b[22m\n\u001b[2m    - waiting for element to be visible, enabled and stable\u001b[22m\n",
+  "browser": "webkit",
+  "device": "iPhone 13",
+  "consoleErrors": [],
+  "network": [
+    {
+      "seat": 1,
+      "event": "request",
+      "url": "http://127.0.0.1:3422/assets/index-h6liQyGZ.js"
+    },
+    {
+      "seat": 1,
+      "event": "request",
+      "url": "http://127.0.0.1:3422/assets/index-Ds3pZHm8.css"
+    },
+    {
+      "seat": 1,
+      "event": "finished",
+      "url": "http://127.0.0.1:3422/assets/index-Ds3pZHm8.css"
+    },
+    {
+      "seat": 1,
+      "event": "finished",
+      "url": "http://127.0.0.1:3422/assets/index-h6liQyGZ.js"
+    },
+    {
+      "seat": 1,
+      "event": "request",
+      "url": "http://127.0.0.1:3422/assets/WitchTown-Dvx_lb3g.js"
+    },
+    {
+      "seat": 1,
+      "event": "request",
+      "url": "http://127.0.0.1:3422/assets/feel-BHIcV1sV.js"
+    },
+    {
+      "seat": 1,
+      "event": "request",
+      "url": "http://127.0.0.1:3422/assets/data-uX4HZbZR.js"
+    },
+    {
+      "seat": 1,
+      "event": "request",
+      "url": "http://127.0.0.1:3422/assets/data-BTTsYx9T.css"
+    },
+    {
+      "seat": 1,
+      "event": "request",
+      "url": "http://127.0.0.1:3422/assets/WitchTown-ZVQefSMb.css"
+    },
+    {
+      "seat": 1,
+      "event": "finished",
+      "url": "http://127.0.0.1:3422/assets/WitchTown-Dvx_lb3g.js"
+    },
+    {
+      "seat": 1,
+      "event": "finished",
+      "url": "http://127.0.0.1:3422/assets/feel-BHIcV1sV.js"
+    },
+    {
+      "seat": 1,
+      "event": "finished",
+      "url": "http://127.0.0.1:3422/assets/data-uX4HZbZR.js"
+    },
+    {
+      "seat": 1,
+      "event": "finished",
+      "url": "http://127.0.0.1:3422/assets/data-BTTsYx9T.css"
+    },
+    {
+      "seat": 1,
+      "event": "finished",
+      "url": "http://127.0.0.1:3422/assets/WitchTown-ZVQefSMb.css"
+    },
+    {
+      "seat": 2,
+      "event": "request",
+      "url": "http://127.0.0.1:3422/assets/index-h6liQyGZ.js"
+    },
+    {
+      "seat": 2,
+      "event": "request",
+      "url": "http://127.0.0.1:3422/assets/index-Ds3pZHm8.css"
+    },
+    {
+      "seat": 2,
+      "event": "finished",
+      "url": "http://127.0.0.1:3422/assets/index-h6liQyGZ.js"
+    },
+    {
+      "seat": 2,
+      "event": "finished",
+      "url": "http://127.0.0.1:3422/assets/index-Ds3pZHm8.css"
+    },
+    {
+      "seat": 2,
+      "event": "request",
+      "url": "http://127.0.0.1:3422/assets/WitchTown-Dvx_lb3g.js"
+    },
+    {
+      "seat": 2,
+      "event": "request",
+      "url": "http://127.0.0.1:3422/assets/feel-BHIcV1sV.js"
+    },
+    {
+      "seat": 2,
+      "event": "request",
+      "url": "http://127.0.0.1:3422/assets/data-uX4HZbZR.js"
+    },
+    {
+      "seat": 2,
+      "event": "request",
+      "url": "http://127.0.0.1:3422/assets/data-BTTsYx9T.css"
+    },
+    {
+      "seat": 2,
+      "event": "request",
+      "url": "http://127.0.0.1:3422/assets/WitchTown-ZVQefSMb.css"
+    },
+    {
+      "seat": 2,
+      "event": "finished",
+      "url": "http://127.0.0.1:3422/assets/WitchTown-Dvx_lb3g.js"
+    },
+    {
+      "seat": 2,
+      "event": "finished",
+      "url": "http://127.0.0.1:3422/assets/feel-BHIcV1sV.js"
+    },
+    {
+      "seat": 2,
+      "event": "finished",
+      "url": "http://127.0.0.1:3422/assets/data-uX4HZbZR.js"
+    },
+    {
+      "seat": 2,
+      "event": "finished",
+      "url": "http://127.0.0.1:3422/assets/data-BTTsYx9T.css"
+    },
+    {
+      "seat": 2,
+      "event": "finished",
+      "url": "http://127.0.0.1:3422/assets/WitchTown-ZVQefSMb.css"
+    },
+    {
+      "seat": 3,
+      "event": "request",
+      "url": "http://127.0.0.1:3422/assets/index-h6liQyGZ.js"
+    },
+    {
+      "seat": 3,
+      "event": "request",
+      "url": "http://127.0.0.1:3422/assets/index-Ds3pZHm8.css"
+    },
+    {
+      "seat": 3,
+      "event": "finished",
+      "url": "http://127.0.0.1:3422/assets/index-Ds3pZHm8.css"
+    },
+    {
+      "seat": 3,
+      "event": "finished",
+      "url": "http://127.0.0.1:3422/assets/index-h6liQyGZ.js"
+    },
+    {
+      "seat": 3,
+      "event": "request",
+      "url": "http://127.0.0.1:3422/assets/WitchTown-Dvx_lb3g.js"
+    },
+    {
+      "seat": 3,
+      "event": "request",
+      "url": "http://127.0.0.1:3422/assets/feel-BHIcV1sV.js"
+    },
+    {
+      "seat": 3,
+      "event": "request",
+      "url": "http://127.0.0.1:3422/assets/data-uX4HZbZR.js"
+    },
+    {
+      "seat": 3,
+      "event": "request",
+      "url": "http://127.0.0.1:3422/assets/data-BTTsYx9T.css"
+    },
+    {
+      "seat": 3,
+      "event": "request",
+      "url": "http://127.0.0.1:3422/assets/WitchTown-ZVQefSMb.css"
+    },
+    {
+      "seat": 3,
+      "event": "finished",
+      "url": "http://127.0.0.1:3422/assets/WitchTown-Dvx_lb3g.js"
+    },
+    {
+      "seat": 3,
+      "event": "finished",
+      "url": "http://127.0.0.1:3422/assets/feel-BHIcV1sV.js"
+    },
+    {
+      "seat": 3,
+      "event": "finished",
+      "url": "http://127.0.0.1:3422/assets/data-uX4HZbZR.js"
+    },
+    {
+      "seat": 3,
+      "event": "finished",
+      "url": "http://127.0.0.1:3422/assets/data-BTTsYx9T.css"
+    },
+    {
+      "seat": 3,
+      "event": "finished",
+      "url": "http://127.0.0.1:3422/assets/WitchTown-ZVQefSMb.css"
+    },
+    {
+      "seat": 4,
+      "event": "request",
+      "url": "http://127.0.0.1:3422/assets/index-h6liQyGZ.js"
+    },
+    {
+      "seat": 4,
+      "event": "request",
+      "url": "http://127.0.0.1:3422/assets/index-Ds3pZHm8.css"
+    },
+    {
+      "seat": 4,
+      "event": "finished",
+      "url": "http://127.0.0.1:3422/assets/index-Ds3pZHm8.css"
+    },
+    {
+      "seat": 4,
+      "event": "finished",
+      "url": "http://127.0.0.1:3422/assets/index-h6liQyGZ.js"
+    },
+    {
+      "seat": 4,
+      "event": "request",
+      "url": "http://127.0.0.1:3422/assets/WitchTown-Dvx_lb3g.js"
+    },
+    {
+      "seat": 4,
+      "event": "request",
+      "url": "http://127.0.0.1:3422/assets/feel-BHIcV1sV.js"
+    },
+    {
+      "seat": 4,
+      "event": "request",
+      "url": "http://127.0.0.1:3422/assets/data-uX4HZbZR.js"
+    },
+    {
+      "seat": 4,
+      "event": "request",
+      "url": "http://127.0.0.1:3422/assets/data-BTTsYx9T.css"
+    },
+    {
+      "seat": 4,
+      "event": "request",
+      "url": "http://127.0.0.1:3422/assets/WitchTown-ZVQefSMb.css"
+    },
+    {
+      "seat": 4,
+      "event": "finished",
+      "url": "http://127.0.0.1:3422/assets/WitchTown-Dvx_lb3g.js"
+    },
+    {
+      "seat": 4,
+      "event": "finished",
+      "url": "http://127.0.0.1:3422/assets/feel-BHIcV1sV.js"
+    },
+    {
+      "seat": 4,
+      "event": "finished",
+      "url": "http://127.0.0.1:3422/assets/data-uX4HZbZR.js"
+    },
+    {
+      "seat": 4,
+      "event": "finished",
+      "url": "http://127.0.0.1:3422/assets/data-BTTsYx9T.css"
+    },
+    {
+      "seat": 4,
+      "event": "finished",
+      "url": "http://127.0.0.1:3422/assets/WitchTown-ZVQefSMb.css"
+    },
+    {
+      "seat": 5,
+      "event": "request",
+      "url": "http://127.0.0.1:3422/assets/index-h6liQyGZ.js"
+    },
+    {
+      "seat": 5,
+      "event": "request",
+      "url": "http://127.0.0.1:3422/assets/index-Ds3pZHm8.css"
+    },
+    {
+      "seat": 5,
+      "event": "finished",
+      "url": "http://127.0.0.1:3422/assets/index-h6liQyGZ.js"
+    },
+    {
+      "seat": 5,
+      "event": "finished",
+      "url": "http://127.0.0.1:3422/assets/index-Ds3pZHm8.css"
+    },
+    {
+      "seat": 5,
+      "event": "request",
+      "url": "http://127.0.0.1:3422/assets/WitchTown-Dvx_lb3g.js"
+    },
+    {
+      "seat": 5,
+      "event": "request",
+      "url": "http://127.0.0.1:3422/assets/feel-BHIcV1sV.js"
+    },
+    {
+      "seat": 5,
+      "event": "request",
+      "url": "http://127.0.0.1:3422/assets/data-uX4HZbZR.js"
+    },
+    {
+      "seat": 5,
+      "event": "request",
+      "url": "http://127.0.0.1:3422/assets/data-BTTsYx9T.css"
+    },
+    {
+      "seat": 5,
+      "event": "request",
+      "url": "http://127.0.0.1:3422/assets/WitchTown-ZVQefSMb.css"
+    },
+    {
+      "seat": 5,
+      "event": "finished",
+      "url": "http://127.0.0.1:3422/assets/WitchTown-Dvx_lb3g.js"
+    },
+    {
+      "seat": 5,
+      "event": "finished",
+      "url": "http://127.0.0.1:3422/assets/feel-BHIcV1sV.js"
+    },
+    {
+      "seat": 5,
+      "event": "finished",
+      "url": "http://127.0.0.1:3422/assets/data-uX4HZbZR.js"
+    },
+    {
+      "seat": 5,
+      "event": "finished",
+      "url": "http://127.0.0.1:3422/assets/data-BTTsYx9T.css"
+    },
+    {
+      "seat": 5,
+      "event": "finished",
+      "url": "http://127.0.0.1:3422/assets/WitchTown-ZVQefSMb.css"
+    },
+    {
+      "seat": 6,
+      "event": "request",
+      "url": "http://127.0.0.1:3422/assets/index-h6liQyGZ.js"
+    },
+    {
+      "seat": 6,
+      "event": "request",
+      "url": "http://127.0.0.1:3422/assets/index-Ds3pZHm8.css"
+    },
+    {
+      "seat": 6,
+      "event": "finished",
+      "url": "http://127.0.0.1:3422/assets/index-Ds3pZHm8.css"
+    },
+    {
+      "seat": 6,
+      "event": "finished",
+      "url": "http://127.0.0.1:3422/assets/index-h6liQyGZ.js"
+    },
+    {
+      "seat": 6,
+      "event": "request",
+      "url": "http://127.0.0.1:3422/assets/WitchTown-Dvx_lb3g.js"
+    },
+    {
+      "seat": 6,
+      "event": "request",
+      "url": "http://127.0.0.1:3422/assets/feel-BHIcV1sV.js"
+    },
+    {
+      "seat": 6,
+      "event": "request",
+      "url": "http://127.0.0.1:3422/assets/data-uX4HZbZR.js"
+    },
+    {
+      "seat": 6,
+      "event": "request",
+      "url": "http://127.0.0.1:3422/assets/data-BTTsYx9T.css"
+    },
+    {
+      "seat": 6,
+      "event": "request",
+      "url": "http://127.0.0.1:3422/assets/WitchTown-ZVQefSMb.css"
+    },
+    {
+      "seat": 6,
+      "event": "finished",
+      "url": "http://127.0.0.1:3422/assets/WitchTown-Dvx_lb3g.js"
+    },
+    {
+      "seat": 6,
+      "event": "finished",
+      "url": "http://127.0.0.1:3422/assets/feel-BHIcV1sV.js"
+    },
+    {
+      "seat": 6,
+      "event": "finished",
+      "url": "http://127.0.0.1:3422/assets/data-uX4HZbZR.js"
+    },
+    {
+      "seat": 6,
+      "event": "finished",
+      "url": "http://127.0.0.1:3422/assets/data-BTTsYx9T.css"
+    },
+    {
+      "seat": 6,
+      "event": "finished",
+      "url": "http://127.0.0.1:3422/assets/WitchTown-ZVQefSMb.css"
+    }
+  ],
+  "pages": [
+    {
+      "url": "http://127.0.0.1:3422/?game=wt&room=FA7D7029",
+      "body": "‹\n5/8人\n静\n☷\n小镇集会\n玩家1\n未准备\n房主\n我1\n玩家2\n未准备\n2\n玩家3\n未准备\n3\n玩家4\n未准备\n4\n玩家5\n未准备\n5\n空位\n6\n空位\n7\n空位\n8\n房间 FA7D7029\n5/8席\n邀请朋友入座 ↗\n1\n玩家1（我）\n房主 · 未准备\n2\n玩家2\n未准备\n3\n玩家3\n未准备\n4\n玩家4\n未准备\n5\n玩家5\n未准备\n已入座 5/8 · 0人已准备\n准备\n开始游戏"
+    },
+    {
+      "url": "http://127.0.0.1:3422/?game=wt&room=FA7D7029",
+      "body": "‹\n5/8人\n静\n☷\n小镇集会\n玩家2\n未准备\n我2\n玩家3\n未准备\n3\n玩家4\n未准备\n4\n玩家5\n未准备\n5\n空位\n6\n空位\n7\n空位\n8\n玩家1\n未准备\n房主\n1\n房间 FA7D7029\n5/8席\n邀请朋友入座 ↗\n1\n玩家1\n房主 · 未准备\n2\n玩家2（我）\n未准备\n3\n玩家3\n未准备\n4\n玩家4\n未准备\n5\n玩家5\n未准备\n已入座 5/8 · 0人已准备\n准备"
+    },
+    {
+      "url": "http://127.0.0.1:3422/?game=wt&room=FA7D7029",
+      "body": "‹\n5/8人\n静\n☷\n小镇集会\n玩家3\n未准备\n我3\n玩家4\n未准备\n4\n玩家5\n未准备\n5\n空位\n6\n空位\n7\n空位\n8\n玩家1\n未准备\n房主\n1\n玩家2\n未准备\n2\n房间 FA7D7029\n5/8席\n邀请朋友入座 ↗\n1\n玩家1\n房主 · 未准备\n2\n玩家2\n未准备\n3\n玩家3（我）\n未准备\n4\n玩家4\n未准备\n5\n玩家5\n未准备\n已入座 5/8 · 0人已准备\n准备"
+    },
+    {
+      "url": "http://127.0.0.1:3422/?game=wt&room=FA7D7029",
+      "body": "‹\n5/8人\n静\n☷\n小镇集会\n玩家4\n未准备\n我4\n玩家5\n未准备\n5\n空位\n6\n空位\n7\n空位\n8\n玩家1\n未准备\n房主\n1\n玩家2\n未准备\n2\n玩家3\n未准备\n3\n房间 FA7D7029\n5/8席\n邀请朋友入座 ↗\n1\n玩家1\n房主 · 未准备\n2\n玩家2\n未准备\n3\n玩家3\n未准备\n4\n玩家4（我）\n未准备\n5\n玩家5\n未准备\n已入座 5/8 · 0人已准备\n准备"
+    },
+    {
+      "url": "http://127.0.0.1:3422/?game=wt&room=FA7D7029",
+      "body": "‹\n5/8人\n静\n☷\n小镇集会\n玩家5\n未准备\n我5\n空位\n6\n空位\n7\n空位\n8\n玩家1\n未准备\n房主\n1\n玩家2\n未准备\n2\n玩家3\n未准备\n3\n玩家4\n未准备\n4\n房间 FA7D7029\n5/8席\n邀请朋友入座 ↗\n1\n玩家1\n房主 · 未准备\n2\n玩家2\n未准备\n3\n玩家3\n未准备\n4\n玩家4\n未准备\n5\n玩家5（我）\n未准备\n已入座 5/8 · 0人已准备\n准备"
+    },
+    {
+      "url": "http://127.0.0.1:3422/?game=wt&room=FA7D7029",
+      "body": "‹\n5/8人\n静\n☷\n小镇集会\n玩家1\n未准备\n房主\n1\n玩家2\n未准备\n2\n玩家3\n未准备\n3\n玩家4\n未准备\n4\n玩家5\n未准备\n5\n空位\n6\n空位\n7\n空位\n8\n房间 FA7D7029\n5/8席\n你的昵称\n入座\n邀请朋友入座 ↗\n1\n玩家1\n房主 · 未准备\n2\n玩家2\n未准备\n3\n玩家3\n未准备\n4\n玩家4\n未准备\n5\n玩家5\n未准备\n房间已开始或你尚未入座"
+    },
+    {
+      "url": "about:blank",
+      "body": ""
+    },
+    {
+      "url": "about:blank",
+      "body": ""
+    }
+  ]
+}

@@ -1,0 +1,9 @@
+{
+  "menuPrevented": true,
+  "releaseCovered": true,
+  "selection": "",
+  "unsupportedAPIs": {
+    "vibrate": "undefined",
+    "wakeLock": "undefined"
+  }
+}

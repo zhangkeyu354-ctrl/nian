@@ -1,5 +1,14 @@
 # 女巫镇 M5 关卡2进度（Claude 接手，2026-10-22）
 
+## Codex 上线后核查（2026-10-23，进行中）
+
+- 已在 `codex/witch-town-m1` 执行 `git pull --ff-only`，从 `9c8650a` 开始；不碰 main、不部署。
+- 第一项：浏览器脚本增加 WebKit / 内置 iPhone 设备、缺失震动及 Wake Lock 的回退检查、按住私牌检查和可视区缩减检查。普通模式四种组合均已尝试，存在稳定性超时或长时间未推进，未标整局通过；减少动态效果诊断正在运行。
+- 证据及复现：[WebKit 核查](../witch-town/validation/WEBKIT_AUDIT_2026-10-23.md)。重点不能把单项私牌通过写成整局验收通过。
+- 本地启动：`npm run build` 后设置 `PORT=3422`、`WT_ENABLE_DEV=1`、`WT_ALLOW_CANDIDATE_COUNTS=1`，运行 `npm run server`；浏览器环境变量见核查文档。
+- 验证：typecheck、build 已通过；全仓测试正在运行，尚未出最终结论。
+- 下一步：完成 WebKit 重试并保留失败证据，随后分别提交隐私核查和中文说明对照。生产代码与规则引擎未修改。
+
 Codex 额度用完，Claude 从 `8d3781c` 接手。只在 `codex/witch-town-m1` 工作，不碰 main，不部署。
 
 ## 已完成
