@@ -194,7 +194,7 @@
 
 /* =================== premium material pass =================== */
 /* Buttons: forged look — bevel highlight on top edge, dark lip below, inset on press */
-.wt-world.wt-live :where(button):not(.wt-seat):not(.wt-card):not(.wt-tryal) {
+.wt-world.wt-live :where(button):not(.wt-seat):not(.wt-card):not(.wt-tryal):not(.wt-private-heading button):not(.wt-section-label button) {
   background:linear-gradient(180deg,color-mix(in srgb,var(--wt-wall) 80%,var(--wt-moon)) 0,var(--wt-wall) 45%,var(--wt-ink) 100%);
   border:1px solid color-mix(in srgb,var(--wt-gold-dark) 35%,var(--wt-line));
   box-shadow:inset 0 1px 0 color-mix(in srgb,var(--wt-white) 14%,transparent),inset 0 -2px 0 color-mix(in srgb,var(--wt-black) 35%,transparent),0 3px 8px var(--wt-shadow);
