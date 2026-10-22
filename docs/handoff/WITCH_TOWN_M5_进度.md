@@ -17,6 +17,15 @@ WT_ENABLE_DEV=1 WT_ALLOW_CANDIDATE_COUNTS=1 PORT=3420 npm run server
 WT_URL=http://127.0.0.1:3420 WT_PLAYERS=8 PW_CHROME=<chromium> npx tsx scripts/verify-witch-town-browsers.ts
 ```
 
+## 打磨（63c0732）
+- 出牌飞牌动画、指控数字跳动、手牌发入动画、主按钮轻震。
+- 揭审判牌全屏翻牌（女巫：紫烟+震动）；抽到黑牌全屏亮牌。
+- 座位按等弧长排布，放不下自动缩小：12人在375×667不再重叠。
+- 女巫/黎明共选加「采用最多票」按钮；嫁祸/抢劫在座位上标「被抢/转出/接收」。
+- 自白改为按住牌偷看、点一下选择；横幅不再积压过期提示。
+- 首页大厅加入女巫镇盒子（原创封面，8位房间号）。
+- 4/6/8/12人（含375×667小屏）整局通过；全仓781项测试通过。
+
 ## 下一步
 - 用户要求：上线前继续深度打磨界面、手感、反馈。
-- 上线时 render.yaml 需加 WT_ENABLE_DEV=1、WT_ALLOW_CANDIDATE_COUNTS=1，大厅加女巫镇入口，health fullGame=true。
+- 上线需用户明确同意：服务器默认开启女巫镇（目前仍需 WT_ENABLE_DEV=1）、health 改 M5/fullGame=true、合并 main、Render 手动部署。
