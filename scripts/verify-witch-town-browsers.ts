@@ -18,6 +18,7 @@ mkdirSync(SHOTS, { recursive: true });
 const rnd = <T,>(a: T[]) => a[Math.floor(Math.random() * a.length)];
 const errors: string[] = [];
 const shot = new Set<string>();
+const overflow: string[] = [];
 
 async function snapPhase(page: Page, i: number) {
   const key = await page.evaluate(() => {
@@ -25,6 +26,17 @@ async function snapPhase(page: Page, i: number) {
     const h = document.querySelector("[data-testid=wt-hint]")?.textContent ?? "";
     return `${w?.dataset.phase}|${h.replace(/[0-9０-９]+号\S*/g, "").slice(0, 14)}`;
   });
+  const bad = await page.evaluate(() => {
+    const boxes = ".wt-entry-card,.wt-personal,.wt-dock,.wt-modal,.wt-seat,.wt-top";
+    return [...document.querySelectorAll(".wt-world *")].filter(e => {
+      if ((e as HTMLElement).closest(".wt-fly,.wt-confetti,.wt-smoke-fx,.wt-phase-banner,.wt-fx-black,.wt-fx-reveal,.wt-table-wood")) return false;
+      const r = e.getBoundingClientRect(); if (!r.width || !r.height) return false;
+      if (r.right > innerWidth + 1 || r.left < -1 || r.bottom > innerHeight + 1) return true;
+      const box = e.parentElement?.closest(boxes) as HTMLElement | null; if (!box || getComputedStyle(box).overflow !== "visible") return false;
+      const b = box.getBoundingClientRect(); return r.right > b.right + 2 || r.left < b.left - 2 || r.bottom > b.bottom + 2;
+    }).map(e => `${(e as HTMLElement).className || e.tagName}`.slice(0, 50)).slice(0, 5);
+  });
+  if (bad.length) overflow.push(`${key}: ${bad.join(" | ")}`);
   if (shot.has(key) || shot.size > 60) return;
   shot.add(key);
   await page.screenshot({ path: `${SHOTS}/${String(shot.size).padStart(2, "0")}-p${i + 1}-${key.replace(/[^a-zA-Z0-9一-龥]+/g, "_")}.png` });
@@ -124,10 +136,10 @@ async function main() {
   await new Promise(r => setTimeout(r, 3500));
   for (let i = 0; i < N; i++) await pages[i].screenshot({ path: `${SHOTS}/99-result-p${i + 1}.png` });
   // privacy probe: no page's DOM shows another seat's hidden tryal kinds before the end is checked by protocol tests; here we only confirm the game finished.
-  const summary = { players: N, room, finished: phase === "over", actions: turns, ms: Date.now() - t0, reloaded, offlined, consoleErrors: errors.filter(e => !/WebSocket|ERR_INTERNET_DISCONNECTED|net::|AudioContext/.test(e)) };
+  const summary = { players: N, room, finished: phase === "over", actions: turns, ms: Date.now() - t0, reloaded, offlined, overflow: [...new Set(overflow)].slice(0, 30), consoleErrors: errors.filter(e => !/WebSocket|ERR_INTERNET_DISCONNECTED|net::|AudioContext/.test(e)) };
   writeFileSync(`${SHOTS}/summary.json`, JSON.stringify(summary, null, 2));
   console.log(JSON.stringify(summary));
   await browser.close();
-  if (!summary.finished || summary.consoleErrors.length) process.exit(1);
+  if (!summary.finished || summary.consoleErrors.length || summary.overflow.length) process.exit(1);
 }
 main().catch(e => { console.error(e); process.exit(1); });

@@ -183,3 +183,85 @@
   .wt-world.wt-live .wt-night-center { inset:30% 25%; }
   .wt-world.wt-live .wt-night-center h2,.wt-world.wt-live .wt-table-center h2 { font-size:18px; }
 }
+/* entrance: nothing may be wider than its card */
+.wt-world .wt-entry-card { width:min(100% - 32px,420px); box-sizing:border-box; }
+.wt-world .wt-entry-card > * { min-width:0; }
+.wt-world .wt-entry-card input { width:100%; box-sizing:border-box; }
+.wt-world .wt-seg { grid-template-columns:repeat(9,minmax(0,1fr)); }
+.wt-world .wt-seg button { min-width:0; padding:0; font-size:14px; }
+.wt-world .wt-entry-join { grid-template-columns:minmax(0,1fr) auto; }
+@media (max-width:420px) { .wt-world .wt-seg { grid-template-columns:repeat(5,minmax(0,1fr)); } }
+
+/* =================== premium material pass =================== */
+/* Buttons: forged look — bevel highlight on top edge, dark lip below, inset on press */
+.wt-world.wt-live :where(button):not(.wt-seat):not(.wt-card):not(.wt-tryal) {
+  background:linear-gradient(180deg,color-mix(in srgb,var(--wt-wall) 80%,var(--wt-moon)) 0,var(--wt-wall) 45%,var(--wt-ink) 100%);
+  border:1px solid color-mix(in srgb,var(--wt-gold-dark) 35%,var(--wt-line));
+  box-shadow:inset 0 1px 0 color-mix(in srgb,var(--wt-white) 14%,transparent),inset 0 -2px 0 color-mix(in srgb,var(--wt-black) 35%,transparent),0 3px 8px var(--wt-shadow);
+  letter-spacing:.5px;
+}
+.wt-world.wt-live :where(button):not(.wt-seat):not(.wt-card):not(.wt-tryal):active:not(:disabled) {
+  transform:translateY(1px) scale(.98); box-shadow:inset 0 2px 6px var(--wt-deep-shadow);
+}
+.wt-world.wt-live .wt-primary,.wt-world.wt-entrance .wt-primary {
+  position:relative; overflow:hidden;
+  background:linear-gradient(180deg,#f6e7c3 0,var(--wt-gold) 48%,var(--wt-gold-dark) 100%);
+  border:1px solid #f3d9a0; color:#2a2118; font-weight:700; letter-spacing:2px;
+  box-shadow:inset 0 1px 0 #fff8e6,inset 0 -3px 0 color-mix(in srgb,var(--wt-wood) 55%,transparent),0 0 0 1px color-mix(in srgb,var(--wt-black) 40%,transparent),0 6px 18px color-mix(in srgb,var(--wt-gold) 28%,transparent);
+  text-shadow:0 1px 0 color-mix(in srgb,var(--wt-white) 45%,transparent);
+}
+.wt-world.wt-live .wt-primary::after,.wt-world.wt-entrance .wt-primary::after { content:""; position:absolute; inset:0 auto 0 -60%; width:40%; background:linear-gradient(100deg,transparent,color-mix(in srgb,var(--wt-white) 45%,transparent),transparent); transform:skewX(-20deg); animation:wt-sheen 4.5s 1s ease-in-out infinite; pointer-events:none; }
+@keyframes wt-sheen { 0%,70% { left:-60%; } 100% { left:130%; } }
+.wt-world.wt-live .wt-primary:disabled,.wt-world.wt-entrance .wt-primary:disabled { background:linear-gradient(180deg,var(--wt-wall),var(--wt-ink)); color:var(--wt-disabled-text); border-color:var(--wt-line); text-shadow:none; box-shadow:inset 0 1px 0 color-mix(in srgb,var(--wt-white) 8%,transparent); }
+.wt-world.wt-live .wt-primary:disabled::after,.wt-world.wt-entrance .wt-primary:disabled::after { display:none; }
+.wt-world .wt-seg button[aria-pressed="true"] { background:linear-gradient(180deg,#f6e7c3,var(--wt-gold) 55%,var(--wt-gold-dark)); color:#2a2118; border-color:#f3d9a0; box-shadow:0 0 14px color-mix(in srgb,var(--wt-gold) 40%,transparent); }
+
+/* Panels: smoked glass with a gilt hairline and engraved corners */
+.wt-world.wt-live .wt-personal,.wt-world.wt-live .wt-dock,.wt-world .wt-entry-card {
+  background:linear-gradient(180deg,color-mix(in srgb,var(--wt-wall) 70%,transparent),color-mix(in srgb,var(--wt-night) 92%,transparent));
+  border:1px solid color-mix(in srgb,var(--wt-gold-dark) 45%,transparent);
+  box-shadow:inset 0 1px 0 color-mix(in srgb,var(--wt-gold) 22%,transparent),inset 0 0 0 1px color-mix(in srgb,var(--wt-black) 40%,transparent),0 18px 40px var(--wt-deep-shadow);
+}
+.wt-world.wt-live .wt-personal::before,.wt-world .wt-entry-card::before { content:""; position:absolute; inset:6px; border-radius:inherit; pointer-events:none;
+  background:
+    linear-gradient(var(--wt-gold-dark),var(--wt-gold-dark)) top left/14px 1px,linear-gradient(var(--wt-gold-dark),var(--wt-gold-dark)) top left/1px 14px,
+    linear-gradient(var(--wt-gold-dark),var(--wt-gold-dark)) top right/14px 1px,linear-gradient(var(--wt-gold-dark),var(--wt-gold-dark)) top right/1px 14px,
+    linear-gradient(var(--wt-gold-dark),var(--wt-gold-dark)) bottom left/14px 1px,linear-gradient(var(--wt-gold-dark),var(--wt-gold-dark)) bottom left/1px 14px,
+    linear-gradient(var(--wt-gold-dark),var(--wt-gold-dark)) bottom right/14px 1px,linear-gradient(var(--wt-gold-dark),var(--wt-gold-dark)) bottom right/1px 14px;
+  background-repeat:no-repeat; opacity:.7; }
+.wt-world .wt-entry-card { position:relative; }
+.wt-world.wt-live .wt-dock-active { border-color:color-mix(in srgb,var(--wt-gold) 70%,transparent); box-shadow:inset 0 1px 0 color-mix(in srgb,var(--wt-gold) 35%,transparent),0 0 0 1px color-mix(in srgb,var(--wt-gold) 25%,transparent),0 0 28px color-mix(in srgb,var(--wt-gold) 18%,transparent),0 18px 40px var(--wt-deep-shadow); }
+.wt-world.wt-live .wt-event-heading h2,.wt-world.wt-live .wt-entry-crest h1 { background:linear-gradient(180deg,#fff3d6,var(--wt-gold) 70%,var(--wt-gold-dark)); -webkit-background-clip:text; background-clip:text; color:transparent; }
+.wt-world.wt-live .wt-event-heading > span { letter-spacing:3px; color:var(--wt-gold-dark); font-size:12px; }
+.wt-world.wt-live .wt-event-heading > span::before,.wt-world.wt-live .wt-event-heading > span::after { content:"—"; margin:0 6px; opacity:.6; }
+
+/* Seats: wood grain + brass nameplate line */
+.wt-world.wt-live .wt-table-space .wt-seat {
+  background:
+    linear-gradient(var(--wt-light-angle),color-mix(in srgb,var(--wt-candle) 18%,transparent),transparent 55%),
+    repeating-linear-gradient(92deg,transparent 0 6px,color-mix(in srgb,var(--wt-wood-dark) 35%,transparent) 6px 7px,transparent 7px 13px),
+    linear-gradient(160deg,var(--wt-wood-light) -30%,var(--wt-wood) 30%,var(--wt-wood-dark));
+  border:1px solid color-mix(in srgb,var(--wt-gold-dark) 55%,var(--wt-wood-light));
+}
+.wt-world.wt-live .wt-seat-number { background:radial-gradient(circle at 35% 30%,#fff3d6,var(--wt-gold) 60%,var(--wt-gold-dark)); color:#2a2118; border:1px solid var(--wt-wood-dark); }
+
+/* Table: brass rim and a softer felt edge */
+.wt-world.wt-live .wt-table-wood { box-shadow:0 0 0 2px color-mix(in srgb,var(--wt-gold-dark) 70%,transparent),inset 0 0 0 1px color-mix(in srgb,var(--wt-gold) 40%,transparent),inset 0 -6px 5px var(--wt-shadow),0 9px 0 var(--wt-wood-dark),0 30px 60px var(--wt-deep-shadow); }
+
+/* Cards in hand: lift on hover/focus, gilt edge when selected */
+.wt-world.wt-live .wt-hand .wt-card[aria-pressed="true"] { transform:translateY(-12px); box-shadow:0 0 0 2px var(--wt-gold),0 14px 24px var(--wt-deep-shadow); }
+@media (hover:hover) { .wt-world.wt-live .wt-hand .wt-card:hover { transform:translateY(-8px) rotate(0); } }
+
+/* Toast and banners: gilt rules */
+.wt-world .wt-toast { border-color:var(--wt-gold-dark); background:linear-gradient(180deg,var(--wt-wall),var(--wt-night)); box-shadow:inset 0 1px 0 color-mix(in srgb,var(--wt-gold) 25%,transparent),var(--wt-shadow-float); animation:wt-toast-in .35s var(--wt-spring); }
+@keyframes wt-toast-in { from { transform:translate(-50%,12px); opacity:0; } }
+.wt-world .wt-phase-banner strong { border-image:linear-gradient(90deg,transparent,var(--wt-gold-dark),transparent) 1; letter-spacing:6px; }
+/* hand: a fan that always fits — cards overlap instead of scrolling off-screen */
+.wt-world.wt-live .wt-hand-fan { display:flex; overflow:visible; padding:14px 8px 8px; justify-content:center; }
+.wt-world.wt-live .wt-hand-fan > div { flex:0 1 calc((100% - 74px) / max(1, calc(var(--wt-n) - 1))); max-width:78px; min-width:0; overflow:visible; position:relative; }
+.wt-world.wt-live .wt-hand-fan > div:last-child { flex:0 0 74px; }
+.wt-world.wt-live .wt-hand-fan .wt-card { width:74px; height:102px; }
+.wt-world.wt-live .wt-hand-fan > div:has(.wt-card[aria-pressed="true"]) { z-index:5; }
+@media (max-height:700px) { .wt-world.wt-live .wt-hand-fan .wt-card { width:64px; height:88px; } .wt-world.wt-live .wt-hand-fan > div:last-child { flex-basis:64px; } .wt-world.wt-live .wt-hand-fan > div { flex-basis:calc((100% - 64px) / max(1, calc(var(--wt-n) - 1))); } }
+/* "me" badge sits inside the plaque */
+.wt-world.wt-live .wt-me-inside { position:absolute; top:4px; right:4px; bottom:auto; left:auto; transform:none; width:16px; height:16px; padding:0; display:grid; place-items:center; border-radius:50%; font-size:10px; line-height:16px; }
