@@ -7,6 +7,16 @@ import {
   type CharacterId,
   type CountsProfile,
 } from "./data.ts";
+import {
+  accusationValue,
+  publicPending,
+  privateChoice,
+  type WTPending,
+  type WTTask,
+  type WTLog,
+  type WTOutcome,
+} from "./day.ts";
+export { reduceWitchTown, accusationValue, trialThreshold } from "./day.ts";
 export * from "./data.ts";
 
 export type Random = () => number;
@@ -19,6 +29,7 @@ export interface Tryal {
 export interface PlayingCard {
   id: string;
   kind: CardKind;
+  asWitness?: true;
 }
 export interface WTPlayer {
   id: string;
@@ -38,15 +49,20 @@ export interface WTState {
   rulesProfile: string;
   countsProfile: CountsProfile;
   evidenceWarnings: string[];
-  phase: "dawn";
+  phase: "dawn" | "day" | "choice" | "trial" | "black-event" | "over";
   players: WTPlayer[];
   deck: PlayingCard[];
   discard: PlayingCard[];
-  dawnBlackCat: PlayingCard;
+  dawnBlackCat: PlayingCard | null;
   blackCatOwnerId: string | null;
   turnPlayerId: string | null;
   unusedCharacters: CharacterId[];
-  pending: { kind: "dawn-black-cat" };
+  pending: WTPending;
+  day: { played: number };
+  tasks: WTTask[];
+  dawnVotes: Record<string, string>;
+  log: WTLog[];
+  outcome: WTOutcome | null;
   frameCharacters: CharacterId[];
   gavelTargetId: string | null;
   timerDeadline: number | null;
@@ -200,10 +216,27 @@ export function createWitchTown(
     gavelTargetId: null,
     timerDeadline: null,
     pending: { kind: "dawn-black-cat" },
+    day: { played: 0 },
+    tasks: [],
+    dawnVotes: {},
+    log: [],
+    outcome: null,
+  };
+}
+/** Additive M1 save migration; no dealing or random regeneration on reconnect. */
+export function upgradeWitchTown(state: WTState): WTState {
+  return {
+    ...state,
+    day: state.day ?? { played: 0 },
+    tasks: state.tasks ?? [],
+    dawnVotes: state.dawnVotes ?? {},
+    log: state.log ?? [],
+    outcome: state.outcome ?? null,
   };
 }
 /** Explicit allow-list projection. Public hidden cards expose counts only. */
 export function viewForWitchTown(state: WTState, playerId: string | null) {
+  state = upgradeWitchTown(state);
   const me = state.players.find((p) => p.id === playerId);
   return structuredClone({
     game: state.game,
@@ -215,6 +248,10 @@ export function viewForWitchTown(state: WTState, playerId: string | null) {
     blackCatOwnerId: state.blackCatOwnerId,
     deckCount: state.deck.length,
     discard: state.discard,
+    pending: publicPending(state),
+    day: state.day,
+    log: state.log,
+    outcome: state.outcome,
     players: state.players.map((p) => ({
       id: p.id,
       name: p.name,
@@ -224,6 +261,7 @@ export function viewForWitchTown(state: WTState, playerId: string | null) {
       revealedTryals: p.tryals.filter((c) => c.revealed).map((c) => c.kind),
       handCount: p.hand.length,
       table: p.table,
+      accusations: accusationValue(state, p.id),
     })),
     private: me
       ? {
@@ -232,6 +270,15 @@ export function viewForWitchTown(state: WTState, playerId: string | null) {
           hand: me.hand,
           everWitch: me.everWitch,
           abilityUses: me.abilityUses,
+          choice: privateChoice(state, me.id),
+          ...(state.phase === "dawn" && me.everWitch
+            ? {
+                witchAllies: state.players
+                  .filter((p) => p.alive && p.everWitch)
+                  .map((p) => p.id),
+                dawnVotes: state.dawnVotes,
+              }
+            : {}),
         }
       : null,
   });

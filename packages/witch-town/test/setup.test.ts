@@ -33,11 +33,14 @@ describe("Salem standard M1 setup", () => {
       expect(c.nameZh).toBeTruthy();
       expect(c.timing).toBeTruthy();
       expect(c.abilityZh).toBeTruthy();
-      expect(c.implementation).toBe("metadata-only");
+      expect(c.implementation).toBeTruthy();
     }
   });
   it("models color independently of duration and never silently confirms candidate counts", () => {
     expect(CARDS).toHaveLength(15);
+    expect(CARDS.find((c) => c.key === "curse")!.effectZh).toContain(
+      "一张蓝牌",
+    );
     expect(CARDS.find((c) => c.key === "stocks")).toMatchObject({
       color: "green",
       lifecycle: "until-skipped-turn",
@@ -93,7 +96,7 @@ describe("Salem standard M1 setup", () => {
         const all = [
           ...s.deck,
           ...s.players.flatMap((p) => p.hand),
-          s.dawnBlackCat,
+          s.dawnBlackCat!,
         ];
         expect(all).toHaveLength(59);
         expect(new Set(all.map((c) => c.id)).size).toBe(59);
@@ -147,7 +150,7 @@ describe("Salem standard M1 setup", () => {
           const cards = [
             ...s.deck,
             ...s.players.flatMap((p) => p.hand),
-            s.dawnBlackCat,
+            s.dawnBlackCat!,
           ];
           expect(new Set(cards.map((c) => c.id)).size).toBe(59);
           for (const [kind, count] of Object.entries(CANDIDATE_COUNTS))

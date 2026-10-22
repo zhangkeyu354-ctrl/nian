@@ -21,6 +21,167 @@ afterEach(() => {
   for (const d of dirs.splice(0)) rmSync(d, { recursive: true, force: true });
 });
 describe("witch town server M1", () => {
+  it("migrates M1 snapshots without changing cards, credentials or public revision", () => {
+    const { store, dir } = setup();
+    const code = store.create(4),
+      seats = Array.from({ length: 4 }, (_, i) => store.claim(code, `P${i}`));
+    for (let i = 0; i < 4; i++)
+      store.action(code, seats[i].token, {
+        requestId: `r${i}`,
+        version: 4 + i,
+        action: { type: "READY", ready: true },
+      });
+    store.action(code, seats[0].token, {
+      requestId: "s",
+      version: 8,
+      action: { type: "START" },
+    });
+    const before = store.snapshot(code, seats[0].token),
+      file = join(dir, `${code}.json`),
+      old = JSON.parse(readFileSync(file, "utf8"));
+    for (const key of ["day", "tasks", "dawnVotes", "log", "outcome"])
+      delete old.state[key];
+    writeFileSync(file, JSON.stringify(old));
+    const recovered = new WTRoomStore(dir, { allowCandidateCounts: true });
+    expect(recovered.snapshot(code, seats[0].token)).toEqual(before);
+  });
+  it("persists mid-trial choice and black draw continuation across restart, retries never reveal twice", () => {
+    const { store, dir } = setup();
+    const code = store.create(4),
+      seats = Array.from({ length: 4 }, (_, i) => store.claim(code, `P${i}`));
+    for (let i = 0; i < 4; i++)
+      store.action(code, seats[i].token, {
+        requestId: `r${i}`,
+        version: 4 + i,
+        action: { type: "READY", ready: true },
+      });
+    store.action(code, seats[0].token, {
+      requestId: "start",
+      version: 8,
+      action: { type: "START" },
+    });
+    const file = join(dir, `${code}.json`),
+      r = JSON.parse(readFileSync(file, "utf8")),
+      state = r.state;
+    state.players.forEach((p: any, i: number) => {
+      p.everWitch = i === 0;
+      p.character = "william_phips";
+    });
+    function pull(kind: string) {
+      for (const z of [state.deck, ...state.players.map((p: any) => p.hand)]) {
+        const i = z.findIndex((c: any) => c.kind === kind);
+        if (i >= 0) return z.splice(i, 1)[0];
+      }
+      throw Error("fixture card missing");
+    }
+    for (let i = 0; i < 6; i++) state.players[1].table.push(pull("accusation"));
+    state.players[0].hand.push(pull("accusation"));
+    writeFileSync(file, JSON.stringify(r));
+    let recovered = new WTRoomStore(dir, { allowCandidateCounts: true });
+    recovered.action(code, seats[0].token, {
+      requestId: "dawn",
+      version: 9,
+      action: { type: "DAWN_TARGET", targetId: seats[0].playerId },
+    });
+    const card = recovered
+      .snapshot(code, seats[0].token)
+      .view!.private!.hand.find((c) => c.kind === "accusation")!;
+    const req = {
+      requestId: "play",
+      version: 10,
+      action: {
+        type: "PLAY",
+        cardId: card.id,
+        targetId: seats[1].playerId,
+      } as const,
+    };
+    recovered.action(code, seats[0].token, req);
+    const trial = recovered.snapshot(code, seats[0].token);
+    expect(trial.view?.pending?.kind).toBe("trial");
+    recovered = new WTRoomStore(dir, { allowCandidateCounts: true });
+    expect(recovered.snapshot(code, seats[0].token)).toEqual(trial);
+    recovered.action(code, seats[0].token, req);
+    expect(recovered.snapshot(code, seats[0].token)).toEqual(trial);
+    const index = recovered
+      .snapshot(code, seats[1].token)
+      .view!.private!.tryals.findIndex((t) => t.kind !== "witch");
+    const reveal = {
+      requestId: "reveal",
+      version: 11,
+      action: { type: "REVEAL_TRYAL", index } as const,
+    };
+    recovered.action(code, seats[0].token, reveal);
+    const after = recovered.snapshot(code, seats[0].token);
+    recovered.action(code, seats[0].token, reveal);
+    expect(recovered.snapshot(code, seats[0].token)).toEqual(after);
+    recovered.action(code, seats[0].token, {
+      requestId: "end",
+      version: 12,
+      action: { type: "END_TURN" },
+    });
+    const disk = JSON.parse(readFileSync(file, "utf8")),
+      night = disk.state.deck.findIndex((c: any) => c.kind === "night");
+    disk.state.deck.unshift(disk.state.deck.splice(night, 1)[0]);
+    writeFileSync(file, JSON.stringify(disk));
+    recovered = new WTRoomStore(dir, { allowCandidateCounts: true });
+    recovered.action(code, seats[1].token, {
+      requestId: "draw",
+      version: 13,
+      action: { type: "DRAW" },
+    });
+    const event = recovered.snapshot(code, seats[1].token);
+    expect(event.view?.phase).toBe("black-event");
+    const saved = JSON.parse(readFileSync(file, "utf8"));
+    expect(saved.state.tasks[0]).toMatchObject({ kind: "draw", remaining: 1 });
+    recovered = new WTRoomStore(dir, { allowCandidateCounts: true });
+    expect(recovered.snapshot(code, seats[1].token)).toEqual(event);
+    expect(() =>
+      recovered.action(code, seats[1].token, {
+        requestId: "skip",
+        version: 14,
+        action: { type: "END_TURN" },
+      }),
+    ).toThrow("BLACK_EVENT_PENDING");
+    expect(recovered.snapshot(code, seats[1].token)).toEqual(event);
+  });
+  it("does not expose the number of secret dawn submissions through public version", () => {
+    const { store, dir } = setup();
+    const code = store.create(6),
+      seats = Array.from({ length: 6 }, (_, i) => store.claim(code, `p${i}`));
+    for (let i = 0; i < 6; i++)
+      store.action(code, seats[i].token, {
+        requestId: `r${i}`,
+        version: 6 + i,
+        action: { type: "READY", ready: true },
+      });
+    store.action(code, seats[0].token, {
+      requestId: "start",
+      version: 12,
+      action: { type: "START" },
+    });
+    const file = join(dir, `${code}.json`),
+      r = JSON.parse(readFileSync(file, "utf8"));
+    r.state.players.forEach((p: any, i: number) => {
+      p.everWitch = i < 2;
+      p.character = "william_phips";
+    });
+    writeFileSync(file, JSON.stringify(r));
+    const recovered = new WTRoomStore(dir, { allowCandidateCounts: true });
+    const before = recovered.snapshot(code, null);
+    recovered.action(code, seats[0].token, {
+      requestId: "d0",
+      version: 13,
+      action: { type: "DAWN_TARGET", targetId: seats[0].playerId },
+    });
+    expect(recovered.snapshot(code, null)).toEqual(before);
+    recovered.action(code, seats[1].token, {
+      requestId: "d1",
+      version: 13,
+      action: { type: "DAWN_TARGET", targetId: seats[0].playerId },
+    });
+    expect(recovered.snapshot(code, null).version).toBe(14);
+    expect(recovered.snapshot(code, null).view?.phase).toBe("day");
+  });
   it("does not commit a mutation when the durable write fails", () => {
     const { store, dir } = setup();
     const code = store.create(4),
@@ -178,7 +339,7 @@ describe("witch town server M1", () => {
     expect(() => store.claim(code, "extra")).toThrow("ROOM_FULL");
     const req = { requestId: "x", version: 4, action: { type: "DRAW" } as any };
     expect(() => store.action(code, seats[0].token, req)).toThrow(
-      "M1_ACTION_NOT_IMPLEMENTED",
+      "NOT_STARTED",
     );
     for (let i = 0; i < 4; i++)
       store.action(code, seats[i].token, {
@@ -198,6 +359,6 @@ describe("witch town server M1", () => {
         version: 9,
         action: { type: "DRAW" } as any,
       }),
-    ).toThrow("M1_ACTION_NOT_IMPLEMENTED");
+    ).toThrow("WRONG_PHASE");
   });
 });

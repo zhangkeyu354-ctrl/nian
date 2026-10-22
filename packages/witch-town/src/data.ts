@@ -104,7 +104,7 @@ export const CHARACTERS = [
     spec: "WITCH_TOWN_CHARACTER_MATRIX.md",
     openIssues: [],
     abilityZh: "审判的最后指控由你打出时，可弃掉自己面前全部红色指控牌。",
-    implementation: "metadata-only",
+    implementation: "day-trigger",
   },
   {
     id: "H02",
@@ -118,7 +118,7 @@ export const CHARACTERS = [
     spec: "WITCH_TOWN_CHARACTER_MATRIX.md",
     openIssues: [],
     abilityZh: "审判你需要8点指控；法官对你需要7点。",
-    implementation: "metadata-only",
+    implementation: "day-passive",
   },
   {
     id: "H03",
@@ -132,7 +132,7 @@ export const CHARACTERS = [
     spec: "WITCH_TOWN_CHARACTER_MATRIX.md",
     openIssues: [],
     abilityZh: "对你使用的证据只值1点指控。",
-    implementation: "metadata-only",
+    implementation: "day-passive",
   },
   {
     id: "H04",
@@ -146,7 +146,7 @@ export const CHARACTERS = [
     spec: "WITCH_TOWN_CHARACTER_MATRIX.md",
     openIssues: ["X12"],
     abilityZh: "可将辩护作为7点指控的目击打出。",
-    implementation: "metadata-only",
+    implementation: "day-transform",
   },
   {
     id: "H05",
@@ -160,7 +160,7 @@ export const CHARACTERS = [
     spec: "WITCH_TOWN_CHARACTER_MATRIX.md",
     openIssues: ["X03", "X09", "X10"],
     abilityZh: "动态复制右手边第一位存活玩家的能力；次数继承等见待核项。",
-    implementation: "metadata-only",
+    implementation: "partial-copy",
   },
   {
     id: "H06",
@@ -174,7 +174,7 @@ export const CHARACTERS = [
     spec: "WITCH_TOWN_CHARACTER_MATRIX.md",
     openIssues: ["X09"],
     abilityZh: "其他玩家死亡时收取其手牌和蓝牌进入手牌；双重继承见X09。",
-    implementation: "metadata-only",
+    implementation: "check-required",
   },
   {
     id: "H07",
@@ -202,7 +202,7 @@ export const CHARACTERS = [
     spec: "WITCH_TOWN_CHARACTER_MATRIX.md",
     openIssues: [],
     abilityZh: "抢劫与纵火对你无效；可以成为抢劫的受益者。",
-    implementation: "metadata-only",
+    implementation: "day-immunity",
   },
   {
     id: "H09",
@@ -216,7 +216,7 @@ export const CHARACTERS = [
     spec: "WITCH_TOWN_CHARACTER_MATRIX.md",
     openIssues: ["X06"],
     abilityZh: "不受黑猫与情侣的不利效果；你的死亡仍可触发伴侣死亡。",
-    implementation: "metadata-only",
+    implementation: "partial-immunity",
   },
   {
     id: "H10",
@@ -230,7 +230,7 @@ export const CHARACTERS = [
     spec: "WITCH_TOWN_CHARACTER_MATRIX.md",
     openIssues: [],
     abilityZh: "自己回合抽到两张普通指控时展示并再抽一张。",
-    implementation: "metadata-only",
+    implementation: "day-trigger",
   },
   {
     id: "H11",
@@ -244,7 +244,7 @@ export const CHARACTERS = [
     spec: "WITCH_TOWN_CHARACTER_MATRIX.md",
     openIssues: ["X02"],
     abilityZh: "打出最后指控后、揭示身份前抽两张，可在该回合使用。",
-    implementation: "metadata-only",
+    implementation: "partial-trigger",
   },
   {
     id: "H12",
@@ -258,7 +258,7 @@ export const CHARACTERS = [
     spec: "WITCH_TOWN_CHARACTER_MATRIX.md",
     openIssues: ["X02"],
     abilityZh: "其他玩家身份揭示时可抽一张；死亡与自白展示不触发。",
-    implementation: "metadata-only",
+    implementation: "partial-trigger",
   },
   {
     id: "H13",
@@ -286,7 +286,7 @@ export const CHARACTERS = [
     spec: "WITCH_TOWN_CHARACTER_MATRIX.md",
     openIssues: [],
     abilityZh: "你打出达到6点的最后指控可审判；对大力士需7点。",
-    implementation: "metadata-only",
+    implementation: "day-passive",
   },
   {
     id: "H15",
@@ -320,7 +320,7 @@ export const CARDS = [
     openIssues: [],
     lifecycle: "discard-after-resolution",
     effectZh: "移除其他玩家面前合计至多3点的红牌；按整张牌移除。",
-    implementation: "metadata-only",
+    implementation: "partial-day-action",
     points: 0,
   },
   {
@@ -339,7 +339,7 @@ export const CARDS = [
     openIssues: ["X06"],
     lifecycle: "discard-after-resolution",
     effectZh: "将一位其他玩家面前所有红蓝绿牌转给另一位其他玩家。",
-    implementation: "metadata-only",
+    implementation: "partial-day-action",
     points: 0,
   },
   {
@@ -358,7 +358,7 @@ export const CARDS = [
     openIssues: [],
     lifecycle: "discard-after-resolution",
     effectZh: "将一位其他玩家全部手牌转给另一位其他玩家。",
-    implementation: "metadata-only",
+    implementation: "day-action",
     points: 0,
   },
   {
@@ -376,8 +376,8 @@ export const CARDS = [
     sources: ["STD:12", "STD:13"],
     openIssues: [],
     lifecycle: "discard-after-resolution",
-    effectZh: "弃掉其他玩家面前全部蓝牌。",
-    implementation: "metadata-only",
+    effectZh: "弃掉其他玩家面前选定的一张蓝牌。",
+    implementation: "partial-day-action",
     points: 0,
   },
   {
@@ -396,7 +396,7 @@ export const CARDS = [
     openIssues: ["X12"],
     lifecycle: "discard-after-resolution",
     effectZh: "弃掉其他玩家全部手牌。",
-    implementation: "metadata-only",
+    implementation: "provisional-day-action",
     points: 0,
   },
   {
@@ -415,7 +415,7 @@ export const CARDS = [
     openIssues: [],
     lifecycle: "until-skipped-turn",
     effectZh: "目标跳过下一回合后弃置；多张依次跳过。",
-    implementation: "metadata-only",
+    implementation: "day-persistent",
     points: 0,
   },
   {
@@ -434,7 +434,7 @@ export const CARDS = [
     openIssues: [],
     lifecycle: "persistent",
     effectZh: "免于夜晚直接袭击；不阻止情侣连锁。",
-    implementation: "metadata-only",
+    implementation: "persistent-only",
     points: 0,
   },
   {
@@ -453,7 +453,7 @@ export const CARDS = [
     openIssues: ["X07"],
     lifecycle: "persistent",
     effectZh: "审判所需指控点数加倍。",
-    implementation: "metadata-only",
+    implementation: "day-passive",
     points: 0,
   },
   {
@@ -472,7 +472,7 @@ export const CARDS = [
     openIssues: ["X06"],
     lifecycle: "persistent",
     effectZh: "两名持有者连锁死亡；同一人不能被放第二张。",
-    implementation: "metadata-only",
+    implementation: "partial-day-persistent",
     points: 0,
   },
   {
@@ -491,7 +491,7 @@ export const CARDS = [
     openIssues: [],
     lifecycle: "until-trial",
     effectZh: "增加1点指控。",
-    implementation: "metadata-only",
+    implementation: "day-action",
     points: 1,
   },
   {
@@ -510,7 +510,7 @@ export const CARDS = [
     openIssues: ["X01"],
     lifecycle: "until-trial",
     effectZh: "增加3点指控；部长只计1点。",
-    implementation: "metadata-only",
+    implementation: "day-action",
     points: 3,
   },
   {
@@ -529,7 +529,7 @@ export const CARDS = [
     openIssues: ["X12"],
     lifecycle: "until-trial",
     effectZh: "增加7点指控。",
-    implementation: "metadata-only",
+    implementation: "provisional-day-action",
     points: 7,
   },
   {
@@ -548,7 +548,7 @@ export const CARDS = [
     openIssues: ["X04", "X08"],
     lifecycle: "immediate-event",
     effectZh: "立即处理黑猫身份揭示，再同时从左侧取得一张隐藏身份。",
-    implementation: "metadata-only",
+    implementation: "interruption-only",
     points: 0,
   },
   {
@@ -567,7 +567,7 @@ export const CARDS = [
     openIssues: ["X05", "X08"],
     lifecycle: "immediate-event",
     effectZh: "立即进行女巫袭击、警长保护、自白及夜晚结算。",
-    implementation: "metadata-only",
+    implementation: "interruption-only",
     points: 0,
   },
   {
@@ -586,7 +586,7 @@ export const CARDS = [
     openIssues: [],
     lifecycle: "persistent",
     effectZh: "黎明女巫放置；阴谋时持有者一张身份被揭示。",
-    implementation: "metadata-only",
+    implementation: "partial-dawn-day",
     points: 0,
   },
 ] as const;

@@ -82,7 +82,7 @@ const http = createServer((req, res) => {
         dmRooms: dmStore.rooms.size,
         rrRooms: rrStore.rooms.size,
         ...(wtStore
-          ? { witchTown: { milestone: "M1_SETUP_ONLY", rooms: wtStore.size, fullGame: false } }
+          ? { witchTown: { milestone: "M2_DAY_ENGINE", rooms: wtStore.size, fullGame: false } }
           : {}),
       }),
     );
@@ -144,8 +144,8 @@ const http = createServer((req, res) => {
 });
 
 const io = new Server(http, { cors: { origin: true } });
-/** M1 local engineering entry; disabled by default until complete game acceptance. */
-const wtStore = process.env.WT_ENABLE_M1 === "1"
+/** Local engineering entry; disabled by default until complete game acceptance. */
+const wtStore = process.env.WT_ENABLE_DEV === "1" || process.env.WT_ENABLE_M1 === "1"
   ? attachWitchTown(
       io,
       resolve(process.env.WT_DATA_DIR ?? join(DATA, "../wt-rooms")),

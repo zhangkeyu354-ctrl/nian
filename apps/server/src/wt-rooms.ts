@@ -11,6 +11,8 @@ import type { Server, Socket } from "socket.io";
 import {
   createWitchTown,
   viewForWitchTown,
+  reduceWitchTown,
+  upgradeWitchTown,
   type WTState,
 } from "../../../packages/witch-town/src/index.ts";
 import {
@@ -72,6 +74,7 @@ export class WTRoomStore {
           !Number.isInteger(r.version)
         )
           fail("BAD_SAVE");
+        if (r.state) r.state = upgradeWitchTown(r.state);
         this.rooms.set(r.code, r);
       } catch {
         this.loadErrors.push(name);
@@ -188,8 +191,14 @@ export class WTRoomStore {
         },
         () => randomInt(0x100000000) / 0x100000000,
       );
-    } else fail("M1_ACTION_NOT_IMPLEMENTED");
-    r.version++;
+    } else {
+      if (!r.state) fail("NOT_STARTED");
+      r.state = reduceWitchTown(r.state, me.id, req.action);
+    }
+    // Secret dawn ballots merge serially but do not advance the public revision.
+    // Otherwise the revision gap itself reveals how many witch holders voted.
+    if (!(req.action.type === "DAWN_TARGET" && r.state?.phase === "dawn"))
+      r.version++;
     r.updatedAt = Date.now();
     r.receipts[key] = { signature, version: r.version };
     this.save(r);
@@ -213,7 +222,7 @@ export class WTRoomStore {
         connected: (this.connections.get(code)?.get(p.id) ?? 0) > 0,
       })),
       view: r.state ? viewForWitchTown(r.state, me?.id ?? null) : null,
-      milestone: "M1_SETUP_ONLY",
+      milestone: "M2_DAY_ENGINE",
     };
   }
   connected(code: string, id: string, delta: number) {
@@ -233,9 +242,12 @@ export function attachWitchTown(
     string,
     { code: string; token: string | null; playerId: string | null }
   >();
-  const broadcast = (code: string) => {
+  const broadcast = (code: string, witchesOnly = false) => {
     for (const [id, b] of bindings)
-      if (b.code === code)
+      if (
+        b.code === code &&
+        (!witchesOnly || store.snapshot(code, b.token).view?.private?.everWitch)
+      )
         io.sockets.sockets
           .get(id)
           ?.emit(WT_EVENTS.update, store.snapshot(code, b.token));
@@ -282,8 +294,11 @@ export function attachWitchTown(
       const b = bindings.get(socket.id);
       if (!b?.token) fail("BAD_CREDENTIAL");
       if (r.code !== b.code) fail("BAD_CREDENTIAL");
+      const before = JSON.stringify(store.snapshot(b.code, null));
       store.action(b.code, b.token, r.request);
-      broadcast(b.code);
+      const publicChanged =
+        before !== JSON.stringify(store.snapshot(b.code, null));
+      broadcast(b.code, !publicChanged);
       return store.snapshot(b.code, b.token);
     });
     socket.on("disconnect", detach);

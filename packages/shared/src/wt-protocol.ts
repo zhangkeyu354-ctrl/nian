@@ -1,4 +1,5 @@
 import type { WTView } from "../../witch-town/src/index.ts";
+import type { WTCommand } from "../../witch-town/src/day.ts";
 export const WT_EVENTS = {
   create: "wt:create",
   join: "wt:join",
@@ -11,7 +12,7 @@ export type WTLobbyAction =
 export interface WTActionRequest {
   requestId: string;
   version: number;
-  action: WTLobbyAction;
+  action: WTLobbyAction | WTCommand;
 }
 export interface WTRoomSnapshot {
   game: "witch-town";
@@ -28,5 +29,5 @@ export interface WTRoomSnapshot {
     connected: boolean;
   }[];
   view: WTView | null;
-  milestone: "M1_SETUP_ONLY";
+  milestone: "M2_DAY_ENGINE";
 }
