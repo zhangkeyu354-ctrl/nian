@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import type { Fx, LogEntry, Token } from "../../../../packages/magical-athlete/src/types.ts";
 import { RACER_BY_ID, type MAView } from "../../../../packages/magical-athlete/src/index.ts";
-import { sfxCheer, sfxFanfare, sfxFinish, sfxLand, sfxOops, sfxPower, sfxRoll, sfxStep } from "./sfx.ts";
+import { sfxCount, sfxCheer, sfxFanfare, sfxFinish, sfxLand, sfxOops, sfxPower, sfxRoll, sfxStep } from "./sfx.ts";
 
 /** 屏幕上正在播放的东西 */
 export type Show =
@@ -11,6 +11,7 @@ export type Show =
   | { kind: "finish"; racer: string; place: number; text: string }
   | { kind: "start"; race: number; track: string; text: string }
   | { kind: "note"; racer: string; text: string }
+  | { kind: "count"; n: number }
   | { kind: "podium"; race: number; places: Array<{ racer: string; owner: string; place: number; points: number }> }
   | { kind: "champion"; winners: string[]; totals: Array<{ player: string; total: number }> };
 
@@ -62,6 +63,8 @@ export function usePlayback(view: MAView) {
   const [shake, setShake] = useState(0);
   /** 正在发动技能的选手：棋盘上放大发光 */
   const [spot, setSpot] = useState<string | null>(null);
+  /** 正在走的选手要停的格子（棋盘上提前亮起来） */
+  const [target, setTarget] = useState<number | null>(null);
   const fxId = useRef(0);
   const [shown, setShown] = useState<Map<string, ShownToken> | null>(null);
   /** 动画里的当前位置；不播放时等于上一段动画结束时（= 当时服务器）的位置 */
@@ -160,6 +163,12 @@ export function usePlayback(view: MAView) {
           setShown(cur);
           setShow({ kind: "start", race: fx.race, track: fx.track, text: e.text });
           await wait(2200);
+          // 3、2、1、开跑！
+          for (const n of [3, 2, 1, 0]) {
+            setShow({ kind: "count", n });
+            play(() => sfxCount(n === 0));
+            await wait(n === 0 ? 700 : 600);
+          }
           break;
         }
         case "roll":
@@ -208,6 +217,7 @@ export function usePlayback(view: MAView) {
               await wait(700);
             }
           }
+          setTarget(fx.to);
           for (let p = fx.from + dir; dir > 0 ? p <= fx.to : p >= fx.to; p += dir) {
             for (const r of fx.racers) setPos(r, { pos: p });
             play(sfxStep);
@@ -215,6 +225,7 @@ export function usePlayback(view: MAView) {
           }
           setMoving([]);
           await wait(380);
+          setTarget(null);
           break;
         }
         case "warp":
@@ -301,6 +312,7 @@ export function usePlayback(view: MAView) {
     spot,
     hit,
     shake,
+    target,
     skip: () => {
       skip.current = true;
       [...wakers.current].forEach((f) => f());

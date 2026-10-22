@@ -202,3 +202,20 @@ export function sfxCheer(seconds = 2.5) {
     tone(1800 + Math.random() * 600, at, 0.45, "sine", 0.05, 2600 + Math.random() * 500);
   }
 }
+
+/** 倒计时「嘀」，最后一下「开跑」更高更长 */
+export function sfxCount(final = false) {
+  if (final) {
+    tone(880, 0, 0.5, "square", 0.12);
+    tone(1320, 0, 0.5, "triangle", 0.1);
+    vibrate([40, 30, 80]);
+  } else {
+    tone(587, 0, 0.16, "square", 0.1);
+    vibrate(20);
+  }
+}
+/** 按住掷骰按钮时骰子在手里晃：一下「咔啦」 */
+export function sfxShake() {
+  noise(0, 0.04, 0.16, 2600 + Math.random() * 1400, 3);
+  vibrate(6);
+}

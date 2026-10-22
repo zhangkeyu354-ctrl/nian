@@ -78,6 +78,7 @@ export function Track({
   link,
   spot,
   hit,
+  target,
 }: {
   race: RaceState;
   colorOf: (playerId: string) => string;
@@ -100,6 +101,8 @@ export function Track({
   spot?: string | null;
   /** 被技能命中的特效 */
   hit?: { id: number; racer: string; kind: string } | null;
+  /** 正在走的选手要停的格子 */
+  target?: number | null;
 }) {
   const race: RaceState = shown
     ? { ...raceIn, tokens: raceIn.tokens.map((t) => ({ ...t, ...(shown.get(t.racer) ?? {}) })) }
@@ -265,7 +268,7 @@ export function Track({
             return (
               <div
                 key={sp.index}
-                className={"ma-cell" + (active.has(sp.index) ? " occupied" : "")}
+                className={"ma-cell" + (active.has(sp.index) ? " occupied" : "") + (target === sp.index ? " target" : "")}
                 style={{
                   left: `${(col / GRID_COLS) * 100}%`,
                   top: `${(row / GRID_ROWS) * 100}%`,
@@ -320,6 +323,17 @@ export function Track({
           <source media="(max-width: 760px)" srcSet={`${ART}/${board.assets.mobile}`} />
           <img className="ma-board-img" src={`${ART}/${board.assets.webp}`} alt="" draggable={false} />
         </picture>
+      )}
+      {target !== null && target !== undefined && board.spaces[target] && (
+        <span
+          className="ma-target-ring"
+          style={{
+            left: `${board.spaces[target].x * 100}%`,
+            top: `${board.spaces[target].y * 100}%`,
+            width: `${board.spaces[target].width * 100}%`,
+            height: `${board.spaces[target].height * 100}%`,
+          }}
+        />
       )}
       {linkLayer}
       {pawns}

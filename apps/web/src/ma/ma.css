@@ -2451,3 +2451,193 @@
   padding-top: 0;
   padding-bottom: calc(24px + env(safe-area-inset-bottom));
 }
+
+/* ---------- 手感升级（用户 2026-10-22） ---------- */
+/* 按钮按下：涟漪 */
+.ma-app button,
+.ma-app .ma-go {
+  position: relative;
+  overflow: hidden;
+}
+.ma-ripple {
+  position: absolute;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.55);
+  transform: scale(0);
+  animation: ma-ripple 0.55s ease-out forwards;
+  pointer-events: none;
+}
+.ma-app .ma-go .ma-ripple,
+.ma-app .ma-cc .ma-ripple {
+  background: rgba(28, 35, 64, 0.18);
+}
+@keyframes ma-ripple {
+  to {
+    transform: scale(1);
+    opacity: 0;
+  }
+}
+/* 掷骰按钮：骰子图标 + 「按住摇一摇」；按住时骰子在手里晃 */
+.ma-app .ma-roll {
+  gap: 8px;
+  flex-wrap: wrap;
+}
+.ma-roll small {
+  width: 100%;
+  font-size: 11px;
+  font-weight: 700;
+  opacity: 0.6;
+  line-height: 1;
+  margin-top: -2px;
+}
+.ma-cc .ma-roll small {
+  display: none;
+}
+.ma-roll-die {
+  display: inline-block;
+  font-size: 1.25em;
+  transition: transform 0.2s;
+}
+.ma-roll.holding .ma-roll-die {
+  animation: ma-hand-shake 0.11s linear infinite;
+}
+.ma-app .ma-roll.holding {
+  transform: translateY(3px) scale(0.97);
+  box-shadow: 0 0 0 var(--ink), 0 0 0 4px rgba(255, 255, 255, 0.9), 0 0 22px 8px rgba(255, 205, 46, 0.9);
+}
+@keyframes ma-hand-shake {
+  25% {
+    transform: rotate(-25deg) translate(-3px, -2px);
+  }
+  75% {
+    transform: rotate(25deg) translate(3px, 1px);
+  }
+}
+/* 开跑倒计时 */
+.ma-overlay.ov-count {
+  background: rgba(16, 22, 44, 0.5);
+}
+.ma-overlay.ov-count .ma-ov-skip {
+  display: none;
+}
+.ma-ov-count {
+  font-size: clamp(110px, 38vw, 200px);
+  font-weight: 900;
+  line-height: 1;
+  color: var(--sun);
+  -webkit-text-stroke: 5px var(--ink);
+  text-shadow: 0 10px 0 var(--ink);
+  animation: ma-count 0.6s cubic-bezier(0.2, 1.6, 0.4, 1);
+}
+.ma-ov-count.go {
+  font-size: clamp(64px, 22vw, 130px);
+  color: #fff;
+  background: var(--tartan);
+  border: 5px solid var(--ink);
+  border-radius: 24px;
+  padding: 6px 26px;
+  -webkit-text-stroke: 0;
+  text-shadow: none;
+  box-shadow: 0 10px 0 var(--ink);
+}
+@keyframes ma-count {
+  0% {
+    transform: scale(2.4);
+    opacity: 0;
+  }
+  60% {
+    transform: scale(0.92);
+    opacity: 1;
+  }
+}
+/* 比分变化：跳一下，旁边弹出 +N */
+.ma-scores li {
+  position: relative;
+}
+.ma-total.bump {
+  display: inline-block;
+  animation: ma-bump 0.6s cubic-bezier(0.2, 1.8, 0.4, 1);
+  color: var(--tartan);
+}
+@keyframes ma-bump {
+  0% {
+    transform: scale(1);
+  }
+  40% {
+    transform: scale(1.8);
+  }
+}
+.ma-score-pop {
+  position: absolute;
+  right: 4px;
+  top: -10px;
+  font-style: normal;
+  font-weight: 900;
+  font-size: 15px;
+  color: #fff;
+  background: #1fa37a;
+  border: 2px solid var(--ink);
+  border-radius: 99px;
+  padding: 0 7px;
+  animation: ma-float-up 1.6s ease-out forwards;
+  pointer-events: none;
+}
+/* 要停的格子提前亮起 */
+.ma-cell.target .ma-cell-art {
+  border-color: #fff;
+  animation: ma-target 0.6s ease-in-out infinite;
+}
+@keyframes ma-target {
+  50% {
+    box-shadow:
+      0 0 0 4px #fff,
+      0 0 18px 6px var(--sun);
+  }
+}
+.ma-target-ring {
+  position: absolute;
+  transform: translate(-50%, -50%);
+  border-radius: 10px;
+  border: 4px solid #fff;
+  box-shadow: 0 0 18px 6px var(--sun);
+  animation: ma-target-ring 0.6s ease-in-out infinite;
+  pointer-events: none;
+  z-index: 5;
+}
+@keyframes ma-target-ring {
+  50% {
+    opacity: 0.4;
+  }
+}
+/* 换阶段（选秀 → 选人 → 比赛 → 结束）时内容淡入，不是「啪」地切换 */
+.ma-stage,
+.ma-race,
+.ma-final {
+  animation: ma-phase-in 0.4s ease-out;
+}
+@keyframes ma-phase-in {
+  from {
+    opacity: 0;
+    transform: translateY(14px);
+  }
+}
+/* 选手卡：按下时压一下 */
+.ma-card {
+  transition: transform 0.12s;
+}
+.ma-card:active {
+  transform: scale(0.97);
+}
+@media (prefers-reduced-motion: reduce) {
+  .ma-ripple,
+  .ma-roll.holding .ma-roll-die,
+  .ma-ov-count,
+  .ma-total.bump,
+  .ma-cell.target .ma-cell-art,
+  .ma-target-ring,
+  .ma-stage,
+  .ma-race,
+  .ma-final {
+    animation: none !important;
+  }
+}

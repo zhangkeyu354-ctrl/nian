@@ -10,7 +10,7 @@ import {
 import type { MARoomSnapshot } from "../../../../packages/shared/src/ma-protocol.ts";
 import { createMARoom, savedName, useMARoom } from "./ma-net.ts";
 import { ART, PLAYER_COLORS, Track, useVerticalBoard } from "./Track.tsx";
-import { installAudioUnlock, onMutedChange, setSfxMuted, sfxMuted, sfxTap, sfxYourTurn, vibrate } from "./sfx.ts";
+import { installAudioUnlock, onMutedChange, setSfxMuted, sfxMuted, sfxShake, sfxTap, sfxYourTurn, vibrate } from "./sfx.ts";
 import { usePlayback, type Show } from "./playback.ts";
 import "./ma.css";
 
@@ -419,7 +419,19 @@ function Game({ snap, view, send, connected }: { snap: MARoomSnapshot; view: MAV
   const onPress = (e: React.PointerEvent) => {
     const b = (e.target as Element).closest<HTMLElement>("button, a.ma-go, [role=button]");
     lastBtn.current = b;
-    if (b && !(b as HTMLButtonElement).disabled) sfxTap();
+    if (b && !(b as HTMLButtonElement).disabled) {
+      sfxTap();
+      // 按下的位置泛起一圈涟漪
+      const r = b.getBoundingClientRect();
+      const s = document.createElement("span");
+      s.className = "ma-ripple";
+      const size = Math.max(r.width, r.height) * 2;
+      s.style.width = s.style.height = `${size}px`;
+      s.style.left = `${e.clientX - r.left - size / 2}px`;
+      s.style.top = `${e.clientY - r.top - size / 2}px`;
+      b.appendChild(s);
+      setTimeout(() => s.remove(), 600);
+    }
   };
   useEffect(() => setError(""), [snap.version]);
   const pb = usePlayback(view);
@@ -487,9 +499,10 @@ function Game({ snap, view, send, connected }: { snap: MARoomSnapshot; view: MAV
 /** 决定选项按钮：选项是一名选手时（神秘蛋三选一、军师预测等），直接显示它的头像和技能介绍 */
 function OptionButton({ o, onPick }: { o: { value: string; label: string }; onPick: () => void }) {
   const r = RACER_BY_ID.get(o.value);
+  if (o.value === "roll") return <RollButton label={o.label} onRoll={onPick} />;
   if (!r)
     return (
-      <button className={o.value === "roll" ? "ma-go" : ""} onClick={onPick}>
+      <button className="" onClick={onPick}>
         {o.label}
       </button>
     );
@@ -505,6 +518,36 @@ function OptionButton({ o, onPick }: { o: { value: string; label: string }; onPi
   );
 }
 
+/** 掷骰按钮：按住时骰子在手里晃（声音 + 震动），松手就掷；轻点也能直接掷 */
+function RollButton({ label, onRoll }: { label: string; onRoll: () => void }) {
+  const [hold, setHold] = useState(false);
+  const timer = useRef<ReturnType<typeof setInterval> | null>(null);
+  const stop = () => {
+    if (timer.current) clearInterval(timer.current);
+    timer.current = null;
+    setHold(false);
+  };
+  useEffect(() => stop, []);
+  return (
+    <button
+      className={"ma-go ma-roll" + (hold ? " holding" : "")}
+      onPointerDown={() => {
+        setHold(true);
+        sfxShake();
+        timer.current = setInterval(sfxShake, 110);
+      }}
+      onPointerUp={stop}
+      onPointerLeave={stop}
+      onPointerCancel={stop}
+      onClick={onRoll}
+    >
+      <span className="ma-roll-die" aria-hidden="true">🎲</span>
+      {label.replace("🎲", "").trim() || "掷骰"}
+      <small>{hold ? "松手掷出！" : "按住摇一摇"}</small>
+    </button>
+  );
+}
+
 function SoundToggle() {
   const [m, setM] = useState(sfxMuted);
   useEffect(() => onMutedChange(setM), []);
@@ -516,6 +559,27 @@ function SoundToggle() {
 }
 
 function Scores({ view, me, colorOf, compact }: { view: MAView; me: string | null; colorOf: (id: string) => string; compact?: boolean }) {
+  // 得分变化时：分数跳一下，旁边弹出「+N」
+  const prev = useRef<Map<string, number> | null>(null);
+  const [bump, setBump] = useState<Map<string, { id: number; d: number }>>(new Map());
+  const totals = view.players.map((p) => [p.id, total(p.chips)] as const);
+  const key = totals.map(([, v]) => v).join(",");
+  useEffect(() => {
+    const now = new Map(totals);
+    if (prev.current) {
+      const next = new Map<string, { id: number; d: number }>();
+      for (const [id, v] of now) {
+        const d = v - (prev.current.get(id) ?? v);
+        if (d) next.set(id, { id: Date.now() + Math.random(), d });
+      }
+      if (next.size) {
+        setBump(next);
+        setTimeout(() => setBump(new Map()), 1600);
+      }
+    }
+    prev.current = now;
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [key]);
   return (
     <ul className={"ma-scores" + (compact ? " compact" : "")}>
       {view.players.map((p) => {
@@ -524,7 +588,15 @@ function Scores({ view, me, colorOf, compact }: { view: MAView; me: string | nul
           <li key={p.id} className={p.id === me ? "me" : ""} style={{ borderColor: colorOf(p.id) }}>
             <span className="ma-dot" style={{ background: colorOf(p.id) }} />
             <span className="ma-pname">{p.name}</span>
-            <b className="ma-total">{total(p.chips)}</b>
+            <b key={bump.get(p.id)?.id ?? "t"} className={"ma-total" + (bump.has(p.id) ? " bump" : "")}>
+              {total(p.chips)}
+            </b>
+            {bump.has(p.id) && (
+              <em className="ma-score-pop">
+                {bump.get(p.id)!.d > 0 ? "+" : ""}
+                {bump.get(p.id)!.d}
+              </em>
+            )}
             <small>
               {runners.length ? runners.map((r) => racerName(r.racer)).join("、") : view.phase === "choose" ? (p.choices.length ? "已选好" : "选择中") : `${p.hand.length} 名选手`}
             </small>
@@ -774,6 +846,7 @@ function Race({
           link={pb.link}
           spot={pb.spot}
           hit={pb.hit}
+          target={pb.target}
         />
       </div>
       {showBar && p && (
@@ -1032,6 +1105,12 @@ function Overlay({
             </li>
           ))}
         </ol>
+      </div>
+    );
+  } else if (show.kind === "count") {
+    body = (
+      <div key={show.n} className={"ma-ov-count" + (show.n === 0 ? " go" : "")}>
+        {show.n === 0 ? "开跑！" : show.n}
       </div>
     );
   } else if (show.kind === "start") {
