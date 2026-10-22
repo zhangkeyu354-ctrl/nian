@@ -2161,7 +2161,7 @@
   pointer-events: none;
 }
 .ma-pawn.walking::after {
-  animation: ma-shadow 0.34s ease-in-out infinite;
+  animation: ma-shadow 0.48s ease-in-out infinite;
 }
 @keyframes ma-shadow {
   50% {
@@ -2188,7 +2188,7 @@
 /* 走路：起跳前压扁、空中拉长、落地再压扁，身体略往前倾 */
 .ma-pawn.walking > img:not(.ma-pawn-trip) {
   transform-origin: 50% 100%;
-  animation: ma-hop25 0.34s ease-in-out infinite;
+  animation: ma-hop25 0.48s ease-in-out infinite;
 }
 @keyframes ma-hop25 {
   0% {
@@ -2230,4 +2230,224 @@
 }
 .ma-pawn.spot .ma-pawn-base {
   box-shadow: 0 0 0 4px #b77cff, 0 0 18px 6px #8a4fd6;
+}
+
+/* ---------- 技能触发：屏幕中央大卡片（用户 2026-10-22：先大屏显示谁触发，再慢慢播放效果） ---------- */
+.ma-overlay.ov-power {
+  background: rgba(16, 22, 44, 0.62);
+  place-items: center;
+  padding-top: 16px;
+  pointer-events: auto;
+}
+.ma-overlay.ov-power .ma-ov-skip {
+  display: block;
+}
+.ma-ov-skill {
+  width: min(88vw, 400px);
+  text-align: center;
+  background: var(--chalk);
+  color: var(--ink);
+  border: 4px solid var(--ink);
+  border-top: 14px solid var(--pc);
+  border-radius: 20px;
+  padding: 14px 16px 16px;
+  box-shadow: 0 8px 0 var(--ink), 0 0 40px rgba(138, 79, 214, 0.6);
+  animation: ma-skill-in 0.5s cubic-bezier(0.2, 1.6, 0.4, 1);
+}
+@keyframes ma-skill-in {
+  0% {
+    transform: scale(0.3) rotate(-8deg);
+    opacity: 0;
+  }
+  60% {
+    transform: scale(1.08) rotate(2deg);
+    opacity: 1;
+  }
+}
+.ma-skill-who {
+  margin: 0 0 10px;
+  font-size: clamp(20px, 6vw, 26px);
+  font-weight: 900;
+  color: var(--pc);
+  text-shadow: 0 2px 0 rgba(0, 0, 0, 0.15);
+}
+.ma-ov-skill img {
+  width: 128px;
+  height: 98px;
+  object-fit: cover;
+  border-radius: 14px;
+  border: 3px solid var(--ink);
+  box-shadow: 0 4px 0 var(--ink);
+  animation: ma-skill-pic 1.2s ease-in-out infinite;
+}
+@keyframes ma-skill-pic {
+  50% {
+    transform: scale(1.06) rotate(-2deg);
+  }
+}
+.ma-skill-name {
+  display: block;
+  margin-top: 10px;
+  font-size: clamp(20px, 6vw, 26px);
+  font-weight: 900;
+  color: var(--tartan);
+}
+.ma-skill-text {
+  margin: 6px 0 0;
+  font-size: 15px;
+  font-weight: 700;
+}
+/* 自己的技能：金色、更醒目 */
+.ma-ov-skill.mine {
+  background: linear-gradient(#fff6c9, var(--sun));
+  box-shadow: 0 8px 0 var(--ink), 0 0 50px 10px rgba(255, 205, 46, 0.85);
+}
+.ma-ov-skill.mine .ma-skill-who {
+  color: var(--ink);
+  font-size: clamp(24px, 7.5vw, 32px);
+}
+
+/* ---------- 命中特效 ---------- */
+/* 摔倒：先被绊一下弹起，再重重摔在地上，头上冒星星 */
+.ma-pawn.fx-trip > img:not(.ma-pawn-trip) {
+  animation: ma-fall 1s cubic-bezier(0.3, 1.4, 0.5, 1) forwards !important;
+}
+@keyframes ma-fall {
+  0% {
+    transform: rotate(0) translateY(0);
+  }
+  25% {
+    transform: rotate(-20deg) translateY(-30%);
+  }
+  65% {
+    transform: rotate(95deg) translate(28%, 12%);
+  }
+  80% {
+    transform: rotate(75deg) translate(28%, 4%);
+  }
+  100% {
+    transform: rotate(80deg) translate(28%, 10%);
+  }
+}
+.ma-dizzy {
+  position: absolute;
+  left: 50%;
+  top: 6%;
+  font-size: 26px;
+  transform: translateX(-50%);
+  animation: ma-dizzy 0.7s linear infinite;
+  pointer-events: none;
+  z-index: 4;
+}
+@keyframes ma-dizzy {
+  from {
+    transform: translateX(-50%) rotate(0);
+  }
+  to {
+    transform: translateX(-50%) rotate(360deg);
+  }
+}
+/* 被击退：往后仰、发红光，脚下炸开一圈 */
+.ma-pawn.fx-knock > img:not(.ma-pawn-trip) {
+  animation: ma-knock 0.7s ease-out !important;
+  filter: drop-shadow(0 0 8px #ff3b3b) drop-shadow(0 0 2px #000);
+}
+@keyframes ma-knock {
+  0% {
+    transform: translateX(0) rotate(0) scale(1);
+  }
+  20% {
+    transform: translateX(-18%) rotate(-22deg) scale(1.15);
+  }
+  45% {
+    transform: translateX(12%) rotate(14deg);
+  }
+  70% {
+    transform: translateX(-6%) rotate(-6deg);
+  }
+  100% {
+    transform: none;
+  }
+}
+.ma-impact {
+  position: absolute;
+  left: 50%;
+  bottom: 0;
+  width: 200%;
+  aspect-ratio: 1;
+  border-radius: 50%;
+  transform: translate(-50%, 40%) scale(0.2);
+  border: 4px solid #ff3b3b;
+  box-shadow: 0 0 16px 4px #ff9d00;
+  animation: ma-impact 0.6s ease-out forwards;
+  pointer-events: none;
+}
+@keyframes ma-impact {
+  to {
+    transform: translate(-50%, 40%) scale(1.4);
+    opacity: 0;
+  }
+}
+/* 淘汰：被打飞出棋盘 */
+.ma-pawn.fx-out > img:not(.ma-pawn-trip) {
+  animation: ma-fly-out 1s ease-in forwards !important;
+}
+@keyframes ma-fly-out {
+  0% {
+    transform: none;
+  }
+  20% {
+    transform: translateY(8%) scale(1.1, 0.85);
+  }
+  100% {
+    transform: translate(160%, -260%) rotate(540deg) scale(0.3);
+    opacity: 0;
+  }
+}
+/* 棋盘震一下 */
+.ma-board.shake .ma-board-scroll {
+  animation: ma-shake-board 0.45s ease-in-out;
+}
+@keyframes ma-shake-board {
+  15% {
+    transform: translate(-6px, 2px);
+  }
+  35% {
+    transform: translate(6px, -2px);
+  }
+  55% {
+    transform: translate(-4px, 1px);
+  }
+  75% {
+    transform: translate(3px, 0);
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .ma-ov-skill,
+  .ma-ov-skill img,
+  .ma-dizzy,
+  .ma-impact,
+  .ma-board.shake .ma-board-scroll,
+  .ma-pawn.fx-trip > img,
+  .ma-pawn.fx-knock > img,
+  .ma-pawn.fx-out > img {
+    animation: none !important;
+  }
+}
+
+/* 用户 2026-10-22：每一步都慢慢走（每格约 0.48 秒），小人滑到下一格也放慢 */
+.ma-pawn {
+  transition:
+    left 0.4s ease-in-out,
+    top 0.4s ease-in-out;
+}
+/* 棋盘自成一层：小人再怎么发光放大也不会盖过技能大卡片、提示框 */
+.ma-board-scroll {
+  isolation: isolate;
+}
+/* 摔倒 / 淘汰的文字提示放到屏幕下方，不挡住正在摔倒的小人 */
+.ma-overlay.ov-note {
+  place-items: end center;
+  padding-top: 0;
+  padding-bottom: calc(24px + env(safe-area-inset-bottom));
 }

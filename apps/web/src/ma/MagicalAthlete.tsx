@@ -740,7 +740,7 @@ function Race({
           </div>
         </Fold>
       )}
-      <div className={"ma-board" + (useGrid ? " grid-mode" : "")}>
+      <div className={"ma-board" + (useGrid ? " grid-mode" : "") + (pb.shake ? " shake" : "")}>
         <div className="ma-board-head">
           <b>第 {race.index + 1} 场 · {track.zh}</b>
           {portrait ? (
@@ -773,6 +773,7 @@ function Race({
           floats={pb.floats}
           link={pb.link}
           spot={pb.spot}
+          hit={pb.hit}
         />
       </div>
       {showBar && p && (
@@ -952,14 +953,15 @@ function Overlay({
   } else if (show.kind === "power") {
     const r = RACER_BY_ID.get(show.power);
     const pid = owner(show.racer);
+    const mine = pid === me;
     body = (
-      <div className="ma-ov-power" style={{ ["--pc" as string]: colorOf(pid) }}>
+      <div className={"ma-ov-skill" + (mine ? " mine" : "")} style={{ ["--pc" as string]: colorOf(pid) }}>
+        <p className="ma-skill-who">{mine ? "✨ 你的技能触发了！" : `✨ ${name(pid)} 的技能触发了！`}</p>
         <img src={`${ART}/portraits/${show.racer}.webp`} alt="" />
-        <div>
-          <small>{name(pid)} 的 {racerName(show.racer)} 发动技能</small>
-          <b>【{r?.powerZh ?? show.power}】</b>
-          <p>{show.text.replace(/^[^】]*】：?/, "")}</p>
-        </div>
+        <b className="ma-skill-name">
+          {racerName(show.racer)}【{r?.powerZh ?? show.power}】
+        </b>
+        <p className="ma-skill-text">{show.text.replace(/^[^】]*】：?/, "")}</p>
       </div>
     );
   } else if (show.kind === "finish") {

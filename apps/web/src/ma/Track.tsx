@@ -77,6 +77,7 @@ export function Track({
   floats,
   link,
   spot,
+  hit,
 }: {
   race: RaceState;
   colorOf: (playerId: string) => string;
@@ -97,6 +98,8 @@ export function Track({
   link?: { id: number; from: string; to: string } | null;
   /** 正在发动技能的选手 */
   spot?: string | null;
+  /** 被技能命中的特效 */
+  hit?: { id: number; racer: string; kind: string } | null;
 }) {
   const race: RaceState = shown
     ? { ...raceIn, tokens: raceIn.tokens.map((t) => ({ ...t, ...(shown.get(t.racer) ?? {}) })) }
@@ -188,6 +191,7 @@ export function Track({
             (moving.includes(rid) ? " walking" : "") +
             (fl ? " has-float" : "") +
             (spot === rid ? " spot" : "") +
+            (hit?.racer === rid ? " fx-" + hit.kind : "") +
             (link && (link.from === rid || link.to === rid) ? (link.from === rid ? " link-from" : " link-to") : "")
           }
           role={onPawn ? "button" : undefined}
@@ -206,6 +210,12 @@ export function Track({
           <span className="ma-pawn-base" />
           <img src={`${ART}/tokens/${rid}.png`} alt={racerName(rid)} draggable={false} />
           {t.tripped && <img className="ma-pawn-trip" src={`${ART}/icons/trip.svg`} alt="摔倒" />}
+          {hit?.racer === rid && hit.kind === "trip" && (
+            <span key={"s" + hit.id} className="ma-dizzy" aria-hidden="true">
+              💫
+            </span>
+          )}
+          {hit?.racer === rid && hit.kind === "knock" && <span key={"k" + hit.id} className="ma-impact" aria-hidden="true" />}
           {fl && (
             <span key={fl.id} className={"ma-float " + fl.tone}>
               {fl.text}

@@ -56,6 +56,10 @@ export function usePlayback(view: MAView) {
   const [moving, setMoving] = useState<string[]>([]);
   const [floats, setFloats] = useState<Map<string, Float>>(new Map());
   const [link, setLink] = useState<Link | null>(null);
+  /** 被技能命中的特效（摔倒 / 被击退 / 淘汰飞出） */
+  const [hit, setHit] = useState<{ id: number; racer: string; kind: "trip" | "knock" | "out" } | null>(null);
+  /** 棋盘震动：非 0 时震一下（约半秒后归零） */
+  const [shake, setShake] = useState(0);
   /** 正在发动技能的选手：棋盘上放大发光 */
   const [spot, setSpot] = useState<string | null>(null);
   const fxId = useRef(0);
@@ -106,6 +110,15 @@ export function usePlayback(view: MAView) {
       setTimeout(() => setLink((x) => (x?.id === l.id ? null : x)), 2800);
     };
     const signed = (n: number) => (n >= 0 ? `+${n}` : `${n}`);
+    const hitFx = (racer: string, kind: "trip" | "knock" | "out", big = false) => {
+      const h = { id: ++fxId.current, racer, kind };
+      setHit(h);
+      if (big) {
+        setShake(h.id);
+        setTimeout(() => setShake((x) => (x === h.id ? 0 : x)), 480);
+      }
+      setTimeout(() => setHit((x) => (x?.id === h.id ? null : x)), 1300);
+    };
     while (queue.current.length) {
       const e = queue.current.shift()!;
       const fx = e.fx;
@@ -188,11 +201,17 @@ export function usePlayback(view: MAView) {
               float(r, label, tone);
               linkTo(r);
             }
+            // 被技能往后打退：先播「被击退」特效再往回走
+            if (fx.to < fx.from && why !== "主移动") {
+              for (const r of fx.racers) hitFx(r, "knock", true);
+              play(sfxOops);
+              await wait(700);
+            }
           }
           for (let p = fx.from + dir; dir > 0 ? p <= fx.to : p >= fx.to; p += dir) {
             for (const r of fx.racers) setPos(r, { pos: p });
             play(sfxStep);
-            await wait(340);
+            await wait(480);
           }
           setMoving([]);
           await wait(380);
@@ -208,6 +227,7 @@ export function usePlayback(view: MAView) {
           setMoving([]);
           break;
         case "trip":
+          hitFx(fx.racer, "trip", true);
           setPos(fx.racer, { tripped: true });
           float(fx.racer, "摔倒！", "bad");
           linkTo(fx.racer);
@@ -218,6 +238,10 @@ export function usePlayback(view: MAView) {
         case "out":
           float(fx.racer, "淘汰！", "bad");
           linkTo(fx.racer);
+          // 先播飞出棋盘的动画，再把它从棋盘上拿掉
+          hitFx(fx.racer, "out", true);
+          play(sfxOops);
+          await wait(1000);
           setPos(fx.racer, { out: true });
           setShow({ kind: "note", racer: fx.racer, text: "被淘汰出本场比赛！" });
           play(sfxOops);
@@ -275,6 +299,8 @@ export function usePlayback(view: MAView) {
     floats,
     link,
     spot,
+    hit,
+    shake,
     skip: () => {
       skip.current = true;
       [...wakers.current].forEach((f) => f());
