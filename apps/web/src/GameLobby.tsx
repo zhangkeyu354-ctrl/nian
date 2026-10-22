@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import "./game-lobby.css";
 import { ObjectArt } from "./rr/Objects.tsx";
+import { FakeArtistCover, TelephoneCover } from "./drawing/Covers.tsx";
 
 /** 首页：选游戏。每款游戏一个「盒盖」，保持各自的风格 */
 export function GameLobby() {
@@ -17,8 +18,8 @@ export function GameLobby() {
         </p>
       </header>
       <div className="hall-boxes">
-        <GameBox id="tp" title="传情画意" sub="绘画派对 · 画猜传话" meta="3–8人 · 同时画画" blurb="一句话变成一幅画，再变成一句话。最后一起翻开跑偏的传话本。" art={<span style={{fontSize:64}}>✎</span>} online="/?game=tp" join={code=>"/?game=tp&room="+code}/>
-        <GameBox id="fa" title="纽约伪画家" sub="绘画派对 · 自动主持改编" meta="3–8人 · 卧底画画" blurb="大家轮流在同一张纸上画一笔，只有一人不知道题目。你能找出伪画家吗？" art={<span style={{fontSize:64}}>?</span>} online="/?game=fa" join={code=>"/?game=fa&room="+code}/>
+        <GameBox id="tp" title="传情画意" sub="绘画派对 · 画猜传话" meta="3–8人 · 同时画画" blurb="一句话变成一幅画，再变成一句话。最后一起翻开跑偏的传话本。" art={<TelephoneCover logo={false} />} online="/?game=tp" join={code=>"/?game=tp&room="+code} codeLength={6}/>
+        <GameBox id="fa" title="纽约伪画家" sub="绘画派对 · 自动主持改编" meta="3–8人 · 卧底画画" blurb="大家轮流在同一张纸上画一笔，只有一人不知道题目。你能找出伪画家吗？" art={<FakeArtistCover logo={false} />} online="/?game=fa" join={code=>"/?game=fa&room="+code} codeLength={6}/>
         <GameBox
           id="rr"
           title="眼疾手快"
@@ -109,7 +110,9 @@ function GameBox(props: {
   online: string;
   join: (code: string) => string;
   extra?: React.ReactNode;
+  codeLength?: number;
 }) {
+  const len = props.codeLength ?? 4;
   const [code, setCode] = useState("");
   return (
     <section
@@ -136,14 +139,14 @@ function GameBox(props: {
         className="box-join"
         onSubmit={(e) => {
           e.preventDefault();
-          if (code.trim().length === 4)
+          if (code.trim().length === len)
             location.href = props.join(code.trim().toUpperCase());
         }}
       >
         <input
           aria-label={`${props.title}房间号`}
           placeholder="有房间号？"
-          maxLength={4}
+          maxLength={len}
           value={code}
           onChange={(e) => setCode(e.target.value.toUpperCase())}
         />

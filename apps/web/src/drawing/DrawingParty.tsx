@@ -13,6 +13,10 @@ import { Studio } from "./Studio.tsx";
 import { Board } from "./Board.tsx";
 import { drawingId } from "./id.ts";
 import { paint } from "./render.ts";
+import { feel } from "./feel.ts";
+import { Portrait } from "./StudioArt.tsx";
+import { FakeArtistCover, TelephoneCover } from "./Covers.tsx";
+import "./studio.css";
 import "./drawing-party.css";
 interface Snapshot {
   code: string;
@@ -310,6 +314,19 @@ export function DrawingParty({ mode }: { mode: Mode }) {
         busy={busy}
         inkBusy={inkBusy}
         seconds={seconds}
+        total={
+          v.phase === "TASK"
+            ? v.step % 2
+              ? 90
+              : 40
+            : v.phase === "PROMPT"
+              ? 60
+              : v.phase === "DISCUSS"
+                ? 90
+                : v.phase === "OBSERVE"
+                  ? 15
+                  : 30
+        }
         code={code}
         error={error}
         input={input}
@@ -328,31 +345,67 @@ export function DrawingParty({ mode }: { mode: Mode }) {
         }
       />
     );
+  const seats = snap ? Array.from({ length: snap.count }, (_, i) => snap.players[i]) : [];
   return (
-    <main className={"dp-app dp-" + mode}>
-      <header className="dp-top">
-        <a href="/">‹ 合集</a>
-        <span className="dp-series">绘画派对</span>
-        <button onClick={() => setRules(!rules)}>怎么玩</button>
+    <main className={"lb-world lb-" + mode}>
+      <div className="st-backdrop" aria-hidden="true">
+        <i className="st-light" />
+        <i className="st-texture" />
+        <i className="st-vignette" />
+      </div>
+      <header className="lb-top">
+        <a className="lb-back" href="/" onClick={() => feel("tap")}>
+          ‹ 合集
+        </a>
+        <span className="lb-series">绘画派对</span>
+        <button
+          className="lb-rules-btn"
+          aria-expanded={rules}
+          onClick={() => {
+            feel("tap");
+            setRules(!rules);
+          }}
+        >
+          怎么玩
+        </button>
       </header>
       {rules && (
-        <aside className="dp-rules">
-          <button onClick={() => setRules(false)}>关闭 ×</button>
-          <h2>{title}</h2>
-          <p>
-            {mode === "tp"
-              ? "每人写题，画画与猜词交替，只看上一页。最后一起翻开所有传话链，看看跑偏了多远。3人是短链改编。"
-              : "系统出题，只有一位不知道答案。每人轮流画一笔，共两圈，再投票。卧底若未被唯一最高票抓住便获胜；被抓后可猜题翻盘。3–8人线上自动主持改编。"}{" "}
-          </p>
-          <p>
-            {mode === "fa"
-              ? "抬起手指即结束这一笔，不能撤销。建议先与朋友开语音。"
-              : "提前提交后不能修改，等大家都好或到时一起传下一页。"}
-          </p>
-        </aside>
+        <div className="lb-sheet-backdrop" onClick={() => setRules(false)}>
+          <aside className="lb-rules" onClick={(e) => e.stopPropagation()}>
+            <h2>{title} · 怎么玩</h2>
+            <ol>
+              {(mode === "tp"
+                ? [
+                    "每人先写一句题目。",
+                    "拿到别人的题目，把它画出来。",
+                    "再拿到别人的画，猜它画的是什么。",
+                    "画、猜交替传下去，每人只看得到上一页。",
+                    "最后一起翻开所有传话本，看看跑偏了多远。",
+                  ]
+                : [
+                    "大家先投票选主题，系统出题。",
+                    "只有一个人不知道题目——他是伪画家。",
+                    "每人轮流在同一张纸上画一笔，共两圈。",
+                    "讨论后投票，找出伪画家。",
+                    "伪画家没被抓到就赢；被抓到还能猜题翻盘。",
+                  ]
+              ).map((t) => (
+                <li key={t}>{t}</li>
+              ))}
+            </ol>
+            <p>
+              {mode === "fa"
+                ? "抬起手指即结束这一笔，不能撤销。建议先和朋友开语音。3–8 人线上自动主持改编。"
+                : "提前提交后不能修改，等大家都好或到时一起传下一页。3 人是短链改编。"}
+            </p>
+            <button className="st-btn st-primary" onClick={() => setRules(false)}>
+              知道了
+            </button>
+          </aside>
+        </div>
       )}
       {error && (
-        <div className="dp-notice" role="status">
+        <div className="st-toast" role="status">
           {error}
           <button aria-label="关闭提示" onClick={() => setError("")}>
             ×
@@ -360,491 +413,255 @@ export function DrawingParty({ mode }: { mode: Mode }) {
         </div>
       )}
       {!connected && (
-        <p className="dp-offline" role="status">
+        <p className="lb-offline" role="status">
           连接中断，正在恢复原座位…
         </p>
       )}
-      {!snap ? (
-        <section className="dp-entry">
-          <div className="dp-entry-mark">{mode === "tp" ? "✎" : "?"}</div>
-          <p className="dp-eyebrow">
-            {mode === "tp" ? "画一句 · 猜一画" : "同一张画 · 一位伪画家"}
-          </p>
-          <h1>{title}</h1>
-          <p>3–8位朋友，各拿一部手机，就能开始。</p>
-          <label>
-            这次几个人
-            <select
-              aria-label="游戏人数"
-              value={count}
-              onChange={(e) => setCount(Number(e.target.value))}
-            >
-              {[3, 4, 5, 6, 7, 8].map((n) => (
-                <option key={n} value={n}>
-                  {n} 人
-                </option>
-              ))}
-            </select>
-          </label>
-          <button
-            className="dp-primary"
-            disabled={!canAct}
-            onClick={() => void create()}
-          >
-            创建房间 →
-          </button>
-          <form
-            className="dp-join"
-            onSubmit={(e) => {
-              e.preventDefault();
-              void go(code.trim().toUpperCase()).catch((e) =>
-                setError(e.message),
-              );
-            }}
-          >
-            <input
-              aria-label="房间号"
-              placeholder="输入房间号"
-              maxLength={6}
-              value={code}
-              onChange={(e) => setCode(e.target.value.toUpperCase())}
-            />
-            <button disabled={!canAct || !code.trim()}>加入</button>
-          </form>
-        </section>
-      ) : !snap.me ? (
-        <section className="dp-entry">
-          <h1>{title}</h1>
-          <p>
-            房间 {code} · {snap.players.length}/{snap.count}人
-          </p>
-          <form
-            onSubmit={(e) => {
-              e.preventDefault();
-              void claim();
-            }}
-          >
-            <label>
-              你的昵称
-              <input
-                autoComplete="nickname"
-                aria-label="你的昵称"
-                maxLength={12}
-                value={name}
-                onChange={(e) => setName(e.target.value)}
-              />
-            </label>
-            <button className="dp-primary" disabled={!canAct || !name.trim()}>
-              加入这局 →
-            </button>
-          </form>
-        </section>
-      ) : !v ? (
-        <section className="dp-lobby">
-          <div className="dp-room-title">
-            <div>
-              <p className="dp-eyebrow">邀请朋友一起玩</p>
-              <h1>{title}</h1>
-            </div>
-            <button onClick={() => void invite()}>
-              <small>房间号</small>
-              <strong>{code}</strong>复制邀请
-            </button>
-          </div>
-          <div className="dp-player-list">
-            {snap.players.map((p, i) => (
-              <div key={p.id}>
-                <span className="dp-avatar" style={{ background: COLORS[i] }}>
-                  {i + 1}
-                </span>
-                <b>
-                  {p.name}
-                  {p.id === snap.me ? "（我）" : ""}
-                </b>
-                <span>
-                  {p.connected ? (p.ready ? "已准备" : "等待准备") : "离线"}
-                </span>
-              </div>
-            ))}
-          </div>
-          {host && (
-            <label>
-              人数
-              <select
-                aria-label="房间人数"
-                value={snap.count}
-                onChange={(e) =>
-                  void submit({ type: "COUNT", count: Number(e.target.value) })
-                }
-              >
-                {[3, 4, 5, 6, 7, 8].map((n) => (
-                  <option key={n} disabled={n < snap.players.length} value={n}>
-                    {n}人
-                  </option>
-                ))}
-              </select>
-            </label>
-          )}
-          <button
-            className="dp-primary"
-            disabled={!canAct}
-            onClick={() => void submit({ type: "READY" })}
-          >
-            {my?.ready ? "取消准备" : "我准备好了"}
-          </button>
-          {host ? (
-            <button
-              className="dp-primary dp-start"
-              disabled={
-                !canAct ||
-                snap.players.length !== snap.count ||
-                snap.players.some((p) => !p.ready)
-              }
-              onClick={() => void submit({ type: "START" })}
-            >
-              开始游戏 →
-            </button>
-          ) : (
-            <p>人齐并准备后，由房主开始。</p>
-          )}
-          <button
-            onClick={() =>
-              void submit({ type: "LEAVE" }).then(() => {
-                localStorage.removeItem("dp-token-" + code);
-                void join(code);
-              })
-            }
-          >
-            离开座位
-          </button>
-        </section>
-      ) : (
-        <section className="dp-game">
-          <div className="dp-phase">
-            <div>
-              <p className="dp-eyebrow">
-                {title}{" "}
-                {mode === "tp" && v.phase === "TASK"
-                  ? "· 第 " + v.step + "/" + v.steps + " 步"
-                  : mode === "fa" && v.phase === "DRAW"
-                    ? "· 第 " +
-                      (Math.floor(v.turn / v.players.length) + 1) +
-                      "/2 圈"
-                    : ""}
+      <div className="lb-body">
+        <div className="lb-cover">
+          {mode === "fa" ? <FakeArtistCover /> : <TelephoneCover />}
+        </div>
+        <section className="lb-card" key={!snap ? "entry" : !snap.me ? "claim" : "room"}>
+          {!snap ? (
+            <>
+              <p className="lb-eyebrow">
+                {mode === "tp" ? "画一句 · 猜一画" : "同一张画 · 一位伪画家"}
               </p>
-              <h1>{phaseNames[v.phase]}</h1>
-            </div>
-            {v.deadline > 0 && (
-              <span
-                className={"dp-clock " + (seconds <= 10 ? "dp-urgent" : "")}
-                aria-label={"剩余" + seconds + "秒"}
-              >
-                {Math.floor(seconds / 60)}:
-                {String(seconds % 60).padStart(2, "0")}
-              </span>
-            )}
-          </div>
-          {mode === "tp" && (
-            <>
-              {v.phase === "PROMPT" &&
-                (v.submitted ? (
-                  <div className="dp-wait">
-                    <h2>题目收好了</h2>
-                    <p>
-                      {v.completed}/{v.players.length}人已完成，稍后一起传题。
-                    </p>
-                  </div>
-                ) : (
-                  textForm("给朋友写个题目")
-                ))}
-              {v.phase === "TASK" && v.task && (
-                <>
-                  <p className="dp-instruction">
-                    {v.task.kind === "drawing"
-                      ? "把这句话画出来"
-                      : "这幅画画的是什么？"}
-                  </p>
-                  {v.task.kind === "drawing" ? (
-                    <>
-                      <h2 className="dp-prompt">{v.task.source.text}</h2>
-                      {drawBoard()}
-                      <button
-                        className="dp-primary"
-                        disabled={!canAct || inkBusy || v.submitted}
-                        onClick={() => void submit({ type: "SUBMIT" })}
-                      >
-                        {v.submitted ? "已提交 · 等待其他人" : "画好了 →"}
-                      </button>
-                    </>
-                  ) : (
-                    <>
-                      {display(
-                        v.task.source.drawing,
-                        v.id + ":source:" + v.task.id,
-                      )}
-                      {!v.submitted && textForm("写下你的猜测")}
-                    </>
-                  )}
-                  <p className="dp-progress">
-                    {v.completed}/{v.players.length}人已完成{" "}
-                    {inkBusy ? "· 正在保存笔画" : ""}
-                  </p>
-                </>
-              )}
-              {(v.phase === "REVEAL" || v.phase === "RESULT") &&
-                v.albums?.map((a, i) => (
-                  <article className="dp-album" key={a.owner.id}>
-                    <h2>
-                      <span>{i + 1}</span> {a.owner.name}的传话本
-                    </h2>
-                    {!a.entries.length ? (
-                      <p>还没翻到这一本</p>
-                    ) : (
-                      a.entries.map((e, j) => (
-                        <div className="dp-album-page" key={j}>
-                          <p className="dp-eyebrow">
-                            {j === 0
-                              ? "初始题目"
-                              : j % 2
-                                ? "第" + Math.ceil(j / 2) + "幅画"
-                                : "第" + j / 2 + "次猜测"}{" "}
-                            · {v.players.find((p) => p.id === e.author)?.name}
-                            {e.missing ? " · 到时封存" : ""}
-                          </p>
-                          {e.kind === "text" ? (
-                            <h3>{e.text}</h3>
-                          ) : (
-                            display(e.drawing, v.id + ":album:" + i + ":" + j)
-                          )}
-                        </div>
-                      ))
-                    )}
-                    {a.entries.length === v.steps + 1 && (
-                      <button onClick={() => exportAlbum(a)}>
-                        保存整条传话链
-                      </button>
-                    )}
-                  </article>
-                ))}
-              {v.phase === "REVEAL" &&
-                (host ? (
-                  <button
-                    className="dp-primary dp-next"
-                    disabled={!canAct}
-                    onClick={() => void submit({ type: "NEXT" })}
-                  >
-                    {v.cursor >= v.players.length * (v.steps + 1) - 1
-                      ? "看完了 · 本局结束"
-                      : "翻开下一页 →"}
-                  </button>
-                ) : (
-                  <p className="dp-wait">等房主翻开下一页…</p>
-                ))}
-            </>
-          )}
-          {mode === "fa" && (
-            <>
-              <div className="dp-secret">
-                <span>类别：{v.category}</span>
-                {v.phase === "RESULT" ? (
-                  <button onClick={() => setHideWord(!hideWord)}>
-                    {hideWord ? "显示题目" : "隐藏题目"}
-                  </button>
-                ) : v.role === "artist" ? (
-                  <button onClick={() => setSecret(!secret)}>
-                    {secret ? v.word : "点此查看你的题目"}
-                  </button>
-                ) : (
-                  <b>你是伪画家 · 只知道类别</b>
-                )}
+              <h1>{title}</h1>
+              <p className="lb-lead">3–8 位朋友，各拿一部手机，就能开始。</p>
+              <div className="lb-field">
+                <span>这次几个人</span>
+                <div className="lb-seg" role="group" aria-label="游戏人数">
+                  {[3, 4, 5, 6, 7, 8].map((n) => (
+                    <button
+                      key={n}
+                      aria-pressed={count === n}
+                      onClick={() => {
+                        feel("tap");
+                        setCount(n);
+                      }}
+                    >
+                      {n}
+                    </button>
+                  ))}
+                </div>
               </div>
-              {v.phase === "DRAW" && (
-                <>
-                  <div
-                    className="dp-turn"
-                    style={{ borderColor: COLORS[v.turn % v.players.length] }}
+              <button
+                className="st-btn st-primary lb-main"
+                disabled={!canAct}
+                onClick={() => {
+                  feel("submit");
+                  void create();
+                }}
+              >
+                创建房间 →
+              </button>
+              <div className="lb-or">
+                <span>或加入朋友的房间</span>
+              </div>
+              <form
+                className="lb-join"
+                onSubmit={(e) => {
+                  e.preventDefault();
+                  feel("tap");
+                  void go(code.trim().toUpperCase()).catch((e) =>
+                    setError(e.message),
+                  );
+                }}
+              >
+                <input
+                  aria-label="房间号"
+                  placeholder="输入房间号"
+                  maxLength={6}
+                  inputMode="text"
+                  autoCapitalize="characters"
+                  value={code}
+                  onChange={(e) => setCode(e.target.value.toUpperCase())}
+                />
+                <button className="st-btn st-ghost" disabled={!canAct || !code.trim()}>
+                  加入
+                </button>
+              </form>
+            </>
+          ) : !snap.me ? (
+            <>
+              <p className="lb-eyebrow">
+                房间 {code} · {snap.players.length}/{snap.count}人
+              </p>
+              <h1>{title}</h1>
+              <p className="lb-lead">起个名字，朋友们会在画室里看到它。</p>
+              <form
+                className="lb-claim"
+                onSubmit={(e) => {
+                  e.preventDefault();
+                  feel("submit");
+                  void claim();
+                }}
+              >
+                <label className="lb-field">
+                  <span>你的昵称</span>
+                  <input
+                    autoComplete="nickname"
+                    aria-label="你的昵称"
+                    maxLength={12}
+                    placeholder="最多 12 个字"
+                    value={name}
+                    onChange={(e) => setName(e.target.value)}
+                  />
+                </label>
+                <button
+                  className="st-btn st-primary lb-main"
+                  disabled={!canAct || !name.trim()}
+                >
+                  加入这局 →
+                </button>
+              </form>
+            </>
+          ) : (
+            <>
+              <div className="lb-room-head">
+                <div>
+                  <p className="lb-eyebrow">邀请朋友一起玩</p>
+                  <h1>{title}</h1>
+                </div>
+                <button
+                  className="lb-code"
+                  onClick={() => {
+                    feel("tap");
+                    void invite();
+                  }}
+                >
+                  <small>房间号</small>
+                  <strong>{code}</strong>
+                  <span>复制邀请</span>
+                </button>
+              </div>
+              <ul className="lb-seats">
+                {seats.map((p, i) => (
+                  <li
+                    key={p?.id ?? "empty" + i}
+                    className={
+                      !p
+                        ? "is-empty"
+                        : (p.ready ? "is-ready " : "") +
+                          (p.connected ? "" : "is-off ") +
+                          (p.id === snap.me ? "is-me" : "")
+                    }
+                    style={{ "--seat": COLORS[i % 8] } as React.CSSProperties}
                   >
-                    <b>{v.players.find((p) => p.id === v.currentId)?.name}</b>
-                    {v.currentId === snap.me
-                      ? "，轮到你画一笔，抬手即提交"
-                      : "正在画，仔细观察这一笔"}
-                  </div>
-                  {drawBoard(true)}
-                  {v.currentId === snap.me && (
-                    <button
-                      disabled={!canAct || inkBusy}
-                      onClick={() => void submit({ type: "SUBMIT" })}
-                    >
-                      本回合跳过
-                    </button>
-                  )}
-                  <div className="dp-turn-order">
-                    {v.players.map((p, i) => (
-                      <span
-                        key={p.id}
-                        className={v.currentId === p.id ? "active" : ""}
-                        style={{ borderColor: COLORS[i] }}
+                    {p ? (
+                      <>
+                        <span className="lb-face">
+                          <Portrait index={i} />
+                        </span>
+                        <b>
+                          {p.name}
+                          {p.id === snap.me ? "（我）" : ""}
+                          {p.id === snap.host && <em>房主</em>}
+                        </b>
+                        <span className="lb-state">
+                          {p.connected ? (p.ready ? "已准备" : "等待准备") : "离线"}
+                        </span>
+                      </>
+                    ) : (
+                      <>
+                        <span className="lb-face is-empty">{i + 1}</span>
+                        <b>等待加入…</b>
+                      </>
+                    )}
+                  </li>
+                ))}
+              </ul>
+              {host && (
+                <div className="lb-field is-inline">
+                  <span>人数</span>
+                  <div className="lb-seg is-small" role="group" aria-label="房间人数">
+                    {[3, 4, 5, 6, 7, 8].map((n) => (
+                      <button
+                        key={n}
+                        aria-pressed={snap.count === n}
+                        disabled={n < snap.players.length || !canAct}
+                        onClick={() => {
+                          feel("tap");
+                          void submit({ type: "COUNT", count: n });
+                        }}
                       >
-                        {i + 1} {p.name}
-                      </span>
-                    ))}
-                  </div>
-                </>
-              )}
-              {["DISCUSS", "VOTE", "OBSERVE"].includes(v.phase) &&
-                display(v.drawing, v.id + ":" + v.phase)}
-              {v.phase === "DISCUSS" && (
-                <>
-                  <p className="dp-instruction">
-                    每一笔都是线索。和朋友聊聊，谁在假装知道？
-                  </p>
-                  {host && (
-                    <button
-                      className="dp-primary"
-                      disabled={!canAct}
-                      onClick={() => void submit({ type: "FINISH_DISCUSSION" })}
-                    >
-                      开始投票 →
-                    </button>
-                  )}
-                </>
-              )}
-              {v.phase === "VOTE" &&
-                (v.myVote ? (
-                  <div className="dp-wait">
-                    已投票，等待其他人（{v.completed}/{v.players.length}）
-                  </div>
-                ) : (
-                  <>
-                    <p>选出你怀疑的人，确认后不能修改。</p>
-                    <div className="dp-voters">
-                      {v.players
-                        .filter((p) => p.id !== snap.me)
-                        .map((p) => (
-                          <button
-                            aria-pressed={vote === p.id}
-                            key={p.id}
-                            onClick={() => setVote(p.id)}
-                          >
-                            {p.name}
-                          </button>
-                        ))}
-                    </div>
-                    <button
-                      className="dp-primary"
-                      disabled={!canAct || !vote}
-                      onClick={() =>
-                        void submit({ type: "VOTE", target: vote })
-                      }
-                    >
-                      确认投票
-                    </button>
-                  </>
-                ))}
-              {v.phase === "OBSERVE" &&
-                (v.role === "fake" ? (
-                  <>
-                    <p>你被找到了！记住这幅画，开始选择后画作会隐藏。</p>
-                    <button
-                      className="dp-primary"
-                      disabled={!canAct}
-                      onClick={() => void submit({ type: "BEGIN_GUESS" })}
-                    >
-                      我想好了 · 开始猜题 →
-                    </button>
-                  </>
-                ) : (
-                  <p className="dp-wait">卧底正在观察作品，准备最后猜题…</p>
-                ))}
-              {v.phase === "GUESS" &&
-                (v.role === "fake" ? (
-                  <>
-                    <p className="dp-instruction">
-                      这幅画的题目是什么？只能选一次。
-                    </p>
-                    <div className="dp-options">
-                      {v.options?.map((w) => (
-                        <button
-                          key={w}
-                          disabled={!canAct}
-                          onClick={() =>
-                            void submit({ type: "GUESS", answer: w })
-                          }
-                        >
-                          {w}
-                        </button>
-                      ))}
-                    </div>
-                  </>
-                ) : (
-                  <p className="dp-wait">正在等待卧底最后猜题…</p>
-                ))}
-              {v.phase === "RESULT" && (
-                <div className="dp-exhibition">
-                  <p className="dp-eyebrow">
-                    {v.winner === "fake"
-                      ? "伪画家成功蒙混过关"
-                      : "真画家识破了伪装"}
-                  </p>
-                  <h2>{hideWord ? "这幅作品画的是什么？" : v.word}</h2>
-                  {display(v.drawing, v.id + ":exhibition")}
-                  <p>
-                    伪画家是{" "}
-                    <b>{v.players.find((p) => p.id === v.fakeId)?.name}</b>
-                    {v.guess ? " · 最后猜了：" + v.guess : ""}
-                  </p>
-                  <div className="dp-vote-result">
-                    {v.players.map((p) => (
-                      <p key={p.id}>
-                        {p.name} →{" "}
-                        {v.players.find((t) => t.id === v.votes?.[p.id])
-                          ?.name ?? "未投票"}
-                      </p>
+                        {n}
+                      </button>
                     ))}
                   </div>
                 </div>
               )}
+              <div className="lb-room-actions">
+                <button
+                  className={"st-btn " + (my?.ready ? "st-ghost" : "st-primary")}
+                  disabled={!canAct}
+                  onClick={() => {
+                    feel(my?.ready ? "tap" : "select");
+                    void submit({ type: "READY" });
+                  }}
+                >
+                  {my?.ready ? "取消准备" : "我准备好了"}
+                </button>
+                {host ? (
+                  <button
+                    className="st-btn st-gold"
+                    disabled={
+                      !canAct ||
+                      snap.players.length !== snap.count ||
+                      snap.players.some((p) => !p.ready)
+                    }
+                    onClick={() => {
+                      feel("turn");
+                      void submit({ type: "START" });
+                    }}
+                  >
+                    开始游戏 →
+                  </button>
+                ) : (
+                  <p className="lb-hint">人齐并准备后，由房主开始。</p>
+                )}
+              </div>
+              {host &&
+                (snap.players.length !== snap.count ||
+                  snap.players.some((p) => !p.ready)) && (
+                  <p className="lb-hint">
+                    {snap.players.length !== snap.count
+                      ? `还差 ${snap.count - snap.players.length} 人入座`
+                      : "等所有人点「我准备好了」"}
+                  </p>
+                )}
+              <div className="lb-room-foot">
+                <button
+                  className="lb-link"
+                  onClick={() =>
+                    void submit({ type: "LEAVE" }).then(() => {
+                      localStorage.removeItem("dp-token-" + code);
+                      void join(code);
+                    })
+                  }
+                >
+                  离开座位
+                </button>
+                {snap.me &&
+                  !snap.players.find((p) => p.id === snap.host)?.connected && (
+                    <button
+                      className="lb-link"
+                      onClick={() => void submit({ type: "TAKE_HOST" })}
+                    >
+                      房主离线 · 接任房主
+                    </button>
+                  )}
+              </div>
             </>
           )}
-          {v.phase === "RESULT" &&
-            (host ? (
-              <button
-                className="dp-primary"
-                disabled={!canAct}
-                onClick={() => void submit({ type: "RESTART" })}
-              >
-                再来一局 →
-              </button>
-            ) : (
-              <p>等待房主开始下一局</p>
-            ))}
-          {host && v.phase !== "RESULT" && (
-            <button
-              className="dp-abort"
-              onClick={() => {
-                if (
-                  confirm(
-                    "结束本局并返回准备？本局作品不再在房间展示，请先保存需要的图片。",
-                  )
-                )
-                  void submit({ type: "ABORT" });
-              }}
-            >
-              结束本局
-            </button>
-          )}
+          <footer className="lb-footnote">
+            {snap?.ephemeral
+              ? "云端为临时存储：部署或服务重启可能清除对局，请及时下载作品。"
+              : "3–8 人 · 建议同时开启语音 · 作品可自行下载"}
+          </footer>
         </section>
-      )}
-      {snap?.me && !snap.players.find((p) => p.id === snap.host)?.connected && (
-        <button onClick={() => void submit({ type: "TAKE_HOST" })}>
-          房主离线 · 接任房主
-        </button>
-      )}
-      <footer className="dp-footer">
-        {snap?.ephemeral
-          ? "当前云端为临时存储：部署或服务重启可能清除对局，请及时下载作品。"
-          : "3–8人 · 建议同时开启语音 · 作品可自行下载"}
-      </footer>
+      </div>
     </main>
   );
 }

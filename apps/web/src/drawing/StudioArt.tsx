@@ -174,3 +174,43 @@ export function Easel() {
     </div>
   );
 }
+export function TimerRing({ fraction }: { fraction: number }) {
+  const r = 21,
+    c = 2 * Math.PI * r,
+    f = Math.max(0, Math.min(1, fraction));
+  return (
+    <svg className="st-ring" viewBox="0 0 50 50" aria-hidden="true">
+      <circle className="st-ring-track" cx="25" cy="25" r={r} />
+      <circle
+        className="st-ring-fill"
+        cx="25"
+        cy="25"
+        r={r}
+        strokeDasharray={c}
+        strokeDashoffset={c * (1 - f)}
+      />
+    </svg>
+  );
+}
+/** Line icons for the six Fake Artist themes (职业, 文具/工具, 家具/电器, 昆虫, 陆栖动物, 随机). */
+export function CategoryIcon({ index }: { index: number }) {
+  const paths = [
+    // briefcase
+    "M9 8V6.5A1.5 1.5 0 0 1 10.5 5h3A1.5 1.5 0 0 1 15 6.5V8M4.5 8h15A1.5 1.5 0 0 1 21 9.5v8A1.5 1.5 0 0 1 19.5 19h-15A1.5 1.5 0 0 1 3 17.5v-8A1.5 1.5 0 0 1 4.5 8ZM3 13h18M11 13v1.5h2V13",
+    // pencil + ruler
+    "M15.5 4.5l4 4L9 19H5v-4L15.5 4.5ZM13.5 6.5l4 4M3 21h18",
+    // lamp + sofa
+    "M8 3h8l2 6H6l2-6ZM12 9v4M5 21v-3a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2v3M3 15.5a1.5 1.5 0 0 1 3 0V19h12v-3.5a1.5 1.5 0 0 1 3 0V21H3v-5.5Z",
+    // bug
+    "M9 7.5a3 3 0 0 1 6 0M8 10h8v5a4 4 0 0 1-8 0v-5ZM12 10v9M4 11l4 1M20 11l-4 1M4 18l4-2M20 18l-4-2M9 5L7.5 3M15 5l1.5-2",
+    // paw
+    "M7 10.5a1.8 2.3 0 1 0 0-.1M17 10.5a1.8 2.3 0 1 0 0-.1M10 6.5a1.8 2.3 0 1 0 0-.1M14 6.5a1.8 2.3 0 1 0 0-.1M12 12c-3 0-5.5 3.2-5.5 5.4 0 1.6 1.3 2.6 2.8 2.6 1 0 1.7-.5 2.7-.5s1.7.5 2.7.5c1.5 0 2.8-1 2.8-2.6C17.5 15.2 15 12 12 12Z",
+    // dice
+    "M5 4h14a1 1 0 0 1 1 1v14a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V5a1 1 0 0 1 1-1ZM8.5 8.5h.01M15.5 8.5h.01M12 12h.01M8.5 15.5h.01M15.5 15.5h.01",
+  ];
+  return (
+    <svg className="st-cat-icon" viewBox="0 0 24 24" aria-hidden="true">
+      <path d={paths[index % paths.length]} />
+    </svg>
+  );
+}

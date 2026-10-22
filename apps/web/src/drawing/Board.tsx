@@ -11,6 +11,7 @@ import { PaintBrush } from "./StudioArt.tsx";
 import { drawingId } from "./id.ts";
 import { paint, downloadDrawing } from "./render.ts";
 import { readDraft, saveDraft } from "./drafts.ts";
+import { feel } from "./feel.ts";
 interface Props {
   drawing: Drawing;
   docKey: string;
@@ -292,6 +293,8 @@ export function Board(p: Props) {
       visible: true,
     });
     e.currentTarget.setPointerCapture(e.pointerId);
+    feel("pen");
+    if (toolsOpen) setToolsOpen(false);
     redraw();
     busy();
     persist();
@@ -327,7 +330,13 @@ export function Board(p: Props) {
     }
   };
   return (
-    <section className={"dp-board " + (focus ? "dp-focus" : "")}>
+    <section
+      className={
+        "dp-board " +
+        (focus ? "dp-focus " : "") +
+        (p.canDraw && !p.single ? "has-dock" : "")
+      }
+    >
       <div className="dp-paper">
         <canvas
           ref={canvas}
@@ -355,54 +364,86 @@ export function Board(p: Props) {
         </div>
         {!p.canDraw && <span className="dp-readonly">观看作品</span>}
       </div>
-      {p.canDraw && !p.single && toolsOpen && (
-        <div className="dp-tools">
-          <div className="dp-palette">
-            {COLORS.map((c, i) => (
-              <button
-                key={c}
-                aria-label={"颜色" + (i + 1)}
-                aria-pressed={color === i}
-                style={{ background: c }}
-                onClick={() => {
-                  setColor(i);
-                  setToolsOpen(false);
-                }}
-              />
-            ))}
-          </div>
-          <div className="dp-pen">
+      {p.canDraw && !p.single && (
+        <div className="dp-dock" aria-label="画笔">
+          <button
+            className="st-tool-toggle"
+            aria-label="画笔工具"
+            aria-expanded={toolsOpen}
+            onClick={() => {
+              feel("tap");
+              setToolsOpen(!toolsOpen);
+            }}
+          >
+            <i style={{ background: COLORS[color] }} />
+          </button>
+          <div className="dp-sizes">
             {[4, 8, 16, 28].map((w) => (
               <button
                 key={w}
                 aria-label={"粗细" + w}
                 aria-pressed={width === w}
-                onClick={() => setWidth(w)}
+                onClick={() => {
+                  feel("tap");
+                  setWidth(w);
+                }}
               >
                 <i
                   style={{
-                    width: Math.max(3, w / 2),
-                    height: Math.max(3, w / 2),
+                    width: Math.max(4, w * 0.7),
+                    height: Math.max(4, w * 0.7),
+                    background: COLORS[color],
                   }}
                 />
               </button>
             ))}
-            <button onClick={() => void edit("undo")}>撤销</button>
-            <button onClick={() => void edit("clear")}>清空</button>
           </div>
+          <button
+            className="dp-dock-edit"
+            aria-label="撤销"
+            onClick={() => {
+              feel("tap");
+              void edit("undo");
+            }}
+          >
+            <svg viewBox="0 0 24 24" aria-hidden="true">
+              <path d="M9 14L4 9l5-5M4 9h10a6 6 0 0 1 0 12h-3" />
+            </svg>
+          </button>
+          <button
+            className="dp-dock-edit"
+            aria-label="清空"
+            onClick={() => {
+              feel("tap");
+              void edit("clear");
+            }}
+          >
+            <svg viewBox="0 0 24 24" aria-hidden="true">
+              <path d="M4 7h16M10 11v6M14 11v6M6 7l1 13h10l1-13M9 7V4h6v3" />
+            </svg>
+          </button>
+          {toolsOpen && (
+            <div className="dp-tools" role="dialog" aria-label="选择颜色">
+              <div className="dp-palette">
+                {COLORS.map((c, i) => (
+                  <button
+                    key={c}
+                    aria-label={"颜色" + (i + 1)}
+                    aria-pressed={color === i}
+                    style={{ background: c }}
+                    onClick={() => {
+                      feel("select");
+                      setColor(i);
+                      setToolsOpen(false);
+                    }}
+                  />
+                ))}
+              </div>
+            </div>
+          )}
         </div>
       )}
       <div className="dp-board-footer">
-        {p.canDraw && !p.single && (
-          <button
-            className="st-tool-toggle"
-            aria-label="画笔工具"
-            aria-expanded={toolsOpen}
-            onClick={() => setToolsOpen(!toolsOpen)}
-          >
-            画笔 ▾
-          </button>
-        )}
         <span role="status">{p.canDraw ? status : "只读画作"}</span>
         <button
           className="st-local-focus"
@@ -412,7 +453,9 @@ export function Board(p: Props) {
         </button>
         {!p.canDraw && (
           <>
-            <button onClick={() => setReplay(true)}>逐笔回放</button>
+            <button onClick={() => setReplay(true)}>
+              <span aria-hidden="true">▶ </span>逐笔回放
+            </button>
             <button onClick={() => downloadDrawing(model.current)}>
               保存图
             </button>

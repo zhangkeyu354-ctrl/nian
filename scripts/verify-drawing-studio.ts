@@ -162,7 +162,7 @@ try {
         .getByRole("button", { name: "颜色3", exact: true })
         .click();
       await pages[0].getByRole("button", { name: "打开游戏菜单" }).click();
-      await pages[0].getByRole("button", { name: "音效 关闭" }).click();
+      await pages[0].getByRole("button", { name: /^音效/ }).click();
       await pages[0].getByRole("button", { name: "返回画室" }).click();
       await pages[0].setViewportSize({ width: 390, height: 844 });
       await pages[0].waitForTimeout(420);
