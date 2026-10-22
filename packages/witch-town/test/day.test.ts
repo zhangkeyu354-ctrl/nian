@@ -660,7 +660,9 @@ describe("M2 day actions and trials", () => {
       reduceWitchTown(s, "p0", { type: "REVEAL_TRYAL", index: 0 }),
     ).toThrow("CHECK_REQUIRED:X02");
     expect(s).toEqual(before);
-    s.players[2].character = "john_proctor";
+    s.players[2].character = "william_phips";
+    s.players[0].character = "john_proctor";
+    s.players[1].character = "martha_corey";
     before = structuredClone(s);
     expect(() =>
       reduceWitchTown(s, "p0", { type: "REVEAL_TRYAL", index: 0 }),

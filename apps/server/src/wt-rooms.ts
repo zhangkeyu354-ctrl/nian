@@ -8,6 +8,7 @@ import {
 } from "node:fs";
 import { join } from "node:path";
 import type { Server, Socket } from "socket.io";
+import { tickWitchTown } from "../../../packages/witch-town/src/events.ts";
 import {
   createWitchTown,
   viewForWitchTown,
@@ -43,6 +44,7 @@ interface RoomFile {
   players: WTSeat[];
   state: WTState | null;
   receipts: Record<string, { signature: string; version: number }>;
+  ruleAuditCode?: string;
 }
 interface WTStoreOptions {
   allowCandidateCounts?: boolean;
@@ -150,7 +152,7 @@ export class WTRoomStore {
     this.save(r);
     return { playerId: id, token };
   }
-  action(code: string, token: string, req: WTActionRequest) {
+  action(code: string, token: string, req: WTActionRequest, now = Date.now()) {
     const current = this.room(code),
       me = this.seat(current, token);
     if (
@@ -193,16 +195,70 @@ export class WTRoomStore {
       );
     } else {
       if (!r.state) fail("NOT_STARTED");
-      r.state = reduceWitchTown(r.state, me.id, req.action);
+      try {
+        r.state = reduceWitchTown(r.state, me.id, req.action, {
+          now,
+          random: () => randomInt(0x100000000) / 0x100000000,
+        });
+      } catch (e) {
+        if (
+          ["CONSPIRACY_PICK", "CONSPIRACY_REVEAL", "REVEAL_TRYAL"].includes(
+            req.action.type,
+          ) &&
+          e instanceof Error &&
+          e.message.startsWith("CHECK_REQUIRED")
+        ) {
+          r.state.checkRequired = "CHECK_REQUIRED:EVENT_RULE_REVIEW";
+          r.ruleAuditCode = e.message;
+          r.version++;
+          this.save(r);
+          fail("CHECK_REQUIRED:EVENT_RULE_REVIEW");
+        }
+        throw e;
+      }
     }
     // Secret dawn ballots merge serially but do not advance the public revision.
     // Otherwise the revision gap itself reveals how many witch holders voted.
-    if (!(req.action.type === "DAWN_TARGET" && r.state?.phase === "dawn"))
-      r.version++;
+    const secret = ["DAWN_TARGET", "NIGHT_TARGET", "CONSPIRACY_PICK"].includes(
+      req.action.type,
+    );
+    const privateOnly =
+      secret &&
+      current.state &&
+      r.state &&
+      JSON.stringify(viewForWitchTown(current.state, null)) ===
+        JSON.stringify(viewForWitchTown(r.state, null));
+    if (!privateOnly) r.version++;
     r.updatedAt = Date.now();
     r.receipts[key] = { signature, version: r.version };
     this.save(r);
     return r.version;
+  }
+  tick(now = Date.now()) {
+    const changed: string[] = [];
+    for (const current of this.rooms.values()) {
+      if (!current.state || current.state.checkRequired) continue;
+      const r = structuredClone(current);
+      try {
+        const next = tickWitchTown(
+          r.state!,
+          now,
+          () => randomInt(0x100000000) / 0x100000000,
+        );
+        if (!next) continue;
+        r.state = next;
+      } catch (e) {
+        if (!(e instanceof Error) || !e.message.startsWith("CHECK_REQUIRED"))
+          throw e;
+        r.state!.checkRequired = "CHECK_REQUIRED:EVENT_RULE_REVIEW";
+        r.ruleAuditCode = e.message;
+      }
+      r.version++;
+      r.updatedAt = now;
+      this.save(r);
+      changed.push(r.code);
+    }
+    return changed;
   }
   snapshot(code: string, token: string | null): WTRoomSnapshot {
     const r = this.room(code),
@@ -222,7 +278,7 @@ export class WTRoomStore {
         connected: (this.connections.get(code)?.get(p.id) ?? 0) > 0,
       })),
       view: r.state ? viewForWitchTown(r.state, me?.id ?? null) : null,
-      milestone: "M2_DAY_ENGINE",
+      milestone: "M3_EVENT_ENGINE",
     };
   }
   connected(code: string, id: string, delta: number) {
@@ -242,10 +298,15 @@ export function attachWitchTown(
     string,
     { code: string; token: string | null; playerId: string | null }
   >();
-  const broadcast = (code: string, witchesOnly = false) => {
+  const broadcast = (
+    code: string,
+    witchesOnly = false,
+    playerOnly?: string,
+  ) => {
     for (const [id, b] of bindings)
       if (
         b.code === code &&
+        (!playerOnly || b.playerId === playerOnly) &&
         (!witchesOnly || store.snapshot(code, b.token).view?.private?.everWitch)
       )
         io.sockets.sockets
@@ -295,13 +356,37 @@ export function attachWitchTown(
       if (!b?.token) fail("BAD_CREDENTIAL");
       if (r.code !== b.code) fail("BAD_CREDENTIAL");
       const before = JSON.stringify(store.snapshot(b.code, null));
-      store.action(b.code, b.token, r.request);
+      try {
+        store.action(b.code, b.token, r.request);
+      } catch (e) {
+        if (before !== JSON.stringify(store.snapshot(b.code, null)))
+          broadcast(b.code);
+        throw e;
+      }
       const publicChanged =
         before !== JSON.stringify(store.snapshot(b.code, null));
-      broadcast(b.code, !publicChanged);
+      if (publicChanged) broadcast(b.code);
+      else if (r.request.action.type === "CONSPIRACY_PICK")
+        broadcast(b.code, false, b.playerId ?? undefined);
+      else if (
+        r.request.action.type === "DAWN_TARGET" ||
+        r.request.action.type === "NIGHT_TARGET"
+      )
+        broadcast(b.code, true);
       return store.snapshot(b.code, b.token);
     });
     socket.on("disconnect", detach);
   });
+  const timer = setInterval(() => {
+    try {
+      for (const code of store.tick()) broadcast(code);
+    } catch (e) {
+      console.error(
+        "WT_TIMER_ERROR",
+        e instanceof Error ? e.message : "UNKNOWN",
+      );
+    }
+  }, 250);
+  timer.unref();
   return store;
 }

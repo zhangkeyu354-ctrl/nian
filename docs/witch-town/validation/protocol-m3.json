@@ -1,0 +1,249 @@
+{
+  "cases": [
+    {
+      "players": 4,
+      "mode": "kill",
+      "automaticServerDeadline": true,
+      "victimAlive": false,
+      "restartedDuringConfession": true,
+      "reconnectedDuringConfession": true,
+      "secretAttackHidden": true
+    },
+    {
+      "players": 4,
+      "mode": "protect",
+      "automaticServerDeadline": true,
+      "victimAlive": true,
+      "restartedDuringConfession": false,
+      "reconnectedDuringConfession": true,
+      "secretAttackHidden": true
+    },
+    {
+      "players": 4,
+      "mode": "confess",
+      "automaticServerDeadline": true,
+      "victimAlive": true,
+      "restartedDuringConfession": false,
+      "reconnectedDuringConfession": true,
+      "secretAttackHidden": true
+    },
+    {
+      "players": 5,
+      "mode": "kill",
+      "automaticServerDeadline": true,
+      "victimAlive": false,
+      "restartedDuringConfession": false,
+      "reconnectedDuringConfession": true,
+      "secretAttackHidden": true
+    },
+    {
+      "players": 5,
+      "mode": "protect",
+      "automaticServerDeadline": true,
+      "victimAlive": true,
+      "restartedDuringConfession": false,
+      "reconnectedDuringConfession": true,
+      "secretAttackHidden": true
+    },
+    {
+      "players": 5,
+      "mode": "confess",
+      "automaticServerDeadline": true,
+      "victimAlive": true,
+      "restartedDuringConfession": false,
+      "reconnectedDuringConfession": true,
+      "secretAttackHidden": true
+    },
+    {
+      "players": 6,
+      "mode": "kill",
+      "automaticServerDeadline": true,
+      "victimAlive": false,
+      "restartedDuringConfession": false,
+      "reconnectedDuringConfession": true,
+      "secretAttackHidden": true
+    },
+    {
+      "players": 6,
+      "mode": "protect",
+      "automaticServerDeadline": true,
+      "victimAlive": true,
+      "restartedDuringConfession": false,
+      "reconnectedDuringConfession": true,
+      "secretAttackHidden": true
+    },
+    {
+      "players": 6,
+      "mode": "confess",
+      "automaticServerDeadline": true,
+      "victimAlive": true,
+      "restartedDuringConfession": false,
+      "reconnectedDuringConfession": true,
+      "secretAttackHidden": true
+    },
+    {
+      "players": 7,
+      "mode": "kill",
+      "automaticServerDeadline": true,
+      "victimAlive": false,
+      "restartedDuringConfession": false,
+      "reconnectedDuringConfession": true,
+      "secretAttackHidden": true
+    },
+    {
+      "players": 7,
+      "mode": "protect",
+      "automaticServerDeadline": true,
+      "victimAlive": true,
+      "restartedDuringConfession": false,
+      "reconnectedDuringConfession": true,
+      "secretAttackHidden": true
+    },
+    {
+      "players": 7,
+      "mode": "confess",
+      "automaticServerDeadline": true,
+      "victimAlive": true,
+      "restartedDuringConfession": false,
+      "reconnectedDuringConfession": true,
+      "secretAttackHidden": true
+    },
+    {
+      "players": 8,
+      "mode": "kill",
+      "automaticServerDeadline": true,
+      "victimAlive": false,
+      "restartedDuringConfession": false,
+      "reconnectedDuringConfession": true,
+      "secretAttackHidden": true
+    },
+    {
+      "players": 8,
+      "mode": "protect",
+      "automaticServerDeadline": true,
+      "victimAlive": true,
+      "restartedDuringConfession": false,
+      "reconnectedDuringConfession": true,
+      "secretAttackHidden": true
+    },
+    {
+      "players": 8,
+      "mode": "confess",
+      "automaticServerDeadline": true,
+      "victimAlive": true,
+      "restartedDuringConfession": false,
+      "reconnectedDuringConfession": true,
+      "secretAttackHidden": true
+    },
+    {
+      "players": 9,
+      "mode": "kill",
+      "automaticServerDeadline": true,
+      "victimAlive": false,
+      "restartedDuringConfession": false,
+      "reconnectedDuringConfession": true,
+      "secretAttackHidden": true
+    },
+    {
+      "players": 9,
+      "mode": "protect",
+      "automaticServerDeadline": true,
+      "victimAlive": true,
+      "restartedDuringConfession": false,
+      "reconnectedDuringConfession": true,
+      "secretAttackHidden": true
+    },
+    {
+      "players": 9,
+      "mode": "confess",
+      "automaticServerDeadline": true,
+      "victimAlive": true,
+      "restartedDuringConfession": false,
+      "reconnectedDuringConfession": true,
+      "secretAttackHidden": true
+    },
+    {
+      "players": 10,
+      "mode": "kill",
+      "automaticServerDeadline": true,
+      "victimAlive": false,
+      "restartedDuringConfession": false,
+      "reconnectedDuringConfession": true,
+      "secretAttackHidden": true
+    },
+    {
+      "players": 10,
+      "mode": "protect",
+      "automaticServerDeadline": true,
+      "victimAlive": true,
+      "restartedDuringConfession": false,
+      "reconnectedDuringConfession": true,
+      "secretAttackHidden": true
+    },
+    {
+      "players": 10,
+      "mode": "confess",
+      "automaticServerDeadline": true,
+      "victimAlive": true,
+      "restartedDuringConfession": false,
+      "reconnectedDuringConfession": true,
+      "secretAttackHidden": true
+    },
+    {
+      "players": 11,
+      "mode": "kill",
+      "automaticServerDeadline": true,
+      "victimAlive": false,
+      "restartedDuringConfession": false,
+      "reconnectedDuringConfession": true,
+      "secretAttackHidden": true
+    },
+    {
+      "players": 11,
+      "mode": "protect",
+      "automaticServerDeadline": true,
+      "victimAlive": true,
+      "restartedDuringConfession": false,
+      "reconnectedDuringConfession": true,
+      "secretAttackHidden": true
+    },
+    {
+      "players": 11,
+      "mode": "confess",
+      "automaticServerDeadline": true,
+      "victimAlive": true,
+      "restartedDuringConfession": false,
+      "reconnectedDuringConfession": true,
+      "secretAttackHidden": true
+    },
+    {
+      "players": 12,
+      "mode": "kill",
+      "automaticServerDeadline": true,
+      "victimAlive": false,
+      "restartedDuringConfession": false,
+      "reconnectedDuringConfession": true,
+      "secretAttackHidden": true
+    },
+    {
+      "players": 12,
+      "mode": "protect",
+      "automaticServerDeadline": true,
+      "victimAlive": true,
+      "restartedDuringConfession": false,
+      "reconnectedDuringConfession": true,
+      "secretAttackHidden": true
+    },
+    {
+      "players": 12,
+      "mode": "confess",
+      "automaticServerDeadline": true,
+      "victimAlive": true,
+      "restartedDuringConfession": false,
+      "reconnectedDuringConfession": true,
+      "secretAttackHidden": true
+    }
+  ],
+  "fullOriginalGameAcceptance": false,
+  "passed": true
+}

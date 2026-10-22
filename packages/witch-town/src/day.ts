@@ -5,7 +5,17 @@ import {
   type WTState,
   type WTPlayer,
   type PlayingCard,
+  type Random,
 } from "./index.ts";
+
+import {
+  beginBlackEvent,
+  commandBlackEvent,
+  eventPublic,
+  eventPrivate,
+  type WTEvent,
+  type WTEventCommand,
+} from "./events.ts";
 
 export type WTCommand =
   | { type: "DAWN_TARGET"; targetId: string }
@@ -21,7 +31,8 @@ export type WTCommand =
       asWitness?: boolean;
     }
   | { type: "REVEAL_TRYAL"; index: number }
-  | { type: "ABILITY_DECISION"; use: boolean };
+  | { type: "ABILITY_DECISION"; use: boolean }
+  | WTEventCommand;
 export type Ability = "ann" | "abigail" | "rebecca" | "giles";
 export type WTTask =
   | {
@@ -33,12 +44,21 @@ export type WTTask =
     }
   | { kind: "finish-turn"; playerId: string }
   | { kind: "trial"; actorId: string; targetId: string }
-  | { kind: "ability"; playerId: string; ability: Ability };
+  | { kind: "ability"; playerId: string; ability: Ability }
+  | {
+      kind: "resume-event";
+      pending: Extract<WTPending, { kind: "black-event" }>;
+    };
 export type WTPending =
   | null
   | { kind: "dawn-black-cat" }
   | Extract<WTTask, { kind: "trial" | "ability" }>
-  | { kind: "black-event"; card: PlayingCard; drawerId: string };
+  | {
+      kind: "black-event";
+      card: PlayingCard;
+      drawerId: string;
+      event?: WTEvent;
+    };
 export interface WTLog {
   seq: number;
   type: string;
@@ -50,14 +70,17 @@ export interface WTLog {
 }
 export interface WTOutcome {
   team: "townspeople" | "witches";
-  reason: "all-witch-tryals-revealed" | "no-living-townspeople";
+  reason:
+    | "all-witch-tryals-revealed"
+    | "no-living-townspeople"
+    | "last-townsperson-infected";
   winners: string[];
   losers: string[];
 }
-function fail(code: string): never {
+export function fail(code: string): never {
   throw new WTRuleError(code);
 }
-function player(s: WTState, id: string) {
+export function player(s: WTState, id: string) {
   return s.players.find((p) => p.id === id) ?? fail("BAD_PLAYER");
 }
 const alive = (s: WTState, id: string) => {
@@ -96,10 +119,10 @@ export function trialThreshold(s: WTState, actorId: string, targetId: string) {
     (player(s, targetId).table.some((c) => c.kind === "piety") ? 2 : 1)
   );
 }
-function log(s: WTState, item: Omit<WTLog, "seq">) {
+export function log(s: WTState, item: Omit<WTLog, "seq">) {
   s.log.push({ seq: s.log.length + 1, ...item });
 }
-function discard(s: WTState, cards: PlayingCard[]) {
+export function discard(s: WTState, cards: PlayingCard[]) {
   for (const c of cards) {
     delete c.asWitness;
     s.discard.push(c);
@@ -133,7 +156,7 @@ function advance(s: WTState, from: string) {
   }
   fail("NO_PLAYABLE_TURN");
 }
-function victory(s: WTState) {
+export function victory(s: WTState, personalLoser?: string) {
   const witchTryals = s.players
     .flatMap((p) => p.tryals)
     .filter((t) => t.kind === "witch");
@@ -144,21 +167,33 @@ function victory(s: WTState) {
   const team = townWin ? "townspeople" : "witches";
   s.outcome = {
     team,
-    reason: townWin ? "all-witch-tryals-revealed" : "no-living-townspeople",
+    reason: townWin
+      ? "all-witch-tryals-revealed"
+      : personalLoser
+        ? "last-townsperson-infected"
+        : "no-living-townspeople",
     winners: s.players
-      .filter((p) => p.everWitch === (team === "witches"))
+      .filter(
+        (p) => p.everWitch === (team === "witches") && p.id !== personalLoser,
+      )
       .map((p) => p.id),
     losers: s.players
-      .filter((p) => p.everWitch !== (team === "witches"))
+      .filter(
+        (p) => p.everWitch !== (team === "witches") || p.id === personalLoser,
+      )
       .map((p) => p.id),
   };
   s.phase = "over";
+  s.timerDeadline = null;
+  if (s.pending?.kind === "black-event") discard(s, [s.pending.card]);
+  for (const t of s.tasks)
+    if (t.kind === "resume-event") discard(s, [t.pending.card]);
   s.pending = null;
   s.tasks = [];
   s.turnPlayerId = null;
   log(s, { type: "GAME_OVER" });
 }
-function fatalReveal(p: WTPlayer, index: number) {
+export function fatalReveal(p: WTPlayer, index: number) {
   const hidden = p.tryals.filter((t) => !t.revealed),
     selected = hidden[index];
   if (!selected) fail("BAD_TRYAL_INDEX");
@@ -169,11 +204,26 @@ function fatalReveal(p: WTPlayer, index: number) {
   );
 }
 function checkDeathBoundary(s: WTState, dyingIds: string[]) {
+  const farmers = s.players.filter(
+    (p) =>
+      p.alive &&
+      !dyingIds.includes(p.id) &&
+      effectiveCharacter(s, p.id) === "john_proctor",
+  );
+  if (
+    farmers.length > 1 ||
+    farmers.some(
+      (p) =>
+        p.character === "martha_corey" &&
+        s.players.some(
+          (q) => dyingIds.includes(q.id) && q.character === "john_proctor",
+        ),
+    )
+  )
+    fail("CHECK_REQUIRED:X09:SHARED_FARMER_LOOT");
   for (const p of s.players.filter(
     (p) => p.alive && !dyingIds.includes(p.id),
   )) {
-    if (effectiveCharacter(s, p.id) === "john_proctor")
-      fail("CHECK_REQUIRED:X09:FARMER_LOOT");
     if (
       p.character === "martha_corey" &&
       effectiveCharacter(s, p.id) === "cotton_mather"
@@ -188,7 +238,7 @@ function checkDeathBoundary(s: WTState, dyingIds: string[]) {
     }
   }
 }
-function eliminate(s: WTState, root: WTPlayer) {
+export function eliminate(s: WTState, root: WTPlayer) {
   let partner = root.table.some((c) => c.kind === "matchmaker")
     ? s.players.find(
         (p) =>
@@ -210,13 +260,20 @@ function eliminate(s: WTState, root: WTPlayer) {
     s,
     dying.map((p) => p.id),
   );
+  const farmer = s.players.find(
+    (p) =>
+      p.alive &&
+      !dying.some((q) => q.id === p.id) &&
+      effectiveCharacter(s, p.id) === "john_proctor",
+  );
   for (const p of dying) {
     p.alive = false;
     for (const t of p.tryals) t.revealed = true;
-    discard(s, p.hand.splice(0));
+    const hand = p.hand.splice(0);
     const blues = p.table.filter((c) => color(c) === "blue");
     p.table = p.table.filter((c) => color(c) !== "blue");
-    discard(s, blues);
+    if (farmer) farmer.hand.push(...hand, ...blues);
+    else discard(s, [...hand, ...blues]);
     log(s, { type: "ELIMINATED", targetId: p.id });
   }
   s.frameCharacters = s.players.filter((p) => p.alive).map((p) => p.character);
@@ -235,10 +292,18 @@ function beginTrial(
     s.tasks.push({ kind: "ability", playerId: actorId, ability: "abigail" });
   s.tasks.push({ kind: "trial", actorId, targetId });
 }
-function drain(s: WTState) {
+export function drain(s: WTState, now = Date.now()) {
   while (s.tasks.length && s.phase !== "over") {
     const t = s.tasks.shift()!;
+    if (t.kind === "resume-event") {
+      s.phase = "black-event";
+      s.pending = t.pending;
+      beginBlackEvent(s, now);
+      return;
+    }
     if (t.kind === "trial") {
+      if (!player(s, t.actorId).alive)
+        fail("CHECK_REQUIRED:X02:TRIAL_ACTOR_ELIMINATED");
       if (!player(s, t.targetId).alive)
         fail("CHECK_REQUIRED:X02:TRIAL_TARGET_ELIMINATED");
       s.phase = "trial";
@@ -270,6 +335,7 @@ function drain(s: WTState) {
           actorId: t.playerId,
           cardKind: card.kind,
         });
+        beginBlackEvent(s, now);
         return;
       }
       player(s, t.playerId).hand.push(card);
@@ -302,6 +368,7 @@ function playCard(
   s: WTState,
   actorId: string,
   cmd: Extract<WTCommand, { type: "PLAY" }>,
+  now?: number,
 ) {
   const actor = alive(s, actorId),
     target = other(s, actorId, cmd.targetId),
@@ -426,7 +493,7 @@ function playCard(
         fail("CARD_EFFECT_NOT_IMPLEMENTED");
     }
   refreshCat(s);
-  drain(s);
+  drain(s, now);
 }
 
 /** Transactional pure reducer: any invalid or CHECK_REQUIRED command leaves input intact. */
@@ -434,13 +501,24 @@ export function reduceWitchTown(
   input: WTState,
   actorId: string,
   cmd: WTCommand,
+  context: { now?: number; random?: Random } = {},
 ): WTState {
   const s = structuredClone(upgradeWitchTown(input));
+  if (s.checkRequired) fail(s.checkRequired);
   alive(s, actorId);
   if (!cmd || typeof cmd !== "object" || typeof cmd.type !== "string")
     fail("BAD_GAME_COMMAND");
   if (s.phase === "over") fail("GAME_OVER");
-  if (s.phase === "black-event") fail("BLACK_EVENT_PENDING:M3_REQUIRED");
+  if (s.phase === "black-event") {
+    beginBlackEvent(s, context.now ?? Date.now());
+    return commandBlackEvent(
+      s,
+      actorId,
+      cmd,
+      context.now ?? Date.now(),
+      context.random,
+    );
+  }
   if (cmd.type === "DAWN_TARGET") {
     if (s.phase !== "dawn") fail("WRONG_PHASE");
     if (!player(s, actorId).everWitch) fail("WITCH_ONLY");
@@ -481,7 +559,7 @@ export function reduceWitchTown(
       if (p.ability === "giles")
         log(s, { type: "GILES_SHOWS_TWO_ACCUSATIONS", actorId });
     }
-    drain(s);
+    drain(s, context.now);
     return s;
   }
   if (cmd.type === "REVEAL_TRYAL") {
@@ -521,13 +599,13 @@ export function reduceWitchTown(
           ability: "rebecca" as const,
         })),
       );
-      drain(s);
+      drain(s, context.now);
     }
     return s;
   }
   if (s.phase !== "day" || s.pending) fail("WRONG_PHASE");
   if (s.turnPlayerId !== actorId) fail("NOT_YOUR_TURN");
-  if (cmd.type === "PLAY") playCard(s, actorId, cmd);
+  if (cmd.type === "PLAY") playCard(s, actorId, cmd, context.now);
   else if (cmd.type === "DRAW") {
     if (s.day.played) fail("DRAW_AFTER_PLAY");
     s.tasks.push(
@@ -540,7 +618,7 @@ export function reduceWitchTown(
       },
       { kind: "finish-turn", playerId: actorId },
     );
-    drain(s);
+    drain(s, context.now);
   } else if (cmd.type === "END_TURN") {
     if (!s.day.played) fail("MUST_DRAW_OR_PLAY");
     advance(s, actorId);
@@ -552,13 +630,19 @@ export function publicPending(s: WTState) {
   if (!p) return null;
   if (p.kind === "dawn-black-cat") return { kind: p.kind };
   if (p.kind === "black-event")
-    return { kind: p.kind, cardKind: p.card.kind, drawerId: p.drawerId };
+    return {
+      kind: p.kind,
+      cardKind: p.card.kind,
+      drawerId: p.drawerId,
+      ...eventPublic(s, p),
+    };
   if (p.kind === "trial")
     return { kind: p.kind, actorId: p.actorId, targetId: p.targetId };
   return { kind: p.kind, playerId: p.playerId, ability: p.ability };
 }
 export function privateChoice(s: WTState, id: string) {
   const p = s.pending;
+  if (p?.kind === "black-event") return eventPrivate(s, p, id);
   if (p?.kind === "trial" && p.actorId === id)
     return {
       kind: "trial" as const,

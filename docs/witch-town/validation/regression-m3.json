@@ -1,0 +1,102 @@
+{
+  "milestone": "M3_EVENT_ENGINE",
+  "status": "passed",
+  "firstFullSuite": {
+    "numTotalTests": 580,
+    "numPassedTests": 580,
+    "numFailedTests": 0,
+    "success": true
+  },
+  "witchTown": {
+    "numTotalTests": 147,
+    "numPassedTests": 147,
+    "numFailedTests": 0,
+    "success": true
+  },
+  "realProtocolCasesFinalRun": 27,
+  "realProtocolRuns": 2,
+  "simulationRunsSameSeeds": 2,
+  "distinctSeedCases": 180,
+  "completedGamesDistinctSeeds": 139,
+  "ruleBlockedDistinctSeeds": 41,
+  "typecheck": "passed",
+  "build": "passed",
+  "dbdProtocol": {
+    "games": [
+      {
+        "seed": 1701,
+        "code": "XX3V",
+        "commands": 228,
+        "winner": "survivor",
+        "events": 450,
+        "rejectedAsExpected": 24
+      },
+      {
+        "seed": 2903,
+        "code": "EG2U",
+        "commands": 268,
+        "winner": "survivor",
+        "events": 535,
+        "rejectedAsExpected": 28
+      },
+      {
+        "seed": 4111,
+        "code": "E2GT",
+        "commands": 109,
+        "winner": "killer",
+        "events": 223,
+        "rejectedAsExpected": 12
+      }
+    ],
+    "viewEqualityChecks": 3025,
+    "restartRestore": true
+  },
+  "dbdBrowserGames": [
+    {
+      "seed": 4111,
+      "room": "JUCA",
+      "commands": 109,
+      "winner": "killer",
+      "browsers": 5,
+      "killerFramesChecked": 112,
+      "screenshotsChecked": 5
+    },
+    {
+      "seed": 1701,
+      "room": "RSVH",
+      "commands": 228,
+      "winner": "survivor",
+      "browsers": 5,
+      "killerFramesChecked": 231,
+      "screenshotsChecked": 5
+    }
+  ],
+  "dbdLobby": [
+    {
+      "scenario": "5人_两人想当杀手",
+      "room": "6E3W",
+      "players": 5,
+      "killerOptions": 3
+    },
+    {
+      "scenario": "4人_没人选杀手_一人报名控两名",
+      "room": "29MK",
+      "players": 4,
+      "killerOptions": 3
+    },
+    {
+      "scenario": "3人",
+      "room": "CS2H",
+      "players": 3,
+      "killerOptions": 3
+    }
+  ],
+  "deployment": false,
+  "completeOriginalGameAcceptance": false,
+  "finalFullSuite": {
+    "numTotalTests": 581,
+    "numPassedTests": 581,
+    "numFailedTests": 0,
+    "success": true
+  }
+}

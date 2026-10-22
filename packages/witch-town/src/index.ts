@@ -63,6 +63,7 @@ export interface WTState {
   dawnVotes: Record<string, string>;
   log: WTLog[];
   outcome: WTOutcome | null;
+  checkRequired?: string | null;
   frameCharacters: CharacterId[];
   gavelTargetId: string | null;
   timerDeadline: number | null;
@@ -221,6 +222,7 @@ export function createWitchTown(
     dawnVotes: {},
     log: [],
     outcome: null,
+    checkRequired: null,
   };
 }
 /** Additive M1 save migration; no dealing or random regeneration on reconnect. */
@@ -232,6 +234,7 @@ export function upgradeWitchTown(state: WTState): WTState {
     dawnVotes: state.dawnVotes ?? {},
     log: state.log ?? [],
     outcome: state.outcome ?? null,
+    checkRequired: state.checkRequired ?? null,
   };
 }
 /** Explicit allow-list projection. Public hidden cards expose counts only. */
@@ -246,6 +249,8 @@ export function viewForWitchTown(state: WTState, playerId: string | null) {
     phase: state.phase,
     turnPlayerId: state.turnPlayerId,
     blackCatOwnerId: state.blackCatOwnerId,
+    gavelTargetId: state.gavelTargetId,
+    checkRequired: state.checkRequired ?? null,
     deckCount: state.deck.length,
     discard: state.discard,
     pending: publicPending(state),

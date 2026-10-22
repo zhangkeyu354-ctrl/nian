@@ -174,7 +174,7 @@ export const CHARACTERS = [
     spec: "WITCH_TOWN_CHARACTER_MATRIX.md",
     openIssues: ["X09"],
     abilityZh: "其他玩家死亡时收取其手牌和蓝牌进入手牌；双重继承见X09。",
-    implementation: "check-required",
+    implementation: "partial-death-loot",
   },
   {
     id: "H07",
@@ -300,7 +300,7 @@ export const CHARACTERS = [
     spec: "WITCH_TOWN_CHARACTER_MATRIX.md",
     openIssues: ["X10"],
     abilityZh: "每局一次，自白时可以不揭示身份牌。",
-    implementation: "metadata-only",
+    implementation: "night-once",
   },
 ] as const;
 export const CARDS = [
@@ -434,7 +434,7 @@ export const CARDS = [
     openIssues: [],
     lifecycle: "persistent",
     effectZh: "免于夜晚直接袭击；不阻止情侣连锁。",
-    implementation: "persistent-only",
+    implementation: "night-passive",
     points: 0,
   },
   {
@@ -548,7 +548,7 @@ export const CARDS = [
     openIssues: ["X04", "X08"],
     lifecycle: "immediate-event",
     effectZh: "立即处理黑猫身份揭示，再同时从左侧取得一张隐藏身份。",
-    implementation: "interruption-only",
+    implementation: "partial-event",
     points: 0,
   },
   {
@@ -567,7 +567,7 @@ export const CARDS = [
     openIssues: ["X05", "X08"],
     lifecycle: "immediate-event",
     effectZh: "立即进行女巫袭击、警长保护、自白及夜晚结算。",
-    implementation: "interruption-only",
+    implementation: "partial-event",
     points: 0,
   },
   {
@@ -586,7 +586,7 @@ export const CARDS = [
     openIssues: [],
     lifecycle: "persistent",
     effectZh: "黎明女巫放置；阴谋时持有者一张身份被揭示。",
-    implementation: "partial-dawn-day",
+    implementation: "partial-dawn-day-event",
     points: 0,
   },
 ] as const;

@@ -1,0 +1,332 @@
+{
+  "profile": "candidate-59",
+  "townHall": "actual random 15-character pool; bots may decline optional abilities",
+  "attemptedGamesPerPlayerCount": 20,
+  "results": [
+    {
+      "players": 4,
+      "attempted": 20,
+      "completed": 20,
+      "ruleBlocked": 0,
+      "stepLimit": 0,
+      "blockedSeeds": [],
+      "failures": [],
+      "blocks": {},
+      "teams": {
+        "townspeople": 15,
+        "witches": 5
+      },
+      "commands": 4125
+    },
+    {
+      "players": 5,
+      "attempted": 20,
+      "completed": 20,
+      "ruleBlocked": 0,
+      "stepLimit": 0,
+      "blockedSeeds": [],
+      "failures": [],
+      "blocks": {},
+      "teams": {
+        "townspeople": 12,
+        "witches": 8
+      },
+      "commands": 5518
+    },
+    {
+      "players": 6,
+      "attempted": 20,
+      "completed": 18,
+      "ruleBlocked": 2,
+      "stepLimit": 0,
+      "blockedSeeds": [
+        {
+          "seed": 60002,
+          "code": "CHECK_REQUIRED:X04:CAT_DEATH_BEFORE_TRANSMISSION"
+        },
+        {
+          "seed": 60020,
+          "code": "CHECK_REQUIRED:X04:CAT_DEATH_BEFORE_TRANSMISSION"
+        }
+      ],
+      "failures": [],
+      "blocks": {
+        "CHECK_REQUIRED:X04:CAT_DEATH_BEFORE_TRANSMISSION": 2
+      },
+      "teams": {
+        "townspeople": 7,
+        "witches": 11
+      },
+      "commands": 5788
+    },
+    {
+      "players": 7,
+      "attempted": 20,
+      "completed": 18,
+      "ruleBlocked": 2,
+      "stepLimit": 0,
+      "blockedSeeds": [
+        {
+          "seed": 70003,
+          "code": "CHECK_REQUIRED:X04:CAT_DEATH_BEFORE_TRANSMISSION"
+        },
+        {
+          "seed": 70010,
+          "code": "CHECK_REQUIRED:X04:CAT_DEATH_BEFORE_TRANSMISSION"
+        }
+      ],
+      "failures": [],
+      "blocks": {
+        "CHECK_REQUIRED:X04:CAT_DEATH_BEFORE_TRANSMISSION": 2
+      },
+      "teams": {
+        "townspeople": 8,
+        "witches": 10
+      },
+      "commands": 6626
+    },
+    {
+      "players": 8,
+      "attempted": 20,
+      "completed": 14,
+      "ruleBlocked": 6,
+      "stepLimit": 0,
+      "blockedSeeds": [
+        {
+          "seed": 80001,
+          "code": "CHECK_REQUIRED:X04:CAT_DEATH_BEFORE_TRANSMISSION"
+        },
+        {
+          "seed": 80002,
+          "code": "CHECK_REQUIRED:X04:CAT_DEATH_BEFORE_TRANSMISSION"
+        },
+        {
+          "seed": 80011,
+          "code": "CHECK_REQUIRED:X04:CAT_DEATH_BEFORE_TRANSMISSION"
+        },
+        {
+          "seed": 80012,
+          "code": "CHECK_REQUIRED:X09:SHARED_FARMER_LOOT"
+        },
+        {
+          "seed": 80013,
+          "code": "CHECK_REQUIRED:X04:CAT_DEATH_BEFORE_TRANSMISSION"
+        },
+        {
+          "seed": 80020,
+          "code": "CHECK_REQUIRED:X04:CAT_DEATH_BEFORE_TRANSMISSION"
+        }
+      ],
+      "failures": [],
+      "blocks": {
+        "CHECK_REQUIRED:X04:CAT_DEATH_BEFORE_TRANSMISSION": 5,
+        "CHECK_REQUIRED:X09:SHARED_FARMER_LOOT": 1
+      },
+      "teams": {
+        "townspeople": 10,
+        "witches": 4
+      },
+      "commands": 6168
+    },
+    {
+      "players": 9,
+      "attempted": 20,
+      "completed": 13,
+      "ruleBlocked": 7,
+      "stepLimit": 0,
+      "blockedSeeds": [
+        {
+          "seed": 90003,
+          "code": "CHECK_REQUIRED:X09:SHARED_FARMER_LOOT"
+        },
+        {
+          "seed": 90006,
+          "code": "CHECK_REQUIRED:X04:CAT_DEATH_BEFORE_TRANSMISSION"
+        },
+        {
+          "seed": 90007,
+          "code": "CHECK_REQUIRED:X04:CAT_DEATH_BEFORE_TRANSMISSION"
+        },
+        {
+          "seed": 90012,
+          "code": "CHECK_REQUIRED:X04:CAT_DEATH_BEFORE_TRANSMISSION"
+        },
+        {
+          "seed": 90014,
+          "code": "CHECK_REQUIRED:X04:CAT_DEATH_BEFORE_TRANSMISSION"
+        },
+        {
+          "seed": 90015,
+          "code": "CHECK_REQUIRED:X04:CAT_DEATH_BEFORE_TRANSMISSION"
+        },
+        {
+          "seed": 90018,
+          "code": "CHECK_REQUIRED:X04:CAT_DEATH_BEFORE_TRANSMISSION"
+        }
+      ],
+      "failures": [],
+      "blocks": {
+        "CHECK_REQUIRED:X09:SHARED_FARMER_LOOT": 1,
+        "CHECK_REQUIRED:X04:CAT_DEATH_BEFORE_TRANSMISSION": 6
+      },
+      "teams": {
+        "townspeople": 3,
+        "witches": 10
+      },
+      "commands": 6815
+    },
+    {
+      "players": 10,
+      "attempted": 20,
+      "completed": 14,
+      "ruleBlocked": 6,
+      "stepLimit": 0,
+      "blockedSeeds": [
+        {
+          "seed": 100010,
+          "code": "CHECK_REQUIRED:X04:CAT_DEATH_BEFORE_TRANSMISSION"
+        },
+        {
+          "seed": 100011,
+          "code": "CHECK_REQUIRED:X04:CAT_DEATH_BEFORE_TRANSMISSION"
+        },
+        {
+          "seed": 100012,
+          "code": "CHECK_REQUIRED:X04:CAT_DEATH_BEFORE_TRANSMISSION"
+        },
+        {
+          "seed": 100013,
+          "code": "CHECK_REQUIRED:X04:CAT_DEATH_BEFORE_TRANSMISSION"
+        },
+        {
+          "seed": 100015,
+          "code": "CHECK_REQUIRED:X04:CAT_DEATH_BEFORE_TRANSMISSION"
+        },
+        {
+          "seed": 100018,
+          "code": "CHECK_REQUIRED:X04:CAT_DEATH_BEFORE_TRANSMISSION"
+        }
+      ],
+      "failures": [],
+      "blocks": {
+        "CHECK_REQUIRED:X04:CAT_DEATH_BEFORE_TRANSMISSION": 6
+      },
+      "teams": {
+        "townspeople": 10,
+        "witches": 4
+      },
+      "commands": 5536
+    },
+    {
+      "players": 11,
+      "attempted": 20,
+      "completed": 10,
+      "ruleBlocked": 10,
+      "stepLimit": 0,
+      "blockedSeeds": [
+        {
+          "seed": 110002,
+          "code": "CHECK_REQUIRED:X04:CAT_DEATH_BEFORE_TRANSMISSION"
+        },
+        {
+          "seed": 110005,
+          "code": "CHECK_REQUIRED:X04:CAT_DEATH_BEFORE_TRANSMISSION"
+        },
+        {
+          "seed": 110009,
+          "code": "CHECK_REQUIRED:X04:CAT_DEATH_BEFORE_TRANSMISSION"
+        },
+        {
+          "seed": 110010,
+          "code": "CHECK_REQUIRED:X04:CAT_DEATH_BEFORE_TRANSMISSION"
+        },
+        {
+          "seed": 110011,
+          "code": "CHECK_REQUIRED:X04:CAT_DEATH_BEFORE_TRANSMISSION"
+        },
+        {
+          "seed": 110013,
+          "code": "CHECK_REQUIRED:X04:CAT_DEATH_BEFORE_TRANSMISSION"
+        },
+        {
+          "seed": 110014,
+          "code": "CHECK_REQUIRED:X04:CAT_DEATH_BEFORE_TRANSMISSION"
+        },
+        {
+          "seed": 110015,
+          "code": "CHECK_REQUIRED:X04:CAT_DEATH_BEFORE_TRANSMISSION"
+        },
+        {
+          "seed": 110016,
+          "code": "CHECK_REQUIRED:X04:CAT_DEATH_BEFORE_TRANSMISSION"
+        },
+        {
+          "seed": 110019,
+          "code": "CHECK_REQUIRED:X04:CAT_DEATH_BEFORE_TRANSMISSION"
+        }
+      ],
+      "failures": [],
+      "blocks": {
+        "CHECK_REQUIRED:X04:CAT_DEATH_BEFORE_TRANSMISSION": 10
+      },
+      "teams": {
+        "townspeople": 6,
+        "witches": 4
+      },
+      "commands": 6000
+    },
+    {
+      "players": 12,
+      "attempted": 20,
+      "completed": 12,
+      "ruleBlocked": 8,
+      "stepLimit": 0,
+      "blockedSeeds": [
+        {
+          "seed": 120001,
+          "code": "CHECK_REQUIRED:X04:LAST_HIDDEN_WITCH_TRANSFER"
+        },
+        {
+          "seed": 120004,
+          "code": "CHECK_REQUIRED:X04:CAT_DEATH_BEFORE_TRANSMISSION"
+        },
+        {
+          "seed": 120005,
+          "code": "CHECK_REQUIRED:X04:CAT_DEATH_BEFORE_TRANSMISSION"
+        },
+        {
+          "seed": 120008,
+          "code": "CHECK_REQUIRED:X04:CAT_DEATH_BEFORE_TRANSMISSION"
+        },
+        {
+          "seed": 120015,
+          "code": "CHECK_REQUIRED:X04:CAT_DEATH_BEFORE_TRANSMISSION"
+        },
+        {
+          "seed": 120016,
+          "code": "CHECK_REQUIRED:X04:CAT_DEATH_BEFORE_TRANSMISSION"
+        },
+        {
+          "seed": 120018,
+          "code": "CHECK_REQUIRED:X04:CAT_DEATH_BEFORE_TRANSMISSION"
+        },
+        {
+          "seed": 120019,
+          "code": "CHECK_REQUIRED:X09:SHARED_FARMER_LOOT"
+        }
+      ],
+      "failures": [],
+      "blocks": {
+        "CHECK_REQUIRED:X04:LAST_HIDDEN_WITCH_TRANSFER": 1,
+        "CHECK_REQUIRED:X04:CAT_DEATH_BEFORE_TRANSMISSION": 6,
+        "CHECK_REQUIRED:X09:SHARED_FARMER_LOOT": 1
+      },
+      "teams": {
+        "townspeople": 12,
+        "witches": 0
+      },
+      "commands": 6289
+    }
+  ],
+  "completeOriginalGameAcceptance": false
+}
