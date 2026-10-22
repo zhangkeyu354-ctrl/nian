@@ -1,0 +1,30 @@
+{
+  "date": "2026-10-22",
+  "scope": "M5 Gate1 round2 visual mock only; no protocol or deployment",
+  "unit": {
+    "total": 781,
+    "passed": 781,
+    "failed": 0,
+    "success": true
+  },
+  "typecheck": "passed",
+  "build": "passed",
+  "screenshots": {
+    "primary": 96,
+    "interaction": 9,
+    "total": 105,
+    "issues": [],
+    "errors": []
+  },
+  "geometry": 36,
+  "interactionGroups": 14,
+  "phoneGroups": 6,
+  "cpu4xFirstTwoFramesMs": 150.79999999701977,
+  "limitations": [
+    "No actual Socket.IO rooms or reconnect in Gate1",
+    "Wake Lock and visibility lifecycle checks use API stubs; physical phone tests pending",
+    "Known pre-existing DBD browser regression remains in round1 report, not retested or declared fixed this round",
+    "Only internal list/hand scrolling; no page scroll",
+    "External visual approval pending"
+  ]
+}

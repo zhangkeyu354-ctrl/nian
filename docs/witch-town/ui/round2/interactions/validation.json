@@ -1,0 +1,383 @@
+{
+  "scope": "mock UI interactions only",
+  "results": [
+    "4–12人×4尺寸：36种排座，自己居中在底部，无核心文字截断/座位重叠",
+    "手牌大图→非法自己目标提示→合法目标→同位置确认→飞牌与公开反馈",
+    "审判确认前不在DOM写入隐藏牌面，确认后翻牌、女巫烟雾与死亡横幅",
+    "阴谋背面选牌→确认→仅本人新牌展示",
+    "自白二次确认、本人牌揭示、末10秒红色圆环",
+    "共同分牌选取后显示等待下一位，并禁用重复领取",
+    "说书人手机上下箭头、拖拽、保存后抽2/出牌两个选项",
+    "底部详情抽屉、私人审判牌按住翻开/松手盖回，键盘同样可用",
+    "死亡只读、没有手牌出牌入口",
+    "女巫/普通人夜间外部场景结构相同，差别只在私人事件与行动区",
+    "多个阶段横幅按队列播放、约1.9秒后退出且不拦截点击",
+    "手牌半屏抽屉与底部关闭、省电模式开关",
+    "夜晚目标二次确认，不在首击提交",
+    "样稿未连接Socket.IO、未持久化牌面/凭证；无页面异常（非真实协议隐私验收）"
+  ],
+  "geometry": [
+    {
+      "width": 390,
+      "height": 844,
+      "players": 4,
+      "count": 4,
+      "collisions": [],
+      "selfCentered": true,
+      "selfBottom": true,
+      "clipped": []
+    },
+    {
+      "width": 390,
+      "height": 844,
+      "players": 5,
+      "count": 5,
+      "collisions": [],
+      "selfCentered": true,
+      "selfBottom": true,
+      "clipped": []
+    },
+    {
+      "width": 390,
+      "height": 844,
+      "players": 6,
+      "count": 6,
+      "collisions": [],
+      "selfCentered": true,
+      "selfBottom": true,
+      "clipped": []
+    },
+    {
+      "width": 390,
+      "height": 844,
+      "players": 7,
+      "count": 7,
+      "collisions": [],
+      "selfCentered": true,
+      "selfBottom": true,
+      "clipped": []
+    },
+    {
+      "width": 390,
+      "height": 844,
+      "players": 8,
+      "count": 8,
+      "collisions": [],
+      "selfCentered": true,
+      "selfBottom": true,
+      "clipped": []
+    },
+    {
+      "width": 390,
+      "height": 844,
+      "players": 9,
+      "count": 9,
+      "collisions": [],
+      "selfCentered": true,
+      "selfBottom": true,
+      "clipped": []
+    },
+    {
+      "width": 390,
+      "height": 844,
+      "players": 10,
+      "count": 10,
+      "collisions": [],
+      "selfCentered": true,
+      "selfBottom": true,
+      "clipped": []
+    },
+    {
+      "width": 390,
+      "height": 844,
+      "players": 11,
+      "count": 11,
+      "collisions": [],
+      "selfCentered": true,
+      "selfBottom": true,
+      "clipped": []
+    },
+    {
+      "width": 390,
+      "height": 844,
+      "players": 12,
+      "count": 12,
+      "collisions": [],
+      "selfCentered": true,
+      "selfBottom": true,
+      "clipped": []
+    },
+    {
+      "width": 375,
+      "height": 667,
+      "players": 4,
+      "count": 4,
+      "collisions": [],
+      "selfCentered": true,
+      "selfBottom": true,
+      "clipped": []
+    },
+    {
+      "width": 375,
+      "height": 667,
+      "players": 5,
+      "count": 5,
+      "collisions": [],
+      "selfCentered": true,
+      "selfBottom": true,
+      "clipped": []
+    },
+    {
+      "width": 375,
+      "height": 667,
+      "players": 6,
+      "count": 6,
+      "collisions": [],
+      "selfCentered": true,
+      "selfBottom": true,
+      "clipped": []
+    },
+    {
+      "width": 375,
+      "height": 667,
+      "players": 7,
+      "count": 7,
+      "collisions": [],
+      "selfCentered": true,
+      "selfBottom": true,
+      "clipped": []
+    },
+    {
+      "width": 375,
+      "height": 667,
+      "players": 8,
+      "count": 8,
+      "collisions": [],
+      "selfCentered": true,
+      "selfBottom": true,
+      "clipped": []
+    },
+    {
+      "width": 375,
+      "height": 667,
+      "players": 9,
+      "count": 9,
+      "collisions": [],
+      "selfCentered": true,
+      "selfBottom": true,
+      "clipped": []
+    },
+    {
+      "width": 375,
+      "height": 667,
+      "players": 10,
+      "count": 10,
+      "collisions": [],
+      "selfCentered": true,
+      "selfBottom": true,
+      "clipped": []
+    },
+    {
+      "width": 375,
+      "height": 667,
+      "players": 11,
+      "count": 11,
+      "collisions": [],
+      "selfCentered": true,
+      "selfBottom": true,
+      "clipped": []
+    },
+    {
+      "width": 375,
+      "height": 667,
+      "players": 12,
+      "count": 12,
+      "collisions": [],
+      "selfCentered": true,
+      "selfBottom": true,
+      "clipped": []
+    },
+    {
+      "width": 844,
+      "height": 390,
+      "players": 4,
+      "count": 4,
+      "collisions": [],
+      "selfCentered": true,
+      "selfBottom": true,
+      "clipped": []
+    },
+    {
+      "width": 844,
+      "height": 390,
+      "players": 5,
+      "count": 5,
+      "collisions": [],
+      "selfCentered": true,
+      "selfBottom": true,
+      "clipped": []
+    },
+    {
+      "width": 844,
+      "height": 390,
+      "players": 6,
+      "count": 6,
+      "collisions": [],
+      "selfCentered": true,
+      "selfBottom": true,
+      "clipped": []
+    },
+    {
+      "width": 844,
+      "height": 390,
+      "players": 7,
+      "count": 7,
+      "collisions": [],
+      "selfCentered": true,
+      "selfBottom": true,
+      "clipped": []
+    },
+    {
+      "width": 844,
+      "height": 390,
+      "players": 8,
+      "count": 8,
+      "collisions": [],
+      "selfCentered": true,
+      "selfBottom": true,
+      "clipped": []
+    },
+    {
+      "width": 844,
+      "height": 390,
+      "players": 9,
+      "count": 9,
+      "collisions": [],
+      "selfCentered": true,
+      "selfBottom": true,
+      "clipped": []
+    },
+    {
+      "width": 844,
+      "height": 390,
+      "players": 10,
+      "count": 10,
+      "collisions": [],
+      "selfCentered": true,
+      "selfBottom": true,
+      "clipped": []
+    },
+    {
+      "width": 844,
+      "height": 390,
+      "players": 11,
+      "count": 11,
+      "collisions": [],
+      "selfCentered": true,
+      "selfBottom": true,
+      "clipped": []
+    },
+    {
+      "width": 844,
+      "height": 390,
+      "players": 12,
+      "count": 12,
+      "collisions": [],
+      "selfCentered": true,
+      "selfBottom": true,
+      "clipped": []
+    },
+    {
+      "width": 1440,
+      "height": 900,
+      "players": 4,
+      "count": 4,
+      "collisions": [],
+      "selfCentered": true,
+      "selfBottom": true,
+      "clipped": []
+    },
+    {
+      "width": 1440,
+      "height": 900,
+      "players": 5,
+      "count": 5,
+      "collisions": [],
+      "selfCentered": true,
+      "selfBottom": true,
+      "clipped": []
+    },
+    {
+      "width": 1440,
+      "height": 900,
+      "players": 6,
+      "count": 6,
+      "collisions": [],
+      "selfCentered": true,
+      "selfBottom": true,
+      "clipped": []
+    },
+    {
+      "width": 1440,
+      "height": 900,
+      "players": 7,
+      "count": 7,
+      "collisions": [],
+      "selfCentered": true,
+      "selfBottom": true,
+      "clipped": []
+    },
+    {
+      "width": 1440,
+      "height": 900,
+      "players": 8,
+      "count": 8,
+      "collisions": [],
+      "selfCentered": true,
+      "selfBottom": true,
+      "clipped": []
+    },
+    {
+      "width": 1440,
+      "height": 900,
+      "players": 9,
+      "count": 9,
+      "collisions": [],
+      "selfCentered": true,
+      "selfBottom": true,
+      "clipped": []
+    },
+    {
+      "width": 1440,
+      "height": 900,
+      "players": 10,
+      "count": 10,
+      "collisions": [],
+      "selfCentered": true,
+      "selfBottom": true,
+      "clipped": []
+    },
+    {
+      "width": 1440,
+      "height": 900,
+      "players": 11,
+      "count": 11,
+      "collisions": [],
+      "selfCentered": true,
+      "selfBottom": true,
+      "clipped": []
+    },
+    {
+      "width": 1440,
+      "height": 900,
+      "players": 12,
+      "count": 12,
+      "collisions": [],
+      "selfCentered": true,
+      "selfBottom": true,
+      "clipped": []
+    }
+  ],
+  "errors": [],
+  "sockets": []
+}

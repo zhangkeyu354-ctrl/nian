@@ -38,48 +38,8 @@ export function Portrait({ index }: { index: number }) {
 }
 
 export function RoomArt() {
-  return <div className="wt-room-art" aria-hidden="true">
-    <svg className="wt-wide-room" viewBox="0 0 1440 900" preserveAspectRatio="xMidYMid slice">
-      <defs><pattern id="wt-grain" width="120" height="120" patternUnits="userSpaceOnUse"><path d="M0 5h120M0 38h120M0 86h120M9 0v120M68 0v120" stroke="var(--wt-moon)" strokeWidth=".5" opacity=".06"/></pattern><radialGradient id="wt-moonshine"><stop stopColor="var(--wt-moon)" stopOpacity=".25"/><stop offset="1" stopColor="var(--wt-moon)" stopOpacity="0"/></radialGradient></defs>
-      <rect width="1440" height="900" fill="var(--wt-ink)"/>
-      <path d="M0 0h1440v900H0z" fill="url(#wt-grain)"/>
-      <ellipse cx="260" cy="190" rx="470" ry="380" fill="url(#wt-moonshine)"/>
-      <g stroke="var(--wt-wood-dark)" strokeWidth="10">
-        <path d="M71 340V130a105 105 0 0 1 210 0v210z" fill="var(--wt-night)"/>
-        <circle cx="115" cy="107" r="29" fill="var(--wt-moon)" stroke="none" opacity=".35"/>
-        <path d="M78 278l27-29 23 29v56H78zm55 56V221l27-27 28 27v113m8 0v-68l33-25 35 25v68" fill="var(--wt-wall)" strokeWidth="2"/>
-        <path d="M80 170h194M80 254h194M176 30v307"/>
-      </g>
-      <g fill="var(--wt-candle)"><path d="M145 235h6v11h-6zm15 15h6v12h-6zm65 27h6v12h-6z"/></g>
-      <path d="M77 340L500 750h380L280 340z" fill="var(--wt-moon)" opacity=".025"/>
-      <g fill="var(--wt-night)" stroke="var(--wt-line)" strokeWidth="2">
-        <path d="M1060 774V477l98-79 112 79v297zM1020 477l138-106 148 106z"/>
-        <path d="M1179 774V573l89-79 102 79v201M1144 574l124-109 132 109z"/>
-        <path d="M1065 758V625l-45-45-45 45v133M938 626l82-81 81 81z"/>
-      </g>
-      <g fill="var(--wt-candle)" opacity=".4"><path d="M1136 516h16v25h-16zm38 0h16v25h-16zm81 94h12v20h-12zm24 0h12v20h-12z"/></g>
-      <path d="M0 806q350-55 720-5t720-20v119H0z" fill="var(--wt-wood-dark)"/>
-      <path d="M0 830l1440-12M0 867l1440-13M240 820l-80 80M1050 820l90 80" stroke="var(--wt-wood)" opacity=".5"/>
-      <path d="M1350 900q-30-230 45-443m-35 243-70-55m86-8 50-73m-45 12-54-80" stroke="var(--wt-night)" strokeWidth="13" fill="none"/>
-    </svg>
-    <svg className="wt-mobile-room" viewBox="0 0 390 844" preserveAspectRatio="xMidYMid slice">
-      <rect width="390" height="844" fill="var(--wt-ink)"/>
-      <g stroke="var(--wt-wood-dark)" strokeWidth="6">
-        <path d="M-28 350V146a58 58 0 0 1 116 0v204z" fill="var(--wt-night)"/>
-        <circle cx="49" cy="151" r="18" fill="var(--wt-moon)" stroke="none" opacity=".5"/>
-        <path d="M-28 226H88M30 91v259M-28 290H88"/>
-      </g>
-      <g fill="var(--wt-wall)" stroke="var(--wt-line)" strokeWidth=".5">
-        <path d="M290 382V206l39-43 40 43v176zM282 207l47-54 48 54z"/>
-        <path d="M248 400V280l36-35 33 35v120M240 281l44-44 42 44z"/>
-        <path d="M345 420V321l35-33 35 33v99"/>
-      </g>
-      <path d="M313 224h7v12h-7zm18 0h7v12h-7zm-61 77h7v11h-7z" fill="var(--wt-candle)" opacity=".25"/>
-      <path d="M0 780q180-25 390 10v54H0z" fill="var(--wt-wood-dark)"/>
-      <path d="M0 818h390M90 794l-20 50M290 794l10 50" stroke="var(--wt-wood)" opacity=".5"/>
-    </svg>
-    <div className="wt-grain"/><div className="wt-vignette"/><div className="wt-moon-grid"/>
-  </div>;
+  // A quiet plaster wall shares the table's two light sources; no pasted scenery.
+  return <div className="wt-room-art" aria-hidden="true"><div className="wt-lit-wall"/><div className="wt-grain"/><div className="wt-vignette"/><div className="wt-moon-grid"/></div>;
 }
 
 export function Candle() {

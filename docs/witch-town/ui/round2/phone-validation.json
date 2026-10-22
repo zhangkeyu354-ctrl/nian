@@ -1,0 +1,13 @@
+{
+  "scope": "mock mobile UI; Wake Lock and visibility use deterministic API stubs, no actual reconnect",
+  "results": [
+    "游戏作用域禁止双指/双击页面缩放，保留单指横纵滑动",
+    "Wake Lock功能检测/请求；失焦盖牌；模拟切后台返回保留当前阶段并提示轮到我，不伪报真实重连",
+    "座位底部抽屉滑动手柄关闭",
+    "超过5张手牌内部横滑，页面保持不横滚",
+    "省电模式关闭粒子/烟雾/动画并释放屏幕常亮",
+    "Chrome 4倍CPU降速：阶段切换到两帧提交 150.8ms（非安卓真机帧率承诺）"
+  ],
+  "cpu4xFirstTwoFramesMs": 150.79999999701977,
+  "errors": []
+}
