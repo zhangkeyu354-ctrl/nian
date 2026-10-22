@@ -480,3 +480,24 @@
 @keyframes current-ring { 0%,100% { stroke-opacity: 1; } 50% { stroke-opacity: .35; } }
 @keyframes room-reach { 0%,100% { stroke-opacity: 1; } 50% { stroke-opacity: .45; } }
 [data-motion="off"] .killer-halo, [data-motion="off"] .current-halo, [data-motion="off"] .current-ring, [data-motion="off"] .room-reachable { animation: none; }
+/* 缩得很小时（看全图）：房间名和人名放大，细节淡化，避免糊成一片 */
+svg[data-zoom="far"] .room-label { font-size: 30px !important; }
+svg[data-zoom="far"] [data-actor] text { font-size: 22px; }
+svg[data-zoom="far"] .prop-node { opacity: .8; }
+/* 2.5D：棋子像立在棋盘上的立牌，有投影 */
+[data-actor] .visual-token { filter: drop-shadow(0 6px 4px rgba(0,0,0,.65)); }
+
+/* 2.5D 倾斜视角（2026-10-22）：整张地图像桌面上的棋盘，可在设置里关闭 */
+[data-tilt="on"] .map-viewport > svg {
+  transform: perspective(1400px) rotateX(28deg) scale(.94);
+  transform-origin: 50% 55%;
+}
+[data-tilt="on"] .map-viewport { background: radial-gradient(ellipse at 50% 30%, #2a3a3e 0%, #0b1012 75%); }
+/* 降噪：路线标记缩小、道具在缩小时更淡、房间标题更清楚 */
+.route-badge { opacity: .9; }
+.route-badge.is-lit { opacity: 1; }
+svg[data-zoom="far"] .route-badge { opacity: .75; }
+.room-extrude { transition: opacity .3s; }
+[data-tilt="on"] .map-viewport { overflow: hidden; contain: paint; }
+[data-tilt="on"] .map-viewport > svg[data-full] { transform: none; }
+[data-tilt="on"] .board-overview .map-viewport > svg { transform: none; }

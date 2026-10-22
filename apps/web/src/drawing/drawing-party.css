@@ -1,0 +1,669 @@
+.dp-app {
+  --ink: #30233f;
+  --muted: #766a85;
+  --accent: #7550bd;
+  --accent-light: #eee7fb;
+  --paper: #faf7ff;
+  min-height: 100svh;
+  background: var(--paper);
+  color: var(--ink);
+  font-family: ui-rounded, "Microsoft YaHei", system-ui, sans-serif;
+  padding: 0 18px 24px;
+}
+.dp-app * {
+  box-sizing: border-box;
+}
+.dp-fa {
+  --accent: #284c65;
+  --accent-light: #e6eef0;
+  --paper: #f4f0e6;
+  --ink: #243f50;
+  --muted: #6b7d83;
+}
+.dp-app button,
+.dp-app input,
+.dp-app select,
+.dp-app textarea {
+  font: inherit;
+  min-height: 44px;
+  border: 1px solid #d9d0e0;
+  border-radius: 12px;
+  padding: 10px 14px;
+  background: white;
+  color: var(--ink);
+}
+.dp-app button {
+  cursor: pointer;
+  transition:
+    transform 0.15s,
+    background 0.15s;
+}
+.dp-app button:hover:not(:disabled) {
+  background: var(--accent-light);
+}
+.dp-app button:active:not(:disabled) {
+  transform: translateY(2px);
+}
+.dp-app button:disabled {
+  opacity: 0.48;
+  cursor: default;
+}
+.dp-app button[aria-pressed="true"] {
+  outline: 3px solid var(--accent);
+  outline-offset: 2px;
+}
+.dp-app input:focus,
+.dp-app textarea:focus {
+  outline: 2px solid var(--accent);
+}
+.dp-app label {
+  display: grid;
+  gap: 8px;
+}
+.dp-app h1,
+.dp-app h2,
+.dp-app h3,
+.dp-app p {
+  margin: 0;
+}
+.dp-top {
+  max-width: 1050px;
+  margin: auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 70px;
+  border-bottom: 1px solid #e1dce4;
+}
+.dp-top a {
+  text-decoration: none;
+  color: var(--muted);
+  padding: 12px 0;
+}
+.dp-top button {
+  background: transparent;
+  border: 0;
+}
+.dp-series {
+  font-weight: 800;
+  letter-spacing: 4px;
+}
+.dp-entry {
+  max-width: 400px;
+  margin: 45px auto;
+  display: grid;
+  gap: 22px;
+  text-align: center;
+}
+.dp-entry h1 {
+  font-size: clamp(32px, 7vw, 52px);
+  letter-spacing: -2px;
+}
+.dp-entry p {
+  color: var(--muted);
+  line-height: 1.6;
+}
+.dp-entry label {
+  text-align: left;
+}
+.dp-entry form {
+  display: grid;
+  gap: 20px;
+}
+.dp-entry-mark {
+  margin: auto;
+  width: 84px;
+  height: 84px;
+  background: var(--accent);
+  color: white;
+  border-radius: 24px;
+  display: grid;
+  place-content: center;
+  font-size: 54px;
+  transform: rotate(-8deg);
+}
+.dp-eyebrow {
+  font-size: 13px !important;
+  letter-spacing: 2px;
+  color: var(--muted);
+  font-weight: 600;
+}
+.dp-app .dp-primary {
+  background: var(--accent);
+  color: white;
+  font-weight: 750;
+  border: 0;
+  min-height: 50px;
+  box-shadow: 0 4px 0 color-mix(in srgb, var(--accent), black 20%);
+}
+.dp-app .dp-primary:hover:not(:disabled) {
+  background: var(--accent);
+}
+.dp-join {
+  display: flex !important;
+  gap: 8px !important;
+}
+.dp-join input {
+  min-width: 0;
+  flex: 1;
+}
+.dp-notice,
+.dp-offline {
+  max-width: 850px;
+  margin: 12px auto !important;
+  padding: 12px;
+  background: #fff0d1;
+  border-radius: 10px;
+  display: flex;
+  justify-content: space-between;
+}
+.dp-notice button {
+  border: 0;
+  min-height: 24px;
+  padding: 0 8px;
+  background: transparent;
+}
+.dp-lobby {
+  max-width: 700px;
+  margin: 35px auto;
+  display: grid;
+  gap: 22px;
+}
+.dp-room-title {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 20px;
+}
+.dp-room-title h1 {
+  font-size: 32px;
+  margin-top: 8px;
+}
+.dp-room-title button {
+  display: grid;
+  gap: 4px;
+  text-align: left;
+}
+.dp-room-title strong {
+  font-size: 24px;
+  letter-spacing: 4px;
+}
+.dp-room-title small {
+  color: var(--muted);
+}
+.dp-player-list {
+  border-block: 1px solid #e1dce4;
+}
+.dp-player-list > div {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 14px 0;
+  border-bottom: 1px solid #ebe5ef;
+}
+.dp-player-list > div > span:last-child {
+  margin-left: auto;
+  font-size: 14px;
+  color: var(--muted);
+}
+.dp-avatar {
+  height: 40px;
+  width: 40px;
+  display: grid;
+  place-content: center;
+  color: white;
+  border-radius: 50%;
+  font-weight: 800;
+}
+.dp-start {
+  background: #2c8b70 !important;
+}
+.dp-game {
+  max-width: 860px;
+  margin: 25px auto;
+  display: grid;
+  gap: 18px;
+}
+.dp-phase {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+}
+.dp-phase h1 {
+  font-size: 26px;
+  margin-top: 5px;
+}
+.dp-clock {
+  font-size: 26px;
+  font-variant-numeric: tabular-nums;
+  font-weight: 800;
+}
+.dp-urgent {
+  color: #c44353;
+}
+.dp-instruction {
+  text-align: center;
+  color: var(--muted);
+  line-height: 1.6;
+}
+.dp-prompt {
+  text-align: center;
+  font-size: 24px;
+  background: var(--accent-light);
+  padding: 18px;
+  border-radius: 16px;
+}
+.dp-board {
+  max-width: 620px;
+  width: 100%;
+  margin: auto;
+  display: grid;
+  gap: 12px;
+}
+.dp-paper {
+  background: white;
+  position: relative;
+  border: 1px solid #e1dce4;
+  border-radius: 10px;
+  box-shadow: 0 7px 0 #e4dcea;
+  overflow: hidden;
+}
+.dp-fa .dp-paper {
+  box-shadow: 0 7px 0 #d6d2c9;
+}
+.dp-paper canvas {
+  display: block;
+  width: 100%;
+  aspect-ratio: 1;
+  touch-action: none;
+  user-select: none;
+  -webkit-user-select: none;
+  overscroll-behavior: none;
+}
+.dp-readonly {
+  position: absolute;
+  bottom: 8px;
+  right: 12px;
+  pointer-events: none;
+  font-size: 11px;
+  color: #aaa;
+}
+.dp-tools {
+  display: grid;
+  gap: 10px;
+}
+.dp-palette,
+.dp-pen {
+  display: flex;
+  gap: 8px;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+.dp-palette button {
+  min-height: 44px;
+  min-width: 44px;
+  width: 44px;
+  height: 44px;
+  padding: 0;
+  border: 4px solid white;
+  border-radius: 50%;
+  box-shadow: 0 0 0 1px #ddd;
+}
+.dp-pen button {
+  display: grid;
+  place-items: center;
+  padding: 6px;
+  min-width: 44px;
+}
+.dp-pen i {
+  display: block;
+  border-radius: 50%;
+  background: #35283f;
+}
+.dp-board-footer {
+  display: flex;
+  gap: 6px;
+  align-items: center;
+  flex-wrap: wrap;
+  color: var(--muted);
+  font-size: 12px;
+}
+.dp-board-footer > span {
+  flex: 1;
+  min-width: 100px;
+}
+.dp-board-footer button {
+  font-size: 13px;
+  padding: 6px 10px;
+}
+.dp-focus {
+  position: fixed;
+  inset: 0;
+  z-index: 50;
+  max-width: none;
+  background: var(--paper);
+  padding: 12px;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  overflow: auto;
+}
+.dp-focus .dp-paper {
+  width: min(90vw, calc(100dvh - 190px));
+  flex-shrink: 0;
+}
+.dp-focus .dp-board-footer {
+  flex-shrink: 0;
+}
+.dp-text-form {
+  display: grid;
+  gap: 12px;
+}
+.dp-text-form textarea {
+  resize: vertical;
+  min-height: 110px;
+  line-height: 1.5;
+  width: 100%;
+  font-size: 18px;
+}
+.dp-text-form > span {
+  font-size: 12px;
+  color: var(--muted);
+  text-align: right;
+}
+.dp-wait {
+  text-align: center;
+  padding: 35px 15px;
+  background: var(--accent-light);
+  border-radius: 16px;
+  line-height: 1.8;
+}
+.dp-progress {
+  text-align: center;
+  color: var(--muted);
+  font-size: 14px;
+}
+.dp-secret {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 10px;
+  font-size: 15px;
+  min-height: 50px;
+  border-bottom: 1px solid #d9d4c8;
+  padding-bottom: 12px;
+}
+.dp-secret b {
+  font-size: 14px;
+}
+.dp-turn {
+  border-left: 5px solid;
+  padding: 8px 12px;
+  line-height: 1.6;
+}
+.dp-turn b {
+  font-weight: 800;
+}
+.dp-turn-order {
+  display: flex;
+  gap: 8px;
+  overflow: auto;
+  padding: 5px 3px;
+}
+.dp-turn-order span {
+  padding: 8px 12px;
+  border-bottom: 4px solid;
+  white-space: nowrap;
+  color: var(--muted);
+  font-size: 13px;
+}
+.dp-turn-order .active {
+  background: white;
+  color: var(--ink);
+  font-weight: 800;
+  border-radius: 6px;
+}
+.dp-voters,
+.dp-options {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 12px;
+}
+.dp-options button {
+  min-height: 58px;
+}
+.dp-exhibition {
+  padding: 24px 0;
+  text-align: center;
+  display: grid;
+  gap: 20px;
+}
+.dp-exhibition h2 {
+  font-size: 34px;
+}
+.dp-exhibition .dp-paper {
+  border: 8px solid #bc9d65;
+  box-shadow: 0 10px 24px #62554224;
+}
+.dp-vote-result {
+  display: flex;
+  justify-content: center;
+  gap: 12px;
+  flex-wrap: wrap;
+  font-size: 13px;
+  color: var(--muted);
+}
+.dp-album {
+  display: grid;
+  gap: 18px;
+  padding: 30px 0;
+  border-bottom: 1px solid #dcd4e5;
+}
+.dp-album h2 {
+  font-size: 20px;
+}
+.dp-album h2 > span {
+  display: inline-grid;
+  place-content: center;
+  background: var(--accent);
+  color: white;
+  border-radius: 50%;
+  width: 30px;
+  height: 30px;
+}
+.dp-album-page {
+  display: grid;
+  gap: 14px;
+  animation: dp-in 0.24s ease-out;
+}
+.dp-album-page h3 {
+  font-size: 25px;
+  background: white;
+  padding: 24px;
+  border-radius: 12px;
+}
+.dp-next {
+  position: sticky;
+  bottom: calc(12px + env(safe-area-inset-bottom));
+  z-index: 5;
+}
+.dp-abort {
+  justify-self: center;
+  border: 0 !important;
+  background: transparent !important;
+  color: var(--muted) !important;
+  font-size: 13px !important;
+  margin-top: 20px;
+}
+.dp-footer {
+  max-width: 850px;
+  margin: 28px auto 0;
+  font-size: 12px;
+  color: var(--muted);
+  text-align: center;
+  line-height: 1.6;
+}
+.dp-rules {
+  position: relative;
+  max-width: 700px;
+  margin: 20px auto;
+  background: white;
+  border-radius: 15px;
+  padding: 24px;
+  line-height: 1.8;
+  display: grid;
+  gap: 14px;
+}
+.dp-rules > button {
+  justify-self: end;
+}
+.dp-game > .dp-primary {
+  max-width: 620px;
+  width: 100%;
+  justify-self: center;
+}
+@keyframes dp-in {
+  from {
+    opacity: 0;
+    transform: translateY(6px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+@media (max-width: 500px) {
+  .dp-app {
+    padding: 0 12px 20px;
+  }
+  .dp-top {
+    height: 58px;
+  }
+  .dp-game {
+    margin: 18px auto;
+    gap: 14px;
+  }
+  .dp-phase h1 {
+    font-size: 23px;
+  }
+  .dp-phase .dp-eyebrow {
+    font-size: 11px !important;
+    letter-spacing: 1px;
+  }
+  .dp-board {
+    gap: 10px;
+  }
+  .dp-palette,
+  .dp-pen {
+    gap: 6px;
+  }
+  .dp-palette {
+    display: grid;
+    grid-template-columns: repeat(4, 44px);
+    justify-content: center;
+  }
+  .dp-palette button {
+    width: 44px;
+    height: 44px;
+    min-width: 44px;
+    border-width: 5px;
+  }
+  .dp-clock {
+    font-size: 24px;
+  }
+  .dp-secret {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+  .dp-secret button {
+    width: 100%;
+  }
+  .dp-entry {
+    margin-top: 35px;
+  }
+  .dp-room-title h1 {
+    font-size: 25px;
+  }
+  .dp-voters,
+  .dp-options {
+    gap: 8px;
+  }
+  .dp-options button {
+    padding: 10px 5px;
+  }
+  .dp-prompt {
+    font-size: 21px;
+    padding: 12px;
+  }
+  .dp-album-page h3 {
+    font-size: 22px;
+  }
+}
+@media (orientation: landscape) and (max-height: 520px) {
+  .dp-board {
+    max-width: 350px;
+  }
+  .dp-focus {
+    flex-direction: row;
+    justify-content: center;
+    gap: 16px;
+  }
+  .dp-focus .dp-paper {
+    width: calc(100dvh - 26px);
+  }
+  .dp-focus .dp-tools {
+    max-width: 160px;
+  }
+  .dp-focus .dp-board-footer {
+    max-width: 120px;
+    flex-direction: column;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .dp-app * {
+    animation: none !important;
+    transition: none !important;
+  }
+}
+
+/* Focus must override the ordinary board's landscape width cap. */
+.dp-board.dp-focus {
+  max-width: none;
+  width: 100%;
+  height: 100dvh;
+  margin: 0;
+}
+@media (orientation: landscape) and (max-height: 520px) {
+  .dp-board.dp-focus {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) 210px 110px;
+    gap: 12px;
+    align-items: center;
+    padding: 12px;
+  }
+  .dp-board.dp-focus .dp-paper {
+    width: min(100%, calc(100dvh - 24px));
+    margin: auto;
+  }
+  .dp-board.dp-focus .dp-tools {
+    width: 100%;
+    max-width: none;
+  }
+  .dp-board.dp-focus .dp-palette {
+    display: grid;
+    grid-template-columns: repeat(4, 44px);
+    gap: 8px;
+    justify-content: center;
+  }
+  .dp-board.dp-focus .dp-pen {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(44px, 1fr));
+    gap: 8px;
+  }
+  .dp-board.dp-focus .dp-board-footer {
+    width: 110px;
+    max-width: 110px;
+    align-items: stretch;
+  }
+}

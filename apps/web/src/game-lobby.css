@@ -179,3 +179,73 @@
 .box-rr-art svg{width:34px;height:34px}
 .box-rr-art svg:first-child{transform:rotate(-20deg) translate(4px,-6px)}
 .box-rr-art svg:last-child{transform:rotate(24deg) translate(-4px,8px)}
+
+/* 绘画派对：传情画意（紫）与纽约伪画家（桃红），封面通栏 */
+.box-tp,
+.box-fa {
+  color: #fff;
+  border: 0;
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.18),
+    0 18px 40px -18px rgba(20, 0, 40, 0.6);
+}
+.box-tp {
+  background: linear-gradient(160deg, #6a37c9, #3a1c86 70%);
+}
+.box-fa {
+  background: linear-gradient(160deg, #e73b76, #9b1a4f 70%);
+}
+.box-tp .box-art,
+.box-fa .box-art {
+  height: auto;
+  margin: -20px -20px 6px;
+  aspect-ratio: 16 / 9;
+  overflow: hidden;
+}
+.box-tp .cover-svg,
+.box-fa .cover-svg {
+  display: block;
+  width: 100%;
+  height: 100%;
+  transition: transform 0.6s cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+.box-tp:hover .cover-svg,
+.box-fa:hover .cover-svg {
+  transform: scale(1.03);
+}
+.box-tp .box-open,
+.box-fa .box-open,
+.box-tp button,
+.box-fa button {
+  border: 0;
+  border-radius: 12px;
+  font-weight: 900;
+  color: #fff;
+}
+.box-tp .box-open,
+.box-tp button {
+  background: linear-gradient(#5fe8c9, #2fbf9f);
+  color: #123a3a;
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.6),
+    0 3px 0 #1d7f6c;
+}
+.box-fa .box-open,
+.box-fa button {
+  background: linear-gradient(#ffe36b, #f2b72c);
+  color: #5a2a06;
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.7),
+    0 3px 0 #a86d10;
+}
+.box-tp input,
+.box-fa input {
+  background: rgba(255, 255, 255, 0.14);
+  color: #fff;
+  border: 1px solid rgba(255, 255, 255, 0.28);
+  border-radius: 12px;
+}
+.box-tp input::placeholder,
+.box-fa input::placeholder {
+  color: rgba(255, 255, 255, 0.7);
+}

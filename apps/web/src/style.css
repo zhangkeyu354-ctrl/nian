@@ -21,7 +21,7 @@ input,
 select {
   font: inherit;
 }
-button {
+button:not(:where(.st-world *, .lb-world *)) {
   min-height: 44px;
   border: 1px solid #59635b;
   background: #293530;
@@ -34,11 +34,11 @@ button {
     border-color 0.15s,
     transform 0.15s;
 }
-button:hover {
+button:not(:where(.st-world *, .lb-world *)):hover {
   background: #3b4840;
   border-color: #abb39b;
 }
-button:active {
+button:not(:where(.st-world *, .lb-world *)):active {
   transform: translateY(1px);
 }
 button:focus-visible,
@@ -48,7 +48,7 @@ summary:focus-visible {
   outline: 3px solid #ead18b;
   outline-offset: 3px;
 }
-button:disabled {
+button:not(:where(.st-world *, .lb-world *)):disabled {
   opacity: 0.45;
   cursor: not-allowed;
 }
@@ -1230,3 +1230,6 @@ legend {
 [data-motion="off"] .verdict-banner { animation: none; }
 /* 结果播报显示时，把同时出现的小提示淡出，避免叠在一起 */
 body:has(.verdict-banner) .toast-feedback { opacity: 0; transition: opacity .15s; }
+/* 大号播报出现时，淡出同时弹出的小提示，避免两层叠在一起 */
+body:has(.major-notice) .toast-feedback,
+body:has(.major-notice) .verdict-banner { opacity: 0; transition: opacity .15s; }

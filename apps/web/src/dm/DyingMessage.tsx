@@ -11,6 +11,16 @@ import {
 } from "../../../../packages/dying-message/src/index.ts";
 import "./dm.css";
 import { RoleArt } from "./RoleArt.tsx";
+import {
+  ActionDock,
+  CountdownRing,
+  PhaseBanner,
+  SoundToggle,
+  VoteReveal,
+  feel,
+  useStageFeedback,
+} from "./Polish.tsx";
+import "./polish.css";
 const titles: Record<string, string> = {
   NIGHT_PREPARATION: "夜幕降临",
   KILLER_SELECTION: "杀手正在行动",
@@ -270,6 +280,11 @@ export function DyingMessage() {
     host = snap?.hostId === snap?.mySeat,
     disabled = busy || !connected;
   const myRole = roles.find((r) => r.roleId === v?.me.roleId);
+  const fb = useStageFeedback(v);
+  const act = (a: DMAction, cue: Parameters<typeof feel>[0] = "submit") => {
+    feel(cue);
+    return action(a);
+  };
   const phase = v?.phase;
   const toggle = (id: string, max: number) =>
     setSelection((s) =>
@@ -290,15 +305,253 @@ export function DyingMessage() {
     0,
     Math.ceil(((v?.deadline ?? 0) - now - offset.current) / 1000),
   );
+  const seatName = (id: string) => {
+    const p = v?.players.find((x) => x.id === id);
+    return p ? p.seat + "号 " + p.name : "";
+  };
+  const picked = selection.length
+    ? "已选：" + selection.map(seatName).join("、")
+    : "点击圆桌上的玩家";
+  function Dock() {
+    if (!snap) return null;
+    if (!v) {
+      const ready = snap.players.filter((p) => p.ready).length;
+      const full = snap.players.length === snap.count;
+      return (
+        <ActionDock
+          hint={
+            <>
+              <b>
+                {snap.players.length}/{snap.count} 人入座
+              </b>
+              <span>
+                {ready} 人已准备
+                {!full ? " · 等待朋友加入" : ready < snap.count ? "" : " · 可以开始"}
+              </span>
+            </>
+          }
+        >
+          <button
+            data-testid="dm-ready"
+            className={me?.ready ? "ghost" : ""}
+            disabled={disabled}
+            onClick={() => act({ type: "READY" }, me?.ready ? "tap" : "select")}
+          >
+            {me?.ready ? "取消准备" : "我准备好了"}
+          </button>
+          {host && (
+            <button
+              data-testid="dm-start"
+              disabled={
+                disabled ||
+                snap.players.length !== snap.count ||
+                snap.players.some((p) => !p.ready)
+              }
+              onClick={() => act({ type: "START" }, "turn")}
+            >
+              随机发牌并开始
+            </button>
+          )}
+        </ActionDock>
+      );
+    }
+    if (v.winner) return null;
+    const speaker = v.speaker ? seatName(v.speaker) : "";
+    const wait = (text: string) => (
+      <ActionDock
+        hint={
+          <>
+            <b>{text}</b>
+            <span>{v.me.alive ? "请稍候" : "你已死亡，请勿透露线索"}</span>
+          </>
+        }
+      >
+        {null}
+      </ActionDock>
+    );
+    if (v.forensic)
+      return (
+        <ActionDock hint={<b>选 1 张上一轮的遗言鉴定</b>}>
+          <button
+            disabled={disabled || selection.length !== 1}
+            onClick={() => act({ type: "FORENSIC", card: selection[0] })}
+          >
+            宣布真假
+          </button>
+        </ActionDock>
+      );
+    if (!v.active) {
+      if (phase === "INVESTIGATION") return wait(speaker + " 正在发言");
+      if (phase === "DEFENSE") return wait(seatName(v.suspect ?? "") + " 正在辩解");
+      if (phase === "FIRST_VOTE" || phase === "SECOND_VOTE")
+        return wait(v.myVote ? "你已投票，等待其他人" : "投票进行中");
+      return wait(
+        ["NIGHT_PREPARATION", "KILLER_SELECTION", "VICTIM_EVIDENCE", "SPECIAL_INFORMATION", "KILLER_FAKE_EVIDENCE"].includes(phase!)
+          ? "夜晚 · 请闭眼等待"
+          : "等待其他玩家",
+      );
+    }
+    switch (phase) {
+      case "NIGHT_PREPARATION":
+        return (
+          <ActionDock hint={<b>{picked}</b>}>
+            <button
+              disabled={disabled || selection.length !== 1}
+              onClick={() => act({ type: "PREPARE", target: selection[0] })}
+            >
+              确认选择
+            </button>
+          </ActionDock>
+        );
+      case "KILLER_SELECTION":
+        return (
+          <ActionDock
+            hint={
+              <>
+                <b>{picked}</b>
+                <span>需选 {v.required} 人 · 杀手须一致</span>
+              </>
+            }
+          >
+            <button
+              data-testid="dm-kill"
+              className="danger"
+              disabled={disabled || selection.length !== v.required}
+              onClick={() => act({ type: "KILL", targets: selection }, "stamp")}
+            >
+              确认行凶
+            </button>
+          </ActionDock>
+        );
+      case "VICTIM_EVIDENCE":
+      case "KILLER_FAKE_EVIDENCE":
+        return (
+          <ActionDock
+            hint={
+              <>
+                <b>
+                  已选 {selection.length}/{v.required} 张
+                </b>
+                <span>
+                  {phase === "VICTIM_EVIDENCE" ? "真遗言" : "假遗言"}
+                  {v.selection.length > 0 ? " · 已提交，等待一致" : ""}
+                </span>
+              </>
+            }
+          >
+            <button
+              data-testid="dm-evidence-confirm"
+              className={phase === "KILLER_FAKE_EVIDENCE" ? "danger" : ""}
+              disabled={disabled || selection.length !== v.required}
+              onClick={() =>
+                act({
+                  type: phase === "VICTIM_EVIDENCE" ? "TRUE" : "FAKE",
+                  cards: selection,
+                })
+              }
+            >
+              确认这组遗言
+            </button>
+          </ActionDock>
+        );
+      case "SPECIAL_INFORMATION":
+        return (
+          <ActionDock hint={<b>记住真遗言 · {left} 秒</b>}>
+            <button
+              data-testid="dm-info-ack"
+              disabled={disabled}
+              onClick={() => act({ type: "INFO_ACK" }, "tap")}
+            >
+              已查看，继续
+            </button>
+          </ActionDock>
+        );
+      case "INVESTIGATION":
+        return (
+          <ActionDock
+            hint={
+              <>
+                <b>轮到你发言</b>
+                <span>
+                  剩余 {Math.floor(left / 60)}:{String(left % 60).padStart(2, "0")}
+                </span>
+              </>
+            }
+          >
+            <button
+              data-testid="dm-speech-end"
+              disabled={disabled}
+              onClick={() => act({ type: "SPEAK_END" }, "page")}
+            >
+              我说完了，下一位
+            </button>
+          </ActionDock>
+        );
+      case "FIRST_VOTE":
+      case "SECOND_VOTE":
+        return (
+          <ActionDock
+            hint={
+              <>
+                <b>{selection.length ? "投给 " + seatName(selection[0]) : "点击圆桌玩家投票"}</b>
+                <span>已提交 {v.voted} 票</span>
+              </>
+            }
+          >
+            <button
+              data-testid="dm-vote"
+              disabled={disabled || selection.length !== 1}
+              onClick={() => act({ type: "VOTE", target: selection[0] })}
+            >
+              确认投票
+            </button>
+          </ActionDock>
+        );
+      case "DEFENSE":
+        return (
+          <ActionDock hint={<b>你的辩解时间</b>}>
+            <button
+              data-testid="dm-defense-end"
+              disabled={disabled}
+              onClick={() => act({ type: "DEFENSE_END" }, "page")}
+            >
+              辩解结束
+            </button>
+          </ActionDock>
+        );
+      case "ROUND_END":
+        return (
+          <ActionDock hint={<b>本轮已结算</b>}>
+            <button
+              data-testid="dm-next"
+              disabled={disabled}
+              onClick={() => act({ type: "NEXT" }, "turn")}
+            >
+              下一轮
+            </button>
+          </ActionDock>
+        );
+    }
+    return wait("等待其他玩家");
+  }
   return (
     <main
-      className={"dm-app dm-photo-v2 " + (code ? "dm-in-room" : "dm-at-home")}
+      className={
+        "dm-app dm-photo-v2 dm-polish " +
+        (code ? "dm-in-room" : "dm-at-home") +
+        (snap?.mySeat && !v?.winner ? " has-dock" : "") +
+        (v ? " phase-" + v.phase.toLowerCase().replace(/_/g, "-") : " phase-lobby") +
+        (v && !v.me.alive ? " me-dead" : "")
+      }
     >
       <header className="dm-header">
         <a href="/">← 桌游合集</a>
         <strong>请留遗言</strong>
         <span>{code ? "房间 " + code : "Dying Message"}</span>
-        <small role="status">{connected ? "已连接" : "正在重连…"}</small>
+        <small role="status" className={connected ? "on" : "off"}>
+          {connected ? "已连接" : "正在重连…"}
+        </small>
+        <SoundToggle />
       </header>
       {error && (
         <p className="dm-error" role="alert">
@@ -458,6 +711,12 @@ export function DyingMessage() {
                           : "等待朋友"}
                     </span>
                     {v?.deadline && (
+                      <CountdownRing
+                        left={left}
+                        total={phase === "SPECIAL_INFORMATION" ? 5 : 300}
+                      />
+                    )}
+                    {v?.deadline && (
                       <strong data-testid="dm-countdown">
                         {Math.floor(left / 60)}:
                         {String(left % 60).padStart(2, "0")}
@@ -476,7 +735,11 @@ export function DyingMessage() {
                         {v.history.at(-1)!.cards.map((id, i) => (
                           <button
                             key={id}
-                            onClick={() => setZoom(id)}
+                            style={{ ["--i" as any]: i }}
+                            onClick={() => {
+                              feel("tap");
+                              setZoom(id);
+                            }}
                             aria-label={"放大公开遗言 " + (i + 1)}
                           >
                             <img src={image(id)} alt={"公开遗言 " + (i + 1)} />
@@ -512,16 +775,21 @@ export function DyingMessage() {
                         className={
                           "dm-seat " +
                           (vp && !vp.alive ? "dead " : "") +
-                          (p?.id === v?.speaker ? "speaking " : "") +
-                          (p?.id === snap.mySeat ? "self" : "")
+                          (p && v?.speaker && p.id === v.speaker ? "speaking " : "") +
+                          (p && p.id === snap.mySeat ? "self " : "") +
+                          (target && !disabled ? "pickable " : "") +
+                          (vp && v?.killers.some((k) => k.id === vp.id) && !v.winner
+                            ? "known-killer"
+                            : "")
                         }
-                        onClick={() =>
-                          p &&
+                        onClick={() => {
+                          if (!p) return;
+                          feel("select");
                           toggle(
                             p.id,
                             phase === "KILLER_SELECTION" ? v!.required : 1,
-                          )
-                        }
+                          );
+                        }}
                       >
                         <span className="dm-seat-portrait" aria-hidden="true">
                           {vp?.roleId && (!vp.alive || v?.winner) ? (
@@ -556,13 +824,6 @@ export function DyingMessage() {
                 <aside className="dm-sidebar">
                   {!v ? (
                     <section className="dm-controls">
-                      <button
-                        data-testid="dm-ready"
-                        disabled={disabled}
-                        onClick={() => action({ type: "READY" })}
-                      >
-                        {me?.ready ? "取消准备" : "我准备好了"}
-                      </button>
                       {host && (
                         <>
                           <label>
@@ -583,17 +844,6 @@ export function DyingMessage() {
                               ))}
                             </select>
                           </label>
-                          <button
-                            data-testid="dm-start"
-                            disabled={
-                              disabled ||
-                              snap.players.length !== snap.count ||
-                              snap.players.some((p) => !p.ready)
-                            }
-                            onClick={() => action({ type: "START" })}
-                          >
-                            随机发牌并开始
-                          </button>
                         </>
                       )}
                       <PoolEditor
@@ -623,7 +873,10 @@ export function DyingMessage() {
                         )}
                         <button
                           className="dm-link"
-                          onClick={() => setReveal(!reveal)}
+                          onClick={() => {
+                            feel(reveal ? "tap" : "page");
+                            setReveal(!reveal);
+                          }}
                         >
                           {reveal ? "收起我的角色" : "查看我的秘密角色"}
                         </button>
@@ -716,14 +969,6 @@ export function DyingMessage() {
                               onSelect={(id) => toggle(id, 1)}
                               disabled={disabled}
                             />
-                            <button
-                              disabled={disabled || selection.length !== 1}
-                              onClick={() =>
-                                action({ type: "FORENSIC", card: selection[0] })
-                              }
-                            >
-                              宣布这张遗言的真假
-                            </button>
                           </>
                         ) : null}
                         {v.active && phase === "NIGHT_PREPARATION" && (
@@ -733,17 +978,6 @@ export function DyingMessage() {
                                 ? "点击圆桌上一名其他玩家，选择命运之人。"
                                 : "点击圆桌选择要保护的玩家。不能保护自己或其他名犬。"}
                             </p>
-                            <button
-                              disabled={disabled || selection.length !== 1}
-                              onClick={() =>
-                                action({
-                                  type: "PREPARE",
-                                  target: selection[0],
-                                })
-                              }
-                            >
-                              确认选择
-                            </button>
                           </>
                         )}
                         {v.active && phase === "KILLER_SELECTION" && (
@@ -752,17 +986,6 @@ export function DyingMessage() {
                               点击玩家图标，选择 {v.required}{" "}
                               名目标。所有杀手须提交相同目标。
                             </p>
-                            <button
-                              data-testid="dm-kill"
-                              disabled={
-                                disabled || selection.length !== v.required
-                              }
-                              onClick={() =>
-                                action({ type: "KILL", targets: selection })
-                              }
-                            >
-                              确认行凶
-                            </button>
                           </>
                         )}
                         {v.active &&
@@ -789,26 +1012,12 @@ export function DyingMessage() {
                               <Cards
                                 ids={v.pool}
                                 selected={selection}
-                                onSelect={(id) => toggle(id, v.required)}
+                                onSelect={(id) => {
+                                  feel("select");
+                                  toggle(id, v.required);
+                                }}
                                 disabled={disabled}
                               />
-                              <button
-                                data-testid="dm-evidence-confirm"
-                                disabled={
-                                  disabled || selection.length !== v.required
-                                }
-                                onClick={() =>
-                                  action({
-                                    type:
-                                      phase === "VICTIM_EVIDENCE"
-                                        ? "TRUE"
-                                        : "FAKE",
-                                    cards: selection,
-                                  })
-                                }
-                              >
-                                确认这组遗言
-                              </button>
                             </>
                           )}
                         {v.active && phase === "SPECIAL_INFORMATION" && (
@@ -816,13 +1025,6 @@ export function DyingMessage() {
                             <h2>这是死者真正的遗言</h2>
                             <p>查看窗口：最多5秒</p>
                             <Cards ids={v.trueCards} />
-                            <button
-                              data-testid="dm-info-ack"
-                              disabled={disabled}
-                              onClick={() => action({ type: "INFO_ACK" })}
-                            >
-                              已查看，继续
-                            </button>
                           </>
                         )}
                         {phase === "INVESTIGATION" && !v.forensic && (
@@ -834,15 +1036,6 @@ export function DyingMessage() {
                               }
                               号正在发言。按座位号轮流，每人最多5分钟，全部结束后投票。
                             </p>
-                            {v.active && (
-                              <button
-                                data-testid="dm-speech-end"
-                                disabled={disabled}
-                                onClick={() => action({ type: "SPEAK_END" })}
-                              >
-                                我说完了，下一位
-                              </button>
-                            )}
                           </>
                         )}
                         {["FIRST_VOTE", "SECOND_VOTE"].includes(phase!) && (
@@ -854,18 +1047,8 @@ export function DyingMessage() {
                                 : "超过存活人数的一半才进入辩解。"}
                               已提交 {v.voted} 票。
                             </p>
-                            {v.active ? (
-                              <button
-                                data-testid="dm-vote"
-                                disabled={disabled || selection.length !== 1}
-                                onClick={() =>
-                                  action({ type: "VOTE", target: selection[0] })
-                                }
-                              >
-                                确认投票
-                              </button>
-                            ) : (
-                              v.myVote && <p>你已投票，等待统一结算。</p>
+                            {!v.active && v.myVote && (
+                              <p>你已投票，等待统一结算。</p>
                             )}
                           </>
                         )}
@@ -878,15 +1061,6 @@ export function DyingMessage() {
                               }
                               号获得一次辩解机会。
                             </p>
-                            {v.active && (
-                              <button
-                                data-testid="dm-defense-end"
-                                disabled={disabled}
-                                onClick={() => action({ type: "DEFENSE_END" })}
-                              >
-                                辩解结束，开始第二次投票
-                              </button>
-                            )}
                           </>
                         )}
                         {phase === "ROUND_END" && (
@@ -897,15 +1071,6 @@ export function DyingMessage() {
                                 ? "查看圆桌玩家存活状态。"
                                 : "无人连续两次获得过半票。"}
                             </p>
-                            {v.active && !v.forensic && (
-                              <button
-                                data-testid="dm-next"
-                                disabled={disabled}
-                                onClick={() => action({ type: "NEXT" })}
-                              >
-                                下一轮
-                              </button>
-                            )}
                           </>
                         )}
                         {v.winner && (
@@ -974,6 +1139,11 @@ export function DyingMessage() {
           )}
         </>
       )}
+      {snap?.mySeat && Dock()}
+      {!v?.winner && <PhaseBanner banner={fb.banner} />}
+      {v && !v.winner && (
+        <VoteReveal v={v} result={fb.vote} onClose={fb.closeVote} />
+      )}
       {zoom && <EvidenceZoom id={zoom} onClose={() => setZoom(null)} />}
       {snap?.view?.winner && !hideResult && !zoom && (
         <ResultScreen
@@ -1034,16 +1204,18 @@ function Cards({
             data-card={id}
             aria-label={"证据图 " + (i + 1)}
             aria-pressed={selected.includes(id)}
+            data-order={selected.includes(id) ? selected.indexOf(id) + 1 : undefined}
+            style={{ ["--i" as any]: i }}
             disabled={disabled}
             onClick={() => onSelect(id)}
           >
             <img src={image(id)} alt={"证据图 " + (i + 1)} loading="lazy" />
           </button>
         ) : (
-          <figure key={id}>
+          <figure key={id} style={{ ["--i" as any]: i }}>
             <img src={image(id)} alt={"公开证据 " + (i + 1)} loading="lazy" />
             {Object.hasOwn(revealed, id) && (
-              <figcaption>{revealed[id] ? "真遗言" : "假遗言"}</figcaption>
+              <figcaption data-true={revealed[id] ? "1" : "0"}>{revealed[id] ? "真遗言" : "假遗言"}</figcaption>
             )}
           </figure>
         ),
@@ -1098,6 +1270,7 @@ function ResultScreen({
   const ref = useRef<HTMLDivElement>(null);
   useEffect(() => {
     ref.current?.focus();
+    feel(iWon ? "win" : "lose");
   }, []);
   return (
     <div
@@ -1113,6 +1286,13 @@ function ResultScreen({
           {winner === "INNOCENT" ? "无罪阵营获胜" : "有罪阵营获胜"}
         </h2>
         <p className="dm-result-reason">{reason}</p>
+        {iWon && (
+          <div className="dm-confetti" aria-hidden="true">
+            {Array.from({ length: 28 }, (_, i) => (
+              <i key={i} style={{ ["--i" as any]: i }} />
+            ))}
+          </div>
+        )}
         <p className={"dm-result-me " + (iWon ? "won" : "lost")}>
           {iWon ? "你赢了！" : "你输了"}
         </p>
@@ -1167,7 +1347,7 @@ function ResultScreen({
           ) : (
             <p>等待房主开始下一局</p>
           )}
-          <button onClick={onClose} data-testid="dm-result-close">
+          <button className="ghost" onClick={onClose} data-testid="dm-result-close">
             查看圆桌与遗言
           </button>
         </div>

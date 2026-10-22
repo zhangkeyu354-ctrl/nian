@@ -12,6 +12,7 @@ import { Online } from "./Online.tsx";
 const DyingMessage = lazy(() =>
   import("./dm/DyingMessage.tsx").then((m) => ({ default: m.DyingMessage })),
 );
+const DrawingParty = lazy(() => import("./drawing/DrawingParty.tsx").then(m => ({default:m.DrawingParty})));
 const q = new URLSearchParams(location.search);
 import { GameLobby } from "./GameLobby.tsx";
 const Codenames = lazy(() =>
@@ -43,6 +44,8 @@ createRoot(document.getElementById("root")!).render(
       </Suspense>
     ) : q.get("view") === "props" ? (
       <Gallery />
+    ) : q.get("game") === "tp" || q.get("game") === "fa" ? (
+      <Suspense fallback={<p>正在打开绘画派对…</p>}><DrawingParty mode={q.get("game") as "tp"|"fa"} /></Suspense>
     ) : q.get("game") === "dm" ? (
       <Suspense fallback={<p>正在打开请留遗言…</p>}>
         <DyingMessage />

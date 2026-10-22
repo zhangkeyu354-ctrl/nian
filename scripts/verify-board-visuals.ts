@@ -80,8 +80,11 @@ for (const seed of [1701, 2903]) {
     ),
   );
   assert((await p.locator("[data-actor] .asset-png").count()) > 0);
-  const geometry = await p.locator(".route-badge").evaluateAll((els) =>
-    els.map((el) => {
+  // 平面上的重叠检查：临时关掉 2.5D 倾斜（倾斜后外接矩形会变大，不代表真的重叠）
+  const geometry = await p.locator(".route-badge").evaluateAll((els) => {
+    const tilt = document.documentElement.dataset.tilt;
+    document.documentElement.dataset.tilt = "off";
+    const out = els.map((el) => {
       const b = el.getBoundingClientRect();
       const overlaps = [
         ...document.querySelectorAll("[data-room] > rect"),
@@ -92,8 +95,10 @@ for (const seed of [1701, 2903]) {
         );
       });
       return { id: el.getAttribute("data-route-icon"), overlaps };
-    }),
-  );
+    });
+    document.documentElement.dataset.tilt = tilt;
+    return out;
+  });
   assert(
     geometry.every((r) => !r.overlaps),
     JSON.stringify(geometry.filter((r) => r.overlaps)),

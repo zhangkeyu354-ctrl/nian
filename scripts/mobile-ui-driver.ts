@@ -16,6 +16,10 @@ export async function tapPhoneCommand(
     await el.tap();
     onTap?.(label);
   };
+  // 2.5D 倾斜只是视觉（CSS 变换），点按判定不变；为了让"点房间中心"在测试里稳定落在同一位置，驱动点按时用平面视角
+  await page.evaluate(() => {
+    document.documentElement.dataset.tilt = "off";
+  });
   const direct = async () => {
     for (let n = 0; n < 20; n++) {
       const buttons = page.locator(".mobile-dock [data-command]:visible");
