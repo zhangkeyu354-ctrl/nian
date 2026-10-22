@@ -16,8 +16,10 @@ import {
   fatalReveal,
   victory,
   finishTituba,
+  expireDay,
   type WTPending,
   type WTCommand,
+  type WTTask,
 } from "./day.ts";
 type Pending = Extract<WTPending, { kind: "black-event" }>;
 export type WTEventCommand =
@@ -110,8 +112,10 @@ export function beginBlackEvent(s: WTState, now: number) {
   const e = p.event;
   if (e.type === "conspiracy" && e.stage === "prepare-picking") {
     e.members = s.players.filter((q) => q.alive).map((q) => q.id);
-    if (e.members.length < 2)
-      fail("CHECK_REQUIRED:X04:INSUFFICIENT_TRANSMISSION_MEMBERS");
+    if (e.members.length < 2) {
+      victory(s);
+      return;
+    }
     e.leftOf = Object.fromEntries(
       e.members.map((id, i) => [id, e.members[(i + 1) % e.members.length]]),
     );
@@ -123,6 +127,20 @@ function finishEvent(s: WTState, now: number) {
   discard(s, [p.card]);
   s.pending = null;
   drain(s, now);
+}
+function resumeAfterResolution(
+  s: WTState,
+  p: Pending,
+  oldTasks: ReadonlySet<WTTask>,
+  now: number,
+) {
+  const added = s.tasks.filter((t) => !oldTasks.has(t)),
+    continued = s.tasks.filter((t) => oldTasks.has(t));
+  if (added.length > 0) {
+    s.tasks = [...added, { kind: "resume-event", pending: p }, ...continued];
+    s.pending = null;
+    drain(s, now);
+  } else beginBlackEvent(s, now);
 }
 export function commandBlackEvent(
   s: WTState,
@@ -140,28 +158,13 @@ export function commandBlackEvent(
       const target = living(s, s.blackCatOwnerId!),
         card = conceal(target, cmd.index),
         fatal = fatalReveal(target, cmd.index);
-      const wouldEnd =
-        s.players
-          .flatMap((q) => q.tryals)
-          .filter((t) => t.kind === "witch")
-          .every(
-            (t) =>
-              t.revealed || t === card || (fatal && target.tryals.includes(t)),
-          ) ||
-        (fatal &&
-          !s.players.some(
-            (q) => q.alive && q.id !== target.id && !q.everWitch,
-          ));
-      if (fatal && !wouldEnd)
-        fail("CHECK_REQUIRED:X04:CAT_DEATH_BEFORE_TRANSMISSION");
+      const oldTasks = new Set(s.tasks);
       const rewards = s.players.filter(
         (q) =>
           q.alive &&
           q.id !== target.id &&
           effectiveCharacter(s, q.id) === "rebecca_nurse",
       );
-      if (fatal && rewards.length && !wouldEnd)
-        fail("CHECK_REQUIRED:X02:FATAL_REBECCA_REWARD");
       card.revealed = true;
       log(s, {
         type: "TRYAL_REVEALED",
@@ -169,7 +172,11 @@ export function commandBlackEvent(
         targetId: target.id,
         tryalKind: card.kind,
       });
-      if (fatal) eliminate(s, target);
+      // RULE_DERIVED P5/P6/P12: death and victory precede the live-ring snapshot.
+      if (fatal) {
+        log(s, { type: "CAT_FATAL", targetId: target.id });
+        eliminate(s, target);
+      }
       victory(s);
       if (s.outcome) return s;
       e.stage = "prepare-picking";
@@ -180,11 +187,9 @@ export function commandBlackEvent(
             playerId: q.id,
             ability: "rebecca" as const,
           })),
-          { kind: "resume-event", pending: p },
         );
-        s.pending = null;
-        drain(s, now);
-      } else beginBlackEvent(s, now);
+      }
+      resumeAfterResolution(s, p, oldTasks, now);
       return s;
     }
     if (cmd.type !== "CONSPIRACY_PICK")
@@ -206,20 +211,10 @@ export function commandBlackEvent(
     const towns = e.members.filter((id) => !player(s, id).everWitch),
       newWitches = towns.filter((id) => incoming.get(id)!.kind === "witch");
     if (towns.length > 1 && newWitches.length === towns.length)
-      fail("CHECK_REQUIRED:X04:SIMULTANEOUS_LAST_INFECTIONS");
-    for (const id of e.members) {
-      const q = player(s, id),
-        outgoing =
-          e.picks[e.members.find((receiver) => e.leftOf[receiver] === id)!];
-      if (
-        q.tryals.some((t) => t.revealed && t.kind === "witch") &&
-        !q.tryals.some(
-          (t) => !t.revealed && t.kind === "witch" && t.id !== outgoing,
-        ) &&
-        incoming.get(id)!.kind !== "witch"
-      )
-        fail("CHECK_REQUIRED:X04:LAST_HIDDEN_WITCH_TRANSFER");
-    }
+      log(s, {
+        type: "SIMULTANEOUS_LAST_INFECTIONS",
+        count: newWitches.length,
+      });
     const originals = new Map(
       e.members.map((id) => [id, [...player(s, id).tryals]]),
     );
@@ -234,9 +229,24 @@ export function commandBlackEvent(
       if (incoming.get(id)!.kind === "witch") q.everWitch = true;
     }
     log(s, { type: "CONSPIRACY_RESOLVED" });
+    // DEFAULT_PENDING_CONFIRM P5/P14: apply every transfer first, then recheck exemptions.
+    for (const q of s.players.filter(
+      (q) =>
+        q.alive &&
+        q.tryals.some((t) => t.revealed && t.kind === "witch") &&
+        !q.tryals.some((t) => !t.revealed && t.kind === "witch"),
+    )) {
+      if (q.alive) {
+        log(s, { type: "WITCH_EXEMPTION_LOST", targetId: q.id });
+        eliminate(s, q);
+      }
+    }
     victory(
       s,
-      towns.length === 1 && newWitches.length === 1 ? towns[0] : undefined,
+      // DEFAULT_PENDING_CONFIRM P6: all simultaneous final infectees personally lose.
+      towns.length > 0 && newWitches.length === towns.length
+        ? newWitches
+        : undefined,
     );
     if (s.outcome) return s;
     finishEvent(s, now);
@@ -262,7 +272,7 @@ export function commandBlackEvent(
   if (cmd.type === "NIGHT_PROTECT") {
     if (e.stage !== "constable") fail("WRONG_EVENT_STAGE");
     if (constable(s)?.id !== actorId) fail("CONSTABLE_ONLY");
-    if (cmd.targetId === null) fail("CHECK_REQUIRED:X05:CONSTABLE_ABSTENTION");
+    if (cmd.targetId === null) fail("PROTECT_ANOTHER_PLAYER"); // P7/P11 standard mandatory action.
     living(s, cmd.targetId);
     if (cmd.targetId === actorId) fail("NO_SELF_TARGET");
     e.protectedId = cmd.targetId;
@@ -282,8 +292,7 @@ export function commandBlackEvent(
     if (cmd.useGovernor) {
       if (effectiveCharacter(s, actorId) !== "william_phips")
         fail("NOT_GOVERNOR");
-      if (q.character === "martha_corey")
-        fail("CHECK_REQUIRED:X10:COPIED_LIMITED_ABILITY");
+      // DEFAULT_PENDING_CONFIRM X10: copied abilities use the copier's retained budget.
       if (q.abilityUses.william_phips) fail("ABILITY_EXHAUSTED");
       q.abilityUses.william_phips = 1;
     } else {
@@ -308,6 +317,7 @@ export function tickWitchTown(
 ): WTState | null {
   const s = structuredClone(upgradeWitchTown(input));
   if (s.checkRequired) return null;
+  if (expireDay(s, now)) return s;
   if (s.pending?.kind === "tituba" && now >= s.pending.deadline) {
     finishTituba(s, now);
     return s;
@@ -338,7 +348,7 @@ export function tickWitchTown(
   if (s.outcome) return s;
   const deck = shuffle([...s.deck, ...s.discard], random);
   s.discard = [];
-  if (!deck.length) fail("CHECK_REQUIRED:X08:EMPTY_NIGHT_REBUILD");
+  // RULE_DERIVED P8: an empty remainder still yields a deck containing Night itself.
   const split = Math.floor(deck.length / 2);
   s.deck = [
     ...deck.slice(0, split),
@@ -413,12 +423,9 @@ export function eventPrivate(s: WTState, p: Pending, id: string) {
         deadline: e.deadline,
         ...(q.everWitch ? { knownAttackTargetId: e.attackTargetId } : {}),
         governorAvailable:
-          q.character === "william_phips" &&
           effectiveCharacter(s, id) === "william_phips" &&
           !q.abilityUses.william_phips,
-        copiedGovernorCheckRequired:
-          q.character === "martha_corey" &&
-          effectiveCharacter(s, id) === "william_phips",
+        copiedGovernorCheckRequired: false,
       };
   }
   return null;

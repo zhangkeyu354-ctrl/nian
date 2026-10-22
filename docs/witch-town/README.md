@@ -1,8 +1,8 @@
 # 女巫镇开发入口
 
-M4进行中：新增牧师替代抽牌、说书人私人限时排序，详见[M4进度与真实验收](M4_ACTIVE_ROLES.md)。M3健康检查标识暂保留，不能据此声称M4全部完成。人物均已有执行路径，但复制、死亡与其他复杂交互仍有待核条目。
+当前为**M4规则引擎收尾版，正式手机界面尚未完成**。传染/死亡续程、共同分牌、人物组合、白天沙漏及占座恢复已落地；C类按用户授权的默认继续执行，不把默认伪称官方判例。详见[收尾交接](../handoff/WITCH_TOWN_M4_COMPLETE_2026-10-22.md)和[手机界面接口](M4_UI_CONTRACT.md)。M1～M3及M4_ACTIVE_ROLES为历史快照。
 
-当前：**M3黑卡/夜晚引擎，正式手机游戏尚未完成**。已接通白天、审判、同时传染、夜袭、保护、自白、夜末洗牌、死亡与胜负，以及可恢复的嵌套事件。部分规则组合仍会明确暂停待核；主动能力和手机UI尚未全部完成。正式配置的行动牌单类数量尚未冻结；默认拒绝开始，不伪造官方张数。候选59张配置只供显式本地工程测试，状态视图始终带CHECK_REQUIRED。
+房间显式采用candidate-59，并显示“部分张数待官方核实”。逐类quantity未无据升级确认；严格的已核实牌池资料接口与房间的已授权候选路径分开。健康检查M4_RULE_ENGINE，fullGame保持false。
 
 ## 本地运行
 
@@ -12,21 +12,24 @@ M4进行中：新增牧师替代抽牌、说书人私人限时排序，详见[M4
 npm ci --ignore-scripts --no-audit --no-fund
 npm run build
 $env:WT_ENABLE_DEV='1'
-$env:WT_ALLOW_CANDIDATE_COUNTS='1'
 $env:HOST='127.0.0.1'
-$env:PORT='3398'
-$env:DBD_DATA_DIR='data/local-wt/dbd'
-$env:WT_DATA_DIR='data/local-wt/wt'
+$env:PORT='3408'
+$env:DBD_DATA_DIR='data/local-wt-m4/dbd'
+$env:WT_DATA_DIR='data/local-wt-m4/wt'
 npm run server
 ```
 
-健康检查：<http://127.0.0.1:3398/api/health>，会显示witchTown/M3_EVENT_ENGINE/fullGame:false。根页面仍是原游戏大厅，**尚无女巫镇手机游玩页**；通过真实Socket.IO协议操作和验证。当前分支不要求新增依赖，原开发环境可复用node_modules；换电脑请先npm ci。旧WT_ENABLE_M1开关仍兼容。
+健康检查：<http://127.0.0.1:3408/api/health>。根页面仍是原游戏大厅，**尚无女巫镇手机游玩页**。不新增依赖，旧WT_ENABLE_M1兼容。端口占用时换端口，不停止他人进程。
 
 ## 复现测试
 
 ```powershell
-npm test -- packages/witch-town apps/server/test/wt-rooms.test.ts
-npx tsx scripts/verify-witch-town-m3.ts
+npm test -- --maxWorkers=2
+npx tsx scripts/verify-witch-town-m4-active.ts
+npx tsx scripts/verify-witch-town-m4-recovery.ts
+$env:WT_SIM_ACTIVE='1'
+$env:WT_SIM_M4='1'
+$env:WT_SIM_ROUNDS='100'
 npx tsx scripts/simulate-witch-town-m3.ts
 npm run typecheck
 npm run build
@@ -39,7 +42,7 @@ M2协议脚本（仍保留）会在3399端口临时启动**现有主服务器**�
 使用现有Socket.IO连接，事件和类型在packages/shared/src/wt-protocol.ts。响应沿用 `{ok:true,data}` / `{ok:false,error}`。
 
 1. `wt:create {capacity:4..12}` → code。
-2. `wt:claim {code,name}` → token/playerId/snapshot；客户端保存私人token。claim是初次占座，不在超时后盲目重发；M6需完善丢失首次回执的占座恢复。
+2. `wt:claim {code,name,claimKey}` → token/playerId/snapshot；在发送前先保存随机秘密claimKey、code、原昵称，丢失回执时原样重发恢复同一身份。旧无claimKey调用仍兼容，但不能恢复首次丢失回执。
 3. `wt:join {code,token?}` → 本人或旁观者快照；私人token只交给自己的连接。
 4. `wt:action {code,request:{requestId,version,action:{type:'READY',ready:true}}}`。
 5. 全部准备后房主发送同类请求 `action:{type:'START'}`。
@@ -56,7 +59,7 @@ M2协议脚本（仍保留）会在3399端口临时启动**现有主服务器**�
 - `ABILITY_DECISION {use:boolean}`：仅当前被询问者决定是否使用奖励/清牌能力。
 - `REVEAL_TRYAL {index}`：仅最终指控者选择当前目标隐藏牌列表内的序号，不是隐藏牌实例ID。
 
-黑卡会自动进入对应的秘密操作阶段。新增命令：CONSPIRACY_REVEAL {index}、CONSPIRACY_PICK {index}、NIGHT_TARGET {targetId}、NIGHT_PROTECT {targetId}、CONFESS {index} 或官员 CONFESS {useGovernor:true}。自白窗口为真实服务器时钟30秒，客户端不能发送TICK或自报时间。待核交互不消耗牌；涉及隐藏信息的待核错误会保存服务端具体审计码，客户端只见通用CHECK_REQUIRED:EVENT_RULE_REVIEW并暂停该事件，不能反复试选探牌。未实现的主动能力仍明确拒绝。私人视图private.choice给当前有权限者所需选项，公开pending不含隐藏内容。
+黑卡进入对应秘密阶段，CONSPIRACY_REVEAL/PICK、NIGHT_TARGET/PROTECT、CONFESS沿用原协议。新增LOOT_PICK与START_HOURGLASS；夜间private.lootChoices可与自白choice并行，deadline不重置。全部命令、权限、C/D默认及字段见[M4_UI_CONTRACT.md](M4_UI_CONTRACT.md)。已授权规则分支不再待核锁死，非法请求仍事务拒绝。
 
 工程报告：[PROJECT_AUDIT.md](PROJECT_AUDIT.md)、[MILESTONE_1.md](MILESTONE_1.md)、[MILESTONE_2.md](MILESTONE_2.md)、[MILESTONE_3.md](MILESTONE_3.md)。此前WITCH_TOWN_*研究文档是规则基线；其中“未开始开发”的历史记录由本轮开发报告更新，不是当前工程状态。原始扫描/PDF仍在原研究工作区，不提交公开仓库。
 

@@ -303,7 +303,7 @@ describe("witch town server M1", () => {
     expect(() => store.action(code, "fake", req)).toThrow("BAD_CREDENTIAL");
     expect(store.snapshot(code, a.token)).toEqual(before);
   });
-  it("requires readiness, actual minimum, host and explicit candidate opt-in", () => {
+  it("requires readiness and actual minimum, then starts with the user-authorized count warning", () => {
     const { store } = setup(false);
     const code = store.create(12),
       seats = Array.from({ length: 4 }, (_, i) => store.claim(code, `p${i}`));
@@ -321,14 +321,15 @@ describe("witch town server M1", () => {
         action: { type: "READY", ready: true },
       });
     const before = store.snapshot(code, seats[0].token);
-    expect(() =>
-      store.action(code, seats[0].token, {
-        requestId: "s",
-        version: 8,
-        action: { type: "START" },
-      }),
-    ).toThrow("CHECK_REQUIRED:X11");
-    expect(store.snapshot(code, seats[0].token)).toEqual(before);
+    store.action(code, seats[0].token, {
+      requestId: "s",
+      version: 8,
+      action: { type: "START" },
+    });
+    expect(store.snapshot(code, seats[0].token).view!.notices).toContain(
+      "部分张数待官方核实",
+    );
+    expect(before.view).toBeNull();
     expect(() => store.create(3)).toThrow("BAD_CAPACITY");
     expect(() => store.create(13)).toThrow("BAD_CAPACITY");
   });

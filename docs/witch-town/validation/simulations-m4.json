@@ -1,0 +1,236 @@
+{
+  "profile": "candidate-59",
+  "townHall": "actual random 15-character pool; bots may decline optional abilities",
+  "attemptedGamesPerPlayerCount": 100,
+  "results": [
+    {
+      "players": 4,
+      "attempted": 100,
+      "completed": 100,
+      "ruleBlocked": 0,
+      "stepLimit": 0,
+      "blockedSeeds": [],
+      "failures": [],
+      "blocks": {},
+      "teams": {
+        "townspeople": 70,
+        "witches": 30
+      },
+      "commands": 20314,
+      "triggers": {
+        "catFatal": 10,
+        "sharedLoot": 1,
+        "simultaneousLastInfections": 0,
+        "witchExemptionLost": 0
+      },
+      "activeUses": {
+        "tituba": 38,
+        "samuel_parris": 66
+      }
+    },
+    {
+      "players": 5,
+      "attempted": 100,
+      "completed": 100,
+      "ruleBlocked": 0,
+      "stepLimit": 0,
+      "blockedSeeds": [],
+      "failures": [],
+      "blocks": {},
+      "teams": {
+        "townspeople": 77,
+        "witches": 23
+      },
+      "commands": 25084,
+      "triggers": {
+        "catFatal": 14,
+        "sharedLoot": 0,
+        "simultaneousLastInfections": 0,
+        "witchExemptionLost": 0
+      },
+      "activeUses": {
+        "tituba": 25,
+        "samuel_parris": 72
+      }
+    },
+    {
+      "players": 6,
+      "attempted": 100,
+      "completed": 100,
+      "ruleBlocked": 0,
+      "stepLimit": 0,
+      "blockedSeeds": [],
+      "failures": [],
+      "blocks": {},
+      "teams": {
+        "townspeople": 63,
+        "witches": 37
+      },
+      "commands": 31346,
+      "triggers": {
+        "catFatal": 24,
+        "sharedLoot": 0,
+        "simultaneousLastInfections": 0,
+        "witchExemptionLost": 3
+      },
+      "activeUses": {
+        "tituba": 36,
+        "samuel_parris": 70
+      }
+    },
+    {
+      "players": 7,
+      "attempted": 100,
+      "completed": 100,
+      "ruleBlocked": 0,
+      "stepLimit": 0,
+      "blockedSeeds": [],
+      "failures": [],
+      "blocks": {},
+      "teams": {
+        "townspeople": 63,
+        "witches": 37
+      },
+      "commands": 35388,
+      "triggers": {
+        "catFatal": 22,
+        "sharedLoot": 0,
+        "simultaneousLastInfections": 0,
+        "witchExemptionLost": 2
+      },
+      "activeUses": {
+        "tituba": 42,
+        "samuel_parris": 98
+      }
+    },
+    {
+      "players": 8,
+      "attempted": 100,
+      "completed": 100,
+      "ruleBlocked": 0,
+      "stepLimit": 0,
+      "blockedSeeds": [],
+      "failures": [],
+      "blocks": {},
+      "teams": {
+        "townspeople": 62,
+        "witches": 38
+      },
+      "commands": 34639,
+      "triggers": {
+        "catFatal": 39,
+        "sharedLoot": 1,
+        "simultaneousLastInfections": 2,
+        "witchExemptionLost": 2
+      },
+      "activeUses": {
+        "tituba": 72,
+        "samuel_parris": 120
+      }
+    },
+    {
+      "players": 9,
+      "attempted": 100,
+      "completed": 100,
+      "ruleBlocked": 0,
+      "stepLimit": 0,
+      "blockedSeeds": [],
+      "failures": [],
+      "blocks": {},
+      "teams": {
+        "townspeople": 66,
+        "witches": 34
+      },
+      "commands": 37405,
+      "triggers": {
+        "catFatal": 38,
+        "sharedLoot": 7,
+        "simultaneousLastInfections": 0,
+        "witchExemptionLost": 4
+      },
+      "activeUses": {
+        "tituba": 73,
+        "samuel_parris": 114
+      }
+    },
+    {
+      "players": 10,
+      "attempted": 100,
+      "completed": 100,
+      "ruleBlocked": 0,
+      "stepLimit": 0,
+      "blockedSeeds": [],
+      "failures": [],
+      "blocks": {},
+      "teams": {
+        "townspeople": 57,
+        "witches": 43
+      },
+      "commands": 35240,
+      "triggers": {
+        "catFatal": 59,
+        "sharedLoot": 0,
+        "simultaneousLastInfections": 2,
+        "witchExemptionLost": 2
+      },
+      "activeUses": {
+        "tituba": 75,
+        "samuel_parris": 154
+      }
+    },
+    {
+      "players": 11,
+      "attempted": 100,
+      "completed": 100,
+      "ruleBlocked": 0,
+      "stepLimit": 0,
+      "blockedSeeds": [],
+      "failures": [],
+      "blocks": {},
+      "teams": {
+        "townspeople": 67,
+        "witches": 33
+      },
+      "commands": 38035,
+      "triggers": {
+        "catFatal": 65,
+        "sharedLoot": 3,
+        "simultaneousLastInfections": 0,
+        "witchExemptionLost": 3
+      },
+      "activeUses": {
+        "tituba": 80,
+        "samuel_parris": 177
+      }
+    },
+    {
+      "players": 12,
+      "attempted": 100,
+      "completed": 100,
+      "ruleBlocked": 0,
+      "stepLimit": 0,
+      "blockedSeeds": [],
+      "failures": [],
+      "blocks": {},
+      "teams": {
+        "townspeople": 67,
+        "witches": 33
+      },
+      "commands": 37662,
+      "triggers": {
+        "catFatal": 66,
+        "sharedLoot": 6,
+        "simultaneousLastInfections": 2,
+        "witchExemptionLost": 2
+      },
+      "activeUses": {
+        "tituba": 84,
+        "samuel_parris": 156
+      }
+    }
+  ],
+  "completeOriginalGameAcceptance": false,
+  "modeM4": true,
+  "policies": "Every third game prioritizes transmission coverage by choosing non-Witch trial slots and protecting the agreed attack target; others use random trial slots. Optional abilities, confession and concurrent night loot are exercised. All transitions are legal commands from randomized setup.",
+  "mode": "Tituba and Parris actively used; other optional abilities may be declined"
+}

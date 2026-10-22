@@ -173,9 +173,10 @@ describe("Samuel Parris replaces the draw action", () => {
     ).toThrow("NOT_PARRIS");
     s.players[0].character = "martha_corey";
     s.players[3].character = "samuel_parris";
-    expect(() =>
-      reduceWitchTown(s, "p0", { type: "PARRIS_DRAW", cardIds: [] } as any),
-    ).toThrow("CHECK_REQUIRED:X10");
+    expect(
+      reduceWitchTown(s, "p0", { type: "PARRIS_DRAW", cardIds: [] }).players[0]
+        .abilityUses.samuel_parris,
+    ).toBe(1);
   });
 });
 
@@ -317,9 +318,10 @@ describe("Tituba private timed rearrangement", () => {
     day.day.played = 0;
     day.players[0].character = "martha_corey";
     day.players[3].character = "tituba";
-    expect(() =>
-      reduceWitchTown(day, "p0", { type: "TITUBA_START" } as any),
-    ).toThrow("CHECK_REQUIRED:X10");
+    expect(
+      reduceWitchTown(day, "p0", { type: "TITUBA_START" }).players[0]
+        .abilityUses.tituba,
+    ).toBe(1);
   });
 });
 
@@ -378,7 +380,7 @@ describe("M2 day actions and trials", () => {
     });
     expect(s.pending?.kind).toBe("trial");
   });
-  it("Cotton death revalues existing copied Evidence, blocks only the unresolved crossing", () => {
+  it("P13 Cotton death revalues copied Evidence below the ordinary threshold without blocking", () => {
     for (const count of [1, 2]) {
       let s = fresh();
       s.players[0].character = "cotton_mather";
@@ -403,17 +405,10 @@ describe("M2 day actions and trials", () => {
         cardId: id,
         targetId: "p0",
       });
-      const before = structuredClone(s);
-      if (count === 2) {
-        expect(() =>
-          reduceWitchTown(s, "p2", { type: "REVEAL_TRYAL", index: 0 }),
-        ).toThrow("CHECK_REQUIRED:X03");
-        expect(s).toEqual(before);
-      } else {
-        s = reduceWitchTown(s, "p2", { type: "REVEAL_TRYAL", index: 0 });
-        expect(accusationValue(s, "p1")).toBe(3);
-        conservation(s);
-      }
+      s = reduceWitchTown(s, "p2", { type: "REVEAL_TRYAL", index: 0 });
+      expect(accusationValue(s, "p1")).toBe(count * 3);
+      expect(s.pending).toBeNull();
+      conservation(s);
     }
   });
   it("requires secret unanimous dawn targets, permits self, hides votes from townspeople", () => {
@@ -560,7 +555,7 @@ describe("M2 day actions and trials", () => {
     expect(s.pending?.kind).toBe("trial");
     conservation(s);
   });
-  it("Alibi selects whole cards <=3 points, doesn't remove Witness or guess Cotton ambiguity", () => {
+  it("Alibi selects whole cards <=3 current points, excludes Witness, and applies the documented Cotton default", () => {
     let s = fresh();
     const evidence = give(s, "evidence", "p1"),
       p = s.players[1];
@@ -585,15 +580,15 @@ describe("M2 day actions and trials", () => {
     );
     const id = give(s, "alibi");
     const before = structuredClone(s);
-    expect(() =>
-      reduceWitchTown(s, "p0", {
-        type: "PLAY",
-        cardId: id,
-        targetId: "p1",
-        removeIds: [e],
-      }),
-    ).toThrow("CHECK_REQUIRED:X01");
-    expect(s).toEqual(before);
+    s = reduceWitchTown(s, "p0", {
+      type: "PLAY",
+      cardId: id,
+      targetId: "p1",
+      removeIds: [e],
+    });
+    expect(s.discard.some((c) => c.id === e)).toBe(true);
+    expect(before.players[1].table.some((c) => c.id === e)).toBe(true);
+    conservation(s);
   });
   it("Curse removes exactly one selected blue card; Stocks survives until its skipped turn", () => {
     let s = fresh();
@@ -634,7 +629,7 @@ describe("M2 day actions and trials", () => {
     expect(s.players[2].table.some((c) => c.kind === "stocks")).toBe(true);
     conservation(s);
   });
-  it("Piety removal immediately triggers ordinary trial and blocks unresolved special-threshold case", () => {
+  it("P13 Piety removal triggers at >=7 even for George's special defence threshold", () => {
     let s = fresh();
     s = play(s, "piety");
     points(s, "p1", 7);
@@ -648,15 +643,15 @@ describe("M2 day actions and trials", () => {
     points(s, "p1", 7);
     const id = give(s, "curse"),
       before = structuredClone(s);
-    expect(() =>
-      reduceWitchTown(s, "p0", {
-        type: "PLAY",
-        cardId: id,
-        targetId: "p1",
-        blueId: s.players[1].table.find((c) => c.kind === "piety")!.id,
-      }),
-    ).toThrow("CHECK_REQUIRED:X07");
-    expect(s).toEqual(before);
+    s = reduceWitchTown(s, "p0", {
+      type: "PLAY",
+      cardId: id,
+      targetId: "p1",
+      blueId: s.players[1].table.find((c) => c.kind === "piety")!.id,
+    });
+    expect(s.pending?.kind).toBe("trial");
+    expect(before.pending).toBeNull();
+    conservation(s);
   });
   it("Ann reward is optional before reveal and black interruption retains the original trial", () => {
     let s = fresh();
@@ -884,23 +879,23 @@ describe("M2 day actions and trials", () => {
     expect(accusationValue(s, "p1")).toBe(1);
     conservation(s);
   });
-  it("CHECK_REQUIRED death interactions roll back reveals, red discard, rewards and card consumption", () => {
+  it("P6 terminal victory precedes Rebecca reward and shared loot choices without losing cards", () => {
     let s = fresh();
     s.players[2].character = "rebecca_nurse";
     points(s, "p3", 6);
     s = play(s, "accusation", "p3");
     let before = structuredClone(s);
-    expect(() =>
-      reduceWitchTown(s, "p0", { type: "REVEAL_TRYAL", index: 0 }),
-    ).toThrow("CHECK_REQUIRED:X02");
-    expect(s).toEqual(before);
+    const won = reduceWitchTown(s, "p0", { type: "REVEAL_TRYAL", index: 0 });
+    expect(won.outcome?.team).toBe("townspeople");
+    expect(won.tasks).toEqual([]);
+    conservation(won);
     s.players[2].character = "william_phips";
     s.players[0].character = "john_proctor";
     s.players[1].character = "martha_corey";
     before = structuredClone(s);
-    expect(() =>
-      reduceWitchTown(s, "p0", { type: "REVEAL_TRYAL", index: 0 }),
-    ).toThrow("CHECK_REQUIRED:X09");
+    const shared = reduceWitchTown(s, "p0", { type: "REVEAL_TRYAL", index: 0 });
+    expect(shared.outcome?.team).toBe("townspeople");
+    conservation(shared);
     expect(s).toEqual(before);
   });
   it("doctor effect returns to a normal Alibi after discard and cannot be forged by other roles", () => {
@@ -954,15 +949,15 @@ describe("M2 day actions and trials", () => {
       }),
     ).toThrow("SELECT_ONE_BLUE_CARD");
   });
-  it("Mary and moved second Matchmaker ambiguities reject atomically rather than dropping a card", () => {
+  it("Mary keeps harmless blue cards; a prohibited moved second Matchmaker rejects atomically", () => {
     let s = fresh();
     s.players[1].character = "mary_warren";
     const id = give(s, "black_cat"),
       before = structuredClone(s);
-    expect(() =>
-      reduceWitchTown(s, "p0", { type: "PLAY", cardId: id, targetId: "p1" }),
-    ).toThrow("CHECK_REQUIRED:X06");
-    expect(s).toEqual(before);
+    s = reduceWitchTown(s, "p0", { type: "PLAY", cardId: id, targetId: "p1" });
+    expect(s.players[1].table.some((c) => c.id === id)).toBe(true);
+    expect(before.players[1].table).toEqual([]);
+    conservation(s);
     s = fresh();
     s = play(s, "matchmaker", "p1");
     s = play(s, "matchmaker", "p2");
@@ -975,7 +970,7 @@ describe("M2 day actions and trials", () => {
         targetId: "p1",
         recipientId: "p2",
       }),
-    ).toThrow("CHECK_REQUIRED:X06");
+    ).toThrow("ALREADY_MATCHED");
     expect(s).toEqual(prior);
   });
   for (let n = 4; n <= 12; n++)

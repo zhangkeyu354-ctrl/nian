@@ -16,6 +16,7 @@ import {
 import { tickWitchTown } from "../packages/witch-town/src/events.ts";
 const rounds = Number(process.env.WT_SIM_ROUNDS ?? 20);
 const activeRoles = process.env.WT_SIM_ACTIVE === "1";
+const m4 = process.env.WT_SIM_M4 === "1";
 assert(Number.isInteger(rounds) && rounds > 0 && rounds <= 10000);
 function invariant(s: WTState, n: number) {
   const c = PLAYER_CONFIGS.find((c) => c.players === n)!;
@@ -34,8 +35,13 @@ function invariant(s: WTState, n: number) {
     ...s.players.flatMap((p) => [...p.hand, ...p.table]),
     ...(s.dawnBlackCat ? [s.dawnBlackCat] : []),
     ...(s.pending?.kind === "black-event" ? [s.pending.card] : []),
+    ...(s.pending?.kind === "loot" ? s.pending.pool : []),
     ...s.tasks.flatMap((t) =>
-      t.kind === "resume-event" ? [t.pending.card] : [],
+      t.kind === "resume-event"
+        ? [t.pending.card]
+        : t.kind === "loot"
+          ? t.pool
+          : [],
     ),
   ];
   assert.equal(cards.length, 59);
@@ -54,9 +60,16 @@ for (let n = 4; n <= 12; n++) {
     blocks: {} as Record<string, number>,
     teams: { townspeople: 0, witches: 0 },
     commands: 0,
+    triggers: {
+      catFatal: 0,
+      sharedLoot: 0,
+      simultaneousLastInfections: 0,
+      witchExemptionLost: 0,
+    },
     ...(activeRoles ? { activeUses: { tituba: 0, samuel_parris: 0 } } : {}),
   };
   for (let run = 1; run <= rounds; run++) {
+    const infectionFocus = m4 && run % 3 === 0;
     const seed = n * 10000 + run,
       rnd = seededRandom(seed);
     let now = 1000;
@@ -89,6 +102,10 @@ for (let n = 4; n <= 12; n++) {
       for (let step = 0; step < 2000 && !s.outcome; step++) {
         now += 100;
         const p = s.pending;
+        if (p?.kind === "loot") {
+          apply(p.playerId, { type: "LOOT_PICK", cardId: choose(p.pool).id });
+          continue;
+        }
         if (p?.kind === "tituba") {
           apply(p.playerId, {
             type: "TITUBA_REORDER",
@@ -101,7 +118,10 @@ for (let n = 4; n <= 12; n++) {
           continue;
         }
         if (p?.kind === "ability") {
-          apply(p.playerId, { type: "ABILITY_DECISION", use: false });
+          apply(p.playerId, {
+            type: "ABILITY_DECISION",
+            use: m4 ? rnd() < 0.65 : false,
+          });
           continue;
         }
         if (p?.kind === "trial") {
@@ -111,7 +131,12 @@ for (let n = 4; n <= 12; n++) {
           const safe = hidden.findIndex((t) => t.kind !== "witch");
           apply(p.actorId, {
             type: "REVEAL_TRYAL",
-            index: safe >= 0 ? safe : 0,
+            index:
+              m4 && !infectionFocus
+                ? Math.floor(rnd() * hidden.length)
+                : safe >= 0
+                  ? safe
+                  : 0,
           });
           continue;
         }
@@ -147,6 +172,15 @@ for (let n = 4; n <= 12; n++) {
             );
             const target =
               Object.values(e.votes)[0] ??
+              (infectionFocus
+                ? s.players.find(
+                    (q) =>
+                      q.alive &&
+                      !q.tryals.some(
+                        (t) => !t.revealed && t.kind === "constable",
+                      ),
+                  )?.id
+                : undefined) ??
               s.players.find(
                 (q) =>
                   q.alive &&
@@ -171,11 +205,40 @@ for (let n = 4; n <= 12; n++) {
             )!;
             apply(c.id, {
               type: "NIGHT_PROTECT",
-              targetId: choose(
-                s.players.filter((q) => q.alive && q.id !== c.id),
-              ).id,
+              targetId:
+                infectionFocus && e.attackTargetId !== c.id
+                  ? e.attackTargetId!
+                  : choose(s.players.filter((q) => q.alive && q.id !== c.id))
+                      .id,
             });
             continue;
+          }
+          if (m4) {
+            const loot = s.tasks.find((t) => t.kind === "loot");
+            if (loot?.kind === "loot" && rnd() < 0.8) {
+              apply(loot.playerId, {
+                type: "LOOT_PICK",
+                cardId: choose(loot.pool).id,
+              });
+              continue;
+            }
+            const confessor = s.players.find(
+              (q) => q.alive && !e.confessed.includes(q.id),
+            );
+            if (confessor && rnd() < 0.35) {
+              const governor =
+                effectiveCharacter(s, confessor.id) === "william_phips" &&
+                !confessor.abilityUses.william_phips;
+              const hidden = confessor.tryals.filter((t) => !t.revealed),
+                safe = hidden.findIndex((t) => t.kind !== "witch");
+              apply(
+                confessor.id,
+                governor
+                  ? { type: "CONFESS", useGovernor: true }
+                  : { type: "CONFESS", index: safe >= 0 ? safe : 0 },
+              );
+              continue;
+            }
           }
           now = e.deadline!;
           const next = tickWitchTown(s, now, rnd);
@@ -194,7 +257,7 @@ for (let n = 4; n <= 12; n++) {
         let played = false;
         if (
           activeRoles &&
-          actor.character === "tituba" &&
+          effectiveCharacter(s, actor.id) === "tituba" &&
           !actor.abilityUses.tituba
         ) {
           apply(actor.id, { type: "TITUBA_START" });
@@ -203,7 +266,7 @@ for (let n = 4; n <= 12; n++) {
         }
         if (
           activeRoles &&
-          actor.character === "samuel_parris" &&
+          effectiveCharacter(s, actor.id) === "samuel_parris" &&
           (actor.abilityUses.samuel_parris ?? 0) < 2 &&
           s.discard.length
         ) {
@@ -222,7 +285,7 @@ for (let n = 4; n <= 12; n++) {
           const others = s.players.filter((q) => q.alive && q.id !== actor.id);
           let targets = [...others].sort(() => rnd() - 0.5);
           const red = ["accusation", "evidence", "witness"].includes(card.kind);
-          if (red && rebeccas.length) {
+          if (!m4 && red && rebeccas.length) {
             targets = targets.filter(
               (q) => rebeccas.length === 1 && q.id === rebeccas[0].id,
             );
@@ -277,6 +340,17 @@ for (let n = 4; n <= 12; n++) {
         row.blocks[code] = (row.blocks[code] ?? 0) + 1;
       } else row.failures.push({ seed, code, phase: s.phase });
     }
+    const types = s.log.map((x) => x.type);
+    row.triggers.catFatal += types.filter((x) => x === "CAT_FATAL").length;
+    row.triggers.sharedLoot += types.filter(
+      (x) => x === "SHARED_FARMER_LOOT",
+    ).length;
+    row.triggers.simultaneousLastInfections += types.filter(
+      (x) => x === "SIMULTANEOUS_LAST_INFECTIONS",
+    ).length;
+    row.triggers.witchExemptionLost += types.filter(
+      (x) => x === "WITCH_EXEMPTION_LOST",
+    ).length;
   }
   result.push(row);
   console.log(
@@ -291,6 +365,10 @@ const report = {
   attemptedGamesPerPlayerCount: rounds,
   results: result,
   completeOriginalGameAcceptance: false,
+  modeM4: m4,
+  policies: m4
+    ? "Every third game prioritizes transmission coverage by choosing non-Witch trial slots and protecting the agreed attack target; others use random trial slots. Optional abilities, confession and concurrent night loot are exercised. All transitions are legal commands from randomized setup."
+    : undefined,
   ...(activeRoles
     ? {
         mode: "Tituba and Parris actively used; other optional abilities may be declined",
@@ -299,12 +377,32 @@ const report = {
 };
 mkdirSync("docs/witch-town/validation", { recursive: true });
 writeFileSync(
-  activeRoles
-    ? "docs/witch-town/validation/simulations-m4-active.json"
-    : "docs/witch-town/validation/simulations-m3.json",
+  m4
+    ? "docs/witch-town/validation/simulations-m4.json"
+    : activeRoles
+      ? "docs/witch-town/validation/simulations-m4-active.json"
+      : "docs/witch-town/validation/simulations-m3.json",
   JSON.stringify(report, null, 2),
 );
 assert(
   result.every((r) => r.failures.length === 0),
   "unexpected simulation failures; inspect report",
 );
+if (m4) {
+  assert(
+    result.every(
+      (r) => r.completed === rounds && r.ruleBlocked === 0 && r.stepLimit === 0,
+    ),
+    "M4 game completion gate failed; inspect report",
+  );
+  for (const key of [
+    "catFatal",
+    "sharedLoot",
+    "simultaneousLastInfections",
+    "witchExemptionLost",
+  ])
+    assert(
+      result.reduce((n, r) => n + r.triggers[key], 0) > 0,
+      `M4 missing actual trigger coverage: ${key}`,
+    );
+}

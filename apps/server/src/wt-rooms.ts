@@ -1,4 +1,4 @@
-import { createHash, randomBytes, randomInt } from "node:crypto";
+import { createHash, createHmac, randomBytes, randomInt } from "node:crypto";
 import {
   mkdirSync,
   readdirSync,
@@ -31,6 +31,7 @@ interface WTSeat {
   name: string;
   tokenHash: string;
   ready: boolean;
+  claimKeyHash?: string;
 }
 interface RoomFile {
   schemaVersion: 1;
@@ -45,6 +46,7 @@ interface RoomFile {
   state: WTState | null;
   receipts: Record<string, { signature: string; version: number }>;
   ruleAuditCode?: string;
+  claimSecret?: string;
 }
 interface WTStoreOptions {
   allowCandidateCounts?: boolean;
@@ -55,6 +57,7 @@ interface WTStoreOptions {
 /** Server-authoritative snapshots on disk; synchronous transactions serialize commands
  * within the existing single-process Node service. No await occurs between check/write. */
 export class WTRoomStore {
+  dispose = () => {};
   private rooms = new Map<string, RoomFile>();
   readonly connections = new Map<string, Map<string, number>>();
   readonly loadErrors: string[] = [];
@@ -76,7 +79,17 @@ export class WTRoomStore {
           !Number.isInteger(r.version)
         )
           fail("BAD_SAVE");
-        if (r.state) r.state = upgradeWitchTown(r.state);
+        if (r.state) {
+          r.state = upgradeWitchTown(r.state);
+          // M4 resolves these former rule-review locks; preserve cards and prior choices.
+          if (
+            r.state.checkRequired === "CHECK_REQUIRED:EVENT_RULE_REVIEW" &&
+            /^CHECK_REQUIRED:X0[1-9]:/.test(r.ruleAuditCode ?? "")
+          ) {
+            r.state.checkRequired = null;
+            delete r.ruleAuditCode;
+          }
+        }
         this.rooms.set(r.code, r);
       } catch {
         this.loadErrors.push(name);
@@ -129,22 +142,49 @@ export class WTRoomStore {
       players: [],
       state: null,
       receipts: {},
+      claimSecret: randomBytes(32).toString("hex"),
     });
     return code;
   }
-  claim(code: string, name: unknown) {
+  claim(code: string, name: unknown, claimKey?: unknown) {
     const r = structuredClone(this.room(code));
+    if (
+      claimKey !== undefined &&
+      (typeof claimKey !== "string" ||
+        !/^[a-zA-Z0-9_-]{32,128}$/.test(claimKey))
+    )
+      fail("BAD_CLAIM_KEY");
+    if (typeof name !== "string" || !name.trim() || name.trim().length > 24)
+      fail("BAD_NAME");
+    const keyHash = typeof claimKey === "string" ? hash(claimKey) : undefined;
+    const existing = keyHash
+      ? r.players.find((p) => p.claimKeyHash === keyHash)
+      : undefined;
+    const recoveredToken = () =>
+      createHmac("sha256", r.claimSecret!)
+        .update(`${code}:${claimKey}`)
+        .digest("base64url");
+    if (existing) {
+      if (existing.name !== name.trim()) fail("CLAIM_KEY_REUSED");
+      const token = recoveredToken();
+      if (hash(token) !== existing.tokenHash) fail("BAD_SAVE");
+      return { playerId: existing.id, token };
+    }
     if (r.state) fail("ALREADY_STARTED");
     if (r.players.length >= r.capacity) fail("ROOM_FULL");
     if (typeof name !== "string" || !name.trim() || name.trim().length > 24)
       fail("BAD_NAME");
-    const token = randomBytes(24).toString("base64url"),
+    r.claimSecret ??= randomBytes(32).toString("hex");
+    const token = keyHash
+        ? recoveredToken()
+        : randomBytes(24).toString("base64url"),
       id = randomBytes(12).toString("hex");
     r.players.push({
       id,
       name: name.trim(),
       tokenHash: hash(token),
       ready: false,
+      ...(keyHash ? { claimKeyHash: keyHash } : {}),
     });
     r.hostId ??= id;
     r.version++;
@@ -186,10 +226,9 @@ export class WTRoomStore {
       r.state = createWitchTown(
         {
           players: r.players.map((p) => ({ id: p.id, name: p.name })),
-          countsProfile: this.options.allowCandidateCounts
-            ? "candidate-59"
-            : "official-standard",
-          allowCandidateCounts: this.options.allowCandidateCounts,
+          // X11 explicit user instruction: playable provisional counts, never labelled confirmed.
+          countsProfile: "candidate-59",
+          allowCandidateCounts: true,
         },
         () => randomInt(0x100000000) / 0x100000000,
       );
@@ -281,7 +320,7 @@ export class WTRoomStore {
         connected: (this.connections.get(code)?.get(p.id) ?? 0) > 0,
       })),
       view: r.state ? viewForWitchTown(r.state, me?.id ?? null) : null,
-      milestone: "M3_EVENT_ENGINE",
+      milestone: "M4_RULE_ENGINE",
     };
   }
   connected(code: string, id: string, delta: number) {
@@ -349,7 +388,7 @@ export function attachWitchTown(
     on(WT_EVENTS.create, (r) => ({ code: store.create(r.capacity) }));
     on(WT_EVENTS.join, (r) => attach(r.code, r.token ?? null));
     on(WT_EVENTS.claim, (r) => {
-      const seat = store.claim(r.code, r.name);
+      const seat = store.claim(r.code, r.name, r.claimKey);
       attach(r.code, seat.token);
       return { ...seat, snapshot: store.snapshot(r.code, seat.token) };
     });
@@ -393,5 +432,6 @@ export function attachWitchTown(
     }
   }, 250);
   timer.unref();
+  store.dispose = () => clearInterval(timer);
   return store;
 }

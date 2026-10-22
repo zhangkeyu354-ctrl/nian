@@ -125,7 +125,7 @@ it("secret night ballots do not change public versions; real deadline state surv
   f.restore();
   expect(f.store.snapshot(f.code, f.seats[0].token)).toEqual(done);
 });
-it("unresolved secret exchange locks generically, with concrete diagnosis only in the server save", () => {
+it("P6 simultaneous final infections complete atomically without exposing prior secret picks", () => {
   const f = fixture("conspiracy"),
     before = f.store.snapshot(f.code, null);
   for (let i = 0; i < 5; i++)
@@ -145,16 +145,12 @@ it("unresolved secret exchange locks generically, with concrete diagnosis only i
   expect(f.store.snapshot(f.code, null)).toEqual(before);
   const left = f.store.snapshot(f.code, f.seats[0].token).view!.private!.tryals;
   const witchIndex = left.findIndex((t) => t.kind === "witch");
-  expect(() =>
-    f.action(5, { type: "CONSPIRACY_PICK", index: witchIndex }),
-  ).toThrow("CHECK_REQUIRED:EVENT_RULE_REVIEW");
+  f.action(5, { type: "CONSPIRACY_PICK", index: witchIndex });
   const publicJson = JSON.stringify(f.store.snapshot(f.code, null));
-  expect(publicJson).not.toContain("X04");
-  expect(publicJson).not.toContain("picks");
-  expect(JSON.parse(readFileSync(f.path, "utf8")).ruleAuditCode).toContain(
-    "X04",
-  );
+  expect(f.store.snapshot(f.code,null).view!.checkRequired).toBeNull();
+  expect(publicJson).not.toContain('"picks":');
+  expect(f.store.snapshot(f.code, null).view!.outcome?.team).toBe("witches");
   expect(() => f.action(5, { type: "CONSPIRACY_PICK", index: 0 })).toThrow(
-    "CHECK_REQUIRED:EVENT_RULE_REVIEW",
+    "GAME_OVER",
   );
 });

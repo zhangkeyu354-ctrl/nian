@@ -3,6 +3,7 @@ import {
   CHARACTERS,
   CANDIDATE_COUNTS,
   PLAYER_CONFIGS,
+  RULE_DECISIONS,
   type CardKind,
   type CharacterId,
   type CountsProfile,
@@ -11,6 +12,7 @@ import {
   accusationValue,
   publicPending,
   privateChoice,
+  privateLootChoices,
   type WTPending,
   type WTTask,
   type WTLog,
@@ -58,7 +60,7 @@ export interface WTState {
   turnPlayerId: string | null;
   unusedCharacters: CharacterId[];
   pending: WTPending;
-  day: { played: number };
+  day: { played: number; deadline?: number };
   tasks: WTTask[];
   dawnVotes: Record<string, string>;
   log: WTLog[];
@@ -246,6 +248,8 @@ export function viewForWitchTown(state: WTState, playerId: string | null) {
     rulesProfile: state.rulesProfile,
     countsProfile: state.countsProfile,
     evidenceWarnings: state.evidenceWarnings,
+    notices: ["部分张数待官方核实"],
+    ruleDecisions: RULE_DECISIONS,
     phase: state.phase,
     turnPlayerId: state.turnPlayerId,
     blackCatOwnerId: state.blackCatOwnerId,
@@ -276,6 +280,7 @@ export function viewForWitchTown(state: WTState, playerId: string | null) {
           everWitch: me.everWitch,
           abilityUses: me.abilityUses,
           choice: privateChoice(state, me.id),
+          lootChoices: privateLootChoices(state, me.id),
           ...(state.phase === "dawn" && me.everWitch
             ? {
                 witchAllies: state.players

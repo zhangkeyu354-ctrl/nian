@@ -85,9 +85,13 @@ describe("M3 events", () => {
     s = cmd(s, "p0", { type: "NIGHT_TARGET", targetId: "p2" });
     s = cmd(s, "p1", { type: "NIGHT_PROTECT", targetId: "p3" });
     const before = structuredClone(s);
-    expect(() => tickWitchTown(s, 31000, seededRandom(22))).toThrow(
-      "CHECK_REQUIRED:X02:TRIAL_ACTOR_ELIMINATED",
-    );
+    const next = tickWitchTown(s, 31000, seededRandom(22))!;
+    expect(next.pending).toMatchObject({
+      kind: "trial",
+      actorId: "p3",
+      targetId: "p3",
+    });
+    count(next);
     expect(s).toEqual(before);
   });
   it("reconnecting Witch remembers the agreed attack while a townsperson never receives it", () => {
@@ -175,15 +179,15 @@ describe("M3 events", () => {
     expect(s.players[0].alive).toBe(false);
     count(s);
   });
-  it("cat nonterminal death and simultaneous last infections retain specific unresolved boundaries", () => {
+  it("P5/P6 cat death and simultaneous last infections resolve without freezing", () => {
     let s = base();
     s.players[2].tryals.slice(1).forEach((t) => (t.revealed = true));
     s = event(s, "conspiracy");
     let before = structuredClone(s);
-    expect(() => cmd(s, "p2", { type: "CONSPIRACY_REVEAL", index: 0 })).toThrow(
-      "CHECK_REQUIRED:X04",
-    );
-    expect(s).toEqual(before);
+    s = cmd(s, "p2", { type: "CONSPIRACY_REVEAL", index: 0 });
+    expect(s.players[2].alive).toBe(false);
+    expect((s.pending as any).event.members).not.toContain("p2");
+    count(s);
     s = base();
     s.players[2].tryals[0].kind = "witch";
     s.players[2].everWitch = true;
@@ -193,10 +197,9 @@ describe("M3 events", () => {
     for (let i = 0; i < 3; i++)
       s = cmd(s, `p${i}`, { type: "CONSPIRACY_PICK", index: 0 });
     before = structuredClone(s);
-    expect(() => cmd(s, "p3", { type: "CONSPIRACY_PICK", index: 0 })).toThrow(
-      "CHECK_REQUIRED:X04",
-    );
-    expect(s).toEqual(before);
+    s = cmd(s, "p3", { type: "CONSPIRACY_PICK", index: 0 });
+    expect(s.outcome?.team).toBe("witches");
+    expect(s.outcome?.losers).toEqual(["p1", "p3"]);
     count(s);
   });
   it("confession is not protection from identity death and does not reward Rebecca", () => {
@@ -210,7 +213,7 @@ describe("M3 events", () => {
     expect(s.players[2].hand.length).toBe(3);
     count(s);
   });
-  it("Governor cannot renew the one-shot use and copied limited ability stays explicitly unresolved", () => {
+  it("Governor and copied Governor retain a personal one-shot budget", () => {
     let s = night(base());
     s = cmd(s, "p3", { type: "CONFESS", useGovernor: true });
     (s.pending as any).event.confessed = [];
@@ -219,7 +222,7 @@ describe("M3 events", () => {
     );
     s.players[3].character = "martha_corey";
     expect(() => cmd(s, "p3", { type: "CONFESS", useGovernor: true })).toThrow(
-      "CHECK_REQUIRED:X10",
+      "ABILITY_EXHAUSTED",
     );
     count(s);
   });
@@ -232,9 +235,12 @@ describe("M3 events", () => {
     s = cmd(s, "p0", { type: "NIGHT_TARGET", targetId: "p3" });
     s = cmd(s, "p1", { type: "NIGHT_PROTECT", targetId: "p3" });
     const before = structuredClone(s);
-    expect(() => tickWitchTown(s, 31000, seededRandom(1))).toThrow(
-      "CHECK_REQUIRED:X08",
-    );
+    const next = tickWitchTown(s, 31000, seededRandom(1))!;
+    expect(next.pending).toMatchObject({
+      kind: "black-event",
+      card: { kind: "night" },
+    });
+    count(next);
     expect(s).toEqual(before);
     count(s);
   });
@@ -316,7 +322,7 @@ describe("M3 events", () => {
     ).toThrow("CONSTABLE_ONLY");
     expect(() =>
       cmd(s, "p1", { type: "NIGHT_PROTECT", targetId: null }),
-    ).toThrow("CHECK_REQUIRED:X05");
+    ).toThrow("PROTECT_ANOTHER_PLAYER");
     count(s);
   });
   it.each(["protection", "confession", "asylum"])(

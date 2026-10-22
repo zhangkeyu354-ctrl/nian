@@ -1,0 +1,375 @@
+{
+  "milestone": "M4_RULE_ENGINE",
+  "status": "passed",
+  "fullGame": false,
+  "phoneUIImplemented": false,
+  "unit": {
+    "milestone": "M4_RULE_ENGINE",
+    "command": "npm test -- --maxWorkers=2 --reporter=json --outputFile=output/witch-town/full-tests-m4-final.json",
+    "total": 754,
+    "passed": 754,
+    "failed": 0,
+    "witchTown": {
+      "total": 320,
+      "passed": 320
+    },
+    "rawReport": "output/witch-town/full-tests-m4-final.json",
+    "rawSha256": "8654d5b6ba679cd1b6bce090958ec5e7c585ae7fb1e49fedc82e43e993d2dddc",
+    "testFiles": [
+      {
+        "file": "apps/web/test/experience.test.ts",
+        "status": "passed",
+        "total": 4,
+        "passed": 4
+      },
+      {
+        "file": "apps/server/test/dm-rooms.test.ts",
+        "status": "passed",
+        "total": 2,
+        "passed": 2
+      },
+      {
+        "file": "apps/server/test/dm-timer.test.ts",
+        "status": "passed",
+        "total": 1,
+        "passed": 1
+      },
+      {
+        "file": "apps/server/test/lobby.test.ts",
+        "status": "passed",
+        "total": 13,
+        "passed": 13
+      },
+      {
+        "file": "apps/server/test/ma-rooms.test.ts",
+        "status": "passed",
+        "total": 6,
+        "passed": 6
+      },
+      {
+        "file": "apps/server/test/wt-active-roles.test.ts",
+        "status": "passed",
+        "total": 10,
+        "passed": 10
+      },
+      {
+        "file": "apps/server/test/wt-events.test.ts",
+        "status": "passed",
+        "total": 2,
+        "passed": 2
+      },
+      {
+        "file": "apps/server/test/wt-m4-recovery.test.ts",
+        "status": "passed",
+        "total": 111,
+        "passed": 111
+      },
+      {
+        "file": "apps/server/test/wt-rooms.test.ts",
+        "status": "passed",
+        "total": 18,
+        "passed": 18
+      },
+      {
+        "file": "packages/codenames/test/engine.test.ts",
+        "status": "passed",
+        "total": 38,
+        "passed": 38
+      },
+      {
+        "file": "packages/dying-message/test/engine.test.ts",
+        "status": "passed",
+        "total": 5,
+        "passed": 5
+      },
+      {
+        "file": "packages/dying-message/test/special.test.ts",
+        "status": "passed",
+        "total": 19,
+        "passed": 19
+      },
+      {
+        "file": "packages/game-engine/test/board-visuals.test.tsx",
+        "status": "passed",
+        "total": 2,
+        "passed": 2
+      },
+      {
+        "file": "packages/game-engine/test/controls.test.ts",
+        "status": "passed",
+        "total": 2,
+        "passed": 2
+      },
+      {
+        "file": "packages/game-engine/test/core.test.ts",
+        "status": "passed",
+        "total": 8,
+        "passed": 8
+      },
+      {
+        "file": "packages/game-engine/test/flow.test.ts",
+        "status": "passed",
+        "total": 17,
+        "passed": 17
+      },
+      {
+        "file": "packages/game-engine/test/items.test.ts",
+        "status": "passed",
+        "total": 33,
+        "passed": 33
+      },
+      {
+        "file": "packages/game-engine/test/presentation.test.ts",
+        "status": "passed",
+        "total": 4,
+        "passed": 4
+      },
+      {
+        "file": "packages/game-engine/test/privacy.test.ts",
+        "status": "passed",
+        "total": 5,
+        "passed": 5
+      },
+      {
+        "file": "packages/game-engine/test/rules.test.ts",
+        "status": "passed",
+        "total": 16,
+        "passed": 16
+      },
+      {
+        "file": "packages/game-engine/test/simulation.test.ts",
+        "status": "passed",
+        "total": 1,
+        "passed": 1
+      },
+      {
+        "file": "packages/game-engine/test/skills.test.ts",
+        "status": "passed",
+        "total": 44,
+        "passed": 44
+      },
+      {
+        "file": "packages/game-engine/test/triggers.test.ts",
+        "status": "passed",
+        "total": 63,
+        "passed": 63
+      },
+      {
+        "file": "packages/game-engine/test/visual-privacy.test.tsx",
+        "status": "passed",
+        "total": 2,
+        "passed": 2
+      },
+      {
+        "file": "packages/reflex-race/test/engine.test.ts",
+        "status": "passed",
+        "total": 13,
+        "passed": 13
+      },
+      {
+        "file": "packages/magical-athlete/test/audit.test.ts",
+        "status": "passed",
+        "total": 67,
+        "passed": 67
+      },
+      {
+        "file": "packages/magical-athlete/test/racers.test.ts",
+        "status": "passed",
+        "total": 41,
+        "passed": 41
+      },
+      {
+        "file": "packages/magical-athlete/test/simulation.test.ts",
+        "status": "passed",
+        "total": 20,
+        "passed": 20
+      },
+      {
+        "file": "packages/magical-athlete/test/variants.test.ts",
+        "status": "passed",
+        "total": 8,
+        "passed": 8
+      },
+      {
+        "file": "packages/witch-town/test/day.test.ts",
+        "status": "passed",
+        "total": 74,
+        "passed": 74
+      },
+      {
+        "file": "packages/witch-town/test/events.test.ts",
+        "status": "passed",
+        "total": 37,
+        "passed": 37
+      },
+      {
+        "file": "packages/witch-town/test/m4-resolution.test.ts",
+        "status": "passed",
+        "total": 28,
+        "passed": 28
+      },
+      {
+        "file": "packages/witch-town/test/setup.test.ts",
+        "status": "passed",
+        "total": 40,
+        "passed": 40
+      }
+    ]
+  },
+  "typecheck": "passed",
+  "build": {
+    "status": "passed",
+    "existingWarnings": [
+      "Other-game table-wood asset reference",
+      "Existing large frontend bundle"
+    ]
+  },
+  "witchTownProtocol": {
+    "active": 18,
+    "recovery": 108,
+    "total": 126,
+    "failed": 0
+  },
+  "simulation": {
+    "games": 900,
+    "completed": 900,
+    "ruleBlocked": 0,
+    "unexpected": 0,
+    "stepLimit": 0,
+    "triggers": {
+      "catFatal": 337,
+      "sharedLoot": 18,
+      "simultaneousLastInfections": 6,
+      "witchExemptionLost": 18
+    },
+    "countsProfile": "candidate-59",
+    "originalRuleAcceptance": false
+  },
+  "baseline": {
+    "total": 615,
+    "passed": 614,
+    "failed": 1,
+    "success": false,
+    "failures": [
+      {
+        "file": "packages/game-engine/test/privacy.test.ts",
+        "test": "联机隐藏信息 回放 2903 的每一步，每个座位都看不到别人的秘密",
+        "error": "Error: Test timed out in 5000ms."
+      }
+    ]
+  },
+  "originalTimeout": {
+    "file": "packages/game-engine/test/privacy.test.ts",
+    "test": "Replay 2903 all-seat privacy",
+    "milliseconds": 5000,
+    "observedBeforeM4Changes": true,
+    "sourceModified": false,
+    "timeoutModified": false,
+    "isolatedFileRetry": "5/5",
+    "finalFullSuite": "passed"
+  },
+  "otherGames": {
+    "replays": {
+      "verified": [
+        {
+          "seed": 1701,
+          "winner": "survivor",
+          "sha256": "003023f949f2c4873d031fac0c3f2c32eea1ef48861459f02a2bd9566f5a066a",
+          "eventsSha256": "5540f85ba3b620cda45aa6f594478becaa2ff0d0355791f17b5a7b1f05f82c1b",
+          "commandsSha256": "18532c5cf738cc5ecd45f06868d1c0424e2a91a25c041a0b3dd19829469f1e5a"
+        },
+        {
+          "seed": 2903,
+          "winner": "survivor",
+          "sha256": "957d9d25558d5622a6b47d08c42d178fb6db55ac0f298e40658e2e97e570a91c",
+          "eventsSha256": "c96d3e9992295e5b134389c989d17ddace42988d70a40b8d4dcd0b4f7033246b",
+          "commandsSha256": "53757559965142d20e80ab72ebcbdd1f0497f890f5ef37f9ba6b122dbab3a68a"
+        },
+        {
+          "seed": 4111,
+          "winner": "killer",
+          "sha256": "2fa6a8fa6f5eabbdcc72d83b5683cb6b81b1a0b22a6aedbbd64d9bad84e4463f",
+          "eventsSha256": "489c7e15e7f4da5262d878375cfff1ef511783f397ec55eb326473c2b14016c7",
+          "commandsSha256": "74822afba55f37a750dce14f90959851ab77c91fa1a722e1bc830934f7aec2e0"
+        }
+      ]
+    },
+    "lanProtocol": {
+      "games": [
+        {
+          "seed": 1701,
+          "code": "BXFD",
+          "commands": 228,
+          "winner": "survivor",
+          "events": 450,
+          "rejectedAsExpected": 24
+        },
+        {
+          "seed": 2903,
+          "code": "XUT9",
+          "commands": 268,
+          "winner": "survivor",
+          "events": 535,
+          "rejectedAsExpected": 28
+        },
+        {
+          "seed": 4111,
+          "code": "ARJD",
+          "commands": 109,
+          "winner": "killer",
+          "events": 223,
+          "rejectedAsExpected": 12
+        }
+      ],
+      "viewEqualityChecks": 3025,
+      "restartRestore": true
+    },
+    "lanBrowsers": [
+      {
+        "seed": 4111,
+        "room": "TXZR",
+        "commands": 109,
+        "winner": "killer",
+        "browsers": 5,
+        "killerFramesChecked": 112,
+        "screenshotsChecked": 5
+      },
+      {
+        "seed": 1701,
+        "room": "SDFL",
+        "commands": 228,
+        "winner": "survivor",
+        "browsers": 5,
+        "killerFramesChecked": 231,
+        "screenshotsChecked": 5
+      }
+    ],
+    "lanLobby": {
+      "passed": true,
+      "scenarios": 3
+    },
+    "codenames": {
+      "passed": true,
+      "checks": 12
+    },
+    "dyingMessage": {
+      "pass": true,
+      "players": 4,
+      "code": "9F3Q",
+      "roles": "random, host configured detective",
+      "speechOrder": [
+        1,
+        3,
+        4
+      ],
+      "refreshRestored": true,
+      "privacy": true,
+      "twoVotes": true,
+      "winner": "INNOCENT",
+      "restart": true,
+      "consoleErrors": []
+    }
+  },
+  "deployed": false,
+  "mainMerged": false
+}

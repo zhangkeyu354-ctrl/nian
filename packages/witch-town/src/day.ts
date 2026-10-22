@@ -25,6 +25,8 @@ export type WTCommand =
   | { type: "TITUBA_REORDER"; cardIds: string[] }
   | { type: "TITUBA_FINISH" }
   | { type: "END_TURN" }
+  | { type: "START_HOURGLASS" }
+  | { type: "LOOT_PICK"; cardId: string }
   | {
       type: "PLAY";
       cardId: string;
@@ -38,7 +40,16 @@ export type WTCommand =
   | { type: "ABILITY_DECISION"; use: boolean }
   | WTEventCommand;
 export type Ability = "ann" | "abigail" | "rebecca" | "giles";
+export interface WTLoot {
+  kind: "loot";
+  pool: PlayingCard[];
+  recipients: string[];
+  taken: number[];
+  playerId: string;
+  remainderId: string;
+}
 export type WTTask =
+  | WTLoot
   | {
       kind: "draw";
       playerId: string;
@@ -57,6 +68,7 @@ export type WTPending =
   | null
   | { kind: "dawn-black-cat" }
   | { kind: "tituba"; playerId: string; deadline: number }
+  | WTLoot
   | Extract<WTTask, { kind: "trial" | "ability" }>
   | {
       kind: "black-event";
@@ -161,7 +173,12 @@ function advance(s: WTState, from: string) {
   }
   fail("NO_PLAYABLE_TURN");
 }
-export function victory(s: WTState, personalLoser?: string) {
+export function victory(s: WTState, personalLoser?: string | string[]) {
+  const personalLosers = Array.isArray(personalLoser)
+    ? personalLoser
+    : personalLoser
+      ? [personalLoser]
+      : [];
   const witchTryals = s.players
     .flatMap((p) => p.tryals)
     .filter((t) => t.kind === "witch");
@@ -174,25 +191,30 @@ export function victory(s: WTState, personalLoser?: string) {
     team,
     reason: townWin
       ? "all-witch-tryals-revealed"
-      : personalLoser
+      : personalLosers.length
         ? "last-townsperson-infected"
         : "no-living-townspeople",
     winners: s.players
       .filter(
-        (p) => p.everWitch === (team === "witches") && p.id !== personalLoser,
+        (p) =>
+          p.everWitch === (team === "witches") &&
+          !personalLosers.includes(p.id),
       )
       .map((p) => p.id),
     losers: s.players
       .filter(
-        (p) => p.everWitch !== (team === "witches") || p.id === personalLoser,
+        (p) =>
+          p.everWitch !== (team === "witches") || personalLosers.includes(p.id),
       )
       .map((p) => p.id),
   };
   s.phase = "over";
   s.timerDeadline = null;
   if (s.pending?.kind === "black-event") discard(s, [s.pending.card]);
+  if (s.pending?.kind === "loot") settleLoot(s, s.pending);
   for (const t of s.tasks)
     if (t.kind === "resume-event") discard(s, [t.pending.card]);
+    else if (t.kind === "loot") settleLoot(s, t);
   s.pending = null;
   s.tasks = [];
   s.turnPlayerId = null;
@@ -208,40 +230,23 @@ export function fatalReveal(p: WTPlayer, index: number) {
       !hidden.some((t) => t !== selected && t.kind === "witch"))
   );
 }
-function checkDeathBoundary(s: WTState, dyingIds: string[]) {
-  const farmers = s.players.filter(
-    (p) =>
-      p.alive &&
-      !dyingIds.includes(p.id) &&
-      effectiveCharacter(s, p.id) === "john_proctor",
-  );
-  if (
-    farmers.length > 1 ||
-    farmers.some(
-      (p) =>
-        p.character === "martha_corey" &&
-        s.players.some(
-          (q) => dyingIds.includes(q.id) && q.character === "john_proctor",
-        ),
-    )
-  )
-    fail("CHECK_REQUIRED:X09:SHARED_FARMER_LOOT");
-  for (const p of s.players.filter(
-    (p) => p.alive && !dyingIds.includes(p.id),
-  )) {
-    if (
-      p.character === "martha_corey" &&
-      effectiveCharacter(s, p.id) === "cotton_mather"
-    ) {
-      const later = structuredClone(s);
-      for (const id of dyingIds) player(later, id).alive = false;
-      if (
-        effectiveCharacter(later, p.id) !== "cotton_mather" &&
-        accusationValue(later, p.id) >= 6
-      )
-        fail("CHECK_REQUIRED:X03:COPY_RESCORING");
+function settleLoot(s: WTState, loot: WTLoot) {
+  // DEFAULT_PENDING_CONFIRM P12: after three each, leftovers belong to John.
+  // At terminal state no further private choices are required; complete alternation.
+  while (
+    loot.pool.length &&
+    loot.recipients.some((id, i) => player(s, id).alive && loot.taken[i] < 3)
+  ) {
+    const i = loot.recipients.indexOf(loot.playerId);
+    if (player(s, loot.playerId).alive && loot.taken[i] < 3) {
+      player(s, loot.playerId).hand.push(loot.pool.shift()!);
+      loot.taken[i]++;
     }
+    loot.playerId = loot.recipients[(i + 1) % loot.recipients.length];
   }
+  const recipient = s.players.find((p) => p.id === loot.remainderId && p.alive);
+  if (recipient) recipient.hand.push(...loot.pool.splice(0));
+  else discard(s, loot.pool.splice(0));
 }
 export function eliminate(s: WTState, root: WTPlayer) {
   let partner = root.table.some((c) => c.kind === "matchmaker")
@@ -257,32 +262,99 @@ export function eliminate(s: WTState, root: WTPlayer) {
   // P13: if a pair would eliminate both teams, only the original target dies.
   if (
     partner &&
-    !s.players.some((p) => p.alive && p.id !== root.id && p.id !== partner!.id)
+    !s.players.some(
+      (p) =>
+        p.alive && !p.everWitch && p.id !== root.id && p.id !== partner!.id,
+    ) &&
+    s.players.every((p) =>
+      p.tryals
+        .filter((t) => t.kind === "witch")
+        .every((t) => t.revealed || p.id === root.id || p.id === partner!.id),
+    )
   )
     partner = undefined;
   const dying = [root, ...(partner ? [partner] : [])];
-  checkDeathBoundary(
-    s,
-    dying.map((p) => p.id),
-  );
-  const farmer = s.players.find(
+  // DEFAULT_PENDING_CONFIRM P5/P12: finish prior shared pools before a recipient's
+  // later death, so inherited cards participate in that subsequent death's loot.
+  const completed = new Set<WTTask>();
+  for (const task of s.tasks) {
+    if (
+      task.kind === "loot" &&
+      task.recipients.some((id) => dying.some((p) => p.id === id))
+    ) {
+      log(s, {
+        type: "LOOT_AUTO_SETTLED_BEFORE_DEATH",
+        count: task.pool.length,
+      });
+      settleLoot(s, task);
+      completed.add(task);
+    }
+  }
+  s.tasks = s.tasks.filter((t) => !completed.has(t));
+  const formerCottons = s.players
+    .filter(
+      (p) =>
+        p.alive &&
+        p.character === "martha_corey" &&
+        effectiveCharacter(s, p.id) === "cotton_mather",
+    )
+    .map((p) => p.id);
+  const farmers = s.players.filter(
     (p) =>
       p.alive &&
       !dying.some((q) => q.id === p.id) &&
       effectiveCharacter(s, p.id) === "john_proctor",
   );
+  farmers.sort(
+    (a, b) =>
+      Number(b.character === "john_proctor") -
+      Number(a.character === "john_proctor"),
+  );
+  const lootTasks: WTTask[] = [];
   for (const p of dying) {
     p.alive = false;
     for (const t of p.tryals) t.revealed = true;
     const hand = p.hand.splice(0);
     const blues = p.table.filter((c) => color(c) === "blue");
     p.table = p.table.filter((c) => color(c) !== "blue");
-    if (farmer) farmer.hand.push(...hand, ...blues);
+    if (farmers.length > 1 && hand.length + blues.length) {
+      lootTasks.push({
+        kind: "loot",
+        pool: [...hand, ...blues],
+        recipients: farmers.map((p) => p.id),
+        taken: farmers.map(() => 0),
+        playerId: farmers[0].id,
+        remainderId: farmers[0].id,
+      });
+      log(s, { type: "SHARED_FARMER_LOOT", targetId: p.id });
+    } else if (farmers[0]) farmers[0].hand.push(...hand, ...blues);
     else discard(s, [...hand, ...blues]);
     log(s, { type: "ELIMINATED", targetId: p.id });
   }
   s.frameCharacters = s.players.filter((p) => p.alive).map((p) => p.character);
   refreshCat(s);
+  for (const id of formerCottons) {
+    const q = player(s, id);
+    const passiveThreshold =
+      (effectiveCharacter(s, id) === "george_burroughs" ? 8 : 7) *
+      (q.table.some((c) => c.kind === "piety") ? 2 : 1);
+    if (
+      q.alive &&
+      effectiveCharacter(s, id) !== "cotton_mather" &&
+      accusationValue(s, id) >= passiveThreshold
+    ) {
+      // DEFAULT_PENDING_CONFIRM P13: no public accuser exists; target chooses own card.
+      // This avoids exposing a secret night attacker through the choice owner.
+      lootTasks.push({ kind: "trial", actorId: id, targetId: id });
+      log(s, { type: "COPY_RESCORING_TRIAL", targetId: id });
+    }
+  }
+  const priorLootPrefix = s.tasks.findIndex((t) => t.kind !== "loot");
+  s.tasks.splice(
+    priorLootPrefix < 0 ? s.tasks.length : priorLootPrefix,
+    0,
+    ...lootTasks,
+  );
 }
 function beginTrial(
   s: WTState,
@@ -300,6 +372,19 @@ function beginTrial(
 export function drain(s: WTState, now = Date.now()) {
   while (s.tasks.length && s.phase !== "over") {
     const t = s.tasks.shift()!;
+    if (t.kind === "loot") {
+      const eligible = t.recipients.filter(
+        (id, i) => player(s, id).alive && t.taken[i] < 3,
+      );
+      if (!t.pool.length || !eligible.length) {
+        settleLoot(s, t);
+        continue;
+      }
+      if (!eligible.includes(t.playerId)) t.playerId = eligible[0];
+      s.phase = "choice";
+      s.pending = t;
+      return;
+    }
     if (t.kind === "resume-event") {
       s.phase = "black-event";
       s.pending = t.pending;
@@ -307,10 +392,21 @@ export function drain(s: WTState, now = Date.now()) {
       return;
     }
     if (t.kind === "trial") {
-      if (!player(s, t.actorId).alive)
-        fail("CHECK_REQUIRED:X02:TRIAL_ACTOR_ELIMINATED");
-      if (!player(s, t.targetId).alive)
-        fail("CHECK_REQUIRED:X02:TRIAL_TARGET_ELIMINATED");
+      // DEFAULT_PENDING_CONFIRM P5/P12: skip an already dead target; otherwise
+      // a dead chooser is replaced by the first living clockwise neighbour.
+      if (!player(s, t.targetId).alive) continue;
+      if (!player(s, t.actorId).alive) {
+        const i = s.players.findIndex((p) => p.id === t.actorId);
+        t.actorId = Array.from(
+          { length: s.players.length },
+          (_, j) => s.players[(i + j + 1) % s.players.length],
+        ).find((p) => p.alive)!.id;
+        log(s, {
+          type: "TRIAL_CHOOSER_REPLACED",
+          actorId: t.actorId,
+          targetId: t.targetId,
+        });
+      }
       s.phase = "trial";
       s.pending = t;
       return;
@@ -327,7 +423,16 @@ export function drain(s: WTState, now = Date.now()) {
     }
     if (!player(s, t.playerId).alive) continue;
     while (t.remaining > 0) {
-      const card = s.deck.shift() ?? fail("CHECK_REQUIRED:X08:EMPTY_DRAW_DECK");
+      const card = s.deck.shift();
+      if (!card) {
+        // DEFAULT_PENDING_CONFIRM P12: draw available cards only; never invent cards.
+        log(s, {
+          type: "DRAW_DECK_EXHAUSTED",
+          actorId: t.playerId,
+          count: t.remaining,
+        });
+        break;
+      }
       t.remaining--;
       t.drawn.push(card.kind);
       log(s, { type: "DRAW", actorId: t.playerId, count: 1 });
@@ -413,11 +518,7 @@ function playCard(
         );
         if (selected.some((c) => color(c) !== "red"))
           fail("BAD_ALIBI_SELECTION");
-        if (
-          selected.some((c) => c.kind === "evidence") &&
-          effectiveCharacter(s, target.id) === "cotton_mather"
-        )
-          fail("CHECK_REQUIRED:X01:ALIBI_COTTON");
+        // DEFAULT_PENDING_CONFIRM X01: count accusations at their current value.
         if (selected.reduce((n, c) => n + value(s, target.id, c), 0) > 3)
           fail("ALIBI_LIMIT");
         target.table = target.table.filter((c) => !ids.includes(c.id));
@@ -433,10 +534,8 @@ function playCard(
         const removed = target.table.splice(index, 1)[0];
         discard(s, [removed, card]);
         if (removed.kind === "piety") {
-          const points = accusationValue(s, target.id),
-            threshold = trialThreshold(s, actorId, target.id);
-          if (threshold !== 7 && points >= Math.min(7, threshold))
-            fail("CHECK_REQUIRED:X07:PIETY_SPECIAL_THRESHOLD");
+          const points = accusationValue(s, target.id);
+          // P13 Piety is an explicit immediate >=7 trigger, independent of P14 attack thresholds.
           if (points >= 7) beginTrial(s, actorId, target.id, false);
         }
         break;
@@ -459,16 +558,7 @@ function playCard(
           target.table.some((c) => c.kind === "matchmaker") &&
           recipient.table.some((c) => c.kind === "matchmaker")
         )
-          fail("CHECK_REQUIRED:X06:MOVED_SECOND_MATCHMAKER");
-        if (
-          [target, recipient].some(
-            (p) => effectiveCharacter(s, p.id) === "mary_warren",
-          ) &&
-          target.table.some(
-            (c) => c.kind === "matchmaker" || c.kind === "black_cat",
-          )
-        )
-          fail("CHECK_REQUIRED:X06:MARY_MOVED_BLUE");
+          fail("ALREADY_MATCHED"); // P13: prohibited move is rejected atomically, not a game lock.
         recipient.table.push(...target.table.splice(0));
         discard(s, [card]);
         if (
@@ -485,8 +575,7 @@ function playCard(
           target.table.some((c) => c.kind === "matchmaker")
         )
           fail("ALREADY_MATCHED");
-        if (effectiveCharacter(s, target.id) === "mary_warren")
-          fail("CHECK_REQUIRED:X06:MARY_BLUE_PLACEMENT");
+        // DEFAULT_PENDING_CONFIRM X06: immunity negates harm; persistent blue still attaches.
         target.table.push(card);
         break;
       case "stocks":
@@ -521,6 +610,28 @@ export function finishTituba(s: WTState, now: number) {
   log(s, { type: "TITUBA_COMPLETE", actorId: p.playerId });
   drain(s, now);
 }
+export function expireDay(s: WTState, now: number) {
+  if (
+    s.phase !== "day" ||
+    s.pending ||
+    !s.turnPlayerId ||
+    s.day.deadline == null ||
+    now < s.day.deadline
+  )
+    return false;
+  const id = s.turnPlayerId;
+  delete s.day.deadline;
+  log(s, { type: "HOURGLASS_EXPIRED", actorId: id });
+  if (s.day.played) advance(s, id);
+  else {
+    s.tasks.push(
+      { kind: "draw", playerId: id, remaining: 2, reason: "turn", drawn: [] },
+      { kind: "finish-turn", playerId: id },
+    );
+    drain(s, now);
+  }
+  return true;
+}
 export function reduceWitchTown(
   input: WTState,
   actorId: string,
@@ -533,6 +644,46 @@ export function reduceWitchTown(
   if (!cmd || typeof cmd !== "object" || typeof cmd.type !== "string")
     fail("BAD_GAME_COMMAND");
   if (s.phase === "over") fail("GAME_OVER");
+  if (cmd.type === "LOOT_PICK") {
+    const main = s.pending;
+    const concurrent =
+      main?.kind === "black-event" &&
+      main.event?.type === "night" &&
+      main.event.stage === "confession";
+    const p =
+      main?.kind === "loot"
+        ? main
+        : concurrent
+          ? s.tasks.find((t) => t.kind === "loot")
+          : undefined;
+    if (p?.kind !== "loot") fail("NO_LOOT_CHOICE");
+    if (p.playerId !== actorId) fail("NOT_YOUR_CHOICE");
+    if (
+      concurrent &&
+      main.event?.type === "night" &&
+      main.event.deadline != null &&
+      (context.now ?? Date.now()) >= main.event.deadline
+    )
+      fail("NIGHT_SETTLEMENT_DUE");
+    const i = p.pool.findIndex((c) => c.id === cmd.cardId);
+    if (i < 0) fail("BAD_LOOT_CARD");
+    player(s, actorId).hand.push(p.pool.splice(i, 1)[0]);
+    const ri = p.recipients.indexOf(actorId);
+    p.taken[ri]++;
+    p.playerId = p.recipients[(ri + 1) % p.recipients.length];
+    log(s, { type: "LOOT_PICK", actorId, count: 1 });
+    if (concurrent) {
+      if (!p.pool.length || p.taken.every((n) => n >= 3)) {
+        settleLoot(s, p);
+        s.tasks = s.tasks.filter((t) => t !== p);
+      }
+    } else {
+      s.pending = null;
+      s.tasks.unshift(p);
+      drain(s, context.now);
+    }
+    return s;
+  }
   if (s.pending?.kind === "tituba") {
     const p = s.pending,
       now = context.now ?? Date.now();
@@ -565,8 +716,6 @@ export function reduceWitchTown(
     if (s.phase !== "dawn") fail("WRONG_PHASE");
     if (!player(s, actorId).everWitch) fail("WITCH_ONLY");
     alive(s, cmd.targetId);
-    if (effectiveCharacter(s, cmd.targetId) === "mary_warren")
-      fail("CHECK_REQUIRED:X06:MARY_DAWN_CAT");
     s.dawnVotes[actorId] = cmd.targetId;
     const witches = s.players.filter((p) => p.alive && p.everWitch);
     if (witches.every((p) => s.dawnVotes[p.id] === cmd.targetId)) {
@@ -620,8 +769,8 @@ export function reduceWitchTown(
           q.id !== target.id &&
           effectiveCharacter(s, q.id) === "rebecca_nurse",
       );
-    if (fatal && rebeccas.length)
-      fail("CHECK_REQUIRED:X02:FATAL_REBECCA_REWARD");
+    // DEFAULT_PENDING_CONFIRM X02: the causal trial reveal earns a reward;
+    // subsequent death-display reveals do not, and terminal victory takes priority.
     t.revealed = true;
     clearRed(s, target);
     s.pending = null;
@@ -646,14 +795,22 @@ export function reduceWitchTown(
     return s;
   }
   if (s.phase !== "day" || s.pending) fail("WRONG_PHASE");
+  if (cmd.type === "START_HOURGLASS") {
+    // A P2/P9: 30 seconds; ONLINE_CONVENTION: any living player may flag delay.
+    if (s.day.deadline != null) fail("HOURGLASS_ALREADY_RUNNING");
+    s.day.deadline = (context.now ?? Date.now()) + 30000;
+    log(s, { type: "HOURGLASS_STARTED", actorId });
+    return s;
+  }
+  if (s.day.deadline != null && (context.now ?? Date.now()) >= s.day.deadline)
+    fail("TURN_DEADLINE_PASSED");
   if (s.turnPlayerId !== actorId) fail("NOT_YOUR_TURN");
   if (cmd.type === "PLAY") playCard(s, actorId, cmd, context.now);
   else if (cmd.type === "TITUBA_START") {
     if (s.day.played) fail("DRAW_AFTER_PLAY");
     const actor = player(s, actorId);
     if (effectiveCharacter(s, actorId) !== "tituba") fail("NOT_TITUBA");
-    if (actor.character === "martha_corey")
-      fail("CHECK_REQUIRED:X10:COPIED_LIMITED_ABILITY");
+    // DEFAULT_PENDING_CONFIRM X10: personal per-ability budget, retained across neighbour changes.
     if (actor.abilityUses.tituba) fail("ABILITY_EXHAUSTED");
     actor.abilityUses.tituba = 1;
     const deadline = (context.now ?? Date.now()) + 60000;
@@ -665,8 +822,6 @@ export function reduceWitchTown(
     if (s.day.played) fail("DRAW_AFTER_PLAY");
     const actor = player(s, actorId);
     if (effectiveCharacter(s, actorId) !== "samuel_parris") fail("NOT_PARRIS");
-    if (actor.character === "martha_corey")
-      fail("CHECK_REQUIRED:X10:COPIED_LIMITED_ABILITY");
     if ((actor.abilityUses.samuel_parris ?? 0) >= 2) fail("ABILITY_EXHAUSTED");
     if (
       !Array.isArray(cmd.cardIds) ||
@@ -709,6 +864,13 @@ export function publicPending(s: WTState) {
   const p = s.pending;
   if (!p) return null;
   if (p.kind === "dawn-black-cat") return { kind: p.kind };
+  if (p.kind === "loot")
+    return {
+      kind: p.kind,
+      playerId: p.playerId,
+      recipients: p.recipients,
+      remaining: p.pool.length,
+    };
   if (p.kind === "tituba")
     return { kind: p.kind, playerId: p.playerId, deadline: p.deadline };
   if (p.kind === "black-event")
@@ -724,6 +886,14 @@ export function publicPending(s: WTState) {
 }
 export function privateChoice(s: WTState, id: string) {
   const p = s.pending;
+  if (p?.kind === "loot" && p.recipients.includes(id))
+    return {
+      kind: "loot" as const,
+      playerId: p.playerId,
+      pool: p.pool,
+      taken: p.taken,
+      recipients: p.recipients,
+    };
   if (p?.kind === "tituba" && p.playerId === id)
     return { kind: "tituba" as const, deck: s.deck, deadline: p.deadline };
   if (p?.kind === "black-event") return eventPrivate(s, p, id);
@@ -737,4 +907,27 @@ export function privateChoice(s: WTState, id: string) {
   if (p?.kind === "ability" && p.playerId === id)
     return { kind: "ability" as const, ability: p.ability };
   return null;
+}
+
+export function privateLootChoices(s: WTState, id: string) {
+  if (!player(s, id).alive) return [];
+  const p = s.pending;
+  const loot =
+    p?.kind === "loot"
+      ? p
+      : p?.kind === "black-event" &&
+          p.event?.type === "night" &&
+          p.event.stage === "confession"
+        ? s.tasks.find((t) => t.kind === "loot")
+        : undefined;
+  return loot?.kind === "loot" && loot.recipients.includes(id)
+    ? [
+        {
+          playerId: loot.playerId,
+          pool: loot.pool,
+          taken: loot.taken,
+          recipients: loot.recipients,
+        },
+      ]
+    : [];
 }

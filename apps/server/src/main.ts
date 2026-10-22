@@ -82,7 +82,7 @@ const http = createServer((req, res) => {
         dmRooms: dmStore.rooms.size,
         rrRooms: rrStore.rooms.size,
         ...(wtStore
-          ? { witchTown: { milestone: "M3_EVENT_ENGINE", rooms: wtStore.size, fullGame: false } }
+          ? { witchTown: { milestone: "M4_RULE_ENGINE", rooms: wtStore.size, fullGame: false } }
           : {}),
       }),
     );

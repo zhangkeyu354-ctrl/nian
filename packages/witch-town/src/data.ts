@@ -160,7 +160,7 @@ export const CHARACTERS = [
     spec: "WITCH_TOWN_CHARACTER_MATRIX.md",
     openIssues: ["X03", "X09", "X10"],
     abilityZh: "动态复制右手边第一位存活玩家的能力；次数继承等见待核项。",
-    implementation: "partial-copy",
+    implementation: "runtime-with-defaults",
   },
   {
     id: "H06",
@@ -174,7 +174,7 @@ export const CHARACTERS = [
     spec: "WITCH_TOWN_CHARACTER_MATRIX.md",
     openIssues: ["X09"],
     abilityZh: "其他玩家死亡时收取其手牌和蓝牌进入手牌；双重继承见X09。",
-    implementation: "partial-death-loot",
+    implementation: "runtime-with-defaults",
   },
   {
     id: "H07",
@@ -216,7 +216,7 @@ export const CHARACTERS = [
     spec: "WITCH_TOWN_CHARACTER_MATRIX.md",
     openIssues: ["X06"],
     abilityZh: "不受黑猫与情侣的不利效果；你的死亡仍可触发伴侣死亡。",
-    implementation: "partial-immunity",
+    implementation: "runtime-with-defaults",
   },
   {
     id: "H10",
@@ -244,7 +244,7 @@ export const CHARACTERS = [
     spec: "WITCH_TOWN_CHARACTER_MATRIX.md",
     openIssues: ["X02"],
     abilityZh: "打出最后指控后、揭示身份前抽两张，可在该回合使用。",
-    implementation: "partial-trigger",
+    implementation: "runtime-with-defaults",
   },
   {
     id: "H12",
@@ -258,7 +258,7 @@ export const CHARACTERS = [
     spec: "WITCH_TOWN_CHARACTER_MATRIX.md",
     openIssues: ["X02"],
     abilityZh: "其他玩家身份揭示时可抽一张；死亡与自白展示不触发。",
-    implementation: "partial-trigger",
+    implementation: "runtime-with-defaults",
   },
   {
     id: "H13",
@@ -320,7 +320,7 @@ export const CARDS = [
     openIssues: [],
     lifecycle: "discard-after-resolution",
     effectZh: "移除其他玩家面前合计至多3点的红牌；按整张牌移除。",
-    implementation: "partial-day-action",
+    implementation: "runtime-with-defaults",
     points: 0,
   },
   {
@@ -339,7 +339,7 @@ export const CARDS = [
     openIssues: ["X06"],
     lifecycle: "discard-after-resolution",
     effectZh: "将一位其他玩家面前所有红蓝绿牌转给另一位其他玩家。",
-    implementation: "partial-day-action",
+    implementation: "runtime-with-defaults",
     points: 0,
   },
   {
@@ -377,7 +377,7 @@ export const CARDS = [
     openIssues: [],
     lifecycle: "discard-after-resolution",
     effectZh: "弃掉其他玩家面前选定的一张蓝牌。",
-    implementation: "partial-day-action",
+    implementation: "runtime-with-defaults",
     points: 0,
   },
   {
@@ -472,7 +472,7 @@ export const CARDS = [
     openIssues: ["X06"],
     lifecycle: "persistent",
     effectZh: "两名持有者连锁死亡；同一人不能被放第二张。",
-    implementation: "partial-day-persistent",
+    implementation: "runtime-with-defaults",
     points: 0,
   },
   {
@@ -548,7 +548,7 @@ export const CARDS = [
     openIssues: ["X04", "X08"],
     lifecycle: "immediate-event",
     effectZh: "立即处理黑猫身份揭示，再同时从左侧取得一张隐藏身份。",
-    implementation: "partial-event",
+    implementation: "runtime-with-defaults",
     points: 0,
   },
   {
@@ -567,7 +567,7 @@ export const CARDS = [
     openIssues: ["X05", "X08"],
     lifecycle: "immediate-event",
     effectZh: "立即进行女巫袭击、警长保护、自白及夜晚结算。",
-    implementation: "partial-event",
+    implementation: "runtime-with-defaults",
     points: 0,
   },
   {
@@ -586,7 +586,7 @@ export const CARDS = [
     openIssues: [],
     lifecycle: "persistent",
     effectZh: "黎明女巫放置；阴谋时持有者一张身份被揭示。",
-    implementation: "partial-dawn-day-event",
+    implementation: "runtime-with-defaults",
     points: 0,
   },
 ] as const;
@@ -616,3 +616,133 @@ export const CANDIDATE_COUNT_SOURCE = {
   status: "CHECK_REQUIRED",
   note: "Historical community list, not verified to match standard 15th printing",
 } as const;
+
+/** Machine-readable policy audit, distinct from claims of official clarification. */
+export const RULE_DECISIONS = [
+  {
+    id: "X01",
+    classification: "DEFAULT_PENDING_CONFIRM",
+    pages: [13],
+    policy:
+      "Alibi uses current accusation values, including Cotton's Evidence at 1.",
+  },
+  {
+    id: "X02_REWARD",
+    classification: "DEFAULT_PENDING_CONFIRM",
+    pages: [5, 12],
+    policy:
+      "Reward the causal reveal; no reward for subsequent death display or confession; terminal victory wins priority.",
+  },
+  {
+    id: "X02_CHOOSER",
+    classification: "DEFAULT_PENDING_CONFIRM",
+    pages: [5, 12],
+    policy:
+      "Skip dead trial targets; replace dead choosers by first living clockwise seat.",
+  },
+  {
+    id: "X03",
+    classification: "DEFAULT_PENDING_CONFIRM",
+    pages: [13],
+    policy:
+      "Rescore immediately using passive defence threshold; affected player chooses when no public accuser exists.",
+  },
+  {
+    id: "X04_CAT",
+    classification: "RULE_DERIVED",
+    pages: [5, 6, 12],
+    policy:
+      "Complete death, check victory, then rebuild the living transmission ring.",
+  },
+  {
+    id: "X04_EXEMPTION",
+    classification: "DEFAULT_PENDING_CONFIRM",
+    pages: [5, 14],
+    policy:
+      "After simultaneous transfer eliminate revealed-Witch holders with no hidden Witch.",
+  },
+  {
+    id: "X04_FINAL",
+    classification: "DEFAULT_PENDING_CONFIRM",
+    pages: [6],
+    policy:
+      "All simultaneous final infectees personally lose; Witch team still wins.",
+  },
+  {
+    id: "X05",
+    classification: "RULE_DERIVED",
+    pages: [7, 11, 12],
+    policy:
+      "Current hidden Constable protects another living player; revealing the card disables the role.",
+  },
+  {
+    id: "X06",
+    classification: "DEFAULT_PENDING_CONFIRM",
+    pages: [13],
+    policy:
+      "Mary retains harmless persistent cards. A prohibited second Matchmaker is rejected atomically.",
+  },
+  {
+    id: "X07",
+    classification: "RULE_DERIVED",
+    pages: [13, 14],
+    policy:
+      "Piety removal explicitly triggers at >=7; normal attack thresholds remain 6/7/8 and doubles.",
+  },
+  {
+    id: "X08",
+    classification: "DEFAULT_PENDING_CONFIRM",
+    pages: [8, 12],
+    policy:
+      "An exhausted draw draws only available cards. Night alone remains a valid rebuild; no cards are fabricated.",
+  },
+  {
+    id: "X09",
+    classification: "DEFAULT_PENDING_CONFIRM",
+    pages: [12, 13],
+    policy:
+      "Single farmer receives all. Shared loot: John first, at most 3 each, all leftovers John. Eligibility snapshots before death; separate death pools resolve in cause order.",
+  },
+  {
+    id: "X10",
+    classification: "DEFAULT_PENDING_CONFIRM",
+    pages: [12, 14],
+    policy:
+      "Copied limited abilities spend the copier's personal per-ability lifetime budget, never reset by changing neighbours.",
+  },
+  {
+    id: "X11",
+    classification: "DEFAULT_PENDING_CONFIRM",
+    pages: [2, 16],
+    policy:
+      "Use candidate-59 with a visible unverified-count notice, not confirmed per-type quantities.",
+  },
+  {
+    id: "X12",
+    classification: "DEFAULT_PENDING_CONFIRM",
+    pages: [2],
+    policy:
+      "Arson and Witness use recorded card text while exact current-print face provenance remains open.",
+  },
+  {
+    id: "D_HOURGLASS",
+    classification: "ONLINE_CONVENTION",
+    pages: [2, 9],
+    policy:
+      "Any living player can flag delay and start a non-resettable 30-second day hourglass; secret interruptions finish before an overdue day expires.",
+  },
+  {
+    id: "D_TITUBA",
+    classification: "ONLINE_CONVENTION",
+    pages: [2, 14],
+    policy:
+      "Start commits a draw action; finish or 60-second deadline draws using last accepted private order.",
+  },
+  {
+    id: "D_LOOT_NIGHT",
+    classification: "ONLINE_CONVENTION",
+    pages: [8, 12],
+    policy:
+      "Shared picks coexist privately with confession without resetting its clock. Before a recipient dies later, remaining earlier choices settle in fixed pool order so all cards participate in that later death.",
+  },
+] as const;

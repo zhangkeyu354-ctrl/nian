@@ -1,0 +1,978 @@
+{
+  "milestone": "M4_RULE_ENGINE",
+  "activeAbilities": {
+    "cases": 18,
+    "passed": 18,
+    "failed": 0,
+    "countsProfile": "candidate-59",
+    "results": [
+      {
+        "players": 4,
+        "role": "tituba",
+        "passed": true
+      },
+      {
+        "players": 4,
+        "role": "samuel_parris",
+        "passed": true
+      },
+      {
+        "players": 5,
+        "role": "tituba",
+        "passed": true
+      },
+      {
+        "players": 5,
+        "role": "samuel_parris",
+        "passed": true
+      },
+      {
+        "players": 6,
+        "role": "tituba",
+        "passed": true
+      },
+      {
+        "players": 6,
+        "role": "samuel_parris",
+        "passed": true
+      },
+      {
+        "players": 7,
+        "role": "tituba",
+        "passed": true
+      },
+      {
+        "players": 7,
+        "role": "samuel_parris",
+        "passed": true
+      },
+      {
+        "players": 8,
+        "role": "tituba",
+        "passed": true
+      },
+      {
+        "players": 8,
+        "role": "samuel_parris",
+        "passed": true
+      },
+      {
+        "players": 9,
+        "role": "tituba",
+        "passed": true
+      },
+      {
+        "players": 9,
+        "role": "samuel_parris",
+        "passed": true
+      },
+      {
+        "players": 10,
+        "role": "tituba",
+        "passed": true
+      },
+      {
+        "players": 10,
+        "role": "samuel_parris",
+        "passed": true
+      },
+      {
+        "players": 11,
+        "role": "tituba",
+        "passed": true
+      },
+      {
+        "players": 11,
+        "role": "samuel_parris",
+        "passed": true
+      },
+      {
+        "players": 12,
+        "role": "tituba",
+        "passed": true
+      },
+      {
+        "players": 12,
+        "role": "samuel_parris",
+        "passed": true
+      }
+    ]
+  },
+  "recovery": {
+    "cases": 108,
+    "passed": 108,
+    "failed": 0,
+    "serverInstanceRestarts": 217,
+    "lostClaimAckRecovery": true,
+    "virtualClockFixtures": true,
+    "results": [
+      {
+        "players": 4,
+        "stage": "dawn",
+        "refresh": true,
+        "serverInstanceRestart": true,
+        "durableRetry": true,
+        "passed": true
+      },
+      {
+        "players": 4,
+        "stage": "day",
+        "refresh": true,
+        "serverInstanceRestart": true,
+        "durableRetry": true,
+        "passed": true
+      },
+      {
+        "players": 4,
+        "stage": "trial",
+        "refresh": true,
+        "serverInstanceRestart": true,
+        "durableRetry": true,
+        "passed": true
+      },
+      {
+        "players": 4,
+        "stage": "ability",
+        "refresh": true,
+        "serverInstanceRestart": true,
+        "durableRetry": true,
+        "passed": true
+      },
+      {
+        "players": 4,
+        "stage": "cat",
+        "refresh": true,
+        "serverInstanceRestart": true,
+        "durableRetry": true,
+        "passed": true
+      },
+      {
+        "players": 4,
+        "stage": "picking",
+        "refresh": true,
+        "serverInstanceRestart": true,
+        "durableRetry": true,
+        "passed": true
+      },
+      {
+        "players": 4,
+        "stage": "witches",
+        "refresh": true,
+        "serverInstanceRestart": true,
+        "durableRetry": true,
+        "passed": true
+      },
+      {
+        "players": 4,
+        "stage": "constable",
+        "refresh": true,
+        "serverInstanceRestart": true,
+        "durableRetry": true,
+        "passed": true
+      },
+      {
+        "players": 4,
+        "stage": "confession",
+        "refresh": true,
+        "serverInstanceRestart": true,
+        "durableRetry": true,
+        "passed": true
+      },
+      {
+        "players": 4,
+        "stage": "confession-loot",
+        "refresh": true,
+        "serverInstanceRestart": true,
+        "durableRetry": true,
+        "passed": true
+      },
+      {
+        "players": 4,
+        "stage": "tituba",
+        "refresh": true,
+        "serverInstanceRestart": true,
+        "durableRetry": true,
+        "passed": true
+      },
+      {
+        "players": 4,
+        "stage": "loot",
+        "refresh": true,
+        "serverInstanceRestart": true,
+        "durableRetry": true,
+        "passed": true
+      },
+      {
+        "players": 5,
+        "stage": "dawn",
+        "refresh": true,
+        "serverInstanceRestart": true,
+        "durableRetry": true,
+        "passed": true
+      },
+      {
+        "players": 5,
+        "stage": "day",
+        "refresh": true,
+        "serverInstanceRestart": true,
+        "durableRetry": true,
+        "passed": true
+      },
+      {
+        "players": 5,
+        "stage": "trial",
+        "refresh": true,
+        "serverInstanceRestart": true,
+        "durableRetry": true,
+        "passed": true
+      },
+      {
+        "players": 5,
+        "stage": "ability",
+        "refresh": true,
+        "serverInstanceRestart": true,
+        "durableRetry": true,
+        "passed": true
+      },
+      {
+        "players": 5,
+        "stage": "cat",
+        "refresh": true,
+        "serverInstanceRestart": true,
+        "durableRetry": true,
+        "passed": true
+      },
+      {
+        "players": 5,
+        "stage": "picking",
+        "refresh": true,
+        "serverInstanceRestart": true,
+        "durableRetry": true,
+        "passed": true
+      },
+      {
+        "players": 5,
+        "stage": "witches",
+        "refresh": true,
+        "serverInstanceRestart": true,
+        "durableRetry": true,
+        "passed": true
+      },
+      {
+        "players": 5,
+        "stage": "constable",
+        "refresh": true,
+        "serverInstanceRestart": true,
+        "durableRetry": true,
+        "passed": true
+      },
+      {
+        "players": 5,
+        "stage": "confession",
+        "refresh": true,
+        "serverInstanceRestart": true,
+        "durableRetry": true,
+        "passed": true
+      },
+      {
+        "players": 5,
+        "stage": "confession-loot",
+        "refresh": true,
+        "serverInstanceRestart": true,
+        "durableRetry": true,
+        "passed": true
+      },
+      {
+        "players": 5,
+        "stage": "tituba",
+        "refresh": true,
+        "serverInstanceRestart": true,
+        "durableRetry": true,
+        "passed": true
+      },
+      {
+        "players": 5,
+        "stage": "loot",
+        "refresh": true,
+        "serverInstanceRestart": true,
+        "durableRetry": true,
+        "passed": true
+      },
+      {
+        "players": 6,
+        "stage": "dawn",
+        "refresh": true,
+        "serverInstanceRestart": true,
+        "durableRetry": true,
+        "passed": true
+      },
+      {
+        "players": 6,
+        "stage": "day",
+        "refresh": true,
+        "serverInstanceRestart": true,
+        "durableRetry": true,
+        "passed": true
+      },
+      {
+        "players": 6,
+        "stage": "trial",
+        "refresh": true,
+        "serverInstanceRestart": true,
+        "durableRetry": true,
+        "passed": true
+      },
+      {
+        "players": 6,
+        "stage": "ability",
+        "refresh": true,
+        "serverInstanceRestart": true,
+        "durableRetry": true,
+        "passed": true
+      },
+      {
+        "players": 6,
+        "stage": "cat",
+        "refresh": true,
+        "serverInstanceRestart": true,
+        "durableRetry": true,
+        "passed": true
+      },
+      {
+        "players": 6,
+        "stage": "picking",
+        "refresh": true,
+        "serverInstanceRestart": true,
+        "durableRetry": true,
+        "passed": true
+      },
+      {
+        "players": 6,
+        "stage": "witches",
+        "refresh": true,
+        "serverInstanceRestart": true,
+        "durableRetry": true,
+        "passed": true
+      },
+      {
+        "players": 6,
+        "stage": "constable",
+        "refresh": true,
+        "serverInstanceRestart": true,
+        "durableRetry": true,
+        "passed": true
+      },
+      {
+        "players": 6,
+        "stage": "confession",
+        "refresh": true,
+        "serverInstanceRestart": true,
+        "durableRetry": true,
+        "passed": true
+      },
+      {
+        "players": 6,
+        "stage": "confession-loot",
+        "refresh": true,
+        "serverInstanceRestart": true,
+        "durableRetry": true,
+        "passed": true
+      },
+      {
+        "players": 6,
+        "stage": "tituba",
+        "refresh": true,
+        "serverInstanceRestart": true,
+        "durableRetry": true,
+        "passed": true
+      },
+      {
+        "players": 6,
+        "stage": "loot",
+        "refresh": true,
+        "serverInstanceRestart": true,
+        "durableRetry": true,
+        "passed": true
+      },
+      {
+        "players": 7,
+        "stage": "dawn",
+        "refresh": true,
+        "serverInstanceRestart": true,
+        "durableRetry": true,
+        "passed": true
+      },
+      {
+        "players": 7,
+        "stage": "day",
+        "refresh": true,
+        "serverInstanceRestart": true,
+        "durableRetry": true,
+        "passed": true
+      },
+      {
+        "players": 7,
+        "stage": "trial",
+        "refresh": true,
+        "serverInstanceRestart": true,
+        "durableRetry": true,
+        "passed": true
+      },
+      {
+        "players": 7,
+        "stage": "ability",
+        "refresh": true,
+        "serverInstanceRestart": true,
+        "durableRetry": true,
+        "passed": true
+      },
+      {
+        "players": 7,
+        "stage": "cat",
+        "refresh": true,
+        "serverInstanceRestart": true,
+        "durableRetry": true,
+        "passed": true
+      },
+      {
+        "players": 7,
+        "stage": "picking",
+        "refresh": true,
+        "serverInstanceRestart": true,
+        "durableRetry": true,
+        "passed": true
+      },
+      {
+        "players": 7,
+        "stage": "witches",
+        "refresh": true,
+        "serverInstanceRestart": true,
+        "durableRetry": true,
+        "passed": true
+      },
+      {
+        "players": 7,
+        "stage": "constable",
+        "refresh": true,
+        "serverInstanceRestart": true,
+        "durableRetry": true,
+        "passed": true
+      },
+      {
+        "players": 7,
+        "stage": "confession",
+        "refresh": true,
+        "serverInstanceRestart": true,
+        "durableRetry": true,
+        "passed": true
+      },
+      {
+        "players": 7,
+        "stage": "confession-loot",
+        "refresh": true,
+        "serverInstanceRestart": true,
+        "durableRetry": true,
+        "passed": true
+      },
+      {
+        "players": 7,
+        "stage": "tituba",
+        "refresh": true,
+        "serverInstanceRestart": true,
+        "durableRetry": true,
+        "passed": true
+      },
+      {
+        "players": 7,
+        "stage": "loot",
+        "refresh": true,
+        "serverInstanceRestart": true,
+        "durableRetry": true,
+        "passed": true
+      },
+      {
+        "players": 8,
+        "stage": "dawn",
+        "refresh": true,
+        "serverInstanceRestart": true,
+        "durableRetry": true,
+        "passed": true
+      },
+      {
+        "players": 8,
+        "stage": "day",
+        "refresh": true,
+        "serverInstanceRestart": true,
+        "durableRetry": true,
+        "passed": true
+      },
+      {
+        "players": 8,
+        "stage": "trial",
+        "refresh": true,
+        "serverInstanceRestart": true,
+        "durableRetry": true,
+        "passed": true
+      },
+      {
+        "players": 8,
+        "stage": "ability",
+        "refresh": true,
+        "serverInstanceRestart": true,
+        "durableRetry": true,
+        "passed": true
+      },
+      {
+        "players": 8,
+        "stage": "cat",
+        "refresh": true,
+        "serverInstanceRestart": true,
+        "durableRetry": true,
+        "passed": true
+      },
+      {
+        "players": 8,
+        "stage": "picking",
+        "refresh": true,
+        "serverInstanceRestart": true,
+        "durableRetry": true,
+        "passed": true
+      },
+      {
+        "players": 8,
+        "stage": "witches",
+        "refresh": true,
+        "serverInstanceRestart": true,
+        "durableRetry": true,
+        "passed": true
+      },
+      {
+        "players": 8,
+        "stage": "constable",
+        "refresh": true,
+        "serverInstanceRestart": true,
+        "durableRetry": true,
+        "passed": true
+      },
+      {
+        "players": 8,
+        "stage": "confession",
+        "refresh": true,
+        "serverInstanceRestart": true,
+        "durableRetry": true,
+        "passed": true
+      },
+      {
+        "players": 8,
+        "stage": "confession-loot",
+        "refresh": true,
+        "serverInstanceRestart": true,
+        "durableRetry": true,
+        "passed": true
+      },
+      {
+        "players": 8,
+        "stage": "tituba",
+        "refresh": true,
+        "serverInstanceRestart": true,
+        "durableRetry": true,
+        "passed": true
+      },
+      {
+        "players": 8,
+        "stage": "loot",
+        "refresh": true,
+        "serverInstanceRestart": true,
+        "durableRetry": true,
+        "passed": true
+      },
+      {
+        "players": 9,
+        "stage": "dawn",
+        "refresh": true,
+        "serverInstanceRestart": true,
+        "durableRetry": true,
+        "passed": true
+      },
+      {
+        "players": 9,
+        "stage": "day",
+        "refresh": true,
+        "serverInstanceRestart": true,
+        "durableRetry": true,
+        "passed": true
+      },
+      {
+        "players": 9,
+        "stage": "trial",
+        "refresh": true,
+        "serverInstanceRestart": true,
+        "durableRetry": true,
+        "passed": true
+      },
+      {
+        "players": 9,
+        "stage": "ability",
+        "refresh": true,
+        "serverInstanceRestart": true,
+        "durableRetry": true,
+        "passed": true
+      },
+      {
+        "players": 9,
+        "stage": "cat",
+        "refresh": true,
+        "serverInstanceRestart": true,
+        "durableRetry": true,
+        "passed": true
+      },
+      {
+        "players": 9,
+        "stage": "picking",
+        "refresh": true,
+        "serverInstanceRestart": true,
+        "durableRetry": true,
+        "passed": true
+      },
+      {
+        "players": 9,
+        "stage": "witches",
+        "refresh": true,
+        "serverInstanceRestart": true,
+        "durableRetry": true,
+        "passed": true
+      },
+      {
+        "players": 9,
+        "stage": "constable",
+        "refresh": true,
+        "serverInstanceRestart": true,
+        "durableRetry": true,
+        "passed": true
+      },
+      {
+        "players": 9,
+        "stage": "confession",
+        "refresh": true,
+        "serverInstanceRestart": true,
+        "durableRetry": true,
+        "passed": true
+      },
+      {
+        "players": 9,
+        "stage": "confession-loot",
+        "refresh": true,
+        "serverInstanceRestart": true,
+        "durableRetry": true,
+        "passed": true
+      },
+      {
+        "players": 9,
+        "stage": "tituba",
+        "refresh": true,
+        "serverInstanceRestart": true,
+        "durableRetry": true,
+        "passed": true
+      },
+      {
+        "players": 9,
+        "stage": "loot",
+        "refresh": true,
+        "serverInstanceRestart": true,
+        "durableRetry": true,
+        "passed": true
+      },
+      {
+        "players": 10,
+        "stage": "dawn",
+        "refresh": true,
+        "serverInstanceRestart": true,
+        "durableRetry": true,
+        "passed": true
+      },
+      {
+        "players": 10,
+        "stage": "day",
+        "refresh": true,
+        "serverInstanceRestart": true,
+        "durableRetry": true,
+        "passed": true
+      },
+      {
+        "players": 10,
+        "stage": "trial",
+        "refresh": true,
+        "serverInstanceRestart": true,
+        "durableRetry": true,
+        "passed": true
+      },
+      {
+        "players": 10,
+        "stage": "ability",
+        "refresh": true,
+        "serverInstanceRestart": true,
+        "durableRetry": true,
+        "passed": true
+      },
+      {
+        "players": 10,
+        "stage": "cat",
+        "refresh": true,
+        "serverInstanceRestart": true,
+        "durableRetry": true,
+        "passed": true
+      },
+      {
+        "players": 10,
+        "stage": "picking",
+        "refresh": true,
+        "serverInstanceRestart": true,
+        "durableRetry": true,
+        "passed": true
+      },
+      {
+        "players": 10,
+        "stage": "witches",
+        "refresh": true,
+        "serverInstanceRestart": true,
+        "durableRetry": true,
+        "passed": true
+      },
+      {
+        "players": 10,
+        "stage": "constable",
+        "refresh": true,
+        "serverInstanceRestart": true,
+        "durableRetry": true,
+        "passed": true
+      },
+      {
+        "players": 10,
+        "stage": "confession",
+        "refresh": true,
+        "serverInstanceRestart": true,
+        "durableRetry": true,
+        "passed": true
+      },
+      {
+        "players": 10,
+        "stage": "confession-loot",
+        "refresh": true,
+        "serverInstanceRestart": true,
+        "durableRetry": true,
+        "passed": true
+      },
+      {
+        "players": 10,
+        "stage": "tituba",
+        "refresh": true,
+        "serverInstanceRestart": true,
+        "durableRetry": true,
+        "passed": true
+      },
+      {
+        "players": 10,
+        "stage": "loot",
+        "refresh": true,
+        "serverInstanceRestart": true,
+        "durableRetry": true,
+        "passed": true
+      },
+      {
+        "players": 11,
+        "stage": "dawn",
+        "refresh": true,
+        "serverInstanceRestart": true,
+        "durableRetry": true,
+        "passed": true
+      },
+      {
+        "players": 11,
+        "stage": "day",
+        "refresh": true,
+        "serverInstanceRestart": true,
+        "durableRetry": true,
+        "passed": true
+      },
+      {
+        "players": 11,
+        "stage": "trial",
+        "refresh": true,
+        "serverInstanceRestart": true,
+        "durableRetry": true,
+        "passed": true
+      },
+      {
+        "players": 11,
+        "stage": "ability",
+        "refresh": true,
+        "serverInstanceRestart": true,
+        "durableRetry": true,
+        "passed": true
+      },
+      {
+        "players": 11,
+        "stage": "cat",
+        "refresh": true,
+        "serverInstanceRestart": true,
+        "durableRetry": true,
+        "passed": true
+      },
+      {
+        "players": 11,
+        "stage": "picking",
+        "refresh": true,
+        "serverInstanceRestart": true,
+        "durableRetry": true,
+        "passed": true
+      },
+      {
+        "players": 11,
+        "stage": "witches",
+        "refresh": true,
+        "serverInstanceRestart": true,
+        "durableRetry": true,
+        "passed": true
+      },
+      {
+        "players": 11,
+        "stage": "constable",
+        "refresh": true,
+        "serverInstanceRestart": true,
+        "durableRetry": true,
+        "passed": true
+      },
+      {
+        "players": 11,
+        "stage": "confession",
+        "refresh": true,
+        "serverInstanceRestart": true,
+        "durableRetry": true,
+        "passed": true
+      },
+      {
+        "players": 11,
+        "stage": "confession-loot",
+        "refresh": true,
+        "serverInstanceRestart": true,
+        "durableRetry": true,
+        "passed": true
+      },
+      {
+        "players": 11,
+        "stage": "tituba",
+        "refresh": true,
+        "serverInstanceRestart": true,
+        "durableRetry": true,
+        "passed": true
+      },
+      {
+        "players": 11,
+        "stage": "loot",
+        "refresh": true,
+        "serverInstanceRestart": true,
+        "durableRetry": true,
+        "passed": true
+      },
+      {
+        "players": 12,
+        "stage": "dawn",
+        "refresh": true,
+        "serverInstanceRestart": true,
+        "durableRetry": true,
+        "passed": true
+      },
+      {
+        "players": 12,
+        "stage": "day",
+        "refresh": true,
+        "serverInstanceRestart": true,
+        "durableRetry": true,
+        "passed": true
+      },
+      {
+        "players": 12,
+        "stage": "trial",
+        "refresh": true,
+        "serverInstanceRestart": true,
+        "durableRetry": true,
+        "passed": true
+      },
+      {
+        "players": 12,
+        "stage": "ability",
+        "refresh": true,
+        "serverInstanceRestart": true,
+        "durableRetry": true,
+        "passed": true
+      },
+      {
+        "players": 12,
+        "stage": "cat",
+        "refresh": true,
+        "serverInstanceRestart": true,
+        "durableRetry": true,
+        "passed": true
+      },
+      {
+        "players": 12,
+        "stage": "picking",
+        "refresh": true,
+        "serverInstanceRestart": true,
+        "durableRetry": true,
+        "passed": true
+      },
+      {
+        "players": 12,
+        "stage": "witches",
+        "refresh": true,
+        "serverInstanceRestart": true,
+        "durableRetry": true,
+        "passed": true
+      },
+      {
+        "players": 12,
+        "stage": "constable",
+        "refresh": true,
+        "serverInstanceRestart": true,
+        "durableRetry": true,
+        "passed": true
+      },
+      {
+        "players": 12,
+        "stage": "confession",
+        "refresh": true,
+        "serverInstanceRestart": true,
+        "durableRetry": true,
+        "passed": true
+      },
+      {
+        "players": 12,
+        "stage": "confession-loot",
+        "refresh": true,
+        "serverInstanceRestart": true,
+        "durableRetry": true,
+        "passed": true
+      },
+      {
+        "players": 12,
+        "stage": "tituba",
+        "refresh": true,
+        "serverInstanceRestart": true,
+        "durableRetry": true,
+        "passed": true
+      },
+      {
+        "players": 12,
+        "stage": "loot",
+        "refresh": true,
+        "serverInstanceRestart": true,
+        "durableRetry": true,
+        "passed": true
+      }
+    ]
+  },
+  "passed": 126,
+  "failed": 0,
+  "note": "Recovery cases rebuild the in-process HTTP/Socket.IO service and reload disk; these are service-instance restarts, not OS process restarts. Recovery fixtures use virtual deadlines."
+}

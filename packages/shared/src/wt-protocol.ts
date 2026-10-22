@@ -29,5 +29,5 @@ export interface WTRoomSnapshot {
     connected: boolean;
   }[];
   view: WTView | null;
-  milestone: "M3_EVENT_ENGINE";
+  milestone: "M4_RULE_ENGINE";
 }
