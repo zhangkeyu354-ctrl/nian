@@ -772,6 +772,7 @@ function Race({
           center={centerCard}
           floats={pb.floats}
           link={pb.link}
+          spot={pb.spot}
         />
       </div>
       {showBar && p && (

@@ -76,6 +76,7 @@ export function Track({
   center,
   floats,
   link,
+  spot,
 }: {
   race: RaceState;
   colorOf: (playerId: string) => string;
@@ -94,6 +95,8 @@ export function Track({
   floats?: Map<string, { id: number; text: string; tone: string }>;
   /** 技能连线：from 的技能影响了 to */
   link?: { id: number; from: string; to: string } | null;
+  /** 正在发动技能的选手 */
+  spot?: string | null;
 }) {
   const race: RaceState = shown
     ? { ...raceIn, tokens: raceIn.tokens.map((t) => ({ ...t, ...(shown.get(t.racer) ?? {}) })) }
@@ -184,6 +187,7 @@ export function Track({
             (t.tripped ? " tripped" : "") +
             (moving.includes(rid) ? " walking" : "") +
             (fl ? " has-float" : "") +
+            (spot === rid ? " spot" : "") +
             (link && (link.from === rid || link.to === rid) ? (link.from === rid ? " link-from" : " link-to") : "")
           }
           role={onPawn ? "button" : undefined}
@@ -193,7 +197,7 @@ export function Track({
             top: `${at.y * 100}%`,
             ["--pc" as string]: colorOf(t.owner),
             ["--ps" as string]: at.scale,
-            zIndex: 10 + depth + (fl ? 200 : 0),
+            zIndex: 10 + depth + (fl ? 200 : 0) + (spot === rid ? 300 : 0),
           }}
           title={`${racerName(rid)}${t.place ? ` · 第 ${t.place} 名` : ` · 第 ${t.pos} 格`}${t.tripped ? " · 摔倒" : ""}`}
         >

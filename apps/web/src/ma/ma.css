@@ -2010,7 +2010,7 @@
   box-shadow: 0 3px 0 var(--ink);
   pointer-events: none;
   z-index: 5;
-  animation: ma-float-up 1.7s ease-out forwards;
+  animation: ma-float-up 2.6s ease-out forwards;
 }
 .ma-float.roll {
   background: var(--sun);
@@ -2073,7 +2073,7 @@
   stroke-linecap: round;
   stroke-dasharray: 10 8;
   filter: drop-shadow(0 0 4px #ff9d00) drop-shadow(0 0 1px #000);
-  animation: ma-link-flow 0.5s linear infinite, ma-link-in 1.6s ease-out forwards;
+  animation: ma-link-flow 0.5s linear infinite, ma-link-in 2.8s ease-out forwards;
 }
 @keyframes ma-link-flow {
   to {
@@ -2102,7 +2102,7 @@
   z-index: 299;
   border: 3px solid #ffe14d;
   box-shadow: 0 0 12px 3px #ff9d00;
-  animation: ma-ring 0.8s ease-out 2;
+  animation: ma-ring 0.9s ease-out 3;
 }
 .ma-board-art .ma-link-ring {
   width: 4.5%;
@@ -2161,7 +2161,7 @@
   pointer-events: none;
 }
 .ma-pawn.walking::after {
-  animation: ma-shadow 0.23s ease-in-out infinite;
+  animation: ma-shadow 0.34s ease-in-out infinite;
 }
 @keyframes ma-shadow {
   50% {
@@ -2188,7 +2188,7 @@
 /* 走路：起跳前压扁、空中拉长、落地再压扁，身体略往前倾 */
 .ma-pawn.walking > img:not(.ma-pawn-trip) {
   transform-origin: 50% 100%;
-  animation: ma-hop25 0.23s ease-in-out infinite;
+  animation: ma-hop25 0.34s ease-in-out infinite;
 }
 @keyframes ma-hop25 {
   0% {
@@ -2213,4 +2213,21 @@
 /* 整条赛道一屏显示时不需要滚动：允许第一排小人的头和飘字伸出棋盘上沿 */
 .ma-board-scroll.fit:not(.vertical) {
   overflow: visible;
+}
+/* 正在发动技能的选手：放大、发紫光，横幅显示期间一直亮着，大家都知道是谁 */
+.ma-pawn.spot > img:not(.ma-pawn-trip) {
+  animation: ma-spot 0.9s ease-in-out infinite !important;
+  filter: drop-shadow(0 0 8px #b77cff) drop-shadow(0 0 14px #8a4fd6) drop-shadow(0 2px 0 rgba(0, 0, 0, 0.6));
+}
+@keyframes ma-spot {
+  0%,
+  100% {
+    transform: scale(1.25);
+  }
+  50% {
+    transform: scale(1.4) translateY(-6%);
+  }
+}
+.ma-pawn.spot .ma-pawn-base {
+  box-shadow: 0 0 0 4px #b77cff, 0 0 18px 6px #8a4fd6;
 }

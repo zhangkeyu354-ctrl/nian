@@ -56,6 +56,8 @@ export function usePlayback(view: MAView) {
   const [moving, setMoving] = useState<string[]>([]);
   const [floats, setFloats] = useState<Map<string, Float>>(new Map());
   const [link, setLink] = useState<Link | null>(null);
+  /** 正在发动技能的选手：棋盘上放大发光 */
+  const [spot, setSpot] = useState<string | null>(null);
   const fxId = useRef(0);
   const [shown, setShown] = useState<Map<string, ShownToken> | null>(null);
   /** 动画里的当前位置；不播放时等于上一段动画结束时（= 当时服务器）的位置 */
@@ -95,13 +97,13 @@ export function usePlayback(view: MAView) {
     const float = (racer: string, text: string, tone: Float["tone"]) => {
       const f = { id: ++fxId.current, text, tone };
       setFloats((m) => new Map(m).set(racer, f));
-      setTimeout(() => setFloats((m) => (m.get(racer)?.id === f.id ? (m.delete(racer), new Map(m)) : m)), 1700);
+      setTimeout(() => setFloats((m) => (m.get(racer)?.id === f.id ? (m.delete(racer), new Map(m)) : m)), 2600);
     };
     const linkTo = (racer: string) => {
       if (!lastPower || lastPower === racer) return;
       const l = { id: ++fxId.current, from: lastPower, to: racer };
       setLink(l);
-      setTimeout(() => setLink((x) => (x?.id === l.id ? null : x)), 1600);
+      setTimeout(() => setLink((x) => (x?.id === l.id ? null : x)), 2800);
     };
     const signed = (n: number) => (n >= 0 ? `+${n}` : `${n}`);
     while (queue.current.length) {
@@ -110,7 +112,8 @@ export function usePlayback(view: MAView) {
       if (!fx) continue;
       // 点屏幕只跳过「当前这一段」动画；领奖台、总冠军不会被之前的点击连带跳过
       skip.current = false;
-      const k = reduced() ? 0 : queue.current.length > 12 ? 0.45 : queue.current.length > 6 ? 0.7 : 1;
+      // 用户反馈（2026-10-22）：连锁触发太快、眼花缭乱 → 不再因为排队多而加速（只有特别长的连锁才稍快一点）
+      const k = reduced() ? 0 : queue.current.length > 30 ? 0.8 : 1;
       const wait = (ms: number) =>
         k === 0 || skip.current
           ? Promise.resolve()
@@ -168,7 +171,9 @@ export function usePlayback(view: MAView) {
           play(sfxPower);
           lastPower = fx.racer;
           float(fx.racer, `✨${RACER_BY_ID.get(fx.power)?.powerZh ?? "技能"}`, "power");
-          await wait(1700);
+          setSpot(fx.racer);
+          await wait(2600);
+          setSpot(null);
           break;
         case "move": {
           if (!cur) cur = fromRace(latest.current.race?.tokens ?? []);
@@ -187,10 +192,10 @@ export function usePlayback(view: MAView) {
           for (let p = fx.from + dir; dir > 0 ? p <= fx.to : p >= fx.to; p += dir) {
             for (const r of fx.racers) setPos(r, { pos: p });
             play(sfxStep);
-            await wait(230);
+            await wait(340);
           }
           setMoving([]);
-          await wait(120);
+          await wait(380);
           break;
         }
         case "warp":
@@ -199,7 +204,7 @@ export function usePlayback(view: MAView) {
           float(fx.racer, `传送 → 第 ${fx.to} 格`, "info");
           linkTo(fx.racer);
           setPos(fx.racer, { pos: fx.to });
-          await wait(450);
+          await wait(900);
           setMoving([]);
           break;
         case "trip":
@@ -208,7 +213,7 @@ export function usePlayback(view: MAView) {
           linkTo(fx.racer);
           setShow({ kind: "note", racer: fx.racer, text: "摔倒了！下次主移动跳过" });
           play(sfxOops);
-          await wait(900);
+          await wait(1400);
           break;
         case "out":
           float(fx.racer, "淘汰！", "bad");
@@ -216,7 +221,7 @@ export function usePlayback(view: MAView) {
           setPos(fx.racer, { out: true });
           setShow({ kind: "note", racer: fx.racer, text: "被淘汰出本场比赛！" });
           play(sfxOops);
-          await wait(1100);
+          await wait(1600);
           break;
         case "finish":
           setPos(fx.racer, { place: fx.place });
@@ -269,6 +274,7 @@ export function usePlayback(view: MAView) {
     shown: frozen,
     floats,
     link,
+    spot,
     skip: () => {
       skip.current = true;
       [...wakers.current].forEach((f) => f());
