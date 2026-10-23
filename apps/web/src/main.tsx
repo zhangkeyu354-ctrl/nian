@@ -16,6 +16,7 @@ const DrawingParty = lazy(() => import("./drawing/DrawingParty.tsx").then(m => (
 const WitchTown = lazy(() => import("./wt/WitchTown.tsx").then(m => ({ default: m.WitchTown })));
 const WitchTownMock = lazy(() => import("./wt/Mock.tsx").then(m => ({ default: m.WitchTownMock })));
 const q = new URLSearchParams(location.search);
+const Xiabaiwang = lazy(() => import('./xb/Xiabaiwang.tsx').then(m => ({default:m.Xiabaiwang})));
 import { GameLobby } from "./GameLobby.tsx";
 const Codenames = lazy(() =>
   import("./cn/Codenames.tsx").then((m) => ({ default: m.Codenames })),
@@ -50,6 +51,8 @@ createRoot(document.getElementById("root")!).render(
       <Suspense fallback={<p>正在打开绘画派对…</p>}><DrawingParty mode={q.get("game") as "tp"|"fa"} /></Suspense>
     ) : q.get("game") === "wt" ? (
       <Suspense fallback={<p>正在打开女巫镇…</p>}>{q.has("mock") ? <WitchTownMock /> : <WitchTown />}</Suspense>
+    ) : q.get("game") === "xb" ? (
+      <Suspense fallback={<p>正在打开瞎掰王…</p>}><Xiabaiwang /></Suspense>
     ) : q.get("game") === "dm" ? (
       <Suspense fallback={<p>正在打开请留遗言…</p>}>
         <DyingMessage />
