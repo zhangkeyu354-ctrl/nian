@@ -2646,3 +2646,90 @@
   font-size: 13px;
   white-space: nowrap;
 }
+
+/* ---------- 本场数据榜（颁奖台之后） ---------- */
+.ma-overlay.ov-stats {
+  background: rgba(16, 22, 44, 0.9);
+}
+.ma-ov-stats {
+  width: min(94vw, 460px);
+  display: grid;
+  gap: 10px;
+  color: var(--ink);
+}
+.ma-ov-stats > small {
+  justify-self: center;
+  font-size: 18px;
+  font-weight: 900;
+  color: #fff;
+  background: var(--tartan);
+  border: 3px solid var(--ink);
+  border-radius: 99px;
+  padding: 4px 18px;
+  box-shadow: 0 4px 0 var(--ink);
+  animation: ma-pop 0.4s cubic-bezier(0.2, 1.5, 0.4, 1);
+}
+.ma-stat-row {
+  display: grid;
+  grid-template-columns: auto auto 1fr;
+  align-items: center;
+  gap: 8px;
+  background: var(--chalk);
+  border: 3px solid var(--ink);
+  border-radius: 14px;
+  padding: 8px 10px;
+  box-shadow: 0 4px 0 var(--ink);
+  animation: ma-stat-in 0.45s cubic-bezier(0.2, 1.4, 0.4, 1) both;
+}
+@keyframes ma-stat-in {
+  from {
+    opacity: 0;
+    transform: translateX(-30px) scale(0.9);
+  }
+}
+.ma-stat-icon {
+  font-size: 26px;
+}
+.ma-stat-title {
+  font-weight: 900;
+  font-size: 16px;
+  white-space: nowrap;
+}
+.ma-stat-who {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 6px;
+}
+.ma-stat-who b {
+  font-size: 18px;
+  font-weight: 900;
+  color: var(--tartan);
+  white-space: nowrap;
+}
+.ma-stat-racer {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  font-weight: 800;
+  font-size: 14px;
+  border: 2px solid var(--pc);
+  border-radius: 99px;
+  padding: 1px 8px 1px 2px;
+}
+.ma-stat-racer img {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+.ma-stat-racer small {
+  font-size: 11px;
+  color: #5b6178;
+}
+.ma-stat-none {
+  justify-self: end;
+  color: #8a8fa3;
+  font-weight: 700;
+}

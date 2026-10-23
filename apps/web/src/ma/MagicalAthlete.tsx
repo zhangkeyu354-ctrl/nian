@@ -1130,6 +1130,44 @@ function Overlay({
         </ol>
       </div>
     );
+  } else if (show.kind === "stats") {
+    const awards: Array<{ icon: string; title: string; unit: string; key: "forward" | "powers" | "back" | "trips" }> = [
+      { icon: "🏃", title: "跑得最远", unit: "格", key: "forward" },
+      { icon: "✨", title: "技能王", unit: "次", key: "powers" },
+      { icon: "↩️", title: "倒退王", unit: "格", key: "back" },
+      { icon: "💫", title: "摔跤王", unit: "次", key: "trips" },
+    ];
+    body = (
+      <div className="ma-ov-stats">
+        <small>第 {show.race + 1} 场 · 本场数据</small>
+        {awards.map((a, i) => {
+          const max = Math.max(0, ...show.rows.map((r) => r[a.key]));
+          const top = max > 0 ? show.rows.filter((r) => r[a.key] === max) : [];
+          return (
+            <div key={a.key} className="ma-stat-row" style={{ animationDelay: `${0.25 + i * 0.35}s` }}>
+              <span className="ma-stat-icon">{a.icon}</span>
+              <span className="ma-stat-title">{a.title}</span>
+              {top.length ? (
+                <span className="ma-stat-who">
+                  {top.map((r) => (
+                    <span key={r.racer} className="ma-stat-racer" style={{ ["--pc" as string]: colorOf(r.owner) }}>
+                      <img src={`${ART}/portraits/${r.racer}.webp`} alt="" />
+                      {racerName(r.racer)}
+                      <small>{r.owner === me ? "你" : name(r.owner)}</small>
+                    </span>
+                  ))}
+                  <b>
+                    {max} {a.unit}
+                  </b>
+                </span>
+              ) : (
+                <span className="ma-stat-none">本场没有人</span>
+              )}
+            </div>
+          );
+        })}
+      </div>
+    );
   } else if (show.kind === "count") {
     body = (
       <div key={show.n} className={"ma-ov-count" + (show.n === 0 ? " go" : "")}>
@@ -1163,7 +1201,7 @@ function Overlay({
   return (
     <div className={"ma-overlay ov-" + show.kind} onClick={onSkip} role="status" aria-live="polite" title="点一下跳过动画">
       {body}
-      <span className="ma-ov-skip">{show.kind === "champion" ? "点屏幕查看成绩" : show.kind === "podium" ? "点屏幕继续" : "点屏幕跳过动画"}</span>
+      <span className="ma-ov-skip">{show.kind === "champion" ? "点屏幕查看成绩" : show.kind === "podium" || show.kind === "stats" ? "点屏幕继续" : "点屏幕跳过动画"}</span>
     </div>
   );
 }

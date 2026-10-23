@@ -12,8 +12,43 @@ export type Show =
   | { kind: "start"; race: number; track: string; text: string }
   | { kind: "note"; racer: string; text: string }
   | { kind: "count"; n: number }
+  | { kind: "stats"; race: number; rows: RacerStat[] }
   | { kind: "podium"; race: number; places: Array<{ racer: string; owner: string; place: number; points: number }> }
   | { kind: "champion"; winners: string[]; totals: Array<{ player: string; total: number }> };
+
+/** 一场比赛里每名选手的数据（从比赛记录的 fx 统计，只用于展示） */
+export interface RacerStat {
+  racer: string;
+  owner: string;
+  /** 往前走的总格数（主移动 + 技能 + 箭头 + 向前传送） */
+  forward: number;
+  /** 被往后打退 / 后退的总格数 */
+  back: number;
+  trips: number;
+  powers: number;
+}
+export function raceStats(log: LogEntry[], race: number, owners: Map<string, string>): RacerStat[] {
+  const m = new Map<string, RacerStat>();
+  const get = (racer: string) => {
+    let s = m.get(racer);
+    if (!s) m.set(racer, (s = { racer, owner: owners.get(racer) ?? "", forward: 0, back: 0, trips: 0, powers: 0 }));
+    return s;
+  };
+  for (const r of owners.keys()) get(r);
+  for (const e of log) {
+    if (e.race !== race || !e.fx) continue;
+    const fx = e.fx;
+    if (fx.kind === "move" || fx.kind === "warp") {
+      const d = fx.to - fx.from;
+      for (const r of fx.kind === "move" ? fx.racers : [fx.racer]) {
+        if (d > 0) get(r).forward += d;
+        else get(r).back += -d;
+      }
+    } else if (fx.kind === "trip") get(fx.racer).trips++;
+    else if (fx.kind === "power") get(fx.racer).powers++;
+  }
+  return [...m.values()];
+}
 
 /** 小人头顶飘出的字（「🎲 +5」「箭头 +3」「摔倒！」…） */
 export interface Float {
@@ -302,6 +337,17 @@ export function usePlayback(view: MAView) {
             setTimeout(() => sfxCheer(2.2), 900);
           });
           await wait(4800);
+          {
+            // 本场数据榜：跑最远、技能王、倒退王、摔跤王
+            const r = latest.current.race;
+            const owners = new Map((r && r.index === fx.race ? r.tokens : []).map((x) => [x.racer, x.owner] as const));
+            for (const p of fx.places) owners.set(p.racer, p.owner);
+            const rows = raceStats(latest.current.log, fx.race, owners);
+            if (rows.length) {
+              showIt({ kind: "stats", race: fx.race, rows });
+              await wait(6500);
+            }
+          }
           break;
         case "champion":
           // 总冠军：大号角 + 长欢呼；画面停留到有人点一下（或 9 秒后）
