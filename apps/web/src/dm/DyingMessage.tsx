@@ -16,6 +16,7 @@ import {
   CountdownRing,
   PhaseBanner,
   SoundToggle,
+  TeamChat,
   VoteReveal,
   feel,
   useStageFeedback,
@@ -281,6 +282,15 @@ export function DyingMessage() {
     disabled = busy || !connected;
   const myRole = roles.find((r) => r.roleId === v?.me.roleId);
   const fb = useStageFeedback(v);
+  // 同伴已提交的选择 → 在座位/卡牌上标出"X号选了"
+  const mateMarks: Record<string, string[]> = {};
+  if (v?.active)
+    for (const t of v.teamChoices)
+      if (t.playerId !== v.me.id)
+        for (const c of t.choices)
+          (mateMarks[c] ??= []).push(
+            (v.players.find((x) => x.id === t.playerId)?.seat ?? "?") + "号",
+          );
   const act = (a: DMAction, cue: Parameters<typeof feel>[0] = "submit") => {
     feel(cue);
     return action(a);
@@ -392,17 +402,35 @@ export function DyingMessage() {
       );
     }
     switch (phase) {
-      case "NIGHT_PREPARATION":
+      case "NIGHT_PREPARATION": {
+        const love = v.me.roleId === "soulmate";
+        const who = selection[0] ? seatName(selection[0]) : "";
         return (
-          <ActionDock hint={<b>{picked}</b>}>
+          <ActionDock
+            hint={
+              <>
+                <b>
+                  {love ? "💞 命运之人：" : "🐕 保护："}
+                  {who || "点击圆桌选择"}
+                </b>
+                <span>
+                  {love
+                    ? "你们其中一人死亡，另一人也会死亡"
+                    : "今晚杀手不能杀害被保护的人 · 不能保护自己和其他名犬"}
+                </span>
+              </>
+            }
+          >
             <button
+              data-testid="dm-prepare"
               disabled={disabled || selection.length !== 1}
               onClick={() => act({ type: "PREPARE", target: selection[0] })}
             >
-              确认选择
+              {love ? "选定命运之人" : who ? "保护 " + who.split(" ")[0] : "确认保护"}
             </button>
           </ActionDock>
         );
+      }
       case "KILLER_SELECTION":
         return (
           <ActionDock
@@ -431,9 +459,20 @@ export function DyingMessage() {
               <>
                 <b>
                   已选 {selection.length}/{v.required} 张
+                  {selection.length > 0 &&
+                    "（" +
+                      selection
+                        .map((c) => v.pool.indexOf(c) + 1 + "号")
+                        .join("、") +
+                      "）"}
                 </b>
                 <span>
-                  {phase === "VICTIM_EVIDENCE" ? "真遗言" : "假遗言"}
+                  {phase === "VICTIM_EVIDENCE"
+                    ? "真遗言" +
+                      (v.evidenceTurn && v.evidenceTurn.total > 1
+                        ? " · 第 " + v.evidenceTurn.step + "/" + v.evidenceTurn.total + " 位死者"
+                        : "")
+                    : "假遗言"}
                   {v.selection.length > 0 ? " · 已提交，等待一致" : ""}
                 </span>
               </>
@@ -541,7 +580,13 @@ export function DyingMessage() {
         (code ? "dm-in-room" : "dm-at-home") +
         (snap?.mySeat && !v?.winner ? " has-dock" : "") +
         (v ? " phase-" + v.phase.toLowerCase().replace(/_/g, "-") : " phase-lobby") +
-        (v && !v.me.alive ? " me-dead" : "")
+        (v && !v.me.alive ? " me-dead" : "") +
+        (v?.chat ? " has-chat" : "") +
+        (v?.active && phase === "NIGHT_PREPARATION"
+          ? v.me.roleId === "soulmate"
+            ? " pick-love"
+            : " pick-guard"
+          : "")
       }
     >
       <header className="dm-header">
@@ -799,6 +844,11 @@ export function DyingMessage() {
                           )}
                           <b>{i + 1}</b>
                         </span>
+                        {p && mateMarks[p.id] && (
+                          <i className="dm-mate-pick" aria-label={mateMarks[p.id].join("、") + " 选了此人"}>
+                            {mateMarks[p.id].join("、")}选
+                          </i>
+                        )}
                         <span>{p?.name ?? "空座位"}</span>
                         <small>
                           {vp
@@ -1001,7 +1051,13 @@ export function DyingMessage() {
                               <p>
                                 选择 {v.required} 张。
                                 {phase === "VICTIM_EVIDENCE"
-                                  ? "若有多位死者，需共同选择。"
+                                  ? v.evidenceTurn && v.evidenceTurn.members.length > 1
+                                    ? "你和同时遇害的人需选择相同的牌。"
+                                    : v.evidenceTurn && v.evidenceTurn.total > 1
+                                      ? "多人遇害时按被杀顺序各自留遗言，你是第 " +
+                                        v.evidenceTurn.step +
+                                        " 位。"
+                                      : ""
                                   : "所有存活杀手需选择相同的组合。"}
                               </p>
                               {v.selection.length > 0 && (
@@ -1011,6 +1067,8 @@ export function DyingMessage() {
                               )}
                               <Cards
                                 ids={v.pool}
+                                numbered
+                                marks={mateMarks}
                                 selected={selection}
                                 onSelect={(id) => {
                                   feel("select");
@@ -1140,6 +1198,13 @@ export function DyingMessage() {
         </>
       )}
       {snap?.mySeat && Dock()}
+      {v?.chat && (
+        <TeamChat
+          v={v}
+          disabled={!connected}
+          onSend={(text) => action({ type: "CHAT", text })}
+        />
+      )}
       {!v?.winner && <PhaseBanner banner={fb.banner} />}
       {v && !v.winner && (
         <VoteReveal v={v} result={fb.vote} onClose={fb.closeVote} />
@@ -1188,7 +1253,11 @@ function Cards({
   onSelect,
   disabled,
   revealed = {},
+  numbered,
+  marks = {},
 }: {
+  numbered?: boolean;
+  marks?: Record<string, string[]>;
   ids: string[];
   selected?: string[];
   onSelect?: (id: string) => void;
@@ -1210,6 +1279,10 @@ function Cards({
             onClick={() => onSelect(id)}
           >
             <img src={image(id)} alt={"证据图 " + (i + 1)} loading="lazy" />
+            {numbered && <span className="dm-card-no">{i + 1}</span>}
+            {marks[id] && (
+              <i className="dm-mate-pick">{marks[id].join("、")}选</i>
+            )}
           </button>
         ) : (
           <figure key={id} style={{ ["--i" as any]: i }}>

@@ -16,19 +16,35 @@ const label = (v: View, id?: string | null) => {
 };
 
 function bannerFor(v: View, newlyDead: string[]): Banner | null {
-  const k = v.round + ":" + v.phase;
+  const k = v.round + ":" + v.phase + ":" + (v.evidenceTurn?.step ?? 0);
   const meKiller = v.killers.some((x) => x.id === v.me.id);
   switch (v.phase) {
     case "NIGHT_PREPARATION":
+      if (v.active && v.me.roleId === "wonder-dog")
+        return { key: k, title: "🐕 名犬", sub: "选择今晚要保护的人", tone: "guard" };
+      if (v.active && v.me.roleId === "soulmate")
+        return { key: k, title: "💞 灵魂伴侣", sub: "选择你的命运之人", tone: "love" };
       return { key: k, title: "夜幕降临", sub: "第 " + v.round + " 夜", tone: "night" };
     case "KILLER_SELECTION":
       return v.active
         ? { key: k, title: "轮到你行凶", sub: "点击圆桌选择目标", tone: "blood" }
         : { key: k, title: "夜幕降临", sub: "杀手正在行动…", tone: "night" };
     case "VICTIM_EVIDENCE":
-      return v.active
-        ? { key: k, title: "你遇害了", sub: "留下一张真正的遗言", tone: "blood" }
-        : { key: k, title: "夜色正浓", sub: "死者正在留下遗言", tone: "night" };
+      if (v.active)
+        return {
+          key: k,
+          title: "你遇害了",
+          sub:
+            (v.evidenceTurn && v.evidenceTurn.members.length > 1
+              ? "和同时死去的人一起"
+              : "") +
+            "留下 " +
+            v.required +
+            " 张真正的遗言",
+          tone: "blood",
+        };
+      if ((v.evidenceTurn?.step ?? 1) > 1) return null;
+      return { key: k, title: "夜色正浓", sub: "死者正在留下遗言", tone: "night" };
     case "KILLER_FAKE_EVIDENCE":
       return v.active
         ? { key: k, title: "混入假遗言", sub: "让真相变得模糊", tone: "blood" }
@@ -74,11 +90,12 @@ export function useStageFeedback(v: View | null | undefined) {
   } | null>(null);
   useEffect(() => {
     if (!v) {
-      prev.current = null;
+      // 在大厅：开局后的第一个阶段也要弹横幅
+      prev.current = { key: "lobby", alive: new Set(), votes: 0, speaker: null };
       return;
     }
     const alive = new Set(v.players.filter((p) => p.alive).map((p) => p.id));
-    const key = v.round + ":" + v.phase;
+    const key = v.round + ":" + v.phase + ":" + (v.evidenceTurn?.step ?? 0);
     const p = prev.current;
     prev.current = {
       key,
@@ -295,5 +312,95 @@ export function SoundToggle() {
         )}
       </svg>
     </button>
+  );
+}
+
+/** 杀手 / 同组死者的小对话框：每阶段每人 2 句，每句 20 字。 */
+export function TeamChat({
+  v,
+  disabled,
+  onSend,
+}: {
+  v: View;
+  disabled: boolean;
+  onSend: (text: string) => Promise<boolean>;
+}) {
+  const chat = v.chat;
+  const [text, setText] = useState("");
+  const [open, setOpen] = useState(true);
+  const seen = useRef(0);
+  const count = chat?.messages.length ?? 0;
+  useEffect(() => {
+    if (count > seen.current) {
+      const last = chat!.messages[count - 1];
+      if (last.from !== v.me.id) {
+        feel("select");
+        setOpen(true);
+      }
+    }
+    seen.current = count;
+  }, [count]);
+  if (!chat) return null;
+  const team =
+    v.phase === "VICTIM_EVIDENCE" ? "同时遇害的人" : "杀手同伴";
+  return (
+    <section
+      className={"dm-chat " + (open ? "open" : "closed")}
+      aria-label="小队对话"
+      data-testid="dm-chat"
+    >
+      <button
+        type="button"
+        className="dm-chat-head"
+        onClick={() => setOpen(!open)}
+        aria-expanded={open}
+      >
+        <b>悄悄话 · 仅{team}可见</b>
+        <span>
+          你还能说 {chat.left} 句{count ? " · " + count + " 条" : ""}
+        </span>
+      </button>
+      {open && (
+        <>
+          <ol>
+            {chat.messages.length === 0 && (
+              <li className="empty">每人每阶段只能说 {chat.limit} 句，想清楚再发</li>
+            )}
+            {chat.messages.map((m, i) => (
+              <li key={i} className={m.from === v.me.id ? "mine" : ""}>
+                <em>{label(v, m.from)}</em>
+                <span>{m.text}</span>
+              </li>
+            ))}
+          </ol>
+          <form
+            onSubmit={async (e) => {
+              e.preventDefault();
+              const t = text.trim();
+              if (!t) return;
+              feel("submit");
+              if (await onSend(t)) setText("");
+            }}
+          >
+            <input
+              aria-label="悄悄话内容"
+              placeholder={
+                chat.left > 0 ? "最多 " + chat.maxChars + " 字，如：选 4 号" : "本阶段已说完"
+              }
+              maxLength={chat.maxChars}
+              value={text}
+              disabled={disabled || chat.left <= 0}
+              onChange={(e) => setText(e.target.value)}
+            />
+            <button
+              data-testid="dm-chat-send"
+              disabled={disabled || chat.left <= 0 || !text.trim()}
+            >
+              发送
+            </button>
+          </form>
+        </>
+      )}
+    </section>
   );
 }

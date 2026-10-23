@@ -28,9 +28,14 @@ function kill(s: DMState, targets: string[]) {
   for (const id of actorsDM(s)) s = act(s, id, "KILL", { targets });
   return s;
 }
+// 房规：真遗言按死者分组依次选择；每组成员提交相同的牌
 function truth(s: DMState) {
-  const ids = s.pool.slice(0, viewDM(s, s.nightVictims[0]).required);
-  for (const id of [...s.nightVictims]) s = act(s, id, "TRUE", { cards: ids });
+  while (s.phase === "VICTIM_EVIDENCE") {
+    const group = actorsDM(s);
+    const v = viewDM(s, group[0]);
+    const ids = v.pool.slice(0, v.required);
+    for (const id of group) s = act(s, id, "TRUE", { cards: ids });
+  }
   return s;
 }
 describe("special roles and roundtable timing", () => {
@@ -64,15 +69,19 @@ describe("special roles and roundtable timing", () => {
       "noble",
     ]);
     s = kill(s, ["p3", "p4"]);
-    expect(viewDM(s, "p3").required).toBe(3);
+    // 房规：两名贵族各自一组、各选 2 张，按被杀顺序
+    expect(actorsDM(s)).toEqual(["p3"]);
+    expect(viewDM(s, "p3").required).toBe(2);
+    expect(viewDM(s, "p3").evidenceTurn).toMatchObject({ step: 1, total: 2 });
     s = truth(s);
+    expect(s.truth).toHaveLength(4);
     expect(viewDM(s, "p0").required).toBe(3);
   });
   it("two celebrity deaths reduce fake evidence to zero without a deadlock", () => {
     let s = setup(["killer", "serial-killer", "celebrity", "celebrity"]);
     s = truth(kill(s, ["p2", "p3"]));
     expect(s.phase).toBe("INVESTIGATION");
-    expect(s.history[0].cards).toHaveLength(1);
+    expect(s.history[0].cards).toHaveLength(2);
   });
   it("dog rejects self or other dog protection and prevents direct murder, not chained death", () => {
     let s = setup(["killer", "wonder-dog", "wonder-dog"]);
@@ -92,6 +101,10 @@ describe("special roles and roundtable timing", () => {
     expect(s.nightVictims.sort()).toEqual(["p1", "p2"]);
     expect(s.deaths).toHaveLength(2);
     expect(s.players[1].alive).toBe(false);
+    // 房规：灵魂伴侣连带死亡者不选遗言，也看不到杀手
+    expect(actorsDM(s)).toEqual(["p2"]);
+    expect(viewDM(s, "p1").killers).toEqual([]);
+    expect(viewDM(s, "p2").killers.map((k) => k.id)).toEqual(["p0"]);
   });
   it("hostage kills nearest living neighbors and does not trigger directly-murdered noble effect", () => {
     let s = setup(["killer", "civilian", "noble", "hostage", "civilian"]);
@@ -100,17 +113,24 @@ describe("special roles and roundtable timing", () => {
     expect(s.nightVictims.sort()).toEqual(["p2", "p3", "p5"]);
     expect(viewDM(s, "p3").required).toBe(1);
     expect(s.deaths).toHaveLength(3);
+    // 人质与连带邻座同组一起选 1 张（原版）
+    expect(actorsDM(s).sort()).toEqual(["p2", "p3", "p5"]);
   });
   it("janitor can use discard evidence; everyone must agree to joint evidence", () => {
     let s = setup(["killer", "serial-killer", "janitor"]);
     s.discard = ["old"];
     s = kill(s, ["p2", "p3"]);
+    // 清扫员（第一位死者）可从弃牌堆选；第二位死者不能，也不能重复
+    expect(actorsDM(s)).toEqual(["p2"]);
     expect(viewDM(s, "p2").pool).toContain("old");
     s = act(s, "p2", "TRUE", { cards: ["old"] });
     expect(s.phase).toBe("VICTIM_EVIDENCE");
-    expect(viewDM(s, "p3").teamChoices[0].choices).toEqual(["old"]);
-    s = act(s, "p3", "TRUE", { cards: ["old"] });
-    expect(s.truth).toEqual(["old"]);
+    expect(actorsDM(s)).toEqual(["p3"]);
+    expect(viewDM(s, "p3").pool).not.toContain("old");
+    expect(() => act(s, "p3", "TRUE", { cards: ["old"] })).toThrow();
+    s = act(s, "p3", "TRUE", { cards: [s.pool[0]] });
+    expect(s.truth).toEqual(["old", s.history.at(-1)?.truth[1] ?? s.truth[1]]);
+    expect(s.truth).toHaveLength(2);
   });
   it("forensic reveals exactly one card from previous round and pauses speech until resolved", () => {
     let s = setup(["killer", "forensic-scientist"]);
@@ -141,8 +161,8 @@ describe("special roles and roundtable timing", () => {
     s = kill(s, ["p2", "p3"]);
     expect(s.skipNights).toBe(2);
     s = truth(s);
-    for (const id of ["p0", "p1"])
-      s = act(s, id, "FAKE", { cards: s.pool.slice(1, 3) });
+    const fake = s.pool.filter((x) => !s.truth.includes(x)).slice(0, 2);
+    for (const id of ["p0", "p1"]) s = act(s, id, "FAKE", { cards: fake });
     s.phase = "ROUND_END";
     const old = s.pool.slice();
     s = act(s, "p0", "NEXT");
@@ -180,5 +200,41 @@ describe("special roles and roundtable timing", () => {
     const plain = JSON.stringify(viewDM(s, "p2"));
     expect(plain).not.toContain('"truth"');
     expect(viewDM(s, "p2").players.filter((p) => p.roleId)).toHaveLength(1);
+  });
+  it("serial killer: each victim picks in kill order; killers and multi-victims can chat 2 lines", () => {
+    let s = setup(["killer", "serial-killer", "civilian", "civilian", "hostage"]);
+    // 杀手对话：每人每阶段 2 句，超出被拒；非杀手不能说
+    s = act(s, "p0", "CHAT", { text: "  选三号吧  " });
+    s = act(s, "p0", "CHAT", { text: "x".repeat(40) });
+    expect(() => act(s, "p0", "CHAT", { text: "第三句" })).toThrow();
+    expect(() => act(s, "p2", "CHAT", { text: "我不是杀手" })).toThrow();
+    expect(viewDM(s, "p1").chat?.messages).toEqual([
+      { from: "p0", text: "选三号吧" },
+      { from: "p0", text: "x".repeat(20) },
+    ]);
+    expect(viewDM(s, "p0").chat?.left).toBe(0);
+    expect(viewDM(s, "p2").chat).toBeNull();
+    // 最后提交者的顺序：p3 先、p2 后
+    s = act(s, "p0", "KILL", { targets: ["p2", "p3"] });
+    s = act(s, "p1", "KILL", { targets: ["p3", "p2"] });
+    expect(actorsDM(s)).toEqual(["p3"]);
+    expect(viewDM(s, "p3").chat).toBeNull(); // 单人组没有对话框
+    const first = s.pool[0];
+    s = act(s, "p3", "TRUE", { cards: [first] });
+    expect(actorsDM(s)).toEqual(["p2"]);
+    expect(viewDM(s, "p2").pool).not.toContain(first);
+    s = act(s, "p2", "TRUE", { cards: [s.pool[1]] });
+    expect(s.truth).toHaveLength(2);
+    expect(s.phase).toBe("KILLER_FAKE_EVIDENCE");
+    // 新阶段对话额度重置
+    expect(viewDM(s, "p0").chat?.left).toBe(2);
+  });
+  it("hostage group with two members can chat; killer chained by hostage joins hostage group", () => {
+    let s = setup(["killer", "civilian", "hostage", "civilian"]);
+    s.players.slice(4).forEach((p) => (p.alive = false));
+    s = kill(s, ["p2"]);
+    expect(actorsDM(s).sort()).toEqual(["p1", "p2", "p3"]);
+    s = act(s, "p1", "CHAT", { text: "选有猫的" });
+    expect(viewDM(s, "p3").chat?.messages).toHaveLength(1);
   });
 });

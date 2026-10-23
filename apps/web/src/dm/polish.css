@@ -1079,3 +1079,201 @@
 .dm-polish .dm-tabletop:has(.dm-ring) {
   padding-top: 22px;
 }
+
+/* ---------- 同伴选择标记 ---------- */
+.dm-polish .dm-seat {
+  position: absolute;
+}
+.dm-mate-pick {
+  position: absolute;
+  top: -10px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 3;
+  font-style: normal;
+  font-size: 10px;
+  font-weight: 800;
+  white-space: nowrap;
+  padding: 1px 7px;
+  border-radius: 99px;
+  color: #fff;
+  background: linear-gradient(180deg, #ef4b5c, #9a1527);
+  box-shadow:
+    0 0 0 1.5px #fff,
+    0 3px 8px #000a;
+  animation: dm-stamp 0.35s var(--spring) both;
+  pointer-events: none;
+}
+.dm-polish .dm-seat .dm-mate-pick {
+  top: -14px;
+}
+.dm-polish .dm-cards button .dm-mate-pick {
+  top: auto;
+  bottom: -8px;
+}
+
+/* ---------- 遗言卡编号 ---------- */
+.dm-card-no {
+  position: absolute;
+  left: 6px;
+  top: 6px;
+  z-index: 2;
+  min-width: 22px;
+  height: 22px;
+  padding: 0 5px;
+  border-radius: 7px;
+  display: grid;
+  place-items: center;
+  font-size: 12px;
+  font-weight: 800;
+  font-variant-numeric: tabular-nums;
+  color: #fff;
+  background: #2a2133dd;
+  box-shadow: 0 2px 5px #0007;
+  pointer-events: none;
+}
+
+/* ---------- 名犬 / 灵魂伴侣：选中图标 ---------- */
+.dm-polish.pick-guard .dm-seat[aria-pressed="true"] .dm-seat-portrait,
+.dm-polish.pick-love .dm-seat[aria-pressed="true"] .dm-seat-portrait {
+  background: linear-gradient(160deg, #fff, #4fb3ff);
+  box-shadow:
+    0 0 0 3px #4fb3ff,
+    0 0 26px #4fb3ffa0,
+    0 14px 22px #000c;
+}
+.dm-polish.pick-love .dm-seat[aria-pressed="true"] .dm-seat-portrait {
+  background: linear-gradient(160deg, #fff, #ff7eb6);
+  box-shadow:
+    0 0 0 3px #ff7eb6,
+    0 0 26px #ff7eb6a0,
+    0 14px 22px #000c;
+}
+.dm-polish.pick-guard .dm-seat[aria-pressed="true"] .dm-seat-portrait::after,
+.dm-polish.pick-love .dm-seat[aria-pressed="true"] .dm-seat-portrait::after {
+  content: "🛡️";
+  inset: 0;
+  display: grid;
+  place-items: center;
+  border: 0;
+  border-radius: 0;
+  font-size: 28px;
+  line-height: 1;
+  filter: drop-shadow(0 3px 6px #000c);
+  animation: dm-stamp 0.4s var(--spring) both;
+}
+.dm-polish.pick-love .dm-seat[aria-pressed="true"] .dm-seat-portrait::after {
+  content: "💞";
+}
+.dm-banner-guard strong {
+  color: #9fd6ff;
+  text-shadow: 0 0 28px #4fb3ffaa;
+}
+.dm-banner-love strong {
+  color: #ffb3d6;
+  text-shadow: 0 0 28px #ff7eb6aa;
+}
+
+/* ---------- 悄悄话 ---------- */
+.dm-polish.has-chat {
+  padding-bottom: calc(300px + env(safe-area-inset-bottom));
+}
+.dm-chat {
+  position: fixed;
+  z-index: 29;
+  left: 50%;
+  bottom: calc(86px + env(safe-area-inset-bottom));
+  transform: translateX(-50%);
+  width: min(720px, calc(100vw - 20px));
+  border-radius: 16px;
+  background: linear-gradient(180deg, #34121d, #230b13);
+  border: 1px solid #d8283c66;
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  box-shadow:
+    inset 0 1px 0 #ffffff14,
+    0 14px 30px #000c;
+  overflow: hidden;
+  animation: dm-dock-in 0.4s var(--spring) both;
+}
+.dm-app.dm-polish .dm-chat-head {
+  all: unset;
+  box-sizing: border-box;
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 8px;
+  padding: 9px 14px;
+  cursor: pointer;
+  color: #ffd6dc;
+  font-size: 13px;
+}
+.dm-chat-head span {
+  color: #e9a3ae;
+  font-size: 12px;
+}
+.dm-chat ol {
+  list-style: none;
+  margin: 0;
+  padding: 0 12px;
+  display: grid;
+  gap: 6px;
+  max-height: 120px;
+  overflow-y: auto;
+}
+.dm-chat li {
+  justify-self: start;
+  max-width: 85%;
+  padding: 5px 10px;
+  border-radius: 12px 12px 12px 4px;
+  background: #ffffff14;
+  font-size: 14px;
+  line-height: 1.4;
+  animation: dm-rise 0.3s var(--spring) both;
+}
+.dm-chat li em {
+  display: block;
+  font-style: normal;
+  font-size: 10px;
+  color: #e9a3ae;
+}
+.dm-chat li.mine {
+  justify-self: end;
+  border-radius: 12px 12px 4px 12px;
+  background: #d8283c55;
+}
+.dm-chat li.empty {
+  justify-self: center;
+  background: none;
+  color: #c98b95;
+  font-size: 12px;
+}
+.dm-chat form {
+  display: flex;
+  gap: 8px;
+  padding: 10px 12px 12px;
+}
+.dm-app.dm-polish .dm-chat input {
+  flex: 1;
+  min-width: 0;
+  min-height: 40px;
+  padding: 8px 12px;
+}
+.dm-app.dm-polish .dm-chat button[data-testid="dm-chat-send"] {
+  min-height: 40px;
+  padding: 6px 16px;
+  border-radius: 12px;
+}
+.dm-chat.closed {
+  border-color: #d8283c44;
+}
+@media (max-width: 650px) {
+  .dm-chat {
+    width: calc(100vw - 16px);
+    bottom: calc(78px + env(safe-area-inset-bottom));
+  }
+  .dm-chat ol {
+    max-height: 92px;
+  }
+}

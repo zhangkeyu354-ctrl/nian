@@ -34,6 +34,8 @@ export interface Death {
   round: number;
   phase: Phase;
   sourceCharacter: string;
+  /** 连锁死亡的起因玩家（人质/灵魂伴侣） */
+  source?: string;
   triggeredEffects: string[];
 }
 export interface DMState {
@@ -67,9 +69,15 @@ export interface DMState {
   speechDone: string[];
   deadline: number | null;
   hostageWipe: boolean;
+  /** 房规：真遗言按死者分组依次选择（连环杀手每名被杀者各一组；人质连带邻座同组；灵魂伴侣连死者不选） */
+  evidenceGroups?: { members: string[]; count: number; janitor: boolean }[];
+  evidenceStep?: number;
+  /** 杀手/同组死者的简短对话，每阶段每人最多 2 句 */
+  chat?: { key: string; from: string; text: string }[];
 }
 export interface DMCommand {
   type: string;
+  text?: string;
   targets?: string[];
   cards?: string[];
   target?: string;
@@ -175,6 +183,9 @@ export function createDM(
     speechDone: [],
     deadline: null,
     hostageWipe: false,
+    evidenceGroups: [],
+    evidenceStep: 0,
+    chat: [],
   };
   s.deck = shuffle(s, [...cards]);
   draw(s);
@@ -208,6 +219,8 @@ function prepare(s: DMState) {
   s.nightVictims = [];
   s.directVictims = [];
   s.truth = [];
+  s.evidenceGroups = [];
+  s.evidenceStep = 0;
   s.speechDone = [];
   s.speaker = null;
   s.deadline = null;
@@ -221,7 +234,9 @@ function prepare(s: DMState) {
   }
 }
 function death(s: DMState, ids: string[], cause: string) {
-  let queue = ids.map((id) => ({ id, cause }));
+  let queue: { id: string; cause: string; source?: string }[] = ids.map(
+    (id) => ({ id, cause }),
+  );
   const processed = new Set<string>();
   while (queue.length) {
     const batch = queue;
@@ -239,6 +254,7 @@ function death(s: DMState, ids: string[], cause: string) {
         round: s.round,
         phase: s.phase,
         sourceCharacter: p.roleId,
+        source: item.source,
         triggeredEffects: [],
       };
       s.deaths.push(e);
@@ -264,7 +280,7 @@ function death(s: DMState, ids: string[], cause: string) {
               (index + delta + aliveBefore.length) % aliveBefore.length
             ];
           if (next && next.id !== p.id)
-            queue.push({ id: next.id, cause: "HOSTAGE" });
+            queue.push({ id: next.id, cause: "HOSTAGE", source: p.id });
         }
       }
       const soul = s.players.find((p) => p.roleId === "soulmate");
@@ -272,6 +288,7 @@ function death(s: DMState, ids: string[], cause: string) {
         queue.push({
           id: p.id === soul.id ? s.soulmate : soul.id,
           cause: "SOULMATE",
+          source: p.id,
         });
         e.triggeredEffects.push("SOULMATE");
       }
@@ -308,6 +325,49 @@ function discussion(s: DMState, now: number) {
   s.speaker = living(s)[0]?.id ?? null;
   s.deadline = s.speaker && !s.forensics.length ? now + 300000 : null;
 }
+/** 房规（2026-10-23 用户裁定）：按被杀顺序，每名被直接杀害者一组各选真遗言；
+ *  人质连带死亡的邻座并入人质所在组（原版：一起选）；灵魂伴侣连死者不参加。
+ *  贵族所在组多选 1 张；清扫员所在组可从弃牌堆选。 */
+function buildEvidenceGroups(s: DMState, order: string[]) {
+  const today = s.deaths.filter((d) => d.round === s.round);
+  const groups: { members: string[]; count: number; janitor: boolean }[] = [];
+  for (const id of order) {
+    if (!s.directVictims.includes(id)) continue;
+    const members = [id];
+    for (let i = 0; i < members.length; i++)
+      for (const d of today)
+        if (
+          d.cause === "HOSTAGE" &&
+          d.source === members[i] &&
+          !members.includes(d.playerId)
+        )
+          members.push(d.playerId);
+    const r = s.players.find((p) => p.id === id)!.roleId;
+    groups.push({
+      members,
+      count: r === "noble" ? 2 : 1,
+      janitor: r === "janitor",
+    });
+  }
+  s.evidenceGroups = groups;
+  s.evidenceStep = 0;
+}
+function currentGroup(s: DMState) {
+  return s.evidenceGroups?.[s.evidenceStep ?? 0];
+}
+export function chatKey(s: DMState) {
+  return s.round + ":" + s.phase + ":" + (s.evidenceStep ?? 0);
+}
+/** 当前可以使用对话框的一组人（人数≥2 才有意义） */
+export function chatTeam(s: DMState): string[] {
+  if (s.winner) return [];
+  if (s.phase === "KILLER_SELECTION" || s.phase === "KILLER_FAKE_EVIDENCE")
+    return killers(s).map((p) => p.id);
+  if (s.phase === "VICTIM_EVIDENCE") return currentGroup(s)?.members ?? [];
+  return [];
+}
+export const CHAT_LIMIT = 2;
+export const CHAT_MAX_CHARS = 20;
 function consensus(
   s: DMState,
   id: string,
@@ -433,29 +493,33 @@ export function reduceDM(
         win(s);
         break;
       }
+      buildEvidenceGroups(s, targets);
       s.phase = "VICTIM_EVIDENCE";
       break;
     }
     case "TRUE": {
       requireRule(s.phase === "VICTIM_EVIDENCE");
+      const g = currentGroup(s);
+      requireRule(g, "没有需要选择遗言的死者");
       const cards = c.cards;
       requireRule(
         Array.isArray(cards) &&
           new Set(cards).size === cards.length &&
-          cards.length === counts(s).trueCount,
+          cards.length === g.count,
         "真遗言数量不符",
-      );
-      const janitor = s.directVictims.some(
-        (id) => s.players.find((p) => p.id === id)?.roleId === "janitor",
       );
       requireRule(
         cards.every(
-          (id) => s.pool.includes(id) || (janitor && s.discard.includes(id)),
+          (id) =>
+            !s.truth.includes(id) &&
+            (s.pool.includes(id) || (g.janitor && s.discard.includes(id))),
         ),
         "无效证据",
       );
-      if (!consensus(s, actor, cards, s.nightVictims)) break;
-      s.truth = [...cards];
+      if (!consensus(s, actor, cards, g.members)) break;
+      s.truth.push(...cards);
+      s.evidenceStep = (s.evidenceStep ?? 0) + 1;
+      if (currentGroup(s)) break; // 下一位死者继续选
       s.ack = [];
       s.phase = infoActors(s).length
         ? "SPECIAL_INFORMATION"
@@ -463,6 +527,24 @@ export function reduceDM(
       s.deadline = s.phase === "SPECIAL_INFORMATION" ? now + 5000 : null;
       if (s.phase === "KILLER_FAKE_EVIDENCE" && counts(s).fakeCount === 0)
         publish(s, [], now);
+      break;
+    }
+    case "CHAT": {
+      const team = chatTeam(s);
+      requireRule(team.length > 1 && team.includes(actor), "现在不能发言");
+      const text = String(c.text ?? "")
+        .replace(/\s+/g, " ")
+        .trim()
+        .slice(0, CHAT_MAX_CHARS);
+      requireRule(text, "请输入内容");
+      const key = chatKey(s);
+      s.chat ??= [];
+      requireRule(
+        s.chat.filter((m) => m.key === key && m.from === actor).length <
+          CHAT_LIMIT,
+        "本阶段最多说 " + CHAT_LIMIT + " 句",
+      );
+      s.chat.push({ key, from: actor, text });
       break;
     }
     case "INFO_ACK":
@@ -599,7 +681,7 @@ export function actorsDM(s: DMState): string[] {
     case "KILLER_FAKE_EVIDENCE":
       return killers(s).map((p) => p.id);
     case "VICTIM_EVIDENCE":
-      return s.nightVictims;
+      return currentGroup(s)?.members ?? [];
     case "SPECIAL_INFORMATION":
       return infoActors(s)
         .filter((id) => !s.ack.includes(id))
@@ -638,8 +720,11 @@ export function viewDM(s: DMState, id: string) {
       ? Object.fromEntries(h.cards.map((c) => [c, h.truth.includes(c)]))
       : h.revealed,
   }));
+  const evidenceDead = (s.evidenceGroups ?? []).flatMap((g) => g.members);
   const canSeeKillers =
-    isKiller(me) || s.nightVictims.includes(id) || !!s.winner;
+    isKiller(me) || evidenceDead.includes(id) || !!s.winner;
+  const team = chatTeam(s);
+  const key = chatKey(s);
   const showTruth =
     (s.phase === "SPECIAL_INFORMATION" && active) ||
     (s.phase === "KILLER_FAKE_EVIDENCE" && active);
@@ -665,20 +750,17 @@ export function viewDM(s: DMState, id: string) {
     killers: canSeeKillers
       ? s.players
           .filter(isKiller)
-          .filter((p) => p.alive || s.nightVictims.includes(p.id))
+          .filter((p) => p.alive || evidenceDead.includes(p.id))
           .map((p) => ({ id: p.id, name: p.name, seat: p.seat }))
       : [],
     pool:
-      s.phase === "VICTIM_EVIDENCE" &&
-      active &&
-      s.directVictims.some(
-        (id) => s.players.find((p) => p.id === id)?.roleId === "janitor",
-      )
-        ? [...s.pool, ...s.discard]
+      s.phase === "VICTIM_EVIDENCE" && active && currentGroup(s)?.janitor
+        ? [...s.pool, ...s.discard].filter((c) => !s.truth.includes(c))
         : s.pool.filter(
             (c) =>
               !(
-                s.phase === "KILLER_FAKE_EVIDENCE" &&
+                (s.phase === "KILLER_FAKE_EVIDENCE" ||
+                  s.phase === "VICTIM_EVIDENCE") &&
                 active &&
                 s.truth.includes(c)
               ),
@@ -702,8 +784,31 @@ export function viewDM(s: DMState, id: string) {
             living(s).length - 1,
           )
         : s.phase === "VICTIM_EVIDENCE"
-          ? counts(s).trueCount
+          ? (currentGroup(s)?.count ?? 1)
           : counts(s).fakeCount,
+    /** 选真遗言：第几位死者 / 共几位，当前在选的死者 */
+    evidenceTurn:
+      s.phase === "VICTIM_EVIDENCE" && currentGroup(s)
+        ? {
+            step: (s.evidenceStep ?? 0) + 1,
+            total: s.evidenceGroups!.length,
+            members: currentGroup(s)!.members,
+          }
+        : null,
+    chat:
+      team.length > 1 && team.includes(id)
+        ? {
+            limit: CHAT_LIMIT,
+            maxChars: CHAT_MAX_CHARS,
+            left:
+              CHAT_LIMIT -
+              (s.chat ?? []).filter((m) => m.key === key && m.from === id)
+                .length,
+            messages: (s.chat ?? [])
+              .filter((m) => m.key === key)
+              .map((m) => ({ from: m.from, text: m.text })),
+          }
+        : null,
     legalTargets: active
       ? s.players
           .filter(

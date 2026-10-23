@@ -91,7 +91,9 @@ export class DMRoom {
       throw Error("无效操作");
     const p = this.me(token);
     if (!p) throw Error("入座凭证无效");
-    if (version !== this.file.version) throw Error("状态已更新，请重试");
+    // 对话不依赖版本，避免同伴刚发言就让自己的提交失效
+    if (c.type !== "CHAT" && version !== this.file.version)
+      throw Error("状态已更新，请重试");
     const host = this.file.players[0]?.id === p.id;
     if (["SET_COUNT", "SET_POOL", "START", "RESTART"].includes(c.type) && !host)
       throw Error("只有房主可以操作");

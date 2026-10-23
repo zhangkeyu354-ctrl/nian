@@ -29,6 +29,7 @@
     "verify:cn-protocol": "tsx scripts/verify-cn-protocol.ts",
     "verify:cn-browsers": "tsx scripts/verify-cn-browsers.ts",
     "verify:dm-browsers": "tsx scripts/verify-dm-browsers.ts",
+    "verify:dm-teamplay": "tsx scripts/verify-dm-teamplay.ts",
     "verify:rr-protocol": "tsx scripts/verify-rr-protocol.ts",
     "verify:rr-browsers": "tsx scripts/verify-rr-browsers.ts"
   },
