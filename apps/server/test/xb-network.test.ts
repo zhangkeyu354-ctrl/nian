@@ -152,7 +152,9 @@ it("真实Socket.IO：3～10人完整对局、并发互动、秘密隔离、刷�
         if (round === 1) {
           const before = JSON.stringify(room.file);
           const results = await Promise.all(
-            clients.map((c) => ask(c.socket, E.poop, { target: state.truth })),
+            clients.map((c, i) =>
+              ask(c.socket, E.poop, { target: clients[(i + 1) % n].view!.me }),
+            ),
           );
           expect(results.every((r) => r.ok)).toBe(true);
           await delay(180);

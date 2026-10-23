@@ -6,6 +6,7 @@ export const XB_EVENTS = {
   update: "xb:update",
   poop: "xb:poop",
   effects: "xb:effects",
+  fun: "xb:fun",
 } as const;
 export interface XBSnapshot {
   code: string;
@@ -14,8 +15,10 @@ export interface XBSnapshot {
   version: number;
   players: { id: string; name: string; connected: boolean }[];
   view: View | null;
+  discussionAt: number;
+  funHits: Record<string, number>;
 }
-export type XBCommand = Command | { type: "START" };
+export type XBCommand = Command | { type: "START" } | { type: "REMATCH" };
 export interface XBEffect {
   from: string;
   target: string;

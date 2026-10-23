@@ -98,12 +98,16 @@ const buzz: Partial<Record<Cue, number | number[]>> = {
   pen: 4,
 };
 
-export function feel(cue: Cue) {
+export function feel(
+  cue: Cue,
+  options?: { sound?: boolean; vibration?: boolean },
+) {
   try {
     const v = buzz[cue];
-    if (v && "vibrate" in navigator) navigator.vibrate(v);
+    if (options?.vibration !== false && v && "vibrate" in navigator)
+      navigator.vibrate(v);
   } catch {}
-  if (!soundOn() || cue === "pen") return;
+  if (!(options?.sound ?? soundOn()) || cue === "pen") return;
   try {
     const c = audio();
     if (!c) return;

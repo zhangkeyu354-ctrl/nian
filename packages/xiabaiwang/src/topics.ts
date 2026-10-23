@@ -1,4 +1,5 @@
 /** 服务端专用：禁止从浏览器代码导入。题面和释义为本项目原创写作。 */
+import { EXTRA_TOPICS } from "./topics-v1.ts";
 export interface Topic {
   id: string;
   question: string;
@@ -119,10 +120,12 @@ export const TOPICS: Topic[] = [
     2,
     "https://doi.org/10.1126/science.aam5979",
   ],
-].map(([id, question, answer, difficulty, source], i) => ({
-  id: `xb-${i + 1}`,
-  question: String(question),
-  answer: String(answer),
-  difficulty: Number(difficulty) as 1 | 2 | 3,
-  source: String(source),
-}));
+]
+  .map(([id, question, answer, difficulty, source], i) => ({
+    id: `xb-${i + 1}`,
+    question: String(question),
+    answer: String(answer),
+    difficulty: Number(difficulty) as 1 | 2 | 3,
+    source: String(source),
+  }))
+  .concat(EXTRA_TOPICS);

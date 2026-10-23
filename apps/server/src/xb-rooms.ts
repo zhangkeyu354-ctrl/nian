@@ -27,8 +27,10 @@ interface File {
   players: { id: string; name: string; token: string }[];
   state: State | null;
   version: number;
+  discussionAt?: number;
 }
 export class XBRoom {
+  funHits: Record<string, number> = {};
   file: File;
   connections = new Map<string, number>();
   cooldown = new Map<string, number>();
@@ -58,27 +60,38 @@ export class XBRoom {
   command(token: string, c: XBCommand) {
     const p = this.player(token);
     if (!p) throw Error("请先加入房间");
-    if (c?.type === "START") {
+    if (c?.type === "REMATCH") {
+      if (p.id !== this.file.players[0].id || this.file.state?.phase !== "over")
+        throw Error("只有房主可在本局结束后再来一局");
+      this.file.state = null;
+      this.file.discussionAt = 0;
+    } else if (c?.type === "START") {
       if (p.id !== this.file.players[0].id) throw Error("仅房主可以开局");
       if (this.file.state) throw Error("已开局");
       this.file.state = createGame(
         this.file.players.map(({ id, name }) => ({ id, name })),
         randomInt(2 ** 31),
       );
+      this.funHits = {};
+      this.file.discussionAt = Date.now();
     } else {
       if (!this.file.state) throw Error("尚未开始");
       this.file.state = act(this.file.state, p.id, c);
+      if (c.type === "NEXT" && this.file.state.phase === "discussion")
+        this.file.discussionAt = Date.now();
     }
     this.file.version++;
   }
   poop(token: string, target: string, now = Date.now()) {
     const p = this.player(token);
     if (!p) throw Error("请先加入房间");
+    if (target === p.id) throw Error("不能扔自己，留点面子给自己吧");
     if (!this.file.players.some((x) => x.id === target))
       throw Error("目标无效");
     if (now - (this.cooldown.get(p.id) ?? -Infinity) < 2000)
       throw Error("歇两秒再扔");
     this.cooldown.set(p.id, now);
+    this.funHits[target] = (this.funHits[target] ?? 0) + 1;
     const key = p.id + ":" + target;
     const event = this.pending.get(key);
     this.pending.set(key, {
@@ -100,6 +113,8 @@ export class XBRoom {
         connected: (this.connections.get(id) ?? 0) > 0,
       })),
       view: this.file.state ? viewFor(this.file.state, me) : null,
+      discussionAt: this.file.discussionAt ?? 0,
+      funHits: { ...this.funHits },
     };
   }
 }
@@ -120,6 +135,11 @@ export function attachXiabaiwang(
       if (data.code + ".json" !== f || !Array.isArray(data.players))
         throw Error("无效存档");
       rooms.set(data.code, new XBRoom(data.code, data));
+      try {
+        rooms.get(data.code)!.funHits = JSON.parse(
+          readFileSync(join(dir, data.code + ".fun.json"), "utf8"),
+        );
+      } catch {}
       touched.set(data.code, statSync(join(dir, f)).mtimeMs);
     } catch (e) {
       console.warn("瞎掰王存档无法恢复", f, e);
@@ -138,6 +158,11 @@ export function attachXiabaiwang(
       if (sock) sock.emit(E.update, r.snapshot(sock.data.xbToken));
     }
   };
+  const saveFun = (r: XBRoom) => {
+    const path = join(dir, r.file.code + ".fun.json");
+    writeFileSync(path + ".tmp", JSON.stringify(r.funHits));
+    renameSync(path + ".tmp", path);
+  };
   const sweep = setInterval(() => {
     for (const [code, r] of rooms) {
       if (
@@ -147,6 +172,7 @@ export function attachXiabaiwang(
         rooms.delete(code);
         touched.delete(code);
         rmSync(join(dir, code + ".json"), { force: true });
+        rmSync(join(dir, code + ".fun.json"), { force: true });
       }
     }
   }, 60_000);
@@ -156,6 +182,12 @@ export function attachXiabaiwang(
     for (const r of rooms.values()) {
       if (r.pending.size) {
         io.to(channel(r)).emit(E.effects, [...r.pending.values()]);
+        io.to(channel(r)).emit(E.fun, r.funHits);
+        try {
+          saveFun(r);
+        } catch (e) {
+          console.warn("娱乐统计保存失败", e);
+        }
         r.pending.clear();
       }
     }
@@ -241,6 +273,8 @@ export function attachXiabaiwang(
         if (!joined) throw Error("请先加入房间");
         joined.command(socket.data.xbToken, req.command);
         save(joined);
+        if (req.command?.type === "START" || req.command?.type === "REMATCH")
+          saveFun(joined);
         broadcast(joined);
         return { snapshot: joined.snapshot(socket.data.xbToken) };
       }),
