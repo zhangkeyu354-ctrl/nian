@@ -2641,3 +2641,8 @@
     animation: none !important;
   }
 }
+
+.ma-app .ma-speed {
+  font-size: 13px;
+  white-space: nowrap;
+}

@@ -11,7 +11,7 @@ import type { MARoomSnapshot } from "../../../../packages/shared/src/ma-protocol
 import { createMARoom, savedName, useMARoom } from "./ma-net.ts";
 import { ART, PLAYER_COLORS, Track, useVerticalBoard } from "./Track.tsx";
 import { installAudioUnlock, onMutedChange, setSfxMuted, sfxMuted, sfxShake, sfxTap, sfxYourTurn, vibrate } from "./sfx.ts";
-import { usePlayback, type Show } from "./playback.ts";
+import { getSpeed, setSpeed, usePlayback, type Show, type Speed } from "./playback.ts";
 import "./ma.css";
 
 const roomFromUrl = () => new URLSearchParams(location.search).get("room")?.toUpperCase() ?? null;
@@ -481,6 +481,7 @@ function Game({ snap, view, send, connected }: { snap: MARoomSnapshot; view: MAV
         <a className="ma-back" href="/">← 合集</a>
         <strong>魔法运动员</strong>
         <span className="ma-muted">房间 {snap.code}{!connected && " · 重新连接中…"}</span>
+        <SpeedToggle />
         <SoundToggle />
       </div>
       <Scores view={view} me={me} colorOf={colorOf} compact={showRace} />
@@ -544,6 +545,28 @@ function RollButton({ label, onRoll }: { label: string; onRoll: () => void }) {
       <span className="ma-roll-die" aria-hidden="true">🎲</span>
       {label.replace("🎲", "").trim() || "掷骰"}
       <small>{hold ? "松手掷出！" : "按住摇一摇"}</small>
+    </button>
+  );
+}
+
+/** 动画速度：慢 / 正常 / 快，点一下换一档，只影响自己的手机 */
+function SpeedToggle() {
+  const [s, setS] = useState<Speed>(getSpeed);
+  const next: Record<Speed, Speed> = { slow: "normal", normal: "fast", fast: "slow" };
+  const label: Record<Speed, string> = { slow: "🐢 慢", normal: "🚶 正常", fast: "🐇 快" };
+  return (
+    <button
+      type="button"
+      className="ma-sound ma-speed"
+      data-testid="ma-speed"
+      aria-label={`动画速度：${label[s]}，点一下切换`}
+      onClick={() => {
+        const n = next[s];
+        setSpeed(n);
+        setS(n);
+      }}
+    >
+      {label[s]}
     </button>
   );
 }

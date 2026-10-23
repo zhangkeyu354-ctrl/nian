@@ -37,6 +37,26 @@ export interface ShownToken {
 }
 
 const sleep = (ms: number) => new Promise((r) => setTimeout(r, ms));
+
+/** 动画速度（每台手机自己选，存在本机）：慢 1.5 倍时长 / 正常 / 快 0.5 倍 */
+export type Speed = "slow" | "normal" | "fast";
+const SPEED_KEY = "ma-speed";
+const FACTOR: Record<Speed, number> = { slow: 1.5, normal: 1, fast: 0.5 };
+export function getSpeed(): Speed {
+  try {
+    const v = localStorage.getItem(SPEED_KEY);
+    return v === "slow" || v === "fast" ? v : "normal";
+  } catch {
+    return "normal";
+  }
+}
+export function setSpeed(s: Speed) {
+  try {
+    localStorage.setItem(SPEED_KEY, s);
+  } catch {
+    /* 忽略 */
+  }
+}
 const reduced = () => typeof matchMedia === "function" && matchMedia("(prefers-reduced-motion: reduce)").matches;
 
 /**
@@ -145,7 +165,7 @@ export function usePlayback(view: MAView) {
                 wakers.current.delete(done);
                 res();
               };
-              const id = setTimeout(done, ms * k);
+              const id = setTimeout(done, ms * k * FACTOR[getSpeed()]);
               wakers.current.add(done);
             });
       /** 快进（点屏幕跳过 / 积压太多）时不出声 */
@@ -295,7 +315,7 @@ export function usePlayback(view: MAView) {
       }
       setShow(null);
       // 用户反馈（2026-10-23）：弹窗太快一个接一个会眼花 → 每个弹窗之后停 0.6 秒再出下一个
-      if (popped && queue.current.length && !skip.current && !reduced()) await sleep(600);
+      if (popped && queue.current.length && !skip.current && !reduced()) await sleep(600 * FACTOR[getSpeed()]);
     }
     // 播放完：对齐服务器的真实状态
     const r = latest.current.race;
