@@ -1,3 +1,4 @@
+# Release trigger: Xiabaiwang original flow and cartoon studio, 2026-10-24.
 # Render 一键部署（Blueprint）。免费网页服务，新加坡机房（离日本/中国较近）。
 services:
   - type: web
