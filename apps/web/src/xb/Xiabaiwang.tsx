@@ -822,11 +822,6 @@ export function Xiabaiwang() {
             <h1>
               瞎掰王<span>深夜胡扯电台</span>
             </h1>
-            <p>
-              真话就一句。
-              <br />
-              剩下的，全靠你这张嘴。
-            </p>
             <button
               className="xb-primary"
               data-testid="xb-create"
@@ -1770,7 +1765,7 @@ export function Xiabaiwang() {
       )}
       {!snap && (
         <div className="xb-entrance-footer">
-          一句真话，十张嘴。记得用外部语音通话。
+          记得开语音通话一起玩。
         </div>
       )}
       {panel && (
