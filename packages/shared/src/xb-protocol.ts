@@ -9,6 +9,22 @@ export const XB_EVENTS = {
   effects: "xb:effects",
   fun: "xb:fun",
 } as const;
+export type XBNoteTag = "suspect" | "truthy" | "unknown";
+export type XBAidCommand =
+  | { type: "SET_SPEECH"; seconds: 0 | 30 | 60 }
+  | { type: "CALL" | "CROWN"; round: number; target: string }
+  | { type: "NOTE"; round: number; target: string; tag: XBNoteTag | null };
+export interface XBPublicNotes {
+  round: number;
+  guesser: string;
+  tags: Record<string, XBNoteTag>;
+}
+export interface XBCallout {
+  id: string;
+  round: number;
+  target: string;
+  at: number;
+}
 export interface XBSnapshot {
   code: string;
   me: string | null;
@@ -21,9 +37,23 @@ export interface XBSnapshot {
   topicThemes?: string[];
   topicRemaining?: number;
   cycles?: Cycles;
+  serverNow?: number;
+  gameId?: string;
+  readUntil?: number;
+  revealAt?: number;
+  speechSeconds?: 0 | 30 | 60;
+  speechUsed?: Record<string, number>;
+  speakerAt?: number;
+  callout?: XBCallout;
+  privateNotes?: Record<string, XBNoteTag>;
+  revealedNotes?: XBPublicNotes[];
+  crownCounts?: Record<string, number>;
+  crownTotals?: Record<string, number>;
+  myCrownVote?: string;
 }
 export type XBCommand =
   | Command
+  | XBAidCommand
   | { type: "START" }
   | { type: "REMATCH" }
   | { type: "SET_TOPICS"; themes: string[] }

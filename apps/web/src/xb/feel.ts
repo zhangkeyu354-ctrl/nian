@@ -1,5 +1,20 @@
 /** XB唯一反馈入口。复用绘画音频底层，偏好不写dp全局设置。 */
-import { feel as audioFeel, type Cue } from "../drawing/feel.ts";
+import {
+  feel as audioFeel,
+  setNormalizedVolume,
+  type Cue,
+} from "../drawing/feel.ts";
+let volume = 0.7;
+export function setFeedbackVolume(value: number) {
+  volume = Math.max(0, Math.min(1, Number.isFinite(value) ? value : 0.7));
+  setNormalizedVolume(volume);
+}
+const audible = () =>
+  typeof document === "undefined" || document.visibilityState !== "hidden";
+const playCue = (cue: Cue, sound: boolean) => {
+  if (audible())
+    audioFeel(cue, { sound, vibration: false, mix: "normalized", volume });
+};
 export type Feedback =
   | "tap"
   | "confirm"
@@ -62,10 +77,18 @@ export function feedback(
   prefs: { sound: boolean; vibration: boolean },
   recipient = true,
 ) {
-  audioFeel(sounds[cue], { sound: prefs.sound, vibration: false });
+  if (!audible()) return;
+  playCue(sounds[cue], prefs.sound);
   if (cue === "opening" && prefs.sound) {
-    setTimeout(() => audioFeel("turn", { sound: true, vibration: false }), 400);
-    setTimeout(() => audioFeel("win", { sound: true, vibration: false }), 950);
+    for (const [delay, tone] of [
+      [400, "turn"],
+      [950, "win"],
+    ] as const) {
+      const deadline = Date.now() + delay;
+      setTimeout(() => {
+        if (Date.now() - deadline < 150) playCue(tone, true);
+      }, delay);
+    }
   }
   const pattern = feedbackPattern(cue);
   if (
@@ -87,12 +110,9 @@ export function reveal(
   card?: Element | null,
 ) {
   const play = () => {
-    audioFeel("page", { sound: p.sound, vibration: false });
+    playCue("page", p.sound);
     if (role === "truth" || role === "bluffer")
-      audioFeel(role === "truth" ? "stamp" : "lose", {
-        sound: p.sound,
-        vibration: false,
-      });
+      playCue(role === "truth" ? "stamp" : "lose", p.sound);
   };
   if (card && typeof requestAnimationFrame !== "undefined") {
     let id = 0,

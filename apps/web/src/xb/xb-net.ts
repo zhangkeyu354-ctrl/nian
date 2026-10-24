@@ -1,3 +1,4 @@
+import { safeGet, safeSet } from "./storage.ts";
 import { useEffect, useRef, useState } from "react";
 import { io, type Socket } from "socket.io-client";
 import {
@@ -48,7 +49,7 @@ export function useXB(code: string) {
     const update = (v: XBSnapshot) =>
       setSnapshot((old) => (old && old.version > v.version ? old : v));
     s.on("connect", () => {
-      const token = localStorage.getItem(key);
+      const token = safeGet("local", key);
       setError("");
       if (code && token) {
         send(E.join, { code, token })
@@ -84,7 +85,7 @@ export function useXB(code: string) {
     try {
       const r = await send(event, data);
       if (r.snapshot) setSnapshot(r.snapshot);
-      if (r.token) localStorage.setItem("xb-token:" + code, r.token);
+      if (r.token) safeSet("local", "xb-token:" + code, r.token);
       return r;
     } catch (e) {
       setError(e instanceof Error ? e.message : "操作失败");

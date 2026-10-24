@@ -1,6 +1,7 @@
 import React, { useEffect, useLayoutEffect, useRef, useState } from "react";
 import { feedback, type Feedback } from "./feel.ts";
 import { Loudmouth } from "./Art.tsx";
+import { claimOnce } from "./storage.ts";
 export function RollingScore({
   value,
   powerSave,
@@ -63,6 +64,8 @@ export function FeelLayer({
   spotlight,
   winner,
   skipped,
+  cueKey = "legacy",
+  active = true,
 }: {
   selected: string;
   speaker: string | null | undefined;
@@ -73,6 +76,8 @@ export function FeelLayer({
   spotlight: boolean;
   winner: string;
   skipped: boolean;
+  cueKey?: string;
+  active?: boolean;
 }) {
   const [banner, setBanner] = useState(""),
     [rects, setRects] = useState<{
@@ -81,8 +86,13 @@ export function FeelLayer({
     }>({ select: null, speaker: null });
   const last = useRef("");
   useEffect(() => {
-    if (last.current === stage) return;
-    last.current = stage;
+    const identity = cueKey + ":" + stage;
+    if (last.current === identity) return;
+    last.current = identity;
+    if (!claimOnce("xb-banner:" + identity) || !active) {
+      setBanner("");
+      return;
+    }
     const labels: Record<string, string> = {
       deal: "瞎掰王，开播！",
       rotation: "换个频道，接着掰",
@@ -98,7 +108,7 @@ export function FeelLayer({
       });
     const t = setTimeout(() => setBanner(""), stage === "deal" ? 1500 : 1000);
     return () => clearTimeout(t);
-  }, [stage]);
+  }, [stage, cueKey]);
   useLayoutEffect(() => {
     const read = () =>
       setRects({
@@ -128,7 +138,7 @@ export function FeelLayer({
   });
   return (
     <>
-      {banner && (
+      {banner && active && (
         <div
           className="xb-channel-banner"
           key={stage}
@@ -138,7 +148,7 @@ export function FeelLayer({
           {banner}
         </div>
       )}
-      {warmup && !skipped && (
+      {warmup && !skipped && active && (
         <div className="xb-warmup" data-testid="xb-warmup">
           <span>耳朵竖起来，真相要来了…</span>
         </div>
@@ -168,7 +178,7 @@ export function FeelLayer({
           ))}
         </div>
       )}
-      {spotlight && !skipped && (
+      {spotlight && !skipped && active && (
         <div className="xb-spotlight" data-testid="xb-spotlight">
           🎙 本轮高光：{winner}
         </div>

@@ -1,0 +1,62 @@
+{
+  "complete": true,
+  "shots": [
+    "docs\\xiabaiwang\\ui-v3\\01-tutorial-identity-390x844.png",
+    "docs\\xiabaiwang\\ui-v3\\01-tutorial-identity-844x390.png",
+    "docs\\xiabaiwang\\ui-v3\\02-tutorial-bluff-390x844.png",
+    "docs\\xiabaiwang\\ui-v3\\02-tutorial-bluff-844x390.png",
+    "docs\\xiabaiwang\\ui-v3\\03-tutorial-score-390x844.png",
+    "docs\\xiabaiwang\\ui-v3\\03-tutorial-score-844x390.png",
+    "docs\\xiabaiwang\\ui-v3\\07-eyes-390x844.png",
+    "docs\\xiabaiwang\\ui-v3\\07-eyes-844x390.png",
+    "docs\\xiabaiwang\\ui-v3\\08-private-answer-390x844.png",
+    "docs\\xiabaiwang\\ui-v3\\08-private-answer-844x390.png",
+    "docs\\xiabaiwang\\ui-v3\\04-first-guesser-390x844.png",
+    "docs\\xiabaiwang\\ui-v3\\04-first-guesser-844x390.png",
+    "docs\\xiabaiwang\\ui-v3\\04-first-truth-390x844.png",
+    "docs\\xiabaiwang\\ui-v3\\04-first-truth-844x390.png",
+    "docs\\xiabaiwang\\ui-v3\\04-first-bluffer-390x844.png",
+    "docs\\xiabaiwang\\ui-v3\\04-first-bluffer-844x390.png",
+    "docs\\xiabaiwang\\ui-v3\\09-callout-390x844.png",
+    "docs\\xiabaiwang\\ui-v3\\09-callout-844x390.png",
+    "docs\\xiabaiwang\\ui-v3\\10-notes-private-390x844.png",
+    "docs\\xiabaiwang\\ui-v3\\10-notes-private-844x390.png",
+    "docs\\xiabaiwang\\ui-v3\\11-notes-public-390x844.png",
+    "docs\\xiabaiwang\\ui-v3\\11-notes-public-844x390.png",
+    "docs\\xiabaiwang\\ui-v3\\12-truth-card-390x844.png",
+    "docs\\xiabaiwang\\ui-v3\\12-truth-card-844x390.png",
+    "docs\\xiabaiwang\\ui-v3\\13-crown-vote-390x844.png",
+    "docs\\xiabaiwang\\ui-v3\\13-crown-vote-844x390.png",
+    "docs\\xiabaiwang\\ui-v3\\14-extreme-question-390x844.png",
+    "docs\\xiabaiwang\\ui-v3\\14-extreme-question-844x390.png",
+    "docs\\xiabaiwang\\ui-v3\\16-extreme-0-360.png",
+    "docs\\xiabaiwang\\ui-v3\\15-extreme-answer-390x844.png",
+    "docs\\xiabaiwang\\ui-v3\\15-extreme-answer-844x390.png",
+    "docs\\xiabaiwang\\ui-v3\\16-extreme-1-360.png"
+  ],
+  "errors": [],
+  "tutorialOnce": true,
+  "tutorialFocusTrap": true,
+  "volumePersisted": true,
+  "roleHintsOnce": true,
+  "readWindowCommon": true,
+  "calloutPrivate": true,
+  "notesPrivateThenPublic": true,
+  "crownsNoScore": true,
+  "backgroundNoReplay": "visibilitychange simulation, production listener, oscillator start counter",
+  "refreshNoReplay": true,
+  "truthHistorySwipe": true,
+  "extremes": [
+    {
+      "code": "EXTRE1",
+      "questionLength": 29,
+      "answerLength": 41
+    },
+    {
+      "code": "EXTRE2",
+      "questionLength": 16,
+      "answerLength": 49
+    }
+  ],
+  "scoringSHA": "03b63855c4396d69537cebaaac2ebce7112ea414e01455febe7b03c247235728"
+}

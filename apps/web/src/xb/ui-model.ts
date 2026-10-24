@@ -47,7 +47,11 @@ export function revealFrame(elapsed: number, players: number) {
     duration,
   };
 }
-export function titles(view: View, hits: Record<string, number>) {
+export function titles(
+  view: View,
+  hits: Record<string, number>,
+  crowns?: Record<string, number>,
+) {
   const bluff: Record<string, number> = {},
     fooled: Record<string, number> = {};
   for (const h of view.history)
@@ -68,6 +72,9 @@ export function titles(view: View, hits: Record<string, number>) {
     { title: "最佳瞎掰王", names: best(bluff), icon: "🎭" },
     { title: "最容易上当", names: best(fooled), icon: "❔" },
     { title: "粑粑收集者", names: best(hits), icon: "💩" },
+    ...(crowns
+      ? [{ title: "最离谱瞎掰", names: best(crowns), icon: "👑" }]
+      : []),
   ];
 }
 export function ranking(view: View, previous = false) {

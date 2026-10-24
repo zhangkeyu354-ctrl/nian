@@ -22,7 +22,13 @@ import {
   type Cycles,
 } from "../../../../packages/xiabaiwang/src/rules.ts";
 import { coalesceEffects } from "./effect-queue.ts";
+import { safeGet, safeSet, claimOnce, revealAge } from "./storage.ts";
+import { FirstGame, EyesWindow } from "./FirstGame.tsx";
+import { VoiceAid, PublicNotes, SpeechBar } from "./VoiceAid.tsx";
+import { TruthRecap } from "./TruthRecap.tsx";
+import { setFeedbackVolume } from "./feel.ts";
 import "./xb.css";
+import "./v3.css";
 const ROLES: Record<string, string> = XB_RULES.roles;
 const JOBS: Record<string, string> = {
   guesser: "耳朵借你，别把脑子也借出去。追问大家，找出真正的老实人。",
@@ -39,9 +45,9 @@ type Flight = {
   dy: number;
 };
 const pref = (name: string, d = true) =>
-  localStorage.getItem("xb-" + name) === "off"
+  safeGet("local", "xb-" + name) === "off"
     ? false
-    : localStorage.getItem("xb-" + name) === "on"
+    : safeGet("local", "xb-" + name) === "on"
       ? true
       : d;
 export function Xiabaiwang() {
@@ -51,9 +57,24 @@ export function Xiabaiwang() {
     snap = net.snapshot,
     view = snap?.view,
     me = snap?.me;
-  const [name, setName] = useState(() => localStorage.getItem("xb-name") ?? ""),
+  const [active, setActive] = useState(
+    () => document.visibilityState !== "hidden",
+  );
+  const [tutorialRequest, setTutorialRequest] = useState(0);
+  const [volume, setVolume] = useState(() =>
+    Math.max(
+      0,
+      Math.min(1, Number(safeGet("local", "xb-volume") ?? "0.7") || 0),
+    ),
+  );
+  const clockOffset = useRef(0);
+  useEffect(() => {
+    if (snap?.serverNow) clockOffset.current = snap.serverNow - Date.now();
+  }, [snap?.serverNow]);
+  useEffect(() => setFeedbackVolume(volume), [volume]);
+  const [name, setName] = useState(() => safeGet("local", "xb-name") ?? ""),
     [roomInput, setRoomInput] = useState(
-      () => sessionStorage.getItem("xb-room-input") ?? "",
+      () => safeGet("session", "xb-room-input") ?? "",
     );
   const [panel, setPanel] = useState<
       "menu" | "rules" | "recap" | "role" | null
@@ -134,6 +155,60 @@ export function Xiabaiwang() {
     ),
     last = view?.history.at(-1),
     scoreSteps = view ? settlement(view) : [];
+  const serverNow = now + clockOffset.current;
+  const cueKey = `${code}:${snap?.gameId ?? "legacy"}:${view?.round ?? 0}`;
+  const currentRef = useRef({
+    phase: view?.phase,
+    cueKey,
+    readUntil: snap?.readUntil ?? 0,
+  });
+  currentRef.current = {
+    phase: view?.phase,
+    cueKey,
+    readUntil: snap?.readUntil ?? 0,
+  };
+  const [calloutText, setCalloutText] = useState("");
+  useEffect(() => {
+    const change = () => {
+      const visible = document.visibilityState !== "hidden";
+      setActive(visible);
+      setNow(Date.now());
+      setFlights([]);
+      setPointFlights([]);
+      setHit({});
+      setCombo({});
+      setCalloutText("");
+      hitTimers.current.forEach(clearTimeout);
+      hitTimers.current.clear();
+      if (!visible && currentRef.current.phase === "reveal") {
+        safeSet("session", "xb-reveal-done:" + currentRef.current.cueKey, "1");
+        setSkipped(true);
+      }
+      if (
+        visible &&
+        currentRef.current.readUntil <= Date.now() + clockOffset.current
+      )
+        setIntro(null);
+    };
+    document.addEventListener("visibilitychange", change);
+    return () => document.removeEventListener("visibilitychange", change);
+  }, []);
+  useEffect(() => {
+    const call = snap?.callout;
+    if (!call) {
+      setCalloutText("");
+      return;
+    }
+    if (!call || !claimOnce("xb-callout:" + call.id)) return;
+    if (!active || serverNow - call.at >= 4000) return;
+    setCalloutText("轮到你说 · 想想点到你了");
+    feedback("turn", feedbackPrefs.current);
+    const timer = setTimeout(
+      () => setCalloutText(""),
+      Math.max(0, 4000 - (serverNow - call.at)),
+    );
+    return () => clearTimeout(timer);
+  }, [snap?.callout?.id]);
   const revealed = view?.phase === "reveal",
     over = view?.phase === "over";
   const stage = !code
@@ -179,14 +254,13 @@ export function Xiabaiwang() {
   }, []);
   useEffect(() => {
     if (!view || previousRound.current === view.round) return;
-    const was = previousRound.current;
     previousRound.current = view.round;
     setPanel(null);
     setSkipped(false);
     setElapsed(0);
     let draft: any = null;
     try {
-      draft = JSON.parse(sessionStorage.getItem("xb-draft:" + code) ?? "null");
+      draft = JSON.parse(safeGet("session", "xb-draft:" + code) ?? "null");
     } catch {}
     if (
       restore.current &&
@@ -203,19 +277,19 @@ export function Xiabaiwang() {
     }
     restore.current = false;
     if (view.phase !== "discussion") return;
-    if (isGuesser) {
+    if (isGuesser && claimOnce("xb-round-turn:" + cueKey)) {
       feedback("turn", feedbackPrefs.current);
     }
-    setIntro(was === null ? "deal" : "rotation");
-    const timers = [
-      setTimeout(() => setIntro("deal"), was === null ? 0 : 2000),
-      setTimeout(() => setIntro(null), was === null ? 3000 : 5000),
-    ];
-    return () => timers.forEach(clearTimeout);
+    const remaining =
+      (snap?.readUntil ?? 0) - (Date.now() + clockOffset.current);
+    setIntro(remaining > 0 ? "deal" : null);
+    const timer = setTimeout(() => setIntro(null), Math.max(0, remaining));
+    return () => clearTimeout(timer);
   }, [view?.round]);
   useEffect(() => {
     if (view && !restore.current)
-      sessionStorage.setItem(
+      safeSet(
+        "session",
         "xb-draft:" + code,
         JSON.stringify({ round: view.round, mode, selected }),
       );
@@ -229,20 +303,31 @@ export function Xiabaiwang() {
       setPanel(null);
     }
     if (view?.phase === "reveal") {
-      setElapsed(0);
-      setSkipped(false);
-      revealStart.current = performance.now();
-      if (animate && !skipped) {
-        [0, 420, 730, 950, 1100].forEach((ms) => {
-          const t = setTimeout(() => {
-            sfx("stamp");
-            hitTimers.current.delete(t);
-          }, ms);
-          hitTimers.current.add(t);
-        });
+      const age = revealAge(
+        snap?.revealAt ?? 0,
+        Date.now() + clockOffset.current,
+      );
+      setElapsed(age);
+      setSkipped(
+        !!safeGet("session", "xb-reveal-done:" + cueKey) || age >= 12000,
+      );
+      revealStart.current = snap?.revealAt ?? 0;
+      if (animate && age < 1200 && claimOnce("xb-warmup:" + cueKey)) {
+        [0, 420, 730, 950, 1100]
+          .filter((ms) => ms >= age)
+          .forEach((ms) => {
+            const t = setTimeout(() => {
+              sfx("stamp");
+              hitTimers.current.delete(t);
+            }, ms - age);
+            hitTimers.current.add(t);
+          });
       }
       const t = setInterval(
-        () => setElapsed(performance.now() - revealStart.current),
+        () =>
+          setElapsed(
+            revealAge(revealStart.current, Date.now() + clockOffset.current),
+          ),
         80,
       );
       return () => clearInterval(t);
@@ -250,7 +335,12 @@ export function Xiabaiwang() {
   }, [view?.phase, view?.round]);
   useEffect(() => () => hitTimers.current.forEach(clearTimeout), []);
   useEffect(() => {
-    if (revealed && frame.scores && view) {
+    if (
+      revealed &&
+      frame.scores &&
+      view &&
+      claimOnce("xb-score-cue:" + cueKey)
+    ) {
       sfx("win");
       if ((last?.delta[me ?? ""] ?? 0) !== 0)
         feedback("score", {
@@ -429,7 +519,7 @@ export function Xiabaiwang() {
     setter: (v: boolean) => void,
   ) => {
     setter(value);
-    localStorage.setItem("xb-" + key, value ? "on" : "off");
+    safeSet("local", "xb-" + key, value ? "on" : "off");
   };
   useEffect(() => {
     document.querySelector(".xb-world .xb-stage")?.scrollTo({ top: 0 });
@@ -443,8 +533,18 @@ export function Xiabaiwang() {
     return () => clearTimeout(t);
   }, [net.busy]);
   useEffect(() => {
-    if (view?.phase === "discussion" && secs <= 3 && secs > 0) sfx("tick");
-    if (view?.phase === "discussion" && secs === 0) {
+    if (
+      view?.phase === "discussion" &&
+      secs <= 3 &&
+      secs > 0 &&
+      claimOnce(`xb-tick:${cueKey}:${secs}`)
+    )
+      sfx("tick");
+    if (
+      view?.phase === "discussion" &&
+      secs === 0 &&
+      claimOnce("xb-clock-end:" + cueKey)
+    ) {
       document.querySelector(".xb-world")?.classList.add("xb-time-up");
       const t = setTimeout(
         () =>
@@ -461,7 +561,13 @@ export function Xiabaiwang() {
       return;
     }
     let cancel: undefined | (() => void);
-    if (frame.visible > priorVisible.current && !skipped && animate)
+    if (
+      frame.visible > priorVisible.current &&
+      !skipped &&
+      animate &&
+      active &&
+      claimOnce(`xb-flip:${cueKey}:${frame.visible}`)
+    )
       cancel = revealSound(
         feedbackPrefs.current,
         view?.players[frame.visible - 1]?.role,
@@ -480,6 +586,7 @@ export function Xiabaiwang() {
     }
     if (
       !animate ||
+      !active ||
       skipped ||
       frame.settlementIndex < 0 ||
       frame.settlementIndex <= lastCoin.current
@@ -487,6 +594,7 @@ export function Xiabaiwang() {
       return;
     lastCoin.current = frame.settlementIndex;
     const step = scoreSteps[frame.settlementIndex];
+    if (!claimOnce(`xb-coins:${cueKey}:${frame.settlementIndex}`)) return;
     if (!step) return;
     const timers = view!.players.map((p, i) => {
       const delta = step.delta[p.id] ?? 0;
@@ -562,7 +670,7 @@ export function Xiabaiwang() {
   }, [stage, view, snap, selected, waiting, myRole]);
   return (
     <main
-      className={`xb-world ${animate ? "" : "xb-power-save"} ${net.error ? "xb-rejected" : ""} ${revealed && animate && !skipped && view?.players[frame.visible - 1]?.role === "truth" ? "xb-truth-impact" : ""}`}
+      className={`xb-world ${!active ? "xb-suspended" : ""} ${animate ? "" : "xb-power-save"} ${net.error ? "xb-rejected" : ""} ${revealed && animate && !skipped && view?.players[frame.visible - 1]?.role === "truth" ? "xb-truth-impact" : ""}`}
       data-stage={stage}
       onPointerDownCapture={(e) => {
         const b = (e.target as HTMLElement).closest<HTMLButtonElement>(
@@ -738,7 +846,8 @@ export function Xiabaiwang() {
                   value={roomInput}
                   onChange={(e) => {
                     setRoomInput(e.target.value.toUpperCase());
-                    sessionStorage.setItem(
+                    safeSet(
+                      "session",
                       "xb-room-input",
                       e.target.value.toUpperCase(),
                     );
@@ -772,7 +881,7 @@ export function Xiabaiwang() {
               placeholder="最多16字，嘴硬不限量"
               onChange={(e) => {
                 setName(e.target.value);
-                localStorage.setItem("xb-name", e.target.value);
+                safeSet("local", "xb-name", e.target.value);
               }}
             />
             <button
@@ -872,6 +981,26 @@ export function Xiabaiwang() {
                 本房已出题不重抽；题不足时请增加主题。
               </small>
             </fieldset>
+            <label className="xb-speech-setting">
+              每人发言计时
+              <select
+                data-testid="xb-speech-setting"
+                aria-label="每人发言计时"
+                value={snap.speechSeconds ?? 0}
+                disabled={!host || disabled}
+                onChange={(e) =>
+                  command({
+                    type: "SET_SPEECH",
+                    seconds: Number(e.target.value) as 0 | 30 | 60,
+                  })
+                }
+              >
+                <option value={0}>不限 · 自由聊</option>
+                <option value={30}>30秒 · 只提醒</option>
+                <option value={60}>60秒 · 只提醒</option>
+              </select>
+              <small>本轮累计每人发言时间，到时不禁言、不扣分。</small>
+            </label>
             <p className="xb-wait">{waiting}</p>
           </div>
         ) : stage === "rotation" ? (
@@ -1059,6 +1188,10 @@ export function Xiabaiwang() {
                     );
                   })}
                 </div>
+                <PublicNotes snap={snap} />
+                {frame.done && (
+                  <TruthRecap snap={snap} command={command} busy={disabled} />
+                )}
               </>
             )}
           </div>
@@ -1112,20 +1245,23 @@ export function Xiabaiwang() {
               })}
             </div>
             <div className="xb-titles">
-              {titles(view, snap.funHits ?? {}).map((t) => (
-                <div key={t.title}>
-                  <span>{t.icon}</span>
-                  <p>
-                    <strong>{t.title}</strong>
-                    <b>{t.names}</b>
-                  </p>
-                </div>
-              ))}
+              {titles(view, snap.funHits ?? {}, snap.crownTotals ?? {}).map(
+                (t) => (
+                  <div key={t.title}>
+                    <span>{t.icon}</span>
+                    <p>
+                      <strong>{t.title}</strong>
+                      <b>{t.names}</b>
+                    </p>
+                  </div>
+                ),
+              )}
             </div>
             <button onClick={() => setPanel("recap")}>
               每轮回顾 · 把嘴硬留个档
             </button>
             <p>称号仅供乐，不另加分。并列玩家共享称号。</p>
+            <TruthRecap snap={snap} command={command} busy={disabled} />
           </div>
         ) : (
           <div className="xb-discussion">
@@ -1197,6 +1333,11 @@ export function Xiabaiwang() {
               </button>
             </div>
             {view.muted && (
+              <p className="xb-kicker">语音约定 · 本轮禁言仍然有效</p>
+            )}
+            <VoiceAid snap={snap} command={command} busy={disabled} />
+            {isGuesser && <p className="xb-kicker">点玩家头像，邀请他开麦。</p>}
+            {view.muted && (
               <p className="xb-mute" role="status" data-testid="xb-muted">
                 📢 {label(view.muted)} 本轮禁止发言。仍可被指认、扔粑粑。
               </p>
@@ -1239,15 +1380,25 @@ export function Xiabaiwang() {
                 id={"xb-avatar-" + p.id}
                 key={p.id}
                 data-testid={"xb-seat-" + i}
-                aria-label={`选择 ${p.name}${mode === "POOP" && p.id === me ? "，不能扔自己" : ""}`}
+                aria-label={`${!mode && isGuesser ? "点名" : "选择"} ${p.name}${mode === "POOP" && p.id === me ? "，不能扔自己" : ""}`}
                 title={p.name}
                 className={`xb-seat ${selected === p.id ? "is-selected" : ""} ${view?.speaker === p.id ? "is-speaking" : ""} ${hitNow ? "is-hit" : ""} ${p.id === view?.guesser ? "is-guesser" : ""}`}
                 disabled={
                   disabled ||
-                  !mode ||
+                  (!mode &&
+                    !(isGuesser && view?.phase === "discussion" && !intro)) ||
+                  (!mode && view?.muted === p.id) ||
                   (mode === "POOP" ? p.id === me : p.id === view?.guesser)
                 }
                 onClick={() => {
+                  if (!mode && isGuesser && view?.phase === "discussion") {
+                    void command({
+                      type: "CALL",
+                      target: p.id,
+                      round: view.round,
+                    });
+                    return;
+                  }
                   setSelected(p.id);
                   setArmed(false);
                   sfx("select");
@@ -1305,6 +1456,9 @@ export function Xiabaiwang() {
                                   ? "在听"
                                   : "离线"}
                 </small>
+                {view?.phase === "discussion" && (
+                  <SpeechBar snap={snap} id={p.id} now={serverNow} />
+                )}
               </button>
             );
           })}
@@ -1453,6 +1607,7 @@ export function Xiabaiwang() {
               <button
                 data-testid="xb-skip"
                 onClick={() => {
+                  safeSet("session", "xb-reveal-done:" + cueKey, "1");
                   setSkipped(true);
                   sfx("page");
                 }}
@@ -1635,6 +1790,23 @@ export function Xiabaiwang() {
                 <span className="xb-kicker">频道设置 · 各管各的耳朵</span>
                 <h2>小点声？都听你的。</h2>
                 <label>
+                  总音量 <output>{Math.round(volume * 100)}%</output>
+                  <input
+                    data-testid="xb-volume"
+                    aria-label="总音量"
+                    type="range"
+                    min="0"
+                    max="1"
+                    step="0.05"
+                    value={volume}
+                    onChange={(e) => {
+                      const v = Number(e.target.value);
+                      setVolume(v);
+                      safeSet("local", "xb-volume", String(v));
+                    }}
+                  />
+                </label>
+                <label>
                   <input
                     type="checkbox"
                     checked={sound}
@@ -1680,6 +1852,15 @@ export function Xiabaiwang() {
                 <button onClick={() => setPanel("rules")}>
                   规则与所选版本
                 </button>
+                <button
+                  data-testid="xb-reopen-tutorial"
+                  onClick={() => {
+                    setPanel(null);
+                    setTutorialRequest((v) => v + 1);
+                  }}
+                >
+                  再看一次新手教学
+                </button>
                 {!!view?.history.length && (
                   <button onClick={() => setPanel("recap")}>每轮回顾</button>
                 )}
@@ -1698,6 +1879,29 @@ export function Xiabaiwang() {
             连击 ×{v.count} · {label(id)}
           </aside>
         ))}
+      {calloutText && active && (
+        <aside className="xb-callout" data-testid="xb-callout" role="status">
+          🎙 {calloutText}
+        </aside>
+      )}
+      {view?.phase === "discussion" && (
+        <EyesWindow
+          key={cueKey}
+          until={snap?.readUntil ?? 0}
+          now={serverNow}
+          role={myRole}
+          answer={view.answer}
+          round={view.round}
+        />
+      )}
+      <FirstGame
+        joined={!!snap?.me}
+        role={myRole}
+        job={JOBS[myRole] ?? ""}
+        ready={view?.phase === "discussion" && !intro}
+        request={tutorialRequest}
+        active={active}
+      />
       <FeelLayer
         selected={selected}
         speaker={view?.speaker}
@@ -1716,6 +1920,8 @@ export function Xiabaiwang() {
             : ""
         }
         skipped={skipped}
+        cueKey={cueKey}
+        active={active}
       />
       {drag && (
         <svg className="xb-drag-preview" aria-hidden="true">

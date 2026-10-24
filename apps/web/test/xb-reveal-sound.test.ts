@@ -1,5 +1,8 @@
 import { it, expect, vi, afterEach } from "vitest";
-vi.mock("../src/drawing/feel.ts", () => ({ feel: vi.fn() }));
+vi.mock("../src/drawing/feel.ts", () => ({
+  feel: vi.fn(),
+  setNormalizedVolume: vi.fn(),
+}));
 import { feel } from "../src/drawing/feel.ts";
 import { reveal } from "../src/xb/feel.ts";
 afterEach(() => {
@@ -12,12 +15,33 @@ it("翻到90度才唰声并按身份盖章/滑稽声，跳过可以取消待播�
   const cancel = reveal(p, "bluffer");
   expect(feel).not.toHaveBeenCalled();
   vi.advanceTimersByTime(400);
-  expect(feel).toHaveBeenCalledWith("page", { sound: true, vibration: false });
-  expect(feel).toHaveBeenCalledWith("lose", { sound: true, vibration: false });
+  expect(feel).toHaveBeenCalledWith(
+    "page",
+    expect.objectContaining({
+      sound: true,
+      vibration: false,
+      mix: "normalized",
+    }),
+  );
+  expect(feel).toHaveBeenCalledWith(
+    "lose",
+    expect.objectContaining({
+      sound: true,
+      vibration: false,
+      mix: "normalized",
+    }),
+  );
   vi.clearAllMocks();
   reveal(p, "truth");
   vi.advanceTimersByTime(400);
-  expect(feel).toHaveBeenCalledWith("stamp", { sound: true, vibration: false });
+  expect(feel).toHaveBeenCalledWith(
+    "stamp",
+    expect.objectContaining({
+      sound: true,
+      vibration: false,
+      mix: "normalized",
+    }),
+  );
   vi.clearAllMocks();
   const stop = reveal(p, "truth");
   stop();

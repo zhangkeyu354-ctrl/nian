@@ -1,0 +1,92 @@
+{
+  "base": "e722a4db5f777db15b05ab08127860d331828006",
+  "branch": "codex/xiabaiwang",
+  "frozenScoring": {
+    "engine.ts": "03b63855c4396d69537cebaaac2ebce7112ea414e01455febe7b03c247235728",
+    "rules.ts": "17a8504117a0cd2bdcd3811faa8a5c67cfb5e9d1d29082c442813f3db852f4c9"
+  },
+  "fullBrowserGames": [
+    {
+      "players": 3,
+      "rounds": 3,
+      "cycles": 1,
+      "complete": true,
+      "refresh": true,
+      "privacy": true,
+      "independentEffects": true,
+      "selfThrowRejected": true,
+      "longNames": false
+    },
+    {
+      "players": 6,
+      "rounds": 6,
+      "cycles": 1,
+      "complete": true,
+      "refresh": true,
+      "privacy": true,
+      "independentEffects": true,
+      "selfThrowRejected": true,
+      "longNames": false
+    },
+    {
+      "players": 10,
+      "rounds": 10,
+      "cycles": 1,
+      "complete": true,
+      "refresh": true,
+      "privacy": true,
+      "independentEffects": true,
+      "selfThrowRejected": true,
+      "longNames": true
+    }
+  ],
+  "browserErrors": [],
+  "topicCount": 160,
+  "mobile": {
+    "captureTests": 197,
+    "files": 12,
+    "interfaceChecks": 64
+  },
+  "replays": {
+    "seeds": [
+      1701,
+      2903,
+      4111
+    ],
+    "allEventsReproduced": true
+  },
+  "regressions": {
+    "dbdProtocol": {
+      "games": 3,
+      "viewsChecked": 3025
+    },
+    "dbdLobby": [
+      3,
+      4,
+      5
+    ],
+    "dbdBrowser": {
+      "players": 5,
+      "commands": 109,
+      "winner": "killer"
+    },
+    "cnProtocolGroups": 12,
+    "dmBrowser": "full-game passed",
+    "rrProtocol": "passed",
+    "maBrowser": {
+      "passed": true,
+      "players": 4,
+      "deal": "draft",
+      "steps": 3552,
+      "racesSeen": 4
+    }
+  },
+  "allUnitTests": {
+    "passed": 835,
+    "files": 51,
+    "durationSeconds": 282.2,
+    "command": "npm test -- --testTimeout=20000 --maxWorkers=1"
+  },
+  "typecheck": "passed",
+  "build": "passed"
+}

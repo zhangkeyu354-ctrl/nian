@@ -124,6 +124,7 @@ try {
         await pages[i].getByLabel("你的昵称").fill(name.slice(0, 16));
         await click(pages[i], "xb-join");
         await waitStage(pages[i], "lobby");
+        await pages[i].getByTestId("xb-tutorial-skip").click();
       }
       if (n === 3) {
         await shot(host, "04-lobby");
@@ -167,7 +168,11 @@ try {
         "新局初始每人3分",
       );
       for (let round = 1; round <= totalRounds; round++) {
-        for (const p of pages) await waitStage(p, "discussion");
+        for (const p of pages) {
+          await waitStage(p, "discussion");
+          if (await p.getByTestId("xb-hint-dismiss").isVisible())
+            await p.getByTestId("xb-hint-dismiss").click();
+        }
         const g = pages.find(
           (p) => states.get(p)?.me === states.get(host)?.view?.guesser,
         )!;
@@ -314,8 +319,9 @@ try {
         }
         await click(host, "xb-next");
         if (round < n && n === 3 && round === 1) {
-          await waitStage(host, "rotation");
-          await shot(host, "18-rotation");
+          await waitStage(host, "deal");
+          await host.getByTestId("xb-eyes").waitFor();
+          await shot(host, "18-next-round-eyes");
         }
       }
       await waitStage(host, "over");

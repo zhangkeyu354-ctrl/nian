@@ -1,4 +1,12 @@
 import { TOPICS } from "../../../packages/xiabaiwang/src/topics.ts";
+import {
+  freshAids,
+  beginRead,
+  trackSpeaker,
+  applyAid,
+  aidSnapshot,
+  type XBAids,
+} from "./xb-aids.ts";
 import { TOPIC_THEMES } from "../../../packages/xiabaiwang/src/topic-themes.ts";
 import {
   XB_RULES,
@@ -37,6 +45,7 @@ interface File {
   topicThemes?: string[];
   usedTopics?: string[];
   cycles?: Cycles;
+  aids?: XBAids;
 }
 export class XBRoom {
   funHits: Record<string, number> = {};
@@ -70,7 +79,9 @@ export class XBRoom {
   command(token: string, c: XBCommand) {
     const p = this.player(token);
     if (!p) throw Error("请先加入房间");
-    if (c?.type === "SET_CYCLES") {
+    if (c && applyAid(this.file, p.id, c)) {
+      // Auxiliary metadata is deliberately separate from engine state.
+    } else if (c?.type === "SET_CYCLES") {
       if (p.id !== this.file.players[0].id) throw Error("仅房主可以设置圈数");
       if (this.file.state) throw Error("开局后不能更换圈数");
       if (!(XB_RULES.cycleOptions as readonly number[]).includes(c.cycles))
@@ -98,6 +109,7 @@ export class XBRoom {
         ]),
       ];
       this.file.state = null;
+      this.file.aids = freshAids(this.file.aids?.speechSeconds);
       this.file.discussionAt = 0;
     } else if (c?.type === "START") {
       if (p.id !== this.file.players[0].id) throw Error("仅房主可以开局");
@@ -113,12 +125,23 @@ export class XBRoom {
         this.file.state.topic.id,
       ];
       this.funHits = {};
+      this.file.aids = freshAids(this.file.aids?.speechSeconds);
+      beginRead(this.file.aids);
       this.file.discussionAt = Date.now();
     } else {
       if (!this.file.state) throw Error("尚未开始");
-      this.file.state = act(this.file.state, p.id, c);
+      const previousSpeaker = this.file.state.speaker;
+      this.file.state = act(
+        this.file.state,
+        p.id,
+        c as Parameters<typeof act>[2],
+      );
+      this.file.aids ??= { ...freshAids(), gameId: `legacy-${this.file.code}` };
+      trackSpeaker(this.file.aids, previousSpeaker, this.file.state.speaker);
+      if (c.type === "GUESS") this.file.aids.revealAt = Date.now();
       if (c.type === "NEXT" && this.file.state.phase === "discussion") {
         this.file.discussionAt = Date.now();
+        beginRead(this.file.aids);
         this.file.usedTopics = [
           ...(this.file.usedTopics ?? []),
           this.file.state.topic.id,
@@ -176,6 +199,7 @@ export class XBRoom {
       topicThemes: this.file.topicThemes ?? [],
       topicRemaining: this.availableTopics().length,
       cycles: this.file.cycles ?? XB_RULES.defaultCycles,
+      ...aidSnapshot(this.file, me),
     };
   }
 }
