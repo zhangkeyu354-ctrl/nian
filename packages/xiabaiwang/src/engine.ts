@@ -34,13 +34,19 @@ export interface State {
   scores: Record<string, number>;
   history: Result[];
 }
-export function createGame(players: Player[], seed: number): State {
+export function createGame(
+  players: Player[],
+  seed: number,
+  topics: Topic[] = TOPICS,
+): State {
   if (
     players.length < 3 ||
     players.length > 10 ||
     new Set(players.map((p) => p.id)).size !== players.length
   )
     throw Error("需要3～10名不同玩家");
+  if (topics.length < players.length)
+    throw Error("可用题目不足，请增加主题或选择全部随机");
   const s: State = {
     players: structuredClone(players),
     host: players[0].id,
@@ -48,8 +54,8 @@ export function createGame(players: Player[], seed: number): State {
     round: 0,
     guesser: "",
     truth: "",
-    topic: TOPICS[0],
-    deck: structuredClone(TOPICS),
+    topic: topics[0],
+    deck: structuredClone(topics),
     seed: seed >>> 0,
     muted: null,
     speaker: null,

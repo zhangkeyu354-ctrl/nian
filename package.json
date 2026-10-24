@@ -4,6 +4,8 @@
   "private": true,
   "type": "module",
   "scripts": {
+    "verify:xb-topics": "tsx scripts/verify-xb-topics.ts",
+    "verify:xb-feel": "tsx scripts/verify-xb-feel-v2.ts",
     "verify:xb-browsers": "tsx scripts/verify-xb-browsers.ts",
     "test": "vitest run",
     "typecheck": "tsc --noEmit",

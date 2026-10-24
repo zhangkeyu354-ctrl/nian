@@ -3,10 +3,18 @@ import {
   XB_EVENTS as E,
   type XBCommand,
 } from "../../../../packages/shared/src/xb-protocol.ts";
-import { feel, type Cue } from "../drawing/feel.ts";
+import {
+  feedback,
+  motionPolicy,
+  revealTimeline,
+  reveal as revealSound,
+  type Feedback,
+} from "./feel.ts";
+import { RollingScore, HoldRing, FeelLayer } from "./FeelV2.tsx";
+import { TOPIC_THEMES } from "../../../../packages/xiabaiwang/src/topic-themes.ts";
 import { useXB } from "./xb-net.ts";
 import { Loudmouth, CutePoop, AVATARS } from "./Art.tsx";
-import { revealFrame, ranking, titles } from "./ui-model.ts";
+import { ranking, titles } from "./ui-model.ts";
 import { coalesceEffects } from "./effect-queue.ts";
 import "./xb.css";
 const ROLES: Record<string, string> = {
@@ -55,7 +63,25 @@ export function Xiabaiwang() {
   const [reduced, setReduced] = useState(
     () => matchMedia("(prefers-reduced-motion: reduce)").matches,
   );
-  const animate = animations && !reduced;
+  const [powerSave, setPowerSave] = useState(() => pref("power-save", false));
+  const policy = motionPolicy(powerSave, reduced);
+  const animate = animations && !policy.powerSave;
+  const [holding, setHolding] = useState(false),
+    [slow, setSlow] = useState(false);
+  const holdTimer = useRef<ReturnType<typeof setTimeout> | null>(null),
+    holdFired = useRef(false);
+  const [drag, setDrag] = useState<{
+    x: number;
+    y: number;
+    tx: number;
+    ty: number;
+  } | null>(null);
+  const dragRef = useRef<typeof drag>(null),
+    dragFired = useRef(false);
+  const [combo, setCombo] = useState<
+    Record<string, { count: number; at: number }>
+  >({});
+  const [shaken, setShaken] = useState<Record<string, number>>({});
   const [mode, setMode] = useState<Mode>(null),
     [selected, setSelected] = useState(""),
     [armed, setArmed] = useState(false);
@@ -77,13 +103,21 @@ export function Xiabaiwang() {
     revealStart = useRef(0);
   const feedbackPrefs = useRef({ sound, vibration });
   feedbackPrefs.current = { sound, vibration };
-  const sfx = (cue: Cue) =>
-    feel(cue, { sound: feedbackPrefs.current.sound, vibration: false });
-  const buzz = (pattern: number | number[]) => {
-    if (feedbackPrefs.current.vibration && "vibrate" in navigator)
-      try {
-        navigator.vibrate(pattern);
-      } catch {}
+  const sfx = (cue: string) => {
+    const map: Record<string, Feedback> = {
+      tap: "tap",
+      select: "tap",
+      submit: "confirm",
+      stamp: "hit",
+      win: "score",
+      page: "reveal",
+      turn: "turn",
+      tick: "tick",
+    };
+    feedback(map[cue] ?? "tap", {
+      sound: feedbackPrefs.current.sound,
+      vibration: false,
+    });
   };
   const label = (id: string | null | undefined) =>
     snap?.players.find((p) => p.id === id)?.name ?? "朋友";
@@ -92,7 +126,7 @@ export function Xiabaiwang() {
   const myRole = view?.players.find((p) => p.id === me)?.role ?? "",
     isGuesser = !!me && me === view?.guesser,
     host = !!me && me === snap?.host;
-  const frame = revealFrame(
+  const frame = revealTimeline(
       skipped || !animate ? 12000 : elapsed,
       snap?.players.length ?? 3,
     ),
@@ -166,7 +200,9 @@ export function Xiabaiwang() {
     }
     restore.current = false;
     if (view.phase !== "discussion") return;
-    if (isGuesser) buzz([30, 50, 30]);
+    if (isGuesser) {
+      feedback("turn", feedbackPrefs.current);
+    }
     setIntro(was === null ? "deal" : "rotation");
     const timers = [
       setTimeout(() => setIntro("deal"), was === null ? 0 : 2000),
@@ -193,7 +229,15 @@ export function Xiabaiwang() {
       setElapsed(0);
       setSkipped(false);
       revealStart.current = performance.now();
-      sfx("stamp");
+      if (animate && !skipped) {
+        [0, 420, 730, 950, 1100].forEach((ms) => {
+          const t = setTimeout(() => {
+            sfx("stamp");
+            hitTimers.current.delete(t);
+          }, ms);
+          hitTimers.current.add(t);
+        });
+      }
       const t = setInterval(
         () => setElapsed(performance.now() - revealStart.current),
         80,
@@ -205,31 +249,11 @@ export function Xiabaiwang() {
   useEffect(() => {
     if (revealed && frame.scores && view) {
       sfx("win");
-      buzz([16, 35, 25]);
-      if (animate && !skipped) {
-        setPointFlights(
-          view.players.flatMap((p, i) => {
-            const a = document
-                .querySelector(`[data-testid="xb-reveal-card-${i}"]`)
-                ?.getBoundingClientRect(),
-              b = document
-                .getElementById("xb-avatar-" + p.id)
-                ?.getBoundingClientRect();
-            if (!a || !b) return [];
-            return [
-              {
-                id: ++seq.current,
-                target: p.id,
-                delta: last?.delta[p.id] ?? 0,
-                x: a.x + a.width / 2,
-                y: a.y + a.height / 2,
-                dx: b.x - a.x + (b.width - a.width) / 2,
-                dy: b.y - a.y + (b.height - a.height) / 2,
-              },
-            ];
-          }),
-        );
-      }
+      if ((last?.delta[me ?? ""] ?? 0) !== 0)
+        feedback("score", {
+          sound: false,
+          vibration: feedbackPrefs.current.vibration,
+        });
     }
   }, [revealed, frame.scores]);
   useEffect(() => {
@@ -248,7 +272,25 @@ export function Xiabaiwang() {
     const timer = setTimeout(
       () => {
         sfx("stamp");
-        if (batch.some((e) => e.target === me)) buzz([30, 40, 60]);
+        feedback(
+          "hit",
+          { sound: false, vibration: feedbackPrefs.current.vibration },
+          batch.some((e) => e.target === me),
+        );
+        setCombo((old) => {
+          const next = { ...old };
+          for (const e of batch) {
+            const prev = next[e.target];
+            next[e.target] = {
+              count:
+                prev && Date.now() - prev.at < 6000
+                  ? prev.count + e.count
+                  : e.count,
+              at: Date.now(),
+            };
+          }
+          return next;
+        });
         hitTimers.current.delete(timer);
       },
       animate ? 650 : 0,
@@ -389,13 +431,208 @@ export function Xiabaiwang() {
   useEffect(() => {
     document.querySelector(".xb-world .xb-stage")?.scrollTo({ top: 0 });
   }, [stage]);
+  useEffect(() => {
+    if (!net.busy) {
+      setSlow(false);
+      return;
+    }
+    const t = setTimeout(() => setSlow(true), 3000);
+    return () => clearTimeout(t);
+  }, [net.busy]);
+  useEffect(() => {
+    if (view?.phase === "discussion" && secs <= 3 && secs > 0) sfx("tick");
+    if (view?.phase === "discussion" && secs === 0) {
+      document.querySelector(".xb-world")?.classList.add("xb-time-up");
+      const t = setTimeout(
+        () =>
+          document.querySelector(".xb-world")?.classList.remove("xb-time-up"),
+        600,
+      );
+      return () => clearTimeout(t);
+    }
+  }, [secs, view?.phase]);
+  const priorVisible = useRef(0);
+  useEffect(() => {
+    if (!revealed) {
+      priorVisible.current = 0;
+      return;
+    }
+    let cancel: undefined | (() => void);
+    if (frame.visible > priorVisible.current && !skipped && animate)
+      cancel = revealSound(
+        feedbackPrefs.current,
+        view?.players[frame.visible - 1]?.role,
+        document.querySelector(
+          `[data-testid="xb-reveal-card-${frame.visible - 1}"] .xb-idcard-inner`,
+        ),
+      );
+    priorVisible.current = frame.visible;
+    return cancel;
+  }, [frame.visible, revealed, skipped, animate]);
+  const lastCoin = useRef(0);
+  useEffect(() => {
+    if (!revealed) {
+      lastCoin.current = 0;
+      return;
+    }
+    if (!animate || skipped || frame.visible <= lastCoin.current) return;
+    const i = frame.visible - 1;
+    lastCoin.current = frame.visible;
+    const p = view!.players[i],
+      delta = last?.delta[p.id] ?? 0;
+    const t = setTimeout(() => {
+      const a = document
+          .querySelector(`[data-testid="xb-reveal-card-${i}"]`)
+          ?.getBoundingClientRect(),
+        b = document
+          .getElementById("xb-avatar-" + p.id)
+          ?.getBoundingClientRect();
+      if (a && b && delta)
+        setPointFlights((old) =>
+          [
+            ...old,
+            {
+              id: ++seq.current,
+              target: p.id,
+              delta,
+              x: a.x + a.width / 2,
+              y: a.y + a.height / 2,
+              dx: b.x - a.x + (b.width - a.width) / 2,
+              dy: b.y - a.y + (b.height - a.height) / 2,
+            },
+          ].slice(-10),
+        );
+      hitTimers.current.delete(t);
+    }, 600);
+    hitTimers.current.add(t);
+  }, [revealed, frame.visible, animate, skipped]);
+  useEffect(() => {
+    if (skipped) {
+      setPointFlights([]);
+      hitTimers.current.forEach(clearTimeout);
+      hitTimers.current.clear();
+    }
+  }, [skipped]);
+  const endHold = () => {
+    if (holdTimer.current) clearTimeout(holdTimer.current);
+    holdTimer.current = null;
+    setHolding(false);
+  };
+  useEffect(
+    () => () => {
+      if (holdTimer.current) clearTimeout(holdTimer.current);
+    },
+    [],
+  );
+  useEffect(() => {
+    const w = window as any;
+    w.render_game_to_text = () =>
+      JSON.stringify({
+        game: "xb",
+        stage,
+        round: view?.round,
+        question: view?.question,
+        myRole,
+        answer: view?.answer,
+        players: snap?.players.map((p) => ({ id: p.id, name: p.name })),
+        selected,
+        waiting,
+        coordinates: "viewport origin top-left; x right, y down",
+      });
+    return () => {
+      delete w.render_game_to_text;
+    };
+  }, [stage, view, snap, selected, waiting, myRole]);
   return (
     <main
-      className={`xb-world ${animate ? "" : "xb-reduced"} ${net.error ? "xb-rejected" : ""}`}
+      className={`xb-world ${animate ? "" : "xb-power-save"} ${net.error ? "xb-rejected" : ""} ${revealed && animate && !skipped && view?.players[frame.visible - 1]?.role === "truth" ? "xb-truth-impact" : ""}`}
       data-stage={stage}
-      onPointerDown={(e) => {
-        if ((e.target as HTMLElement).closest("button:not(:disabled)"))
-          sfx("tap");
+      onPointerDownCapture={(e) => {
+        const b = (e.target as HTMLElement).closest<HTMLButtonElement>(
+          "button,input,select,summary,a",
+        );
+        if (!b) return;
+        sfx("tap");
+        if (b.disabled) {
+          if (animate)
+            b.animate(
+              [
+                { transform: "translateX(0)" },
+                { transform: "translateX(-6px)" },
+                { transform: "translateX(6px)" },
+                { transform: "translateX(-6px)" },
+                { transform: "translateX(6px)" },
+                { transform: "translateX(0)" },
+              ],
+              { duration: 360, easing: "ease-out" },
+            );
+          const id = b.dataset.testid ?? "";
+          setNotice(
+            !net.connected
+              ? "正在重连，请稍等"
+              : net.busy
+                ? "操作已发送，正在等服务器确认"
+                : id === "xb-challenge"
+                  ? "本轮质疑已经使用，不能再来一次"
+                  : id.startsWith("xb-seat")
+                    ? mode === "POOP"
+                      ? "不能扔自己，请选其他朋友"
+                      : !mode
+                        ? "先在底部选择指认、质疑或扔粑粑"
+                        : "猜测者不能指认自己"
+                    : id === "xb-speak"
+                      ? "本轮已被禁止发言，仍然可以扔粑粑"
+                      : !view
+                        ? "仅房主可以开局，且需要至少3人"
+                        : !host && revealed
+                          ? "正在等待房主继续"
+                          : cooldownSecs
+                            ? `再等${cooldownSecs}秒就能扔了`
+                            : "当前阶段暂时不能操作",
+          );
+        }
+      }}
+      onPointerUpCapture={(e) => {
+        const b = (e.target as HTMLElement).closest("button:not(:disabled)");
+        if (b && animate)
+          b.animate(
+            [
+              { transform: "scale(.94)" },
+              { transform: "scale(1.02)" },
+              { transform: "scale(1)" },
+            ],
+            { duration: 180, easing: "ease-out" },
+          );
+      }}
+      onPointerMove={(e) => {
+        if (dragRef.current) {
+          const next = { ...dragRef.current, tx: e.clientX, ty: e.clientY };
+          dragRef.current = next;
+          setDrag(next);
+        }
+      }}
+      onPointerUp={async (e) => {
+        const d = dragRef.current;
+        if (!d) return;
+        dragRef.current = null;
+        setDrag(null);
+        if (Math.hypot(d.tx - d.x, d.ty - d.y) < 12) return;
+        dragFired.current = true;
+        setTimeout(() => {
+          dragFired.current = false;
+        }, 0);
+        const b = document
+          .elementFromPoint(e.clientX, e.clientY)
+          ?.closest<HTMLElement>("[id^='xb-avatar-']");
+        const target = b?.id.replace("xb-avatar-", "");
+        if (target && target !== me && cooldownSecs === 0) {
+          if (await net.run(E.poop, { target })) setCooldown(Date.now() + 2000);
+        } else setNotice("拖到其他朋友头像上再松手，不能扔自己。");
+      }}
+      onPointerCancel={() => {
+        dragRef.current = null;
+        setDrag(null);
+        endHold();
       }}
     >
       <header className="xb-topbar">
@@ -413,6 +650,7 @@ export function Xiabaiwang() {
             className={
               "xb-clock " +
               timerColor +
+              (secs > 0 && secs <= 3 ? " xb-clock-final" : "") +
               (secs > 0 && secs <= 10 ? " xb-clock-urgent" : "")
             }
             role="timer"
@@ -568,6 +806,42 @@ export function Xiabaiwang() {
               </select>
               <small>轮数设置待规则裁定，暂不修改。</small>
             </label>
+            <fieldset
+              className="xb-topic-picker"
+              disabled={!host || disabled}
+              data-testid="xb-topic-picker"
+            >
+              <legend>今晚掰什么 · 可多选</legend>
+              <label>
+                <input
+                  type="checkbox"
+                  checked={!snap.topicThemes?.length}
+                  onChange={() => command({ type: "SET_TOPICS", themes: [] })}
+                />
+                全部随机（含原题库）
+              </label>
+              {TOPIC_THEMES.map((t) => (
+                <label key={t}>
+                  <input
+                    type="checkbox"
+                    checked={snap.topicThemes?.includes(t) ?? false}
+                    onChange={(e) =>
+                      command({
+                        type: "SET_TOPICS",
+                        themes: e.target.checked
+                          ? [...(snap.topicThemes ?? []), t]
+                          : (snap.topicThemes ?? []).filter((x) => x !== t),
+                      })
+                    }
+                  />
+                  {t}
+                </label>
+              ))}
+              <small>
+                剩余 {snap.topicRemaining ?? 64} 题 ·
+                本房已出题不重抽；题不足时请增加主题。
+              </small>
+            </fieldset>
             <p className="xb-wait">{waiting}</p>
           </div>
         ) : stage === "rotation" ? (
@@ -595,7 +869,11 @@ export function Xiabaiwang() {
           </div>
         ) : revealed ? (
           <div
-            className={"xb-reveal " + (frame.scores ? "xb-scoring" : "")}
+            className={
+              "xb-reveal " +
+              (frame.scores ? "xb-scoring" : "") +
+              (skipped ? " xb-reveal-skipped" : "")
+            }
             data-testid="xb-reveal"
             data-visible={frame.visible}
             data-scores={frame.scores}
@@ -611,10 +889,25 @@ export function Xiabaiwang() {
                   delta = last?.delta[p.id] ?? 0;
                 return (
                   <article
-                    className={`xb-idcard ${open ? "is-open" : ""} ${open ? p.role : ""}`}
+                    className={`xb-idcard ${open ? "is-open" : ""} ${open ? p.role : ""} ${skipped ? "xb-skip-final" : ""}`}
                     key={p.id}
                     data-testid={"xb-reveal-card-" + i}
                   >
+                    {open && animate && !skipped && p.role !== "guesser" && (
+                      <span
+                        className={"xb-role-burst " + p.role}
+                        aria-hidden="true"
+                      >
+                        {Array.from({ length: 6 }, (_, k) => (
+                          <i
+                            key={k}
+                            style={{ "--n": k } as React.CSSProperties}
+                          >
+                            ✦
+                          </i>
+                        ))}
+                      </span>
+                    )}
                     <div className="xb-idcard-inner">
                       <div className="xb-id-back">
                         <Loudmouth small />
@@ -624,13 +917,15 @@ export function Xiabaiwang() {
                         <span>{AVATARS[i]}</span>
                         <b>{p.name}</b>
                         <strong>{ROLES[p.role ?? ""]}</strong>
-                        <em>
-                          {p.role === "truth"
-                            ? "✓ 真的！"
-                            : p.role === "bluffer"
-                              ? "〰 瞎掰！"
-                              : "🎙 猜测者"}
-                        </em>
+                        {open && (
+                          <em>
+                            {p.role === "truth"
+                              ? "✓ 真的！"
+                              : p.role === "bluffer"
+                                ? "〰 瞎掰！"
+                                : "🎙 猜测者"}
+                          </em>
+                        )}
                         {last?.selected === p.id && <small>✅ 已投</small>}
                       </div>
                     </div>
@@ -778,6 +1073,11 @@ export function Xiabaiwang() {
               </details>
             )}
             <div className="xb-speaking">
+              {!isGuesser && (
+                <span className="xb-idle-mascot">
+                  <Loudmouth small />
+                </span>
+              )}
               <span>
                 🎙{" "}
                 {view.speaker
@@ -824,7 +1124,9 @@ export function Xiabaiwang() {
             const vp = view?.players.find((v) => v.id === p.id),
               showRole = !revealed || i < frame.visible,
               delta = revealed && !frame.scores ? (last?.delta[p.id] ?? 0) : 0,
-              hitNow = now - (hit[p.id] ?? 0) < 1800;
+              hitNow =
+                now - (hit[p.id] ?? 0) < 3650 &&
+                (hit[p.id] ?? 0) > (shaken[p.id] ?? 0);
             return (
               <button
                 type="button"
@@ -845,9 +1147,18 @@ export function Xiabaiwang() {
                   sfx("select");
                 }}
               >
-                <span className="xb-seat-face">
+                <span className="xb-seat-face" key={hit[p.id] ?? 0}>
                   {AVATARS[i]}
                   {view?.muted === p.id && <i>🤔</i>}
+                  {hitNow && animate && (
+                    <span className="xb-hit-splashes" aria-hidden="true">
+                      {Array.from({ length: 6 }, (_, k) => (
+                        <i key={k} style={{ "--n": k } as React.CSSProperties}>
+                          ✦
+                        </i>
+                      ))}
+                    </span>
+                  )}
                   {hitNow && (
                     <i className="xb-hit-poop">
                       <CutePoop />
@@ -856,7 +1167,16 @@ export function Xiabaiwang() {
                 </span>
                 <b>{p.name}</b>
                 <strong>
-                  {vp ? `${vp.score - delta}分` : p.connected ? "在线" : "离线"}
+                  {vp ? (
+                    <RollingScore
+                      value={vp.score - delta}
+                      powerSave={!animate}
+                    />
+                  ) : p.connected ? (
+                    "在线"
+                  ) : (
+                    "离线"
+                  )}
                 </strong>
                 <small>
                   {selected === p.id
@@ -892,7 +1212,32 @@ export function Xiabaiwang() {
           }
           data-testid="xb-dock"
         >
-          <p aria-live="polite">{notice || waiting}</p>
+          <p aria-live="polite">{slow ? "网络有点慢…" : notice || waiting}</p>
+          {me &&
+            now - (hit[me] ?? 0) < 3650 &&
+            (hit[me] ?? 0) > (shaken[me] ?? 0) && (
+              <button
+                className="xb-shake-off"
+                data-testid="xb-shake-off"
+                onClick={() => {
+                  const b = document.getElementById("xb-avatar-" + me);
+                  if (animate)
+                    b?.animate(
+                      [
+                        { transform: "rotate(-8deg)" },
+                        { transform: "rotate(8deg)" },
+                        { transform: "rotate(-8deg)" },
+                        { transform: "rotate(0)" },
+                      ],
+                      { duration: 400, easing: "ease-out" },
+                    );
+                  setShaken((old) => ({ ...old, [me]: Date.now() }));
+                  setNotice("抖掉啦，嘴还能继续硬。");
+                }}
+              >
+                抖掉 💩
+              </button>
+            )}
           <button
             className="xb-primary"
             data-testid={
@@ -925,11 +1270,71 @@ export function Xiabaiwang() {
                 cooldownSecs > 0)
             }
             aria-busy={net.busy}
-            onClick={primaryAction}
+            onPointerDown={(e) => {
+              if (
+                !mode &&
+                !isGuesser &&
+                view?.phase === "discussion" &&
+                !disabled &&
+                !cooldownSecs &&
+                !intro
+              ) {
+                const d = {
+                  x: e.clientX,
+                  y: e.clientY,
+                  tx: e.clientX,
+                  ty: e.clientY,
+                };
+                dragRef.current = d;
+                setDrag(d);
+                e.currentTarget.setPointerCapture(e.pointerId);
+                return;
+              }
+              if (!selected || !mode || mode === "POOP" || disabled) return;
+              e.currentTarget.setPointerCapture(e.pointerId);
+              holdFired.current = false;
+              setHolding(true);
+              holdTimer.current = setTimeout(() => {
+                holdFired.current = true;
+                setHolding(false);
+                feedback("confirm", feedbackPrefs.current);
+                void command({
+                  type: mode,
+                  target: selected,
+                  round: view!.round,
+                }).then((ok) => {
+                  if (ok) choose(null);
+                });
+              }, 500);
+            }}
+            onPointerUp={() => {
+              endHold();
+              setTimeout(() => {
+                holdFired.current = false;
+              }, 0);
+            }}
+            onPointerLeave={endHold}
+            onPointerCancel={endHold}
+            onClick={() => {
+              if (dragFired.current) {
+                dragFired.current = false;
+                return;
+              }
+              if (holdFired.current) {
+                holdFired.current = false;
+                return;
+              }
+              void primaryAction();
+            }}
           >
+            <HoldRing holding={holding} />
             {net.busy ? (
               <>
-                <i className="xb-spinner" /> 等服务器点头…
+                <span className="xb-wait-dots" aria-label="等待服务器">
+                  <i />
+                  <i />
+                  <i />
+                </span>
               </>
             ) : (
               primary
@@ -961,6 +1366,24 @@ export function Xiabaiwang() {
                 </button>
                 <button
                   data-testid="xb-poop"
+                  onPointerDown={(e) => {
+                    if (disabled || cooldownSecs > 0 || intro) return;
+                    const d = {
+                      x: e.clientX,
+                      y: e.clientY,
+                      tx: e.clientX,
+                      ty: e.clientY,
+                    };
+                    dragRef.current = d;
+                    setDrag(d);
+                    e.currentTarget.setPointerCapture(e.pointerId);
+                  }}
+                  onClickCapture={(e) => {
+                    if (dragFired.current) {
+                      dragFired.current = false;
+                      e.stopPropagation();
+                    }
+                  }}
                   disabled={disabled || cooldownSecs > 0 || !!intro}
                   onClick={() => choose("POOP")}
                 >
@@ -1094,6 +1517,18 @@ export function Xiabaiwang() {
                   />
                   互动动画 {reduced && <small>跟随系统减少动态</small>}
                 </label>
+                <label>
+                  <input
+                    data-testid="xb-power-save"
+                    type="checkbox"
+                    checked={policy.powerSave}
+                    disabled={reduced}
+                    onChange={(e) =>
+                      setting("power-save", e.target.checked, setPowerSave)
+                    }
+                  />
+                  省电模式 {reduced && <small>跟随系统减少动态</small>}
+                </label>
                 <button onClick={() => setPanel("rules")}>
                   规则与所选版本
                 </button>
@@ -1106,6 +1541,44 @@ export function Xiabaiwang() {
             )}
           </section>
         </div>
+      )}
+      {Object.entries(combo)
+        .filter(([, v]) => v.count > 1 && now - v.at < 3500)
+        .slice(-1)
+        .map(([id, v]) => (
+          <aside className="xb-combo" key={id} role="status">
+            连击 ×{v.count} · {label(id)}
+          </aside>
+        ))}
+      <FeelLayer
+        selected={selected}
+        speaker={view?.speaker}
+        stage={stage}
+        powerSave={!animate}
+        sound={sound}
+        warmup={revealed && frame.warmup}
+        spotlight={revealed && frame.spotlight && !frame.done}
+        winner={
+          view
+            ? label(
+                [...view.players].sort(
+                  (a, b) => (last?.delta[b.id] ?? 0) - (last?.delta[a.id] ?? 0),
+                )[0]?.id,
+              )
+            : ""
+        }
+        skipped={skipped}
+      />
+      {drag && (
+        <svg className="xb-drag-preview" aria-hidden="true">
+          <path
+            d={`M ${drag.x} ${drag.y} Q ${(drag.x + drag.tx) / 2} ${Math.min(drag.y, drag.ty) - 100} ${drag.tx} ${drag.ty}`}
+            fill="none"
+            stroke="#FFC83D"
+            strokeWidth="3"
+            strokeDasharray="6 8"
+          />
+        </svg>
       )}
       {flights.map((f) => (
         <span
@@ -1125,11 +1598,12 @@ export function Xiabaiwang() {
           }
         >
           <CutePoop />
+          <i className="xb-flight-stars">✦ · ✦</i>
         </span>
       ))}
       {pointFlights.map((f) => (
         <span
-          className="xb-point-flight"
+          className={"xb-point-flight " + (f.delta < 0 ? "negative" : "")}
           key={f.id}
           aria-hidden="true"
           style={
@@ -1140,12 +1614,25 @@ export function Xiabaiwang() {
               "--dy": f.dy + "px",
             } as React.CSSProperties
           }
-          onAnimationEnd={() =>
-            setPointFlights((old) => old.filter((x) => x.id !== f.id))
-          }
+          onAnimationEnd={() => {
+            if (animate && !skipped)
+              document
+                .getElementById("xb-avatar-" + f.target)
+                ?.querySelector(".xb-seat-face")
+                ?.animate(
+                  [
+                    { transform: "scale(1)" },
+                    { transform: "scale(1.12)" },
+                    { transform: "scale(1)" },
+                  ],
+                  { duration: 600, easing: "cubic-bezier(.34,1.56,.64,1)" },
+                );
+            setPointFlights((old) => old.filter((x) => x.id !== f.id));
+          }}
         >
-          {f.delta > 0 ? "+" : ""}
+          <b className="xb-coin" aria-hidden="true"/> {f.delta > 0 ? "+" : ""}
           {f.delta}
+          <i className="xb-coin-tail"><b className="xb-coin"/><b className="xb-coin"/></i>
         </span>
       ))}
     </main>

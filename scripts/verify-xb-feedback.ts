@@ -22,14 +22,19 @@ try {
     "({firstFrameMs:window.__xbFeedback.firstFrameMs,transform:getComputedStyle(document.querySelector('[data-testid=xb-create]')).transform})",
   )) as { firstFrameMs: number; transform: string };
   assert(result.firstFrameMs <= 100, `反馈帧超过100ms：${result.firstFrameMs}`);
-  assert(result.transform.startsWith("matrix(0.96"), result.transform);
+  assert(
+    Number(result.transform.match(/matrix\(([^,]+)/)?.[1]) <= 0.96,
+    result.transform,
+  );
+  await page.waitForTimeout(120);
+  const held = await button.evaluate((el) => getComputedStyle(el).transform);
+  assert(held.startsWith("matrix(0.94"), held);
+  Object.assign(result, { heldTransform: held });
   await page.mouse.up();
   await page.getByTestId("xb-join").waitFor();
-  mkdirSync("docs/xiabaiwang/ui-v1", { recursive: true });
-  writeFileSync(
-    "docs/xiabaiwang/ui-v1/feedback.json",
-    JSON.stringify(result, null, 2),
-  );
+  const out = process.env.XB_ARTIFACT_DIR ?? "docs/xiabaiwang/feel-v2";
+  mkdirSync(out, { recursive: true });
+  writeFileSync(out + "/feedback.json", JSON.stringify(result, null, 2));
   console.log("XB_FEEDBACK_PASS", JSON.stringify(result));
 } finally {
   await browser.close();

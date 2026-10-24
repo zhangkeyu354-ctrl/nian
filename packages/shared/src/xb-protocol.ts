@@ -17,8 +17,14 @@ export interface XBSnapshot {
   view: View | null;
   discussionAt: number;
   funHits: Record<string, number>;
+  topicThemes?: string[];
+  topicRemaining?: number;
 }
-export type XBCommand = Command | { type: "START" } | { type: "REMATCH" };
+export type XBCommand =
+  | Command
+  | { type: "START" }
+  | { type: "REMATCH" }
+  | { type: "SET_TOPICS"; themes: string[] };
 export interface XBEffect {
   from: string;
   target: string;

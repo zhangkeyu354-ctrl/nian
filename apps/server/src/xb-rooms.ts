@@ -1,3 +1,5 @@
+import { TOPICS } from "../../../packages/xiabaiwang/src/topics.ts";
+import { TOPIC_THEMES } from "../../../packages/xiabaiwang/src/topic-themes.ts";
 import { randomBytes, randomInt } from "node:crypto";
 import {
   mkdirSync,
@@ -28,6 +30,8 @@ interface File {
   state: State | null;
   version: number;
   discussionAt?: number;
+  topicThemes?: string[];
+  usedTopics?: string[];
 }
 export class XBRoom {
   funHits: Record<string, number> = {};
@@ -60,9 +64,27 @@ export class XBRoom {
   command(token: string, c: XBCommand) {
     const p = this.player(token);
     if (!p) throw Error("请先加入房间");
-    if (c?.type === "REMATCH") {
+    if (c?.type === "SET_TOPICS") {
+      if (p.id !== this.file.players[0].id) throw Error("仅房主可以设置主题");
+      if (this.file.state) throw Error("开局后不能更换主题");
+      if (
+        !Array.isArray(c.themes) ||
+        c.themes.some((t) => !TOPIC_THEMES.includes(t as any))
+      )
+        throw Error("主题无效");
+      this.file.topicThemes = [...new Set(c.themes)];
+    } else if (c?.type === "REMATCH") {
       if (p.id !== this.file.players[0].id || this.file.state?.phase !== "over")
         throw Error("只有房主可在本局结束后再来一局");
+      this.file.usedTopics = [
+        ...new Set([
+          ...(this.file.usedTopics ?? []),
+          ...TOPICS.filter((t) =>
+            this.file.state!.history.some((h) => h.question === t.question),
+          ).map((t) => t.id),
+          this.file.state!.topic.id,
+        ]),
+      ];
       this.file.state = null;
       this.file.discussionAt = 0;
     } else if (c?.type === "START") {
@@ -71,16 +93,39 @@ export class XBRoom {
       this.file.state = createGame(
         this.file.players.map(({ id, name }) => ({ id, name })),
         randomInt(2 ** 31),
+        this.availableTopics(),
       );
+      this.file.usedTopics = [
+        ...(this.file.usedTopics ?? []),
+        this.file.state.topic.id,
+      ];
       this.funHits = {};
       this.file.discussionAt = Date.now();
     } else {
       if (!this.file.state) throw Error("尚未开始");
       this.file.state = act(this.file.state, p.id, c);
-      if (c.type === "NEXT" && this.file.state.phase === "discussion")
+      if (c.type === "NEXT" && this.file.state.phase === "discussion") {
         this.file.discussionAt = Date.now();
+        this.file.usedTopics = [
+          ...(this.file.usedTopics ?? []),
+          this.file.state.topic.id,
+        ];
+      }
     }
     this.file.version++;
+  }
+  availableTopics() {
+    const used = new Set([
+      ...(this.file.usedTopics ?? []),
+      ...(this.file.state?.history.map((h) => h.question) ?? []),
+    ]);
+    return TOPICS.filter(
+      (t) =>
+        !used.has(t.id) &&
+        !used.has(t.question) &&
+        (!this.file.topicThemes?.length ||
+          this.file.topicThemes.includes(t.theme ?? "")),
+    );
   }
   poop(token: string, target: string, now = Date.now()) {
     const p = this.player(token);
@@ -115,6 +160,8 @@ export class XBRoom {
       view: this.file.state ? viewFor(this.file.state, me) : null,
       discussionAt: this.file.discussionAt ?? 0,
       funHits: { ...this.funHits },
+      topicThemes: this.file.topicThemes ?? [],
+      topicRemaining: this.availableTopics().length,
     };
   }
 }

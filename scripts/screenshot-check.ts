@@ -142,6 +142,7 @@ export async function assertUiShot(
   p: Page,
   path: string,
   regionSelector: string = "body",
+  animations: "disabled" | "allow" = "disabled",
 ) {
   await waitForBoardImages(p);
   await p.evaluate(() => document.fonts.ready);
@@ -164,7 +165,7 @@ export async function assertUiShot(
     rect.width > 20 && rect.height > 20,
     "Evidence region must be visible",
   );
-  const png = await p.screenshot({ path, animations: "disabled" });
+  const png = await p.screenshot({ path, animations });
   const pixels = await pixelStats(p, png, rect);
   assert(
     pixels.busy > 0.025 && pixels.std > 6,

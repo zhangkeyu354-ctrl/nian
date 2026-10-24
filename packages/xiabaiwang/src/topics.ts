@@ -1,4 +1,5 @@
 /** 服务端专用：禁止从浏览器代码导入。题面和释义为本项目原创写作。 */
+import { V2_TOPICS } from "./topics-v2.ts";
 import { EXTRA_TOPICS } from "./topics-v1.ts";
 export interface Topic {
   id: string;
@@ -6,6 +7,8 @@ export interface Topic {
   answer: string;
   difficulty: 1 | 2 | 3;
   source: string;
+  theme?: string;
+  sourceNote?: string;
 }
 export const TOPICS: Topic[] = [
   [
@@ -128,4 +131,4 @@ export const TOPICS: Topic[] = [
     difficulty: Number(difficulty) as 1 | 2 | 3,
     source: String(source),
   }))
-  .concat(EXTRA_TOPICS);
+  .concat(EXTRA_TOPICS, V2_TOPICS);

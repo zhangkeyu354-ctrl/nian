@@ -157,7 +157,10 @@ it("真实Socket.IO：3～10人完整对局、并发互动、秘密隔离、刷�
             ),
           );
           expect(results.every((r) => r.ok)).toBe(true);
-          await delay(180);
+          // 聚合器120ms仅是调度间隔，负载下不能把固定180ms睡眠当成送达保证。
+          // 保持3秒实际送达上限，等待每个客户端真的收到事件再断言。
+          const effectDeadline=Date.now()+3000;
+          while(!clients.every(c=>c.effects>0)&&Date.now()<effectDeadline) await delay(10);
           expect(clients.every((c) => c.effects > 0)).toBe(true);
           expect(JSON.stringify(room.file)).toBe(before);
           expect(
@@ -217,4 +220,5 @@ it("真实Socket.IO：3～10人完整对局、并发互动、秘密隔离、刷�
     store.close();
     await new Promise<void>((r) => server.close(() => r()));
   }
-}, 60000);
+  // 八种人数、52轮及重连均串行，160题存档较大；单次ACK仍严格限制3秒。
+}, 120000);

@@ -1,0 +1,6 @@
+{
+  "baseline": "4115935",
+  "scoringRoleRotationPrivacyUnchanged": true,
+  "sha256WithoutWhitespace": "34bef40f745bbb868ea6000ab54d8a0fd5a1581a8c7539b4de981e45c5092c70",
+  "onlyEngineChanges": "createGame可注入筛选题库，并在题目不足时拒绝；初始分表达式也未改。"
+}

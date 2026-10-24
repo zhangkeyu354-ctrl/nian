@@ -5,7 +5,7 @@ import { join } from "node:path";
 import type { XBSnapshot } from "../packages/shared/src/xb-protocol.ts";
 import { TOPICS } from "../packages/xiabaiwang/src/topics.ts";
 const base = process.env.XB_TEST_URL ?? "http://127.0.0.1:3358",
-  out = "docs/xiabaiwang/ui-v1";
+  out = process.env.XB_ARTIFACT_DIR ?? "docs/xiabaiwang/ui-v1";
 mkdirSync(out, { recursive: true });
 const browser = await chromium.launch({ headless: true });
 const errors: string[] = [],
@@ -245,7 +245,7 @@ try {
             .waitFor();
           if (n === 3)
             assert.equal(
-              await pages[2].locator(".xb-world.xb-reduced").count(),
+              await pages[2].locator(".xb-world.xb-power-save").count(),
               1,
             );
         } else {
