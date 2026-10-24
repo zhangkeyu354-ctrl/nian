@@ -7,7 +7,10 @@ import { TOPICS } from "../packages/xiabaiwang/src/topics.ts";
 const base = process.env.XB_TEST_URL ?? "http://127.0.0.1:3358",
   out = process.env.XB_ARTIFACT_DIR ?? "docs/xiabaiwang/ui-v1";
 mkdirSync(out, { recursive: true });
-const browser = await chromium.launch({ headless: true });
+const browser = await chromium.launch({
+  executablePath: process.env.PW_CHROME,
+  headless: true,
+});
 const errors: string[] = [],
   report: any[] = [];
 const shots: string[] = [];
@@ -51,7 +54,16 @@ async function shot(p: Page, name: string) {
   await p.setViewportSize(sizes[0]);
 }
 async function click(p: Page, id: string) {
-  await p.getByTestId(id).click();
+  await p.waitForFunction((id) => {
+    const button = document.querySelector(
+      `[data-testid="${id}"]`,
+    ) as HTMLButtonElement | null;
+    return !!button && !button.disabled;
+  }, id);
+  await p
+    .getByTestId(id)
+    .click({ force: id === "xb-start" || id === "xb-primary" });
+  await sleep(70);
 }
 async function doubleConfirm(p: Page, id: string) {
   await click(p, id);
@@ -195,6 +207,22 @@ try {
           if (p !== truth) assert(!(await p.content()).includes(answer));
           await stable(p);
         }
+        // Explain in seat order through the same server command as the UI.
+        const explanationOrder = states.get(g)!.view!.explanationOrder;
+        for (const id of explanationOrder) {
+          assert.equal(states.get(g)!.view!.explainer, id);
+          assert(
+            (await g.getByTestId("xb-explanation-order").innerText()).includes(
+              "轮到",
+            ),
+          );
+          await click(g, "xb-explain-next");
+          for (let retry = 0; states.get(g)!.view!.explainer === id; retry++) {
+            assert(retry < 100, "解释队列应同步到浏览器");
+            await sleep(30);
+          }
+        }
+        assert.equal(states.get(g)!.view!.explainer, null);
         const guesserId = states.get(g)!.me!,
           liarIndex = states
             .get(host)!

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import type {
   XBSnapshot,
   XBCommand,
@@ -15,8 +15,8 @@ export function TruthRecap({
   const view = snap.view!;
   return (
     <section className="xb-afterparty">
-      <h2>本轮真相</h2>
-      <p>左右滑动，回味本局已经出过的题。</p>
+      <h2>节目回放</h2>
+      <p>左右滑动选一盘，翻面听真解释。</p>
       <div
         className="xb-truth-carousel"
         data-testid="xb-truth-carousel"
@@ -28,20 +28,7 @@ export function TruthRecap({
         }}
       >
         {view.history.map((h) => (
-          <article
-            key={h.round}
-            className="xb-truth-card"
-            data-testid={`xb-truth-card-${h.round}`}
-          >
-            <span className="xb-kicker">
-              第{h.round}轮 · {"★".repeat(h.difficulty)}
-            </span>
-            <h2>{h.question}</h2>
-            <p>{h.answer}</p>
-            <a href={h.source} target="_blank" rel="noreferrer">
-              核对真实来源 ↗
-            </a>
-          </article>
+          <ReplayCard key={h.round} item={h} />
         ))}
       </div>
       {view.phase === "reveal" && (
@@ -73,5 +60,60 @@ export function TruthRecap({
         </div>
       )}
     </section>
+  );
+}
+
+function ReplayCard({
+  item: h,
+}: {
+  item: NonNullable<XBSnapshot["view"]>["history"][number];
+}) {
+  const [back, setBack] = useState(false);
+  return (
+    <article
+      className={"xb-truth-card xb-cassette " + (back ? "is-flipped" : "")}
+      data-testid={`xb-truth-card-${h.round}`}
+    >
+      <div className="xb-cassette-shell">
+        <span className="xb-cassette-side">
+          {back ? "SIDE B · 真解释" : "SIDE A · 本轮题目"}
+        </span>
+        <div className="xb-cassette-label">
+          <span className="xb-kicker">
+            第{h.round}轮 · {"★".repeat(h.difficulty)}
+          </span>
+          <div className="xb-cassette-flip">
+            <div className="xb-cassette-inner">
+              <div className="xb-cassette-front" aria-hidden={back}>
+                <h2>{h.question}</h2>
+              </div>
+              <div className="xb-cassette-back" aria-hidden={!back}>
+                <p>{h.answer}</p>
+                <a
+                  href={h.source}
+                  target="_blank"
+                  rel="noreferrer"
+                  tabIndex={back ? 0 : -1}
+                >
+                  核对真实来源 ↗
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div className="xb-tape-reels" aria-hidden="true">
+          <i />
+          <span />
+          <i />
+        </div>
+        <button
+          data-testid={`xb-replay-flip-${h.round}`}
+          aria-pressed={back}
+          onClick={() => setBack(!back)}
+        >
+          {back ? "翻回题目 ↶" : "翻到真解释 ↷"}
+        </button>
+      </div>
+    </article>
   );
 }

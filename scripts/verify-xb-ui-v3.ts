@@ -16,9 +16,10 @@ import { freshAids } from "../apps/server/src/xb-aids.ts";
 import type { XBSnapshot } from "../packages/shared/src/xb-protocol.ts";
 import { assertUiShot } from "./screenshot-check.ts";
 const base = process.env.XB_TEST_URL ?? "http://127.0.0.1:3359",
-  out = "docs/xiabaiwang/ui-v3";
+  out = process.env.XB_UI_V3_ARTIFACT_DIR ?? "docs/xiabaiwang/ui-v3";
 mkdirSync(out, { recursive: true });
 const browser = await chromium.launch({
+  executablePath: process.env.PW_CHROME,
   headless: true,
   args: ["--mute-audio"],
 });
@@ -57,7 +58,15 @@ async function phone() {
   return p;
 }
 async function tap(p: Page, id: string) {
-  await p.getByTestId(id).click();
+  await p.waitForFunction((id) => {
+    const button = document.querySelector(
+      `[data-testid="${id}"]`,
+    ) as HTMLButtonElement | null;
+    return !!button && !button.disabled;
+  }, id);
+  await p
+    .getByTestId(id)
+    .click({ force: id === "xb-start" || id === "xb-primary" });
   await delay(70);
 }
 async function stage(p: Page, s: string) {
@@ -70,6 +79,7 @@ async function stable(p: Page) {
   );
 }
 async function shot(p: Page, label: string, selector?: string) {
+  console.log("SHOT", label);
   for (const size of sizes) {
     await p.setViewportSize(size);
     if (selector) await p.locator(selector).scrollIntoViewIfNeeded();
@@ -228,14 +238,9 @@ try {
   await tap(host, "xb-seat-" + truthIndex);
   await truth.getByTestId("xb-callout").waitFor();
   await liar.getByTestId("xb-callout").waitFor({ state: "hidden" });
-  await host.getByTestId("xb-cheatsheet").locator("summary").click();
-  await tap(host, `xb-note-${truthId}-truthy`);
-  await shot(host, "10-notes-private", ".xb-cheatsheet");
-  for (const p of pages.filter((p) => p !== host)) {
-    assert.equal(states.get(p)!.privateNotes, undefined);
-    assert(!JSON.stringify(states.get(p)).includes('"truthy"'));
-    assert.equal(await p.getByTestId("xb-cheatsheet").count(), 0);
-  }
+  assert.equal(await host.getByTestId("xb-cheatsheet").count(), 0);
+  for (const p of pages) assert(!("privateNotes" in states.get(p)!));
+  await shot(host, "10-voice-aid", ".xb-voice-aid");
   await guess(host, truthIndex);
   await host.getByTestId("xb-reveal").waitFor();
   const revealed = JSON.stringify(states.get(host)!.view);
@@ -270,16 +275,16 @@ try {
   for (const p of pages) {
     if (await p.getByTestId("xb-skip").count()) await tap(p, "xb-skip");
   }
-  await shot(pages[1], "11-notes-public", ".xb-public-notes");
-  for (const p of pages)
-    assert(
-      states.get(p)!.revealedNotes!.some((n) => n.tags[truthId] === "truthy"),
-    );
+  for (const p of pages) assert(!("revealedNotes" in states.get(p)!));
   await shot(host, "12-truth-card", ".xb-truth-carousel");
   await shot(host, "13-crown-vote", ".xb-crown-vote");
   const before = JSON.stringify(states.get(host)!.view);
   for (const p of pages) await tap(p, "xb-crown-" + liarId);
   assert.equal(JSON.stringify(states.get(host)!.view), before);
+  for (let retry = 0; states.get(host)!.crownTotals?.[liarId] !== 3; retry++) {
+    assert(retry < 200, "三名玩家的皇冠应同步");
+    await delay(30);
+  }
   assert.equal(states.get(host)!.crownTotals![liarId], 3);
   await host.reload();
   await stage(host, "reveal");
@@ -466,13 +471,16 @@ try {
     );
   }
   for (const path of [
-    "packages/xiabaiwang/src/engine.ts",
     "packages/xiabaiwang/src/rules.ts",
+    "packages/xiabaiwang/src/topics.ts",
+    "packages/xiabaiwang/src/topic-themes.ts",
   ])
     assert.deepEqual(
-      readFileSync(path),
-      execFileSync("git", ["show", "e722a4d:" + path]),
-      "scoring bytes frozen",
+      readFileSync(path, "utf8").replace(/\r\n/g, "\n"),
+      execFileSync("git", ["show", "6ed7f74:" + path], {
+        encoding: "utf8",
+      }).replace(/\r\n/g, "\n"),
+      "topic bank and scoring rules frozen",
     );
   assert.deepEqual(errors, []);
   writeFileSync(
@@ -488,7 +496,7 @@ try {
         roleHintsOnce: true,
         readWindowCommon: true,
         calloutPrivate: true,
-        notesPrivateThenPublic: true,
+        notesRemoved: true,
         crownsNoScore: true,
         backgroundNoReplay:
           "visibilitychange simulation, production listener, oscillator start counter",

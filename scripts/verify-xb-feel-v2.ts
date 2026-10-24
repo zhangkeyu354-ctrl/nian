@@ -5,10 +5,13 @@ import { io, type Socket } from "socket.io-client";
 import { strict as assert } from "node:assert";
 import { mkdirSync, writeFileSync, renameSync } from "node:fs";
 const base = process.env.XB_TEST_URL ?? "http://127.0.0.1:3359",
-  out = "docs/xiabaiwang/feel-v2";
+  out = process.env.XB_FEEL_ARTIFACT_DIR ?? "docs/xiabaiwang/feel-v2";
 mkdirSync(out, { recursive: true });
 const sleep = (n: number) => new Promise((r) => setTimeout(r, n));
-const browser = await chromium.launch({ headless: true });
+const browser = await chromium.launch({
+  executablePath: process.env.PW_CHROME,
+  headless: true,
+});
 const ctx = await browser.newContext({
   viewport: { width: 390, height: 844 },
   recordVideo: { dir: out, size: { width: 390, height: 844 } },
@@ -68,18 +71,18 @@ try {
     latest = s;
   });
   await ctx.addInitScript({
-    content: `localStorage.setItem(${JSON.stringify("xb-token:" + code)},${JSON.stringify(tokens[0])});window.__buzz=[];Object.defineProperty(navigator,'vibrate',{configurable:true,value:function(v){window.__buzz.push(v);return true;}});`,
+    content: `localStorage.setItem('xb-onboarding-v3','1');for(const role of ['guesser','truth','bluffer'])localStorage.setItem('xb-role-hint-v3:'+role,'1');localStorage.setItem(${JSON.stringify("xb-token:" + code)},${JSON.stringify(tokens[0])});window.__buzz=[];Object.defineProperty(navigator,'vibrate',{configurable:true,value:function(v){window.__buzz.push(v);return true;}});`,
   });
   await page.goto(base + "/?game=xb&room=" + code);
   await page.getByTestId("xb-start").waitFor();
   // Full10 theme selection: one8-question theme refuses; adding another works.
-  await command(0, { type: "SET_TOPICS", themes: ["冷门汉字或词语"] });
+  await command(0, { type: "SET_TOPICS", themes: ["世界各地的怪习俗"] });
   await assert.rejects(command(0, { type: "START" }), /题目不足/);
   await command(0, {
     type: "SET_TOPICS",
-    themes: ["冷门汉字或词语", "奇怪的动植物"],
+    themes: ["世界各地的怪习俗", "奇怪的动植物"],
   });
-  await page.getByTestId("xb-start").click();
+  await page.getByTestId("xb-start").click({ force: true });
   await page.getByTestId("xb-channel-banner").waitFor();
   await shot("01-opening");
   await page.locator('.xb-world[data-stage="discussion"]').waitFor();
@@ -185,7 +188,7 @@ try {
   const frames: number[] = await page.evaluate(() => (window as any).__frames);
   await cdp.send("Tracing.end");
   for (let i = 0; !traceStream && i < 200; i++) await sleep(100);
-  assert(traceStream,"Performance trace未在20秒内完成导出");
+  assert(traceStream, "Performance trace未在20秒内完成导出");
   let trace = "";
   for (;;) {
     const r = await cdp.send("IO.read", { handle: traceStream });
@@ -223,8 +226,20 @@ try {
       g = latest.players.findIndex((p: any) => p.id === snap.view.guesser),
       other = latest.players.find((p: any) => p.id !== snap.view.guesser).id;
     await command(g, { type: "GUESS", target: other, round });
-    if(round===2){
-      await page.getByTestId("xb-reveal").waitFor();await shot("07-reveal-warmup");await sleep(1900);await shot("08-reveal-first");await sleep(2400);await shot("09-reveal-middle");await page.locator('[data-testid="xb-reveal"][data-scores="true"]').waitFor();await shot("10-reveal-score");await page.locator('[data-testid="xb-reveal"][data-done="true"]').waitFor();
+    if (round === 2) {
+      await page.getByTestId("xb-reveal").waitFor();
+      await shot("07-reveal-warmup");
+      await sleep(1900);
+      await shot("08-reveal-first");
+      await sleep(2400);
+      await shot("09-reveal-middle");
+      await page
+        .locator('[data-testid="xb-reveal"][data-scores="true"]')
+        .waitFor();
+      await shot("10-reveal-score");
+      await page
+        .locator('[data-testid="xb-reveal"][data-done="true"]')
+        .waitFor();
     } else await page.getByTestId("xb-skip").click();
     await page.getByTestId("xb-next").click();
   }

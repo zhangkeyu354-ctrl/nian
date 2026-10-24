@@ -13,7 +13,7 @@ import {
 import { RollingScore, HoldRing, FeelLayer } from "./FeelV2.tsx";
 import { TOPIC_THEMES } from "../../../../packages/xiabaiwang/src/topic-themes.ts";
 import { useXB } from "./xb-net.ts";
-import { Loudmouth, CutePoop, AVATARS } from "./Art.tsx";
+import { Loudmouth, CutePoop, HostPortrait } from "./Art.tsx";
 import { ranking, titles, settlement } from "./ui-model.ts";
 import {
   XB_RULES,
@@ -24,11 +24,13 @@ import {
 import { coalesceEffects } from "./effect-queue.ts";
 import { safeGet, safeSet, claimOnce, revealAge } from "./storage.ts";
 import { FirstGame, EyesWindow } from "./FirstGame.tsx";
-import { VoiceAid, PublicNotes, SpeechBar } from "./VoiceAid.tsx";
+import { VoiceAid, SpeechBar } from "./VoiceAid.tsx";
 import { TruthRecap } from "./TruthRecap.tsx";
 import { setFeedbackVolume } from "./feel.ts";
 import "./xb.css";
 import "./v3.css";
+import { StudioScene, OnAir } from "./StudioScene.tsx";
+import "./art-v4.css";
 const ROLES: Record<string, string> = XB_RULES.roles;
 const JOBS: Record<string, string> = {
   guesser: "耳朵借你，别把脑子也借出去。追问大家，找出真正的老实人。",
@@ -121,7 +123,7 @@ export function Xiabaiwang() {
   >([]);
   const hitTimers = useRef(new Set<ReturnType<typeof setTimeout>>());
   const seq = useRef(0),
-    previousRound = useRef<number | null>(null),
+    previousReadWindow = useRef<string | null>(null),
     restore = useRef(true),
     revealStart = useRef(0);
   const feedbackPrefs = useRef({ sound, vibration });
@@ -253,8 +255,10 @@ export function Xiabaiwang() {
     return () => clearInterval(t);
   }, []);
   useEffect(() => {
-    if (!view || previousRound.current === view.round) return;
-    previousRound.current = view.round;
+    if (!view) return;
+    const readKey = `${view.round}:${snap?.readUntil ?? 0}`;
+    if (previousReadWindow.current === readKey) return;
+    previousReadWindow.current = readKey;
     setPanel(null);
     setSkipped(false);
     setElapsed(0);
@@ -285,7 +289,7 @@ export function Xiabaiwang() {
     setIntro(remaining > 0 ? "deal" : null);
     const timer = setTimeout(() => setIntro(null), Math.max(0, remaining));
     return () => clearTimeout(timer);
-  }, [view?.round]);
+  }, [view?.round, snap?.readUntil]);
   useEffect(() => {
     if (view && !restore.current)
       safeSet(
@@ -658,6 +662,8 @@ export function Xiabaiwang() {
         round: view?.round,
         question: view?.question,
         myRole,
+        explainer: view?.explainer,
+        speaker: view?.speaker,
         answer: view?.answer,
         players: snap?.players.map((p) => ({ id: p.id, name: p.name })),
         selected,
@@ -760,6 +766,7 @@ export function Xiabaiwang() {
         endHold();
       }}
     >
+      <StudioScene powerSave={!animate} />
       <header className="xb-topbar">
         <a href="/" aria-label="返回桌游合集">
           <Loudmouth small />
@@ -767,6 +774,7 @@ export function Xiabaiwang() {
         <div>
           <strong>{code ? "FM · " + code : "瞎掰王"}</strong>
           <span>
+            <OnAir phase={stage} />{" "}
             {view ? `第 ${view.round}/${view.totalRounds} 轮` : "深夜胡扯电台"}
           </span>
         </div>
@@ -1074,8 +1082,13 @@ export function Xiabaiwang() {
                         <span>嘴还挺硬</span>
                       </div>
                       <div className="xb-id-front">
-                        <span>{AVATARS[i]}</span>
-                        <b>{p.name}</b>
+                        <span>
+                          <HostPortrait seat={i} />
+                        </span>
+                        <b>
+                          {p.name.replace(/^[一二三四五六七八九十\d]+号/, "") ||
+                            p.name}
+                        </b>
                         <strong>{ROLES[p.role ?? ""]}</strong>
                         {open && (
                           <em>
@@ -1173,7 +1186,7 @@ export function Xiabaiwang() {
                         }
                       >
                         <span>
-                          {AVATARS[i]} {p.name}
+                          <HostPortrait seat={i} /> {p.name}
                         </span>
                         <strong className={p.score < 0 ? "xb-negative" : ""}>
                           {p.score < 0 ? "💸 " : ""}
@@ -1188,7 +1201,6 @@ export function Xiabaiwang() {
                     );
                   })}
                 </div>
-                <PublicNotes snap={snap} />
                 {frame.done && (
                   <TruthRecap snap={snap} command={command} busy={disabled} />
                 )}
@@ -1227,7 +1239,9 @@ export function Xiabaiwang() {
                             key={p.id}
                             data-rank={person.rank}
                           >
-                            <span>{AVATARS[p.seat]}</span>
+                            <span>
+                              <HostPortrait seat={p.seat} />
+                            </span>
                             <b title={p.name}>{p.name}</b>
                             <strong
                               className={p.score < 0 ? "xb-negative" : ""}
@@ -1285,11 +1299,29 @@ export function Xiabaiwang() {
                 {topicPoints(view.difficulty)} 分
               </span>
               <h1>{view.question}</h1>
-              <div className="xb-wave" aria-hidden="true">
-                {Array.from({ length: 19 }, (_, i) => (
-                  <i key={i} style={{ height: 8 + ((i * 17) % 31) }} />
-                ))}
-              </div>
+              <span
+                className="xb-topic-category"
+                data-testid="xb-topic-category"
+              >
+                {(
+                  {
+                    冷门汉字或词语: "词语",
+                    奇怪的动植物: "自然",
+                    世界各地的怪习俗: "习俗",
+                    历史冷知识: "历史",
+                    奇葩发明或专利: "科技",
+                    方言和俗语: "方言",
+                    体育或游戏规则的冷知识: "体育游戏",
+                    身体与心理学小现象: "身心",
+                    职业黑话: "职业",
+                    自然现象与地貌: "自然",
+                    食物的由来: "饮食",
+                  } as Record<string, string>
+                )[view.theme ?? ""] ??
+                  view.theme ??
+                  "冷知识"}
+              </span>
+
               <p>
                 {mode === "CHALLENGE"
                   ? "谁的话听着最离谱？点头像质疑。"
@@ -1306,6 +1338,58 @@ export function Xiabaiwang() {
                 <p>{view.answer}</p>
               </details>
             )}
+            <div className="xb-word-tools">
+              <button
+                data-testid="xb-request-word"
+                disabled={
+                  disabled || !!view.muted || snap.wordRequests?.includes(me!)
+                }
+                onClick={() =>
+                  command({ type: "REQUEST_WORD", round: view.round })
+                }
+              >
+                {snap.wordRequests?.includes(me!)
+                  ? "已申请换词 · 等待房主"
+                  : "这个词我认识，申请换词"}
+              </button>
+              {!!snap.wordRequests?.length && (
+                <p role="status">
+                  {snap.wordRequests.map(label).join("、")} 申请换词
+                  {me === snap.host ? "" : " · 等待房主确认"}
+                </p>
+              )}
+              {me === snap.host && !!snap.wordRequests?.length && (
+                <button
+                  data-testid="xb-swap-word"
+                  disabled={disabled || !!view.muted}
+                  onClick={() =>
+                    command({ type: "SWAP_TOPIC", round: view.round })
+                  }
+                >
+                  同意换词 · 重新闭眼9秒
+                </button>
+              )}
+            </div>
+            <div
+              className="xb-explanation-order"
+              data-testid="xb-explanation-order"
+              role="status"
+            >
+              {view.explainer
+                ? `轮到 ${label(view.explainer)} 解释 · 按座位顺序`
+                : "解释完毕 · 自由追问"}
+              {view.explainer && (isGuesser || me === view.explainer) && (
+                <button
+                  data-testid="xb-explain-next"
+                  disabled={disabled}
+                  onClick={() =>
+                    command({ type: "EXPLAIN_NEXT", round: view.round })
+                  }
+                >
+                  解释完了，下一位
+                </button>
+              )}
+            </div>
             <div className="xb-speaking">
               {!isGuesser && (
                 <span className="xb-idle-mascot">
@@ -1316,7 +1400,7 @@ export function Xiabaiwang() {
                 🎙{" "}
                 {view.speaker
                   ? `${label(view.speaker)} 正在发言`
-                  : "自由讨论 · 话筒没排队"}
+                  : "自由追问 · 大家都解释过了"}
               </span>
               <button
                 data-testid="xb-speak"
@@ -1405,8 +1489,23 @@ export function Xiabaiwang() {
                 }}
               >
                 <span className="xb-seat-face" key={hit[p.id] ?? 0}>
-                  {AVATARS[i]}
-                  {view?.muted === p.id && <i>🤔</i>}
+                  <HostPortrait seat={i} />
+                  <span className="xb-seat-number">{i + 1}号</span>
+                  <i className="xb-badge-state" aria-hidden="true">
+                    {view?.muted === p.id
+                      ? "禁"
+                      : selected === p.id
+                        ? "选"
+                        : revealed && last?.selected === p.id
+                          ? "投"
+                          : view?.speaker === p.id
+                            ? "麦"
+                            : p.id === view?.guesser
+                              ? "想"
+                              : !p.connected
+                                ? "离"
+                                : ""}
+                  </i>
                   {hitNow && animate && (
                     <span className="xb-hit-splashes" aria-hidden="true">
                       {Array.from({ length: 6 }, (_, k) => (
@@ -1422,7 +1521,9 @@ export function Xiabaiwang() {
                     </i>
                   )}
                 </span>
-                <b>{p.name}</b>
+                <b>
+                  {p.name.replace(/^[一二三四五六七八九十\d]+号/, "") || p.name}
+                </b>
                 {vp && displayScore < 0 && (
                   <span className="xb-debt" aria-label="负分">
                     💸
@@ -1437,7 +1538,7 @@ export function Xiabaiwang() {
                     "离线"
                   )}
                 </strong>
-                <small>
+                <small className="xb-seat-accessible-status">
                   {selected === p.id
                     ? "✅ 已选"
                     : revealed && last?.selected === p.id
@@ -1457,7 +1558,12 @@ export function Xiabaiwang() {
                                   : "离线"}
                 </small>
                 {view?.phase === "discussion" && (
-                  <SpeechBar snap={snap} id={p.id} now={serverNow} />
+                  <>
+                    {view.explainer === p.id && (
+                      <span className="xb-explainer-label">轮到解释</span>
+                    )}
+                    <SpeechBar snap={snap} id={p.id} now={serverNow} />
+                  </>
                 )}
               </button>
             );
@@ -1730,9 +1836,12 @@ export function Xiabaiwang() {
               <>
                 <h2>规则与所选版本</h2>
                 <p>
+                  词条带分类提示。已认识词条可申请换词，由房主确认；身份、轮次和分数不变，重新闭眼9秒。旧词不再抽到；已使用「你在放屁！」后不能换词。
+                </p>
+                <p>
                   每轮一位{ROLES.guesser}公开主持，一位{ROLES.truth}
                   秘密看答案，其余为{ROLES.bluffer}
-                  。保持自由语音，不用交文字解释。指认后按座位揭晓身份。
+                  。题卡只有一个冷门词。同步闭眼9秒，只有老实人看到真实解释；之后按座位轮流解释，跳过想想。老实人照实说，瞎掰人现编，想想可点头像追问，不用交文字稿。指认后按座位揭晓身份。
                 </p>
                 <article
                   className="xb-score-reference"
@@ -1754,8 +1863,8 @@ export function Xiabaiwang() {
                     +D。指中瞎掰人：只有被指中的瞎掰人 +D。
                   </p>
                   <p>
-                    「你在放屁！」（公三小）：每轮最多{" "}
-                    {XB_RULES.challengesPerRound} 次。命中瞎掰人，
+                    「你在放屁！」：每轮最多 {XB_RULES.challengesPerRound}{" "}
+                    次。命中瞎掰人，
                     {ROLES.guesser} +{XB_RULES.challengeBlufferReward}、目标 −
                     {XB_RULES.challengeBlufferPenalty}；误中老实人，
                     {ROLES.guesser} −{XB_RULES.challengeTruthPenalty}
@@ -1886,7 +1995,7 @@ export function Xiabaiwang() {
       )}
       {view?.phase === "discussion" && (
         <EyesWindow
-          key={cueKey}
+          key={cueKey + ":" + snap?.readUntil}
           until={snap?.readUntil ?? 0}
           now={serverNow}
           role={myRole}

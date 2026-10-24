@@ -1,0 +1,39 @@
+{
+  "base": "6ed7f74",
+  "branch": "codex/xiabaiwang-original",
+  "npmTest": {
+    "passed": 845,
+    "files": 53,
+    "durationSeconds": 420.66,
+    "command": "npm test -- --maxWorkers=1 --testTimeout=20000"
+  },
+  "typecheck": true,
+  "build": true,
+  "replays": [
+    1701,
+    2903,
+    4111
+  ],
+  "mobile": {
+    "captureTests": 197,
+    "wiring": 64
+  },
+  "fullGames": [
+    3,
+    6,
+    10
+  ],
+  "uiV3": true,
+  "artV4": true,
+  "wordChange": true,
+  "feel": true,
+  "regressions": {
+    "dbd": "3 protocol games, 3025 view checks",
+    "cn": "12 protocol groups",
+    "dm": "browser full game",
+    "rr": "protocol full game",
+    "ma": "4 clients draft, 2641 steps, 4 races"
+  },
+  "deployed": false,
+  "mergedMain": false
+}

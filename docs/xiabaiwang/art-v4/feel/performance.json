@@ -1,0 +1,23 @@
+{
+  "viewport": "390×844",
+  "players": 10,
+  "frames": 1624,
+  "averageFps": 141.1292075721081,
+  "minimumOneSecondFps": 136,
+  "oneSecondFps": [
+    136,
+    140,
+    144,
+    143,
+    144,
+    142,
+    144,
+    144,
+    143,
+    138,
+    138
+  ],
+  "longFramesOver50ms": 0,
+  "maxFrameMs": 41.80000000000291,
+  "method": "Chromium CDP Performance trace + requestAnimationFrame，录屏同时开启；截图像素检查另轮执行，桌面环境，不代表所有手机硬件。"
+}

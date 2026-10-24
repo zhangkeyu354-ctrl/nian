@@ -83,7 +83,10 @@ const server = spawn(
     stdio: ["ignore", "ignore", "inherit"],
   },
 );
-const browser = await chromium.launch({ headless: true });
+const browser = await chromium.launch({
+  executablePath: process.env.PW_CHROME,
+  headless: true,
+});
 const errors: string[] = [];
 try {
   for (let i = 0; ; i++) {

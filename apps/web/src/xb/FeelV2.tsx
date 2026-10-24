@@ -115,11 +115,13 @@ export function FeelLayer({
         select: selected
           ? (document
               .getElementById("xb-avatar-" + selected)
+              ?.querySelector(".xb-seat-face")
               ?.getBoundingClientRect() ?? null)
           : null,
         speaker: speaker
           ? (document
               .getElementById("xb-avatar-" + speaker)
+              ?.querySelector(".xb-seat-face")
               ?.getBoundingClientRect() ?? null)
           : null,
       });

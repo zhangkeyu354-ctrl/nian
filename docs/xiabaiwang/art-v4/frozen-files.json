@@ -1,0 +1,20 @@
+[
+  {
+    "file": "packages/xiabaiwang/src/topics.ts",
+    "baseline": "6ed7f74",
+    "unchanged": true,
+    "sha256_normalized_lf": "3f6687e7ba4fb72e656e941e2891dd106935d4061bef07410b65451f3093933a"
+  },
+  {
+    "file": "packages/xiabaiwang/src/topic-themes.ts",
+    "baseline": "6ed7f74",
+    "unchanged": true,
+    "sha256_normalized_lf": "9811e8799122992cd4067275590a5791f3fe03cd1272cdea9e3d20b8783cb494"
+  },
+  {
+    "file": "packages/xiabaiwang/src/rules.ts",
+    "baseline": "6ed7f74",
+    "unchanged": true,
+    "sha256_normalized_lf": "17a8504117a0cd2bdcd3811faa8a5c67cfb5e9d1d29082c442813f3db852f4c9"
+  }
+]

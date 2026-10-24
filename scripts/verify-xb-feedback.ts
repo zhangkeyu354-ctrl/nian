@@ -1,7 +1,9 @@
 import { chromium } from "playwright";
 import { strict as assert } from "node:assert";
 import { mkdirSync, writeFileSync } from "node:fs";
-const browser = await chromium.launch();
+const browser = await chromium.launch({
+  executablePath: process.env.PW_CHROME,
+});
 const page = await browser.newPage({ viewport: { width: 390, height: 844 } });
 try {
   await page.goto(

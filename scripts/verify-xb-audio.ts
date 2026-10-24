@@ -1,7 +1,10 @@
 import { chromium } from "playwright";
 import { strict as assert } from "node:assert";
 import { mkdirSync, writeFileSync } from "node:fs";
-const browser = await chromium.launch({ headless: true });
+const browser = await chromium.launch({
+  executablePath: process.env.PW_CHROME,
+  headless: true,
+});
 try {
   const page = await browser.newPage();
   await page.goto("http://127.0.0.1:5173/test/xb-audio.html");

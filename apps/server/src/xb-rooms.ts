@@ -130,6 +130,8 @@ export class XBRoom {
       this.file.discussionAt = Date.now();
     } else {
       if (!this.file.state) throw Error("尚未开始");
+      if (c.type === "SWAP_TOPIC" && !this.file.aids?.wordRequests?.length)
+        throw Error("还没有玩家申请换词");
       const previousSpeaker = this.file.state.speaker;
       this.file.state = act(
         this.file.state,
@@ -139,6 +141,14 @@ export class XBRoom {
       this.file.aids ??= { ...freshAids(), gameId: `legacy-${this.file.code}` };
       trackSpeaker(this.file.aids, previousSpeaker, this.file.state.speaker);
       if (c.type === "GUESS") this.file.aids.revealAt = Date.now();
+      if (c.type === "SWAP_TOPIC") {
+        beginRead(this.file.aids);
+        this.file.discussionAt = Date.now();
+        this.file.usedTopics = [
+          ...(this.file.usedTopics ?? []),
+          this.file.state.topic.id,
+        ];
+      }
       if (c.type === "NEXT" && this.file.state.phase === "discussion") {
         this.file.discussionAt = Date.now();
         beginRead(this.file.aids);

@@ -3,9 +3,7 @@ import { randomBytes } from "node:crypto";
 import { act, type State } from "../../../packages/xiabaiwang/src/engine.ts";
 import type {
   XBCommand,
-  XBNoteTag,
   XBCallout,
-  XBPublicNotes,
 } from "../../../packages/shared/src/xb-protocol.ts";
 export interface XBAids {
   gameId: string;
@@ -14,9 +12,9 @@ export interface XBAids {
   speechSeconds: 0 | 30 | 60;
   speakerAt: number;
   speechUsed: Record<string, number>;
-  notes: Record<number, XBPublicNotes>;
   votes: Record<number, Record<string, string>>;
   callouts: Record<string, XBCallout>;
+  wordRequests?: string[];
 }
 interface RoomData {
   code: string;
@@ -32,7 +30,6 @@ export function freshAids(seconds: 0 | 30 | 60 = 0): XBAids {
     speechSeconds: seconds,
     speakerAt: 0,
     speechUsed: {},
-    notes: {},
     votes: {},
     callouts: {},
   };
@@ -43,6 +40,7 @@ export function beginRead(a: XBAids, now = Date.now()) {
   a.speakerAt = 0;
   a.speechUsed = {};
   a.callouts = {};
+  a.wordRequests = [];
 }
 export function trackSpeaker(
   a: XBAids,
@@ -50,14 +48,18 @@ export function trackSpeaker(
   next: string | null,
   now = Date.now(),
 ) {
-  if (previous === next) return;
+  if (previous === next) {
+    if (next && !a.speakerAt) a.speakerAt = now;
+    return;
+  }
   if (previous && a.speakerAt)
     a.speechUsed[previous] =
       (a.speechUsed[previous] ?? 0) + Math.max(0, now - a.speakerAt);
   a.speakerAt = next ? now : 0;
 }
 export function applyAid(f: RoomData, actor: string, c: XBCommand) {
-  if (!["SET_SPEECH", "CALL", "NOTE", "CROWN"].includes(c.type)) return false;
+  if (!["SET_SPEECH", "CALL", "CROWN", "REQUEST_WORD"].includes(c.type))
+    return false;
   const a = f.aids ?? { ...freshAids(), gameId: `legacy-${f.code}` },
     s = f.state;
   if (c.type === "SET_SPEECH") {
@@ -68,8 +70,18 @@ export function applyAid(f: RoomData, actor: string, c: XBCommand) {
     f.aids = a;
     return true;
   }
-  if (c.type !== "CALL" && c.type !== "NOTE" && c.type !== "CROWN")
-    return false;
+  if (c.type === "REQUEST_WORD") {
+    if (!s || s.phase !== "discussion" || c.round !== s.round)
+      throw Error("只能在本轮指认前申请换词");
+    if (s.muted) throw Error("本轮已使用你在放屁！，不能再换词");
+    if (!f.players.some((p) => p.id === actor)) throw Error("请先加入房间");
+    if (a.wordRequests?.includes(actor))
+      throw Error("你已申请换词，等待房主确认");
+    (a.wordRequests ??= []).push(actor);
+    f.aids = a;
+    return true;
+  }
+  if (c.type !== "CALL" && c.type !== "CROWN") return false;
   if (!s || c.round !== s.round) throw Error("回合已变化，请刷新状态");
   if (!f.players.some((p) => p.id === c.target)) throw Error("目标无效");
   if (c.type === "CROWN") {
@@ -81,19 +93,9 @@ export function applyAid(f: RoomData, actor: string, c: XBCommand) {
     return true;
   }
   if (s.phase !== "discussion") throw Error("只能在讨论阶段操作");
-  if (actor !== s.guesser) throw Error("只有想想可以点名或记小抄");
+  if (actor !== s.guesser) throw Error("只有想想可以点名");
   if (c.target === s.guesser) throw Error("请选择其他玩家");
-  if (c.type === "NOTE") {
-    if (c.tag !== null && !["suspect", "truthy", "unknown"].includes(c.tag))
-      throw Error("小抄标签无效");
-    const notes = (a.notes[s.round] ??= {
-      round: s.round,
-      guesser: s.guesser,
-      tags: {},
-    });
-    if (c.tag === null) delete notes.tags[c.target];
-    else notes.tags[c.target] = c.tag;
-  } else {
+  {
     const previous = s.speaker;
     f.state = act(s, actor, {
       type: "SPEAK",
@@ -139,13 +141,7 @@ export function aidSnapshot(f: RoomData, me: string | null, now = Date.now()) {
     now - callout.at < 4000
       ? { callout: { ...callout } }
       : {}),
-    ...(s?.phase === "discussion" && me === s.guesser
-      ? { privateNotes: { ...a?.notes[s.round]?.tags } }
-      : {}),
-    revealedNotes:
-      s?.history.flatMap((h) =>
-        a?.notes[h.round] ? [structuredClone(a.notes[h.round])] : [],
-      ) ?? [],
+    wordRequests: [...(a?.wordRequests ?? [])],
     crownCounts: counts,
     crownTotals: totals,
     ...(me && s && a?.votes[s.round]?.[me]

@@ -1,21 +1,22 @@
 import React, { useEffect, useRef, useState } from "react";
+import { StudioHeadphones } from "./Art.tsx";
 import { XB_RULES } from "../../../../packages/xiabaiwang/src/rules.ts";
 import { claimOnce, safeGet, safeSet } from "./storage.ts";
 const pages = [
   {
     icon: "🎭",
-    title: "一桌人，三种身份",
-    text: `${XB_RULES.roles.guesser}公开主持，${XB_RULES.roles.truth}偷偷知道答案，其余都是${XB_RULES.roles.bluffer}。每轮换一位想想。`,
+    title: "一个冷门词，三种身份",
+    text: `${XB_RULES.roles.guesser}公开主持。题卡只有一个冷门词，大家猜它的意思。${XB_RULES.roles.truth}偷偷知道答案，其余都是${XB_RULES.roles.bluffer}。每轮换一位想想。`,
   },
   {
     icon: "🎙",
     title: "嘴硬一点，开麦就掰",
-    text: "老实人把真解释讲出来，瞎掰人现场编；想想随意追问。大家同时点屏假装在想，别让动作泄露身份。不用交文字稿。",
+    text: "闭眼9秒，只有老实人看到真解释。之后按座位顺序解释，跳过想想：老实人照实说，瞎掰人现场编；想想可追问，不用交文字稿。",
   },
   {
     icon: "⭐",
     title: "看难度拿分，皇冠只图一乐",
-    text: `初始${XB_RULES.initialScore}分。指中老实人，双方各得本题D分；指中瞎掰人，只有他得D分。质疑分另算、可负分；扔粑粑和皇冠都不加分。`,
+    text: `初始${XB_RULES.initialScore}分。指中老实人，双方各得本题D分；指中瞎掰人，只有他得D分。「你在放屁！」的分数另算、可负分；扔粑粑和皇冠都不加分。`,
   },
 ];
 export function FirstGame({
@@ -221,7 +222,7 @@ export function EyesWindow({
       ) : (
         <>
           <div className="xb-eyes-art" aria-hidden="true">
-            🙈
+            <StudioHeadphones />
           </div>
           <h1>大家一起，假装在想。</h1>
           <p>其他人也在同时点屏幕，谁也别偷看别人。</p>

@@ -30,38 +30,24 @@ it("每人发言累计跨点名保留，超时只提示，不改阶段或积分"
     vi.useRealTimers();
   }
 });
-it("小抄只发给想想，揭晓后公开；非想想、越轮次及非法标签均拒绝，重连恢复", () => {
-  let { room, tokens, guesser, other } = setup();
+it("旧小抄命令被拒绝，旧存档的小抄不再向任何客户端发送", () => {
+  const { room, tokens, guesser } = setup();
   const target = room.file.players[1].id;
-  room.command(guesser, { type: "NOTE", round: 1, target, tag: "suspect" });
-  expect(room.snapshot(guesser).privateNotes).toEqual({ [target]: "suspect" });
-  expect(room.snapshot(other).privateNotes).toBeUndefined();
-  expect(JSON.stringify(room.snapshot(other))).not.toContain('"suspect"');
-  expect(() =>
-    room.command(other, { type: "NOTE", round: 1, target, tag: "truthy" }),
-  ).toThrow();
-  expect(() =>
-    room.command(guesser, { type: "NOTE", round: 2, target, tag: "truthy" }),
-  ).toThrow();
   expect(() =>
     room.command(guesser, {
       type: "NOTE",
       round: 1,
       target,
-      tag: "bad" as any,
-    }),
+      tag: "suspect",
+    } as any),
   ).toThrow();
-  room = new XBRoom("UIV333", JSON.parse(JSON.stringify(room.file)));
-  expect(room.snapshot(guesser).privateNotes).toEqual({ [target]: "suspect" });
-  room.command(guesser, {
-    type: "GUESS",
-    round: 1,
-    target: room.file.state!.truth,
-  });
-  expect(room.snapshot(other).revealedNotes![0].tags).toEqual({
-    [target]: "suspect",
-  });
-  expect(room.snapshot().privateNotes).toBeUndefined();
+  (room.file.aids as any).notes = {
+    1: { round: 1, tags: { [target]: "suspect" } },
+  };
+  for (const token of [...tokens, undefined]) {
+    expect(room.snapshot(token)).not.toHaveProperty("privateNotes");
+    expect(room.snapshot(token)).not.toHaveProperty("revealedNotes");
+  }
 });
 it("点名通知只有目标可见；禁言者不能被点名，普通人不能点别人", () => {
   const { room, tokens, guesser } = setup();
@@ -133,4 +119,44 @@ it("同步9秒窗口和揭晓时刻存档，房主可设30/60/不限且普通人
   const restored = new XBRoom("UIV334", JSON.parse(JSON.stringify(room.file)));
   expect(restored.snapshot(a).revealAt).toBeGreaterThanOrEqual(now);
   expect(() => room.command(a, { type: "SET_SPEECH", seconds: 30 })).toThrow();
+});
+
+it("申请换词不泄密、不改积分：去重、房主确认、同步阅读、旧词去重和刷新恢复", () => {
+  const { room, tokens, guesser } = setup();
+  const old = structuredClone(room.file.state!);
+  expect(() =>
+    room.command(guesser, { type: "SWAP_TOPIC", round: 1 }),
+  ).toThrow();
+  room.command(tokens[1], { type: "REQUEST_WORD", round: 1 });
+  expect(() =>
+    room.command(tokens[1], { type: "REQUEST_WORD", round: 1 }),
+  ).toThrow();
+  expect(() =>
+    room.command(tokens[1], { type: "SWAP_TOPIC", round: 1 }),
+  ).toThrow();
+  expect(room.file.state).toEqual(old);
+  const requester = room.file.players[1].id;
+  expect(room.snapshot(tokens[2]).wordRequests).toEqual([requester]);
+  const before = Date.now();
+  room.command(guesser, { type: "SWAP_TOPIC", round: 1 });
+  expect(room.file.state!.topic.id).not.toBe(old.topic.id);
+  expect(room.file.state!.scores).toEqual(old.scores);
+  expect(room.file.state!.truth).toBe(old.truth);
+  expect(room.snapshot(guesser).readUntil).toBeGreaterThanOrEqual(
+    before + 9000,
+  );
+  expect(room.snapshot(guesser).wordRequests).toEqual([]);
+  const restored = new XBRoom("UIV333", JSON.parse(JSON.stringify(room.file)));
+  for (const t of tokens)
+    expect(restored.snapshot(t).readUntil).toBe(room.snapshot(t).readUntil);
+  expect(restored.availableTopics().some((t) => t.id === old.topic.id)).toBe(
+    false,
+  );
+  const truthToken = tokens.find((t) => room.player(t)!.id === old.truth)!;
+  for (const t of tokens)
+    expect(!!room.snapshot(t).view!.answer).toBe(t === truthToken);
+  room.command(guesser, { type: "CHALLENGE", round: 1, target: requester });
+  expect(() =>
+    room.command(tokens[2], { type: "REQUEST_WORD", round: 1 }),
+  ).toThrow();
 });

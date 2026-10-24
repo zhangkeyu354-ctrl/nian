@@ -9,16 +9,10 @@ export const XB_EVENTS = {
   effects: "xb:effects",
   fun: "xb:fun",
 } as const;
-export type XBNoteTag = "suspect" | "truthy" | "unknown";
 export type XBAidCommand =
+  | { type: "REQUEST_WORD"; round: number }
   | { type: "SET_SPEECH"; seconds: 0 | 30 | 60 }
-  | { type: "CALL" | "CROWN"; round: number; target: string }
-  | { type: "NOTE"; round: number; target: string; tag: XBNoteTag | null };
-export interface XBPublicNotes {
-  round: number;
-  guesser: string;
-  tags: Record<string, XBNoteTag>;
-}
+  | { type: "CALL" | "CROWN"; round: number; target: string };
 export interface XBCallout {
   id: string;
   round: number;
@@ -45,8 +39,7 @@ export interface XBSnapshot {
   speechUsed?: Record<string, number>;
   speakerAt?: number;
   callout?: XBCallout;
-  privateNotes?: Record<string, XBNoteTag>;
-  revealedNotes?: XBPublicNotes[];
+  wordRequests?: string[];
   crownCounts?: Record<string, number>;
   crownTotals?: Record<string, number>;
   myCrownVote?: string;
