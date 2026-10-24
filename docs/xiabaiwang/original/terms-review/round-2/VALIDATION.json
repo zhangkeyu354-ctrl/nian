@@ -1,0 +1,14 @@
+{
+  "date": "2026-10-24",
+  "status": "16-new-candidates-pending-user-review",
+  "count": 16,
+  "lengthRange": [
+    4,
+    8
+  ],
+  "chineseFrontsOnly": true,
+  "duplicateFronts": 0,
+  "overlapWithPrevious160": 0,
+  "sourceCoverage": 16,
+  "independentReviewVersion": "2026-10-24-round2"
+}
