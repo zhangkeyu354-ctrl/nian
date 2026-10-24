@@ -1,4 +1,5 @@
 import type { View, Command } from "../../xiabaiwang/src/engine.ts";
+import type { Cycles } from "../../xiabaiwang/src/rules.ts";
 export const XB_EVENTS = {
   create: "xb:create",
   join: "xb:join",
@@ -19,12 +20,14 @@ export interface XBSnapshot {
   funHits: Record<string, number>;
   topicThemes?: string[];
   topicRemaining?: number;
+  cycles?: Cycles;
 }
 export type XBCommand =
   | Command
   | { type: "START" }
   | { type: "REMATCH" }
-  | { type: "SET_TOPICS"; themes: string[] };
+  | { type: "SET_TOPICS"; themes: string[] }
+  | { type: "SET_CYCLES"; cycles: Cycles };
 export interface XBEffect {
   from: string;
   target: string;

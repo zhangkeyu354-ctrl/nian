@@ -1,4 +1,39 @@
 import type { View } from "../../../../packages/xiabaiwang/src/engine.ts";
+import { scoreRound } from "../../../../packages/xiabaiwang/src/rules.ts";
+export function settlement(view: View) {
+  const h = view.history.at(-1);
+  if (!h) return [];
+  const steps =
+    h.scoring ??
+    scoreRound(
+      view.players.map((p) => p.id),
+      h.guesser,
+      h.truth,
+      h.selected,
+      h.challenged,
+      h.difficulty,
+    );
+  return [
+    {
+      kind: "guess",
+      label:
+        h.selected === h.truth
+          ? "指认结果 · 找到老实人"
+          : "指认结果 · 瞎掰成功",
+      delta: steps[0].delta,
+    },
+    {
+      kind: "challenge",
+      label: !h.challenged
+        ? "质疑结果 · 本轮未使用"
+        : h.challenged === h.truth
+          ? "质疑结果 · 误中老实人"
+          : "质疑结果 · 命中瞎掰人",
+      delta: steps[1].delta,
+    },
+    { kind: "total", label: "总分变化", delta: h.delta },
+  ];
+}
 export function revealFrame(elapsed: number, players: number) {
   const scoreAt = 600 + players * 900;
   const duration = Math.max(6000, scoreAt + 1400);

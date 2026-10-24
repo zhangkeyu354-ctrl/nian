@@ -74,6 +74,8 @@ try {
   for (const n of (process.env.XB_PLAYER_COUNTS ?? "3,6,10")
     .split(",")
     .map(Number)) {
+    const cycles = Number(process.env.XB_CYCLES ?? 1),
+      totalRounds = n * cycles;
     const contexts: BrowserContext[] = [],
       pages: Page[] = [];
     try {
@@ -134,11 +136,37 @@ try {
         await host.getByRole("button", { name: "关闭面板" }).click();
       }
       if (n === 3) await pages[2].emulateMedia({ reducedMotion: "reduce" });
+      assert(
+        await pages[1].getByTestId("xb-cycles").isDisabled(),
+        "非房主不能改圈数",
+      );
+      if (cycles !== 1) {
+        await host.getByTestId("xb-cycles").selectOption(String(cycles));
+        await pages[1].waitForFunction(
+          (c) =>
+            (
+              document.querySelector(
+                '[data-testid="xb-cycles"]',
+              ) as HTMLSelectElement
+            )?.value === String(c),
+          cycles,
+        );
+        await host.reload();
+        await waitStage(host, "lobby");
+        assert.equal(
+          await host.getByTestId("xb-cycles").inputValue(),
+          String(cycles),
+        );
+      }
       await click(host, "xb-start");
       await waitStage(host, "deal");
       if (n === 3) await shot(host, "07-deal");
       await waitStage(host, "discussion");
-      for (let round = 1; round <= n; round++) {
+      assert(
+        states.get(host)!.view!.players.every((p) => p.score === 3),
+        "新局初始每人3分",
+      );
+      for (let round = 1; round <= totalRounds; round++) {
         for (const p of pages) await waitStage(p, "discussion");
         const g = pages.find(
           (p) => states.get(p)?.me === states.get(host)?.view?.guesser,
@@ -167,6 +195,9 @@ try {
             .get(host)!
             .players.findIndex((p) => p.id !== guesserId && p.id !== truthId);
         const challengeIndex = round % 2 === 0 ? truthIndex : liarIndex;
+        const beforeScores = Object.fromEntries(
+          states.get(host)!.view!.players.map((p) => [p.id, p.score]),
+        );
         if (round === 1) {
           await shot(host, `${n}-08-discussion`);
           if (n === 3) {
@@ -231,6 +262,30 @@ try {
         if (n === 3 && round === 1) await shot(g, "14-guess");
         await doubleConfirm(g, "xb-guess-confirm");
         await waitStage(host, "reveal");
+        const resultView = states.get(host)!.view!,
+          result = resultView.history.at(-1)!;
+        for (const p of resultView.players) {
+          const expected =
+            (p.id === truthId || p.id === guesserId ? result.difficulty : 0) +
+            (round % 2 === 0
+              ? p.id === guesserId
+                ? -3
+                : 0
+              : p.id === guesserId
+                ? 1
+                : p.id === result.challenged
+                  ? -1
+                  : 0);
+          assert.equal(
+            p.score,
+            beforeScores[p.id] + expected,
+            "难度分+质疑分应独立叠加",
+          );
+        }
+        assert.deepEqual(
+          result.scoring.map((step) => step.kind),
+          ["guess", "challenge"],
+        );
         if ((n === 3 || n === 10) && round === 1) {
           const prefix = n === 3 ? "" : "10-";
           await shot(host, prefix + "15-reveal-start");
@@ -285,7 +340,8 @@ try {
       assert.equal(states.get(host)!.players.length, n);
       report.push({
         players: n,
-        rounds: n,
+        rounds: totalRounds,
+        cycles,
         complete: true,
         refresh: true,
         privacy: true,
@@ -293,7 +349,7 @@ try {
         selfThrowRejected: true,
         longNames: n === 10,
       });
-      console.log(`XB_UI_V1_PASS ${n} players ${n} rounds`);
+      console.log(`XB_UI_V1_PASS ${n} players ${totalRounds} rounds`);
     } catch (e) {
       writeFileSync(
         join(out, "failure.json"),

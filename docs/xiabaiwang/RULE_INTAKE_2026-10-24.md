@@ -17,3 +17,7 @@
 - [原版开箱（龐奇桌遊）](https://www.punchboardgame.com/blog/posts/%E7%9E%8E%E6%8E%B0%E7%8E%8B-9-upper-%E7%B9%81%E9%AB%94%E4%B8%AD%E6%96%87%E7%89%88-%E9%96%8B%E7%AE%B1%E5%8F%8A%E8%A6%8F%E5%89%87%E4%BB%8B%E7%B4%B9-%E9%AB%98%E9%9B%84%E9%BE%90%E5%A5%87%E6%A1%8C%E9%81%8A)
 - [2E爱玩芝麻事](https://joaoio.pixnet.net/blog/posts/17340213389)
 - [boardgamematcher](https://boardgamematcher.com/game/9upper)
+
+## 状态更新：2026-10-24已收到明确执行指令
+
+本文件保留收到资料时的历史状态。五项现已由用户裁定，见[CHECK_REQUIRED.md](CHECK_REQUIRED.md)与[计分执行文件](../instructions/XB_SCORING_2026-10-24.md)。本轮初始3分、两圈设置及共同获胜已实现；不再处于待授权状态。

@@ -1,4 +1,12 @@
 import { TOPICS, type Topic } from "./topics.ts";
+import {
+  XB_RULES,
+  scoreRound,
+  scoreStandings,
+  type Cycles,
+  type ScoreStep,
+} from "./rules.ts";
+export { XB_RULES } from "./rules.ts";
 export interface Player {
   id: string;
   name: string;
@@ -18,6 +26,7 @@ export interface Result {
   source: string;
   difficulty: number;
   delta: Record<string, number>;
+  scoring: ScoreStep[];
 }
 export interface State {
   players: Player[];
@@ -33,19 +42,23 @@ export interface State {
   speaker: string | null;
   scores: Record<string, number>;
   history: Result[];
+  cycles?: Cycles;
 }
 export function createGame(
   players: Player[],
   seed: number,
   topics: Topic[] = TOPICS,
+  cycles: Cycles = XB_RULES.defaultCycles,
 ): State {
+  if (!(XB_RULES.cycleOptions as readonly number[]).includes(cycles))
+    throw Error("圈数无效");
   if (
-    players.length < 3 ||
-    players.length > 10 ||
+    players.length < XB_RULES.minPlayers ||
+    players.length > XB_RULES.maxPlayers ||
     new Set(players.map((p) => p.id)).size !== players.length
   )
-    throw Error("需要3～10名不同玩家");
-  if (topics.length < players.length)
+    throw Error(`需要${XB_RULES.minPlayers}～${XB_RULES.maxPlayers}名不同玩家`);
+  if (topics.length < players.length * cycles)
     throw Error("可用题目不足，请增加主题或选择全部随机");
   const s: State = {
     players: structuredClone(players),
@@ -59,8 +72,11 @@ export function createGame(
     seed: seed >>> 0,
     muted: null,
     speaker: null,
-    scores: Object.fromEntries(players.map((p) => [p.id, 0])),
+    scores: Object.fromEntries(
+      players.map((p) => [p.id, XB_RULES.initialScore]),
+    ),
     history: [],
+    cycles,
   };
   for (let i = s.deck.length - 1; i > 0; i--) {
     const j = random(s, i + 1);
@@ -75,7 +91,7 @@ function random(s: State, n: number) {
 }
 function next(s: State) {
   s.round++;
-  s.guesser = s.players[s.round - 1].id;
+  s.guesser = s.players[(s.round - 1) % s.players.length].id;
   const others = s.players.filter((p) => p.id !== s.guesser);
   s.truth = others[random(s, others.length)].id;
   s.topic = s.deck[s.round - 1];
@@ -94,7 +110,8 @@ export function act(state: State, actor: string, c: Command): State {
   if (c.type === "NEXT") {
     if (actor !== s.host || s.phase !== "reveal")
       throw Error("仅房主可在结算后继续");
-    if (s.round === s.players.length) s.phase = "over";
+    if (s.round === s.players.length * (s.cycles ?? XB_RULES.defaultCycles))
+      s.phase = "over";
     else next(s);
     return s;
   }
@@ -114,25 +131,27 @@ export function act(state: State, actor: string, c: Command): State {
     return s;
   }
   if (c.type !== "CHALLENGE" && c.type !== "GUESS") throw Error("行动无效");
-  if (actor !== s.guesser) throw Error("仅猜测者可以操作");
+  if (actor !== s.guesser) throw Error(`仅${XB_RULES.roles.guesser}可以操作`);
   if (c.target === s.guesser || !s.players.some((p) => p.id === c.target))
     throw Error("请选择其他玩家");
   if (c.type === "CHALLENGE") {
-    if (s.muted) throw Error("本轮质疑已使用");
+    if ((s.muted ? 1 : 0) >= XB_RULES.challengesPerRound)
+      throw Error("本轮质疑已使用");
     s.muted = c.target;
     if (s.speaker === c.target) s.speaker = null;
     return s;
   }
   const delta = Object.fromEntries(s.players.map((p) => [p.id, 0]));
-  delta[c.target] += s.topic.difficulty;
-  if (c.target === s.truth) delta[s.guesser] += s.topic.difficulty;
-  if (s.muted) {
-    if (s.muted === s.truth) delta[s.guesser] -= 3;
-    else {
-      delta[s.guesser]++;
-      delta[s.muted]--;
-    }
-  }
+  const scoring = scoreRound(
+    s.players.map((p) => p.id),
+    s.guesser,
+    s.truth,
+    c.target,
+    s.muted,
+    s.topic.difficulty,
+  );
+  for (const step of scoring)
+    for (const id of Object.keys(delta)) delta[id] += step.delta[id];
   for (const id of Object.keys(delta)) s.scores[id] += delta[id];
   s.history.push({
     round: s.round,
@@ -145,6 +164,7 @@ export function act(state: State, actor: string, c: Command): State {
     source: s.topic.source,
     difficulty: s.topic.difficulty,
     delta,
+    scoring,
   });
   s.phase = "reveal";
   s.speaker = null;
@@ -155,7 +175,19 @@ export function viewFor(s: State, me: string | null) {
   return {
     phase: s.phase,
     round: s.round,
-    totalRounds: s.players.length,
+    totalRounds: s.players.length * (s.cycles ?? XB_RULES.defaultCycles),
+    cycles: s.cycles ?? XB_RULES.defaultCycles,
+    standings: scoreStandings(
+      s.players.map((p) => ({ id: p.id, score: s.scores[p.id] })),
+    ),
+    winners:
+      s.phase === "over"
+        ? s.players
+            .filter(
+              (p) => s.scores[p.id] === Math.max(...Object.values(s.scores)),
+            )
+            .map((p) => p.id)
+        : [],
     guesser: s.guesser,
     question: s.topic.question,
     difficulty: s.topic.difficulty,

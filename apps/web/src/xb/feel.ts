@@ -31,11 +31,19 @@ export function revealTimeline(elapsed: number, players: number) {
       players,
       Math.max(0, Math.floor((elapsed - 1600) / 800) + 1),
     ),
-    scores: elapsed >= scoreAt + 400,
-    done: elapsed >= Math.max(6000, scoreAt + 1600),
-    duration: Math.max(6000, scoreAt + 1600),
+    settlementIndex:
+      elapsed < scoreAt + 400
+        ? -1
+        : elapsed < scoreAt + 1000
+          ? 0
+          : elapsed < scoreAt + 1600
+            ? 1
+            : 2,
+    scores: elapsed >= scoreAt + 1600,
+    done: elapsed >= Math.max(6000, scoreAt + 2800),
+    duration: Math.max(6000, scoreAt + 2800),
     warmup: elapsed < 1200,
-    spotlight: elapsed >= scoreAt + 600,
+    spotlight: elapsed >= scoreAt + 1800,
   };
 }
 const sounds: Record<Feedback, Cue> = {

@@ -1,5 +1,9 @@
 import { TOPICS } from "../../../packages/xiabaiwang/src/topics.ts";
 import { TOPIC_THEMES } from "../../../packages/xiabaiwang/src/topic-themes.ts";
+import {
+  XB_RULES,
+  type Cycles,
+} from "../../../packages/xiabaiwang/src/rules.ts";
 import { randomBytes, randomInt } from "node:crypto";
 import {
   mkdirSync,
@@ -32,6 +36,7 @@ interface File {
   discussionAt?: number;
   topicThemes?: string[];
   usedTopics?: string[];
+  cycles?: Cycles;
 }
 export class XBRoom {
   funHits: Record<string, number> = {};
@@ -51,7 +56,8 @@ export class XBRoom {
       return token;
     }
     if (this.file.state) throw Error("游戏已开始，只能使用原设备身份重连");
-    if (this.file.players.length >= 10) throw Error("房间已满");
+    if (this.file.players.length >= XB_RULES.maxPlayers)
+      throw Error("房间已满");
     name = String(name ?? "")
       .trim()
       .slice(0, 16);
@@ -64,7 +70,13 @@ export class XBRoom {
   command(token: string, c: XBCommand) {
     const p = this.player(token);
     if (!p) throw Error("请先加入房间");
-    if (c?.type === "SET_TOPICS") {
+    if (c?.type === "SET_CYCLES") {
+      if (p.id !== this.file.players[0].id) throw Error("仅房主可以设置圈数");
+      if (this.file.state) throw Error("开局后不能更换圈数");
+      if (!(XB_RULES.cycleOptions as readonly number[]).includes(c.cycles))
+        throw Error("圈数无效");
+      this.file.cycles = c.cycles;
+    } else if (c?.type === "SET_TOPICS") {
       if (p.id !== this.file.players[0].id) throw Error("仅房主可以设置主题");
       if (this.file.state) throw Error("开局后不能更换主题");
       if (
@@ -94,6 +106,7 @@ export class XBRoom {
         this.file.players.map(({ id, name }) => ({ id, name })),
         randomInt(2 ** 31),
         this.availableTopics(),
+        this.file.cycles ?? XB_RULES.defaultCycles,
       );
       this.file.usedTopics = [
         ...(this.file.usedTopics ?? []),
@@ -162,6 +175,7 @@ export class XBRoom {
       funHits: { ...this.funHits },
       topicThemes: this.file.topicThemes ?? [],
       topicRemaining: this.availableTopics().length,
+      cycles: this.file.cycles ?? XB_RULES.defaultCycles,
     };
   }
 }

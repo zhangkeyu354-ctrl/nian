@@ -1,0 +1,86 @@
+{
+  "base": "d96fed5",
+  "branch": "codex/xiabaiwang",
+  "instruction": "XB_SCORING_2026-10-24.md",
+  "status": "PASS",
+  "unitRed": {
+    "passed": 1,
+    "failed": 11
+  },
+  "targetedFinal": {
+    "files": 6,
+    "passed": 30
+  },
+  "fullSuiteFirstRun": {
+    "files": 49,
+    "passed": 825,
+    "failed": 3,
+    "failure": "MA simulation 120-second timeouts under parallel browser load",
+    "durationSeconds": 1248.36
+  },
+  "fullSuiteFinal": {
+    "files": 49,
+    "passed": 828,
+    "failed": 0,
+    "durationSeconds": 524.52,
+    "command": "npm test -- --testTimeout=20000 --maxWorkers=1"
+  },
+  "typecheck": "PASS",
+  "build": "PASS; existing DM image and bundle-size warnings",
+  "replays": {
+    "status": "PASS",
+    "seeds": [
+      1701,
+      2903,
+      4111
+    ]
+  },
+  "mobileInterfaces": {
+    "captureTests": 197,
+    "uiWiringScenarios": 64,
+    "status": "PASS",
+    "captureTimeoutMs": 20000,
+    "navigationTimeoutMs": 30000,
+    "interactionTimeoutMs": 5000
+  },
+  "xbFullGames": {
+    "players": [
+      3,
+      6,
+      10
+    ],
+    "status": "PASS",
+    "independentPerRoundScoringAssertions": true,
+    "privacyAndReconnect": true
+  },
+  "xbTwoCycles": {
+    "players": 3,
+    "rounds": 6,
+    "status": "PASS"
+  },
+  "xbUi": {
+    "status": "PASS",
+    "screenshots": 14,
+    "sizes": [
+      "390x844",
+      "844x390"
+    ],
+    "fixture": "10 players, 20 engine-generated rounds, seed 1; no manually edited scores",
+    "tiedChampionsSameHeight": true,
+    "negativeScoreColorAndBadge": true,
+    "orderedSettlementAndSkip": true
+  },
+  "otherGames": {
+    "dbd": "PASS: 3 protocol games / 3025 view checks; 3/4/5-player lobby; 5-browser full game seed 4111 / 109 commands / 112 privacy frames / 5 checked screenshots",
+    "magicalAthlete": "PASS: 4 browser clients, draft, 4 races, 1691 steps",
+    "codenames": "PASS: protocol regression",
+    "dyingMessage": "PASS: 4-browser full game; haptic API spy, physical vibration not verified",
+    "rapidReaction": "PASS: protocol regression"
+  },
+  "webGameSkillClient": "PASS: screenshot and render_game_to_text inspected",
+  "oldSavePolicy": "Preserve scores on reconnect, default absent cycles to 1; new games start at 3",
+  "pushed": false,
+  "mergedMain": false,
+  "deployed": false,
+  "rawLogs": "output/xb-scoring/ (gitignored; includes failures and retries)"
+}

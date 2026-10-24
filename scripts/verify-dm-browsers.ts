@@ -5,13 +5,26 @@ import { assertUiShot } from "./screenshot-check.ts";
 const base = process.env.DM_URL ?? "http://127.0.0.1:3184";
 const out = process.env.DM_SCREEN_DIR ?? "docs/dying-message/screens";
 mkdirSync(out, { recursive: true });
-const browser = await chromium.launch({ headless: true, executablePath: process.env.PW_CHROME });
+const browser = await chromium.launch({
+  headless: true,
+  executablePath: process.env.PW_CHROME,
+});
 const contexts = await Promise.all(
   Array.from({ length: 4 }, () =>
     browser.newContext({
       viewport: { width: 390, height: 844 },
       isMobile: true,
       hasTouch: true,
+    }),
+  ),
+);
+// Headless desktop has no physical vibrator. Record API requests (as XB tests do)
+// instead of treating Chromium's post-reload user-activation policy as a game error.
+await Promise.all(
+  contexts.map((c) =>
+    c.addInitScript({
+      content:
+        "window.__dmBuzz=[];Object.defineProperty(navigator,'vibrate',{configurable:true,value:function(v){window.__dmBuzz.push(v);return true;}});",
     }),
   ),
 );
@@ -221,6 +234,7 @@ try {
         winner: "INNOCENT",
         restart: true,
         consoleErrors: errors,
+        haptics: "API spy only; physical device vibration is not verified",
       },
       null,
       2,

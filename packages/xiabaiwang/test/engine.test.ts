@@ -63,17 +63,17 @@ describe("瞎掰王", () => {
   it("误质疑老实人扣3分，仍可指认；猜错被选者得难度分", () => {
     let s = createGame(players(4), 7);
     s = act(s, s.guesser, { type: "CHALLENGE", target: s.truth, round: 1 });
-    expect(s.scores[s.guesser]).toBe(0);
+    expect(s.scores[s.guesser]).toBe(3);
     const liar = s.players.find(
       (p) => p.id !== s.guesser && p.id !== s.truth,
     )!.id;
     s = act(s, s.guesser, { type: "GUESS", target: liar, round: 1 });
-    expect(s.scores[s.guesser]).toBe(-3);
-    expect(s.scores[liar]).toBe(s.topic.difficulty);
+    expect(s.scores[s.guesser]).toBe(0);
+    expect(s.scores[liar]).toBe(3 + s.topic.difficulty);
     let t = createGame(players(3), 8);
     t = act(t, t.guesser, { type: "CHALLENGE", target: t.truth, round: 1 });
     t = act(t, t.guesser, { type: "GUESS", target: t.truth, round: 1 });
-    expect(t.scores[t.guesser]).toBe(t.topic.difficulty - 3);
+    expect(t.scores[t.guesser]).toBe(3 + t.topic.difficulty - 3);
   });
   it("拒绝人数越界、过期回合、非法目标及未知行动", () => {
     expect(() => createGame(players(2), 1)).toThrow();

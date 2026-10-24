@@ -14,18 +14,20 @@ import { RollingScore, HoldRing, FeelLayer } from "./FeelV2.tsx";
 import { TOPIC_THEMES } from "../../../../packages/xiabaiwang/src/topic-themes.ts";
 import { useXB } from "./xb-net.ts";
 import { Loudmouth, CutePoop, AVATARS } from "./Art.tsx";
-import { ranking, titles } from "./ui-model.ts";
+import { ranking, titles, settlement } from "./ui-model.ts";
+import {
+  XB_RULES,
+  HOUSE_RULES,
+  topicPoints,
+  type Cycles,
+} from "../../../../packages/xiabaiwang/src/rules.ts";
 import { coalesceEffects } from "./effect-queue.ts";
 import "./xb.css";
-const ROLES: Record<string, string> = {
-  guesser: "猜测者",
-  truth: "老实人",
-  bluffer: "瞎掰人",
-};
+const ROLES: Record<string, string> = XB_RULES.roles;
 const JOBS: Record<string, string> = {
   guesser: "耳朵借你，别把脑子也借出去。追问大家，找出真正的老实人。",
   truth: "你知道真答案。讲得像真的就行——虽然本来就是真的。",
-  bluffer: "别慌，脸不红就算赢一半。现场编，让猜测者相信你。",
+  bluffer: `别慌，脸不红就算赢一半。现场编，让${XB_RULES.roles.guesser}相信你。`,
 };
 type Mode = "POOP" | "CHALLENGE" | "GUESS" | null;
 type Flight = {
@@ -128,9 +130,10 @@ export function Xiabaiwang() {
     host = !!me && me === snap?.host;
   const frame = revealTimeline(
       skipped || !animate ? 12000 : elapsed,
-      snap?.players.length ?? 3,
+      snap?.players.length ?? XB_RULES.minPlayers,
     ),
-    last = view?.history.at(-1);
+    last = view?.history.at(-1),
+    scoreSteps = view ? settlement(view) : [];
   const revealed = view?.phase === "reveal",
     over = view?.phase === "over";
   const stage = !code
@@ -469,43 +472,57 @@ export function Xiabaiwang() {
     priorVisible.current = frame.visible;
     return cancel;
   }, [frame.visible, revealed, skipped, animate]);
-  const lastCoin = useRef(0);
+  const lastCoin = useRef(-1);
   useEffect(() => {
     if (!revealed) {
-      lastCoin.current = 0;
+      lastCoin.current = -1;
       return;
     }
-    if (!animate || skipped || frame.visible <= lastCoin.current) return;
-    const i = frame.visible - 1;
-    lastCoin.current = frame.visible;
-    const p = view!.players[i],
-      delta = last?.delta[p.id] ?? 0;
-    const t = setTimeout(() => {
-      const a = document
-          .querySelector(`[data-testid="xb-reveal-card-${i}"]`)
-          ?.getBoundingClientRect(),
-        b = document
-          .getElementById("xb-avatar-" + p.id)
-          ?.getBoundingClientRect();
-      if (a && b && delta)
-        setPointFlights((old) =>
-          [
-            ...old,
-            {
-              id: ++seq.current,
-              target: p.id,
-              delta,
-              x: a.x + a.width / 2,
-              y: a.y + a.height / 2,
-              dx: b.x - a.x + (b.width - a.width) / 2,
-              dy: b.y - a.y + (b.height - a.height) / 2,
-            },
-          ].slice(-10),
-        );
-      hitTimers.current.delete(t);
-    }, 600);
-    hitTimers.current.add(t);
-  }, [revealed, frame.visible, animate, skipped]);
+    if (
+      !animate ||
+      skipped ||
+      frame.settlementIndex < 0 ||
+      frame.settlementIndex <= lastCoin.current
+    )
+      return;
+    lastCoin.current = frame.settlementIndex;
+    const step = scoreSteps[frame.settlementIndex];
+    if (!step) return;
+    const timers = view!.players.map((p, i) => {
+      const delta = step.delta[p.id] ?? 0;
+      const t = setTimeout(() => {
+        const a = document
+            .querySelector(`[data-testid="xb-reveal-card-${i}"]`)
+            ?.getBoundingClientRect(),
+          b = document
+            .getElementById("xb-avatar-" + p.id)
+            ?.getBoundingClientRect();
+        if (a && b && delta)
+          setPointFlights((old) =>
+            [
+              ...old,
+              {
+                id: ++seq.current,
+                target: p.id,
+                delta,
+                x: a.x + a.width / 2,
+                y: a.y + a.height / 2,
+                dx: b.x - a.x + (b.width - a.width) / 2,
+                dy: b.y - a.y + (b.height - a.height) / 2,
+              },
+            ].slice(-10),
+          );
+        hitTimers.current.delete(t);
+      }, 0);
+      hitTimers.current.add(t);
+      return t;
+    });
+    return () =>
+      timers.forEach((t) => {
+        clearTimeout(t);
+        hitTimers.current.delete(t);
+      });
+  }, [revealed, frame.settlementIndex, animate, skipped]);
   useEffect(() => {
     if (skipped) {
       setPointFlights([]);
@@ -579,7 +596,7 @@ export function Xiabaiwang() {
                       ? "不能扔自己，请选其他朋友"
                       : !mode
                         ? "先在底部选择指认、质疑或扔粑粑"
-                        : "猜测者不能指认自己"
+                        : `${ROLES.guesser}不能指认自己`
                     : id === "xb-speak"
                       ? "本轮已被禁止发言，仍然可以扔粑粑"
                       : !view
@@ -732,7 +749,10 @@ export function Xiabaiwang() {
                 </button>
               </div>
             </form>
-            <small>3～10人 · 语音自己开，胡扯我们管</small>
+            <small>
+              {XB_RULES.minPlayers}～{XB_RULES.maxPlayers}人 ·
+              语音自己开，胡扯我们管
+            </small>
           </div>
         ) : !snap ? (
           <div className="xb-entry">
@@ -770,13 +790,13 @@ export function Xiabaiwang() {
             <Loudmouth />
             <span className="xb-kicker">朋友正在调频</span>
             <h1>
-              {snap.players.length < 3
-                ? `还差 ${3 - snap.players.length} 人`
+              {snap.players.length < XB_RULES.minPlayers
+                ? `还差 ${XB_RULES.minPlayers - snap.players.length} 人`
                 : "人齐了，嘴准备好没？"}
             </h1>
             <p>
-              已到 {snap.players.length} / 10 人。
-              {snap.players.length < 3
+              已到 {snap.players.length} / {XB_RULES.maxPlayers} 人。
+              {snap.players.length < XB_RULES.minPlayers
                 ? "至少3人才能开场。"
                 : "更多朋友也可以加入。"}
             </p>
@@ -796,15 +816,25 @@ export function Xiabaiwang() {
             <label className="xb-round-setting">
               本局轮数
               <select
-                disabled
-                aria-label="本局轮数，规则待裁定"
-                value={snap.players.length}
+                disabled={!host || disabled}
+                aria-label="本局圈数"
+                data-testid="xb-cycles"
+                value={snap.cycles ?? XB_RULES.defaultCycles}
+                onChange={(e) =>
+                  command({
+                    type: "SET_CYCLES",
+                    cycles: Number(e.target.value) as Cycles,
+                  })
+                }
               >
-                <option value={snap.players.length}>
-                  {snap.players.length}轮 · 每人任一次猜测者
-                </option>
+                {XB_RULES.cycleOptions.map((cycles) => (
+                  <option key={cycles} value={cycles}>
+                    {cycles}圈 · {snap.players.length * cycles}轮 · 每人任
+                    {cycles}次{ROLES.guesser}
+                  </option>
+                ))}
               </select>
-              <small>轮数设置待规则裁定，暂不修改。</small>
+              <small>按座位向左依次轮换；仅房主可改。</small>
             </label>
             <fieldset
               className="xb-topic-picker"
@@ -878,6 +908,7 @@ export function Xiabaiwang() {
             data-visible={frame.visible}
             data-scores={frame.scores}
             data-done={frame.done}
+            data-settlement={frame.settlementIndex}
           >
             <span className="xb-kicker">真相时间 · 谁的嘴最硬</span>
             <h1>
@@ -923,7 +954,7 @@ export function Xiabaiwang() {
                               ? "✓ 真的！"
                               : p.role === "bluffer"
                                 ? "〰 瞎掰！"
-                                : "🎙 猜测者"}
+                                : `🎙 ${ROLES.guesser}`}
                           </em>
                         )}
                         {last?.selected === p.id && <small>✅ 已投</small>}
@@ -948,6 +979,41 @@ export function Xiabaiwang() {
                 );
               })}
             </div>
+            {frame.settlementIndex >= 0 && (
+              <ol className="xb-settlement" data-testid="xb-settlement">
+                {scoreSteps
+                  .slice(0, frame.settlementIndex + 1)
+                  .map((step, index) => (
+                    <li
+                      key={step.kind}
+                      data-testid={`xb-settlement-${step.kind}`}
+                      className={
+                        index === frame.settlementIndex ? "is-current" : ""
+                      }
+                    >
+                      <b>{step.label}</b>
+                      <div>
+                        {view.players
+                          .filter((p) => step.delta[p.id] !== 0)
+                          .map((p) => (
+                            <span
+                              key={p.id}
+                              className={
+                                (step.delta[p.id] ?? 0) < 0 ? "xb-negative" : ""
+                              }
+                            >
+                              {p.name} {(step.delta[p.id] ?? 0) > 0 ? "+" : ""}
+                              {step.delta[p.id]}
+                            </span>
+                          ))}
+                        {Object.values(step.delta).every((d) => d === 0) && (
+                          <span>无人加减分</span>
+                        )}
+                      </div>
+                    </li>
+                  ))}
+              </ol>
+            )}
             {frame.scores && (
               <>
                 <div className="xb-answer">
@@ -980,7 +1046,10 @@ export function Xiabaiwang() {
                         <span>
                           {AVATARS[i]} {p.name}
                         </span>
-                        <strong>{p.score}分</strong>
+                        <strong className={p.score < 0 ? "xb-negative" : ""}>
+                          {p.score < 0 ? "💸 " : ""}
+                          {p.score}分
+                        </strong>
                         <i
                           style={{
                             width: `${Math.max(4, ((p.score - Math.min(...view.players.map((x) => x.score))) / (Math.max(...view.players.map((x) => x.score)) - Math.min(...view.players.map((x) => x.score)) + 1)) * 100)}%`,
@@ -1001,14 +1070,42 @@ export function Xiabaiwang() {
               <br />
               请上台。
             </h1>
+            <p data-testid="xb-winners">
+              {view.winners.map((id) => label(id)).join("、")}
+              {view.winners.length > 1 ? " · 共同获胜！" : " · 获胜！"}
+            </p>
             <div className="xb-podium">
               {[1, 0, 2].map((rank) => {
-                const p = ranking(view)[rank];
-                return p ? (
-                  <div key={p.id} className={"place-" + rank}>
-                    <span>{AVATARS[p.seat]}</span>
-                    <b>{p.name}</b>
-                    <strong>{p.score}分</strong>
+                const group = view.standings.filter((p) => p.rank === rank + 1);
+                return group.length ? (
+                  <div
+                    key={rank}
+                    className={"place-" + rank}
+                    data-testid={`xb-podium-level-${rank + 1}`}
+                  >
+                    <div className="xb-podium-occupants">
+                      {group.map((person) => {
+                        const p = ranking(view).find(
+                          (p) => p.id === person.id,
+                        )!;
+                        return (
+                          <div
+                            className="xb-podium-player"
+                            key={p.id}
+                            data-rank={person.rank}
+                          >
+                            <span>{AVATARS[p.seat]}</span>
+                            <b title={p.name}>{p.name}</b>
+                            <strong
+                              className={p.score < 0 ? "xb-negative" : ""}
+                            >
+                              {p.score < 0 ? "💸 " : ""}
+                              {p.score}分
+                            </strong>
+                          </div>
+                        );
+                      })}
+                    </div>
                     <i>{rank === 0 ? "👑" : rank + 1}</i>
                   </div>
                 ) : null;
@@ -1048,7 +1145,8 @@ export function Xiabaiwang() {
             </button>
             <article className="xb-paper">
               <span className="xb-kicker">
-                今晚的胡扯主题 · {"★".repeat(view.difficulty)}
+                今晚的胡扯主题 · {"★".repeat(view.difficulty)} · 本题{" "}
+                {topicPoints(view.difficulty)} 分
               </span>
               <h1>{view.question}</h1>
               <div className="xb-wave" aria-hidden="true">
@@ -1123,7 +1221,15 @@ export function Xiabaiwang() {
           {snap.players.map((p, i) => {
             const vp = view?.players.find((v) => v.id === p.id),
               showRole = !revealed || i < frame.visible,
-              delta = revealed && !frame.scores ? (last?.delta[p.id] ?? 0) : 0,
+              pendingDelta =
+                revealed && !frame.scores ? (last?.delta[p.id] ?? 0) : 0,
+              playedDelta =
+                !revealed || frame.scores || frame.settlementIndex < 0
+                  ? 0
+                  : scoreSteps
+                      .slice(0, frame.settlementIndex + 1)
+                      .reduce((sum, step) => sum + (step.delta[p.id] ?? 0), 0),
+              displayScore = (vp?.score ?? 0) - pendingDelta + playedDelta,
               hitNow =
                 now - (hit[p.id] ?? 0) < 3650 &&
                 (hit[p.id] ?? 0) > (shaken[p.id] ?? 0);
@@ -1166,12 +1272,14 @@ export function Xiabaiwang() {
                   )}
                 </span>
                 <b>{p.name}</b>
-                <strong>
+                {vp && displayScore < 0 && (
+                  <span className="xb-debt" aria-label="负分">
+                    💸
+                  </span>
+                )}
+                <strong className={vp && displayScore < 0 ? "xb-negative" : ""}>
                   {vp ? (
-                    <RollingScore
-                      value={vp.score - delta}
-                      powerSave={!animate}
-                    />
+                    <RollingScore value={displayScore} powerSave={!animate} />
                   ) : p.connected ? (
                     "在线"
                   ) : (
@@ -1190,7 +1298,7 @@ export function Xiabaiwang() {
                           : revealed && showRole
                             ? ROLES[vp?.role ?? ""]
                             : p.id === view?.guesser
-                              ? "猜测者"
+                              ? ROLES.guesser
                               : p.id === me
                                 ? "你"
                                 : p.connected
@@ -1258,7 +1366,7 @@ export function Xiabaiwang() {
             disabled={
               disabled ||
               !!intro ||
-              (!view && (!host || snap.players.length < 3)) ||
+              (!view && (!host || snap.players.length < XB_RULES.minPlayers)) ||
               (!!mode && !selected) ||
               (revealed && (!host || !frame.done)) ||
               (over && !host) ||
@@ -1467,14 +1575,54 @@ export function Xiabaiwang() {
               <>
                 <h2>规则与所选版本</h2>
                 <p>
-                  一位猜测者公开主持，一位老实人秘密看答案，其余人现场瞎掰。保持自由语音，不用交文字解释。指认后按座位揭晓身份。
+                  每轮一位{ROLES.guesser}公开主持，一位{ROLES.truth}
+                  秘密看答案，其余为{ROLES.bluffer}
+                  。保持自由语音，不用交文字解释。指认后按座位揭晓身份。
                 </p>
-                <p>
-                  基础计分候选：猜中双方各得题目难度分，猜错被选中的瞎掰人得难度分。初始0分、允许负分、每人任一次猜测者。以上基础分与轮数仍待用户核对原版，尚非官方确认。
-                </p>
-                <p>
-                  「你在放屁！」采用用户指定的地区版参考玩法：猜测者每轮一次，禁言但不揭身份，可继续指认。命中瞎掰人时猜测者+1、目标-1；误中老实人时猜测者-3；结算时叠加。
-                </p>
+                <article
+                  className="xb-score-reference"
+                  data-testid="xb-scoring-reference"
+                >
+                  <h3>计分速查 · 台湾繁体版，用户已裁定</h3>
+                  <p>
+                    每人初始 {XB_RULES.initialScore} 分。本题分值 D ={" "}
+                    {Object.entries(XB_RULES.difficultyPoints)
+                      .map(
+                        ([level, points]) =>
+                          `${XB_RULES.difficultyNames[Number(level) as 1 | 2 | 3]} ${points} 分`,
+                      )
+                      .join("／")}
+                    。
+                  </p>
+                  <p>
+                    指中老实人：{ROLES.guesser} +D、老实人
+                    +D。指中瞎掰人：只有被指中的瞎掰人 +D。
+                  </p>
+                  <p>
+                    「你在放屁！」（公三小）：每轮最多{" "}
+                    {XB_RULES.challengesPerRound} 次。命中瞎掰人，
+                    {ROLES.guesser} +{XB_RULES.challengeBlufferReward}、目标 −
+                    {XB_RULES.challengeBlufferPenalty}；误中老实人，
+                    {ROLES.guesser} −{XB_RULES.challengeTruthPenalty}
+                    。质疑与指认分叠加。
+                  </p>
+                  <p>
+                    质疑在讨论阶段使用，不揭身份；被禁言者仍可被指认、仍可扔粑粑。使用后不可撤销。
+                  </p>
+                  <p>
+                    默认 {XB_RULES.defaultCycles} 圈，房主可选{" "}
+                    {XB_RULES.cycleOptions.join("／")}{" "}
+                    圈；按座位向左依次传给下一位{ROLES.guesser}
+                    。最高分获胜，同分共同获胜、共享同一级领奖台。
+                  </p>
+                  <ul>
+                    {HOUSE_RULES.map((rule) => (
+                      <li key={rule.id}>
+                        <b>{rule.id}</b>：{rule.text}
+                      </li>
+                    ))}
+                  </ul>
+                </article>
                 <p>
                   参考计时180秒，时间到仍能继续讨论，不自动结束或扣分。粑粑不限次数、2秒冷却、不能扔自己，只做娱乐。禁言依赖外部语音约定，网站不碰麦克风。
                 </p>
@@ -1630,9 +1778,12 @@ export function Xiabaiwang() {
             setPointFlights((old) => old.filter((x) => x.id !== f.id));
           }}
         >
-          <b className="xb-coin" aria-hidden="true"/> {f.delta > 0 ? "+" : ""}
+          <b className="xb-coin" aria-hidden="true" /> {f.delta > 0 ? "+" : ""}
           {f.delta}
-          <i className="xb-coin-tail"><b className="xb-coin"/><b className="xb-coin"/></i>
+          <i className="xb-coin-tail">
+            <b className="xb-coin" />
+            <b className="xb-coin" />
+          </i>
         </span>
       ))}
     </main>
