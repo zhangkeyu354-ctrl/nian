@@ -1,0 +1,39 @@
+{
+  "complete": true,
+  "fixtures": "10人两圈20轮真实引擎指令生成，无手改分数",
+  "initialSeed": 1,
+  "winners": [
+    "p3",
+    "p6"
+  ],
+  "scores": {
+    "p0": 1,
+    "p1": 1,
+    "p2": -1,
+    "p3": 3,
+    "p4": 0,
+    "p5": -2,
+    "p6": 3,
+    "p7": 2,
+    "p8": -1,
+    "p9": -1
+  },
+  "sequence": [
+    "guess",
+    "challenge",
+    "total"
+  ],
+  "sizes": [
+    {
+      "width": 390,
+      "height": 844
+    },
+    {
+      "width": 844,
+      "height": 390
+    }
+  ],
+  "skip": true,
+  "negativeBadge": true,
+  "errors": []
+}

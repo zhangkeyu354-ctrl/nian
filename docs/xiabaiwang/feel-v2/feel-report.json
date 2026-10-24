@@ -1,0 +1,12 @@
+{
+  "complete": true,
+  "errors": [],
+  "longPress": true,
+  "cancelHold": true,
+  "drag": true,
+  "combo": true,
+  "shakeOff": true,
+  "powerSave": true,
+  "themeCapacity": true,
+  "scoreUnaffected": true
+}

@@ -25,6 +25,9 @@ try {
   );
   const p = await ctx.newPage();
   p.setDefaultTimeout(5000);
+  // Vite's first navigation compiles the fixture app. Keep interaction assertions
+  // at 5 seconds; give cold navigation its own budget on local Windows machines.
+  p.setDefaultNavigationTimeout(30_000);
   const errors: string[] = [];
   p.on("pageerror", (e) => errors.push(String(e)));
   for (const sample of samples) {
@@ -86,7 +89,16 @@ try {
         );
       console.log("UI_WIRING_PASS", sample.id, taps.length);
     } catch (e) {
-      console.error("UI_WIRING_FAIL", sample.id, JSON.stringify(await p.evaluate(() => ({sent:(window as any).__sent, state:window.render_game_to_text()}))));
+      console.error(
+        "UI_WIRING_FAIL",
+        sample.id,
+        JSON.stringify(
+          await p.evaluate(() => ({
+            sent: (window as any).__sent,
+            state: window.render_game_to_text(),
+          })),
+        ),
+      );
       await p.screenshot({
         path:
           "output/mobile-implementation/interfaces/FAILED_" +

@@ -1,0 +1,40 @@
+import assert from 'node:assert/strict';
+import fs from 'node:fs';
+import path from 'node:path';
+import { fileURLToPath } from 'node:url';
+const repo=path.resolve(path.dirname(fileURLToPath(import.meta.url)),'..');
+const directory=path.join(repo,'docs/xiabaiwang/original/terms-review');
+const rows=JSON.parse(fs.readFileSync(path.join(directory,'terms-review.json'),'utf8'));
+assert.equal(rows.length,160,'题库必须有160条');
+assert.equal(new Set(rows.map(r=>r.id)).size,160,'编号重复');
+const fronts=rows.map(r=>r.question.normalize('NFKC').replace(/\s/gu,''));
+assert.equal(new Set(fronts).size,160,'题面重复');
+for(const r of rows){
+ assert.match(r.question,/^[\p{Script=Han}]{2,8}$/u,`${r.id}：题面须为2至8个汉字`);
+ assert.ok(!/[?？]|为什么|是什么|怎么|吗/u.test(r.question),`${r.id}：不得使用问答题面`);
+ assert.ok(r.answer.length>=12&&r.answer.length<=160,`${r.id}：释义不完整或过长`);
+ assert.ok([1,2,3].includes(r.difficulty),`${r.id}：难度无效`);
+ const u=new URL(r.source);assert.equal(u.protocol,'https:',`${r.id}：来源须为HTTPS链接`);
+ assert.ok(r.sourceNote?.length>=6,`${r.id}：缺少来源说明`);
+}
+const difficulty=Object.fromEntries([1,2,3].map(d=>[d,rows.filter(r=>r.difficulty===d).length]));
+assert.deepEqual(Object.values(difficulty),[64,64,32],'难度配比错误');
+const themes=[...new Set(rows.map(r=>r.theme))];assert.equal(themes.length,12,'主题数量错误');
+const byTheme=Object.fromEntries(themes.map(t=>[t,{total:rows.filter(r=>r.theme===t).length,...Object.fromEntries([1,2,3].map(d=>[d,rows.filter(r=>r.theme===t&&r.difficulty===d).length]))}]));
+assert.ok(Object.values(byTheme).every(t=>t.total>=8),'每主题至少8条');
+const html=fs.readFileSync(path.join(directory,'index.html'),'utf8');
+const embedded=html.match(/<script id="bank-data" type="application\/json">([\s\S]*?)<\/script>/)?.[1];
+assert.ok(embedded,'审核页缺少题库数据');assert.deepEqual(JSON.parse(embedded),rows,'网页与JSON数据不一致');
+const md=fs.readFileSync(path.join(directory,'XB_TERMS_REVIEW_2026-10-24.md'),'utf8');
+assert.equal((md.match(/^\| \d{3} \|/gm)||[]).length,160,'文字版条数错误');
+for(const r of rows)assert.ok(md.includes(`**${r.question}**`),`${r.id}：文字版漏词`);
+const oldFiles=['packages/xiabaiwang/src/topics.ts','packages/xiabaiwang/src/topics-v1.ts','packages/xiabaiwang/src/topics-v2.ts'];
+const oldFronts=oldFiles.filter(f=>fs.existsSync(path.join(repo,f))).flatMap(f=>{
+ const code=fs.readFileSync(path.join(repo,f),'utf8');
+ return [...code.matchAll(/question:\s*["']([^"']+)["']/gu),...code.matchAll(/\[\s*"((?:[^"\\]|\\.)+)"\s*,/gu)].map(m=>m[1].normalize('NFKC').replace(/\s/gu,''));
+});
+assert.equal(oldFronts.length,160,'旧题提取必须覆盖160题，不能用空比较伪装去重');
+const overlap=fronts.filter(q=>oldFronts.includes(q));assert.deepEqual(overlap,[],'与被替换的问答题题面重复');
+const result={date:'2026-10-24',status:'review-ready-not-game-integrated',total:rows.length,uniqueFronts:fronts.length,difficulty,byTheme,checks:{chineseOnly:true,twoToEightCharacters:true,noQuestionFronts:true,uniqueIds:true,uniqueFronts:true,sourceCoverage:rows.length,webDataMatchesJson:true,markdownCount:160,oldQuestionFrontCount:oldFronts.length,oldQuestionFrontOverlap:overlap},limits:['难度与趣味等待用户审核；机械检查不代替内容审核。','本轮只交付题库审核包，没有完成原版流程、UI与全游戏回归。']};
+fs.writeFileSync(path.join(directory,'VALIDATION.json'),JSON.stringify(result,null,2)+'\n');
+console.log(JSON.stringify({passed:true,total:rows.length,difficulty,themes:themes.length,duplicateFronts:0,oldQuestionFrontOverlap:overlap.length}));

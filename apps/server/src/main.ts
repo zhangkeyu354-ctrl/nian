@@ -11,6 +11,7 @@ import { attachMagicalAthlete } from "./ma-rooms.ts";
 import { attachDyingMessage } from "./dm-rooms.ts";
 import { attachCodenames } from "./cn-rooms.ts";
 import { attachReflexRace } from "./rr-rooms.ts";
+import { attachXiabaiwang } from "./xb-rooms.ts";
 import { attachWitchTown } from "./wt-rooms.ts";
 import {
   EVENTS,
@@ -82,6 +83,7 @@ const http = createServer((req, res) => {
         cnRooms: cnStore.rooms.size,
         dmRooms: dmStore.rooms.size,
         rrRooms: rrStore.rooms.size,
+        xbRooms: xbStore.rooms.size,
         dpRooms: dpStore.rooms.size,
         ...(wtStore
           ? { witchTown: { milestone: "M5_PHONE_UI", rooms: wtStore.size, fullGame: true } }
@@ -186,6 +188,8 @@ const rrStore = attachReflexRace(
   resolve(process.env.RR_DATA_DIR ?? join(DATA, "../rr-rooms")),
   { maxRooms: MAX_ROOMS, idleMs: ROOM_IDLE_MS },
 );
+
+const xbStore = attachXiabaiwang(io, resolve(process.env.XB_DATA_DIR ?? join(DATA, '../xb-rooms')), {maxRooms:MAX_ROOMS,idleMs:ROOM_IDLE_MS});
 
 function broadcast(room: Room) {
   for (const s of io.sockets.adapter.rooms.get(room.code) ?? []) {

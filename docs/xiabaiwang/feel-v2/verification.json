@@ -1,0 +1,53 @@
+{
+  "base": "4115935",
+  "branch": "codex/xiabaiwang",
+  "unitTestFiles": 46,
+  "unitTests": 813,
+  "unitCommand": "npm test -- --testTimeout=20000 --maxWorkers=2",
+  "typecheck": true,
+  "build": true,
+  "replays": 3,
+  "mobileCaptureTests": 197,
+  "mobileUIWiringScenes": 64,
+  "xbBrowserPlayers": [
+    3,
+    6,
+    10
+  ],
+  "xbProtocolPlayers": [
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9,
+    10
+  ],
+  "otherGames": {
+    "dbd": {
+      "protocolViewChecks": 3025,
+      "browserPlayers": 5,
+      "commands": 109
+    },
+    "magicalAthlete": {
+      "players": 4,
+      "races": 4,
+      "steps": 2083
+    },
+    "codenames": {
+      "protocolGroups": 12
+    },
+    "dyingMessage": {
+      "browserPlayers": 4,
+      "fullGame": true
+    },
+    "reflexRace": {
+      "protocol": true
+    }
+  },
+  "minimumOneSecondFps": 54,
+  "averageFps": 58.43890832993236,
+  "deployed": false,
+  "pushed": false
+}

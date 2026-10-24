@@ -1,0 +1,45 @@
+<!doctype html>
+<html lang="zh">
+  <meta charset="utf-8" /><title>XB音频离线验收</title>
+  <body>
+    归一化音频测量（不调用扬声器）
+    <script type="module">
+      import {
+        synthesizeCue,
+        createNormalizedMix,
+        NORMALIZED_CUE_GAIN,
+      } from "/src/drawing/feel.ts";
+      window.measureXBAudio = async () => {
+        const rows = [];
+        for (const cue of Object.keys(NORMALIZED_CUE_GAIN).filter(
+          (c) => c !== "pen",
+        )) {
+          const c = new OfflineAudioContext(1, 48000, 48000),
+            m = createNormalizedMix(c, c.destination, 1),
+            g = c.createGain();
+          g.gain.value = NORMALIZED_CUE_GAIN[cue];
+          g.connect(m.input);
+          synthesizeCue(c, g, cue, 0.01);
+          const a = (await c.startRendering()).getChannelData(0);
+          let peak = 0,
+            rms = 0;
+          const n = 2400;
+          let sum = 0;
+          for (let i = 0; i < a.length; i++) {
+            peak = Math.max(peak, Math.abs(a[i]));
+            sum += a[i] * a[i];
+            if (i >= n) sum -= a[i - n] * a[i - n];
+            if (i >= n) rms = Math.max(rms, Math.sqrt(Math.max(0, sum) / n));
+          }
+          rows.push({ cue, peak, rms });
+        }
+        const ref = rows.find((r) => r.cue === "turn");
+        return rows.map((r) => ({
+          ...r,
+          peakRatio: r.peak / ref.peak,
+          rmsRatio: r.rms / ref.rms,
+        }));
+      };
+    </script>
+  </body>
+</html>

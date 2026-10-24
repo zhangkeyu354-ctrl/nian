@@ -1,0 +1,1292 @@
+{
+  "schema": "xb-effective-review-v1",
+  "originalExport": "user-review.json",
+  "chatOverrideDate": "2026-10-24",
+  "reviews": [
+    {
+      "id": "xb-review-001",
+      "term": "白象",
+      "difficulty": 1,
+      "decision": "replace",
+      "note": "",
+      "currentTerm": "白象"
+    },
+    {
+      "id": "xb-review-002",
+      "term": "黄油猫悖论",
+      "difficulty": 3,
+      "decision": "replace",
+      "note": "",
+      "currentTerm": "黄油猫悖论"
+    },
+    {
+      "id": "xb-review-003",
+      "term": "祖父悖论",
+      "difficulty": 3,
+      "decision": "replace",
+      "note": "",
+      "currentTerm": "祖父悖论"
+    },
+    {
+      "id": "xb-review-004",
+      "term": "生日悖论",
+      "difficulty": 3,
+      "decision": "replace",
+      "note": "",
+      "currentTerm": "生日悖论"
+    },
+    {
+      "id": "xb-review-005",
+      "term": "土豆悖论",
+      "difficulty": 3,
+      "decision": "replace",
+      "note": "",
+      "currentTerm": "土豆悖论"
+    },
+    {
+      "id": "xb-review-006",
+      "term": "猴子补丁",
+      "difficulty": 3,
+      "decision": "replace",
+      "note": "",
+      "currentTerm": "猴子补丁"
+    },
+    {
+      "id": "xb-review-007",
+      "term": "橡皮鸭调试",
+      "difficulty": 2,
+      "decision": "keep",
+      "note": "",
+      "currentTerm": "橡皮鸭调试"
+    },
+    {
+      "id": "xb-review-008",
+      "term": "汉堡菜单",
+      "difficulty": 2,
+      "decision": "keep",
+      "note": "",
+      "currentTerm": "汉堡菜单"
+    },
+    {
+      "id": "xb-review-009",
+      "term": "面包屑导航",
+      "difficulty": 1,
+      "decision": "keep",
+      "note": "",
+      "currentTerm": "面包屑导航"
+    },
+    {
+      "id": "xb-review-010",
+      "term": "蜂蜜罐",
+      "difficulty": 3,
+      "decision": "keep",
+      "note": "",
+      "currentTerm": "蜂蜜罐"
+    },
+    {
+      "id": "xb-review-011",
+      "term": "袋鼠词",
+      "difficulty": 3,
+      "decision": "keep",
+      "note": "",
+      "currentTerm": "袋鼠词"
+    },
+    {
+      "id": "xb-review-012",
+      "term": "雪克隆",
+      "difficulty": 3,
+      "decision": "keep",
+      "note": "",
+      "currentTerm": "雪克隆"
+    },
+    {
+      "id": "xb-review-013",
+      "term": "蓝月亮",
+      "difficulty": 3,
+      "decision": "keep",
+      "note": "",
+      "currentTerm": "蓝月亮"
+    },
+    {
+      "id": "xb-review-014",
+      "term": "花园路径句",
+      "difficulty": 3,
+      "decision": "keep",
+      "note": "",
+      "currentTerm": "花园路径句"
+    },
+    {
+      "id": "xb-review-015",
+      "term": "蚁浴",
+      "difficulty": 1,
+      "decision": "keep",
+      "note": "",
+      "currentTerm": "蚁浴"
+    },
+    {
+      "id": "xb-review-016",
+      "term": "海猪",
+      "difficulty": 1,
+      "decision": "keep",
+      "note": "",
+      "currentTerm": "海猪"
+    },
+    {
+      "id": "xb-review-017",
+      "term": "海兔",
+      "difficulty": 1,
+      "decision": "replace",
+      "note": "",
+      "currentTerm": "海兔"
+    },
+    {
+      "id": "xb-review-018",
+      "term": "水熊",
+      "difficulty": 1,
+      "decision": "replace",
+      "note": "",
+      "currentTerm": "水熊"
+    },
+    {
+      "id": "xb-review-019",
+      "term": "熊狸",
+      "difficulty": 1,
+      "decision": "replace",
+      "note": "",
+      "currentTerm": "熊狸"
+    },
+    {
+      "id": "xb-review-020",
+      "term": "拳击蟹",
+      "difficulty": 1,
+      "decision": "replace",
+      "note": "",
+      "currentTerm": "拳击蟹"
+    },
+    {
+      "id": "xb-review-021",
+      "term": "尸花",
+      "difficulty": 2,
+      "decision": "keep",
+      "note": "",
+      "currentTerm": "尸花"
+    },
+    {
+      "id": "xb-review-022",
+      "term": "跳舞草",
+      "difficulty": 2,
+      "decision": "replace",
+      "note": "",
+      "currentTerm": "跳舞草"
+    },
+    {
+      "id": "xb-review-023",
+      "term": "巧克力秋英",
+      "difficulty": 2,
+      "decision": "keep",
+      "note": "",
+      "currentTerm": "巧克力秋英"
+    },
+    {
+      "id": "xb-review-024",
+      "term": "冰虫",
+      "difficulty": 2,
+      "decision": "replace",
+      "note": "",
+      "currentTerm": "冰虫"
+    },
+    {
+      "id": "xb-review-025",
+      "term": "月亮鱼",
+      "difficulty": 2,
+      "decision": "replace",
+      "note": "",
+      "currentTerm": "月亮鱼"
+    },
+    {
+      "id": "xb-review-026",
+      "term": "叶海龙",
+      "difficulty": 2,
+      "decision": "replace",
+      "note": "",
+      "currentTerm": "叶海龙"
+    },
+    {
+      "id": "xb-review-027",
+      "term": "僧帽水母",
+      "difficulty": 2,
+      "decision": "replace",
+      "note": "",
+      "currentTerm": "僧帽水母"
+    },
+    {
+      "id": "xb-review-028",
+      "term": "玻璃蛙",
+      "difficulty": 2,
+      "decision": "replace",
+      "note": "",
+      "currentTerm": "玻璃蛙"
+    },
+    {
+      "id": "xb-review-029",
+      "term": "拉耳朵深蹲",
+      "difficulty": 1,
+      "decision": "keep",
+      "note": "",
+      "currentTerm": "拉耳朵深蹲"
+    },
+    {
+      "id": "xb-review-030",
+      "term": "滚奶酪",
+      "difficulty": 1,
+      "decision": "keep",
+      "note": "",
+      "currentTerm": "滚奶酪"
+    },
+    {
+      "id": "xb-review-031",
+      "term": "婚前砸瓷",
+      "difficulty": 1,
+      "decision": "keep",
+      "note": "",
+      "currentTerm": "婚前砸瓷"
+    },
+    {
+      "id": "xb-review-032",
+      "term": "红酒大战",
+      "difficulty": 1,
+      "decision": "keep",
+      "note": "",
+      "currentTerm": "红酒大战"
+    },
+    {
+      "id": "xb-review-033",
+      "term": "五月柱",
+      "difficulty": 1,
+      "decision": "keep",
+      "note": "",
+      "currentTerm": "五月柱"
+    },
+    {
+      "id": "xb-review-034",
+      "term": "圣诞木头",
+      "difficulty": 1,
+      "decision": "replace",
+      "note": "",
+      "currentTerm": "圣诞木头"
+    },
+    {
+      "id": "xb-review-035",
+      "term": "指尖角力",
+      "difficulty": 2,
+      "decision": "replace",
+      "note": "",
+      "currentTerm": "指尖角力"
+    },
+    {
+      "id": "xb-review-036",
+      "term": "撒豆",
+      "difficulty": 2,
+      "decision": "replace",
+      "note": "",
+      "currentTerm": "撒豆"
+    },
+    {
+      "id": "xb-review-037",
+      "term": "涂黑新娘",
+      "difficulty": 2,
+      "decision": "replace",
+      "note": "",
+      "currentTerm": "涂黑新娘"
+    },
+    {
+      "id": "xb-review-038",
+      "term": "番茄大战",
+      "difficulty": 2,
+      "decision": "replace",
+      "note": "",
+      "currentTerm": "番茄大战"
+    },
+    {
+      "id": "xb-review-039",
+      "term": "跳婴节",
+      "difficulty": 2,
+      "decision": "replace",
+      "note": "",
+      "currentTerm": "跳婴节"
+    },
+    {
+      "id": "xb-review-040",
+      "term": "猴子自助餐",
+      "difficulty": 1,
+      "decision": "keep",
+      "note": "",
+      "currentTerm": "猴子自助餐"
+    },
+    {
+      "id": "xb-review-041",
+      "term": "萝卜之夜",
+      "difficulty": 2,
+      "decision": "replace",
+      "note": "",
+      "currentTerm": "萝卜之夜"
+    },
+    {
+      "id": "xb-review-042",
+      "term": "哭嫁",
+      "difficulty": 2,
+      "decision": "replace",
+      "note": "",
+      "currentTerm": "哭嫁"
+    },
+    {
+      "id": "xb-review-043",
+      "term": "虎子",
+      "difficulty": 1,
+      "decision": "keep",
+      "note": "",
+      "currentTerm": "虎子"
+    },
+    {
+      "id": "xb-review-044",
+      "term": "警枕",
+      "difficulty": 1,
+      "decision": "keep",
+      "note": "",
+      "currentTerm": "警枕"
+    },
+    {
+      "id": "xb-review-045",
+      "term": "走马灯",
+      "difficulty": 1,
+      "decision": "replace",
+      "note": "",
+      "currentTerm": "走马灯"
+    },
+    {
+      "id": "xb-review-046",
+      "term": "鸭形玻璃注",
+      "difficulty": 1,
+      "decision": "keep",
+      "note": "",
+      "currentTerm": "鸭形玻璃注"
+    },
+    {
+      "id": "xb-review-047",
+      "term": "空心十二面体",
+      "difficulty": 3,
+      "decision": "keep",
+      "note": "",
+      "currentTerm": "空心十二面体"
+    },
+    {
+      "id": "xb-review-048",
+      "term": "哨壶",
+      "difficulty": 1,
+      "decision": "replace",
+      "note": "",
+      "currentTerm": "哨壶"
+    },
+    {
+      "id": "xb-review-049",
+      "term": "猫头鹰币",
+      "difficulty": 2,
+      "decision": "replace",
+      "note": "",
+      "currentTerm": "猫头鹰币"
+    },
+    {
+      "id": "xb-review-050",
+      "term": "耳杯",
+      "difficulty": 2,
+      "decision": "replace",
+      "note": "",
+      "currentTerm": "耳杯"
+    },
+    {
+      "id": "xb-review-051",
+      "term": "鱼符",
+      "difficulty": 2,
+      "decision": "replace",
+      "note": "",
+      "currentTerm": "鱼符"
+    },
+    {
+      "id": "xb-review-052",
+      "term": "封泥",
+      "difficulty": 2,
+      "decision": "replace",
+      "note": "",
+      "currentTerm": "封泥"
+    },
+    {
+      "id": "xb-review-053",
+      "term": "虎帐",
+      "difficulty": 2,
+      "decision": "replace",
+      "note": "",
+      "currentTerm": "虎帐"
+    },
+    {
+      "id": "xb-review-054",
+      "term": "奇普",
+      "difficulty": 3,
+      "decision": "keep",
+      "note": "",
+      "currentTerm": "奇普"
+    },
+    {
+      "id": "xb-review-055",
+      "term": "重写本",
+      "difficulty": 3,
+      "decision": "pending",
+      "note": "",
+      "currentTerm": "贝叶经",
+      "priorTermDecision": "replace",
+      "decisionSource": "词名发生变化，旧词审核意见不得套用于新词"
+    },
+    {
+      "id": "xb-review-056",
+      "term": "面包印章",
+      "difficulty": 2,
+      "decision": "replace",
+      "note": "",
+      "currentTerm": "面包印章"
+    },
+    {
+      "id": "xb-review-057",
+      "term": "珍道具",
+      "difficulty": 1,
+      "decision": "keep",
+      "note": "",
+      "currentTerm": "珍道具"
+    },
+    {
+      "id": "xb-review-058",
+      "term": "鸽子相机",
+      "difficulty": 1,
+      "decision": "keep",
+      "note": "",
+      "currentTerm": "鸽子相机"
+    },
+    {
+      "id": "xb-review-059",
+      "term": "耳朵喇叭",
+      "difficulty": 1,
+      "decision": "keep",
+      "note": "",
+      "currentTerm": "耳朵喇叭"
+    },
+    {
+      "id": "xb-review-060",
+      "term": "黄油棒",
+      "difficulty": 1,
+      "decision": "keep",
+      "note": "",
+      "currentTerm": "黄油棒"
+    },
+    {
+      "id": "xb-review-061",
+      "term": "单轮摩托",
+      "difficulty": 1,
+      "decision": "replace",
+      "note": "",
+      "currentTerm": "单轮摩托",
+      "decisionSource": "用户聊天明确裁定：这三个都不要了；2026-10-24"
+    },
+    {
+      "id": "xb-review-062",
+      "term": "滚动桥",
+      "difficulty": 2,
+      "decision": "keep",
+      "note": "",
+      "currentTerm": "滚动桥"
+    },
+    {
+      "id": "xb-review-063",
+      "term": "风力仿生兽",
+      "difficulty": 3,
+      "decision": "keep",
+      "note": "",
+      "currentTerm": "风力仿生兽"
+    },
+    {
+      "id": "xb-review-064",
+      "term": "玻璃琴",
+      "difficulty": 3,
+      "decision": "replace",
+      "note": "",
+      "currentTerm": "玻璃琴",
+      "decisionSource": "用户聊天明确裁定：这三个都不要了；2026-10-24"
+    },
+    {
+      "id": "xb-review-065",
+      "term": "特雷门琴",
+      "difficulty": 3,
+      "decision": "replace",
+      "note": "",
+      "currentTerm": "特雷门琴",
+      "decisionSource": "用户聊天明确裁定：这三个都不要了；2026-10-24"
+    },
+    {
+      "id": "xb-review-066",
+      "term": "摄影枪",
+      "difficulty": 2,
+      "decision": "pending",
+      "note": "",
+      "currentTerm": "摄影枪"
+    },
+    {
+      "id": "xb-review-067",
+      "term": "佩珀尔幻象",
+      "difficulty": 3,
+      "decision": "keep",
+      "note": "",
+      "currentTerm": "佩珀尔幻象"
+    },
+    {
+      "id": "xb-review-068",
+      "term": "烟雾头盔",
+      "difficulty": 2,
+      "decision": "replace",
+      "note": "",
+      "currentTerm": "烟雾头盔"
+    },
+    {
+      "id": "xb-review-069",
+      "term": "喝水鸟",
+      "difficulty": 2,
+      "decision": "replace",
+      "note": "",
+      "currentTerm": "喝水鸟"
+    },
+    {
+      "id": "xb-review-070",
+      "term": "猫锅",
+      "difficulty": 1,
+      "decision": "replace",
+      "note": "",
+      "currentTerm": "猫锅"
+    },
+    {
+      "id": "xb-review-071",
+      "term": "猫舌",
+      "difficulty": 1,
+      "decision": "replace",
+      "note": "",
+      "currentTerm": "猫舌"
+    },
+    {
+      "id": "xb-review-072",
+      "term": "狐狸嫁女",
+      "difficulty": 1,
+      "decision": "keep",
+      "note": "",
+      "currentTerm": "狐狸嫁女"
+    },
+    {
+      "id": "xb-review-073",
+      "term": "借景",
+      "difficulty": 1,
+      "decision": "replace",
+      "note": "",
+      "currentTerm": "借景"
+    },
+    {
+      "id": "xb-review-074",
+      "term": "水琴窟",
+      "difficulty": 1,
+      "decision": "replace",
+      "note": "",
+      "currentTerm": "水琴窟"
+    },
+    {
+      "id": "xb-review-075",
+      "term": "鹿威",
+      "difficulty": 2,
+      "decision": "replace",
+      "note": "",
+      "currentTerm": "鹿威"
+    },
+    {
+      "id": "xb-review-076",
+      "term": "根付",
+      "difficulty": 2,
+      "decision": "replace",
+      "note": "",
+      "currentTerm": "根付"
+    },
+    {
+      "id": "xb-review-077",
+      "term": "暖帘",
+      "difficulty": 2,
+      "decision": "common",
+      "note": "",
+      "currentTerm": "暖帘"
+    },
+    {
+      "id": "xb-review-078",
+      "term": "朝颜",
+      "difficulty": 2,
+      "decision": "common",
+      "note": "",
+      "currentTerm": "朝颜"
+    },
+    {
+      "id": "xb-review-079",
+      "term": "落盖",
+      "difficulty": 2,
+      "decision": "replace",
+      "note": "",
+      "currentTerm": "落盖"
+    },
+    {
+      "id": "xb-review-080",
+      "term": "猫车",
+      "difficulty": 2,
+      "decision": "replace",
+      "note": "",
+      "currentTerm": "猫车"
+    },
+    {
+      "id": "xb-review-081",
+      "term": "金鱼捞",
+      "difficulty": 2,
+      "decision": "common",
+      "note": "",
+      "currentTerm": "金鱼捞"
+    },
+    {
+      "id": "xb-review-082",
+      "term": "大根演员",
+      "difficulty": 2,
+      "decision": "common",
+      "note": "",
+      "currentTerm": "大根演员"
+    },
+    {
+      "id": "xb-review-083",
+      "term": "狗牙纹",
+      "difficulty": 1,
+      "decision": "replace",
+      "note": "",
+      "currentTerm": "狗牙纹"
+    },
+    {
+      "id": "xb-review-084",
+      "term": "鱼骨纹",
+      "difficulty": 1,
+      "decision": "replace",
+      "note": "",
+      "currentTerm": "鱼骨纹"
+    },
+    {
+      "id": "xb-review-085",
+      "term": "泡泡纱",
+      "difficulty": 1,
+      "decision": "replace",
+      "note": "",
+      "currentTerm": "泡泡纱"
+    },
+    {
+      "id": "xb-review-086",
+      "term": "巴拿马帽",
+      "difficulty": 1,
+      "decision": "replace",
+      "note": "",
+      "currentTerm": "巴拿马帽"
+    },
+    {
+      "id": "xb-review-087",
+      "term": "彼得潘领",
+      "difficulty": 1,
+      "decision": "replace",
+      "note": "",
+      "currentTerm": "彼得潘领"
+    },
+    {
+      "id": "xb-review-088",
+      "term": "主教袖",
+      "difficulty": 1,
+      "decision": "replace",
+      "note": "",
+      "currentTerm": "主教袖"
+    },
+    {
+      "id": "xb-review-089",
+      "term": "猫跟鞋",
+      "difficulty": 1,
+      "decision": "replace",
+      "note": "",
+      "currentTerm": "猫跟鞋"
+    },
+    {
+      "id": "xb-review-090",
+      "term": "公主线",
+      "difficulty": 2,
+      "decision": "replace",
+      "note": "",
+      "currentTerm": "公主线"
+    },
+    {
+      "id": "xb-review-091",
+      "term": "鲨鱼皮",
+      "difficulty": 2,
+      "decision": "replace",
+      "note": "",
+      "currentTerm": "鲨鱼皮"
+    },
+    {
+      "id": "xb-review-092",
+      "term": "吸烟装",
+      "difficulty": 2,
+      "decision": "replace",
+      "note": "",
+      "currentTerm": "吸烟装"
+    },
+    {
+      "id": "xb-review-093",
+      "term": "绞花",
+      "difficulty": 3,
+      "decision": "replace",
+      "note": "",
+      "currentTerm": "绞花"
+    },
+    {
+      "id": "xb-review-094",
+      "term": "德比帽",
+      "difficulty": 2,
+      "decision": "replace",
+      "note": "",
+      "currentTerm": "德比帽"
+    },
+    {
+      "id": "xb-review-095",
+      "term": "刀褶",
+      "difficulty": 2,
+      "decision": "replace",
+      "note": "",
+      "currentTerm": "刀褶"
+    },
+    {
+      "id": "xb-review-096",
+      "term": "棺材板",
+      "difficulty": 1,
+      "decision": "replace",
+      "note": "",
+      "currentTerm": "棺材板"
+    },
+    {
+      "id": "xb-review-097",
+      "term": "土笋冻",
+      "difficulty": 1,
+      "decision": "replace",
+      "note": "",
+      "currentTerm": "土笋冻"
+    },
+    {
+      "id": "xb-review-098",
+      "term": "浮岛",
+      "difficulty": 1,
+      "decision": "replace",
+      "note": "",
+      "currentTerm": "浮岛"
+    },
+    {
+      "id": "xb-review-099",
+      "term": "牧羊人派",
+      "difficulty": 1,
+      "decision": "replace",
+      "note": "",
+      "currentTerm": "牧羊人派"
+    },
+    {
+      "id": "xb-review-100",
+      "term": "泥巴派",
+      "difficulty": 1,
+      "decision": "replace",
+      "note": "",
+      "currentTerm": "泥巴派"
+    },
+    {
+      "id": "xb-review-101",
+      "term": "苍蝇头",
+      "difficulty": 2,
+      "decision": "replace",
+      "note": "",
+      "currentTerm": "苍蝇头"
+    },
+    {
+      "id": "xb-review-102",
+      "term": "猫舌饼",
+      "difficulty": 2,
+      "decision": "replace",
+      "note": "",
+      "currentTerm": "猫舌饼"
+    },
+    {
+      "id": "xb-review-103",
+      "term": "斑点布丁",
+      "difficulty": 2,
+      "decision": "replace",
+      "note": "",
+      "currentTerm": "斑点布丁"
+    },
+    {
+      "id": "xb-review-104",
+      "term": "女士手指",
+      "difficulty": 2,
+      "decision": "replace",
+      "note": "",
+      "currentTerm": "女士手指"
+    },
+    {
+      "id": "xb-review-105",
+      "term": "修女泡芙",
+      "difficulty": 2,
+      "decision": "replace",
+      "note": "",
+      "currentTerm": "修女泡芙"
+    },
+    {
+      "id": "xb-review-106",
+      "term": "穷人布丁",
+      "difficulty": 2,
+      "decision": "replace",
+      "note": "",
+      "currentTerm": "穷人布丁"
+    },
+    {
+      "id": "xb-review-107",
+      "term": "天使之发",
+      "difficulty": 2,
+      "decision": "replace",
+      "note": "",
+      "currentTerm": "天使之发"
+    },
+    {
+      "id": "xb-review-108",
+      "term": "水信玄饼",
+      "difficulty": 2,
+      "decision": "replace",
+      "note": "",
+      "currentTerm": "水信玄饼"
+    },
+    {
+      "id": "xb-review-109",
+      "term": "打冷",
+      "difficulty": 1,
+      "decision": "keep",
+      "note": "",
+      "currentTerm": "打冷"
+    },
+    {
+      "id": "xb-review-110",
+      "term": "打平伙",
+      "difficulty": 1,
+      "decision": "keep",
+      "note": "",
+      "currentTerm": "打平伙"
+    },
+    {
+      "id": "xb-review-111",
+      "term": "龙门阵",
+      "difficulty": 1,
+      "decision": "replace",
+      "note": "",
+      "currentTerm": "龙门阵"
+    },
+    {
+      "id": "xb-review-112",
+      "term": "食死猫",
+      "difficulty": 1,
+      "decision": "keep",
+      "note": "",
+      "currentTerm": "食死猫"
+    },
+    {
+      "id": "xb-review-113",
+      "term": "开天窗",
+      "difficulty": 1,
+      "decision": "replace",
+      "note": "",
+      "currentTerm": "开天窗"
+    },
+    {
+      "id": "xb-review-114",
+      "term": "打牙祭",
+      "difficulty": 2,
+      "decision": "replace",
+      "note": "",
+      "currentTerm": "打牙祭"
+    },
+    {
+      "id": "xb-review-115",
+      "term": "吃排头",
+      "difficulty": 1,
+      "decision": "replace",
+      "note": "",
+      "currentTerm": "吃排头"
+    },
+    {
+      "id": "xb-review-116",
+      "term": "白相",
+      "difficulty": 1,
+      "decision": "keep",
+      "note": "",
+      "currentTerm": "白相"
+    },
+    {
+      "id": "xb-review-117",
+      "term": "交关",
+      "difficulty": 2,
+      "decision": "replace",
+      "note": "",
+      "currentTerm": "交关"
+    },
+    {
+      "id": "xb-review-118",
+      "term": "打边炉",
+      "difficulty": 1,
+      "decision": "replace",
+      "note": "",
+      "currentTerm": "打边炉"
+    },
+    {
+      "id": "xb-review-119",
+      "term": "车大炮",
+      "difficulty": 1,
+      "decision": "keep",
+      "note": "",
+      "currentTerm": "车大炮"
+    },
+    {
+      "id": "xb-review-120",
+      "term": "打秋风",
+      "difficulty": 2,
+      "decision": "replace",
+      "note": "",
+      "currentTerm": "打秋风"
+    },
+    {
+      "id": "xb-review-121",
+      "term": "猪笼入水",
+      "difficulty": 2,
+      "decision": "keep",
+      "note": "",
+      "currentTerm": "猪笼入水"
+    },
+    {
+      "id": "xb-review-122",
+      "term": "吃过路兵",
+      "difficulty": 1,
+      "decision": "replace",
+      "note": "",
+      "currentTerm": "吃过路兵"
+    },
+    {
+      "id": "xb-review-123",
+      "term": "金鸭子",
+      "difficulty": 1,
+      "decision": "keep",
+      "note": "",
+      "currentTerm": "金鸭子"
+    },
+    {
+      "id": "xb-review-124",
+      "term": "火鸡",
+      "difficulty": 1,
+      "decision": "keep",
+      "note": "",
+      "currentTerm": "火鸡"
+    },
+    {
+      "id": "xb-review-125",
+      "term": "射月",
+      "difficulty": 1,
+      "decision": "keep",
+      "note": "",
+      "currentTerm": "射月"
+    },
+    {
+      "id": "xb-review-126",
+      "term": "打入",
+      "difficulty": 1,
+      "decision": "keep",
+      "note": "",
+      "currentTerm": "打入"
+    },
+    {
+      "id": "xb-review-127",
+      "term": "千日手",
+      "difficulty": 3,
+      "decision": "keep",
+      "note": "",
+      "currentTerm": "千日手"
+    },
+    {
+      "id": "xb-review-128",
+      "term": "偷分",
+      "difficulty": 2,
+      "decision": "replace",
+      "note": "",
+      "currentTerm": "偷分"
+    },
+    {
+      "id": "xb-review-129",
+      "term": "倒脱靴",
+      "difficulty": 3,
+      "decision": "keep",
+      "note": "",
+      "currentTerm": "倒脱靴"
+    },
+    {
+      "id": "xb-review-130",
+      "term": "黄金盘",
+      "difficulty": 3,
+      "decision": "keep",
+      "note": "",
+      "currentTerm": "黄金盘"
+    },
+    {
+      "id": "xb-review-131",
+      "term": "双活",
+      "difficulty": 3,
+      "decision": "replace",
+      "note": "",
+      "currentTerm": "双活"
+    },
+    {
+      "id": "xb-review-132",
+      "term": "倒扑",
+      "difficulty": 3,
+      "decision": "replace",
+      "note": "",
+      "currentTerm": "倒扑"
+    },
+    {
+      "id": "xb-review-133",
+      "term": "勺子点球",
+      "difficulty": 2,
+      "decision": "replace",
+      "note": "",
+      "currentTerm": "勺子点球"
+    },
+    {
+      "id": "xb-review-134",
+      "term": "兔子领跑",
+      "difficulty": 2,
+      "decision": "replace",
+      "note": "",
+      "currentTerm": "兔子领跑"
+    },
+    {
+      "id": "xb-review-135",
+      "term": "耳虫",
+      "difficulty": 1,
+      "decision": "keep",
+      "note": "",
+      "currentTerm": "耳虫"
+    },
+    {
+      "id": "xb-review-136",
+      "term": "门口效应",
+      "difficulty": 1,
+      "decision": "replace",
+      "note": "",
+      "currentTerm": "门口效应"
+    },
+    {
+      "id": "xb-review-137",
+      "term": "舌尖现象",
+      "difficulty": 1,
+      "decision": "replace",
+      "note": "",
+      "currentTerm": "舌尖现象"
+    },
+    {
+      "id": "xb-review-138",
+      "term": "幻振",
+      "difficulty": 1,
+      "decision": "replace",
+      "note": "",
+      "currentTerm": "幻振"
+    },
+    {
+      "id": "xb-review-139",
+      "term": "鸡尾酒会效应",
+      "difficulty": 1,
+      "decision": "replace",
+      "note": "",
+      "currentTerm": "鸡尾酒会效应"
+    },
+    {
+      "id": "xb-review-140",
+      "term": "橡胶手错觉",
+      "difficulty": 3,
+      "decision": "keep",
+      "note": "",
+      "currentTerm": "橡胶手错觉"
+    },
+    {
+      "id": "xb-review-141",
+      "term": "腹语效应",
+      "difficulty": 3,
+      "decision": "replace",
+      "note": "",
+      "currentTerm": "腹语效应"
+    },
+    {
+      "id": "xb-review-142",
+      "term": "频率错觉",
+      "difficulty": 2,
+      "decision": "replace",
+      "note": "",
+      "currentTerm": "频率错觉"
+    },
+    {
+      "id": "xb-review-143",
+      "term": "空想性错视",
+      "difficulty": 2,
+      "decision": "replace",
+      "note": "",
+      "currentTerm": "空想性错视"
+    },
+    {
+      "id": "xb-review-144",
+      "term": "月亮错觉",
+      "difficulty": 2,
+      "decision": "replace",
+      "note": "",
+      "currentTerm": "月亮错觉"
+    },
+    {
+      "id": "xb-review-145",
+      "term": "入睡抽动",
+      "difficulty": 2,
+      "decision": "replace",
+      "note": "",
+      "currentTerm": "入睡抽动"
+    },
+    {
+      "id": "xb-review-146",
+      "term": "皮肤兔错觉",
+      "difficulty": 3,
+      "decision": "keep",
+      "note": "",
+      "currentTerm": "皮肤兔错觉"
+    },
+    {
+      "id": "xb-review-147",
+      "term": "旋转蛇",
+      "difficulty": 3,
+      "decision": "replace",
+      "note": "",
+      "currentTerm": "旋转蛇"
+    },
+    {
+      "id": "xb-review-148",
+      "term": "野轨",
+      "difficulty": 1,
+      "decision": "replace",
+      "note": "",
+      "currentTerm": "野轨"
+    },
+    {
+      "id": "xb-review-149",
+      "term": "拉焦",
+      "difficulty": 3,
+      "decision": "replace",
+      "note": "",
+      "currentTerm": "拉焦"
+    },
+    {
+      "id": "xb-review-150",
+      "term": "飞白",
+      "difficulty": 1,
+      "decision": "keep",
+      "note": "",
+      "currentTerm": "飞白"
+    },
+    {
+      "id": "xb-review-151",
+      "term": "出血",
+      "difficulty": 1,
+      "decision": "replace",
+      "note": "",
+      "currentTerm": "出血"
+    },
+    {
+      "id": "xb-review-152",
+      "term": "反白",
+      "difficulty": 3,
+      "decision": "replace",
+      "note": "",
+      "currentTerm": "反白"
+    },
+    {
+      "id": "xb-review-153",
+      "term": "蝴蝶装",
+      "difficulty": 2,
+      "decision": "replace",
+      "note": "",
+      "currentTerm": "蝴蝶装"
+    },
+    {
+      "id": "xb-review-154",
+      "term": "骑缝",
+      "difficulty": 3,
+      "decision": "replace",
+      "note": "",
+      "currentTerm": "骑缝"
+    },
+    {
+      "id": "xb-review-155",
+      "term": "牛腿",
+      "difficulty": 2,
+      "decision": "replace",
+      "note": "",
+      "currentTerm": "牛腿"
+    },
+    {
+      "id": "xb-review-156",
+      "term": "把子",
+      "difficulty": 2,
+      "decision": "replace",
+      "note": "",
+      "currentTerm": "把子"
+    },
+    {
+      "id": "xb-review-157",
+      "term": "水旗",
+      "difficulty": 2,
+      "decision": "replace",
+      "note": "",
+      "currentTerm": "水旗"
+    },
+    {
+      "id": "xb-review-158",
+      "term": "书口",
+      "difficulty": 2,
+      "decision": "replace",
+      "note": "",
+      "currentTerm": "书口"
+    },
+    {
+      "id": "xb-review-159",
+      "term": "天头",
+      "difficulty": 3,
+      "decision": "replace",
+      "note": "",
+      "currentTerm": "天头"
+    },
+    {
+      "id": "xb-review-160",
+      "term": "叼口",
+      "difficulty": 3,
+      "decision": "keep",
+      "note": "",
+      "currentTerm": "叼口"
+    }
+  ]
+}

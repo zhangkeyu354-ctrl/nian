@@ -1,0 +1,11 @@
+{
+  "complete": true,
+  "hostApproval": true,
+  "themeHint": true,
+  "commonReadWindow": true,
+  "rolesPreserved": true,
+  "scoresPreserved": true,
+  "answerPrivate": true,
+  "reconnect": true,
+  "errors": []
+}

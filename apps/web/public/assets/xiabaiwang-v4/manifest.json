@@ -1,0 +1,78 @@
+{
+  "host-1.webp": {
+    "bytes": 19472,
+    "sha256": "37fb98df760a5cf6c6df3ec7a31e207edaa4af9cb1e22754c6a6109a36693716"
+  },
+  "host-10.webp": {
+    "bytes": 19172,
+    "sha256": "d83b0a7da965970510f4ba0b2a5f576839165d023a2c049a8e413ee92d44336e"
+  },
+  "host-2.webp": {
+    "bytes": 17164,
+    "sha256": "224d16de0a1fcd85e6db293cf1e76e22d9f3cb8884019cb4437272bed99dba13"
+  },
+  "host-3.webp": {
+    "bytes": 15704,
+    "sha256": "e9bd3a5e98dbf9132f139515c1807940badb3972482ce3f38d42353b459c28b6"
+  },
+  "host-4.webp": {
+    "bytes": 17624,
+    "sha256": "46ab42aa2a42e8c4281befca6d74508dae112265f8121d41f9d029b92a90c3ac"
+  },
+  "host-5.webp": {
+    "bytes": 15394,
+    "sha256": "83e01d1d65dcaaf2cfb3052459fee438a88a7f29932457fb0e67f12af0d9fc1d"
+  },
+  "host-6.webp": {
+    "bytes": 19252,
+    "sha256": "ba2edbb5d1ba85ae38f3210be97ac7eb28a2f81508222a06221dd3aef0943bdb"
+  },
+  "host-7.webp": {
+    "bytes": 16158,
+    "sha256": "4c94c7755c4a34ef8b4c81c9973445a2626cfe8470abb8faefff5f8883a5bb42"
+  },
+  "host-8.webp": {
+    "bytes": 19492,
+    "sha256": "9ec0004c6cc9ae16344b4524a496de88a7bc535bf87dc313892079abf605d2cb"
+  },
+  "host-9.webp": {
+    "bytes": 15980,
+    "sha256": "077cd4bc117fc5abb2a43f4c77afc85f7fb8b804fd59e9774e8e9d1fab2fc0a0"
+  },
+  "radio-display.woff2": {
+    "bytes": 223896,
+    "sha256": "4b35033faa9238af1034da43e8b9481b10c7e40478c8c331b8e8c2540fe2e93f"
+  },
+  "studio-high-blur.webp": {
+    "bytes": 17938,
+    "sha256": "b3fd7551c2ca4866ca18ce191601260f184370fa057b84c13172b7240ef2c74e"
+  },
+  "studio-high.webp": {
+    "bytes": 91976,
+    "sha256": "84b8c8fbd46d2e216195f41b79ddece7f93d2d48ae42274a6eabe8b3bb58cbea"
+  },
+  "studio-low-blur.webp": {
+    "bytes": 8776,
+    "sha256": "6018329788517c91d00eac89628d1f7da0fba00c3aea023a0f73e9fefc38ed2c"
+  },
+  "studio-low.webp": {
+    "bytes": 45722,
+    "sha256": "05ffbb665a064abdee12bb84876b98b75b1302fa6adc748b3b5444be091a7e9b"
+  },
+  "studio-portrait-high-blur.webp": {
+    "bytes": 17928,
+    "sha256": "54cea362ff1bf52e21ee3c35037ac20a9f8f94c4ee6f132ae2c5917dee056e13"
+  },
+  "studio-portrait-high.webp": {
+    "bytes": 95972,
+    "sha256": "3f61ef22b73499b6de60db5b619cb9a6bc31c9c836d05854292cffbb7ac686c9"
+  },
+  "studio-portrait-low-blur.webp": {
+    "bytes": 9808,
+    "sha256": "3876b8694f996a3610da0a4248da6a62476f29e58fa9956da6c149c1322c5fd0"
+  },
+  "studio-portrait-low.webp": {
+    "bytes": 50262,
+    "sha256": "96539a9f467f7899ee9f2d132e55492296e94add4d3ea934e800c7ee081ced0c"
+  }
+}

@@ -4,6 +4,9 @@
   "private": true,
   "type": "module",
   "scripts": {
+    "verify:xb-topics": "tsx scripts/verify-xb-topics.ts",
+    "verify:xb-feel": "tsx scripts/verify-xb-feel-v2.ts",
+    "verify:xb-browsers": "tsx scripts/verify-xb-browsers.ts",
     "test": "vitest run",
     "typecheck": "tsc --noEmit",
     "simulate": "tsx scripts/simulate.ts",
@@ -31,7 +34,10 @@
     "verify:dm-browsers": "tsx scripts/verify-dm-browsers.ts",
     "verify:dm-teamplay": "tsx scripts/verify-dm-teamplay.ts",
     "verify:rr-protocol": "tsx scripts/verify-rr-protocol.ts",
-    "verify:rr-browsers": "tsx scripts/verify-rr-browsers.ts"
+    "verify:rr-browsers": "tsx scripts/verify-rr-browsers.ts",
+    "verify:xb-ui-v3": "tsx scripts/verify-xb-ui-v3.ts",
+    "verify:xb-art": "tsx scripts/verify-xb-art-v4.ts",
+    "verify:xb-word-change": "tsx scripts/verify-xb-word-change.ts"
   },
   "devDependencies": {
     "@tailwindcss/vite": "4.3.3",

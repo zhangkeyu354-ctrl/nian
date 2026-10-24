@@ -1,0 +1,68 @@
+{
+  "metric": "48kHz offline rendering; maximum 50ms RMS and absolute peak, relative to turn prompt",
+  "results": [
+    {
+      "cue": "tap",
+      "peak": 0.03999999910593033,
+      "rms": 0.017206858272662034,
+      "peakRatio": 1,
+      "rmsRatio": 0.5406722536393138
+    },
+    {
+      "cue": "select",
+      "peak": 0.03999999910593033,
+      "rms": 0.022340099733079526,
+      "peakRatio": 1,
+      "rmsRatio": 0.7019684754654795
+    },
+    {
+      "cue": "submit",
+      "peak": 0.03999999910593033,
+      "rms": 0.02495304560695876,
+      "peakRatio": 1,
+      "rmsRatio": 0.784072210608831
+    },
+    {
+      "cue": "turn",
+      "peak": 0.03999999910593033,
+      "rms": 0.0318249330474074,
+      "peakRatio": 1,
+      "rmsRatio": 1
+    },
+    {
+      "cue": "page",
+      "peak": 0.03999999910593033,
+      "rms": 0.022516745867381803,
+      "peakRatio": 1,
+      "rmsRatio": 0.7075190333893293
+    },
+    {
+      "cue": "stamp",
+      "peak": 0.03999999910593033,
+      "rms": 0.02551542840703934,
+      "peakRatio": 1,
+      "rmsRatio": 0.8017433491228646
+    },
+    {
+      "cue": "tick",
+      "peak": 0.03999999910593033,
+      "rms": 0.01819274156584432,
+      "peakRatio": 1,
+      "rmsRatio": 0.5716505841110131
+    },
+    {
+      "cue": "win",
+      "peak": 0.03999999910593033,
+      "rms": 0.026173817753444253,
+      "peakRatio": 1,
+      "rmsRatio": 0.8224311961459567
+    },
+    {
+      "cue": "lose",
+      "peak": 0.03999999910593033,
+      "rms": 0.03176000103848175,
+      "peakRatio": 1,
+      "rmsRatio": 0.9979597126306936
+    }
+  ]
+}

@@ -1,0 +1,42 @@
+{
+  "method": "未改动的真实浏览器截图，等尺寸并排排版，无AI重绘或界面合成",
+  "phase": "3人待开局大厅",
+  "sources": [
+    {
+      "file": "docs\\xiabaiwang\\art-v4\\00-lobby-390x844.png",
+      "width": 390,
+      "height": 844,
+      "sha256": "95697aab8e67244ac4ee14b6fc03e922ec5b3f413860816cc6d003dba43565f7"
+    },
+    {
+      "file": "docs\\xiabaiwang\\art-v4\\compare\\dm-lobby-390x844.png",
+      "width": 390,
+      "height": 844,
+      "sha256": "0f658f1fe2d0749a5d0ace21fc67adb4fbc9498a685c8166b2b5cd26db9936f4"
+    },
+    {
+      "file": "docs\\xiabaiwang\\art-v4\\compare\\tp-lobby-390x844.png",
+      "width": 390,
+      "height": 844,
+      "sha256": "ab28bae15c40e5005b91bcb18068ccb7db4057a3a1612b71c225ce98013d8528"
+    },
+    {
+      "file": "docs\\xiabaiwang\\art-v4\\00-lobby-844x390.png",
+      "width": 844,
+      "height": 390,
+      "sha256": "2f58029e5880fe4a5a5af304865d8b337d7c150d34910866a81b48fbffd67434"
+    },
+    {
+      "file": "docs\\xiabaiwang\\art-v4\\compare\\dm-lobby-844x390.png",
+      "width": 844,
+      "height": 390,
+      "sha256": "3591e6f71e5ca630cab6d5bb9041704ed1a0cdc965a76330c2788a53a67075ce"
+    },
+    {
+      "file": "docs\\xiabaiwang\\art-v4\\compare\\tp-lobby-844x390.png",
+      "width": 844,
+      "height": 390,
+      "sha256": "5232b99dbceca5a3fd4759f7b7bc5f67c90320d33d49e9dd1f80fd60b9eba00d"
+    }
+  ]
+}
