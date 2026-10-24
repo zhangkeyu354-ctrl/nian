@@ -1281,7 +1281,7 @@ export function Xiabaiwang() {
             </button>
             <article className="xb-paper">
               <span className="xb-kicker">
-                今晚的胡扯主题 · {"★".repeat(view.difficulty)} · 本题{" "}
+                这是什么？ · {"★".repeat(view.difficulty)} · 本题{" "}
                 {topicPoints(view.difficulty)} 分
               </span>
               <h1>{view.question}</h1>

@@ -14,7 +14,7 @@ it("圈数只允许房主在大厅设置，序列化重连保持两圈并按轮�
   room.command(host, { type: "SET_CYCLES", cycles: 2 });
   room = new XBRoom("SCORE2", JSON.parse(JSON.stringify(room.file)));
   expect(room.snapshot(other).cycles).toBe(2);
-  room.command(host, { type: "SET_TOPICS", themes: ["冷门汉字或词语"] });
+  room.command(host, { type: "SET_TOPICS", themes: ["自然现象与地貌"] });
   expect(() => room.command(host, { type: "START" })).toThrow("题目不足");
   expect(room.file.state).toBeNull();
   room.command(host, { type: "SET_TOPICS", themes: [] });

@@ -1,30 +1,30 @@
 import { it, expect } from "vitest";
 import { TOPICS } from "../src/topics.ts";
-it("原创题库至少60题，三档都有题且ID题面不重复，每题保留来源", () => {
-  expect(TOPICS.length).toBeGreaterThanOrEqual(60);
-  expect(new Set(TOPICS.map((t) => t.id)).size).toBe(TOPICS.length);
-  expect(new Set(TOPICS.map((t) => t.question)).size).toBe(TOPICS.length);
-  for (const d of [1, 2, 3])
-    expect(
-      TOPICS.filter((t) => t.difficulty === d).length,
-    ).toBeGreaterThanOrEqual(10);
-  for (const t of TOPICS) {
-    expect(t.source).toMatch(/^https:\/\//);
-    expect(t.answer.length).toBeGreaterThan(15);
-  }
-});
+import { TOPIC_THEMES } from "../src/topic-themes.ts";
 
-it("v2新增96题且保留旧64题，每主题至少8题，每题带来源说明", () => {
-  const added = TOPICS.filter((t) => t.id.startsWith("xb-v2-"));
-  expect(added).toHaveLength(96);
-  expect(TOPICS.length).toBeGreaterThanOrEqual(160);
-  expect(new Set(added.map((t) => t.theme)).size).toBe(12);
-  for (const theme of new Set(added.map((t) => t.theme)))
-    expect(
-      added.filter((t) => t.theme === theme).length,
-    ).toBeGreaterThanOrEqual(8);
-  expect(added.every((t) => t.sourceNote)).toBe(true);
+it("原版题库：160个冷门词条，难度64/64/32，ID与词条不重复", () => {
+  expect(TOPICS).toHaveLength(160);
+  expect(new Set(TOPICS.map((t) => t.id)).size).toBe(160);
+  expect(new Set(TOPICS.map((t) => t.question)).size).toBe(160);
   expect(
     [1, 2, 3].map((d) => TOPICS.filter((t) => t.difficulty === d).length),
   ).toEqual([64, 64, 32]);
+});
+
+it("题面只是一个词：不是问句、不超过12个字", () => {
+  for (const t of TOPICS) {
+    expect(t.question, t.id).not.toMatch(/[？?]$/);
+    expect(t.question, t.id).not.toMatch(/为什么|是什么|怎么|吗/);
+    expect([...t.question].length, t.id).toBeLessThanOrEqual(12);
+  }
+});
+
+it("每题有真实解释和来源链接，主题都在可选主题列表里，且每个主题都有题", () => {
+  for (const t of TOPICS) {
+    expect(t.source, t.id).toMatch(/^https:\/\//);
+    expect(t.answer.length, t.id).toBeGreaterThan(10);
+    expect(TOPIC_THEMES as readonly string[], t.id).toContain(t.theme);
+  }
+  for (const th of TOPIC_THEMES)
+    expect(TOPICS.filter((t) => t.theme === th).length, th).toBeGreaterThan(0);
 });
