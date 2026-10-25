@@ -8,6 +8,7 @@ import QRCode from "qrcode";
 import { attachDrawingParty } from "./drawing-rooms.ts";
 import { RoomStore, errorText, type Room } from "./rooms.ts";
 import { attachMagicalAthlete } from "./ma-rooms.ts";
+import { attachRummikub } from "./rk-rooms.ts";
 import { attachDyingMessage } from "./dm-rooms.ts";
 import { attachCodenames } from "./cn-rooms.ts";
 import { attachReflexRace } from "./rr-rooms.ts";
@@ -82,6 +83,7 @@ const http = createServer((req, res) => {
         maRooms: maStore.rooms.size,
         cnRooms: cnStore.rooms.size,
         dmRooms: dmStore.rooms.size,
+        rkRooms: rkStore.rooms.size,
         rrRooms: rrStore.rooms.size,
         xbRooms: xbStore.rooms.size,
         dpRooms: dpStore.rooms.size,
@@ -162,6 +164,11 @@ const dmStore = attachDyingMessage(
   io,
   resolve(process.env.DM_DATA_DIR ?? join(DATA, "../dm-rooms")),
   { maxRooms: MAX_ROOMS, idleMs: ROOM_IDLE_MS },
+);
+const rkStore = attachRummikub(
+  io,
+  resolve(process.env.RK_DATA_DIR ?? join(DATA, '../rk-rooms')),
+  { maxRooms: MAX_ROOMS, idleMs: ROOM_IDLE_MS, allowFixedSeed: process.env.RK_ALLOW_FIXED_SEED === '1' },
 );
 const maStore = attachMagicalAthlete(
   io,

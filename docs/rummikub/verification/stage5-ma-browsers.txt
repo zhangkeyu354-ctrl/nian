@@ -1,0 +1,5 @@
+
+> dbd-boardgame-private@0.2.2 verify:ma-browsers
+> tsx scripts/verify-ma-browsers.ts
+
+MA_BROWSERS_PASS {"players":4,"deal":"draft","steps":3293,"racesSeen":4}

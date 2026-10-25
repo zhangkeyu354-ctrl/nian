@@ -1,0 +1,14 @@
+{
+  "passed": true,
+  "engines": [
+    "Chromium"
+  ],
+  "simulatedWidths": [
+    844,
+    667,
+    812,
+    390
+  ],
+  "realDevices": false,
+  "errors": []
+}

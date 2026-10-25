@@ -1,0 +1,5 @@
+
+> dbd-boardgame-private@0.2.2 verify:dm-browsers
+> tsx scripts/verify-dm-browsers.ts
+
+DM browser full-game PASS URHF

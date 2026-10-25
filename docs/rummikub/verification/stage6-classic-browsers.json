@@ -1,0 +1,87 @@
+{
+  "generatedAt": "2026-10-25T08:46:45.076Z",
+  "mode": "real Chromium protocol clients over WebSocket; not stage4 UI acceptance",
+  "passed": 11,
+  "failed": 0,
+  "checks": [
+    {
+      "name": "server deadline rollback and penalty 3",
+      "passed": true
+    },
+    {
+      "name": "initial meld below 30 rejected",
+      "passed": true
+    },
+    {
+      "name": "invalid meld rejected and no private draft packets leaked",
+      "passed": true
+    },
+    {
+      "name": "table joker released, reused, and normal empty-rack victory",
+      "passed": true
+    },
+    {
+      "name": "browser refresh token reconnect keeps current private draft",
+      "passed": true
+    },
+    {
+      "name": "actual server process restart restores private draft and seq",
+      "passed": true
+    },
+    {
+      "name": "empty pool full round terminates with blocked scoring",
+      "passed": true
+    },
+    {
+      "name": "2 browser players complete game",
+      "passed": true,
+      "details": {
+        "count": 2,
+        "seed": 2001,
+        "turns": 135,
+        "blocked": true,
+        "scores": [
+          -26,
+          26
+        ]
+      }
+    },
+    {
+      "name": "3 browser players complete game",
+      "passed": true,
+      "details": {
+        "count": 3,
+        "seed": 3001,
+        "turns": 115,
+        "blocked": true,
+        "scores": [
+          10,
+          -4,
+          -6
+        ]
+      }
+    },
+    {
+      "name": "4 browser players complete game",
+      "passed": true,
+      "details": {
+        "count": 4,
+        "seed": 4001,
+        "turns": 99,
+        "blocked": true,
+        "scores": [
+          31,
+          -17,
+          -9,
+          -5
+        ]
+      }
+    },
+    {
+      "name": "no Chromium page errors",
+      "passed": true
+    }
+  ],
+  "failures": [],
+  "pageErrors": []
+}

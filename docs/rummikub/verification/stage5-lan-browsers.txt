@@ -1,0 +1,5 @@
+
+> dbd-boardgame-private@0.2.2 verify:lan-browsers
+> tsx scripts/verify-lan-browsers.ts
+
+LAN_BROWSERS_PASS [{"seed":4111,"room":"NXTA","commands":109,"winner":"killer","browsers":5,"killerFramesChecked":112,"screenshotsChecked":5},{"seed":1701,"room":"67JB","commands":228,"winner":"survivor","browsers":5,"killerFramesChecked":231,"screenshotsChecked":5}]

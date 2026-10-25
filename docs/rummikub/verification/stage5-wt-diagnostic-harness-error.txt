@@ -1,0 +1,8 @@
+page.evaluate: ReferenceError: __name is not defined
+    at eval (eval at evaluate (:370:30), <anonymous>:1:22)
+    at UtilityScript.evaluate (<anonymous>:372:16)
+    at UtilityScript.<anonymous> (<anonymous>:1:44)
+    at snapPhase (E:\DBD-BoardGame-Web\scripts\verify-witch-town-browsers.ts:41:33)
+    at async main (E:\DBD-BoardGame-Web\scripts\verify-witch-town-browsers.ts:143:37) {
+  log: []
+}

@@ -21,7 +21,7 @@ input,
 select {
   font: inherit;
 }
-button:not(:where(.st-world *, .lb-world *, .wt-world *)) {
+button:not(:where(.st-world *, .lb-world *, .wt-world *, .rk-world *)) {
   min-height: 44px;
   border: 1px solid #59635b;
   background: #293530;
@@ -34,11 +34,11 @@ button:not(:where(.st-world *, .lb-world *, .wt-world *)) {
     border-color 0.15s,
     transform 0.15s;
 }
-button:not(:where(.st-world *, .lb-world *, .wt-world *)):hover {
+button:not(:where(.st-world *, .lb-world *, .wt-world *, .rk-world *)):hover {
   background: #3b4840;
   border-color: #abb39b;
 }
-button:not(:where(.st-world *, .lb-world *, .wt-world *)):active {
+button:not(:where(.st-world *, .lb-world *, .wt-world *, .rk-world *)):active {
   transform: translateY(1px);
 }
 button:focus-visible,
@@ -48,7 +48,7 @@ summary:focus-visible {
   outline: 3px solid #ead18b;
   outline-offset: 3px;
 }
-button:not(:where(.st-world *, .lb-world *, .wt-world *)):disabled {
+button:not(:where(.st-world *, .lb-world *, .wt-world *, .rk-world *)):disabled {
   opacity: 0.45;
   cursor: not-allowed;
 }

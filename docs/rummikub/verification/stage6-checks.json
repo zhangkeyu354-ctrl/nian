@@ -1,0 +1,62 @@
+[
+  {
+    "name": "build",
+    "command": "npm run build",
+    "code": 0,
+    "ms": 3316
+  },
+  {
+    "name": "xp-screens",
+    "command": "npx tsx scripts/verify-rk-xp-browsers.ts",
+    "code": 1,
+    "ms": 9035
+  },
+  {
+    "name": "typecheck",
+    "command": "npm run typecheck",
+    "code": 0,
+    "ms": 2512
+  },
+  {
+    "name": "replays",
+    "command": "npm run verify:replays",
+    "code": 0,
+    "ms": 1152
+  },
+  {
+    "name": "mobile-interfaces",
+    "command": "npm run verify:mobile-interfaces",
+    "code": 0,
+    "ms": 58870
+  },
+  {
+    "name": "lan-protocol",
+    "command": "npm run verify:lan-protocol",
+    "code": 0,
+    "ms": 19244
+  },
+  {
+    "name": "lan-lobby",
+    "command": "npm run verify:lan-lobby",
+    "code": 0,
+    "ms": 23721
+  },
+  {
+    "name": "lan-browsers",
+    "command": "npm run verify:lan-browsers",
+    "code": 0,
+    "ms": 267437
+  },
+  {
+    "name": "classic-ui",
+    "command": "npx tsx scripts/verify-rk-ui.ts",
+    "code": 0,
+    "ms": 53991
+  },
+  {
+    "name": "full-test",
+    "command": "npm test",
+    "code": 0,
+    "ms": 182691
+  }
+]

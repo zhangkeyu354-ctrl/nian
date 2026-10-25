@@ -1,0 +1,3 @@
+XP_UI_PASS 5 players 161 turns
+XP_UI_PASS 6 players 134 turns
+XP browsers PASS 4 checks 10 screenshots
