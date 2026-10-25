@@ -38,10 +38,12 @@ export function SpeechBar({
   snap,
   id,
   now,
+  ring = false,
 }: {
   snap: XBSnapshot;
   id: string;
   now: number;
+  ring?: boolean;
 }) {
   const used =
       (snap.speechUsed?.[id] ?? 0) +
@@ -49,6 +51,7 @@ export function SpeechBar({
         ? Math.max(0, now - snap.speakerAt)
         : 0),
     limit = snap.speechSeconds ?? 0;
+  if (ring && !limit) return null;
   if (!limit)
     return snap.view?.speaker === id ? (
       <span className="xb-speech-time">
@@ -56,6 +59,24 @@ export function SpeechBar({
       </span>
     ) : null;
   const remaining = Math.max(0, limit - Math.floor(used / 1000));
+  if (ring)
+    return (
+      <svg
+        className={"xb-speech-ring " + (!remaining ? "is-expired" : "")}
+        viewBox="0 0 46 46"
+        role="img"
+        aria-label={`发言剩余${remaining}秒`}
+      >
+        <circle className="xb-ring-track" cx="23" cy="23" r="21" />
+        <circle
+          cx="23"
+          cy="23"
+          r="21"
+          strokeDasharray={Math.PI * 42}
+          strokeDashoffset={Math.PI * 42 * (1 - remaining / limit)}
+        />
+      </svg>
+    );
   return (
     <span
       className={"xb-speech-meter " + (!remaining ? "is-expired" : "")}

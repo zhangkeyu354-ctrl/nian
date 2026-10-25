@@ -4,8 +4,10 @@ import {
   type Drawing,
   type GameView,
 } from "../../../../packages/drawing-party/src/index.ts";
-import { Portrait } from "./StudioArt.tsx";
+import { Portrait, AwardIcon } from "./StudioArt.tsx";
 import { paint } from "./render.ts";
+import { PublicBallots, outcomeLabel } from "./TaleVerdict.tsx";
+import { AwardWinners } from "./TaleAwards.tsx";
 import { feel } from "./feel.ts";
 
 export function Thumb({ drawing, className }: { drawing?: Drawing; className?: string }) {
@@ -14,10 +16,10 @@ export function Thumb({ drawing, className }: { drawing?: Drawing; className?: s
     const c = ref.current;
     if (!c || !drawing) return;
     c.width = 640;
-    c.height = 320;
+    c.height = Math.round(c.width / (drawing.aspect ?? 2));
     paint(c, drawing);
   }, [drawing]);
-  return <canvas ref={ref} className={"rs-thumb " + (className ?? "")} aria-hidden="true" />;
+  return <canvas ref={ref} style={{aspectRatio:drawing?.aspect ?? 2}} className={"rs-thumb " + (className ?? "")} aria-hidden="true" />;
 }
 
 function Confetti({ count = 36, palette }: { count?: number; palette: string[] }) {
@@ -229,12 +231,32 @@ export function TaleResult(p: {
       <div className="rs-curtain" aria-hidden="true">
         <i className="rs-spot" />
       </div>
-      <Confetti count={28} palette={["#83ffe3", "#c8a9ff", "#ffd36b", "#ff8fb1", "#ffffff"]} />
+      <Confetti
+        count={28}
+        palette={["#83ffe3", "#c8a9ff", "#ffd36b", "#ff8fb1", "#ffffff"]}
+      />
       <header className="rs-tp-head">
         <small>THE END</small>
         <h1>传话本全部翻完</h1>
-        <p>从第一句话到最后一页，看看跑偏了多远</p>
+        <p>
+          {v.theme
+            ? "本局主题：" + v.theme
+            : "从第一句话到最后一页，看看跑偏了多远"}
+        </p>
       </header>
+      <AwardWinners v={v} result={v.awardTotals} all />
+      <div className="tp-total-votes">
+        {v.players.map((p, i) => (
+          <div key={p.id}>
+            <Portrait index={i} tale />
+            <b>{p.name}</b>
+            <span>
+              <AwardIcon kind="mvp"/> {v.awardTotals?.mvp[p.id] ?? 0} <AwardIcon kind="dud"/>{" "}
+              {v.awardTotals?.dud[p.id] ?? 0}
+            </span>
+          </div>
+        ))}
+      </div>
       <div className="rs-books">
         {albums.map((a, i) => {
           const firstE = a.entries[0],
@@ -245,11 +267,14 @@ export function TaleResult(p: {
               className="rs-book"
               key={a.owner.id}
               style={
-                { "--k": i, "--seat": COLORS[owner % COLORS.length] } as React.CSSProperties
+                {
+                  "--k": i,
+                  "--seat": COLORS[owner % COLORS.length],
+                } as React.CSSProperties
               }
             >
               <header>
-                <Portrait index={owner} />
+                <Portrait index={owner} tale />
                 <b>{a.owner.name}的传话本</b>
                 <small>{Math.max(0, a.entries.length - 1)} 次传递</small>
               </header>
@@ -268,6 +293,29 @@ export function TaleResult(p: {
                   )}
                 </div>
               </div>
+              {v.verdictResults?.find(r=>r.chain===i) && <p className="tp-book-verdict">{outcomeLabel(v.verdictResults.find(r=>r.chain===i)?.outcome)}</p>}
+              <div className="tp-book-awards">
+                {(["mvp", "dud"] as const).map((kind) => (
+                  <span key={kind}>
+                    {kind === "mvp" ? "MVP" : "坑货"}{" "}
+                    {v.awardResults
+                      ?.find((r) => r.chain === i)
+                      ?.[(kind + "Winners") as "mvpWinners" | "dudWinners"].map(
+                        (id) => (
+                          <i
+                            key={id}
+                            title={v.players.find((p) => p.id === id)?.name}
+                          >
+                            <Portrait
+                              index={v.players.findIndex((p) => p.id === id)}
+                            />
+                          </i>
+                        ),
+                      )}
+                  </span>
+                ))}
+              </div>
+              <PublicBallots v={v} chain={i}/>
               <footer>
                 <button className="st-btn st-ghost" onClick={() => p.onOpen(i)}>
                   翻看这本

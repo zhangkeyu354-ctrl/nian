@@ -723,7 +723,7 @@
 .xb-world.xb-power-save .xb-cassette-back {
   transform: none;
 }
-@media (orientation: portrait) {
+@media (min-width: 650px) and (orientation: portrait) {
   .xb-world .xb-seats:has(.xb-speech-meter) {
     max-height: 296px;
   }

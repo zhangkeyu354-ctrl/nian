@@ -3,6 +3,7 @@ import { io } from "socket.io-client";
 import {
   appendChunk,
   emptyDrawing,
+  gameScope,
   COLORS,
   type Mode,
   type GameView,
@@ -102,7 +103,7 @@ export function DrawingParty({ mode }: { mode: Mode }) {
         if (!old?.view || old.view.id !== e.game) return old;
         const id = old.view.mode === "fa" ? "shared" : old.view.task?.id;
         if (id !== e.doc) return old;
-        const d = old.view.drawing ?? emptyDrawing();
+        const d = old.view.drawing ?? emptyDrawing(old.view.paperAspect);
         if (e.revision <= d.revision) return old;
         if (e.revision !== d.revision + 1) {
           void join(old.code).catch(() => {});
@@ -127,7 +128,7 @@ export function DrawingParty({ mode }: { mode: Mode }) {
     };
   }, []);
   const v = snap?.view,
-    scope = v ? [v.id, v.phase, v.step, v.turn].join(":") : "lobby",
+    scope = v ? gameScope(v) : "lobby",
     host = !!snap?.me && snap.host === snap.me,
     my = snap?.players.find((p) => p.id === snap.me),
     canAct = connected && !busy;
@@ -146,8 +147,7 @@ export function DrawingParty({ mode }: { mode: Mode }) {
         me: snap?.me,
         phase: v?.phase,
         view: v,
-        coordinateSystem:
-          "1024×1024 normalized; 2:1 paper; origin top-left; x right y down",
+        coordinateSystem: `1024×1024 normalized; paper aspect ${v?.paperAspect ?? 2}; origin top-left; x right y down`,
       });
     return () => {
       delete (window as any).render_game_to_text;
@@ -345,7 +345,9 @@ export function DrawingParty({ mode }: { mode: Mode }) {
         }
       />
     );
-  const seats = snap ? Array.from({ length: snap.count }, (_, i) => snap.players[i]) : [];
+  const seats = snap
+    ? Array.from({ length: snap.count }, (_, i) => snap.players[i])
+    : [];
   return (
     <main className={"lb-world lb-" + mode}>
       <div className="st-backdrop" aria-hidden="true">
@@ -398,7 +400,10 @@ export function DrawingParty({ mode }: { mode: Mode }) {
                 ? "抬起手指即结束这一笔，不能撤销。建议先和朋友开语音。3–10 人线上自动主持改编。"
                 : "提前提交后不能修改，等大家都好或到时一起传下一页。3 人是短链改编。"}
             </p>
-            <button className="st-btn st-primary" onClick={() => setRules(false)}>
+            <button
+              className="st-btn st-primary"
+              onClick={() => setRules(false)}
+            >
               知道了
             </button>
           </aside>
@@ -421,7 +426,10 @@ export function DrawingParty({ mode }: { mode: Mode }) {
         <div className="lb-cover">
           {mode === "fa" ? <FakeArtistCover /> : <TelephoneCover />}
         </div>
-        <section className="lb-card" key={!snap ? "entry" : !snap.me ? "claim" : "room"}>
+        <section
+          className="lb-card"
+          key={!snap ? "entry" : !snap.me ? "claim" : "room"}
+        >
           {!snap ? (
             <>
               <p className="lb-eyebrow">
@@ -478,7 +486,10 @@ export function DrawingParty({ mode }: { mode: Mode }) {
                   value={code}
                   onChange={(e) => setCode(e.target.value.toUpperCase())}
                 />
-                <button className="st-btn st-ghost" disabled={!canAct || !code.trim()}>
+                <button
+                  className="st-btn st-ghost"
+                  disabled={!canAct || !code.trim()}
+                >
                   加入
                 </button>
               </form>
@@ -547,7 +558,11 @@ export function DrawingParty({ mode }: { mode: Mode }) {
                           (p.connected ? "" : "is-off ") +
                           (p.id === snap.me ? "is-me" : "")
                     }
-                    style={{ "--seat": COLORS[i % COLORS.length] } as React.CSSProperties}
+                    style={
+                      {
+                        "--seat": COLORS[i % COLORS.length],
+                      } as React.CSSProperties
+                    }
                   >
                     {p ? (
                       <>
@@ -560,7 +575,11 @@ export function DrawingParty({ mode }: { mode: Mode }) {
                           {p.id === snap.host && <em>房主</em>}
                         </b>
                         <span className="lb-state">
-                          {p.connected ? (p.ready ? "已准备" : "等待准备") : "离线"}
+                          {p.connected
+                            ? p.ready
+                              ? "已准备"
+                              : "等待准备"
+                            : "离线"}
                         </span>
                       </>
                     ) : (
@@ -575,7 +594,11 @@ export function DrawingParty({ mode }: { mode: Mode }) {
               {host && (
                 <div className="lb-field is-inline">
                   <span>人数</span>
-                  <div className="lb-seg is-small" role="group" aria-label="房间人数">
+                  <div
+                    className="lb-seg is-small"
+                    role="group"
+                    aria-label="房间人数"
+                  >
                     {[3, 4, 5, 6, 7, 8, 9, 10].map((n) => (
                       <button
                         key={n}
@@ -594,7 +617,9 @@ export function DrawingParty({ mode }: { mode: Mode }) {
               )}
               <div className="lb-room-actions">
                 <button
-                  className={"st-btn " + (my?.ready ? "st-ghost" : "st-primary")}
+                  className={
+                    "st-btn " + (my?.ready ? "st-ghost" : "st-primary")
+                  }
                   disabled={!canAct}
                   onClick={() => {
                     feel(my?.ready ? "tap" : "select");
@@ -669,7 +694,15 @@ function exportAlbum(a: { owner: { name: string }; entries: any[] }) {
   const c = document.createElement("canvas");
   c.width = 1000;
   c.height =
-    120 + a.entries.reduce((n, e) => n + (e.kind === "drawing" ? 520 : 180), 0);
+    120 +
+    a.entries.reduce(
+      (n, e) =>
+        n +
+        (e.kind === "drawing"
+          ? Math.round(860 / (e.drawing?.aspect ?? 2)) + 90
+          : 180),
+      0,
+    );
   const g = c.getContext("2d")!;
   g.fillStyle = "#f8f5ef";
   g.fillRect(0, 0, c.width, c.height);
@@ -684,10 +717,10 @@ function exportAlbum(a: { owner: { name: string }; entries: any[] }) {
     if (e.kind === "drawing") {
       const p = document.createElement("canvas");
       p.width = 860;
-      p.height = 430;
+      p.height = Math.round(p.width / (e.drawing?.aspect ?? 2));
       paint(p, e.drawing ?? emptyDrawing());
       g.drawImage(p, 70, y + 50);
-      y += 520;
+      y += p.height + 90;
     } else {
       g.fillStyle = "#272336";
       g.font = "bold 30px sans-serif";

@@ -376,7 +376,7 @@ try {
       await shot(host, `${n}-19-titles`);
       if (n === 3) {
         await host
-          .getByRole("button", { name: "每轮回顾 · 把嘴硬留个档" })
+          .locator(".xb-finale-recap")
           .click();
         await shot(host, "20-recap");
         await host.getByRole("button", { name: "关闭面板" }).click();

@@ -17,6 +17,7 @@ import {
   tick,
   viewFor,
   startGame,
+  gameScope,
   taskFor,
   emptyDrawing,
   appendChunk,
@@ -92,7 +93,7 @@ export class DrawingRoom {
           break;
         } // incomplete final write has never been acknowledged
         if (e.game !== f.game.id) continue;
-        const d = (f.game.drawings[e.doc] ??= emptyDrawing());
+        const d = (f.game.drawings[e.doc] ??= emptyDrawing(f.game.paperAspect));
         if (d.revision >= e.revision) continue;
         if (d.revision !== e.revision - 1) throw Error("画作日志缺口");
         appendChunk(d, e.chunk);
@@ -136,7 +137,7 @@ export class DrawingRoom {
   }
   scope() {
     const g = this.file.game;
-    return g ? [g.id, g.phase, g.step, g.turn].join(":") : "lobby";
+    return g ? gameScope(g) : "lobby";
   }
   apply(p: Seat, req: any, now = Date.now()) {
     if (typeof req.op !== "string" || req.op.length > 100)
@@ -211,6 +212,9 @@ export class DrawingRoom {
           optionOffset: randomInt(18),
           categoryVote: true,
           categoryTieSeed: randomInt(60),
+          ...(this.file.mode === "tp"
+            ? { themeTieSeed: randomInt(420), themeRandomIndex: randomInt(5) }
+            : {}),
         },
       );
       this.file.game.id = randomBytes(16).toString("hex");
@@ -251,7 +255,7 @@ export class DrawingRoom {
       c.width = 8;
       if (c.points?.length > 128) throw Error("分片过大");
     }
-    const old = g.drawings[doc] ?? emptyDrawing(),
+    const old = g.drawings[doc] ?? emptyDrawing(g.paperAspect),
       d = structuredClone(old);
     appendChunk(d, c);
     if (d.revision === old.revision)
@@ -279,7 +283,7 @@ export class DrawingRoom {
       req.scope !== this.scope()
     )
       throw Error("不能修改当前画作");
-    const d = (g.drawings[t.id] ??= emptyDrawing());
+    const d = (g.drawings[t.id] ??= emptyDrawing(g.paperAspect));
     if (req.revision !== d.revision) throw Error("画作正在保存，请稍后重试");
     if (req.kind === "undo") d.strokes.pop();
     else if (req.kind === "clear") d.strokes = [];

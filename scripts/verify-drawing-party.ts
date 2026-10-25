@@ -1,3 +1,4 @@
+import { gameScope } from "../packages/drawing-party/src/index.ts";
 import { strict as assert } from "node:assert";
 import { io, type Socket } from "socket.io-client";
 const url = process.env.DP_URL ?? "http://127.0.0.1:3011";
@@ -46,7 +47,7 @@ try {
           code,
           token: seats[i].token,
           op: String(++op),
-          scope: v ? [v.id, v.phase, v.step, v.turn].join(":") : "lobby",
+          scope: v ? gameScope(v) : "lobby",
           action,
         });
       };
@@ -58,6 +59,12 @@ try {
       const ids = seats.map((x) => x.snapshot.me);
       if (mode === "tp") {
         for (let i = 0; i < n; i++)
+          await action(i, { type: "THEME_VOTE", theme: n % 2 ? 4 : 6 });
+        assert.equal((await snap()).view.phase, "THEME_RESULT");
+        await new Promise((r) => setTimeout(r, 1900));
+        assert.equal((await snap()).view.phase, "PROMPT");
+        assert.equal((await snap()).view.theme, n % 2 ? "歌词" : undefined);
+        for (let i = 0; i < n; i++)
           await action(i, { type: "TEXT", text: "秘密中文" + i });
         for (let step = 1; step <= n - (n % 2); step++) {
           if (step % 2) {
@@ -66,7 +73,7 @@ try {
             await Promise.all(
               clients.map(async (s, i) => {
                 const v = (await snap(i)).view,
-                  scope = [v.id, v.phase, v.step, v.turn].join(":");
+                  scope = gameScope(v);
                 for (let seq = 0; seq < 3; seq++) {
                   const a = await ok(s, "dp:stroke", {
                     code,
@@ -101,9 +108,7 @@ try {
               code,
               token: seats[0].token,
               op: "old-tab",
-              scope: [before.id, before.phase, before.step, before.turn].join(
-                ":",
-              ),
+              scope: gameScope(before),
               action: { type: "SUBMIT" },
             });
             assert.equal(denied.ok, false);
@@ -115,8 +120,36 @@ try {
               await action(i, { type: "TEXT", text: "猜测" + step + "-" + i });
         }
         assert.equal((await snap()).view.phase, "REVEAL");
-        for (let j = 0; j < n * (n - (n % 2) + 1); j++)
-          await action(0, { type: "NEXT" });
+        while ((await snap()).view.phase !== "RESULT") {
+          const v = (await snap()).view;
+          if (v.phase === "VERDICT") {
+            for (let i = 0; i < n; i++)
+              await action(i, {
+                type: "VERDICT_VOTE",
+                chain: v.awardChain,
+                choice: i % 3 ? "success" : "offtrack",
+              });
+            assert.equal((await snap()).view.phase, "VERDICT_RESULT");
+            assert.equal(
+              Object.keys((await snap()).view.verdictVotes).length,
+              n,
+            );
+          } else if (v.phase === "AWARD") {
+            for (let i = 0; i < n; i++)
+              await action(i, {
+                type: "AWARD_VOTE",
+                chain: v.awardChain,
+                mvp: ids[(i + 1) % n],
+                dud: i % 2 ? null : ids[(i + 1) % n],
+              });
+            assert.equal((await snap()).view.phase, "AWARD_RESULT");
+            assert.equal(
+              (await snap()).view.awardResults.length,
+              v.awardChain + 1,
+            );
+          } else await action(0, { type: "NEXT" });
+        }
+        assert.equal((await snap()).view.awardResults.length, n);
         assert.equal((await snap()).view.phase, "RESULT");
       } else {
         let fake = -1,
@@ -132,7 +165,7 @@ try {
         for (let turn = 0; turn < 2 * n; turn++) {
           const i = turn % n,
             v = (await snap(i)).view,
-            scope = [v.id, v.phase, v.step, v.turn].join(":");
+            scope = gameScope(v);
           const denied = await req(clients[(i + 1) % n], "dp:stroke", {
             code,
             token: seats[(i + 1) % n].token,

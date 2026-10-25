@@ -1,0 +1,206 @@
+[
+  {
+    "label": "theme",
+    "width": 844,
+    "height": 390,
+    "bad": [],
+    "paper": null
+  },
+  {
+    "label": "theme",
+    "width": 667,
+    "height": 375,
+    "bad": [],
+    "paper": null
+  },
+  {
+    "label": "theme",
+    "width": 390,
+    "height": 844,
+    "bad": [],
+    "paper": null
+  },
+  {
+    "label": "prompt",
+    "width": 844,
+    "height": 390,
+    "bad": [],
+    "paper": null
+  },
+  {
+    "label": "prompt",
+    "width": 667,
+    "height": 375,
+    "bad": [],
+    "paper": null
+  },
+  {
+    "label": "prompt",
+    "width": 390,
+    "height": 844,
+    "bad": [],
+    "paper": null
+  },
+  {
+    "label": "reveal-before-award",
+    "width": 844,
+    "height": 390,
+    "bad": [],
+    "paper": {
+      "width": 384,
+      "height": 288
+    }
+  },
+  {
+    "label": "reveal-before-award",
+    "width": 667,
+    "height": 375,
+    "bad": [],
+    "paper": {
+      "width": 364,
+      "height": 273
+    }
+  },
+  {
+    "label": "reveal-before-award",
+    "width": 390,
+    "height": 844,
+    "bad": [],
+    "paper": {
+      "width": 390,
+      "height": 292.5
+    }
+  },
+  {
+    "label": "verdict",
+    "width": 844,
+    "height": 390,
+    "bad": [],
+    "paper": null
+  },
+  {
+    "label": "verdict",
+    "width": 667,
+    "height": 375,
+    "bad": [],
+    "paper": null
+  },
+  {
+    "label": "verdict",
+    "width": 390,
+    "height": 844,
+    "bad": [],
+    "paper": null
+  },
+  {
+    "label": "verdict-result",
+    "width": 844,
+    "height": 390,
+    "bad": [],
+    "paper": null
+  },
+  {
+    "label": "verdict-result",
+    "width": 667,
+    "height": 375,
+    "bad": [],
+    "paper": null
+  },
+  {
+    "label": "verdict-result",
+    "width": 390,
+    "height": 844,
+    "bad": [],
+    "paper": null
+  },
+  {
+    "label": "award",
+    "width": 844,
+    "height": 390,
+    "bad": [],
+    "paper": {
+      "width": 278.65625,
+      "height": 208.984375
+    }
+  },
+  {
+    "label": "award",
+    "width": 667,
+    "height": 375,
+    "bad": [],
+    "paper": {
+      "width": 258.65625,
+      "height": 193.984375
+    }
+  },
+  {
+    "label": "award",
+    "width": 390,
+    "height": 844,
+    "bad": [],
+    "paper": {
+      "width": 390,
+      "height": 292.5
+    }
+  },
+  {
+    "label": "award-result",
+    "width": 844,
+    "height": 390,
+    "bad": [],
+    "paper": {
+      "width": 281.328125,
+      "height": 210.984375
+    }
+  },
+  {
+    "label": "award-result",
+    "width": 667,
+    "height": 375,
+    "bad": [],
+    "paper": {
+      "width": 261.328125,
+      "height": 195.984375
+    }
+  },
+  {
+    "label": "award-result",
+    "width": 390,
+    "height": 844,
+    "bad": [],
+    "paper": {
+      "width": 390,
+      "height": 292.5
+    }
+  },
+  {
+    "label": "total-result",
+    "width": 844,
+    "height": 390,
+    "bad": [],
+    "paper": {
+      "width": 384,
+      "height": 288
+    }
+  },
+  {
+    "label": "total-result",
+    "width": 667,
+    "height": 375,
+    "bad": [],
+    "paper": {
+      "width": 364,
+      "height": 273
+    }
+  },
+  {
+    "label": "total-result",
+    "width": 390,
+    "height": 844,
+    "bad": [],
+    "paper": {
+      "width": 390,
+      "height": 292.5
+    }
+  }
+]
