@@ -1,0 +1,222 @@
+{
+  "checks": [
+    {
+      "name": "legacy classic file migration",
+      "passed": true
+    },
+    {
+      "name": "third copy and J3/J4 render; private draft survives reload and process restart",
+      "passed": true
+    },
+    {
+      "name": "5-browser real UI full game and next game",
+      "turns": 161,
+      "blocked": true,
+      "scores": [
+        -38,
+        -12,
+        -20,
+        83,
+        -13
+      ],
+      "passed": true
+    },
+    {
+      "name": "6-browser real UI full game and next game",
+      "turns": 134,
+      "blocked": false,
+      "scores": [
+        -25,
+        -57,
+        -15,
+        131,
+        -22,
+        -12
+      ],
+      "passed": true
+    }
+  ],
+  "shots": [
+    {
+      "name": "390-six-seats-jokers",
+      "audit": {
+        "horizontal": false,
+        "names": []
+      },
+      "scope": "Visible UI / prototype region, not a full-map-count claim",
+      "region": {
+        "x": 0,
+        "y": 0,
+        "width": 390,
+        "height": 844
+      },
+      "pixels": {
+        "busy": 0.39439786122250575,
+        "std": 58.39662724706964
+      }
+    },
+    {
+      "name": "844-six-seats-jokers",
+      "audit": {
+        "horizontal": false,
+        "names": []
+      },
+      "scope": "Visible UI / prototype region, not a full-map-count claim",
+      "region": {
+        "x": 0,
+        "y": 0,
+        "width": 844,
+        "height": 390
+      },
+      "pixels": {
+        "busy": 0.322068295054077,
+        "std": 46.61866033572432
+      }
+    },
+    {
+      "name": "1280-six-seats-jokers",
+      "audit": {
+        "horizontal": false,
+        "names": []
+      },
+      "scope": "Visible UI / prototype region, not a full-map-count claim",
+      "region": {
+        "x": 0,
+        "y": 0,
+        "width": 1280,
+        "height": 800
+      },
+      "pixels": {
+        "busy": 0.1819609375,
+        "std": 39.93677151230931
+      }
+    },
+    {
+      "name": "xp-restored-private-draft",
+      "audit": {
+        "horizontal": false,
+        "names": []
+      },
+      "scope": "Visible UI / prototype region, not a full-map-count claim",
+      "region": {
+        "x": 0,
+        "y": 0,
+        "width": 390,
+        "height": 844
+      },
+      "pixels": {
+        "busy": 0.41458257382428,
+        "std": 58.1858048781803
+      }
+    },
+    {
+      "name": "xp-5-lobby",
+      "audit": {
+        "horizontal": false,
+        "names": []
+      },
+      "scope": "Visible UI / prototype region, not a full-map-count claim",
+      "region": {
+        "x": 0,
+        "y": 0,
+        "width": 390,
+        "height": 844
+      },
+      "pixels": {
+        "busy": 0.23430550492161867,
+        "std": 50.098089133744814
+      }
+    },
+    {
+      "name": "xp-5-start",
+      "audit": {
+        "horizontal": false,
+        "names": []
+      },
+      "scope": "Visible UI / prototype region, not a full-map-count claim",
+      "region": {
+        "x": 0,
+        "y": 0,
+        "width": 390,
+        "height": 844
+      },
+      "pixels": {
+        "busy": 0.3857455340867663,
+        "std": 54.55119208317681
+      }
+    },
+    {
+      "name": "xp-5-result",
+      "audit": {
+        "horizontal": false,
+        "names": []
+      },
+      "scope": "Visible UI / prototype region, not a full-map-count claim",
+      "region": {
+        "x": 0,
+        "y": 0,
+        "width": 390,
+        "height": 844
+      },
+      "pixels": {
+        "busy": 0.35395552314983597,
+        "std": 55.6785496614655
+      }
+    },
+    {
+      "name": "xp-6-lobby",
+      "audit": {
+        "horizontal": false,
+        "names": []
+      },
+      "scope": "Visible UI / prototype region, not a full-map-count claim",
+      "region": {
+        "x": 0,
+        "y": 0,
+        "width": 390,
+        "height": 844
+      },
+      "pixels": {
+        "busy": 0.23770810548061733,
+        "std": 50.51770921471203
+      }
+    },
+    {
+      "name": "xp-6-start",
+      "audit": {
+        "horizontal": false,
+        "names": []
+      },
+      "scope": "Visible UI / prototype region, not a full-map-count claim",
+      "region": {
+        "x": 0,
+        "y": 0,
+        "width": 390,
+        "height": 844
+      },
+      "pixels": {
+        "busy": 0.38558755620366997,
+        "std": 53.73618039614176
+      }
+    },
+    {
+      "name": "xp-6-result",
+      "audit": {
+        "horizontal": false,
+        "names": []
+      },
+      "scope": "Visible UI / prototype region, not a full-map-count claim",
+      "region": {
+        "x": 0,
+        "y": 0,
+        "width": 390,
+        "height": 844
+      },
+      "pixels": {
+        "busy": 0.33430550492161865,
+        "std": 48.14488601560983
+      }
+    }
+  ],
+  "errors": []
+}

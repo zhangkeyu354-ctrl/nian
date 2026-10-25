@@ -1,0 +1,8438 @@
+{
+  "generatedAt": "2026-10-25T05:51:33.774Z",
+  "elapsedMs": 57451,
+  "total": 600,
+  "passed": 600,
+  "failed": 0,
+  "seedPolicy": "players * 1000 + [1..200]",
+  "ai": "greedy own-rack melds then extensions; no full table solver",
+  "results": [
+    {
+      "players": 2,
+      "seed": 2001,
+      "turns": 135,
+      "blocked": true,
+      "winners": [
+        1
+      ],
+      "scores": [
+        -26,
+        26
+      ]
+    },
+    {
+      "players": 2,
+      "seed": 2002,
+      "turns": 135,
+      "blocked": true,
+      "winners": [
+        1
+      ],
+      "scores": [
+        -8,
+        8
+      ]
+    },
+    {
+      "players": 2,
+      "seed": 2003,
+      "turns": 130,
+      "blocked": true,
+      "winners": [
+        1
+      ],
+      "scores": [
+        -7,
+        7
+      ]
+    },
+    {
+      "players": 2,
+      "seed": 2004,
+      "turns": 128,
+      "blocked": true,
+      "winners": [
+        0
+      ],
+      "scores": [
+        15,
+        -15
+      ]
+    },
+    {
+      "players": 2,
+      "seed": 2005,
+      "turns": 129,
+      "blocked": true,
+      "winners": [
+        1
+      ],
+      "scores": [
+        -5,
+        5
+      ]
+    },
+    {
+      "players": 2,
+      "seed": 2006,
+      "turns": 128,
+      "blocked": true,
+      "winners": [
+        1
+      ],
+      "scores": [
+        -23,
+        23
+      ]
+    },
+    {
+      "players": 2,
+      "seed": 2007,
+      "turns": 128,
+      "blocked": true,
+      "winners": [
+        1
+      ],
+      "scores": [
+        -9,
+        9
+      ]
+    },
+    {
+      "players": 2,
+      "seed": 2008,
+      "turns": 129,
+      "blocked": true,
+      "winners": [
+        0,
+        1
+      ],
+      "scores": [
+        0,
+        0
+      ]
+    },
+    {
+      "players": 2,
+      "seed": 2009,
+      "turns": 123,
+      "blocked": true,
+      "winners": [
+        0
+      ],
+      "scores": [
+        42,
+        -42
+      ]
+    },
+    {
+      "players": 2,
+      "seed": 2010,
+      "turns": 131,
+      "blocked": true,
+      "winners": [
+        0
+      ],
+      "scores": [
+        23,
+        -23
+      ]
+    },
+    {
+      "players": 2,
+      "seed": 2011,
+      "turns": 142,
+      "blocked": true,
+      "winners": [
+        1
+      ],
+      "scores": [
+        -3,
+        3
+      ]
+    },
+    {
+      "players": 2,
+      "seed": 2012,
+      "turns": 131,
+      "blocked": true,
+      "winners": [
+        1
+      ],
+      "scores": [
+        -13,
+        13
+      ]
+    },
+    {
+      "players": 2,
+      "seed": 2013,
+      "turns": 132,
+      "blocked": true,
+      "winners": [
+        0
+      ],
+      "scores": [
+        25,
+        -25
+      ]
+    },
+    {
+      "players": 2,
+      "seed": 2014,
+      "turns": 133,
+      "blocked": true,
+      "winners": [
+        0
+      ],
+      "scores": [
+        25,
+        -25
+      ]
+    },
+    {
+      "players": 2,
+      "seed": 2015,
+      "turns": 132,
+      "blocked": false,
+      "winners": [
+        0
+      ],
+      "scores": [
+        25,
+        -25
+      ]
+    },
+    {
+      "players": 2,
+      "seed": 2016,
+      "turns": 130,
+      "blocked": true,
+      "winners": [
+        1
+      ],
+      "scores": [
+        -26,
+        26
+      ]
+    },
+    {
+      "players": 2,
+      "seed": 2017,
+      "turns": 124,
+      "blocked": true,
+      "winners": [
+        0
+      ],
+      "scores": [
+        24,
+        -24
+      ]
+    },
+    {
+      "players": 2,
+      "seed": 2018,
+      "turns": 136,
+      "blocked": true,
+      "winners": [
+        0
+      ],
+      "scores": [
+        18,
+        -18
+      ]
+    },
+    {
+      "players": 2,
+      "seed": 2019,
+      "turns": 125,
+      "blocked": false,
+      "winners": [
+        1
+      ],
+      "scores": [
+        -17,
+        17
+      ]
+    },
+    {
+      "players": 2,
+      "seed": 2020,
+      "turns": 122,
+      "blocked": false,
+      "winners": [
+        1
+      ],
+      "scores": [
+        -24,
+        24
+      ]
+    },
+    {
+      "players": 2,
+      "seed": 2021,
+      "turns": 133,
+      "blocked": true,
+      "winners": [
+        1
+      ],
+      "scores": [
+        -18,
+        18
+      ]
+    },
+    {
+      "players": 2,
+      "seed": 2022,
+      "turns": 127,
+      "blocked": false,
+      "winners": [
+        0
+      ],
+      "scores": [
+        36,
+        -36
+      ]
+    },
+    {
+      "players": 2,
+      "seed": 2023,
+      "turns": 123,
+      "blocked": true,
+      "winners": [
+        0
+      ],
+      "scores": [
+        3,
+        -3
+      ]
+    },
+    {
+      "players": 2,
+      "seed": 2024,
+      "turns": 135,
+      "blocked": true,
+      "winners": [
+        1
+      ],
+      "scores": [
+        -8,
+        8
+      ]
+    },
+    {
+      "players": 2,
+      "seed": 2025,
+      "turns": 133,
+      "blocked": true,
+      "winners": [
+        0
+      ],
+      "scores": [
+        21,
+        -21
+      ]
+    },
+    {
+      "players": 2,
+      "seed": 2026,
+      "turns": 135,
+      "blocked": true,
+      "winners": [
+        0
+      ],
+      "scores": [
+        10,
+        -10
+      ]
+    },
+    {
+      "players": 2,
+      "seed": 2027,
+      "turns": 128,
+      "blocked": false,
+      "winners": [
+        0
+      ],
+      "scores": [
+        9,
+        -9
+      ]
+    },
+    {
+      "players": 2,
+      "seed": 2028,
+      "turns": 135,
+      "blocked": true,
+      "winners": [
+        0
+      ],
+      "scores": [
+        5,
+        -5
+      ]
+    },
+    {
+      "players": 2,
+      "seed": 2029,
+      "turns": 144,
+      "blocked": true,
+      "winners": [
+        0,
+        1
+      ],
+      "scores": [
+        0,
+        0
+      ]
+    },
+    {
+      "players": 2,
+      "seed": 2030,
+      "turns": 123,
+      "blocked": false,
+      "winners": [
+        0
+      ],
+      "scores": [
+        30,
+        -30
+      ]
+    },
+    {
+      "players": 2,
+      "seed": 2031,
+      "turns": 136,
+      "blocked": true,
+      "winners": [
+        1
+      ],
+      "scores": [
+        -23,
+        23
+      ]
+    },
+    {
+      "players": 2,
+      "seed": 2032,
+      "turns": 127,
+      "blocked": true,
+      "winners": [
+        0
+      ],
+      "scores": [
+        5,
+        -5
+      ]
+    },
+    {
+      "players": 2,
+      "seed": 2033,
+      "turns": 137,
+      "blocked": true,
+      "winners": [
+        1
+      ],
+      "scores": [
+        -5,
+        5
+      ]
+    },
+    {
+      "players": 2,
+      "seed": 2034,
+      "turns": 123,
+      "blocked": true,
+      "winners": [
+        0
+      ],
+      "scores": [
+        22,
+        -22
+      ]
+    },
+    {
+      "players": 2,
+      "seed": 2035,
+      "turns": 143,
+      "blocked": true,
+      "winners": [
+        1
+      ],
+      "scores": [
+        -13,
+        13
+      ]
+    },
+    {
+      "players": 2,
+      "seed": 2036,
+      "turns": 126,
+      "blocked": true,
+      "winners": [
+        1
+      ],
+      "scores": [
+        -10,
+        10
+      ]
+    },
+    {
+      "players": 2,
+      "seed": 2037,
+      "turns": 134,
+      "blocked": true,
+      "winners": [
+        0
+      ],
+      "scores": [
+        3,
+        -3
+      ]
+    },
+    {
+      "players": 2,
+      "seed": 2038,
+      "turns": 128,
+      "blocked": true,
+      "winners": [
+        1
+      ],
+      "scores": [
+        -6,
+        6
+      ]
+    },
+    {
+      "players": 2,
+      "seed": 2039,
+      "turns": 130,
+      "blocked": true,
+      "winners": [
+        0,
+        1
+      ],
+      "scores": [
+        0,
+        0
+      ]
+    },
+    {
+      "players": 2,
+      "seed": 2040,
+      "turns": 134,
+      "blocked": true,
+      "winners": [
+        1
+      ],
+      "scores": [
+        -5,
+        5
+      ]
+    },
+    {
+      "players": 2,
+      "seed": 2041,
+      "turns": 144,
+      "blocked": true,
+      "winners": [
+        1
+      ],
+      "scores": [
+        -2,
+        2
+      ]
+    },
+    {
+      "players": 2,
+      "seed": 2042,
+      "turns": 130,
+      "blocked": true,
+      "winners": [
+        0
+      ],
+      "scores": [
+        12,
+        -12
+      ]
+    },
+    {
+      "players": 2,
+      "seed": 2043,
+      "turns": 129,
+      "blocked": false,
+      "winners": [
+        1
+      ],
+      "scores": [
+        -8,
+        8
+      ]
+    },
+    {
+      "players": 2,
+      "seed": 2044,
+      "turns": 124,
+      "blocked": true,
+      "winners": [
+        1
+      ],
+      "scores": [
+        -7,
+        7
+      ]
+    },
+    {
+      "players": 2,
+      "seed": 2045,
+      "turns": 127,
+      "blocked": true,
+      "winners": [
+        1
+      ],
+      "scores": [
+        -3,
+        3
+      ]
+    },
+    {
+      "players": 2,
+      "seed": 2046,
+      "turns": 130,
+      "blocked": true,
+      "winners": [
+        0
+      ],
+      "scores": [
+        22,
+        -22
+      ]
+    },
+    {
+      "players": 2,
+      "seed": 2047,
+      "turns": 124,
+      "blocked": true,
+      "winners": [
+        0
+      ],
+      "scores": [
+        9,
+        -9
+      ]
+    },
+    {
+      "players": 2,
+      "seed": 2048,
+      "turns": 130,
+      "blocked": true,
+      "winners": [
+        0
+      ],
+      "scores": [
+        9,
+        -9
+      ]
+    },
+    {
+      "players": 2,
+      "seed": 2049,
+      "turns": 131,
+      "blocked": true,
+      "winners": [
+        1
+      ],
+      "scores": [
+        -5,
+        5
+      ]
+    },
+    {
+      "players": 2,
+      "seed": 2050,
+      "turns": 128,
+      "blocked": true,
+      "winners": [
+        1
+      ],
+      "scores": [
+        -4,
+        4
+      ]
+    },
+    {
+      "players": 2,
+      "seed": 2051,
+      "turns": 128,
+      "blocked": true,
+      "winners": [
+        1
+      ],
+      "scores": [
+        -15,
+        15
+      ]
+    },
+    {
+      "players": 2,
+      "seed": 2052,
+      "turns": 136,
+      "blocked": true,
+      "winners": [
+        1
+      ],
+      "scores": [
+        -1,
+        1
+      ]
+    },
+    {
+      "players": 2,
+      "seed": 2053,
+      "turns": 128,
+      "blocked": true,
+      "winners": [
+        1
+      ],
+      "scores": [
+        -3,
+        3
+      ]
+    },
+    {
+      "players": 2,
+      "seed": 2054,
+      "turns": 131,
+      "blocked": true,
+      "winners": [
+        0
+      ],
+      "scores": [
+        3,
+        -3
+      ]
+    },
+    {
+      "players": 2,
+      "seed": 2055,
+      "turns": 129,
+      "blocked": true,
+      "winners": [
+        1
+      ],
+      "scores": [
+        -18,
+        18
+      ]
+    },
+    {
+      "players": 2,
+      "seed": 2056,
+      "turns": 140,
+      "blocked": true,
+      "winners": [
+        0
+      ],
+      "scores": [
+        4,
+        -4
+      ]
+    },
+    {
+      "players": 2,
+      "seed": 2057,
+      "turns": 125,
+      "blocked": true,
+      "winners": [
+        1
+      ],
+      "scores": [
+        -3,
+        3
+      ]
+    },
+    {
+      "players": 2,
+      "seed": 2058,
+      "turns": 130,
+      "blocked": true,
+      "winners": [
+        0
+      ],
+      "scores": [
+        4,
+        -4
+      ]
+    },
+    {
+      "players": 2,
+      "seed": 2059,
+      "turns": 130,
+      "blocked": true,
+      "winners": [
+        0
+      ],
+      "scores": [
+        8,
+        -8
+      ]
+    },
+    {
+      "players": 2,
+      "seed": 2060,
+      "turns": 125,
+      "blocked": true,
+      "winners": [
+        0
+      ],
+      "scores": [
+        7,
+        -7
+      ]
+    },
+    {
+      "players": 2,
+      "seed": 2061,
+      "turns": 133,
+      "blocked": true,
+      "winners": [
+        1
+      ],
+      "scores": [
+        -18,
+        18
+      ]
+    },
+    {
+      "players": 2,
+      "seed": 2062,
+      "turns": 119,
+      "blocked": false,
+      "winners": [
+        1
+      ],
+      "scores": [
+        -31,
+        31
+      ]
+    },
+    {
+      "players": 2,
+      "seed": 2063,
+      "turns": 131,
+      "blocked": true,
+      "winners": [
+        0
+      ],
+      "scores": [
+        1,
+        -1
+      ]
+    },
+    {
+      "players": 2,
+      "seed": 2064,
+      "turns": 137,
+      "blocked": true,
+      "winners": [
+        0
+      ],
+      "scores": [
+        14,
+        -14
+      ]
+    },
+    {
+      "players": 2,
+      "seed": 2065,
+      "turns": 129,
+      "blocked": true,
+      "winners": [
+        1
+      ],
+      "scores": [
+        -13,
+        13
+      ]
+    },
+    {
+      "players": 2,
+      "seed": 2066,
+      "turns": 124,
+      "blocked": false,
+      "winners": [
+        1
+      ],
+      "scores": [
+        -16,
+        16
+      ]
+    },
+    {
+      "players": 2,
+      "seed": 2067,
+      "turns": 133,
+      "blocked": true,
+      "winners": [
+        1
+      ],
+      "scores": [
+        -3,
+        3
+      ]
+    },
+    {
+      "players": 2,
+      "seed": 2068,
+      "turns": 136,
+      "blocked": true,
+      "winners": [
+        1
+      ],
+      "scores": [
+        -4,
+        4
+      ]
+    },
+    {
+      "players": 2,
+      "seed": 2069,
+      "turns": 137,
+      "blocked": true,
+      "winners": [
+        1
+      ],
+      "scores": [
+        -12,
+        12
+      ]
+    },
+    {
+      "players": 2,
+      "seed": 2070,
+      "turns": 119,
+      "blocked": true,
+      "winners": [
+        0
+      ],
+      "scores": [
+        7,
+        -7
+      ]
+    },
+    {
+      "players": 2,
+      "seed": 2071,
+      "turns": 125,
+      "blocked": true,
+      "winners": [
+        0
+      ],
+      "scores": [
+        10,
+        -10
+      ]
+    },
+    {
+      "players": 2,
+      "seed": 2072,
+      "turns": 133,
+      "blocked": true,
+      "winners": [
+        1
+      ],
+      "scores": [
+        -13,
+        13
+      ]
+    },
+    {
+      "players": 2,
+      "seed": 2073,
+      "turns": 134,
+      "blocked": true,
+      "winners": [
+        0
+      ],
+      "scores": [
+        10,
+        -10
+      ]
+    },
+    {
+      "players": 2,
+      "seed": 2074,
+      "turns": 121,
+      "blocked": true,
+      "winners": [
+        0
+      ],
+      "scores": [
+        41,
+        -41
+      ]
+    },
+    {
+      "players": 2,
+      "seed": 2075,
+      "turns": 138,
+      "blocked": true,
+      "winners": [
+        1
+      ],
+      "scores": [
+        -3,
+        3
+      ]
+    },
+    {
+      "players": 2,
+      "seed": 2076,
+      "turns": 134,
+      "blocked": true,
+      "winners": [
+        1
+      ],
+      "scores": [
+        -3,
+        3
+      ]
+    },
+    {
+      "players": 2,
+      "seed": 2077,
+      "turns": 124,
+      "blocked": true,
+      "winners": [
+        1
+      ],
+      "scores": [
+        -8,
+        8
+      ]
+    },
+    {
+      "players": 2,
+      "seed": 2078,
+      "turns": 138,
+      "blocked": true,
+      "winners": [
+        0
+      ],
+      "scores": [
+        12,
+        -12
+      ]
+    },
+    {
+      "players": 2,
+      "seed": 2079,
+      "turns": 138,
+      "blocked": true,
+      "winners": [
+        0
+      ],
+      "scores": [
+        13,
+        -13
+      ]
+    },
+    {
+      "players": 2,
+      "seed": 2080,
+      "turns": 136,
+      "blocked": false,
+      "winners": [
+        1
+      ],
+      "scores": [
+        -4,
+        4
+      ]
+    },
+    {
+      "players": 2,
+      "seed": 2081,
+      "turns": 127,
+      "blocked": false,
+      "winners": [
+        0
+      ],
+      "scores": [
+        24,
+        -24
+      ]
+    },
+    {
+      "players": 2,
+      "seed": 2082,
+      "turns": 125,
+      "blocked": false,
+      "winners": [
+        1
+      ],
+      "scores": [
+        -8,
+        8
+      ]
+    },
+    {
+      "players": 2,
+      "seed": 2083,
+      "turns": 134,
+      "blocked": true,
+      "winners": [
+        0
+      ],
+      "scores": [
+        6,
+        -6
+      ]
+    },
+    {
+      "players": 2,
+      "seed": 2084,
+      "turns": 134,
+      "blocked": false,
+      "winners": [
+        0
+      ],
+      "scores": [
+        13,
+        -13
+      ]
+    },
+    {
+      "players": 2,
+      "seed": 2085,
+      "turns": 134,
+      "blocked": true,
+      "winners": [
+        0,
+        1
+      ],
+      "scores": [
+        0,
+        0
+      ]
+    },
+    {
+      "players": 2,
+      "seed": 2086,
+      "turns": 122,
+      "blocked": false,
+      "winners": [
+        1
+      ],
+      "scores": [
+        -1,
+        1
+      ]
+    },
+    {
+      "players": 2,
+      "seed": 2087,
+      "turns": 138,
+      "blocked": true,
+      "winners": [
+        1
+      ],
+      "scores": [
+        -10,
+        10
+      ]
+    },
+    {
+      "players": 2,
+      "seed": 2088,
+      "turns": 129,
+      "blocked": false,
+      "winners": [
+        0
+      ],
+      "scores": [
+        8,
+        -8
+      ]
+    },
+    {
+      "players": 2,
+      "seed": 2089,
+      "turns": 134,
+      "blocked": true,
+      "winners": [
+        1
+      ],
+      "scores": [
+        -3,
+        3
+      ]
+    },
+    {
+      "players": 2,
+      "seed": 2090,
+      "turns": 130,
+      "blocked": true,
+      "winners": [
+        0
+      ],
+      "scores": [
+        2,
+        -2
+      ]
+    },
+    {
+      "players": 2,
+      "seed": 2091,
+      "turns": 136,
+      "blocked": true,
+      "winners": [
+        0
+      ],
+      "scores": [
+        5,
+        -5
+      ]
+    },
+    {
+      "players": 2,
+      "seed": 2092,
+      "turns": 130,
+      "blocked": true,
+      "winners": [
+        1
+      ],
+      "scores": [
+        -16,
+        16
+      ]
+    },
+    {
+      "players": 2,
+      "seed": 2093,
+      "turns": 121,
+      "blocked": false,
+      "winners": [
+        1
+      ],
+      "scores": [
+        -41,
+        41
+      ]
+    },
+    {
+      "players": 2,
+      "seed": 2094,
+      "turns": 128,
+      "blocked": true,
+      "winners": [
+        0,
+        1
+      ],
+      "scores": [
+        0,
+        0
+      ]
+    },
+    {
+      "players": 2,
+      "seed": 2095,
+      "turns": 136,
+      "blocked": true,
+      "winners": [
+        0
+      ],
+      "scores": [
+        6,
+        -6
+      ]
+    },
+    {
+      "players": 2,
+      "seed": 2096,
+      "turns": 137,
+      "blocked": true,
+      "winners": [
+        1
+      ],
+      "scores": [
+        -17,
+        17
+      ]
+    },
+    {
+      "players": 2,
+      "seed": 2097,
+      "turns": 130,
+      "blocked": true,
+      "winners": [
+        0
+      ],
+      "scores": [
+        17,
+        -17
+      ]
+    },
+    {
+      "players": 2,
+      "seed": 2098,
+      "turns": 130,
+      "blocked": true,
+      "winners": [
+        1
+      ],
+      "scores": [
+        -8,
+        8
+      ]
+    },
+    {
+      "players": 2,
+      "seed": 2099,
+      "turns": 134,
+      "blocked": true,
+      "winners": [
+        0
+      ],
+      "scores": [
+        28,
+        -28
+      ]
+    },
+    {
+      "players": 2,
+      "seed": 2100,
+      "turns": 132,
+      "blocked": true,
+      "winners": [
+        0
+      ],
+      "scores": [
+        21,
+        -21
+      ]
+    },
+    {
+      "players": 2,
+      "seed": 2101,
+      "turns": 131,
+      "blocked": true,
+      "winners": [
+        0,
+        1
+      ],
+      "scores": [
+        0,
+        0
+      ]
+    },
+    {
+      "players": 2,
+      "seed": 2102,
+      "turns": 137,
+      "blocked": true,
+      "winners": [
+        0,
+        1
+      ],
+      "scores": [
+        0,
+        0
+      ]
+    },
+    {
+      "players": 2,
+      "seed": 2103,
+      "turns": 125,
+      "blocked": true,
+      "winners": [
+        1
+      ],
+      "scores": [
+        -11,
+        11
+      ]
+    },
+    {
+      "players": 2,
+      "seed": 2104,
+      "turns": 134,
+      "blocked": true,
+      "winners": [
+        0
+      ],
+      "scores": [
+        12,
+        -12
+      ]
+    },
+    {
+      "players": 2,
+      "seed": 2105,
+      "turns": 130,
+      "blocked": true,
+      "winners": [
+        0
+      ],
+      "scores": [
+        15,
+        -15
+      ]
+    },
+    {
+      "players": 2,
+      "seed": 2106,
+      "turns": 138,
+      "blocked": true,
+      "winners": [
+        0
+      ],
+      "scores": [
+        2,
+        -2
+      ]
+    },
+    {
+      "players": 2,
+      "seed": 2107,
+      "turns": 135,
+      "blocked": true,
+      "winners": [
+        1
+      ],
+      "scores": [
+        -16,
+        16
+      ]
+    },
+    {
+      "players": 2,
+      "seed": 2108,
+      "turns": 136,
+      "blocked": true,
+      "winners": [
+        0
+      ],
+      "scores": [
+        23,
+        -23
+      ]
+    },
+    {
+      "players": 2,
+      "seed": 2109,
+      "turns": 125,
+      "blocked": false,
+      "winners": [
+        0
+      ],
+      "scores": [
+        18,
+        -18
+      ]
+    },
+    {
+      "players": 2,
+      "seed": 2110,
+      "turns": 134,
+      "blocked": true,
+      "winners": [
+        0
+      ],
+      "scores": [
+        13,
+        -13
+      ]
+    },
+    {
+      "players": 2,
+      "seed": 2111,
+      "turns": 132,
+      "blocked": true,
+      "winners": [
+        0,
+        1
+      ],
+      "scores": [
+        0,
+        0
+      ]
+    },
+    {
+      "players": 2,
+      "seed": 2112,
+      "turns": 117,
+      "blocked": true,
+      "winners": [
+        1
+      ],
+      "scores": [
+        -4,
+        4
+      ]
+    },
+    {
+      "players": 2,
+      "seed": 2113,
+      "turns": 101,
+      "blocked": false,
+      "winners": [
+        1
+      ],
+      "scores": [
+        -17,
+        17
+      ]
+    },
+    {
+      "players": 2,
+      "seed": 2114,
+      "turns": 122,
+      "blocked": false,
+      "winners": [
+        1
+      ],
+      "scores": [
+        -11,
+        11
+      ]
+    },
+    {
+      "players": 2,
+      "seed": 2115,
+      "turns": 135,
+      "blocked": true,
+      "winners": [
+        0
+      ],
+      "scores": [
+        6,
+        -6
+      ]
+    },
+    {
+      "players": 2,
+      "seed": 2116,
+      "turns": 141,
+      "blocked": true,
+      "winners": [
+        1
+      ],
+      "scores": [
+        -12,
+        12
+      ]
+    },
+    {
+      "players": 2,
+      "seed": 2117,
+      "turns": 133,
+      "blocked": true,
+      "winners": [
+        1
+      ],
+      "scores": [
+        -11,
+        11
+      ]
+    },
+    {
+      "players": 2,
+      "seed": 2118,
+      "turns": 133,
+      "blocked": true,
+      "winners": [
+        0,
+        1
+      ],
+      "scores": [
+        0,
+        0
+      ]
+    },
+    {
+      "players": 2,
+      "seed": 2119,
+      "turns": 133,
+      "blocked": true,
+      "winners": [
+        1
+      ],
+      "scores": [
+        -10,
+        10
+      ]
+    },
+    {
+      "players": 2,
+      "seed": 2120,
+      "turns": 129,
+      "blocked": true,
+      "winners": [
+        0,
+        1
+      ],
+      "scores": [
+        0,
+        0
+      ]
+    },
+    {
+      "players": 2,
+      "seed": 2121,
+      "turns": 138,
+      "blocked": true,
+      "winners": [
+        1
+      ],
+      "scores": [
+        -33,
+        33
+      ]
+    },
+    {
+      "players": 2,
+      "seed": 2122,
+      "turns": 132,
+      "blocked": true,
+      "winners": [
+        1
+      ],
+      "scores": [
+        -4,
+        4
+      ]
+    },
+    {
+      "players": 2,
+      "seed": 2123,
+      "turns": 130,
+      "blocked": true,
+      "winners": [
+        1
+      ],
+      "scores": [
+        -4,
+        4
+      ]
+    },
+    {
+      "players": 2,
+      "seed": 2124,
+      "turns": 130,
+      "blocked": true,
+      "winners": [
+        1
+      ],
+      "scores": [
+        -8,
+        8
+      ]
+    },
+    {
+      "players": 2,
+      "seed": 2125,
+      "turns": 128,
+      "blocked": true,
+      "winners": [
+        0
+      ],
+      "scores": [
+        11,
+        -11
+      ]
+    },
+    {
+      "players": 2,
+      "seed": 2126,
+      "turns": 130,
+      "blocked": true,
+      "winners": [
+        1
+      ],
+      "scores": [
+        -25,
+        25
+      ]
+    },
+    {
+      "players": 2,
+      "seed": 2127,
+      "turns": 132,
+      "blocked": true,
+      "winners": [
+        1
+      ],
+      "scores": [
+        -23,
+        23
+      ]
+    },
+    {
+      "players": 2,
+      "seed": 2128,
+      "turns": 126,
+      "blocked": true,
+      "winners": [
+        1
+      ],
+      "scores": [
+        -8,
+        8
+      ]
+    },
+    {
+      "players": 2,
+      "seed": 2129,
+      "turns": 136,
+      "blocked": true,
+      "winners": [
+        0
+      ],
+      "scores": [
+        13,
+        -13
+      ]
+    },
+    {
+      "players": 2,
+      "seed": 2130,
+      "turns": 127,
+      "blocked": true,
+      "winners": [
+        0,
+        1
+      ],
+      "scores": [
+        0,
+        0
+      ]
+    },
+    {
+      "players": 2,
+      "seed": 2131,
+      "turns": 123,
+      "blocked": true,
+      "winners": [
+        1
+      ],
+      "scores": [
+        -39,
+        39
+      ]
+    },
+    {
+      "players": 2,
+      "seed": 2132,
+      "turns": 137,
+      "blocked": true,
+      "winners": [
+        0
+      ],
+      "scores": [
+        17,
+        -17
+      ]
+    },
+    {
+      "players": 2,
+      "seed": 2133,
+      "turns": 127,
+      "blocked": true,
+      "winners": [
+        0
+      ],
+      "scores": [
+        17,
+        -17
+      ]
+    },
+    {
+      "players": 2,
+      "seed": 2134,
+      "turns": 136,
+      "blocked": true,
+      "winners": [
+        1
+      ],
+      "scores": [
+        -12,
+        12
+      ]
+    },
+    {
+      "players": 2,
+      "seed": 2135,
+      "turns": 124,
+      "blocked": false,
+      "winners": [
+        0
+      ],
+      "scores": [
+        20,
+        -20
+      ]
+    },
+    {
+      "players": 2,
+      "seed": 2136,
+      "turns": 127,
+      "blocked": true,
+      "winners": [
+        1
+      ],
+      "scores": [
+        -30,
+        30
+      ]
+    },
+    {
+      "players": 2,
+      "seed": 2137,
+      "turns": 127,
+      "blocked": true,
+      "winners": [
+        0
+      ],
+      "scores": [
+        16,
+        -16
+      ]
+    },
+    {
+      "players": 2,
+      "seed": 2138,
+      "turns": 129,
+      "blocked": true,
+      "winners": [
+        0
+      ],
+      "scores": [
+        20,
+        -20
+      ]
+    },
+    {
+      "players": 2,
+      "seed": 2139,
+      "turns": 129,
+      "blocked": true,
+      "winners": [
+        1
+      ],
+      "scores": [
+        -1,
+        1
+      ]
+    },
+    {
+      "players": 2,
+      "seed": 2140,
+      "turns": 133,
+      "blocked": true,
+      "winners": [
+        1
+      ],
+      "scores": [
+        -2,
+        2
+      ]
+    },
+    {
+      "players": 2,
+      "seed": 2141,
+      "turns": 129,
+      "blocked": true,
+      "winners": [
+        0,
+        1
+      ],
+      "scores": [
+        0,
+        0
+      ]
+    },
+    {
+      "players": 2,
+      "seed": 2142,
+      "turns": 134,
+      "blocked": true,
+      "winners": [
+        1
+      ],
+      "scores": [
+        -4,
+        4
+      ]
+    },
+    {
+      "players": 2,
+      "seed": 2143,
+      "turns": 137,
+      "blocked": true,
+      "winners": [
+        0
+      ],
+      "scores": [
+        1,
+        -1
+      ]
+    },
+    {
+      "players": 2,
+      "seed": 2144,
+      "turns": 132,
+      "blocked": true,
+      "winners": [
+        1
+      ],
+      "scores": [
+        -1,
+        1
+      ]
+    },
+    {
+      "players": 2,
+      "seed": 2145,
+      "turns": 115,
+      "blocked": true,
+      "winners": [
+        1
+      ],
+      "scores": [
+        -1,
+        1
+      ]
+    },
+    {
+      "players": 2,
+      "seed": 2146,
+      "turns": 137,
+      "blocked": true,
+      "winners": [
+        0
+      ],
+      "scores": [
+        32,
+        -32
+      ]
+    },
+    {
+      "players": 2,
+      "seed": 2147,
+      "turns": 129,
+      "blocked": false,
+      "winners": [
+        1
+      ],
+      "scores": [
+        -5,
+        5
+      ]
+    },
+    {
+      "players": 2,
+      "seed": 2148,
+      "turns": 118,
+      "blocked": true,
+      "winners": [
+        1
+      ],
+      "scores": [
+        -5,
+        5
+      ]
+    },
+    {
+      "players": 2,
+      "seed": 2149,
+      "turns": 127,
+      "blocked": true,
+      "winners": [
+        0
+      ],
+      "scores": [
+        6,
+        -6
+      ]
+    },
+    {
+      "players": 2,
+      "seed": 2150,
+      "turns": 132,
+      "blocked": true,
+      "winners": [
+        0
+      ],
+      "scores": [
+        12,
+        -12
+      ]
+    },
+    {
+      "players": 2,
+      "seed": 2151,
+      "turns": 137,
+      "blocked": true,
+      "winners": [
+        0
+      ],
+      "scores": [
+        8,
+        -8
+      ]
+    },
+    {
+      "players": 2,
+      "seed": 2152,
+      "turns": 124,
+      "blocked": true,
+      "winners": [
+        1
+      ],
+      "scores": [
+        -20,
+        20
+      ]
+    },
+    {
+      "players": 2,
+      "seed": 2153,
+      "turns": 133,
+      "blocked": true,
+      "winners": [
+        0
+      ],
+      "scores": [
+        11,
+        -11
+      ]
+    },
+    {
+      "players": 2,
+      "seed": 2154,
+      "turns": 134,
+      "blocked": true,
+      "winners": [
+        0
+      ],
+      "scores": [
+        8,
+        -8
+      ]
+    },
+    {
+      "players": 2,
+      "seed": 2155,
+      "turns": 131,
+      "blocked": true,
+      "winners": [
+        0
+      ],
+      "scores": [
+        7,
+        -7
+      ]
+    },
+    {
+      "players": 2,
+      "seed": 2156,
+      "turns": 124,
+      "blocked": true,
+      "winners": [
+        0
+      ],
+      "scores": [
+        5,
+        -5
+      ]
+    },
+    {
+      "players": 2,
+      "seed": 2157,
+      "turns": 141,
+      "blocked": true,
+      "winners": [
+        0
+      ],
+      "scores": [
+        3,
+        -3
+      ]
+    },
+    {
+      "players": 2,
+      "seed": 2158,
+      "turns": 142,
+      "blocked": true,
+      "winners": [
+        1
+      ],
+      "scores": [
+        -4,
+        4
+      ]
+    },
+    {
+      "players": 2,
+      "seed": 2159,
+      "turns": 135,
+      "blocked": true,
+      "winners": [
+        0
+      ],
+      "scores": [
+        17,
+        -17
+      ]
+    },
+    {
+      "players": 2,
+      "seed": 2160,
+      "turns": 131,
+      "blocked": true,
+      "winners": [
+        1
+      ],
+      "scores": [
+        -6,
+        6
+      ]
+    },
+    {
+      "players": 2,
+      "seed": 2161,
+      "turns": 136,
+      "blocked": false,
+      "winners": [
+        1
+      ],
+      "scores": [
+        -10,
+        10
+      ]
+    },
+    {
+      "players": 2,
+      "seed": 2162,
+      "turns": 134,
+      "blocked": true,
+      "winners": [
+        0
+      ],
+      "scores": [
+        14,
+        -14
+      ]
+    },
+    {
+      "players": 2,
+      "seed": 2163,
+      "turns": 139,
+      "blocked": true,
+      "winners": [
+        1
+      ],
+      "scores": [
+        -19,
+        19
+      ]
+    },
+    {
+      "players": 2,
+      "seed": 2164,
+      "turns": 127,
+      "blocked": true,
+      "winners": [
+        1
+      ],
+      "scores": [
+        -2,
+        2
+      ]
+    },
+    {
+      "players": 2,
+      "seed": 2165,
+      "turns": 126,
+      "blocked": true,
+      "winners": [
+        1
+      ],
+      "scores": [
+        -13,
+        13
+      ]
+    },
+    {
+      "players": 2,
+      "seed": 2166,
+      "turns": 130,
+      "blocked": true,
+      "winners": [
+        0
+      ],
+      "scores": [
+        10,
+        -10
+      ]
+    },
+    {
+      "players": 2,
+      "seed": 2167,
+      "turns": 126,
+      "blocked": false,
+      "winners": [
+        1
+      ],
+      "scores": [
+        -6,
+        6
+      ]
+    },
+    {
+      "players": 2,
+      "seed": 2168,
+      "turns": 134,
+      "blocked": true,
+      "winners": [
+        0
+      ],
+      "scores": [
+        22,
+        -22
+      ]
+    },
+    {
+      "players": 2,
+      "seed": 2169,
+      "turns": 128,
+      "blocked": true,
+      "winners": [
+        0
+      ],
+      "scores": [
+        31,
+        -31
+      ]
+    },
+    {
+      "players": 2,
+      "seed": 2170,
+      "turns": 127,
+      "blocked": false,
+      "winners": [
+        0
+      ],
+      "scores": [
+        10,
+        -10
+      ]
+    },
+    {
+      "players": 2,
+      "seed": 2171,
+      "turns": 135,
+      "blocked": true,
+      "winners": [
+        0,
+        1
+      ],
+      "scores": [
+        0,
+        0
+      ]
+    },
+    {
+      "players": 2,
+      "seed": 2172,
+      "turns": 135,
+      "blocked": true,
+      "winners": [
+        1
+      ],
+      "scores": [
+        -8,
+        8
+      ]
+    },
+    {
+      "players": 2,
+      "seed": 2173,
+      "turns": 136,
+      "blocked": true,
+      "winners": [
+        1
+      ],
+      "scores": [
+        -13,
+        13
+      ]
+    },
+    {
+      "players": 2,
+      "seed": 2174,
+      "turns": 138,
+      "blocked": true,
+      "winners": [
+        1
+      ],
+      "scores": [
+        -1,
+        1
+      ]
+    },
+    {
+      "players": 2,
+      "seed": 2175,
+      "turns": 132,
+      "blocked": true,
+      "winners": [
+        1
+      ],
+      "scores": [
+        -30,
+        30
+      ]
+    },
+    {
+      "players": 2,
+      "seed": 2176,
+      "turns": 135,
+      "blocked": true,
+      "winners": [
+        0
+      ],
+      "scores": [
+        17,
+        -17
+      ]
+    },
+    {
+      "players": 2,
+      "seed": 2177,
+      "turns": 136,
+      "blocked": true,
+      "winners": [
+        0
+      ],
+      "scores": [
+        16,
+        -16
+      ]
+    },
+    {
+      "players": 2,
+      "seed": 2178,
+      "turns": 137,
+      "blocked": true,
+      "winners": [
+        1
+      ],
+      "scores": [
+        -3,
+        3
+      ]
+    },
+    {
+      "players": 2,
+      "seed": 2179,
+      "turns": 126,
+      "blocked": true,
+      "winners": [
+        0,
+        1
+      ],
+      "scores": [
+        0,
+        0
+      ]
+    },
+    {
+      "players": 2,
+      "seed": 2180,
+      "turns": 130,
+      "blocked": true,
+      "winners": [
+        1
+      ],
+      "scores": [
+        -14,
+        14
+      ]
+    },
+    {
+      "players": 2,
+      "seed": 2181,
+      "turns": 125,
+      "blocked": true,
+      "winners": [
+        1
+      ],
+      "scores": [
+        -22,
+        22
+      ]
+    },
+    {
+      "players": 2,
+      "seed": 2182,
+      "turns": 135,
+      "blocked": true,
+      "winners": [
+        0
+      ],
+      "scores": [
+        7,
+        -7
+      ]
+    },
+    {
+      "players": 2,
+      "seed": 2183,
+      "turns": 128,
+      "blocked": true,
+      "winners": [
+        1
+      ],
+      "scores": [
+        -59,
+        59
+      ]
+    },
+    {
+      "players": 2,
+      "seed": 2184,
+      "turns": 133,
+      "blocked": true,
+      "winners": [
+        1
+      ],
+      "scores": [
+        -8,
+        8
+      ]
+    },
+    {
+      "players": 2,
+      "seed": 2185,
+      "turns": 133,
+      "blocked": true,
+      "winners": [
+        0
+      ],
+      "scores": [
+        19,
+        -19
+      ]
+    },
+    {
+      "players": 2,
+      "seed": 2186,
+      "turns": 136,
+      "blocked": true,
+      "winners": [
+        0
+      ],
+      "scores": [
+        28,
+        -28
+      ]
+    },
+    {
+      "players": 2,
+      "seed": 2187,
+      "turns": 121,
+      "blocked": false,
+      "winners": [
+        1
+      ],
+      "scores": [
+        -25,
+        25
+      ]
+    },
+    {
+      "players": 2,
+      "seed": 2188,
+      "turns": 133,
+      "blocked": true,
+      "winners": [
+        0,
+        1
+      ],
+      "scores": [
+        0,
+        0
+      ]
+    },
+    {
+      "players": 2,
+      "seed": 2189,
+      "turns": 123,
+      "blocked": true,
+      "winners": [
+        1
+      ],
+      "scores": [
+        -24,
+        24
+      ]
+    },
+    {
+      "players": 2,
+      "seed": 2190,
+      "turns": 138,
+      "blocked": true,
+      "winners": [
+        1
+      ],
+      "scores": [
+        -11,
+        11
+      ]
+    },
+    {
+      "players": 2,
+      "seed": 2191,
+      "turns": 132,
+      "blocked": true,
+      "winners": [
+        1
+      ],
+      "scores": [
+        -18,
+        18
+      ]
+    },
+    {
+      "players": 2,
+      "seed": 2192,
+      "turns": 130,
+      "blocked": true,
+      "winners": [
+        1
+      ],
+      "scores": [
+        -22,
+        22
+      ]
+    },
+    {
+      "players": 2,
+      "seed": 2193,
+      "turns": 143,
+      "blocked": false,
+      "winners": [
+        1
+      ],
+      "scores": [
+        -26,
+        26
+      ]
+    },
+    {
+      "players": 2,
+      "seed": 2194,
+      "turns": 116,
+      "blocked": true,
+      "winners": [
+        0
+      ],
+      "scores": [
+        9,
+        -9
+      ]
+    },
+    {
+      "players": 2,
+      "seed": 2195,
+      "turns": 134,
+      "blocked": true,
+      "winners": [
+        0
+      ],
+      "scores": [
+        2,
+        -2
+      ]
+    },
+    {
+      "players": 2,
+      "seed": 2196,
+      "turns": 129,
+      "blocked": true,
+      "winners": [
+        0
+      ],
+      "scores": [
+        12,
+        -12
+      ]
+    },
+    {
+      "players": 2,
+      "seed": 2197,
+      "turns": 138,
+      "blocked": true,
+      "winners": [
+        0
+      ],
+      "scores": [
+        1,
+        -1
+      ]
+    },
+    {
+      "players": 2,
+      "seed": 2198,
+      "turns": 132,
+      "blocked": true,
+      "winners": [
+        1
+      ],
+      "scores": [
+        -5,
+        5
+      ]
+    },
+    {
+      "players": 2,
+      "seed": 2199,
+      "turns": 129,
+      "blocked": true,
+      "winners": [
+        0
+      ],
+      "scores": [
+        16,
+        -16
+      ]
+    },
+    {
+      "players": 2,
+      "seed": 2200,
+      "turns": 129,
+      "blocked": true,
+      "winners": [
+        1
+      ],
+      "scores": [
+        -5,
+        5
+      ]
+    },
+    {
+      "players": 3,
+      "seed": 3001,
+      "turns": 115,
+      "blocked": true,
+      "winners": [
+        0
+      ],
+      "scores": [
+        10,
+        -4,
+        -6
+      ]
+    },
+    {
+      "players": 3,
+      "seed": 3002,
+      "turns": 124,
+      "blocked": true,
+      "winners": [
+        2
+      ],
+      "scores": [
+        -10,
+        -14,
+        24
+      ]
+    },
+    {
+      "players": 3,
+      "seed": 3003,
+      "turns": 108,
+      "blocked": true,
+      "winners": [
+        2
+      ],
+      "scores": [
+        -15,
+        -10,
+        25
+      ]
+    },
+    {
+      "players": 3,
+      "seed": 3004,
+      "turns": 123,
+      "blocked": false,
+      "winners": [
+        1
+      ],
+      "scores": [
+        -31,
+        88,
+        -57
+      ]
+    },
+    {
+      "players": 3,
+      "seed": 3005,
+      "turns": 116,
+      "blocked": true,
+      "winners": [
+        0
+      ],
+      "scores": [
+        32,
+        -17,
+        -15
+      ]
+    },
+    {
+      "players": 3,
+      "seed": 3006,
+      "turns": 117,
+      "blocked": true,
+      "winners": [
+        2
+      ],
+      "scores": [
+        -2,
+        -7,
+        9
+      ]
+    },
+    {
+      "players": 3,
+      "seed": 3007,
+      "turns": 112,
+      "blocked": true,
+      "winners": [
+        2
+      ],
+      "scores": [
+        -31,
+        -5,
+        36
+      ]
+    },
+    {
+      "players": 3,
+      "seed": 3008,
+      "turns": 111,
+      "blocked": true,
+      "winners": [
+        1
+      ],
+      "scores": [
+        -48,
+        68,
+        -20
+      ]
+    },
+    {
+      "players": 3,
+      "seed": 3009,
+      "turns": 103,
+      "blocked": true,
+      "winners": [
+        2
+      ],
+      "scores": [
+        -6,
+        -39,
+        45
+      ]
+    },
+    {
+      "players": 3,
+      "seed": 3010,
+      "turns": 116,
+      "blocked": true,
+      "winners": [
+        0
+      ],
+      "scores": [
+        47,
+        -15,
+        -32
+      ]
+    },
+    {
+      "players": 3,
+      "seed": 3011,
+      "turns": 121,
+      "blocked": false,
+      "winners": [
+        2
+      ],
+      "scores": [
+        -11,
+        -12,
+        23
+      ]
+    },
+    {
+      "players": 3,
+      "seed": 3012,
+      "turns": 114,
+      "blocked": true,
+      "winners": [
+        0
+      ],
+      "scores": [
+        33,
+        -22,
+        -11
+      ]
+    },
+    {
+      "players": 3,
+      "seed": 3013,
+      "turns": 113,
+      "blocked": true,
+      "winners": [
+        2
+      ],
+      "scores": [
+        -3,
+        -4,
+        7
+      ]
+    },
+    {
+      "players": 3,
+      "seed": 3014,
+      "turns": 124,
+      "blocked": true,
+      "winners": [
+        2
+      ],
+      "scores": [
+        -24,
+        -3,
+        27
+      ]
+    },
+    {
+      "players": 3,
+      "seed": 3015,
+      "turns": 127,
+      "blocked": true,
+      "winners": [
+        1
+      ],
+      "scores": [
+        -4,
+        12,
+        -8
+      ]
+    },
+    {
+      "players": 3,
+      "seed": 3016,
+      "turns": 118,
+      "blocked": true,
+      "winners": [
+        0
+      ],
+      "scores": [
+        107,
+        -57,
+        -50
+      ]
+    },
+    {
+      "players": 3,
+      "seed": 3017,
+      "turns": 112,
+      "blocked": true,
+      "winners": [
+        0
+      ],
+      "scores": [
+        23,
+        -1,
+        -22
+      ]
+    },
+    {
+      "players": 3,
+      "seed": 3018,
+      "turns": 98,
+      "blocked": true,
+      "winners": [
+        1
+      ],
+      "scores": [
+        -18,
+        45,
+        -27
+      ]
+    },
+    {
+      "players": 3,
+      "seed": 3019,
+      "turns": 112,
+      "blocked": true,
+      "winners": [
+        2
+      ],
+      "scores": [
+        -10,
+        -20,
+        30
+      ]
+    },
+    {
+      "players": 3,
+      "seed": 3020,
+      "turns": 111,
+      "blocked": true,
+      "winners": [
+        0
+      ],
+      "scores": [
+        51,
+        -14,
+        -37
+      ]
+    },
+    {
+      "players": 3,
+      "seed": 3021,
+      "turns": 111,
+      "blocked": true,
+      "winners": [
+        1
+      ],
+      "scores": [
+        -19,
+        37,
+        -18
+      ]
+    },
+    {
+      "players": 3,
+      "seed": 3022,
+      "turns": 113,
+      "blocked": true,
+      "winners": [
+        0
+      ],
+      "scores": [
+        30,
+        -14,
+        -16
+      ]
+    },
+    {
+      "players": 3,
+      "seed": 3023,
+      "turns": 114,
+      "blocked": true,
+      "winners": [
+        1
+      ],
+      "scores": [
+        -12,
+        25,
+        -13
+      ]
+    },
+    {
+      "players": 3,
+      "seed": 3024,
+      "turns": 104,
+      "blocked": true,
+      "winners": [
+        0
+      ],
+      "scores": [
+        106,
+        -76,
+        -30
+      ]
+    },
+    {
+      "players": 3,
+      "seed": 3025,
+      "turns": 119,
+      "blocked": true,
+      "winners": [
+        2
+      ],
+      "scores": [
+        -17,
+        -30,
+        47
+      ]
+    },
+    {
+      "players": 3,
+      "seed": 3026,
+      "turns": 120,
+      "blocked": true,
+      "winners": [
+        0
+      ],
+      "scores": [
+        41,
+        -19,
+        -22
+      ]
+    },
+    {
+      "players": 3,
+      "seed": 3027,
+      "turns": 111,
+      "blocked": true,
+      "winners": [
+        2
+      ],
+      "scores": [
+        -23,
+        -3,
+        26
+      ]
+    },
+    {
+      "players": 3,
+      "seed": 3028,
+      "turns": 102,
+      "blocked": true,
+      "winners": [
+        1
+      ],
+      "scores": [
+        -2,
+        17,
+        -15
+      ]
+    },
+    {
+      "players": 3,
+      "seed": 3029,
+      "turns": 124,
+      "blocked": true,
+      "winners": [
+        2
+      ],
+      "scores": [
+        -18,
+        -22,
+        40
+      ]
+    },
+    {
+      "players": 3,
+      "seed": 3030,
+      "turns": 115,
+      "blocked": true,
+      "winners": [
+        1
+      ],
+      "scores": [
+        -20,
+        31,
+        -11
+      ]
+    },
+    {
+      "players": 3,
+      "seed": 3031,
+      "turns": 109,
+      "blocked": true,
+      "winners": [
+        0
+      ],
+      "scores": [
+        24,
+        -20,
+        -4
+      ]
+    },
+    {
+      "players": 3,
+      "seed": 3032,
+      "turns": 110,
+      "blocked": true,
+      "winners": [
+        2
+      ],
+      "scores": [
+        -15,
+        -44,
+        59
+      ]
+    },
+    {
+      "players": 3,
+      "seed": 3033,
+      "turns": 107,
+      "blocked": true,
+      "winners": [
+        1
+      ],
+      "scores": [
+        -25,
+        34,
+        -9
+      ]
+    },
+    {
+      "players": 3,
+      "seed": 3034,
+      "turns": 111,
+      "blocked": true,
+      "winners": [
+        2
+      ],
+      "scores": [
+        -19,
+        -18,
+        37
+      ]
+    },
+    {
+      "players": 3,
+      "seed": 3035,
+      "turns": 104,
+      "blocked": true,
+      "winners": [
+        2
+      ],
+      "scores": [
+        -46,
+        -37,
+        83
+      ]
+    },
+    {
+      "players": 3,
+      "seed": 3036,
+      "turns": 115,
+      "blocked": true,
+      "winners": [
+        1
+      ],
+      "scores": [
+        -24,
+        25,
+        -1
+      ]
+    },
+    {
+      "players": 3,
+      "seed": 3037,
+      "turns": 107,
+      "blocked": true,
+      "winners": [
+        0
+      ],
+      "scores": [
+        75,
+        -29,
+        -46
+      ]
+    },
+    {
+      "players": 3,
+      "seed": 3038,
+      "turns": 118,
+      "blocked": true,
+      "winners": [
+        1
+      ],
+      "scores": [
+        -58,
+        68,
+        -10
+      ]
+    },
+    {
+      "players": 3,
+      "seed": 3039,
+      "turns": 123,
+      "blocked": true,
+      "winners": [
+        0
+      ],
+      "scores": [
+        40,
+        -10,
+        -30
+      ]
+    },
+    {
+      "players": 3,
+      "seed": 3040,
+      "turns": 110,
+      "blocked": true,
+      "winners": [
+        0
+      ],
+      "scores": [
+        27,
+        -7,
+        -20
+      ]
+    },
+    {
+      "players": 3,
+      "seed": 3041,
+      "turns": 118,
+      "blocked": true,
+      "winners": [
+        0
+      ],
+      "scores": [
+        84,
+        -21,
+        -63
+      ]
+    },
+    {
+      "players": 3,
+      "seed": 3042,
+      "turns": 110,
+      "blocked": true,
+      "winners": [
+        2
+      ],
+      "scores": [
+        -15,
+        -14,
+        29
+      ]
+    },
+    {
+      "players": 3,
+      "seed": 3043,
+      "turns": 119,
+      "blocked": true,
+      "winners": [
+        2
+      ],
+      "scores": [
+        -32,
+        -39,
+        71
+      ]
+    },
+    {
+      "players": 3,
+      "seed": 3044,
+      "turns": 102,
+      "blocked": true,
+      "winners": [
+        2
+      ],
+      "scores": [
+        -42,
+        -40,
+        82
+      ]
+    },
+    {
+      "players": 3,
+      "seed": 3045,
+      "turns": 112,
+      "blocked": true,
+      "winners": [
+        0
+      ],
+      "scores": [
+        75,
+        -24,
+        -51
+      ]
+    },
+    {
+      "players": 3,
+      "seed": 3046,
+      "turns": 114,
+      "blocked": true,
+      "winners": [
+        2
+      ],
+      "scores": [
+        -6,
+        -5,
+        11
+      ]
+    },
+    {
+      "players": 3,
+      "seed": 3047,
+      "turns": 115,
+      "blocked": true,
+      "winners": [
+        0
+      ],
+      "scores": [
+        47,
+        -24,
+        -23
+      ]
+    },
+    {
+      "players": 3,
+      "seed": 3048,
+      "turns": 112,
+      "blocked": true,
+      "winners": [
+        1
+      ],
+      "scores": [
+        -52,
+        88,
+        -36
+      ]
+    },
+    {
+      "players": 3,
+      "seed": 3049,
+      "turns": 98,
+      "blocked": true,
+      "winners": [
+        2
+      ],
+      "scores": [
+        -24,
+        -13,
+        37
+      ]
+    },
+    {
+      "players": 3,
+      "seed": 3050,
+      "turns": 108,
+      "blocked": true,
+      "winners": [
+        1
+      ],
+      "scores": [
+        -30,
+        40,
+        -10
+      ]
+    },
+    {
+      "players": 3,
+      "seed": 3051,
+      "turns": 107,
+      "blocked": true,
+      "winners": [
+        1
+      ],
+      "scores": [
+        -14,
+        57,
+        -43
+      ]
+    },
+    {
+      "players": 3,
+      "seed": 3052,
+      "turns": 110,
+      "blocked": true,
+      "winners": [
+        2
+      ],
+      "scores": [
+        -10,
+        -6,
+        16
+      ]
+    },
+    {
+      "players": 3,
+      "seed": 3053,
+      "turns": 120,
+      "blocked": true,
+      "winners": [
+        0
+      ],
+      "scores": [
+        40,
+        -35,
+        -5
+      ]
+    },
+    {
+      "players": 3,
+      "seed": 3054,
+      "turns": 109,
+      "blocked": true,
+      "winners": [
+        0
+      ],
+      "scores": [
+        49,
+        -15,
+        -34
+      ]
+    },
+    {
+      "players": 3,
+      "seed": 3055,
+      "turns": 115,
+      "blocked": true,
+      "winners": [
+        1
+      ],
+      "scores": [
+        -22,
+        30,
+        -8
+      ]
+    },
+    {
+      "players": 3,
+      "seed": 3056,
+      "turns": 119,
+      "blocked": true,
+      "winners": [
+        0,
+        1
+      ],
+      "scores": [
+        1,
+        1,
+        -2
+      ]
+    },
+    {
+      "players": 3,
+      "seed": 3057,
+      "turns": 109,
+      "blocked": true,
+      "winners": [
+        1
+      ],
+      "scores": [
+        -13,
+        30,
+        -17
+      ]
+    },
+    {
+      "players": 3,
+      "seed": 3058,
+      "turns": 117,
+      "blocked": true,
+      "winners": [
+        2
+      ],
+      "scores": [
+        -1,
+        -16,
+        17
+      ]
+    },
+    {
+      "players": 3,
+      "seed": 3059,
+      "turns": 115,
+      "blocked": true,
+      "winners": [
+        2
+      ],
+      "scores": [
+        -25,
+        -18,
+        43
+      ]
+    },
+    {
+      "players": 3,
+      "seed": 3060,
+      "turns": 116,
+      "blocked": true,
+      "winners": [
+        2
+      ],
+      "scores": [
+        -3,
+        -5,
+        8
+      ]
+    },
+    {
+      "players": 3,
+      "seed": 3061,
+      "turns": 124,
+      "blocked": true,
+      "winners": [
+        2
+      ],
+      "scores": [
+        -18,
+        -24,
+        42
+      ]
+    },
+    {
+      "players": 3,
+      "seed": 3062,
+      "turns": 109,
+      "blocked": true,
+      "winners": [
+        2
+      ],
+      "scores": [
+        -29,
+        -5,
+        34
+      ]
+    },
+    {
+      "players": 3,
+      "seed": 3063,
+      "turns": 107,
+      "blocked": false,
+      "winners": [
+        0
+      ],
+      "scores": [
+        44,
+        -29,
+        -15
+      ]
+    },
+    {
+      "players": 3,
+      "seed": 3064,
+      "turns": 58,
+      "blocked": false,
+      "winners": [
+        2
+      ],
+      "scores": [
+        -54,
+        -82,
+        136
+      ]
+    },
+    {
+      "players": 3,
+      "seed": 3065,
+      "turns": 115,
+      "blocked": true,
+      "winners": [
+        1
+      ],
+      "scores": [
+        -46,
+        63,
+        -17
+      ]
+    },
+    {
+      "players": 3,
+      "seed": 3066,
+      "turns": 124,
+      "blocked": false,
+      "winners": [
+        1
+      ],
+      "scores": [
+        -28,
+        49,
+        -21
+      ]
+    },
+    {
+      "players": 3,
+      "seed": 3067,
+      "turns": 108,
+      "blocked": true,
+      "winners": [
+        1
+      ],
+      "scores": [
+        -43,
+        126,
+        -83
+      ]
+    },
+    {
+      "players": 3,
+      "seed": 3068,
+      "turns": 117,
+      "blocked": true,
+      "winners": [
+        0
+      ],
+      "scores": [
+        17,
+        -2,
+        -15
+      ]
+    },
+    {
+      "players": 3,
+      "seed": 3069,
+      "turns": 110,
+      "blocked": true,
+      "winners": [
+        1
+      ],
+      "scores": [
+        -16,
+        40,
+        -24
+      ]
+    },
+    {
+      "players": 3,
+      "seed": 3070,
+      "turns": 133,
+      "blocked": true,
+      "winners": [
+        0,
+        2
+      ],
+      "scores": [
+        6,
+        -12,
+        6
+      ]
+    },
+    {
+      "players": 3,
+      "seed": 3071,
+      "turns": 121,
+      "blocked": true,
+      "winners": [
+        0
+      ],
+      "scores": [
+        25,
+        -13,
+        -12
+      ]
+    },
+    {
+      "players": 3,
+      "seed": 3072,
+      "turns": 112,
+      "blocked": true,
+      "winners": [
+        0
+      ],
+      "scores": [
+        94,
+        -61,
+        -33
+      ]
+    },
+    {
+      "players": 3,
+      "seed": 3073,
+      "turns": 120,
+      "blocked": true,
+      "winners": [
+        1
+      ],
+      "scores": [
+        -37,
+        58,
+        -21
+      ]
+    },
+    {
+      "players": 3,
+      "seed": 3074,
+      "turns": 107,
+      "blocked": true,
+      "winners": [
+        1
+      ],
+      "scores": [
+        -6,
+        11,
+        -5
+      ]
+    },
+    {
+      "players": 3,
+      "seed": 3075,
+      "turns": 109,
+      "blocked": true,
+      "winners": [
+        0
+      ],
+      "scores": [
+        29,
+        -17,
+        -12
+      ]
+    },
+    {
+      "players": 3,
+      "seed": 3076,
+      "turns": 108,
+      "blocked": true,
+      "winners": [
+        0
+      ],
+      "scores": [
+        59,
+        -29,
+        -30
+      ]
+    },
+    {
+      "players": 3,
+      "seed": 3077,
+      "turns": 116,
+      "blocked": true,
+      "winners": [
+        1
+      ],
+      "scores": [
+        -17,
+        32,
+        -15
+      ]
+    },
+    {
+      "players": 3,
+      "seed": 3078,
+      "turns": 111,
+      "blocked": true,
+      "winners": [
+        1
+      ],
+      "scores": [
+        -6,
+        24,
+        -18
+      ]
+    },
+    {
+      "players": 3,
+      "seed": 3079,
+      "turns": 114,
+      "blocked": true,
+      "winners": [
+        1
+      ],
+      "scores": [
+        -7,
+        44,
+        -37
+      ]
+    },
+    {
+      "players": 3,
+      "seed": 3080,
+      "turns": 110,
+      "blocked": true,
+      "winners": [
+        2
+      ],
+      "scores": [
+        -22,
+        -46,
+        68
+      ]
+    },
+    {
+      "players": 3,
+      "seed": 3081,
+      "turns": 113,
+      "blocked": true,
+      "winners": [
+        1
+      ],
+      "scores": [
+        -12,
+        23,
+        -11
+      ]
+    },
+    {
+      "players": 3,
+      "seed": 3082,
+      "turns": 107,
+      "blocked": true,
+      "winners": [
+        2
+      ],
+      "scores": [
+        -68,
+        -89,
+        157
+      ]
+    },
+    {
+      "players": 3,
+      "seed": 3083,
+      "turns": 120,
+      "blocked": true,
+      "winners": [
+        0
+      ],
+      "scores": [
+        11,
+        -1,
+        -10
+      ]
+    },
+    {
+      "players": 3,
+      "seed": 3084,
+      "turns": 107,
+      "blocked": true,
+      "winners": [
+        1
+      ],
+      "scores": [
+        -42,
+        59,
+        -17
+      ]
+    },
+    {
+      "players": 3,
+      "seed": 3085,
+      "turns": 116,
+      "blocked": true,
+      "winners": [
+        1
+      ],
+      "scores": [
+        -30,
+        64,
+        -34
+      ]
+    },
+    {
+      "players": 3,
+      "seed": 3086,
+      "turns": 107,
+      "blocked": true,
+      "winners": [
+        1
+      ],
+      "scores": [
+        -10,
+        23,
+        -13
+      ]
+    },
+    {
+      "players": 3,
+      "seed": 3087,
+      "turns": 110,
+      "blocked": true,
+      "winners": [
+        1
+      ],
+      "scores": [
+        -14,
+        36,
+        -22
+      ]
+    },
+    {
+      "players": 3,
+      "seed": 3088,
+      "turns": 124,
+      "blocked": true,
+      "winners": [
+        0
+      ],
+      "scores": [
+        51,
+        -6,
+        -45
+      ]
+    },
+    {
+      "players": 3,
+      "seed": 3089,
+      "turns": 123,
+      "blocked": true,
+      "winners": [
+        0
+      ],
+      "scores": [
+        15,
+        -3,
+        -12
+      ]
+    },
+    {
+      "players": 3,
+      "seed": 3090,
+      "turns": 109,
+      "blocked": false,
+      "winners": [
+        2
+      ],
+      "scores": [
+        -60,
+        -73,
+        133
+      ]
+    },
+    {
+      "players": 3,
+      "seed": 3091,
+      "turns": 107,
+      "blocked": true,
+      "winners": [
+        0
+      ],
+      "scores": [
+        23,
+        -5,
+        -18
+      ]
+    },
+    {
+      "players": 3,
+      "seed": 3092,
+      "turns": 113,
+      "blocked": true,
+      "winners": [
+        0
+      ],
+      "scores": [
+        36,
+        -8,
+        -28
+      ]
+    },
+    {
+      "players": 3,
+      "seed": 3093,
+      "turns": 107,
+      "blocked": true,
+      "winners": [
+        2
+      ],
+      "scores": [
+        -47,
+        -47,
+        94
+      ]
+    },
+    {
+      "players": 3,
+      "seed": 3094,
+      "turns": 114,
+      "blocked": true,
+      "winners": [
+        1
+      ],
+      "scores": [
+        -35,
+        87,
+        -52
+      ]
+    },
+    {
+      "players": 3,
+      "seed": 3095,
+      "turns": 110,
+      "blocked": true,
+      "winners": [
+        1
+      ],
+      "scores": [
+        -35,
+        73,
+        -38
+      ]
+    },
+    {
+      "players": 3,
+      "seed": 3096,
+      "turns": 119,
+      "blocked": true,
+      "winners": [
+        0
+      ],
+      "scores": [
+        39,
+        -25,
+        -14
+      ]
+    },
+    {
+      "players": 3,
+      "seed": 3097,
+      "turns": 113,
+      "blocked": true,
+      "winners": [
+        1
+      ],
+      "scores": [
+        -12,
+        37,
+        -25
+      ]
+    },
+    {
+      "players": 3,
+      "seed": 3098,
+      "turns": 108,
+      "blocked": true,
+      "winners": [
+        1
+      ],
+      "scores": [
+        -45,
+        77,
+        -32
+      ]
+    },
+    {
+      "players": 3,
+      "seed": 3099,
+      "turns": 123,
+      "blocked": true,
+      "winners": [
+        2
+      ],
+      "scores": [
+        -9,
+        -39,
+        48
+      ]
+    },
+    {
+      "players": 3,
+      "seed": 3100,
+      "turns": 105,
+      "blocked": true,
+      "winners": [
+        0
+      ],
+      "scores": [
+        93,
+        -41,
+        -52
+      ]
+    },
+    {
+      "players": 3,
+      "seed": 3101,
+      "turns": 105,
+      "blocked": true,
+      "winners": [
+        2
+      ],
+      "scores": [
+        -8,
+        -16,
+        24
+      ]
+    },
+    {
+      "players": 3,
+      "seed": 3102,
+      "turns": 111,
+      "blocked": true,
+      "winners": [
+        1
+      ],
+      "scores": [
+        -35,
+        62,
+        -27
+      ]
+    },
+    {
+      "players": 3,
+      "seed": 3103,
+      "turns": 113,
+      "blocked": true,
+      "winners": [
+        1
+      ],
+      "scores": [
+        -24,
+        49,
+        -25
+      ]
+    },
+    {
+      "players": 3,
+      "seed": 3104,
+      "turns": 100,
+      "blocked": true,
+      "winners": [
+        0
+      ],
+      "scores": [
+        61,
+        -26,
+        -35
+      ]
+    },
+    {
+      "players": 3,
+      "seed": 3105,
+      "turns": 113,
+      "blocked": true,
+      "winners": [
+        2
+      ],
+      "scores": [
+        -4,
+        -3,
+        7
+      ]
+    },
+    {
+      "players": 3,
+      "seed": 3106,
+      "turns": 110,
+      "blocked": true,
+      "winners": [
+        2
+      ],
+      "scores": [
+        -21,
+        -11,
+        32
+      ]
+    },
+    {
+      "players": 3,
+      "seed": 3107,
+      "turns": 121,
+      "blocked": true,
+      "winners": [
+        1
+      ],
+      "scores": [
+        -43,
+        53,
+        -10
+      ]
+    },
+    {
+      "players": 3,
+      "seed": 3108,
+      "turns": 115,
+      "blocked": true,
+      "winners": [
+        0
+      ],
+      "scores": [
+        43,
+        -21,
+        -22
+      ]
+    },
+    {
+      "players": 3,
+      "seed": 3109,
+      "turns": 119,
+      "blocked": true,
+      "winners": [
+        0
+      ],
+      "scores": [
+        24,
+        -6,
+        -18
+      ]
+    },
+    {
+      "players": 3,
+      "seed": 3110,
+      "turns": 104,
+      "blocked": true,
+      "winners": [
+        2
+      ],
+      "scores": [
+        -3,
+        -16,
+        19
+      ]
+    },
+    {
+      "players": 3,
+      "seed": 3111,
+      "turns": 121,
+      "blocked": true,
+      "winners": [
+        0,
+        1,
+        2
+      ],
+      "scores": [
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "players": 3,
+      "seed": 3112,
+      "turns": 119,
+      "blocked": true,
+      "winners": [
+        1
+      ],
+      "scores": [
+        -23,
+        49,
+        -26
+      ]
+    },
+    {
+      "players": 3,
+      "seed": 3113,
+      "turns": 104,
+      "blocked": true,
+      "winners": [
+        1
+      ],
+      "scores": [
+        -24,
+        30,
+        -6
+      ]
+    },
+    {
+      "players": 3,
+      "seed": 3114,
+      "turns": 110,
+      "blocked": true,
+      "winners": [
+        0
+      ],
+      "scores": [
+        32,
+        -7,
+        -25
+      ]
+    },
+    {
+      "players": 3,
+      "seed": 3115,
+      "turns": 117,
+      "blocked": true,
+      "winners": [
+        0,
+        1
+      ],
+      "scores": [
+        3,
+        3,
+        -6
+      ]
+    },
+    {
+      "players": 3,
+      "seed": 3116,
+      "turns": 112,
+      "blocked": true,
+      "winners": [
+        0
+      ],
+      "scores": [
+        24,
+        -19,
+        -5
+      ]
+    },
+    {
+      "players": 3,
+      "seed": 3117,
+      "turns": 103,
+      "blocked": true,
+      "winners": [
+        2
+      ],
+      "scores": [
+        -27,
+        -38,
+        65
+      ]
+    },
+    {
+      "players": 3,
+      "seed": 3118,
+      "turns": 108,
+      "blocked": true,
+      "winners": [
+        1
+      ],
+      "scores": [
+        -19,
+        24,
+        -5
+      ]
+    },
+    {
+      "players": 3,
+      "seed": 3119,
+      "turns": 117,
+      "blocked": true,
+      "winners": [
+        1
+      ],
+      "scores": [
+        -23,
+        29,
+        -6
+      ]
+    },
+    {
+      "players": 3,
+      "seed": 3120,
+      "turns": 117,
+      "blocked": true,
+      "winners": [
+        0
+      ],
+      "scores": [
+        19,
+        -11,
+        -8
+      ]
+    },
+    {
+      "players": 3,
+      "seed": 3121,
+      "turns": 120,
+      "blocked": true,
+      "winners": [
+        1
+      ],
+      "scores": [
+        -17,
+        38,
+        -21
+      ]
+    },
+    {
+      "players": 3,
+      "seed": 3122,
+      "turns": 112,
+      "blocked": true,
+      "winners": [
+        2
+      ],
+      "scores": [
+        -26,
+        -42,
+        68
+      ]
+    },
+    {
+      "players": 3,
+      "seed": 3123,
+      "turns": 107,
+      "blocked": false,
+      "winners": [
+        2
+      ],
+      "scores": [
+        -62,
+        -68,
+        130
+      ]
+    },
+    {
+      "players": 3,
+      "seed": 3124,
+      "turns": 117,
+      "blocked": true,
+      "winners": [
+        2
+      ],
+      "scores": [
+        -14,
+        -6,
+        20
+      ]
+    },
+    {
+      "players": 3,
+      "seed": 3125,
+      "turns": 107,
+      "blocked": false,
+      "winners": [
+        2
+      ],
+      "scores": [
+        -41,
+        -37,
+        78
+      ]
+    },
+    {
+      "players": 3,
+      "seed": 3126,
+      "turns": 107,
+      "blocked": true,
+      "winners": [
+        1
+      ],
+      "scores": [
+        -44,
+        63,
+        -19
+      ]
+    },
+    {
+      "players": 3,
+      "seed": 3127,
+      "turns": 104,
+      "blocked": true,
+      "winners": [
+        0
+      ],
+      "scores": [
+        57,
+        -39,
+        -18
+      ]
+    },
+    {
+      "players": 3,
+      "seed": 3128,
+      "turns": 114,
+      "blocked": true,
+      "winners": [
+        2
+      ],
+      "scores": [
+        -30,
+        -6,
+        36
+      ]
+    },
+    {
+      "players": 3,
+      "seed": 3129,
+      "turns": 119,
+      "blocked": true,
+      "winners": [
+        0
+      ],
+      "scores": [
+        12,
+        -11,
+        -1
+      ]
+    },
+    {
+      "players": 3,
+      "seed": 3130,
+      "turns": 108,
+      "blocked": true,
+      "winners": [
+        2
+      ],
+      "scores": [
+        -35,
+        -9,
+        44
+      ]
+    },
+    {
+      "players": 3,
+      "seed": 3131,
+      "turns": 108,
+      "blocked": true,
+      "winners": [
+        2
+      ],
+      "scores": [
+        -25,
+        -18,
+        43
+      ]
+    },
+    {
+      "players": 3,
+      "seed": 3132,
+      "turns": 119,
+      "blocked": true,
+      "winners": [
+        2
+      ],
+      "scores": [
+        -12,
+        -12,
+        24
+      ]
+    },
+    {
+      "players": 3,
+      "seed": 3133,
+      "turns": 102,
+      "blocked": true,
+      "winners": [
+        1
+      ],
+      "scores": [
+        -3,
+        6,
+        -3
+      ]
+    },
+    {
+      "players": 3,
+      "seed": 3134,
+      "turns": 111,
+      "blocked": true,
+      "winners": [
+        2
+      ],
+      "scores": [
+        -2,
+        -17,
+        19
+      ]
+    },
+    {
+      "players": 3,
+      "seed": 3135,
+      "turns": 116,
+      "blocked": true,
+      "winners": [
+        2
+      ],
+      "scores": [
+        -57,
+        -16,
+        73
+      ]
+    },
+    {
+      "players": 3,
+      "seed": 3136,
+      "turns": 115,
+      "blocked": true,
+      "winners": [
+        2
+      ],
+      "scores": [
+        -20,
+        -10,
+        30
+      ]
+    },
+    {
+      "players": 3,
+      "seed": 3137,
+      "turns": 120,
+      "blocked": true,
+      "winners": [
+        0
+      ],
+      "scores": [
+        37,
+        -13,
+        -24
+      ]
+    },
+    {
+      "players": 3,
+      "seed": 3138,
+      "turns": 114,
+      "blocked": true,
+      "winners": [
+        1
+      ],
+      "scores": [
+        -17,
+        26,
+        -9
+      ]
+    },
+    {
+      "players": 3,
+      "seed": 3139,
+      "turns": 114,
+      "blocked": true,
+      "winners": [
+        2
+      ],
+      "scores": [
+        -22,
+        -2,
+        24
+      ]
+    },
+    {
+      "players": 3,
+      "seed": 3140,
+      "turns": 102,
+      "blocked": true,
+      "winners": [
+        2
+      ],
+      "scores": [
+        -61,
+        -18,
+        79
+      ]
+    },
+    {
+      "players": 3,
+      "seed": 3141,
+      "turns": 102,
+      "blocked": true,
+      "winners": [
+        0
+      ],
+      "scores": [
+        52,
+        -33,
+        -19
+      ]
+    },
+    {
+      "players": 3,
+      "seed": 3142,
+      "turns": 110,
+      "blocked": true,
+      "winners": [
+        0
+      ],
+      "scores": [
+        36,
+        -19,
+        -17
+      ]
+    },
+    {
+      "players": 3,
+      "seed": 3143,
+      "turns": 111,
+      "blocked": true,
+      "winners": [
+        0
+      ],
+      "scores": [
+        11,
+        -2,
+        -9
+      ]
+    },
+    {
+      "players": 3,
+      "seed": 3144,
+      "turns": 116,
+      "blocked": true,
+      "winners": [
+        1
+      ],
+      "scores": [
+        -19,
+        38,
+        -19
+      ]
+    },
+    {
+      "players": 3,
+      "seed": 3145,
+      "turns": 112,
+      "blocked": true,
+      "winners": [
+        2
+      ],
+      "scores": [
+        -17,
+        -9,
+        26
+      ]
+    },
+    {
+      "players": 3,
+      "seed": 3146,
+      "turns": 108,
+      "blocked": true,
+      "winners": [
+        0
+      ],
+      "scores": [
+        15,
+        -5,
+        -10
+      ]
+    },
+    {
+      "players": 3,
+      "seed": 3147,
+      "turns": 117,
+      "blocked": true,
+      "winners": [
+        1
+      ],
+      "scores": [
+        -15,
+        17,
+        -2
+      ]
+    },
+    {
+      "players": 3,
+      "seed": 3148,
+      "turns": 103,
+      "blocked": true,
+      "winners": [
+        2
+      ],
+      "scores": [
+        -28,
+        -16,
+        44
+      ]
+    },
+    {
+      "players": 3,
+      "seed": 3149,
+      "turns": 115,
+      "blocked": true,
+      "winners": [
+        0
+      ],
+      "scores": [
+        36,
+        -3,
+        -33
+      ]
+    },
+    {
+      "players": 3,
+      "seed": 3150,
+      "turns": 106,
+      "blocked": true,
+      "winners": [
+        0
+      ],
+      "scores": [
+        104,
+        -44,
+        -60
+      ]
+    },
+    {
+      "players": 3,
+      "seed": 3151,
+      "turns": 113,
+      "blocked": true,
+      "winners": [
+        1
+      ],
+      "scores": [
+        -2,
+        17,
+        -15
+      ]
+    },
+    {
+      "players": 3,
+      "seed": 3152,
+      "turns": 109,
+      "blocked": true,
+      "winners": [
+        1
+      ],
+      "scores": [
+        -53,
+        55,
+        -2
+      ]
+    },
+    {
+      "players": 3,
+      "seed": 3153,
+      "turns": 106,
+      "blocked": true,
+      "winners": [
+        1,
+        2
+      ],
+      "scores": [
+        -12,
+        6,
+        6
+      ]
+    },
+    {
+      "players": 3,
+      "seed": 3154,
+      "turns": 117,
+      "blocked": true,
+      "winners": [
+        0
+      ],
+      "scores": [
+        55,
+        -40,
+        -15
+      ]
+    },
+    {
+      "players": 3,
+      "seed": 3155,
+      "turns": 117,
+      "blocked": true,
+      "winners": [
+        1
+      ],
+      "scores": [
+        -23,
+        32,
+        -9
+      ]
+    },
+    {
+      "players": 3,
+      "seed": 3156,
+      "turns": 115,
+      "blocked": true,
+      "winners": [
+        1
+      ],
+      "scores": [
+        -8,
+        9,
+        -1
+      ]
+    },
+    {
+      "players": 3,
+      "seed": 3157,
+      "turns": 112,
+      "blocked": true,
+      "winners": [
+        0
+      ],
+      "scores": [
+        33,
+        -16,
+        -17
+      ]
+    },
+    {
+      "players": 3,
+      "seed": 3158,
+      "turns": 108,
+      "blocked": true,
+      "winners": [
+        0
+      ],
+      "scores": [
+        86,
+        -53,
+        -33
+      ]
+    },
+    {
+      "players": 3,
+      "seed": 3159,
+      "turns": 116,
+      "blocked": true,
+      "winners": [
+        1
+      ],
+      "scores": [
+        -11,
+        16,
+        -5
+      ]
+    },
+    {
+      "players": 3,
+      "seed": 3160,
+      "turns": 113,
+      "blocked": false,
+      "winners": [
+        1
+      ],
+      "scores": [
+        -22,
+        51,
+        -29
+      ]
+    },
+    {
+      "players": 3,
+      "seed": 3161,
+      "turns": 112,
+      "blocked": true,
+      "winners": [
+        1
+      ],
+      "scores": [
+        -17,
+        45,
+        -28
+      ]
+    },
+    {
+      "players": 3,
+      "seed": 3162,
+      "turns": 117,
+      "blocked": true,
+      "winners": [
+        1
+      ],
+      "scores": [
+        -15,
+        32,
+        -17
+      ]
+    },
+    {
+      "players": 3,
+      "seed": 3163,
+      "turns": 108,
+      "blocked": false,
+      "winners": [
+        2
+      ],
+      "scores": [
+        -44,
+        -33,
+        77
+      ]
+    },
+    {
+      "players": 3,
+      "seed": 3164,
+      "turns": 109,
+      "blocked": true,
+      "winners": [
+        1
+      ],
+      "scores": [
+        -16,
+        18,
+        -2
+      ]
+    },
+    {
+      "players": 3,
+      "seed": 3165,
+      "turns": 120,
+      "blocked": false,
+      "winners": [
+        2
+      ],
+      "scores": [
+        -35,
+        -18,
+        53
+      ]
+    },
+    {
+      "players": 3,
+      "seed": 3166,
+      "turns": 115,
+      "blocked": true,
+      "winners": [
+        1
+      ],
+      "scores": [
+        -10,
+        23,
+        -13
+      ]
+    },
+    {
+      "players": 3,
+      "seed": 3167,
+      "turns": 111,
+      "blocked": true,
+      "winners": [
+        0
+      ],
+      "scores": [
+        37,
+        -26,
+        -11
+      ]
+    },
+    {
+      "players": 3,
+      "seed": 3168,
+      "turns": 126,
+      "blocked": true,
+      "winners": [
+        0,
+        2
+      ],
+      "scores": [
+        7,
+        -14,
+        7
+      ]
+    },
+    {
+      "players": 3,
+      "seed": 3169,
+      "turns": 124,
+      "blocked": true,
+      "winners": [
+        1
+      ],
+      "scores": [
+        -9,
+        36,
+        -27
+      ]
+    },
+    {
+      "players": 3,
+      "seed": 3170,
+      "turns": 119,
+      "blocked": true,
+      "winners": [
+        1
+      ],
+      "scores": [
+        -31,
+        57,
+        -26
+      ]
+    },
+    {
+      "players": 3,
+      "seed": 3171,
+      "turns": 94,
+      "blocked": true,
+      "winners": [
+        2
+      ],
+      "scores": [
+        -40,
+        -44,
+        84
+      ]
+    },
+    {
+      "players": 3,
+      "seed": 3172,
+      "turns": 117,
+      "blocked": true,
+      "winners": [
+        2
+      ],
+      "scores": [
+        -33,
+        -9,
+        42
+      ]
+    },
+    {
+      "players": 3,
+      "seed": 3173,
+      "turns": 108,
+      "blocked": true,
+      "winners": [
+        2
+      ],
+      "scores": [
+        -17,
+        -20,
+        37
+      ]
+    },
+    {
+      "players": 3,
+      "seed": 3174,
+      "turns": 118,
+      "blocked": true,
+      "winners": [
+        1
+      ],
+      "scores": [
+        -11,
+        14,
+        -3
+      ]
+    },
+    {
+      "players": 3,
+      "seed": 3175,
+      "turns": 118,
+      "blocked": true,
+      "winners": [
+        1
+      ],
+      "scores": [
+        -20,
+        27,
+        -7
+      ]
+    },
+    {
+      "players": 3,
+      "seed": 3176,
+      "turns": 107,
+      "blocked": true,
+      "winners": [
+        1
+      ],
+      "scores": [
+        -44,
+        99,
+        -55
+      ]
+    },
+    {
+      "players": 3,
+      "seed": 3177,
+      "turns": 110,
+      "blocked": true,
+      "winners": [
+        2
+      ],
+      "scores": [
+        -22,
+        -21,
+        43
+      ]
+    },
+    {
+      "players": 3,
+      "seed": 3178,
+      "turns": 115,
+      "blocked": true,
+      "winners": [
+        0
+      ],
+      "scores": [
+        16,
+        -1,
+        -15
+      ]
+    },
+    {
+      "players": 3,
+      "seed": 3179,
+      "turns": 114,
+      "blocked": true,
+      "winners": [
+        1
+      ],
+      "scores": [
+        -25,
+        36,
+        -11
+      ]
+    },
+    {
+      "players": 3,
+      "seed": 3180,
+      "turns": 108,
+      "blocked": true,
+      "winners": [
+        1
+      ],
+      "scores": [
+        -39,
+        57,
+        -18
+      ]
+    },
+    {
+      "players": 3,
+      "seed": 3181,
+      "turns": 111,
+      "blocked": true,
+      "winners": [
+        2
+      ],
+      "scores": [
+        -6,
+        -21,
+        27
+      ]
+    },
+    {
+      "players": 3,
+      "seed": 3182,
+      "turns": 108,
+      "blocked": true,
+      "winners": [
+        1
+      ],
+      "scores": [
+        -12,
+        25,
+        -13
+      ]
+    },
+    {
+      "players": 3,
+      "seed": 3183,
+      "turns": 115,
+      "blocked": true,
+      "winners": [
+        0
+      ],
+      "scores": [
+        44,
+        -26,
+        -18
+      ]
+    },
+    {
+      "players": 3,
+      "seed": 3184,
+      "turns": 110,
+      "blocked": true,
+      "winners": [
+        2
+      ],
+      "scores": [
+        -4,
+        -42,
+        46
+      ]
+    },
+    {
+      "players": 3,
+      "seed": 3185,
+      "turns": 119,
+      "blocked": true,
+      "winners": [
+        2
+      ],
+      "scores": [
+        -23,
+        -7,
+        30
+      ]
+    },
+    {
+      "players": 3,
+      "seed": 3186,
+      "turns": 100,
+      "blocked": true,
+      "winners": [
+        0
+      ],
+      "scores": [
+        16,
+        -5,
+        -11
+      ]
+    },
+    {
+      "players": 3,
+      "seed": 3187,
+      "turns": 113,
+      "blocked": true,
+      "winners": [
+        0
+      ],
+      "scores": [
+        8,
+        -7,
+        -1
+      ]
+    },
+    {
+      "players": 3,
+      "seed": 3188,
+      "turns": 105,
+      "blocked": true,
+      "winners": [
+        1
+      ],
+      "scores": [
+        -7,
+        27,
+        -20
+      ]
+    },
+    {
+      "players": 3,
+      "seed": 3189,
+      "turns": 102,
+      "blocked": true,
+      "winners": [
+        1
+      ],
+      "scores": [
+        -40,
+        61,
+        -21
+      ]
+    },
+    {
+      "players": 3,
+      "seed": 3190,
+      "turns": 122,
+      "blocked": true,
+      "winners": [
+        2
+      ],
+      "scores": [
+        -19,
+        -8,
+        27
+      ]
+    },
+    {
+      "players": 3,
+      "seed": 3191,
+      "turns": 107,
+      "blocked": true,
+      "winners": [
+        0,
+        1
+      ],
+      "scores": [
+        10.5,
+        10.5,
+        -21
+      ]
+    },
+    {
+      "players": 3,
+      "seed": 3192,
+      "turns": 114,
+      "blocked": true,
+      "winners": [
+        2
+      ],
+      "scores": [
+        -4,
+        -5,
+        9
+      ]
+    },
+    {
+      "players": 3,
+      "seed": 3193,
+      "turns": 101,
+      "blocked": true,
+      "winners": [
+        2
+      ],
+      "scores": [
+        -2,
+        -8,
+        10
+      ]
+    },
+    {
+      "players": 3,
+      "seed": 3194,
+      "turns": 121,
+      "blocked": true,
+      "winners": [
+        0,
+        2
+      ],
+      "scores": [
+        4.5,
+        -9,
+        4.5
+      ]
+    },
+    {
+      "players": 3,
+      "seed": 3195,
+      "turns": 113,
+      "blocked": true,
+      "winners": [
+        1
+      ],
+      "scores": [
+        -18,
+        26,
+        -8
+      ]
+    },
+    {
+      "players": 3,
+      "seed": 3196,
+      "turns": 94,
+      "blocked": true,
+      "winners": [
+        1
+      ],
+      "scores": [
+        -34,
+        83,
+        -49
+      ]
+    },
+    {
+      "players": 3,
+      "seed": 3197,
+      "turns": 119,
+      "blocked": true,
+      "winners": [
+        0
+      ],
+      "scores": [
+        29,
+        -19,
+        -10
+      ]
+    },
+    {
+      "players": 3,
+      "seed": 3198,
+      "turns": 117,
+      "blocked": true,
+      "winners": [
+        0
+      ],
+      "scores": [
+        20,
+        -9,
+        -11
+      ]
+    },
+    {
+      "players": 3,
+      "seed": 3199,
+      "turns": 116,
+      "blocked": true,
+      "winners": [
+        2
+      ],
+      "scores": [
+        -2,
+        -1,
+        3
+      ]
+    },
+    {
+      "players": 3,
+      "seed": 3200,
+      "turns": 118,
+      "blocked": true,
+      "winners": [
+        0
+      ],
+      "scores": [
+        36,
+        -4,
+        -32
+      ]
+    },
+    {
+      "players": 4,
+      "seed": 4001,
+      "turns": 99,
+      "blocked": true,
+      "winners": [
+        0
+      ],
+      "scores": [
+        31,
+        -17,
+        -9,
+        -5
+      ]
+    },
+    {
+      "players": 4,
+      "seed": 4002,
+      "turns": 97,
+      "blocked": true,
+      "winners": [
+        0
+      ],
+      "scores": [
+        70,
+        -24,
+        -22,
+        -24
+      ]
+    },
+    {
+      "players": 4,
+      "seed": 4003,
+      "turns": 100,
+      "blocked": true,
+      "winners": [
+        3
+      ],
+      "scores": [
+        -17,
+        -36,
+        -21,
+        74
+      ]
+    },
+    {
+      "players": 4,
+      "seed": 4004,
+      "turns": 103,
+      "blocked": true,
+      "winners": [
+        1
+      ],
+      "scores": [
+        -17,
+        34,
+        -2,
+        -15
+      ]
+    },
+    {
+      "players": 4,
+      "seed": 4005,
+      "turns": 104,
+      "blocked": true,
+      "winners": [
+        2
+      ],
+      "scores": [
+        -15,
+        -46,
+        82,
+        -21
+      ]
+    },
+    {
+      "players": 4,
+      "seed": 4006,
+      "turns": 88,
+      "blocked": true,
+      "winners": [
+        2
+      ],
+      "scores": [
+        -13,
+        -23,
+        58,
+        -22
+      ]
+    },
+    {
+      "players": 4,
+      "seed": 4007,
+      "turns": 102,
+      "blocked": true,
+      "winners": [
+        0
+      ],
+      "scores": [
+        36,
+        -20,
+        -5,
+        -11
+      ]
+    },
+    {
+      "players": 4,
+      "seed": 4008,
+      "turns": 97,
+      "blocked": false,
+      "winners": [
+        0
+      ],
+      "scores": [
+        36,
+        -17,
+        -9,
+        -10
+      ]
+    },
+    {
+      "players": 4,
+      "seed": 4009,
+      "turns": 107,
+      "blocked": true,
+      "winners": [
+        3
+      ],
+      "scores": [
+        -17,
+        -19,
+        -4,
+        40
+      ]
+    },
+    {
+      "players": 4,
+      "seed": 4010,
+      "turns": 96,
+      "blocked": true,
+      "winners": [
+        0
+      ],
+      "scores": [
+        91,
+        -30,
+        -50,
+        -11
+      ]
+    },
+    {
+      "players": 4,
+      "seed": 4011,
+      "turns": 91,
+      "blocked": true,
+      "winners": [
+        0,
+        2
+      ],
+      "scores": [
+        7,
+        -13,
+        7,
+        -1
+      ]
+    },
+    {
+      "players": 4,
+      "seed": 4012,
+      "turns": 83,
+      "blocked": true,
+      "winners": [
+        0
+      ],
+      "scores": [
+        70,
+        -15,
+        -31,
+        -24
+      ]
+    },
+    {
+      "players": 4,
+      "seed": 4013,
+      "turns": 93,
+      "blocked": true,
+      "winners": [
+        0
+      ],
+      "scores": [
+        74,
+        -13,
+        -24,
+        -37
+      ]
+    },
+    {
+      "players": 4,
+      "seed": 4014,
+      "turns": 105,
+      "blocked": true,
+      "winners": [
+        1
+      ],
+      "scores": [
+        -19,
+        87,
+        -30,
+        -38
+      ]
+    },
+    {
+      "players": 4,
+      "seed": 4015,
+      "turns": 99,
+      "blocked": true,
+      "winners": [
+        2
+      ],
+      "scores": [
+        -9,
+        -3,
+        16,
+        -4
+      ]
+    },
+    {
+      "players": 4,
+      "seed": 4016,
+      "turns": 96,
+      "blocked": true,
+      "winners": [
+        1
+      ],
+      "scores": [
+        -11,
+        89,
+        -30,
+        -48
+      ]
+    },
+    {
+      "players": 4,
+      "seed": 4017,
+      "turns": 97,
+      "blocked": true,
+      "winners": [
+        3
+      ],
+      "scores": [
+        -36,
+        -27,
+        -13,
+        76
+      ]
+    },
+    {
+      "players": 4,
+      "seed": 4018,
+      "turns": 85,
+      "blocked": false,
+      "winners": [
+        0
+      ],
+      "scores": [
+        86,
+        -29,
+        -33,
+        -24
+      ]
+    },
+    {
+      "players": 4,
+      "seed": 4019,
+      "turns": 99,
+      "blocked": true,
+      "winners": [
+        0
+      ],
+      "scores": [
+        79,
+        -21,
+        -16,
+        -42
+      ]
+    },
+    {
+      "players": 4,
+      "seed": 4020,
+      "turns": 99,
+      "blocked": true,
+      "winners": [
+        3
+      ],
+      "scores": [
+        -32,
+        -20,
+        -36,
+        88
+      ]
+    },
+    {
+      "players": 4,
+      "seed": 4021,
+      "turns": 102,
+      "blocked": true,
+      "winners": [
+        3
+      ],
+      "scores": [
+        -25,
+        -16,
+        -29,
+        70
+      ]
+    },
+    {
+      "players": 4,
+      "seed": 4022,
+      "turns": 80,
+      "blocked": true,
+      "winners": [
+        1
+      ],
+      "scores": [
+        -28,
+        95,
+        -58,
+        -9
+      ]
+    },
+    {
+      "players": 4,
+      "seed": 4023,
+      "turns": 68,
+      "blocked": false,
+      "winners": [
+        0
+      ],
+      "scores": [
+        107,
+        -43,
+        -24,
+        -40
+      ]
+    },
+    {
+      "players": 4,
+      "seed": 4024,
+      "turns": 85,
+      "blocked": true,
+      "winners": [
+        1,
+        3
+      ],
+      "scores": [
+        -5,
+        8,
+        -11,
+        8
+      ]
+    },
+    {
+      "players": 4,
+      "seed": 4025,
+      "turns": 92,
+      "blocked": true,
+      "winners": [
+        0
+      ],
+      "scores": [
+        97,
+        -19,
+        -42,
+        -36
+      ]
+    },
+    {
+      "players": 4,
+      "seed": 4026,
+      "turns": 99,
+      "blocked": true,
+      "winners": [
+        3
+      ],
+      "scores": [
+        -15,
+        -17,
+        -2,
+        34
+      ]
+    },
+    {
+      "players": 4,
+      "seed": 4027,
+      "turns": 92,
+      "blocked": true,
+      "winners": [
+        2
+      ],
+      "scores": [
+        -26,
+        -3,
+        87,
+        -58
+      ]
+    },
+    {
+      "players": 4,
+      "seed": 4028,
+      "turns": 101,
+      "blocked": true,
+      "winners": [
+        0
+      ],
+      "scores": [
+        35,
+        -15,
+        -17,
+        -3
+      ]
+    },
+    {
+      "players": 4,
+      "seed": 4029,
+      "turns": 99,
+      "blocked": true,
+      "winners": [
+        2
+      ],
+      "scores": [
+        -17,
+        -8,
+        59,
+        -34
+      ]
+    },
+    {
+      "players": 4,
+      "seed": 4030,
+      "turns": 91,
+      "blocked": true,
+      "winners": [
+        3
+      ],
+      "scores": [
+        -3,
+        -12,
+        -10,
+        25
+      ]
+    },
+    {
+      "players": 4,
+      "seed": 4031,
+      "turns": 112,
+      "blocked": true,
+      "winners": [
+        3
+      ],
+      "scores": [
+        -17,
+        -23,
+        -5,
+        45
+      ]
+    },
+    {
+      "players": 4,
+      "seed": 4032,
+      "turns": 84,
+      "blocked": true,
+      "winners": [
+        2
+      ],
+      "scores": [
+        -32,
+        -3,
+        46,
+        -11
+      ]
+    },
+    {
+      "players": 4,
+      "seed": 4033,
+      "turns": 89,
+      "blocked": false,
+      "winners": [
+        1
+      ],
+      "scores": [
+        -20,
+        89,
+        -46,
+        -23
+      ]
+    },
+    {
+      "players": 4,
+      "seed": 4034,
+      "turns": 103,
+      "blocked": true,
+      "winners": [
+        2
+      ],
+      "scores": [
+        -27,
+        -3,
+        41,
+        -11
+      ]
+    },
+    {
+      "players": 4,
+      "seed": 4035,
+      "turns": 90,
+      "blocked": true,
+      "winners": [
+        2
+      ],
+      "scores": [
+        -22,
+        -1,
+        28,
+        -5
+      ]
+    },
+    {
+      "players": 4,
+      "seed": 4036,
+      "turns": 103,
+      "blocked": true,
+      "winners": [
+        3
+      ],
+      "scores": [
+        -16,
+        -27,
+        -16,
+        59
+      ]
+    },
+    {
+      "players": 4,
+      "seed": 4037,
+      "turns": 98,
+      "blocked": true,
+      "winners": [
+        3
+      ],
+      "scores": [
+        -16,
+        -18,
+        -33,
+        67
+      ]
+    },
+    {
+      "players": 4,
+      "seed": 4038,
+      "turns": 51,
+      "blocked": false,
+      "winners": [
+        3
+      ],
+      "scores": [
+        -40,
+        -42,
+        -46,
+        128
+      ]
+    },
+    {
+      "players": 4,
+      "seed": 4039,
+      "turns": 103,
+      "blocked": true,
+      "winners": [
+        3
+      ],
+      "scores": [
+        -10,
+        -1,
+        -11,
+        22
+      ]
+    },
+    {
+      "players": 4,
+      "seed": 4040,
+      "turns": 81,
+      "blocked": true,
+      "winners": [
+        1
+      ],
+      "scores": [
+        -2,
+        22,
+        -17,
+        -3
+      ]
+    },
+    {
+      "players": 4,
+      "seed": 4041,
+      "turns": 100,
+      "blocked": true,
+      "winners": [
+        0
+      ],
+      "scores": [
+        26,
+        -12,
+        -7,
+        -7
+      ]
+    },
+    {
+      "players": 4,
+      "seed": 4042,
+      "turns": 99,
+      "blocked": true,
+      "winners": [
+        0
+      ],
+      "scores": [
+        75,
+        -22,
+        -30,
+        -23
+      ]
+    },
+    {
+      "players": 4,
+      "seed": 4043,
+      "turns": 99,
+      "blocked": true,
+      "winners": [
+        1
+      ],
+      "scores": [
+        -29,
+        60,
+        -4,
+        -27
+      ]
+    },
+    {
+      "players": 4,
+      "seed": 4044,
+      "turns": 98,
+      "blocked": true,
+      "winners": [
+        1
+      ],
+      "scores": [
+        -40,
+        94,
+        -46,
+        -8
+      ]
+    },
+    {
+      "players": 4,
+      "seed": 4045,
+      "turns": 49,
+      "blocked": false,
+      "winners": [
+        3
+      ],
+      "scores": [
+        -21,
+        -101,
+        -37,
+        159
+      ]
+    },
+    {
+      "players": 4,
+      "seed": 4046,
+      "turns": 95,
+      "blocked": true,
+      "winners": [
+        2
+      ],
+      "scores": [
+        -19,
+        -29,
+        62,
+        -14
+      ]
+    },
+    {
+      "players": 4,
+      "seed": 4047,
+      "turns": 90,
+      "blocked": true,
+      "winners": [
+        1
+      ],
+      "scores": [
+        -13,
+        63,
+        -34,
+        -16
+      ]
+    },
+    {
+      "players": 4,
+      "seed": 4048,
+      "turns": 101,
+      "blocked": true,
+      "winners": [
+        2
+      ],
+      "scores": [
+        -32,
+        -10,
+        99,
+        -57
+      ]
+    },
+    {
+      "players": 4,
+      "seed": 4049,
+      "turns": 99,
+      "blocked": true,
+      "winners": [
+        3
+      ],
+      "scores": [
+        -28,
+        -10,
+        -12,
+        50
+      ]
+    },
+    {
+      "players": 4,
+      "seed": 4050,
+      "turns": 94,
+      "blocked": true,
+      "winners": [
+        3
+      ],
+      "scores": [
+        -20,
+        -29,
+        -3,
+        52
+      ]
+    },
+    {
+      "players": 4,
+      "seed": 4051,
+      "turns": 83,
+      "blocked": true,
+      "winners": [
+        3
+      ],
+      "scores": [
+        -43,
+        -36,
+        -46,
+        125
+      ]
+    },
+    {
+      "players": 4,
+      "seed": 4052,
+      "turns": 96,
+      "blocked": true,
+      "winners": [
+        0
+      ],
+      "scores": [
+        35,
+        -6,
+        -21,
+        -8
+      ]
+    },
+    {
+      "players": 4,
+      "seed": 4053,
+      "turns": 91,
+      "blocked": true,
+      "winners": [
+        2
+      ],
+      "scores": [
+        -32,
+        -30,
+        108,
+        -46
+      ]
+    },
+    {
+      "players": 4,
+      "seed": 4054,
+      "turns": 117,
+      "blocked": true,
+      "winners": [
+        3
+      ],
+      "scores": [
+        -22,
+        -31,
+        -9,
+        62
+      ]
+    },
+    {
+      "players": 4,
+      "seed": 4055,
+      "turns": 101,
+      "blocked": true,
+      "winners": [
+        1
+      ],
+      "scores": [
+        -19,
+        48,
+        -5,
+        -24
+      ]
+    },
+    {
+      "players": 4,
+      "seed": 4056,
+      "turns": 95,
+      "blocked": true,
+      "winners": [
+        1
+      ],
+      "scores": [
+        -11,
+        68,
+        -32,
+        -25
+      ]
+    },
+    {
+      "players": 4,
+      "seed": 4057,
+      "turns": 96,
+      "blocked": true,
+      "winners": [
+        0
+      ],
+      "scores": [
+        76,
+        -19,
+        -14,
+        -43
+      ]
+    },
+    {
+      "players": 4,
+      "seed": 4058,
+      "turns": 104,
+      "blocked": true,
+      "winners": [
+        0
+      ],
+      "scores": [
+        53,
+        -20,
+        -20,
+        -13
+      ]
+    },
+    {
+      "players": 4,
+      "seed": 4059,
+      "turns": 95,
+      "blocked": true,
+      "winners": [
+        3
+      ],
+      "scores": [
+        -38,
+        -19,
+        -11,
+        68
+      ]
+    },
+    {
+      "players": 4,
+      "seed": 4060,
+      "turns": 88,
+      "blocked": true,
+      "winners": [
+        2
+      ],
+      "scores": [
+        -6,
+        -18,
+        38,
+        -14
+      ]
+    },
+    {
+      "players": 4,
+      "seed": 4061,
+      "turns": 76,
+      "blocked": true,
+      "winners": [
+        0
+      ],
+      "scores": [
+        58,
+        -34,
+        -12,
+        -12
+      ]
+    },
+    {
+      "players": 4,
+      "seed": 4062,
+      "turns": 86,
+      "blocked": true,
+      "winners": [
+        3
+      ],
+      "scores": [
+        -12,
+        -24,
+        -7,
+        43
+      ]
+    },
+    {
+      "players": 4,
+      "seed": 4063,
+      "turns": 83,
+      "blocked": true,
+      "winners": [
+        0
+      ],
+      "scores": [
+        43,
+        -7,
+        -15,
+        -21
+      ]
+    },
+    {
+      "players": 4,
+      "seed": 4064,
+      "turns": 87,
+      "blocked": true,
+      "winners": [
+        1
+      ],
+      "scores": [
+        -5,
+        14,
+        -7,
+        -2
+      ]
+    },
+    {
+      "players": 4,
+      "seed": 4065,
+      "turns": 90,
+      "blocked": true,
+      "winners": [
+        2
+      ],
+      "scores": [
+        -9,
+        -8,
+        42,
+        -25
+      ]
+    },
+    {
+      "players": 4,
+      "seed": 4066,
+      "turns": 93,
+      "blocked": true,
+      "winners": [
+        2
+      ],
+      "scores": [
+        -61,
+        -69,
+        199,
+        -69
+      ]
+    },
+    {
+      "players": 4,
+      "seed": 4067,
+      "turns": 89,
+      "blocked": true,
+      "winners": [
+        1
+      ],
+      "scores": [
+        -5,
+        60,
+        -35,
+        -20
+      ]
+    },
+    {
+      "players": 4,
+      "seed": 4068,
+      "turns": 105,
+      "blocked": true,
+      "winners": [
+        0
+      ],
+      "scores": [
+        129,
+        -54,
+        -42,
+        -33
+      ]
+    },
+    {
+      "players": 4,
+      "seed": 4069,
+      "turns": 87,
+      "blocked": true,
+      "winners": [
+        1
+      ],
+      "scores": [
+        -21,
+        68,
+        -14,
+        -33
+      ]
+    },
+    {
+      "players": 4,
+      "seed": 4070,
+      "turns": 94,
+      "blocked": true,
+      "winners": [
+        3
+      ],
+      "scores": [
+        -26,
+        -26,
+        -10,
+        62
+      ]
+    },
+    {
+      "players": 4,
+      "seed": 4071,
+      "turns": 93,
+      "blocked": true,
+      "winners": [
+        3
+      ],
+      "scores": [
+        -48,
+        -10,
+        -12,
+        70
+      ]
+    },
+    {
+      "players": 4,
+      "seed": 4072,
+      "turns": 101,
+      "blocked": true,
+      "winners": [
+        2
+      ],
+      "scores": [
+        -17,
+        -28,
+        49,
+        -4
+      ]
+    },
+    {
+      "players": 4,
+      "seed": 4073,
+      "turns": 88,
+      "blocked": true,
+      "winners": [
+        2
+      ],
+      "scores": [
+        -12,
+        -1,
+        24,
+        -11
+      ]
+    },
+    {
+      "players": 4,
+      "seed": 4074,
+      "turns": 96,
+      "blocked": true,
+      "winners": [
+        1
+      ],
+      "scores": [
+        -46,
+        66,
+        -12,
+        -8
+      ]
+    },
+    {
+      "players": 4,
+      "seed": 4075,
+      "turns": 88,
+      "blocked": true,
+      "winners": [
+        1
+      ],
+      "scores": [
+        -62,
+        209,
+        -74,
+        -73
+      ]
+    },
+    {
+      "players": 4,
+      "seed": 4076,
+      "turns": 105,
+      "blocked": true,
+      "winners": [
+        0
+      ],
+      "scores": [
+        83,
+        -23,
+        -33,
+        -27
+      ]
+    },
+    {
+      "players": 4,
+      "seed": 4077,
+      "turns": 107,
+      "blocked": false,
+      "winners": [
+        3
+      ],
+      "scores": [
+        -12,
+        -13,
+        -13,
+        38
+      ]
+    },
+    {
+      "players": 4,
+      "seed": 4078,
+      "turns": 90,
+      "blocked": true,
+      "winners": [
+        1
+      ],
+      "scores": [
+        -51,
+        78,
+        -18,
+        -9
+      ]
+    },
+    {
+      "players": 4,
+      "seed": 4079,
+      "turns": 80,
+      "blocked": true,
+      "winners": [
+        1
+      ],
+      "scores": [
+        -47,
+        140,
+        -75,
+        -18
+      ]
+    },
+    {
+      "players": 4,
+      "seed": 4080,
+      "turns": 97,
+      "blocked": true,
+      "winners": [
+        1
+      ],
+      "scores": [
+        -20,
+        59,
+        -19,
+        -20
+      ]
+    },
+    {
+      "players": 4,
+      "seed": 4081,
+      "turns": 73,
+      "blocked": true,
+      "winners": [
+        3
+      ],
+      "scores": [
+        -67,
+        -12,
+        -17,
+        96
+      ]
+    },
+    {
+      "players": 4,
+      "seed": 4082,
+      "turns": 106,
+      "blocked": true,
+      "winners": [
+        2
+      ],
+      "scores": [
+        -30,
+        -45,
+        78,
+        -3
+      ]
+    },
+    {
+      "players": 4,
+      "seed": 4083,
+      "turns": 96,
+      "blocked": true,
+      "winners": [
+        1
+      ],
+      "scores": [
+        -13,
+        52,
+        -7,
+        -32
+      ]
+    },
+    {
+      "players": 4,
+      "seed": 4084,
+      "turns": 88,
+      "blocked": true,
+      "winners": [
+        1
+      ],
+      "scores": [
+        -3,
+        96,
+        -25,
+        -68
+      ]
+    },
+    {
+      "players": 4,
+      "seed": 4085,
+      "turns": 100,
+      "blocked": true,
+      "winners": [
+        1
+      ],
+      "scores": [
+        -30,
+        70,
+        -33,
+        -7
+      ]
+    },
+    {
+      "players": 4,
+      "seed": 4086,
+      "turns": 106,
+      "blocked": true,
+      "winners": [
+        2
+      ],
+      "scores": [
+        -12,
+        -22,
+        43,
+        -9
+      ]
+    },
+    {
+      "players": 4,
+      "seed": 4087,
+      "turns": 83,
+      "blocked": true,
+      "winners": [
+        0
+      ],
+      "scores": [
+        66,
+        -34,
+        -28,
+        -4
+      ]
+    },
+    {
+      "players": 4,
+      "seed": 4088,
+      "turns": 109,
+      "blocked": true,
+      "winners": [
+        2
+      ],
+      "scores": [
+        -7,
+        -8,
+        58,
+        -43
+      ]
+    },
+    {
+      "players": 4,
+      "seed": 4089,
+      "turns": 82,
+      "blocked": true,
+      "winners": [
+        2
+      ],
+      "scores": [
+        -38,
+        -11,
+        78,
+        -29
+      ]
+    },
+    {
+      "players": 4,
+      "seed": 4090,
+      "turns": 92,
+      "blocked": true,
+      "winners": [
+        2
+      ],
+      "scores": [
+        -21,
+        -29,
+        74,
+        -24
+      ]
+    },
+    {
+      "players": 4,
+      "seed": 4091,
+      "turns": 82,
+      "blocked": true,
+      "winners": [
+        1
+      ],
+      "scores": [
+        -44,
+        120,
+        -27,
+        -49
+      ]
+    },
+    {
+      "players": 4,
+      "seed": 4092,
+      "turns": 101,
+      "blocked": true,
+      "winners": [
+        0
+      ],
+      "scores": [
+        72,
+        -20,
+        -28,
+        -24
+      ]
+    },
+    {
+      "players": 4,
+      "seed": 4093,
+      "turns": 86,
+      "blocked": true,
+      "winners": [
+        3
+      ],
+      "scores": [
+        -48,
+        -22,
+        -24,
+        94
+      ]
+    },
+    {
+      "players": 4,
+      "seed": 4094,
+      "turns": 103,
+      "blocked": true,
+      "winners": [
+        0
+      ],
+      "scores": [
+        82,
+        -23,
+        -1,
+        -58
+      ]
+    },
+    {
+      "players": 4,
+      "seed": 4095,
+      "turns": 61,
+      "blocked": false,
+      "winners": [
+        1
+      ],
+      "scores": [
+        -27,
+        119,
+        -34,
+        -58
+      ]
+    },
+    {
+      "players": 4,
+      "seed": 4096,
+      "turns": 96,
+      "blocked": true,
+      "winners": [
+        1
+      ],
+      "scores": [
+        -40,
+        80,
+        -20,
+        -20
+      ]
+    },
+    {
+      "players": 4,
+      "seed": 4097,
+      "turns": 90,
+      "blocked": true,
+      "winners": [
+        3
+      ],
+      "scores": [
+        -5,
+        -42,
+        -37,
+        84
+      ]
+    },
+    {
+      "players": 4,
+      "seed": 4098,
+      "turns": 99,
+      "blocked": true,
+      "winners": [
+        0
+      ],
+      "scores": [
+        20,
+        -4,
+        -15,
+        -1
+      ]
+    },
+    {
+      "players": 4,
+      "seed": 4099,
+      "turns": 79,
+      "blocked": true,
+      "winners": [
+        1
+      ],
+      "scores": [
+        -64,
+        86,
+        -6,
+        -16
+      ]
+    },
+    {
+      "players": 4,
+      "seed": 4100,
+      "turns": 90,
+      "blocked": true,
+      "winners": [
+        0
+      ],
+      "scores": [
+        46,
+        -10,
+        -28,
+        -8
+      ]
+    },
+    {
+      "players": 4,
+      "seed": 4101,
+      "turns": 96,
+      "blocked": true,
+      "winners": [
+        3
+      ],
+      "scores": [
+        -6,
+        -8,
+        -28,
+        42
+      ]
+    },
+    {
+      "players": 4,
+      "seed": 4102,
+      "turns": 103,
+      "blocked": true,
+      "winners": [
+        1
+      ],
+      "scores": [
+        -17,
+        107,
+        -39,
+        -51
+      ]
+    },
+    {
+      "players": 4,
+      "seed": 4103,
+      "turns": 87,
+      "blocked": true,
+      "winners": [
+        2
+      ],
+      "scores": [
+        -10,
+        -56,
+        102,
+        -36
+      ]
+    },
+    {
+      "players": 4,
+      "seed": 4104,
+      "turns": 104,
+      "blocked": true,
+      "winners": [
+        2
+      ],
+      "scores": [
+        -39,
+        -12,
+        71,
+        -20
+      ]
+    },
+    {
+      "players": 4,
+      "seed": 4105,
+      "turns": 103,
+      "blocked": true,
+      "winners": [
+        0
+      ],
+      "scores": [
+        94,
+        -29,
+        -53,
+        -12
+      ]
+    },
+    {
+      "players": 4,
+      "seed": 4106,
+      "turns": 97,
+      "blocked": true,
+      "winners": [
+        3
+      ],
+      "scores": [
+        -12,
+        -36,
+        -25,
+        73
+      ]
+    },
+    {
+      "players": 4,
+      "seed": 4107,
+      "turns": 100,
+      "blocked": true,
+      "winners": [
+        0
+      ],
+      "scores": [
+        56,
+        -5,
+        -33,
+        -18
+      ]
+    },
+    {
+      "players": 4,
+      "seed": 4108,
+      "turns": 98,
+      "blocked": true,
+      "winners": [
+        0
+      ],
+      "scores": [
+        49,
+        -20,
+        -28,
+        -1
+      ]
+    },
+    {
+      "players": 4,
+      "seed": 4109,
+      "turns": 85,
+      "blocked": true,
+      "winners": [
+        1
+      ],
+      "scores": [
+        -25,
+        74,
+        -24,
+        -25
+      ]
+    },
+    {
+      "players": 4,
+      "seed": 4110,
+      "turns": 102,
+      "blocked": true,
+      "winners": [
+        3
+      ],
+      "scores": [
+        -14,
+        -17,
+        -9,
+        40
+      ]
+    },
+    {
+      "players": 4,
+      "seed": 4111,
+      "turns": 91,
+      "blocked": true,
+      "winners": [
+        0
+      ],
+      "scores": [
+        20,
+        -14,
+        -4,
+        -2
+      ]
+    },
+    {
+      "players": 4,
+      "seed": 4112,
+      "turns": 90,
+      "blocked": true,
+      "winners": [
+        3
+      ],
+      "scores": [
+        -34,
+        -6,
+        -4,
+        44
+      ]
+    },
+    {
+      "players": 4,
+      "seed": 4113,
+      "turns": 71,
+      "blocked": false,
+      "winners": [
+        0
+      ],
+      "scores": [
+        132,
+        -39,
+        -40,
+        -53
+      ]
+    },
+    {
+      "players": 4,
+      "seed": 4114,
+      "turns": 87,
+      "blocked": true,
+      "winners": [
+        0
+      ],
+      "scores": [
+        127,
+        -16,
+        -57,
+        -54
+      ]
+    },
+    {
+      "players": 4,
+      "seed": 4115,
+      "turns": 111,
+      "blocked": true,
+      "winners": [
+        1
+      ],
+      "scores": [
+        -32,
+        90,
+        -38,
+        -20
+      ]
+    },
+    {
+      "players": 4,
+      "seed": 4116,
+      "turns": 83,
+      "blocked": false,
+      "winners": [
+        2
+      ],
+      "scores": [
+        -16,
+        -49,
+        117,
+        -52
+      ]
+    },
+    {
+      "players": 4,
+      "seed": 4117,
+      "turns": 86,
+      "blocked": true,
+      "winners": [
+        0
+      ],
+      "scores": [
+        49,
+        -17,
+        -26,
+        -6
+      ]
+    },
+    {
+      "players": 4,
+      "seed": 4118,
+      "turns": 99,
+      "blocked": true,
+      "winners": [
+        3
+      ],
+      "scores": [
+        -21,
+        -37,
+        -35,
+        93
+      ]
+    },
+    {
+      "players": 4,
+      "seed": 4119,
+      "turns": 96,
+      "blocked": true,
+      "winners": [
+        2
+      ],
+      "scores": [
+        -1,
+        -5,
+        15,
+        -9
+      ]
+    },
+    {
+      "players": 4,
+      "seed": 4120,
+      "turns": 97,
+      "blocked": false,
+      "winners": [
+        0
+      ],
+      "scores": [
+        59,
+        -24,
+        -25,
+        -10
+      ]
+    },
+    {
+      "players": 4,
+      "seed": 4121,
+      "turns": 79,
+      "blocked": true,
+      "winners": [
+        0
+      ],
+      "scores": [
+        108,
+        -27,
+        -30,
+        -51
+      ]
+    },
+    {
+      "players": 4,
+      "seed": 4122,
+      "turns": 92,
+      "blocked": true,
+      "winners": [
+        1
+      ],
+      "scores": [
+        -27,
+        32,
+        -2,
+        -3
+      ]
+    },
+    {
+      "players": 4,
+      "seed": 4123,
+      "turns": 119,
+      "blocked": true,
+      "winners": [
+        1
+      ],
+      "scores": [
+        -9,
+        58,
+        -39,
+        -10
+      ]
+    },
+    {
+      "players": 4,
+      "seed": 4124,
+      "turns": 98,
+      "blocked": true,
+      "winners": [
+        0
+      ],
+      "scores": [
+        63,
+        -27,
+        -16,
+        -20
+      ]
+    },
+    {
+      "players": 4,
+      "seed": 4125,
+      "turns": 86,
+      "blocked": true,
+      "winners": [
+        3
+      ],
+      "scores": [
+        -18,
+        -35,
+        -43,
+        96
+      ]
+    },
+    {
+      "players": 4,
+      "seed": 4126,
+      "turns": 89,
+      "blocked": true,
+      "winners": [
+        1
+      ],
+      "scores": [
+        -16,
+        76,
+        -31,
+        -29
+      ]
+    },
+    {
+      "players": 4,
+      "seed": 4127,
+      "turns": 93,
+      "blocked": true,
+      "winners": [
+        0
+      ],
+      "scores": [
+        99,
+        -31,
+        -30,
+        -38
+      ]
+    },
+    {
+      "players": 4,
+      "seed": 4128,
+      "turns": 84,
+      "blocked": true,
+      "winners": [
+        3
+      ],
+      "scores": [
+        -41,
+        -29,
+        -48,
+        118
+      ]
+    },
+    {
+      "players": 4,
+      "seed": 4129,
+      "turns": 96,
+      "blocked": true,
+      "winners": [
+        3
+      ],
+      "scores": [
+        -3,
+        -28,
+        -10,
+        41
+      ]
+    },
+    {
+      "players": 4,
+      "seed": 4130,
+      "turns": 105,
+      "blocked": true,
+      "winners": [
+        2
+      ],
+      "scores": [
+        -2,
+        -11,
+        48,
+        -35
+      ]
+    },
+    {
+      "players": 4,
+      "seed": 4131,
+      "turns": 88,
+      "blocked": true,
+      "winners": [
+        3
+      ],
+      "scores": [
+        -20,
+        -31,
+        -32,
+        83
+      ]
+    },
+    {
+      "players": 4,
+      "seed": 4132,
+      "turns": 101,
+      "blocked": true,
+      "winners": [
+        1
+      ],
+      "scores": [
+        -3,
+        12,
+        -6,
+        -3
+      ]
+    },
+    {
+      "players": 4,
+      "seed": 4133,
+      "turns": 90,
+      "blocked": true,
+      "winners": [
+        0
+      ],
+      "scores": [
+        40,
+        -6,
+        -12,
+        -22
+      ]
+    },
+    {
+      "players": 4,
+      "seed": 4134,
+      "turns": 92,
+      "blocked": true,
+      "winners": [
+        3
+      ],
+      "scores": [
+        -15,
+        -12,
+        -4,
+        31
+      ]
+    },
+    {
+      "players": 4,
+      "seed": 4135,
+      "turns": 92,
+      "blocked": true,
+      "winners": [
+        1
+      ],
+      "scores": [
+        -25,
+        59,
+        -9,
+        -25
+      ]
+    },
+    {
+      "players": 4,
+      "seed": 4136,
+      "turns": 96,
+      "blocked": false,
+      "winners": [
+        2
+      ],
+      "scores": [
+        -28,
+        -16,
+        68,
+        -24
+      ]
+    },
+    {
+      "players": 4,
+      "seed": 4137,
+      "turns": 39,
+      "blocked": false,
+      "winners": [
+        2
+      ],
+      "scores": [
+        -53,
+        -52,
+        128,
+        -23
+      ]
+    },
+    {
+      "players": 4,
+      "seed": 4138,
+      "turns": 94,
+      "blocked": true,
+      "winners": [
+        2
+      ],
+      "scores": [
+        -14,
+        -15,
+        51,
+        -22
+      ]
+    },
+    {
+      "players": 4,
+      "seed": 4139,
+      "turns": 108,
+      "blocked": true,
+      "winners": [
+        3
+      ],
+      "scores": [
+        -27,
+        -1,
+        -4,
+        32
+      ]
+    },
+    {
+      "players": 4,
+      "seed": 4140,
+      "turns": 98,
+      "blocked": true,
+      "winners": [
+        3
+      ],
+      "scores": [
+        -1,
+        -4,
+        -37,
+        42
+      ]
+    },
+    {
+      "players": 4,
+      "seed": 4141,
+      "turns": 96,
+      "blocked": true,
+      "winners": [
+        0
+      ],
+      "scores": [
+        57,
+        -15,
+        -9,
+        -33
+      ]
+    },
+    {
+      "players": 4,
+      "seed": 4142,
+      "turns": 96,
+      "blocked": true,
+      "winners": [
+        1
+      ],
+      "scores": [
+        -9,
+        57,
+        -20,
+        -28
+      ]
+    },
+    {
+      "players": 4,
+      "seed": 4143,
+      "turns": 114,
+      "blocked": true,
+      "winners": [
+        0
+      ],
+      "scores": [
+        100,
+        -41,
+        -14,
+        -45
+      ]
+    },
+    {
+      "players": 4,
+      "seed": 4144,
+      "turns": 98,
+      "blocked": true,
+      "winners": [
+        0
+      ],
+      "scores": [
+        37,
+        -13,
+        -22,
+        -2
+      ]
+    },
+    {
+      "players": 4,
+      "seed": 4145,
+      "turns": 98,
+      "blocked": true,
+      "winners": [
+        1
+      ],
+      "scores": [
+        -14,
+        60,
+        -32,
+        -14
+      ]
+    },
+    {
+      "players": 4,
+      "seed": 4146,
+      "turns": 80,
+      "blocked": true,
+      "winners": [
+        3
+      ],
+      "scores": [
+        -21,
+        -12,
+        -40,
+        73
+      ]
+    },
+    {
+      "players": 4,
+      "seed": 4147,
+      "turns": 101,
+      "blocked": true,
+      "winners": [
+        3
+      ],
+      "scores": [
+        -20,
+        -25,
+        -38,
+        83
+      ]
+    },
+    {
+      "players": 4,
+      "seed": 4148,
+      "turns": 87,
+      "blocked": true,
+      "winners": [
+        1
+      ],
+      "scores": [
+        -11,
+        63,
+        -21,
+        -31
+      ]
+    },
+    {
+      "players": 4,
+      "seed": 4149,
+      "turns": 100,
+      "blocked": true,
+      "winners": [
+        1
+      ],
+      "scores": [
+        -15,
+        69,
+        -8,
+        -46
+      ]
+    },
+    {
+      "players": 4,
+      "seed": 4150,
+      "turns": 94,
+      "blocked": true,
+      "winners": [
+        0
+      ],
+      "scores": [
+        88,
+        -43,
+        -32,
+        -13
+      ]
+    },
+    {
+      "players": 4,
+      "seed": 4151,
+      "turns": 96,
+      "blocked": true,
+      "winners": [
+        3
+      ],
+      "scores": [
+        -3,
+        -11,
+        -19,
+        33
+      ]
+    },
+    {
+      "players": 4,
+      "seed": 4152,
+      "turns": 87,
+      "blocked": true,
+      "winners": [
+        2
+      ],
+      "scores": [
+        -36,
+        -5,
+        56,
+        -15
+      ]
+    },
+    {
+      "players": 4,
+      "seed": 4153,
+      "turns": 93,
+      "blocked": true,
+      "winners": [
+        1
+      ],
+      "scores": [
+        -7,
+        54,
+        -39,
+        -8
+      ]
+    },
+    {
+      "players": 4,
+      "seed": 4154,
+      "turns": 91,
+      "blocked": true,
+      "winners": [
+        3
+      ],
+      "scores": [
+        -2,
+        -17,
+        -22,
+        41
+      ]
+    },
+    {
+      "players": 4,
+      "seed": 4155,
+      "turns": 102,
+      "blocked": true,
+      "winners": [
+        3
+      ],
+      "scores": [
+        -5,
+        -10,
+        -35,
+        50
+      ]
+    },
+    {
+      "players": 4,
+      "seed": 4156,
+      "turns": 111,
+      "blocked": true,
+      "winners": [
+        0
+      ],
+      "scores": [
+        48,
+        -33,
+        -12,
+        -3
+      ]
+    },
+    {
+      "players": 4,
+      "seed": 4157,
+      "turns": 113,
+      "blocked": true,
+      "winners": [
+        0
+      ],
+      "scores": [
+        48,
+        -18,
+        -9,
+        -21
+      ]
+    },
+    {
+      "players": 4,
+      "seed": 4158,
+      "turns": 109,
+      "blocked": true,
+      "winners": [
+        0
+      ],
+      "scores": [
+        76,
+        -36,
+        -17,
+        -23
+      ]
+    },
+    {
+      "players": 4,
+      "seed": 4159,
+      "turns": 84,
+      "blocked": true,
+      "winners": [
+        1
+      ],
+      "scores": [
+        -15,
+        26,
+        -5,
+        -6
+      ]
+    },
+    {
+      "players": 4,
+      "seed": 4160,
+      "turns": 85,
+      "blocked": true,
+      "winners": [
+        0
+      ],
+      "scores": [
+        92,
+        -51,
+        -17,
+        -24
+      ]
+    },
+    {
+      "players": 4,
+      "seed": 4161,
+      "turns": 103,
+      "blocked": true,
+      "winners": [
+        1
+      ],
+      "scores": [
+        -16,
+        70,
+        -28,
+        -26
+      ]
+    },
+    {
+      "players": 4,
+      "seed": 4162,
+      "turns": 93,
+      "blocked": true,
+      "winners": [
+        3
+      ],
+      "scores": [
+        -26,
+        -34,
+        -11,
+        71
+      ]
+    },
+    {
+      "players": 4,
+      "seed": 4163,
+      "turns": 91,
+      "blocked": true,
+      "winners": [
+        1
+      ],
+      "scores": [
+        -45,
+        135,
+        -51,
+        -39
+      ]
+    },
+    {
+      "players": 4,
+      "seed": 4164,
+      "turns": 87,
+      "blocked": true,
+      "winners": [
+        0
+      ],
+      "scores": [
+        112,
+        -49,
+        -29,
+        -34
+      ]
+    },
+    {
+      "players": 4,
+      "seed": 4165,
+      "turns": 107,
+      "blocked": true,
+      "winners": [
+        3
+      ],
+      "scores": [
+        -17,
+        -4,
+        -39,
+        60
+      ]
+    },
+    {
+      "players": 4,
+      "seed": 4166,
+      "turns": 95,
+      "blocked": true,
+      "winners": [
+        0
+      ],
+      "scores": [
+        42,
+        -10,
+        -16,
+        -16
+      ]
+    },
+    {
+      "players": 4,
+      "seed": 4167,
+      "turns": 92,
+      "blocked": true,
+      "winners": [
+        3
+      ],
+      "scores": [
+        -10,
+        -63,
+        -5,
+        78
+      ]
+    },
+    {
+      "players": 4,
+      "seed": 4168,
+      "turns": 84,
+      "blocked": true,
+      "winners": [
+        1
+      ],
+      "scores": [
+        -12,
+        37,
+        -22,
+        -3
+      ]
+    },
+    {
+      "players": 4,
+      "seed": 4169,
+      "turns": 76,
+      "blocked": true,
+      "winners": [
+        2
+      ],
+      "scores": [
+        -19,
+        -38,
+        68,
+        -11
+      ]
+    },
+    {
+      "players": 4,
+      "seed": 4170,
+      "turns": 100,
+      "blocked": true,
+      "winners": [
+        2
+      ],
+      "scores": [
+        -26,
+        -28,
+        103,
+        -49
+      ]
+    },
+    {
+      "players": 4,
+      "seed": 4171,
+      "turns": 75,
+      "blocked": false,
+      "winners": [
+        2
+      ],
+      "scores": [
+        -64,
+        -28,
+        126,
+        -34
+      ]
+    },
+    {
+      "players": 4,
+      "seed": 4172,
+      "turns": 90,
+      "blocked": true,
+      "winners": [
+        3
+      ],
+      "scores": [
+        -15,
+        -2,
+        -17,
+        34
+      ]
+    },
+    {
+      "players": 4,
+      "seed": 4173,
+      "turns": 93,
+      "blocked": true,
+      "winners": [
+        0
+      ],
+      "scores": [
+        51,
+        -15,
+        -18,
+        -18
+      ]
+    },
+    {
+      "players": 4,
+      "seed": 4174,
+      "turns": 96,
+      "blocked": true,
+      "winners": [
+        0
+      ],
+      "scores": [
+        104,
+        -46,
+        -27,
+        -31
+      ]
+    },
+    {
+      "players": 4,
+      "seed": 4175,
+      "turns": 109,
+      "blocked": true,
+      "winners": [
+        1
+      ],
+      "scores": [
+        -9,
+        32,
+        -16,
+        -7
+      ]
+    },
+    {
+      "players": 4,
+      "seed": 4176,
+      "turns": 95,
+      "blocked": true,
+      "winners": [
+        0
+      ],
+      "scores": [
+        72,
+        -9,
+        -41,
+        -22
+      ]
+    },
+    {
+      "players": 4,
+      "seed": 4177,
+      "turns": 106,
+      "blocked": true,
+      "winners": [
+        3
+      ],
+      "scores": [
+        -52,
+        -33,
+        -26,
+        111
+      ]
+    },
+    {
+      "players": 4,
+      "seed": 4178,
+      "turns": 99,
+      "blocked": true,
+      "winners": [
+        1
+      ],
+      "scores": [
+        -23,
+        66,
+        -19,
+        -24
+      ]
+    },
+    {
+      "players": 4,
+      "seed": 4179,
+      "turns": 98,
+      "blocked": true,
+      "winners": [
+        2
+      ],
+      "scores": [
+        -20,
+        -30,
+        56,
+        -6
+      ]
+    },
+    {
+      "players": 4,
+      "seed": 4180,
+      "turns": 94,
+      "blocked": true,
+      "winners": [
+        0
+      ],
+      "scores": [
+        86,
+        -11,
+        -32,
+        -43
+      ]
+    },
+    {
+      "players": 4,
+      "seed": 4181,
+      "turns": 105,
+      "blocked": true,
+      "winners": [
+        1
+      ],
+      "scores": [
+        -11,
+        46,
+        -25,
+        -10
+      ]
+    },
+    {
+      "players": 4,
+      "seed": 4182,
+      "turns": 97,
+      "blocked": true,
+      "winners": [
+        3
+      ],
+      "scores": [
+        -10,
+        -1,
+        -25,
+        36
+      ]
+    },
+    {
+      "players": 4,
+      "seed": 4183,
+      "turns": 104,
+      "blocked": true,
+      "winners": [
+        3
+      ],
+      "scores": [
+        -48,
+        -10,
+        -26,
+        84
+      ]
+    },
+    {
+      "players": 4,
+      "seed": 4184,
+      "turns": 90,
+      "blocked": true,
+      "winners": [
+        3
+      ],
+      "scores": [
+        -10,
+        -19,
+        -40,
+        69
+      ]
+    },
+    {
+      "players": 4,
+      "seed": 4185,
+      "turns": 97,
+      "blocked": true,
+      "winners": [
+        0
+      ],
+      "scores": [
+        108,
+        -30,
+        -42,
+        -36
+      ]
+    },
+    {
+      "players": 4,
+      "seed": 4186,
+      "turns": 94,
+      "blocked": true,
+      "winners": [
+        0
+      ],
+      "scores": [
+        85,
+        -24,
+        -34,
+        -27
+      ]
+    },
+    {
+      "players": 4,
+      "seed": 4187,
+      "turns": 77,
+      "blocked": true,
+      "winners": [
+        0
+      ],
+      "scores": [
+        287,
+        -171,
+        -45,
+        -71
+      ]
+    },
+    {
+      "players": 4,
+      "seed": 4188,
+      "turns": 106,
+      "blocked": true,
+      "winners": [
+        1
+      ],
+      "scores": [
+        -27,
+        93,
+        -49,
+        -17
+      ]
+    },
+    {
+      "players": 4,
+      "seed": 4189,
+      "turns": 90,
+      "blocked": true,
+      "winners": [
+        2
+      ],
+      "scores": [
+        -37,
+        -34,
+        92,
+        -21
+      ]
+    },
+    {
+      "players": 4,
+      "seed": 4190,
+      "turns": 76,
+      "blocked": false,
+      "winners": [
+        2
+      ],
+      "scores": [
+        -32,
+        -18,
+        99,
+        -49
+      ]
+    },
+    {
+      "players": 4,
+      "seed": 4191,
+      "turns": 94,
+      "blocked": true,
+      "winners": [
+        0
+      ],
+      "scores": [
+        79,
+        -57,
+        -14,
+        -8
+      ]
+    },
+    {
+      "players": 4,
+      "seed": 4192,
+      "turns": 104,
+      "blocked": true,
+      "winners": [
+        2
+      ],
+      "scores": [
+        -40,
+        -43,
+        116,
+        -33
+      ]
+    },
+    {
+      "players": 4,
+      "seed": 4193,
+      "turns": 86,
+      "blocked": true,
+      "winners": [
+        2
+      ],
+      "scores": [
+        -9,
+        -16,
+        46,
+        -21
+      ]
+    },
+    {
+      "players": 4,
+      "seed": 4194,
+      "turns": 99,
+      "blocked": true,
+      "winners": [
+        0
+      ],
+      "scores": [
+        89,
+        -41,
+        -8,
+        -40
+      ]
+    },
+    {
+      "players": 4,
+      "seed": 4195,
+      "turns": 102,
+      "blocked": true,
+      "winners": [
+        0
+      ],
+      "scores": [
+        67,
+        -1,
+        -12,
+        -54
+      ]
+    },
+    {
+      "players": 4,
+      "seed": 4196,
+      "turns": 93,
+      "blocked": false,
+      "winners": [
+        2
+      ],
+      "scores": [
+        -23,
+        -18,
+        73,
+        -32
+      ]
+    },
+    {
+      "players": 4,
+      "seed": 4197,
+      "turns": 95,
+      "blocked": true,
+      "winners": [
+        3
+      ],
+      "scores": [
+        -6,
+        -10,
+        -37,
+        53
+      ]
+    },
+    {
+      "players": 4,
+      "seed": 4198,
+      "turns": 95,
+      "blocked": true,
+      "winners": [
+        0,
+        1
+      ],
+      "scores": [
+        4.5,
+        4.5,
+        -6,
+        -3
+      ]
+    },
+    {
+      "players": 4,
+      "seed": 4199,
+      "turns": 95,
+      "blocked": true,
+      "winners": [
+        3
+      ],
+      "scores": [
+        -51,
+        -5,
+        -13,
+        69
+      ]
+    },
+    {
+      "players": 4,
+      "seed": 4200,
+      "turns": 98,
+      "blocked": true,
+      "winners": [
+        1
+      ],
+      "scores": [
+        -15,
+        29,
+        -4,
+        -10
+      ]
+    }
+  ]
+}

@@ -1,0 +1,23 @@
+
+ RUN  v5.0.5 E:/DBD-BoardGame-Web
+
+ ❯ packages/rummikub/test/engine.test.ts (0 test)
+
+⎯⎯⎯⎯⎯⎯ Failed Suites 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  packages/rummikub/test/engine.test.ts [ packages/rummikub/test/engine.test.ts ]
+Error: Cannot find module '../src/index.ts' imported from E:/DBD-BoardGame-Web/packages/rummikub/test/engine.test.ts
+ ❯ packages/rummikub/test/engine.test.ts:2:1
+      1| import { describe, it, expect } from 'vitest';
+      2| import { createRK, createTiles, validateMeld, reduceRK, viewForRK, ass…
+       | ^
+      3| const game = (n=2, seed=1) => createRK(Array.from({length:n},(_,i)=>`玩…
+      4| function fixture(hands: string[][], board: string[][]=[], opened=true)…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  no tests
+   Start at  14:43:13
+   Duration  384ms (worker 96%, environment 4%)

@@ -1,0 +1,80 @@
+{
+  "date": "2026-10-25",
+  "official": true,
+  "rawPdfRgb": {
+    "R": [
+      237,
+      28,
+      36
+    ],
+    "B": [
+      0,
+      173,
+      239
+    ],
+    "O": [
+      250,
+      178,
+      11
+    ],
+    "K": [
+      35,
+      31,
+      32
+    ]
+  },
+  "accessiblePalette": {
+    "R": "#c02d29",
+    "B": "#087092",
+    "O": "#965603",
+    "K": "#242120"
+  },
+  "contrastOnIvory": {
+    "R": 4.89,
+    "B": 4.77,
+    "O": 4.92,
+    "K": 13.59
+  },
+  "files": [
+    {
+      "file": "box-classic.webp",
+      "size": [
+        1020,
+        750
+      ],
+      "bytes": 108152,
+      "sha256": "448b36e2448772184a4ee5af4ff10a98fb33f6fb5c3d8383639904f0360034bd",
+      "source": "https://rummikub.com/wp-content/uploads/2019/11/rummikub-classic-_1600.jpg"
+    },
+    {
+      "file": "joker.webp",
+      "size": [
+        270,
+        270
+      ],
+      "bytes": 16636,
+      "sha256": "f33be37907195173863549d89bcc18ea3676ec51624f4089d71c1f60ab277c7c",
+      "source": "https://rummikub.com/wp-content/uploads/2019/12/cropped-red-joker-270x270.jpg"
+    },
+    {
+      "file": "logo.webp",
+      "size": [
+        700,
+        154
+      ],
+      "bytes": 8890,
+      "sha256": "1819eff83eac7806528bdb2c5b6fd03799735422c86b58b253be656ca9f6e3a0",
+      "source": "https://rummikub.com/wp-content/uploads/2019/12/logo-rummikub-vector-1.png"
+    },
+    {
+      "file": "tiles-reference.webp",
+      "size": [
+        1890,
+        720
+      ],
+      "bytes": 58102,
+      "sha256": "6b63e0c011f5313c859601456ddf4d6ffb6aa2b6675bc154f1cc173609c9b879",
+      "source": "https://rummikub.com/wp-content/uploads/2019/12/2600-English.pdf"
+    }
+  ]
+}

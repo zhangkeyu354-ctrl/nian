@@ -1,0 +1,279 @@
+/* Only phone portrait: one viewport, one scrolling stage. */
+.xb-world .xb-speech-ring,
+.xb-world .xb-final-ranks,
+.xb-world .xb-phone-hint {
+  display: none;
+}
+@media (max-width: 649px) and (orientation: portrait) {
+  .xb-world {
+    height: 100dvh;
+    grid-template-columns: minmax(0, 1fr);
+    grid-template-rows: 56px minmax(0, 1fr) auto auto;
+    grid-template-areas: "top" "stage" "seats" "dock";
+  }
+  .xb-world .xb-stage {
+    min-height: 0;
+    min-width: 0;
+    overflow-y: auto;
+    overflow-x: hidden;
+    overscroll-behavior: contain;
+    padding: 12px;
+  }
+  .xb-world .xb-seats,
+  .xb-world .xb-seats:has(.xb-speech-meter) {
+    display: flex;
+    flex-wrap: nowrap;
+    align-items: start;
+    gap: 0;
+    padding: 4px 4px 2px;
+    height: 76px;
+    max-height: 84px;
+    min-height: 0;
+    overflow-x: auto;
+    overflow-y: hidden;
+    scroll-snap-type: x proximity;
+    scrollbar-width: none;
+    overscroll-behavior-x: contain;
+  }
+  .xb-world .xb-seats::-webkit-scrollbar {
+    display: none;
+  }
+  .xb-world[data-hide-seats="true"] .xb-seats,
+  .xb-world:has(.xb-eyes) .xb-seats {
+    display: none;
+  }
+  .xb-world .xb-seats .xb-seat,
+  .xb-world .xb-seats .xb-seat:has(.xb-speech-meter) {
+    flex: 0 0 64px;
+    width: 64px;
+    height: 68px;
+    min-height: 0;
+    gap: 0;
+    padding: 0 2px;
+    border-radius: 8px;
+    scroll-snap-align: center;
+    transform: none;
+  }
+  .xb-world .xb-seats .xb-seat-face {
+    width: 40px;
+    height: 40px;
+    min-height: 40px;
+    border-width: 2px;
+  }
+  .xb-world .xb-seat b,
+  .xb-world .xb-seat strong,
+  .xb-world .xb-seat strong span {
+    font-size: 12px;
+    line-height: 14px;
+    max-width: 60px;
+    min-height: 0;
+    height: 14px;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+  }
+  .xb-world .xb-seat b {
+    display: block;
+  }
+  .xb-world .xb-seat-number,
+  .xb-world .xb-badge-state {
+    font-size: 10px;
+    line-height: 13px;
+    min-height: 0;
+    padding: 0 2px;
+  }
+  .xb-world .xb-seat.is-guesser .xb-badge-state {
+    background: #ffc83d;
+    color: #27200d;
+  }
+  .xb-world .xb-seat.is-offline .xb-host-portrait {
+    filter: grayscale(1);
+    opacity: 0.5;
+  }
+  .xb-world .xb-seat .xb-explainer-label,
+  .xb-world .xb-seat .xb-speech-meter,
+  .xb-world .xb-seat .xb-speech-time {
+    display: none;
+  }
+  .xb-world .xb-seat .xb-speech-ring {
+    display: block;
+    position: absolute;
+    inset: -3px;
+    width: 42px;
+    height: 42px;
+    overflow: visible;
+    pointer-events: none;
+    fill: none;
+    stroke: #3ddc97;
+    stroke-width: 2;
+    transform: rotate(-90deg);
+    border-radius: 50%;
+  }
+  .xb-world .xb-speech-ring .xb-ring-track {
+    stroke: #ffffff25;
+  }
+  .xb-world .xb-speech-ring.is-expired {
+    stroke: #ff5a3c;
+  }
+  .xb-world .xb-dock {
+    position: relative;
+    padding: 4px 8px calc(4px + env(safe-area-inset-bottom));
+    gap: 4px;
+    min-width: 0;
+  }
+  .xb-world .xb-dock > .xb-primary {
+    height: 52px;
+    min-height: 52px;
+    max-height: 52px;
+    padding: 8px;
+    font-size: 17px;
+  }
+  .xb-world .xb-dock > p {
+    display: block;
+    -webkit-line-clamp: 1;
+    min-height: 0;
+    height: 16px;
+    max-height: 16px;
+    line-height: 16px;
+    font-size: 12px;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
+  }
+  .xb-world .xb-dock > p .xb-desktop-hint {
+    display: none;
+  }
+  .xb-world .xb-dock > p .xb-phone-hint {
+    display: inline;
+    font-size: 12px;
+    line-height: 16px;
+  }
+  .xb-world .xb-dock > p[data-hint="false"],
+  .xb-world[data-stage="over"] .xb-dock > p {
+    display: none;
+  }
+  .xb-world .xb-secondary-actions {
+    min-height: 0;
+    gap: 4px;
+  }
+  .xb-world .xb-secondary-actions button {
+    min-height: 44px;
+    height: 44px;
+    padding: 4px;
+    font-size: 14px;
+  }
+  .xb-world .xb-secondary-actions:has(> span:only-child) {
+    display: none;
+  }
+  .xb-world .xb-dock:has(.xb-dock-recap) {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) 80px;
+  }
+  .xb-world .xb-dock:has(.xb-dock-recap) > p {
+    grid-column: 1/-1;
+  }
+  .xb-world .xb-dock:has(.xb-dock-recap) > .xb-primary {
+    grid-column: 1;
+  }
+  .xb-world .xb-dock:has(.xb-dock-recap) > .xb-secondary-actions {
+    grid-column: 2;
+    grid-row: 1;
+  }
+  .xb-world[data-stage="over"] .xb-dock:has(.xb-dock-recap) {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .xb-world[data-stage="over"] .xb-secondary-actions {
+    display: none;
+  }
+  .xb-world .xb-shake-off {
+    position: absolute;
+    right: 8px;
+    bottom: calc(100% + 8px);
+    min-height: 44px;
+    z-index: 6;
+  }
+  .xb-world .xb-finale {
+    gap: 8px;
+    padding: 12px;
+  }
+  .xb-world .xb-finale h1 {
+    font-size: 22px;
+    line-height: 1.2;
+  }
+  .xb-world .xb-finale h1 br {
+    display: none;
+  }
+  .xb-world .xb-finale > p {
+    margin: 0;
+    font-size: 14px;
+  }
+  .xb-world .xb-podium {
+    min-height: 190px;
+    gap: 6px;
+  }
+  .xb-world .xb-podium > div {
+    padding: 8px 2px 0;
+  }
+  .xb-world .xb-podium-player > span {
+    width: 44px;
+    height: 44px;
+  }
+  .xb-world .xb-podium-player b {
+    font-size: 12px;
+    line-height: 16px;
+  }
+  .xb-world .xb-podium-player strong {
+    font-size: 17px;
+  }
+  .xb-world .xb-podium-occupants {
+    flex-wrap: wrap;
+    gap: 4px;
+  }
+  .xb-world .xb-podium-player {
+    flex: 1 0 44px;
+  }
+  .xb-world .xb-podium i {
+    height: 40px;
+    font-size: 22px;
+    line-height: 40px;
+  }
+  .xb-world .xb-final-ranks {
+    display: grid;
+    gap: 4px;
+    padding: 0;
+    list-style: none;
+    margin: 4px 0;
+  }
+  .xb-world .xb-final-ranks li {
+    display: flex;
+    gap: 8px;
+    align-items: center;
+    padding: 4px 8px;
+    background: #ffffff08;
+  }
+  .xb-world .xb-final-ranks li span,
+  .xb-world .xb-final-ranks li b,
+  .xb-world .xb-final-ranks li strong {
+    font-size: 14px;
+  }
+  .xb-world .xb-final-ranks b {
+    flex: 1;
+    min-width: 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+  .xb-world .xb-finale-recap {
+    border: 0;
+    border-radius: 0;
+    width: auto;
+    align-self: flex-start;
+    padding: 0 4px;
+    background: none;
+    box-shadow: none;
+    text-decoration: underline;
+    text-underline-offset: 4px;
+    min-height: 44px;
+    font-size: 14px;
+  }
+}

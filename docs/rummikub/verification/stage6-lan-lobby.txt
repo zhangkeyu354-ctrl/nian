@@ -1,0 +1,5 @@
+
+> dbd-boardgame-private@0.2.2 verify:lan-lobby
+> tsx scripts/verify-lan-lobby.ts
+
+LAN_LOBBY_PASS [{"scenario":"5人_两人想当杀手","room":"MREC","players":5,"killerOptions":3},{"scenario":"4人_没人选杀手_一人报名控两名","room":"CU66","players":4,"killerOptions":3},{"scenario":"3人","room":"M6MJ","players":3,"killerOptions":3}]

@@ -1,0 +1,19 @@
+
+ RUN  v5.0.5 E:/DBD-BoardGame-Web
+
+ ❯ apps/web/test/rk-ui-model.test.ts (0 test)
+
+⎯⎯⎯⎯⎯⎯ Failed Suites 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  apps/web/test/rk-ui-model.test.ts [ apps/web/test/rk-ui-model.test.ts ]
+Error: Cannot find module '../src/rk/ui-model.ts' imported from E:/DBD-BoardGame-Web/apps/web/test/rk-ui-model.test.ts
+ ❯ apps/web/test/rk-ui-model.test.ts:2:1
+
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  no tests
+   Start at  15:13:14
+   Duration  279ms (worker 95%, environment 5%)

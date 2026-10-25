@@ -1,0 +1,116 @@
+[
+  {
+    "name": "typecheck",
+    "command": "npm run typecheck",
+    "code": 0,
+    "ms": 2954
+  },
+  {
+    "name": "build",
+    "command": "npm run build",
+    "code": 0,
+    "ms": 4166
+  },
+  {
+    "name": "replays",
+    "command": "npm run verify:replays",
+    "code": 0,
+    "ms": 1377
+  },
+  {
+    "name": "mobile-interfaces",
+    "command": "npm run verify:mobile-interfaces",
+    "code": 0,
+    "ms": 72785
+  },
+  {
+    "name": "lan-protocol",
+    "command": "npm run verify:lan-protocol",
+    "code": 0,
+    "ms": 18793
+  },
+  {
+    "name": "lan-lobby",
+    "command": "npm run verify:lan-lobby",
+    "code": 0,
+    "ms": 24893
+  },
+  {
+    "name": "lan-browsers",
+    "command": "npm run verify:lan-browsers",
+    "code": 0,
+    "ms": 275185
+  },
+  {
+    "name": "ma-browsers",
+    "command": "npm run verify:ma-browsers",
+    "code": 0,
+    "ms": 637081
+  },
+  {
+    "name": "cn-protocol",
+    "command": "npm run verify:cn-protocol",
+    "code": 0,
+    "ms": 17140
+  },
+  {
+    "name": "cn-browsers",
+    "command": "npm run verify:cn-browsers",
+    "code": 0,
+    "ms": 69270
+  },
+  {
+    "name": "dm-browsers",
+    "command": "npm run verify:dm-browsers",
+    "code": 0,
+    "ms": 20871
+  },
+  {
+    "name": "dm-teamplay",
+    "command": "npm run verify:dm-teamplay",
+    "code": 0,
+    "ms": 20699
+  },
+  {
+    "name": "rr-protocol",
+    "command": "npm run verify:rr-protocol",
+    "code": 0,
+    "ms": 10642
+  },
+  {
+    "name": "rr-browsers",
+    "command": "npm run verify:rr-browsers",
+    "code": 0,
+    "ms": 34551
+  },
+  {
+    "name": "xb-browsers",
+    "command": "npm run verify:xb-browsers",
+    "code": 1,
+    "ms": 216730
+  },
+  {
+    "name": "drawing-browsers",
+    "command": "npx tsx scripts/verify-drawing-browsers.ts",
+    "code": 0,
+    "ms": 55650
+  },
+  {
+    "name": "witch-town-browsers",
+    "command": "npx tsx scripts/verify-witch-town-browsers.ts",
+    "code": 1,
+    "ms": 230706
+  },
+  {
+    "name": "rk-browsers",
+    "command": "npx tsx scripts/verify-rk-browsers.ts",
+    "code": 0,
+    "ms": 74009
+  },
+  {
+    "name": "rk-ui",
+    "command": "npx tsx scripts/verify-rk-ui.ts",
+    "code": 0,
+    "ms": 66160
+  }
+]

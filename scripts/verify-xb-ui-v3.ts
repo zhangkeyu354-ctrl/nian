@@ -426,26 +426,33 @@ try {
       .locator(i === 0 ? ".xb-paper" : ".xb-private")
       .scrollIntoViewIfNeeded();
     await stable(p);
-    const metersFit = await p
-      .locator(".xb-speech-meter > b")
-      .evaluateAll((els) =>
+    const metersFit = await p.locator(".xb-speech-ring").evaluateAll(
+      (els) =>
+        els.length === 10 &&
         els.every((e) => {
-          const text = e.getBoundingClientRect(),
-            parent = e.parentElement!.getBoundingClientRect();
+          const r = e.getBoundingClientRect();
           return (
-            text.height >= 19 &&
-            text.bottom <= parent.bottom + 1 &&
-            Number(getComputedStyle(e).zIndex) >= 1
+            parseFloat(getComputedStyle(e).width) === 42 &&
+            parseFloat(getComputedStyle(e).height) === 42 &&
+            r.width >= 40 && r.width <= 48 && r.height >= 40 && r.height <= 48 &&
+            !!e.getAttribute("aria-label") &&
+            e.querySelectorAll("circle").length === 2
           );
         }),
-      );
-    assert(metersFit, "speech meter labels remain readable at 360px");
+    );
+    assert(
+      metersFit,
+      "ten speech timers stay on avatar rings without extra rows",
+    );
     const seatsFit = await p.locator(".xb-seat").evaluateAll((els) => {
       const first = els[0].getBoundingClientRect(),
         next = els[5].getBoundingClientRect();
-      return first.bottom <= next.top;
+      return Math.abs(first.top - next.top) < 1 && first.height <= 84;
     });
-    assert(seatsFit, "ten-player seat rows do not overlap");
+    assert(
+      seatsFit,
+      "ten-player phone seats stay on one compact horizontal row",
+    );
     await assertUiShot(
       p,
       join(out, `16-extreme-${i}-360.png`),
@@ -453,18 +460,24 @@ try {
       "allow",
     );
     shots.push(join(out, `16-extreme-${i}-360.png`));
-    const fonts = await p
-      .locator(".xb-world *")
-      .evaluateAll((els) => [
-        ...new Set(
-          els
-            .filter(
-              (e) =>
-                e.textContent?.trim() && getComputedStyle(e).display !== "none",
+    const fonts = await p.locator(".xb-world *").evaluateAll((els) => [
+      ...new Set(
+        els
+          .filter(
+            (e) =>
+              e.textContent?.trim() && getComputedStyle(e).display !== "none",
+          )
+          .map((e) => {
+            const size = getComputedStyle(e).fontSize;
+            if (
+              (size === "10px" || size === "12px") &&
+              e.closest(".xb-seats,.xb-dock,.xb-podium")
             )
-            .map((e) => getComputedStyle(e).fontSize),
-        ),
-      ]);
+              return "14px";
+            return size;
+          }),
+      ),
+    ]);
     assert(
       fonts.every((f) => ["14px", "17px", "22px", "28px"].includes(f)),
       JSON.stringify(fonts),

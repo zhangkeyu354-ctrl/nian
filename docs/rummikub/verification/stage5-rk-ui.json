@@ -1,0 +1,1210 @@
+{
+  "generatedAt": "2026-10-25T07:40:45.837Z",
+  "screenshots": 29,
+  "reports": [
+    {
+      "name": "portrait-lobby",
+      "audit": {
+        "width": 390,
+        "height": 844,
+        "pageScroll": false,
+        "dock": null,
+        "hand": null,
+        "secondary": null,
+        "smallTargets": [],
+        "images": true
+      },
+      "pixels": {
+        "scope": "Visible UI / prototype region, not a full-map-count claim",
+        "region": {
+          "x": 0,
+          "y": 0,
+          "width": 390,
+          "height": 844
+        },
+        "pixels": {
+          "busy": 0.25193826710414385,
+          "std": 49.08261829006076
+        }
+      }
+    },
+    {
+      "name": "portrait-draw",
+      "audit": {
+        "width": 390,
+        "height": 844,
+        "pageScroll": false,
+        "dock": {
+          "x": 0,
+          "y": 780,
+          "w": 390,
+          "h": 64,
+          "bottom": 844
+        },
+        "hand": {
+          "x": 0,
+          "y": 551,
+          "w": 390,
+          "h": 179,
+          "bottom": 730
+        },
+        "secondary": {
+          "x": 0,
+          "y": 730,
+          "w": 390,
+          "h": 50,
+          "bottom": 780
+        },
+        "smallTargets": [],
+        "images": true
+      },
+      "pixels": {
+        "scope": "Visible UI / prototype region, not a full-map-count claim",
+        "region": {
+          "x": 0,
+          "y": 0,
+          "width": 390,
+          "height": 844
+        },
+        "pixels": {
+          "busy": 0.32972414631182406,
+          "std": 46.96895762826329
+        }
+      }
+    },
+    {
+      "name": "portrait-empty",
+      "audit": {
+        "width": 390,
+        "height": 844,
+        "pageScroll": false,
+        "dock": {
+          "x": 0,
+          "y": 780,
+          "w": 390,
+          "h": 64,
+          "bottom": 844
+        },
+        "hand": {
+          "x": 0,
+          "y": 551,
+          "w": 390,
+          "h": 179,
+          "bottom": 730
+        },
+        "secondary": {
+          "x": 0,
+          "y": 730,
+          "w": 390,
+          "h": 50,
+          "bottom": 780
+        },
+        "smallTargets": [],
+        "images": true
+      },
+      "pixels": {
+        "scope": "Visible UI / prototype region, not a full-map-count claim",
+        "region": {
+          "x": 0,
+          "y": 0,
+          "width": 390,
+          "height": 844
+        },
+        "pixels": {
+          "busy": 0.39957467493012516,
+          "std": 53.021521683742286
+        }
+      }
+    },
+    {
+      "name": "portrait-progress",
+      "audit": {
+        "width": 390,
+        "height": 844,
+        "pageScroll": false,
+        "dock": {
+          "x": 0,
+          "y": 780,
+          "w": 390,
+          "h": 64,
+          "bottom": 844
+        },
+        "hand": {
+          "x": 0,
+          "y": 551,
+          "w": 390,
+          "h": 179,
+          "bottom": 730
+        },
+        "secondary": {
+          "x": 0,
+          "y": 730,
+          "w": 390,
+          "h": 50,
+          "bottom": 780
+        },
+        "smallTargets": [],
+        "images": true
+      },
+      "pixels": {
+        "scope": "Visible UI / prototype region, not a full-map-count claim",
+        "region": {
+          "x": 0,
+          "y": 0,
+          "width": 390,
+          "height": 844
+        },
+        "pixels": {
+          "busy": 0.3897192854538826,
+          "std": 41.02109930880533
+        }
+      }
+    },
+    {
+      "name": "portrait-drag",
+      "audit": {
+        "width": 390,
+        "height": 844,
+        "pageScroll": false,
+        "dock": {
+          "x": 0,
+          "y": 780,
+          "w": 390,
+          "h": 64,
+          "bottom": 844
+        },
+        "hand": {
+          "x": 0,
+          "y": 551,
+          "w": 390,
+          "h": 179,
+          "bottom": 730
+        },
+        "secondary": {
+          "x": 0,
+          "y": 730,
+          "w": 390,
+          "h": 50,
+          "bottom": 780
+        },
+        "smallTargets": [],
+        "images": true
+      },
+      "pixels": {
+        "scope": "Visible UI / prototype region, not a full-map-count claim",
+        "region": {
+          "x": 0,
+          "y": 0,
+          "width": 390,
+          "height": 844
+        },
+        "pixels": {
+          "busy": 0.5113865597277919,
+          "std": 68.44490767518941
+        }
+      }
+    },
+    {
+      "name": "portrait-invalid",
+      "audit": {
+        "width": 390,
+        "height": 844,
+        "pageScroll": false,
+        "dock": {
+          "x": 0,
+          "y": 780,
+          "w": 390,
+          "h": 64,
+          "bottom": 844
+        },
+        "hand": {
+          "x": 0,
+          "y": 551,
+          "w": 390,
+          "h": 179,
+          "bottom": 730
+        },
+        "secondary": {
+          "x": 0,
+          "y": 730,
+          "w": 390,
+          "h": 50,
+          "bottom": 780
+        },
+        "smallTargets": [],
+        "images": true
+      },
+      "pixels": {
+        "scope": "Visible UI / prototype region, not a full-map-count claim",
+        "region": {
+          "x": 0,
+          "y": 0,
+          "width": 390,
+          "height": 844
+        },
+        "pixels": {
+          "busy": 0.5094908251306356,
+          "std": 61.51179764197894
+        }
+      }
+    },
+    {
+      "name": "portrait-split",
+      "audit": {
+        "width": 390,
+        "height": 844,
+        "pageScroll": false,
+        "dock": {
+          "x": 0,
+          "y": 780,
+          "w": 390,
+          "h": 64,
+          "bottom": 844
+        },
+        "hand": {
+          "x": 0,
+          "y": 551,
+          "w": 390,
+          "h": 179,
+          "bottom": 730
+        },
+        "secondary": {
+          "x": 0,
+          "y": 730,
+          "w": 390,
+          "h": 50,
+          "bottom": 780
+        },
+        "smallTargets": [],
+        "images": true
+      },
+      "pixels": {
+        "scope": "Visible UI / prototype region, not a full-map-count claim",
+        "region": {
+          "x": 0,
+          "y": 0,
+          "width": 390,
+          "height": 844
+        },
+        "pixels": {
+          "busy": 0.4269291529955037,
+          "std": 49.55001961319669
+        }
+      }
+    },
+    {
+      "name": "portrait-joker",
+      "audit": {
+        "width": 390,
+        "height": 844,
+        "pageScroll": false,
+        "dock": {
+          "x": 0,
+          "y": 780,
+          "w": 390,
+          "h": 64,
+          "bottom": 844
+        },
+        "hand": {
+          "x": 0,
+          "y": 551,
+          "w": 390,
+          "h": 179,
+          "bottom": 730
+        },
+        "secondary": {
+          "x": 0,
+          "y": 730,
+          "w": 390,
+          "h": 50,
+          "bottom": 780
+        },
+        "smallTargets": [],
+        "images": true
+      },
+      "pixels": {
+        "scope": "Visible UI / prototype region, not a full-map-count claim",
+        "region": {
+          "x": 0,
+          "y": 0,
+          "width": 390,
+          "height": 844
+        },
+        "pixels": {
+          "busy": 0.39320695102685627,
+          "std": 45.49645507467151
+        }
+      }
+    },
+    {
+      "name": "portrait-others",
+      "audit": {
+        "width": 390,
+        "height": 844,
+        "pageScroll": false,
+        "dock": {
+          "x": 0,
+          "y": 780,
+          "w": 390,
+          "h": 64,
+          "bottom": 844
+        },
+        "hand": {
+          "x": 0,
+          "y": 551,
+          "w": 390,
+          "h": 179,
+          "bottom": 730
+        },
+        "secondary": {
+          "x": 0,
+          "y": 730,
+          "w": 390,
+          "h": 50,
+          "bottom": 780
+        },
+        "smallTargets": [],
+        "images": true
+      },
+      "pixels": {
+        "scope": "Visible UI / prototype region, not a full-map-count claim",
+        "region": {
+          "x": 0,
+          "y": 0,
+          "width": 390,
+          "height": 844
+        },
+        "pixels": {
+          "busy": 0.4621217644914327,
+          "std": 63.663779183429654
+        }
+      }
+    },
+    {
+      "name": "portrait-timeout",
+      "audit": {
+        "width": 390,
+        "height": 844,
+        "pageScroll": false,
+        "dock": {
+          "x": 0,
+          "y": 780,
+          "w": 390,
+          "h": 64,
+          "bottom": 844
+        },
+        "hand": {
+          "x": 0,
+          "y": 551,
+          "w": 390,
+          "h": 179,
+          "bottom": 730
+        },
+        "secondary": {
+          "x": 0,
+          "y": 730,
+          "w": 390,
+          "h": 50,
+          "bottom": 780
+        },
+        "smallTargets": [],
+        "images": true
+      },
+      "pixels": {
+        "scope": "Visible UI / prototype region, not a full-map-count claim",
+        "region": {
+          "x": 0,
+          "y": 0,
+          "width": 390,
+          "height": 844
+        },
+        "pixels": {
+          "busy": 0.46445497630331756,
+          "std": 67.25697966854167
+        }
+      }
+    },
+    {
+      "name": "portrait-result",
+      "audit": {
+        "width": 390,
+        "height": 844,
+        "pageScroll": false,
+        "dock": {
+          "x": 0,
+          "y": 780,
+          "w": 390,
+          "h": 64,
+          "bottom": 844
+        },
+        "hand": {
+          "x": 0,
+          "y": 551,
+          "w": 390,
+          "h": 179,
+          "bottom": 730
+        },
+        "secondary": {
+          "x": 0,
+          "y": 730,
+          "w": 390,
+          "h": 50,
+          "bottom": 780
+        },
+        "smallTargets": [],
+        "images": true
+      },
+      "pixels": {
+        "scope": "Visible UI / prototype region, not a full-map-count claim",
+        "region": {
+          "x": 0,
+          "y": 0,
+          "width": 390,
+          "height": 844
+        },
+        "pixels": {
+          "busy": 0.38809089804350466,
+          "std": 44.80763157512468
+        }
+      }
+    },
+    {
+      "name": "portrait-disconnect",
+      "audit": {
+        "width": 390,
+        "height": 844,
+        "pageScroll": false,
+        "dock": {
+          "x": 0,
+          "y": 780,
+          "w": 390,
+          "h": 64,
+          "bottom": 844
+        },
+        "hand": {
+          "x": 0,
+          "y": 551,
+          "w": 390,
+          "h": 179,
+          "bottom": 730
+        },
+        "secondary": {
+          "x": 0,
+          "y": 730,
+          "w": 390,
+          "h": 50,
+          "bottom": 780
+        },
+        "smallTargets": [],
+        "images": true
+      },
+      "pixels": {
+        "scope": "Visible UI / prototype region, not a full-map-count claim",
+        "region": {
+          "x": 0,
+          "y": 0,
+          "width": 390,
+          "height": 844
+        },
+        "pixels": {
+          "busy": 0.5354599586827075,
+          "std": 70.37558270957703
+        }
+      }
+    },
+    {
+      "name": "landscape-lobby",
+      "audit": {
+        "width": 844,
+        "height": 390,
+        "pageScroll": false,
+        "dock": null,
+        "hand": null,
+        "secondary": null,
+        "smallTargets": [],
+        "images": true
+      },
+      "pixels": {
+        "scope": "Visible UI / prototype region, not a full-map-count claim",
+        "region": {
+          "x": 0,
+          "y": 0,
+          "width": 844,
+          "height": 390
+        },
+        "pixels": {
+          "busy": 0.25204763640782596,
+          "std": 42.47847728443688
+        }
+      }
+    },
+    {
+      "name": "landscape-draw",
+      "audit": {
+        "width": 844,
+        "height": 390,
+        "pageScroll": false,
+        "dock": {
+          "x": 591.796875,
+          "y": 326,
+          "w": 252.1875,
+          "h": 64,
+          "bottom": 390
+        },
+        "hand": {
+          "x": 591.796875,
+          "y": 114,
+          "w": 252.1875,
+          "h": 164,
+          "bottom": 278
+        },
+        "secondary": {
+          "x": 591.796875,
+          "y": 278,
+          "w": 252.1875,
+          "h": 48,
+          "bottom": 326
+        },
+        "smallTargets": [],
+        "images": true
+      },
+      "pixels": {
+        "scope": "Visible UI / prototype region, not a full-map-count claim",
+        "region": {
+          "x": 0,
+          "y": 0,
+          "width": 844,
+          "height": 390
+        },
+        "pixels": {
+          "busy": 0.32061003767164903,
+          "std": 45.91278203709828
+        }
+      }
+    },
+    {
+      "name": "landscape-empty",
+      "audit": {
+        "width": 844,
+        "height": 390,
+        "pageScroll": false,
+        "dock": {
+          "x": 591.796875,
+          "y": 326,
+          "w": 252.1875,
+          "h": 64,
+          "bottom": 390
+        },
+        "hand": {
+          "x": 591.796875,
+          "y": 114,
+          "w": 252.1875,
+          "h": 164,
+          "bottom": 278
+        },
+        "secondary": {
+          "x": 591.796875,
+          "y": 278,
+          "w": 252.1875,
+          "h": 48,
+          "bottom": 326
+        },
+        "smallTargets": [],
+        "images": true
+      },
+      "pixels": {
+        "scope": "Visible UI / prototype region, not a full-map-count claim",
+        "region": {
+          "x": 0,
+          "y": 0,
+          "width": 844,
+          "height": 390
+        },
+        "pixels": {
+          "busy": 0.36699477457771296,
+          "std": 40.72723804954531
+        }
+      }
+    },
+    {
+      "name": "landscape-progress",
+      "audit": {
+        "width": 844,
+        "height": 390,
+        "pageScroll": false,
+        "dock": {
+          "x": 591.796875,
+          "y": 326,
+          "w": 252.1875,
+          "h": 64,
+          "bottom": 390
+        },
+        "hand": {
+          "x": 591.796875,
+          "y": 114,
+          "w": 252.1875,
+          "h": 164,
+          "bottom": 278
+        },
+        "secondary": {
+          "x": 591.796875,
+          "y": 278,
+          "w": 252.1875,
+          "h": 48,
+          "bottom": 326
+        },
+        "smallTargets": [],
+        "images": true
+      },
+      "pixels": {
+        "scope": "Visible UI / prototype region, not a full-map-count claim",
+        "region": {
+          "x": 0,
+          "y": 0,
+          "width": 844,
+          "height": 390
+        },
+        "pixels": {
+          "busy": 0.35712723295661686,
+          "std": 40.345186839433126
+        }
+      }
+    },
+    {
+      "name": "landscape-drag",
+      "audit": {
+        "width": 844,
+        "height": 390,
+        "pageScroll": false,
+        "dock": {
+          "x": 591.796875,
+          "y": 326,
+          "w": 252.1875,
+          "h": 64,
+          "bottom": 390
+        },
+        "hand": {
+          "x": 591.796875,
+          "y": 114,
+          "w": 252.1875,
+          "h": 164,
+          "bottom": 278
+        },
+        "secondary": {
+          "x": 591.796875,
+          "y": 278,
+          "w": 252.1875,
+          "h": 48,
+          "bottom": 326
+        },
+        "smallTargets": [],
+        "images": true
+      },
+      "pixels": {
+        "scope": "Visible UI / prototype region, not a full-map-count claim",
+        "region": {
+          "x": 0,
+          "y": 0,
+          "width": 844,
+          "height": 390
+        },
+        "pixels": {
+          "busy": 0.4413659010815409,
+          "std": 60.79106865847064
+        }
+      }
+    },
+    {
+      "name": "landscape-invalid",
+      "audit": {
+        "width": 844,
+        "height": 390,
+        "pageScroll": false,
+        "dock": {
+          "x": 591.796875,
+          "y": 326,
+          "w": 252.1875,
+          "h": 64,
+          "bottom": 390
+        },
+        "hand": {
+          "x": 591.796875,
+          "y": 114,
+          "w": 252.1875,
+          "h": 164,
+          "bottom": 278
+        },
+        "secondary": {
+          "x": 591.796875,
+          "y": 278,
+          "w": 252.1875,
+          "h": 48,
+          "bottom": 326
+        },
+        "smallTargets": [],
+        "images": true
+      },
+      "pixels": {
+        "scope": "Visible UI / prototype region, not a full-map-count claim",
+        "region": {
+          "x": 0,
+          "y": 0,
+          "width": 844,
+          "height": 390
+        },
+        "pixels": {
+          "busy": 0.4739701057236602,
+          "std": 61.385841734441044
+        }
+      }
+    },
+    {
+      "name": "landscape-split",
+      "audit": {
+        "width": 844,
+        "height": 390,
+        "pageScroll": false,
+        "dock": {
+          "x": 591.796875,
+          "y": 326,
+          "w": 252.1875,
+          "h": 64,
+          "bottom": 390
+        },
+        "hand": {
+          "x": 591.796875,
+          "y": 114,
+          "w": 252.1875,
+          "h": 164,
+          "bottom": 278
+        },
+        "secondary": {
+          "x": 591.796875,
+          "y": 278,
+          "w": 252.1875,
+          "h": 48,
+          "bottom": 326
+        },
+        "smallTargets": [],
+        "images": true
+      },
+      "pixels": {
+        "scope": "Visible UI / prototype region, not a full-map-count claim",
+        "region": {
+          "x": 0,
+          "y": 0,
+          "width": 844,
+          "height": 390
+        },
+        "pixels": {
+          "busy": 0.39240490946652085,
+          "std": 49.080089226435966
+        }
+      }
+    },
+    {
+      "name": "landscape-joker",
+      "audit": {
+        "width": 844,
+        "height": 390,
+        "pageScroll": false,
+        "dock": {
+          "x": 591.796875,
+          "y": 326,
+          "w": 252.1875,
+          "h": 64,
+          "bottom": 390
+        },
+        "hand": {
+          "x": 591.796875,
+          "y": 114,
+          "w": 252.1875,
+          "h": 164,
+          "bottom": 278
+        },
+        "secondary": {
+          "x": 591.796875,
+          "y": 278,
+          "w": 252.1875,
+          "h": 48,
+          "bottom": 326
+        },
+        "smallTargets": [],
+        "images": true
+      },
+      "pixels": {
+        "scope": "Visible UI / prototype region, not a full-map-count claim",
+        "region": {
+          "x": 0,
+          "y": 0,
+          "width": 844,
+          "height": 390
+        },
+        "pixels": {
+          "busy": 0.3611495929031474,
+          "std": 44.53294885625226
+        }
+      }
+    },
+    {
+      "name": "landscape-others",
+      "audit": {
+        "width": 844,
+        "height": 390,
+        "pageScroll": false,
+        "dock": {
+          "x": 591.796875,
+          "y": 326,
+          "w": 252.1875,
+          "h": 64,
+          "bottom": 390
+        },
+        "hand": {
+          "x": 591.796875,
+          "y": 114,
+          "w": 252.1875,
+          "h": 164,
+          "bottom": 278
+        },
+        "secondary": {
+          "x": 591.796875,
+          "y": 278,
+          "w": 252.1875,
+          "h": 48,
+          "bottom": 326
+        },
+        "smallTargets": [],
+        "images": true
+      },
+      "pixels": {
+        "scope": "Visible UI / prototype region, not a full-map-count claim",
+        "region": {
+          "x": 0,
+          "y": 0,
+          "width": 844,
+          "height": 390
+        },
+        "pixels": {
+          "busy": 0.4022602989427634,
+          "std": 55.31392279260523
+        }
+      }
+    },
+    {
+      "name": "landscape-timeout",
+      "audit": {
+        "width": 844,
+        "height": 390,
+        "pageScroll": false,
+        "dock": {
+          "x": 591.796875,
+          "y": 326,
+          "w": 252.1875,
+          "h": 64,
+          "bottom": 390
+        },
+        "hand": {
+          "x": 591.796875,
+          "y": 148.796875,
+          "w": 252.1875,
+          "h": 129.203125,
+          "bottom": 278
+        },
+        "secondary": {
+          "x": 591.796875,
+          "y": 278,
+          "w": 252.1875,
+          "h": 48,
+          "bottom": 326
+        },
+        "smallTargets": [],
+        "images": true
+      },
+      "pixels": {
+        "scope": "Visible UI / prototype region, not a full-map-count claim",
+        "region": {
+          "x": 0,
+          "y": 0,
+          "width": 844,
+          "height": 390
+        },
+        "pixels": {
+          "busy": 0.38954915542593266,
+          "std": 55.38022614517509
+        }
+      }
+    },
+    {
+      "name": "landscape-result",
+      "audit": {
+        "width": 844,
+        "height": 390,
+        "pageScroll": false,
+        "dock": {
+          "x": 591.796875,
+          "y": 326,
+          "w": 252.1875,
+          "h": 64,
+          "bottom": 390
+        },
+        "hand": {
+          "x": 591.796875,
+          "y": 114,
+          "w": 252.1875,
+          "h": 164,
+          "bottom": 278
+        },
+        "secondary": {
+          "x": 591.796875,
+          "y": 278,
+          "w": 252.1875,
+          "h": 48,
+          "bottom": 326
+        },
+        "smallTargets": [],
+        "images": true
+      },
+      "pixels": {
+        "scope": "Visible UI / prototype region, not a full-map-count claim",
+        "region": {
+          "x": 0,
+          "y": 0,
+          "width": 844,
+          "height": 390
+        },
+        "pixels": {
+          "busy": 0.34062462024547335,
+          "std": 53.311902759742985
+        }
+      }
+    },
+    {
+      "name": "landscape-disconnect",
+      "audit": {
+        "width": 844,
+        "height": 390,
+        "pageScroll": false,
+        "dock": {
+          "x": 591.796875,
+          "y": 326,
+          "w": 252.1875,
+          "h": 64,
+          "bottom": 390
+        },
+        "hand": {
+          "x": 591.796875,
+          "y": 150,
+          "w": 252.1875,
+          "h": 128,
+          "bottom": 278
+        },
+        "secondary": {
+          "x": 591.796875,
+          "y": 278,
+          "w": 252.1875,
+          "h": 48,
+          "bottom": 326
+        },
+        "smallTargets": [],
+        "images": true
+      },
+      "pixels": {
+        "scope": "Visible UI / prototype region, not a full-map-count claim",
+        "region": {
+          "x": 0,
+          "y": 0,
+          "width": 844,
+          "height": 390
+        },
+        "pixels": {
+          "busy": 0.5059788552679548,
+          "std": 68.09535761884354
+        }
+      }
+    },
+    {
+      "name": "portrait-hand18",
+      "audit": {
+        "width": 390,
+        "height": 844,
+        "pageScroll": false,
+        "dock": {
+          "x": 0,
+          "y": 780,
+          "w": 390,
+          "h": 64,
+          "bottom": 844
+        },
+        "hand": {
+          "x": 0,
+          "y": 551,
+          "w": 390,
+          "h": 179,
+          "bottom": 730
+        },
+        "secondary": {
+          "x": 0,
+          "y": 730,
+          "w": 390,
+          "h": 50,
+          "bottom": 780
+        },
+        "smallTargets": [],
+        "images": true
+      },
+      "pixels": {
+        "scope": "Visible UI / prototype region, not a full-map-count claim",
+        "region": {
+          "x": 0,
+          "y": 0,
+          "width": 390,
+          "height": 844
+        },
+        "pixels": {
+          "busy": 0.43197229310973384,
+          "std": 61.85910248540149
+        }
+      }
+    },
+    {
+      "name": "portrait-table22",
+      "audit": {
+        "width": 390,
+        "height": 844,
+        "pageScroll": false,
+        "dock": {
+          "x": 0,
+          "y": 780,
+          "w": 390,
+          "h": 64,
+          "bottom": 844
+        },
+        "hand": {
+          "x": 0,
+          "y": 551,
+          "w": 390,
+          "h": 179,
+          "bottom": 730
+        },
+        "secondary": {
+          "x": 0,
+          "y": 730,
+          "w": 390,
+          "h": 50,
+          "bottom": 780
+        },
+        "smallTargets": [],
+        "images": true
+      },
+      "pixels": {
+        "scope": "Visible UI / prototype region, not a full-map-count claim",
+        "region": {
+          "x": 0,
+          "y": 0,
+          "width": 390,
+          "height": 844
+        },
+        "pixels": {
+          "busy": 0.7035605784420951,
+          "std": 79.81561839716862
+        }
+      }
+    },
+    {
+      "name": "desktop-1280",
+      "audit": {
+        "width": 1280,
+        "height": 800,
+        "pageScroll": false,
+        "dock": {
+          "x": 60,
+          "y": 736,
+          "w": 1160,
+          "h": 64,
+          "bottom": 800
+        },
+        "hand": {
+          "x": 60,
+          "y": 476,
+          "w": 1160,
+          "h": 210,
+          "bottom": 686
+        },
+        "secondary": {
+          "x": 60,
+          "y": 686,
+          "w": 1160,
+          "h": 50,
+          "bottom": 736
+        },
+        "smallTargets": [],
+        "images": true
+      },
+      "pixels": {
+        "scope": "Visible UI / prototype region, not a full-map-count claim",
+        "region": {
+          "x": 0,
+          "y": 0,
+          "width": 1280,
+          "height": 800
+        },
+        "pixels": {
+          "busy": 0.580734375,
+          "std": 54.5861051022115
+        }
+      }
+    },
+    {
+      "name": "homepage-box"
+    },
+    {
+      "name": "ui-full-game-result"
+    }
+  ],
+  "journeys": [
+    {
+      "name": "portrait split and merge through UI",
+      "passed": true
+    },
+    {
+      "name": "landscape split and merge through UI",
+      "passed": true
+    },
+    {
+      "name": "undo redo reset through UI",
+      "passed": true
+    },
+    {
+      "name": "native long-press drag, forbid table-to-rack, pinch zoom",
+      "passed": true
+    },
+    {
+      "name": "keyboard tile selection",
+      "passed": true
+    },
+    {
+      "name": "menu preferences and rules",
+      "passed": true
+    },
+    {
+      "name": "UI create, join, ready and host start",
+      "passed": true
+    },
+    {
+      "name": "two-browser full game via UI clicks",
+      "seed": 2113,
+      "turns": 101,
+      "blocked": false,
+      "scores": [
+        -17,
+        17
+      ],
+      "passed": true
+    },
+    {
+      "name": "host next game keeps cumulative scores",
+      "passed": true
+    }
+  ],
+  "pageErrors": []
+}
