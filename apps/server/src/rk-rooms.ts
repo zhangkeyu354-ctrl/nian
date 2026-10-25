@@ -16,6 +16,7 @@ import {
   assertInvariants,
   type RKState,
   type Command,
+  type RKVariant,
 } from "../../../packages/rummikub/src/index.ts";
 import {
   RK_EVENTS as E,
@@ -29,6 +30,7 @@ interface Seat {
   ready: boolean;
 }
 export interface RKFile {
+  variant: RKVariant;
   schema: 1;
   game: "rummikub";
   code: string;
@@ -67,6 +69,7 @@ export class RKRoom {
     return new RKRoom(
       {
         schema: 1,
+        variant: "classic",
         game: "rummikub",
         code,
         version: 0,
@@ -176,17 +179,28 @@ export class RKRoom {
       } else {
         switch (c.type) {
           case "SET_SETTINGS": {
-            const count = c.count ?? this.file.count,
+            const previousVariant = this.file.variant ?? "classic";
+            const variant = c.variant ?? previousVariant;
+            ensure(variant === "classic" || variant === "xp", "未知拉密玩法");
+            const count =
+                c.count ??
+                (variant === previousVariant
+                  ? this.file.count
+                  : variant === "xp"
+                    ? 5
+                    : Math.max(2, this.file.players.length)),
               minutes = c.minutes ?? this.file.minutes,
               games =
                 c.games ??
                 (this.file.games === this.file.count ? count : this.file.games);
             ensure(
               Number.isInteger(count) &&
-                count >= 2 &&
-                count <= 4 &&
+                count >= (variant === "xp" ? 5 : 2) &&
+                count <= (variant === "xp" ? 6 : 4) &&
                 count >= this.file.players.length,
-              "人数须为 2–4 且不少于已入座人数",
+              variant === "xp"
+                ? "XP 人数须为 5–6 且不少于已入座人数"
+                : "人数须为 2–4 且不少于已入座人数",
             );
             ensure(
               [0, 1, 2].includes(minutes),
@@ -197,6 +211,7 @@ export class RKRoom {
               "局数须为 1–100",
             );
             this.file.count = count;
+            this.file.variant = variant;
             this.file.minutes = minutes;
             this.file.games = games;
             this.file.players.forEach((p) => (p.ready = false));
@@ -222,6 +237,7 @@ export class RKRoom {
                 minutes: this.file.minutes,
                 now,
                 assertions: true,
+                variant: this.file.variant ?? "classic",
               },
             );
             break;
@@ -264,6 +280,7 @@ export class RKRoom {
       mySeat: me?.id ?? null,
       hostId: this.file.players[0]?.id ?? null,
       count: this.file.count,
+      variant: this.file.variant ?? "classic",
       minutes: this.file.minutes,
       games: this.file.games,
       players: this.file.players.map((p, i) => ({
@@ -311,6 +328,7 @@ export function attachRummikub(
       const f = JSON.parse(
         readFileSync(join(directory, name), "utf8"),
       ) as RKFile;
+      f.variant ??= "classic";
       ensure(
         f.schema === 1 &&
           f.game === "rummikub" &&
@@ -322,9 +340,20 @@ export function attachRummikub(
         "存档结构无效",
       );
       if (f.state) {
+        f.state.variant ??= "classic";
+        ensure(f.state.variant === f.variant, "存档玩法不匹配");
         ensure(f.state.players.length === f.players.length, "存档座位不匹配");
         assertInvariants(f.state);
       }
+      ensure(
+        (f.variant === "classic" && f.count >= 2 && f.count <= 4) ||
+          (f.variant === "xp" && f.count >= 5 && f.count <= 6),
+        "存档人数或玩法无效",
+      );
+      ensure(
+        Number.isInteger(f.count) && f.players.length <= f.count,
+        "存档座位数无效",
+      );
       rooms.set(f.code, new RKRoom(f, directory, opts));
     } catch {
       console.warn("无法恢复拉密房间", name);

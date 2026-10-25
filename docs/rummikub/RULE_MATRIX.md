@@ -1,6 +1,6 @@
 # 拉密规则矩阵（阶段 1）
 
-核对日期：2026-10-25。范围：原版 2–4 人。阶段 1 原始规划保留，下表函数和测试映射已于阶段 2 更新为实际实现；官方普通超时策略与 XP 明确例外。
+核对日期：2026-10-25。范围：原版 2–4 人，阶段 6 增加显式启用的 XP 5–6 人。下表映射对应实际实现；官方普通超时策略的差异仍单独记录。
 
 ## 来源
 
@@ -37,7 +37,7 @@
 | R20 | 空池后继续，直至无人可出；项目按完整一轮无人出结束，出牌则重置计数 | 两版 p1、p4 + P-RK §1；检测方式 PROJECT_DEFAULT，见 Q04 | drawEnd / reduceRK | empty pool needs a full round of passes and scores lowest rack |
 | R21 | 堵局最低手牌点数者胜；每位败者得 m−s_i，胜者得 Σ(s_i−m)，不是按普通清空结算 | 两版 p4；CONFIRMED，最低分并列未规定，见 Q03 | scoreGame | normal and blocked scores are zero sum, joker costs 30 |
 | R22 | 一轮包含与人数相同的小局；约定轮数；总冠军先比胜局数，再比累计分；每局重做准备 | 两版 p1、p4；CONFIRMED；项目房间局数映射见 Q08 | deal / matchRanking | normal and blocked scores are zero sum, joker costs 30；matchRanking 实现胜局优先 |
-| R23 | 5–6 人 XP：160=12×13+4 Joker，阶段 6 用户同意后才开；Twist 不做 | 两版 p1 + P-RK §5；OUT_OF_SCOPE | createRK 拒绝（XP 未实现） | rejects unsupported players and malformed seed/settings |
+| R23 | 5–6 人 XP：160=12×13+4 Joker；默认关闭，房主显式切换；Twist 不做 | 两版 p1 + P-RK §5；阶段 6 用户授权 | createTiles("xp") / createRK(names,{variant:"xp"}) / assertInvariants / RKRoom SET_SETTINGS | packages/rummikub/test/xp.test.ts；apps/server/test/rk-xp.test.ts；verify-rk-xp-browsers.ts |
 | R24 | 草稿仅操作者可见；seq 幂等；UNDO/REDO/RESET；牌不重不丢，非当前玩家不能改 | P-RK §2；软件约束，不是实体规则 | reduceRK / viewForRK / assertInvariants | preserves 106 tiles through randomized move/undo/redo/reset/draw sequences |
 
 ## 确定的计分例子

@@ -18,7 +18,7 @@ import {
 import { useRKRoom } from "./rk-net.ts";
 import "./rk.css";
 const assets = "/assets/rummikub/";
-const tiles = new Map(createTiles().map((t) => [t.id, t]));
+const tiles = new Map(createTiles("xp").map((t) => [t.id, t]));
 const symbols = { R: "●", B: "▲", O: "■", K: "◆" };
 const colors = { R: "红", B: "蓝", O: "橙", K: "黑" };
 function preference(key: string, fallback: boolean) {
@@ -455,13 +455,20 @@ export function Rummikub() {
     </div>
   );
   return (
-    <main className={"rk-world " + (!v ? "rk-lobby-world" : "")}>
+    <main
+      className={
+        "rk-world " +
+        (!v ? "rk-lobby-world " : "") +
+        (s?.variant === "xp" ? "rk-xp" : "")
+      }
+    >
       <div className="rk-shell">
         <header className="rk-top">
           <a href="/" aria-label="返回桌游合集">
             <img src={assets + "logo.webp"} alt="Rummikub" />
           </a>
           <span className="rk-room-code">{s ? "房间 " + s.code : "拉密"}</span>
+          {s?.variant === "xp" && <b className="rk-variant-badge">XP</b>}
           {v && <span className="rk-pool">池 {v.poolCount}</span>}
           {v?.deadline !== null && v?.phase === "PLAYING" && (
             <span
@@ -521,6 +528,23 @@ export function Rummikub() {
                   {playerStrip(true)}
                   <div className="rk-settings">
                     <label>
+                      玩法
+                      <select
+                        aria-label="拉密玩法"
+                        value={s.variant ?? "classic"}
+                        disabled={!host || net.pending}
+                        onChange={(e) =>
+                          void send({
+                            type: "SET_SETTINGS",
+                            variant: e.target.value as "classic" | "xp",
+                          })
+                        }
+                      >
+                        <option value="classic">原版 · 106 张</option>
+                        <option value="xp">XP · 160 张</option>
+                      </select>
+                    </label>
+                    <label>
                       人数
                       <select
                         aria-label="本局人数"
@@ -533,7 +557,7 @@ export function Rummikub() {
                           })
                         }
                       >
-                        {[2, 3, 4].map((n) => (
+                        {(s.variant === "xp" ? [5, 6] : [2, 3, 4]).map((n) => (
                           <option key={n}>{n}</option>
                         ))}
                       </select>
@@ -665,7 +689,10 @@ export function Rummikub() {
                     </button>
                   )}
                   <p className="rk-entry-note">
-                    2–4 人 · 原版 106 张 · 每人 14 张起手
+                    {s?.variant === "xp"
+                      ? "5–6 人 · XP 160 张 · 4 张百搭牌"
+                      : "2–4 人 · 原版 106 张"}{" "}
+                    · 每人 14 张起手
                   </p>
                 </>
               )}
@@ -1188,6 +1215,12 @@ export function Rummikub() {
               <span className="rk-eyebrow">THE ORIGINAL RUMMIKUB</span>
               <h2>把手牌，组合成可能</h2>
               <ol>
+                <li>
+                  {s?.variant === "xp"
+                    ? "本房间为 XP：5–6 人、160 张牌，每色数字 3 张、4 张 Joker。"
+                    : "本房间为原版：2–4 人、106 张牌，每色数字 2 张、2 张 Joker。"}
+                  每人起手 14 张。
+                </li>
                 <li>
                   同数字 3–4 张，颜色各不相同；或同色至少 3 张连续数字，13
                   后不能接 1。

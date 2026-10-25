@@ -1,5 +1,11 @@
 # 拉密纯引擎接口（阶段 2）
 
+阶段 6：可显式传入 `variant: "xp"`，仅支持 5–6 人，使用 160 张牌。省略模式仍为 `classic`（2–4 人、106 张）。`createTiles("xp")` 增加每色数字第三副本（ID 后缀 c）和 J3/J4；默认 `createTiles()` 的顺序与 ID 保持原版。`validateMeld` 能解释整个牌库中的 ID，但事务守恒按实际模式核对，经典存档不接受 XP 专属牌。下一局保留模式与累计分，并按模式重新发牌。
+
+房主在大厅切换玩法、调整人数，所有人需重新准备；开局后不能改模式。模式写入快照和存档。旧存档缺少模式字段时按 classic 恢复，不按人数或牌面猜测 XP。
+
+XP 回归：`npx tsx scripts/verify-rk-xp-engine.ts`（5/6 人各 200 局）；`npx tsx scripts/verify-rk-xp-browsers.ts`（先构建，真实 UI 整局、重连、进程重启、旧存档、下一局与截图）。测试服务器和合成存档均隔离在临时目录，不开放生产测试入口。
+
 模块入口 `src/index.ts`；不依赖网络、React、磁盘、Math.random 或系统时钟。
 
 ```ts

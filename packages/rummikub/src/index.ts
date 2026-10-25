@@ -1,4 +1,5 @@
 export type Color = "R" | "B" | "O" | "K";
+export type RKVariant = "classic" | "xp";
 export interface Tile {
   id: string;
   color: Color | null;
@@ -32,6 +33,7 @@ export interface Result {
   rackPoints: number[];
 }
 export interface RKState {
+  variant: RKVariant;
   phase: "PLAYING" | "FINISHED";
   players: Player[];
   pool: string[];
@@ -92,11 +94,13 @@ export class RKError extends Error {
 }
 const COLORS: Color[] = ["R", "B", "O", "K"];
 const NAMES: Record<Color, string> = { R: "红", B: "蓝", O: "橙", K: "黑" };
-export function createTiles(): Tile[] {
+export function createTiles(variant: RKVariant = "classic"): Tile[] {
+  if (variant !== "classic" && variant !== "xp")
+    throw new RKError("未知拉密玩法");
   const out: Tile[] = [];
   for (const color of COLORS)
     for (let value = 1; value <= 13; value++)
-      for (const copy of ["a", "b"])
+      for (const copy of variant === "xp" ? ["a", "b", "c"] : ["a", "b"])
         out.push({
           id: `${color}${String(value).padStart(2, "0")}${copy}`,
           color,
@@ -106,9 +110,16 @@ export function createTiles(): Tile[] {
     ...out,
     { id: "J1", color: null, value: null },
     { id: "J2", color: null, value: null },
+    ...(variant === "xp"
+      ? [
+          { id: "J3", color: null, value: null },
+          { id: "J4", color: null, value: null },
+        ]
+      : []),
   ];
 }
-const TILES = createTiles();
+const TILES = createTiles("xp");
+const CLASSIC_IDS = new Set(createTiles().map((t) => t.id));
 const BY_ID = new Map(TILES.map((t) => [t.id, t]));
 export function tileName(id: string) {
   const t = BY_ID.get(id);
@@ -247,12 +258,13 @@ function beginTurn(s: RKState, now: number) {
   s.deadline = s.minutes ? now + s.minutes * 60000 : null;
 }
 function deal(s: RKState, now: number) {
+  const tiles = createTiles(s.variant ?? "classic");
   s.startDraw = [];
   let candidates = s.players.map((_, i) => i);
   let round = 0;
   while (candidates.length > 1) {
     const draw = shuffle(
-      TILES.filter((t) => t.color !== null).map((t) => t.id),
+      tiles.filter((t) => t.color !== null).map((t) => t.id),
       s,
     ).slice(0, candidates.length);
     const max = Math.max(...draw.map((id) => BY_ID.get(id)!.value!));
@@ -264,7 +276,7 @@ function deal(s: RKState, now: number) {
   }
   s.current = candidates[0];
   s.pool = shuffle(
-    TILES.map((t) => t.id),
+    tiles.map((t) => t.id),
     s,
   );
   s.board = [];
@@ -286,14 +298,19 @@ export function createRK(
     now?: number;
     minutes?: 0 | 1 | 2;
     assertions?: boolean;
+    variant?: RKVariant;
   },
 ): RKState {
+  const variant = options.variant ?? "classic";
+  check(variant === "classic" || variant === "xp", "未知拉密玩法");
   check(
     Array.isArray(names) &&
-      names.length >= 2 &&
-      names.length <= 4 &&
+      names.length >= (variant === "xp" ? 5 : 2) &&
+      names.length <= (variant === "xp" ? 6 : 4) &&
       names.every((n) => typeof n === "string" && n.trim().length > 0),
-    "只支持 2–4 位有名字的玩家",
+    variant === "xp"
+      ? "XP 只支持 5–6 位有名字的玩家"
+      : "只支持 2–4 位有名字的玩家",
   );
   check(
     Number.isInteger(options.seed) &&
@@ -306,6 +323,7 @@ export function createRK(
   check(Number.isFinite(now) && now >= 0, "服务器时间无效");
   check([0, 1, 2].includes(minutes), "计时只能设置为 1 分钟、2 分钟或不限");
   const s: RKState = {
+    variant,
     phase: "PLAYING",
     players: names.map((name) => ({
       name,
@@ -450,10 +468,12 @@ function validateConservation(s: RKState, d: Draft) {
     ...d.board.flatMap((m) => m.tiles),
   ];
   check(
-    ids.length === 106 &&
-      new Set(ids).size === 106 &&
-      ids.every((id) => BY_ID.has(id)),
-    "牌不变量失败：必须 106 张且无重复、无丢失",
+    ids.length === (s.variant === "xp" ? 160 : 106) &&
+      new Set(ids).size === ids.length &&
+      ids.every((id) =>
+        s.variant === "xp" ? BY_ID.has(id) : CLASSIC_IDS.has(id),
+      ),
+    `牌不变量失败：必须 ${s.variant === "xp" ? 160 : 106} 张且无重复、无丢失`,
   );
   check(
     new Set(d.board.map((m) => m.id)).size === d.board.length &&
@@ -468,8 +488,12 @@ function validateConservation(s: RKState, d: Draft) {
 }
 export function assertInvariants(s: RKState) {
   check(
-    s.players.length >= 2 &&
-      s.players.length <= 4 &&
+    s.variant === undefined || s.variant === "classic" || s.variant === "xp",
+    "未知拉密玩法",
+  );
+  check(
+    s.players.length >= (s.variant === "xp" ? 5 : 2) &&
+      s.players.length <= (s.variant === "xp" ? 6 : 4) &&
       s.current >= 0 &&
       s.current < s.players.length,
     "座位不变量失败",
@@ -480,10 +504,12 @@ export function assertInvariants(s: RKState) {
     ...s.board.flatMap((m) => m.tiles),
   ];
   check(
-    ids.length === 106 &&
-      new Set(ids).size === 106 &&
-      ids.every((id) => BY_ID.has(id)),
-    "牌不变量失败：必须 106 张且无重复、无丢失",
+    ids.length === (s.variant === "xp" ? 160 : 106) &&
+      new Set(ids).size === ids.length &&
+      ids.every((id) =>
+        s.variant === "xp" ? BY_ID.has(id) : CLASSIC_IDS.has(id),
+      ),
+    `牌不变量失败：必须 ${s.variant === "xp" ? 160 : 106} 张且无重复、无丢失`,
   );
   check(
     s.board.every((m) => validateMeld(m.tiles).length > 0),
@@ -761,6 +787,7 @@ export function viewForRK(s: RKState, seat: number) {
       }
     : null;
   return {
+    variant: s.variant ?? "classic",
     phase: s.phase,
     game: s.game,
     me: seat,

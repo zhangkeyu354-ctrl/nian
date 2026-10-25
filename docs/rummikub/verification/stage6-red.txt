@@ -1,0 +1,90 @@
+
+ RUN  v5.0.5 E:/DBD-BoardGame-Web
+
+ ❯ packages/rummikub/test/xp.test.ts (5 tests | 4 failed) 20ms
+   × XP explicitly enables 160 unique tiles, three copies and four independent jokers 10ms
+   × classic stays the default and mode/player mismatches are rejected 2ms
+   × XP 5 seats keep all tiles private and conserved across draft, draw and next turn 3ms
+   × XP 6 seats keep all tiles private and conserved across draft, draw and next turn 1ms
+ ❯ apps/server/test/rk-xp.test.ts (1 test | 1 failed) 16ms
+   × XP requires host opt-in, resets readiness, persists mode and cannot shrink occupied rooms 14ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 5 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  apps/server/test/rk-xp.test.ts > XP requires host opt-in, resets readiness, persists mode and cannot shrink occupied rooms
+AssertionError: expected undefined to be 'classic' // Object.is equality
+
+- Expected:
+"classic"
+
++ Received:
+undefined
+
+ ❯ apps/server/test/rk-xp.test.ts:11:45
+      9|  const users=[r.claim("房主"),r.claim("朋友")];
+     10|  const act=(i:number,c:any)=>r.action(users[i].token,r.file.version,(r…
+     11|  expect(r.snapshot(users[0].token).variant).toBe("classic");
+       |                                             ^
+     12|  expect(()=>act(0,{type:"SET_SETTINGS",count:6})).toThrow(/人数/);
+     13|  expect(()=>act(1,{type:"SET_SETTINGS",variant:"xp"})).toThrow(/房主/);
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/5]⎯
+
+ FAIL  packages/rummikub/test/xp.test.ts > XP explicitly enables 160 unique tiles, three copies and four independent jokers
+AssertionError: expected [ …(106) ] to have a length of 160 but got 106
+
+- Expected
++ Received
+
+- 160
++ 106
+
+ ❯ packages/rummikub/test/xp.test.ts:6:17
+      4| it("XP explicitly enables 160 unique tiles, three copies and four inde…
+      5|   const tiles = createTiles("xp");
+      6|   expect(tiles).toHaveLength(160);
+       |                 ^
+      7|   expect(new Set(tiles.map(t => t.id)).size).toBe(160);
+      8|   expect(tiles.filter(t => t.color === null).map(t => t.id)).toEqual([…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[2/5]⎯
+
+ FAIL  packages/rummikub/test/xp.test.ts > classic stays the default and mode/player mismatches are rejected
+AssertionError: expected undefined to be 'classic' // Object.is equality
+
+- Expected:
+"classic"
+
++ Received:
+undefined
+
+ ❯ packages/rummikub/test/xp.test.ts:15:49
+     13| });
+     14| it("classic stays the default and mode/player mismatches are rejected"…
+     15|   expect(createRK(["A","B"], {seed:1}).variant).toBe("classic");
+       |                                                 ^
+     16|   for (const [count, variant] of [[5,"classic"],[4,"xp"],[7,"xp"],[6,"…
+     17|     expect(()=>createRK(Array.from({length:count},(_,i)=>String(i)),{s…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[3/5]⎯
+
+ FAIL  packages/rummikub/test/xp.test.ts > XP 5 seats keep all tiles private and conserved across draft, draw and next turn
+ FAIL  packages/rummikub/test/xp.test.ts > XP 6 seats keep all tiles private and conserved across draft, draw and next turn
+RKError: 只支持 2–4 位有名字的玩家
+ ❯ check packages/rummikub/src/index.ts:120:18
+    118| const copy = <T>(v: T): T => structuredClone(v);
+    119| function check(ok: unknown, reason: string): asserts ok {
+    120|   if (!ok) throw new RKError(reason);
+       |                  ^
+    121| }
+    122| // No positional inference: assign each joker to every missing (color,…
+ ❯ createRK packages/rummikub/src/index.ts:291:3
+ ❯ packages/rummikub/test/xp.test.ts:20:11
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[4/5]⎯
+
+
+ Test Files  2 failed (2)
+      Tests  5 failed | 1 passed (6)
+   Start at  17:38:28
+   Duration  373ms (transform 52%, import 25%, tests 17%, worker 6%)

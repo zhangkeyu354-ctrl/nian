@@ -6,6 +6,7 @@ import {
   assertInvariants,
   type RKState,
   type Command,
+  type RKVariant,
 } from "./index.ts";
 // Intentionally modest AI: self-rack groups/runs and extensions, no full table solver.
 export function findRackMelds(rack: string[]): string[][] {
@@ -89,10 +90,15 @@ export function aiTurn(s: RKState): RKState {
   }
   return act(d, { type: moved ? "COMMIT" : "DRAW" });
 }
-export function simulateRK(players: number, seed: number, maxTurns = 2000) {
+export function simulateRK(
+  players: number,
+  seed: number,
+  maxTurns = 2000,
+  variant: RKVariant = "classic",
+) {
   let state = createRK(
     Array.from({ length: players }, (_, i) => `模拟${i + 1}`),
-    { seed, now: 0, minutes: 0, assertions: true },
+    { seed, now: 0, minutes: 0, assertions: true, variant },
   );
   let turns = 0;
   while (state.phase === "PLAYING" && turns < maxTurns) {

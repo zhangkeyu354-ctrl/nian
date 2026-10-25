@@ -1,4 +1,8 @@
-import type { Command, viewForRK } from "../../rummikub/src/index.ts";
+import type {
+  Command,
+  RKVariant,
+  viewForRK,
+} from "../../rummikub/src/index.ts";
 export const RK_EVENTS = {
   create: "rk:create",
   join: "rk:join",
@@ -15,6 +19,7 @@ export type RKAction =
   | Exclude<Payload<Command>, { type: "TIMEOUT" }>
   | {
       type: "SET_SETTINGS";
+      variant?: RKVariant;
       count?: number;
       minutes?: 0 | 1 | 2;
       games?: number;
@@ -23,6 +28,7 @@ export type RKAction =
   | { type: "START"; seed?: number }
   | { type: "LEAVE" };
 export interface RKSnapshot {
+  variant: RKVariant;
   code: string;
   version: number;
   mySeat: string | null;
