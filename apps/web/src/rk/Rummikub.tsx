@@ -91,7 +91,9 @@ export function Rummikub() {
     [mergeMode, setMergeMode] = useState(false),
     [splitHint, setSplitHint] = useState(""),
     [drag, setDrag] = useState<Drag | null>(null),
-    [target, setTarget] = useState("");
+    [target, setTarget] = useState(""),
+    [drawnIds, setDrawnIds] = useState<string[]>([]),
+    [rackWidth, setRackWidth] = useState(0);
   const surface = useRef<HTMLDivElement>(null),
     rackArea = useRef<HTMLDivElement>(null),
     prior = useRef<
@@ -213,6 +215,31 @@ export function Rummikub() {
     const timer = setTimeout(() => setNewIds([]), 2000);
     return () => clearTimeout(timer);
   }, [newIds]);
+  const officialRack = v?.players[v.me]?.rack;
+  const priorRack = useRef<{ game: number; ids: string[] } | null>(null);
+  useEffect(() => {
+    if (!v || !officialRack) return;
+    const p = priorRack.current;
+    if (p && p.game === v.game) {
+      const had = new Set(p.ids);
+      const added = officialRack.filter((id) => !had.has(id));
+      if (added.length && added.length <= 4) setDrawnIds(added);
+    }
+    priorRack.current = { game: v.game, ids: [...officialRack] };
+  }, [officialRack?.join(","), v?.game]);
+  useEffect(() => {
+    if (!drawnIds.length) return;
+    const timer = setTimeout(() => setDrawnIds([]), 1800);
+    return () => clearTimeout(timer);
+  }, [drawnIds]);
+  useEffect(() => {
+    const el = rackArea.current;
+    if (!el || typeof ResizeObserver === "undefined") return;
+    const ro = new ResizeObserver(() => setRackWidth(el.clientWidth));
+    ro.observe(el);
+    setRackWidth(el.clientWidth);
+    return () => ro.disconnect();
+  }, [!!v]);
   useEffect(() => {
     if (!net.error) return;
     const t = setTimeout(() => net.setError(""), 6500);
@@ -347,7 +374,8 @@ export function Rummikub() {
           "rk-hit " +
           (chosen ? "selected " : "") +
           (onTable && newIds.includes(id) ? "arrived " : "") +
-          (onTable && !oldIds.has(id) ? "fresh" : "")
+          (onTable && !oldIds.has(id) ? "fresh " : "") +
+          (!onTable && drawnIds.includes(id) ? "drawn" : "")
         }
         data-tile={id}
         data-testid={"rk-tile-" + id}
@@ -372,6 +400,24 @@ export function Rummikub() {
       </button>
     );
   };
+  const rackCols = Math.max(7, Math.ceil(rack.length / 2));
+  const handW = rackWidth
+    ? Math.max(
+        38,
+        Math.min(44, Math.floor((rackWidth - 10 - 4 * (rackCols - 1)) / rackCols)),
+      )
+    : 38;
+  const officialBoard = v?.board ?? [];
+  const dirty =
+    !!v?.draft &&
+    (rack.length !== (officialRack?.length ?? rack.length) ||
+      board.length !== officialBoard.length ||
+      board.some(
+        (m, i) =>
+          m.id !== officialBoard[i]?.id ||
+          m.tiles.join() !== officialBoard[i]?.tiles.join(),
+      ));
+  const drawMode = mine && !dirty;
   const openDraw = drawVisible && v?.phase === "PLAYING";
   const playerStrip = (lobby = false) => (
     <div className={"rk-players " + (lobby ? "rk-seats" : "")}>
@@ -833,7 +879,19 @@ export function Rummikub() {
                   }}
                 >
                   <div
-                    className="rk-table-content"
+                    className={
+                      "rk-table-content " +
+                      (mine && selected.length ? "picking" : "")
+                    }
+                    onClick={(e) => {
+                      if (
+                        !(e.target as HTMLElement).closest(
+                          "button, .rk-meld",
+                        ) &&
+                        selected.length
+                      )
+                        setSelected([]);
+                    }}
                     style={{ zoom, "--rk-zoom": zoom } as React.CSSProperties}
                     data-testid="rk-table"
                   >
@@ -928,7 +986,7 @@ export function Rummikub() {
                               </div>
                             ))}
                           </div>
-                          {mine && (
+                          {mine && selected.length > 0 && (
                             <button
                               className="rk-add"
                               data-rk-drop={m.id}
@@ -984,8 +1042,8 @@ export function Rummikub() {
                   {drag
                     ? "拖到组合末尾或新建一组"
                     : selected.length
-                      ? "已选 " + selected.length + " 张 · 点「+」放入组合"
-                      : "点选多张牌再放置 · 长按拖动 · 双指缩放"}
+                      ? "已选 " + selected.length + " 张 · 点组合右侧「+」或「新建一组」 · 点空白处取消"
+                      : "点选牌再放置 · 长按拖动 · 点牌缝两下可拆分 · 双指缩放"}
                 </p>
               </section>
               <aside className="rk-sidebar">
@@ -1020,7 +1078,15 @@ export function Rummikub() {
                     }
                     ref={rackArea}
                   >
-                    <div className="rk-rack-tiles">
+                    <div
+                      className="rk-rack-tiles"
+                      style={
+                        {
+                          "--hw": handW + "px",
+                          "--hh": Math.round(handW * 1.37) + "px",
+                        } as React.CSSProperties
+                      }
+                    >
                       {sortRack(rack, sort).map((id) => tileButton(id))}
                     </div>
                   </div>
@@ -1030,25 +1096,19 @@ export function Rummikub() {
                     disabled={!mine || net.pending || !v.canUndo}
                     onClick={() => void send({ type: "UNDO" })}
                   >
-                    撤销
+                    <i aria-hidden="true">↶</i>撤销
                   </button>
                   <button
                     disabled={!mine || net.pending || !v.canRedo}
                     onClick={() => void send({ type: "REDO" })}
                   >
-                    重做
+                    <i aria-hidden="true">↷</i>重做
                   </button>
                   <button
-                    disabled={!mine || net.pending}
+                    disabled={!mine || net.pending || !dirty}
                     onClick={() => void send({ type: "RESET" })}
                   >
-                    全部还原
-                  </button>
-                  <button
-                    disabled={!mine || net.pending || !net.online}
-                    onClick={() => void send({ type: "DRAW" })}
-                  >
-                    摸牌并结束
+                    <i aria-hidden="true">⟲</i>全部还原
                   </button>
                 </div>
                 <div
@@ -1057,9 +1117,11 @@ export function Rummikub() {
                   <ActionDock
                     hint={
                       mine
-                        ? v.validation?.ok
-                          ? "组合合法，可以确认"
-                          : v.validation?.reason
+                        ? drawMode
+                          ? "没有要出的牌？摸 1 张结束回合"
+                          : v.validation?.ok
+                            ? "组合合法，可以确认"
+                            : v.validation?.reason
                         : "等待 " +
                           (v.current + 1) +
                           "号 " +
@@ -1068,18 +1130,25 @@ export function Rummikub() {
                     }
                   >
                     <button
-                      className="rk-primary"
+                      className={"rk-primary " + (drawMode ? "draw" : "")}
                       data-testid="rk-commit"
                       disabled={
-                        !mine || !v.validation?.ok || net.pending || !net.online
+                        !mine ||
+                        net.pending ||
+                        !net.online ||
+                        (!drawMode && !v.validation?.ok)
                       }
-                      onClick={() => void send({ type: "COMMIT" })}
+                      onClick={() =>
+                        void send({ type: drawMode ? "DRAW" : "COMMIT" })
+                      }
                     >
                       {net.pending ? (
                         <>
                           <span className="rk-spinner" aria-hidden="true" />
                           正在确认…
                         </>
+                      ) : drawMode ? (
+                        "摸牌并结束"
                       ) : mine ? (
                         "确认出牌"
                       ) : (
@@ -1197,7 +1266,11 @@ export function Rummikub() {
         {drag && (
           <div
             className={"rk-drag-ghost " + (drag.forbidden ? "forbidden" : "")}
-            style={{ left: drag.x, top: drag.y }}
+            style={{
+              left: 0,
+              top: 0,
+              transform: `translate3d(${drag.x}px, ${drag.y}px, 0) translate(-50%, -110%) scale(1.15)`,
+            }}
           >
             <TileFace id={drag.ids[0]} />
             {drag.ids.length > 1 && <b>+{drag.ids.length - 1}</b>}
