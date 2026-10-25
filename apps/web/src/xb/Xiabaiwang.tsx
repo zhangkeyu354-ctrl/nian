@@ -31,6 +31,7 @@ import "./xb.css";
 import "./v3.css";
 import { StudioScene, OnAir } from "./StudioScene.tsx";
 import "./art-v4.css";
+import "./layout-phone.css";
 const ROLES: Record<string, string> = XB_RULES.roles;
 const JOBS: Record<string, string> = {
   guesser: "耳朵借你，别把脑子也借出去。追问大家，找出真正的老实人。",
@@ -445,6 +446,34 @@ export function Xiabaiwang() {
       prev?.focus();
     };
   }, [panel]);
+  const seatStrip = useRef<HTMLElement | null>(null);
+  const seatViewer = useRef<string | null>(null);
+  useEffect(() => {
+    if (
+      !me ||
+      !matchMedia("(max-width: 649px) and (orientation: portrait)").matches
+    )
+      return;
+    const target = seatViewer.current !== me ? me : (view?.speaker ?? me);
+    seatViewer.current = me;
+    const frame = requestAnimationFrame(() => {
+      const strip = seatStrip.current,
+        avatar = document.getElementById("xb-avatar-" + target);
+      if (!strip || !avatar) return;
+      const seat = avatar.getBoundingClientRect(),
+        bounds = strip.getBoundingClientRect();
+      if (seat.left < bounds.left || seat.right > bounds.right)
+        strip.scrollTo({
+          left:
+            strip.scrollLeft +
+            seat.left -
+            bounds.left -
+            (bounds.width - seat.width) / 2,
+          behavior: "instant",
+        });
+    });
+    return () => cancelAnimationFrame(frame);
+  }, [me, view?.speaker]);
   const command = (c: XBCommand) => net.run(E.command, { command: c });
   const choose = (m: Mode) => {
     setMode(m);
@@ -678,6 +707,13 @@ export function Xiabaiwang() {
     <main
       className={`xb-world ${!active ? "xb-suspended" : ""} ${animate ? "" : "xb-power-save"} ${net.error ? "xb-rejected" : ""} ${revealed && animate && !skipped && view?.players[frame.visible - 1]?.role === "truth" ? "xb-truth-impact" : ""}`}
       data-stage={stage}
+      data-hide-seats={
+        !!intro ||
+        over ||
+        (revealed && frame.done) ||
+        panel === "role" ||
+        panel === "recap"
+      }
       onPointerDownCapture={(e) => {
         const b = (e.target as HTMLElement).closest<HTMLButtonElement>(
           "button,input,select,summary,a",
@@ -1253,6 +1289,19 @@ export function Xiabaiwang() {
                 ) : null;
               })}
             </div>
+            <ol className="xb-final-ranks" aria-label="其他玩家排名">
+              {view.standings
+                .filter((p) => p.rank > 3)
+                .map((person) => (
+                  <li key={person.id}>
+                    <span>第{person.rank}名</span>
+                    <b title={label(person.id)}>{label(person.id)}</b>
+                    <strong className={person.score < 0 ? "xb-negative" : ""}>
+                      {person.score}分
+                    </strong>
+                  </li>
+                ))}
+            </ol>
             <div className="xb-titles">
               {titles(view, snap.funHits ?? {}, snap.crownTotals ?? {}).map(
                 (t) => (
@@ -1266,8 +1315,11 @@ export function Xiabaiwang() {
                 ),
               )}
             </div>
-            <button onClick={() => setPanel("recap")}>
-              每轮回顾 · 把嘴硬留个档
+            <button
+              className="xb-finale-recap"
+              onClick={() => setPanel("recap")}
+            >
+              每轮回顾
             </button>
             <p>称号仅供乐，不另加分。并列玩家共享称号。</p>
             <TruthRecap snap={snap} command={command} busy={disabled} />
@@ -1434,6 +1486,7 @@ export function Xiabaiwang() {
       </section>
       {snap && (
         <section
+          ref={seatStrip}
           className="xb-seats"
           aria-label="全体玩家"
           data-testid="xb-seats"
@@ -1461,7 +1514,7 @@ export function Xiabaiwang() {
                 data-testid={"xb-seat-" + i}
                 aria-label={`${!mode && isGuesser ? "点名" : "选择"} ${p.name}${mode === "POOP" && p.id === me ? "，不能扔自己" : ""}`}
                 title={p.name}
-                className={`xb-seat ${selected === p.id ? "is-selected" : ""} ${view?.speaker === p.id ? "is-speaking" : ""} ${hitNow ? "is-hit" : ""} ${p.id === view?.guesser ? "is-guesser" : ""}`}
+                className={`xb-seat ${selected === p.id ? "is-selected" : ""} ${view?.speaker === p.id ? "is-speaking" : ""} ${hitNow ? "is-hit" : ""} ${p.id === view?.guesser ? "is-guesser" : ""} ${!p.connected ? "is-offline" : ""}`}
                 disabled={
                   disabled ||
                   (!mode &&
@@ -1485,21 +1538,26 @@ export function Xiabaiwang() {
               >
                 <span className="xb-seat-face" key={hit[p.id] ?? 0}>
                   <HostPortrait seat={i} />
+                  {view?.phase === "discussion" && (
+                    <SpeechBar snap={snap} id={p.id} now={serverNow} ring />
+                  )}
                   <span className="xb-seat-number">{i + 1}号</span>
                   <i className="xb-badge-state" aria-hidden="true">
-                    {view?.muted === p.id
-                      ? "禁"
-                      : selected === p.id
-                        ? "选"
-                        : revealed && last?.selected === p.id
-                          ? "投"
-                          : view?.speaker === p.id
-                            ? "麦"
-                            : p.id === view?.guesser
-                              ? "想"
-                              : !p.connected
-                                ? "离"
-                                : ""}
+                    {!p.connected
+                      ? "离"
+                      : view?.muted === p.id
+                        ? "禁"
+                        : selected === p.id
+                          ? "选"
+                          : revealed && last?.selected === p.id
+                            ? "投"
+                            : view?.speaker === p.id
+                              ? "麦"
+                              : p.id === view?.guesser
+                                ? "想"
+                                : !p.connected
+                                  ? "离"
+                                  : ""}
                   </i>
                   {hitNow && animate && (
                     <span className="xb-hit-splashes" aria-hidden="true">
@@ -1575,7 +1633,23 @@ export function Xiabaiwang() {
           }
           data-testid="xb-dock"
         >
-          <p aria-live="polite">{slow ? "网络有点慢…" : notice || waiting}</p>
+          <p
+            aria-live="polite"
+            data-hint={
+              !!slow ||
+              !!notice ||
+              (isGuesser && view?.phase === "discussion" && !intro)
+            }
+          >
+            {slow
+              ? "网络有点慢…"
+              : notice || (
+                  <>
+                    <span className="xb-desktop-hint">{waiting}</span>
+                    <span className="xb-phone-hint">轮到你：选择操作</span>
+                  </>
+                )}
+          </p>
           {me &&
             now - (hit[me] ?? 0) < 3650 &&
             (hit[me] ?? 0) > (shaken[me] ?? 0) && (
@@ -1756,7 +1830,12 @@ export function Xiabaiwang() {
                 </button>
               </>
             ) : revealed || over ? (
-              <button onClick={() => setPanel("recap")}>每轮回顾</button>
+              <button
+                className="xb-dock-recap"
+                onClick={() => setPanel("recap")}
+              >
+                每轮回顾
+              </button>
             ) : (
               <span>粑粑不限次数 · 每次歇2秒</span>
             )}
@@ -1764,9 +1843,7 @@ export function Xiabaiwang() {
         </footer>
       )}
       {!snap && (
-        <div className="xb-entrance-footer">
-          记得开语音通话一起玩。
-        </div>
+        <div className="xb-entrance-footer">记得开语音通话一起玩。</div>
       )}
       {panel && (
         <div className="xb-overlay">
@@ -1966,7 +2043,12 @@ export function Xiabaiwang() {
                   再看一次新手教学
                 </button>
                 {!!view?.history.length && (
-                  <button onClick={() => setPanel("recap")}>每轮回顾</button>
+                  <button
+                    className="xb-dock-recap"
+                    onClick={() => setPanel("recap")}
+                  >
+                    每轮回顾
+                  </button>
                 )}
                 <a href="/">退出到桌游合集</a>
                 <p>退出不删除身份，用原房间链接可回来。</p>

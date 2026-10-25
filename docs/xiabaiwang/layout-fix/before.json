@@ -1,0 +1,2129 @@
+{
+  "results": [
+    {
+      "n": 3,
+      "phase": "discussion",
+      "size": {
+        "width": 390,
+        "height": 844
+      },
+      "screen": 844,
+      "width": 390,
+      "pageWidth": 390,
+      "stage": {
+        "x": 0,
+        "y": 56,
+        "width": 390,
+        "height": 423.65625,
+        "display": "block"
+      },
+      "seats": {
+        "x": 0,
+        "y": 479.65625,
+        "width": 390,
+        "height": 208.34375,
+        "display": "grid"
+      },
+      "dock": {
+        "x": 0,
+        "y": 688,
+        "width": 390,
+        "height": 156,
+        "display": "flex"
+      },
+      "top": {
+        "x": 0,
+        "y": 0,
+        "width": 390,
+        "height": 56,
+        "display": "flex"
+      },
+      "cards": []
+    },
+    {
+      "n": 3,
+      "phase": "guess",
+      "size": {
+        "width": 390,
+        "height": 844
+      },
+      "screen": 844,
+      "width": 390,
+      "pageWidth": 390,
+      "stage": {
+        "x": 0,
+        "y": 56,
+        "width": 390,
+        "height": 423.65625,
+        "display": "block"
+      },
+      "seats": {
+        "x": 0,
+        "y": 479.65625,
+        "width": 390,
+        "height": 208.34375,
+        "display": "grid"
+      },
+      "dock": {
+        "x": 0,
+        "y": 688,
+        "width": 390,
+        "height": 156,
+        "display": "flex"
+      },
+      "top": {
+        "x": 0,
+        "y": 0,
+        "width": 390,
+        "height": 56,
+        "display": "flex"
+      },
+      "cards": []
+    },
+    {
+      "n": 3,
+      "phase": "reveal",
+      "size": {
+        "width": 390,
+        "height": 844
+      },
+      "screen": 844,
+      "width": 390,
+      "pageWidth": 390,
+      "stage": {
+        "x": 0,
+        "y": 56,
+        "width": 390,
+        "height": 486,
+        "display": "block"
+      },
+      "seats": {
+        "x": 0,
+        "y": 542,
+        "width": 390,
+        "height": 146,
+        "display": "grid"
+      },
+      "dock": {
+        "x": 0,
+        "y": 688,
+        "width": 390,
+        "height": 156,
+        "display": "flex"
+      },
+      "top": {
+        "x": 0,
+        "y": 0,
+        "width": 390,
+        "height": 56,
+        "display": "flex"
+      },
+      "cards": []
+    },
+    {
+      "n": 3,
+      "phase": "over",
+      "size": {
+        "width": 390,
+        "height": 844
+      },
+      "screen": 844,
+      "width": 390,
+      "pageWidth": 390,
+      "stage": {
+        "x": 0,
+        "y": 56,
+        "width": 390,
+        "height": 486,
+        "display": "block"
+      },
+      "seats": {
+        "x": 0,
+        "y": 542,
+        "width": 390,
+        "height": 146,
+        "display": "grid"
+      },
+      "dock": {
+        "x": 0,
+        "y": 688,
+        "width": 390,
+        "height": 156,
+        "display": "flex"
+      },
+      "top": {
+        "x": 0,
+        "y": 0,
+        "width": 390,
+        "height": 56,
+        "display": "flex"
+      },
+      "cards": [
+        {
+          "top": 347.375,
+          "bottom": 475.8125
+        },
+        {
+          "top": 322.375,
+          "bottom": 450.8125
+        },
+        {
+          "top": 362.375,
+          "bottom": 490.8125
+        }
+      ]
+    },
+    {
+      "n": 6,
+      "phase": "discussion",
+      "size": {
+        "width": 390,
+        "height": 844
+      },
+      "screen": 844,
+      "width": 390,
+      "pageWidth": 390,
+      "stage": {
+        "x": 0,
+        "y": 56,
+        "width": 390,
+        "height": 336,
+        "display": "block"
+      },
+      "seats": {
+        "x": 0,
+        "y": 392,
+        "width": 390,
+        "height": 296,
+        "display": "grid"
+      },
+      "dock": {
+        "x": 0,
+        "y": 688,
+        "width": 390,
+        "height": 156,
+        "display": "flex"
+      },
+      "top": {
+        "x": 0,
+        "y": 0,
+        "width": 390,
+        "height": 56,
+        "display": "flex"
+      },
+      "cards": []
+    },
+    {
+      "n": 6,
+      "phase": "guess",
+      "size": {
+        "width": 390,
+        "height": 844
+      },
+      "screen": 844,
+      "width": 390,
+      "pageWidth": 390,
+      "stage": {
+        "x": 0,
+        "y": 56,
+        "width": 390,
+        "height": 336,
+        "display": "block"
+      },
+      "seats": {
+        "x": 0,
+        "y": 392,
+        "width": 390,
+        "height": 296,
+        "display": "grid"
+      },
+      "dock": {
+        "x": 0,
+        "y": 688,
+        "width": 390,
+        "height": 156,
+        "display": "flex"
+      },
+      "top": {
+        "x": 0,
+        "y": 0,
+        "width": 390,
+        "height": 56,
+        "display": "flex"
+      },
+      "cards": []
+    },
+    {
+      "n": 6,
+      "phase": "reveal",
+      "size": {
+        "width": 390,
+        "height": 844
+      },
+      "screen": 844,
+      "width": 390,
+      "pageWidth": 390,
+      "stage": {
+        "x": 0,
+        "y": 56,
+        "width": 390,
+        "height": 376,
+        "display": "block"
+      },
+      "seats": {
+        "x": 0,
+        "y": 432,
+        "width": 390,
+        "height": 256,
+        "display": "grid"
+      },
+      "dock": {
+        "x": 0,
+        "y": 688,
+        "width": 390,
+        "height": 156,
+        "display": "flex"
+      },
+      "top": {
+        "x": 0,
+        "y": 0,
+        "width": 390,
+        "height": 56,
+        "display": "flex"
+      },
+      "cards": []
+    },
+    {
+      "n": 6,
+      "phase": "over",
+      "size": {
+        "width": 390,
+        "height": 844
+      },
+      "screen": 844,
+      "width": 390,
+      "pageWidth": 390,
+      "stage": {
+        "x": 0,
+        "y": 56,
+        "width": 390,
+        "height": 376,
+        "display": "block"
+      },
+      "seats": {
+        "x": 0,
+        "y": 432,
+        "width": 390,
+        "height": 256,
+        "display": "grid"
+      },
+      "dock": {
+        "x": 0,
+        "y": 688,
+        "width": 390,
+        "height": 156,
+        "display": "flex"
+      },
+      "top": {
+        "x": 0,
+        "y": 0,
+        "width": 390,
+        "height": 56,
+        "display": "flex"
+      },
+      "cards": [
+        {
+          "top": 373.71875,
+          "bottom": 502.15625
+        },
+        {
+          "top": 373.71875,
+          "bottom": 502.15625
+        },
+        {
+          "top": 348.71875,
+          "bottom": 477.15625
+        },
+        {
+          "top": 348.71875,
+          "bottom": 477.15625
+        },
+        {
+          "top": 388.71875,
+          "bottom": 517.15625
+        }
+      ]
+    },
+    {
+      "n": 10,
+      "phase": "discussion",
+      "size": {
+        "width": 390,
+        "height": 844
+      },
+      "screen": 844,
+      "width": 390,
+      "pageWidth": 390,
+      "stage": {
+        "x": 0,
+        "y": 56,
+        "width": 390,
+        "height": 336,
+        "display": "block"
+      },
+      "seats": {
+        "x": 0,
+        "y": 392,
+        "width": 390,
+        "height": 296,
+        "display": "grid"
+      },
+      "dock": {
+        "x": 0,
+        "y": 688,
+        "width": 390,
+        "height": 156,
+        "display": "flex"
+      },
+      "top": {
+        "x": 0,
+        "y": 0,
+        "width": 390,
+        "height": 56,
+        "display": "flex"
+      },
+      "cards": []
+    },
+    {
+      "n": 10,
+      "phase": "guess",
+      "size": {
+        "width": 390,
+        "height": 844
+      },
+      "screen": 844,
+      "width": 390,
+      "pageWidth": 390,
+      "stage": {
+        "x": 0,
+        "y": 56,
+        "width": 390,
+        "height": 336,
+        "display": "block"
+      },
+      "seats": {
+        "x": 0,
+        "y": 392,
+        "width": 390,
+        "height": 296,
+        "display": "grid"
+      },
+      "dock": {
+        "x": 0,
+        "y": 688,
+        "width": 390,
+        "height": 156,
+        "display": "flex"
+      },
+      "top": {
+        "x": 0,
+        "y": 0,
+        "width": 390,
+        "height": 56,
+        "display": "flex"
+      },
+      "cards": []
+    },
+    {
+      "n": 10,
+      "phase": "reveal",
+      "size": {
+        "width": 390,
+        "height": 844
+      },
+      "screen": 844,
+      "width": 390,
+      "pageWidth": 390,
+      "stage": {
+        "x": 0,
+        "y": 56,
+        "width": 390,
+        "height": 376,
+        "display": "block"
+      },
+      "seats": {
+        "x": 0,
+        "y": 432,
+        "width": 390,
+        "height": 256,
+        "display": "grid"
+      },
+      "dock": {
+        "x": 0,
+        "y": 688,
+        "width": 390,
+        "height": 156,
+        "display": "flex"
+      },
+      "top": {
+        "x": 0,
+        "y": 0,
+        "width": 390,
+        "height": 56,
+        "display": "flex"
+      },
+      "cards": []
+    },
+    {
+      "n": 10,
+      "phase": "over",
+      "size": {
+        "width": 390,
+        "height": 844
+      },
+      "screen": 844,
+      "width": 390,
+      "pageWidth": 390,
+      "stage": {
+        "x": 0,
+        "y": 56,
+        "width": 390,
+        "height": 376,
+        "display": "block"
+      },
+      "seats": {
+        "x": 0,
+        "y": 432,
+        "width": 390,
+        "height": 256,
+        "display": "grid"
+      },
+      "dock": {
+        "x": 0,
+        "y": 688,
+        "width": 390,
+        "height": 156,
+        "display": "flex"
+      },
+      "top": {
+        "x": 0,
+        "y": 0,
+        "width": 390,
+        "height": 56,
+        "display": "flex"
+      },
+      "cards": [
+        {
+          "top": 347.375,
+          "bottom": 475.8125
+        },
+        {
+          "top": 322.375,
+          "bottom": 450.8125
+        },
+        {
+          "top": 362.375,
+          "bottom": 490.8125
+        },
+        {
+          "top": 362.375,
+          "bottom": 490.8125
+        }
+      ]
+    },
+    {
+      "n": 3,
+      "phase": "discussion",
+      "size": {
+        "width": 360,
+        "height": 740
+      },
+      "screen": 740,
+      "width": 360,
+      "pageWidth": 360,
+      "stage": {
+        "x": 0,
+        "y": 56,
+        "width": 360,
+        "height": 319.65625,
+        "display": "block"
+      },
+      "seats": {
+        "x": 0,
+        "y": 375.65625,
+        "width": 360,
+        "height": 208.34375,
+        "display": "grid"
+      },
+      "dock": {
+        "x": 0,
+        "y": 584,
+        "width": 360,
+        "height": 156,
+        "display": "flex"
+      },
+      "top": {
+        "x": 0,
+        "y": 0,
+        "width": 360,
+        "height": 56,
+        "display": "flex"
+      },
+      "cards": []
+    },
+    {
+      "n": 3,
+      "phase": "guess",
+      "size": {
+        "width": 360,
+        "height": 740
+      },
+      "screen": 740,
+      "width": 360,
+      "pageWidth": 360,
+      "stage": {
+        "x": 0,
+        "y": 56,
+        "width": 360,
+        "height": 319.65625,
+        "display": "block"
+      },
+      "seats": {
+        "x": 0,
+        "y": 375.65625,
+        "width": 360,
+        "height": 208.34375,
+        "display": "grid"
+      },
+      "dock": {
+        "x": 0,
+        "y": 584,
+        "width": 360,
+        "height": 156,
+        "display": "flex"
+      },
+      "top": {
+        "x": 0,
+        "y": 0,
+        "width": 360,
+        "height": 56,
+        "display": "flex"
+      },
+      "cards": []
+    },
+    {
+      "n": 3,
+      "phase": "reveal",
+      "size": {
+        "width": 360,
+        "height": 740
+      },
+      "screen": 740,
+      "width": 360,
+      "pageWidth": 360,
+      "stage": {
+        "x": 0,
+        "y": 56,
+        "width": 360,
+        "height": 382,
+        "display": "block"
+      },
+      "seats": {
+        "x": 0,
+        "y": 438,
+        "width": 360,
+        "height": 146,
+        "display": "grid"
+      },
+      "dock": {
+        "x": 0,
+        "y": 584,
+        "width": 360,
+        "height": 156,
+        "display": "flex"
+      },
+      "top": {
+        "x": 0,
+        "y": 0,
+        "width": 360,
+        "height": 56,
+        "display": "flex"
+      },
+      "cards": []
+    },
+    {
+      "n": 3,
+      "phase": "over",
+      "size": {
+        "width": 360,
+        "height": 740
+      },
+      "screen": 740,
+      "width": 360,
+      "pageWidth": 360,
+      "stage": {
+        "x": 0,
+        "y": 56,
+        "width": 360,
+        "height": 382,
+        "display": "block"
+      },
+      "seats": {
+        "x": 0,
+        "y": 438,
+        "width": 360,
+        "height": 146,
+        "display": "grid"
+      },
+      "dock": {
+        "x": 0,
+        "y": 584,
+        "width": 360,
+        "height": 156,
+        "display": "flex"
+      },
+      "top": {
+        "x": 0,
+        "y": 0,
+        "width": 360,
+        "height": 56,
+        "display": "flex"
+      },
+      "cards": [
+        {
+          "top": 347.375,
+          "bottom": 475.8125
+        },
+        {
+          "top": 322.375,
+          "bottom": 450.8125
+        },
+        {
+          "top": 362.375,
+          "bottom": 490.8125
+        }
+      ]
+    },
+    {
+      "n": 6,
+      "phase": "discussion",
+      "size": {
+        "width": 360,
+        "height": 740
+      },
+      "screen": 740,
+      "width": 360,
+      "pageWidth": 360,
+      "stage": {
+        "x": 0,
+        "y": 56,
+        "width": 360,
+        "height": 232,
+        "display": "block"
+      },
+      "seats": {
+        "x": 0,
+        "y": 288,
+        "width": 360,
+        "height": 296,
+        "display": "grid"
+      },
+      "dock": {
+        "x": 0,
+        "y": 584,
+        "width": 360,
+        "height": 156,
+        "display": "flex"
+      },
+      "top": {
+        "x": 0,
+        "y": 0,
+        "width": 360,
+        "height": 56,
+        "display": "flex"
+      },
+      "cards": []
+    },
+    {
+      "n": 6,
+      "phase": "guess",
+      "size": {
+        "width": 360,
+        "height": 740
+      },
+      "screen": 740,
+      "width": 360,
+      "pageWidth": 360,
+      "stage": {
+        "x": 0,
+        "y": 56,
+        "width": 360,
+        "height": 232,
+        "display": "block"
+      },
+      "seats": {
+        "x": 0,
+        "y": 288,
+        "width": 360,
+        "height": 296,
+        "display": "grid"
+      },
+      "dock": {
+        "x": 0,
+        "y": 584,
+        "width": 360,
+        "height": 156,
+        "display": "flex"
+      },
+      "top": {
+        "x": 0,
+        "y": 0,
+        "width": 360,
+        "height": 56,
+        "display": "flex"
+      },
+      "cards": []
+    },
+    {
+      "n": 6,
+      "phase": "reveal",
+      "size": {
+        "width": 360,
+        "height": 740
+      },
+      "screen": 740,
+      "width": 360,
+      "pageWidth": 360,
+      "stage": {
+        "x": 0,
+        "y": 56,
+        "width": 360,
+        "height": 272,
+        "display": "block"
+      },
+      "seats": {
+        "x": 0,
+        "y": 328,
+        "width": 360,
+        "height": 256,
+        "display": "grid"
+      },
+      "dock": {
+        "x": 0,
+        "y": 584,
+        "width": 360,
+        "height": 156,
+        "display": "flex"
+      },
+      "top": {
+        "x": 0,
+        "y": 0,
+        "width": 360,
+        "height": 56,
+        "display": "flex"
+      },
+      "cards": []
+    },
+    {
+      "n": 6,
+      "phase": "over",
+      "size": {
+        "width": 360,
+        "height": 740
+      },
+      "screen": 740,
+      "width": 360,
+      "pageWidth": 360,
+      "stage": {
+        "x": 0,
+        "y": 56,
+        "width": 360,
+        "height": 272,
+        "display": "block"
+      },
+      "seats": {
+        "x": 0,
+        "y": 328,
+        "width": 360,
+        "height": 256,
+        "display": "grid"
+      },
+      "dock": {
+        "x": 0,
+        "y": 584,
+        "width": 360,
+        "height": 156,
+        "display": "flex"
+      },
+      "top": {
+        "x": 0,
+        "y": 0,
+        "width": 360,
+        "height": 56,
+        "display": "flex"
+      },
+      "cards": [
+        {
+          "top": 373.71875,
+          "bottom": 502.15625
+        },
+        {
+          "top": 373.71875,
+          "bottom": 502.15625
+        },
+        {
+          "top": 348.71875,
+          "bottom": 477.15625
+        },
+        {
+          "top": 348.71875,
+          "bottom": 477.15625
+        },
+        {
+          "top": 388.71875,
+          "bottom": 517.15625
+        }
+      ]
+    },
+    {
+      "n": 10,
+      "phase": "discussion",
+      "size": {
+        "width": 360,
+        "height": 740
+      },
+      "screen": 740,
+      "width": 360,
+      "pageWidth": 360,
+      "stage": {
+        "x": 0,
+        "y": 56,
+        "width": 360,
+        "height": 232,
+        "display": "block"
+      },
+      "seats": {
+        "x": 0,
+        "y": 288,
+        "width": 360,
+        "height": 296,
+        "display": "grid"
+      },
+      "dock": {
+        "x": 0,
+        "y": 584,
+        "width": 360,
+        "height": 156,
+        "display": "flex"
+      },
+      "top": {
+        "x": 0,
+        "y": 0,
+        "width": 360,
+        "height": 56,
+        "display": "flex"
+      },
+      "cards": []
+    },
+    {
+      "n": 10,
+      "phase": "guess",
+      "size": {
+        "width": 360,
+        "height": 740
+      },
+      "screen": 740,
+      "width": 360,
+      "pageWidth": 360,
+      "stage": {
+        "x": 0,
+        "y": 56,
+        "width": 360,
+        "height": 232,
+        "display": "block"
+      },
+      "seats": {
+        "x": 0,
+        "y": 288,
+        "width": 360,
+        "height": 296,
+        "display": "grid"
+      },
+      "dock": {
+        "x": 0,
+        "y": 584,
+        "width": 360,
+        "height": 156,
+        "display": "flex"
+      },
+      "top": {
+        "x": 0,
+        "y": 0,
+        "width": 360,
+        "height": 56,
+        "display": "flex"
+      },
+      "cards": []
+    },
+    {
+      "n": 10,
+      "phase": "reveal",
+      "size": {
+        "width": 360,
+        "height": 740
+      },
+      "screen": 740,
+      "width": 360,
+      "pageWidth": 360,
+      "stage": {
+        "x": 0,
+        "y": 56,
+        "width": 360,
+        "height": 272,
+        "display": "block"
+      },
+      "seats": {
+        "x": 0,
+        "y": 328,
+        "width": 360,
+        "height": 256,
+        "display": "grid"
+      },
+      "dock": {
+        "x": 0,
+        "y": 584,
+        "width": 360,
+        "height": 156,
+        "display": "flex"
+      },
+      "top": {
+        "x": 0,
+        "y": 0,
+        "width": 360,
+        "height": 56,
+        "display": "flex"
+      },
+      "cards": []
+    },
+    {
+      "n": 10,
+      "phase": "over",
+      "size": {
+        "width": 360,
+        "height": 740
+      },
+      "screen": 740,
+      "width": 360,
+      "pageWidth": 360,
+      "stage": {
+        "x": 0,
+        "y": 56,
+        "width": 360,
+        "height": 272,
+        "display": "block"
+      },
+      "seats": {
+        "x": 0,
+        "y": 328,
+        "width": 360,
+        "height": 256,
+        "display": "grid"
+      },
+      "dock": {
+        "x": 0,
+        "y": 584,
+        "width": 360,
+        "height": 156,
+        "display": "flex"
+      },
+      "top": {
+        "x": 0,
+        "y": 0,
+        "width": 360,
+        "height": 56,
+        "display": "flex"
+      },
+      "cards": [
+        {
+          "top": 347.375,
+          "bottom": 475.8125
+        },
+        {
+          "top": 322.375,
+          "bottom": 450.8125
+        },
+        {
+          "top": 362.375,
+          "bottom": 490.8125
+        },
+        {
+          "top": 362.375,
+          "bottom": 490.8125
+        }
+      ]
+    },
+    {
+      "n": 3,
+      "phase": "discussion",
+      "size": {
+        "width": 844,
+        "height": 390
+      },
+      "screen": 390,
+      "width": 844,
+      "pageWidth": 844,
+      "stage": {
+        "x": 0,
+        "y": 56,
+        "width": 562.65625,
+        "height": 334,
+        "display": "block"
+      },
+      "seats": {
+        "x": 562.65625,
+        "y": 56,
+        "width": 281.34375,
+        "height": 186,
+        "display": "grid"
+      },
+      "dock": {
+        "x": 562.65625,
+        "y": 242,
+        "width": 281.34375,
+        "height": 148,
+        "display": "flex"
+      },
+      "top": {
+        "x": 0,
+        "y": 0,
+        "width": 844,
+        "height": 56,
+        "display": "flex"
+      },
+      "cards": []
+    },
+    {
+      "n": 3,
+      "phase": "guess",
+      "size": {
+        "width": 844,
+        "height": 390
+      },
+      "screen": 390,
+      "width": 844,
+      "pageWidth": 844,
+      "stage": {
+        "x": 0,
+        "y": 56,
+        "width": 562.65625,
+        "height": 334,
+        "display": "block"
+      },
+      "seats": {
+        "x": 562.65625,
+        "y": 56,
+        "width": 281.34375,
+        "height": 186,
+        "display": "grid"
+      },
+      "dock": {
+        "x": 562.65625,
+        "y": 242,
+        "width": 281.34375,
+        "height": 148,
+        "display": "flex"
+      },
+      "top": {
+        "x": 0,
+        "y": 0,
+        "width": 844,
+        "height": 56,
+        "display": "flex"
+      },
+      "cards": []
+    },
+    {
+      "n": 3,
+      "phase": "reveal",
+      "size": {
+        "width": 844,
+        "height": 390
+      },
+      "screen": 390,
+      "width": 844,
+      "pageWidth": 844,
+      "stage": {
+        "x": 0,
+        "y": 56,
+        "width": 562.65625,
+        "height": 334,
+        "display": "block"
+      },
+      "seats": {
+        "x": 562.65625,
+        "y": 56,
+        "width": 281.34375,
+        "height": 186,
+        "display": "grid"
+      },
+      "dock": {
+        "x": 562.65625,
+        "y": 242,
+        "width": 281.34375,
+        "height": 148,
+        "display": "flex"
+      },
+      "top": {
+        "x": 0,
+        "y": 0,
+        "width": 844,
+        "height": 56,
+        "display": "flex"
+      },
+      "cards": []
+    },
+    {
+      "n": 3,
+      "phase": "over",
+      "size": {
+        "width": 844,
+        "height": 390
+      },
+      "screen": 390,
+      "width": 844,
+      "pageWidth": 844,
+      "stage": {
+        "x": 0,
+        "y": 56,
+        "width": 562.65625,
+        "height": 334,
+        "display": "block"
+      },
+      "seats": {
+        "x": 562.65625,
+        "y": 56,
+        "width": 281.34375,
+        "height": 186,
+        "display": "grid"
+      },
+      "dock": {
+        "x": 562.65625,
+        "y": 242,
+        "width": 281.34375,
+        "height": 148,
+        "display": "flex"
+      },
+      "top": {
+        "x": 0,
+        "y": 0,
+        "width": 844,
+        "height": 56,
+        "display": "flex"
+      },
+      "cards": [
+        {
+          "top": 339.375,
+          "bottom": 467.8125
+        },
+        {
+          "top": 314.375,
+          "bottom": 442.8125
+        },
+        {
+          "top": 354.375,
+          "bottom": 482.8125
+        }
+      ]
+    },
+    {
+      "n": 6,
+      "phase": "discussion",
+      "size": {
+        "width": 844,
+        "height": 390
+      },
+      "screen": 390,
+      "width": 844,
+      "pageWidth": 844,
+      "stage": {
+        "x": 0,
+        "y": 56,
+        "width": 562.65625,
+        "height": 334,
+        "display": "block"
+      },
+      "seats": {
+        "x": 562.65625,
+        "y": 56,
+        "width": 281.34375,
+        "height": 186,
+        "display": "grid"
+      },
+      "dock": {
+        "x": 562.65625,
+        "y": 242,
+        "width": 281.34375,
+        "height": 148,
+        "display": "flex"
+      },
+      "top": {
+        "x": 0,
+        "y": 0,
+        "width": 844,
+        "height": 56,
+        "display": "flex"
+      },
+      "cards": []
+    },
+    {
+      "n": 6,
+      "phase": "guess",
+      "size": {
+        "width": 844,
+        "height": 390
+      },
+      "screen": 390,
+      "width": 844,
+      "pageWidth": 844,
+      "stage": {
+        "x": 0,
+        "y": 56,
+        "width": 562.65625,
+        "height": 334,
+        "display": "block"
+      },
+      "seats": {
+        "x": 562.65625,
+        "y": 56,
+        "width": 281.34375,
+        "height": 186,
+        "display": "grid"
+      },
+      "dock": {
+        "x": 562.65625,
+        "y": 242,
+        "width": 281.34375,
+        "height": 148,
+        "display": "flex"
+      },
+      "top": {
+        "x": 0,
+        "y": 0,
+        "width": 844,
+        "height": 56,
+        "display": "flex"
+      },
+      "cards": []
+    },
+    {
+      "n": 6,
+      "phase": "reveal",
+      "size": {
+        "width": 844,
+        "height": 390
+      },
+      "screen": 390,
+      "width": 844,
+      "pageWidth": 844,
+      "stage": {
+        "x": 0,
+        "y": 56,
+        "width": 562.65625,
+        "height": 334,
+        "display": "block"
+      },
+      "seats": {
+        "x": 562.65625,
+        "y": 56,
+        "width": 281.34375,
+        "height": 186,
+        "display": "grid"
+      },
+      "dock": {
+        "x": 562.65625,
+        "y": 242,
+        "width": 281.34375,
+        "height": 148,
+        "display": "flex"
+      },
+      "top": {
+        "x": 0,
+        "y": 0,
+        "width": 844,
+        "height": 56,
+        "display": "flex"
+      },
+      "cards": []
+    },
+    {
+      "n": 6,
+      "phase": "over",
+      "size": {
+        "width": 844,
+        "height": 390
+      },
+      "screen": 390,
+      "width": 844,
+      "pageWidth": 844,
+      "stage": {
+        "x": 0,
+        "y": 56,
+        "width": 562.65625,
+        "height": 334,
+        "display": "block"
+      },
+      "seats": {
+        "x": 562.65625,
+        "y": 56,
+        "width": 281.34375,
+        "height": 186,
+        "display": "grid"
+      },
+      "dock": {
+        "x": 562.65625,
+        "y": 242,
+        "width": 281.34375,
+        "height": 148,
+        "display": "flex"
+      },
+      "top": {
+        "x": 0,
+        "y": 0,
+        "width": 844,
+        "height": 56,
+        "display": "flex"
+      },
+      "cards": [
+        {
+          "top": 339.375,
+          "bottom": 467.8125
+        },
+        {
+          "top": 339.375,
+          "bottom": 467.8125
+        },
+        {
+          "top": 314.375,
+          "bottom": 442.8125
+        },
+        {
+          "top": 314.375,
+          "bottom": 442.8125
+        },
+        {
+          "top": 354.375,
+          "bottom": 482.8125
+        }
+      ]
+    },
+    {
+      "n": 10,
+      "phase": "discussion",
+      "size": {
+        "width": 844,
+        "height": 390
+      },
+      "screen": 390,
+      "width": 844,
+      "pageWidth": 844,
+      "stage": {
+        "x": 0,
+        "y": 56,
+        "width": 562.65625,
+        "height": 334,
+        "display": "block"
+      },
+      "seats": {
+        "x": 562.65625,
+        "y": 56,
+        "width": 281.34375,
+        "height": 186,
+        "display": "grid"
+      },
+      "dock": {
+        "x": 562.65625,
+        "y": 242,
+        "width": 281.34375,
+        "height": 148,
+        "display": "flex"
+      },
+      "top": {
+        "x": 0,
+        "y": 0,
+        "width": 844,
+        "height": 56,
+        "display": "flex"
+      },
+      "cards": []
+    },
+    {
+      "n": 10,
+      "phase": "guess",
+      "size": {
+        "width": 844,
+        "height": 390
+      },
+      "screen": 390,
+      "width": 844,
+      "pageWidth": 844,
+      "stage": {
+        "x": 0,
+        "y": 56,
+        "width": 562.65625,
+        "height": 334,
+        "display": "block"
+      },
+      "seats": {
+        "x": 562.65625,
+        "y": 56,
+        "width": 281.34375,
+        "height": 186,
+        "display": "grid"
+      },
+      "dock": {
+        "x": 562.65625,
+        "y": 242,
+        "width": 281.34375,
+        "height": 148,
+        "display": "flex"
+      },
+      "top": {
+        "x": 0,
+        "y": 0,
+        "width": 844,
+        "height": 56,
+        "display": "flex"
+      },
+      "cards": []
+    },
+    {
+      "n": 10,
+      "phase": "reveal",
+      "size": {
+        "width": 844,
+        "height": 390
+      },
+      "screen": 390,
+      "width": 844,
+      "pageWidth": 844,
+      "stage": {
+        "x": 0,
+        "y": 56,
+        "width": 562.65625,
+        "height": 334,
+        "display": "block"
+      },
+      "seats": {
+        "x": 562.65625,
+        "y": 56,
+        "width": 281.34375,
+        "height": 186,
+        "display": "grid"
+      },
+      "dock": {
+        "x": 562.65625,
+        "y": 242,
+        "width": 281.34375,
+        "height": 148,
+        "display": "flex"
+      },
+      "top": {
+        "x": 0,
+        "y": 0,
+        "width": 844,
+        "height": 56,
+        "display": "flex"
+      },
+      "cards": []
+    },
+    {
+      "n": 10,
+      "phase": "over",
+      "size": {
+        "width": 844,
+        "height": 390
+      },
+      "screen": 390,
+      "width": 844,
+      "pageWidth": 844,
+      "stage": {
+        "x": 0,
+        "y": 56,
+        "width": 562.65625,
+        "height": 334,
+        "display": "block"
+      },
+      "seats": {
+        "x": 562.65625,
+        "y": 56,
+        "width": 281.34375,
+        "height": 186,
+        "display": "grid"
+      },
+      "dock": {
+        "x": 562.65625,
+        "y": 242,
+        "width": 281.34375,
+        "height": 148,
+        "display": "flex"
+      },
+      "top": {
+        "x": 0,
+        "y": 0,
+        "width": 844,
+        "height": 56,
+        "display": "flex"
+      },
+      "cards": [
+        {
+          "top": 339.375,
+          "bottom": 467.8125
+        },
+        {
+          "top": 314.375,
+          "bottom": 442.8125
+        },
+        {
+          "top": 354.375,
+          "bottom": 482.8125
+        },
+        {
+          "top": 354.375,
+          "bottom": 482.8125
+        }
+      ]
+    },
+    {
+      "n": 3,
+      "phase": "discussion",
+      "size": {
+        "width": 768,
+        "height": 1024
+      },
+      "screen": 1024,
+      "width": 768,
+      "pageWidth": 768,
+      "stage": {
+        "x": 0,
+        "y": 56,
+        "width": 768,
+        "height": 603.65625,
+        "display": "block"
+      },
+      "seats": {
+        "x": 0,
+        "y": 659.65625,
+        "width": 768,
+        "height": 208.34375,
+        "display": "grid"
+      },
+      "dock": {
+        "x": 0,
+        "y": 868,
+        "width": 768,
+        "height": 156,
+        "display": "flex"
+      },
+      "top": {
+        "x": 0,
+        "y": 0,
+        "width": 768,
+        "height": 56,
+        "display": "flex"
+      },
+      "cards": []
+    },
+    {
+      "n": 3,
+      "phase": "guess",
+      "size": {
+        "width": 768,
+        "height": 1024
+      },
+      "screen": 1024,
+      "width": 768,
+      "pageWidth": 768,
+      "stage": {
+        "x": 0,
+        "y": 56,
+        "width": 768,
+        "height": 603.65625,
+        "display": "block"
+      },
+      "seats": {
+        "x": 0,
+        "y": 659.65625,
+        "width": 768,
+        "height": 208.34375,
+        "display": "grid"
+      },
+      "dock": {
+        "x": 0,
+        "y": 868,
+        "width": 768,
+        "height": 156,
+        "display": "flex"
+      },
+      "top": {
+        "x": 0,
+        "y": 0,
+        "width": 768,
+        "height": 56,
+        "display": "flex"
+      },
+      "cards": []
+    },
+    {
+      "n": 3,
+      "phase": "reveal",
+      "size": {
+        "width": 768,
+        "height": 1024
+      },
+      "screen": 1024,
+      "width": 768,
+      "pageWidth": 768,
+      "stage": {
+        "x": 0,
+        "y": 56,
+        "width": 768,
+        "height": 666,
+        "display": "block"
+      },
+      "seats": {
+        "x": 0,
+        "y": 722,
+        "width": 768,
+        "height": 146,
+        "display": "grid"
+      },
+      "dock": {
+        "x": 0,
+        "y": 868,
+        "width": 768,
+        "height": 156,
+        "display": "flex"
+      },
+      "top": {
+        "x": 0,
+        "y": 0,
+        "width": 768,
+        "height": 56,
+        "display": "flex"
+      },
+      "cards": []
+    },
+    {
+      "n": 3,
+      "phase": "over",
+      "size": {
+        "width": 768,
+        "height": 1024
+      },
+      "screen": 1024,
+      "width": 768,
+      "pageWidth": 768,
+      "stage": {
+        "x": 0,
+        "y": 56,
+        "width": 768,
+        "height": 666,
+        "display": "block"
+      },
+      "seats": {
+        "x": 0,
+        "y": 722,
+        "width": 768,
+        "height": 146,
+        "display": "grid"
+      },
+      "dock": {
+        "x": 0,
+        "y": 868,
+        "width": 768,
+        "height": 156,
+        "display": "flex"
+      },
+      "top": {
+        "x": 0,
+        "y": 0,
+        "width": 768,
+        "height": 56,
+        "display": "flex"
+      },
+      "cards": [
+        {
+          "top": 347.375,
+          "bottom": 475.8125
+        },
+        {
+          "top": 322.375,
+          "bottom": 450.8125
+        },
+        {
+          "top": 362.375,
+          "bottom": 490.8125
+        }
+      ]
+    },
+    {
+      "n": 6,
+      "phase": "discussion",
+      "size": {
+        "width": 768,
+        "height": 1024
+      },
+      "screen": 1024,
+      "width": 768,
+      "pageWidth": 768,
+      "stage": {
+        "x": 0,
+        "y": 56,
+        "width": 768,
+        "height": 516,
+        "display": "block"
+      },
+      "seats": {
+        "x": 0,
+        "y": 572,
+        "width": 768,
+        "height": 296,
+        "display": "grid"
+      },
+      "dock": {
+        "x": 0,
+        "y": 868,
+        "width": 768,
+        "height": 156,
+        "display": "flex"
+      },
+      "top": {
+        "x": 0,
+        "y": 0,
+        "width": 768,
+        "height": 56,
+        "display": "flex"
+      },
+      "cards": []
+    },
+    {
+      "n": 6,
+      "phase": "guess",
+      "size": {
+        "width": 768,
+        "height": 1024
+      },
+      "screen": 1024,
+      "width": 768,
+      "pageWidth": 768,
+      "stage": {
+        "x": 0,
+        "y": 56,
+        "width": 768,
+        "height": 516,
+        "display": "block"
+      },
+      "seats": {
+        "x": 0,
+        "y": 572,
+        "width": 768,
+        "height": 296,
+        "display": "grid"
+      },
+      "dock": {
+        "x": 0,
+        "y": 868,
+        "width": 768,
+        "height": 156,
+        "display": "flex"
+      },
+      "top": {
+        "x": 0,
+        "y": 0,
+        "width": 768,
+        "height": 56,
+        "display": "flex"
+      },
+      "cards": []
+    },
+    {
+      "n": 6,
+      "phase": "reveal",
+      "size": {
+        "width": 768,
+        "height": 1024
+      },
+      "screen": 1024,
+      "width": 768,
+      "pageWidth": 768,
+      "stage": {
+        "x": 0,
+        "y": 56,
+        "width": 768,
+        "height": 556,
+        "display": "block"
+      },
+      "seats": {
+        "x": 0,
+        "y": 612,
+        "width": 768,
+        "height": 256,
+        "display": "grid"
+      },
+      "dock": {
+        "x": 0,
+        "y": 868,
+        "width": 768,
+        "height": 156,
+        "display": "flex"
+      },
+      "top": {
+        "x": 0,
+        "y": 0,
+        "width": 768,
+        "height": 56,
+        "display": "flex"
+      },
+      "cards": []
+    },
+    {
+      "n": 6,
+      "phase": "over",
+      "size": {
+        "width": 768,
+        "height": 1024
+      },
+      "screen": 1024,
+      "width": 768,
+      "pageWidth": 768,
+      "stage": {
+        "x": 0,
+        "y": 56,
+        "width": 768,
+        "height": 556,
+        "display": "block"
+      },
+      "seats": {
+        "x": 0,
+        "y": 612,
+        "width": 768,
+        "height": 256,
+        "display": "grid"
+      },
+      "dock": {
+        "x": 0,
+        "y": 868,
+        "width": 768,
+        "height": 156,
+        "display": "flex"
+      },
+      "top": {
+        "x": 0,
+        "y": 0,
+        "width": 768,
+        "height": 56,
+        "display": "flex"
+      },
+      "cards": [
+        {
+          "top": 347.375,
+          "bottom": 475.8125
+        },
+        {
+          "top": 347.375,
+          "bottom": 475.8125
+        },
+        {
+          "top": 322.375,
+          "bottom": 450.8125
+        },
+        {
+          "top": 322.375,
+          "bottom": 450.8125
+        },
+        {
+          "top": 362.375,
+          "bottom": 490.8125
+        }
+      ]
+    },
+    {
+      "n": 10,
+      "phase": "discussion",
+      "size": {
+        "width": 768,
+        "height": 1024
+      },
+      "screen": 1024,
+      "width": 768,
+      "pageWidth": 768,
+      "stage": {
+        "x": 0,
+        "y": 56,
+        "width": 768,
+        "height": 516,
+        "display": "block"
+      },
+      "seats": {
+        "x": 0,
+        "y": 572,
+        "width": 768,
+        "height": 296,
+        "display": "grid"
+      },
+      "dock": {
+        "x": 0,
+        "y": 868,
+        "width": 768,
+        "height": 156,
+        "display": "flex"
+      },
+      "top": {
+        "x": 0,
+        "y": 0,
+        "width": 768,
+        "height": 56,
+        "display": "flex"
+      },
+      "cards": []
+    },
+    {
+      "n": 10,
+      "phase": "guess",
+      "size": {
+        "width": 768,
+        "height": 1024
+      },
+      "screen": 1024,
+      "width": 768,
+      "pageWidth": 768,
+      "stage": {
+        "x": 0,
+        "y": 56,
+        "width": 768,
+        "height": 516,
+        "display": "block"
+      },
+      "seats": {
+        "x": 0,
+        "y": 572,
+        "width": 768,
+        "height": 296,
+        "display": "grid"
+      },
+      "dock": {
+        "x": 0,
+        "y": 868,
+        "width": 768,
+        "height": 156,
+        "display": "flex"
+      },
+      "top": {
+        "x": 0,
+        "y": 0,
+        "width": 768,
+        "height": 56,
+        "display": "flex"
+      },
+      "cards": []
+    },
+    {
+      "n": 10,
+      "phase": "reveal",
+      "size": {
+        "width": 768,
+        "height": 1024
+      },
+      "screen": 1024,
+      "width": 768,
+      "pageWidth": 768,
+      "stage": {
+        "x": 0,
+        "y": 56,
+        "width": 768,
+        "height": 556,
+        "display": "block"
+      },
+      "seats": {
+        "x": 0,
+        "y": 612,
+        "width": 768,
+        "height": 256,
+        "display": "grid"
+      },
+      "dock": {
+        "x": 0,
+        "y": 868,
+        "width": 768,
+        "height": 156,
+        "display": "flex"
+      },
+      "top": {
+        "x": 0,
+        "y": 0,
+        "width": 768,
+        "height": 56,
+        "display": "flex"
+      },
+      "cards": []
+    },
+    {
+      "n": 10,
+      "phase": "over",
+      "size": {
+        "width": 768,
+        "height": 1024
+      },
+      "screen": 1024,
+      "width": 768,
+      "pageWidth": 768,
+      "stage": {
+        "x": 0,
+        "y": 56,
+        "width": 768,
+        "height": 556,
+        "display": "block"
+      },
+      "seats": {
+        "x": 0,
+        "y": 612,
+        "width": 768,
+        "height": 256,
+        "display": "grid"
+      },
+      "dock": {
+        "x": 0,
+        "y": 868,
+        "width": 768,
+        "height": 156,
+        "display": "flex"
+      },
+      "top": {
+        "x": 0,
+        "y": 0,
+        "width": 768,
+        "height": 56,
+        "display": "flex"
+      },
+      "cards": [
+        {
+          "top": 347.375,
+          "bottom": 475.8125
+        },
+        {
+          "top": 322.375,
+          "bottom": 450.8125
+        },
+        {
+          "top": 362.375,
+          "bottom": 490.8125
+        },
+        {
+          "top": 362.375,
+          "bottom": 490.8125
+        }
+      ]
+    }
+  ],
+  "errors": []
+}

@@ -7,6 +7,7 @@
     "verify:xb-topics": "tsx scripts/verify-xb-topics.ts",
     "verify:xb-feel": "tsx scripts/verify-xb-feel-v2.ts",
     "verify:xb-browsers": "tsx scripts/verify-xb-browsers.ts",
+    "verify:xb-layout": "tsx scripts/verify-xb-layout.ts",
     "test": "vitest run",
     "typecheck": "tsc --noEmit",
     "simulate": "tsx scripts/simulate.ts",
