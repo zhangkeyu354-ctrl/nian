@@ -2206,3 +2206,67 @@
     height: 64px;
   }
 }
+.rk-world .rk-quick-new {
+  flex-shrink: 0;
+  margin: 4px 12px 0;
+  min-height: 44px;
+  border-radius: 10px;
+  border: 1px solid #f2d88f;
+  background: #e7cf8f2e;
+  color: #f7e6b4;
+  font-size: 14px;
+  font-weight: 700;
+}
+.rk-world .rk-quick-new:active:not(:disabled) {
+  transform: scale(0.98);
+}
+/* Portrait: whole hand always visible, wraps into more rows instead of scrolling. */
+@media not ((orientation: landscape) and (max-height: 550px)) {
+  .rk-world .rk-rack {
+    overflow: hidden;
+    touch-action: manipulation;
+    min-height: 0;
+  }
+  .rk-world .rk-rack-tiles {
+    grid-auto-flow: row;
+    grid-template-rows: none;
+    grid-auto-rows: var(--hh, 52px);
+    grid-template-columns: repeat(var(--cols, 7), var(--hw, 38px));
+    width: auto;
+    row-gap: 6px;
+    justify-content: center;
+  }
+  .rk-world .rk-rack:has(.rk-rack-tiles) {
+    background:
+      repeating-linear-gradient(
+        180deg,
+        transparent 0 calc(var(--hh, 52px) + 6px),
+        #4a3322 calc(var(--hh, 52px) + 6px) calc(var(--hh, 52px) + 8px),
+        transparent calc(var(--hh, 52px) + 8px) calc(var(--hh, 52px) + 12px)
+      ) 0 3px / 100% calc(var(--hh, 52px) + 6px),
+      linear-gradient(180deg, #8a6644, #6a4a30 8%, #75523a 92%, #4f3726);
+  }
+  .rk-world .rk-rack .rk-hit {
+    touch-action: manipulation;
+  }
+  .rk-world .rk-rack .rk-hit:not(:disabled) {
+    touch-action: none;
+  }
+}
+/* Compact empty table on phones so nothing important gets pushed out of view. */
+@media (max-height: 900px) {
+  .rk-world .rk-empty > span {
+    display: none;
+  }
+  .rk-world .rk-empty {
+    margin: 8px 0;
+  }
+  .rk-world .rk-empty h2 {
+    font-size: 16px;
+  }
+}
+@media (orientation: portrait) {
+  .rk-world .rk-secondary.rk-idle {
+    display: none;
+  }
+}

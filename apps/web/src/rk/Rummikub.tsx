@@ -241,6 +241,12 @@ export function Rummikub() {
     return () => ro.disconnect();
   }, [!!v]);
   useEffect(() => {
+    if (selected.length && mergeMode) setMergeMode(false);
+  }, [selected.length]);
+  useEffect(() => {
+    if (board.length < 2 && mergeMode) setMergeMode(false);
+  }, [board.length]);
+  useEffect(() => {
     if (!net.error) return;
     const t = setTimeout(() => net.setError(""), 6500);
     return () => clearTimeout(t);
@@ -400,11 +406,15 @@ export function Rummikub() {
       </button>
     );
   };
-  const rackCols = Math.max(7, Math.ceil(rack.length / 2));
+  const rackRows = rack.length <= 18 ? 2 : rack.length <= 30 ? 3 : 4;
+  const rackCols = Math.max(7, Math.ceil(rack.length / rackRows));
   const handW = rackWidth
     ? Math.max(
-        38,
-        Math.min(44, Math.floor((rackWidth - 10 - 4 * (rackCols - 1)) / rackCols)),
+        28,
+        Math.min(
+          rackRows > 2 ? 40 : 44,
+          Math.floor((rackWidth - 10 - 4 * (rackCols - 1)) / rackCols),
+        ),
       )
     : 38;
   const officialBoard = v?.board ?? [];
@@ -778,7 +788,7 @@ export function Rummikub() {
                     >
                       +
                     </button>
-                    {mine && (
+                    {mine && board.length >= 2 && (
                       <button
                         onClick={() => {
                           setMergeMode(!mergeMode);
@@ -1038,6 +1048,16 @@ export function Rummikub() {
                             " 张"}
                   </div>
                 )}
+                {mine && selected.length > 0 && !drag && (
+                  <button
+                    className="rk-quick-new"
+                    data-testid="rk-quick-new"
+                    disabled={net.pending}
+                    onClick={() => move(selected, null)}
+                  >
+                    ＋ 用选中的 {selected.length} 张新建一组
+                  </button>
+                )}
                 <p className="rk-table-foot">
                   {drag
                     ? "拖到组合末尾或新建一组"
@@ -1083,6 +1103,8 @@ export function Rummikub() {
                       style={
                         {
                           "--hw": handW + "px",
+                          "--cols": rackCols,
+                          "--rows": rackRows,
                           "--hh": Math.round(handW * 1.37) + "px",
                         } as React.CSSProperties
                       }
@@ -1091,7 +1113,7 @@ export function Rummikub() {
                     </div>
                   </div>
                 </section>
-                <div className="rk-secondary">
+                <div className={"rk-secondary " + (mine ? "" : "rk-idle")}>
                   <button
                     disabled={!mine || net.pending || !v.canUndo}
                     onClick={() => void send({ type: "UNDO" })}
@@ -1118,7 +1140,9 @@ export function Rummikub() {
                     hint={
                       mine
                         ? drawMode
-                          ? "没有要出的牌？摸 1 张结束回合"
+                          ? selected.length
+                            ? "先点上方「用选中的牌新建一组」放上桌面"
+                            : "没有要出的牌？摸 1 张结束回合"
                           : v.validation?.ok
                             ? "组合合法，可以确认"
                             : v.validation?.reason
