@@ -1,0 +1,1306 @@
+{
+  "key": "day|轮到你了 · 抽2张，或打出",
+  "evidence": [
+    {
+      "className": "wt-hand-slot",
+      "rect": {
+        "x": -2.684324264526367,
+        "y": 620.4766235351562,
+        "width": 39.55925750732422,
+        "height": 92.35113525390625,
+        "top": 620.4766235351562,
+        "right": 36.87493324279785,
+        "bottom": 712.8277587890625,
+        "left": -2.684324264526367
+      },
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "parent": {
+        "className": "wt-hand wt-hand-fan",
+        "rect": {
+          "x": 17,
+          "y": 604,
+          "width": 344,
+          "height": 115,
+          "top": 604,
+          "right": 361,
+          "bottom": 719,
+          "left": 17
+        }
+      },
+      "animations": [
+        {
+          "name": "wt-deal",
+          "state": "finished",
+          "time": 450,
+          "timing": {
+            "delay": 0,
+            "direction": "normal",
+            "duration": 450,
+            "easing": "linear",
+            "endDelay": 0,
+            "fill": "both",
+            "iterationStart": 0,
+            "iterations": 1,
+            "activeDuration": 450,
+            "currentIteration": 0,
+            "endTime": 450,
+            "localTime": 450,
+            "progress": 1
+          }
+        }
+      ]
+    },
+    {
+      "className": "wt-card wt-red wt-card-small",
+      "rect": {
+        "x": -2.684324264526367,
+        "y": 601.8798217773438,
+        "width": 101.2470474243164,
+        "height": 119.5313720703125,
+        "top": 601.8798217773438,
+        "right": 98.56272315979004,
+        "bottom": 721.4111938476562,
+        "left": -2.684324264526367
+      },
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "parent": {
+        "className": "wt-hand-slot",
+        "rect": {
+          "x": -2.684324264526367,
+          "y": 620.4766235351562,
+          "width": 39.55925750732422,
+          "height": 92.35113525390625,
+          "top": 620.4766235351562,
+          "right": 36.87493324279785,
+          "bottom": 712.8277587890625,
+          "left": -2.684324264526367
+        }
+      },
+      "animations": [
+        {
+          "name": "wt-deal",
+          "state": "finished",
+          "time": 450,
+          "timing": {
+            "delay": 0,
+            "direction": "normal",
+            "duration": 450,
+            "easing": "linear",
+            "endDelay": 0,
+            "fill": "both",
+            "iterationStart": 0,
+            "iterations": 1,
+            "activeDuration": 450,
+            "currentIteration": 0,
+            "endTime": 450,
+            "localTime": 450,
+            "progress": 1
+          }
+        }
+      ]
+    },
+    {
+      "className": "wt-hand-slot",
+      "rect": {
+        "x": 19.292919158935547,
+        "y": 619.5977783203125,
+        "width": 35.797115325927734,
+        "height": 92.97332763671875,
+        "top": 619.5977783203125,
+        "right": 55.09003448486328,
+        "bottom": 712.5711059570312,
+        "left": 19.292919158935547
+      },
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "parent": {
+        "className": "wt-hand wt-hand-fan",
+        "rect": {
+          "x": 17,
+          "y": 604,
+          "width": 344,
+          "height": 115,
+          "top": 604,
+          "right": 361,
+          "bottom": 719,
+          "left": 17
+        }
+      },
+      "animations": [
+        {
+          "name": "wt-deal",
+          "state": "finished",
+          "time": 490,
+          "timing": {
+            "delay": 40,
+            "direction": "normal",
+            "duration": 450,
+            "easing": "linear",
+            "endDelay": 0,
+            "fill": "both",
+            "iterationStart": 0,
+            "iterations": 1,
+            "activeDuration": 450,
+            "currentIteration": 0,
+            "endTime": 490,
+            "localTime": 490,
+            "progress": 1
+          }
+        }
+      ]
+    },
+    {
+      "className": "wt-hand-slot",
+      "rect": {
+        "x": 41.31206512451172,
+        "y": 618.888916015625,
+        "width": 31.996986389160156,
+        "height": 93.4266357421875,
+        "top": 618.888916015625,
+        "right": 73.30905151367188,
+        "bottom": 712.3155517578125,
+        "left": 41.31206512451172
+      },
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "parent": {
+        "className": "wt-hand wt-hand-fan",
+        "rect": {
+          "x": 17,
+          "y": 604,
+          "width": 344,
+          "height": 115,
+          "top": 604,
+          "right": 361,
+          "bottom": 719,
+          "left": 17
+        }
+      },
+      "animations": [
+        {
+          "name": "wt-deal",
+          "state": "finished",
+          "time": 530,
+          "timing": {
+            "delay": 80,
+            "direction": "normal",
+            "duration": 450,
+            "easing": "linear",
+            "endDelay": 0,
+            "fill": "both",
+            "iterationStart": 0,
+            "iterations": 1,
+            "activeDuration": 450,
+            "currentIteration": 0,
+            "endTime": 530,
+            "localTime": 530,
+            "progress": 1
+          }
+        }
+      ]
+    },
+    {
+      "className": "wt-card wt-red wt-card-small",
+      "rect": {
+        "x": 41.31206512451172,
+        "y": 605.5034790039062,
+        "width": 94.32274627685547,
+        "height": 115.5987548828125,
+        "top": 605.5034790039062,
+        "right": 135.6348114013672,
+        "bottom": 721.1022338867188,
+        "left": 41.31206512451172
+      },
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "parent": {
+        "className": "wt-hand-slot",
+        "rect": {
+          "x": 41.31206512451172,
+          "y": 618.888916015625,
+          "width": 31.996986389160156,
+          "height": 93.4266357421875,
+          "top": 618.888916015625,
+          "right": 73.30905151367188,
+          "bottom": 712.3155517578125,
+          "left": 41.31206512451172
+        }
+      },
+      "animations": [
+        {
+          "name": "wt-deal",
+          "state": "finished",
+          "time": 530,
+          "timing": {
+            "delay": 80,
+            "direction": "normal",
+            "duration": 450,
+            "easing": "linear",
+            "endDelay": 0,
+            "fill": "both",
+            "iterationStart": 0,
+            "iterations": 1,
+            "activeDuration": 450,
+            "currentIteration": 0,
+            "endTime": 530,
+            "localTime": 530,
+            "progress": 1
+          }
+        }
+      ]
+    },
+    {
+      "className": "wt-hand-slot",
+      "rect": {
+        "x": 63.39606475830078,
+        "y": 618.3587646484375,
+        "width": 28.10546112060547,
+        "height": 93.6953125,
+        "top": 618.3587646484375,
+        "right": 91.50152587890625,
+        "bottom": 712.0540771484375,
+        "left": 63.39606475830078
+      },
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "parent": {
+        "className": "wt-hand wt-hand-fan",
+        "rect": {
+          "x": 17,
+          "y": 604,
+          "width": 344,
+          "height": 115,
+          "top": 604,
+          "right": 361,
+          "bottom": 719,
+          "left": 17
+        }
+      },
+      "animations": [
+        {
+          "name": "wt-deal",
+          "state": "finished",
+          "time": 570.0000000000001,
+          "timing": {
+            "delay": 120,
+            "direction": "normal",
+            "duration": 450,
+            "easing": "linear",
+            "endDelay": 0,
+            "fill": "both",
+            "iterationStart": 0,
+            "iterations": 1,
+            "activeDuration": 450,
+            "currentIteration": 0,
+            "endTime": 570.0000000000001,
+            "localTime": 570.0000000000001,
+            "progress": 1
+          }
+        }
+      ]
+    },
+    {
+      "className": "wt-card wt-red wt-card-small",
+      "rect": {
+        "x": 63.39606475830078,
+        "y": 607.6170043945312,
+        "width": 90.58788299560547,
+        "height": 113.30035400390625,
+        "top": 607.6170043945312,
+        "right": 153.98394775390625,
+        "bottom": 720.9173583984375,
+        "left": 63.39606475830078
+      },
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "parent": {
+        "className": "wt-hand-slot",
+        "rect": {
+          "x": 63.39606475830078,
+          "y": 618.3587646484375,
+          "width": 28.10546112060547,
+          "height": 93.6953125,
+          "top": 618.3587646484375,
+          "right": 91.50152587890625,
+          "bottom": 712.0540771484375,
+          "left": 63.39606475830078
+        }
+      },
+      "animations": [
+        {
+          "name": "wt-deal",
+          "state": "finished",
+          "time": 570.0000000000001,
+          "timing": {
+            "delay": 120,
+            "direction": "normal",
+            "duration": 450,
+            "easing": "linear",
+            "endDelay": 0,
+            "fill": "both",
+            "iterationStart": 0,
+            "iterations": 1,
+            "activeDuration": 450,
+            "currentIteration": 0,
+            "endTime": 570.0000000000001,
+            "localTime": 570.0000000000001,
+            "progress": 1
+          }
+        }
+      ]
+    },
+    {
+      "className": "wt-hand-slot",
+      "rect": {
+        "x": 85.50674438476562,
+        "y": 618.0032958984375,
+        "width": 24.175697326660156,
+        "height": 93.7890625,
+        "top": 618.0032958984375,
+        "right": 109.68244171142578,
+        "bottom": 711.7923583984375,
+        "left": 85.50674438476562
+      },
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "parent": {
+        "className": "wt-hand wt-hand-fan",
+        "rect": {
+          "x": 17,
+          "y": 604,
+          "width": 344,
+          "height": 115,
+          "top": 604,
+          "right": 361,
+          "bottom": 719,
+          "left": 17
+        }
+      },
+      "animations": [
+        {
+          "name": "wt-deal",
+          "state": "finished",
+          "time": 610,
+          "timing": {
+            "delay": 160,
+            "direction": "normal",
+            "duration": 450,
+            "easing": "linear",
+            "endDelay": 0,
+            "fill": "both",
+            "iterationStart": 0,
+            "iterations": 1,
+            "activeDuration": 450,
+            "currentIteration": 0,
+            "endTime": 610,
+            "localTime": 610,
+            "progress": 1
+          }
+        }
+      ]
+    },
+    {
+      "className": "wt-hand-slot",
+      "rect": {
+        "x": 107.65199279785156,
+        "y": 617.8248291015625,
+        "width": 20.199905395507812,
+        "height": 93.7042236328125,
+        "top": 617.8248291015625,
+        "right": 127.85189819335938,
+        "bottom": 711.529052734375,
+        "left": 107.65199279785156
+      },
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "parent": {
+        "className": "wt-hand wt-hand-fan",
+        "rect": {
+          "x": 17,
+          "y": 604,
+          "width": 344,
+          "height": 115,
+          "top": 604,
+          "right": 361,
+          "bottom": 719,
+          "left": 17
+        }
+      },
+      "animations": [
+        {
+          "name": "wt-deal",
+          "state": "finished",
+          "time": 650,
+          "timing": {
+            "delay": 200,
+            "direction": "normal",
+            "duration": 450,
+            "easing": "linear",
+            "endDelay": 0,
+            "fill": "both",
+            "iterationStart": 0,
+            "iterations": 1,
+            "activeDuration": 450,
+            "currentIteration": 0,
+            "endTime": 650,
+            "localTime": 650,
+            "progress": 1
+          }
+        }
+      ]
+    },
+    {
+      "className": "wt-card wt-red wt-card-small",
+      "rect": {
+        "x": 107.65199279785156,
+        "y": 612.4334106445312,
+        "width": 82.60829162597656,
+        "height": 108.0614013671875,
+        "top": 612.4334106445312,
+        "right": 190.26028442382812,
+        "bottom": 720.4948120117188,
+        "left": 107.65199279785156
+      },
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "parent": {
+        "className": "wt-hand-slot",
+        "rect": {
+          "x": 107.65199279785156,
+          "y": 617.8248291015625,
+          "width": 20.199905395507812,
+          "height": 93.7042236328125,
+          "top": 617.8248291015625,
+          "right": 127.85189819335938,
+          "bottom": 711.529052734375,
+          "left": 107.65199279785156
+        }
+      },
+      "animations": [
+        {
+          "name": "wt-deal",
+          "state": "finished",
+          "time": 650,
+          "timing": {
+            "delay": 200,
+            "direction": "normal",
+            "duration": 450,
+            "easing": "linear",
+            "endDelay": 0,
+            "fill": "both",
+            "iterationStart": 0,
+            "iterations": 1,
+            "activeDuration": 450,
+            "currentIteration": 0,
+            "endTime": 650,
+            "localTime": 650,
+            "progress": 1
+          }
+        }
+      ]
+    },
+    {
+      "className": "wt-hand-slot",
+      "rect": {
+        "x": 129.8241729736328,
+        "y": 617.82373046875,
+        "width": 16.1856689453125,
+        "height": 93.4410400390625,
+        "top": 617.82373046875,
+        "right": 146.0098419189453,
+        "bottom": 711.2647705078125,
+        "left": 129.8241729736328
+      },
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "parent": {
+        "className": "wt-hand wt-hand-fan",
+        "rect": {
+          "x": 17,
+          "y": 604,
+          "width": 344,
+          "height": 115,
+          "top": 604,
+          "right": 361,
+          "bottom": 719,
+          "left": 17
+        }
+      },
+      "animations": [
+        {
+          "name": "wt-deal",
+          "state": "finished",
+          "time": 690,
+          "timing": {
+            "delay": 240,
+            "direction": "normal",
+            "duration": 450,
+            "easing": "linear",
+            "endDelay": 0,
+            "fill": "both",
+            "iterationStart": 0,
+            "iterations": 1,
+            "activeDuration": 450,
+            "currentIteration": 0,
+            "endTime": 690,
+            "localTime": 690,
+            "progress": 1
+          }
+        }
+      ]
+    },
+    {
+      "className": "wt-card wt-red wt-card-small",
+      "rect": {
+        "x": 129.8241729736328,
+        "y": 615.12548828125,
+        "width": 78.37875366210938,
+        "height": 105.1307373046875,
+        "top": 615.12548828125,
+        "right": 208.2029266357422,
+        "bottom": 720.2562255859375,
+        "left": 129.8241729736328
+      },
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "parent": {
+        "className": "wt-hand-slot",
+        "rect": {
+          "x": 129.8241729736328,
+          "y": 617.82373046875,
+          "width": 16.1856689453125,
+          "height": 93.4410400390625,
+          "top": 617.82373046875,
+          "right": 146.0098419189453,
+          "bottom": 711.2647705078125,
+          "left": 129.8241729736328
+        }
+      },
+      "animations": [
+        {
+          "name": "wt-deal",
+          "state": "finished",
+          "time": 690,
+          "timing": {
+            "delay": 240,
+            "direction": "normal",
+            "duration": 450,
+            "easing": "linear",
+            "endDelay": 0,
+            "fill": "both",
+            "iterationStart": 0,
+            "iterations": 1,
+            "activeDuration": 450,
+            "currentIteration": 0,
+            "endTime": 690,
+            "localTime": 690,
+            "progress": 1
+          }
+        }
+      ]
+    },
+    {
+      "className": "wt-hand-slot",
+      "rect": {
+        "x": 152.015625,
+        "y": 618,
+        "width": 12.140625,
+        "height": 93,
+        "top": 618,
+        "right": 164.15625,
+        "bottom": 711,
+        "left": 152.015625
+      },
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "parent": {
+        "className": "wt-hand wt-hand-fan",
+        "rect": {
+          "x": 17,
+          "y": 604,
+          "width": 344,
+          "height": 115,
+          "top": 604,
+          "right": 361,
+          "bottom": 719,
+          "left": 17
+        }
+      },
+      "animations": [
+        {
+          "name": "wt-deal",
+          "state": "finished",
+          "time": 730,
+          "timing": {
+            "delay": 280,
+            "direction": "normal",
+            "duration": 450,
+            "easing": "linear",
+            "endDelay": 0,
+            "fill": "both",
+            "iterationStart": 0,
+            "iterations": 1,
+            "activeDuration": 450,
+            "currentIteration": 0,
+            "endTime": 730,
+            "localTime": 730,
+            "progress": 1
+          }
+        }
+      ]
+    },
+    {
+      "className": "wt-card wt-red wt-card-small",
+      "rect": {
+        "x": 152.015625,
+        "y": 618,
+        "width": 74,
+        "height": 102,
+        "top": 618,
+        "right": 226.015625,
+        "bottom": 720,
+        "left": 152.015625
+      },
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "parent": {
+        "className": "wt-hand-slot",
+        "rect": {
+          "x": 152.015625,
+          "y": 618,
+          "width": 12.140625,
+          "height": 93,
+          "top": 618,
+          "right": 164.15625,
+          "bottom": 711,
+          "left": 152.015625
+        }
+      },
+      "animations": [
+        {
+          "name": "wt-deal",
+          "state": "finished",
+          "time": 730,
+          "timing": {
+            "delay": 280,
+            "direction": "normal",
+            "duration": 450,
+            "easing": "linear",
+            "endDelay": 0,
+            "fill": "both",
+            "iterationStart": 0,
+            "iterations": 1,
+            "activeDuration": 450,
+            "currentIteration": 0,
+            "endTime": 730,
+            "localTime": 730,
+            "progress": 1
+          }
+        }
+      ]
+    },
+    {
+      "className": "wt-hand-slot",
+      "rect": {
+        "x": 170.1620330810547,
+        "y": 617.82373046875,
+        "width": 16.1856689453125,
+        "height": 93.4410400390625,
+        "top": 617.82373046875,
+        "right": 186.3477020263672,
+        "bottom": 711.2647705078125,
+        "left": 170.1620330810547
+      },
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "parent": {
+        "className": "wt-hand wt-hand-fan",
+        "rect": {
+          "x": 17,
+          "y": 604,
+          "width": 344,
+          "height": 115,
+          "top": 604,
+          "right": 361,
+          "bottom": 719,
+          "left": 17
+        }
+      },
+      "animations": [
+        {
+          "name": "wt-deal",
+          "state": "finished",
+          "time": 770,
+          "timing": {
+            "delay": 320,
+            "direction": "normal",
+            "duration": 450,
+            "easing": "linear",
+            "endDelay": 0,
+            "fill": "both",
+            "iterationStart": 0,
+            "iterations": 1,
+            "activeDuration": 450,
+            "currentIteration": 0,
+            "endTime": 770,
+            "localTime": 770,
+            "progress": 1
+          }
+        }
+      ]
+    },
+    {
+      "className": "wt-card wt-red wt-card-small",
+      "rect": {
+        "x": 169.7694549560547,
+        "y": 617.82373046875,
+        "width": 78.37873840332031,
+        "height": 105.1307373046875,
+        "top": 617.82373046875,
+        "right": 248.148193359375,
+        "bottom": 722.9544677734375,
+        "left": 169.7694549560547
+      },
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "parent": {
+        "className": "wt-hand-slot",
+        "rect": {
+          "x": 170.1620330810547,
+          "y": 617.82373046875,
+          "width": 16.1856689453125,
+          "height": 93.4410400390625,
+          "top": 617.82373046875,
+          "right": 186.3477020263672,
+          "bottom": 711.2647705078125,
+          "left": 170.1620330810547
+        }
+      },
+      "animations": [
+        {
+          "name": "wt-deal",
+          "state": "finished",
+          "time": 770,
+          "timing": {
+            "delay": 320,
+            "direction": "normal",
+            "duration": 450,
+            "easing": "linear",
+            "endDelay": 0,
+            "fill": "both",
+            "iterationStart": 0,
+            "iterations": 1,
+            "activeDuration": 450,
+            "currentIteration": 0,
+            "endTime": 770,
+            "localTime": 770,
+            "progress": 1
+          }
+        }
+      ]
+    },
+    {
+      "className": "wt-hand-slot",
+      "rect": {
+        "x": 188.31997680664062,
+        "y": 617.8248291015625,
+        "width": 20.199905395507812,
+        "height": 93.7042236328125,
+        "top": 617.8248291015625,
+        "right": 208.51988220214844,
+        "bottom": 711.529052734375,
+        "left": 188.31997680664062
+      },
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "parent": {
+        "className": "wt-hand wt-hand-fan",
+        "rect": {
+          "x": 17,
+          "y": 604,
+          "width": 344,
+          "height": 115,
+          "top": 604,
+          "right": 361,
+          "bottom": 719,
+          "left": 17
+        }
+      },
+      "animations": [
+        {
+          "name": "wt-deal",
+          "state": "finished",
+          "time": 810,
+          "timing": {
+            "delay": 360,
+            "direction": "normal",
+            "duration": 450,
+            "easing": "linear",
+            "endDelay": 0,
+            "fill": "both",
+            "iterationStart": 0,
+            "iterations": 1,
+            "activeDuration": 450,
+            "currentIteration": 0,
+            "endTime": 810,
+            "localTime": 810,
+            "progress": 1
+          }
+        }
+      ]
+    },
+    {
+      "className": "wt-hand-slot",
+      "rect": {
+        "x": 206.4894256591797,
+        "y": 618.0032958984375,
+        "width": 24.175704956054688,
+        "height": 93.7890625,
+        "top": 618.0032958984375,
+        "right": 230.66513061523438,
+        "bottom": 711.7923583984375,
+        "left": 206.4894256591797
+      },
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "parent": {
+        "className": "wt-hand wt-hand-fan",
+        "rect": {
+          "x": 17,
+          "y": 604,
+          "width": 344,
+          "height": 115,
+          "top": 604,
+          "right": 361,
+          "bottom": 719,
+          "left": 17
+        }
+      },
+      "animations": [
+        {
+          "name": "wt-deal",
+          "state": "finished",
+          "time": 850.0000000000001,
+          "timing": {
+            "delay": 400,
+            "direction": "normal",
+            "duration": 450,
+            "easing": "linear",
+            "endDelay": 0,
+            "fill": "both",
+            "iterationStart": 0,
+            "iterations": 1,
+            "activeDuration": 450,
+            "currentIteration": 0,
+            "endTime": 850.0000000000001,
+            "localTime": 850.0000000000001,
+            "progress": 1
+          }
+        }
+      ]
+    },
+    {
+      "className": "wt-card wt-red wt-card-small",
+      "rect": {
+        "x": 205.314697265625,
+        "y": 618.0032958984375,
+        "width": 86.68060302734375,
+        "height": 110.78631591796875,
+        "top": 618.0032958984375,
+        "right": 291.99530029296875,
+        "bottom": 728.7896118164062,
+        "left": 205.314697265625
+      },
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "parent": {
+        "className": "wt-hand-slot",
+        "rect": {
+          "x": 206.4894256591797,
+          "y": 618.0032958984375,
+          "width": 24.175704956054688,
+          "height": 93.7890625,
+          "top": 618.0032958984375,
+          "right": 230.66513061523438,
+          "bottom": 711.7923583984375,
+          "left": 206.4894256591797
+        }
+      },
+      "animations": [
+        {
+          "name": "wt-deal",
+          "state": "finished",
+          "time": 850.0000000000001,
+          "timing": {
+            "delay": 400,
+            "direction": "normal",
+            "duration": 450,
+            "easing": "linear",
+            "endDelay": 0,
+            "fill": "both",
+            "iterationStart": 0,
+            "iterations": 1,
+            "activeDuration": 450,
+            "currentIteration": 0,
+            "endTime": 850.0000000000001,
+            "localTime": 850.0000000000001,
+            "progress": 1
+          }
+        }
+      ]
+    },
+    {
+      "className": "wt-hand-slot",
+      "rect": {
+        "x": 224.67034912109375,
+        "y": 618.3587646484375,
+        "width": 28.105453491210938,
+        "height": 93.6953125,
+        "top": 618.3587646484375,
+        "right": 252.7758026123047,
+        "bottom": 712.0540771484375,
+        "left": 224.67034912109375
+      },
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "parent": {
+        "className": "wt-hand wt-hand-fan",
+        "rect": {
+          "x": 17,
+          "y": 604,
+          "width": 344,
+          "height": 115,
+          "top": 604,
+          "right": 361,
+          "bottom": 719,
+          "left": 17
+        }
+      },
+      "animations": [
+        {
+          "name": "wt-deal",
+          "state": "finished",
+          "time": 890,
+          "timing": {
+            "delay": 440,
+            "direction": "normal",
+            "duration": 450,
+            "easing": "linear",
+            "endDelay": 0,
+            "fill": "both",
+            "iterationStart": 0,
+            "iterations": 1,
+            "activeDuration": 450,
+            "currentIteration": 0,
+            "endTime": 890,
+            "localTime": 890,
+            "progress": 1
+          }
+        }
+      ]
+    },
+    {
+      "className": "wt-hand-slot",
+      "rect": {
+        "x": 242.86264038085938,
+        "y": 618.890625,
+        "width": 31.981719970703125,
+        "height": 93.4232177734375,
+        "top": 618.890625,
+        "right": 274.8443603515625,
+        "bottom": 712.3138427734375,
+        "left": 242.86264038085938
+      },
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "parent": {
+        "className": "wt-hand wt-hand-fan",
+        "rect": {
+          "x": 17,
+          "y": 604,
+          "width": 344,
+          "height": 115,
+          "top": 604,
+          "right": 361,
+          "bottom": 719,
+          "left": 17
+        }
+      },
+      "animations": [
+        {
+          "name": "wt-deal",
+          "state": "finished",
+          "time": 929.9999999999999,
+          "timing": {
+            "delay": 480,
+            "direction": "normal",
+            "duration": 450,
+            "easing": "linear",
+            "endDelay": 0,
+            "fill": "both",
+            "iterationStart": 0,
+            "iterations": 1,
+            "activeDuration": 450,
+            "currentIteration": 0,
+            "endTime": 929.9999999999999,
+            "localTime": 929.9999999999999,
+            "progress": 1
+          }
+        }
+      ]
+    },
+    {
+      "className": "wt-card wt-red wt-card-small",
+      "rect": {
+        "x": 240.91468811035156,
+        "y": 618.890625,
+        "width": 94.32273864746094,
+        "height": 115.59869384765625,
+        "top": 618.890625,
+        "right": 335.2374267578125,
+        "bottom": 734.4893188476562,
+        "left": 240.91468811035156
+      },
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "parent": {
+        "className": "wt-hand-slot",
+        "rect": {
+          "x": 242.86264038085938,
+          "y": 618.890625,
+          "width": 31.981719970703125,
+          "height": 93.4232177734375,
+          "top": 618.890625,
+          "right": 274.8443603515625,
+          "bottom": 712.3138427734375,
+          "left": 242.86264038085938
+        }
+      },
+      "animations": [
+        {
+          "name": "wt-deal",
+          "state": "finished",
+          "time": 929.9999999999999,
+          "timing": {
+            "delay": 480,
+            "direction": "normal",
+            "duration": 450,
+            "easing": "linear",
+            "endDelay": 0,
+            "fill": "both",
+            "iterationStart": 0,
+            "iterations": 1,
+            "activeDuration": 450,
+            "currentIteration": 0,
+            "endTime": 929.9999999999999,
+            "localTime": 929.9999999999999,
+            "progress": 1
+          }
+        }
+      ]
+    },
+    {
+      "className": "wt-hand-slot",
+      "rect": {
+        "x": 261.06622314453125,
+        "y": 619.5977783203125,
+        "width": 35.797119140625,
+        "height": 92.97332763671875,
+        "top": 619.5977783203125,
+        "right": 296.86334228515625,
+        "bottom": 712.5711059570312,
+        "left": 261.06622314453125
+      },
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "parent": {
+        "className": "wt-hand wt-hand-fan",
+        "rect": {
+          "x": 17,
+          "y": 604,
+          "width": 344,
+          "height": 115,
+          "top": 604,
+          "right": 361,
+          "bottom": 719,
+          "left": 17
+        }
+      },
+      "animations": [
+        {
+          "name": "wt-deal",
+          "state": "finished",
+          "time": 970,
+          "timing": {
+            "delay": 520,
+            "direction": "normal",
+            "duration": 450,
+            "easing": "linear",
+            "endDelay": 0,
+            "fill": "both",
+            "iterationStart": 0,
+            "iterations": 1,
+            "activeDuration": 450,
+            "currentIteration": 0,
+            "endTime": 970,
+            "localTime": 970,
+            "progress": 1
+          }
+        }
+      ]
+    },
+    {
+      "className": "wt-card wt-red wt-card-small",
+      "rect": {
+        "x": 258.7368469238281,
+        "y": 619.5977783203125,
+        "width": 97.8780517578125,
+        "height": 117.67706298828125,
+        "top": 619.5977783203125,
+        "right": 356.6148986816406,
+        "bottom": 737.2748413085938,
+        "left": 258.7368469238281
+      },
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "parent": {
+        "className": "wt-hand-slot",
+        "rect": {
+          "x": 261.06622314453125,
+          "y": 619.5977783203125,
+          "width": 35.797119140625,
+          "height": 92.97332763671875,
+          "top": 619.5977783203125,
+          "right": 296.86334228515625,
+          "bottom": 712.5711059570312,
+          "left": 261.06622314453125
+        }
+      },
+      "animations": [
+        {
+          "name": "wt-deal",
+          "state": "finished",
+          "time": 970,
+          "timing": {
+            "delay": 520,
+            "direction": "normal",
+            "duration": 450,
+            "easing": "linear",
+            "endDelay": 0,
+            "fill": "both",
+            "iterationStart": 0,
+            "iterations": 1,
+            "activeDuration": 450,
+            "currentIteration": 0,
+            "endTime": 970,
+            "localTime": 970,
+            "progress": 1
+          }
+        }
+      ]
+    },
+    {
+      "className": "wt-hand-slot",
+      "rect": {
+        "x": 280.71246337890625,
+        "y": 611.17822265625,
+        "width": 98.54071044921875,
+        "height": 110.9478759765625,
+        "top": 611.17822265625,
+        "right": 379.253173828125,
+        "bottom": 722.1260986328125,
+        "left": 280.71246337890625
+      },
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "parent": {
+        "className": "wt-hand wt-hand-fan",
+        "rect": {
+          "x": 17,
+          "y": 604,
+          "width": 344,
+          "height": 115,
+          "top": 604,
+          "right": 361,
+          "bottom": 719,
+          "left": 17
+        }
+      },
+      "animations": [
+        {
+          "name": "wt-deal",
+          "state": "finished",
+          "time": 1010,
+          "timing": {
+            "delay": 560,
+            "direction": "normal",
+            "duration": 450,
+            "easing": "linear",
+            "endDelay": 0,
+            "fill": "both",
+            "iterationStart": 0,
+            "iterations": 1,
+            "activeDuration": 450,
+            "currentIteration": 0,
+            "endTime": 1010,
+            "localTime": 1010,
+            "progress": 1
+          }
+        }
+      ]
+    }
+  ],
+  "settled": []
+}

@@ -36,7 +36,22 @@ async function snapPhase(page: Page, i: number) {
       const b = box.getBoundingClientRect(); return r.right > b.right + 2 || r.left < b.left - 2 || r.bottom > b.bottom + 2;
     }).map(e => `${(e as HTMLElement).className || e.tagName}`.slice(0, 50)).slice(0, 5);
   });
-  if (bad.length) overflow.push(`${key}: ${bad.join(" | ")}`);
+  if (bad.length) {
+    overflow.push(`${key}: ${bad.join(" | ")}`);
+    const evidence = await page.evaluate((classes) => {
+      return [...document.querySelectorAll(".wt-world *")].filter(e => classes.includes(`${(e as HTMLElement).className || e.tagName}`.slice(0,50))).map(e => ({
+        className: e.className, rect: e.getBoundingClientRect().toJSON(), viewport:{width:innerWidth,height:innerHeight},
+        parent: e.parentElement && {className:e.parentElement.className,rect:e.parentElement.getBoundingClientRect().toJSON()},
+        animations: [...e.getAnimations(), ...(e.parentElement?.getAnimations() ?? [])].map(a => ({name:(a as CSSAnimation).animationName,state:a.playState,time:a.currentTime,timing:a.effect?.getComputedTiming()})),
+      }));
+    }, bad);
+    const prefix = `${SHOTS}/overflow-${overflow.length}-p${i+1}`;
+    await page.screenshot({path:`${prefix}.png`});
+    await page.waitForTimeout(800);
+    const settled = await page.evaluate((classes) => [...document.querySelectorAll(".wt-world *")].filter(e => classes.includes(`${(e as HTMLElement).className || e.tagName}`.slice(0,50))).map(e => { const r=e.getBoundingClientRect(); return {className:e.className,x:r.x,y:r.y,right:r.right,bottom:r.bottom}; }), bad);
+    writeFileSync(`${prefix}.json`,JSON.stringify({key,evidence,settled},null,2));
+    await page.screenshot({path:`${prefix}-settled.png`});
+  }
   if (shot.has(key) || shot.size > 60) return;
   shot.add(key);
   await page.screenshot({ path: `${SHOTS}/${String(shot.size).padStart(2, "0")}-p${i + 1}-${key.replace(/[^a-zA-Z0-9一-龥]+/g, "_")}.png` });
