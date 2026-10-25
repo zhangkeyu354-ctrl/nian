@@ -110,3 +110,10 @@ M5第二轮完成：96场景+9交互截图=105；布局96/96、交互14组/排�
 
 - 2026-10-25 当前用户委托执行GitHub新版docs/instructions/传情画意_主题投票与MVP坑货_交给Codex.md。新分支codex/tp-theme-mvp基于d2d301c，未合并旧实验分支；仅tp：THEME→THEME_RESULT→PROMPT，自由写题无系统题库；每册末页AWARD→AWARD_RESULT，匿名MVP/坑货，按原始票数汇总并列，无积分输赢。TP scope加cursor，FA原路径不改。详见docs/drawing-party/TP_THEME_MVP_2026-10-25.md。首轮850测试、类型、构建、重放、3～10人两款16局协议、两款3端与8人UI回归通过。3017隔离预览，真机与Render未测试，未部署。
 - 最终冻结版再次55文件/850项通过（230.44秒）；typecheck/build、三局重放、16局tp/fa协议、BROWSER_PASS tp/fa、EIGHT_UI_PASS tp/fa、10人全流程与像素截图复验全部通过。截图theme-mvp-screens/共19张，metrics记录纸面保留率，人工复核完成。无真实手机或Render测试；按指令交接后停止。
+
+## 2026-10-25 XB_LAYOUT_FIX（ec71245 基线）
+- 从最新 main ec71245 创建 codex/xb-layout-fix，保存本轮执行文件；仅改瞎掰王呈现层及对应验收脚本。
+- 手机竖屏单行横滑座位76px，头像40px、姓名/分数12px；计时改头像环；自动显示自己/发言人。闭眼、身份、真相与终局隐藏座位。Dock主按钮52px、紧凑副操作及安全区；终局领奖台和其余排名在舞台内滚动。
+- 先记录基线与失败断言：390宽3人舞台423.66px不足60%；修复后48组布局通过，390×844讨论584px(69.2%)，终局728px(86.3%)，34px安全区亦通过，横屏/平板区域矩形与基线相同。
+- 62文件904项单测、typecheck/build、UI v3 30图、原五款回归已通过。截图及实测记录位于docs/xiabaiwang/layout-fix/，含真实main修改前截图与并排对比。引擎/计分/题库/服务端协议冻结未改。
+- 最终verify:xb-browsers：3/6/10人分别完成3/6/10轮、终局刷新和再来一局，全部通过。交接docs/handoff/XB_LAYOUT_FIX_交接_2026-10-25.md；仅推codex/xb-layout-fix，不合并、不部署。
