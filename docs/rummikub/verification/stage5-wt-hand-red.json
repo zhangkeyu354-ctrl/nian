@@ -1,0 +1,679 @@
+{
+  "frames": 48,
+  "failedFrames": 40,
+  "errors": [],
+  "results": [
+    {
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "count": 3,
+      "time": 0,
+      "horizontalScroll": false,
+      "minLeft": 73.12698364257812,
+      "maxRight": 328.5830078125,
+      "maxBottom": 773.0618286132812,
+      "outsideViewport": 0,
+      "clippedByPanel": 6
+    },
+    {
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "count": 3,
+      "time": 100,
+      "horizontalScroll": false,
+      "minLeft": 71.37680053710938,
+      "maxRight": 326.1356506347656,
+      "maxBottom": 760.4300537109375,
+      "outsideViewport": 0,
+      "clippedByPanel": 3
+    },
+    {
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "count": 3,
+      "time": 225,
+      "horizontalScroll": false,
+      "minLeft": 68.90362548828125,
+      "maxRight": 319.77130126953125,
+      "maxBottom": 728.364501953125,
+      "outsideViewport": 0,
+      "clippedByPanel": 0
+    },
+    {
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "count": 3,
+      "time": 2000,
+      "horizontalScroll": false,
+      "minLeft": 69.98051452636719,
+      "maxRight": 320.0213928222656,
+      "maxBottom": 729.6925659179688,
+      "outsideViewport": 0,
+      "clippedByPanel": 0
+    },
+    {
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "count": 9,
+      "time": 0,
+      "horizontalScroll": false,
+      "minLeft": 29.87274169921875,
+      "maxRight": 371.5830078125,
+      "maxBottom": 776.4193725585938,
+      "outsideViewport": 0,
+      "clippedByPanel": 18
+    },
+    {
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "count": 9,
+      "time": 100,
+      "horizontalScroll": false,
+      "minLeft": 17.3924503326416,
+      "maxRight": 371.5830078125,
+      "maxBottom": 776.4193725585938,
+      "outsideViewport": 0,
+      "clippedByPanel": 15
+    },
+    {
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "count": 9,
+      "time": 225,
+      "horizontalScroll": false,
+      "minLeft": 13.23880672454834,
+      "maxRight": 371.5830078125,
+      "maxBottom": 776.4193725585938,
+      "outsideViewport": 0,
+      "clippedByPanel": 9
+    },
+    {
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "count": 9,
+      "time": 2000,
+      "horizontalScroll": false,
+      "minLeft": 15.046319961547852,
+      "maxRight": 374.587158203125,
+      "maxBottom": 735.9014282226562,
+      "outsideViewport": 0,
+      "clippedByPanel": 0
+    },
+    {
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "count": 19,
+      "time": 0,
+      "horizontalScroll": false,
+      "minLeft": 29.786977767944336,
+      "maxRight": 371.5830078125,
+      "maxBottom": 777.6469116210938,
+      "outsideViewport": 0,
+      "clippedByPanel": 38
+    },
+    {
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "count": 19,
+      "time": 100,
+      "horizontalScroll": false,
+      "minLeft": -0.5046844482421875,
+      "maxRight": 371.5830078125,
+      "maxBottom": 777.6469116210938,
+      "outsideViewport": 0,
+      "clippedByPanel": 37
+    },
+    {
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "count": 19,
+      "time": 225,
+      "horizontalScroll": false,
+      "minLeft": -7.158029556274414,
+      "maxRight": 371.5830078125,
+      "maxBottom": 777.6469116210938,
+      "outsideViewport": 2,
+      "clippedByPanel": 31
+    },
+    {
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "count": 19,
+      "time": 2000,
+      "horizontalScroll": false,
+      "minLeft": -4.2803192138671875,
+      "maxRight": 391.7731018066406,
+      "maxBottom": 751.3799438476562,
+      "outsideViewport": 4,
+      "clippedByPanel": 9
+    },
+    {
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "count": 30,
+      "time": 0,
+      "horizontalScroll": false,
+      "minLeft": 29.76089859008789,
+      "maxRight": 371.5830078125,
+      "maxBottom": 778.0198364257812,
+      "outsideViewport": 0,
+      "clippedByPanel": 60
+    },
+    {
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "count": 30,
+      "time": 100,
+      "horizontalScroll": false,
+      "minLeft": -18.842735290527344,
+      "maxRight": 371.5830078125,
+      "maxBottom": 778.0198364257812,
+      "outsideViewport": 2,
+      "clippedByPanel": 60
+    },
+    {
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "count": 30,
+      "time": 225,
+      "horizontalScroll": false,
+      "minLeft": -27.354228973388672,
+      "maxRight": 371.5830078125,
+      "maxBottom": 778.0198364257812,
+      "outsideViewport": 6,
+      "clippedByPanel": 56
+    },
+    {
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "count": 30,
+      "time": 2000,
+      "horizontalScroll": false,
+      "minLeft": -23.72414779663086,
+      "maxRight": 406.83026123046875,
+      "maxBottom": 766.8271484375,
+      "outsideViewport": 6,
+      "clippedByPanel": 18
+    },
+    {
+      "viewport": {
+        "width": 360,
+        "height": 640
+      },
+      "count": 3,
+      "time": 0,
+      "horizontalScroll": false,
+      "minLeft": 64.37954711914062,
+      "maxRight": 307.9358215332031,
+      "maxBottom": 569.427734375,
+      "outsideViewport": 0,
+      "clippedByPanel": 6
+    },
+    {
+      "viewport": {
+        "width": 360,
+        "height": 640
+      },
+      "count": 3,
+      "time": 100,
+      "horizontalScroll": false,
+      "minLeft": 61.518680572509766,
+      "maxRight": 305.6094970703125,
+      "maxBottom": 555.9288330078125,
+      "outsideViewport": 0,
+      "clippedByPanel": 2
+    },
+    {
+      "viewport": {
+        "width": 360,
+        "height": 640
+      },
+      "count": 3,
+      "time": 225,
+      "horizontalScroll": false,
+      "minLeft": 59.180850982666016,
+      "maxRight": 299.5710754394531,
+      "maxBottom": 524.1676025390625,
+      "outsideViewport": 0,
+      "clippedByPanel": 0
+    },
+    {
+      "viewport": {
+        "width": 360,
+        "height": 640
+      },
+      "count": 3,
+      "time": 2000,
+      "horizontalScroll": false,
+      "minLeft": 60.198612213134766,
+      "maxRight": 299.80804443359375,
+      "maxBottom": 525.701171875,
+      "outsideViewport": 0,
+      "clippedByPanel": 0
+    },
+    {
+      "viewport": {
+        "width": 360,
+        "height": 640
+      },
+      "count": 9,
+      "time": 0,
+      "horizontalScroll": false,
+      "minLeft": 31.11313247680664,
+      "maxRight": 340.9358215332031,
+      "maxBottom": 571.2891845703125,
+      "outsideViewport": 0,
+      "clippedByPanel": 18
+    },
+    {
+      "viewport": {
+        "width": 360,
+        "height": 640
+      },
+      "count": 9,
+      "time": 100,
+      "horizontalScroll": false,
+      "minLeft": 18.117908477783203,
+      "maxRight": 340.9358215332031,
+      "maxBottom": 571.2891845703125,
+      "outsideViewport": 0,
+      "clippedByPanel": 14
+    },
+    {
+      "viewport": {
+        "width": 360,
+        "height": 640
+      },
+      "count": 9,
+      "time": 225,
+      "horizontalScroll": false,
+      "minLeft": 14.183156967163086,
+      "maxRight": 340.9358215332031,
+      "maxBottom": 571.2891845703125,
+      "outsideViewport": 0,
+      "clippedByPanel": 8
+    },
+    {
+      "viewport": {
+        "width": 360,
+        "height": 640
+      },
+      "count": 9,
+      "time": 2000,
+      "horizontalScroll": false,
+      "minLeft": 15.895570755004883,
+      "maxRight": 343.7948913574219,
+      "maxBottom": 530.8363037109375,
+      "outsideViewport": 0,
+      "clippedByPanel": 0
+    },
+    {
+      "viewport": {
+        "width": 360,
+        "height": 640
+      },
+      "count": 19,
+      "time": 0,
+      "horizontalScroll": false,
+      "minLeft": 31.034061431884766,
+      "maxRight": 340.9358215332031,
+      "maxBottom": 572.4199829101562,
+      "outsideViewport": 0,
+      "clippedByPanel": 38
+    },
+    {
+      "viewport": {
+        "width": 360,
+        "height": 640
+      },
+      "count": 19,
+      "time": 100,
+      "horizontalScroll": false,
+      "minLeft": 1.1684436798095703,
+      "maxRight": 340.9358215332031,
+      "maxBottom": 572.4199829101562,
+      "outsideViewport": 0,
+      "clippedByPanel": 36
+    },
+    {
+      "viewport": {
+        "width": 360,
+        "height": 640
+      },
+      "count": 19,
+      "time": 225,
+      "horizontalScroll": false,
+      "minLeft": -5.137430191040039,
+      "maxRight": 340.9358215332031,
+      "maxBottom": 572.4199829101562,
+      "outsideViewport": 2,
+      "clippedByPanel": 30
+    },
+    {
+      "viewport": {
+        "width": 360,
+        "height": 640
+      },
+      "count": 19,
+      "time": 2000,
+      "horizontalScroll": false,
+      "minLeft": -2.409719467163086,
+      "maxRight": 360.24029541015625,
+      "maxBottom": 544.6921997070312,
+      "outsideViewport": 2,
+      "clippedByPanel": 6
+    },
+    {
+      "viewport": {
+        "width": 360,
+        "height": 640
+      },
+      "count": 30,
+      "time": 0,
+      "horizontalScroll": false,
+      "minLeft": 31.010112762451172,
+      "maxRight": 340.9358215332031,
+      "maxBottom": 572.7635498046875,
+      "outsideViewport": 0,
+      "clippedByPanel": 60
+    },
+    {
+      "viewport": {
+        "width": 360,
+        "height": 640
+      },
+      "count": 30,
+      "time": 100,
+      "horizontalScroll": false,
+      "minLeft": -16.20537567138672,
+      "maxRight": 340.9358215332031,
+      "maxBottom": 572.7635498046875,
+      "outsideViewport": 2,
+      "clippedByPanel": 60
+    },
+    {
+      "viewport": {
+        "width": 360,
+        "height": 640
+      },
+      "count": 30,
+      "time": 225,
+      "horizontalScroll": false,
+      "minLeft": -24.277263641357422,
+      "maxRight": 340.9358215332031,
+      "maxBottom": 572.7635498046875,
+      "outsideViewport": 4,
+      "clippedByPanel": 56
+    },
+    {
+      "viewport": {
+        "width": 360,
+        "height": 640
+      },
+      "count": 30,
+      "time": 2000,
+      "horizontalScroll": false,
+      "minLeft": -20.83413314819336,
+      "maxRight": 374.8414611816406,
+      "maxBottom": 558.9835815429688,
+      "outsideViewport": 6,
+      "clippedByPanel": 16
+    },
+    {
+      "viewport": {
+        "width": 844,
+        "height": 390
+      },
+      "count": 3,
+      "time": 0,
+      "horizontalScroll": false,
+      "minLeft": 576.3795166015625,
+      "maxRight": 825.7810668945312,
+      "maxBottom": 335.427734375,
+      "outsideViewport": 0,
+      "clippedByPanel": 3
+    },
+    {
+      "viewport": {
+        "width": 844,
+        "height": 390
+      },
+      "count": 3,
+      "time": 100,
+      "horizontalScroll": false,
+      "minLeft": 572.326904296875,
+      "maxRight": 822.291015625,
+      "maxBottom": 321.9288330078125,
+      "outsideViewport": 0,
+      "clippedByPanel": 1
+    },
+    {
+      "viewport": {
+        "width": 844,
+        "height": 390
+      },
+      "count": 3,
+      "time": 225,
+      "horizontalScroll": false,
+      "minLeft": 568.8521728515625,
+      "maxRight": 813.2882080078125,
+      "maxBottom": 290.1676025390625,
+      "outsideViewport": 0,
+      "clippedByPanel": 0
+    },
+    {
+      "viewport": {
+        "width": 844,
+        "height": 390
+      },
+      "count": 3,
+      "time": 2000,
+      "horizontalScroll": false,
+      "minLeft": 570.3665771484375,
+      "maxRight": 813.6400756835938,
+      "maxBottom": 291.701171875,
+      "outsideViewport": 0,
+      "clippedByPanel": 0
+    },
+    {
+      "viewport": {
+        "width": 844,
+        "height": 390
+      },
+      "count": 9,
+      "time": 0,
+      "horizontalScroll": false,
+      "minLeft": 570.0802612304688,
+      "maxRight": 831.7810668945312,
+      "maxBottom": 334.45355224609375,
+      "outsideViewport": 0,
+      "clippedByPanel": 9
+    },
+    {
+      "viewport": {
+        "width": 844,
+        "height": 390
+      },
+      "count": 9,
+      "time": 100,
+      "horizontalScroll": false,
+      "minLeft": 550.87158203125,
+      "maxRight": 831.7810668945312,
+      "maxBottom": 334.45355224609375,
+      "outsideViewport": 0,
+      "clippedByPanel": 9
+    },
+    {
+      "viewport": {
+        "width": 844,
+        "height": 390
+      },
+      "count": 9,
+      "time": 225,
+      "horizontalScroll": false,
+      "minLeft": 544.9880981445312,
+      "maxRight": 831.7810668945312,
+      "maxBottom": 334.45355224609375,
+      "outsideViewport": 0,
+      "clippedByPanel": 6
+    },
+    {
+      "viewport": {
+        "width": 844,
+        "height": 390
+      },
+      "count": 9,
+      "time": 2000,
+      "horizontalScroll": false,
+      "minLeft": 547.5510864257812,
+      "maxRight": 836.088134765625,
+      "maxBottom": 295.5567626953125,
+      "outsideViewport": 0,
+      "clippedByPanel": 4
+    },
+    {
+      "viewport": {
+        "width": 844,
+        "height": 390
+      },
+      "count": 19,
+      "time": 0,
+      "horizontalScroll": false,
+      "minLeft": 570.0194702148438,
+      "maxRight": 831.7810668945312,
+      "maxBottom": 334.45355224609375,
+      "outsideViewport": 0,
+      "clippedByPanel": 19
+    },
+    {
+      "viewport": {
+        "width": 844,
+        "height": 390
+      },
+      "count": 19,
+      "time": 100,
+      "horizontalScroll": false,
+      "minLeft": 525.7401733398438,
+      "maxRight": 831.7810668945312,
+      "maxBottom": 334.45355224609375,
+      "outsideViewport": 0,
+      "clippedByPanel": 19
+    },
+    {
+      "viewport": {
+        "width": 844,
+        "height": 390
+      },
+      "count": 19,
+      "time": 225,
+      "horizontalScroll": false,
+      "minLeft": 516.3303833007812,
+      "maxRight": 831.7810668945312,
+      "maxBottom": 334.45355224609375,
+      "outsideViewport": 0,
+      "clippedByPanel": 20
+    },
+    {
+      "viewport": {
+        "width": 844,
+        "height": 390
+      },
+      "count": 19,
+      "time": 2000,
+      "horizontalScroll": false,
+      "minLeft": 520.4033813476562,
+      "maxRight": 861.31298828125,
+      "maxBottom": 302.245849609375,
+      "outsideViewport": 2,
+      "clippedByPanel": 7
+    },
+    {
+      "viewport": {
+        "width": 844,
+        "height": 390
+      },
+      "count": 30,
+      "time": 0,
+      "horizontalScroll": false,
+      "minLeft": 570.0010375976562,
+      "maxRight": 831.7810668945312,
+      "maxBottom": 334.45355224609375,
+      "outsideViewport": 0,
+      "clippedByPanel": 30
+    },
+    {
+      "viewport": {
+        "width": 844,
+        "height": 390
+      },
+      "count": 30,
+      "time": 100,
+      "horizontalScroll": false,
+      "minLeft": 500.0406188964844,
+      "maxRight": 831.7810668945312,
+      "maxBottom": 334.45355224609375,
+      "outsideViewport": 0,
+      "clippedByPanel": 32
+    },
+    {
+      "viewport": {
+        "width": 844,
+        "height": 390
+      },
+      "count": 30,
+      "time": 225,
+      "horizontalScroll": false,
+      "minLeft": 488.02099609375,
+      "maxRight": 831.7810668945312,
+      "maxBottom": 334.45355224609375,
+      "outsideViewport": 0,
+      "clippedByPanel": 33
+    },
+    {
+      "viewport": {
+        "width": 844,
+        "height": 390
+      },
+      "count": 30,
+      "time": 2000,
+      "horizontalScroll": false,
+      "minLeft": 493.1509094238281,
+      "maxRight": 884.676513671875,
+      "maxBottom": 308.9219055175781,
+      "outsideViewport": 5,
+      "clippedByPanel": 18
+    }
+  ]
+}

@@ -1,0 +1,1 @@
+WT_HAND_LAYOUT_PASS 48 frames, 12 screenshots; all cards pointer-accessible
