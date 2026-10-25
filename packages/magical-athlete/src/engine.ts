@@ -446,6 +446,14 @@ function react(s: MAState, c: Ctx, t: Token, passed: Token[], simultaneous = fal
       gainChip(s, t.owner, 1);
       log(s, `${rname(t)} 停在星星上，获得 1 分筹码。`);
     } else {
+      // 箭头会开始新的一段移动并提前返回；必须先结算刚刚这段移动经过的香蕉。
+      // 不能把 passed 交给下一段：下一段可能后退，或香蕉已经移动到别处。
+      for (const x of inOrder(s)) {
+        if (powerOf(s, x) === "banana" && passed.includes(x)) {
+          trip(s, t);
+          fire(s, c, x, `${rname(x)}【香蕉皮】：${rname(t)} 经过时摔倒。`);
+        }
+      }
       // 例：巨婴在 12、箭头 11（+1）→ 被放回 11 → 再走箭头……按「循环结算一轮后停止」
       if (loopCheck(s, c, `arrow:${t.racer}@${pos}`, `${rname(t)} 与第 ${pos} 格箭头`)) return;
       log(s, `${rname(t)} 停在箭头上：额外移动 ${sp.steps} 格。`);
