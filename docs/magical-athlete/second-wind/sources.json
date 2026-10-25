@@ -1,0 +1,83 @@
+[
+  {
+    "id": "SW-P01",
+    "title": "CMYK 产品页",
+    "url": "https://www.cmyk.games/products/magical-athlete",
+    "classification": "PUBLISHER",
+    "retrieved": "2026-10-25",
+    "sha256": "757d1a14eeb4e3b1e5d90afacc5508c9156e1d09999489c1b2e20af9ed5466e4",
+    "notes": "核对2至6人、发行商与设计；未提供Second Wind逐角色规则。"
+  },
+  {
+    "id": "SW-B01",
+    "title": "2026基础版规则书镜像",
+    "url": "https://johnnlds.github.io/Magical-Athlete-Racers/officialrules.pdf",
+    "classification": "PUBLISHER_AUTHORED_UNVERIFIED_MIRROR",
+    "retrieved": "2026-10-25",
+    "sha256": "97afcd9db3dd45d6fe589d9d1abc8a409217ec6dfe72660dfa546206b3282c47",
+    "notes": "32页；已视觉核对PDF页23、28。没有可验证的发布日期或与BGG文件的哈希对应。不是Second Wind规则书。"
+  },
+  {
+    "id": "SW-F01",
+    "title": "玩家人物参考站",
+    "url": "https://johnnlds.github.io/Magical-Athlete-Racers/?v=13",
+    "classification": "FAN_TRANSCRIPTION",
+    "retrieved": "2026-10-25",
+    "sha256": "44f7f83a78529912c7ef01aca7d06cf0f233eb72d1f93f3340325e11f4e02e7b",
+    "notes": "静态源码区分36基础、36 Second Wind候选、32 Extra Mile。图片为立绘裁切，不能核验技能原文。"
+  },
+  {
+    "id": "SW-F02",
+    "title": "中文36角色图鉴",
+    "url": "https://magical-athlete-site.vercel.app/",
+    "classification": "FAN_TRANSLATION",
+    "retrieved": "2026-10-25",
+    "sha256": "8e1f571b34a15d434e4b3e93995c2be789ed97c4dd835ccfe39714225859d2b5",
+    "notes": "玩家中文释义，不作为英文原规则。"
+  },
+  {
+    "id": "SW-I01",
+    "title": "BGG官方规则文件入口",
+    "url": "https://boardgamegeek.com/filepage/307679/how-to-play-magical-athlete",
+    "classification": "PUBLISHER_UPLOAD_INDEX",
+    "retrieved": "2026-10-25",
+    "sha256": null,
+    "notes": "本轮403；未取得2026-08-17官方原文件。"
+  },
+  {
+    "id": "SW-I02",
+    "title": "设计师2026规则修订帖",
+    "url": "https://boardgamegeek.com/thread/3754599/a-couple-august-2026-rules-updates/page/1",
+    "classification": "DESIGNER_STATEMENT_INDEX",
+    "retrieved": "2026-10-25",
+    "sha256": null,
+    "notes": "本轮403；现有仓库保存历史人工审计，不伪称本轮已重读原帖。"
+  },
+  {
+    "id": "SW-I03",
+    "title": "BGG玩家文件区",
+    "url": "https://boardgamegeek.com/boardgame/454103/magical-athlete/files",
+    "classification": "COMMUNITY_INDEX",
+    "retrieved": "2026-10-25",
+    "sha256": null,
+    "notes": "本轮403。"
+  },
+  {
+    "id": "SW-I04",
+    "title": "Ludopedia Second Wind索引",
+    "url": "https://ludopedia.com.br/jogo/magical-athlete-second-wind",
+    "classification": "COMMUNITY_INDEX",
+    "retrieved": "2026-10-25",
+    "sha256": null,
+    "notes": "索引称可独立/混合、列出两新赛道；发行年2027仅索引值，不据此确认发布日期。"
+  },
+  {
+    "id": "SW-I05",
+    "title": "Second Wind规则上传条目",
+    "url": "https://ludopedia.com.br/jogo/magical-athlete-second-wind/anexos/350133",
+    "classification": "COMMUNITY_MIRROR_INDEX",
+    "retrieved": "2026-10-25",
+    "sha256": null,
+    "notes": "上传者称来自发行商Discord，下载跳转登录；本轮没有取得PDF，不能提升为官方已核验。"
+  }
+]

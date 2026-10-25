@@ -1,0 +1,1765 @@
+{
+  "schema_version": 1,
+  "as_of": "2026-10-25",
+  "production_enabled": false,
+  "warning": "36名候选登记；不是36名官方核验或可玩角色。candidate_*全部待核，不可自动转换为规则代码。",
+  "characters": [
+    {
+      "id": "sw_bite_mark",
+      "en": "Bite Mark",
+      "zh_draft": "咬痕",
+      "translation_status": "DRAFT",
+      "edition_claim": "second-wind",
+      "membership_status": "CANDIDATE_FAN_LIST",
+      "rule_status": "CHECK_REQUIRED",
+      "release_ready": false,
+      "source_refs": [
+        "SW-F01"
+      ],
+      "source_locator": "const expansionAthletes[0] / Bite Mark",
+      "source_ability_sha256": "12898c2a7c376a3576a1bead9bbd0f8801ecd35f92f92ccdaf0fcc53ee846926",
+      "verified_semantics": null,
+      "candidate_semantics": "主移动的最终骰为1或2时，变为经过者淘汰的狼人形态。",
+      "candidate_trigger": "final-main-roll",
+      "candidate_optionality": "mandatory",
+      "candidate_movement": [
+        "main"
+      ],
+      "candidate_targets": "自己及被经过者",
+      "candidate_requires_choice": false,
+      "candidate_extra_turn": false,
+      "candidate_changes_controller": false,
+      "candidate_eliminates": true,
+      "candidate_changes_score": false,
+      "interaction_notes": "与香蕉和半人马交互，经过与淘汰顺序",
+      "open_questions": [
+        "变身持续时间、再次变身、能力复制须查原卡。",
+        "尚未取得可归属官方发布版本的完整规则书或可读原卡卡文。"
+      ],
+      "animation_requirements": [
+        "power_source_highlight",
+        "step_path",
+        "elimination"
+      ],
+      "artwork": {
+        "status": "NOT_LICENSED",
+        "public_asset_path": null,
+        "observed_reference": "来源图片未作为完整技能卡面核验；抽查可见插画裁切。"
+      },
+      "tests": {
+        "status": "PLANNED_NOT_IMPLEMENTED",
+        "normal": "在满足触发条件时验证候选语义：主移动的最终骰为1或2时，变为经过者淘汰的狼人形态。",
+        "boundary": "重掷替换旧骰后不误变身",
+        "interaction": "与香蕉和半人马交互，经过与淘汰顺序",
+        "passed": 0
+      }
+    },
+    {
+      "id": "sw_blunderdog",
+      "en": "Blunderdog",
+      "zh_draft": "倒霉狗",
+      "translation_status": "DRAFT",
+      "edition_claim": "second-wind",
+      "membership_status": "CANDIDATE_FAN_LIST",
+      "rule_status": "CHECK_REQUIRED",
+      "release_ready": false,
+      "source_refs": [
+        "SW-F01"
+      ],
+      "source_locator": "const expansionAthletes[1] / Blunderdog",
+      "source_ability_sha256": "fb30a71dc06996e528ddce8f9e8c25ac8061d10ecbd02eb5f88757f57b240bea",
+      "verified_semantics": null,
+      "candidate_semantics": "垫底时主移动骰乘三；否则主移动改为后退。",
+      "candidate_trigger": "main-move",
+      "candidate_optionality": "mandatory",
+      "candidate_movement": [
+        "main"
+      ],
+      "candidate_targets": "自己",
+      "candidate_requires_choice": false,
+      "candidate_extra_turn": false,
+      "candidate_changes_controller": false,
+      "candidate_eliminates": false,
+      "candidate_changes_score": false,
+      "interaction_notes": "与教练、黏黏怪的加减顺序",
+      "open_questions": [
+        "并列垫底、骰值与移动修正顺序待核。",
+        "尚未取得可归属官方发布版本的完整规则书或可读原卡卡文。"
+      ],
+      "animation_requirements": [
+        "power_source_highlight",
+        "step_path"
+      ],
+      "artwork": {
+        "status": "NOT_LICENSED",
+        "public_asset_path": null,
+        "observed_reference": "来源图片未作为完整技能卡面核验；抽查可见插画裁切。"
+      },
+      "tests": {
+        "status": "PLANNED_NOT_IMPLEMENTED",
+        "normal": "在满足触发条件时验证候选语义：垫底时主移动骰乘三；否则主移动改为后退。",
+        "boundary": "并列最后是否适用三倍",
+        "interaction": "与教练、黏黏怪的加减顺序",
+        "passed": 0
+      }
+    },
+    {
+      "id": "sw_cheatah",
+      "en": "Cheatah",
+      "zh_draft": "作弊豹",
+      "translation_status": "DRAFT",
+      "edition_claim": "second-wind",
+      "membership_status": "CANDIDATE_FAN_LIST",
+      "rule_status": "CHECK_REQUIRED",
+      "release_ready": false,
+      "source_refs": [
+        "SW-F01"
+      ],
+      "source_locator": "const expansionAthletes[2] / Cheatah",
+      "source_ability_sha256": "cf5688abe7fc475f1813ccb138a3a06776fe646313de788c822ac7d244ba0a92",
+      "verified_semantics": null,
+      "candidate_semantics": "主移动以秘密设定骰子代替掷骰；右侧玩家猜中则不移动。",
+      "candidate_trigger": "replace-main-roll",
+      "candidate_optionality": "mixed",
+      "candidate_movement": [
+        "main"
+      ],
+      "candidate_targets": "自己及右侧玩家",
+      "candidate_requires_choice": true,
+      "candidate_extra_turn": false,
+      "candidate_changes_controller": false,
+      "candidate_eliminates": false,
+      "candidate_changes_score": false,
+      "interaction_notes": "与全局重掷和固定骰效应交互",
+      "open_questions": [
+        "秘密提交与猜测顺序、揭露后算不算骰点待核。",
+        "尚未取得可归属官方发布版本的完整规则书或可读原卡卡文。"
+      ],
+      "animation_requirements": [
+        "power_source_highlight",
+        "step_path",
+        "decision_prompt"
+      ],
+      "artwork": {
+        "status": "NOT_LICENSED",
+        "public_asset_path": null,
+        "observed_reference": "来源图片未作为完整技能卡面核验；抽查可见插画裁切。"
+      },
+      "tests": {
+        "status": "PLANNED_NOT_IMPLEMENTED",
+        "normal": "在满足触发条件时验证候选语义：主移动以秘密设定骰子代替掷骰；右侧玩家猜中则不移动。",
+        "boundary": "断线后不泄露秘密骰",
+        "interaction": "与全局重掷和固定骰效应交互",
+        "passed": 0
+      }
+    },
+    {
+      "id": "sw_critic",
+      "en": "Critic",
+      "zh_draft": "评论家",
+      "translation_status": "DRAFT",
+      "edition_claim": "second-wind",
+      "membership_status": "CANDIDATE_FAN_LIST",
+      "rule_status": "CHECK_REQUIRED",
+      "release_ready": false,
+      "source_refs": [
+        "SW-F01"
+      ],
+      "source_locator": "const expansionAthletes[3] / Critic",
+      "source_ability_sha256": "3b7b00259200a12d6da3a07893bbf1ef6d567baaf264cfd2fc7eb01aab34313c",
+      "verified_semantics": null,
+      "candidate_semantics": "每回合可要求前方选手重掷一次主移动骰。",
+      "candidate_trigger": "main-reroll-window",
+      "candidate_optionality": "optional",
+      "candidate_movement": [],
+      "candidate_targets": "前方选手",
+      "candidate_requires_choice": true,
+      "candidate_extra_turn": false,
+      "candidate_changes_controller": false,
+      "candidate_eliminates": false,
+      "candidate_changes_score": false,
+      "interaction_notes": "与骰贩子、魔术师和派对扫兴鬼排队重掷",
+      "open_questions": [
+        "每回合一次是按每对象还是按能力、多个重掷的优先级待核。",
+        "尚未取得可归属官方发布版本的完整规则书或可读原卡卡文。"
+      ],
+      "animation_requirements": [
+        "power_source_highlight",
+        "decision_prompt"
+      ],
+      "artwork": {
+        "status": "NOT_LICENSED",
+        "public_asset_path": null,
+        "observed_reference": "来源图片未作为完整技能卡面核验；抽查可见插画裁切。"
+      },
+      "tests": {
+        "status": "PLANNED_NOT_IMPLEMENTED",
+        "normal": "在满足触发条件时验证候选语义：每回合可要求前方选手重掷一次主移动骰。",
+        "boundary": "同格和身后不合格",
+        "interaction": "与骰贩子、魔术师和派对扫兴鬼排队重掷",
+        "passed": 0
+      }
+    },
+    {
+      "id": "sw_diva",
+      "en": "Diva",
+      "zh_draft": "大牌",
+      "translation_status": "DRAFT",
+      "edition_claim": "second-wind",
+      "membership_status": "CANDIDATE_FAN_LIST",
+      "rule_status": "CHECK_REQUIRED",
+      "release_ready": false,
+      "source_refs": [
+        "SW-F01"
+      ],
+      "source_locator": "const expansionAthletes[4] / Diva",
+      "source_ability_sha256": "0b539baa508d69e57aa4e62b3ea35190117355dfa8de1807b1528ea348e1b3e7",
+      "verified_semantics": null,
+      "candidate_semantics": "回合开始时垫底则与领先者换位，否则与垫底者换位。",
+      "candidate_trigger": "turn-start",
+      "candidate_optionality": "mandatory",
+      "candidate_movement": [
+        "warp"
+      ],
+      "candidate_targets": "自己及领先/垫底选手",
+      "candidate_requires_choice": true,
+      "candidate_extra_turn": false,
+      "candidate_changes_controller": false,
+      "candidate_eliminates": false,
+      "candidate_changes_score": false,
+      "interaction_notes": "巨婴位置调整、瞬移同格触发规则",
+      "open_questions": [
+        "并列目标和自己同时并列首尾时如何选择待核。",
+        "尚未取得可归属官方发布版本的完整规则书或可读原卡卡文。"
+      ],
+      "animation_requirements": [
+        "power_source_highlight",
+        "warp_group",
+        "decision_prompt"
+      ],
+      "artwork": {
+        "status": "NOT_LICENSED",
+        "public_asset_path": null,
+        "observed_reference": "来源图片未作为完整技能卡面核验；抽查可见插画裁切。"
+      },
+      "tests": {
+        "status": "PLANNED_NOT_IMPLEMENTED",
+        "normal": "在满足触发条件时验证候选语义：回合开始时垫底则与领先者换位，否则与垫底者换位。",
+        "boundary": "并列领先与并列最后",
+        "interaction": "巨婴位置调整、瞬移同格触发规则",
+        "passed": 0
+      }
+    },
+    {
+      "id": "sw_doppelgangster",
+      "en": "Doppelgängster",
+      "zh_draft": "替身黑帮",
+      "translation_status": "DRAFT",
+      "edition_claim": "second-wind",
+      "membership_status": "CANDIDATE_FAN_LIST",
+      "rule_status": "CHECK_REQUIRED",
+      "release_ready": false,
+      "source_refs": [
+        "SW-F01"
+      ],
+      "source_locator": "const expansionAthletes[5] / Doppelgängster",
+      "source_ability_sha256": "5aa4c2442d65bc738d1dd55b0c78bce6fd864354cef92639cce4ddbb54875db5",
+      "verified_semantics": null,
+      "candidate_semantics": "首位冲线者改为被淘汰；自己取得其能力。",
+      "candidate_trigger": "before-finish-award",
+      "candidate_optionality": "mandatory",
+      "candidate_movement": [],
+      "candidate_targets": "首位冲线者及自己",
+      "candidate_requires_choice": false,
+      "candidate_extra_turn": false,
+      "candidate_changes_controller": false,
+      "candidate_eliminates": true,
+      "candidate_changes_score": true,
+      "interaction_notes": "与军师、双胞胎、Re-Runner和取消比赛交互",
+      "open_questions": [
+        "是否仅一次、继承持续、奖牌及原冠军记录必须查原卡。",
+        "尚未取得可归属官方发布版本的完整规则书或可读原卡卡文。"
+      ],
+      "animation_requirements": [
+        "power_source_highlight",
+        "elimination",
+        "score_ledger"
+      ],
+      "artwork": {
+        "status": "NOT_LICENSED",
+        "public_asset_path": null,
+        "observed_reference": "来源图片未作为完整技能卡面核验；抽查可见插画裁切。"
+      },
+      "tests": {
+        "status": "PLANNED_NOT_IMPLEMENTED",
+        "normal": "在满足触发条件时验证候选语义：首位冲线者改为被淘汰；自己取得其能力。",
+        "boundary": "本人首位冲线及多名同时冲线",
+        "interaction": "与军师、双胞胎、Re-Runner和取消比赛交互",
+        "passed": 0
+      }
+    },
+    {
+      "id": "sw_gloth",
+      "en": "Gloth",
+      "zh_draft": "哥特懒兽",
+      "translation_status": "DRAFT",
+      "edition_claim": "second-wind",
+      "membership_status": "CANDIDATE_FAN_LIST",
+      "rule_status": "CHECK_REQUIRED",
+      "release_ready": false,
+      "source_refs": [
+        "SW-F01"
+      ],
+      "source_locator": "const expansionAthletes[6] / Gloth",
+      "source_ability_sha256": "13fb379f0322ee742084c41ef012a00abdaa083d51265bfe6e4e9735a3b76313",
+      "verified_semantics": null,
+      "candidate_semantics": "主移动减1；比赛结束时未越过第二弯道则获得3分。",
+      "candidate_trigger": "main-modifier+race-end",
+      "candidate_optionality": "mandatory",
+      "candidate_movement": [
+        "main"
+      ],
+      "candidate_targets": "自己及所属玩家",
+      "candidate_requires_choice": false,
+      "candidate_extra_turn": false,
+      "candidate_changes_controller": false,
+      "candidate_eliminates": false,
+      "candidate_changes_score": true,
+      "interaction_notes": "被取消的比赛是否仍有结束奖励",
+      "open_questions": [
+        "淘汰后结束奖励是否仍有效；弯道等于时的定义待核。",
+        "尚未取得可归属官方发布版本的完整规则书或可读原卡卡文。"
+      ],
+      "animation_requirements": [
+        "power_source_highlight",
+        "step_path",
+        "score_ledger"
+      ],
+      "artwork": {
+        "status": "NOT_LICENSED",
+        "public_asset_path": null,
+        "observed_reference": "来源图片未作为完整技能卡面核验；抽查可见插画裁切。"
+      },
+      "tests": {
+        "status": "PLANNED_NOT_IMPLEMENTED",
+        "normal": "在满足触发条件时验证候选语义：主移动减1；比赛结束时未越过第二弯道则获得3分。",
+        "boundary": "恰好在第二弯道",
+        "interaction": "被取消的比赛是否仍有结束奖励",
+        "passed": 0
+      }
+    },
+    {
+      "id": "sw_hog_knight",
+      "en": "Hog Knight",
+      "zh_draft": "野猪骑士",
+      "translation_status": "DRAFT",
+      "edition_claim": "second-wind",
+      "membership_status": "CANDIDATE_FAN_LIST",
+      "rule_status": "CHECK_REQUIRED",
+      "release_ready": false,
+      "source_refs": [
+        "SW-F01"
+      ],
+      "source_locator": "const expansionAthletes[7] / Hog Knight",
+      "source_ability_sha256": "3223231b4981d5b09b6e98832454797dbaf02397384f33478be2ddf6f233509e",
+      "verified_semantics": null,
+      "candidate_semantics": "开场骑乘野猪，骑手主移动加2；其他人停到野猪所在格时接手。",
+      "candidate_trigger": "before-race+stopping",
+      "candidate_optionality": "mandatory",
+      "candidate_movement": [
+        "main"
+      ],
+      "candidate_targets": "坐骑与骑手",
+      "candidate_requires_choice": false,
+      "candidate_extra_turn": false,
+      "candidate_changes_controller": false,
+      "candidate_eliminates": false,
+      "candidate_changes_score": false,
+      "interaction_notes": "巨婴、吸盘鱼与坐骑共享格",
+      "open_questions": [
+        "坐骑是独立实体还是随骑手移动；同时抵达接手优先级待核。",
+        "尚未取得可归属官方发布版本的完整规则书或可读原卡卡文。"
+      ],
+      "animation_requirements": [
+        "power_source_highlight",
+        "step_path"
+      ],
+      "artwork": {
+        "status": "NOT_LICENSED",
+        "public_asset_path": null,
+        "observed_reference": "来源图片未作为完整技能卡面核验；抽查可见插画裁切。"
+      },
+      "tests": {
+        "status": "PLANNED_NOT_IMPLEMENTED",
+        "normal": "在满足触发条件时验证候选语义：开场骑乘野猪，骑手主移动加2；其他人停到野猪所在格时接手。",
+        "boundary": "多人同时到达坐骑格",
+        "interaction": "巨婴、吸盘鱼与坐骑共享格",
+        "passed": 0
+      }
+    },
+    {
+      "id": "sw_hopfrog",
+      "en": "Hopfrog",
+      "zh_draft": "跳蛙",
+      "translation_status": "DRAFT",
+      "edition_claim": "second-wind",
+      "membership_status": "CANDIDATE_FAN_LIST",
+      "rule_status": "CHECK_REQUIRED",
+      "release_ready": false,
+      "source_refs": [
+        "SW-F01"
+      ],
+      "source_locator": "const expansionAthletes[8] / Hopfrog",
+      "source_ability_sha256": "4a53681d3b334ca19917e71a62ba33e3d37dffbaa65607f3c02d272c4e5df96a",
+      "verified_semantics": null,
+      "candidate_semantics": "回合结束时在另一名选手身后一格，获得额外回合。",
+      "candidate_trigger": "turn-end",
+      "candidate_optionality": "mandatory",
+      "candidate_movement": [],
+      "candidate_targets": "自己",
+      "candidate_requires_choice": false,
+      "candidate_extra_turn": true,
+      "candidate_changes_controller": false,
+      "candidate_eliminates": false,
+      "candidate_changes_score": false,
+      "interaction_notes": "与天才、船长的额外回合和插队优先级",
+      "open_questions": [
+        "同一次结束多目标是否只给一回合；额外回合链待核。",
+        "尚未取得可归属官方发布版本的完整规则书或可读原卡卡文。"
+      ],
+      "animation_requirements": [
+        "power_source_highlight"
+      ],
+      "artwork": {
+        "status": "NOT_LICENSED",
+        "public_asset_path": null,
+        "observed_reference": "来源图片未作为完整技能卡面核验；抽查可见插画裁切。"
+      },
+      "tests": {
+        "status": "PLANNED_NOT_IMPLEMENTED",
+        "normal": "在满足触发条件时验证候选语义：回合结束时在另一名选手身后一格，获得额外回合。",
+        "boundary": "多人同在前方一格",
+        "interaction": "与天才、船长的额外回合和插队优先级",
+        "passed": 0
+      }
+    },
+    {
+      "id": "sw_hotel",
+      "en": "Hotel",
+      "zh_draft": "旅馆",
+      "translation_status": "DRAFT",
+      "edition_claim": "second-wind",
+      "membership_status": "CANDIDATE_FAN_LIST",
+      "rule_status": "CHECK_REQUIRED",
+      "release_ready": false,
+      "source_refs": [
+        "SW-F01"
+      ],
+      "source_locator": "const expansionAthletes[9] / Hotel",
+      "source_ability_sha256": "13a89ac451e12c7aa64ada0dd8632cc76d6885696b2c6f74e718f5d6ead65fca",
+      "verified_semantics": null,
+      "candidate_semantics": "其他选手停到自己格子时付1分；付不起则摔倒。",
+      "candidate_trigger": "stopping",
+      "candidate_optionality": "mandatory",
+      "candidate_movement": [],
+      "candidate_targets": "到访者及自己玩家",
+      "candidate_requires_choice": false,
+      "candidate_extra_turn": false,
+      "candidate_changes_controller": false,
+      "candidate_eliminates": false,
+      "candidate_changes_score": true,
+      "interaction_notes": "西西弗斯扣分和坐骑停格事件",
+      "open_questions": [
+        "换筹、同一玩家自付款、同时抵达是否触发待核。",
+        "尚未取得可归属官方发布版本的完整规则书或可读原卡卡文。"
+      ],
+      "animation_requirements": [
+        "power_source_highlight",
+        "score_ledger",
+        "trip_status"
+      ],
+      "artwork": {
+        "status": "NOT_LICENSED",
+        "public_asset_path": null,
+        "observed_reference": "来源图片未作为完整技能卡面核验；抽查可见插画裁切。"
+      },
+      "tests": {
+        "status": "PLANNED_NOT_IMPLEMENTED",
+        "normal": "在满足触发条件时验证候选语义：其他选手停到自己格子时付1分；付不起则摔倒。",
+        "boundary": "到访者0分或只有3分筹码",
+        "interaction": "西西弗斯扣分和坐骑停格事件",
+        "passed": 0
+      }
+    },
+    {
+      "id": "sw_icarus",
+      "en": "Icarus",
+      "zh_draft": "伊卡洛斯",
+      "translation_status": "DRAFT",
+      "edition_claim": "second-wind",
+      "membership_status": "CANDIDATE_FAN_LIST",
+      "rule_status": "CHECK_REQUIRED",
+      "release_ready": false,
+      "source_refs": [
+        "SW-F01"
+      ],
+      "source_locator": "const expansionAthletes[10] / Icarus",
+      "source_ability_sha256": "5dca2588919d04726a1ff1db0f0e2085674c301ed17d84a5f63ea3dba02a71a9",
+      "verified_semantics": null,
+      "candidate_semantics": "主移动加3；主移动最终骰为6时直接淘汰。",
+      "candidate_trigger": "final-main-roll+main-modifier",
+      "candidate_optionality": "mandatory",
+      "candidate_movement": [
+        "main"
+      ],
+      "candidate_targets": "自己",
+      "candidate_requires_choice": false,
+      "candidate_extra_turn": false,
+      "candidate_changes_controller": false,
+      "candidate_eliminates": true,
+      "candidate_changes_score": false,
+      "interaction_notes": "与派对扫兴鬼、军师、只剩一人结算",
+      "open_questions": [
+        "先重掷还是先淘汰、效果替代主移动的次序待核。",
+        "尚未取得可归属官方发布版本的完整规则书或可读原卡卡文。"
+      ],
+      "animation_requirements": [
+        "power_source_highlight",
+        "step_path",
+        "elimination"
+      ],
+      "artwork": {
+        "status": "NOT_LICENSED",
+        "public_asset_path": null,
+        "observed_reference": "来源图片未作为完整技能卡面核验；抽查可见插画裁切。"
+      },
+      "tests": {
+        "status": "PLANNED_NOT_IMPLEMENTED",
+        "normal": "在满足触发条件时验证候选语义：主移动加3；主移动最终骰为6时直接淘汰。",
+        "boundary": "6被重掷为非6及反向重掷",
+        "interaction": "与派对扫兴鬼、军师、只剩一人结算",
+        "passed": 0
+      }
+    },
+    {
+      "id": "sw_kingtripper",
+      "en": "Kingtripper",
+      "zh_draft": "绊王",
+      "translation_status": "DRAFT",
+      "edition_claim": "second-wind",
+      "membership_status": "CANDIDATE_FAN_LIST",
+      "rule_status": "CHECK_REQUIRED",
+      "release_ready": false,
+      "source_refs": [
+        "SW-F01"
+      ],
+      "source_locator": "const expansionAthletes[11] / Kingtripper",
+      "source_ability_sha256": "563c97ad5663c269b5f8af17f6259d1b0a5e7d0bb944e6fe7fa5563095c6bdc9",
+      "verified_semantics": null,
+      "candidate_semantics": "回合开始时可以绊倒领先选手。",
+      "candidate_trigger": "turn-start",
+      "candidate_optionality": "optional",
+      "candidate_movement": [],
+      "candidate_targets": "领先选手",
+      "candidate_requires_choice": true,
+      "candidate_extra_turn": false,
+      "candidate_changes_controller": false,
+      "candidate_eliminates": false,
+      "candidate_changes_score": false,
+      "interaction_notes": "与企鹅和摔倒起身回合交互",
+      "open_questions": [
+        "并列领先、自己领先是否可选待核。",
+        "尚未取得可归属官方发布版本的完整规则书或可读原卡卡文。"
+      ],
+      "animation_requirements": [
+        "power_source_highlight",
+        "decision_prompt",
+        "trip_status"
+      ],
+      "artwork": {
+        "status": "NOT_LICENSED",
+        "public_asset_path": null,
+        "observed_reference": "来源图片未作为完整技能卡面核验；抽查可见插画裁切。"
+      },
+      "tests": {
+        "status": "PLANNED_NOT_IMPLEMENTED",
+        "normal": "在满足触发条件时验证候选语义：回合开始时可以绊倒领先选手。",
+        "boundary": "并列和无其他在场选手",
+        "interaction": "与企鹅和摔倒起身回合交互",
+        "passed": 0
+      }
+    },
+    {
+      "id": "sw_kraken",
+      "en": "Kraken",
+      "zh_draft": "克拉肯",
+      "translation_status": "DRAFT",
+      "edition_claim": "second-wind",
+      "membership_status": "CANDIDATE_FAN_LIST",
+      "rule_status": "CHECK_REQUIRED",
+      "release_ready": false,
+      "source_refs": [
+        "SW-F01"
+      ],
+      "source_locator": "const expansionAthletes[12] / Kraken",
+      "source_ability_sha256": "4508bd939e72c5b49578c9c59e1e809952aeec10aa6bc35809ae2e80c7925272",
+      "verified_semantics": null,
+      "candidate_semantics": "每场一次，可在回合开始时将所有其他选手瞬移到自己格子并绊倒。",
+      "candidate_trigger": "turn-start",
+      "candidate_optionality": "optional",
+      "candidate_movement": [
+        "warp"
+      ],
+      "candidate_targets": "所有其他在场选手",
+      "candidate_requires_choice": true,
+      "candidate_extra_turn": false,
+      "candidate_changes_controller": false,
+      "candidate_eliminates": false,
+      "candidate_changes_score": false,
+      "interaction_notes": "与巨婴、血盆大口、浪漫者、吸盘鱼交互",
+      "open_questions": [
+        "同时到达、先瞬移再绊倒、复制/抑制后次数保留待核。",
+        "尚未取得可归属官方发布版本的完整规则书或可读原卡卡文。"
+      ],
+      "animation_requirements": [
+        "power_source_highlight",
+        "warp_group",
+        "decision_prompt",
+        "trip_status"
+      ],
+      "artwork": {
+        "status": "NOT_LICENSED",
+        "public_asset_path": null,
+        "observed_reference": "来源图片未作为完整技能卡面核验；抽查可见插画裁切。"
+      },
+      "tests": {
+        "status": "PLANNED_NOT_IMPLEMENTED",
+        "normal": "在满足触发条件时验证候选语义：每场一次，可在回合开始时将所有其他选手瞬移到自己格子并绊倒。",
+        "boundary": "第二次使用被拒与已离场目标",
+        "interaction": "与巨婴、血盆大口、浪漫者、吸盘鱼交互",
+        "passed": 0
+      }
+    },
+    {
+      "id": "sw_le_saboteur",
+      "en": "Le Saboteur",
+      "zh_draft": "破坏者",
+      "translation_status": "DRAFT",
+      "edition_claim": "second-wind",
+      "membership_status": "CANDIDATE_FAN_LIST",
+      "rule_status": "CHECK_REQUIRED",
+      "release_ready": false,
+      "source_refs": [
+        "SW-F01"
+      ],
+      "source_locator": "const expansionAthletes[13] / Le Saboteur",
+      "source_ability_sha256": "8428b0a346b244a27b61fabc737137f96263df11d25e5bf8d5ea7ce89714b165",
+      "verified_semantics": null,
+      "candidate_semantics": "其他选手主移动最终骰为3时，改为向后移动。",
+      "candidate_trigger": "final-main-roll",
+      "candidate_optionality": "mandatory",
+      "candidate_movement": [
+        "main"
+      ],
+      "candidate_targets": "其他选手",
+      "candidate_requires_choice": false,
+      "candidate_extra_turn": false,
+      "candidate_changes_controller": false,
+      "candidate_eliminates": false,
+      "candidate_changes_score": false,
+      "interaction_notes": "与香蕉后退经过及Null抑制交互",
+      "open_questions": [
+        "骰值还是最终格数变负，重掷与修正次序待核。",
+        "尚未取得可归属官方发布版本的完整规则书或可读原卡卡文。"
+      ],
+      "animation_requirements": [
+        "power_source_highlight",
+        "step_path"
+      ],
+      "artwork": {
+        "status": "NOT_LICENSED",
+        "public_asset_path": null,
+        "observed_reference": "来源图片未作为完整技能卡面核验；抽查可见插画裁切。"
+      },
+      "tests": {
+        "status": "PLANNED_NOT_IMPLEMENTED",
+        "normal": "在满足触发条件时验证候选语义：其他选手主移动最终骰为3时，改为向后移动。",
+        "boundary": "位于起点时后退",
+        "interaction": "与香蕉后退经过及Null抑制交互",
+        "passed": 0
+      }
+    },
+    {
+      "id": "sw_magical_athlete",
+      "en": "Magical Athlete",
+      "zh_draft": "魔法运动员",
+      "translation_status": "DRAFT",
+      "edition_claim": "second-wind",
+      "membership_status": "CANDIDATE_FAN_LIST",
+      "rule_status": "CHECK_REQUIRED",
+      "release_ready": false,
+      "source_refs": [
+        "SW-F01"
+      ],
+      "source_locator": "const expansionAthletes[14] / Magical Athlete",
+      "source_ability_sha256": "4a426b396989a2edec857dae25b31e3d5b526939c2e915b8038b0838a78dc9a8",
+      "verified_semantics": null,
+      "candidate_semantics": "主移动骰1走7；2拉垫底者到自己格；3瞬移到另一选手并绊倒；4走4并额外回合；5领先者后退5；6走6且绊倒经过者。",
+      "candidate_trigger": "final-main-roll",
+      "candidate_optionality": "mixed",
+      "candidate_movement": [
+        "main",
+        "warp",
+        "extra"
+      ],
+      "candidate_targets": "自己及领先/垫底/所选选手",
+      "candidate_requires_choice": true,
+      "candidate_extra_turn": true,
+      "candidate_changes_controller": false,
+      "candidate_eliminates": false,
+      "candidate_changes_score": false,
+      "interaction_notes": "与较真怪、香蕉、船长、多个领先者交互",
+      "open_questions": [
+        "六分支是否替代整次主移动、并列、额外移动定性必须逐项核卡。",
+        "尚未取得可归属官方发布版本的完整规则书或可读原卡卡文。"
+      ],
+      "animation_requirements": [
+        "power_source_highlight",
+        "step_path",
+        "warp_group",
+        "decision_prompt",
+        "trip_status"
+      ],
+      "artwork": {
+        "status": "NOT_LICENSED",
+        "public_asset_path": null,
+        "observed_reference": "来源图片未作为完整技能卡面核验；抽查可见插画裁切。"
+      },
+      "tests": {
+        "status": "PLANNED_NOT_IMPLEMENTED",
+        "normal": "在满足触发条件时验证候选语义：主移动骰1走7；2拉垫底者到自己格；3瞬移到另一选手并绊倒；4走4并额外回合；5领先者后退5；6走6且绊倒经过者。",
+        "boundary": "逐一覆盖六点与重掷",
+        "interaction": "与较真怪、香蕉、船长、多个领先者交互",
+        "passed": 0
+      }
+    },
+    {
+      "id": "sw_mole",
+      "en": "Mole",
+      "zh_draft": "鼹鼠",
+      "translation_status": "DRAFT",
+      "edition_claim": "second-wind",
+      "membership_status": "CANDIDATE_FAN_LIST",
+      "rule_status": "CHECK_REQUIRED",
+      "release_ready": false,
+      "source_refs": [
+        "SW-F01"
+      ],
+      "source_locator": "const expansionAthletes[15] / Mole",
+      "source_ability_sha256": "4ffd43c1459a68dc085a2a79db1ec5fd1ecd9dc62aaf23559f9bd24d71f151bc",
+      "verified_semantics": null,
+      "candidate_semantics": "周围一格内没有其他选手时，可不掷主移动骰而直接走6。",
+      "candidate_trigger": "replace-main-roll",
+      "candidate_optionality": "optional",
+      "candidate_movement": [
+        "main"
+      ],
+      "candidate_targets": "自己",
+      "candidate_requires_choice": true,
+      "candidate_extra_turn": false,
+      "candidate_changes_controller": false,
+      "candidate_eliminates": false,
+      "candidate_changes_score": false,
+      "interaction_notes": "与黏黏怪、教练及掷骰触发能力交互",
+      "open_questions": [
+        "同格是否算一格以内；范围计算仅在场选手待核。",
+        "尚未取得可归属官方发布版本的完整规则书或可读原卡卡文。"
+      ],
+      "animation_requirements": [
+        "power_source_highlight",
+        "step_path",
+        "decision_prompt"
+      ],
+      "artwork": {
+        "status": "NOT_LICENSED",
+        "public_asset_path": null,
+        "observed_reference": "来源图片未作为完整技能卡面核验；抽查可见插画裁切。"
+      },
+      "tests": {
+        "status": "PLANNED_NOT_IMPLEMENTED",
+        "normal": "在满足触发条件时验证候选语义：周围一格内没有其他选手时，可不掷主移动骰而直接走6。",
+        "boundary": "附近恰好一格",
+        "interaction": "与黏黏怪、教练及掷骰触发能力交互",
+        "passed": 0
+      }
+    },
+    {
+      "id": "sw_mr_dice_guy",
+      "en": "Mr. Dice Guy",
+      "zh_draft": "骰子先生",
+      "translation_status": "DRAFT",
+      "edition_claim": "second-wind",
+      "membership_status": "CANDIDATE_FAN_LIST",
+      "rule_status": "CHECK_REQUIRED",
+      "release_ready": false,
+      "source_refs": [
+        "SW-F01"
+      ],
+      "source_locator": "const expansionAthletes[16] / Mr. Dice Guy",
+      "source_ability_sha256": "5f31fd1c7af1cfb2dfb349dda2ea0a8f2948c082652d667221e29301b9283388",
+      "verified_semantics": null,
+      "candidate_semantics": "主移动掷六颗骰子，从出现超过一次的数字中选一个。",
+      "candidate_trigger": "main-roll",
+      "candidate_optionality": "mixed",
+      "candidate_movement": [
+        "main"
+      ],
+      "candidate_targets": "自己",
+      "candidate_requires_choice": true,
+      "candidate_extra_turn": false,
+      "candidate_changes_controller": false,
+      "candidate_eliminates": false,
+      "candidate_changes_score": false,
+      "interaction_notes": "与Stunner和Party Pooper逐颗处理",
+      "open_questions": [
+        "六颗全不同时怎么办、全部重掷或单颗重掷、选择前后待核。",
+        "尚未取得可归属官方发布版本的完整规则书或可读原卡卡文。"
+      ],
+      "animation_requirements": [
+        "power_source_highlight",
+        "step_path",
+        "decision_prompt"
+      ],
+      "artwork": {
+        "status": "NOT_LICENSED",
+        "public_asset_path": null,
+        "observed_reference": "来源图片未作为完整技能卡面核验；抽查可见插画裁切。"
+      },
+      "tests": {
+        "status": "PLANNED_NOT_IMPLEMENTED",
+        "normal": "在满足触发条件时验证候选语义：主移动掷六颗骰子，从出现超过一次的数字中选一个。",
+        "boundary": "恰好1到6各一次",
+        "interaction": "与Stunner和Party Pooper逐颗处理",
+        "passed": 0
+      }
+    },
+    {
+      "id": "sw_mush",
+      "en": "Mush",
+      "zh_draft": "糊糊",
+      "translation_status": "DRAFT",
+      "edition_claim": "second-wind",
+      "membership_status": "CANDIDATE_FAN_LIST",
+      "rule_status": "CHECK_REQUIRED",
+      "release_ready": false,
+      "source_refs": [
+        "SW-F01"
+      ],
+      "source_locator": "const expansionAthletes[17] / Mush",
+      "source_ability_sha256": "01fc88d9a875d5e0824db9d47491a4e16a2527be76c07c9e93a1ee3a51e590f5",
+      "verified_semantics": null,
+      "candidate_semantics": "主移动最终骰1或2时抽一名新选手，获得其能力至本场结束。",
+      "candidate_trigger": "final-main-roll",
+      "candidate_optionality": "mandatory",
+      "candidate_movement": [],
+      "candidate_targets": "自己及牌堆",
+      "candidate_requires_choice": false,
+      "candidate_extra_turn": false,
+      "candidate_changes_controller": false,
+      "candidate_eliminates": false,
+      "candidate_changes_score": false,
+      "interaction_notes": "与Egg、Twin、Understudy以及Null交互",
+      "open_questions": [
+        "累加还是替换、是否获取赛前能力、牌堆耗尽待核。",
+        "尚未取得可归属官方发布版本的完整规则书或可读原卡卡文。"
+      ],
+      "animation_requirements": [
+        "power_source_highlight"
+      ],
+      "artwork": {
+        "status": "NOT_LICENSED",
+        "public_asset_path": null,
+        "observed_reference": "来源图片未作为完整技能卡面核验；抽查可见插画裁切。"
+      },
+      "tests": {
+        "status": "PLANNED_NOT_IMPLEMENTED",
+        "normal": "在满足触发条件时验证候选语义：主移动最终骰1或2时抽一名新选手，获得其能力至本场结束。",
+        "boundary": "牌堆为空和重复触发",
+        "interaction": "与Egg、Twin、Understudy以及Null交互",
+        "passed": 0
+      }
+    },
+    {
+      "id": "sw_nemesis",
+      "en": "Nemesis",
+      "zh_draft": "宿敌",
+      "translation_status": "DRAFT",
+      "edition_claim": "second-wind",
+      "membership_status": "CANDIDATE_FAN_LIST",
+      "rule_status": "CHECK_REQUIRED",
+      "release_ready": false,
+      "source_refs": [
+        "SW-F01"
+      ],
+      "source_locator": "const expansionAthletes[18] / Nemesis",
+      "source_ability_sha256": "734a9208e80422b05328be8688d5818b7fdef5f24806e45b17272de7a8e6f7e2",
+      "verified_semantics": null,
+      "candidate_semantics": "其他选手掷主移动骰时，可以跟掷；相同则自己移动相应格数。",
+      "candidate_trigger": "other-main-roll",
+      "candidate_optionality": "optional",
+      "candidate_movement": [
+        "extra"
+      ],
+      "candidate_targets": "自己",
+      "candidate_requires_choice": true,
+      "candidate_extra_turn": false,
+      "candidate_changes_controller": false,
+      "candidate_eliminates": false,
+      "candidate_changes_score": false,
+      "interaction_notes": "与骰贩子、Stunner和Party Pooper的重掷链",
+      "open_questions": [
+        "比较最终骰还是即时骰、跟掷算何种骰、可否多次待核。",
+        "尚未取得可归属官方发布版本的完整规则书或可读原卡卡文。"
+      ],
+      "animation_requirements": [
+        "power_source_highlight",
+        "step_path",
+        "decision_prompt"
+      ],
+      "artwork": {
+        "status": "NOT_LICENSED",
+        "public_asset_path": null,
+        "observed_reference": "来源图片未作为完整技能卡面核验；抽查可见插画裁切。"
+      },
+      "tests": {
+        "status": "PLANNED_NOT_IMPLEMENTED",
+        "normal": "在满足触发条件时验证候选语义：其他选手掷主移动骰时，可以跟掷；相同则自己移动相应格数。",
+        "boundary": "对方重掷后旧点数失效",
+        "interaction": "与骰贩子、Stunner和Party Pooper的重掷链",
+        "passed": 0
+      }
+    },
+    {
+      "id": "sw_nepo_baby",
+      "en": "Nepo Baby",
+      "zh_draft": "关系户",
+      "translation_status": "DRAFT",
+      "edition_claim": "second-wind",
+      "membership_status": "CANDIDATE_FAN_LIST",
+      "rule_status": "CHECK_REQUIRED",
+      "release_ready": false,
+      "source_refs": [
+        "SW-F01"
+      ],
+      "source_locator": "const expansionAthletes[19] / Nepo Baby",
+      "source_ability_sha256": "dc1551817532b81d283a3b0add49962fc1eaa1f8d497fb162f08369218c05706",
+      "verified_semantics": null,
+      "candidate_semantics": "比赛开始时直接放在第一弯道。",
+      "candidate_trigger": "before-race",
+      "candidate_optionality": "mandatory",
+      "candidate_movement": [],
+      "candidate_targets": "自己",
+      "candidate_requires_choice": false,
+      "candidate_extra_turn": false,
+      "candidate_changes_controller": false,
+      "candidate_eliminates": false,
+      "candidate_changes_score": false,
+      "interaction_notes": "第一弯道有巨婴时的调整",
+      "open_questions": [
+        "新旧棋盘第一弯道准确格位；放置是否结算地形待核。",
+        "尚未取得可归属官方发布版本的完整规则书或可读原卡卡文。"
+      ],
+      "animation_requirements": [
+        "power_source_highlight"
+      ],
+      "artwork": {
+        "status": "NOT_LICENSED",
+        "public_asset_path": null,
+        "observed_reference": "来源图片未作为完整技能卡面核验；抽查可见插画裁切。"
+      },
+      "tests": {
+        "status": "PLANNED_NOT_IMPLEMENTED",
+        "normal": "在满足触发条件时验证候选语义：比赛开始时直接放在第一弯道。",
+        "boundary": "与其他赛前效果顺序",
+        "interaction": "第一弯道有巨婴时的调整",
+        "passed": 0
+      }
+    },
+    {
+      "id": "sw_null",
+      "en": "Null",
+      "zh_draft": "虚无",
+      "translation_status": "DRAFT",
+      "edition_claim": "second-wind",
+      "membership_status": "CANDIDATE_FAN_LIST",
+      "rule_status": "CHECK_REQUIRED",
+      "release_ready": false,
+      "source_refs": [
+        "SW-F01"
+      ],
+      "source_locator": "const expansionAthletes[20] / Null",
+      "source_ability_sha256": "605099dcb5c06a928cdb42e7d321ca2f30f6e5fc9d73740fdc1ca78966fdf206",
+      "verified_semantics": null,
+      "candidate_semantics": "处于自己前方的选手失去能力，且其主移动减1。",
+      "candidate_trigger": "continuous",
+      "candidate_optionality": "mandatory",
+      "candidate_movement": [
+        "main"
+      ],
+      "candidate_targets": "自己前方的选手",
+      "candidate_requires_choice": false,
+      "candidate_extra_turn": false,
+      "candidate_changes_controller": false,
+      "candidate_eliminates": false,
+      "candidate_changes_score": false,
+      "interaction_notes": "与Copycat、Understudy、被抑制的临时能力交互",
+      "open_questions": [
+        "多个Null互相抑制的依赖、位置改变时生效快照待核。",
+        "尚未取得可归属官方发布版本的完整规则书或可读原卡卡文。"
+      ],
+      "animation_requirements": [
+        "power_source_highlight",
+        "step_path"
+      ],
+      "artwork": {
+        "status": "NOT_LICENSED",
+        "public_asset_path": null,
+        "observed_reference": "来源图片未作为完整技能卡面核验；抽查可见插画裁切。"
+      },
+      "tests": {
+        "status": "PLANNED_NOT_IMPLEMENTED",
+        "normal": "在满足触发条件时验证候选语义：处于自己前方的选手失去能力，且其主移动减1。",
+        "boundary": "并列和刚越过边界",
+        "interaction": "与Copycat、Understudy、被抑制的临时能力交互",
+        "passed": 0
+      }
+    },
+    {
+      "id": "sw_overtaker",
+      "en": "Overtaker",
+      "zh_draft": "超车手",
+      "translation_status": "DRAFT",
+      "edition_claim": "second-wind",
+      "membership_status": "CANDIDATE_FAN_LIST",
+      "rule_status": "CHECK_REQUIRED",
+      "release_ready": false,
+      "source_refs": [
+        "SW-F01"
+      ],
+      "source_locator": "const expansionAthletes[21] / Overtaker",
+      "source_ability_sha256": "032c49b8d4a6f3013d871f6820ff87b4197f53a8cb46508ef6a6dd2f4a8ebfb7",
+      "verified_semantics": null,
+      "candidate_semantics": "每有一名选手在前方，自己主移动加1。",
+      "candidate_trigger": "main-modifier",
+      "candidate_optionality": "mandatory",
+      "candidate_movement": [
+        "main"
+      ],
+      "candidate_targets": "自己",
+      "candidate_requires_choice": false,
+      "candidate_extra_turn": false,
+      "candidate_changes_controller": false,
+      "candidate_eliminates": false,
+      "candidate_changes_score": false,
+      "interaction_notes": "与Null、教练及多选手同玩家交互",
+      "open_questions": [
+        "在场对象与确定修正时机待核。",
+        "尚未取得可归属官方发布版本的完整规则书或可读原卡卡文。"
+      ],
+      "animation_requirements": [
+        "power_source_highlight",
+        "step_path"
+      ],
+      "artwork": {
+        "status": "NOT_LICENSED",
+        "public_asset_path": null,
+        "observed_reference": "来源图片未作为完整技能卡面核验；抽查可见插画裁切。"
+      },
+      "tests": {
+        "status": "PLANNED_NOT_IMPLEMENTED",
+        "normal": "在满足触发条件时验证候选语义：每有一名选手在前方，自己主移动加1。",
+        "boundary": "并列选手不在前方",
+        "interaction": "与Null、教练及多选手同玩家交互",
+        "passed": 0
+      }
+    },
+    {
+      "id": "sw_party_pooper",
+      "en": "Party Pooper",
+      "zh_draft": "派对扫兴鬼",
+      "translation_status": "DRAFT",
+      "edition_claim": "second-wind",
+      "membership_status": "CANDIDATE_FAN_LIST",
+      "rule_status": "CHECK_REQUIRED",
+      "release_ready": false,
+      "source_refs": [
+        "SW-F01"
+      ],
+      "source_locator": "const expansionAthletes[22] / Party Pooper",
+      "source_ability_sha256": "e4a339c2b574e1525ad4219ff8aff53c813322e5115dc29eb4c53af76389c33d",
+      "verified_semantics": null,
+      "candidate_semantics": "所有6都必须重掷，每次如此重掷时自己移动1。",
+      "candidate_trigger": "any-roll",
+      "candidate_optionality": "mandatory",
+      "candidate_movement": [
+        "extra"
+      ],
+      "candidate_targets": "所有掷骰者及自己",
+      "candidate_requires_choice": false,
+      "candidate_extra_turn": false,
+      "candidate_changes_controller": false,
+      "candidate_eliminates": false,
+      "candidate_changes_score": false,
+      "interaction_notes": "与Mr. Dice Guy、Show-Off、Stunner、Icarus交互",
+      "open_questions": [
+        "所有骰的范围、连出6、固定骰与重掷优先级待核。",
+        "尚未取得可归属官方发布版本的完整规则书或可读原卡卡文。"
+      ],
+      "animation_requirements": [
+        "power_source_highlight",
+        "step_path"
+      ],
+      "artwork": {
+        "status": "NOT_LICENSED",
+        "public_asset_path": null,
+        "observed_reference": "来源图片未作为完整技能卡面核验；抽查可见插画裁切。"
+      },
+      "tests": {
+        "status": "PLANNED_NOT_IMPLEMENTED",
+        "normal": "在满足触发条件时验证候选语义：所有6都必须重掷，每次如此重掷时自己移动1。",
+        "boundary": "连续多个6及全6骰池",
+        "interaction": "与Mr. Dice Guy、Show-Off、Stunner、Icarus交互",
+        "passed": 0
+      }
+    },
+    {
+      "id": "sw_penguin",
+      "en": "Penguin",
+      "zh_draft": "企鹅",
+      "translation_status": "DRAFT",
+      "edition_claim": "second-wind",
+      "membership_status": "CANDIDATE_FAN_LIST",
+      "rule_status": "CHECK_REQUIRED",
+      "release_ready": false,
+      "source_refs": [
+        "SW-F01"
+      ],
+      "source_locator": "const expansionAthletes[23] / Penguin",
+      "source_ability_sha256": "f1e322f5842b48da4a7c6e80da34c4d2d121f347386c904616d264190a7ba945",
+      "verified_semantics": null,
+      "candidate_semantics": "被经过时自己摔倒；摔倒状态下主移动改为骰点翻倍，而非跳过。",
+      "candidate_trigger": "passed+main-move",
+      "candidate_optionality": "mandatory",
+      "candidate_movement": [
+        "main"
+      ],
+      "candidate_targets": "自己",
+      "candidate_requires_choice": false,
+      "candidate_extra_turn": false,
+      "candidate_changes_controller": false,
+      "candidate_eliminates": false,
+      "candidate_changes_score": false,
+      "interaction_notes": "与香蕉、起身和火箭科学家的修正交互",
+      "open_questions": [
+        "本次翻倍后是否起身、后退经过也算否须核新版。",
+        "尚未取得可归属官方发布版本的完整规则书或可读原卡卡文。"
+      ],
+      "animation_requirements": [
+        "power_source_highlight",
+        "step_path",
+        "trip_status"
+      ],
+      "artwork": {
+        "status": "NOT_LICENSED",
+        "public_asset_path": null,
+        "observed_reference": "来源图片未作为完整技能卡面核验；抽查可见插画裁切。"
+      },
+      "tests": {
+        "status": "PLANNED_NOT_IMPLEMENTED",
+        "normal": "在满足触发条件时验证候选语义：被经过时自己摔倒；摔倒状态下主移动改为骰点翻倍，而非跳过。",
+        "boundary": "连续被经过与已经摔倒",
+        "interaction": "与香蕉、起身和火箭科学家的修正交互",
+        "passed": 0
+      }
+    },
+    {
+      "id": "sw_re_runner",
+      "en": "Re-Runner",
+      "zh_draft": "返场跑者",
+      "translation_status": "DRAFT",
+      "edition_claim": "second-wind",
+      "membership_status": "CANDIDATE_FAN_LIST",
+      "rule_status": "CHECK_REQUIRED",
+      "release_ready": false,
+      "source_refs": [
+        "SW-F01"
+      ],
+      "source_locator": "const expansionAthletes[24] / Re-Runner",
+      "source_ability_sha256": "7af7ad12750d16f6408c3668058fd8f946d5ac25fc2abd587e2aef4beb293a2a",
+      "verified_semantics": null,
+      "candidate_semantics": "第一次参赛后，后续所有比赛额外作为该玩家的一名选手参赛。",
+      "candidate_trigger": "after-race+before-race",
+      "candidate_optionality": "mandatory",
+      "candidate_movement": [],
+      "candidate_targets": "玩家及额外角色实体",
+      "candidate_requires_choice": false,
+      "candidate_extra_turn": false,
+      "candidate_changes_controller": false,
+      "candidate_eliminates": false,
+      "candidate_changes_score": false,
+      "interaction_notes": "与Switcharoo、双选手、双胞胎和冠军替换交互",
+      "open_questions": [
+        "淘汰/换控制者后归属、起点状态与返场顺序待核。",
+        "尚未取得可归属官方发布版本的完整规则书或可读原卡卡文。"
+      ],
+      "animation_requirements": [
+        "power_source_highlight"
+      ],
+      "artwork": {
+        "status": "NOT_LICENSED",
+        "public_asset_path": null,
+        "observed_reference": "来源图片未作为完整技能卡面核验；抽查可见插画裁切。"
+      },
+      "tests": {
+        "status": "PLANNED_NOT_IMPLEMENTED",
+        "normal": "在满足触发条件时验证候选语义：第一次参赛后，后续所有比赛额外作为该玩家的一名选手参赛。",
+        "boundary": "首次在第4场使用",
+        "interaction": "与Switcharoo、双选手、双胞胎和冠军替换交互",
+        "passed": 0
+      }
+    },
+    {
+      "id": "sw_show_off",
+      "en": "Show-Off",
+      "zh_draft": "爱现鬼",
+      "translation_status": "DRAFT",
+      "edition_claim": "second-wind",
+      "membership_status": "CANDIDATE_FAN_LIST",
+      "rule_status": "CHECK_REQUIRED",
+      "release_ready": false,
+      "source_refs": [
+        "SW-F01"
+      ],
+      "source_locator": "const expansionAthletes[25] / Show-Off",
+      "source_ability_sha256": "932d3efe6514055dd8aa5d57838dd997582195c6dfa3d75ee5c82404a57d2b85",
+      "verified_semantics": null,
+      "candidate_semantics": "主移动掷骰后可继续掷并累加；若新骰不大于上一骰则不移动。",
+      "candidate_trigger": "main-roll-continuation",
+      "candidate_optionality": "optional",
+      "candidate_movement": [
+        "main"
+      ],
+      "candidate_targets": "自己",
+      "candidate_requires_choice": true,
+      "candidate_extra_turn": false,
+      "candidate_changes_controller": false,
+      "candidate_eliminates": false,
+      "candidate_changes_score": false,
+      "interaction_notes": "与Party Pooper、Stunner及Icarus复制交互",
+      "open_questions": [
+        "累加是否含初骰、6后可否选择继续、全局重掷次序待核。",
+        "尚未取得可归属官方发布版本的完整规则书或可读原卡卡文。"
+      ],
+      "animation_requirements": [
+        "power_source_highlight",
+        "step_path",
+        "decision_prompt"
+      ],
+      "artwork": {
+        "status": "NOT_LICENSED",
+        "public_asset_path": null,
+        "observed_reference": "来源图片未作为完整技能卡面核验；抽查可见插画裁切。"
+      },
+      "tests": {
+        "status": "PLANNED_NOT_IMPLEMENTED",
+        "normal": "在满足触发条件时验证候选语义：主移动掷骰后可继续掷并累加；若新骰不大于上一骰则不移动。",
+        "boundary": "相同点数与连续递增至6",
+        "interaction": "与Party Pooper、Stunner及Icarus复制交互",
+        "passed": 0
+      }
+    },
+    {
+      "id": "sw_soulmate",
+      "en": "Soulmate",
+      "zh_draft": "灵魂伴侣",
+      "translation_status": "DRAFT",
+      "edition_claim": "second-wind",
+      "membership_status": "CANDIDATE_FAN_LIST",
+      "rule_status": "CHECK_REQUIRED",
+      "release_ready": false,
+      "source_refs": [
+        "SW-F01"
+      ],
+      "source_locator": "const expansionAthletes[26] / Soulmate",
+      "source_ability_sha256": "c0714ab4fb7c9887993c6210ac98f891d3a5085511a0ca2de2361a418a23dc05",
+      "verified_semantics": null,
+      "candidate_semantics": "赛前选对方角色；回合开始距其五格以内则瞬移到其格。",
+      "candidate_trigger": "before-race+turn-start",
+      "candidate_optionality": "mixed",
+      "candidate_movement": [
+        "warp"
+      ],
+      "candidate_targets": "自己及绑定对象",
+      "candidate_requires_choice": true,
+      "candidate_extra_turn": false,
+      "candidate_changes_controller": false,
+      "candidate_eliminates": false,
+      "candidate_changes_score": false,
+      "interaction_notes": "与巨婴、Null和Switcharoo交互",
+      "open_questions": [
+        "对象离场、控制交换后仍绑定角色还是玩家待核。",
+        "尚未取得可归属官方发布版本的完整规则书或可读原卡卡文。"
+      ],
+      "animation_requirements": [
+        "power_source_highlight",
+        "warp_group",
+        "decision_prompt"
+      ],
+      "artwork": {
+        "status": "NOT_LICENSED",
+        "public_asset_path": null,
+        "observed_reference": "来源图片未作为完整技能卡面核验；抽查可见插画裁切。"
+      },
+      "tests": {
+        "status": "PLANNED_NOT_IMPLEMENTED",
+        "normal": "在满足触发条件时验证候选语义：赛前选对方角色；回合开始距其五格以内则瞬移到其格。",
+        "boundary": "距离恰好5与对象已淘汰",
+        "interaction": "与巨婴、Null和Switcharoo交互",
+        "passed": 0
+      }
+    },
+    {
+      "id": "sw_speed_demon",
+      "en": "Speed Demon",
+      "zh_draft": "速度恶魔",
+      "translation_status": "DRAFT",
+      "edition_claim": "second-wind",
+      "membership_status": "CANDIDATE_FAN_LIST",
+      "rule_status": "CHECK_REQUIRED",
+      "release_ready": false,
+      "source_refs": [
+        "SW-F01"
+      ],
+      "source_locator": "const expansionAthletes[27] / Speed Demon",
+      "source_ability_sha256": "fcda1505e4c5cf4efab4301c75907e71d78fb35a32cc84f26949b8a2209172e6",
+      "verified_semantics": null,
+      "candidate_semantics": "所属玩家每有1分，主移动加1；回合开始领先其他人至少四格则淘汰。",
+      "candidate_trigger": "turn-start+main-modifier",
+      "candidate_optionality": "mandatory",
+      "candidate_movement": [
+        "main"
+      ],
+      "candidate_targets": "自己及所属玩家",
+      "candidate_requires_choice": false,
+      "candidate_extra_turn": false,
+      "candidate_changes_controller": false,
+      "candidate_eliminates": true,
+      "candidate_changes_score": false,
+      "interaction_notes": "与Switcharoo积分归属、Spoilsport与军师结算",
+      "open_questions": [
+        "多领先/唯一存活者、积分取值时点、转移控制者后取谁的分待核。",
+        "尚未取得可归属官方发布版本的完整规则书或可读原卡卡文。"
+      ],
+      "animation_requirements": [
+        "power_source_highlight",
+        "step_path",
+        "elimination"
+      ],
+      "artwork": {
+        "status": "NOT_LICENSED",
+        "public_asset_path": null,
+        "observed_reference": "来源图片未作为完整技能卡面核验；抽查可见插画裁切。"
+      },
+      "tests": {
+        "status": "PLANNED_NOT_IMPLEMENTED",
+        "normal": "在满足触发条件时验证候选语义：所属玩家每有1分，主移动加1；回合开始领先其他人至少四格则淘汰。",
+        "boundary": "恰好领先4与并列领先",
+        "interaction": "与Switcharoo积分归属、Spoilsport与军师结算",
+        "passed": 0
+      }
+    },
+    {
+      "id": "sw_spoilsport",
+      "en": "Spoilsport",
+      "zh_draft": "扫兴者",
+      "translation_status": "DRAFT",
+      "edition_claim": "second-wind",
+      "membership_status": "CANDIDATE_FAN_LIST",
+      "rule_status": "CHECK_REQUIRED",
+      "release_ready": false,
+      "source_refs": [
+        "SW-F01"
+      ],
+      "source_locator": "const expansionAthletes[28] / Spoilsport",
+      "source_ability_sha256": "6106622ebf3e0119b832b2fb24ef74c1d5569778b4ea8f1e085aa147553e9915",
+      "verified_semantics": null,
+      "candidate_semantics": "回合开始时其他所有选手都领先自己至少五格，取消本场且自己得3分。",
+      "candidate_trigger": "turn-start+race-cancel",
+      "candidate_optionality": "mandatory",
+      "candidate_movement": [],
+      "candidate_targets": "全场及自己玩家",
+      "candidate_requires_choice": false,
+      "candidate_extra_turn": false,
+      "candidate_changes_controller": false,
+      "candidate_eliminates": false,
+      "candidate_changes_score": true,
+      "interaction_notes": "与Gloth、Re-Runner、Doppelgangster、军师交互",
+      "open_questions": [
+        "已经发放的奖牌、取消是否触发结束奖励、单人空集合必须核实。",
+        "尚未取得可归属官方发布版本的完整规则书或可读原卡卡文。"
+      ],
+      "animation_requirements": [
+        "power_source_highlight",
+        "score_ledger"
+      ],
+      "artwork": {
+        "status": "NOT_LICENSED",
+        "public_asset_path": null,
+        "observed_reference": "来源图片未作为完整技能卡面核验；抽查可见插画裁切。"
+      },
+      "tests": {
+        "status": "PLANNED_NOT_IMPLEMENTED",
+        "normal": "在满足触发条件时验证候选语义：回合开始时其他所有选手都领先自己至少五格，取消本场且自己得3分。",
+        "boundary": "恰好5格与仅剩自己",
+        "interaction": "与Gloth、Re-Runner、Doppelgangster、军师交互",
+        "passed": 0
+      }
+    },
+    {
+      "id": "sw_stepdad",
+      "en": "Stepdad",
+      "zh_draft": "继父",
+      "translation_status": "DRAFT",
+      "edition_claim": "second-wind",
+      "membership_status": "CANDIDATE_FAN_LIST",
+      "rule_status": "CHECK_REQUIRED",
+      "release_ready": false,
+      "source_refs": [
+        "SW-F01"
+      ],
+      "source_locator": "const expansionAthletes[29] / Stepdad",
+      "source_ability_sha256": "4465cd61235569ca96df4adfbee8de1127cdec12a63eb3d87c20be5cf16aad7f",
+      "verified_semantics": null,
+      "candidate_semantics": "左侧角色主移动加2；其获得第一时自己得3分。",
+      "candidate_trigger": "main-modifier+finish",
+      "candidate_optionality": "mandatory",
+      "candidate_movement": [
+        "main"
+      ],
+      "candidate_targets": "左侧角色与自己玩家",
+      "candidate_requires_choice": false,
+      "candidate_extra_turn": false,
+      "candidate_changes_controller": false,
+      "candidate_eliminates": false,
+      "candidate_changes_score": true,
+      "interaction_notes": "与冠军替换、控制权交换和多人顺序交互",
+      "open_questions": [
+        "左侧按实体席位还是玩家、多选手和淘汰后左侧更新待核。",
+        "尚未取得可归属官方发布版本的完整规则书或可读原卡卡文。"
+      ],
+      "animation_requirements": [
+        "power_source_highlight",
+        "step_path",
+        "score_ledger"
+      ],
+      "artwork": {
+        "status": "NOT_LICENSED",
+        "public_asset_path": null,
+        "observed_reference": "来源图片未作为完整技能卡面核验；抽查可见插画裁切。"
+      },
+      "tests": {
+        "status": "PLANNED_NOT_IMPLEMENTED",
+        "normal": "在满足触发条件时验证候选语义：左侧角色主移动加2；其获得第一时自己得3分。",
+        "boundary": "左侧角色属于自己玩家",
+        "interaction": "与冠军替换、控制权交换和多人顺序交互",
+        "passed": 0
+      }
+    },
+    {
+      "id": "sw_streaker",
+      "en": "Streaker",
+      "zh_draft": "裸奔者",
+      "translation_status": "DRAFT",
+      "edition_claim": "second-wind",
+      "membership_status": "CANDIDATE_FAN_LIST",
+      "rule_status": "CHECK_REQUIRED",
+      "release_ready": false,
+      "source_refs": [
+        "SW-F01"
+      ],
+      "source_locator": "const expansionAthletes[30] / Streaker",
+      "source_ability_sha256": "328b6ae4061a7795f93874909a19908c52f21f95d8c32dd2a14e0ad3cabcedac",
+      "verified_semantics": null,
+      "candidate_semantics": "一次移动经过其他选手时获得1分。",
+      "candidate_trigger": "passing",
+      "candidate_optionality": "mandatory",
+      "candidate_movement": [],
+      "candidate_targets": "自己玩家",
+      "candidate_requires_choice": false,
+      "candidate_extra_turn": false,
+      "candidate_changes_controller": false,
+      "candidate_eliminates": false,
+      "candidate_changes_score": true,
+      "interaction_notes": "与半人马、香蕉、反向移动交互",
+      "open_questions": [
+        "一次经过多人是共1分还是逐人1分、后退经过待核。",
+        "尚未取得可归属官方发布版本的完整规则书或可读原卡卡文。"
+      ],
+      "animation_requirements": [
+        "power_source_highlight",
+        "score_ledger"
+      ],
+      "artwork": {
+        "status": "NOT_LICENSED",
+        "public_asset_path": null,
+        "observed_reference": "来源图片未作为完整技能卡面核验；抽查可见插画裁切。"
+      },
+      "tests": {
+        "status": "PLANNED_NOT_IMPLEMENTED",
+        "normal": "在满足触发条件时验证候选语义：一次移动经过其他选手时获得1分。",
+        "boundary": "同段经过多人",
+        "interaction": "与半人马、香蕉、反向移动交互",
+        "passed": 0
+      }
+    },
+    {
+      "id": "sw_stunner",
+      "en": "Stunner",
+      "zh_draft": "惊艳者",
+      "translation_status": "DRAFT",
+      "edition_claim": "second-wind",
+      "membership_status": "CANDIDATE_FAN_LIST",
+      "rule_status": "CHECK_REQUIRED",
+      "release_ready": false,
+      "source_refs": [
+        "SW-F01"
+      ],
+      "source_locator": "const expansionAthletes[31] / Stunner",
+      "source_ability_sha256": "3e3b0968c5c7c096bf7cce18eef5a7848b5320bc6dab591547c113fda76bdcb5",
+      "verified_semantics": null,
+      "candidate_semantics": "其他选手在自己一格以内，所有骰点都视为1。",
+      "candidate_trigger": "any-roll-modifier",
+      "candidate_optionality": "mandatory",
+      "candidate_movement": [],
+      "candidate_targets": "范围内的其他选手",
+      "candidate_requires_choice": false,
+      "candidate_extra_turn": false,
+      "candidate_changes_controller": false,
+      "candidate_eliminates": false,
+      "candidate_changes_score": false,
+      "interaction_notes": "与Mr. Dice Guy、Nemesis、决斗和重掷交互",
+      "open_questions": [
+        "设置点数还是实际掷骰、动态移动出范围的时点待核。",
+        "尚未取得可归属官方发布版本的完整规则书或可读原卡卡文。"
+      ],
+      "animation_requirements": [
+        "power_source_highlight"
+      ],
+      "artwork": {
+        "status": "NOT_LICENSED",
+        "public_asset_path": null,
+        "observed_reference": "来源图片未作为完整技能卡面核验；抽查可见插画裁切。"
+      },
+      "tests": {
+        "status": "PLANNED_NOT_IMPLEMENTED",
+        "normal": "在满足触发条件时验证候选语义：其他选手在自己一格以内，所有骰点都视为1。",
+        "boundary": "恰好距离1及同格",
+        "interaction": "与Mr. Dice Guy、Nemesis、决斗和重掷交互",
+        "passed": 0
+      }
+    },
+    {
+      "id": "sw_switcharoo",
+      "en": "Switcharoo",
+      "zh_draft": "换手袋鼠",
+      "translation_status": "DRAFT",
+      "edition_claim": "second-wind",
+      "membership_status": "CANDIDATE_FAN_LIST",
+      "rule_status": "CHECK_REQUIRED",
+      "release_ready": false,
+      "source_refs": [
+        "SW-F01"
+      ],
+      "source_locator": "const expansionAthletes[32] / Switcharoo",
+      "source_ability_sha256": "da566308b90a49ce1992951da92aea1bd9d139d54990c6a4263cde2b7d8d729a",
+      "verified_semantics": null,
+      "candidate_semantics": "回合结束时距另一角色一格以内，可交换控制该角色的玩家与角色卡。",
+      "candidate_trigger": "turn-end",
+      "candidate_optionality": "optional",
+      "candidate_movement": [],
+      "candidate_targets": "自己与所选角色的控制者",
+      "candidate_requires_choice": true,
+      "candidate_extra_turn": false,
+      "candidate_changes_controller": true,
+      "candidate_eliminates": false,
+      "candidate_changes_score": false,
+      "interaction_notes": "与Re-Runner、Speed Demon、额外回合及身份凭证交互",
+      "open_questions": [
+        "座位顺序、待决定归属、历史得分和返场效果的转移边界待核。",
+        "尚未取得可归属官方发布版本的完整规则书或可读原卡卡文。"
+      ],
+      "animation_requirements": [
+        "power_source_highlight",
+        "controller_badge_transfer",
+        "decision_prompt"
+      ],
+      "artwork": {
+        "status": "NOT_LICENSED",
+        "public_asset_path": null,
+        "observed_reference": "来源图片未作为完整技能卡面核验；抽查可见插画裁切。"
+      },
+      "tests": {
+        "status": "PLANNED_NOT_IMPLEMENTED",
+        "normal": "在满足触发条件时验证候选语义：回合结束时距另一角色一格以内，可交换控制该角色的玩家与角色卡。",
+        "boundary": "同玩家角色及断线重连",
+        "interaction": "与Re-Runner、Speed Demon、额外回合及身份凭证交互",
+        "passed": 0
+      }
+    },
+    {
+      "id": "sw_tail",
+      "en": "Tail",
+      "zh_draft": "尾巴",
+      "translation_status": "DRAFT",
+      "edition_claim": "second-wind",
+      "membership_status": "CANDIDATE_FAN_LIST",
+      "rule_status": "CHECK_REQUIRED",
+      "release_ready": false,
+      "source_refs": [
+        "SW-F01"
+      ],
+      "source_locator": "const expansionAthletes[33] / Tail",
+      "source_ability_sha256": "6cdbc284c3cbdd0004a8ea788abd85ae6a497319155e1d5a3528658998c391a6",
+      "verified_semantics": null,
+      "candidate_semantics": "回合开始可瞬移到前方最近角色的身后一格。",
+      "candidate_trigger": "turn-start",
+      "candidate_optionality": "optional",
+      "candidate_movement": [
+        "warp"
+      ],
+      "candidate_targets": "自己",
+      "candidate_requires_choice": true,
+      "candidate_extra_turn": false,
+      "candidate_changes_controller": false,
+      "candidate_eliminates": false,
+      "candidate_changes_score": false,
+      "interaction_notes": "与巨婴、地形落点及Null交互",
+      "open_questions": [
+        "最近并列、无前方对象待核。",
+        "尚未取得可归属官方发布版本的完整规则书或可读原卡卡文。"
+      ],
+      "animation_requirements": [
+        "power_source_highlight",
+        "warp_group",
+        "decision_prompt"
+      ],
+      "artwork": {
+        "status": "NOT_LICENSED",
+        "public_asset_path": null,
+        "observed_reference": "来源图片未作为完整技能卡面核验；抽查可见插画裁切。"
+      },
+      "tests": {
+        "status": "PLANNED_NOT_IMPLEMENTED",
+        "normal": "在满足触发条件时验证候选语义：回合开始可瞬移到前方最近角色的身后一格。",
+        "boundary": "最近对象就在前方一格",
+        "interaction": "与巨婴、地形落点及Null交互",
+        "passed": 0
+      }
+    },
+    {
+      "id": "sw_the_hose",
+      "en": "The Hose",
+      "zh_draft": "水管",
+      "translation_status": "DRAFT",
+      "edition_claim": "second-wind",
+      "membership_status": "CANDIDATE_FAN_LIST",
+      "rule_status": "CHECK_REQUIRED",
+      "release_ready": false,
+      "source_refs": [
+        "SW-F01"
+      ],
+      "source_locator": "const expansionAthletes[34] / The Hose",
+      "source_ability_sha256": "35deed639b350d6a8968df55093760c566e79f175cade5767aef6dc00c6df244",
+      "verified_semantics": null,
+      "candidate_semantics": "回合结束掷一骰，将前方范围内的所有选手绊倒，范围等于点数。",
+      "candidate_trigger": "turn-end-roll",
+      "candidate_optionality": "mandatory",
+      "candidate_movement": [],
+      "candidate_targets": "前方范围内的选手",
+      "candidate_requires_choice": false,
+      "candidate_extra_turn": false,
+      "candidate_changes_controller": false,
+      "candidate_eliminates": false,
+      "candidate_changes_score": false,
+      "interaction_notes": "与Stunner、Party Pooper、企鹅交互",
+      "open_questions": [
+        "自己回合结束后连锁和距离边界、所有骰修正待核。",
+        "尚未取得可归属官方发布版本的完整规则书或可读原卡卡文。"
+      ],
+      "animation_requirements": [
+        "power_source_highlight",
+        "trip_status"
+      ],
+      "artwork": {
+        "status": "NOT_LICENSED",
+        "public_asset_path": null,
+        "observed_reference": "来源图片未作为完整技能卡面核验；抽查可见插画裁切。"
+      },
+      "tests": {
+        "status": "PLANNED_NOT_IMPLEMENTED",
+        "normal": "在满足触发条件时验证候选语义：回合结束掷一骰，将前方范围内的所有选手绊倒，范围等于点数。",
+        "boundary": "距离恰好等于骰值",
+        "interaction": "与Stunner、Party Pooper、企鹅交互",
+        "passed": 0
+      }
+    },
+    {
+      "id": "sw_understudy",
+      "en": "Understudy",
+      "zh_draft": "候补演员",
+      "translation_status": "DRAFT",
+      "edition_claim": "second-wind",
+      "membership_status": "CANDIDATE_FAN_LIST",
+      "rule_status": "CHECK_REQUIRED",
+      "release_ready": false,
+      "source_refs": [
+        "SW-F01"
+      ],
+      "source_locator": "const expansionAthletes[35] / Understudy",
+      "source_ability_sha256": "45629f28a371b5c855192ef6506b5b190ff9bf054b014bebcbf8316cbdd86eb8",
+      "verified_semantics": null,
+      "candidate_semantics": "赛前复制一名对手选手的能力。",
+      "candidate_trigger": "before-race",
+      "candidate_optionality": "mixed",
+      "candidate_movement": [],
+      "candidate_targets": "自己及所选对手角色",
+      "candidate_requires_choice": true,
+      "candidate_extra_turn": false,
+      "candidate_changes_controller": false,
+      "candidate_eliminates": false,
+      "candidate_changes_score": false,
+      "interaction_notes": "与Egg、Twin、Copycat和Null依赖交互",
+      "open_questions": [
+        "可否复制赛前能力、多层复制和Null屏蔽必须核实。",
+        "尚未取得可归属官方发布版本的完整规则书或可读原卡卡文。"
+      ],
+      "animation_requirements": [
+        "power_source_highlight",
+        "decision_prompt"
+      ],
+      "artwork": {
+        "status": "NOT_LICENSED",
+        "public_asset_path": null,
+        "observed_reference": "来源图片未作为完整技能卡面核验；抽查可见插画裁切。"
+      },
+      "tests": {
+        "status": "PLANNED_NOT_IMPLEMENTED",
+        "normal": "在满足触发条件时验证候选语义：赛前复制一名对手选手的能力。",
+        "boundary": "目标是另一个复制者",
+        "interaction": "与Egg、Twin、Copycat和Null依赖交互",
+        "passed": 0
+      }
+    }
+  ],
+  "candidate_flag_scope": "candidate_*布尔仅描述转录里的直接效果；复制或变身后可能继承的效果未核，不表示永远不可能。"
+}

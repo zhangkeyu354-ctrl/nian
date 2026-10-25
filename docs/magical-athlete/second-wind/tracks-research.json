@@ -1,0 +1,49 @@
+{
+  "schema_version": 1,
+  "as_of": "2026-10-26",
+  "production_enabled": false,
+  "tracks": [
+    {
+      "id": "twisty_twirl",
+      "en": "Twisty Twirl",
+      "zh_draft": "曲折回旋",
+      "source_refs": [
+        "SW-B01",
+        "SW-I04"
+      ],
+      "name_evidence": "基础规则书镜像PDF页20混盒赛程",
+      "rules_status": "CHECK_REQUIRED",
+      "length": null,
+      "start": null,
+      "finish_threshold": null,
+      "first_corner": null,
+      "second_corner": null,
+      "spaces": null,
+      "specials": null,
+      "coordinate_map": null,
+      "verified_special_positions": 0,
+      "release_ready": false
+    },
+    {
+      "id": "whirly_world",
+      "en": "Whirly World",
+      "zh_draft": "旋转世界",
+      "source_refs": [
+        "SW-B01",
+        "SW-I04"
+      ],
+      "name_evidence": "基础规则书镜像PDF页20混盒赛程",
+      "rules_status": "CHECK_REQUIRED",
+      "length": null,
+      "start": null,
+      "finish_threshold": null,
+      "first_corner": null,
+      "second_corner": null,
+      "spaces": null,
+      "specials": null,
+      "coordinate_map": null,
+      "verified_special_positions": 0,
+      "release_ready": false
+    }
+  ]
+}

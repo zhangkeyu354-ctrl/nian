@@ -1,0 +1,399 @@
+{
+  "baseline": "f3569000ff165fc12125c8c0b4fa5db3af7540c5",
+  "productionFilesUnchangedByThisResearch": true,
+  "changedProductionFiles": [],
+  "rulesetDescription": "CMYK 2025 base + partial 2026 revisions + documented house rules; no versioned ruleset setting yet",
+  "roster": [
+    {
+      "id": "alchemist",
+      "en": "Alchemist",
+      "zh": "炼金术士",
+      "status": "CONFIRMED",
+      "source_ref": "MA-B01 Racer Info；中文名 MA-D01",
+      "translation_status": "DRAFT"
+    },
+    {
+      "id": "baba_yaga",
+      "en": "Baba Yaga",
+      "zh": "芭芭雅嘎",
+      "status": "CONFIRMED",
+      "source_ref": "MA-B01 Racer Info；中文名 MA-D01",
+      "translation_status": "DRAFT"
+    },
+    {
+      "id": "banana",
+      "en": "Banana",
+      "zh": "香蕉",
+      "status": "CONFIRMED",
+      "source_ref": "MA-B01 Racer Info；中文名 MA-D01",
+      "translation_status": "DRAFT"
+    },
+    {
+      "id": "blimp",
+      "en": "Blimp",
+      "zh": "飞艇",
+      "status": "CONFIRMED",
+      "source_ref": "MA-B01 Racer Info；中文名 MA-D01",
+      "translation_status": "DRAFT"
+    },
+    {
+      "id": "centaur",
+      "en": "Centaur",
+      "zh": "半人马",
+      "status": "CONFIRMED",
+      "source_ref": "MA-B01 Racer Info；中文名 MA-D01",
+      "translation_status": "DRAFT"
+    },
+    {
+      "id": "cheerleader",
+      "en": "Cheerleader",
+      "zh": "啦啦队长",
+      "status": "CONFIRMED",
+      "source_ref": "MA-B01 Racer Info；中文名 MA-D01",
+      "translation_status": "DRAFT"
+    },
+    {
+      "id": "coach",
+      "en": "Coach",
+      "zh": "教练",
+      "status": "CONFIRMED",
+      "source_ref": "MA-B01 Racer Info；中文名 MA-D01",
+      "translation_status": "DRAFT"
+    },
+    {
+      "id": "copycat",
+      "en": "Copycat",
+      "zh": "山寨猫",
+      "status": "CONFIRMED",
+      "source_ref": "MA-B01 Racer Info；中文名 MA-D01",
+      "translation_status": "DRAFT"
+    },
+    {
+      "id": "dicemonger",
+      "en": "Dicemonger",
+      "zh": "骰贩子",
+      "status": "CONFIRMED",
+      "source_ref": "MA-B01 Racer Info；中文名 MA-D01",
+      "translation_status": "DRAFT"
+    },
+    {
+      "id": "duelist",
+      "en": "Duelist",
+      "zh": "决斗者",
+      "status": "CONFIRMED",
+      "source_ref": "MA-B01 Racer Info；中文名 MA-D01",
+      "translation_status": "DRAFT"
+    },
+    {
+      "id": "egg",
+      "en": "Egg",
+      "zh": "神秘蛋",
+      "status": "CONFIRMED",
+      "source_ref": "MA-B01 Racer Info；中文名 MA-D01",
+      "translation_status": "DRAFT"
+    },
+    {
+      "id": "flip_flop",
+      "en": "Flip Flop",
+      "zh": "人字拖",
+      "status": "CONFIRMED",
+      "source_ref": "MA-B01 Racer Info；中文名 MA-D01",
+      "translation_status": "DRAFT"
+    },
+    {
+      "id": "genius",
+      "en": "Genius",
+      "zh": "天才",
+      "status": "CONFIRMED",
+      "source_ref": "MA-B01 Racer Info；中文名 MA-D01",
+      "translation_status": "DRAFT"
+    },
+    {
+      "id": "gunk",
+      "en": "Gunk",
+      "zh": "黏黏怪",
+      "status": "CONFIRMED",
+      "source_ref": "MA-B01 Racer Info；中文名 MA-D01",
+      "translation_status": "DRAFT"
+    },
+    {
+      "id": "hare",
+      "en": "Hare",
+      "zh": "兔子",
+      "status": "CONFIRMED",
+      "source_ref": "MA-B01 Racer Info；中文名 MA-D01",
+      "translation_status": "DRAFT"
+    },
+    {
+      "id": "heckler",
+      "en": "Heckler",
+      "zh": "毒舌喷子",
+      "status": "CONFIRMED",
+      "source_ref": "MA-B01 Racer Info；中文名 MA-D01",
+      "translation_status": "DRAFT"
+    },
+    {
+      "id": "huge_baby",
+      "en": "Huge Baby",
+      "zh": "巨婴",
+      "status": "CONFIRMED",
+      "source_ref": "MA-B01 Racer Info；中文名 MA-D01",
+      "translation_status": "DRAFT"
+    },
+    {
+      "id": "hypnotist",
+      "en": "Hypnotist",
+      "zh": "催眠师",
+      "status": "CONFIRMED",
+      "source_ref": "MA-B01 Racer Info；中文名 MA-D01",
+      "translation_status": "DRAFT"
+    },
+    {
+      "id": "inchworm",
+      "en": "Inchworm",
+      "zh": "尺蠖",
+      "status": "CONFIRMED",
+      "source_ref": "MA-B01 Racer Info；中文名 MA-D01",
+      "translation_status": "DRAFT"
+    },
+    {
+      "id": "lackey",
+      "en": "Lackey",
+      "zh": "跟班",
+      "status": "CONFIRMED",
+      "source_ref": "MA-B01 Racer Info；中文名 MA-D01",
+      "translation_status": "DRAFT"
+    },
+    {
+      "id": "leaptoad",
+      "en": "Leaptoad",
+      "zh": "跳跳蟾",
+      "status": "CONFIRMED",
+      "source_ref": "MA-B01 Racer Info；中文名 MA-D01",
+      "translation_status": "DRAFT"
+    },
+    {
+      "id": "legs",
+      "en": "Legs",
+      "zh": "大长腿",
+      "status": "CONFIRMED",
+      "source_ref": "MA-B01 Racer Info；中文名 MA-D01",
+      "translation_status": "DRAFT"
+    },
+    {
+      "id": "lovable_loser",
+      "en": "Lovable Loser",
+      "zh": "可爱废柴",
+      "status": "CONFIRMED",
+      "source_ref": "MA-B01 Racer Info；中文名 MA-D01",
+      "translation_status": "DRAFT"
+    },
+    {
+      "id": "magician",
+      "en": "Magician",
+      "zh": "魔术师",
+      "status": "CONFIRMED",
+      "source_ref": "MA-B01 Racer Info；中文名 MA-D01",
+      "translation_status": "DRAFT"
+    },
+    {
+      "id": "mastermind",
+      "en": "Mastermind",
+      "zh": "军师",
+      "status": "CONFIRMED",
+      "source_ref": "MA-B01 Racer Info；中文名 MA-D01",
+      "translation_status": "DRAFT"
+    },
+    {
+      "id": "mouth",
+      "en": "M.O.U.T.H.",
+      "zh": "血盆大口",
+      "status": "CONFIRMED",
+      "source_ref": "MA-B01 Racer Info；中文名 MA-D01",
+      "translation_status": "DRAFT"
+    },
+    {
+      "id": "party_animal",
+      "en": "Party Animal",
+      "zh": "派对咖",
+      "status": "CONFIRMED",
+      "source_ref": "MA-B01 Racer Info；中文名 MA-D01",
+      "translation_status": "DRAFT"
+    },
+    {
+      "id": "rocket_scientist",
+      "en": "Rocket Scientist",
+      "zh": "火箭科学家",
+      "status": "CONFIRMED",
+      "source_ref": "MA-B01 Racer Info；中文名 MA-D01",
+      "translation_status": "DRAFT"
+    },
+    {
+      "id": "romantic",
+      "en": "Romantic",
+      "zh": "浪漫者",
+      "status": "CONFIRMED",
+      "source_ref": "MA-B01 Racer Info；中文名 MA-D01",
+      "translation_status": "DRAFT"
+    },
+    {
+      "id": "scoocher",
+      "en": "Scoocher",
+      "zh": "挪挪",
+      "status": "CONFIRMED",
+      "source_ref": "MA-B01 Racer Info；中文名 MA-D01",
+      "translation_status": "DRAFT"
+    },
+    {
+      "id": "sisyphus",
+      "en": "Sisyphus",
+      "zh": "西西弗斯",
+      "status": "CONFIRMED",
+      "source_ref": "MA-B01 Racer Info；中文名 MA-D01",
+      "translation_status": "DRAFT"
+    },
+    {
+      "id": "skipper",
+      "en": "Skipper",
+      "zh": "船长",
+      "status": "CONFIRMED",
+      "source_ref": "MA-B01 Racer Info；中文名 MA-D01",
+      "translation_status": "DRAFT"
+    },
+    {
+      "id": "stickler",
+      "en": "Stickler",
+      "zh": "较真怪",
+      "status": "CONFIRMED",
+      "source_ref": "MA-B01 Racer Info；中文名 MA-D01",
+      "translation_status": "DRAFT"
+    },
+    {
+      "id": "suckerfish",
+      "en": "Suckerfish",
+      "zh": "吸盘鱼",
+      "status": "CONFIRMED",
+      "source_ref": "MA-B01 Racer Info；中文名 MA-D01",
+      "translation_status": "DRAFT"
+    },
+    {
+      "id": "third_wheel",
+      "en": "Third Wheel",
+      "zh": "电灯泡",
+      "status": "CONFIRMED",
+      "source_ref": "MA-B01 Racer Info；中文名 MA-D01",
+      "translation_status": "DRAFT"
+    },
+    {
+      "id": "twin",
+      "en": "Twin",
+      "zh": "双胞胎",
+      "status": "CONFIRMED",
+      "source_ref": "MA-B01 Racer Info；中文名 MA-D01",
+      "translation_status": "DRAFT"
+    }
+  ],
+  "counts": {
+    "current": 36,
+    "draftable": 36,
+    "reference2025": 36,
+    "secondWindCandidates": 36,
+    "verifiedSecondWindRules": 0
+  },
+  "missingFromCurrent": [],
+  "extraInCurrent": [],
+  "expansionNameCollisions": [],
+  "tracks": {
+    "mild": {
+      "id": "mild",
+      "zh": "温和赛道",
+      "en": "Mild Mile",
+      "length": 30,
+      "secondCorner": 15,
+      "specials": {},
+      "status": "CONFIRMED",
+      "source_ref": "MA-B03 规则书 p10–11 棋盘图"
+    },
+    "wild": {
+      "id": "wild",
+      "zh": "狂野赛道",
+      "en": "Wild Wilds",
+      "length": 30,
+      "secondCorner": 15,
+      "specials": {
+        "1": {
+          "kind": "star"
+        },
+        "5": {
+          "kind": "rock"
+        },
+        "7": {
+          "kind": "arrow",
+          "steps": 3
+        },
+        "11": {
+          "kind": "arrow",
+          "steps": 1
+        },
+        "13": {
+          "kind": "star"
+        },
+        "16": {
+          "kind": "arrow",
+          "steps": -3
+        },
+        "18": {
+          "kind": "rock"
+        },
+        "23": {
+          "kind": "arrow",
+          "steps": 2
+        },
+        "24": {
+          "kind": "arrow",
+          "steps": -3
+        },
+        "26": {
+          "kind": "rock"
+        }
+      },
+      "status": "CONFIRMED",
+      "source_ref": "MA-B03 规则书棋盘图（狂野面）"
+    }
+  },
+  "runtimeDefaults": {
+    "players": [
+      2,
+      8
+    ],
+    "officialProductPlayers": [
+      2,
+      6
+    ],
+    "races": 4,
+    "pointsPerRace": {
+      "gold": 3,
+      "silver": 1
+    },
+    "deal": "draft",
+    "supportedDeals": [
+      "draft",
+      "random"
+    ],
+    "schedule": [
+      "mild",
+      "wild",
+      "mild",
+      "wild"
+    ],
+    "variant": "standard"
+  },
+  "hashes": {
+    "packages/magical-athlete/src/engine.ts": "3cce6d398e45ccd7438aaffc0b988b45522d3ce1f6b8e8da6dfb865914597180",
+    "packages/magical-athlete/src/racers.ts": "15af2f8a893470dd4b10f36b1f3d998f71e43620027492068f0cef171844e80c",
+    "packages/magical-athlete/src/tracks.ts": "65666458e21f2eabc45918df237055104b0f2b75442ea9dff23bdf6e1e6f2a39",
+    "packages/magical-athlete/src/types.ts": "724c84db4f621188287f9046212c1d0bbace5b1b341a1bfcd2d8283d4b56cafe",
+    "apps/server/src/ma-rooms.ts": "048507c975ee49a446d568570224b540ee29f078d373e16bb88ca8bfd2b84cf3",
+    "apps/web/src/ma/MagicalAthlete.tsx": "d3594312d320dce8699f67e290ed5743b8e968d3acc7603380cc705c512b6a82"
+  }
+}

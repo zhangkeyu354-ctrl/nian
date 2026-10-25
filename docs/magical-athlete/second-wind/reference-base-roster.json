@@ -1,0 +1,185 @@
+{
+  "source_ref": "SW-F02",
+  "characters": [
+    {
+      "id": "alchemist",
+      "en": "Alchemist",
+      "zh": "炼金术士"
+    },
+    {
+      "id": "baba_yaga",
+      "en": "Baba Yaga",
+      "zh": "芭芭雅嘎"
+    },
+    {
+      "id": "banana",
+      "en": "Banana",
+      "zh": "香蕉"
+    },
+    {
+      "id": "blimp",
+      "en": "Blimp",
+      "zh": "飞艇"
+    },
+    {
+      "id": "centaur",
+      "en": "Centaur",
+      "zh": "半人马"
+    },
+    {
+      "id": "cheerleader",
+      "en": "Cheerleader",
+      "zh": "啦啦队长"
+    },
+    {
+      "id": "coach",
+      "en": "Coach",
+      "zh": "教练"
+    },
+    {
+      "id": "copycat",
+      "en": "Copycat",
+      "zh": "模仿猫"
+    },
+    {
+      "id": "dicemonger",
+      "en": "Dicemonger",
+      "zh": "骰子商人"
+    },
+    {
+      "id": "duelist",
+      "en": "Duelist",
+      "zh": "决斗家"
+    },
+    {
+      "id": "egg",
+      "en": "Egg",
+      "zh": "蛋蛋"
+    },
+    {
+      "id": "flip_flop",
+      "en": "Flip Flop",
+      "zh": "人字拖"
+    },
+    {
+      "id": "genius",
+      "en": "Genius",
+      "zh": "天才"
+    },
+    {
+      "id": "gunk",
+      "en": "Gunk",
+      "zh": "黏液怪"
+    },
+    {
+      "id": "hare",
+      "en": "Hare",
+      "zh": "野兔"
+    },
+    {
+      "id": "heckler",
+      "en": "Heckler",
+      "zh": "起哄者"
+    },
+    {
+      "id": "huge_baby",
+      "en": "Huge Baby",
+      "zh": "巨婴"
+    },
+    {
+      "id": "hypnotist",
+      "en": "Hypnotist",
+      "zh": "催眠师"
+    },
+    {
+      "id": "inchworm",
+      "en": "Inchworm",
+      "zh": "尺蠖"
+    },
+    {
+      "id": "lackey",
+      "en": "Lackey",
+      "zh": "跟班"
+    },
+    {
+      "id": "leaptoad",
+      "en": "Leaptoad",
+      "zh": "跳跳蟾蜍"
+    },
+    {
+      "id": "legs",
+      "en": "Legs",
+      "zh": "大长腿"
+    },
+    {
+      "id": "lovable_loser",
+      "en": "Lovable Loser",
+      "zh": "可爱的倒霉蛋"
+    },
+    {
+      "id": "magician",
+      "en": "Magician",
+      "zh": "魔术师"
+    },
+    {
+      "id": "mastermind",
+      "en": "Mastermind",
+      "zh": "幕后军师"
+    },
+    {
+      "id": "mouth",
+      "en": "M.O.U.T.H.",
+      "zh": "大嘴怪"
+    },
+    {
+      "id": "party_animal",
+      "en": "Party Animal",
+      "zh": "派对动物"
+    },
+    {
+      "id": "rocket_scientist",
+      "en": "Rocket Scientist",
+      "zh": "火箭科学家"
+    },
+    {
+      "id": "romantic",
+      "en": "Romantic",
+      "zh": "浪漫家"
+    },
+    {
+      "id": "scoocher",
+      "en": "Scoocher",
+      "zh": "蹭蹭怪"
+    },
+    {
+      "id": "sisyphus",
+      "en": "Sisyphus",
+      "zh": "西西弗斯"
+    },
+    {
+      "id": "skipper",
+      "en": "Skipper",
+      "zh": "船长"
+    },
+    {
+      "id": "stickler",
+      "en": "Stickler",
+      "zh": "较真怪"
+    },
+    {
+      "id": "suckerfish",
+      "en": "Suckerfish",
+      "zh": "吸盘鱼"
+    },
+    {
+      "id": "third_wheel",
+      "en": "Third Wheel",
+      "zh": "电灯泡"
+    },
+    {
+      "id": "twin",
+      "en": "Twin",
+      "zh": "双胞胎"
+    }
+  ]
+}
