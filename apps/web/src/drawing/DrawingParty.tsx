@@ -3,6 +3,7 @@ import { io } from "socket.io-client";
 import {
   appendChunk,
   emptyDrawing,
+  gameScope,
   COLORS,
   type Mode,
   type GameView,
@@ -127,7 +128,7 @@ export function DrawingParty({ mode }: { mode: Mode }) {
     };
   }, []);
   const v = snap?.view,
-    scope = v ? [v.id, v.phase, v.step, v.turn].join(":") : "lobby",
+    scope = v ? gameScope(v) : "lobby",
     host = !!snap?.me && snap.host === snap.me,
     my = snap?.players.find((p) => p.id === snap.me),
     canAct = connected && !busy;

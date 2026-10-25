@@ -17,6 +17,7 @@ import {
   tick,
   viewFor,
   startGame,
+  gameScope,
   taskFor,
   emptyDrawing,
   appendChunk,
@@ -136,7 +137,7 @@ export class DrawingRoom {
   }
   scope() {
     const g = this.file.game;
-    return g ? [g.id, g.phase, g.step, g.turn].join(":") : "lobby";
+    return g ? gameScope(g) : "lobby";
   }
   apply(p: Seat, req: any, now = Date.now()) {
     if (typeof req.op !== "string" || req.op.length > 100)
@@ -211,6 +212,9 @@ export class DrawingRoom {
           optionOffset: randomInt(18),
           categoryVote: true,
           categoryTieSeed: randomInt(60),
+          ...(this.file.mode === "tp"
+            ? { themeTieSeed: randomInt(420), themeRandomIndex: randomInt(5) }
+            : {}),
         },
       );
       this.file.game.id = randomBytes(16).toString("hex");

@@ -25,6 +25,8 @@ describe("3–10人传话", () => {
     it(n + "人分配、隐私、全链揭晓闭环", () => {
       const ps = players(n);
       let s = startGame("tp", ps, 1000, { fakeIndex: 1, wordIndex: 0 });
+      s = tick(s, s.deadline);
+      s = tick(s, s.deadline);
       for (const p of ps)
         s = act(s, p.id, { type: "TEXT", text: "初题" + p.id }, 1100);
       expect(s.phase).toBe("TASK");
@@ -58,6 +60,8 @@ describe("3–10人传话", () => {
     });
   it("到时自动封存且离线不会卡死", () => {
     let s = startGame("tp", players(3), 1000, { fakeIndex: 1, wordIndex: 0 });
+    s = tick(s, s.deadline);
+    s = tick(s, s.deadline);
     s = tick(s, s.deadline);
     expect(s.phase).toBe("TASK");
     while (s.phase === "TASK") s = tick(s, s.deadline);

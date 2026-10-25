@@ -1,6 +1,12 @@
 import React, { useId } from "react";
 import { COLORS } from "../../../../packages/drawing-party/src/index.ts";
-export function Portrait({ index = 0 }: { index?: number }) {
+export function Portrait({
+  index = 0,
+  tale = false,
+}: {
+  index?: number;
+  tale?: boolean;
+}) {
   const skin = [
     "#f6c393",
     "#b97850",
@@ -10,7 +16,7 @@ export function Portrait({ index = 0 }: { index?: number }) {
     "#e9ae89",
     "#f4c8a7",
     "#c58d66",
-  ][index % COLORS.length];
+  ][index % (tale ? 8 : COLORS.length)];
   const hair = [
     "#29344a",
     "#412737",
@@ -20,7 +26,7 @@ export function Portrait({ index = 0 }: { index?: number }) {
     "#704127",
     "#db8b31",
     "#37303b",
-  ][index % COLORS.length];
+  ][index % (tale ? 8 : COLORS.length)];
   return (
     <svg className="st-portrait" viewBox="0 0 80 80" aria-hidden="true">
       <circle cx="40" cy="40" r="38" fill={COLORS[index % COLORS.length]} />
@@ -211,6 +217,42 @@ export function CategoryIcon({ index }: { index: number }) {
   return (
     <svg className="st-cat-icon" viewBox="0 0 24 24" aria-hidden="true">
       <path d={paths[index % paths.length]} />
+    </svg>
+  );
+}
+
+/** TP-only outline icons; deliberately separate from Fake Artist's existing set. */
+export function ThemeIcon({ index }: { index: number }) {
+  const paths = [
+    "M4 4h16v16H4zM8 4v16M16 4v16M4 8h4M4 16h4M16 8h4M16 16h4M8 12h8",
+    "M6 4h12v14H8a2 2 0 1 1 0-4h10M6 4a2 2 0 0 0-2 2v10M9 8h6M9 11h4M18 18a2 2 0 0 0 2 2",
+    "M3 20V9h5v11M16 20V9h5v11M8 20V6l4-3 4 3v14M3 9V6M8 9V6M16 9V6M21 9V6M10 20v-5h4v5",
+    "M4 4h16v12H9l-5 4V4ZM12 6l1.3 3 3.2.3-2.4 2.2.7 3.1-2.8-1.7-2.8 1.7.7-3.1-2.4-2.2 3.2-.3Z",
+    "M10 17V5l10-2v12M10 9l10-2M10 17c0 2-6 4-6 1s6-3 6-1ZM20 15c0 2-6 4-6 1s6-3 6-1Z",
+    "M5 4h14v16H5ZM9 8h.01M15 8h.01M12 12h.01M9 16h.01M15 16h.01",
+    "M4 20l1-5L16 4l4 4L9 19l-5 1ZM13 7l4 4M3 22h18",
+  ];
+  return (
+    <svg className="st-cat-icon" viewBox="0 0 24 24" aria-hidden="true">
+      <path d={paths[index]} />
+    </svg>
+  );
+}
+export function AwardIcon({ kind }: { kind: "mvp" | "dud" }) {
+  return (
+    <svg
+      className={"tp-award-icon is-" + kind}
+      viewBox="0 0 32 32"
+      aria-hidden="true"
+    >
+      {kind === "mvp" ? (
+        <path d="M5 10l5 5 6-10 6 10 5-5-3 15H8L5 10ZM9 28h14" />
+      ) : (
+        <>
+          <ellipse cx="16" cy="23" rx="12" ry="5" />
+          <path d="M12 19V7h9v12M10 7h13M16 7V3" />
+        </>
+      )}
     </svg>
   );
 }

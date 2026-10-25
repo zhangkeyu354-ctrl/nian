@@ -1,3 +1,4 @@
+import { gameScope } from "../packages/drawing-party/src/index.ts";
 import { io, type Socket } from "socket.io-client";
 import { strict as assert } from "node:assert";
 import { performance } from "node:perf_hooks";
@@ -40,13 +41,15 @@ try {
     return req(ss[i], "dp:action", {
       code,
       token: seats[i].token,
-      scope: v ? [v.id, v.phase, v.step, v.turn].join(":") : "lobby",
+      scope: v ? gameScope(v) : "lobby",
       op: String(++op),
       action: a,
     });
   };
   for (let i = 0; i < 8; i++) await action(i, { type: "READY" });
   await action(0, { type: "START" });
+  for (let i = 0; i < 8; i++) await action(i, { type: "THEME_VOTE", theme: 6 });
+  await new Promise((r) => setTimeout(r, 1900));
   for (let i = 0; i < 8; i++)
     await action(i, { type: "TEXT", text: "测试" + i });
   const views = await Promise.all(
@@ -66,7 +69,7 @@ try {
         return req(s, "dp:stroke", {
           code,
           token: seats[i].token,
-          scope: [v.id, v.phase, v.step, v.turn].join(":"),
+          scope: gameScope(v),
           chunk: {
             id: "load-" + i,
             seq,
