@@ -106,3 +106,7 @@ M5第二轮完成：96场景+9交互截图=105；布局96/96、交互14组/排�
 - 最终验收：53文件845项通过（单worker/20秒预算，420.66秒）；typecheck/build/replays通过；移动采集197项+接线64项通过。原版3/6/10人各完成3/6/10轮、UI v3 30图、美术42图、换词专项和手感全部通过。
 - 原五款回归通过：DBD协议3局3025视图、CN12组、DM浏览器整局、RR协议整局、MA选秀2641步4场。揭晓桌面录屏/CDP最低一秒136帧，零50ms长帧。运行美术737690字节。
 - 最终交接docs/handoff/XB_FINISH_交接_2026-10-24.md；65张截图、手感录屏/trace及双尺寸并排对比位于docs/xiabaiwang/art-v4。仅推本分支，不合并main、不部署。
+
+
+- 2026-10-25 当前用户委托执行GitHub新版docs/instructions/传情画意_主题投票与MVP坑货_交给Codex.md。新分支codex/tp-theme-mvp基于d2d301c，未合并旧实验分支；仅tp：THEME→THEME_RESULT→PROMPT，自由写题无系统题库；每册末页AWARD→AWARD_RESULT，匿名MVP/坑货，按原始票数汇总并列，无积分输赢。TP scope加cursor，FA原路径不改。详见docs/drawing-party/TP_THEME_MVP_2026-10-25.md。首轮850测试、类型、构建、重放、3～10人两款16局协议、两款3端与8人UI回归通过。3017隔离预览，真机与Render未测试，未部署。
+- 最终冻结版再次55文件/850项通过（230.44秒）；typecheck/build、三局重放、16局tp/fa协议、BROWSER_PASS tp/fa、EIGHT_UI_PASS tp/fa、10人全流程与像素截图复验全部通过。截图theme-mvp-screens/共19张，metrics记录纸面保留率，人工复核完成。无真实手机或Render测试；按指令交接后停止。

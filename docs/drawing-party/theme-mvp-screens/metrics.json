@@ -1,0 +1,164 @@
+[
+  {
+    "label": "theme",
+    "width": 844,
+    "height": 390,
+    "bad": [],
+    "paper": null
+  },
+  {
+    "label": "theme",
+    "width": 667,
+    "height": 375,
+    "bad": [],
+    "paper": null
+  },
+  {
+    "label": "theme",
+    "width": 390,
+    "height": 844,
+    "bad": [],
+    "paper": null
+  },
+  {
+    "label": "prompt",
+    "width": 844,
+    "height": 390,
+    "bad": [],
+    "paper": null
+  },
+  {
+    "label": "prompt",
+    "width": 667,
+    "height": 375,
+    "bad": [],
+    "paper": null
+  },
+  {
+    "label": "prompt",
+    "width": 390,
+    "height": 844,
+    "bad": [],
+    "paper": null
+  },
+  {
+    "label": "reveal-before-award",
+    "width": 844,
+    "height": 390,
+    "bad": [],
+    "paper": {
+      "width": 576,
+      "height": 288
+    }
+  },
+  {
+    "label": "reveal-before-award",
+    "width": 667,
+    "height": 375,
+    "bad": [],
+    "paper": {
+      "width": 503,
+      "height": 251.5
+    }
+  },
+  {
+    "label": "reveal-before-award",
+    "width": 390,
+    "height": 844,
+    "bad": [],
+    "paper": {
+      "width": 390,
+      "height": 195
+    }
+  },
+  {
+    "label": "award",
+    "width": 844,
+    "height": 390,
+    "bad": [],
+    "paper": {
+      "width": 418,
+      "height": 209
+    }
+  },
+  {
+    "label": "award",
+    "width": 667,
+    "height": 375,
+    "bad": [],
+    "paper": {
+      "width": 388,
+      "height": 194
+    }
+  },
+  {
+    "label": "award",
+    "width": 390,
+    "height": 844,
+    "bad": [],
+    "paper": {
+      "width": 390,
+      "height": 195
+    }
+  },
+  {
+    "label": "award-result",
+    "width": 844,
+    "height": 390,
+    "bad": [],
+    "paper": {
+      "width": 422,
+      "height": 211
+    }
+  },
+  {
+    "label": "award-result",
+    "width": 667,
+    "height": 375,
+    "bad": [],
+    "paper": {
+      "width": 392,
+      "height": 196
+    }
+  },
+  {
+    "label": "award-result",
+    "width": 390,
+    "height": 844,
+    "bad": [],
+    "paper": {
+      "width": 390,
+      "height": 195
+    }
+  },
+  {
+    "label": "total-result",
+    "width": 844,
+    "height": 390,
+    "bad": [],
+    "paper": {
+      "width": 576,
+      "height": 288
+    }
+  },
+  {
+    "label": "total-result",
+    "width": 667,
+    "height": 375,
+    "bad": [],
+    "paper": {
+      "width": 503,
+      "height": 251.5
+    }
+  },
+  {
+    "label": "total-result",
+    "width": 390,
+    "height": 844,
+    "bad": [],
+    "paper": {
+      "width": 390,
+      "height": 195
+    }
+  }
+]

@@ -1,3 +1,4 @@
+import { gameScope } from "../packages/drawing-party/src/index.ts";
 import { chromium } from "playwright";
 import { io, type Socket } from "socket.io-client";
 import { strict as assert } from "node:assert";
@@ -41,7 +42,7 @@ try {
       return req(ss[i], "dp:action", {
         code,
         token: seats[i].token,
-        scope: v ? [v.id, v.phase, v.step, v.turn].join(":") : "lobby",
+        scope: v ? gameScope(v) : "lobby",
         op: String(++counter),
         action: a,
       });
@@ -72,6 +73,10 @@ try {
         .getByRole("button", { name: "文具 / 工具", exact: true })
         .click();
     } else {
+      for (let i = 1; i < 8; i++)
+        await action(i, { type: "THEME_VOTE", theme: 6 });
+      await page.getByRole("button", { name: "自定义", exact: true }).click();
+      await page.getByLabel("给朋友写个题目").waitFor();
       for (let i = 1; i < 8; i++)
         await action(i, { type: "TEXT", text: "画一只戴帽子的猫" });
       await page.getByLabel("给朋友写个题目").fill("戴着帽子的猫");

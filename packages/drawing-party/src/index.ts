@@ -48,6 +48,10 @@ export interface Game {
   mode: Mode;
   players: Player[];
   phase:
+    | "THEME"
+    | "THEME_RESULT"
+    | "AWARD"
+    | "AWARD_RESULT"
     | "CATEGORY"
     | "PROMPT"
     | "TASK"
@@ -73,12 +77,56 @@ export interface Game {
   winner?: "fake" | "artists";
   guess?: string;
   cursor: number;
+  theme?: string;
+  themeVotes?: Record<string, number>;
+  themeTieSeed?: number;
+  themeRandomIndex?: number;
+  awardVotes?: Record<string, AwardBallot>;
+  awardResults?: AwardResult[];
   categoryVotes?: Record<string, number>;
   categorySeed?: number;
   categoryOffset?: number;
   categoryTieSeed?: number;
 }
+export const TP_THEMES = [
+  "影视",
+  "成语",
+  "童话故事",
+  "动漫",
+  "歌词",
+  "随机",
+  "自定义",
+];
+export interface AwardBallot {
+  mvp: string | null;
+  dud: string | null;
+}
+export interface AwardResult {
+  chain: number;
+  mvp: Record<string, number>;
+  dud: Record<string, number>;
+  mvpWinners: string[];
+  dudWinners: string[];
+}
+export function gameScope(
+  g: Pick<Game, "id" | "mode" | "phase" | "step" | "turn" | "cursor">,
+) {
+  return [
+    g.id,
+    g.phase,
+    g.step,
+    g.turn,
+    ...(g.mode === "tp" ? [g.cursor] : []),
+  ].join(":");
+}
 export type Action =
+  | { type: "THEME_VOTE"; theme: number }
+  | {
+      type: "AWARD_VOTE";
+      chain: number;
+      mvp?: string | null;
+      dud?: string | null;
+    }
   | { type: "CATEGORY_VOTE"; category: number }
   | { type: "TEXT"; text: string }
   | { type: "SUBMIT" }
@@ -98,6 +146,14 @@ export interface GameView {
   deadline: number;
   completed: number;
   currentId?: string;
+  theme?: string;
+  themes?: string[];
+  myThemeVote?: number;
+  awardChain?: number;
+  awardCandidates?: string[];
+  myAwardVote?: AwardBallot;
+  awardResults?: AwardResult[];
+  awardTotals?: AwardResult;
   categories?: string[];
   myCategoryVote?: number;
   task?: {
@@ -343,6 +399,8 @@ export function startGame(
     optionOffset?: number;
     categoryVote?: boolean;
     categoryTieSeed?: number;
+    themeTieSeed?: number;
+    themeRandomIndex?: number;
   },
 ): Game {
   if (
@@ -360,11 +418,11 @@ export function startGame(
     id: "game-" + now,
     mode,
     players: structuredClone(players),
-    phase: mode === "tp" ? "PROMPT" : opt.categoryVote ? "CATEGORY" : "DRAW",
+    phase: mode === "tp" ? "THEME" : opt.categoryVote ? "CATEGORY" : "DRAW",
     step: 1,
     steps: players.length - (players.length % 2),
     turn: 0,
-    deadline: now + (mode === "tp" ? 60000 : 30000),
+    deadline: now + 30000,
     done: [],
     chains: players.map(() => []),
     drawings: { shared: emptyDrawing() },
@@ -374,6 +432,15 @@ export function startGame(
     word: bank.words[wi],
     options,
     cursor: 0,
+    ...(mode === "tp"
+      ? {
+          themeVotes: {},
+          themeTieSeed: opt.themeTieSeed ?? 0,
+          themeRandomIndex: opt.themeRandomIndex ?? 0,
+          awardVotes: {},
+          awardResults: [],
+        }
+      : {}),
     ...(mode === "fa" && opt.categoryVote
       ? {
           categoryVotes: {},
@@ -454,13 +521,91 @@ function decide(s: Game, now: number) {
     s.deadline = 0;
   }
 }
+function resolveTheme(s: Game, now: number) {
+  const votes = Object.values(s.themeVotes ?? {}),
+    totals = TP_THEMES.map((_, i) => votes.filter((v) => v === i).length);
+  const max = Math.max(0, ...totals),
+    top = totals.flatMap((n, i) => (n === max ? [i] : []));
+  const choice = votes.length ? top[(s.themeTieSeed ?? 0) % top.length] : 5;
+  s.theme =
+    choice === 6
+      ? undefined
+      : TP_THEMES[choice === 5 ? (s.themeRandomIndex ?? 0) % 5 : choice];
+  s.phase = "THEME_RESULT";
+  s.deadline = now + 1500;
+}
+const awardChain = (s: Game) => Math.floor(s.cursor / (s.steps + 1));
+function winners(t: Record<string, number>): string[] {
+  const max = Math.max(0, ...Object.values(t));
+  return max
+    ? Object.keys(t)
+        .filter((id) => t[id] === max)
+        .sort()
+    : [];
+}
+function resolveAward(s: Game) {
+  const mvp: Record<string, number> = {},
+    dud: Record<string, number> = {};
+  for (const ballot of Object.values(s.awardVotes ?? {}))
+    for (const key of ["mvp", "dud"] as const) {
+      const id = ballot[key];
+      const tally = key === "mvp" ? mvp : dud;
+      if (id) tally[id] = (tally[id] ?? 0) + 1;
+    }
+  s.awardResults!.push({
+    chain: awardChain(s),
+    mvp,
+    dud,
+    mvpWinners: winners(mvp),
+    dudWinners: winners(dud),
+  });
+  s.phase = "AWARD_RESULT";
+  s.deadline = 0;
+}
+function awardTotals(s: Game): AwardResult {
+  const mvp: Record<string, number> = {},
+    dud: Record<string, number> = {};
+  for (const result of s.awardResults ?? [])
+    for (const key of ["mvp", "dud"] as const)
+      for (const [id, n] of Object.entries(result[key])) {
+        const t = key === "mvp" ? mvp : dud;
+        t[id] = (t[id] ?? 0) + n;
+      }
+  return {
+    chain: -1,
+    mvp,
+    dud,
+    mvpWinners: winners(mvp),
+    dudWinners: winners(dud),
+  };
+}
 export function act(state: Game, id: string, a: Action, now: number): Game {
   if (!state.players.some((p) => p.id === id)) fail("不是本局玩家");
   const s = structuredClone(state);
   if (a.type === "NEXT" && s.phase === "REVEAL") {
     if (id !== s.players[0].id) fail("由房主翻页");
     if (s.cursor >= s.players.length * (s.steps + 1) - 1) s.phase = "RESULT";
-    else s.cursor++;
+    else {
+      s.cursor++;
+      if (
+        s.mode === "tp" &&
+        s.awardResults &&
+        s.cursor % (s.steps + 1) === s.steps
+      ) {
+        s.phase = "AWARD";
+        s.awardVotes = {};
+        s.deadline = now + 30000;
+      }
+    }
+    return s;
+  }
+  if (s.mode === "tp" && a.type === "NEXT" && s.phase === "AWARD_RESULT") {
+    if (id !== s.players[0].id) fail("由房主翻页");
+    if (s.cursor >= s.players.length * (s.steps + 1) - 1) s.phase = "RESULT";
+    else {
+      s.cursor++;
+      s.phase = "REVEAL";
+    }
     return s;
   }
   if (a.type === "FINISH_DISCUSSION" && s.phase === "DISCUSS") {
@@ -470,7 +615,35 @@ export function act(state: Game, id: string, a: Action, now: number): Game {
     return s;
   }
   if (s.deadline && now >= s.deadline) fail("本阶段已到时");
-  if (s.phase === "CATEGORY" && a.type === "CATEGORY_VOTE") {
+  if (s.mode === "tp" && s.phase === "THEME" && a.type === "THEME_VOTE") {
+    if (
+      !Number.isInteger(a.theme) ||
+      a.theme < 0 ||
+      a.theme > 6 ||
+      Object.hasOwn(s.themeVotes!, id)
+    )
+      fail("无效或重复主题投票");
+    s.themeVotes![id] = a.theme;
+    if (Object.keys(s.themeVotes!).length === s.players.length)
+      resolveTheme(s, now);
+  } else if (
+    s.mode === "tp" &&
+    s.phase === "AWARD" &&
+    a.type === "AWARD_VOTE"
+  ) {
+    if (!Number.isInteger(a.chain) || a.chain !== awardChain(s))
+      fail("传话本已变化");
+    if (Object.hasOwn(s.awardVotes!, id)) fail("已经提交本轮投票");
+    const candidates = new Set(s.chains[a.chain].map((e) => e.author));
+    for (const target of [a.mvp, a.dud])
+      if (
+        target != null &&
+        (typeof target !== "string" || target === id || !candidates.has(target))
+      )
+        fail("不能投给自己或无效候选人");
+    s.awardVotes![id] = { mvp: a.mvp ?? null, dud: a.dud ?? null };
+    if (Object.keys(s.awardVotes!).length === s.players.length) resolveAward(s);
+  } else if (s.phase === "CATEGORY" && a.type === "CATEGORY_VOTE") {
     if (
       !Number.isInteger(a.category) ||
       a.category < -1 ||
@@ -537,13 +710,18 @@ export function act(state: Game, id: string, a: Action, now: number): Game {
 export function tick(state: Game, now: number): Game {
   if (!state.deadline || now < state.deadline) return state;
   const s = structuredClone(state);
-  if (s.mode === "tp" && (s.phase === "PROMPT" || s.phase === "TASK")) {
+  if (s.mode === "tp" && s.phase === "THEME") resolveTheme(s, now);
+  else if (s.mode === "tp" && s.phase === "THEME_RESULT") {
+    s.phase = "PROMPT";
+    s.deadline = now + 60000;
+  } else if (s.mode === "tp" && s.phase === "AWARD") resolveAward(s);
+  else if (s.mode === "tp" && (s.phase === "PROMPT" || s.phase === "TASK")) {
     for (const p of s.players.filter((p) => !s.done.includes(p.id))) {
       if (s.phase === "PROMPT")
         s.chains[s.players.findIndex((x) => x.id === p.id)].push({
           kind: "text",
           author: p.id,
-          text: "戴帽子的猫",
+          text: "未出题",
           missing: true,
         });
       else {
@@ -599,12 +777,29 @@ export function viewFor(s: Game, id: string): GameView {
       : {}),
   });
   if (s.mode === "tp") {
+    v.theme = s.theme;
+    if (s.phase === "THEME") {
+      v.themes = TP_THEMES;
+      v.completed = Object.keys(s.themeVotes ?? {}).length;
+      if (me) v.myThemeVote = s.themeVotes?.[id];
+      return v;
+    }
+    v.awardResults = structuredClone(s.awardResults ?? []);
+    if (s.phase === "AWARD" || s.phase === "AWARD_RESULT") {
+      v.awardChain = awardChain(s);
+      v.awardCandidates = [
+        ...new Set(s.chains[v.awardChain].map((e) => e.author)),
+      ];
+      v.completed = Object.keys(s.awardVotes ?? {}).length;
+      if (me) v.myAwardVote = s.awardVotes?.[id];
+    }
+    if (s.phase === "RESULT") v.awardTotals = awardTotals(s);
     const t = me ? taskFor(s, id) : null;
     if (t) {
       v.task = { ...t, source: entry(t.source) };
       v.drawing = visibleDrawing(s.drawings[t.id]);
     }
-    if (s.phase === "REVEAL" || s.phase === "RESULT")
+    if (["REVEAL", "AWARD", "AWARD_RESULT", "RESULT"].includes(s.phase))
       v.albums = s.chains.map((es, c) => ({
         owner: s.players[c],
         entries: es

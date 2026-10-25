@@ -14,6 +14,8 @@ it("private ink journal recovery, idempotency, edit revision and host authority"
       r.apply(ps[i], { scope: r.scope(), op: String(++op), action: a });
     for (let i = 0; i < 3; i++) action(i, { type: "READY" });
     action(0, { type: "START" });
+    for (let i = 0; i < 3; i++) action(i, { type: "THEME_VOTE", theme: 6 });
+    r.expire(r.file.game!.deadline);
     for (let i = 0; i < 3; i++)
       action(i, { type: "TEXT", text: "秘密题目" + i });
     const req = {

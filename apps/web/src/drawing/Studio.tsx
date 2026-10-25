@@ -13,7 +13,9 @@ import {
   Easel,
   TimerRing,
   CategoryIcon,
+  ThemeIcon,
 } from "./StudioArt.tsx";
+import { TaleAwards } from "./TaleAwards.tsx";
 import { FakeResult, TaleResult } from "./Results.tsx";
 import { feel, soundOn, setSoundOn } from "./feel.ts";
 import "./studio.css";
@@ -99,8 +101,7 @@ export function Studio(p: Props) {
   // Last five seconds tick (only while there is something left to do).
   useEffect(() => {
     if (!v.deadline || p.seconds > 5 || p.seconds <= 0) return;
-    if (v.submitted || (mode === "fa" && v.phase === "DRAW" && !myTurn))
-      return;
+    if (v.submitted || (mode === "fa" && v.phase === "DRAW" && !myTurn)) return;
     feel("tick");
   }, [p.seconds]);
 
@@ -111,6 +112,10 @@ export function Studio(p: Props) {
   const locked = !connected || p.busy;
   const title = mode === "fa" ? "纽约伪画家" : "传情画意";
   const labels: Record<string, string> = {
+    THEME: "主题投票",
+    THEME_RESULT: "本局主题",
+    AWARD: "这一笔，谁最出彩？",
+    AWARD_RESULT: "本轮奖项",
     CATEGORY: "主题投票",
     PROMPT: "写下一个有趣的句子",
     TASK: v.task?.kind === "drawing" ? "把这句话画出来" : "朋友画的是什么？",
@@ -141,25 +146,29 @@ export function Studio(p: Props) {
                   : v.winner === "fake"
                     ? "伪画家，成功蒙混过关！"
                     : "真画家，识破了伪装！"
-      : v.phase === "PROMPT"
-        ? "故事，从你这句话开始"
-        : v.phase === "TASK"
-          ? "第 " + v.step + " / " + v.steps + " 步"
-          : "一页一页翻开传话本";
+      : v.phase === "THEME"
+        ? "选个方向，写下你自己的脑洞"
+        : v.phase === "PROMPT"
+          ? "故事，从你这句话开始"
+          : v.phase === "TASK"
+            ? "第 " + v.step + " / " + v.steps + " 步"
+            : "一页一页翻开传话本";
 
   const seat = (x: Player, i: number) => {
     const current = v.currentId === x.id;
     return (
       <div
         className={
-          "st-player " + (current ? "is-current " : "") + (x.id === me ? "is-me" : "")
+          "st-player " +
+          (current ? "is-current " : "") +
+          (x.id === me ? "is-me" : "")
         }
         key={x.id}
         data-current={current}
         style={{ "--seat": COLORS[i % COLORS.length] } as React.CSSProperties}
       >
         <div className="st-player-avatar">
-          <Portrait index={i} />
+          <Portrait index={i} tale={mode === "tp"} />
           {x.id === me && <i>我</i>}
         </div>
         <div className="st-player-brush">
@@ -207,7 +216,17 @@ export function Studio(p: Props) {
           aria-label={label}
           maxLength={80}
           placeholder={
-            v.phase === "PROMPT" ? "例如：骑着恐龙去上班" : "大胆猜，跑偏才好玩"
+            v.phase === "PROMPT"
+              ? v.theme
+                ? ({
+                    影视: "写一个你想到的影视作品或情节",
+                    成语: "写一个成语",
+                    童话故事: "写一个你想到的童话故事",
+                    动漫: "写一个你想到的动漫作品或情节",
+                    歌词: "写一句你想到的歌词",
+                  }[v.theme] ?? "按主题写一句题目")
+                : "例如：骑着恐龙去上班"
+              : "大胆猜，跑偏才好玩"
           }
           value={p.input}
           onChange={(e) => p.setInput(e.target.value)}
@@ -239,7 +258,7 @@ export function Studio(p: Props) {
   const canPaper =
     mode === "fa"
       ? ["DRAW", "DISCUSS", "VOTE", "OBSERVE", "RESULT"].includes(v.phase)
-      : v.phase === "TASK" || v.phase === "REVEAL" || v.phase === "RESULT";
+      : ["TASK", "REVEAL", "AWARD", "AWARD_RESULT", "RESULT"].includes(v.phase);
   const drawingTask =
     v.phase === "DRAW" || (v.phase === "TASK" && v.task?.kind === "drawing");
   const fullscreen = async () => {
@@ -256,7 +275,9 @@ export function Studio(p: Props) {
     }
     setMenu(false);
   };
-  const tpReveal = mode === "tp" && (v.phase === "REVEAL" || v.phase === "RESULT");
+  const tpReveal =
+    mode === "tp" &&
+    ["REVEAL", "AWARD", "AWARD_RESULT", "RESULT"].includes(v.phase);
   const revealedCount = useMemo(
     () => (v.albums ?? []).reduce((n, a) => n + a.entries.length, 0),
     [v.albums],
@@ -269,6 +290,7 @@ export function Studio(p: Props) {
         (focused ? " is-focused" : "") +
         (myTurn ? " is-my-turn" : "") +
         (tpReveal ? " is-album" : "") +
+        (["AWARD", "AWARD_RESULT"].includes(v.phase) ? " has-award" : "") +
         " st-phase-" +
         v.phase.toLowerCase()
       }
@@ -302,7 +324,9 @@ export function Studio(p: Props) {
           ) : (
             <>
               <b className="st-phase-label">{labels[v.phase]}</b>
-              <small>{subline}</small>
+              <small>
+                {tpReveal && v.theme ? "本局主题：" + v.theme : subline}
+              </small>
             </>
           )}
         </div>
@@ -381,6 +405,50 @@ export function Studio(p: Props) {
         className={"st-center " + (canPaper ? "has-paper" : "")}
         key={v.id + ":" + v.phase}
       >
+        {mode === "tp" && v.phase === "THEME" && (
+          <div className="st-ballot tp-theme-ballot">
+            <div className="st-category-grid tp-theme-grid">
+              {v.themes?.map((theme, i) => (
+                <button
+                  key={theme}
+                  className={v.myThemeVote === i ? "is-mine" : ""}
+                  aria-pressed={v.myThemeVote === i}
+                  disabled={locked || v.myThemeVote !== undefined || !me}
+                  onClick={() =>
+                    act({ type: "THEME_VOTE", theme: i }, "select")
+                  }
+                >
+                  <ThemeIcon index={i} />
+                  {theme}
+                  <span className="st-check" aria-hidden="true" />
+                </button>
+              ))}
+            </div>
+            <p className="st-pill">
+              {v.myThemeVote === undefined
+                ? "请投票选择主题"
+                : "已投票 · 等朋友们选择"}{" "}
+              <small>
+                {v.completed}/{v.players.length}
+              </small>
+            </p>
+          </div>
+        )}
+        {mode === "tp" && v.phase === "THEME_RESULT" && (
+          <div className="tp-theme-result">
+            <ThemeIcon
+              index={
+                v.theme
+                  ? ["影视", "成语", "童话故事", "动漫", "歌词"].indexOf(
+                      v.theme,
+                    )
+                  : 6
+              }
+            />
+            <h1>本局主题：{v.theme ?? "自定义"}</h1>
+            <p>题目由你来写，脑洞由大家接力</p>
+          </div>
+        )}
         {mode === "fa" && v.phase === "CATEGORY" && (
           <div className="st-ballot">
             <div className="st-category-grid">
@@ -431,7 +499,16 @@ export function Studio(p: Props) {
                   <i key={i} />
                 ))}
               </div>
-              <h1>故事，从你这句话开始</h1>
+              {v.theme && (
+                <span className="st-chip tp-theme-tag">
+                  本局主题 · {v.theme}
+                </span>
+              )}
+              <h1>
+                {v.theme
+                  ? `写一句「${v.theme}」类的题目`
+                  : "故事，从你这句话开始"}
+              </h1>
               {form("给朋友写个题目", true)}
             </div>
           ))}
@@ -462,7 +539,11 @@ export function Studio(p: Props) {
               ) : (
                 <p className="st-pill">猜测已收好，等待朋友们</p>
               )}
-              <Progress done={v.completed} all={v.players.length} busy={p.inkBusy} />
+              <Progress
+                done={v.completed}
+                all={v.players.length}
+                busy={p.inkBusy}
+              />
             </div>
           </>
         )}
@@ -472,7 +553,11 @@ export function Studio(p: Props) {
               {v.albums?.map((a, i) => (
                 <button
                   aria-pressed={book === i}
-                  disabled={!a.entries.length}
+                  disabled={
+                    !a.entries.length ||
+                    (["AWARD", "AWARD_RESULT"].includes(v.phase) &&
+                      i !== v.awardChain)
+                  }
                   key={a.owner.id}
                   onClick={() => {
                     feel("page");
@@ -480,7 +565,7 @@ export function Studio(p: Props) {
                     setPage(a.entries.length - 1);
                   }}
                 >
-                  <Portrait index={indexOf(a.owner.id)} />
+                  <Portrait index={indexOf(a.owner.id)} tale={mode === "tp"} />
                   <span>{a.owner.name}</span>
                   <small>
                     {a.entries.length}/{v.steps + 1}
@@ -500,7 +585,10 @@ export function Studio(p: Props) {
                   </div>
                 )}
                 <div className="st-album-caption">
-                  <Portrait index={indexOf(entry?.author)} />
+                  <Portrait
+                    index={indexOf(entry?.author)}
+                    tale={mode === "tp"}
+                  />
                   <div>
                     <b>{album?.owner.name}的传话本</b>
                     <span>
@@ -532,7 +620,9 @@ export function Studio(p: Props) {
                   ))}
                   {album &&
                     Array.from(
-                      { length: Math.max(0, v.steps + 1 - album.entries.length) },
+                      {
+                        length: Math.max(0, v.steps + 1 - album.entries.length),
+                      },
                       (_, i) => <i className="st-page-ghost" key={"g" + i} />,
                     )}
                 </div>
@@ -573,6 +663,16 @@ export function Studio(p: Props) {
                 </div>
               </div>
             </div>
+            {["AWARD", "AWARD_RESULT"].includes(v.phase) && (
+              <TaleAwards
+                v={v}
+                me={me}
+                locked={locked}
+                host={host}
+                onVote={p.submit}
+                onNext={() => act({ type: "NEXT" }, "page")}
+              />
+            )}
             <div className="st-reveal-progress" aria-hidden="true">
               <i
                 style={{
@@ -630,7 +730,9 @@ export function Studio(p: Props) {
                     开始投票 →
                   </button>
                 ) : (
-                  <p className="st-pill is-soft">和朋友讨论，等待房主开始投票</p>
+                  <p className="st-pill is-soft">
+                    和朋友讨论，等待房主开始投票
+                  </p>
                 )}
               </div>
             )}
@@ -672,7 +774,9 @@ export function Studio(p: Props) {
                     <button
                       className="st-btn st-dark"
                       disabled={locked || !vote}
-                      onClick={() => act({ type: "VOTE", target: vote }, "stamp")}
+                      onClick={() =>
+                        act({ type: "VOTE", target: vote }, "stamp")
+                      }
                     >
                       确认投票
                     </button>
@@ -831,7 +935,7 @@ export function Studio(p: Props) {
               <p className="st-menu-rules">
                 {mode === "fa"
                   ? "选主题 → 每人每圈画一笔，共两圈 → 讨论投票 → 卧底被抓可猜题翻盘。平票未抓到。线上自动主持改编。"
-                  : "写题 → 同时画画 → 猜朋友的画 → 交替传递 → 一起揭晓。提交后锁定，离线到时封存。"}
+                  : "选主题 → 每人自己写题 → 同时画画与猜测 → 逐本揭晓并匿名投MVP／坑货。主题仅供参考，提交后锁定，掉线到时按未完成或弃权处理。"}
               </p>
             )}
             <button
@@ -872,7 +976,12 @@ export function Studio(p: Props) {
   );
 }
 
-function Waiting(p: { stamp?: string; title: string; done: number; all: number }) {
+function Waiting(p: {
+  stamp?: string;
+  title: string;
+  done: number;
+  all: number;
+}) {
   return (
     <div className="st-waiting">
       {p.stamp && <b className="st-stamp">{p.stamp}</b>}
@@ -902,17 +1011,23 @@ function bannerFor(
   me: string | null,
 ): Omit<Banner, "key"> | null {
   if (mode === "fa") {
-    if (v.phase === "CATEGORY") return { text: "选个主题", sub: "最高票决定这局画什么" };
+    if (v.phase === "CATEGORY")
+      return { text: "选个主题", sub: "最高票决定这局画什么" };
     if (v.phase === "DRAW") {
       if (v.turn === 0)
         return v.role === "fake"
-          ? { text: "你是伪画家", sub: "看别人怎么画，假装你知道", tone: "fake" }
+          ? {
+              text: "你是伪画家",
+              sub: "看别人怎么画，假装你知道",
+              tone: "fake",
+            }
           : { text: "你是真画家", sub: "题目藏在左下角题牌里" };
       if (v.currentId === me)
         return { text: "轮到你了", sub: "一笔画完，抬笔即提交", tone: "me" };
       return null;
     }
-    if (v.phase === "DISCUSS") return { text: "讨论时间", sub: "谁在假装知道？" };
+    if (v.phase === "DISCUSS")
+      return { text: "讨论时间", sub: "谁在假装知道？" };
     if (v.phase === "VOTE") return { text: "投票", sub: "找出伪画家" };
     if (v.phase === "OBSERVE")
       return v.role === "fake"
@@ -921,11 +1036,16 @@ function bannerFor(
     if (v.phase === "GUESS") return null;
     return null;
   }
+  if (v.phase === "THEME_RESULT")
+    return { text: "本局主题：" + (v.theme ?? "自定义"), tone: "me" };
+  if (v.phase === "THEME")
+    return { text: "选个主题", sub: "每个人写一句，再让脑洞接力" };
   if (v.phase === "PROMPT") return { text: "写一个题目", sub: "越离谱越好玩" };
   if (v.phase === "TASK")
     return v.task?.kind === "drawing"
       ? { text: "开始画！", sub: v.task.source.text, tone: "me" }
       : { text: "猜猜看", sub: "朋友画的是什么？", tone: "me" };
-  if (v.phase === "REVEAL") return { text: "揭晓时刻", sub: "一页一页翻开传话本" };
+  if (v.phase === "REVEAL")
+    return { text: "揭晓时刻", sub: "一页一页翻开传话本" };
   return null;
 }

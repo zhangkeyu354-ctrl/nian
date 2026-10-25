@@ -92,7 +92,15 @@ try {
       await p.getByRole("button", { name: "我准备好了" }).click();
     await pages[0].getByRole("button", { name: "开始游戏" }).click();
     if (mode === "tp") {
+      await phase(pages[0], "THEME");
+      for (const p of pages)
+        await p.getByRole("button", { name: "歌词", exact: true }).click();
       await phase(pages[0], "PROMPT");
+      assert.equal((await state(pages[0])).view.theme, "歌词");
+      assert.equal(
+        await pages[0].getByLabel("给朋友写个题目").getAttribute("placeholder"),
+        "写一句你想到的歌词",
+      );
       for (let i = 0; i < 3; i++) {
         await pages[i].getByLabel("给朋友写个题目").fill("戴帽子的猫" + i);
         await pages[i].getByRole("button", { name: "写好了" }).click();
@@ -182,21 +190,47 @@ try {
         await pages[i].getByRole("button", { name: "写好了" }).click();
       }
       await phase(pages[0], "REVEAL");
-      for (let i = 0; i < 8; i++)
-        await pages[0].getByRole("button", { name: "翻开下一页" }).click();
+      for (let chain = 0; chain < 3; chain++) {
+        for (let page = 0; page < 2; page++)
+          await pages[0].getByRole("button", { name: "翻开下一页" }).click();
+        await phase(pages[0], "AWARD");
+        for (let i = 0; i < 3; i++) {
+          await pages[i]
+            .getByRole("button", {
+              name: "MVP：画家" + ((i + 1) % 3),
+              exact: true,
+            })
+            .click();
+          await pages[i]
+            .getByRole("button", {
+              name: "坑货：画家" + ((i + 1) % 3),
+              exact: true,
+            })
+            .click();
+          await pages[i]
+            .getByRole("button", { name: "确认投票", exact: true })
+            .click();
+        }
+        await phase(pages[0], "AWARD_RESULT");
+        if (chain < 2)
+          await pages[0].getByRole("button", { name: "翻开下一本" }).click();
+      }
       await pages[0].waitForTimeout(420);
       await pages[0].screenshot({
         path: out + "/tp-reveal.png",
         fullPage: false,
       });
+      await pages[0].getByRole("button", { name: "查看全场结算" }).click();
+      await phase(pages[0], "RESULT");
+      await pages[0]
+        .getByRole("button", { name: "回到相册", exact: true })
+        .click();
       const download = pages[0].waitForEvent("download");
       await pages[0]
         .getByRole("button", { name: "保存整条传话链" })
         .first()
         .click();
       assert((await download).suggestedFilename().endsWith(".png"));
-      await pages[0].getByRole("button", { name: "看完了" }).click();
-      await phase(pages[0], "RESULT");
     } else {
       await phase(pages[0], "CATEGORY");
       await pages[0].waitForTimeout(420);
@@ -278,6 +312,10 @@ try {
         "horizontal overflow",
       );
     }
+    if (mode === "tp")
+      await pages[0]
+        .getByRole("button", { name: "查看结算", exact: true })
+        .click();
     await pages[0].getByRole("button", { name: "再来一局" }).click();
     await pages[0].getByRole("button", { name: "我准备好了" }).waitFor();
     await Promise.all(contexts.map((c) => c.close()));
