@@ -21,6 +21,23 @@
   grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
   gap: 18px;
 }
+.hall-updates {
+  margin: 0 0 20px;
+  padding: 12px 16px;
+  border-left: 3px solid #ffc83d;
+  background: #ffffff08;
+  border-radius: 8px;
+}
+.hall-updates summary {
+  cursor: pointer;
+  font-weight: 700;
+  min-height: 24px;
+}
+.hall-updates p {
+  margin: 8px 0 0;
+  color: #cbd0c5;
+  line-height: 1.6;
+}
 .hall-box {
   border-radius: 16px;
   padding: 20px;

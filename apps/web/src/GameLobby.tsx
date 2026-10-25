@@ -17,6 +17,12 @@ export function GameLobby() {
           Wi-Fi 或外网都行。
         </p>
       </header>
+      <details className="hall-updates" open>
+        <summary>更新公告 · 10 月 25 日</summary>
+        <p>
+          瞎掰王手机布局优化：座位改为单行横滑，题目和讨论区更宽敞；修复终局领奖台被遮挡，回顾入口更好找。玩法、计分和题库不变。
+        </p>
+      </details>
       <div className="hall-boxes">
         <GameBox id="rk" title="拉密 Rummikub" sub="The Original · Classic" meta="2–4 人 · 数字组合" blurb="同色连成顺子，同数凑成一组。拆开桌面的可能，把手中的牌全部打出去。" art={<span style={{display:'flex',height:'100%',gap:12,alignItems:'center',background:'#1f4d3a',borderRadius:8,padding:8}}><img src="/assets/rummikub/box-classic.webp" alt="官方 Classic 包装" style={{height:76,width:105,objectFit:'contain'}}/><img src="/assets/rummikub/logo.webp" alt="Rummikub" style={{width:150,maxWidth:'45%'}}/></span>} online="/?game=rk" join={code=>'/?game=rk&room='+code.toUpperCase()}/>
         <GameBox id="xb" title="瞎掰王" sub="冷知识 · 身份推理" meta="3–10人 · 自由讨论" blurb="谁知道真正答案，谁又在一本正经地瞎掰？配合朋友的语音，一起找出老实人。" art={<img className="box-xb-art" src="/assets/xiabaiwang-v4/host-1.webp" alt="" />} online="/?game=xb" join={code=>'/?game=xb&room='+code.toUpperCase()} codeLength={6}/>
