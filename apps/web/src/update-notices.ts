@@ -1,6 +1,13 @@
 /** 大厅更新公告：每次发布在顶部追加，使用玩家能看懂的简短说明。 */
 export const UPDATE_NOTICES = [
   {
+    id: "2026-10-26-rummikub-launch",
+    date: "2026-10-26",
+    game: "拉密",
+    title: "新游戏：拉密 Rummikub 上线",
+    text: "2–4 人经典版，大厅可切换 5–6 人 XP 版。手机竖屏优化：手牌多了自动换行全部可见；选好牌点「用选中的牌新建一组」即可出牌。",
+  },
+  {
     id: "2026-10-25-drawing-canvas-votes",
     date: "2026-10-25",
     game: "绘画派对",
