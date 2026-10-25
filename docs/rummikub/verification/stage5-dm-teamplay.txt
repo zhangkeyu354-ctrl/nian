@@ -1,0 +1,5 @@
+
+> dbd-boardgame-private@0.2.2 verify:dm-teamplay
+> tsx scripts/verify-dm-teamplay.ts
+
+DM teamplay PASS 5MLP

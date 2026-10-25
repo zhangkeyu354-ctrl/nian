@@ -1,0 +1,1 @@
+{"players":4,"room":"5276BD0F","finished":true,"actions":123,"ms":221469,"reloaded":true,"offlined":true,"overflow":["day|轮到你了 · 抽2张，或打出: wt-hand-slot | wt-card wt-red wt-card-small"],"consoleErrors":[]}

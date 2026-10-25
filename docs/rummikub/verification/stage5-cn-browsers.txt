@@ -1,0 +1,5 @@
+
+> dbd-boardgame-private@0.2.2 verify:cn-browsers
+> tsx scripts/verify-cn-browsers.ts
+
+CN_BROWSERS_PASS {"contexts":4,"phones":2,"games":2,"goals":9,"privacy":true,"refresh":true,"timeout":true}

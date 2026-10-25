@@ -70,6 +70,24 @@ async function doubleConfirm(p: Page, id: string) {
   assert((await p.getByTestId(id).textContent())?.includes("再点确认"));
   await click(p, id);
 }
+async function skipReveal(p: Page) {
+  const skip = p.getByTestId("xb-skip");
+  if (await skip.count()) {
+    try {
+      await skip.click({ timeout: 1000 });
+    } catch (error) {
+      // The animation may finish between count() and the pointer click.
+      // Accept only its verified terminal state, not an arbitrary click failure.
+      if (
+        !(await p
+          .locator('[data-testid="xb-reveal"][data-done="true"]')
+          .count())
+      )
+        throw error;
+    }
+  }
+  await p.locator('[data-testid="xb-reveal"][data-done="true"]').waitFor();
+}
 function observe(p: Page) {
   p.on("pageerror", (e) => errors.push(e.message));
   p.on("websocket", (ws) =>
@@ -337,12 +355,10 @@ try {
               1,
             );
         } else {
-          for (const p of pages)
-            if (await p.getByTestId("xb-skip").count())
-              await click(p, "xb-skip");
+          for (const p of pages) await skipReveal(p);
         }
         for (const p of pages) {
-          if (await p.getByTestId("xb-skip").count()) await click(p, "xb-skip");
+          await skipReveal(p);
           assert.equal(states.get(p)!.view!.answer, answer);
         }
         await click(host, "xb-next");

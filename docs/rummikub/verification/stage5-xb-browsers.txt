@@ -1,0 +1,18 @@
+
+> dbd-boardgame-private@0.2.2 verify:xb-browsers
+> tsx scripts/verify-xb-browsers.ts
+
+XB_UI_V1_PASS 3 players 3 rounds
+XB_UI_V1_PASS 6 players 6 rounds
+node:internal/modules/run_main:107
+    triggerUncaughtException(
+    ^
+
+page.waitForFunction: Timeout 15000ms exceeded.
+    at click (E:\DBD-BoardGame-Web\scripts\verify-xb-ui-v1.ts:57:11)
+    at <anonymous> (E:\DBD-BoardGame-Web\scripts\verify-xb-ui-v1.ts:345:61) {
+  log: [],
+  name: 'TimeoutError'
+}
+
+Node.js v24.14.0
