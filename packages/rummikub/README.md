@@ -43,3 +43,18 @@ assertions 开启时创建及每次新状态转换检查：106 个真实 ID 恰�
 `npx vitest run packages/rummikub/test`：规则例子与确定性草稿随机游走。
 `npx tsx scripts/verify-rk-engine.ts`：2/3/4 人各 200 局，种子分别 2001–2200、3001–3200、4001–4200；报告写入 docs/rummikub/verification/stage2-simulations.json。
 AI 只做本人手牌贪心组牌和简单接牌；不是完整重组求解器。空池整轮 PASS 是共同确认无法出牌的项目默认，模拟堵局多不证明全局已无解。输出只有种子、回合、赢家和分数，不记录隐藏牌架。
+
+## 第 3 阶段 Socket.IO 房间
+
+服务器在同一 main.ts 注册 `attachRummikub`，事件独立使用 rk: 前缀。存档默认 data/rk-rooms，可用 RK_DATA_DIR 覆盖；生产随机种子由服务器生成，只有显式 RK_ALLOW_FIXED_SEED=1 的测试服务允许 START.seed。
+
+- rk:create `{}` → `{ok,code}`；rk:claim `{code,name}` → `{ok,token,playerId,snapshot}`。
+- rk:join `{code,token?}` → snapshot。匿名只有大厅信息，无游戏 view；已提供但无效的 token 明确拒绝，不冒充已有玩家。
+- rk:action `{code,token,version,seq,action}`。seq 使用本人 snapshot.nextSeq，覆盖大厅及对局命令、跨断线保留。actor/now/内部 seq 不允许放进 action；服务器从已绑定连接和可信时钟构造。
+- 大厅 action：SET_SETTINGS（count 2–4、minutes 0/1/2、games 1–100）、READY、START、LEAVE；SET_SETTINGS/START 仅房主。全员满座且准备才开始。NEXT_GAME 仅房主且约定局数尚未用完，房间层负责映射到引擎当前座位。
+- `version` 是公共版本；草稿不增加公共版本。MOVE/SPLIT/MERGE/UNDO/REDO/RESET 仅同 token 的连接收到 rk:update，其余人没有此包。privateRevision 与 nextSeq 仅本人可见；公共提交/罚牌/计时/大厅变化按人投影广播。
+- 非法 COMMIT 已执行罚牌：返回 ok:false、consumed:true、具体中文 error 和最新 snapshot。应用这个快照，不以新 seq 自动重试。相同已处理 seq 即使版本已旧也无副作用，consumed:false。过期公共版本、非法凭证等错误不消耗 seq；若错误包没有 snapshot，重新 rk:join 同步。
+- 所有成功事务先原子落盘（临时文件 + rename）再发包；保存失败恢复内存前态，避免已应答但重启丢草稿。存档含私有状态，不能由静态目录提供或上传公开仓库。服务器只记录故障房间号，不输出牌架或异常状态对象。
+- 默认每 500 ms 检查真实 deadline；玩家请求到达时也先检查。到期先执行罚牌/公共广播，再返回 consumed:false 的同步提示。
+
+协议定义：packages/shared/src/rk-protocol.ts。联机验收：`npx tsx scripts/verify-rk-browsers.ts`，启动隔离的真实主服务器和独立 Chromium 上下文。它检查 WebSocket 协议及完整对局，不代表阶段 4 的成品 UI/截图验收。

@@ -1,0 +1,8 @@
+
+ RUN  v5.0.5 E:/DBD-BoardGame-Web
+
+
+ Test Files  2 passed (2)
+      Tests  7 passed (7)
+   Start at  15:08:04
+   Duration  746ms (tests 50%, import 35%, transform 14%, worker 2%)

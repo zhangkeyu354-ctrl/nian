@@ -1,0 +1,24 @@
+
+ RUN  v5.0.5 E:/DBD-BoardGame-Web
+
+ ❯ apps/server/test/rk-rooms.test.ts (0 test)
+
+⎯⎯⎯⎯⎯⎯ Failed Suites 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  apps/server/test/rk-rooms.test.ts [ apps/server/test/rk-rooms.test.ts ]
+Error: Cannot find module '../src/rk-rooms.ts' imported from E:/DBD-BoardGame-Web/apps/server/test/rk-rooms.test.ts
+ ❯ apps/server/test/rk-rooms.test.ts:5:1
+      3| import { tmpdir } from 'node:os';
+      4| import { join } from 'node:path';
+      5| import { RKRoom } from '../src/rk-rooms.ts';
+       | ^
+      6| const dir=()=>mkdtempSync(join(tmpdir(),'rk-room-'));
+      7| const setup=()=>{
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  no tests
+   Start at  14:56:02
+   Duration  271ms (worker 96%, environment 4%)

@@ -1,0 +1,5 @@
+
+> dbd-boardgame-private@0.2.2 verify:lan-protocol
+> tsx scripts/verify-lan-protocol.ts
+
+LAN_PROTOCOL_PASS [{"seed":1701,"code":"NG22","commands":228,"winner":"survivor","events":450,"rejectedAsExpected":24},{"seed":2903,"code":"VKYT","commands":268,"winner":"survivor","events":535,"rejectedAsExpected":28},{"seed":4111,"code":"8395","commands":109,"winner":"killer","events":223,"rejectedAsExpected":12}] view checks 3025

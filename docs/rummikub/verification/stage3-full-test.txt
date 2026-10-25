@@ -1,0 +1,12 @@
+
+> dbd-boardgame-private@0.2.2 test
+> vitest run
+
+
+ RUN  v5.0.5 E:/DBD-BoardGame-Web
+
+
+ Test Files  57 passed (57)
+      Tests  890 passed (890)
+   Start at  15:01:12
+   Duration  321.24s (tests 98%, import 1%)
