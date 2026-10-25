@@ -5,7 +5,7 @@ import { strict as assert } from "node:assert";
 import { mkdirSync, writeFileSync } from "node:fs";
 import { gameScope } from "../packages/drawing-party/src/index.ts";
 const url = process.env.DP_URL ?? "http://127.0.0.1:3015",
-  out = "docs/drawing-party/theme-mvp-screens";
+  out = "docs/drawing-party/public-verdict-screens";
 mkdirSync(out, { recursive: true });
 const browser = await chromium.launch(),
   sockets: Socket[] = [],
@@ -36,7 +36,9 @@ async function screens(p: Page, label: string) {
       label + " horizontal overflow",
     );
     const result = await p.evaluate(() => {
-      const root = document.querySelector(".tp-award-panel,.tp-theme-ballot");
+      const root = document.querySelector(
+        ".tp-award-panel,.tp-theme-ballot,.tp-verdict",
+      );
       const bad = root
         ? [...root.querySelectorAll("button")]
             .filter((b) => {
@@ -140,8 +142,8 @@ try {
     "写一句你想到的歌词",
   );
   for (let i = 1; i < n; i++)
-    await action(i, { type: "TEXT", text: "这是朋友自由写下的题目" });
-  await p.getByLabel("给朋友写个题目").fill("我的题目不需要系统检查主题");
+    await action(i, { type: "TEXT", text: "小鸡" });
+  await p.getByLabel("给朋友写个题目").fill("小鸡");
   await p.getByRole("button", { name: "写好了", exact: true }).click();
   for (let step = 1; step <= n; step++) {
     await p.waitForFunction(
@@ -151,11 +153,11 @@ try {
     for (let i = 1; i < n; i++)
       await action(
         i,
-        step % 2 ? { type: "SUBMIT" } : { type: "TEXT", text: "猜测" + step },
+        step % 2 ? { type: "SUBMIT" } : { type: "TEXT", text: step===n ? "恐龙" : "猜测" + step },
       );
     if (step % 2) await p.getByRole("button", { name: "画好了" }).click();
     else {
-      await p.getByLabel("写下你的猜测").fill("我的猜测" + step);
+      await p.getByLabel("写下你的猜测").fill(step===n ? "恐龙" : "我的猜测" + step);
       await p.getByRole("button", { name: "写好了", exact: true }).click();
     }
   }
@@ -166,6 +168,24 @@ try {
   for (let chain = 0; chain < n; chain++) {
     for (let j = 0; j < n; j++)
       await p.getByRole("button", { name: "翻开下一页" }).click();
+    await p.getByLabel("传达成功判断", { exact: true }).waitFor();
+    if (chain === 0) await screens(p, "verdict");
+    for (let i = 1; i < n; i++) {
+      await action(i, {
+        type: "VERDICT_VOTE",
+        chain,
+        choice: i % 2 ? "success" : "offtrack",
+      });
+      if (chain === 0 && i === 1)
+        await p
+          .getByRole("row")
+          .filter({ hasText: "朋友2" })
+          .getByRole("cell", { name: "成功", exact: true })
+          .waitFor();
+    }
+    await p.getByRole("button", { name: "成功", exact: true }).click();
+    if (chain === 0) await screens(p, "verdict-result");
+    await p.getByRole("button", { name: "选 MVP 与坑货" }).click();
     await p.getByRole("region", { name: "本轮奖项投票" }).waitFor();
     if (chain === 0) {
       await screens(p, "award");
@@ -175,18 +195,46 @@ try {
       assert.equal((await state(p)).phase, "AWARD");
     }
     const v = (await snap()).view;
-    for (let i = 1; i < n; i++)
+    for (let i = 1; i < n; i++) {
       await action(i, {
         type: "AWARD_VOTE",
         chain,
         mvp: seats[(i + 1) % n].snapshot.me,
         dud: seats[(i + 1) % n].snapshot.me,
       });
+      if (chain === 0 && i === 1) {
+        await p
+          .getByRole("button", { name: "公开投票明细", exact: true })
+          .click();
+        const row = p
+          .getByRole("dialog", { name: "公开投票明细" })
+          .getByRole("row")
+          .filter({ hasText: "朋友2" });
+        assert.equal(
+          await row.getByRole("cell", { name: "朋友3", exact: true }).count(),
+          2,
+        );
+        await p.getByRole("button", { name: "关闭明细", exact: true }).click();
+      }
+    }
     await p.getByRole("button", { name: "MVP：朋友2", exact: true }).click();
     await p.getByRole("button", { name: "坑货：朋友2", exact: true }).click();
     await p.getByRole("button", { name: "确认投票", exact: true }).click();
     await p.getByLabel("本轮奖项公布").waitFor();
-    if (chain === 0) await screens(p, "award-result");
+    if (chain === 0) {
+      await screens(p, "award-result");
+      await p
+        .getByRole("button", { name: "公开投票明细", exact: true })
+        .click();
+      await p.getByRole("dialog", { name: "公开投票明细" }).waitFor();
+      await assertUiShot(p, out + "/public-votes.png");
+      assert(
+        (
+          await p.getByRole("dialog", { name: "公开投票明细" }).innerText()
+        ).includes("朋友2"),
+      );
+      await p.getByRole("button", { name: "关闭明细", exact: true }).click();
+    }
     await p
       .getByRole("button", {
         name: chain === n - 1 ? "查看全场结算" : "翻开下一本",

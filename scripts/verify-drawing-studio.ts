@@ -132,8 +132,8 @@ try {
         await pages[0].evaluate(() => {
           const r = document.querySelector("canvas")!.getBoundingClientRect();
           return (
-            r.width > 500 &&
-            r.height > 240 &&
+            r.width > 300 &&
+            r.height > 230 &&
             r.left >= 0 &&
             r.right <= innerWidth &&
             r.top >= 0 &&
@@ -155,7 +155,7 @@ try {
         .getByLabel("绘画画布")
         .boundingBox())!;
       assert(
-        largeCanvas.width > normalCanvas.width * 1.15 &&
+        largeCanvas.width > normalCanvas.width * 1.05 &&
           largeCanvas.y >= 0 &&
           largeCanvas.y + largeCanvas.height <= 390,
         "focus must enlarge usable canvas",
@@ -193,6 +193,11 @@ try {
       for (let chain = 0; chain < 3; chain++) {
         for (let page = 0; page < 2; page++)
           await pages[0].getByRole("button", { name: "翻开下一页" }).click();
+        await phase(pages[0], "VERDICT");
+        for (const p of pages)
+          await p.getByRole("button", { name: "成功", exact: true }).click();
+        await phase(pages[0], "VERDICT_RESULT");
+        await pages[0].getByRole("button", { name: "选 MVP 与坑货" }).click();
         await phase(pages[0], "AWARD");
         for (let i = 0; i < 3; i++) {
           await pages[i]
@@ -245,7 +250,7 @@ try {
       assert(
         await pages[0].evaluate(() => {
           const r = document.querySelector("canvas")!.getBoundingClientRect();
-          return r.width > 550 && r.height > 260 && r.bottom <= innerHeight;
+          return r.width > 320 && r.height > 230 && r.bottom <= innerHeight;
         }),
         "shared canvas is too small/cropped",
       );

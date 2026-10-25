@@ -27,6 +27,9 @@ it("theme/award snapshots retain deadlines, votes, seeds, receipts and chain sco
     while (r.file.game!.phase !== "REVEAL") r.expire(r.file.game!.deadline);
     action(0, { type: "NEXT" });
     action(0, { type: "NEXT" });
+    expect(r.file.game!.phase).toBe("VERDICT");
+    r.expire(r.file.game!.deadline);
+    action(0, { type: "NEXT" });
     expect(r.file.game!.phase).toBe("AWARD");
     const stale = r.scope(),
       ballot = {

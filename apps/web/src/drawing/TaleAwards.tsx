@@ -4,6 +4,7 @@ import {
   type AwardResult,
 } from "../../../../packages/drawing-party/src/index.ts";
 import { Portrait, AwardIcon } from "./StudioArt.tsx";
+import { PublicBallots } from "./TaleVerdict.tsx";
 import { feel } from "./feel.ts";
 export function AwardWinners({
   v,
@@ -98,19 +99,22 @@ export function TaleAwards({
           v={v}
           result={v.awardResults?.find((r) => r.chain === v.awardChain)}
         />
-        {host ? (
-          <button
-            className="st-btn st-primary tp-next-book"
-            onClick={onNext}
-            disabled={locked || !announced}
-          >
-            {v.awardChain === v.players.length - 1
-              ? "查看全场结算 →"
-              : "翻开下一本 →"}
-          </button>
-        ) : (
-          <p className="st-pill">等房主翻开下一本</p>
-        )}
+        <div className="tp-award-next">
+          <PublicBallots v={v} chain={v.awardChain!} />
+          {host ? (
+            <button
+              className="st-btn st-primary tp-next-book"
+              onClick={onNext}
+              disabled={locked || !announced}
+            >
+              {v.awardChain === v.players.length - 1
+                ? "查看全场结算 →"
+                : "翻开下一本 →"}
+            </button>
+          ) : (
+            <p className="st-pill">等房主翻开下一本</p>
+          )}
+        </div>
       </div>
     );
   const submitted = !!v.myAwardVote;
@@ -174,14 +178,10 @@ export function TaleAwards({
       })}
       <footer>
         <span>
-          {submitted ? (
-            <b className="st-stamp">已投票 ✓</b>
-          ) : (
-            "匿名投票 · 可边翻看边选"
-          )}{" "}
           <small>
-            {v.completed}/{v.players.length}
+            已投 {v.completed}/{v.players.length}
           </small>
+          <PublicBallots v={v} chain={v.awardChain!} />
         </span>
         <button
           className="st-btn st-primary"
@@ -193,7 +193,7 @@ export function TaleAwards({
             onVote({ type: "AWARD_VOTE", chain: v.awardChain, mvp, dud });
           }}
         >
-          确认投票
+          {submitted ? "已投票 ✓" : "确认投票"}
         </button>
       </footer>
     </section>

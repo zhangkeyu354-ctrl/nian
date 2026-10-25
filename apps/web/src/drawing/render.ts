@@ -41,7 +41,7 @@ export function paint(canvas: HTMLCanvasElement, d: Drawing, limit = Infinity) {
 export function downloadDrawing(d: Drawing, name = "画作") {
   const c = document.createElement("canvas");
   c.width = 2048;
-  c.height = 1024;
+  c.height = Math.round(c.width / (d.aspect ?? 2));
   paint(c, d);
   c.toBlob((blob) => {
     if (!blob) return;

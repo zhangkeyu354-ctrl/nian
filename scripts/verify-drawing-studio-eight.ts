@@ -93,7 +93,7 @@ try {
       widthShare: b.width / 844,
       heightShare: b.height / 390,
     });
-    assert(b.width > 570 && b.height > 260 && b.y + b.height <= 390);
+    assert(b.width > 320 && b.height > 230 && b.y + b.height <= 390);
     // A real single-pointer cat silhouette; keep pointer down to inspect physical brush feedback.
     const points = [
       [0.29, 0.75],

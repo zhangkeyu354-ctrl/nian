@@ -1,0 +1,287 @@
+[
+  {
+    "mode": "tp",
+    "label": "draw",
+    "width": 390,
+    "height": 844,
+    "inkRatio": 1.0032362459546926,
+    "canvas": {
+      "x": 0,
+      "y": 225.84375,
+      "width": 390,
+      "height": 292.5
+    },
+    "overlap": [],
+    "overflow": false
+  },
+  {
+    "mode": "tp",
+    "label": "draw",
+    "width": 375,
+    "height": 667,
+    "inkRatio": 1,
+    "canvas": {
+      "x": 0,
+      "y": 142.96875,
+      "width": 375,
+      "height": 281.25
+    },
+    "overlap": [],
+    "overflow": false
+  },
+  {
+    "mode": "tp",
+    "label": "draw",
+    "width": 430,
+    "height": 932,
+    "inkRatio": 1.0028901734104045,
+    "canvas": {
+      "x": 0,
+      "y": 254.84375,
+      "width": 430,
+      "height": 322.5
+    },
+    "overlap": [],
+    "overflow": false
+  },
+  {
+    "mode": "tp",
+    "label": "draw",
+    "width": 844,
+    "height": 390,
+    "inkRatio": 1,
+    "canvas": {
+      "x": 171.671875,
+      "y": 38,
+      "width": 386.65625,
+      "height": 289.984375
+    },
+    "overlap": [],
+    "overflow": false
+  },
+  {
+    "mode": "tp",
+    "label": "draw",
+    "width": 667,
+    "height": 375,
+    "inkRatio": 1.0034013605442176,
+    "canvas": {
+      "x": 93.171875,
+      "y": 38,
+      "width": 366.65625,
+      "height": 274.984375
+    },
+    "overlap": [],
+    "overflow": false
+  },
+  {
+    "mode": "tp",
+    "label": "focus",
+    "width": 390,
+    "height": 844,
+    "inkRatio": 1,
+    "canvas": {
+      "x": 6,
+      "y": 219.25,
+      "width": 378,
+      "height": 283.5
+    },
+    "overlap": [],
+    "overflow": false
+  },
+  {
+    "mode": "tp",
+    "label": "focus",
+    "width": 844,
+    "height": 390,
+    "inkRatio": 1,
+    "canvas": {
+      "x": 149,
+      "y": 6,
+      "width": 432,
+      "height": 324
+    },
+    "overlap": [],
+    "overflow": false
+  },
+  {
+    "mode": "tp",
+    "label": "guess",
+    "width": 390,
+    "height": 844,
+    "inkRatio": 1.0032362459546926,
+    "canvas": {
+      "x": 0,
+      "y": 233.84375,
+      "width": 390,
+      "height": 292.5
+    },
+    "overlap": [],
+    "overflow": false
+  },
+  {
+    "mode": "tp",
+    "label": "guess",
+    "width": 375,
+    "height": 667,
+    "inkRatio": 1.0033670033670035,
+    "canvas": {
+      "x": 0,
+      "y": 150.96875,
+      "width": 375,
+      "height": 281.25
+    },
+    "overlap": [],
+    "overflow": false
+  },
+  {
+    "mode": "tp",
+    "label": "guess",
+    "width": 430,
+    "height": 932,
+    "inkRatio": 1.002932551319648,
+    "canvas": {
+      "x": 0,
+      "y": 262.84375,
+      "width": 430,
+      "height": 322.5
+    },
+    "overlap": [],
+    "overflow": false
+  },
+  {
+    "mode": "tp",
+    "label": "guess",
+    "width": 844,
+    "height": 390,
+    "inkRatio": 1.0032679738562091,
+    "canvas": {
+      "x": 171.671875,
+      "y": 38,
+      "width": 386.65625,
+      "height": 289.984375
+    },
+    "overlap": [],
+    "overflow": false
+  },
+  {
+    "mode": "tp",
+    "label": "guess",
+    "width": 667,
+    "height": 375,
+    "inkRatio": 1.0034482758620689,
+    "canvas": {
+      "x": 93.171875,
+      "y": 38,
+      "width": 366.65625,
+      "height": 274.984375
+    },
+    "overlap": [],
+    "overflow": false
+  },
+  {
+    "mode": "fa",
+    "label": "draw",
+    "width": 390,
+    "height": 844,
+    "inkRatio": null,
+    "canvas": {
+      "x": 0,
+      "y": 272.25,
+      "width": 390,
+      "height": 292.5
+    },
+    "overlap": [],
+    "overflow": false
+  },
+  {
+    "mode": "fa",
+    "label": "draw",
+    "width": 375,
+    "height": 667,
+    "inkRatio": null,
+    "canvas": {
+      "x": 0,
+      "y": 189.375,
+      "width": 375,
+      "height": 281.25
+    },
+    "overlap": [],
+    "overflow": false
+  },
+  {
+    "mode": "fa",
+    "label": "draw",
+    "width": 430,
+    "height": 932,
+    "inkRatio": null,
+    "canvas": {
+      "x": 0,
+      "y": 301.25,
+      "width": 430,
+      "height": 322.5
+    },
+    "overlap": [],
+    "overflow": false
+  },
+  {
+    "mode": "fa",
+    "label": "draw",
+    "width": 844,
+    "height": 390,
+    "inkRatio": null,
+    "canvas": {
+      "x": 223.328125,
+      "y": 37,
+      "width": 397.328125,
+      "height": 297.984375
+    },
+    "overlap": [],
+    "overflow": false
+  },
+  {
+    "mode": "fa",
+    "label": "draw",
+    "width": 667,
+    "height": 375,
+    "inkRatio": null,
+    "canvas": {
+      "x": 144.828125,
+      "y": 37,
+      "width": 377.328125,
+      "height": 282.984375
+    },
+    "overlap": [],
+    "overflow": false
+  },
+  {
+    "mode": "fa",
+    "label": "focus",
+    "width": 390,
+    "height": 844,
+    "inkRatio": null,
+    "canvas": {
+      "x": 6,
+      "y": 253.25,
+      "width": 378,
+      "height": 283.5
+    },
+    "overlap": [],
+    "overflow": false
+  },
+  {
+    "mode": "fa",
+    "label": "focus",
+    "width": 844,
+    "height": 390,
+    "inkRatio": null,
+    "canvas": {
+      "x": 206,
+      "y": 6,
+      "width": 432,
+      "height": 324
+    },
+    "overlap": [],
+    "overflow": false
+  }
+]

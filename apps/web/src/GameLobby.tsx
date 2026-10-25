@@ -1,10 +1,12 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import "./game-lobby.css";
 import { ObjectArt } from "./rr/Objects.tsx";
 import { FakeArtistCover, TelephoneCover } from "./drawing/Covers.tsx";
+import { UPDATE_NOTICES } from "./update-notices.ts";
 
 /** 首页：选游戏。每款游戏一个「盒盖」，保持各自的风格 */
 export function GameLobby() {
+  const updatesDialog = useRef<HTMLDialogElement>(null);
   useEffect(() => {
     document.title = "桌游合集";
   }, []);
@@ -17,6 +19,22 @@ export function GameLobby() {
           Wi-Fi 或外网都行。
         </p>
       </header>
+      <button className="hall-updates-button" onClick={() => updatesDialog.current?.showModal()}>更新公告</button>
+      <dialog className="hall-updates" ref={updatesDialog} aria-labelledby="hall-updates-title">
+        <header className="hall-updates-head">
+          <h2 id="hall-updates-title">更新公告</h2>
+          <button autoFocus onClick={() => updatesDialog.current?.close()} aria-label="关闭更新公告">关闭 ✕</button>
+        </header>
+        <div className="hall-updates-list">
+          {UPDATE_NOTICES.map((notice) => (
+            <article key={notice.id}>
+              <p className="hall-updates-meta"><time dateTime={notice.date}>{notice.date}</time> · {notice.game}</p>
+              <h3>{notice.title}</h3>
+              <p>{notice.text}</p>
+            </article>
+          ))}
+        </div>
+      </dialog>
       <div className="hall-boxes">
         <GameBox id="xb" title="瞎掰王" sub="冷知识 · 身份推理" meta="3–10人 · 自由讨论" blurb="谁知道真正答案，谁又在一本正经地瞎掰？配合朋友的语音，一起找出老实人。" art={<img className="box-xb-art" src="/assets/xiabaiwang-v4/host-1.webp" alt="" />} online="/?game=xb" join={code=>'/?game=xb&room='+code.toUpperCase()} codeLength={6}/>
         <GameBox id="wt" title="女巫镇" sub="Salem 1692" meta="4–12人 · 隐藏身份" blurb="白天互相指控，夜里女巫袭击。身份会在阴谋中悄悄转移——揭开所有女巫牌，小镇才能得救。" art={<WitchCover/>} online="/?game=wt" join={code=>"/?game=wt&room="+code.toUpperCase()} codeLength={8}/>

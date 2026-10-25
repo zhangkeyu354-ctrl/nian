@@ -6,6 +6,7 @@ import {
 } from "../../../../packages/drawing-party/src/index.ts";
 import { Portrait, AwardIcon } from "./StudioArt.tsx";
 import { paint } from "./render.ts";
+import { PublicBallots, outcomeLabel } from "./TaleVerdict.tsx";
 import { AwardWinners } from "./TaleAwards.tsx";
 import { feel } from "./feel.ts";
 
@@ -15,10 +16,10 @@ export function Thumb({ drawing, className }: { drawing?: Drawing; className?: s
     const c = ref.current;
     if (!c || !drawing) return;
     c.width = 640;
-    c.height = 320;
+    c.height = Math.round(c.width / (drawing.aspect ?? 2));
     paint(c, drawing);
   }, [drawing]);
-  return <canvas ref={ref} className={"rs-thumb " + (className ?? "")} aria-hidden="true" />;
+  return <canvas ref={ref} style={{aspectRatio:drawing?.aspect ?? 2}} className={"rs-thumb " + (className ?? "")} aria-hidden="true" />;
 }
 
 function Confetti({ count = 36, palette }: { count?: number; palette: string[] }) {
@@ -292,6 +293,7 @@ export function TaleResult(p: {
                   )}
                 </div>
               </div>
+              {v.verdictResults?.find(r=>r.chain===i) && <p className="tp-book-verdict">{outcomeLabel(v.verdictResults.find(r=>r.chain===i)?.outcome)}</p>}
               <div className="tp-book-awards">
                 {(["mvp", "dud"] as const).map((kind) => (
                   <span key={kind}>
@@ -313,6 +315,7 @@ export function TaleResult(p: {
                   </span>
                 ))}
               </div>
+              <PublicBallots v={v} chain={i}/>
               <footer>
                 <button className="st-btn st-ghost" onClick={() => p.onOpen(i)}>
                   翻看这本
