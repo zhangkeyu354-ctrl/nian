@@ -58,7 +58,7 @@ function useSeatLayout(count: number, el: React.RefObject<HTMLElement | null>) {
     const dense = count >= 9;
     const big = size.w > 600 && size.h > 500;
     let seatW = Math.round(Math.min(dense ? (big ? 120 : 96) : (big ? 142 : 116), Math.max(dense ? 66 : 84, size.w * (dense ? .2 : .25))));
-    let seatH = dense ? (size.h < 300 ? 50 : big ? 64 : 56) : (size.h < 320 ? 66 : big ? 88 : 76);
+    let seatH = dense ? (big ? 64 : 56) : (big ? 88 : 76);
     // Seats spread at equal arc length on a superellipse (round → rounded rectangle);
     // if nothing fits, seats shrink a little and we try again. No per-count tables.
     const place = (e: number, w: number, h: number) => {
@@ -74,7 +74,8 @@ function useSeatLayout(count: number, el: React.RefObject<HTMLElement | null>) {
     let best = place(1, seatW, seatH);
     search: for (let shrink = 0; shrink < 6; shrink++) {
       for (const e of [1, .7, .5, .35, .22]) { const r = place(e, seatW, seatH); if (r.ok) { best = r; break search; } best = r; }
-      seatW = Math.round(seatW * .93); seatH = Math.round(seatH * .95);
+      // Width may shrink; height never drops below what the three content rows need.
+      seatW = Math.round(seatW * .93); seatH = Math.max(dense ? 54 : 74, Math.round(seatH * .97));
     }
     return { seatW, seatH, dense, pos: best.out.map(p => ({ left: 50 + p.x / size.w * 100, top: 50 + p.y / size.h * 100, a: Math.atan2(p.y, p.x) })) };
   }, [size, count]);
@@ -221,10 +222,10 @@ function Entrance({ name, setName, code, setCode, create, claim, conn, toast }: 
       <div className="wt-entry-crest"><Candle/><h1>女巫镇</h1><p>1692 年，塞勒姆。<br/>找出隐藏在镇民中的女巫。</p></div>
       <section className="wt-entry-card">
         <label>你的昵称<input data-testid="wt-name" value={name} maxLength={12} placeholder="例如：阿宁" onChange={e => setName(e.target.value)}/></label>
-        {code ? <><p className="wt-entry-note">房间 <b>{code}</b></p><button className="wt-primary" data-testid="wt-claim" onClick={() => claim(code)}>入座</button></> : <>
+        {code ? <><p className="wt-entry-note">房间 <b>{code}</b></p><button className="wt-primary" data-testid="wt-claim" disabled={conn !== "online"} onClick={() => claim(code)}>{conn === "online" ? "入座" : "正在连接…"}</button></> : <>
           <div className="wt-seg" role="radiogroup" aria-label="房间人数">{Array.from({ length: 9 }, (_, i) => i + 4).map(n => <button key={n} role="radio" aria-pressed={cap === n} onClick={() => setCap(n)}>{n}</button>)}</div>
-          <button className="wt-primary" data-testid="wt-create" onClick={() => create(cap)}>创建 {cap} 人房间</button>
-          <div className="wt-entry-join"><input data-testid="wt-code" value={joinCode} maxLength={8} placeholder="房间号" onChange={e => setJoinCode(e.target.value.toUpperCase())}/><button data-testid="wt-join" disabled={joinCode.length < 8} onClick={() => { setCode(joinCode); claim(joinCode); }}>加入</button></div>
+          <button className="wt-primary" data-testid="wt-create" disabled={conn !== "online"} onClick={() => create(cap)}>{conn === "online" ? `创建 ${cap} 人房间` : "正在连接服务器…"}</button>
+          <div className="wt-entry-join"><input data-testid="wt-code" value={joinCode} maxLength={8} placeholder="房间号" onChange={e => setJoinCode(e.target.value.toUpperCase())}/><button data-testid="wt-join" disabled={joinCode.length < 8 || conn !== "online"} onClick={() => { setCode(joinCode); claim(joinCode); }}>加入</button></div>
         </>}
         <p className="wt-entry-status">{conn === "online" ? "已连接服务器" : conn === "offline" ? "连接中断，正在重连…" : "正在连接…"}</p>
       </section>

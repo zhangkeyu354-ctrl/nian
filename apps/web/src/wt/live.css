@@ -281,3 +281,10 @@
   .wt-world .wt-modal { width:100%; border-radius:18px 18px 0 0; padding:22px 18px calc(18px + env(safe-area-inset-bottom)); animation:wt-sheet-up .35s var(--wt-spring) both; }
 }
 @keyframes wt-sheet-up { from { transform:translateY(60%); opacity:.4; } }
+/* seats: rows are fixed so content can never spill past the plaque */
+.wt-world.wt-live .wt-table-space .wt-seat { grid-template-rows:34px 10px 15px; align-content:center; overflow:hidden; }
+.wt-world.wt-live .wt-table-space .wt-seat-face { width:24px; height:32px; }
+.wt-world.wt-live .wt-dense .wt-seat { grid-template-rows:17px 9px 15px; }
+.wt-world.wt-live .wt-seat::before,.wt-world.wt-live .wt-seat::after { z-index:4; }
+.wt-world.wt-live .wt-seat-public { height:15px; line-height:15px; }
+.wt-world .wt-top > a { min-width:44px; min-height:44px; display:grid; place-items:center; }

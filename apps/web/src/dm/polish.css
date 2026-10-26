@@ -1278,3 +1278,5 @@
     max-height: 92px;
   }
 }
+/* 手机触控：音效按钮命中区至少 44px（2026-10-27 线上核查） */
+.dm-sound{min-width:44px;min-height:44px}

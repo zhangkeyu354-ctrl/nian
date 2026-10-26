@@ -34,7 +34,10 @@ async function snapPhase(page: Page, i: number) {
       if (r.right > innerWidth + 1 || r.left < -1 || r.bottom > innerHeight + 1) return true;
       const box = e.parentElement?.closest(boxes) as HTMLElement | null; if (!box || getComputedStyle(box).overflow !== "visible") return false;
       const b = box.getBoundingClientRect(); return r.right > b.right + 2 || r.left < b.left - 2 || r.bottom > b.bottom + 2;
-    }).map(e => `${(e as HTMLElement).className || e.tagName}`.slice(0, 50)).slice(0, 5);
+    }).map(e => `${(e as HTMLElement).className || e.tagName}`.slice(0, 50)).concat(
+      // clipped (overflow:hidden) seat content still counts: the plaque must hold its rows
+      [...document.querySelectorAll(".wt-table-space .wt-seat, .wt-seat-public, .wt-accuse-row")].filter(e => e.scrollHeight > e.clientHeight + 1 || e.scrollWidth > e.clientWidth + 1).map(e => `clipped:${(e as HTMLElement).className}`.slice(0, 50)),
+    ).slice(0, 5);
   });
   if (bad.length) {
     overflow.push(`${key}: ${bad.join(" | ")}`);

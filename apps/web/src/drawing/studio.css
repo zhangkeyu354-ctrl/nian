@@ -4575,3 +4575,6 @@
 
 .st-world .dp-floating-tools {z-index:80;animation:none;}
 .st-world .dp-floating-tools::after {display:none;}
+/* 手机触控：人数按钮命中区至少 44px（2026-10-27 线上核查） */
+.lb-seg{flex-wrap:wrap}
+.lb-seg button,.lb-seg.is-small button{min-width:44px;min-height:44px}
