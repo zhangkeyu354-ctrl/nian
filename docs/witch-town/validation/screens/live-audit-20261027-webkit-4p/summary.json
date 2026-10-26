@@ -1,0 +1,29 @@
+{
+  "browser": "webkit",
+  "device": "iPhone SE (3rd gen)",
+  "reducedMotion": false,
+  "viewport": {
+    "width": 375,
+    "height": 667
+  },
+  "safariProbe": {
+    "menuPrevented": true,
+    "releaseCovered": true,
+    "selection": "",
+    "unsupportedAPIs": {
+      "vibrate": "undefined",
+      "wakeLock": "undefined"
+    }
+  },
+  "players": 4,
+  "room": "2D5572C5",
+  "finished": false,
+  "actions": 19,
+  "ms": 189760,
+  "reloaded": true,
+  "offlined": true,
+  "overflow": [
+    "day|等待: wt-seat-public | wt-hand-count | wt-hidden-count | wt-mini-seal | wt-seat-public"
+  ],
+  "consoleErrors": []
+}
