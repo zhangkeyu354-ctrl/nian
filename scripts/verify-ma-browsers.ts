@@ -167,7 +167,7 @@ try {
     .split(",")
     .filter(Boolean);
   for (;;) {
-    if (++steps >= 4000) {
+    if (++steps >= Number(process.env.MA_MAX_STEPS ?? 4000)) {
       // 诊断：卡住时把每个人看到的界面和最近的比赛记录打出来
       for (const p of pages)
         if (!(await p.locator(".ma-log li").count()))
