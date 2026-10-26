@@ -1,0 +1,1811 @@
+{
+  "checks": [
+    {
+      "name": "legacy classic file migration",
+      "passed": true
+    },
+    {
+      "name": "third copy and J3/J4 render; private draft survives reload and process restart",
+      "passed": true
+    },
+    {
+      "name": "5-browser real UI full game and next game",
+      "turns": 173,
+      "blocked": true,
+      "scores": [
+        31,
+        -4,
+        -3,
+        -21,
+        -3
+      ],
+      "passed": true
+    },
+    {
+      "name": "6-browser real UI full game and next game",
+      "turns": 131,
+      "blocked": true,
+      "scores": [
+        -59,
+        -86,
+        -40,
+        252,
+        -21,
+        -46
+      ],
+      "passed": true
+    }
+  ],
+  "shots": [
+    {
+      "name": "390-six-seat-draw",
+      "audit": {
+        "horizontal": false,
+        "clippedActions": 0,
+        "seatRects": [
+          {
+            "rect": {
+              "x": 10,
+              "y": 59,
+              "width": 121.328125,
+              "height": 70.1875,
+              "top": 59,
+              "right": 131.328125,
+              "bottom": 129.1875,
+              "left": 10
+            },
+            "parent": {
+              "x": 0,
+              "y": 52,
+              "width": 390,
+              "height": 144.078125,
+              "top": 52,
+              "right": 390,
+              "bottom": 196.078125,
+              "left": 0
+            },
+            "minHeight": "auto"
+          },
+          {
+            "rect": {
+              "x": 134.328125,
+              "y": 59,
+              "width": 121.328125,
+              "height": 70.1875,
+              "top": 59,
+              "right": 255.65625,
+              "bottom": 129.1875,
+              "left": 134.328125
+            },
+            "parent": {
+              "x": 0,
+              "y": 52,
+              "width": 390,
+              "height": 144.078125,
+              "top": 52,
+              "right": 390,
+              "bottom": 196.078125,
+              "left": 0
+            },
+            "minHeight": "auto"
+          },
+          {
+            "rect": {
+              "x": 258.65625,
+              "y": 59,
+              "width": 121.34375,
+              "height": 70.1875,
+              "top": 59,
+              "right": 380,
+              "bottom": 129.1875,
+              "left": 258.65625
+            },
+            "parent": {
+              "x": 0,
+              "y": 52,
+              "width": 390,
+              "height": 144.078125,
+              "top": 52,
+              "right": 390,
+              "bottom": 196.078125,
+              "left": 0
+            },
+            "minHeight": "auto"
+          },
+          {
+            "rect": {
+              "x": 10,
+              "y": 132.1875,
+              "width": 121.328125,
+              "height": 55.890625,
+              "top": 132.1875,
+              "right": 131.328125,
+              "bottom": 188.078125,
+              "left": 10
+            },
+            "parent": {
+              "x": 0,
+              "y": 52,
+              "width": 390,
+              "height": 144.078125,
+              "top": 52,
+              "right": 390,
+              "bottom": 196.078125,
+              "left": 0
+            },
+            "minHeight": "auto"
+          },
+          {
+            "rect": {
+              "x": 134.328125,
+              "y": 132.1875,
+              "width": 121.328125,
+              "height": 55.890625,
+              "top": 132.1875,
+              "right": 255.65625,
+              "bottom": 188.078125,
+              "left": 134.328125
+            },
+            "parent": {
+              "x": 0,
+              "y": 52,
+              "width": 390,
+              "height": 144.078125,
+              "top": 52,
+              "right": 390,
+              "bottom": 196.078125,
+              "left": 0
+            },
+            "minHeight": "auto"
+          },
+          {
+            "rect": {
+              "x": 258.65625,
+              "y": 132.1875,
+              "width": 121.34375,
+              "height": 55.890625,
+              "top": 132.1875,
+              "right": 380,
+              "bottom": 188.078125,
+              "left": 258.65625
+            },
+            "parent": {
+              "x": 0,
+              "y": 52,
+              "width": 390,
+              "height": 144.078125,
+              "top": 52,
+              "right": 390,
+              "bottom": 196.078125,
+              "left": 0
+            },
+            "minHeight": "auto"
+          }
+        ],
+        "names": [],
+        "clippedSeats": 0,
+        "clippedDraw": 0
+      },
+      "scope": "Visible UI / prototype region, not a full-map-count claim",
+      "region": {
+        "x": 0,
+        "y": 0,
+        "width": 390,
+        "height": 844
+      },
+      "pixels": {
+        "busy": 0.41691578563616477,
+        "std": 58.239500415397266
+      }
+    },
+    {
+      "name": "390-six-seats-jokers",
+      "audit": {
+        "horizontal": false,
+        "clippedActions": 0,
+        "seatRects": [
+          {
+            "rect": {
+              "x": 10,
+              "y": 59,
+              "width": 121.328125,
+              "height": 70.1875,
+              "top": 59,
+              "right": 131.328125,
+              "bottom": 129.1875,
+              "left": 10
+            },
+            "parent": {
+              "x": 0,
+              "y": 52,
+              "width": 390,
+              "height": 144.078125,
+              "top": 52,
+              "right": 390,
+              "bottom": 196.078125,
+              "left": 0
+            },
+            "minHeight": "auto"
+          },
+          {
+            "rect": {
+              "x": 134.328125,
+              "y": 59,
+              "width": 121.328125,
+              "height": 70.1875,
+              "top": 59,
+              "right": 255.65625,
+              "bottom": 129.1875,
+              "left": 134.328125
+            },
+            "parent": {
+              "x": 0,
+              "y": 52,
+              "width": 390,
+              "height": 144.078125,
+              "top": 52,
+              "right": 390,
+              "bottom": 196.078125,
+              "left": 0
+            },
+            "minHeight": "auto"
+          },
+          {
+            "rect": {
+              "x": 258.65625,
+              "y": 59,
+              "width": 121.34375,
+              "height": 70.1875,
+              "top": 59,
+              "right": 380,
+              "bottom": 129.1875,
+              "left": 258.65625
+            },
+            "parent": {
+              "x": 0,
+              "y": 52,
+              "width": 390,
+              "height": 144.078125,
+              "top": 52,
+              "right": 390,
+              "bottom": 196.078125,
+              "left": 0
+            },
+            "minHeight": "auto"
+          },
+          {
+            "rect": {
+              "x": 10,
+              "y": 132.1875,
+              "width": 121.328125,
+              "height": 55.890625,
+              "top": 132.1875,
+              "right": 131.328125,
+              "bottom": 188.078125,
+              "left": 10
+            },
+            "parent": {
+              "x": 0,
+              "y": 52,
+              "width": 390,
+              "height": 144.078125,
+              "top": 52,
+              "right": 390,
+              "bottom": 196.078125,
+              "left": 0
+            },
+            "minHeight": "auto"
+          },
+          {
+            "rect": {
+              "x": 134.328125,
+              "y": 132.1875,
+              "width": 121.328125,
+              "height": 55.890625,
+              "top": 132.1875,
+              "right": 255.65625,
+              "bottom": 188.078125,
+              "left": 134.328125
+            },
+            "parent": {
+              "x": 0,
+              "y": 52,
+              "width": 390,
+              "height": 144.078125,
+              "top": 52,
+              "right": 390,
+              "bottom": 196.078125,
+              "left": 0
+            },
+            "minHeight": "auto"
+          },
+          {
+            "rect": {
+              "x": 258.65625,
+              "y": 132.1875,
+              "width": 121.34375,
+              "height": 55.890625,
+              "top": 132.1875,
+              "right": 380,
+              "bottom": 188.078125,
+              "left": 258.65625
+            },
+            "parent": {
+              "x": 0,
+              "y": 52,
+              "width": 390,
+              "height": 144.078125,
+              "top": 52,
+              "right": 390,
+              "bottom": 196.078125,
+              "left": 0
+            },
+            "minHeight": "auto"
+          }
+        ],
+        "names": [],
+        "clippedSeats": 0,
+        "clippedDraw": 0
+      },
+      "scope": "Visible UI / prototype region, not a full-map-count claim",
+      "region": {
+        "x": 0,
+        "y": 0,
+        "width": 390,
+        "height": 844
+      },
+      "pixels": {
+        "busy": 0.5137076193948232,
+        "std": 51.58648893179113
+      }
+    },
+    {
+      "name": "844-six-seat-draw",
+      "audit": {
+        "horizontal": false,
+        "clippedActions": 0,
+        "seatRects": [
+          {
+            "rect": {
+              "x": 519,
+              "y": 42,
+              "width": 105,
+              "height": 38.375,
+              "top": 42,
+              "right": 624,
+              "bottom": 80.375,
+              "left": 519
+            },
+            "parent": {
+              "x": 515,
+              "y": 40,
+              "width": 329,
+              "height": 88,
+              "top": 40,
+              "right": 844,
+              "bottom": 128,
+              "left": 515
+            },
+            "minHeight": "auto"
+          },
+          {
+            "rect": {
+              "x": 627,
+              "y": 42,
+              "width": 105,
+              "height": 38.375,
+              "top": 42,
+              "right": 732,
+              "bottom": 80.375,
+              "left": 627
+            },
+            "parent": {
+              "x": 515,
+              "y": 40,
+              "width": 329,
+              "height": 88,
+              "top": 40,
+              "right": 844,
+              "bottom": 128,
+              "left": 515
+            },
+            "minHeight": "auto"
+          },
+          {
+            "rect": {
+              "x": 735,
+              "y": 42,
+              "width": 105,
+              "height": 38.375,
+              "top": 42,
+              "right": 840,
+              "bottom": 80.375,
+              "left": 735
+            },
+            "parent": {
+              "x": 515,
+              "y": 40,
+              "width": 329,
+              "height": 88,
+              "top": 40,
+              "right": 844,
+              "bottom": 128,
+              "left": 515
+            },
+            "minHeight": "auto"
+          },
+          {
+            "rect": {
+              "x": 519,
+              "y": 83.375,
+              "width": 105,
+              "height": 26.6875,
+              "top": 83.375,
+              "right": 624,
+              "bottom": 110.0625,
+              "left": 519
+            },
+            "parent": {
+              "x": 515,
+              "y": 40,
+              "width": 329,
+              "height": 88,
+              "top": 40,
+              "right": 844,
+              "bottom": 128,
+              "left": 515
+            },
+            "minHeight": "auto"
+          },
+          {
+            "rect": {
+              "x": 627,
+              "y": 83.375,
+              "width": 105,
+              "height": 26.6875,
+              "top": 83.375,
+              "right": 732,
+              "bottom": 110.0625,
+              "left": 627
+            },
+            "parent": {
+              "x": 515,
+              "y": 40,
+              "width": 329,
+              "height": 88,
+              "top": 40,
+              "right": 844,
+              "bottom": 128,
+              "left": 515
+            },
+            "minHeight": "auto"
+          },
+          {
+            "rect": {
+              "x": 735,
+              "y": 83.375,
+              "width": 105,
+              "height": 26.6875,
+              "top": 83.375,
+              "right": 840,
+              "bottom": 110.0625,
+              "left": 735
+            },
+            "parent": {
+              "x": 515,
+              "y": 40,
+              "width": 329,
+              "height": 88,
+              "top": 40,
+              "right": 844,
+              "bottom": 128,
+              "left": 515
+            },
+            "minHeight": "auto"
+          }
+        ],
+        "names": [],
+        "clippedSeats": 0,
+        "clippedDraw": 0
+      },
+      "scope": "Visible UI / prototype region, not a full-map-count claim",
+      "region": {
+        "x": 0,
+        "y": 0,
+        "width": 844,
+        "height": 390
+      },
+      "pixels": {
+        "busy": 0.3867298578199052,
+        "std": 51.87102002171801
+      }
+    },
+    {
+      "name": "844-six-seats-jokers",
+      "audit": {
+        "horizontal": false,
+        "clippedActions": 0,
+        "seatRects": [
+          {
+            "rect": {
+              "x": 519,
+              "y": 42,
+              "width": 105,
+              "height": 38.375,
+              "top": 42,
+              "right": 624,
+              "bottom": 80.375,
+              "left": 519
+            },
+            "parent": {
+              "x": 515,
+              "y": 40,
+              "width": 329,
+              "height": 88,
+              "top": 40,
+              "right": 844,
+              "bottom": 128,
+              "left": 515
+            },
+            "minHeight": "auto"
+          },
+          {
+            "rect": {
+              "x": 627,
+              "y": 42,
+              "width": 105,
+              "height": 38.375,
+              "top": 42,
+              "right": 732,
+              "bottom": 80.375,
+              "left": 627
+            },
+            "parent": {
+              "x": 515,
+              "y": 40,
+              "width": 329,
+              "height": 88,
+              "top": 40,
+              "right": 844,
+              "bottom": 128,
+              "left": 515
+            },
+            "minHeight": "auto"
+          },
+          {
+            "rect": {
+              "x": 735,
+              "y": 42,
+              "width": 105,
+              "height": 38.375,
+              "top": 42,
+              "right": 840,
+              "bottom": 80.375,
+              "left": 735
+            },
+            "parent": {
+              "x": 515,
+              "y": 40,
+              "width": 329,
+              "height": 88,
+              "top": 40,
+              "right": 844,
+              "bottom": 128,
+              "left": 515
+            },
+            "minHeight": "auto"
+          },
+          {
+            "rect": {
+              "x": 519,
+              "y": 83.375,
+              "width": 105,
+              "height": 26.6875,
+              "top": 83.375,
+              "right": 624,
+              "bottom": 110.0625,
+              "left": 519
+            },
+            "parent": {
+              "x": 515,
+              "y": 40,
+              "width": 329,
+              "height": 88,
+              "top": 40,
+              "right": 844,
+              "bottom": 128,
+              "left": 515
+            },
+            "minHeight": "auto"
+          },
+          {
+            "rect": {
+              "x": 627,
+              "y": 83.375,
+              "width": 105,
+              "height": 26.6875,
+              "top": 83.375,
+              "right": 732,
+              "bottom": 110.0625,
+              "left": 627
+            },
+            "parent": {
+              "x": 515,
+              "y": 40,
+              "width": 329,
+              "height": 88,
+              "top": 40,
+              "right": 844,
+              "bottom": 128,
+              "left": 515
+            },
+            "minHeight": "auto"
+          },
+          {
+            "rect": {
+              "x": 735,
+              "y": 83.375,
+              "width": 105,
+              "height": 26.6875,
+              "top": 83.375,
+              "right": 840,
+              "bottom": 110.0625,
+              "left": 735
+            },
+            "parent": {
+              "x": 515,
+              "y": 40,
+              "width": 329,
+              "height": 88,
+              "top": 40,
+              "right": 844,
+              "bottom": 128,
+              "left": 515
+            },
+            "minHeight": "auto"
+          }
+        ],
+        "names": [],
+        "clippedSeats": 0,
+        "clippedDraw": 0
+      },
+      "scope": "Visible UI / prototype region, not a full-map-count claim",
+      "region": {
+        "x": 0,
+        "y": 0,
+        "width": 844,
+        "height": 390
+      },
+      "pixels": {
+        "busy": 0.34917973022238424,
+        "std": 45.11088096796707
+      }
+    },
+    {
+      "name": "1280-six-seat-draw",
+      "audit": {
+        "horizontal": false,
+        "clippedActions": 0,
+        "seatRects": [
+          {
+            "rect": {
+              "x": 80,
+              "y": 62,
+              "width": 371.328125,
+              "height": 47.28125,
+              "top": 62,
+              "right": 451.328125,
+              "bottom": 109.28125,
+              "left": 80
+            },
+            "parent": {
+              "x": 60,
+              "y": 52,
+              "width": 1160,
+              "height": 118.5625,
+              "top": 52,
+              "right": 1220,
+              "bottom": 170.5625,
+              "left": 60
+            },
+            "minHeight": "auto"
+          },
+          {
+            "rect": {
+              "x": 454.328125,
+              "y": 62,
+              "width": 371.328125,
+              "height": 47.28125,
+              "top": 62,
+              "right": 825.65625,
+              "bottom": 109.28125,
+              "left": 454.328125
+            },
+            "parent": {
+              "x": 60,
+              "y": 52,
+              "width": 1160,
+              "height": 118.5625,
+              "top": 52,
+              "right": 1220,
+              "bottom": 170.5625,
+              "left": 60
+            },
+            "minHeight": "auto"
+          },
+          {
+            "rect": {
+              "x": 828.65625,
+              "y": 62,
+              "width": 371.34375,
+              "height": 47.28125,
+              "top": 62,
+              "right": 1200,
+              "bottom": 109.28125,
+              "left": 828.65625
+            },
+            "parent": {
+              "x": 60,
+              "y": 52,
+              "width": 1160,
+              "height": 118.5625,
+              "top": 52,
+              "right": 1220,
+              "bottom": 170.5625,
+              "left": 60
+            },
+            "minHeight": "auto"
+          },
+          {
+            "rect": {
+              "x": 80,
+              "y": 112.28125,
+              "width": 371.328125,
+              "height": 47.28125,
+              "top": 112.28125,
+              "right": 451.328125,
+              "bottom": 159.5625,
+              "left": 80
+            },
+            "parent": {
+              "x": 60,
+              "y": 52,
+              "width": 1160,
+              "height": 118.5625,
+              "top": 52,
+              "right": 1220,
+              "bottom": 170.5625,
+              "left": 60
+            },
+            "minHeight": "auto"
+          },
+          {
+            "rect": {
+              "x": 454.328125,
+              "y": 112.28125,
+              "width": 371.328125,
+              "height": 47.28125,
+              "top": 112.28125,
+              "right": 825.65625,
+              "bottom": 159.5625,
+              "left": 454.328125
+            },
+            "parent": {
+              "x": 60,
+              "y": 52,
+              "width": 1160,
+              "height": 118.5625,
+              "top": 52,
+              "right": 1220,
+              "bottom": 170.5625,
+              "left": 60
+            },
+            "minHeight": "auto"
+          },
+          {
+            "rect": {
+              "x": 828.65625,
+              "y": 112.28125,
+              "width": 371.34375,
+              "height": 47.28125,
+              "top": 112.28125,
+              "right": 1200,
+              "bottom": 159.5625,
+              "left": 828.65625
+            },
+            "parent": {
+              "x": 60,
+              "y": 52,
+              "width": 1160,
+              "height": 118.5625,
+              "top": 52,
+              "right": 1220,
+              "bottom": 170.5625,
+              "left": 60
+            },
+            "minHeight": "auto"
+          }
+        ],
+        "names": [],
+        "clippedSeats": 0,
+        "clippedDraw": 0
+      },
+      "scope": "Visible UI / prototype region, not a full-map-count claim",
+      "region": {
+        "x": 0,
+        "y": 0,
+        "width": 1280,
+        "height": 800
+      },
+      "pixels": {
+        "busy": 0.23093359375,
+        "std": 40.277653043742276
+      }
+    },
+    {
+      "name": "1280-six-seats-jokers",
+      "audit": {
+        "horizontal": false,
+        "clippedActions": 0,
+        "seatRects": [
+          {
+            "rect": {
+              "x": 80,
+              "y": 62,
+              "width": 371.328125,
+              "height": 47.28125,
+              "top": 62,
+              "right": 451.328125,
+              "bottom": 109.28125,
+              "left": 80
+            },
+            "parent": {
+              "x": 60,
+              "y": 52,
+              "width": 1160,
+              "height": 118.5625,
+              "top": 52,
+              "right": 1220,
+              "bottom": 170.5625,
+              "left": 60
+            },
+            "minHeight": "auto"
+          },
+          {
+            "rect": {
+              "x": 454.328125,
+              "y": 62,
+              "width": 371.328125,
+              "height": 47.28125,
+              "top": 62,
+              "right": 825.65625,
+              "bottom": 109.28125,
+              "left": 454.328125
+            },
+            "parent": {
+              "x": 60,
+              "y": 52,
+              "width": 1160,
+              "height": 118.5625,
+              "top": 52,
+              "right": 1220,
+              "bottom": 170.5625,
+              "left": 60
+            },
+            "minHeight": "auto"
+          },
+          {
+            "rect": {
+              "x": 828.65625,
+              "y": 62,
+              "width": 371.34375,
+              "height": 47.28125,
+              "top": 62,
+              "right": 1200,
+              "bottom": 109.28125,
+              "left": 828.65625
+            },
+            "parent": {
+              "x": 60,
+              "y": 52,
+              "width": 1160,
+              "height": 118.5625,
+              "top": 52,
+              "right": 1220,
+              "bottom": 170.5625,
+              "left": 60
+            },
+            "minHeight": "auto"
+          },
+          {
+            "rect": {
+              "x": 80,
+              "y": 112.28125,
+              "width": 371.328125,
+              "height": 47.28125,
+              "top": 112.28125,
+              "right": 451.328125,
+              "bottom": 159.5625,
+              "left": 80
+            },
+            "parent": {
+              "x": 60,
+              "y": 52,
+              "width": 1160,
+              "height": 118.5625,
+              "top": 52,
+              "right": 1220,
+              "bottom": 170.5625,
+              "left": 60
+            },
+            "minHeight": "auto"
+          },
+          {
+            "rect": {
+              "x": 454.328125,
+              "y": 112.28125,
+              "width": 371.328125,
+              "height": 47.28125,
+              "top": 112.28125,
+              "right": 825.65625,
+              "bottom": 159.5625,
+              "left": 454.328125
+            },
+            "parent": {
+              "x": 60,
+              "y": 52,
+              "width": 1160,
+              "height": 118.5625,
+              "top": 52,
+              "right": 1220,
+              "bottom": 170.5625,
+              "left": 60
+            },
+            "minHeight": "auto"
+          },
+          {
+            "rect": {
+              "x": 828.65625,
+              "y": 112.28125,
+              "width": 371.34375,
+              "height": 47.28125,
+              "top": 112.28125,
+              "right": 1200,
+              "bottom": 159.5625,
+              "left": 828.65625
+            },
+            "parent": {
+              "x": 60,
+              "y": 52,
+              "width": 1160,
+              "height": 118.5625,
+              "top": 52,
+              "right": 1220,
+              "bottom": 170.5625,
+              "left": 60
+            },
+            "minHeight": "auto"
+          }
+        ],
+        "names": [],
+        "clippedSeats": 0,
+        "clippedDraw": 0
+      },
+      "scope": "Visible UI / prototype region, not a full-map-count claim",
+      "region": {
+        "x": 0,
+        "y": 0,
+        "width": 1280,
+        "height": 800
+      },
+      "pixels": {
+        "busy": 0.43848046875,
+        "std": 36.65808679834614
+      }
+    },
+    {
+      "name": "xp-restored-private-draft",
+      "audit": {
+        "horizontal": false,
+        "clippedActions": 0,
+        "seatRects": [
+          {
+            "rect": {
+              "x": 10,
+              "y": 59,
+              "width": 121.328125,
+              "height": 70.1875,
+              "top": 59,
+              "right": 131.328125,
+              "bottom": 129.1875,
+              "left": 10
+            },
+            "parent": {
+              "x": 0,
+              "y": 52,
+              "width": 390,
+              "height": 144.078125,
+              "top": 52,
+              "right": 390,
+              "bottom": 196.078125,
+              "left": 0
+            },
+            "minHeight": "auto"
+          },
+          {
+            "rect": {
+              "x": 134.328125,
+              "y": 59,
+              "width": 121.328125,
+              "height": 70.1875,
+              "top": 59,
+              "right": 255.65625,
+              "bottom": 129.1875,
+              "left": 134.328125
+            },
+            "parent": {
+              "x": 0,
+              "y": 52,
+              "width": 390,
+              "height": 144.078125,
+              "top": 52,
+              "right": 390,
+              "bottom": 196.078125,
+              "left": 0
+            },
+            "minHeight": "auto"
+          },
+          {
+            "rect": {
+              "x": 258.65625,
+              "y": 59,
+              "width": 121.34375,
+              "height": 70.1875,
+              "top": 59,
+              "right": 380,
+              "bottom": 129.1875,
+              "left": 258.65625
+            },
+            "parent": {
+              "x": 0,
+              "y": 52,
+              "width": 390,
+              "height": 144.078125,
+              "top": 52,
+              "right": 390,
+              "bottom": 196.078125,
+              "left": 0
+            },
+            "minHeight": "auto"
+          },
+          {
+            "rect": {
+              "x": 10,
+              "y": 132.1875,
+              "width": 121.328125,
+              "height": 55.890625,
+              "top": 132.1875,
+              "right": 131.328125,
+              "bottom": 188.078125,
+              "left": 10
+            },
+            "parent": {
+              "x": 0,
+              "y": 52,
+              "width": 390,
+              "height": 144.078125,
+              "top": 52,
+              "right": 390,
+              "bottom": 196.078125,
+              "left": 0
+            },
+            "minHeight": "auto"
+          },
+          {
+            "rect": {
+              "x": 134.328125,
+              "y": 132.1875,
+              "width": 121.328125,
+              "height": 55.890625,
+              "top": 132.1875,
+              "right": 255.65625,
+              "bottom": 188.078125,
+              "left": 134.328125
+            },
+            "parent": {
+              "x": 0,
+              "y": 52,
+              "width": 390,
+              "height": 144.078125,
+              "top": 52,
+              "right": 390,
+              "bottom": 196.078125,
+              "left": 0
+            },
+            "minHeight": "auto"
+          },
+          {
+            "rect": {
+              "x": 258.65625,
+              "y": 132.1875,
+              "width": 121.34375,
+              "height": 55.890625,
+              "top": 132.1875,
+              "right": 380,
+              "bottom": 188.078125,
+              "left": 258.65625
+            },
+            "parent": {
+              "x": 0,
+              "y": 52,
+              "width": 390,
+              "height": 144.078125,
+              "top": 52,
+              "right": 390,
+              "bottom": 196.078125,
+              "left": 0
+            },
+            "minHeight": "auto"
+          }
+        ],
+        "names": [],
+        "clippedSeats": 0,
+        "clippedDraw": 0
+      },
+      "scope": "Visible UI / prototype region, not a full-map-count claim",
+      "region": {
+        "x": 0,
+        "y": 0,
+        "width": 390,
+        "height": 844
+      },
+      "pixels": {
+        "busy": 0.530428970713331,
+        "std": 48.91847256683903
+      }
+    },
+    {
+      "name": "xp-5-lobby",
+      "audit": {
+        "horizontal": false,
+        "clippedActions": 0,
+        "seatRects": [],
+        "names": [],
+        "clippedSeats": 0,
+        "clippedDraw": 0
+      },
+      "scope": "Visible UI / prototype region, not a full-map-count claim",
+      "region": {
+        "x": 0,
+        "y": 0,
+        "width": 390,
+        "height": 844
+      },
+      "pixels": {
+        "busy": 0.2357516101591931,
+        "std": 50.21406246054044
+      }
+    },
+    {
+      "name": "xp-5-start",
+      "audit": {
+        "horizontal": false,
+        "clippedActions": 0,
+        "seatRects": [
+          {
+            "rect": {
+              "x": 10,
+              "y": 59,
+              "width": 121.328125,
+              "height": 57.59375,
+              "top": 59,
+              "right": 131.328125,
+              "bottom": 116.59375,
+              "left": 10
+            },
+            "parent": {
+              "x": 0,
+              "y": 52,
+              "width": 390,
+              "height": 118.890625,
+              "top": 52,
+              "right": 390,
+              "bottom": 170.890625,
+              "left": 0
+            },
+            "minHeight": "auto"
+          },
+          {
+            "rect": {
+              "x": 134.328125,
+              "y": 59,
+              "width": 121.328125,
+              "height": 57.59375,
+              "top": 59,
+              "right": 255.65625,
+              "bottom": 116.59375,
+              "left": 134.328125
+            },
+            "parent": {
+              "x": 0,
+              "y": 52,
+              "width": 390,
+              "height": 118.890625,
+              "top": 52,
+              "right": 390,
+              "bottom": 170.890625,
+              "left": 0
+            },
+            "minHeight": "auto"
+          },
+          {
+            "rect": {
+              "x": 258.65625,
+              "y": 59,
+              "width": 121.34375,
+              "height": 57.59375,
+              "top": 59,
+              "right": 380,
+              "bottom": 116.59375,
+              "left": 258.65625
+            },
+            "parent": {
+              "x": 0,
+              "y": 52,
+              "width": 390,
+              "height": 118.890625,
+              "top": 52,
+              "right": 390,
+              "bottom": 170.890625,
+              "left": 0
+            },
+            "minHeight": "auto"
+          },
+          {
+            "rect": {
+              "x": 10,
+              "y": 119.59375,
+              "width": 121.328125,
+              "height": 43.296875,
+              "top": 119.59375,
+              "right": 131.328125,
+              "bottom": 162.890625,
+              "left": 10
+            },
+            "parent": {
+              "x": 0,
+              "y": 52,
+              "width": 390,
+              "height": 118.890625,
+              "top": 52,
+              "right": 390,
+              "bottom": 170.890625,
+              "left": 0
+            },
+            "minHeight": "auto"
+          },
+          {
+            "rect": {
+              "x": 134.328125,
+              "y": 119.59375,
+              "width": 121.328125,
+              "height": 43.296875,
+              "top": 119.59375,
+              "right": 255.65625,
+              "bottom": 162.890625,
+              "left": 134.328125
+            },
+            "parent": {
+              "x": 0,
+              "y": 52,
+              "width": 390,
+              "height": 118.890625,
+              "top": 52,
+              "right": 390,
+              "bottom": 170.890625,
+              "left": 0
+            },
+            "minHeight": "auto"
+          }
+        ],
+        "names": [],
+        "clippedSeats": 0,
+        "clippedDraw": 0
+      },
+      "scope": "Visible UI / prototype region, not a full-map-count claim",
+      "region": {
+        "x": 0,
+        "y": 0,
+        "width": 390,
+        "height": 844
+      },
+      "pixels": {
+        "busy": 0.34626321545752825,
+        "std": 58.07573105030601
+      }
+    },
+    {
+      "name": "xp-5-result",
+      "audit": {
+        "horizontal": false,
+        "clippedActions": 0,
+        "seatRects": [
+          {
+            "rect": {
+              "x": 10,
+              "y": 59,
+              "width": 121.328125,
+              "height": 70.1875,
+              "top": 59,
+              "right": 131.328125,
+              "bottom": 129.1875,
+              "left": 10
+            },
+            "parent": {
+              "x": 0,
+              "y": 52,
+              "width": 390,
+              "height": 144.078125,
+              "top": 52,
+              "right": 390,
+              "bottom": 196.078125,
+              "left": 0
+            },
+            "minHeight": "auto"
+          },
+          {
+            "rect": {
+              "x": 134.328125,
+              "y": 59,
+              "width": 121.328125,
+              "height": 70.1875,
+              "top": 59,
+              "right": 255.65625,
+              "bottom": 129.1875,
+              "left": 134.328125
+            },
+            "parent": {
+              "x": 0,
+              "y": 52,
+              "width": 390,
+              "height": 144.078125,
+              "top": 52,
+              "right": 390,
+              "bottom": 196.078125,
+              "left": 0
+            },
+            "minHeight": "auto"
+          },
+          {
+            "rect": {
+              "x": 258.65625,
+              "y": 59,
+              "width": 121.34375,
+              "height": 70.1875,
+              "top": 59,
+              "right": 380,
+              "bottom": 129.1875,
+              "left": 258.65625
+            },
+            "parent": {
+              "x": 0,
+              "y": 52,
+              "width": 390,
+              "height": 144.078125,
+              "top": 52,
+              "right": 390,
+              "bottom": 196.078125,
+              "left": 0
+            },
+            "minHeight": "auto"
+          },
+          {
+            "rect": {
+              "x": 10,
+              "y": 132.1875,
+              "width": 121.328125,
+              "height": 55.890625,
+              "top": 132.1875,
+              "right": 131.328125,
+              "bottom": 188.078125,
+              "left": 10
+            },
+            "parent": {
+              "x": 0,
+              "y": 52,
+              "width": 390,
+              "height": 144.078125,
+              "top": 52,
+              "right": 390,
+              "bottom": 196.078125,
+              "left": 0
+            },
+            "minHeight": "auto"
+          },
+          {
+            "rect": {
+              "x": 134.328125,
+              "y": 132.1875,
+              "width": 121.328125,
+              "height": 55.890625,
+              "top": 132.1875,
+              "right": 255.65625,
+              "bottom": 188.078125,
+              "left": 134.328125
+            },
+            "parent": {
+              "x": 0,
+              "y": 52,
+              "width": 390,
+              "height": 144.078125,
+              "top": 52,
+              "right": 390,
+              "bottom": 196.078125,
+              "left": 0
+            },
+            "minHeight": "auto"
+          }
+        ],
+        "names": [],
+        "clippedSeats": 0,
+        "clippedDraw": 0
+      },
+      "scope": "Visible UI / prototype region, not a full-map-count claim",
+      "region": {
+        "x": 0,
+        "y": 0,
+        "width": 390,
+        "height": 844
+      },
+      "pixels": {
+        "busy": 0.3484262972414631,
+        "std": 50.91057720872107
+      }
+    },
+    {
+      "name": "xp-6-lobby",
+      "audit": {
+        "horizontal": false,
+        "clippedActions": 0,
+        "seatRects": [],
+        "names": [],
+        "clippedSeats": 0,
+        "clippedDraw": 0
+      },
+      "scope": "Visible UI / prototype region, not a full-map-count claim",
+      "region": {
+        "x": 0,
+        "y": 0,
+        "width": 390,
+        "height": 844
+      },
+      "pixels": {
+        "busy": 0.23916636286304532,
+        "std": 50.60905991815336
+      }
+    },
+    {
+      "name": "xp-6-start",
+      "audit": {
+        "horizontal": false,
+        "clippedActions": 0,
+        "seatRects": [
+          {
+            "rect": {
+              "x": 10,
+              "y": 59,
+              "width": 121.328125,
+              "height": 57.59375,
+              "top": 59,
+              "right": 131.328125,
+              "bottom": 116.59375,
+              "left": 10
+            },
+            "parent": {
+              "x": 0,
+              "y": 52,
+              "width": 390,
+              "height": 118.890625,
+              "top": 52,
+              "right": 390,
+              "bottom": 170.890625,
+              "left": 0
+            },
+            "minHeight": "auto"
+          },
+          {
+            "rect": {
+              "x": 134.328125,
+              "y": 59,
+              "width": 121.328125,
+              "height": 57.59375,
+              "top": 59,
+              "right": 255.65625,
+              "bottom": 116.59375,
+              "left": 134.328125
+            },
+            "parent": {
+              "x": 0,
+              "y": 52,
+              "width": 390,
+              "height": 118.890625,
+              "top": 52,
+              "right": 390,
+              "bottom": 170.890625,
+              "left": 0
+            },
+            "minHeight": "auto"
+          },
+          {
+            "rect": {
+              "x": 258.65625,
+              "y": 59,
+              "width": 121.34375,
+              "height": 57.59375,
+              "top": 59,
+              "right": 380,
+              "bottom": 116.59375,
+              "left": 258.65625
+            },
+            "parent": {
+              "x": 0,
+              "y": 52,
+              "width": 390,
+              "height": 118.890625,
+              "top": 52,
+              "right": 390,
+              "bottom": 170.890625,
+              "left": 0
+            },
+            "minHeight": "auto"
+          },
+          {
+            "rect": {
+              "x": 10,
+              "y": 119.59375,
+              "width": 121.328125,
+              "height": 43.296875,
+              "top": 119.59375,
+              "right": 131.328125,
+              "bottom": 162.890625,
+              "left": 10
+            },
+            "parent": {
+              "x": 0,
+              "y": 52,
+              "width": 390,
+              "height": 118.890625,
+              "top": 52,
+              "right": 390,
+              "bottom": 170.890625,
+              "left": 0
+            },
+            "minHeight": "auto"
+          },
+          {
+            "rect": {
+              "x": 134.328125,
+              "y": 119.59375,
+              "width": 121.328125,
+              "height": 43.296875,
+              "top": 119.59375,
+              "right": 255.65625,
+              "bottom": 162.890625,
+              "left": 134.328125
+            },
+            "parent": {
+              "x": 0,
+              "y": 52,
+              "width": 390,
+              "height": 118.890625,
+              "top": 52,
+              "right": 390,
+              "bottom": 170.890625,
+              "left": 0
+            },
+            "minHeight": "auto"
+          },
+          {
+            "rect": {
+              "x": 258.65625,
+              "y": 119.59375,
+              "width": 121.34375,
+              "height": 43.296875,
+              "top": 119.59375,
+              "right": 380,
+              "bottom": 162.890625,
+              "left": 258.65625
+            },
+            "parent": {
+              "x": 0,
+              "y": 52,
+              "width": 390,
+              "height": 118.890625,
+              "top": 52,
+              "right": 390,
+              "bottom": 170.890625,
+              "left": 0
+            },
+            "minHeight": "auto"
+          }
+        ],
+        "names": [],
+        "clippedSeats": 0,
+        "clippedDraw": 0
+      },
+      "scope": "Visible UI / prototype region, not a full-map-count claim",
+      "region": {
+        "x": 0,
+        "y": 0,
+        "width": 390,
+        "height": 844
+      },
+      "pixels": {
+        "busy": 0.34847490582087737,
+        "std": 58.26282758756338
+      }
+    },
+    {
+      "name": "xp-6-result",
+      "audit": {
+        "horizontal": false,
+        "clippedActions": 0,
+        "seatRects": [
+          {
+            "rect": {
+              "x": 10,
+              "y": 59,
+              "width": 121.328125,
+              "height": 70.1875,
+              "top": 59,
+              "right": 131.328125,
+              "bottom": 129.1875,
+              "left": 10
+            },
+            "parent": {
+              "x": 0,
+              "y": 52,
+              "width": 390,
+              "height": 144.078125,
+              "top": 52,
+              "right": 390,
+              "bottom": 196.078125,
+              "left": 0
+            },
+            "minHeight": "auto"
+          },
+          {
+            "rect": {
+              "x": 134.328125,
+              "y": 59,
+              "width": 121.328125,
+              "height": 70.1875,
+              "top": 59,
+              "right": 255.65625,
+              "bottom": 129.1875,
+              "left": 134.328125
+            },
+            "parent": {
+              "x": 0,
+              "y": 52,
+              "width": 390,
+              "height": 144.078125,
+              "top": 52,
+              "right": 390,
+              "bottom": 196.078125,
+              "left": 0
+            },
+            "minHeight": "auto"
+          },
+          {
+            "rect": {
+              "x": 258.65625,
+              "y": 59,
+              "width": 121.34375,
+              "height": 70.1875,
+              "top": 59,
+              "right": 380,
+              "bottom": 129.1875,
+              "left": 258.65625
+            },
+            "parent": {
+              "x": 0,
+              "y": 52,
+              "width": 390,
+              "height": 144.078125,
+              "top": 52,
+              "right": 390,
+              "bottom": 196.078125,
+              "left": 0
+            },
+            "minHeight": "auto"
+          },
+          {
+            "rect": {
+              "x": 10,
+              "y": 132.1875,
+              "width": 121.328125,
+              "height": 55.890625,
+              "top": 132.1875,
+              "right": 131.328125,
+              "bottom": 188.078125,
+              "left": 10
+            },
+            "parent": {
+              "x": 0,
+              "y": 52,
+              "width": 390,
+              "height": 144.078125,
+              "top": 52,
+              "right": 390,
+              "bottom": 196.078125,
+              "left": 0
+            },
+            "minHeight": "auto"
+          },
+          {
+            "rect": {
+              "x": 134.328125,
+              "y": 132.1875,
+              "width": 121.328125,
+              "height": 55.890625,
+              "top": 132.1875,
+              "right": 255.65625,
+              "bottom": 188.078125,
+              "left": 134.328125
+            },
+            "parent": {
+              "x": 0,
+              "y": 52,
+              "width": 390,
+              "height": 144.078125,
+              "top": 52,
+              "right": 390,
+              "bottom": 196.078125,
+              "left": 0
+            },
+            "minHeight": "auto"
+          },
+          {
+            "rect": {
+              "x": 258.65625,
+              "y": 132.1875,
+              "width": 121.34375,
+              "height": 55.890625,
+              "top": 132.1875,
+              "right": 380,
+              "bottom": 188.078125,
+              "left": 258.65625
+            },
+            "parent": {
+              "x": 0,
+              "y": 52,
+              "width": 390,
+              "height": 144.078125,
+              "top": 52,
+              "right": 390,
+              "bottom": 196.078125,
+              "left": 0
+            },
+            "minHeight": "auto"
+          }
+        ],
+        "names": [],
+        "clippedSeats": 0,
+        "clippedDraw": 0
+      },
+      "scope": "Visible UI / prototype region, not a full-map-count claim",
+      "region": {
+        "x": 0,
+        "y": 0,
+        "width": 390,
+        "height": 844
+      },
+      "pixels": {
+        "busy": 0.3979341353748937,
+        "std": 63.80149799339454
+      }
+    }
+  ],
+  "errors": []
+}

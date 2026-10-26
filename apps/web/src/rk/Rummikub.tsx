@@ -13,6 +13,7 @@ import {
   sortRack,
   selectionAfterClick,
   newTableTiles,
+  settingsForPlayerCount,
   type SortMode,
 } from "./ui-model.ts";
 import { useRKRoom } from "./rk-net.ts";
@@ -577,7 +578,9 @@ export function Rummikub() {
                         : "人齐了，准备开局"}
                     </h2>
                     <p>
-                      房间 <b>{s.code}</b> · {s.games} 局 ·{" "}
+                      房间 <b>{s.code}</b> · {s.count} 人 ·{" "}
+                      {s.variant === "xp" ? "XP 160 张" : "原版 106 张"} ·{" "}
+                      {s.games} 局 ·{" "}
                       {s.minutes ? s.minutes + " 分钟/回合" : "不限时"}
                     </p>
                   </div>
@@ -607,14 +610,16 @@ export function Rummikub() {
                         value={s.count}
                         disabled={!host || net.pending}
                         onChange={(e) =>
-                          void send({
-                            type: "SET_SETTINGS",
-                            count: Number(e.target.value),
-                          })
+                          void send(
+                            settingsForPlayerCount(Number(e.target.value)),
+                          )
                         }
                       >
-                        {(s.variant === "xp" ? [5, 6] : [2, 3, 4]).map((n) => (
-                          <option key={n}>{n}</option>
+                        {[2, 3, 4, 5, 6].map((n) => (
+                          <option key={n} value={n}>
+                            {n}
+                            {n >= 5 ? " · XP" : ""}
+                          </option>
                         ))}
                       </select>
                     </label>
@@ -745,9 +750,11 @@ export function Rummikub() {
                     </button>
                   )}
                   <p className="rk-entry-note">
-                    {s?.variant === "xp"
-                      ? "5–6 人 · XP 160 张 · 4 张百搭牌"
-                      : "2–4 人 · 原版 106 张"}{" "}
+                    {!s
+                      ? "2–6 人 · 5–6 人使用 XP 160 张"
+                      : s.variant === "xp"
+                        ? "5–6 人 · XP 160 张 · 4 张百搭牌"
+                        : "2–4 人 · 原版 106 张"}{" "}
                     · 每人 14 张起手
                   </p>
                 </>
@@ -1062,7 +1069,9 @@ export function Rummikub() {
                   {drag
                     ? "拖到组合末尾或新建一组"
                     : selected.length
-                      ? "已选 " + selected.length + " 张 · 点组合右侧「+」或「新建一组」 · 点空白处取消"
+                      ? "已选 " +
+                        selected.length +
+                        " 张 · 点组合右侧「+」或「新建一组」 · 点空白处取消"
                       : "点选牌再放置 · 长按拖动 · 点牌缝两下可拆分 · 双指缩放"}
                 </p>
               </section>

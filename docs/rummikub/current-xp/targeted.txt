@@ -1,0 +1,8 @@
+
+ RUN  v5.0.5 E:/DBD-RK-XP-Current
+
+
+ Test Files  8 passed (8)
+      Tests  55 passed (55)
+   Start at  10:02:48
+   Duration  2.24s (tests 55%, transform 25%, import 17%, worker 2%)

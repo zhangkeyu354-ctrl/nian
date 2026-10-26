@@ -15,7 +15,7 @@ import { findRackMelds } from "../packages/rummikub/src/simulation.ts";
 import { assertUiShot } from "./screenshot-check.ts";
 const root = mkdtempSync(join(tmpdir(), "rk-xp-ui-")),
   data = join(root, "rk"),
-  out = "docs/rummikub/ui-xp";
+  out = process.env.RK_XP_OUT ?? "docs/rummikub/ui-xp";
 mkdirSync(data);
 mkdirSync(out, { recursive: true });
 const names = [
@@ -211,7 +211,7 @@ async function place(p: Page, ids: string[], meld?: string) {
       .getByTestId("rk-meld-" + meld)
       .locator(".rk-add")
       .click();
-  else await p.getByTestId("rk-new-group").click();
+  else await p.getByTestId("rk-quick-new").click();
   await p.waitForFunction(
     (before) =>
       JSON.parse((window as any).render_game_to_text()).privateRevision >
@@ -309,14 +309,29 @@ try {
     await host.getByLabel("拉密玩法").waitFor();
     assert.equal(await host.getByLabel("拉密玩法").inputValue(), "classic");
     assert.deepEqual(
-      await host.getByLabel("本局人数").locator("option").allTextContents(),
-      ["2", "3", "4"],
+      await host
+        .getByLabel("本局人数")
+        .locator("option")
+        .evaluateAll((options) =>
+          options.map((o) => (o as HTMLOptionElement).value),
+        ),
+      ["2", "3", "4", "5", "6"],
     );
-    await host.getByLabel("拉密玩法").selectOption("xp");
+    // No prior XP dropdown step: selecting the count alone must configure the deck.
+    await host.getByLabel("本局人数").selectOption(String(count));
     await host.waitForFunction(
       () => JSON.parse((window as any).render_game_to_text()).variant === "xp",
     );
+    assert.equal((await snap(host)).count, count);
+    await host.getByLabel("本局人数").selectOption("4");
+    await host.waitForFunction(
+      () =>
+        JSON.parse((window as any).render_game_to_text()).variant === "classic",
+    );
     await host.getByLabel("本局人数").selectOption(String(count));
+    await host.waitForFunction(
+      () => JSON.parse((window as any).render_game_to_text()).variant === "xp",
+    );
     await host.getByLabel("每回合计时").selectOption("0");
     const url = host.url();
     for (let i = 1; i < count; i++) {
@@ -369,12 +384,12 @@ try {
           }
       }
       const version = (await snap(p)).version;
-      await p
-        .getByRole("button", {
-          name: moved ? "确认出牌" : "摸牌并结束",
-          exact: true,
-        })
-        .click();
+      // Keep the current site's adaptive primary action (draw when no draft).
+      assert.match(
+        await p.getByTestId("rk-commit").innerText(),
+        moved ? /确认/ : /摸/,
+      );
+      await p.getByTestId("rk-commit").click();
       await Promise.all(
         active.map((pg) =>
           pg.waitForFunction(

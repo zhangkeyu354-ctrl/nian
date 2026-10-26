@@ -1,0 +1,12 @@
+
+> dbd-boardgame-private@0.2.2 test
+> vitest run
+
+
+ RUN  v5.0.5 E:/DBD-RK-XP-Current
+
+
+ Test Files  65 passed (65)
+      Tests  914 passed (914)
+   Start at  10:05:59
+   Duration  181.12s (tests 96%, transform 2%, import 2%)

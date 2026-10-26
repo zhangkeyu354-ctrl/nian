@@ -1,0 +1,13 @@
+
+ RUN  v5.0.5 E:/DBD-RK-XP-Current
+
+
+ Test Files  12 passed (12)
+      Tests  197 passed (197)
+   Start at  10:04:26
+   Duration  7.15s (tests 70%, transform 15%, import 12%, setup 2%, worker 1%)
+
+    Isolate  12 workers spawned · ~260ms startup each (spawn + environment, per file)
+             at least ~1.30s faster with isolate: false — reuses workers across files instead of one per file
+
+UI_SCENARIOS_COLLECTED 64 (successful engine test inputs; generated, not shipped)

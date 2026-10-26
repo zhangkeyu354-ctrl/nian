@@ -1,0 +1,12 @@
+[
+  {
+    "name": "replays",
+    "cmd": "npm run verify:replays",
+    "code": 0
+  },
+  {
+    "name": "mobile-interfaces",
+    "cmd": "npm run verify:mobile-interfaces",
+    "code": 0
+  }
+]

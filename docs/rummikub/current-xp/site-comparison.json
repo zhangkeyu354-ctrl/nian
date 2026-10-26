@@ -1,0 +1,25 @@
+{
+  "checkedAt": "2026-10-26T01:05:31.208Z",
+  "productionURL": "https://dbd-boardgame-8qky.onrender.com",
+  "health": {
+    "ok": true,
+    "version": "b466be5",
+    "rooms": 0,
+    "maRooms": 0,
+    "cnRooms": 0,
+    "dmRooms": 0,
+    "rkRooms": 0,
+    "rrRooms": 0,
+    "xbRooms": 0,
+    "dpRooms": 0,
+    "witchTown": {
+      "milestone": "M5_PHONE_UI",
+      "rooms": 0,
+      "fullGame": true
+    }
+  },
+  "production": "拉密 Rummikub\nThe Original · Classic\n\n2–4 人 · 数字组合\n\n同色连成顺子，同数凑成一组。拆开桌面的可能，把手中的牌全部打出去。\n\n开房间\n加入",
+  "integrated": "拉密 Rummikub\nThe Original · Classic / XP\n\n2–6 人 · 数字组合\n\n同色连成顺子，同数凑成一组。拆开桌面的可能，把手中的牌全部打出去。\n\n开房间\n加入",
+  "baseCommit": "e87c967",
+  "productionGameCodeMatchesBase": true
+}
