@@ -15,6 +15,7 @@ import {
   CategoryIcon,
   ThemeIcon,
 } from "./StudioArt.tsx";
+import { TaleVerdict } from "./TaleVerdict.tsx";
 import { TaleAwards } from "./TaleAwards.tsx";
 import { FakeResult, TaleResult } from "./Results.tsx";
 import { feel, soundOn, setSoundOn } from "./feel.ts";
@@ -114,6 +115,8 @@ export function Studio(p: Props) {
   const labels: Record<string, string> = {
     THEME: "主题投票",
     THEME_RESULT: "本局主题",
+    VERDICT: "这题传成功了吗？",
+    VERDICT_RESULT: "大家的判断",
     AWARD: "这一笔，谁最出彩？",
     AWARD_RESULT: "本轮奖项",
     CATEGORY: "主题投票",
@@ -182,7 +185,7 @@ export function Studio(p: Props) {
   const board = (read = false, d = v.drawing, key = "shared") => (
     <Board
       key={v.id + ":" + (read ? key : (v.task?.id ?? v.turn))}
-      drawing={d ?? emptyDrawing()}
+      drawing={d ?? emptyDrawing(v.paperAspect)}
       docKey={v.id + ":" + (read ? key : (v.task?.id ?? v.turn)) + ":" + me}
       canDraw={
         !read &&
@@ -258,7 +261,15 @@ export function Studio(p: Props) {
   const canPaper =
     mode === "fa"
       ? ["DRAW", "DISCUSS", "VOTE", "OBSERVE", "RESULT"].includes(v.phase)
-      : ["TASK", "REVEAL", "AWARD", "AWARD_RESULT", "RESULT"].includes(v.phase);
+      : [
+          "TASK",
+          "REVEAL",
+          "VERDICT",
+          "VERDICT_RESULT",
+          "AWARD",
+          "AWARD_RESULT",
+          "RESULT",
+        ].includes(v.phase);
   const drawingTask =
     v.phase === "DRAW" || (v.phase === "TASK" && v.task?.kind === "drawing");
   const fullscreen = async () => {
@@ -277,7 +288,14 @@ export function Studio(p: Props) {
   };
   const tpReveal =
     mode === "tp" &&
-    ["REVEAL", "AWARD", "AWARD_RESULT", "RESULT"].includes(v.phase);
+    [
+      "REVEAL",
+      "VERDICT",
+      "VERDICT_RESULT",
+      "AWARD",
+      "AWARD_RESULT",
+      "RESULT",
+    ].includes(v.phase);
   const revealedCount = useMemo(
     () => (v.albums ?? []).reduce((n, a) => n + a.entries.length, 0),
     [v.albums],
@@ -294,6 +312,7 @@ export function Studio(p: Props) {
         " st-phase-" +
         v.phase.toLowerCase()
       }
+      style={{ "--paper-ratio": v.paperAspect ?? 2 } as React.CSSProperties}
       data-testid="drawing-studio"
     >
       <div className="st-backdrop" aria-hidden="true">
@@ -547,7 +566,17 @@ export function Studio(p: Props) {
             </div>
           </>
         )}
-        {tpReveal && (
+        {["VERDICT", "VERDICT_RESULT"].includes(v.phase) && (
+          <TaleVerdict
+            v={v}
+            me={me}
+            host={host}
+            locked={locked}
+            onVote={p.submit}
+            onNext={() => act({ type: "NEXT" }, "page")}
+          />
+        )}
+        {tpReveal && !v.phase.startsWith("VERDICT") && (
           <div className="st-album">
             <nav className="st-album-tabs" aria-label="传话本">
               {v.albums?.map((a, i) => (
@@ -935,7 +964,7 @@ export function Studio(p: Props) {
               <p className="st-menu-rules">
                 {mode === "fa"
                   ? "选主题 → 每人每圈画一笔，共两圈 → 讨论投票 → 卧底被抓可猜题翻盘。平票未抓到。线上自动主持改编。"
-                  : "选主题 → 每人自己写题 → 同时画画与猜测 → 逐本揭晓并匿名投MVP／坑货。主题仅供参考，提交后锁定，掉线到时按未完成或弃权处理。"}
+                  : "选主题 → 每人自己写题 → 同时画画与猜测 → 逐本揭晓先公开判断是否传成功，再公开投MVP／坑货。主题仅供参考，提交后锁定，掉线到时按未完成或弃权处理。"}
               </p>
             )}
             <button

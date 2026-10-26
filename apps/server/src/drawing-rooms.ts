@@ -93,7 +93,7 @@ export class DrawingRoom {
           break;
         } // incomplete final write has never been acknowledged
         if (e.game !== f.game.id) continue;
-        const d = (f.game.drawings[e.doc] ??= emptyDrawing());
+        const d = (f.game.drawings[e.doc] ??= emptyDrawing(f.game.paperAspect));
         if (d.revision >= e.revision) continue;
         if (d.revision !== e.revision - 1) throw Error("画作日志缺口");
         appendChunk(d, e.chunk);
@@ -255,7 +255,7 @@ export class DrawingRoom {
       c.width = 8;
       if (c.points?.length > 128) throw Error("分片过大");
     }
-    const old = g.drawings[doc] ?? emptyDrawing(),
+    const old = g.drawings[doc] ?? emptyDrawing(g.paperAspect),
       d = structuredClone(old);
     appendChunk(d, c);
     if (d.revision === old.revision)
@@ -283,7 +283,7 @@ export class DrawingRoom {
       req.scope !== this.scope()
     )
       throw Error("不能修改当前画作");
-    const d = (g.drawings[t.id] ??= emptyDrawing());
+    const d = (g.drawings[t.id] ??= emptyDrawing(g.paperAspect));
     if (req.revision !== d.revision) throw Error("画作正在保存，请稍后重试");
     if (req.kind === "undo") d.strokes.pop();
     else if (req.kind === "clear") d.strokes = [];

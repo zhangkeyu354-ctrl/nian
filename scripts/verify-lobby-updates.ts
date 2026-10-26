@@ -21,7 +21,8 @@ try {
     await assertUiShot(page, `${out}/${width}x${height}-closed.png`);
     await trigger.click();
     assert(await dialog.isVisible());
-    assert.equal(await dialog.locator("article").count(), 2);
+    assert.equal(await dialog.locator("article").count(), 3);
+    assert(await dialog.getByRole("heading", {name: "画布更大，揭晓更热闹"}).isVisible());
     assert(await dialog.getByText("瞎掰王", { exact: false }).isVisible());
     assert(await dialog.getByText("魔法运动员", { exact: false }).isVisible());
     assert(await dialog.getByRole("heading", {name: "手机讨论更宽敞，领奖台不再被遮挡"}).isVisible());

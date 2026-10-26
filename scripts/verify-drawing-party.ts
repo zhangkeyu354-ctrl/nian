@@ -122,7 +122,19 @@ try {
         assert.equal((await snap()).view.phase, "REVEAL");
         while ((await snap()).view.phase !== "RESULT") {
           const v = (await snap()).view;
-          if (v.phase === "AWARD") {
+          if (v.phase === "VERDICT") {
+            for (let i = 0; i < n; i++)
+              await action(i, {
+                type: "VERDICT_VOTE",
+                chain: v.awardChain,
+                choice: i % 3 ? "success" : "offtrack",
+              });
+            assert.equal((await snap()).view.phase, "VERDICT_RESULT");
+            assert.equal(
+              Object.keys((await snap()).view.verdictVotes).length,
+              n,
+            );
+          } else if (v.phase === "AWARD") {
             for (let i = 0; i < n; i++)
               await action(i, {
                 type: "AWARD_VOTE",

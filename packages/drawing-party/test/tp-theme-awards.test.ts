@@ -57,9 +57,12 @@ it("tie, random, abstention and custom are deterministic and don't issue system 
     expect(g.chains[0][0]).toMatchObject({ text: "未出题", missing: true });
   }
 });
-it("each final page opens anonymous award voting with correct candidates and no self votes", () => {
+it("each final page opens public award voting with correct candidates and no self votes", () => {
   let s = reveal();
   s = act(s, "a", { type: "NEXT" }, 999999);
+  s = act(s, "a", { type: "NEXT" }, 999999);
+  expect(s.phase).toBe("VERDICT");
+  s = tick(s, s.deadline);
   s = act(s, "a", { type: "NEXT" }, 999999);
   expect(s.phase).toBe("AWARD");
   expect(viewFor(s, "a").awardCandidates).toEqual([
@@ -93,7 +96,7 @@ it("each final page opens anonymous award voting with correct candidates and no 
   expect(s.phase).toBe("AWARD_RESULT");
   expect(s.awardResults![0].mvp).toEqual({ b: 1 });
   expect(s.awardResults![0].mvpWinners).toEqual(["b"]);
-  expect(JSON.stringify(viewFor(s, "c"))).not.toContain("awardVotes");
+  expect(viewFor(s, "c").awardVotes?.a).toEqual({ mvp: "b", dud: "b" });
   s = act(s, "a", { type: "NEXT" }, s.deadline + 1);
   expect(s.phase).toBe("REVEAL");
   expect(s.cursor).toBe(3);
@@ -101,7 +104,10 @@ it("each final page opens anonymous award voting with correct candidates and no 
 it("award totals preserve ties and zero votes give no winner", () => {
   let s = reveal();
   while (s.phase !== "RESULT") {
-    if (s.phase === "AWARD") {
+    if (s.phase === "VERDICT") {
+      s = tick(s, s.deadline);
+      s = act(s, "a", { type: "NEXT" }, 1999999);
+    } else if (s.phase === "AWARD") {
       for (const p of ps)
         s = act(
           s,

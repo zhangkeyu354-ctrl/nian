@@ -1,3 +1,4 @@
+import { createPortal } from "react-dom";
 import React, { useEffect, useRef, useState } from "react";
 import {
   emptyDrawing,
@@ -27,6 +28,7 @@ interface Props {
   focused?: boolean;
 }
 export function Board(p: Props) {
+  const [palettePosition, setPalettePosition] = useState({ left: 8, top: 8 });
   const canvas = useRef<HTMLCanvasElement>(null),
     model = useRef<Drawing>(structuredClone(p.drawing)),
     pending = useRef<Chunk[]>([]),
@@ -331,6 +333,7 @@ export function Board(p: Props) {
   };
   return (
     <section
+      style={{ "--paper-ratio": p.drawing.aspect ?? 2 } as React.CSSProperties}
       className={
         "dp-board " +
         (focus ? "dp-focus " : "") +
@@ -370,7 +373,17 @@ export function Board(p: Props) {
             className="st-tool-toggle"
             aria-label="画笔工具"
             aria-expanded={toolsOpen}
-            onClick={() => {
+            onClick={(e) => {
+              const r = e.currentTarget.getBoundingClientRect(),
+                w = 252,
+                h = 116;
+              setPalettePosition({
+                left: Math.max(8, Math.min(innerWidth - w - 8, r.right - w)),
+                top:
+                  r.bottom + 10 + h <= innerHeight
+                    ? r.bottom + 10
+                    : Math.max(8, r.top - h - 10),
+              });
               feel("tap");
               setToolsOpen(!toolsOpen);
             }}
@@ -422,25 +435,40 @@ export function Board(p: Props) {
               <path d="M4 7h16M10 11v6M14 11v6M6 7l1 13h10l1-13M9 7V4h6v3" />
             </svg>
           </button>
-          {toolsOpen && (
-            <div className="dp-tools" role="dialog" aria-label="选择颜色">
-              <div className="dp-palette">
-                {COLORS.map((c, i) => (
-                  <button
-                    key={c}
-                    aria-label={"颜色" + (i + 1)}
-                    aria-pressed={color === i}
-                    style={{ background: c }}
-                    onClick={() => {
-                      feel("select");
-                      setColor(i);
-                      setToolsOpen(false);
-                    }}
-                  />
-                ))}
-              </div>
-            </div>
-          )}
+          {toolsOpen &&
+            createPortal(
+              <div
+                className="dp-tools dp-floating-tools"
+                style={{
+                  position: "fixed",
+                  left: palettePosition.left,
+                  top: palettePosition.top,
+                  right: "auto",
+                  bottom: "auto",
+                  width: 252,
+                  transform: "none",
+                }}
+                role="dialog"
+                aria-label="选择颜色"
+              >
+                <div className="dp-palette">
+                  {COLORS.map((c, i) => (
+                    <button
+                      key={c}
+                      aria-label={"颜色" + (i + 1)}
+                      aria-pressed={color === i}
+                      style={{ background: c }}
+                      onClick={() => {
+                        feel("select");
+                        setColor(i);
+                        setToolsOpen(false);
+                      }}
+                    />
+                  ))}
+                </div>
+              </div>,
+              document.querySelector(".st-world") ?? document.body,
+            )}
         </div>
       )}
       <div className="dp-board-footer">
