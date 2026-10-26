@@ -1,9 +1,10 @@
 // 魔法运动员联机验收：4 部手机尺寸浏览器从首页进入 → 建房 → 加入 → 选秀 → 四场比赛打完。
 // 每一步只点界面上真实的按钮；检查没有页面错误、只有该决定的人看得到选项、四场都结束。
 import { spawn, type ChildProcess } from "node:child_process";
-import { mkdtempSync, mkdirSync } from "node:fs";
+import { mkdtempSync, mkdirSync, writeFileSync } from "node:fs";
 import { tmpdir } from "node:os";
 import { join } from "node:path";
+import { pathToFileURL } from "node:url";
 import { strict as assert } from "node:assert";
 import { chromium, type Page } from "playwright";
 import { assertUiShot } from "./screenshot-check.ts";
@@ -13,7 +14,20 @@ const BASE = `http://127.0.0.1:${PORT}`;
 const out = process.env.MA_OUT ?? "output/ma-browsers";
 mkdirSync(out, { recursive: true });
 const data = mkdtempSync(join(tmpdir(), "ma-ui-"));
-const server: ChildProcess = spawn(process.execPath, ["--import", "tsx", "apps/server/src/main.ts"], {
+const testSeed = process.env.MA_TEST_SEED;
+const seedHook: string[] = [];
+if (testSeed !== undefined) {
+  assert(/^\d+$/.test(testSeed) && Number(testSeed) < 2 ** 31, "测试种子需为非负31位整数");
+  const hook = join(data, "seed-hook.mjs");
+  // Only this temporary test server is seeded. Production exposes no seed API,
+  // and every die, ability and player command still goes through the real server.
+  writeFileSync(
+    hook,
+    `import crypto from 'node:crypto';import {syncBuiltinESMExports} from 'node:module';const original=crypto.randomInt;crypto.randomInt=function(max,...args){return max===2**31&&args.length===0?Number(process.env.MA_TEST_SEED):original.call(crypto,max,...args)};syncBuiltinESMExports();`,
+  );
+  seedHook.push("--import", pathToFileURL(hook).href);
+}
+const server: ChildProcess = spawn(process.execPath, ["--import", "tsx", ...seedHook, "apps/server/src/main.ts"], {
   env: { ...process.env, PORT: String(PORT), HOST: "127.0.0.1", DBD_DATA_DIR: join(data, "dbd"), MA_DATA_DIR: join(data, "ma") },
   stdio: ["ignore", "ignore", "inherit"],
 });

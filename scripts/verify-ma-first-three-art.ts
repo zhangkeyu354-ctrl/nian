@@ -13,11 +13,17 @@ import { assertUiShot } from "./screenshot-check.ts";
 import { SECOND_WIND_PREVIEW_IDS } from "../packages/magical-athlete/src/second-wind-preview.ts";
 
 const batchTwo = process.env.MA_REVIEW_BATCH === "2";
-const out = `docs/magical-athlete/second-wind/${batchTwo ? "batch-two-screens" : "first-three-fix-screens"}`;
+const batchThree = process.env.MA_REVIEW_BATCH === "3";
+const laterBatch = batchTwo || batchThree;
+const out = `docs/magical-athlete/second-wind/${batchThree ? "batch-three-screens" : batchTwo ? "batch-two-screens" : "first-three-fix-screens"}`;
 const work = resolve("work/ma-first-three-review");
 mkdirSync(out, { recursive: true });
 mkdirSync(work, { recursive: true });
-const reviewIds = batchTwo ? SECOND_WIND_PREVIEW_IDS.slice(3) : SECOND_WIND_PREVIEW_IDS.slice(0, 3);
+const reviewIds = batchThree
+  ? SECOND_WIND_PREVIEW_IDS.slice(8, 13)
+  : batchTwo
+    ? SECOND_WIND_PREVIEW_IDS.slice(3, 8)
+    : SECOND_WIND_PREVIEW_IDS.slice(0, 3);
 const ids = [...reviewIds, "banana", "alchemist", "twin"];
 const state = testRace({
   racers: ids,
@@ -145,14 +151,14 @@ try {
     ["grid", 390, 844, "01-clear-phone.png"],
     ["art", 390, 844, "02-original-vertical.png"],
     ["art", 1366, 768, "03-original-desktop.png"],
-    ["tokens", batchTwo ? 1620 : 1100, 560, "04-token-portrait-comparison.png"],
-    ["cards", batchTwo ? 1440 : 1000, 700, "05-card-comparison.png"],
+    ["tokens", laterBatch ? 1620 : 1100, 560, "04-token-portrait-comparison.png"],
+    ["cards", laterBatch ? 1440 : 1000, 700, "05-card-comparison.png"],
     ["power", 390, 844, "06-skill-phone.png"],
     ["stats", 390, 844, "07-stats-phone.png"],
     ["power", 1366, 768, "08-skill-desktop.png"],
     ["stats", 1366, 768, "09-stats-desktop.png"],
   ];
-  if (batchTwo) {
+  if (laterBatch) {
     shots.push(["borders", 1100, 560, "10-first-three-colored-borders.png"]);
     for (const id of reviewIds.slice(1)) shots.push([`power:${id}`, 390, 844, `skill-${id}-phone.png`]);
   }

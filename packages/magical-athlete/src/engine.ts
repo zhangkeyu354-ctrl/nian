@@ -229,6 +229,7 @@ interface Ctx {
   i: number;
   guard: Set<string>;
   depth: number;
+  criticUsed: Set<string>;
 }
 
 function ask(s: MAState, c: Ctx, d: Decision): string {
@@ -394,18 +395,22 @@ function move(s: MAState, c: Ctx, t: Token, n: number, main: boolean, why: strin
 
   // 3) 一起到达（together：同一个效果让同一格的几个人一起移动，如啦啦队长让并列最后的人一起走 2）
   const group = [t, ...together.filter((x) => active(x) && x.pos === from && x !== t), ...riders];
+  const streaking = new Set(group.filter((g) => has(s, g, "sw_streaker")));
   // 经过 = 出发时在自己前面、停下后在自己后面（巨婴把人挤到身后也算被经过，设计师在 BGG 裁定巨婴 × 香蕉会摔倒）
   const before = new Map(race(s).tokens.map((o) => [o, o.pos]));
   const passedOf = (g: Token) =>
-    n < 0
-      ? []
-      : others(s, g).filter(
-          (o) => !group.includes(o) && (before.get(o) ?? 0) > from && (g.place !== null || o.pos < g.pos),
-        );
+    n < 0 ? [] : others(s, g).filter((o) => !group.includes(o) && (before.get(o) ?? 0) > from && (g.place !== null || o.pos < g.pos));
   for (const f of riders) log(s, `${rname(f)}【吸附蹭车】跟着 ${rname(t)} 一起移动。`);
   log(s, "", { kind: "move", racers: group.map((g) => g.racer), from, to: Math.min(p, L), why });
   if (p >= L) {
-    for (const g of group) if (active(g)) finish(s, g);
+    for (const g of group)
+      if (active(g)) {
+        if (n > 0 && streaking.has(g) && others(s, g).some((o) => !group.includes(o) && (before.get(o) ?? 0) > from)) {
+          fire(s, c, g, `${rname(g)}【擦身得分】：经过其他选手，获得 1 分。`, "sw_streaker");
+          gainChip(s, g.owner, 1);
+        }
+        finish(s, g);
+      }
     return;
   }
   for (const g of group) g.pos = p;
@@ -419,16 +424,27 @@ function move(s: MAState, c: Ctx, t: Token, n: number, main: boolean, why: strin
   const arrivals = inOrder(s).filter((x) => group.includes(x));
   for (const g of arrivals) hugeBaby(s, c, g);
   const passed = new Map(group.map((g) => [g, passedOf(g)]));
-  for (const g of arrivals) react(s, c, g, passed.get(g) ?? [], group.length > 1);
+  for (const g of arrivals) react(s, c, g, passed.get(g) ?? [], group.length > 1, streaking.has(g));
   for (const f of riders) if (active(f)) fire(s, c, f, `${rname(f)}【吸附蹭车】发动。`);
 }
 
 /** 传送：放到新格子，不算移动，不经过任何人 */
-function warp(s: MAState, c: Ctx, t: Token, to: number) {
+function warp(s: MAState, c: Ctx, t: Token, to: number, exchange?: Token) {
   if (!active(t)) return;
+  if (exchange && !active(exchange)) return;
   const from = t.pos;
   t.pos = Math.max(0, Math.min(trackOf(s).length - 1, to));
   log(s, "", { kind: "warp", racer: t.racer, from, to: t.pos });
+  if (exchange) {
+    const exchangeFrom = exchange.pos;
+    exchange.pos = from;
+    log(s, "", { kind: "warp", racer: exchange.racer, from: exchangeFrom, to: exchange.pos });
+    hugeBaby(s, c, t);
+    hugeBaby(s, c, exchange);
+    react(s, c, t, [], true);
+    react(s, c, exchange, [], true);
+    return;
+  }
   hugeBaby(s, c, t);
   react(s, c, t, []);
 }
@@ -440,8 +456,12 @@ function warp(s: MAState, c: Ctx, t: Token, to: number) {
  * “Stopping on a space” powers DON'T trigger if racers arrive simultaneously, like in the case of Party Animal.
  * → 浪漫者、血盆大口、芭芭雅嘎这类「停在格子上」的能力对同时到达者不触发。赛道格（箭头/石头/星星）不是能力，照常生效（CHECK_REQUIRED MA-U01b）。
  */
-function react(s: MAState, c: Ctx, t: Token, passed: Token[], simultaneous = false) {
+function react(s: MAState, c: Ctx, t: Token, passed: Token[], simultaneous = false, streaking = false) {
   if (!active(t)) return;
+  if (streaking && passed.length) {
+    fire(s, c, t, `${rname(t)}【擦身得分】：经过其他选手，获得 1 分。`, "sw_streaker");
+    gainChip(s, t.owner, 1);
+  }
   const pos = t.pos;
   const sp = trackOf(s).specials[pos];
   if (sp) {
@@ -498,18 +518,14 @@ function react(s: MAState, c: Ctx, t: Token, passed: Token[], simultaneous = fal
       move(s, c, x, 2, false, "见不得成双");
       fire(s, c, x, `${rname(x)}【见不得成双】：${rname(t)} 停进了两人格子，移动 2 格。`);
     } else if (p === "duelist" && t.pos === pos && !simultaneous) {
-      const foes =
-        x === t ? onSpace(s, pos).filter((o) => o !== x) : x.pos === pos ? [t] : [];
+      const foes = x === t ? onSpace(s, pos).filter((o) => o !== x) : x.pos === pos ? [t] : [];
       if (!foes.length) continue;
       const v = ask(s, c, {
         player: x.owner,
         racer: x.racer,
         kind: "duel",
         prompt: `${rname(x)}【单挑】：要喊「决斗」吗？`,
-        options: [
-          ...foes.map((o) => ({ value: o.racer, label: `和 ${rname(o)} 决斗` })),
-          { value: "no", label: "不决斗" },
-        ],
+        options: [...foes.map((o) => ({ value: o.racer, label: `和 ${rname(o)} 决斗` })), { value: "no", label: "不决斗" }],
       });
       const o = foes.find((f) => f.racer === v);
       if (o) {
@@ -590,6 +606,7 @@ function mainMove(s: MAState, c: Ctx, t: Token, f: TurnFlags) {
   }
   let base: number;
   let reverseMain = false;
+  let mainRoll: number | null = null;
   if (how === "legs" || how === "mole") {
     base = how === "mole" ? 6 : 5;
     fire(s, c, t, `${rname(t)}【${how === "mole" ? "挖地直行" : "稳定输出"}】：不掷骰，走 ${base} 格。`);
@@ -604,6 +621,28 @@ function mainMove(s: MAState, c: Ctx, t: Token, f: TurnFlags) {
     let magic = has(s, t, "magician") ? 2 : 0;
     let diceUsed = false;
     for (;;) {
+      let forcedByCritic = false;
+      for (const critic of holders(s, "sw_critic")) {
+        if (critic === t || t.pos <= critic.pos || c.criticUsed.has(critic.racer)) continue;
+        const picked = ask(s, c, {
+          player: critic.owner,
+          racer: critic.racer,
+          kind: "critic",
+          prompt: `${rname(critic)}【评头论足】：让前方的 ${rname(t)} 重掷 ${v} 点？`,
+          options: [
+            { value: "yes", label: "让他重掷" },
+            { value: "no", label: "不用" },
+          ],
+        });
+        if (picked !== "yes") continue;
+        c.criticUsed.add(critic.racer);
+        fire(s, c, critic, `${rname(critic)}【评头论足】：让 ${rname(t)} 重掷主移动骰。`);
+        v = roll();
+        log(s, `评论家要求重掷：${v}。`, { kind: "roll", player: t.owner, racer: t.racer, value: v, reroll: true });
+        forcedByCritic = true;
+        break;
+      }
+      if (forcedByCritic) continue;
       const dms = holders(s, "dicemonger");
       const opts: Decision["options"] = [{ value: "keep", label: `就用 ${v} 点` }];
       if (magic > 0) opts.push({ value: "magician", label: `【变两次】重掷（还剩 ${magic} 次）` });
@@ -629,6 +668,7 @@ function mainMove(s: MAState, c: Ctx, t: Token, f: TurnFlags) {
       v = roll();
       log(s, `重掷结果：${v}。`, { kind: "roll", player: t.owner, racer: t.racer, value: v, reroll: true });
     }
+    mainRoll = v;
     if (prediction !== null) {
       if (prediction === v) {
         f.extra = true;
@@ -713,6 +753,28 @@ function mainMove(s: MAState, c: Ctx, t: Token, f: TurnFlags) {
     }
   }
   let dist = base;
+  const blunderdog = has(s, t, "sw_blunderdog");
+  if (blunderdog) {
+    const last = Math.min(
+      ...race(s)
+        .tokens.filter(active)
+        .map((o) => o.pos),
+    );
+    if (t.pos === last && mainRoll !== null) {
+      dist += mainRoll * 2;
+      fire(s, c, t, `${rname(t)}【倒霉反转】：垫底，主移动骰点乘 3。`);
+    } else if (t.pos !== last) {
+      reverseMain = true;
+      fire(s, c, t, `${rname(t)}【倒霉反转】：没有垫底，主移动改为后退。`);
+    }
+  }
+  if (has(s, t, "sw_speed_demon")) {
+    const points = total(player(s, t.owner).chips);
+    if (points) {
+      dist += points;
+      fire(s, c, t, `${rname(t)}【极速失控】：玩家有 ${points} 分，主移动 +${points}。`);
+    }
+  }
   if (has(s, t, "sw_icarus")) {
     dist += 3;
     fire(s, c, t, `${rname(t)}【飞行风险】：主移动 +3。`);
@@ -751,7 +813,7 @@ function mainMove(s: MAState, c: Ctx, t: Token, f: TurnFlags) {
       dist -= 1;
       fire(s, c, g, `${rname(g)}【全场减速】：${rname(t)} 主移动 −1。`);
     }
-  move(s, c, t, Math.max(0, dist) * (reverseMain ? -1 : 1), true, reverseMain ? "三点倒车" : how === "mole" ? "挖地直行" : "主移动");
+  move(s, c, t, Math.max(0, dist) * (reverseMain ? -1 : 1), true, blunderdog ? "倒霉反转" : reverseMain ? "三点倒车" : how === "mole" ? "挖地直行" : "主移动");
   if (rocket && active(t)) {
     trip(s, t);
     log(s, `${rname(t)} 冲完摔倒了。`);
@@ -883,7 +945,36 @@ function racerTurn(s: MAState, c: Ctx, t: Token, f: TurnFlags) {
         });
       }
     }
-    // New turn-start ability is not skipped just because the main move is lost.
+    // New turn-start abilities are not skipped just because the main move is lost.
+    if (has(s, t, "sw_speed_demon")) {
+      const opponents = others(s, t);
+      if (opponents.length && t.pos >= Math.max(...opponents.map((o) => o.pos)) + 4) {
+        fire(s, c, t, `${rname(t)}【极速失控】：领先至少 4 格，淘汰出本场。`);
+        eliminate(s, t);
+        return;
+      }
+    }
+    if (has(s, t, "sw_diva")) {
+      const opponents = others(s, t);
+      if (opponents.length) {
+        const last = Math.min(t.pos, ...opponents.map((o) => o.pos));
+        const targetPos = t.pos === last ? Math.max(...opponents.map((o) => o.pos)) : last;
+        const targets = opponents.filter((o) => o.pos === targetPos);
+        const picked =
+          targets.length === 1
+            ? targets[0].racer
+            : ask(s, c, {
+                player: t.owner,
+                racer: t.racer,
+                kind: "diva",
+                prompt: `${rname(t)}【戏剧换位】：选择换位的选手。`,
+                options: targets.map((o) => ({ value: o.racer, label: rname(o) })),
+              });
+        const target = targets.find((o) => o.racer === picked)!;
+        fire(s, c, t, `${rname(t)}【戏剧换位】：与 ${rname(target)} 同步交换位置。`);
+        warp(s, c, t, target.pos, target);
+      }
+    }
     if (has(s, t, "sw_tail")) {
       const ahead = others(s, t).filter((o) => o.pos > t.pos);
       const nearest = ahead.filter((o) => o.pos === Math.min(...ahead.map((x) => x.pos)));
@@ -1093,7 +1184,7 @@ const strip = (s: MAState) => JSON.stringify({ ...s, turn: null, pending: null }
 
 function runUnit(snapshot: string, answers: string[]): { s: MAState; need: Decision | null } {
   const s: MAState = JSON.parse(snapshot);
-  const c: Ctx = { answers, i: 0, guard: new Set(), depth: 0 };
+  const c: Ctx = { answers, i: 0, guard: new Set(), depth: 0, criticUsed: new Set() };
   const r = race(s);
   try {
     if (!r.setup) setupUnit(s, c);
@@ -1110,6 +1201,47 @@ function runUnit(snapshot: string, answers: string[]): { s: MAState; need: Decis
   }
 }
 
+/** Prove a terminal new-Diva cycle using disposable deterministic replays.
+ * Only compulsory stand-up answers may be supplied. Any choice, random roll,
+ * actual movement or scoring invalidates this proof; it is never a chain cap.
+ * Base-only games never enter this path. No hidden history is sent to clients.
+ */
+function forcedStandupCycle(initial: MAState): boolean {
+  if (initial.pending?.kind !== "standup" || !initial.settings.secondWindPreview || !holders(initial, "sw_diva").length) return false;
+  let probe: MAState = structuredClone(initial);
+  const seen = new Set<string>();
+  for (;;) {
+    if (probe.phase !== "race" || probe.race?.over) return false;
+    if (
+      probe.pending &&
+      (probe.pending.kind !== "standup" || probe.pending.options.length !== 1 || probe.pending.options[0].value !== "ok")
+    )
+      return false;
+    const key = JSON.stringify({
+      ...probe,
+      log: [],
+      version: 0,
+      turn: null,
+      pending: probe.pending
+        ? { kind: probe.pending.kind, racer: probe.pending.racer, player: probe.pending.player, answerCount: probe.turn!.answers.length }
+        : null,
+    });
+    if (seen.has(key)) return true;
+    seen.add(key);
+    const snapshot = probe.turn?.snapshot ?? strip(probe);
+    const answers = probe.pending ? [...probe.turn!.answers, "ok"] : [];
+    const res = runUnit(snapshot, answers);
+    // Compare against the beginning of this unit because Need replays rebuild
+    // its existing log. Warps/trips alone can form a closed forced cycle.
+    const startLogLength = (JSON.parse(snapshot) as MAState).log.length;
+    if (res.s.log.slice(startLogLength).some((l) => l.fx && ["roll", "duel", "move", "chip", "finish", "out"].includes(l.fx.kind)))
+      return false;
+    probe = res.s;
+    probe.pending = res.need;
+    probe.turn = res.need ? { snapshot, answers } : null;
+  }
+}
+
 /** 自动推进到下一个需要有人选择的地方 */
 function advance(s: MAState): MAState {
   for (let guard = 0; guard < 1000; guard++) {
@@ -1119,6 +1251,13 @@ function advance(s: MAState): MAState {
     if (res.need) {
       res.s.pending = res.need;
       res.s.turn = { snapshot, answers: [] };
+      if (forcedStandupCycle(res.s)) {
+        log(res.s, "所有在场选手陷入无法前进的强制起身循环，本场立即结束，剩余名次不计分。");
+        endRace(res.s);
+        res.s.pending = null;
+        res.s.turn = null;
+        return res.s;
+      }
       return res.s;
     }
     s = res.s;

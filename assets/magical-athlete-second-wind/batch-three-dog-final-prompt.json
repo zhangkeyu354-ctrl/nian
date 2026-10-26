@@ -1,0 +1,5 @@
+{
+  "tool": "built-in image_gen",
+  "prompt": "Edit this original blue hound standee while preserving its exact face, colors, clothes, orange contour, original comic black-line style, full body and transparent background. The current pose is too WIDE/SHORT: its tight silhouette is width137:height238. Target width115:height238 (about 1:2). Redraw naturally: bring elbows and shoes slightly closer together, and give it somewhat longer legs; keep body anatomy plausible and do NOT geometrically stretch/squash the bitmap. Keep same green vest, red shorts, bandage, orange sneakers, blue drooping ears and sad pink nose. Maintain uniform thin orange die-cut border. No background, ground, shadow, frame or text. Both soles on same flat bottom baseline; minimal safety margins.",
+  "generated_source": "C:\\Users\\Lenovo\\.codex\\generated_images\\01a1581d-8eb3-7b13-b5dd-28051f2d481f\\exec-89607b7a-9a11-486f-b8c8-cbd62d5e9b21.png"
+}

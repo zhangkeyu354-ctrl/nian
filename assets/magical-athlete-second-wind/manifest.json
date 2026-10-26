@@ -226,6 +226,151 @@
       "sha256": "b8530c8cb2cbd7140cbfd5c7e5298d30a3d1f44e7b357443714aa2c74d45561a",
       "token_sha256": "b8530c8cb2cbd7140cbfd5c7e5298d30a3d1f44e7b357443714aa2c74d45561a",
       "standee_sha256": "b8530c8cb2cbd7140cbfd5c7e5298d30a3d1f44e7b357443714aa2c74d45561a"
+    },
+    {
+      "id": "sw_blunderdog",
+      "en": "Blunderdog",
+      "zh": "倒霉狗",
+      "powerZh": "倒霉反转",
+      "text": "垫底时，主移动骰点乘 3；否则主移动改为后退。",
+      "field": "#58a9cf",
+      "illustration": "cutouts/sw_blunderdog-v3.png",
+      "token": "cutouts/sw_blunderdog-v3.png",
+      "standee": "cutouts/sw_blunderdog-v3.png",
+      "card_art_mode": "upper_body",
+      "portrait_frame": {
+        "left": 0.02,
+        "top": 0.03,
+        "width": 0.96
+      },
+      "exported_token_size": [
+        93,
+        238
+      ],
+      "exported_portrait_size": [
+        234,
+        172
+      ],
+      "sha256": "22e08700500d01305ae5270ddd6eccc4909235e1efaef74ab1a63c951bfdfcb1",
+      "token_sha256": "22e08700500d01305ae5270ddd6eccc4909235e1efaef74ab1a63c951bfdfcb1",
+      "standee_sha256": "22e08700500d01305ae5270ddd6eccc4909235e1efaef74ab1a63c951bfdfcb1",
+      "normalize_art_bounds": true
+    },
+    {
+      "id": "sw_critic",
+      "en": "Critic",
+      "zh": "评论家",
+      "powerZh": "评头论足",
+      "text": "每回合可以让前方选手的主移动骰重掷一次。",
+      "field": "#f0c226",
+      "illustration": "cutouts/sw_critic.png",
+      "token": "cutouts/sw_critic.png",
+      "standee": "cutouts/sw_critic.png",
+      "card_art_mode": "upper_body",
+      "portrait_frame": {
+        "left": 0.02,
+        "top": 0.03,
+        "width": 0.96
+      },
+      "exported_token_size": [
+        108,
+        238
+      ],
+      "exported_portrait_size": [
+        234,
+        172
+      ],
+      "sha256": "0bacd65f651c1ac9dc4ba124d664ac2ddec642d5babb0826424e01e96ee5ad9e",
+      "token_sha256": "0bacd65f651c1ac9dc4ba124d664ac2ddec642d5babb0826424e01e96ee5ad9e",
+      "standee_sha256": "0bacd65f651c1ac9dc4ba124d664ac2ddec642d5babb0826424e01e96ee5ad9e",
+      "normalize_art_bounds": true
+    },
+    {
+      "id": "sw_diva",
+      "en": "Diva",
+      "zh": "大牌",
+      "powerZh": "戏剧换位",
+      "text": "回合开始时，若垫底则与领先者换位，否则与垫底者换位。",
+      "field": "#e58cb9",
+      "illustration": "cutouts/sw_diva-v2.png",
+      "token": "cutouts/sw_diva-v2.png",
+      "standee": "cutouts/sw_diva-v2.png",
+      "card_art_mode": "upper_body",
+      "portrait_frame": {
+        "left": 0.02,
+        "top": 0.03,
+        "width": 0.96
+      },
+      "exported_token_size": [
+        121,
+        238
+      ],
+      "exported_portrait_size": [
+        234,
+        172
+      ],
+      "sha256": "0595dc97f5043876de8107bbe4bf8feb6c78b011a7f007a0547c9728f3d6f2f4",
+      "token_sha256": "0595dc97f5043876de8107bbe4bf8feb6c78b011a7f007a0547c9728f3d6f2f4",
+      "standee_sha256": "0595dc97f5043876de8107bbe4bf8feb6c78b011a7f007a0547c9728f3d6f2f4",
+      "normalize_art_bounds": true
+    },
+    {
+      "id": "sw_speed_demon",
+      "en": "Speed Demon",
+      "zh": "速度恶魔",
+      "powerZh": "极速失控",
+      "text": "玩家每有 1 分，主移动 +1；回合开始领先其他选手至少 4 格时淘汰。",
+      "field": "#6ab0d0",
+      "illustration": "cutouts/sw_speed_demon-v2.png",
+      "token": "cutouts/sw_speed_demon-v2.png",
+      "standee": "cutouts/sw_speed_demon-v2.png",
+      "card_art_mode": "upper_body",
+      "portrait_frame": {
+        "left": 0.02,
+        "top": 0.03,
+        "width": 0.96
+      },
+      "exported_token_size": [
+        122,
+        238
+      ],
+      "exported_portrait_size": [
+        234,
+        172
+      ],
+      "sha256": "152bef814c9ae13182af54243979fefc4c799d6bf02c05e82bacea20a4762618",
+      "token_sha256": "152bef814c9ae13182af54243979fefc4c799d6bf02c05e82bacea20a4762618",
+      "standee_sha256": "152bef814c9ae13182af54243979fefc4c799d6bf02c05e82bacea20a4762618",
+      "normalize_art_bounds": true
+    },
+    {
+      "id": "sw_streaker",
+      "en": "Streaker",
+      "zh": "裸奔者",
+      "powerZh": "擦身得分",
+      "text": "一次移动经过其他选手时，获得 1 分。",
+      "field": "#a270af",
+      "illustration": "cutouts/sw_streaker-v2.png",
+      "token": "cutouts/sw_streaker-v2.png",
+      "standee": "cutouts/sw_streaker-v2.png",
+      "card_art_mode": "upper_body",
+      "portrait_frame": {
+        "left": 0.02,
+        "top": 0.03,
+        "width": 0.96
+      },
+      "exported_token_size": [
+        114,
+        238
+      ],
+      "exported_portrait_size": [
+        234,
+        172
+      ],
+      "sha256": "d8c31849841bff333bee027921d6821fe8d85c1d6a8d82f4e680ddfbd3817ab4",
+      "token_sha256": "d8c31849841bff333bee027921d6821fe8d85c1d6a8d82f4e680ddfbd3817ab4",
+      "standee_sha256": "d8c31849841bff333bee027921d6821fe8d85c1d6a8d82f4e680ddfbd3817ab4",
+      "normalize_art_bounds": true
     }
   ],
   "standee_prompt": "Same character in a tightly upright compact pose, narrow silhouette about 1:2, arms and wings tucked inward, full body with both feet planted at the bottom, transparent background, same costume/colors/thick black outlines; no frame, text or shadows.",

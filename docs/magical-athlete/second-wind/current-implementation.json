@@ -19,9 +19,14 @@
       "sw_tail",
       "sw_hopfrog",
       "sw_the_hose",
-      "sw_le_saboteur"
+      "sw_le_saboteur",
+      "sw_blunderdog",
+      "sw_critic",
+      "sw_diva",
+      "sw_speed_demon",
+      "sw_streaker"
     ],
-    "poolSize": 44
+    "poolSize": 49
   },
   "rulesetDescription": "CMYK 2025 base + partial 2026 revisions + documented house rules; no versioned ruleset setting yet",
   "roster": [
@@ -410,7 +415,7 @@
     "variant": "standard"
   },
   "hashes": {
-    "packages/magical-athlete/src/engine.ts": "e6cf5b637f4be20740cfb596f63348651993c436769280a4eabb45c50cbb9a1d",
+    "packages/magical-athlete/src/engine.ts": "72e97ddfa5e655f8627834345692cec2c93412d6b6ce77236c7a1c819d35569b",
     "packages/magical-athlete/src/racers.ts": "277107459d3e6cbe229400dfb3f4440e7e75af4913933720f72b3b8fbc3f280d",
     "packages/magical-athlete/src/tracks.ts": "65666458e21f2eabc45918df237055104b0f2b75442ea9dff23bdf6e1e6f2a39",
     "packages/magical-athlete/src/types.ts": "ebbb29051f309ebe7c9b6d88500bc0f9ab36193c013bffdaa3a7e836ebd00a69",

@@ -42,12 +42,19 @@ for index, character in enumerate(manifest['characters']):
     cid = character['id']
     assert cid.startswith('sw_'), 'Base assets must never be overwritten'
     raw = (ROOT / character['illustration']).read_bytes()
+    normalized_raw = raw
+    if character.get('normalize_art_bounds'):
+        normalized = Image.open(io.BytesIO(raw)).convert('RGBA')
+        normalized = normalized.crop(normalized.getchannel('A').point(lambda alpha: 255 if alpha > 8 else 0).getbbox())
+        normalized_buffer = io.BytesIO()
+        normalized.save(normalized_buffer, 'PNG')
+        normalized_raw = normalized_buffer.getvalue()
     # The existing card uses a black rounded surround with narrow race stripes.
     body = '<rect width="720" height="1032" rx="36" fill="#222"/>'
     for inset, color in [(34, '#51a045'), (39, '#ffbf20'), (44, '#e17bb5'), (49, '#61a6cd')]:
         body += f'<rect x="{inset}" y="{inset}" width="{720-2*inset}" height="{1032-2*inset}" rx="40" fill="none" stroke="{color}" stroke-width="5"/>'
     body += f'<rect x="48" y="44" width="624" height="620" rx="7" fill="{character["field"]}"/>'
-    art_raw = (ROOT / character['token']).read_bytes()
+    art_raw = normalized_raw if character.get('normalize_art_bounds') else (ROOT / character['token']).read_bytes()
     if character.get('card_art_mode') == 'upper_body':
         art_image = Image.open(io.BytesIO(art_raw))
         art_image = art_image.crop((0, 0, art_image.width, art_image.width))
@@ -81,7 +88,7 @@ for index, character in enumerate(manifest['characters']):
     encode_webp(rendered, PUBLIC / 'cards/zh' / f'{cid}.webp')
     # Portrait framing follows the original horizontal skill-card crop. Keep
     # the head and upper torso instead of passing a square to object-fit:cover.
-    portrait_rgba = Image.open(io.BytesIO(raw)).convert('RGBA')
+    portrait_rgba = Image.open(io.BytesIO(normalized_raw)).convert('RGBA')
     portrait = Image.new('RGB', portrait_rgba.size, character['field'])
     portrait.paste(portrait_rgba, mask=portrait_rgba.getchannel('A'))
     portrait_frame = character['portrait_frame']

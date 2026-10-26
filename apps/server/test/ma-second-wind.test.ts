@@ -24,12 +24,12 @@ describe("魔法运动员开局可选新角色", () => {
     expect(room.state!.settings.secondWindPreview).toBeUndefined();
     expect([...room.state!.deck, ...room.state!.draft!.pool].some((id) => id.startsWith("sw_"))).toBe(false);
   });
-  it("开启后混入44名，重启恢复相同；开局后不能切换", () => {
+  it("开启后混入49名，重启恢复相同；开局后不能切换", () => {
     const { dir, store, room, host } = setup();
     room.lobby(host, { type: "SET_SECOND_WIND", enabled: true });
     room.lobby(host, { type: "START" });
     store.save(room);
-    expect([...room.state!.deck, ...room.state!.draft!.pool]).toHaveLength(44);
+    expect([...room.state!.deck, ...room.state!.draft!.pool]).toHaveLength(49);
     const restored = new MARoomStore(dir).rooms.get(room.code)!;
     expect(restored.state).toEqual(room.state);
     expect(restored.snapshot(null).secondWind).toBe(true);
