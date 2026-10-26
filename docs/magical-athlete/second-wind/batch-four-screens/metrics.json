@@ -1,0 +1,421 @@
+{
+  "metrics": [
+    {
+      "id": "sw_icarus",
+      "token": [
+        95,
+        238
+      ],
+      "portrait": [
+        234,
+        172
+      ],
+      "card": [
+        512,
+        734
+      ],
+      "alphaBounds": [
+        0,
+        0,
+        94,
+        237
+      ],
+      "transparent": 9757,
+      "coloredBoundaryPixels": 358
+    },
+    {
+      "id": "sw_overtaker",
+      "token": [
+        113,
+        238
+      ],
+      "portrait": [
+        234,
+        172
+      ],
+      "card": [
+        512,
+        734
+      ],
+      "alphaBounds": [
+        0,
+        0,
+        112,
+        237
+      ],
+      "transparent": 10565,
+      "coloredBoundaryPixels": 511
+    },
+    {
+      "id": "sw_kingtripper",
+      "token": [
+        112,
+        238
+      ],
+      "portrait": [
+        234,
+        172
+      ],
+      "card": [
+        512,
+        734
+      ],
+      "alphaBounds": [
+        0,
+        0,
+        111,
+        237
+      ],
+      "transparent": 11307,
+      "coloredBoundaryPixels": 419
+    },
+    {
+      "id": "sw_mole",
+      "token": [
+        120,
+        238
+      ],
+      "portrait": [
+        234,
+        172
+      ],
+      "card": [
+        512,
+        734
+      ],
+      "alphaBounds": [
+        0,
+        0,
+        119,
+        237
+      ],
+      "transparent": 6175,
+      "coloredBoundaryPixels": 361
+    },
+    {
+      "id": "sw_tail",
+      "token": [
+        115,
+        238
+      ],
+      "portrait": [
+        234,
+        172
+      ],
+      "card": [
+        512,
+        734
+      ],
+      "alphaBounds": [
+        0,
+        0,
+        114,
+        237
+      ],
+      "transparent": 9554,
+      "coloredBoundaryPixels": 524
+    },
+    {
+      "id": "sw_hopfrog",
+      "token": [
+        100,
+        238
+      ],
+      "portrait": [
+        234,
+        172
+      ],
+      "card": [
+        512,
+        734
+      ],
+      "alphaBounds": [
+        0,
+        0,
+        99,
+        237
+      ],
+      "transparent": 12408,
+      "coloredBoundaryPixels": 453
+    },
+    {
+      "id": "sw_the_hose",
+      "token": [
+        103,
+        238
+      ],
+      "portrait": [
+        234,
+        172
+      ],
+      "card": [
+        512,
+        734
+      ],
+      "alphaBounds": [
+        0,
+        0,
+        102,
+        237
+      ],
+      "transparent": 8882,
+      "coloredBoundaryPixels": 498
+    },
+    {
+      "id": "sw_le_saboteur",
+      "token": [
+        107,
+        238
+      ],
+      "portrait": [
+        234,
+        172
+      ],
+      "card": [
+        512,
+        734
+      ],
+      "alphaBounds": [
+        0,
+        0,
+        106,
+        237
+      ],
+      "transparent": 7562,
+      "coloredBoundaryPixels": 450
+    },
+    {
+      "id": "sw_blunderdog",
+      "token": [
+        93,
+        238
+      ],
+      "portrait": [
+        234,
+        172
+      ],
+      "card": [
+        512,
+        734
+      ],
+      "alphaBounds": [
+        0,
+        0,
+        92,
+        237
+      ],
+      "transparent": 7395,
+      "coloredBoundaryPixels": 456
+    },
+    {
+      "id": "sw_critic",
+      "token": [
+        108,
+        238
+      ],
+      "portrait": [
+        234,
+        172
+      ],
+      "card": [
+        512,
+        734
+      ],
+      "alphaBounds": [
+        0,
+        0,
+        107,
+        237
+      ],
+      "transparent": 7736,
+      "coloredBoundaryPixels": 383
+    },
+    {
+      "id": "sw_diva",
+      "token": [
+        121,
+        238
+      ],
+      "portrait": [
+        234,
+        172
+      ],
+      "card": [
+        512,
+        734
+      ],
+      "alphaBounds": [
+        0,
+        0,
+        120,
+        237
+      ],
+      "transparent": 10113,
+      "coloredBoundaryPixels": 505
+    },
+    {
+      "id": "sw_speed_demon",
+      "token": [
+        122,
+        238
+      ],
+      "portrait": [
+        234,
+        172
+      ],
+      "card": [
+        512,
+        734
+      ],
+      "alphaBounds": [
+        0,
+        0,
+        121,
+        237
+      ],
+      "transparent": 11983,
+      "coloredBoundaryPixels": 560
+    },
+    {
+      "id": "sw_streaker",
+      "token": [
+        114,
+        238
+      ],
+      "portrait": [
+        234,
+        172
+      ],
+      "card": [
+        512,
+        734
+      ],
+      "alphaBounds": [
+        0,
+        0,
+        113,
+        237
+      ],
+      "transparent": 12278,
+      "coloredBoundaryPixels": 480
+    },
+    {
+      "id": "sw_kraken",
+      "token": [
+        104,
+        238
+      ],
+      "portrait": [
+        234,
+        172
+      ],
+      "card": [
+        512,
+        734
+      ],
+      "alphaBounds": [
+        0,
+        0,
+        103,
+        237
+      ],
+      "transparent": 7327,
+      "coloredBoundaryPixels": 425
+    },
+    {
+      "id": "sw_nemesis",
+      "token": [
+        107,
+        238
+      ],
+      "portrait": [
+        234,
+        172
+      ],
+      "card": [
+        512,
+        734
+      ],
+      "alphaBounds": [
+        0,
+        0,
+        106,
+        237
+      ],
+      "transparent": 11213,
+      "coloredBoundaryPixels": 567
+    },
+    {
+      "id": "sw_penguin",
+      "token": [
+        116,
+        238
+      ],
+      "portrait": [
+        234,
+        172
+      ],
+      "card": [
+        512,
+        734
+      ],
+      "alphaBounds": [
+        0,
+        0,
+        115,
+        237
+      ],
+      "transparent": 11444,
+      "coloredBoundaryPixels": 495
+    },
+    {
+      "id": "sw_show_off",
+      "token": [
+        118,
+        238
+      ],
+      "portrait": [
+        234,
+        172
+      ],
+      "card": [
+        512,
+        734
+      ],
+      "alphaBounds": [
+        0,
+        0,
+        117,
+        237
+      ],
+      "transparent": 13051,
+      "coloredBoundaryPixels": 459
+    },
+    {
+      "id": "sw_soulmate",
+      "token": [
+        100,
+        238
+      ],
+      "portrait": [
+        234,
+        172
+      ],
+      "card": [
+        512,
+        734
+      ],
+      "alphaBounds": [
+        0,
+        0,
+        99,
+        237
+      ],
+      "transparent": 8236,
+      "coloredBoundaryPixels": 453
+    }
+  ],
+  "screenshots": 14,
+  "componentFixtures": true,
+  "pageErrors": []
+}

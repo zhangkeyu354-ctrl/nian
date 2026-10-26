@@ -730,9 +730,13 @@
         "trip_status"
       ],
       "artwork": {
-        "status": "NOT_LICENSED",
-        "public_asset_path": null,
-        "observed_reference": "来源图片未作为完整技能卡面核验；抽查可见插画裁切。"
+        "status": "ORIGINAL_ART_EXISTING_CARD_TEMPLATE",
+        "public_asset_path": "/assets/magical-athlete/cards/zh/sw_kraken.webp",
+        "portrait_path": "/assets/magical-athlete/portraits/sw_kraken.webp",
+        "token_path": "/assets/magical-athlete/tokens/sw_kraken.png",
+        "source_manifest": "assets/magical-athlete-second-wind/manifest.json",
+        "colored_standee_border": true,
+        "production_release_approved": false
       },
       "tests": {
         "status": "PLANNED_NOT_IMPLEMENTED",
@@ -741,7 +745,18 @@
         "interaction": "与巨婴、血盆大口、浪漫者、吸盘鱼交互",
         "passed": 0
       },
-      "source_acceptance": "USER_ACCEPTED_REFERENCE"
+      "source_acceptance": "USER_ACCEPTED_REFERENCE",
+      "development_implementation": {
+        "status": "BASE_ENGINE_OPT_IN_IMPLEMENTED",
+        "toggle": "settings.secondWindPreview",
+        "enabled_by_default": false,
+        "normal": true,
+        "boundary": true,
+        "interaction": true,
+        "test_file": "packages/magical-athlete/test/second-wind-batch-four.test.ts",
+        "production_release_approved": false,
+        "development_notes": "包含同格角色；所有目标同时到达，再结算地形。每名能力持有者每场一次。"
+      }
     },
     {
       "id": "sw_le_saboteur",
@@ -1063,9 +1078,13 @@
         "decision_prompt"
       ],
       "artwork": {
-        "status": "NOT_LICENSED",
-        "public_asset_path": null,
-        "observed_reference": "来源图片未作为完整技能卡面核验；抽查可见插画裁切。"
+        "status": "ORIGINAL_ART_EXISTING_CARD_TEMPLATE",
+        "public_asset_path": "/assets/magical-athlete/cards/zh/sw_nemesis.webp",
+        "portrait_path": "/assets/magical-athlete/portraits/sw_nemesis.webp",
+        "token_path": "/assets/magical-athlete/tokens/sw_nemesis.png",
+        "source_manifest": "assets/magical-athlete-second-wind/manifest.json",
+        "colored_standee_border": true,
+        "production_release_approved": false
       },
       "tests": {
         "status": "PLANNED_NOT_IMPLEMENTED",
@@ -1074,7 +1093,18 @@
         "interaction": "与骰贩子、Stunner和Party Pooper的重掷链",
         "passed": 0
       },
-      "source_acceptance": "USER_ACCEPTED_REFERENCE"
+      "source_acceptance": "USER_ACCEPTED_REFERENCE",
+      "development_implementation": {
+        "status": "BASE_ENGINE_OPT_IN_IMPLEMENTED",
+        "toggle": "settings.secondWindPreview",
+        "enabled_by_default": false,
+        "normal": true,
+        "boundary": true,
+        "interaction": true,
+        "test_file": "packages/magical-athlete/test/second-wind-batch-four.test.ts",
+        "production_release_approved": false,
+        "development_notes": "按最终主骰结算；跟掷是辅助骰，不继续触发主骰能力。"
+      }
     },
     {
       "id": "sw_nepo_baby",
@@ -1328,9 +1358,13 @@
         "trip_status"
       ],
       "artwork": {
-        "status": "NOT_LICENSED",
-        "public_asset_path": null,
-        "observed_reference": "来源图片未作为完整技能卡面核验；抽查可见插画裁切。"
+        "status": "ORIGINAL_ART_EXISTING_CARD_TEMPLATE",
+        "public_asset_path": "/assets/magical-athlete/cards/zh/sw_penguin.webp",
+        "portrait_path": "/assets/magical-athlete/portraits/sw_penguin.webp",
+        "token_path": "/assets/magical-athlete/tokens/sw_penguin.png",
+        "source_manifest": "assets/magical-athlete-second-wind/manifest.json",
+        "colored_standee_border": true,
+        "production_release_approved": false
       },
       "tests": {
         "status": "PLANNED_NOT_IMPLEMENTED",
@@ -1339,7 +1373,18 @@
         "interaction": "与香蕉、起身和火箭科学家的修正交互",
         "passed": 0
       },
-      "source_acceptance": "USER_ACCEPTED_REFERENCE"
+      "source_acceptance": "USER_ACCEPTED_REFERENCE",
+      "development_implementation": {
+        "status": "BASE_ENGINE_OPT_IN_IMPLEMENTED",
+        "toggle": "settings.secondWindPreview",
+        "enabled_by_default": false,
+        "normal": true,
+        "boundary": true,
+        "interaction": true,
+        "test_file": "packages/magical-athlete/test/second-wind-batch-four.test.ts",
+        "production_release_approved": false,
+        "development_notes": "翻倍的是骰点，滑行不自动起身；传送与后退经过沿用现有定义。"
+      }
     },
     {
       "id": "sw_re_runner",
@@ -1426,9 +1471,13 @@
         "decision_prompt"
       ],
       "artwork": {
-        "status": "NOT_LICENSED",
-        "public_asset_path": null,
-        "observed_reference": "来源图片未作为完整技能卡面核验；抽查可见插画裁切。"
+        "status": "ORIGINAL_ART_EXISTING_CARD_TEMPLATE",
+        "public_asset_path": "/assets/magical-athlete/cards/zh/sw_show_off.webp",
+        "portrait_path": "/assets/magical-athlete/portraits/sw_show_off.webp",
+        "token_path": "/assets/magical-athlete/tokens/sw_show_off.png",
+        "source_manifest": "assets/magical-athlete-second-wind/manifest.json",
+        "colored_standee_border": true,
+        "production_release_approved": false
       },
       "tests": {
         "status": "PLANNED_NOT_IMPLEMENTED",
@@ -1437,7 +1486,18 @@
         "interaction": "与Party Pooper、Stunner及Icarus复制交互",
         "passed": 0
       },
-      "source_acceptance": "USER_ACCEPTED_REFERENCE"
+      "source_acceptance": "USER_ACCEPTED_REFERENCE",
+      "development_implementation": {
+        "status": "BASE_ENGINE_OPT_IN_IMPLEMENTED",
+        "toggle": "settings.secondWindPreview",
+        "enabled_by_default": false,
+        "normal": true,
+        "boundary": true,
+        "interaction": true,
+        "test_file": "packages/magical-athlete/test/second-wind-batch-four.test.ts",
+        "production_release_approved": false,
+        "development_notes": "每颗最终主骰各结算掷骰触发；累计后只应用一次移动修正，随时可收手。"
+      }
     },
     {
       "id": "sw_soulmate",
@@ -1477,9 +1537,13 @@
         "decision_prompt"
       ],
       "artwork": {
-        "status": "NOT_LICENSED",
-        "public_asset_path": null,
-        "observed_reference": "来源图片未作为完整技能卡面核验；抽查可见插画裁切。"
+        "status": "ORIGINAL_ART_EXISTING_CARD_TEMPLATE",
+        "public_asset_path": "/assets/magical-athlete/cards/zh/sw_soulmate.webp",
+        "portrait_path": "/assets/magical-athlete/portraits/sw_soulmate.webp",
+        "token_path": "/assets/magical-athlete/tokens/sw_soulmate.png",
+        "source_manifest": "assets/magical-athlete-second-wind/manifest.json",
+        "colored_standee_border": true,
+        "production_release_approved": false
       },
       "tests": {
         "status": "PLANNED_NOT_IMPLEMENTED",
@@ -1488,7 +1552,18 @@
         "interaction": "与巨婴、Null和Switcharoo交互",
         "passed": 0
       },
-      "source_acceptance": "USER_ACCEPTED_REFERENCE"
+      "source_acceptance": "USER_ACCEPTED_REFERENCE",
+      "development_implementation": {
+        "status": "BASE_ENGINE_OPT_IN_IMPLEMENTED",
+        "toggle": "settings.secondWindPreview",
+        "enabled_by_default": false,
+        "normal": true,
+        "boundary": true,
+        "interaction": true,
+        "test_file": "packages/magical-athlete/test/second-wind-batch-four.test.ts",
+        "production_release_approved": false,
+        "development_notes": "仅对方玩家的角色；目标离场后不传送。赛前已复制本能力的角色也选择目标。"
+      }
     },
     {
       "id": "sw_speed_demon",
@@ -1992,11 +2067,12 @@
   "user_accepted_source_id": "SW-F01",
   "source_acceptance_date": "2026-10-26",
   "development_summary": {
-    "implemented": 13,
+    "implemented": 18,
     "candidates": 36,
-    "pool_when_enabled": 49,
+    "pool_when_enabled": 54,
     "enabled_by_default": false,
     "production_enabled": false,
-    "batch_three_report": "docs/handoff/魔法运动员_第三批5名_2026-10-26.md"
+    "batch_three_report": "docs/handoff/魔法运动员_第三批5名_2026-10-26.md",
+    "batch_four_report": "docs/handoff/魔法运动员_第四批5名_2026-10-26.md"
   }
 }

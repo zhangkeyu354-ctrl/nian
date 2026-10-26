@@ -33,6 +33,8 @@ export interface Token {
   copyPick: string | null;
   /** 第一回合是否已开始（军师） */
   started: boolean;
+  /** New-racer per-race memory; omitted from legacy tokens and snapshots. */
+  secondWind?: { krakenUsed?: boolean; soulmate?: string };
 }
 
 export interface RaceState {
@@ -47,7 +49,12 @@ export interface RaceState {
   eliminated: string[];
   mastermindPick: string | null;
   /** 本回合骰子（显示用） */
-  lastRoll: { player: string; racer: string; value: number; seq: number } | null;
+  lastRoll: {
+    player: string;
+    racer: string;
+    value: number;
+    seq: number;
+  } | null;
   over: boolean;
   /** 赛前能力（神秘蛋、双胞胎、西西弗斯）是否已结算 */
   setup: boolean;
@@ -66,10 +73,26 @@ export interface Decision {
 
 /** 给界面播放动画用的结构化事件（掷骰、技能发动、移动路径……）；text 为空的条目只用于动画，不显示在记录里 */
 export type Fx =
-  | { kind: "roll"; player: string; racer: string; value: number; reroll?: boolean }
-  | { kind: "duel"; a: { racer: string; value: number }; b: { racer: string; value: number } }
+  | {
+      kind: "roll";
+      player: string;
+      racer: string;
+      value: number;
+      reroll?: boolean;
+    }
+  | {
+      kind: "duel";
+      a: { racer: string; value: number };
+      b: { racer: string; value: number };
+    }
   | { kind: "power"; racer: string; power: string }
-  | { kind: "move"; racers: string[]; from: number; to: number; /** 移动原因（主移动 / 箭头 / 技能名），给界面飘字用 */ why?: string }
+  | {
+      kind: "move";
+      racers: string[];
+      from: number;
+      to: number;
+      /** 移动原因（主移动 / 箭头 / 技能名），给界面飘字用 */ why?: string;
+    }
   | { kind: "warp"; racer: string; from: number; to: number }
   | { kind: "trip"; racer: string }
   | { kind: "finish"; racer: string; place: number }
@@ -77,9 +100,22 @@ export type Fx =
   | { kind: "chip"; player: string; value: number }
   | { kind: "start"; race: number; track: string }
   /** 每场结束的领奖台：第 1、2 名（冲线，拿奖牌）＋第 3 名（场上最靠前的未冲线选手，不计分） */
-  | { kind: "podium"; race: number; places: Array<{ racer: string; owner: string; place: number; points: number }> }
+  | {
+      kind: "podium";
+      race: number;
+      places: Array<{
+        racer: string;
+        owner: string;
+        place: number;
+        points: number;
+      }>;
+    }
   /** 全部比赛结束：总冠军（可能并列）与所有人总分 */
-  | { kind: "champion"; winners: string[]; totals: Array<{ player: string; total: number }> };
+  | {
+      kind: "champion";
+      winners: string[];
+      totals: Array<{ player: string; total: number }>;
+    };
 
 export interface LogEntry {
   text: string;

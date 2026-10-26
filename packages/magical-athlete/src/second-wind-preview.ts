@@ -103,7 +103,8 @@ export const SECOND_WIND_PREVIEW: RacerInfo[] = [
       powerEn: "Bon Mots",
       powerZh: "评头论足",
       text: "每回合可以让前方选手的主移动骰重掷一次。",
-      notes: "由评论家的玩家决定；每名能力持有者每回合最多发动一次，辅助骰与免骰不受影响。",
+      notes:
+        "由评论家的玩家决定；每名能力持有者每回合最多发动一次，辅助骰与免骰不受影响。",
     },
     {
       id: "sw_diva",
@@ -130,7 +131,56 @@ export const SECOND_WIND_PREVIEW: RacerInfo[] = [
       powerEn: "Exhibit B",
       powerZh: "擦身得分",
       text: "一次移动经过其他选手时，获得 1 分。",
-      notes: "同段经过多人共得1分；传送不算经过；后退经过随香蕉一起留待最终核对。",
+      notes:
+        "同段经过多人共得1分；传送不算经过；后退经过随香蕉一起留待最终核对。",
+    },
+    {
+      id: "sw_kraken",
+      en: "Kraken",
+      zh: "海怪",
+      powerEn: "Get Over Here",
+      powerZh: "全员集合",
+      text: "每场一次，回合开始时可以把所有其他选手传送到我所在格并绊倒。",
+      notes:
+        "包含同格角色；所有目标同时到达，再结算地形。每名能力持有者每场一次。",
+    },
+    {
+      id: "sw_nemesis",
+      en: "Nemesis",
+      zh: "宿敌",
+      powerEn: "Grudge Match",
+      powerZh: "宿命对决",
+      text: "其他选手掷主移动骰时，我可以跟掷；相同则移动该点数。",
+      notes: "按最终主骰结算；跟掷是辅助骰，不继续触发主骰能力。",
+    },
+    {
+      id: "sw_penguin",
+      en: "Penguin",
+      zh: "企鹅",
+      powerEn: "Tummy Time",
+      powerZh: "肚皮滑行",
+      text: "被其他选手经过时自己摔倒；摔倒时主移动骰翻倍，代替跳过主移动。",
+      notes: "翻倍的是骰点，滑行不自动起身；传送与后退经过沿用现有定义。",
+    },
+    {
+      id: "sw_show_off",
+      en: "Show-Off",
+      zh: "炫耀者",
+      powerEn: "Guys, Watch!",
+      powerZh: "看我表演",
+      text: "主移动掷骰后可继续掷并累加；新骰不大于上一骰则不移动。",
+      notes:
+        "每颗最终主骰各结算掷骰触发；累计后只应用一次移动修正，随时可收手。",
+    },
+    {
+      id: "sw_soulmate",
+      en: "Soulmate",
+      zh: "灵魂伴侣",
+      powerEn: "Twin Flame",
+      powerZh: "心有灵犀",
+      text: "赛前选择一名对方选手；回合开始距其不超过 5 格时传送到其所在格。",
+      notes:
+        "仅对方玩家的角色；目标离场后不传送。赛前已复制本能力的角色也选择目标。",
     },
   ].map((r) => ({
     ...r,
