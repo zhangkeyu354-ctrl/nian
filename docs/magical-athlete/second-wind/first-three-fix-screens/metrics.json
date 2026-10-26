@@ -1,0 +1,73 @@
+{
+  "metrics": [
+    {
+      "id": "sw_icarus",
+      "token": [
+        95,
+        238
+      ],
+      "portrait": [
+        234,
+        172
+      ],
+      "card": [
+        512,
+        734
+      ],
+      "alphaBounds": [
+        0,
+        0,
+        94,
+        237
+      ],
+      "transparent": 10114
+    },
+    {
+      "id": "sw_overtaker",
+      "token": [
+        112,
+        238
+      ],
+      "portrait": [
+        234,
+        172
+      ],
+      "card": [
+        512,
+        734
+      ],
+      "alphaBounds": [
+        0,
+        0,
+        111,
+        237
+      ],
+      "transparent": 10876
+    },
+    {
+      "id": "sw_kingtripper",
+      "token": [
+        111,
+        238
+      ],
+      "portrait": [
+        234,
+        172
+      ],
+      "card": [
+        512,
+        734
+      ],
+      "alphaBounds": [
+        0,
+        0,
+        110,
+        237
+      ],
+      "transparent": 11552
+    }
+  ],
+  "screenshots": 9,
+  "componentFixtures": true,
+  "pageErrors": []
+}

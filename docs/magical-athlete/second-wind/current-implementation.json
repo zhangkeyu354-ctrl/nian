@@ -405,11 +405,11 @@
     "variant": "standard"
   },
   "hashes": {
-    "packages/magical-athlete/src/engine.ts": "c61a7a3cd9d586385e0df526fe6c53bd87abd9b2d9c92f214b74203910a50cf7",
-    "packages/magical-athlete/src/racers.ts": "f97fb24af3cb7bf032aa517c6b0dc198b72780b4b7b72cc12d7b03e192d919e5",
+    "packages/magical-athlete/src/engine.ts": "f5e7ab292838db70a7385ef2ed7f0d3bcc82fbfdf8a8f7df0a5d8f961f226288",
+    "packages/magical-athlete/src/racers.ts": "277107459d3e6cbe229400dfb3f4440e7e75af4913933720f72b3b8fbc3f280d",
     "packages/magical-athlete/src/tracks.ts": "65666458e21f2eabc45918df237055104b0f2b75442ea9dff23bdf6e1e6f2a39",
     "packages/magical-athlete/src/types.ts": "ebbb29051f309ebe7c9b6d88500bc0f9ab36193c013bffdaa3a7e836ebd00a69",
     "apps/server/src/ma-rooms.ts": "4dda2df154f7828ae6618d43c47ee9593b0859208c228e3336586f9c22428964",
-    "apps/web/src/ma/MagicalAthlete.tsx": "9d05e6af213332a13eefe377802353c886c303c3e2bf67ce11741e9b3ee4241f"
+    "apps/web/src/ma/MagicalAthlete.tsx": "f94a7b0d513a1b11e452ad2e791bf9eee97e99954ef2f29add2f6ff76bb856fd"
   }
 }

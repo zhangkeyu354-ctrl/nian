@@ -15,7 +15,22 @@
       "illustration": "illustrations/sw_icarus.png",
       "token": "cutouts/sw_icarus.png",
       "sha256": "40012a9ea36356a19b5d3c3de943f18493d25a98199682d70e86f768b5f74371",
-      "token_sha256": "935bae975f1f4884dffcf37c214e27421c0b8d204d5f35f8df5f25f4be7a5d44"
+      "token_sha256": "935bae975f1f4884dffcf37c214e27421c0b8d204d5f35f8df5f25f4be7a5d44",
+      "standee": "cutouts/sw_icarus-standee.png",
+      "exported_token_size": [
+        95,
+        238
+      ],
+      "exported_portrait_size": [
+        234,
+        172
+      ],
+      "standee_sha256": "a9ac9580f6815558a1a2bbefaf646286e53ebb357f8a6b75a2c6f976a546882a",
+      "portrait_frame": {
+        "left": 0.32,
+        "top": 0,
+        "width": 0.62
+      }
     },
     {
       "id": "sw_overtaker",
@@ -27,7 +42,23 @@
       "illustration": "illustrations/sw_overtaker.png",
       "token": "cutouts/sw_overtaker.png",
       "sha256": "b1ad6d5dd372a20c652d507b91ee23bdc26206c4155da0ce2540322f9d59438b",
-      "token_sha256": "eea6e9a6a82480e9ae6eb52319e8009598e9d0054a9f510f8d77cc32538dc67a"
+      "token_sha256": "eea6e9a6a82480e9ae6eb52319e8009598e9d0054a9f510f8d77cc32538dc67a",
+      "standee": "cutouts/sw_overtaker-standee-v2.png",
+      "exported_token_size": [
+        112,
+        238
+      ],
+      "exported_portrait_size": [
+        234,
+        172
+      ],
+      "standee_sha256": "b52230b34292367c07e7dfe223f51bf4782b68cdf7b7ec48efb558b261604088",
+      "standee_pose_revision": "Hands on hips with wider elbows, feet slightly apart; shorter natural legs to reach about 1:2 silhouette without stretching.",
+      "portrait_frame": {
+        "left": 0.36,
+        "top": 0.035,
+        "width": 0.64
+      }
     },
     {
       "id": "sw_kingtripper",
@@ -39,7 +70,23 @@
       "illustration": "illustrations/sw_kingtripper.png",
       "token": "cutouts/sw_kingtripper.png",
       "sha256": "7d52620de5dd9c76d13dfb81897796a87d97271979a18d04b4fe49e06f7554af",
-      "token_sha256": "2da07e48c5b3aa4a03f332d0b309e79616ce57005c9200f9361262333c99a88b"
+      "token_sha256": "2da07e48c5b3aa4a03f332d0b309e79616ce57005c9200f9361262333c99a88b",
+      "standee": "cutouts/sw_kingtripper-standee.png",
+      "exported_token_size": [
+        111,
+        238
+      ],
+      "exported_portrait_size": [
+        234,
+        172
+      ],
+      "standee_sha256": "082602147603c62fe200964229d859302be2b6f99d98a269cd6494f24eabedb9",
+      "portrait_frame": {
+        "left": 0.15,
+        "top": 0,
+        "width": 0.85
+      }
     }
-  ]
+  ],
+  "standee_prompt": "Same character in a tightly upright compact pose, narrow silhouette about 1:2, arms and wings tucked inward, full body with both feet planted at the bottom, transparent background, same costume/colors/thick black outlines; no frame, text or shadows."
 }

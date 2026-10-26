@@ -244,7 +244,9 @@ function Lobby({ snap, lobby }: { snap: MARoomSnapshot; lobby: (a: Parameters<Re
       <section className="ma-panel ma-invite">
         <div>
           <h2>房间号</h2>
-          <div className="ma-code" data-testid="ma-code">{snap.code}</div>
+          <div className="ma-code" data-testid="ma-code">
+            {snap.code}
+          </div>
           <code className="ma-url">{url}</code>
         </div>
         {url && <img src={`/api/qr?text=${encodeURIComponent(url)}`} alt="扫码加入房间" width={150} height={150} />}
@@ -277,7 +279,8 @@ function Lobby({ snap, lobby }: { snap: MARoomSnapshot; lobby: (a: Parameters<Re
       <section className="ma-panel">
         <h2>每场奖牌分值</h2>
         <p className="ma-muted">
-          规则书只说「越后面的比赛越值钱」，没写具体数字（印在奖牌实物上）。现在默认金牌 3、银牌 1（来自评测文章，待核对），房主可以按实物改。
+          规则书只说「越后面的比赛越值钱」，没写具体数字（印在奖牌实物上）。现在默认金牌 3、银牌
+          1（来自评测文章，待核对），房主可以按实物改。
         </p>
         <table className="ma-points">
           <thead>
@@ -312,19 +315,35 @@ function Lobby({ snap, lobby }: { snap: MARoomSnapshot; lobby: (a: Parameters<Re
             ))}
           </tbody>
         </table>
-        <p className="ma-muted">赛道顺序：温和 → 狂野 → 温和 → 狂野。<a href={`${ART}/docs/skillbook.pdf`} target="_blank" rel="noreferrer">原版 36 名选手技能书（PDF）</a></p>
+        <p className="ma-muted">
+          赛道顺序：温和 → 狂野 → 温和 → 狂野。
+          <a href={`${ART}/docs/skillbook.pdf`} target="_blank" rel="noreferrer">
+            原版 36 名选手技能书（PDF）
+          </a>
+        </p>
       </section>
       <section className="ma-panel">
         <h2>怎么拿选手</h2>
         <label className="ma-expansion-toggle">
-          <input type="checkbox" data-testid="ma-second-wind" checked={snap.secondWind === true} disabled={!host} onChange={e=>void run({type:"SET_SECOND_WIND",enabled:e.target.checked})} />
-          <span><b>开启 Second Wind 新角色</b><small>当前可用 3 名：伊卡洛斯、超车手、绊王。开启后与原版选手混合招募；关闭则只使用原版 36 名。</small></span>
+          <input
+            type="checkbox"
+            data-testid="ma-second-wind"
+            checked={snap.secondWind === true}
+            disabled={!host}
+            onChange={(e) => void run({ type: "SET_SECOND_WIND", enabled: e.target.checked })}
+          />
+          <span>
+            <b>开启 Second Wind 新角色</b>
+            <small>当前可用 3 名：伊卡洛斯、超车手、绊王。开启后与原版选手混合招募；关闭则只使用原版 36 名。</small>
+          </span>
         </label>
         <div className="ma-variant" role="radiogroup" aria-label="怎么拿选手">
-          {([
-            ["draft", "轮流选秀", "翻开一排选手，大家蛇形轮流挑，每人挑 4 名。"],
-            ["random", "🎲 随机模式", "不选秀，系统直接给每人随机发 4 名，全场不会有人拿到同一名选手。"],
-          ] as const).map(([k, label, hint]) => (
+          {(
+            [
+              ["draft", "轮流选秀", "翻开一排选手，大家蛇形轮流挑，每人挑 4 名。"],
+              ["random", "🎲 随机模式", "不选秀，系统直接给每人随机发 4 名，全场不会有人拿到同一名选手。"],
+            ] as const
+          ).map(([k, label, hint]) => (
             <button
               key={k}
               role="radio"
@@ -343,7 +362,11 @@ function Lobby({ snap, lobby }: { snap: MARoomSnapshot; lobby: (a: Parameters<Re
         {!host && <p className="ma-muted">由房主决定。</p>}
         <p className="ma-muted">共 4 场，每场每人派 1 名上场（2 人局也一样）。</p>
       </section>
-      {error && <p className="ma-error" role="alert">{error}</p>}
+      {error && (
+        <p className="ma-error" role="alert">
+          {error}
+        </p>
+      )}
       {host ? (
         <button className="ma-go" data-testid="ma-start" disabled={snap.players.length < 2} onClick={() => run({ type: "START" })}>
           {snap.players.length < 2 ? "还差 1 人才能开始" : snap.deal === "random" ? "人齐了，随机发选手" : "人齐了，开始选秀"}

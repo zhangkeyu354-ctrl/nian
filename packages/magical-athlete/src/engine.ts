@@ -880,12 +880,17 @@ function racerTurn(s: MAState, c: Ctx, t: Token, f: TurnFlags) {
       const targets = leaders(s);
       if (targets.length) {
         const a = ask(s, c, {
-          player: t.owner, racer: t.racer, kind: "kingtripper",
+          player: t.owner,
+          racer: t.racer,
+          kind: "kingtripper",
           prompt: `${rname(t)}【王者一绊】：绊倒一名领先选手？`,
-          options: [...targets.map(o => ({value:o.racer,label:rname(o)})),{value:"no",label:"不用"}],
+          options: [...targets.map((o) => ({ value: o.racer, label: rname(o) })), { value: "no", label: "不用" }],
         });
-        const target = targets.find(o=>o.racer===a);
-        if (target) { trip(s,target); fire(s,c,t,`${rname(t)}【王者一绊】：${rname(target)} 摔倒。`); }
+        const target = targets.find((o) => o.racer === a);
+        if (target) {
+          fire(s, c, t, `${rname(t)}【王者一绊】：${rname(target)} 摔倒。`);
+          trip(s, target);
+        }
       }
     }
     if (t.tripped) {

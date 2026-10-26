@@ -10,7 +10,7 @@ import { assertUiShot } from "./screenshot-check.ts";
 
 const PORT = 3331;
 const BASE = `http://127.0.0.1:${PORT}`;
-const out = "output/ma-browsers";
+const out = process.env.MA_OUT ?? "output/ma-browsers";
 mkdirSync(out, { recursive: true });
 const data = mkdtempSync(join(tmpdir(), "ma-ui-"));
 const server: ChildProcess = spawn(process.execPath, ["--import", "tsx", "apps/server/src/main.ts"], {
@@ -95,6 +95,7 @@ try {
   let steps = 0;
   let staleClicks = 0;
   let races = 0;
+  const newRacersPicked = new Set<string>();
   for (;;) {
     if (++steps >= 4000) {
       // 诊断：卡住时把每个人看到的界面和最近的比赛记录打出来
@@ -115,7 +116,10 @@ try {
     if (await host.locator(".ma-final").count()) break;
     let acted = false;
     for (const p of pages) {
-      const pick = p.locator('[data-testid^="pick-"]', { hasText: /选它|派它上场/ }).first();
+      const previewPick = p.locator('[data-testid^="pick-sw_"]', { hasText: /选它|派它上场/ }).first();
+      const pick = process.env.MA_SECOND_WIND === "1" && await previewPick.count()
+        ? previewPick
+        : p.locator('[data-testid^="pick-"]', { hasText: /选它|派它上场/ }).first();
       // A sending button can outlive its decision for one render; never click it twice.
       // 清晰棋盘：操作在棋盘下面；原版棋盘：操作卡在赛道中间（下面那块隐藏）
       const opt = p
@@ -137,6 +141,8 @@ try {
           if (!(e instanceof Error) || !/Timeout|detached/.test(e.name + e.message) || ++staleClicks > 10) throw e;
         }
       } else if ((await pick.count()) && !(await p.locator(".ma-banner", { hasText: "你派出了" }).count())) {
+        const id = (await pick.getAttribute("data-testid"))?.replace(/^pick-/, "");
+        if (id?.startsWith("sw_")) newRacersPicked.add(id);
         await pick.click();
         acted = true;
       } else continue;
@@ -169,7 +175,7 @@ try {
   }
   await host.screenshot({ path: `${out}/3_最终成绩.png`, fullPage: true });
   assert.deepEqual(errors, []);
-  console.log("MA_BROWSERS_PASS", JSON.stringify({ players: pages.length, deal: random ? "random" : "draft", steps, racesSeen: races }));
+  console.log("MA_BROWSERS_PASS", JSON.stringify({ players: pages.length, deal: random ? "random" : "draft", steps, racesSeen: races, newRacersPicked: [...newRacersPicked] }));
   assert.equal(races, 4, "应当看到 4 场比赛");
 } finally {
   await browser.close();

@@ -72,13 +72,28 @@ for index, character in enumerate(manifest['characters']):
     document = fitz.open(stream=full.encode(), filetype='svg')
     rendered = document[0].get_pixmap(matrix=fitz.Matrix(512/720, 512/720), alpha=False).tobytes('png')
     encode_webp(rendered, PUBLIC / 'cards/zh' / f'{cid}.webp')
-    encode_webp(raw, PUBLIC / 'portraits' / f'{cid}.webp', width=320)
-    token = Image.open(ROOT / character['token']).convert('RGBA')
+    # Portrait framing follows the original horizontal skill-card crop. Keep
+    # the head and upper torso instead of passing a square to object-fit:cover.
+    portrait = Image.open(io.BytesIO(raw)).convert('RGB')
+    portrait_frame = character['portrait_frame']
+    portrait_width = round(portrait.width * portrait_frame['width'])
+    portrait_height = round(portrait_width * 172 / 234)
+    left = round(portrait.width * portrait_frame['left'])
+    top = round(portrait.height * portrait_frame['top'])
+    portrait = portrait.crop((left, top, left + portrait_width, top + portrait_height))
+    portrait.resize((234, 172), Image.Resampling.LANCZOS).save(PUBLIC / 'portraits' / f'{cid}.webp', 'WEBP', quality=90, method=6)
+    token = Image.open(ROOT / character['standee']).convert('RGBA')
     assert token.getextrema()[3][0] == 0, 'Token requires genuine transparent alpha'
-    token.thumbnail((256, 384), Image.Resampling.LANCZOS)
+    # Native standee export: tight alpha bounds, 238px tall and feet at bottom.
+    # Keep the actual silhouette ratio; never squeeze a square running pose.
+    token = token.crop(token.getchannel('A').point(lambda alpha: 255 if alpha > 8 else 0).getbbox())
+    token = token.resize((round(token.width * 238 / token.height), 238), Image.Resampling.LANCZOS)
     token.save(PUBLIC / 'tokens' / f'{cid}.png')
+    character['exported_token_size'] = list(token.size)
+    character['exported_portrait_size'] = [234, 172]
     character['sha256'] = hashlib.sha256(raw).hexdigest()
     character['token_sha256'] = hashlib.sha256((ROOT / character['token']).read_bytes()).hexdigest()
+    character['standee_sha256'] = hashlib.sha256((ROOT / character['standee']).read_bytes()).hexdigest()
 
 (ROOT / 'manifest.json').write_text(json.dumps(manifest, ensure_ascii=False, indent=2) + '\n', encoding='utf-8')
 print('Built 3 original cards, 3 portraits and 3 transparent tokens; base assets unchanged.')
