@@ -1,0 +1,1 @@
+{"version":"b466be5","production":"拉密 Rummikub\nThe Original · Classic\n\n2–4 人 · 数字组合\n\n同色连成顺子，同数凑成一组。拆开桌面的可能，把手中的牌全部打出去。\n\n开房间\n加入","integrated":"拉密 Rummikub\nThe Original · Classic / XP\n\n2–6 人 · 数字组合\n\n同色连成顺子，同数凑成一组。拆开桌面的可能，把手中的牌全部打出去。\n\n开房间\n加入"}

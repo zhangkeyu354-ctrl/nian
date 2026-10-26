@@ -1,4 +1,14 @@
 import type { Meld } from "../../../../packages/rummikub/src/index.ts";
+import type { RKAction } from "../../../../packages/shared/src/rk-protocol.ts";
+export function settingsForPlayerCount(count: number): RKAction {
+  if (!Number.isInteger(count) || count < 2 || count > 6)
+    throw new RangeError("拉密人数必须为 2–6 人");
+  return {
+    type: "SET_SETTINGS",
+    count,
+    variant: count >= 5 ? "xp" : "classic",
+  };
+}
 export type SortMode = "color" | "number";
 const colors = ["R", "B", "O", "K", "J"];
 export function sortRack(ids: string[], mode: SortMode) {

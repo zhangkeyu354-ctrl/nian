@@ -1,0 +1,82 @@
+
+> dbd-boardgame-private@0.2.2 verify:mobile-interfaces
+> vitest run --config apps/web/test/capture.config.ts && tsx scripts/collect-ui-scenarios.ts && tsx scripts/verify-mobile-interfaces.ts
+
+
+ RUN  v5.0.5 E:/DBD-RK-XP-Current
+
+
+ Test Files  12 passed (12)
+      Tests  197 passed (197)
+   Start at  10:09:35
+   Duration  5.20s (tests 76%, import 13%, transform 6%, setup 4%, worker 1%)
+
+    Isolate  12 workers spawned · ~211ms startup each (spawn + environment, per file)
+             at least ~1.06s faster with isolate: false — reuses workers across files instead of one per file
+
+UI_SCENARIOS_COLLECTED 64 (successful engine test inputs; generated, not shipped)
+UI_WIRING_PASS board_ace_1 1
+UI_WIRING_PASS board_dwight_3 1
+UI_WIRING_PASS board_doctor_1 1
+UI_WIRING_PASS item_toolbox 2
+UI_WIRING_PASS item_commodious_toolbox 2
+UI_WIRING_PASS item_first_aid_kit 2
+UI_WIRING_PASS item_map 2
+UI_WIRING_PASS choice_MAP_REVEAL 2
+UI_WIRING_PASS item_rainbow_map 2
+UI_WIRING_PASS item_flashlight 2
+UI_WIRING_PASS item_firecracker 2
+UI_WIRING_PASS item_skeleton_key 2
+UI_WIRING_PASS item_broken_key 2
+UI_WIRING_PASS item_dull_key 2
+UI_WIRING_PASS board_doctor_3 1
+UI_WIRING_PASS board_dwight_2 1
+UI_WIRING_PASS board_claudette_1 1
+UI_WIRING_PASS board_meg_3 1
+UI_WIRING_PASS choice_PHANTASM_TARGET 1
+UI_WIRING_PASS power_hillbilly 2
+UI_WIRING_PASS power_hag 2
+UI_WIRING_PASS board_ace_2 2
+UI_WIRING_PASS board_jake_1 1
+UI_WIRING_PASS board_dwight_1 4
+UI_WIRING_PASS board_meg_2 1
+UI_WIRING_PASS board_claudette_2 2
+UI_WIRING_PASS board_claudette_3 1
+UI_WIRING_PASS board_jake_2 3
+UI_WIRING_PASS board_jake_3 1
+UI_WIRING_PASS board_nea_1 2
+UI_WIRING_PASS board_nea_2 1
+UI_WIRING_PASS board_nea_3 1
+UI_WIRING_PASS board_ace_3 1
+UI_WIRING_PASS board_feng_min_2 2
+UI_WIRING_PASS board_feng_min_3 3
+UI_WIRING_PASS board_trapper_1 2
+UI_WIRING_PASS board_trapper_2 1
+UI_WIRING_PASS board_trapper_3 2
+UI_WIRING_PASS board_wraith_1 1
+UI_WIRING_PASS board_wraith_2 1
+UI_WIRING_PASS board_hillbilly_1 1
+UI_WIRING_PASS board_hillbilly_2 1
+UI_WIRING_PASS board_hillbilly_3 2
+UI_WIRING_PASS board_nurse_1 1
+UI_WIRING_PASS board_nurse_2 1
+UI_WIRING_PASS board_nurse_3 1
+UI_WIRING_PASS board_hag_2 1
+UI_WIRING_PASS board_hag_3 1
+UI_WIRING_PASS board_doctor_2 1
+UI_WIRING_PASS power_trapper 2
+UI_WIRING_PASS power_wraith 2
+UI_WIRING_PASS power_nurse 2
+UI_WIRING_PASS power_doctor 2
+UI_WIRING_PASS board_meg_1 2
+UI_WIRING_PASS board_feng_min_1 2
+UI_WIRING_PASS board_wraith_3 1
+UI_WIRING_PASS choice_REPLAN 1
+UI_WIRING_PASS board_hag_1 1
+UI_WIRING_PASS choice_CARRY_REROUTE 1
+UI_WIRING_PASS out_of_turn_commodious_toolbox 2
+UI_WIRING_PASS out_of_turn_first_aid_kit 2
+UI_WIRING_PASS out_of_turn_map 2
+UI_WIRING_PASS out_of_turn_rainbow_map 2
+UI_WIRING_PASS shared_seat_inventory 2
+MOBILE_INTERFACES_PASS 64

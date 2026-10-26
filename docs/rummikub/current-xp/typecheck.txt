@@ -1,0 +1,6 @@
+
+> dbd-boardgame-private@0.2.2 typecheck
+> tsc --noEmit
+
+apps/web/test/interface.tsx(8,21): error TS2307: Cannot find module './scenarios.generated.json' or its corresponding type declarations.
+apps/web/test/interface.tsx(14,4): error TS7006: Parameter 'x' implicitly has an 'any' type.
