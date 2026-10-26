@@ -34,10 +34,12 @@ export interface Token {
   /** 第一回合是否已开始（军师） */
   started: boolean;
   /** New-racer per-race memory; omitted from legacy tokens and snapshots. */
-  secondWind?: { krakenUsed?: boolean; soulmate?: string };
+  secondWind?: { krakenUsed?: boolean; soulmate?: string; wereMouth?: boolean };
 }
 
 export interface RaceState {
+  /** Cancellation preserves finish history, but awards no medals. */
+  cancelledBy?: string;
   /** Hotel payments funded from earlier-race chips, for this race's net score. */
   priorRaceSpending?: Record<string, number>;
   index: number;

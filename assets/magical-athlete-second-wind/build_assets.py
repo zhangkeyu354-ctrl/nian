@@ -57,7 +57,8 @@ for index, character in enumerate(manifest['characters']):
     art_raw = normalized_raw if character.get('normalize_art_bounds') else (ROOT / character['token']).read_bytes()
     if character.get('card_art_mode') == 'upper_body':
         art_image = Image.open(io.BytesIO(art_raw))
-        art_image = art_image.crop((0, 0, art_image.width, art_image.width))
+        art_top = round(art_image.height * character.get('card_art_top', 0))
+        art_image = art_image.crop((0, art_top, art_image.width, art_top + art_image.width))
         encoded = io.BytesIO()
         art_image.save(encoded, 'PNG')
         art_raw = encoded.getvalue()

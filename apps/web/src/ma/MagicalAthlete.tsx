@@ -8,6 +8,7 @@ import {
   type MAView,
 } from "../../../../packages/magical-athlete/src/index.ts";
 import type { MARoomSnapshot } from "../../../../packages/shared/src/ma-protocol.ts";
+import { racerArtId } from "../../../../packages/magical-athlete/src/second-wind-preview.ts";
 import { createMARoom, savedName, useMARoom } from "./ma-net.ts";
 import { ART, PLAYER_COLORS, Track, useVerticalBoard } from "./Track.tsx";
 import { installAudioUnlock, onMutedChange, setSfxMuted, sfxMuted, sfxShake, sfxTap, sfxYourTurn, vibrate } from "./sfx.ts";
@@ -840,7 +841,7 @@ function Race({
           title={
             <span className="ma-mine-title">
               {mine.map((t) => (
-                <img key={t.racer} src={`${ART}/portraits/${t.racer}.webp`} alt="" />
+                <img key={t.racer} src={`${ART}/portraits/${racerArtId(t)}.webp`} alt="" />
               ))}
               我的选手：{mine.map((t) => `${racerName(t.racer)}【${RACER_BY_ID.get(t.base)?.powerZh}】`).join("、")}
             </span>
@@ -852,7 +853,7 @@ function Race({
               const power = RACER_BY_ID.get(t.base);
               return (
                 <button key={t.racer} type="button" className="ma-mine-card" onClick={() => openCard(t.racer)}>
-                  <img src={`${ART}/portraits/${t.racer}.webp`} alt="" />
+                  <img src={`${ART}/portraits/${racerArtId(t)}.webp`} alt="" />
                   <span>
                     <small>点开看卡</small>
                     <b>{r.zh}</b>
@@ -949,7 +950,7 @@ function Race({
                 style={{ borderLeftColor: colorOf(t.owner) }}
                 onClick={() => openCard(t.racer)}
               >
-                <img className="ma-portrait" src={`${ART}/portraits/${t.racer}.webp`} alt="" />
+                <img className="ma-portrait" src={`${ART}/portraits/${racerArtId(t)}.webp`} alt="" />
                 <div>
                   <b>{r.zh}</b> <small>{name(t.owner)}</small>
                   <small className="ma-state">
@@ -1046,6 +1047,7 @@ function Overlay({
   onSkip: () => void;
 }) {
   const owner = (racer: string) => view.race?.tokens.find((t) => t.racer === racer)?.owner ?? "";
+  const artId = (racer: string) => racerArtId(view.race?.tokens.find((t) => t.racer === racer) ?? { racer });
   const seatNo = (pid: string) => (view.seats.indexOf(pid) % 6) + 1;
   let body: React.ReactNode;
   if (show.kind === "roll") {
@@ -1085,7 +1087,7 @@ function Overlay({
     body = (
       <div className={"ma-ov-skill" + (mine ? " mine" : "")} style={{ ["--pc" as string]: colorOf(pid) }}>
         <p className="ma-skill-who">{mine ? "✨ 你的技能触发了！" : `✨ ${name(pid)} 的技能触发了！`}</p>
-        <img src={`${ART}/portraits/${show.racer}.webp`} alt="" />
+        <img src={`${ART}/portraits/${artId(show.racer)}.webp`} alt="" />
         <b className="ma-skill-name">
           {racerName(show.racer)}【{r?.powerZh ?? show.power}】
         </b>
@@ -1095,7 +1097,7 @@ function Overlay({
   } else if (show.kind === "finish") {
     body = (
       <div className="ma-ov-power finish" style={{ ["--pc" as string]: colorOf(owner(show.racer)) }}>
-        <img src={`${ART}/portraits/${show.racer}.webp`} alt="" />
+        <img src={`${ART}/portraits/${artId(show.racer)}.webp`} alt="" />
         <div>
           <small>{name(owner(show.racer))}</small>
           <b>🏁 {racerName(show.racer)} 第 {show.place} 个冲线！</b>
@@ -1104,10 +1106,11 @@ function Overlay({
     );
   } else if (show.kind === "podium") {
     const at = (n: number) => show.places.find((x) => x.place === n);
+    const cancelled = view.race?.index === show.race && !!view.race.cancelledBy;
     body = (
       <div className="ma-ov-podium">
-        <Confetti n={28} />
-        <small>第 {show.race + 1} 场 · 颁奖</small>
+        {!cancelled && <Confetti n={28} />}
+        <small>第 {show.race + 1} 场 · {cancelled ? "本场取消，不发奖牌" : "颁奖"}</small>
         <div className="ma-podium">
           {[2, 1, 3].map((n) => {
             const pl = at(n);
@@ -1116,7 +1119,7 @@ function Overlay({
                 {pl && (
                   <div className="ma-step-who">
                     {n === 1 && <span className="ma-crown">👑</span>}
-                    <img src={`${ART}/tokens/${pl.racer}.png`} alt="" />
+                    <img src={`${ART}/tokens/${artId(pl.racer)}.png`} alt="" />
                     <b>{racerName(pl.racer)}</b>
                     <small>
                       {pl.owner === me ? "你" : name(pl.owner)}
@@ -1183,7 +1186,7 @@ function Overlay({
                 <span className="ma-stat-who">
                   {top.map((r) => (
                     <span key={r.racer} className="ma-stat-racer" style={{ ["--pc" as string]: colorOf(r.owner) }}>
-                      <img src={`${ART}/portraits/${r.racer}.webp`} alt="" />
+                      <img src={`${ART}/portraits/${artId(r.racer)}.webp`} alt="" />
                       {racerName(r.racer)}
                       <small>{r.owner === me ? "你" : name(r.owner)}</small>
                     </span>
@@ -1222,7 +1225,7 @@ function Overlay({
   } else {
     body = (
       <div className="ma-ov-power note" style={{ ["--pc" as string]: colorOf(owner(show.racer)) }}>
-        <img src={`${ART}/portraits/${show.racer}.webp`} alt="" />
+        <img src={`${ART}/portraits/${artId(show.racer)}.webp`} alt="" />
         <div>
           <b>{racerName(show.racer)}</b>
           <p>{show.text}</p>

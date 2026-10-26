@@ -106,7 +106,8 @@ export const SECOND_WIND_PREVIEW: RacerInfo[] = [
       powerEn: "Bon Mots",
       powerZh: "评头论足",
       text: "每回合可以让前方选手的主移动骰重掷一次。",
-      notes: "由评论家的玩家决定；每名能力持有者每回合最多发动一次，辅助骰与免骰不受影响。",
+      notes:
+        "由评论家的玩家决定；每名能力持有者每回合最多发动一次，辅助骰与免骰不受影响。",
     },
     {
       id: "sw_diva",
@@ -133,7 +134,8 @@ export const SECOND_WIND_PREVIEW: RacerInfo[] = [
       powerEn: "Exhibit B",
       powerZh: "擦身得分",
       text: "一次移动经过其他选手时，获得 1 分。",
-      notes: "同段经过多人共得1分；传送不算经过；后退经过随香蕉一起留待最终核对。",
+      notes:
+        "同段经过多人共得1分；传送不算经过；后退经过随香蕉一起留待最终核对。",
     },
     {
       id: "sw_kraken",
@@ -142,7 +144,8 @@ export const SECOND_WIND_PREVIEW: RacerInfo[] = [
       powerEn: "Get Over Here",
       powerZh: "全员集合",
       text: "每场一次，回合开始时可以把所有其他选手传送到我所在格并绊倒。",
-      notes: "包含同格角色；所有目标同时到达，再结算地形。每名能力持有者每场一次。",
+      notes:
+        "包含同格角色；所有目标同时到达，再结算地形。每名能力持有者每场一次。",
     },
     {
       id: "sw_nemesis",
@@ -169,7 +172,8 @@ export const SECOND_WIND_PREVIEW: RacerInfo[] = [
       powerEn: "Guys, Watch!",
       powerZh: "看我表演",
       text: "主移动掷骰后可继续掷并累加；新骰不大于上一骰则不移动。",
-      notes: "每颗最终主骰各结算掷骰触发；累计后只应用一次移动修正，随时可收手。",
+      notes:
+        "每颗最终主骰各结算掷骰触发；累计后只应用一次移动修正，随时可收手。",
     },
     {
       id: "sw_soulmate",
@@ -178,7 +182,8 @@ export const SECOND_WIND_PREVIEW: RacerInfo[] = [
       powerEn: "Twin Flame",
       powerZh: "心有灵犀",
       text: "赛前选择一名对方选手；回合开始距其不超过 5 格时传送到其所在格。",
-      notes: "仅对方玩家的角色；目标离场后不传送。赛前已复制本能力的角色也选择目标。",
+      notes:
+        "仅对方玩家的角色；目标离场后不传送。赛前已复制本能力的角色也选择目标。",
     },
     {
       id: "sw_gloth",
@@ -205,7 +210,8 @@ export const SECOND_WIND_PREVIEW: RacerInfo[] = [
       powerEn: "Hugely Rich",
       powerZh: "赢在起点",
       text: "比赛开始时，我直接位于赛道的第一个弯道。",
-      notes: "沿用当前两面赛道第一弯道12；赛前复制到能力时同样生效，不改变旧赛道。",
+      notes:
+        "沿用当前两面赛道第一弯道12；赛前复制到能力时同样生效，不改变旧赛道。",
     },
     {
       id: "sw_stepdad",
@@ -223,7 +229,53 @@ export const SECOND_WIND_PREVIEW: RacerInfo[] = [
       powerEn: "Stop Traffic",
       powerZh: "全场看呆",
       text: "距离我不超过 1 格的其他选手，所有掷骰都视为 1。",
-      notes: "包括同格、主骰、决斗、跟掷及冲洗骰；不改变不掷骰的移动或玩家先手比骰。",
+      notes:
+        "包括同格、主骰、决斗、跟掷及冲洗骰；不改变不掷骰的移动或玩家先手比骰。",
+    },
+    {
+      id: "sw_understudy",
+      en: "Understudy",
+      zh: "候补演员",
+      powerEn: "The Method",
+      powerZh: "假戏真做",
+      text: "赛前选择一名对方选手，复制其能力。",
+      notes: "复制已揭晓能力；目标用角色id，赛前效果仍结算。",
+    },
+    {
+      id: "sw_bite_mark",
+      en: "Bite Mark",
+      zh: "咬痕",
+      powerEn: "Huuaarrgghhh!!!!",
+      powerZh: "巨口变身",
+      text: "主移动最终掷出 1 或 2 时变成巨口，淘汰之后经过的选手。",
+      notes: "变身保持到本场结束；传送和后退经过沿用现状。",
+    },
+    {
+      id: "sw_mr_dice_guy",
+      en: "Mr. Dice Guy",
+      zh: "骰子先生",
+      powerEn: "Yes! More!",
+      powerZh: "重复为王",
+      text: "主移动掷六颗骰子，选一个出现至少两次的数字。",
+      notes: "用户裁定全不重复时六颗全部重掷；主移动重掷针对整组。",
+    },
+    {
+      id: "sw_party_pooper",
+      en: "Party Pooper",
+      zh: "派对扫兴鬼",
+      powerEn: "Noise Complaint",
+      powerZh: "噪音投诉",
+      text: "所有掷出的 6 都必须重掷；每次这样重掷，我移动 1 格。",
+      notes: "包括自己、辅助骰和六骰池；多名持有者各走1，骰只重掷一次。",
+    },
+    {
+      id: "sw_spoilsport",
+      en: "Spoilsport",
+      zh: "扫兴者",
+      powerEn: "Cry Foul",
+      powerZh: "举报罢赛",
+      text: "回合开始时，其他选手都领先我至少 5 格，则取消本场并获得 3 分。",
+      notes: "用户裁定保留已得分、不发本场金银牌；无其他在场者不取消。",
     },
   ].map((r) => ({
     ...r,
@@ -234,3 +286,11 @@ export const SECOND_WIND_PREVIEW: RacerInfo[] = [
   })),
 ];
 export const SECOND_WIND_PREVIEW_IDS = SECOND_WIND_PREVIEW.map((r) => r.id);
+
+/** A form is artwork on the same racer, never a new draftable character. */
+export function racerArtId(token: {
+  racer: string;
+  secondWind?: { wereMouth?: boolean };
+}): string {
+  return token.secondWind?.wereMouth ? "sw_bite_mark_were" : token.racer;
+}

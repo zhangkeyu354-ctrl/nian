@@ -2,6 +2,7 @@ import React, { useEffect, useRef, useState } from "react";
 import { racerName, TRACKS } from "../../../../packages/magical-athlete/src/index.ts";
 import type { RaceState } from "../../../../packages/magical-athlete/src/types.ts";
 import type { Special } from "../../../../packages/magical-athlete/src/tracks.ts";
+import { racerArtId } from "../../../../packages/magical-athlete/src/second-wind-preview.ts";
 import coords from "../../public/assets/magical-athlete/boards/coordinates.json" with { type: "json" };
 
 // 第 7、8 位玩家：粉色、青色（骰子图沿用 1、2 号的样式）
@@ -211,7 +212,7 @@ export function Track({
           {t.owner === me && <span className="ma-halo" aria-hidden="true" />}
           {t.owner === me && <span className="ma-me-tag">我</span>}
           <span className="ma-pawn-base" />
-          <img src={`${ART}/tokens/${rid}.png`} alt={racerName(rid)} draggable={false} />
+          <img src={`${ART}/tokens/${racerArtId(t)}.png`} alt={racerName(rid)} draggable={false} />
           {t.tripped && <img className="ma-pawn-trip" src={`${ART}/icons/trip.svg`} alt="摔倒" />}
           {hit?.racer === rid && hit.kind === "trip" && (
             <span key={"s" + hit.id} className="ma-dizzy" aria-hidden="true">

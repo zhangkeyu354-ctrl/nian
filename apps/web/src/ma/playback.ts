@@ -69,6 +69,7 @@ export interface ShownToken {
   tripped: boolean;
   out: boolean;
   place: number | null;
+  secondWind?: Token["secondWind"];
 }
 
 const sleep = (ms: number) => new Promise((r) => setTimeout(r, ms));
@@ -129,7 +130,7 @@ export function usePlayback(view: MAView) {
 
   const fromRace = (tokens: Token[]) =>
     new Map(
-      tokens.map((t) => [t.racer, { racer: t.racer, pos: t.pos, tripped: t.tripped, out: t.out, place: t.place }]),
+      tokens.map((t) => [t.racer, { racer: t.racer, pos: t.pos, tripped: t.tripped, out: t.out, place: t.place, secondWind: t.secondWind }]),
     );
 
   useEffect(() => {
@@ -223,7 +224,7 @@ export function usePlayback(view: MAView) {
           const r = latest.current.race;
           cur = r
             ? new Map(
-                r.tokens.map((t) => [t.racer, { racer: t.racer, pos: 0, tripped: false, out: false, place: null }]),
+                r.tokens.map((t) => [t.racer, { racer: t.racer, pos: 0, tripped: false, out: false, place: null, secondWind: undefined }]),
               )
             : null;
           shownRef.current = cur;
@@ -262,6 +263,9 @@ export function usePlayback(view: MAView) {
           float(fx.racer, `✨${RACER_BY_ID.get(fx.power)?.powerZh ?? "技能"}`, "power");
           setSpot(fx.racer);
           await wait(2600);
+          if (fx.power === "sw_bite_mark") {
+            setPos(fx.racer, { secondWind: latest.current.race?.tokens.find((t) => t.racer === fx.racer)?.secondWind });
+          }
           setSpot(null);
           break;
         case "move": {

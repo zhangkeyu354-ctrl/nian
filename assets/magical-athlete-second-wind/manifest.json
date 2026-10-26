@@ -721,6 +721,181 @@
       "sha256": "9f21d488bc96c920f1f1bfab79e0f392d1c611e86b4c21f08dfb0f769dac84a8",
       "token_sha256": "9f21d488bc96c920f1f1bfab79e0f392d1c611e86b4c21f08dfb0f769dac84a8",
       "standee_sha256": "9f21d488bc96c920f1f1bfab79e0f392d1c611e86b4c21f08dfb0f769dac84a8"
+    },
+    {
+      "id": "sw_understudy",
+      "en": "Understudy",
+      "zh": "候补演员",
+      "powerZh": "假戏真做",
+      "text": "赛前选择一名对方选手，复制其能力。",
+      "field": "#ffe500",
+      "illustration": "cutouts/sw_understudy.png",
+      "token": "cutouts/sw_understudy.png",
+      "standee": "cutouts/sw_understudy.png",
+      "normalize_art_bounds": true,
+      "card_art_mode": "upper_body",
+      "portrait_frame": {
+        "left": 0.02,
+        "top": 0.03,
+        "width": 0.96
+      },
+      "exported_token_size": [
+        102,
+        238
+      ],
+      "exported_portrait_size": [
+        234,
+        172
+      ],
+      "sha256": "4606eb64f40439534fea8fdf6772610f23d33300c4f91f19f4c9aadd9d659674",
+      "token_sha256": "4606eb64f40439534fea8fdf6772610f23d33300c4f91f19f4c9aadd9d659674",
+      "standee_sha256": "4606eb64f40439534fea8fdf6772610f23d33300c4f91f19f4c9aadd9d659674"
+    },
+    {
+      "id": "sw_bite_mark",
+      "en": "Bite Mark",
+      "zh": "咬痕",
+      "powerZh": "巨口变身",
+      "text": "主移动最终掷出 1 或 2 时变成巨口，淘汰之后经过的选手。",
+      "field": "#61cfe1",
+      "illustration": "cutouts/sw_bite_mark.png",
+      "token": "cutouts/sw_bite_mark.png",
+      "standee": "cutouts/sw_bite_mark.png",
+      "normalize_art_bounds": true,
+      "card_art_mode": "upper_body",
+      "portrait_frame": {
+        "left": 0.02,
+        "top": 0.03,
+        "width": 0.96
+      },
+      "exported_token_size": [
+        126,
+        238
+      ],
+      "exported_portrait_size": [
+        234,
+        172
+      ],
+      "sha256": "322835b8984e98f72a23f63b757fad180e692067b5e7ca3720ab7d9dcdbe95f2",
+      "token_sha256": "322835b8984e98f72a23f63b757fad180e692067b5e7ca3720ab7d9dcdbe95f2",
+      "standee_sha256": "322835b8984e98f72a23f63b757fad180e692067b5e7ca3720ab7d9dcdbe95f2"
+    },
+    {
+      "id": "sw_mr_dice_guy",
+      "en": "Mr. Dice Guy",
+      "zh": "骰子先生",
+      "powerZh": "重复为王",
+      "text": "主移动掷六颗骰子，选一个出现至少两次的数字。",
+      "field": "#b8df32",
+      "illustration": "cutouts/sw_mr_dice_guy.png",
+      "token": "cutouts/sw_mr_dice_guy.png",
+      "standee": "cutouts/sw_mr_dice_guy.png",
+      "normalize_art_bounds": true,
+      "card_art_mode": "upper_body",
+      "portrait_frame": {
+        "left": 0.02,
+        "top": 0.03,
+        "width": 0.96
+      },
+      "exported_token_size": [
+        126,
+        238
+      ],
+      "exported_portrait_size": [
+        234,
+        172
+      ],
+      "sha256": "43eb3ac862db897e64738ad0a6c1e5453d6771fc41101429dc66c70e9988be3d",
+      "token_sha256": "43eb3ac862db897e64738ad0a6c1e5453d6771fc41101429dc66c70e9988be3d",
+      "standee_sha256": "43eb3ac862db897e64738ad0a6c1e5453d6771fc41101429dc66c70e9988be3d"
+    },
+    {
+      "id": "sw_party_pooper",
+      "en": "Party Pooper",
+      "zh": "派对扫兴鬼",
+      "powerZh": "噪音投诉",
+      "text": "所有掷出的 6 都必须重掷；每次这样重掷，我移动 1 格。",
+      "field": "#f49a33",
+      "illustration": "cutouts/sw_party_pooper.png",
+      "token": "cutouts/sw_party_pooper.png",
+      "standee": "cutouts/sw_party_pooper.png",
+      "normalize_art_bounds": true,
+      "card_art_mode": "upper_body",
+      "portrait_frame": {
+        "left": 0.02,
+        "top": 0.23,
+        "width": 0.96
+      },
+      "exported_token_size": [
+        123,
+        238
+      ],
+      "exported_portrait_size": [
+        234,
+        172
+      ],
+      "sha256": "fe0a8f75e6081842b99d50d95875dc3c14a0a3177706bd8c07edb97b6d892863",
+      "token_sha256": "fe0a8f75e6081842b99d50d95875dc3c14a0a3177706bd8c07edb97b6d892863",
+      "standee_sha256": "fe0a8f75e6081842b99d50d95875dc3c14a0a3177706bd8c07edb97b6d892863",
+      "card_art_top": 0.18
+    },
+    {
+      "id": "sw_spoilsport",
+      "en": "Spoilsport",
+      "zh": "扫兴者",
+      "powerZh": "举报罢赛",
+      "text": "回合开始时，其他选手都领先我至少 5 格，则取消本场并获得 3 分。",
+      "field": "#ef6bb4",
+      "illustration": "cutouts/sw_spoilsport.png",
+      "token": "cutouts/sw_spoilsport.png",
+      "standee": "cutouts/sw_spoilsport.png",
+      "normalize_art_bounds": true,
+      "card_art_mode": "upper_body",
+      "portrait_frame": {
+        "left": 0.02,
+        "top": 0.03,
+        "width": 0.96
+      },
+      "exported_token_size": [
+        120,
+        238
+      ],
+      "exported_portrait_size": [
+        234,
+        172
+      ],
+      "sha256": "5c49af3b34ba52da41e2075fdc8941cc50b8f6ef473ed352410264a5e7938555",
+      "token_sha256": "5c49af3b34ba52da41e2075fdc8941cc50b8f6ef473ed352410264a5e7938555",
+      "standee_sha256": "5c49af3b34ba52da41e2075fdc8941cc50b8f6ef473ed352410264a5e7938555"
+    },
+    {
+      "id": "sw_bite_mark_were",
+      "en": "W.E.R.E.M.O.U.T.H.",
+      "zh": "巨口形态",
+      "powerZh": "巨口变身",
+      "text": "咬痕的变身形态：淘汰之后经过的选手。",
+      "field": "#61cfe1",
+      "illustration": "cutouts/sw_bite_mark_were.png",
+      "token": "cutouts/sw_bite_mark_were.png",
+      "standee": "cutouts/sw_bite_mark_were.png",
+      "normalize_art_bounds": true,
+      "card_art_mode": "upper_body",
+      "portrait_frame": {
+        "left": 0.02,
+        "top": 0.03,
+        "width": 0.96
+      },
+      "exported_token_size": [
+        134,
+        238
+      ],
+      "exported_portrait_size": [
+        234,
+        172
+      ],
+      "sha256": "89a6ad2549a590d5564412680221cc065849ec19dc9c715f498d81c1831e2ee5",
+      "token_sha256": "89a6ad2549a590d5564412680221cc065849ec19dc9c715f498d81c1831e2ee5",
+      "standee_sha256": "89a6ad2549a590d5564412680221cc065849ec19dc9c715f498d81c1831e2ee5"
     }
   ],
   "standee_prompt": "Same character in a tightly upright compact pose, narrow silhouette about 1:2, arms and wings tucked inward, full body with both feet planted at the bottom, transparent background, same costume/colors/thick black outlines; no frame, text or shadows.",

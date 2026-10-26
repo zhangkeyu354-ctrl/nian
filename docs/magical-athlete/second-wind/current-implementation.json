@@ -34,9 +34,14 @@
       "sw_hotel",
       "sw_nepo_baby",
       "sw_stepdad",
-      "sw_stunner"
+      "sw_stunner",
+      "sw_understudy",
+      "sw_bite_mark",
+      "sw_mr_dice_guy",
+      "sw_party_pooper",
+      "sw_spoilsport"
     ],
-    "poolSize": 59
+    "poolSize": 64
   },
   "rulesetDescription": "CMYK 2025 base + partial 2026 revisions + documented house rules; no versioned ruleset setting yet",
   "roster": [
@@ -425,11 +430,11 @@
     "variant": "standard"
   },
   "hashes": {
-    "packages/magical-athlete/src/engine.ts": "a6c515ee40dd1253d16b4aa29db82c44995e4f4160638533ccd26a4dfe7ac6f7",
+    "packages/magical-athlete/src/engine.ts": "35912e37e7568684ef6d20b5b0da58dfc5199fa6fcc29799f9ccd3963a1f46be",
     "packages/magical-athlete/src/racers.ts": "277107459d3e6cbe229400dfb3f4440e7e75af4913933720f72b3b8fbc3f280d",
     "packages/magical-athlete/src/tracks.ts": "65666458e21f2eabc45918df237055104b0f2b75442ea9dff23bdf6e1e6f2a39",
-    "packages/magical-athlete/src/types.ts": "8ce8ad690e6d4533de007b00ee51e32e6d2c96963495a8be4c1011741b1ad864",
+    "packages/magical-athlete/src/types.ts": "1b39acce82dd0f0a5258338c7d479477a06e0874a4966da11914a263943867f1",
     "apps/server/src/ma-rooms.ts": "4dda2df154f7828ae6618d43c47ee9593b0859208c228e3336586f9c22428964",
-    "apps/web/src/ma/MagicalAthlete.tsx": "562cd74a80569146d81064b630a61c4d84e936971b88d7d56e059c1363a076f4"
+    "apps/web/src/ma/MagicalAthlete.tsx": "2968a3e92d829cf760a561186f0953245aa6dec1c4a051acfa13da96ece89ddb"
   }
 }

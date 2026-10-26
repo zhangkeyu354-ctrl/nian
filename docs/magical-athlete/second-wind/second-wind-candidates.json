@@ -34,7 +34,8 @@
       "interaction_notes": "与香蕉和半人马交互，经过与淘汰顺序",
       "open_questions": [
         "变身持续时间、再次变身、能力复制须查原卡。",
-        "用户已确认采用参考站技能文字；此来源缺少官方卡文不再单独阻塞开发，具体未解边界仍待核。"
+        "用户已确认采用参考站技能文字；此来源缺少官方卡文不再单独阻塞开发，具体未解边界仍待核。",
+        "开发预览已实现；批次报告记录临时互动顺序，官方互动核验仍保留CHECK_REQUIRED。"
       ],
       "animation_requirements": [
         "power_source_highlight",
@@ -42,9 +43,15 @@
         "elimination"
       ],
       "artwork": {
-        "status": "NOT_LICENSED",
-        "public_asset_path": null,
-        "observed_reference": "来源图片未作为完整技能卡面核验；抽查可见插画裁切。"
+        "status": "ORIGINAL_ART_EXISTING_CARD_TEMPLATE",
+        "public_asset_path": "/assets/magical-athlete/cards/zh/sw_bite_mark.webp",
+        "portrait_path": "/assets/magical-athlete/portraits/sw_bite_mark.webp",
+        "token_path": "/assets/magical-athlete/tokens/sw_bite_mark.png",
+        "source_manifest": "assets/magical-athlete-second-wind/manifest.json",
+        "colored_standee_border": true,
+        "production_release_approved": false,
+        "form_token_path": "/assets/magical-athlete/tokens/sw_bite_mark_were.png",
+        "form_portrait_path": "/assets/magical-athlete/portraits/sw_bite_mark_were.webp"
       },
       "tests": {
         "status": "PLANNED_NOT_IMPLEMENTED",
@@ -53,7 +60,17 @@
         "interaction": "与香蕉和半人马交互，经过与淘汰顺序",
         "passed": 0
       },
-      "source_acceptance": "USER_ACCEPTED_REFERENCE"
+      "source_acceptance": "USER_ACCEPTED_REFERENCE",
+      "development_implementation": {
+        "status": "BASE_ENGINE_OPT_IN_IMPLEMENTED",
+        "toggle": "settings.secondWindPreview",
+        "enabled_by_default": false,
+        "normal": true,
+        "boundary": true,
+        "interaction": true,
+        "production_release_approved": false,
+        "test_file": "packages/magical-athlete/test/second-wind-batch-six.test.ts"
+      }
     },
     {
       "id": "sw_blunderdog",
@@ -1003,7 +1020,8 @@
       "interaction_notes": "与Stunner和Party Pooper逐颗处理",
       "open_questions": [
         "六颗全不同时怎么办、全部重掷或单颗重掷、选择前后待核。",
-        "用户已确认采用参考站技能文字；此来源缺少官方卡文不再单独阻塞开发，具体未解边界仍待核。"
+        "用户已确认采用参考站技能文字；此来源缺少官方卡文不再单独阻塞开发，具体未解边界仍待核。",
+        "开发预览已实现；批次报告记录临时互动顺序，官方互动核验仍保留CHECK_REQUIRED。"
       ],
       "animation_requirements": [
         "power_source_highlight",
@@ -1011,9 +1029,13 @@
         "decision_prompt"
       ],
       "artwork": {
-        "status": "NOT_LICENSED",
-        "public_asset_path": null,
-        "observed_reference": "来源图片未作为完整技能卡面核验；抽查可见插画裁切。"
+        "status": "ORIGINAL_ART_EXISTING_CARD_TEMPLATE",
+        "public_asset_path": "/assets/magical-athlete/cards/zh/sw_mr_dice_guy.webp",
+        "portrait_path": "/assets/magical-athlete/portraits/sw_mr_dice_guy.webp",
+        "token_path": "/assets/magical-athlete/tokens/sw_mr_dice_guy.png",
+        "source_manifest": "assets/magical-athlete-second-wind/manifest.json",
+        "colored_standee_border": true,
+        "production_release_approved": false
       },
       "tests": {
         "status": "PLANNED_NOT_IMPLEMENTED",
@@ -1022,7 +1044,19 @@
         "interaction": "与Stunner和Party Pooper逐颗处理",
         "passed": 0
       },
-      "source_acceptance": "USER_ACCEPTED_REFERENCE"
+      "source_acceptance": "USER_ACCEPTED_REFERENCE",
+      "development_implementation": {
+        "status": "BASE_ENGINE_OPT_IN_IMPLEMENTED",
+        "toggle": "settings.secondWindPreview",
+        "enabled_by_default": false,
+        "normal": true,
+        "boundary": true,
+        "interaction": true,
+        "production_release_approved": false,
+        "test_file": "packages/magical-athlete/test/second-wind-batch-six.test.ts",
+        "user_ruling": "docs/magical-athlete/second-wind/10_第六批用户裁定.md",
+        "ruling_source": "USER_RULING"
+      }
     },
     {
       "id": "sw_mush",
@@ -1347,16 +1381,21 @@
       "interaction_notes": "与Mr. Dice Guy、Show-Off、Stunner、Icarus交互",
       "open_questions": [
         "所有骰的范围、连出6、固定骰与重掷优先级待核。",
-        "用户已确认采用参考站技能文字；此来源缺少官方卡文不再单独阻塞开发，具体未解边界仍待核。"
+        "用户已确认采用参考站技能文字；此来源缺少官方卡文不再单独阻塞开发，具体未解边界仍待核。",
+        "开发预览已实现；批次报告记录临时互动顺序，官方互动核验仍保留CHECK_REQUIRED。"
       ],
       "animation_requirements": [
         "power_source_highlight",
         "step_path"
       ],
       "artwork": {
-        "status": "NOT_LICENSED",
-        "public_asset_path": null,
-        "observed_reference": "来源图片未作为完整技能卡面核验；抽查可见插画裁切。"
+        "status": "ORIGINAL_ART_EXISTING_CARD_TEMPLATE",
+        "public_asset_path": "/assets/magical-athlete/cards/zh/sw_party_pooper.webp",
+        "portrait_path": "/assets/magical-athlete/portraits/sw_party_pooper.webp",
+        "token_path": "/assets/magical-athlete/tokens/sw_party_pooper.png",
+        "source_manifest": "assets/magical-athlete-second-wind/manifest.json",
+        "colored_standee_border": true,
+        "production_release_approved": false
       },
       "tests": {
         "status": "PLANNED_NOT_IMPLEMENTED",
@@ -1365,7 +1404,17 @@
         "interaction": "与Mr. Dice Guy、Show-Off、Stunner、Icarus交互",
         "passed": 0
       },
-      "source_acceptance": "USER_ACCEPTED_REFERENCE"
+      "source_acceptance": "USER_ACCEPTED_REFERENCE",
+      "development_implementation": {
+        "status": "BASE_ENGINE_OPT_IN_IMPLEMENTED",
+        "toggle": "settings.secondWindPreview",
+        "enabled_by_default": false,
+        "normal": true,
+        "boundary": true,
+        "interaction": true,
+        "production_release_approved": false,
+        "test_file": "packages/magical-athlete/test/second-wind-batch-six.test.ts"
+      }
     },
     {
       "id": "sw_penguin",
@@ -1705,16 +1754,21 @@
       "interaction_notes": "与Gloth、Re-Runner、Doppelgangster、军师交互",
       "open_questions": [
         "已经发放的奖牌、取消是否触发结束奖励、单人空集合必须核实。",
-        "用户已确认采用参考站技能文字；此来源缺少官方卡文不再单独阻塞开发，具体未解边界仍待核。"
+        "用户已确认采用参考站技能文字；此来源缺少官方卡文不再单独阻塞开发，具体未解边界仍待核。",
+        "开发预览已实现；批次报告记录临时互动顺序，官方互动核验仍保留CHECK_REQUIRED。"
       ],
       "animation_requirements": [
         "power_source_highlight",
         "score_ledger"
       ],
       "artwork": {
-        "status": "NOT_LICENSED",
-        "public_asset_path": null,
-        "observed_reference": "来源图片未作为完整技能卡面核验；抽查可见插画裁切。"
+        "status": "ORIGINAL_ART_EXISTING_CARD_TEMPLATE",
+        "public_asset_path": "/assets/magical-athlete/cards/zh/sw_spoilsport.webp",
+        "portrait_path": "/assets/magical-athlete/portraits/sw_spoilsport.webp",
+        "token_path": "/assets/magical-athlete/tokens/sw_spoilsport.png",
+        "source_manifest": "assets/magical-athlete-second-wind/manifest.json",
+        "colored_standee_border": true,
+        "production_release_approved": false
       },
       "tests": {
         "status": "PLANNED_NOT_IMPLEMENTED",
@@ -1723,7 +1777,19 @@
         "interaction": "与Gloth、Re-Runner、Doppelgangster、军师交互",
         "passed": 0
       },
-      "source_acceptance": "USER_ACCEPTED_REFERENCE"
+      "source_acceptance": "USER_ACCEPTED_REFERENCE",
+      "development_implementation": {
+        "status": "BASE_ENGINE_OPT_IN_IMPLEMENTED",
+        "toggle": "settings.secondWindPreview",
+        "enabled_by_default": false,
+        "normal": true,
+        "boundary": true,
+        "interaction": true,
+        "production_release_approved": false,
+        "test_file": "packages/magical-athlete/test/second-wind-batch-six.test.ts",
+        "user_ruling": "docs/magical-athlete/second-wind/10_第六批用户裁定.md",
+        "ruling_source": "USER_RULING"
+      }
     },
     {
       "id": "sw_stepdad",
@@ -2119,16 +2185,21 @@
       "interaction_notes": "与Egg、Twin、Copycat和Null依赖交互",
       "open_questions": [
         "可否复制赛前能力、多层复制和Null屏蔽必须核实。",
-        "用户已确认采用参考站技能文字；此来源缺少官方卡文不再单独阻塞开发，具体未解边界仍待核。"
+        "用户已确认采用参考站技能文字；此来源缺少官方卡文不再单独阻塞开发，具体未解边界仍待核。",
+        "开发预览已实现；批次报告记录临时互动顺序，官方互动核验仍保留CHECK_REQUIRED。"
       ],
       "animation_requirements": [
         "power_source_highlight",
         "decision_prompt"
       ],
       "artwork": {
-        "status": "NOT_LICENSED",
-        "public_asset_path": null,
-        "observed_reference": "来源图片未作为完整技能卡面核验；抽查可见插画裁切。"
+        "status": "ORIGINAL_ART_EXISTING_CARD_TEMPLATE",
+        "public_asset_path": "/assets/magical-athlete/cards/zh/sw_understudy.webp",
+        "portrait_path": "/assets/magical-athlete/portraits/sw_understudy.webp",
+        "token_path": "/assets/magical-athlete/tokens/sw_understudy.png",
+        "source_manifest": "assets/magical-athlete-second-wind/manifest.json",
+        "colored_standee_border": true,
+        "production_release_approved": false
       },
       "tests": {
         "status": "PLANNED_NOT_IMPLEMENTED",
@@ -2137,20 +2208,31 @@
         "interaction": "与Egg、Twin、Copycat和Null依赖交互",
         "passed": 0
       },
-      "source_acceptance": "USER_ACCEPTED_REFERENCE"
+      "source_acceptance": "USER_ACCEPTED_REFERENCE",
+      "development_implementation": {
+        "status": "BASE_ENGINE_OPT_IN_IMPLEMENTED",
+        "toggle": "settings.secondWindPreview",
+        "enabled_by_default": false,
+        "normal": true,
+        "boundary": true,
+        "interaction": true,
+        "production_release_approved": false,
+        "test_file": "packages/magical-athlete/test/second-wind-batch-six.test.ts"
+      }
     }
   ],
   "candidate_flag_scope": "candidate_*布尔仅描述转录里的直接效果；复制或变身后可能继承的效果未核，不表示永远不可能。",
   "user_accepted_source_id": "SW-F01",
   "source_acceptance_date": "2026-10-26",
   "development_summary": {
-    "implemented": 23,
+    "implemented": 28,
     "candidates": 36,
-    "pool_when_enabled": 59,
+    "pool_when_enabled": 64,
     "enabled_by_default": false,
     "production_enabled": false,
     "batch_three_report": "docs/handoff/魔法运动员_第三批5名_2026-10-26.md",
     "batch_four_report": "docs/handoff/魔法运动员_第四批5名_2026-10-26.md",
-    "batch_five_report": "docs/handoff/魔法运动员_第五批5名_2026-10-26.md"
+    "batch_five_report": "docs/handoff/魔法运动员_第五批5名_2026-10-26.md",
+    "batch_six_report": "docs/handoff/魔法运动员_第六批5名_2026-10-26.md"
   }
 }

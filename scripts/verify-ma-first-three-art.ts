@@ -16,12 +16,15 @@ const batchTwo = process.env.MA_REVIEW_BATCH === "2";
 const batchThree = process.env.MA_REVIEW_BATCH === "3";
 const batchFour = process.env.MA_REVIEW_BATCH === "4";
 const batchFive = process.env.MA_REVIEW_BATCH === "5";
-const laterBatch = batchTwo || batchThree || batchFour || batchFive;
-const out = `docs/magical-athlete/second-wind/${batchFive ? "batch-five-screens" : batchFour ? "batch-four-screens" : batchThree ? "batch-three-screens" : batchTwo ? "batch-two-screens" : "first-three-fix-screens"}`;
+const batchSix = process.env.MA_REVIEW_BATCH === "6";
+const laterBatch = batchTwo || batchThree || batchFour || batchFive || batchSix;
+const out = `docs/magical-athlete/second-wind/${batchSix ? "batch-six-screens" : batchFive ? "batch-five-screens" : batchFour ? "batch-four-screens" : batchThree ? "batch-three-screens" : batchTwo ? "batch-two-screens" : "first-three-fix-screens"}`;
 const work = resolve("work/ma-first-three-review");
 mkdirSync(out, { recursive: true });
 mkdirSync(work, { recursive: true });
-const reviewIds = batchFive
+const reviewIds = batchSix
+  ? SECOND_WIND_PREVIEW_IDS.slice(23, 28)
+  : batchFive
   ? SECOND_WIND_PREVIEW_IDS.slice(18, 23)
   : batchFour
   ? SECOND_WIND_PREVIEW_IDS.slice(13, 18)
@@ -56,8 +59,11 @@ const colorOf=id=>PLAYER_COLORS[view.seats.indexOf(id)];
 const name=id=>view.players.find(p=>p.id===id)?.name??id;
 const root=createRoot(document.getElementById('root'));
 window.review=(mode)=>{
+ const bite=view.race.tokens.find(t=>t.racer==='sw_bite_mark');
+ if(bite) bite.secondWind=mode==='form'?{wereMouth:true}:undefined;
+ view.race.cancelledBy=mode==='cancelled'?'sw_spoilsport':undefined;
  const powerId=mode.startsWith('power:')?mode.slice(6):reviewIds[0];
- let show=mode.startsWith('power')?{kind:'power',racer:powerId,power:powerId,text:'接入标准技能卡显示检查'}:mode==='stats'?{kind:'stats',race:0,rows:reviewIds.map((racer,i)=>({racer,owner:'p'+(i+1),forward:i===2?20:20-i,back:i,powers:i===3?4:1,trips:i===1?3:0}))}:null;
+ let show=mode==='cancelled'?{kind:'podium',race:0,places:[]}:mode.startsWith('power')?{kind:'power',racer:powerId,power:powerId,text:'接入标准技能卡显示检查'}:mode==='stats'?{kind:'stats',race:0,rows:reviewIds.map((racer,i)=>({racer,owner:'p'+(i+1),forward:i===2?20:20-i,back:i,powers:i===3?4:1,trips:i===1?3:0}))}:null;
  root.render(<div className="ma-app"><h2 style={{padding:12}}>角色接入 · 组件截图夹具</h2>{mode==='cards'?<div style={{display:'flex',gap:12,flexWrap:'wrap',padding:12}}>{['alchemist',...reviewIds].map(id=><div style={{width:220}} key={id}><RacerCard id={id}/></div>)}</div>:mode==='tokens'||mode==='borders'?<div style={{display:'flex',gap:24,padding:20,alignItems:'end',background:'#eee'}}>{['alchemist',...(mode==='borders'?firstThree:reviewIds)].map(id=><figure key={id} style={{margin:0,color:'#111',textAlign:'center'}}><img src={'/assets/magical-athlete/tokens/'+id+'.png'} style={{height:238,width:'auto',display:'block'}}/><figcaption>{id}</figcaption><img src={'/assets/magical-athlete/portraits/'+id+'.webp'} width="234" height="172" style={{objectFit:'cover'}}/></figure>)}</div>:<Track race={view.race} colorOf={colorOf} me="p1" layout={mode==='grid'?'grid':'art'} fit={true} onPawn={()=>{}}/>}{show&&<Overlay show={show} view={view} name={name} colorOf={colorOf} me="p1" onSkip={()=>{}}/>}</div>);
 };
 window.review('grid');
@@ -143,7 +149,7 @@ try {
       });
     }
     return results;
-  }, SECOND_WIND_PREVIEW_IDS);
+  }, [...SECOND_WIND_PREVIEW_IDS, ...(batchSix ? ["sw_bite_mark_were"] : [])]);
   for (const m of metrics) {
     assert.equal(m.token[1], 238);
     assert(m.token[0] / m.token[1] >= 0.39 && m.token[0] / m.token[1] <= 0.6, `${m.id}: token ratio`);
@@ -168,6 +174,7 @@ try {
     shots.push(["borders", 1100, 560, "10-first-three-colored-borders.png"]);
     for (const id of reviewIds.slice(1)) shots.push([`power:${id}`, 390, 844, `skill-${id}-phone.png`]);
   }
+  if (batchSix) shots.push(["form",390,844,"11-were-mouth-phone.png"], ["form",1366,768,"12-were-mouth-desktop.png"], ["cancelled",390,844,"13-cancelled-podium-phone.png"]);
   for (const [mode, width, height, filename] of shots) {
     await page.setViewportSize({ width, height });
     await page.evaluate((mode) => (window as any).review(mode), mode);
