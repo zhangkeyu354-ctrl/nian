@@ -17,12 +17,15 @@ const batchThree = process.env.MA_REVIEW_BATCH === "3";
 const batchFour = process.env.MA_REVIEW_BATCH === "4";
 const batchFive = process.env.MA_REVIEW_BATCH === "5";
 const batchSix = process.env.MA_REVIEW_BATCH === "6";
-const laterBatch = batchTwo || batchThree || batchFour || batchFive || batchSix;
-const out = `docs/magical-athlete/second-wind/${batchSix ? "batch-six-screens" : batchFive ? "batch-five-screens" : batchFour ? "batch-four-screens" : batchThree ? "batch-three-screens" : batchTwo ? "batch-two-screens" : "first-three-fix-screens"}`;
+const batchFinal = process.env.MA_REVIEW_BATCH === "final";
+const laterBatch = batchTwo || batchThree || batchFour || batchFive || batchSix || batchFinal;
+const out = `docs/magical-athlete/second-wind/${batchFinal ? "final-batch-screens" : batchSix ? "batch-six-screens" : batchFive ? "batch-five-screens" : batchFour ? "batch-four-screens" : batchThree ? "batch-three-screens" : batchTwo ? "batch-two-screens" : "first-three-fix-screens"}`;
 const work = resolve("work/ma-first-three-review");
 mkdirSync(out, { recursive: true });
 mkdirSync(work, { recursive: true });
-const reviewIds = batchSix
+const reviewIds = batchFinal
+  ? SECOND_WIND_PREVIEW_IDS.slice(28)
+  : batchSix
   ? SECOND_WIND_PREVIEW_IDS.slice(23, 28)
   : batchFive
   ? SECOND_WIND_PREVIEW_IDS.slice(18, 23)
@@ -33,7 +36,7 @@ const reviewIds = batchSix
   : batchTwo
     ? SECOND_WIND_PREVIEW_IDS.slice(3, 8)
     : SECOND_WIND_PREVIEW_IDS.slice(0, 3);
-const ids = [...reviewIds, "banana", "alchemist", "twin"];
+const ids = [...reviewIds.slice(0,5), "banana", "alchemist", "twin"];
 const state = testRace({
   racers: ids,
   pos: ids.map((_, i) => (i < 3 ? 6 : 4 + i)),
@@ -55,16 +58,23 @@ const view=await (await fetch('/@fs/${work.replaceAll("\\", "/")}/view.json')).j
 const ids=${JSON.stringify(ids)};
 const reviewIds=${JSON.stringify(reviewIds)};
 const firstThree=${JSON.stringify(SECOND_WIND_PREVIEW_IDS.slice(0, 3))};
+const finalBatch=${JSON.stringify(batchFinal)};
 const colorOf=id=>PLAYER_COLORS[view.seats.indexOf(id)];
 const name=id=>view.players.find(p=>p.id===id)?.name??id;
 const root=createRoot(document.getElementById('root'));
 window.review=(mode)=>{
+ const displayIds=finalBatch?reviewIds.slice(mode.endsWith(':b')?4:0,mode.endsWith(':b')?8:4):reviewIds;
+ if(finalBatch){
+  view.race.tokens.forEach((t,i)=>{t.racer=(mode.startsWith('remaining')?reviewIds.slice(5).concat(reviewIds):ids)[i];});
+  view.race.hogs=[{source:'sw_hog_knight',rider:'alchemist',pos:10}];
+ }
  const bite=view.race.tokens.find(t=>t.racer==='sw_bite_mark');
  if(bite) bite.secondWind=mode==='form'?{wereMouth:true}:undefined;
  view.race.cancelledBy=mode==='cancelled'?'sw_spoilsport':undefined;
  const powerId=mode.startsWith('power:')?mode.slice(6):reviewIds[0];
+ if(finalBatch && mode.startsWith('power') && !view.race.tokens.some(t=>t.racer===powerId))view.race.tokens[0].racer=powerId;
  let show=mode==='cancelled'?{kind:'podium',race:0,places:[]}:mode.startsWith('power')?{kind:'power',racer:powerId,power:powerId,text:'接入标准技能卡显示检查'}:mode==='stats'?{kind:'stats',race:0,rows:reviewIds.map((racer,i)=>({racer,owner:'p'+(i+1),forward:i===2?20:20-i,back:i,powers:i===3?4:1,trips:i===1?3:0}))}:null;
- root.render(<div className="ma-app"><h2 style={{padding:12}}>角色接入 · 组件截图夹具</h2>{mode==='cards'?<div style={{display:'flex',gap:12,flexWrap:'wrap',padding:12}}>{['alchemist',...reviewIds].map(id=><div style={{width:220}} key={id}><RacerCard id={id}/></div>)}</div>:mode==='tokens'||mode==='borders'?<div style={{display:'flex',gap:24,padding:20,alignItems:'end',background:'#eee'}}>{['alchemist',...(mode==='borders'?firstThree:reviewIds)].map(id=><figure key={id} style={{margin:0,color:'#111',textAlign:'center'}}><img src={'/assets/magical-athlete/tokens/'+id+'.png'} style={{height:238,width:'auto',display:'block'}}/><figcaption>{id}</figcaption><img src={'/assets/magical-athlete/portraits/'+id+'.webp'} width="234" height="172" style={{objectFit:'cover'}}/></figure>)}</div>:<Track race={view.race} colorOf={colorOf} me="p1" layout={mode==='grid'?'grid':'art'} fit={true} onPawn={()=>{}}/>}{show&&<Overlay show={show} view={view} name={name} colorOf={colorOf} me="p1" onSkip={()=>{}}/>}</div>);
+ root.render(<div className="ma-app"><h2 style={{padding:12}}>角色接入 · 组件截图夹具</h2>{mode.startsWith('cards')?<div style={{display:'flex',gap:12,flexWrap:'wrap',padding:12}}>{['alchemist',...displayIds].map(id=><div style={{width:220}} key={id}><RacerCard id={id}/></div>)}</div>:mode.startsWith('tokens')||mode==='borders'?<div style={{display:'flex',gap:24,padding:20,alignItems:'end',background:'#eee'}}>{['alchemist',...(mode==='borders'?firstThree:displayIds)].map(id=><figure key={id} style={{margin:0,color:'#111',textAlign:'center'}}><img src={'/assets/magical-athlete/tokens/'+id+'.png'} style={{height:238,width:'auto',display:'block'}}/><figcaption>{id}</figcaption><img src={'/assets/magical-athlete/portraits/'+id+'.webp'} width="234" height="172" style={{objectFit:'cover'}}/></figure>)}</div>:<Track race={view.race} colorOf={colorOf} me="p1" layout={mode==='grid'||mode==='remaining'?'grid':'art'} fit={true} onPawn={()=>{}}/>}{show&&<Overlay show={show} view={view} name={name} colorOf={colorOf} me="p1" onSkip={()=>{}}/>}</div>);
 };
 window.review('grid');
 `,
@@ -149,7 +159,7 @@ try {
       });
     }
     return results;
-  }, [...SECOND_WIND_PREVIEW_IDS, ...(batchSix ? ["sw_bite_mark_were"] : [])]);
+  }, [...SECOND_WIND_PREVIEW_IDS, ...(batchSix || batchFinal ? ["sw_bite_mark_were"] : [])]);
   for (const m of metrics) {
     assert.equal(m.token[1], 238);
     assert(m.token[0] / m.token[1] >= 0.39 && m.token[0] / m.token[1] <= 0.6, `${m.id}: token ratio`);
@@ -175,6 +185,7 @@ try {
     for (const id of reviewIds.slice(1)) shots.push([`power:${id}`, 390, 844, `skill-${id}-phone.png`]);
   }
   if (batchSix) shots.push(["form",390,844,"11-were-mouth-phone.png"], ["form",1366,768,"12-were-mouth-desktop.png"], ["cancelled",390,844,"13-cancelled-podium-phone.png"]);
+  if (batchFinal) shots.push(["remaining",390,844,"11-remaining-phone.png"],["remaining-art",1366,768,"12-remaining-desktop.png"],["tokens:b",1620,560,"13-token-comparison-b.png"],["cards:b",1440,700,"14-card-comparison-b.png"]);
   for (const [mode, width, height, filename] of shots) {
     await page.setViewportSize({ width, height });
     await page.evaluate((mode) => (window as any).review(mode), mode);

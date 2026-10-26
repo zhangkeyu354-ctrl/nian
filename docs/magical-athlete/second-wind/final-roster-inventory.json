@@ -1,0 +1,597 @@
+{
+  "as_of": "2026-10-26",
+  "playable_base": 36,
+  "preview_characters": 36,
+  "mixed_pool": 72,
+  "token_images": 37,
+  "portrait_images": 37,
+  "card_images": 37,
+  "extra_image_count": 1,
+  "variants": [
+    {
+      "id": "sw_bite_mark_were",
+      "parent": "sw_bite_mark",
+      "purpose": "巨口变身图，不是可招募角色"
+    }
+  ],
+  "base_roster": [
+    {
+      "id": "alchemist",
+      "en": "Alchemist",
+      "zh": "炼金术士"
+    },
+    {
+      "id": "baba_yaga",
+      "en": "Baba Yaga",
+      "zh": "芭芭雅嘎"
+    },
+    {
+      "id": "banana",
+      "en": "Banana",
+      "zh": "香蕉"
+    },
+    {
+      "id": "blimp",
+      "en": "Blimp",
+      "zh": "飞艇"
+    },
+    {
+      "id": "centaur",
+      "en": "Centaur",
+      "zh": "半人马"
+    },
+    {
+      "id": "cheerleader",
+      "en": "Cheerleader",
+      "zh": "啦啦队长"
+    },
+    {
+      "id": "coach",
+      "en": "Coach",
+      "zh": "教练"
+    },
+    {
+      "id": "copycat",
+      "en": "Copycat",
+      "zh": "山寨猫"
+    },
+    {
+      "id": "dicemonger",
+      "en": "Dicemonger",
+      "zh": "骰贩子"
+    },
+    {
+      "id": "duelist",
+      "en": "Duelist",
+      "zh": "决斗者"
+    },
+    {
+      "id": "egg",
+      "en": "Egg",
+      "zh": "神秘蛋"
+    },
+    {
+      "id": "flip_flop",
+      "en": "Flip Flop",
+      "zh": "人字拖"
+    },
+    {
+      "id": "genius",
+      "en": "Genius",
+      "zh": "天才"
+    },
+    {
+      "id": "gunk",
+      "en": "Gunk",
+      "zh": "黏黏怪"
+    },
+    {
+      "id": "hare",
+      "en": "Hare",
+      "zh": "兔子"
+    },
+    {
+      "id": "heckler",
+      "en": "Heckler",
+      "zh": "毒舌喷子"
+    },
+    {
+      "id": "huge_baby",
+      "en": "Huge Baby",
+      "zh": "巨婴"
+    },
+    {
+      "id": "hypnotist",
+      "en": "Hypnotist",
+      "zh": "催眠师"
+    },
+    {
+      "id": "inchworm",
+      "en": "Inchworm",
+      "zh": "尺蠖"
+    },
+    {
+      "id": "lackey",
+      "en": "Lackey",
+      "zh": "跟班"
+    },
+    {
+      "id": "leaptoad",
+      "en": "Leaptoad",
+      "zh": "跳跳蟾"
+    },
+    {
+      "id": "legs",
+      "en": "Legs",
+      "zh": "大长腿"
+    },
+    {
+      "id": "lovable_loser",
+      "en": "Lovable Loser",
+      "zh": "可爱废柴"
+    },
+    {
+      "id": "magician",
+      "en": "Magician",
+      "zh": "魔术师"
+    },
+    {
+      "id": "mastermind",
+      "en": "Mastermind",
+      "zh": "军师"
+    },
+    {
+      "id": "mouth",
+      "en": "M.O.U.T.H.",
+      "zh": "血盆大口"
+    },
+    {
+      "id": "party_animal",
+      "en": "Party Animal",
+      "zh": "派对咖"
+    },
+    {
+      "id": "rocket_scientist",
+      "en": "Rocket Scientist",
+      "zh": "火箭科学家"
+    },
+    {
+      "id": "romantic",
+      "en": "Romantic",
+      "zh": "浪漫者"
+    },
+    {
+      "id": "scoocher",
+      "en": "Scoocher",
+      "zh": "挪挪"
+    },
+    {
+      "id": "sisyphus",
+      "en": "Sisyphus",
+      "zh": "西西弗斯"
+    },
+    {
+      "id": "skipper",
+      "en": "Skipper",
+      "zh": "船长"
+    },
+    {
+      "id": "stickler",
+      "en": "Stickler",
+      "zh": "较真怪"
+    },
+    {
+      "id": "suckerfish",
+      "en": "Suckerfish",
+      "zh": "吸盘鱼"
+    },
+    {
+      "id": "third_wheel",
+      "en": "Third Wheel",
+      "zh": "电灯泡"
+    },
+    {
+      "id": "twin",
+      "en": "Twin",
+      "zh": "双胞胎"
+    }
+  ],
+  "preview_roster": [
+    {
+      "id": "sw_icarus",
+      "en": "Icarus",
+      "zh": "伊卡洛斯",
+      "token_size": [
+        95,
+        238
+      ],
+      "card": "/assets/magical-athlete/cards/zh/sw_icarus.webp",
+      "token_sha256": "f36840e9ab5b742abb54dffd5f8b254276ee9f41d26d128c9fa06a2de3151a16"
+    },
+    {
+      "id": "sw_overtaker",
+      "en": "Overtaker",
+      "zh": "超车手",
+      "token_size": [
+        113,
+        238
+      ],
+      "card": "/assets/magical-athlete/cards/zh/sw_overtaker.webp",
+      "token_sha256": "f2cebba7b404c70f8cc5480e9ae6b1f16c0dd8a6287703f3e08246c4b3232725"
+    },
+    {
+      "id": "sw_kingtripper",
+      "en": "Kingtripper",
+      "zh": "绊王",
+      "token_size": [
+        112,
+        238
+      ],
+      "card": "/assets/magical-athlete/cards/zh/sw_kingtripper.webp",
+      "token_sha256": "fbd8a8757158c425cde30f6f68a1c68101cad75adb05e8ca89f6655f017d7eec"
+    },
+    {
+      "id": "sw_mole",
+      "en": "Mole",
+      "zh": "鼹鼠",
+      "token_size": [
+        120,
+        238
+      ],
+      "card": "/assets/magical-athlete/cards/zh/sw_mole.webp",
+      "token_sha256": "42f280e668f9422f6a15d400e8d63d27ee7db54cffdf42d1da4e7c4afe7d59f8"
+    },
+    {
+      "id": "sw_tail",
+      "en": "Tail",
+      "zh": "尾巴",
+      "token_size": [
+        115,
+        238
+      ],
+      "card": "/assets/magical-athlete/cards/zh/sw_tail.webp",
+      "token_sha256": "74ae6706393915905651a6ffc2f9e066ee9a307aa3fd19d6ea943db662ea5a9f"
+    },
+    {
+      "id": "sw_hopfrog",
+      "en": "Hopfrog",
+      "zh": "跳蛙",
+      "token_size": [
+        100,
+        238
+      ],
+      "card": "/assets/magical-athlete/cards/zh/sw_hopfrog.webp",
+      "token_sha256": "a51ee144ad95b737ebeb1f17becc0f356045f0fe1cf2247810d754a11ca0e630"
+    },
+    {
+      "id": "sw_the_hose",
+      "en": "The Hose",
+      "zh": "水管",
+      "token_size": [
+        103,
+        238
+      ],
+      "card": "/assets/magical-athlete/cards/zh/sw_the_hose.webp",
+      "token_sha256": "6b611c75cf061dee975f50590945b3dcba462eb95355ca48d7cee69e6f2fb590"
+    },
+    {
+      "id": "sw_le_saboteur",
+      "en": "Le Saboteur",
+      "zh": "破坏者",
+      "token_size": [
+        107,
+        238
+      ],
+      "card": "/assets/magical-athlete/cards/zh/sw_le_saboteur.webp",
+      "token_sha256": "a13de89c028c7878825dc8654d0b53c9d19b22ea563b7f8800a5653632d2ef01"
+    },
+    {
+      "id": "sw_blunderdog",
+      "en": "Blunderdog",
+      "zh": "倒霉狗",
+      "token_size": [
+        93,
+        238
+      ],
+      "card": "/assets/magical-athlete/cards/zh/sw_blunderdog.webp",
+      "token_sha256": "8811895b533593d9124929eb4a0cf41ac4e8b3567bfb6f1cd826c7b38bd7a5ca"
+    },
+    {
+      "id": "sw_critic",
+      "en": "Critic",
+      "zh": "评论家",
+      "token_size": [
+        108,
+        238
+      ],
+      "card": "/assets/magical-athlete/cards/zh/sw_critic.webp",
+      "token_sha256": "97ba58f1f0e4b71045cd2184e78260144907b83331a39a3c61dae8923969aa0b"
+    },
+    {
+      "id": "sw_diva",
+      "en": "Diva",
+      "zh": "大牌",
+      "token_size": [
+        121,
+        238
+      ],
+      "card": "/assets/magical-athlete/cards/zh/sw_diva.webp",
+      "token_sha256": "e076ad62d396ea59677c53f7304620ec6295f5fbe4967612dd1af87e12b1f63c"
+    },
+    {
+      "id": "sw_speed_demon",
+      "en": "Speed Demon",
+      "zh": "速度恶魔",
+      "token_size": [
+        122,
+        238
+      ],
+      "card": "/assets/magical-athlete/cards/zh/sw_speed_demon.webp",
+      "token_sha256": "1b000866b959903544446a0bc90e6dd67b17ab34589f1cfa4ac84b2ff78dba35"
+    },
+    {
+      "id": "sw_streaker",
+      "en": "Streaker",
+      "zh": "裸奔者",
+      "token_size": [
+        114,
+        238
+      ],
+      "card": "/assets/magical-athlete/cards/zh/sw_streaker.webp",
+      "token_sha256": "d1dc2417876010d999f6757471aaf388bdd35e590b8d9fb1a3f74fa8091c8465"
+    },
+    {
+      "id": "sw_kraken",
+      "en": "Kraken",
+      "zh": "海怪",
+      "token_size": [
+        104,
+        238
+      ],
+      "card": "/assets/magical-athlete/cards/zh/sw_kraken.webp",
+      "token_sha256": "e014173dfa2cfb4d7af98446c6e909fe18706fcfc151ed977dcf2eea49d3effb"
+    },
+    {
+      "id": "sw_nemesis",
+      "en": "Nemesis",
+      "zh": "宿敌",
+      "token_size": [
+        107,
+        238
+      ],
+      "card": "/assets/magical-athlete/cards/zh/sw_nemesis.webp",
+      "token_sha256": "35931dc669bd9415ac8eaac32ca60dd56b492babc411416b7e33b08e8ebf687d"
+    },
+    {
+      "id": "sw_penguin",
+      "en": "Penguin",
+      "zh": "企鹅",
+      "token_size": [
+        116,
+        238
+      ],
+      "card": "/assets/magical-athlete/cards/zh/sw_penguin.webp",
+      "token_sha256": "0bbdc5d46ed7e06bebef341c084d5f444dd980a8330ec786da84fd9d90f3fee7"
+    },
+    {
+      "id": "sw_show_off",
+      "en": "Show-Off",
+      "zh": "炫耀者",
+      "token_size": [
+        118,
+        238
+      ],
+      "card": "/assets/magical-athlete/cards/zh/sw_show_off.webp",
+      "token_sha256": "4405442028b40706ecc3ae314a036984fc2547687ac0100754e4bfc2bd5f5676"
+    },
+    {
+      "id": "sw_soulmate",
+      "en": "Soulmate",
+      "zh": "灵魂伴侣",
+      "token_size": [
+        100,
+        238
+      ],
+      "card": "/assets/magical-athlete/cards/zh/sw_soulmate.webp",
+      "token_sha256": "8a50902abe0ead2715baec4218c6d009bc88adbf1bf9ee8608120154573f7d8c"
+    },
+    {
+      "id": "sw_gloth",
+      "en": "Gloth",
+      "zh": "慢吞吞",
+      "token_size": [
+        136,
+        238
+      ],
+      "card": "/assets/magical-athlete/cards/zh/sw_gloth.webp",
+      "token_sha256": "394ce59cb06082739683207ad77b3a93199f63f456ad57701bf3fa60c932bd44"
+    },
+    {
+      "id": "sw_hotel",
+      "en": "Hotel",
+      "zh": "旅馆",
+      "token_size": [
+        111,
+        238
+      ],
+      "card": "/assets/magical-athlete/cards/zh/sw_hotel.webp",
+      "token_sha256": "e28280e2bb4ebeca2f38c24011ab546c5748181d1b4b947766520a6988f4d165"
+    },
+    {
+      "id": "sw_nepo_baby",
+      "en": "Nepo Baby",
+      "zh": "关系户宝宝",
+      "token_size": [
+        134,
+        238
+      ],
+      "card": "/assets/magical-athlete/cards/zh/sw_nepo_baby.webp",
+      "token_sha256": "2a562ec9d5446b72355eb022269091cf8f3b72e5dc1bbf000b3e955798f72d17"
+    },
+    {
+      "id": "sw_stepdad",
+      "en": "Stepdad",
+      "zh": "继父",
+      "token_size": [
+        104,
+        238
+      ],
+      "card": "/assets/magical-athlete/cards/zh/sw_stepdad.webp",
+      "token_sha256": "a685e9e1f2b4250f1707f592449534696408b767227c089f4c3155cb83baaf6b"
+    },
+    {
+      "id": "sw_stunner",
+      "en": "Stunner",
+      "zh": "惊艳者",
+      "token_size": [
+        98,
+        238
+      ],
+      "card": "/assets/magical-athlete/cards/zh/sw_stunner.webp",
+      "token_sha256": "50ef5fc94ef0d3740f9533dd1f1d90faab25f225c5f51a4bf159eda565e163f8"
+    },
+    {
+      "id": "sw_understudy",
+      "en": "Understudy",
+      "zh": "候补演员",
+      "token_size": [
+        102,
+        238
+      ],
+      "card": "/assets/magical-athlete/cards/zh/sw_understudy.webp",
+      "token_sha256": "9d0a491ad728b7325a3f4a11b1b841c3cd9741b3110f9518c7e0d24c2bdf1a46"
+    },
+    {
+      "id": "sw_bite_mark",
+      "en": "Bite Mark",
+      "zh": "咬痕",
+      "token_size": [
+        126,
+        238
+      ],
+      "card": "/assets/magical-athlete/cards/zh/sw_bite_mark.webp",
+      "token_sha256": "e630cda886d4cca26ab800b8db1b8c2405e1d64da8c68285f4d920d8ca0a03ae"
+    },
+    {
+      "id": "sw_mr_dice_guy",
+      "en": "Mr. Dice Guy",
+      "zh": "骰子先生",
+      "token_size": [
+        126,
+        238
+      ],
+      "card": "/assets/magical-athlete/cards/zh/sw_mr_dice_guy.webp",
+      "token_sha256": "78ad21a68e07be6320ce7e525f7c2340258e6305eb1ea58cba079cf1c67ec2a8"
+    },
+    {
+      "id": "sw_party_pooper",
+      "en": "Party Pooper",
+      "zh": "派对扫兴鬼",
+      "token_size": [
+        123,
+        238
+      ],
+      "card": "/assets/magical-athlete/cards/zh/sw_party_pooper.webp",
+      "token_sha256": "d239326ae3ff57da35425237c10a037c2e59ff418c73b6eaa9af6fc227c64999"
+    },
+    {
+      "id": "sw_spoilsport",
+      "en": "Spoilsport",
+      "zh": "扫兴者",
+      "token_size": [
+        120,
+        238
+      ],
+      "card": "/assets/magical-athlete/cards/zh/sw_spoilsport.webp",
+      "token_sha256": "9a5f0d55a82bb9b5494e878ad055da2681ceff8f83d85dc5dd74bc52be401f33"
+    },
+    {
+      "id": "sw_cheatah",
+      "en": "Cheatah",
+      "zh": "作弊豹",
+      "token_size": [
+        108,
+        238
+      ],
+      "card": "/assets/magical-athlete/cards/zh/sw_cheatah.webp",
+      "token_sha256": "187a9e17e533e7337633dbc69cf426f7f0a6c29278daef9a98947b1994c3c659"
+    },
+    {
+      "id": "sw_doppelgangster",
+      "en": "Doppelgängster",
+      "zh": "替身黑帮",
+      "token_size": [
+        111,
+        238
+      ],
+      "card": "/assets/magical-athlete/cards/zh/sw_doppelgangster.webp",
+      "token_sha256": "61778b5429a8038558b592e744964082325add7a3d7d28af7046aabf11f3c170"
+    },
+    {
+      "id": "sw_hog_knight",
+      "en": "Hog Knight",
+      "zh": "野猪骑士",
+      "token_size": [
+        98,
+        238
+      ],
+      "card": "/assets/magical-athlete/cards/zh/sw_hog_knight.webp",
+      "token_sha256": "24a9da92a8142e394fb59127c813a11a14cc60714a4212357a196dbe58ce59b4"
+    },
+    {
+      "id": "sw_magical_athlete",
+      "en": "Magical Athlete",
+      "zh": "魔法运动员",
+      "token_size": [
+        114,
+        238
+      ],
+      "card": "/assets/magical-athlete/cards/zh/sw_magical_athlete.webp",
+      "token_sha256": "9e390c7578eb3b6df01db583d5058bc44b4ccf0bb3f308bd75dffd03d7ab8140"
+    },
+    {
+      "id": "sw_mush",
+      "en": "Mush",
+      "zh": "糊糊",
+      "token_size": [
+        113,
+        238
+      ],
+      "card": "/assets/magical-athlete/cards/zh/sw_mush.webp",
+      "token_sha256": "205ffde93f12cc080c9b75017116ce6d59844b14fb85260fbc26252b7b05c23d"
+    },
+    {
+      "id": "sw_null",
+      "en": "Null",
+      "zh": "虚无",
+      "token_size": [
+        102,
+        238
+      ],
+      "card": "/assets/magical-athlete/cards/zh/sw_null.webp",
+      "token_sha256": "58a74caf6526e7cdc8576191d899886e1bb0bae6abca4276b6565da551888275"
+    },
+    {
+      "id": "sw_re_runner",
+      "en": "Re-Runner",
+      "zh": "返场跑者",
+      "token_size": [
+        113,
+        238
+      ],
+      "card": "/assets/magical-athlete/cards/zh/sw_re_runner.webp",
+      "token_sha256": "76da5fccfd1e11a4cc204ad14ac7abd66d5e618f6666c41717f210fce2154501"
+    },
+    {
+      "id": "sw_switcharoo",
+      "en": "Switcharoo",
+      "zh": "换手袋鼠",
+      "token_size": [
+        115,
+        238
+      ],
+      "card": "/assets/magical-athlete/cards/zh/sw_switcharoo.webp",
+      "token_sha256": "9cdb4c98d0d4b5c9e76878ed5fc9f932ca8d50aa0a4d27910da7937936d3115e"
+    }
+  ]
+}

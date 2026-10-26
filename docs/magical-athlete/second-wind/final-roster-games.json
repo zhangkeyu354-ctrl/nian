@@ -1,0 +1,1215 @@
+{
+  "fixture": "deliberately arranged unique hands; actual reducer commands",
+  "games": 36,
+  "races": 144,
+  "new_racers_participating": [
+    "sw_icarus",
+    "sw_overtaker",
+    "sw_kingtripper",
+    "sw_mole",
+    "sw_tail",
+    "sw_hopfrog",
+    "sw_the_hose",
+    "sw_le_saboteur",
+    "sw_blunderdog",
+    "sw_critic",
+    "sw_diva",
+    "sw_speed_demon",
+    "sw_streaker",
+    "sw_kraken",
+    "sw_nemesis",
+    "sw_penguin",
+    "sw_show_off",
+    "sw_soulmate",
+    "sw_gloth",
+    "sw_hotel",
+    "sw_nepo_baby",
+    "sw_stepdad",
+    "sw_stunner",
+    "sw_understudy",
+    "sw_bite_mark",
+    "sw_mr_dice_guy",
+    "sw_party_pooper",
+    "sw_spoilsport",
+    "sw_cheatah",
+    "sw_doppelgangster",
+    "sw_hog_knight",
+    "sw_magical_athlete",
+    "sw_mush",
+    "sw_null",
+    "sw_re_runner",
+    "sw_switcharoo"
+  ],
+  "players": [
+    {
+      "players": 2,
+      "games": 6
+    },
+    {
+      "players": 3,
+      "games": 5
+    },
+    {
+      "players": 4,
+      "games": 5
+    },
+    {
+      "players": 5,
+      "games": 5
+    },
+    {
+      "players": 6,
+      "games": 5
+    },
+    {
+      "players": 7,
+      "games": 5
+    },
+    {
+      "players": 8,
+      "games": 5
+    }
+  ],
+  "results": [
+    {
+      "focus": "sw_icarus",
+      "players": 2,
+      "seed": 1117,
+      "commands": 86,
+      "races": 4,
+      "maxTokens": 2,
+      "controlTransfers": 0,
+      "finalPoints": [
+        {
+          "player": "p0",
+          "points": 10
+        },
+        {
+          "player": "p1",
+          "points": 9
+        }
+      ],
+      "log_sha256": "77de0d27681402895c9ebd3a73e5f37b53d996de2fcc0ba8617af966639a30c1"
+    },
+    {
+      "focus": "sw_overtaker",
+      "players": 3,
+      "seed": 1214,
+      "commands": 110,
+      "races": 4,
+      "maxTokens": 3,
+      "controlTransfers": 0,
+      "finalPoints": [
+        {
+          "player": "p0",
+          "points": 10
+        },
+        {
+          "player": "p1",
+          "points": 7
+        },
+        {
+          "player": "p2",
+          "points": 15
+        }
+      ],
+      "log_sha256": "90f5893f9d8bc0eb664fdfa7a76898e2aa0f5120e99bec00b30e7fe7996242e0"
+    },
+    {
+      "focus": "sw_kingtripper",
+      "players": 4,
+      "seed": 1311,
+      "commands": 178,
+      "races": 4,
+      "maxTokens": 4,
+      "controlTransfers": 0,
+      "finalPoints": [
+        {
+          "player": "p0",
+          "points": 10
+        },
+        {
+          "player": "p1",
+          "points": 0
+        },
+        {
+          "player": "p2",
+          "points": 4
+        },
+        {
+          "player": "p3",
+          "points": 6
+        }
+      ],
+      "log_sha256": "a698958fcba162c3418f736630b93c92f804842982da330976855db7ce2b1b8a"
+    },
+    {
+      "focus": "sw_mole",
+      "players": 5,
+      "seed": 1408,
+      "commands": 226,
+      "races": 4,
+      "maxTokens": 5,
+      "controlTransfers": 0,
+      "finalPoints": [
+        {
+          "player": "p0",
+          "points": 3
+        },
+        {
+          "player": "p1",
+          "points": 4
+        },
+        {
+          "player": "p2",
+          "points": 8
+        },
+        {
+          "player": "p3",
+          "points": 9
+        },
+        {
+          "player": "p4",
+          "points": 6
+        }
+      ],
+      "log_sha256": "9f75905e00919212e4bb968208d142e42da0000650bdd8256c7254a5dc3d1faf"
+    },
+    {
+      "focus": "sw_tail",
+      "players": 6,
+      "seed": 1505,
+      "commands": 316,
+      "races": 4,
+      "maxTokens": 6,
+      "controlTransfers": 0,
+      "finalPoints": [
+        {
+          "player": "p0",
+          "points": 5
+        },
+        {
+          "player": "p1",
+          "points": 9
+        },
+        {
+          "player": "p2",
+          "points": 6
+        },
+        {
+          "player": "p3",
+          "points": 8
+        },
+        {
+          "player": "p4",
+          "points": 3
+        },
+        {
+          "player": "p5",
+          "points": 8
+        }
+      ],
+      "log_sha256": "dff8c65d15f9b8ab0a0af05748ac8599287c28c03c3fb2774e4a154c975d0bf6"
+    },
+    {
+      "focus": "sw_hopfrog",
+      "players": 7,
+      "seed": 1602,
+      "commands": 336,
+      "races": 4,
+      "maxTokens": 7,
+      "controlTransfers": 0,
+      "finalPoints": [
+        {
+          "player": "p0",
+          "points": 2
+        },
+        {
+          "player": "p1",
+          "points": 6
+        },
+        {
+          "player": "p2",
+          "points": 9
+        },
+        {
+          "player": "p3",
+          "points": 2
+        },
+        {
+          "player": "p4",
+          "points": 6
+        },
+        {
+          "player": "p5",
+          "points": 4
+        },
+        {
+          "player": "p6",
+          "points": 8
+        }
+      ],
+      "log_sha256": "fdd312ef5eab6bb1cff6d2991eba43cb16ed2eb252f3e89f285c1bfd6d4f89cd"
+    },
+    {
+      "focus": "sw_the_hose",
+      "players": 8,
+      "seed": 1699,
+      "commands": 328,
+      "races": 4,
+      "maxTokens": 8,
+      "controlTransfers": 1,
+      "finalPoints": [
+        {
+          "player": "p0",
+          "points": 6
+        },
+        {
+          "player": "p1",
+          "points": 6
+        },
+        {
+          "player": "p2",
+          "points": 3
+        },
+        {
+          "player": "p3",
+          "points": 1
+        },
+        {
+          "player": "p4",
+          "points": 1
+        },
+        {
+          "player": "p5",
+          "points": 5
+        },
+        {
+          "player": "p6",
+          "points": 8
+        },
+        {
+          "player": "p7",
+          "points": 8
+        }
+      ],
+      "log_sha256": "013821d6232621187548b685fbeba10536864f4a2261d18e7bcc492584ca7fac"
+    },
+    {
+      "focus": "sw_le_saboteur",
+      "players": 2,
+      "seed": 1796,
+      "commands": 97,
+      "races": 4,
+      "maxTokens": 2,
+      "controlTransfers": 0,
+      "finalPoints": [
+        {
+          "player": "p0",
+          "points": 9
+        },
+        {
+          "player": "p1",
+          "points": 10
+        }
+      ],
+      "log_sha256": "d1abefeddbc776fd4d5d1148e09fb28906b5184649b9de83d859408aa73745b6"
+    },
+    {
+      "focus": "sw_blunderdog",
+      "players": 3,
+      "seed": 1893,
+      "commands": 113,
+      "races": 4,
+      "maxTokens": 3,
+      "controlTransfers": 0,
+      "finalPoints": [
+        {
+          "player": "p0",
+          "points": 4
+        },
+        {
+          "player": "p1",
+          "points": 6
+        },
+        {
+          "player": "p2",
+          "points": 10
+        }
+      ],
+      "log_sha256": "3b63f4a6942289260d0626af6fb2ceb9188c6b3e32236334c5c859ba4fe25af6"
+    },
+    {
+      "focus": "sw_critic",
+      "players": 4,
+      "seed": 1990,
+      "commands": 246,
+      "races": 4,
+      "maxTokens": 5,
+      "controlTransfers": 0,
+      "finalPoints": [
+        {
+          "player": "p0",
+          "points": 7
+        },
+        {
+          "player": "p1",
+          "points": 5
+        },
+        {
+          "player": "p2",
+          "points": 10
+        },
+        {
+          "player": "p3",
+          "points": 6
+        }
+      ],
+      "log_sha256": "0f705862697a9a8b0f98d4d2bfd25c5cbb241ecfcc8233f2355bf38d8f7ec1e5"
+    },
+    {
+      "focus": "sw_diva",
+      "players": 5,
+      "seed": 2087,
+      "commands": 263,
+      "races": 4,
+      "maxTokens": 5,
+      "controlTransfers": 1,
+      "finalPoints": [
+        {
+          "player": "p0",
+          "points": 5
+        },
+        {
+          "player": "p1",
+          "points": 2
+        },
+        {
+          "player": "p2",
+          "points": 7
+        },
+        {
+          "player": "p3",
+          "points": 9
+        },
+        {
+          "player": "p4",
+          "points": 3
+        }
+      ],
+      "log_sha256": "c946cc33981255779e7c13c668b45dd0e5c71bf925f6a884ab76fd4d04e3b0bb"
+    },
+    {
+      "focus": "sw_speed_demon",
+      "players": 6,
+      "seed": 2184,
+      "commands": 290,
+      "races": 4,
+      "maxTokens": 7,
+      "controlTransfers": 0,
+      "finalPoints": [
+        {
+          "player": "p0",
+          "points": 8
+        },
+        {
+          "player": "p1",
+          "points": 1
+        },
+        {
+          "player": "p2",
+          "points": 5
+        },
+        {
+          "player": "p3",
+          "points": 6
+        },
+        {
+          "player": "p4",
+          "points": 5
+        },
+        {
+          "player": "p5",
+          "points": 6
+        }
+      ],
+      "log_sha256": "74bcad01936382c91262af5d8aeba8a052d8eaf667d4014b2cc8d5e4bb8c4753"
+    },
+    {
+      "focus": "sw_streaker",
+      "players": 7,
+      "seed": 2281,
+      "commands": 367,
+      "races": 4,
+      "maxTokens": 7,
+      "controlTransfers": 0,
+      "finalPoints": [
+        {
+          "player": "p0",
+          "points": 9
+        },
+        {
+          "player": "p1",
+          "points": 6
+        },
+        {
+          "player": "p2",
+          "points": 0
+        },
+        {
+          "player": "p3",
+          "points": 4
+        },
+        {
+          "player": "p4",
+          "points": 2
+        },
+        {
+          "player": "p5",
+          "points": 3
+        },
+        {
+          "player": "p6",
+          "points": 5
+        }
+      ],
+      "log_sha256": "745050c674c7544a431bb1d08b0f663a300b10867c57120e9c65f55fdb1fdf4a"
+    },
+    {
+      "focus": "sw_kraken",
+      "players": 8,
+      "seed": 2378,
+      "commands": 381,
+      "races": 4,
+      "maxTokens": 8,
+      "controlTransfers": 0,
+      "finalPoints": [
+        {
+          "player": "p0",
+          "points": 4
+        },
+        {
+          "player": "p1",
+          "points": 2
+        },
+        {
+          "player": "p2",
+          "points": 4
+        },
+        {
+          "player": "p3",
+          "points": 5
+        },
+        {
+          "player": "p4",
+          "points": 3
+        },
+        {
+          "player": "p5",
+          "points": 3
+        },
+        {
+          "player": "p6",
+          "points": 6
+        },
+        {
+          "player": "p7",
+          "points": 3
+        }
+      ],
+      "log_sha256": "2e39a36693a3c4a972831316c0783c32cb78849f0eecdcaa965a9dbd7899a7aa"
+    },
+    {
+      "focus": "sw_nemesis",
+      "players": 2,
+      "seed": 2475,
+      "commands": 124,
+      "races": 4,
+      "maxTokens": 2,
+      "controlTransfers": 0,
+      "finalPoints": [
+        {
+          "player": "p0",
+          "points": 17
+        },
+        {
+          "player": "p1",
+          "points": 11
+        }
+      ],
+      "log_sha256": "1f05cacd9391a9f7c5a7a0581490676ce1e3074300cc153cbeee43803026d554"
+    },
+    {
+      "focus": "sw_penguin",
+      "players": 3,
+      "seed": 2572,
+      "commands": 108,
+      "races": 4,
+      "maxTokens": 3,
+      "controlTransfers": 0,
+      "finalPoints": [
+        {
+          "player": "p0",
+          "points": 5
+        },
+        {
+          "player": "p1",
+          "points": 6
+        },
+        {
+          "player": "p2",
+          "points": 7
+        }
+      ],
+      "log_sha256": "74d7c4a7843060b944bd4abc9f71656600f49f02faf3b555212e531f9693eaa6"
+    },
+    {
+      "focus": "sw_show_off",
+      "players": 4,
+      "seed": 2669,
+      "commands": 214,
+      "races": 4,
+      "maxTokens": 5,
+      "controlTransfers": 0,
+      "finalPoints": [
+        {
+          "player": "p0",
+          "points": 6
+        },
+        {
+          "player": "p1",
+          "points": 8
+        },
+        {
+          "player": "p2",
+          "points": 10
+        },
+        {
+          "player": "p3",
+          "points": 3
+        }
+      ],
+      "log_sha256": "556db4bda627766a60c39fc7120dc59f421b41753baa0383bc41ca6901a4bb72"
+    },
+    {
+      "focus": "sw_soulmate",
+      "players": 5,
+      "seed": 2766,
+      "commands": 255,
+      "races": 4,
+      "maxTokens": 5,
+      "controlTransfers": 0,
+      "finalPoints": [
+        {
+          "player": "p0",
+          "points": 0
+        },
+        {
+          "player": "p1",
+          "points": 2
+        },
+        {
+          "player": "p2",
+          "points": 8
+        },
+        {
+          "player": "p3",
+          "points": 7
+        },
+        {
+          "player": "p4",
+          "points": 6
+        }
+      ],
+      "log_sha256": "fd264303adea6a8161f22e6d6744adc509e6e0927fc33fb75776ebec57e79655"
+    },
+    {
+      "focus": "sw_gloth",
+      "players": 6,
+      "seed": 2863,
+      "commands": 196,
+      "races": 4,
+      "maxTokens": 6,
+      "controlTransfers": 1,
+      "finalPoints": [
+        {
+          "player": "p0",
+          "points": 6
+        },
+        {
+          "player": "p1",
+          "points": 4
+        },
+        {
+          "player": "p2",
+          "points": 4
+        },
+        {
+          "player": "p3",
+          "points": 6
+        },
+        {
+          "player": "p4",
+          "points": 1
+        },
+        {
+          "player": "p5",
+          "points": 8
+        }
+      ],
+      "log_sha256": "44c84a3a4c3d94435dd4908988658696a0e15c223edaedae43f841dac8c85199"
+    },
+    {
+      "focus": "sw_hotel",
+      "players": 7,
+      "seed": 2960,
+      "commands": 338,
+      "races": 4,
+      "maxTokens": 7,
+      "controlTransfers": 0,
+      "finalPoints": [
+        {
+          "player": "p0",
+          "points": 3
+        },
+        {
+          "player": "p1",
+          "points": 3
+        },
+        {
+          "player": "p2",
+          "points": 10
+        },
+        {
+          "player": "p3",
+          "points": 7
+        },
+        {
+          "player": "p4",
+          "points": 4
+        },
+        {
+          "player": "p5",
+          "points": 1
+        },
+        {
+          "player": "p6",
+          "points": 3
+        }
+      ],
+      "log_sha256": "e086c01d6a02e9c0f07a2a35386fec723500cf5ea9e759400f22206bb3e241b7"
+    },
+    {
+      "focus": "sw_nepo_baby",
+      "players": 8,
+      "seed": 3057,
+      "commands": 307,
+      "races": 4,
+      "maxTokens": 8,
+      "controlTransfers": 0,
+      "finalPoints": [
+        {
+          "player": "p0",
+          "points": 1
+        },
+        {
+          "player": "p1",
+          "points": 3
+        },
+        {
+          "player": "p2",
+          "points": 4
+        },
+        {
+          "player": "p3",
+          "points": 4
+        },
+        {
+          "player": "p4",
+          "points": 7
+        },
+        {
+          "player": "p5",
+          "points": 9
+        },
+        {
+          "player": "p6",
+          "points": 3
+        },
+        {
+          "player": "p7",
+          "points": 4
+        }
+      ],
+      "log_sha256": "ec1a00ff12c5fd5baeefd36b61bb81d6eb10f67581c4095cde48e298016c87b7"
+    },
+    {
+      "focus": "sw_stepdad",
+      "players": 2,
+      "seed": 3154,
+      "commands": 72,
+      "races": 4,
+      "maxTokens": 2,
+      "controlTransfers": 0,
+      "finalPoints": [
+        {
+          "player": "p0",
+          "points": 12
+        },
+        {
+          "player": "p1",
+          "points": 12
+        }
+      ],
+      "log_sha256": "c121540737962f09ce02152672b38c1f88441b818bdf8e10de7ca6368b078e79"
+    },
+    {
+      "focus": "sw_stunner",
+      "players": 3,
+      "seed": 3251,
+      "commands": 129,
+      "races": 4,
+      "maxTokens": 3,
+      "controlTransfers": 1,
+      "finalPoints": [
+        {
+          "player": "p0",
+          "points": 6
+        },
+        {
+          "player": "p1",
+          "points": 7
+        },
+        {
+          "player": "p2",
+          "points": 4
+        }
+      ],
+      "log_sha256": "09005ed4acbd11755ddebed875a15267959323d0a7125b1b3269227ccce7a5de"
+    },
+    {
+      "focus": "sw_understudy",
+      "players": 4,
+      "seed": 3348,
+      "commands": 177,
+      "races": 4,
+      "maxTokens": 5,
+      "controlTransfers": 0,
+      "finalPoints": [
+        {
+          "player": "p0",
+          "points": 7
+        },
+        {
+          "player": "p1",
+          "points": 3
+        },
+        {
+          "player": "p2",
+          "points": 4
+        },
+        {
+          "player": "p3",
+          "points": 9
+        }
+      ],
+      "log_sha256": "872aa0e19db2d242fd59ac8dc10aa61d18c262d3620b6d5ce25003f914301ee2"
+    },
+    {
+      "focus": "sw_bite_mark",
+      "players": 5,
+      "seed": 3445,
+      "commands": 282,
+      "races": 4,
+      "maxTokens": 5,
+      "controlTransfers": 1,
+      "finalPoints": [
+        {
+          "player": "p0",
+          "points": 5
+        },
+        {
+          "player": "p1",
+          "points": 7
+        },
+        {
+          "player": "p2",
+          "points": 8
+        },
+        {
+          "player": "p3",
+          "points": 6
+        },
+        {
+          "player": "p4",
+          "points": 7
+        }
+      ],
+      "log_sha256": "095f22a5b94ebf6c63e96a4b8b501e87f386cf3bdf95a29187531bb38fcf4431"
+    },
+    {
+      "focus": "sw_mr_dice_guy",
+      "players": 6,
+      "seed": 3542,
+      "commands": 330,
+      "races": 4,
+      "maxTokens": 6,
+      "controlTransfers": 1,
+      "finalPoints": [
+        {
+          "player": "p0",
+          "points": 6
+        },
+        {
+          "player": "p1",
+          "points": 4
+        },
+        {
+          "player": "p2",
+          "points": 3
+        },
+        {
+          "player": "p3",
+          "points": 5
+        },
+        {
+          "player": "p4",
+          "points": 6
+        },
+        {
+          "player": "p5",
+          "points": 6
+        }
+      ],
+      "log_sha256": "fdd9c0690b90e3a406bc70360aa92a3064843ed404f499f831ee2e83c098aab2"
+    },
+    {
+      "focus": "sw_party_pooper",
+      "players": 7,
+      "seed": 3639,
+      "commands": 368,
+      "races": 4,
+      "maxTokens": 7,
+      "controlTransfers": 0,
+      "finalPoints": [
+        {
+          "player": "p0",
+          "points": 5
+        },
+        {
+          "player": "p1",
+          "points": 8
+        },
+        {
+          "player": "p2",
+          "points": 6
+        },
+        {
+          "player": "p3",
+          "points": 3
+        },
+        {
+          "player": "p4",
+          "points": 9
+        },
+        {
+          "player": "p5",
+          "points": 2
+        },
+        {
+          "player": "p6",
+          "points": 6
+        }
+      ],
+      "log_sha256": "84352b11e04b8fe9a4fef61424cf5c09665eced0563f9f9aee00fa555ed23f12"
+    },
+    {
+      "focus": "sw_spoilsport",
+      "players": 8,
+      "seed": 3736,
+      "commands": 456,
+      "races": 4,
+      "maxTokens": 8,
+      "controlTransfers": 1,
+      "finalPoints": [
+        {
+          "player": "p0",
+          "points": 2
+        },
+        {
+          "player": "p1",
+          "points": 3
+        },
+        {
+          "player": "p2",
+          "points": 3
+        },
+        {
+          "player": "p3",
+          "points": 5
+        },
+        {
+          "player": "p4",
+          "points": 0
+        },
+        {
+          "player": "p5",
+          "points": 7
+        },
+        {
+          "player": "p6",
+          "points": 15
+        },
+        {
+          "player": "p7",
+          "points": 5
+        }
+      ],
+      "log_sha256": "46dd0dcac5bbb2bdfcdf02a9c912085bff7c8dcba09c7b43162b39aff690b9c0"
+    },
+    {
+      "focus": "sw_cheatah",
+      "players": 2,
+      "seed": 3833,
+      "commands": 102,
+      "races": 4,
+      "maxTokens": 2,
+      "controlTransfers": 0,
+      "finalPoints": [
+        {
+          "player": "p0",
+          "points": 12
+        },
+        {
+          "player": "p1",
+          "points": 5
+        }
+      ],
+      "log_sha256": "4c1d7cb59fd9d4bcbc4a54c1cada0fe48bafaf76440b67a1a3db574edae871f4"
+    },
+    {
+      "focus": "sw_doppelgangster",
+      "players": 3,
+      "seed": 3930,
+      "commands": 155,
+      "races": 4,
+      "maxTokens": 3,
+      "controlTransfers": 0,
+      "finalPoints": [
+        {
+          "player": "p0",
+          "points": 8
+        },
+        {
+          "player": "p1",
+          "points": 6
+        },
+        {
+          "player": "p2",
+          "points": 9
+        }
+      ],
+      "log_sha256": "7c72426b6512feb54f9cf75f75b6a12463a901e8093aeee0ee68c06169675fc3"
+    },
+    {
+      "focus": "sw_hog_knight",
+      "players": 4,
+      "seed": 4027,
+      "commands": 196,
+      "races": 4,
+      "maxTokens": 4,
+      "controlTransfers": 0,
+      "finalPoints": [
+        {
+          "player": "p0",
+          "points": 8
+        },
+        {
+          "player": "p1",
+          "points": 7
+        },
+        {
+          "player": "p2",
+          "points": 8
+        },
+        {
+          "player": "p3",
+          "points": 6
+        }
+      ],
+      "log_sha256": "5526a2590700018bb72f5a43b7b15196e701fa8fdf8eed4b4af64e6e7e079cd2"
+    },
+    {
+      "focus": "sw_magical_athlete",
+      "players": 5,
+      "seed": 4124,
+      "commands": 213,
+      "races": 4,
+      "maxTokens": 5,
+      "controlTransfers": 0,
+      "finalPoints": [
+        {
+          "player": "p0",
+          "points": 6
+        },
+        {
+          "player": "p1",
+          "points": 4
+        },
+        {
+          "player": "p2",
+          "points": 3
+        },
+        {
+          "player": "p3",
+          "points": 3
+        },
+        {
+          "player": "p4",
+          "points": 7
+        }
+      ],
+      "log_sha256": "6283e38d71a9196ef75b6ada9fb64fb3e1ca5161b565708e58799eed4f7a0c9f"
+    },
+    {
+      "focus": "sw_mush",
+      "players": 6,
+      "seed": 4221,
+      "commands": 288,
+      "races": 4,
+      "maxTokens": 7,
+      "controlTransfers": 0,
+      "finalPoints": [
+        {
+          "player": "p0",
+          "points": 8
+        },
+        {
+          "player": "p1",
+          "points": 7
+        },
+        {
+          "player": "p2",
+          "points": 7
+        },
+        {
+          "player": "p3",
+          "points": 3
+        },
+        {
+          "player": "p4",
+          "points": 3
+        },
+        {
+          "player": "p5",
+          "points": 2
+        }
+      ],
+      "log_sha256": "f7b014f5fc08ab5681fab705181719d5e39e2bf68772b90356daab3edc4d0dd5"
+    },
+    {
+      "focus": "sw_null",
+      "players": 7,
+      "seed": 4318,
+      "commands": 281,
+      "races": 4,
+      "maxTokens": 7,
+      "controlTransfers": 0,
+      "finalPoints": [
+        {
+          "player": "p0",
+          "points": 11
+        },
+        {
+          "player": "p1",
+          "points": 5
+        },
+        {
+          "player": "p2",
+          "points": 6
+        },
+        {
+          "player": "p3",
+          "points": 0
+        },
+        {
+          "player": "p4",
+          "points": 5
+        },
+        {
+          "player": "p5",
+          "points": 4
+        },
+        {
+          "player": "p6",
+          "points": 0
+        }
+      ],
+      "log_sha256": "2a98881d6d646a75e795994ee3f90afe160388dce9b51cfd2c9a77018a9b5c26"
+    },
+    {
+      "focus": "sw_re_runner",
+      "players": 8,
+      "seed": 4415,
+      "commands": 304,
+      "races": 4,
+      "maxTokens": 9,
+      "controlTransfers": 1,
+      "finalPoints": [
+        {
+          "player": "p0",
+          "points": 13
+        },
+        {
+          "player": "p1",
+          "points": 4
+        },
+        {
+          "player": "p2",
+          "points": 4
+        },
+        {
+          "player": "p3",
+          "points": 3
+        },
+        {
+          "player": "p4",
+          "points": 2
+        },
+        {
+          "player": "p5",
+          "points": 6
+        },
+        {
+          "player": "p6",
+          "points": 8
+        },
+        {
+          "player": "p7",
+          "points": 4
+        }
+      ],
+      "log_sha256": "8f0cc30a92a9699fc96a6d1b5b9651c80936bb9da19cd34e6b32c02e6673102b"
+    },
+    {
+      "focus": "sw_switcharoo",
+      "players": 2,
+      "seed": 4512,
+      "commands": 107,
+      "races": 4,
+      "maxTokens": 2,
+      "controlTransfers": 1,
+      "finalPoints": [
+        {
+          "player": "p0",
+          "points": 13
+        },
+        {
+          "player": "p1",
+          "points": 7
+        }
+      ],
+      "log_sha256": "dfb0500a1a4a61d8191ba1007d8e1d11c59a23edbd21b716a63ff432e3469010"
+    }
+  ]
+}

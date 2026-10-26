@@ -6,7 +6,7 @@ const make = (racers: string[], pos: number[], rolls: number[], extra: object = 
   testRace({ racers, pos, rolls, skipSetup: true, secondWindPreview: true, ...extra });
 
 describe("Second Wind首批：显式开发开关（不在正式房间开放）", () => {
-  it("默认仍只招募基础36名，显式开发房间才扩为64名", () => {
+  it("默认仍只招募基础36名，显式开发房间才扩为72名", () => {
     const opts = {
       players: [
         { id: "a", name: "A" },
@@ -22,7 +22,7 @@ describe("Second Wind首批：显式开发开关（不在正式房间开放）",
     expect(DRAFTABLE).toHaveLength(36);
     expect(all(normal)).toHaveLength(36);
     expect(all(normal).some((id) => id.startsWith("sw_"))).toBe(false);
-    expect(all(preview)).toHaveLength(64);
+    expect(all(preview)).toHaveLength(72);
     expect(racerName("sw_icarus")).toBe("伊卡洛斯");
   });
   it("Icarus正常：主移动加3", () => {
@@ -109,7 +109,7 @@ describe("Second Wind首批：显式开发开关（不在正式房间开放）",
   });
   it("开发开关关闭时拒绝强行注入新角色；未实现角色不会当作空能力运行", () => {
     expect(() => testRace({ racers: ["sw_icarus", "twin", "banana"], skipSetup: true })).toThrow("开发预览未开启");
-    expect(() => make(["sw_null", "twin", "banana"], [0, 5, 10], [2])).toThrow("尚未实现");
+    expect(() => make(["sw_unknown", "twin", "banana"], [0, 5, 10], [2])).toThrow("尚未实现");
   });
   it("Icarus摔倒回合不掷骰，不因预设6淘汰", () => {
     const s = answer(make(["sw_icarus", "twin", "banana"], [0, 10, 20], [6], { tripped: [true, false, false] }), "ok");

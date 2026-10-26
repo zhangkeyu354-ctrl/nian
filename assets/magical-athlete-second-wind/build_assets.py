@@ -15,6 +15,9 @@ import fitz
 from PIL import Image
 from fontTools.ttLib import TTFont
 from fontTools.pens.svgPathPen import SVGPathPen
+from fontTools.pens.recordingPen import DecomposingRecordingPen
+from fontTools.pens.transformPen import TransformPen
+from collections import ChainMap
 
 ROOT = Path(__file__).resolve().parent
 REPO = ROOT.parents[1]
@@ -23,6 +26,21 @@ FONT = TTFont('C:/Windows/Fonts/simhei.ttf')
 GLYPHS = FONT.getGlyphSet()
 CMAP = FONT.getBestCmap()
 UNITS = FONT['head'].unitsPerEm
+# Keep the existing Chinese/Latin typeface. Only the unsupported ä in the
+# canonical name Doppelgängster uses an outline from the system Latin font.
+if ord('ä') not in CMAP:
+    latin_font = TTFont('C:/Windows/Fonts/arial.ttf')
+    latin_scale = UNITS / latin_font['head'].unitsPerEm
+    latin_glyphs = latin_font.getGlyphSet()
+    glyph = latin_glyphs[latin_font.getBestCmap()[ord('ä')]]
+    recording = DecomposingRecordingPen(latin_glyphs)
+    glyph.draw(recording)
+    class LatinFallback:
+        width = glyph.width * latin_scale
+        def draw(self, pen):
+            recording.replay(TransformPen(pen, (latin_scale, 0, 0, latin_scale, 0, 0)))
+    GLYPHS = ChainMap({'__latin_adieresis': LatinFallback()}, GLYPHS)
+    CMAP[ord('ä')] = '__latin_adieresis'
 TEMPLATE = REPO / 'assets/magical-athlete-production-v1/build_assets.py'
 tree = ast.parse(TEMPLATE.read_text(encoding='utf-8'))
 helpers = ast.Module(body=[node for node in tree.body if isinstance(node, ast.FunctionDef)

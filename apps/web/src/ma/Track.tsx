@@ -211,6 +211,9 @@ export function Track({
         >
           {t.owner === me && <span className="ma-halo" aria-hidden="true" />}
           {t.owner === me && <span className="ma-me-tag">我</span>}
+          {race.hogs?.some((h) => h.rider === rid) && (
+            <span className="ma-me-tag" style={{ top: "42%", left: "100%" }} title="持有野猪坐骑">🐗</span>
+          )}
           <span className="ma-pawn-base" />
           <img src={`${ART}/tokens/${racerArtId(t)}.png`} alt={racerName(rid)} draggable={false} />
           {t.tripped && <img className="ma-pawn-trip" src={`${ART}/icons/trip.svg`} alt="摔倒" />}

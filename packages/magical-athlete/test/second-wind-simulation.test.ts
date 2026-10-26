@@ -30,7 +30,7 @@ for (const n of [2, 3, 4, 5, 6, 7, 8])
               type: "ANSWER",
               player: p.player,
               value:
-                p.options.find((o) => o.value === "no")?.value ?? p.options.find((o) => o.value === "keep")?.value ?? p.options[0].value,
+                p.kind === "cheatah_set" ? "4" : p.options.find((o) => o.value === "no")?.value ?? p.options.find((o) => o.value === "keep")?.value ?? p.options[0].value,
             };
           }
           s = reduceMA(s, cmd);

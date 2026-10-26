@@ -896,6 +896,246 @@
       "sha256": "89a6ad2549a590d5564412680221cc065849ec19dc9c715f498d81c1831e2ee5",
       "token_sha256": "89a6ad2549a590d5564412680221cc065849ec19dc9c715f498d81c1831e2ee5",
       "standee_sha256": "89a6ad2549a590d5564412680221cc065849ec19dc9c715f498d81c1831e2ee5"
+    },
+    {
+      "id": "sw_cheatah",
+      "en": "Cheatah",
+      "zh": "作弊豹",
+      "powerZh": "藏骰戏法",
+      "text": "不掷主移动骰，秘密设定点数；右侧玩家猜中则不移动。",
+      "field": "#ffe500",
+      "illustration": "cutouts/sw_cheatah.png",
+      "token": "cutouts/sw_cheatah.png",
+      "standee": "cutouts/sw_cheatah.png",
+      "normalize_art_bounds": true,
+      "card_art_mode": "upper_body",
+      "card_art_top": 0.08,
+      "portrait_frame": {
+        "left": 0.02,
+        "top": 0.1,
+        "width": 0.96
+      },
+      "exported_token_size": [
+        108,
+        238
+      ],
+      "exported_portrait_size": [
+        234,
+        172
+      ],
+      "sha256": "5df480b0c0875508e863a4b9686fbe4952b00e133999c57d91dc009021053167",
+      "token_sha256": "5df480b0c0875508e863a4b9686fbe4952b00e133999c57d91dc009021053167",
+      "standee_sha256": "5df480b0c0875508e863a4b9686fbe4952b00e133999c57d91dc009021053167"
+    },
+    {
+      "id": "sw_doppelgangster",
+      "en": "Doppelgängster",
+      "zh": "替身黑帮",
+      "powerZh": "冠军替身",
+      "text": "第一位冲线者改为被淘汰，我获得其能力。",
+      "field": "#ef6bb4",
+      "illustration": "cutouts/sw_doppelgangster.png",
+      "token": "cutouts/sw_doppelgangster.png",
+      "standee": "cutouts/sw_doppelgangster.png",
+      "normalize_art_bounds": true,
+      "card_art_mode": "upper_body",
+      "card_art_top": 0,
+      "portrait_frame": {
+        "left": 0.02,
+        "top": 0.1,
+        "width": 0.96
+      },
+      "exported_token_size": [
+        111,
+        238
+      ],
+      "exported_portrait_size": [
+        234,
+        172
+      ],
+      "sha256": "010f138d4aecc9471687fb62148b885d8e41a45131eb08807893b8ef3531bdd4",
+      "token_sha256": "010f138d4aecc9471687fb62148b885d8e41a45131eb08807893b8ef3531bdd4",
+      "standee_sha256": "010f138d4aecc9471687fb62148b885d8e41a45131eb08807893b8ef3531bdd4"
+    },
+    {
+      "id": "sw_hog_knight",
+      "en": "Hog Knight",
+      "zh": "野猪骑士",
+      "powerZh": "野猪坐骑",
+      "text": "赛前骑上野猪；骑手主移动 +2。其他选手停到野猪所在格时接走坐骑。",
+      "field": "#f49a33",
+      "illustration": "cutouts/sw_hog_knight.png",
+      "token": "cutouts/sw_hog_knight.png",
+      "standee": "cutouts/sw_hog_knight.png",
+      "normalize_art_bounds": true,
+      "card_art_mode": "upper_body",
+      "card_art_top": 0.18,
+      "portrait_frame": {
+        "left": 0.02,
+        "top": 0.24,
+        "width": 0.96
+      },
+      "exported_token_size": [
+        98,
+        238
+      ],
+      "exported_portrait_size": [
+        234,
+        172
+      ],
+      "sha256": "4e1b9fa054364a7b1cea67fc5565f8acda545a0f6cec0a69c60eb0a7f6f51a26",
+      "token_sha256": "4e1b9fa054364a7b1cea67fc5565f8acda545a0f6cec0a69c60eb0a7f6f51a26",
+      "standee_sha256": "4e1b9fa054364a7b1cea67fc5565f8acda545a0f6cec0a69c60eb0a7f6f51a26"
+    },
+    {
+      "id": "sw_magical_athlete",
+      "en": "Magical Athlete",
+      "zh": "魔法运动员",
+      "powerZh": "六面魔法",
+      "text": "主骰：1走7；2拉垫底者；3传送绊人；4走4再行动；5领先者退5；6走6绊倒经过者。",
+      "field": "#61cfe1",
+      "illustration": "cutouts/sw_magical_athlete.png",
+      "token": "cutouts/sw_magical_athlete.png",
+      "standee": "cutouts/sw_magical_athlete.png",
+      "normalize_art_bounds": true,
+      "card_art_mode": "upper_body",
+      "card_art_top": 0,
+      "portrait_frame": {
+        "left": 0.02,
+        "top": 0.03,
+        "width": 0.96
+      },
+      "exported_token_size": [
+        114,
+        238
+      ],
+      "exported_portrait_size": [
+        234,
+        172
+      ],
+      "sha256": "608a904839baa017c2ad3f48d1e6f002445e963e034ff36425a2df760404688f",
+      "token_sha256": "608a904839baa017c2ad3f48d1e6f002445e963e034ff36425a2df760404688f",
+      "standee_sha256": "608a904839baa017c2ad3f48d1e6f002445e963e034ff36425a2df760404688f"
+    },
+    {
+      "id": "sw_mush",
+      "en": "Mush",
+      "zh": "糊糊",
+      "powerZh": "百变糊糊",
+      "text": "主移动最终掷出1或2时，抽一名选手，获得其能力直到本场结束。",
+      "field": "#b8df32",
+      "illustration": "cutouts/sw_mush.png",
+      "token": "cutouts/sw_mush.png",
+      "standee": "cutouts/sw_mush.png",
+      "normalize_art_bounds": true,
+      "card_art_mode": "upper_body",
+      "card_art_top": 0,
+      "portrait_frame": {
+        "left": 0.02,
+        "top": 0.03,
+        "width": 0.96
+      },
+      "exported_token_size": [
+        113,
+        238
+      ],
+      "exported_portrait_size": [
+        234,
+        172
+      ],
+      "sha256": "6084e464ad98d2467c40f3bf1f9de5a336c5e6da2a29f2a408d47f5df178db39",
+      "token_sha256": "6084e464ad98d2467c40f3bf1f9de5a336c5e6da2a29f2a408d47f5df178db39",
+      "standee_sha256": "6084e464ad98d2467c40f3bf1f9de5a336c5e6da2a29f2a408d47f5df178db39"
+    },
+    {
+      "id": "sw_null",
+      "en": "Null",
+      "zh": "虚无",
+      "powerZh": "虚无领域",
+      "text": "我前方的选手没有能力，主移动 -1。",
+      "field": "#61cfe1",
+      "illustration": "cutouts/sw_null.png",
+      "token": "cutouts/sw_null.png",
+      "standee": "cutouts/sw_null.png",
+      "normalize_art_bounds": true,
+      "card_art_mode": "upper_body",
+      "card_art_top": 0,
+      "portrait_frame": {
+        "left": 0.02,
+        "top": 0.03,
+        "width": 0.96
+      },
+      "exported_token_size": [
+        102,
+        238
+      ],
+      "exported_portrait_size": [
+        234,
+        172
+      ],
+      "sha256": "eaf9a43be726e61682cad93d038e8f16e70670aab75f49cbe38815da5dad3654",
+      "token_sha256": "eaf9a43be726e61682cad93d038e8f16e70670aab75f49cbe38815da5dad3654",
+      "standee_sha256": "eaf9a43be726e61682cad93d038e8f16e70670aab75f49cbe38815da5dad3654"
+    },
+    {
+      "id": "sw_re_runner",
+      "en": "Re-Runner",
+      "zh": "返场跑者",
+      "powerZh": "再次返场",
+      "text": "首次参赛后，之后每场都作为我的玩家的一名额外选手出场。",
+      "field": "#ffe500",
+      "illustration": "cutouts/sw_re_runner.png",
+      "token": "cutouts/sw_re_runner.png",
+      "standee": "cutouts/sw_re_runner.png",
+      "normalize_art_bounds": true,
+      "card_art_mode": "upper_body",
+      "card_art_top": 0,
+      "portrait_frame": {
+        "left": 0.02,
+        "top": 0.03,
+        "width": 0.96
+      },
+      "exported_token_size": [
+        113,
+        238
+      ],
+      "exported_portrait_size": [
+        234,
+        172
+      ],
+      "sha256": "11cb0760807bf2085b3e814e7f5d62aa98e7ac35fceea3babb1b471bde7d1061",
+      "token_sha256": "11cb0760807bf2085b3e814e7f5d62aa98e7ac35fceea3babb1b471bde7d1061",
+      "standee_sha256": "11cb0760807bf2085b3e814e7f5d62aa98e7ac35fceea3babb1b471bde7d1061"
+    },
+    {
+      "id": "sw_switcharoo",
+      "en": "Switcharoo",
+      "zh": "换手袋鼠",
+      "powerZh": "换手戏法",
+      "text": "回合结束时，可以与距离不超过1格的另一名选手交换控制者和角色卡。",
+      "field": "#b8df32",
+      "illustration": "cutouts/sw_switcharoo.png",
+      "token": "cutouts/sw_switcharoo.png",
+      "standee": "cutouts/sw_switcharoo.png",
+      "normalize_art_bounds": true,
+      "card_art_mode": "upper_body",
+      "card_art_top": 0,
+      "portrait_frame": {
+        "left": 0.02,
+        "top": 0.03,
+        "width": 0.96
+      },
+      "exported_token_size": [
+        115,
+        238
+      ],
+      "exported_portrait_size": [
+        234,
+        172
+      ],
+      "sha256": "6389b5b319768bc4ebcd8284dc2ac5ecfe18d0443b1c39bbbb9bc87b4772718f",
+      "token_sha256": "6389b5b319768bc4ebcd8284dc2ac5ecfe18d0443b1c39bbbb9bc87b4772718f",
+      "standee_sha256": "6389b5b319768bc4ebcd8284dc2ac5ecfe18d0443b1c39bbbb9bc87b4772718f"
     }
   ],
   "standee_prompt": "Same character in a tightly upright compact pose, narrow silhouette about 1:2, arms and wings tucked inward, full body with both feet planted at the bottom, transparent background, same costume/colors/thick black outlines; no frame, text or shadows.",

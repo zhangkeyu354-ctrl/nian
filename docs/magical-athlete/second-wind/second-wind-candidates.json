@@ -174,9 +174,13 @@
         "decision_prompt"
       ],
       "artwork": {
-        "status": "NOT_LICENSED",
-        "public_asset_path": null,
-        "observed_reference": "来源图片未作为完整技能卡面核验；抽查可见插画裁切。"
+        "status": "ORIGINAL_ART_EXISTING_CARD_TEMPLATE",
+        "public_asset_path": "/assets/magical-athlete/cards/zh/sw_cheatah.webp",
+        "portrait_path": "/assets/magical-athlete/portraits/sw_cheatah.webp",
+        "token_path": "/assets/magical-athlete/tokens/sw_cheatah.png",
+        "source_manifest": "assets/magical-athlete-second-wind/manifest.json",
+        "colored_standee_border": true,
+        "production_release_approved": false
       },
       "tests": {
         "status": "PLANNED_NOT_IMPLEMENTED",
@@ -185,7 +189,17 @@
         "interaction": "与全局重掷和固定骰效应交互",
         "passed": 0
       },
-      "source_acceptance": "USER_ACCEPTED_REFERENCE"
+      "source_acceptance": "USER_ACCEPTED_REFERENCE",
+      "development_implementation": {
+        "status": "BASE_ENGINE_OPT_IN_IMPLEMENTED",
+        "toggle": "settings.secondWindPreview",
+        "enabled_by_default": false,
+        "normal": true,
+        "boundary": true,
+        "interaction": true,
+        "production_release_approved": false,
+        "test_file": "packages/magical-athlete/test/second-wind-final-batch.test.ts"
+      }
     },
     {
       "id": "sw_critic",
@@ -350,9 +364,13 @@
         "score_ledger"
       ],
       "artwork": {
-        "status": "NOT_LICENSED",
-        "public_asset_path": null,
-        "observed_reference": "来源图片未作为完整技能卡面核验；抽查可见插画裁切。"
+        "status": "ORIGINAL_ART_EXISTING_CARD_TEMPLATE",
+        "public_asset_path": "/assets/magical-athlete/cards/zh/sw_doppelgangster.webp",
+        "portrait_path": "/assets/magical-athlete/portraits/sw_doppelgangster.webp",
+        "token_path": "/assets/magical-athlete/tokens/sw_doppelgangster.png",
+        "source_manifest": "assets/magical-athlete-second-wind/manifest.json",
+        "colored_standee_border": true,
+        "production_release_approved": false
       },
       "tests": {
         "status": "PLANNED_NOT_IMPLEMENTED",
@@ -361,7 +379,17 @@
         "interaction": "与军师、双胞胎、Re-Runner和取消比赛交互",
         "passed": 0
       },
-      "source_acceptance": "USER_ACCEPTED_REFERENCE"
+      "source_acceptance": "USER_ACCEPTED_REFERENCE",
+      "development_implementation": {
+        "status": "BASE_ENGINE_OPT_IN_IMPLEMENTED",
+        "toggle": "settings.secondWindPreview",
+        "enabled_by_default": false,
+        "normal": true,
+        "boundary": true,
+        "interaction": true,
+        "production_release_approved": false,
+        "test_file": "packages/magical-athlete/test/second-wind-final-batch.test.ts"
+      }
     },
     {
       "id": "sw_gloth",
@@ -467,9 +495,13 @@
         "step_path"
       ],
       "artwork": {
-        "status": "NOT_LICENSED",
-        "public_asset_path": null,
-        "observed_reference": "来源图片未作为完整技能卡面核验；抽查可见插画裁切。"
+        "status": "ORIGINAL_ART_EXISTING_CARD_TEMPLATE",
+        "public_asset_path": "/assets/magical-athlete/cards/zh/sw_hog_knight.webp",
+        "portrait_path": "/assets/magical-athlete/portraits/sw_hog_knight.webp",
+        "token_path": "/assets/magical-athlete/tokens/sw_hog_knight.png",
+        "source_manifest": "assets/magical-athlete-second-wind/manifest.json",
+        "colored_standee_border": true,
+        "production_release_approved": false
       },
       "tests": {
         "status": "PLANNED_NOT_IMPLEMENTED",
@@ -478,7 +510,17 @@
         "interaction": "巨婴、吸盘鱼与坐骑共享格",
         "passed": 0
       },
-      "source_acceptance": "USER_ACCEPTED_REFERENCE"
+      "source_acceptance": "USER_ACCEPTED_REFERENCE",
+      "development_implementation": {
+        "status": "BASE_ENGINE_OPT_IN_IMPLEMENTED",
+        "toggle": "settings.secondWindPreview",
+        "enabled_by_default": false,
+        "normal": true,
+        "boundary": true,
+        "interaction": true,
+        "production_release_approved": false,
+        "test_file": "packages/magical-athlete/test/second-wind-final-batch.test.ts"
+      }
     },
     {
       "id": "sw_hopfrog",
@@ -912,9 +954,13 @@
         "trip_status"
       ],
       "artwork": {
-        "status": "NOT_LICENSED",
-        "public_asset_path": null,
-        "observed_reference": "来源图片未作为完整技能卡面核验；抽查可见插画裁切。"
+        "status": "ORIGINAL_ART_EXISTING_CARD_TEMPLATE",
+        "public_asset_path": "/assets/magical-athlete/cards/zh/sw_magical_athlete.webp",
+        "portrait_path": "/assets/magical-athlete/portraits/sw_magical_athlete.webp",
+        "token_path": "/assets/magical-athlete/tokens/sw_magical_athlete.png",
+        "source_manifest": "assets/magical-athlete-second-wind/manifest.json",
+        "colored_standee_border": true,
+        "production_release_approved": false
       },
       "tests": {
         "status": "PLANNED_NOT_IMPLEMENTED",
@@ -923,7 +969,17 @@
         "interaction": "与较真怪、香蕉、船长、多个领先者交互",
         "passed": 0
       },
-      "source_acceptance": "USER_ACCEPTED_REFERENCE"
+      "source_acceptance": "USER_ACCEPTED_REFERENCE",
+      "development_implementation": {
+        "status": "BASE_ENGINE_OPT_IN_IMPLEMENTED",
+        "toggle": "settings.secondWindPreview",
+        "enabled_by_default": false,
+        "normal": true,
+        "boundary": true,
+        "interaction": true,
+        "production_release_approved": false,
+        "test_file": "packages/magical-athlete/test/second-wind-final-batch.test.ts"
+      }
     },
     {
       "id": "sw_mole",
@@ -1092,9 +1148,13 @@
         "power_source_highlight"
       ],
       "artwork": {
-        "status": "NOT_LICENSED",
-        "public_asset_path": null,
-        "observed_reference": "来源图片未作为完整技能卡面核验；抽查可见插画裁切。"
+        "status": "ORIGINAL_ART_EXISTING_CARD_TEMPLATE",
+        "public_asset_path": "/assets/magical-athlete/cards/zh/sw_mush.webp",
+        "portrait_path": "/assets/magical-athlete/portraits/sw_mush.webp",
+        "token_path": "/assets/magical-athlete/tokens/sw_mush.png",
+        "source_manifest": "assets/magical-athlete-second-wind/manifest.json",
+        "colored_standee_border": true,
+        "production_release_approved": false
       },
       "tests": {
         "status": "PLANNED_NOT_IMPLEMENTED",
@@ -1103,7 +1163,18 @@
         "interaction": "与Egg、Twin、Understudy以及Null交互",
         "passed": 0
       },
-      "source_acceptance": "USER_ACCEPTED_REFERENCE"
+      "source_acceptance": "USER_ACCEPTED_REFERENCE",
+      "development_implementation": {
+        "status": "BASE_ENGINE_OPT_IN_IMPLEMENTED",
+        "toggle": "settings.secondWindPreview",
+        "enabled_by_default": false,
+        "normal": true,
+        "boundary": true,
+        "interaction": true,
+        "production_release_approved": false,
+        "test_file": "packages/magical-athlete/test/second-wind-final-batch.test.ts",
+        "provisional_interpretation_awaiting_user": true
+      }
     },
     {
       "id": "sw_nemesis",
@@ -1271,9 +1342,13 @@
         "step_path"
       ],
       "artwork": {
-        "status": "NOT_LICENSED",
-        "public_asset_path": null,
-        "observed_reference": "来源图片未作为完整技能卡面核验；抽查可见插画裁切。"
+        "status": "ORIGINAL_ART_EXISTING_CARD_TEMPLATE",
+        "public_asset_path": "/assets/magical-athlete/cards/zh/sw_null.webp",
+        "portrait_path": "/assets/magical-athlete/portraits/sw_null.webp",
+        "token_path": "/assets/magical-athlete/tokens/sw_null.png",
+        "source_manifest": "assets/magical-athlete-second-wind/manifest.json",
+        "colored_standee_border": true,
+        "production_release_approved": false
       },
       "tests": {
         "status": "PLANNED_NOT_IMPLEMENTED",
@@ -1282,7 +1357,17 @@
         "interaction": "与Copycat、Understudy、被抑制的临时能力交互",
         "passed": 0
       },
-      "source_acceptance": "USER_ACCEPTED_REFERENCE"
+      "source_acceptance": "USER_ACCEPTED_REFERENCE",
+      "development_implementation": {
+        "status": "BASE_ENGINE_OPT_IN_IMPLEMENTED",
+        "toggle": "settings.secondWindPreview",
+        "enabled_by_default": false,
+        "normal": true,
+        "boundary": true,
+        "interaction": true,
+        "production_release_approved": false,
+        "test_file": "packages/magical-athlete/test/second-wind-final-batch.test.ts"
+      }
     },
     {
       "id": "sw_overtaker",
@@ -1516,9 +1601,13 @@
         "power_source_highlight"
       ],
       "artwork": {
-        "status": "NOT_LICENSED",
-        "public_asset_path": null,
-        "observed_reference": "来源图片未作为完整技能卡面核验；抽查可见插画裁切。"
+        "status": "ORIGINAL_ART_EXISTING_CARD_TEMPLATE",
+        "public_asset_path": "/assets/magical-athlete/cards/zh/sw_re_runner.webp",
+        "portrait_path": "/assets/magical-athlete/portraits/sw_re_runner.webp",
+        "token_path": "/assets/magical-athlete/tokens/sw_re_runner.png",
+        "source_manifest": "assets/magical-athlete-second-wind/manifest.json",
+        "colored_standee_border": true,
+        "production_release_approved": false
       },
       "tests": {
         "status": "PLANNED_NOT_IMPLEMENTED",
@@ -1527,7 +1616,17 @@
         "interaction": "与Switcharoo、双选手、双胞胎和冠军替换交互",
         "passed": 0
       },
-      "source_acceptance": "USER_ACCEPTED_REFERENCE"
+      "source_acceptance": "USER_ACCEPTED_REFERENCE",
+      "development_implementation": {
+        "status": "BASE_ENGINE_OPT_IN_IMPLEMENTED",
+        "toggle": "settings.secondWindPreview",
+        "enabled_by_default": false,
+        "normal": true,
+        "boundary": true,
+        "interaction": true,
+        "production_release_approved": false,
+        "test_file": "packages/magical-athlete/test/second-wind-final-batch.test.ts"
+      }
     },
     {
       "id": "sw_show_off",
@@ -2017,9 +2116,13 @@
         "decision_prompt"
       ],
       "artwork": {
-        "status": "NOT_LICENSED",
-        "public_asset_path": null,
-        "observed_reference": "来源图片未作为完整技能卡面核验；抽查可见插画裁切。"
+        "status": "ORIGINAL_ART_EXISTING_CARD_TEMPLATE",
+        "public_asset_path": "/assets/magical-athlete/cards/zh/sw_switcharoo.webp",
+        "portrait_path": "/assets/magical-athlete/portraits/sw_switcharoo.webp",
+        "token_path": "/assets/magical-athlete/tokens/sw_switcharoo.png",
+        "source_manifest": "assets/magical-athlete-second-wind/manifest.json",
+        "colored_standee_border": true,
+        "production_release_approved": false
       },
       "tests": {
         "status": "PLANNED_NOT_IMPLEMENTED",
@@ -2028,7 +2131,18 @@
         "interaction": "与Re-Runner、Speed Demon、额外回合及身份凭证交互",
         "passed": 0
       },
-      "source_acceptance": "USER_ACCEPTED_REFERENCE"
+      "source_acceptance": "USER_ACCEPTED_REFERENCE",
+      "development_implementation": {
+        "status": "BASE_ENGINE_OPT_IN_IMPLEMENTED",
+        "toggle": "settings.secondWindPreview",
+        "enabled_by_default": false,
+        "normal": true,
+        "boundary": true,
+        "interaction": true,
+        "production_release_approved": false,
+        "test_file": "packages/magical-athlete/test/second-wind-final-batch.test.ts",
+        "provisional_interpretation_awaiting_user": true
+      }
     },
     {
       "id": "sw_tail",
@@ -2225,14 +2339,20 @@
   "user_accepted_source_id": "SW-F01",
   "source_acceptance_date": "2026-10-26",
   "development_summary": {
-    "implemented": 28,
+    "implemented": 36,
     "candidates": 36,
-    "pool_when_enabled": 64,
+    "pool_when_enabled": 72,
     "enabled_by_default": false,
     "production_enabled": false,
     "batch_three_report": "docs/handoff/魔法运动员_第三批5名_2026-10-26.md",
     "batch_four_report": "docs/handoff/魔法运动员_第四批5名_2026-10-26.md",
     "batch_five_report": "docs/handoff/魔法运动员_第五批5名_2026-10-26.md",
-    "batch_six_report": "docs/handoff/魔法运动员_第六批5名_2026-10-26.md"
+    "batch_six_report": "docs/handoff/魔法运动员_第六批5名_2026-10-26.md",
+    "final_report": "docs/handoff/魔法运动员_36名新角色_最终验收报告_2026-10-26.md",
+    "pending_user_rulings": [
+      "banana_backward_pass",
+      "mush_power_replacement",
+      "switcharoo_persistent_ownership"
+    ]
   }
 }

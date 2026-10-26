@@ -1,0 +1,23 @@
+{
+  "realRoomStore": true,
+  "results": [
+    {
+      "seed": 390,
+      "commands": 132,
+      "races": 4,
+      "recoveries": 15,
+      "secretDecisionRecoveries": 8,
+      "controlTransfers": 0,
+      "returningRacers": 1
+    },
+    {
+      "seed": 17,
+      "commands": 151,
+      "races": 4,
+      "recoveries": 9,
+      "secretDecisionRecoveries": 0,
+      "controlTransfers": 1,
+      "returningRacers": 1
+    }
+  ]
+}

@@ -38,6 +38,9 @@ export interface Token {
 }
 
 export interface RaceState {
+  /** Physical mounts are shared by every racer; rider ids are racer ids. */
+  hogs?: Array<{ source: string; rider: string | null; pos: number }>;
+  championIntercepted?: boolean;
   /** Cancellation preserves finish history, but awards no medals. */
   cancelledBy?: string;
   /** Hotel payments funded from earlier-race chips, for this race's net score. */
@@ -77,6 +80,7 @@ export interface Decision {
 
 /** 给界面播放动画用的结构化事件（掷骰、技能发动、移动路径……）；text 为空的条目只用于动画，不显示在记录里 */
 export type Fx =
+  | { kind: "control"; racer: string; target: string; owner: string; targetOwner: string }
   | {
       kind: "roll";
       player: string;
@@ -102,7 +106,7 @@ export type Fx =
   | { kind: "finish"; racer: string; place: number }
   | { kind: "out"; racer: string }
   | { kind: "chip"; player: string; value: number }
-  | { kind: "start"; race: number; track: string }
+  | { kind: "start"; race: number; track: string; owners?: Record<string, string> }
   /** 每场结束的领奖台：第 1、2 名（冲线，拿奖牌）＋第 3 名（场上最靠前的未冲线选手，不计分） */
   | {
       kind: "podium";
@@ -141,6 +145,8 @@ export interface Settings {
 }
 
 export interface MAState {
+  /** Extra racers registered for future races, separate from secret selections. */
+  returningRacers?: Array<{ racer: string; owner: string; base: string }>;
   game: "magical-athlete";
   phase: "draft" | "choose" | "race" | "over";
   rng: number;

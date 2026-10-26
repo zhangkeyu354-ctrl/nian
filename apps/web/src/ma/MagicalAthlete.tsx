@@ -533,7 +533,7 @@ function Game({ snap, view, send, connected }: { snap: MARoomSnapshot; view: MAV
 /** 决定选项按钮：选项是一名选手时（神秘蛋三选一、军师预测等），直接显示它的头像和技能介绍 */
 function OptionButton({ o, onPick }: { o: { value: string; label: string }; onPick: () => void }) {
   const r = RACER_BY_ID.get(o.value);
-  if (o.value === "roll") return <RollButton label={o.label} onRoll={onPick} />;
+  if (o.value === "roll" && o.label !== "秘密设骰") return <RollButton label={o.label} onRoll={onPick} />;
   if (!r)
     return (
       <button className="" onClick={onPick}>
@@ -808,7 +808,7 @@ function Race({
   // 底部浮动操作栏只给手机竖屏用（电脑屏幕够大，操作区本来就看得到）
   const showBar = portrait && !centerMode && !!p && !race.over && p.player === me && !pb.busy && !decideSeen;
   // 普通掷骰（只有「掷骰」一个选项）：不需要说明文字，只留「谁在动」和骰子按钮
-  const rollOnly = !!p && p.options.length === 1 && p.options[0].value === "roll";
+  const rollOnly = !!p && p.options.length === 1 && p.options[0].value === "roll" && p.options[0].label !== "秘密设骰";
   const centerCard =
     centerMode && p && !race.over ? (
       <div className={"ma-cc" + (p.player === me ? " you" : "") + (pb.busy ? " waiting" : "") + (rollOnly ? " roll-only" : "")}>
@@ -860,6 +860,7 @@ function Race({
                     <em>
                       【{power?.powerZh}】{power?.text}
                       {t.base !== t.racer && `（来自${racerName(t.base)}）`}
+                      {race.hogs?.some((h) => h.rider === t.racer) && " · 🐗 持有野猪坐骑"}
                     </em>
                   </span>
                 </button>

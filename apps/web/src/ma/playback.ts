@@ -65,6 +65,7 @@ export interface Link {
 
 export interface ShownToken {
   racer: string;
+  owner?: string;
   pos: number;
   tripped: boolean;
   out: boolean;
@@ -130,7 +131,7 @@ export function usePlayback(view: MAView) {
 
   const fromRace = (tokens: Token[]) =>
     new Map(
-      tokens.map((t) => [t.racer, { racer: t.racer, pos: t.pos, tripped: t.tripped, out: t.out, place: t.place, secondWind: t.secondWind }]),
+      tokens.map((t) => [t.racer, { racer: t.racer, owner: t.owner, pos: t.pos, tripped: t.tripped, out: t.out, place: t.place, secondWind: t.secondWind }]),
     );
 
   useEffect(() => {
@@ -220,11 +221,18 @@ export function usePlayback(view: MAView) {
         setShown(cur);
       };
       switch (fx.kind) {
+        case "control":
+          setPos(fx.racer, { owner: fx.owner });
+          setPos(fx.target, { owner: fx.targetOwner });
+          float(fx.racer, "换手", "info");
+          float(fx.target, "换手", "info");
+          await wait(900);
+          break;
         case "start": {
           const r = latest.current.race;
           cur = r
             ? new Map(
-                r.tokens.map((t) => [t.racer, { racer: t.racer, pos: 0, tripped: false, out: false, place: null, secondWind: undefined }]),
+                r.tokens.map((t) => [t.racer, { racer: t.racer, owner: fx.owners?.[t.racer] ?? t.owner, pos: 0, tripped: false, out: false, place: null, secondWind: undefined }]),
               )
             : null;
           shownRef.current = cur;

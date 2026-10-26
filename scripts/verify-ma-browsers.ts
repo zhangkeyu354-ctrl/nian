@@ -12,6 +12,7 @@ import { assertUiShot } from "./screenshot-check.ts";
 const PORT = 3331;
 const BASE = `http://127.0.0.1:${PORT}`;
 const out = process.env.MA_OUT ?? "output/ma-browsers";
+const viewport = process.env.MA_DESKTOP === "1" ? {width:1366,height:768} : {width:390,height:844};
 mkdirSync(out, { recursive: true });
 const data = mkdtempSync(join(tmpdir(), "ma-ui-"));
 const testSeed = process.env.MA_TEST_SEED;
@@ -43,7 +44,7 @@ const browser = await chromium.launch();
 const errors: string[] = [];
 const phone = async () => {
   const ctx = await browser.newContext({
-    viewport: { width: 390, height: 844 },
+    viewport,
     deviceScaleFactor: 2,
     reducedMotion: process.env.MA_REDUCED_MOTION === "1" ? "reduce" : "no-preference",
   });
@@ -79,11 +80,12 @@ try {
     await toggle.click();
     await host.waitForFunction(() => (document.querySelector('[data-testid="ma-second-wind"]') as HTMLInputElement)?.checked);
     await pages[1].waitForFunction(() => (document.querySelector('[data-testid="ma-second-wind"]') as HTMLInputElement)?.checked);
+    await host.setViewportSize({ width: 390, height: 844 });
     await assertUiShot(host, `${out}/sw-lobby-phone.png`);
     await host.setViewportSize({ width: 1366, height: 768 });
     await toggle.scrollIntoViewIfNeeded();
     await assertUiShot(host, `${out}/sw-lobby-desktop.png`);
-    await host.setViewportSize({ width: 390, height: 844 });
+    await host.setViewportSize(viewport);
   }
   const random = process.env.MA_DEAL === "random";
   if (random) {
@@ -162,9 +164,13 @@ try {
       const moleOption = allOptions.filter({ hasText: "挖地直行" }).first();
       const decline = allOptions.filter({ hasText: /^不用$/ }).first();
       const kingDecision = p.locator(".ma-prompt", { hasText: "王者一绊" }).filter({ visible: true });
+      const secretSet = p.locator(".ma-prompt, .ma-cc-prompt", { hasText: "秘密设定" }).filter({ visible: true });
+      const four = allOptions.filter({ hasText: /^4 点$/ }).first();
       // A legal choice to trip oneself forever is not a useful completion bot.
       const opt =
-        (await kingDecision.count()) && (await decline.count())
+        (await secretSet.count()) && (await four.count())
+          ? four
+          : (await kingDecision.count()) && (await decline.count())
           ? decline
           : preferredRacers.length && (await moleOption.count())
             ? moleOption

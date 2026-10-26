@@ -106,8 +106,7 @@ export const SECOND_WIND_PREVIEW: RacerInfo[] = [
       powerEn: "Bon Mots",
       powerZh: "评头论足",
       text: "每回合可以让前方选手的主移动骰重掷一次。",
-      notes:
-        "由评论家的玩家决定；每名能力持有者每回合最多发动一次，辅助骰与免骰不受影响。",
+      notes: "由评论家的玩家决定；每名能力持有者每回合最多发动一次，辅助骰与免骰不受影响。",
     },
     {
       id: "sw_diva",
@@ -134,8 +133,7 @@ export const SECOND_WIND_PREVIEW: RacerInfo[] = [
       powerEn: "Exhibit B",
       powerZh: "擦身得分",
       text: "一次移动经过其他选手时，获得 1 分。",
-      notes:
-        "同段经过多人共得1分；传送不算经过；后退经过随香蕉一起留待最终核对。",
+      notes: "同段经过多人共得1分；传送不算经过；后退经过随香蕉一起留待最终核对。",
     },
     {
       id: "sw_kraken",
@@ -144,8 +142,7 @@ export const SECOND_WIND_PREVIEW: RacerInfo[] = [
       powerEn: "Get Over Here",
       powerZh: "全员集合",
       text: "每场一次，回合开始时可以把所有其他选手传送到我所在格并绊倒。",
-      notes:
-        "包含同格角色；所有目标同时到达，再结算地形。每名能力持有者每场一次。",
+      notes: "包含同格角色；所有目标同时到达，再结算地形。每名能力持有者每场一次。",
     },
     {
       id: "sw_nemesis",
@@ -172,8 +169,7 @@ export const SECOND_WIND_PREVIEW: RacerInfo[] = [
       powerEn: "Guys, Watch!",
       powerZh: "看我表演",
       text: "主移动掷骰后可继续掷并累加；新骰不大于上一骰则不移动。",
-      notes:
-        "每颗最终主骰各结算掷骰触发；累计后只应用一次移动修正，随时可收手。",
+      notes: "每颗最终主骰各结算掷骰触发；累计后只应用一次移动修正，随时可收手。",
     },
     {
       id: "sw_soulmate",
@@ -182,8 +178,7 @@ export const SECOND_WIND_PREVIEW: RacerInfo[] = [
       powerEn: "Twin Flame",
       powerZh: "心有灵犀",
       text: "赛前选择一名对方选手；回合开始距其不超过 5 格时传送到其所在格。",
-      notes:
-        "仅对方玩家的角色；目标离场后不传送。赛前已复制本能力的角色也选择目标。",
+      notes: "仅对方玩家的角色；目标离场后不传送。赛前已复制本能力的角色也选择目标。",
     },
     {
       id: "sw_gloth",
@@ -210,8 +205,7 @@ export const SECOND_WIND_PREVIEW: RacerInfo[] = [
       powerEn: "Hugely Rich",
       powerZh: "赢在起点",
       text: "比赛开始时，我直接位于赛道的第一个弯道。",
-      notes:
-        "沿用当前两面赛道第一弯道12；赛前复制到能力时同样生效，不改变旧赛道。",
+      notes: "沿用当前两面赛道第一弯道12；赛前复制到能力时同样生效，不改变旧赛道。",
     },
     {
       id: "sw_stepdad",
@@ -229,8 +223,7 @@ export const SECOND_WIND_PREVIEW: RacerInfo[] = [
       powerEn: "Stop Traffic",
       powerZh: "全场看呆",
       text: "距离我不超过 1 格的其他选手，所有掷骰都视为 1。",
-      notes:
-        "包括同格、主骰、决斗、跟掷及冲洗骰；不改变不掷骰的移动或玩家先手比骰。",
+      notes: "包括同格、主骰、决斗、跟掷及冲洗骰；不改变不掷骰的移动或玩家先手比骰。",
     },
     {
       id: "sw_understudy",
@@ -277,6 +270,78 @@ export const SECOND_WIND_PREVIEW: RacerInfo[] = [
       text: "回合开始时，其他选手都领先我至少 5 格，则取消本场并获得 3 分。",
       notes: "用户裁定保留已得分、不发本场金银牌；无其他在场者不取消。",
     },
+    {
+      id: "sw_cheatah",
+      en: "Cheatah",
+      zh: "作弊豹",
+      powerEn: "Sleight of Paw",
+      powerZh: "藏骰戏法",
+      text: "不掷主移动骰，秘密设定点数；右侧玩家猜中则不移动。",
+      notes: "设骰不是掷骰；秘密答案保留在服务端重放中。",
+    },
+    {
+      id: "sw_doppelgangster",
+      en: "Doppelgängster",
+      zh: "替身黑帮",
+      powerEn: "Take a Dive",
+      powerZh: "冠军替身",
+      text: "第一位冲线者改为被淘汰，我获得其能力。",
+      notes: "先拦截冠军，再结算普通冲线；含自己。",
+    },
+    {
+      id: "sw_hog_knight",
+      en: "Hog Knight",
+      zh: "野猪骑士",
+      powerEn: "Piggyback",
+      powerZh: "野猪坐骑",
+      text: "赛前骑上野猪；骑手主移动 +2。其他选手停到野猪所在格时接走坐骑。",
+      notes: "共享坐骑随骑手移动，不交换选手控制权。",
+    },
+    {
+      id: "sw_magical_athlete",
+      en: "Magical Athlete",
+      zh: "魔法运动员",
+      powerEn: "Flexomancy",
+      powerZh: "六面魔法",
+      text: "主骰：1走7；2拉垫底者；3传送绊人；4走4再行动；5领先者退5；6走6绊倒经过者。",
+      notes: "并列目标选一名；2、3、5不再额外按骰点移动。",
+    },
+    {
+      id: "sw_mush",
+      en: "Mush",
+      zh: "糊糊",
+      powerEn: "Globster Mash",
+      powerZh: "百变糊糊",
+      text: "主移动最终掷出1或2时，抽一名选手，获得其能力直到本场结束。",
+      notes: "取得能力的具体继承方式见用户裁定与最终验收。",
+    },
+    {
+      id: "sw_null",
+      en: "Null",
+      zh: "虚无",
+      powerEn: "Void",
+      powerZh: "虚无领域",
+      text: "我前方的选手没有能力，主移动 -1。",
+      notes: "严格在前方；同格不受影响；后方虚无优先生效。",
+    },
+    {
+      id: "sw_re_runner",
+      en: "Re-Runner",
+      zh: "返场跑者",
+      powerEn: "Run It Back",
+      powerZh: "再次返场",
+      text: "首次参赛后，之后每场都作为我的玩家的一名额外选手出场。",
+      notes: "仍派当场正常选手；额外返场不消耗第二个出场名额。",
+    },
+    {
+      id: "sw_switcharoo",
+      en: "Switcharoo",
+      zh: "换手袋鼠",
+      powerEn: "Marswapial",
+      powerZh: "换手戏法",
+      text: "回合结束时，可以与距离不超过1格的另一名选手交换控制者和角色卡。",
+      notes: "已得分不转移；后续归属见用户裁定。",
+    },
   ].map((r) => ({
     ...r,
     status: "CONFIRMED" as const,
@@ -288,9 +353,6 @@ export const SECOND_WIND_PREVIEW: RacerInfo[] = [
 export const SECOND_WIND_PREVIEW_IDS = SECOND_WIND_PREVIEW.map((r) => r.id);
 
 /** A form is artwork on the same racer, never a new draftable character. */
-export function racerArtId(token: {
-  racer: string;
-  secondWind?: { wereMouth?: boolean };
-}): string {
+export function racerArtId(token: { racer: string; secondWind?: { wereMouth?: boolean } }): string {
   return token.secondWind?.wereMouth ? "sw_bite_mark_were" : token.racer;
 }
