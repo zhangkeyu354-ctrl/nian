@@ -50,7 +50,8 @@
 .dm-polish[class*="phase-"] .dm-table::after {
   content: "";
   position: absolute;
-  inset: -6%;
+  /* Keep the decorative halo inside the phone's 14px page gutter. */
+  inset: max(-14px, -6%);
   border-radius: 50%;
   pointer-events: none;
   z-index: -1;
