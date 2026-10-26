@@ -1,0 +1,45 @@
+{
+  "status": "LOCAL_DEVELOPMENT_NOT_RELEASED",
+  "tool": "built-in image_gen",
+  "layout_template": "assets/magical-athlete-production-v1/build_assets.py",
+  "illustration_prompt": "Create one original full-body illustration using the existing in-game alchemist card as style reference only: deliberately crude funny flat 2D cartoon, thick slightly irregular black ink outlines, solid vivid CMYK-like fills, stretched odd proportions, hand-drawn comic energy. No text, card frame, gradients, 3D or polished vector icon look. Icarus: lanky orange-haired winged runner in teal on coral red. Overtaker: purple-faced long-nosed runner with green racing jacket on yellow. Kingtripper: green lizard royal with yellow crown, purple cape and orange legs on blue.",
+  "cutout_prompt": "Remove the colored background, detached speed lines, dust clouds and loose feathers only. Preserve the exact character design, pose, colors, thick black outlines, clothing and entire body including hands, wings and feet. Output a single full-body transparent-background board game token cutout. No ground, shadow, text, card frame or new elements.",
+  "characters": [
+    {
+      "id": "sw_icarus",
+      "en": "Icarus",
+      "zh": "伊卡洛斯",
+      "powerZh": "飞行风险",
+      "text": "主移动 +3；主移动最终骰为 6 时淘汰出本场。",
+      "field": "#ff4a3a",
+      "illustration": "illustrations/sw_icarus.png",
+      "token": "cutouts/sw_icarus.png",
+      "sha256": "40012a9ea36356a19b5d3c3de943f18493d25a98199682d70e86f768b5f74371",
+      "token_sha256": "935bae975f1f4884dffcf37c214e27421c0b8d204d5f35f8df5f25f4be7a5d44"
+    },
+    {
+      "id": "sw_overtaker",
+      "en": "Overtaker",
+      "zh": "超车手",
+      "powerZh": "赶超计谋",
+      "text": "每有一名在场选手位于我前方，主移动 +1。",
+      "field": "#ffe500",
+      "illustration": "illustrations/sw_overtaker.png",
+      "token": "cutouts/sw_overtaker.png",
+      "sha256": "b1ad6d5dd372a20c652d507b91ee23bdc26206c4155da0ce2540322f9d59438b",
+      "token_sha256": "eea6e9a6a82480e9ae6eb52319e8009598e9d0054a9f510f8d77cc32538dc67a"
+    },
+    {
+      "id": "sw_kingtripper",
+      "en": "Kingtripper",
+      "zh": "绊王",
+      "powerZh": "王者一绊",
+      "text": "回合开始时，可以绊倒一名领先选手。",
+      "field": "#28ace3",
+      "illustration": "illustrations/sw_kingtripper.png",
+      "token": "cutouts/sw_kingtripper.png",
+      "sha256": "7d52620de5dd9c76d13dfb81897796a87d97271979a18d04b4fe49e06f7554af",
+      "token_sha256": "2da07e48c5b3aa4a03f332d0b309e79616ce57005c9200f9361262333c99a88b"
+    }
+  ]
+}

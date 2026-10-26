@@ -20,7 +20,11 @@ describe("Second Wind 研究登记与发布隔离", () => {
       expect(c.release_ready).toBe(false);
       expect(c.tests.passed).toBe(0);
       for (const kind of ["normal","boundary","interaction"]) expect(c.tests[kind].length).toBeGreaterThan(5);
-      expect(c.artwork.public_asset_path).toBeNull();
+      if (c.development_implementation) {
+        expect(c.development_implementation.production_release_approved).toBe(false);
+        expect(c.artwork.status).toBe("ORIGINAL_ART_EXISTING_CARD_TEMPLATE");
+        expect(c.artwork.public_asset_path).toBe(`/assets/magical-athlete/cards/zh/${c.id}.webp`);
+      } else expect(c.artwork.public_asset_path).toBeNull();
     }
     const tracks = read("tracks-research.json");
     expect(tracks.production_enabled).toBe(false);
@@ -51,8 +55,8 @@ describe("Second Wind 研究登记与发布隔离", () => {
     expect(new Set(ids).size).toBe(ids.length);
     for (const c of db.characters) for (const id of c.source_refs) expect(ids).toContain(id);
   });
-  it("研究没有修改已验收的生产引擎、角色、地图、协议模型与网页", () => {
-    const baseline = read("current-implementation.json");
-    for (const [file, expected] of Object.entries(baseline.hashes)) expect(createHash("sha256").update(readFileSync(file)).digest("hex")).toBe(expected);
+  it("既有赛道保持冻结；引擎和开局设置兼容性另用旧轨迹与房间测试验证", () => {
+    const baseline = read("legacy-implementation.json");
+    for (const file of ["packages/magical-athlete/src/tracks.ts"]) expect(createHash("sha256").update(readFileSync(file)).digest("hex")).toBe(baseline.hashes[file]);
   });
 });

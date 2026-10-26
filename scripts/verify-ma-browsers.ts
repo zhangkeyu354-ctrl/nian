@@ -6,6 +6,7 @@ import { tmpdir } from "node:os";
 import { join } from "node:path";
 import { strict as assert } from "node:assert";
 import { chromium, type Page } from "playwright";
+import { assertUiShot } from "./screenshot-check.ts";
 
 const PORT = 3331;
 const BASE = `http://127.0.0.1:${PORT}`;
@@ -54,6 +55,19 @@ try {
     await p.getByTestId("ma-claim").click();
     await p.getByTestId("ma-code").waitFor();
   }
+  if (process.env.MA_SECOND_WIND === "1") {
+    const toggle = host.getByTestId("ma-second-wind");
+    assert.equal(await toggle.isChecked(), false, "新角色默认关闭");
+    assert.equal(await pages[1].getByTestId("ma-second-wind").isDisabled(), true, "只有房主可改");
+    await toggle.click();
+    await host.waitForFunction(()=> (document.querySelector('[data-testid="ma-second-wind"]') as HTMLInputElement)?.checked);
+    await pages[1].waitForFunction(()=> (document.querySelector('[data-testid="ma-second-wind"]') as HTMLInputElement)?.checked);
+    await assertUiShot(host, `${out}/sw-lobby-phone.png`);
+    await host.setViewportSize({width:1366,height:768});
+    await toggle.scrollIntoViewIfNeeded();
+    await assertUiShot(host, `${out}/sw-lobby-desktop.png`);
+    await host.setViewportSize({width:390,height:844});
+  }
   const random = process.env.MA_DEAL === "random";
   if (random) {
     await host.getByTestId("ma-deal-random").click();
@@ -79,6 +93,7 @@ try {
   }
 
   let steps = 0;
+  let staleClicks = 0;
   let races = 0;
   for (;;) {
     if (++steps >= 4000) {
@@ -112,8 +127,15 @@ try {
         await confirm.click();
         acted = true;
       } else if (await opt.count()) {
-        await opt.click();
-        acted = true;
+        try {
+          await opt.click({timeout:2000});
+          staleClicks = 0;
+          acted = true;
+        } catch (e) {
+          // A command from another page may replace this decision between the
+          // locator check and click. Re-read the live UI; never force a click.
+          if (!(e instanceof Error) || !/Timeout|detached/.test(e.name + e.message) || ++staleClicks > 10) throw e;
+        }
       } else if ((await pick.count()) && !(await p.locator(".ma-banner", { hasText: "你派出了" }).count())) {
         await pick.click();
         acted = true;

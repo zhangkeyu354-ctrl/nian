@@ -8,6 +8,8 @@
  * 中文名与说明为草稿（translation_status: DRAFT），由用户确认后改为 APPROVED。
  * 规则引擎只依赖 id，不依赖文字。
  */
+import { SECOND_WIND_PREVIEW } from "./second-wind-preview.ts";
+
 export interface RacerInfo {
   id: string;
   en: string;
@@ -150,7 +152,7 @@ export const RACERS: RacerInfo[] = [
     "仍使用自己的棋子；仍获得所选角色的「赛前」能力。"),
 ];
 
-export const RACER_BY_ID = new Map(RACERS.map((r) => [r.id, r]));
+export const RACER_BY_ID = new Map([...RACERS, ...SECOND_WIND_PREVIEW].map((r) => [r.id, r]));
 export const racerName = (id: string) => RACER_BY_ID.get(id)?.zh ?? id;
 /** 可以进入选秀的角色（缺资料的 CHECK_REQUIRED 角色暂不进入） */
 export const DRAFTABLE = RACERS.filter((r) => r.status === "CONFIRMED").map((r) => r.id);

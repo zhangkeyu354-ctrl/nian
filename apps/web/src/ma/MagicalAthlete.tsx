@@ -312,10 +312,14 @@ function Lobby({ snap, lobby }: { snap: MARoomSnapshot; lobby: (a: Parameters<Re
             ))}
           </tbody>
         </table>
-        <p className="ma-muted">赛道顺序：温和 → 狂野 → 温和 → 狂野。<a href={`${ART}/docs/skillbook.pdf`} target="_blank" rel="noreferrer">36 名选手技能书（PDF）</a></p>
+        <p className="ma-muted">赛道顺序：温和 → 狂野 → 温和 → 狂野。<a href={`${ART}/docs/skillbook.pdf`} target="_blank" rel="noreferrer">原版 36 名选手技能书（PDF）</a></p>
       </section>
       <section className="ma-panel">
         <h2>怎么拿选手</h2>
+        <label className="ma-expansion-toggle">
+          <input type="checkbox" data-testid="ma-second-wind" checked={snap.secondWind === true} disabled={!host} onChange={e=>void run({type:"SET_SECOND_WIND",enabled:e.target.checked})} />
+          <span><b>开启 Second Wind 新角色</b><small>当前可用 3 名：伊卡洛斯、超车手、绊王。开启后与原版选手混合招募；关闭则只使用原版 36 名。</small></span>
+        </label>
         <div className="ma-variant" role="radiogroup" aria-label="怎么拿选手">
           {([
             ["draft", "轮流选秀", "翻开一排选手，大家蛇形轮流挑，每人挑 4 名。"],
@@ -370,6 +374,7 @@ function RacerCard({
   const r = RACER_BY_ID.get(id);
   const [zoom, setZoom] = useState(false);
   if (!r) return null;
+  const cardSrc = `${ART}/cards/zh/${id}.webp`;
   return (
     <article className={"ma-card" + (dim ? " dim" : "") + (compact ? " compact" : "")}>
       <button type="button" className="ma-card-art" onClick={() => setZoom(true)} aria-label={`放大查看 ${r.zh}`}>

@@ -2,7 +2,7 @@
   "schema_version": 1,
   "as_of": "2026-10-25",
   "production_enabled": false,
-  "warning": "36名候选登记；不是36名官方核验或可玩角色。candidate_*全部待核，不可自动转换为规则代码。",
+  "warning": "36名候选登记。用户已确认采用SW-F01技能文字，可开展开发核验；未解决互动仍待核。不是官方身份核验或正式上线批准。",
   "characters": [
     {
       "id": "sw_bite_mark",
@@ -34,7 +34,7 @@
       "interaction_notes": "与香蕉和半人马交互，经过与淘汰顺序",
       "open_questions": [
         "变身持续时间、再次变身、能力复制须查原卡。",
-        "尚未取得可归属官方发布版本的完整规则书或可读原卡卡文。"
+        "用户已确认采用参考站技能文字；此来源缺少官方卡文不再单独阻塞开发，具体未解边界仍待核。"
       ],
       "animation_requirements": [
         "power_source_highlight",
@@ -52,7 +52,8 @@
         "boundary": "重掷替换旧骰后不误变身",
         "interaction": "与香蕉和半人马交互，经过与淘汰顺序",
         "passed": 0
-      }
+      },
+      "source_acceptance": "USER_ACCEPTED_REFERENCE"
     },
     {
       "id": "sw_blunderdog",
@@ -84,7 +85,7 @@
       "interaction_notes": "与教练、黏黏怪的加减顺序",
       "open_questions": [
         "并列垫底、骰值与移动修正顺序待核。",
-        "尚未取得可归属官方发布版本的完整规则书或可读原卡卡文。"
+        "用户已确认采用参考站技能文字；此来源缺少官方卡文不再单独阻塞开发，具体未解边界仍待核。"
       ],
       "animation_requirements": [
         "power_source_highlight",
@@ -101,7 +102,8 @@
         "boundary": "并列最后是否适用三倍",
         "interaction": "与教练、黏黏怪的加减顺序",
         "passed": 0
-      }
+      },
+      "source_acceptance": "USER_ACCEPTED_REFERENCE"
     },
     {
       "id": "sw_cheatah",
@@ -133,7 +135,7 @@
       "interaction_notes": "与全局重掷和固定骰效应交互",
       "open_questions": [
         "秘密提交与猜测顺序、揭露后算不算骰点待核。",
-        "尚未取得可归属官方发布版本的完整规则书或可读原卡卡文。"
+        "用户已确认采用参考站技能文字；此来源缺少官方卡文不再单独阻塞开发，具体未解边界仍待核。"
       ],
       "animation_requirements": [
         "power_source_highlight",
@@ -151,7 +153,8 @@
         "boundary": "断线后不泄露秘密骰",
         "interaction": "与全局重掷和固定骰效应交互",
         "passed": 0
-      }
+      },
+      "source_acceptance": "USER_ACCEPTED_REFERENCE"
     },
     {
       "id": "sw_critic",
@@ -181,7 +184,7 @@
       "interaction_notes": "与骰贩子、魔术师和派对扫兴鬼排队重掷",
       "open_questions": [
         "每回合一次是按每对象还是按能力、多个重掷的优先级待核。",
-        "尚未取得可归属官方发布版本的完整规则书或可读原卡卡文。"
+        "用户已确认采用参考站技能文字；此来源缺少官方卡文不再单独阻塞开发，具体未解边界仍待核。"
       ],
       "animation_requirements": [
         "power_source_highlight",
@@ -198,7 +201,8 @@
         "boundary": "同格和身后不合格",
         "interaction": "与骰贩子、魔术师和派对扫兴鬼排队重掷",
         "passed": 0
-      }
+      },
+      "source_acceptance": "USER_ACCEPTED_REFERENCE"
     },
     {
       "id": "sw_diva",
@@ -230,7 +234,7 @@
       "interaction_notes": "巨婴位置调整、瞬移同格触发规则",
       "open_questions": [
         "并列目标和自己同时并列首尾时如何选择待核。",
-        "尚未取得可归属官方发布版本的完整规则书或可读原卡卡文。"
+        "用户已确认采用参考站技能文字；此来源缺少官方卡文不再单独阻塞开发，具体未解边界仍待核。"
       ],
       "animation_requirements": [
         "power_source_highlight",
@@ -248,7 +252,8 @@
         "boundary": "并列领先与并列最后",
         "interaction": "巨婴位置调整、瞬移同格触发规则",
         "passed": 0
-      }
+      },
+      "source_acceptance": "USER_ACCEPTED_REFERENCE"
     },
     {
       "id": "sw_doppelgangster",
@@ -278,7 +283,7 @@
       "interaction_notes": "与军师、双胞胎、Re-Runner和取消比赛交互",
       "open_questions": [
         "是否仅一次、继承持续、奖牌及原冠军记录必须查原卡。",
-        "尚未取得可归属官方发布版本的完整规则书或可读原卡卡文。"
+        "用户已确认采用参考站技能文字；此来源缺少官方卡文不再单独阻塞开发，具体未解边界仍待核。"
       ],
       "animation_requirements": [
         "power_source_highlight",
@@ -296,7 +301,8 @@
         "boundary": "本人首位冲线及多名同时冲线",
         "interaction": "与军师、双胞胎、Re-Runner和取消比赛交互",
         "passed": 0
-      }
+      },
+      "source_acceptance": "USER_ACCEPTED_REFERENCE"
     },
     {
       "id": "sw_gloth",
@@ -328,7 +334,7 @@
       "interaction_notes": "被取消的比赛是否仍有结束奖励",
       "open_questions": [
         "淘汰后结束奖励是否仍有效；弯道等于时的定义待核。",
-        "尚未取得可归属官方发布版本的完整规则书或可读原卡卡文。"
+        "用户已确认采用参考站技能文字；此来源缺少官方卡文不再单独阻塞开发，具体未解边界仍待核。"
       ],
       "animation_requirements": [
         "power_source_highlight",
@@ -346,7 +352,8 @@
         "boundary": "恰好在第二弯道",
         "interaction": "被取消的比赛是否仍有结束奖励",
         "passed": 0
-      }
+      },
+      "source_acceptance": "USER_ACCEPTED_REFERENCE"
     },
     {
       "id": "sw_hog_knight",
@@ -378,7 +385,7 @@
       "interaction_notes": "巨婴、吸盘鱼与坐骑共享格",
       "open_questions": [
         "坐骑是独立实体还是随骑手移动；同时抵达接手优先级待核。",
-        "尚未取得可归属官方发布版本的完整规则书或可读原卡卡文。"
+        "用户已确认采用参考站技能文字；此来源缺少官方卡文不再单独阻塞开发，具体未解边界仍待核。"
       ],
       "animation_requirements": [
         "power_source_highlight",
@@ -395,7 +402,8 @@
         "boundary": "多人同时到达坐骑格",
         "interaction": "巨婴、吸盘鱼与坐骑共享格",
         "passed": 0
-      }
+      },
+      "source_acceptance": "USER_ACCEPTED_REFERENCE"
     },
     {
       "id": "sw_hopfrog",
@@ -425,7 +433,7 @@
       "interaction_notes": "与天才、船长的额外回合和插队优先级",
       "open_questions": [
         "同一次结束多目标是否只给一回合；额外回合链待核。",
-        "尚未取得可归属官方发布版本的完整规则书或可读原卡卡文。"
+        "用户已确认采用参考站技能文字；此来源缺少官方卡文不再单独阻塞开发，具体未解边界仍待核。"
       ],
       "animation_requirements": [
         "power_source_highlight"
@@ -441,7 +449,8 @@
         "boundary": "多人同在前方一格",
         "interaction": "与天才、船长的额外回合和插队优先级",
         "passed": 0
-      }
+      },
+      "source_acceptance": "USER_ACCEPTED_REFERENCE"
     },
     {
       "id": "sw_hotel",
@@ -471,7 +480,7 @@
       "interaction_notes": "西西弗斯扣分和坐骑停格事件",
       "open_questions": [
         "换筹、同一玩家自付款、同时抵达是否触发待核。",
-        "尚未取得可归属官方发布版本的完整规则书或可读原卡卡文。"
+        "用户已确认采用参考站技能文字；此来源缺少官方卡文不再单独阻塞开发，具体未解边界仍待核。"
       ],
       "animation_requirements": [
         "power_source_highlight",
@@ -489,7 +498,8 @@
         "boundary": "到访者0分或只有3分筹码",
         "interaction": "西西弗斯扣分和坐骑停格事件",
         "passed": 0
-      }
+      },
+      "source_acceptance": "USER_ACCEPTED_REFERENCE"
     },
     {
       "id": "sw_icarus",
@@ -521,7 +531,7 @@
       "interaction_notes": "与派对扫兴鬼、军师、只剩一人结算",
       "open_questions": [
         "先重掷还是先淘汰、效果替代主移动的次序待核。",
-        "尚未取得可归属官方发布版本的完整规则书或可读原卡卡文。"
+        "用户已确认采用参考站技能文字；此来源缺少官方卡文不再单独阻塞开发，具体未解边界仍待核。"
       ],
       "animation_requirements": [
         "power_source_highlight",
@@ -529,9 +539,12 @@
         "elimination"
       ],
       "artwork": {
-        "status": "NOT_LICENSED",
-        "public_asset_path": null,
-        "observed_reference": "来源图片未作为完整技能卡面核验；抽查可见插画裁切。"
+        "status": "ORIGINAL_ART_EXISTING_CARD_TEMPLATE",
+        "public_asset_path": "/assets/magical-athlete/cards/zh/sw_icarus.webp",
+        "portrait_path": "/assets/magical-athlete/portraits/sw_icarus.webp",
+        "token_path": "/assets/magical-athlete/tokens/sw_icarus.png",
+        "source_manifest": "assets/magical-athlete-second-wind/manifest.json",
+        "production_release_approved": false
       },
       "tests": {
         "status": "PLANNED_NOT_IMPLEMENTED",
@@ -539,6 +552,20 @@
         "boundary": "6被重掷为非6及反向重掷",
         "interaction": "与派对扫兴鬼、军师、只剩一人结算",
         "passed": 0
+      },
+      "source_acceptance": "USER_ACCEPTED_REFERENCE",
+      "development_implementation": {
+        "status": "BASE_ENGINE_OPT_IN_IMPLEMENTED",
+        "toggle": "房间开局设置：开启Second Wind新角色",
+        "default_enabled": false,
+        "coverage": {
+          "normal": true,
+          "boundary": true,
+          "interaction": true,
+          "direct_and_cross_cases": 6
+        },
+        "test_file": "packages/magical-athlete/test/second-wind-first-three.test.ts",
+        "production_release_approved": false
       }
     },
     {
@@ -569,7 +596,7 @@
       "interaction_notes": "与企鹅和摔倒起身回合交互",
       "open_questions": [
         "并列领先、自己领先是否可选待核。",
-        "尚未取得可归属官方发布版本的完整规则书或可读原卡卡文。"
+        "用户已确认采用参考站技能文字；此来源缺少官方卡文不再单独阻塞开发，具体未解边界仍待核。"
       ],
       "animation_requirements": [
         "power_source_highlight",
@@ -577,9 +604,12 @@
         "trip_status"
       ],
       "artwork": {
-        "status": "NOT_LICENSED",
-        "public_asset_path": null,
-        "observed_reference": "来源图片未作为完整技能卡面核验；抽查可见插画裁切。"
+        "status": "ORIGINAL_ART_EXISTING_CARD_TEMPLATE",
+        "public_asset_path": "/assets/magical-athlete/cards/zh/sw_kingtripper.webp",
+        "portrait_path": "/assets/magical-athlete/portraits/sw_kingtripper.webp",
+        "token_path": "/assets/magical-athlete/tokens/sw_kingtripper.png",
+        "source_manifest": "assets/magical-athlete-second-wind/manifest.json",
+        "production_release_approved": false
       },
       "tests": {
         "status": "PLANNED_NOT_IMPLEMENTED",
@@ -587,6 +617,20 @@
         "boundary": "并列和无其他在场选手",
         "interaction": "与企鹅和摔倒起身回合交互",
         "passed": 0
+      },
+      "source_acceptance": "USER_ACCEPTED_REFERENCE",
+      "development_implementation": {
+        "status": "BASE_ENGINE_OPT_IN_IMPLEMENTED",
+        "toggle": "房间开局设置：开启Second Wind新角色",
+        "default_enabled": false,
+        "coverage": {
+          "normal": true,
+          "boundary": true,
+          "interaction": true,
+          "direct_and_cross_cases": 6
+        },
+        "test_file": "packages/magical-athlete/test/second-wind-first-three.test.ts",
+        "production_release_approved": false
       }
     },
     {
@@ -619,7 +663,7 @@
       "interaction_notes": "与巨婴、血盆大口、浪漫者、吸盘鱼交互",
       "open_questions": [
         "同时到达、先瞬移再绊倒、复制/抑制后次数保留待核。",
-        "尚未取得可归属官方发布版本的完整规则书或可读原卡卡文。"
+        "用户已确认采用参考站技能文字；此来源缺少官方卡文不再单独阻塞开发，具体未解边界仍待核。"
       ],
       "animation_requirements": [
         "power_source_highlight",
@@ -638,7 +682,8 @@
         "boundary": "第二次使用被拒与已离场目标",
         "interaction": "与巨婴、血盆大口、浪漫者、吸盘鱼交互",
         "passed": 0
-      }
+      },
+      "source_acceptance": "USER_ACCEPTED_REFERENCE"
     },
     {
       "id": "sw_le_saboteur",
@@ -670,7 +715,7 @@
       "interaction_notes": "与香蕉后退经过及Null抑制交互",
       "open_questions": [
         "骰值还是最终格数变负，重掷与修正次序待核。",
-        "尚未取得可归属官方发布版本的完整规则书或可读原卡卡文。"
+        "用户已确认采用参考站技能文字；此来源缺少官方卡文不再单独阻塞开发，具体未解边界仍待核。"
       ],
       "animation_requirements": [
         "power_source_highlight",
@@ -687,7 +732,8 @@
         "boundary": "位于起点时后退",
         "interaction": "与香蕉后退经过及Null抑制交互",
         "passed": 0
-      }
+      },
+      "source_acceptance": "USER_ACCEPTED_REFERENCE"
     },
     {
       "id": "sw_magical_athlete",
@@ -721,7 +767,7 @@
       "interaction_notes": "与较真怪、香蕉、船长、多个领先者交互",
       "open_questions": [
         "六分支是否替代整次主移动、并列、额外移动定性必须逐项核卡。",
-        "尚未取得可归属官方发布版本的完整规则书或可读原卡卡文。"
+        "用户已确认采用参考站技能文字；此来源缺少官方卡文不再单独阻塞开发，具体未解边界仍待核。"
       ],
       "animation_requirements": [
         "power_source_highlight",
@@ -741,7 +787,8 @@
         "boundary": "逐一覆盖六点与重掷",
         "interaction": "与较真怪、香蕉、船长、多个领先者交互",
         "passed": 0
-      }
+      },
+      "source_acceptance": "USER_ACCEPTED_REFERENCE"
     },
     {
       "id": "sw_mole",
@@ -773,7 +820,7 @@
       "interaction_notes": "与黏黏怪、教练及掷骰触发能力交互",
       "open_questions": [
         "同格是否算一格以内；范围计算仅在场选手待核。",
-        "尚未取得可归属官方发布版本的完整规则书或可读原卡卡文。"
+        "用户已确认采用参考站技能文字；此来源缺少官方卡文不再单独阻塞开发，具体未解边界仍待核。"
       ],
       "animation_requirements": [
         "power_source_highlight",
@@ -791,7 +838,8 @@
         "boundary": "附近恰好一格",
         "interaction": "与黏黏怪、教练及掷骰触发能力交互",
         "passed": 0
-      }
+      },
+      "source_acceptance": "USER_ACCEPTED_REFERENCE"
     },
     {
       "id": "sw_mr_dice_guy",
@@ -823,7 +871,7 @@
       "interaction_notes": "与Stunner和Party Pooper逐颗处理",
       "open_questions": [
         "六颗全不同时怎么办、全部重掷或单颗重掷、选择前后待核。",
-        "尚未取得可归属官方发布版本的完整规则书或可读原卡卡文。"
+        "用户已确认采用参考站技能文字；此来源缺少官方卡文不再单独阻塞开发，具体未解边界仍待核。"
       ],
       "animation_requirements": [
         "power_source_highlight",
@@ -841,7 +889,8 @@
         "boundary": "恰好1到6各一次",
         "interaction": "与Stunner和Party Pooper逐颗处理",
         "passed": 0
-      }
+      },
+      "source_acceptance": "USER_ACCEPTED_REFERENCE"
     },
     {
       "id": "sw_mush",
@@ -871,7 +920,7 @@
       "interaction_notes": "与Egg、Twin、Understudy以及Null交互",
       "open_questions": [
         "累加还是替换、是否获取赛前能力、牌堆耗尽待核。",
-        "尚未取得可归属官方发布版本的完整规则书或可读原卡卡文。"
+        "用户已确认采用参考站技能文字；此来源缺少官方卡文不再单独阻塞开发，具体未解边界仍待核。"
       ],
       "animation_requirements": [
         "power_source_highlight"
@@ -887,7 +936,8 @@
         "boundary": "牌堆为空和重复触发",
         "interaction": "与Egg、Twin、Understudy以及Null交互",
         "passed": 0
-      }
+      },
+      "source_acceptance": "USER_ACCEPTED_REFERENCE"
     },
     {
       "id": "sw_nemesis",
@@ -919,7 +969,7 @@
       "interaction_notes": "与骰贩子、Stunner和Party Pooper的重掷链",
       "open_questions": [
         "比较最终骰还是即时骰、跟掷算何种骰、可否多次待核。",
-        "尚未取得可归属官方发布版本的完整规则书或可读原卡卡文。"
+        "用户已确认采用参考站技能文字；此来源缺少官方卡文不再单独阻塞开发，具体未解边界仍待核。"
       ],
       "animation_requirements": [
         "power_source_highlight",
@@ -937,7 +987,8 @@
         "boundary": "对方重掷后旧点数失效",
         "interaction": "与骰贩子、Stunner和Party Pooper的重掷链",
         "passed": 0
-      }
+      },
+      "source_acceptance": "USER_ACCEPTED_REFERENCE"
     },
     {
       "id": "sw_nepo_baby",
@@ -967,7 +1018,7 @@
       "interaction_notes": "第一弯道有巨婴时的调整",
       "open_questions": [
         "新旧棋盘第一弯道准确格位；放置是否结算地形待核。",
-        "尚未取得可归属官方发布版本的完整规则书或可读原卡卡文。"
+        "用户已确认采用参考站技能文字；此来源缺少官方卡文不再单独阻塞开发，具体未解边界仍待核。"
       ],
       "animation_requirements": [
         "power_source_highlight"
@@ -983,7 +1034,8 @@
         "boundary": "与其他赛前效果顺序",
         "interaction": "第一弯道有巨婴时的调整",
         "passed": 0
-      }
+      },
+      "source_acceptance": "USER_ACCEPTED_REFERENCE"
     },
     {
       "id": "sw_null",
@@ -1015,7 +1067,7 @@
       "interaction_notes": "与Copycat、Understudy、被抑制的临时能力交互",
       "open_questions": [
         "多个Null互相抑制的依赖、位置改变时生效快照待核。",
-        "尚未取得可归属官方发布版本的完整规则书或可读原卡卡文。"
+        "用户已确认采用参考站技能文字；此来源缺少官方卡文不再单独阻塞开发，具体未解边界仍待核。"
       ],
       "animation_requirements": [
         "power_source_highlight",
@@ -1032,7 +1084,8 @@
         "boundary": "并列和刚越过边界",
         "interaction": "与Copycat、Understudy、被抑制的临时能力交互",
         "passed": 0
-      }
+      },
+      "source_acceptance": "USER_ACCEPTED_REFERENCE"
     },
     {
       "id": "sw_overtaker",
@@ -1064,16 +1117,19 @@
       "interaction_notes": "与Null、教练及多选手同玩家交互",
       "open_questions": [
         "在场对象与确定修正时机待核。",
-        "尚未取得可归属官方发布版本的完整规则书或可读原卡卡文。"
+        "用户已确认采用参考站技能文字；此来源缺少官方卡文不再单独阻塞开发，具体未解边界仍待核。"
       ],
       "animation_requirements": [
         "power_source_highlight",
         "step_path"
       ],
       "artwork": {
-        "status": "NOT_LICENSED",
-        "public_asset_path": null,
-        "observed_reference": "来源图片未作为完整技能卡面核验；抽查可见插画裁切。"
+        "status": "ORIGINAL_ART_EXISTING_CARD_TEMPLATE",
+        "public_asset_path": "/assets/magical-athlete/cards/zh/sw_overtaker.webp",
+        "portrait_path": "/assets/magical-athlete/portraits/sw_overtaker.webp",
+        "token_path": "/assets/magical-athlete/tokens/sw_overtaker.png",
+        "source_manifest": "assets/magical-athlete-second-wind/manifest.json",
+        "production_release_approved": false
       },
       "tests": {
         "status": "PLANNED_NOT_IMPLEMENTED",
@@ -1081,6 +1137,20 @@
         "boundary": "并列选手不在前方",
         "interaction": "与Null、教练及多选手同玩家交互",
         "passed": 0
+      },
+      "source_acceptance": "USER_ACCEPTED_REFERENCE",
+      "development_implementation": {
+        "status": "BASE_ENGINE_OPT_IN_IMPLEMENTED",
+        "toggle": "房间开局设置：开启Second Wind新角色",
+        "default_enabled": false,
+        "coverage": {
+          "normal": true,
+          "boundary": true,
+          "interaction": true,
+          "direct_and_cross_cases": 5
+        },
+        "test_file": "packages/magical-athlete/test/second-wind-first-three.test.ts",
+        "production_release_approved": false
       }
     },
     {
@@ -1113,7 +1183,7 @@
       "interaction_notes": "与Mr. Dice Guy、Show-Off、Stunner、Icarus交互",
       "open_questions": [
         "所有骰的范围、连出6、固定骰与重掷优先级待核。",
-        "尚未取得可归属官方发布版本的完整规则书或可读原卡卡文。"
+        "用户已确认采用参考站技能文字；此来源缺少官方卡文不再单独阻塞开发，具体未解边界仍待核。"
       ],
       "animation_requirements": [
         "power_source_highlight",
@@ -1130,7 +1200,8 @@
         "boundary": "连续多个6及全6骰池",
         "interaction": "与Mr. Dice Guy、Show-Off、Stunner、Icarus交互",
         "passed": 0
-      }
+      },
+      "source_acceptance": "USER_ACCEPTED_REFERENCE"
     },
     {
       "id": "sw_penguin",
@@ -1162,7 +1233,7 @@
       "interaction_notes": "与香蕉、起身和火箭科学家的修正交互",
       "open_questions": [
         "本次翻倍后是否起身、后退经过也算否须核新版。",
-        "尚未取得可归属官方发布版本的完整规则书或可读原卡卡文。"
+        "用户已确认采用参考站技能文字；此来源缺少官方卡文不再单独阻塞开发，具体未解边界仍待核。"
       ],
       "animation_requirements": [
         "power_source_highlight",
@@ -1180,7 +1251,8 @@
         "boundary": "连续被经过与已经摔倒",
         "interaction": "与香蕉、起身和火箭科学家的修正交互",
         "passed": 0
-      }
+      },
+      "source_acceptance": "USER_ACCEPTED_REFERENCE"
     },
     {
       "id": "sw_re_runner",
@@ -1210,7 +1282,7 @@
       "interaction_notes": "与Switcharoo、双选手、双胞胎和冠军替换交互",
       "open_questions": [
         "淘汰/换控制者后归属、起点状态与返场顺序待核。",
-        "尚未取得可归属官方发布版本的完整规则书或可读原卡卡文。"
+        "用户已确认采用参考站技能文字；此来源缺少官方卡文不再单独阻塞开发，具体未解边界仍待核。"
       ],
       "animation_requirements": [
         "power_source_highlight"
@@ -1226,7 +1298,8 @@
         "boundary": "首次在第4场使用",
         "interaction": "与Switcharoo、双选手、双胞胎和冠军替换交互",
         "passed": 0
-      }
+      },
+      "source_acceptance": "USER_ACCEPTED_REFERENCE"
     },
     {
       "id": "sw_show_off",
@@ -1258,7 +1331,7 @@
       "interaction_notes": "与Party Pooper、Stunner及Icarus复制交互",
       "open_questions": [
         "累加是否含初骰、6后可否选择继续、全局重掷次序待核。",
-        "尚未取得可归属官方发布版本的完整规则书或可读原卡卡文。"
+        "用户已确认采用参考站技能文字；此来源缺少官方卡文不再单独阻塞开发，具体未解边界仍待核。"
       ],
       "animation_requirements": [
         "power_source_highlight",
@@ -1276,7 +1349,8 @@
         "boundary": "相同点数与连续递增至6",
         "interaction": "与Party Pooper、Stunner及Icarus复制交互",
         "passed": 0
-      }
+      },
+      "source_acceptance": "USER_ACCEPTED_REFERENCE"
     },
     {
       "id": "sw_soulmate",
@@ -1308,7 +1382,7 @@
       "interaction_notes": "与巨婴、Null和Switcharoo交互",
       "open_questions": [
         "对象离场、控制交换后仍绑定角色还是玩家待核。",
-        "尚未取得可归属官方发布版本的完整规则书或可读原卡卡文。"
+        "用户已确认采用参考站技能文字；此来源缺少官方卡文不再单独阻塞开发，具体未解边界仍待核。"
       ],
       "animation_requirements": [
         "power_source_highlight",
@@ -1326,7 +1400,8 @@
         "boundary": "距离恰好5与对象已淘汰",
         "interaction": "与巨婴、Null和Switcharoo交互",
         "passed": 0
-      }
+      },
+      "source_acceptance": "USER_ACCEPTED_REFERENCE"
     },
     {
       "id": "sw_speed_demon",
@@ -1358,7 +1433,7 @@
       "interaction_notes": "与Switcharoo积分归属、Spoilsport与军师结算",
       "open_questions": [
         "多领先/唯一存活者、积分取值时点、转移控制者后取谁的分待核。",
-        "尚未取得可归属官方发布版本的完整规则书或可读原卡卡文。"
+        "用户已确认采用参考站技能文字；此来源缺少官方卡文不再单独阻塞开发，具体未解边界仍待核。"
       ],
       "animation_requirements": [
         "power_source_highlight",
@@ -1376,7 +1451,8 @@
         "boundary": "恰好领先4与并列领先",
         "interaction": "与Switcharoo积分归属、Spoilsport与军师结算",
         "passed": 0
-      }
+      },
+      "source_acceptance": "USER_ACCEPTED_REFERENCE"
     },
     {
       "id": "sw_spoilsport",
@@ -1406,7 +1482,7 @@
       "interaction_notes": "与Gloth、Re-Runner、Doppelgangster、军师交互",
       "open_questions": [
         "已经发放的奖牌、取消是否触发结束奖励、单人空集合必须核实。",
-        "尚未取得可归属官方发布版本的完整规则书或可读原卡卡文。"
+        "用户已确认采用参考站技能文字；此来源缺少官方卡文不再单独阻塞开发，具体未解边界仍待核。"
       ],
       "animation_requirements": [
         "power_source_highlight",
@@ -1423,7 +1499,8 @@
         "boundary": "恰好5格与仅剩自己",
         "interaction": "与Gloth、Re-Runner、Doppelgangster、军师交互",
         "passed": 0
-      }
+      },
+      "source_acceptance": "USER_ACCEPTED_REFERENCE"
     },
     {
       "id": "sw_stepdad",
@@ -1455,7 +1532,7 @@
       "interaction_notes": "与冠军替换、控制权交换和多人顺序交互",
       "open_questions": [
         "左侧按实体席位还是玩家、多选手和淘汰后左侧更新待核。",
-        "尚未取得可归属官方发布版本的完整规则书或可读原卡卡文。"
+        "用户已确认采用参考站技能文字；此来源缺少官方卡文不再单独阻塞开发，具体未解边界仍待核。"
       ],
       "animation_requirements": [
         "power_source_highlight",
@@ -1473,7 +1550,8 @@
         "boundary": "左侧角色属于自己玩家",
         "interaction": "与冠军替换、控制权交换和多人顺序交互",
         "passed": 0
-      }
+      },
+      "source_acceptance": "USER_ACCEPTED_REFERENCE"
     },
     {
       "id": "sw_streaker",
@@ -1503,7 +1581,7 @@
       "interaction_notes": "与半人马、香蕉、反向移动交互",
       "open_questions": [
         "一次经过多人是共1分还是逐人1分、后退经过待核。",
-        "尚未取得可归属官方发布版本的完整规则书或可读原卡卡文。"
+        "用户已确认采用参考站技能文字；此来源缺少官方卡文不再单独阻塞开发，具体未解边界仍待核。"
       ],
       "animation_requirements": [
         "power_source_highlight",
@@ -1520,7 +1598,8 @@
         "boundary": "同段经过多人",
         "interaction": "与半人马、香蕉、反向移动交互",
         "passed": 0
-      }
+      },
+      "source_acceptance": "USER_ACCEPTED_REFERENCE"
     },
     {
       "id": "sw_stunner",
@@ -1550,7 +1629,7 @@
       "interaction_notes": "与Mr. Dice Guy、Nemesis、决斗和重掷交互",
       "open_questions": [
         "设置点数还是实际掷骰、动态移动出范围的时点待核。",
-        "尚未取得可归属官方发布版本的完整规则书或可读原卡卡文。"
+        "用户已确认采用参考站技能文字；此来源缺少官方卡文不再单独阻塞开发，具体未解边界仍待核。"
       ],
       "animation_requirements": [
         "power_source_highlight"
@@ -1566,7 +1645,8 @@
         "boundary": "恰好距离1及同格",
         "interaction": "与Mr. Dice Guy、Nemesis、决斗和重掷交互",
         "passed": 0
-      }
+      },
+      "source_acceptance": "USER_ACCEPTED_REFERENCE"
     },
     {
       "id": "sw_switcharoo",
@@ -1596,7 +1676,7 @@
       "interaction_notes": "与Re-Runner、Speed Demon、额外回合及身份凭证交互",
       "open_questions": [
         "座位顺序、待决定归属、历史得分和返场效果的转移边界待核。",
-        "尚未取得可归属官方发布版本的完整规则书或可读原卡卡文。"
+        "用户已确认采用参考站技能文字；此来源缺少官方卡文不再单独阻塞开发，具体未解边界仍待核。"
       ],
       "animation_requirements": [
         "power_source_highlight",
@@ -1614,7 +1694,8 @@
         "boundary": "同玩家角色及断线重连",
         "interaction": "与Re-Runner、Speed Demon、额外回合及身份凭证交互",
         "passed": 0
-      }
+      },
+      "source_acceptance": "USER_ACCEPTED_REFERENCE"
     },
     {
       "id": "sw_tail",
@@ -1646,7 +1727,7 @@
       "interaction_notes": "与巨婴、地形落点及Null交互",
       "open_questions": [
         "最近并列、无前方对象待核。",
-        "尚未取得可归属官方发布版本的完整规则书或可读原卡卡文。"
+        "用户已确认采用参考站技能文字；此来源缺少官方卡文不再单独阻塞开发，具体未解边界仍待核。"
       ],
       "animation_requirements": [
         "power_source_highlight",
@@ -1664,7 +1745,8 @@
         "boundary": "最近对象就在前方一格",
         "interaction": "与巨婴、地形落点及Null交互",
         "passed": 0
-      }
+      },
+      "source_acceptance": "USER_ACCEPTED_REFERENCE"
     },
     {
       "id": "sw_the_hose",
@@ -1694,7 +1776,7 @@
       "interaction_notes": "与Stunner、Party Pooper、企鹅交互",
       "open_questions": [
         "自己回合结束后连锁和距离边界、所有骰修正待核。",
-        "尚未取得可归属官方发布版本的完整规则书或可读原卡卡文。"
+        "用户已确认采用参考站技能文字；此来源缺少官方卡文不再单独阻塞开发，具体未解边界仍待核。"
       ],
       "animation_requirements": [
         "power_source_highlight",
@@ -1711,7 +1793,8 @@
         "boundary": "距离恰好等于骰值",
         "interaction": "与Stunner、Party Pooper、企鹅交互",
         "passed": 0
-      }
+      },
+      "source_acceptance": "USER_ACCEPTED_REFERENCE"
     },
     {
       "id": "sw_understudy",
@@ -1741,7 +1824,7 @@
       "interaction_notes": "与Egg、Twin、Copycat和Null依赖交互",
       "open_questions": [
         "可否复制赛前能力、多层复制和Null屏蔽必须核实。",
-        "尚未取得可归属官方发布版本的完整规则书或可读原卡卡文。"
+        "用户已确认采用参考站技能文字；此来源缺少官方卡文不再单独阻塞开发，具体未解边界仍待核。"
       ],
       "animation_requirements": [
         "power_source_highlight",
@@ -1758,8 +1841,11 @@
         "boundary": "目标是另一个复制者",
         "interaction": "与Egg、Twin、Copycat和Null依赖交互",
         "passed": 0
-      }
+      },
+      "source_acceptance": "USER_ACCEPTED_REFERENCE"
     }
   ],
-  "candidate_flag_scope": "candidate_*布尔仅描述转录里的直接效果；复制或变身后可能继承的效果未核，不表示永远不可能。"
+  "candidate_flag_scope": "candidate_*布尔仅描述转录里的直接效果；复制或变身后可能继承的效果未核，不表示永远不可能。",
+  "user_accepted_source_id": "SW-F01",
+  "source_acceptance_date": "2026-10-26"
 }

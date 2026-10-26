@@ -24,7 +24,15 @@
     "classification": "FAN_TRANSCRIPTION",
     "retrieved": "2026-10-25",
     "sha256": "44f7f83a78529912c7ef01aca7d06cf0f233eb72d1f93f3340325e11f4e02e7b",
-    "notes": "静态源码区分36基础、36 Second Wind候选、32 Extra Mile。图片为立绘裁切，不能核验技能原文。"
+    "notes": "静态源码区分36基础、36 Second Wind候选、32 Extra Mile。图片为立绘裁切，不能核验技能原文。",
+    "project_acceptance": {
+      "status": "USER_ACCEPTED_REFERENCE",
+      "date": "2026-10-26",
+      "user_confirmation": "这个是对的",
+      "supplied_url": "https://johnnlds.github.io/Magical-Athlete-Racers/?v=13&utm_source=chatgpt.com",
+      "scope": "采用该站Second Wind分类的技能文字作为开发参考；不包含Extra Mile，不等于官方发行商来源或美术授权。"
+    },
+    "rechecked": "2026-10-26"
   },
   {
     "id": "SW-F02",

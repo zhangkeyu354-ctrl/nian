@@ -42,6 +42,7 @@ export interface MARoomFile {
   variant?: "standard" | "double";
   /** 随机模式：每人随机发 4 名（旧存档没有这个字段 = 选秀） */
   deal?: "draft" | "random";
+  secondWind?: boolean;
   seed: number;
   commands: MACommand[];
 }
@@ -64,7 +65,7 @@ export class MARoom {
       players: this.file.players.map((p) => ({ id: p.playerId, name: p.name })),
       seed: this.file.seed,
       // 用户房规 HR-MA-01：每人每场只出 1 名选手（不开放双选手变体）
-      settings: { races: RACES, points: this.file.points, variant: "standard", deal: this.file.deal ?? "draft" },
+      settings: { races: RACES, points: this.file.points, variant: "standard", deal: this.file.deal ?? "draft", ...(this.file.secondWind === true ? {secondWindPreview:true} : {}) },
     });
   }
   idByToken(token: string | null | undefined) {
@@ -110,6 +111,9 @@ export class MARoom {
       const before = this.file.players.length;
       this.file.players = this.file.players.filter((p) => p.playerId !== id);
       if (this.file.players.length === before) throw new Error("BAD_ACTION");
+    } else if (action?.type === "SET_SECOND_WIND") {
+      if (typeof action.enabled !== "boolean") throw new Error("BAD_ACTION");
+      this.file.secondWind = action.enabled;
     } else if (action?.type === "SET_DEAL") {
       if (action.deal !== "draft" && action.deal !== "random") throw new Error("BAD_ACTION");
       this.file.deal = action.deal;
@@ -151,6 +155,7 @@ export class MARoom {
       points: this.file.points,
       variant: "standard",
       deal: this.file.deal ?? "draft",
+      secondWind: this.file.secondWind === true,
       version: this.file.commands.length,
       view: this.state ? viewForMA(this.state, me) : null,
     };

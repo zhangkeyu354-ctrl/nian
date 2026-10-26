@@ -88,6 +88,8 @@ export interface LogEntry {
 }
 
 export interface Settings {
+  /** Server/development opt-in only. Existing rooms omit this and keep base36. */
+  secondWindPreview?: boolean;
   races: number;
   /** standard：每人每场 1 名；double：2 人局 / 3 人双选手变体，每人每场 2 名 */
   variant: "standard" | "double";

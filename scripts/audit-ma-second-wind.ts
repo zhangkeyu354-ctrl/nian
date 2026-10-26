@@ -5,6 +5,7 @@ import { execFileSync } from "node:child_process";
 import { RACERS, DRAFTABLE } from "../packages/magical-athlete/src/racers.ts";
 import { TRACKS } from "../packages/magical-athlete/src/tracks.ts";
 import { DEFAULT_POINTS } from "../packages/magical-athlete/src/engine.ts";
+import { SECOND_WIND_PREVIEW_IDS } from "../packages/magical-athlete/src/second-wind-preview.ts";
 const root = "docs/magical-athlete/second-wind";
 const read = (file: string) => JSON.parse(readFileSync(`${root}/${file}`, "utf8"));
 const reference = read("reference-base-roster.json").characters as Array<{id: string; en: string}>;
@@ -20,6 +21,7 @@ const result = {
   baseline,
   productionFilesUnchangedByThisResearch: changedProductionFiles.length === 0,
   changedProductionFiles,
+  developmentPreview: { enabledByDefault: false, serverLobbyExposesSwitch: true, ids: SECOND_WIND_PREVIEW_IDS, poolSize: DRAFTABLE.length + SECOND_WIND_PREVIEW_IDS.length },
   rulesetDescription: "CMYK 2025 base + partial 2026 revisions + documented house rules; no versioned ruleset setting yet",
   roster: RACERS.map(r => ({id:r.id,en:r.en,zh:r.zh,status:r.status,source_ref:r.source_ref,translation_status:r.translation_status})),
   counts: { current: RACERS.length, draftable: DRAFTABLE.length, reference2025: reference.length, secondWindCandidates: candidates.length,

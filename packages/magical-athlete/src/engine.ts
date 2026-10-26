@@ -7,6 +7,7 @@
  * 这样所有中途选择（决斗、跟随、重掷……）都不需要手写「从中间继续」的逻辑。
  */
 import { DRAFTABLE, racerName } from "./racers.ts";
+import { SECOND_WIND_PREVIEW_IDS } from "./second-wind-preview.ts";
 import { PLAYABLE_TRACKS, TRACKS } from "./tracks.ts";
 import type {
   Chip,
@@ -82,6 +83,7 @@ export function createMAGame(opts: CreateMAOptions): MAState {
   const deal: "draft" | "random" =
     opts.settings?.deal === "random" && variant === "standard" ? "random" : "draft";
   const settings: Settings = {
+    ...(opts.settings?.secondWindPreview === true ? { secondWindPreview: true } : {}),
     races,
     variant,
     deal,
@@ -116,7 +118,7 @@ export function createMAGame(opts: CreateMAOptions): MAState {
     log: [],
     version: 0,
   };
-  s.deck = shuffle(s, DRAFTABLE);
+  s.deck = shuffle(s, settings.secondWindPreview ? [...DRAFTABLE, ...SECOND_WIND_PREVIEW_IDS] : DRAFTABLE);
   if (deal === "random") {
     // 随机模式（用户 2026-10-20）：不选秀，从洗好的牌堆里给每人发 4 名。
     // 牌堆里每名选手只有一张，所以全场不会有两人拿到同一名选手。
@@ -208,6 +210,10 @@ function leaders(s: MAState): Token[] {
 /** 选手当前生效的能力 id（山寨猫取领先者的能力） */
 export function powerOf(s: MAState, t: Token): string | null {
   if (!active(t)) return null;
+  if (t.base.startsWith("sw_")) {
+    if (!s.settings.secondWindPreview) fail("CONTENT_DISABLED", "Second Wind 开发预览未开启。");
+    if (!SECOND_WIND_PREVIEW_IDS.includes(t.base)) fail("CHECK_REQUIRED", "这名 Second Wind 选手尚未实现。");
+  }
   if (t.base !== "copycat") return t.base;
   const lead = leaders(s).filter((x) => x !== t);
   if (!lead.length) return null;
@@ -254,8 +260,8 @@ function loopCheck(s: MAState, c: Ctx, trigger: string, what: string): boolean {
 }
 
 /** 某个能力发动了：记录，并让挪挪各蹭 1 格 */
-function fire(s: MAState, c: Ctx, src: Token, text: string) {
-  log(s, text, { kind: "power", racer: src.racer, power: powerOf(s, src) ?? src.base });
+function fire(s: MAState, c: Ctx, src: Token, text: string, powerOverride?: string) {
+  log(s, text, { kind: "power", racer: src.racer, power: powerOverride ?? powerOf(s, src) ?? src.base });
   for (const sc of holders(s, "scoocher")) {
     if (sc === src) continue;
     if (loopCheck(s, c, `scooch:${src.racer}>${sc.racer}`, `${rname(sc)} 与 ${rname(src)} 互相触发`)) continue;
@@ -635,6 +641,12 @@ function mainMove(s: MAState, c: Ctx, t: Token, f: TurnFlags) {
       warp(s, c, t, 0);
       return;
     }
+    // Final roll only: replaced rolls never eliminate Icarus. Apply its own
+    // effect before other racers react, but still dispatch their roll triggers.
+    if (has(s, t, "sw_icarus") && v === 6) {
+      eliminate(s, t);
+      fire(s, c, t, `${rname(t)}【飞行风险】：最终掷出 6，淘汰出本场。`, "sw_icarus");
+    }
     let skip = false;
     if (v === 1) {
       for (const w of holders(s, "inchworm"))
@@ -693,6 +705,17 @@ function mainMove(s: MAState, c: Ctx, t: Token, f: TurnFlags) {
     }
   }
   let dist = base;
+  if (has(s, t, "sw_icarus")) {
+    dist += 3;
+    fire(s, c, t, `${rname(t)}【飞行风险】：主移动 +3。`);
+  }
+  if (has(s, t, "sw_overtaker")) {
+    const n = others(s, t).filter(o => o.pos > t.pos).length;
+    if (n) {
+      dist += n;
+      fire(s, c, t, `${rname(t)}【赶超计谋】：前方 ${n} 名选手，主移动 +${n}。`);
+    }
+  }
   if (has(s, t, "blimp")) {
     const corner = trackOf(s).secondCorner ?? fail("CHECK_REQUIRED", "第二个弯道位置未确认。");
     const before = turnStartPos(t) < corner;
@@ -850,6 +873,19 @@ function racerTurn(s: MAState, c: Ctx, t: Token, f: TurnFlags) {
           prompt: `${rname(t)}【抄作业】：并列领先，要复制谁的能力？`,
           options: lead.map((o) => ({ value: o.racer, label: rname(o) })),
         });
+      }
+    }
+    // New turn-start ability is not skipped just because the main move is lost.
+    if (has(s, t, "sw_kingtripper")) {
+      const targets = leaders(s);
+      if (targets.length) {
+        const a = ask(s, c, {
+          player: t.owner, racer: t.racer, kind: "kingtripper",
+          prompt: `${rname(t)}【王者一绊】：绊倒一名领先选手？`,
+          options: [...targets.map(o => ({value:o.racer,label:rname(o)})),{value:"no",label:"不用"}],
+        });
+        const target = targets.find(o=>o.racer===a);
+        if (target) { trip(s,target); fire(s,c,t,`${rname(t)}【王者一绊】：${rname(target)} 摔倒。`); }
       }
     }
     if (t.tripped) {
@@ -1217,6 +1253,7 @@ export function waitingFor(s: MAState): string[] {
 
 /** 测试用：直接摆好一场比赛（跳过选秀），位置可指定，然后自动推进到第一个选择 */
 export function testRace(opts: {
+  secondWindPreview?: boolean;
   racers: string[];
   pos?: number[];
   seed?: number;
@@ -1228,7 +1265,7 @@ export function testRace(opts: {
   track?: "mild" | "wild";
 }): MAState {
   const players = opts.racers.map((_, i) => ({ id: "p" + (i + 1), name: "玩家" + (i + 1) }));
-  const s = createMAGame({ players: players.length >= 3 ? players : [...players, ...[{ id: "x1", name: "x" }, { id: "x2", name: "y" }].slice(0, 3 - players.length)], seed: opts.seed ?? 1 });
+  const s = createMAGame({ players: players.length >= 3 ? players : [...players, ...[{ id: "x1", name: "x" }, { id: "x2", name: "y" }].slice(0, 3 - players.length)], seed: opts.seed ?? 1, settings: opts.secondWindPreview ? {secondWindPreview:true} : {} });
   s.players = s.players.slice(0, opts.racers.length);
   s.seats = s.seats.slice(0, opts.racers.length);
   s.draft = null;

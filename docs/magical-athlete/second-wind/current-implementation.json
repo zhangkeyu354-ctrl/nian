@@ -1,7 +1,23 @@
 {
   "baseline": "f3569000ff165fc12125c8c0b4fa5db3af7540c5",
-  "productionFilesUnchangedByThisResearch": true,
-  "changedProductionFiles": [],
+  "productionFilesUnchangedByThisResearch": false,
+  "changedProductionFiles": [
+    "apps/server/src/ma-rooms.ts",
+    "apps/web/src/ma/MagicalAthlete.tsx",
+    "packages/magical-athlete/src/engine.ts",
+    "packages/magical-athlete/src/racers.ts",
+    "packages/magical-athlete/src/types.ts"
+  ],
+  "developmentPreview": {
+    "enabledByDefault": false,
+    "serverLobbyExposesSwitch": true,
+    "ids": [
+      "sw_icarus",
+      "sw_overtaker",
+      "sw_kingtripper"
+    ],
+    "poolSize": 39
+  },
   "rulesetDescription": "CMYK 2025 base + partial 2026 revisions + documented house rules; no versioned ruleset setting yet",
   "roster": [
     {
@@ -389,11 +405,11 @@
     "variant": "standard"
   },
   "hashes": {
-    "packages/magical-athlete/src/engine.ts": "3cce6d398e45ccd7438aaffc0b988b45522d3ce1f6b8e8da6dfb865914597180",
-    "packages/magical-athlete/src/racers.ts": "15af2f8a893470dd4b10f36b1f3d998f71e43620027492068f0cef171844e80c",
+    "packages/magical-athlete/src/engine.ts": "c61a7a3cd9d586385e0df526fe6c53bd87abd9b2d9c92f214b74203910a50cf7",
+    "packages/magical-athlete/src/racers.ts": "f97fb24af3cb7bf032aa517c6b0dc198b72780b4b7b72cc12d7b03e192d919e5",
     "packages/magical-athlete/src/tracks.ts": "65666458e21f2eabc45918df237055104b0f2b75442ea9dff23bdf6e1e6f2a39",
-    "packages/magical-athlete/src/types.ts": "724c84db4f621188287f9046212c1d0bbace5b1b341a1bfcd2d8283d4b56cafe",
-    "apps/server/src/ma-rooms.ts": "048507c975ee49a446d568570224b540ee29f078d373e16bb88ca8bfd2b84cf3",
-    "apps/web/src/ma/MagicalAthlete.tsx": "d3594312d320dce8699f67e290ed5743b8e968d3acc7603380cc705c512b6a82"
+    "packages/magical-athlete/src/types.ts": "ebbb29051f309ebe7c9b6d88500bc0f9ab36193c013bffdaa3a7e836ebd00a69",
+    "apps/server/src/ma-rooms.ts": "4dda2df154f7828ae6618d43c47ee9593b0859208c228e3336586f9c22428964",
+    "apps/web/src/ma/MagicalAthlete.tsx": "9d05e6af213332a13eefe377802353c886c303c3e2bf67ce11741e9b3ee4241f"
   }
 }
