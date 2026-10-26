@@ -15,6 +15,7 @@ import { getSpeed, setSpeed, usePlayback, type Show, type Speed } from "./playba
 import "./ma.css";
 
 const roomFromUrl = () => new URLSearchParams(location.search).get("room")?.toUpperCase() ?? null;
+const expansionRacers = [...RACER_BY_ID.values()].filter((r) => r.id.startsWith("sw_"));
 const goRoom = (code: string) => {
   history.pushState(null, "", `/?game=ma&room=${code}`);
   dispatchEvent(new PopStateEvent("popstate"));
@@ -334,7 +335,10 @@ function Lobby({ snap, lobby }: { snap: MARoomSnapshot; lobby: (a: Parameters<Re
           />
           <span>
             <b>开启 Second Wind 新角色</b>
-            <small>当前可用 3 名：伊卡洛斯、超车手、绊王。开启后与原版选手混合招募；关闭则只使用原版 36 名。</small>
+            <small>
+              当前可用 {expansionRacers.length} 名：{expansionRacers.map((r) => r.zh).join("、")}
+              。开启后与原版选手混合招募；关闭则只使用原版 36 名。
+            </small>
           </span>
         </label>
         <div className="ma-variant" role="radiogroup" aria-label="怎么拿选手">

@@ -2,7 +2,7 @@
 
 Never rebuild or overwrite base-game assets. Typography helpers are loaded from
 the existing generator without executing its PDF extraction or base roster loop.
-Pillow only resizes/encodes; the generated transparent alpha is preserved.
+Pillow handles production crops/resizing/encoding; generated alpha is preserved.
 """
 from pathlib import Path
 import ast
@@ -47,7 +47,14 @@ for index, character in enumerate(manifest['characters']):
     for inset, color in [(34, '#51a045'), (39, '#ffbf20'), (44, '#e17bb5'), (49, '#61a6cd')]:
         body += f'<rect x="{inset}" y="{inset}" width="{720-2*inset}" height="{1032-2*inset}" rx="40" fill="none" stroke="{color}" stroke-width="5"/>'
     body += f'<rect x="48" y="44" width="624" height="620" rx="7" fill="{character["field"]}"/>'
-    body += img((ROOT / character['token']).read_bytes(), 62, 172, 596, 596)
+    art_raw = (ROOT / character['token']).read_bytes()
+    if character.get('card_art_mode') == 'upper_body':
+        art_image = Image.open(io.BytesIO(art_raw))
+        art_image = art_image.crop((0, 0, art_image.width, art_image.width))
+        encoded = io.BytesIO()
+        art_image.save(encoded, 'PNG')
+        art_raw = encoded.getvalue()
+    body += img(art_raw, 62, 172, 596, 596)
     # These coordinates, glyph outlines, line breaking and panel strokes match
     # magical-athlete-production-v1/build_assets.py exactly.
     body += f'<rect x="48" y="44" width="624" height="140" rx="7" fill="{character["field"]}"/>'
@@ -74,7 +81,9 @@ for index, character in enumerate(manifest['characters']):
     encode_webp(rendered, PUBLIC / 'cards/zh' / f'{cid}.webp')
     # Portrait framing follows the original horizontal skill-card crop. Keep
     # the head and upper torso instead of passing a square to object-fit:cover.
-    portrait = Image.open(io.BytesIO(raw)).convert('RGB')
+    portrait_rgba = Image.open(io.BytesIO(raw)).convert('RGBA')
+    portrait = Image.new('RGB', portrait_rgba.size, character['field'])
+    portrait.paste(portrait_rgba, mask=portrait_rgba.getchannel('A'))
     portrait_frame = character['portrait_frame']
     portrait_width = round(portrait.width * portrait_frame['width'])
     portrait_height = round(portrait_width * 172 / 234)
@@ -96,4 +105,4 @@ for index, character in enumerate(manifest['characters']):
     character['standee_sha256'] = hashlib.sha256((ROOT / character['standee']).read_bytes()).hexdigest()
 
 (ROOT / 'manifest.json').write_text(json.dumps(manifest, ensure_ascii=False, indent=2) + '\n', encoding='utf-8')
-print('Built 3 original cards, 3 portraits and 3 transparent tokens; base assets unchanged.')
+print(f'Built {len(manifest["characters"])} original cards, portraits and transparent tokens; base assets unchanged.')

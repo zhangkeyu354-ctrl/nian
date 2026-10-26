@@ -14,9 +14,14 @@
     "ids": [
       "sw_icarus",
       "sw_overtaker",
-      "sw_kingtripper"
+      "sw_kingtripper",
+      "sw_mole",
+      "sw_tail",
+      "sw_hopfrog",
+      "sw_the_hose",
+      "sw_le_saboteur"
     ],
-    "poolSize": 39
+    "poolSize": 44
   },
   "rulesetDescription": "CMYK 2025 base + partial 2026 revisions + documented house rules; no versioned ruleset setting yet",
   "roster": [
@@ -405,11 +410,11 @@
     "variant": "standard"
   },
   "hashes": {
-    "packages/magical-athlete/src/engine.ts": "f5e7ab292838db70a7385ef2ed7f0d3bcc82fbfdf8a8f7df0a5d8f961f226288",
+    "packages/magical-athlete/src/engine.ts": "e6cf5b637f4be20740cfb596f63348651993c436769280a4eabb45c50cbb9a1d",
     "packages/magical-athlete/src/racers.ts": "277107459d3e6cbe229400dfb3f4440e7e75af4913933720f72b3b8fbc3f280d",
     "packages/magical-athlete/src/tracks.ts": "65666458e21f2eabc45918df237055104b0f2b75442ea9dff23bdf6e1e6f2a39",
     "packages/magical-athlete/src/types.ts": "ebbb29051f309ebe7c9b6d88500bc0f9ab36193c013bffdaa3a7e836ebd00a69",
     "apps/server/src/ma-rooms.ts": "4dda2df154f7828ae6618d43c47ee9593b0859208c228e3336586f9c22428964",
-    "apps/web/src/ma/MagicalAthlete.tsx": "f94a7b0d513a1b11e452ad2e791bf9eee97e99954ef2f29add2f6ff76bb856fd"
+    "apps/web/src/ma/MagicalAthlete.tsx": "562cd74a80569146d81064b630a61c4d84e936971b88d7d56e059c1363a076f4"
   }
 }

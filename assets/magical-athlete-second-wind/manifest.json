@@ -16,7 +16,7 @@
       "token": "cutouts/sw_icarus.png",
       "sha256": "40012a9ea36356a19b5d3c3de943f18493d25a98199682d70e86f768b5f74371",
       "token_sha256": "935bae975f1f4884dffcf37c214e27421c0b8d204d5f35f8df5f25f4be7a5d44",
-      "standee": "cutouts/sw_icarus-standee.png",
+      "standee": "cutouts/sw_icarus-border.png",
       "exported_token_size": [
         95,
         238
@@ -25,7 +25,7 @@
         234,
         172
       ],
-      "standee_sha256": "a9ac9580f6815558a1a2bbefaf646286e53ebb357f8a6b75a2c6f976a546882a",
+      "standee_sha256": "480d3739dcc1be78863fc20214136135a09e026bd7168b47a54033d8d1e4595c",
       "portrait_frame": {
         "left": 0.32,
         "top": 0,
@@ -43,16 +43,16 @@
       "token": "cutouts/sw_overtaker.png",
       "sha256": "b1ad6d5dd372a20c652d507b91ee23bdc26206c4155da0ce2540322f9d59438b",
       "token_sha256": "eea6e9a6a82480e9ae6eb52319e8009598e9d0054a9f510f8d77cc32538dc67a",
-      "standee": "cutouts/sw_overtaker-standee-v2.png",
+      "standee": "cutouts/sw_overtaker-border.png",
       "exported_token_size": [
-        112,
+        113,
         238
       ],
       "exported_portrait_size": [
         234,
         172
       ],
-      "standee_sha256": "b52230b34292367c07e7dfe223f51bf4782b68cdf7b7ec48efb558b261604088",
+      "standee_sha256": "1954a677f633d571d363184cfca707ec9a18e0102f39e8dd950c468333fd8744",
       "standee_pose_revision": "Hands on hips with wider elbows, feet slightly apart; shorter natural legs to reach about 1:2 silhouette without stretching.",
       "portrait_frame": {
         "left": 0.36,
@@ -71,22 +71,163 @@
       "token": "cutouts/sw_kingtripper.png",
       "sha256": "7d52620de5dd9c76d13dfb81897796a87d97271979a18d04b4fe49e06f7554af",
       "token_sha256": "2da07e48c5b3aa4a03f332d0b309e79616ce57005c9200f9361262333c99a88b",
-      "standee": "cutouts/sw_kingtripper-standee.png",
+      "standee": "cutouts/sw_kingtripper-border.png",
       "exported_token_size": [
-        111,
+        112,
         238
       ],
       "exported_portrait_size": [
         234,
         172
       ],
-      "standee_sha256": "082602147603c62fe200964229d859302be2b6f99d98a269cd6494f24eabedb9",
+      "standee_sha256": "53191786bf8e059a2416af3a5517ecbb7a51f74978c77c9825adc398f70f15db",
       "portrait_frame": {
         "left": 0.15,
         "top": 0,
         "width": 0.85
       }
+    },
+    {
+      "id": "sw_mole",
+      "en": "Mole",
+      "zh": "鼹鼠",
+      "powerZh": "挖地直行",
+      "text": "一格以内没有其他在场选手时，可以不掷主移动骰，改为移动 6 格。",
+      "field": "#8c50a0",
+      "illustration": "cutouts/sw_mole.png",
+      "token": "cutouts/sw_mole.png",
+      "standee": "cutouts/sw_mole.png",
+      "card_art_mode": "upper_body",
+      "portrait_frame": {
+        "left": 0.02,
+        "top": 0.08,
+        "width": 0.96
+      },
+      "exported_token_size": [
+        120,
+        238
+      ],
+      "exported_portrait_size": [
+        234,
+        172
+      ],
+      "sha256": "ed9add13f0046b39e8af033bbb0e1a26e01b21e708f99aee6bbcefe50977cacc",
+      "token_sha256": "ed9add13f0046b39e8af033bbb0e1a26e01b21e708f99aee6bbcefe50977cacc",
+      "standee_sha256": "ed9add13f0046b39e8af033bbb0e1a26e01b21e708f99aee6bbcefe50977cacc"
+    },
+    {
+      "id": "sw_tail",
+      "en": "Tail",
+      "zh": "尾巴",
+      "powerZh": "尾随其后",
+      "text": "回合开始时，可以传送到前方最近选手的身后一格。",
+      "field": "#ffc126",
+      "illustration": "cutouts/sw_tail.png",
+      "token": "cutouts/sw_tail.png",
+      "standee": "cutouts/sw_tail.png",
+      "card_art_mode": "upper_body",
+      "portrait_frame": {
+        "left": 0.02,
+        "top": 0,
+        "width": 0.96
+      },
+      "exported_token_size": [
+        115,
+        238
+      ],
+      "exported_portrait_size": [
+        234,
+        172
+      ],
+      "sha256": "26c53c562cff3cc38fa8a139a57f7265531c5204a281c07925449e73b1faa8d5",
+      "token_sha256": "26c53c562cff3cc38fa8a139a57f7265531c5204a281c07925449e73b1faa8d5",
+      "standee_sha256": "26c53c562cff3cc38fa8a139a57f7265531c5204a281c07925449e73b1faa8d5"
+    },
+    {
+      "id": "sw_hopfrog",
+      "en": "Hopfrog",
+      "zh": "跳蛙",
+      "powerZh": "弹跳加赛",
+      "text": "回合结束时，若有选手在我前方一格，获得一个额外回合。",
+      "field": "#58a9cf",
+      "illustration": "cutouts/sw_hopfrog.png",
+      "token": "cutouts/sw_hopfrog.png",
+      "standee": "cutouts/sw_hopfrog.png",
+      "card_art_mode": "upper_body",
+      "portrait_frame": {
+        "left": 0.02,
+        "top": 0,
+        "width": 0.96
+      },
+      "exported_token_size": [
+        100,
+        238
+      ],
+      "exported_portrait_size": [
+        234,
+        172
+      ],
+      "sha256": "4e55d575c1e45f15f0c7ab6ce6535abcab8891363f89723de31bcd80380bde27",
+      "token_sha256": "4e55d575c1e45f15f0c7ab6ce6535abcab8891363f89723de31bcd80380bde27",
+      "standee_sha256": "4e55d575c1e45f15f0c7ab6ce6535abcab8891363f89723de31bcd80380bde27"
+    },
+    {
+      "id": "sw_the_hose",
+      "en": "The Hose",
+      "zh": "水管",
+      "powerZh": "强力冲洗",
+      "text": "回合结束时，掷一颗骰子，绊倒前方距离不超过骰点的所有选手。",
+      "field": "#8a50aa",
+      "illustration": "cutouts/sw_the_hose.png",
+      "token": "cutouts/sw_the_hose.png",
+      "standee": "cutouts/sw_the_hose.png",
+      "card_art_mode": "upper_body",
+      "portrait_frame": {
+        "left": 0.02,
+        "top": 0,
+        "width": 0.96
+      },
+      "exported_token_size": [
+        103,
+        238
+      ],
+      "exported_portrait_size": [
+        234,
+        172
+      ],
+      "sha256": "cdb69eed05ae884f485ab47d1f1a46b7078422cd9ca70324fe79a103ad17ae5e",
+      "token_sha256": "cdb69eed05ae884f485ab47d1f1a46b7078422cd9ca70324fe79a103ad17ae5e",
+      "standee_sha256": "cdb69eed05ae884f485ab47d1f1a46b7078422cd9ca70324fe79a103ad17ae5e"
+    },
+    {
+      "id": "sw_le_saboteur",
+      "en": "Le Saboteur",
+      "zh": "破坏者",
+      "powerZh": "三点倒车",
+      "text": "其他选手主移动最终掷出 3 时，改为向后移动。",
+      "field": "#ffc126",
+      "illustration": "cutouts/sw_le_saboteur.png",
+      "token": "cutouts/sw_le_saboteur.png",
+      "standee": "cutouts/sw_le_saboteur.png",
+      "card_art_mode": "upper_body",
+      "portrait_frame": {
+        "left": 0.02,
+        "top": 0,
+        "width": 0.96
+      },
+      "exported_token_size": [
+        107,
+        238
+      ],
+      "exported_portrait_size": [
+        234,
+        172
+      ],
+      "sha256": "b8530c8cb2cbd7140cbfd5c7e5298d30a3d1f44e7b357443714aa2c74d45561a",
+      "token_sha256": "b8530c8cb2cbd7140cbfd5c7e5298d30a3d1f44e7b357443714aa2c74d45561a",
+      "standee_sha256": "b8530c8cb2cbd7140cbfd5c7e5298d30a3d1f44e7b357443714aa2c74d45561a"
     }
   ],
-  "standee_prompt": "Same character in a tightly upright compact pose, narrow silhouette about 1:2, arms and wings tucked inward, full body with both feet planted at the bottom, transparent background, same costume/colors/thick black outlines; no frame, text or shadows."
+  "standee_prompt": "Same character in a tightly upright compact pose, narrow silhouette about 1:2, arms and wings tucked inward, full body with both feet planted at the bottom, transparent background, same costume/colors/thick black outlines; no frame, text or shadows.",
+  "border_note": "All eight standees include a thin colored die-cut contour generated by image_gen; first-three original poses preserved, base36 untouched."
 }

@@ -561,11 +561,12 @@ function mainMove(s: MAState, c: Ctx, t: Token, f: TurnFlags) {
     }
   }
   const start: Decision["options"] = [{ value: "roll", label: "🎲 掷骰" }];
+  if (has(s, t, "sw_mole") && !others(s, t).some((o) => Math.abs(o.pos - t.pos) <= 1))
+    start.push({ value: "mole", label: "【挖地直行】不掷骰，直接走 6 格" });
   if (has(s, t, "legs")) start.push({ value: "legs", label: "【稳定输出】不掷骰，直接走 5 格" });
   if (has(s, t, "flip_flop"))
     for (const o of others(s, t))
-      if (o.pos !== t.pos)
-        start.push({ value: "flip:" + o.racer, label: `【瞬间换位】与 ${rname(o)} 交换位置` });
+      if (o.pos !== t.pos) start.push({ value: "flip:" + o.racer, label: `【瞬间换位】与 ${rname(o)} 交换位置` });
   const how = ask(s, c, {
     player: t.owner,
     racer: t.racer,
@@ -588,9 +589,10 @@ function mainMove(s: MAState, c: Ctx, t: Token, f: TurnFlags) {
     return;
   }
   let base: number;
-  if (how === "legs") {
-    base = 5;
-    fire(s, c, t, `${rname(t)}【稳定输出】：不掷骰，走 5 格。`);
+  let reverseMain = false;
+  if (how === "legs" || how === "mole") {
+    base = how === "mole" ? 6 : 5;
+    fire(s, c, t, `${rname(t)}【${how === "mole" ? "挖地直行" : "稳定输出"}】：不掷骰，走 ${base} 格。`);
   } else {
     const roll = () => {
       const v = d6(s);
@@ -668,6 +670,12 @@ function mainMove(s: MAState, c: Ctx, t: Token, f: TurnFlags) {
           move(s, c, l, 2, false, "点头哈腰");
         }
     if (skip || !active(t)) return;
+    if (v === 3)
+      for (const sab of holders(s, "sw_le_saboteur"))
+        if (sab !== t) {
+          reverseMain = true;
+          fire(s, c, sab, `${rname(sab)}【三点倒车】：${rname(t)} 的主移动改为后退。`);
+        }
     base = v;
     if (has(s, t, "alchemist") && v <= 2) {
       const a = ask(s, c, {
@@ -743,7 +751,7 @@ function mainMove(s: MAState, c: Ctx, t: Token, f: TurnFlags) {
       dist -= 1;
       fire(s, c, g, `${rname(g)}【全场减速】：${rname(t)} 主移动 −1。`);
     }
-  move(s, c, t, Math.max(0, dist), true, "主移动");
+  move(s, c, t, Math.max(0, dist) * (reverseMain ? -1 : 1), true, reverseMain ? "三点倒车" : how === "mole" ? "挖地直行" : "主移动");
   if (rocket && active(t)) {
     trip(s, t);
     log(s, `${rname(t)} 冲完摔倒了。`);
@@ -876,6 +884,24 @@ function racerTurn(s: MAState, c: Ctx, t: Token, f: TurnFlags) {
       }
     }
     // New turn-start ability is not skipped just because the main move is lost.
+    if (has(s, t, "sw_tail")) {
+      const ahead = others(s, t).filter((o) => o.pos > t.pos);
+      const nearest = ahead.filter((o) => o.pos === Math.min(...ahead.map((x) => x.pos)));
+      if (nearest.length) {
+        const picked = ask(s, c, {
+          player: t.owner,
+          racer: t.racer,
+          kind: "tail",
+          prompt: `${rname(t)}【尾随其后】：传送到前方最近选手的身后一格？`,
+          options: [...nearest.map((o) => ({ value: o.racer, label: rname(o) })), { value: "no", label: "不用" }],
+        });
+        const target = nearest.find((o) => o.racer === picked);
+        if (target) {
+          fire(s, c, t, `${rname(t)}【尾随其后】：传送到 ${rname(target)} 身后一格。`);
+          warp(s, c, t, target.pos - 1);
+        }
+      }
+    }
     if (has(s, t, "sw_kingtripper")) {
       const targets = leaders(s);
       if (targets.length) {
@@ -928,6 +954,23 @@ function racerTurn(s: MAState, c: Ctx, t: Token, f: TurnFlags) {
           fire(s, c, h, `${rname(h)}【幸灾乐祸】：${rname(t)} 这回合几乎没动，移动 2 格。`);
           move(s, c, h, 2, false, "幸灾乐祸");
         }
+    if (has(s, t, "sw_hopfrog") && others(s, t).some((o) => o.pos === t.pos + 1)) {
+      fire(s, c, t, `${rname(t)}【弹跳加赛】：前方一格有选手，获得一个额外回合。`);
+      f.extra = true;
+    }
+    if (has(s, t, "sw_the_hose")) {
+      ask(s, c, {
+        player: t.owner,
+        racer: t.racer,
+        kind: "hose",
+        prompt: `${rname(t)}【强力冲洗】：掷骰决定冲洗距离。`,
+        options: [{ value: "roll", label: "🎲 掷冲洗骰" }],
+      });
+      fire(s, c, t, `${rname(t)}【强力冲洗】：掷骰并绊倒前方范围内的选手。`);
+      const value = d6(s);
+      log(s, `${rname(t)} 的冲洗骰：${value}。`, { kind: "roll", player: t.owner, racer: t.racer, value });
+      for (const target of others(s, t)) if (target.pos > t.pos && target.pos - t.pos <= value) trip(s, target);
+    }
   }
 }
 

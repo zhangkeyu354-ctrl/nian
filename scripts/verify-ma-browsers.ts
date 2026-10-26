@@ -28,8 +28,11 @@ for (let i = 0; ; i++) {
 const browser = await chromium.launch();
 const errors: string[] = [];
 const phone = async () => {
-  const ctx = await browser.newContext({ viewport: { width: 390, height: 844 }, deviceScaleFactor: 2,
-    reducedMotion: process.env.MA_REDUCED_MOTION === "1" ? "reduce" : "no-preference" });
+  const ctx = await browser.newContext({
+    viewport: { width: 390, height: 844 },
+    deviceScaleFactor: 2,
+    reducedMotion: process.env.MA_REDUCED_MOTION === "1" ? "reduce" : "no-preference",
+  });
   // MA_LAYOUT=art：手机用原版棋盘（操作卡在赛道中间）
   if (process.env.MA_LAYOUT === "art") await ctx.addInitScript(() => localStorage.setItem("ma-board-layout", "art"));
   const p = await ctx.newPage();
@@ -60,13 +63,13 @@ try {
     assert.equal(await toggle.isChecked(), false, "新角色默认关闭");
     assert.equal(await pages[1].getByTestId("ma-second-wind").isDisabled(), true, "只有房主可改");
     await toggle.click();
-    await host.waitForFunction(()=> (document.querySelector('[data-testid="ma-second-wind"]') as HTMLInputElement)?.checked);
-    await pages[1].waitForFunction(()=> (document.querySelector('[data-testid="ma-second-wind"]') as HTMLInputElement)?.checked);
+    await host.waitForFunction(() => (document.querySelector('[data-testid="ma-second-wind"]') as HTMLInputElement)?.checked);
+    await pages[1].waitForFunction(() => (document.querySelector('[data-testid="ma-second-wind"]') as HTMLInputElement)?.checked);
     await assertUiShot(host, `${out}/sw-lobby-phone.png`);
-    await host.setViewportSize({width:1366,height:768});
+    await host.setViewportSize({ width: 1366, height: 768 });
     await toggle.scrollIntoViewIfNeeded();
     await assertUiShot(host, `${out}/sw-lobby-desktop.png`);
-    await host.setViewportSize({width:390,height:844});
+    await host.setViewportSize({ width: 390, height: 844 });
   }
   const random = process.env.MA_DEAL === "random";
   if (random) {
@@ -96,20 +99,29 @@ try {
   let staleClicks = 0;
   let races = 0;
   const newRacersPicked = new Set<string>();
+  const preferredRacers = (process.env.MA_PREFER_RACERS ?? "").split(",").filter(Boolean);
   for (;;) {
     if (++steps >= 4000) {
       // 诊断：卡住时把每个人看到的界面和最近的比赛记录打出来
-      for (const p of pages) if (!(await p.locator(".ma-log li").count())) await p.getByTestId("fold-log").click().catch(() => {});
+      for (const p of pages)
+        if (!(await p.locator(".ma-log li").count()))
+          await p
+            .getByTestId("fold-log")
+            .click()
+            .catch(() => {});
       for (const p of pages)
         console.log(
-          "STUCK", pages.indexOf(p),
-          JSON.stringify(await p.evaluate(() => ({
-            decide: document.querySelector(".ma-decide")?.className,
-            prompt: document.querySelector(".ma-decide .ma-prompt")?.textContent,
-            buttons: [...document.querySelectorAll(".ma-decide button, [data-testid^=pick-]")].map((b) => b.textContent),
-            overlay: document.querySelector(".ma-overlay")?.className,
-            log: [...document.querySelectorAll(".ma-log li")].slice(0, 12).map((l) => l.textContent),
-          }))),
+          "STUCK",
+          pages.indexOf(p),
+          JSON.stringify(
+            await p.evaluate(() => ({
+              decide: document.querySelector(".ma-decide")?.className,
+              prompt: document.querySelector(".ma-decide .ma-prompt")?.textContent,
+              buttons: [...document.querySelectorAll(".ma-decide button, [data-testid^=pick-]")].map((b) => b.textContent),
+              overlay: document.querySelector(".ma-overlay")?.className,
+              log: [...document.querySelectorAll(".ma-log li")].slice(0, 12).map((l) => l.textContent),
+            })),
+          ),
         );
       assert.fail("对局没有在 4000 步内结束");
     }
@@ -117,22 +129,39 @@ try {
     let acted = false;
     for (const p of pages) {
       const previewPick = p.locator('[data-testid^="pick-sw_"]', { hasText: /选它|派它上场/ }).first();
-      const pick = process.env.MA_SECOND_WIND === "1" && await previewPick.count()
-        ? previewPick
-        : p.locator('[data-testid^="pick-"]', { hasText: /选它|派它上场/ }).first();
+      const preferredPick = preferredRacers.length
+        ? p.locator(preferredRacers.map((id) => `[data-testid="pick-${id}"]`).join(","), { hasText: /选它|派它上场/ }).first()
+        : null;
+      const pick =
+        preferredPick && (await preferredPick.count())
+          ? preferredPick
+          : process.env.MA_SECOND_WIND === "1" && (await previewPick.count())
+            ? previewPick
+            : p.locator('[data-testid^="pick-"]', { hasText: /选它|派它上场/ }).first();
       // A sending button can outlive its decision for one render; never click it twice.
       // 清晰棋盘：操作在棋盘下面；原版棋盘：操作卡在赛道中间（下面那块隐藏）
-      const opt = p
-        .locator(".ma-decide.you .ma-options button:not(.sending):not(:disabled), .ma-cc.you .ma-options button:not(.sending):not(:disabled)")
-        .filter({ visible: true })
-        .first();
+      const allOptions = p
+        .locator(
+          ".ma-decide.you .ma-options button:not(.sending):not(:disabled), .ma-cc.you .ma-options button:not(.sending):not(:disabled)",
+        )
+        .filter({ visible: true });
+      const moleOption = allOptions.filter({ hasText: "挖地直行" }).first();
+      const decline = allOptions.filter({ hasText: /^不用$/ }).first();
+      const kingDecision = p.locator(".ma-prompt", { hasText: "王者一绊" }).filter({ visible: true });
+      // A legal choice to trip oneself forever is not a useful completion bot.
+      const opt =
+        (await kingDecision.count()) && (await decline.count())
+          ? decline
+          : preferredRacers.length && (await moleOption.count())
+            ? moleOption
+            : allOptions.first();
       const confirm = p.getByTestId("ma-choose-confirm");
       if (await confirm.count()) {
         await confirm.click();
         acted = true;
       } else if (await opt.count()) {
         try {
-          await opt.click({timeout:2000});
+          await opt.click({ timeout: 2000 });
           staleClicks = 0;
           acted = true;
         } catch (e) {
@@ -147,7 +176,13 @@ try {
         acted = true;
       } else continue;
       if (process.env.MA_DEBUG && steps < 60)
-        console.log(steps, pages.indexOf(p), await p.evaluate(() => [document.querySelector(".ma-error")?.textContent, document.querySelector(".ma-banner, .ma-prompt")?.textContent].join(" | ")));
+        console.log(
+          steps,
+          pages.indexOf(p),
+          await p.evaluate(() =>
+            [document.querySelector(".ma-error")?.textContent, document.querySelector(".ma-banner, .ma-prompt")?.textContent].join(" | "),
+          ),
+        );
       await p.waitForTimeout(60);
       break;
     }
@@ -156,16 +191,28 @@ try {
       for (const q of pages) {
         // 点跳过时动画刚好结束，会点到下面的小人、打开选手卡：关掉它
         const box = q.locator(".ma-lightbox");
-        if (await box.count()) await box.first().click({ force: true, timeout: 1000 }).catch(() => {});
+        if (await box.count())
+          await box
+            .first()
+            .click({ force: true, timeout: 1000 })
+            .catch(() => {});
         const ov = q.locator(".ma-overlay:not(.ov-power):not(.ov-note)");
-        if (await ov.count()) await ov.first().click({ force: true }).catch(() => {});
+        if (await ov.count())
+          await ov
+            .first()
+            .click({ force: true })
+            .catch(() => {});
       }
       await host.waitForTimeout(150);
       continue;
     }
     // 待决定事项只有决定人看得到选项：别人的面板里不能有选项按钮
     for (const q of pages)
-      assert.equal(await q.locator(".ma-decide:not(.you) .ma-options button, .ma-cc:not(.you) .ma-options button").count(), 0, "旁人看到了别人的选项");
+      assert.equal(
+        await q.locator(".ma-decide:not(.you) .ma-options button, .ma-cc:not(.you) .ma-options button").count(),
+        0,
+        "旁人看到了别人的选项",
+      );
     const board = host.locator(".ma-board-art, .ma-grid").first();
     const label = (await board.count()) ? await board.getAttribute("aria-label") : null;
     if (label && !label.includes(`第 ${races} 场`)) {
@@ -175,7 +222,16 @@ try {
   }
   await host.screenshot({ path: `${out}/3_最终成绩.png`, fullPage: true });
   assert.deepEqual(errors, []);
-  console.log("MA_BROWSERS_PASS", JSON.stringify({ players: pages.length, deal: random ? "random" : "draft", steps, racesSeen: races, newRacersPicked: [...newRacersPicked] }));
+  console.log(
+    "MA_BROWSERS_PASS",
+    JSON.stringify({
+      players: pages.length,
+      deal: random ? "random" : "draft",
+      steps,
+      racesSeen: races,
+      newRacersPicked: [...newRacersPicked],
+    }),
+  );
   assert.equal(races, 4, "应当看到 4 场比赛");
 } finally {
   await browser.close();
