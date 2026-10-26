@@ -1,5 +1,8 @@
 import type { RacerInfo } from "./racers.ts";
 
+/** Existing MA-B03 board corners: 12→13 is the first turn. New content only. */
+export const SECOND_WIND_FIRST_CORNERS = { mild: 12, wild: 12 } as const;
+
 /** User-accepted reference text, development only. Never appended to DRAFTABLE. */
 export const SECOND_WIND_PREVIEW: RacerInfo[] = [
   {
@@ -103,8 +106,7 @@ export const SECOND_WIND_PREVIEW: RacerInfo[] = [
       powerEn: "Bon Mots",
       powerZh: "评头论足",
       text: "每回合可以让前方选手的主移动骰重掷一次。",
-      notes:
-        "由评论家的玩家决定；每名能力持有者每回合最多发动一次，辅助骰与免骰不受影响。",
+      notes: "由评论家的玩家决定；每名能力持有者每回合最多发动一次，辅助骰与免骰不受影响。",
     },
     {
       id: "sw_diva",
@@ -131,8 +133,7 @@ export const SECOND_WIND_PREVIEW: RacerInfo[] = [
       powerEn: "Exhibit B",
       powerZh: "擦身得分",
       text: "一次移动经过其他选手时，获得 1 分。",
-      notes:
-        "同段经过多人共得1分；传送不算经过；后退经过随香蕉一起留待最终核对。",
+      notes: "同段经过多人共得1分；传送不算经过；后退经过随香蕉一起留待最终核对。",
     },
     {
       id: "sw_kraken",
@@ -141,8 +142,7 @@ export const SECOND_WIND_PREVIEW: RacerInfo[] = [
       powerEn: "Get Over Here",
       powerZh: "全员集合",
       text: "每场一次，回合开始时可以把所有其他选手传送到我所在格并绊倒。",
-      notes:
-        "包含同格角色；所有目标同时到达，再结算地形。每名能力持有者每场一次。",
+      notes: "包含同格角色；所有目标同时到达，再结算地形。每名能力持有者每场一次。",
     },
     {
       id: "sw_nemesis",
@@ -169,8 +169,7 @@ export const SECOND_WIND_PREVIEW: RacerInfo[] = [
       powerEn: "Guys, Watch!",
       powerZh: "看我表演",
       text: "主移动掷骰后可继续掷并累加；新骰不大于上一骰则不移动。",
-      notes:
-        "每颗最终主骰各结算掷骰触发；累计后只应用一次移动修正，随时可收手。",
+      notes: "每颗最终主骰各结算掷骰触发；累计后只应用一次移动修正，随时可收手。",
     },
     {
       id: "sw_soulmate",
@@ -179,8 +178,52 @@ export const SECOND_WIND_PREVIEW: RacerInfo[] = [
       powerEn: "Twin Flame",
       powerZh: "心有灵犀",
       text: "赛前选择一名对方选手；回合开始距其不超过 5 格时传送到其所在格。",
-      notes:
-        "仅对方玩家的角色；目标离场后不传送。赛前已复制本能力的角色也选择目标。",
+      notes: "仅对方玩家的角色；目标离场后不传送。赛前已复制本能力的角色也选择目标。",
+    },
+    {
+      id: "sw_gloth",
+      en: "Gloth",
+      zh: "慢吞吞",
+      powerEn: "Glorpor",
+      powerZh: "慢有慢福",
+      text: "主移动 -1；比赛结束时，若没超过第二个弯道，获得 3 分。",
+      notes: "含弯道本格；已冲线或淘汰者能力关闭，无赛后奖励。",
+    },
+    {
+      id: "sw_hotel",
+      en: "Hotel",
+      zh: "旅馆",
+      powerEn: "Monopolize",
+      powerZh: "过路房费",
+      text: "其他选手停到我所在格时，付我 1 分；付不起则摔倒。",
+      notes: "只收停格者，同步到达不触发；积分在双方玩家间转移，不凭空增减。",
+    },
+    {
+      id: "sw_nepo_baby",
+      en: "Nepo Baby",
+      zh: "关系户宝宝",
+      powerEn: "Hugely Rich",
+      powerZh: "赢在起点",
+      text: "比赛开始时，我直接位于赛道的第一个弯道。",
+      notes: "沿用当前两面赛道第一弯道12；赛前复制到能力时同样生效，不改变旧赛道。",
+    },
+    {
+      id: "sw_stepdad",
+      en: "Stepdad",
+      zh: "继父",
+      powerEn: "Step Up",
+      powerZh: "扶你一把",
+      text: "左侧选手的主移动 +2；若其第一个冲线，我获得 3 分。",
+      notes: "左侧按赛前选手顺序的下一名，不按领先/落后，也不跳过离场邻居。",
+    },
+    {
+      id: "sw_stunner",
+      en: "Stunner",
+      zh: "惊艳者",
+      powerEn: "Stop Traffic",
+      powerZh: "全场看呆",
+      text: "距离我不超过 1 格的其他选手，所有掷骰都视为 1。",
+      notes: "包括同格、主骰、决斗、跟掷及冲洗骰；不改变不掷骰的移动或玩家先手比骰。",
     },
   ].map((r) => ({
     ...r,

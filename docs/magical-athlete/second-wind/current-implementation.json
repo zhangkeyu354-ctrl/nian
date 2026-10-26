@@ -29,9 +29,14 @@
       "sw_nemesis",
       "sw_penguin",
       "sw_show_off",
-      "sw_soulmate"
+      "sw_soulmate",
+      "sw_gloth",
+      "sw_hotel",
+      "sw_nepo_baby",
+      "sw_stepdad",
+      "sw_stunner"
     ],
-    "poolSize": 54
+    "poolSize": 59
   },
   "rulesetDescription": "CMYK 2025 base + partial 2026 revisions + documented house rules; no versioned ruleset setting yet",
   "roster": [
@@ -420,10 +425,10 @@
     "variant": "standard"
   },
   "hashes": {
-    "packages/magical-athlete/src/engine.ts": "a31269d52de7a66e860c37b462f735d5f1e3c32f2df269f1bc4f240b1a590551",
+    "packages/magical-athlete/src/engine.ts": "a6c515ee40dd1253d16b4aa29db82c44995e4f4160638533ccd26a4dfe7ac6f7",
     "packages/magical-athlete/src/racers.ts": "277107459d3e6cbe229400dfb3f4440e7e75af4913933720f72b3b8fbc3f280d",
     "packages/magical-athlete/src/tracks.ts": "65666458e21f2eabc45918df237055104b0f2b75442ea9dff23bdf6e1e6f2a39",
-    "packages/magical-athlete/src/types.ts": "752f5e7b7ae0794ee6db8abbcf40037e7a88a972a83997e30c63eb6f2e3523df",
+    "packages/magical-athlete/src/types.ts": "8ce8ad690e6d4533de007b00ee51e32e6d2c96963495a8be4c1011741b1ad864",
     "apps/server/src/ma-rooms.ts": "4dda2df154f7828ae6618d43c47ee9593b0859208c228e3336586f9c22428964",
     "apps/web/src/ma/MagicalAthlete.tsx": "562cd74a80569146d81064b630a61c4d84e936971b88d7d56e059c1363a076f4"
   }

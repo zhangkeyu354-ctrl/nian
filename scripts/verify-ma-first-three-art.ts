@@ -15,12 +15,15 @@ import { SECOND_WIND_PREVIEW_IDS } from "../packages/magical-athlete/src/second-
 const batchTwo = process.env.MA_REVIEW_BATCH === "2";
 const batchThree = process.env.MA_REVIEW_BATCH === "3";
 const batchFour = process.env.MA_REVIEW_BATCH === "4";
-const laterBatch = batchTwo || batchThree || batchFour;
-const out = `docs/magical-athlete/second-wind/${batchFour ? "batch-four-screens" : batchThree ? "batch-three-screens" : batchTwo ? "batch-two-screens" : "first-three-fix-screens"}`;
+const batchFive = process.env.MA_REVIEW_BATCH === "5";
+const laterBatch = batchTwo || batchThree || batchFour || batchFive;
+const out = `docs/magical-athlete/second-wind/${batchFive ? "batch-five-screens" : batchFour ? "batch-four-screens" : batchThree ? "batch-three-screens" : batchTwo ? "batch-two-screens" : "first-three-fix-screens"}`;
 const work = resolve("work/ma-first-three-review");
 mkdirSync(out, { recursive: true });
 mkdirSync(work, { recursive: true });
-const reviewIds = batchFour
+const reviewIds = batchFive
+  ? SECOND_WIND_PREVIEW_IDS.slice(18, 23)
+  : batchFour
   ? SECOND_WIND_PREVIEW_IDS.slice(13, 18)
   : batchThree
   ? SECOND_WIND_PREVIEW_IDS.slice(8, 13)

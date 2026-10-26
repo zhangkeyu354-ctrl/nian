@@ -7,7 +7,7 @@
  * 这样所有中途选择（决斗、跟随、重掷……）都不需要手写「从中间继续」的逻辑。
  */
 import { DRAFTABLE, racerName } from "./racers.ts";
-import { SECOND_WIND_PREVIEW_IDS } from "./second-wind-preview.ts";
+import { SECOND_WIND_FIRST_CORNERS, SECOND_WIND_PREVIEW_IDS } from "./second-wind-preview.ts";
 import { PLAYABLE_TRACKS, TRACKS } from "./tracks.ts";
 import type {
   Chip,
@@ -265,6 +265,8 @@ function fire(s: MAState, c: Ctx, src: Token, text: string, powerOverride?: stri
     racer: src.racer,
     power: powerOverride ?? powerOf(s, src) ?? src.base,
   });
+  // End-of-race powers get the usual skill card, without resuming the race.
+  if (race(s).over) return;
   for (const sc of holders(s, "scoocher")) {
     if (sc === src) continue;
     if (loopCheck(s, c, `scooch:${src.racer}>${sc.racer}`, `${rname(sc)} 与 ${rname(src)} 互相触发`)) continue;
@@ -279,12 +281,50 @@ function trip(s: MAState, t: Token) {
   log(s, "", { kind: "trip", racer: t.racer });
 }
 function gainChip(s: MAState, owner: string, value: number) {
+  if (value < 0) {
+    const payer = player(s, owner);
+    if (total(payer.chips) < -value) fail("POINTS", "积分不足。");
+    let remaining = -value;
+    for (const kind of ["bronze", "silver", "gold"] as const) {
+      for (const chip of payer.chips.filter((ch) => ch.kind === kind && ch.value > 0)) {
+        const paid = Math.min(remaining, chip.value);
+        if (paid && chip.race !== race(s).index) {
+          const spending = (race(s).priorRaceSpending ??= {});
+          spending[owner] = (spending[owner] ?? 0) + paid;
+        }
+        chip.value -= paid;
+        remaining -= paid;
+        if (!remaining) break;
+      }
+      if (!remaining) break;
+    }
+    payer.chips = payer.chips.filter((ch) => ch.value > 0);
+    log(s, "", { kind: "chip", player: owner, value });
+    return;
+  }
   player(s, owner).chips.push({ kind: "bronze", value, race: race(s).index });
   log(s, "", { kind: "chip", player: owner, value });
 }
 
-function finish(s: MAState, t: Token) {
+const leftOf = (s: MAState, t: Token) => {
+  const tokens = race(s).tokens;
+  return tokens[(tokens.indexOf(t) + 1) % tokens.length];
+};
+
+/** A skill-card's Scoocher chain must not erase an already-triggered award. */
+function awardPower(s: MAState, c: Ctx, src: Token, amount: number, text: string, id: string) {
+  try {
+    fire(s, c, src, text, id);
+  } catch (e) {
+    if (e instanceof RaceOver) gainChip(s, src.owner, amount);
+    throw e;
+  }
+  gainChip(s, src.owner, amount);
+}
+
+function finish(s: MAState, c: Ctx, t: Token) {
   const r = race(s);
+  const stepdads = holders(s, "sw_stepdad").filter((dad) => leftOf(s, dad) === t);
   t.pos = trackOf(s).length;
   r.finishers.push(t.racer);
   t.place = r.finishers.length;
@@ -293,6 +333,9 @@ function finish(s: MAState, t: Token) {
     racer: t.racer,
     place: t.place,
   });
+  if (t.place === 1)
+    for (const dad of stepdads)
+      awardPower(s, c, dad, 3, `${rname(dad)}【扶你一把】：左侧 ${rname(t)} 第一个冲线，获得 3 分。`, "sw_stepdad");
   if (t.place === 1 && r.mastermindPick === t.racer) {
     const mm = r.tokens.find((x) => x.base === "mastermind" && !x.out);
     if (mm) {
@@ -437,7 +480,7 @@ function move(s: MAState, c: Ctx, t: Token, n: number, main: boolean, why: strin
           fire(s, c, g, `${rname(g)}【擦身得分】：经过其他选手，获得 1 分。`, "sw_streaker");
           gainChip(s, g.owner, 1);
         }
-        finish(s, g);
+        finish(s, c, g);
       }
     return;
   }
@@ -553,7 +596,23 @@ function react(
     if (!active(t)) return;
     const p = powerOf(s, x);
     if (!p) continue;
-    if (p === "banana" && passed.includes(x)) {
+    if (p === "sw_hotel" && x !== t && t.pos === pos && x.pos === pos && !simultaneous) {
+      if (
+        loopCheck(
+          s,
+          c,
+          `hotel:${x.racer}>${t.racer}:${total(player(s, t.owner).chips)}:${total(player(s, x.owner).chips)}`,
+          `${rname(x)} 重复收取同一停格费用`,
+        )
+      )
+        continue;
+      fire(s, c, x, `${rname(x)}【过路房费】：结算 ${rname(t)} 的 1 分房费。`, "sw_hotel");
+      const canPay = total(player(s, t.owner).chips) >= 1;
+      if (canPay && t.owner !== x.owner) {
+        gainChip(s, t.owner, -1);
+        gainChip(s, x.owner, 1);
+      } else if (!canPay) trip(s, t);
+    } else if (p === "banana" && passed.includes(x)) {
       trip(s, t);
       fire(s, c, x, `${rname(x)}【香蕉皮】：${rname(t)} 经过时摔倒。`);
     } else if (p === "centaur" && x === t && passed.length) {
@@ -597,8 +656,8 @@ function react(
       });
       const o = foes.find((f) => f.racer === v);
       if (o) {
-        const a = d6(s),
-          b = d6(s);
+        const a = racerDie(s, c, x),
+          b = racerDie(s, c, o);
         const winner = a >= b ? x : o;
         log(s, "", {
           kind: "duel",
@@ -627,6 +686,15 @@ function aloneLast(s: MAState, t: Token) {
 interface TurnFlags {
   extra: boolean;
   skipper: string | null;
+}
+
+/** Racer-owned rolls, including auxiliary dice; player roll-offs stay unchanged. */
+function racerDie(s: MAState, c: Ctx, t: Token) {
+  const stunner = holders(s, "sw_stunner").find((o) => o !== t && Math.abs(o.pos - t.pos) <= 1);
+  const raw = d6(s);
+  if (!stunner) return raw;
+  fire(s, c, stunner, `${rname(stunner)}【全场看呆】：${rname(t)} 的骰点视为 1。`, "sw_stunner");
+  return 1;
 }
 
 function mainMove(s: MAState, c: Ctx, t: Token, f: TurnFlags) {
@@ -691,7 +759,7 @@ function mainMove(s: MAState, c: Ctx, t: Token, f: TurnFlags) {
     fire(s, c, t, `${rname(t)}【${how === "mole" ? "挖地直行" : "稳定输出"}】：不掷骰，走 ${base} 格。`);
   } else {
     const roll = () => {
-      const v = d6(s);
+      const v = racerDie(s, c, t);
       r.lastRoll = {
         player: t.owner,
         racer: t.racer,
@@ -811,7 +879,7 @@ function mainMove(s: MAState, c: Ctx, t: Token, f: TurnFlags) {
         });
         if (choice !== "yes") continue;
         fire(s, c, rival, `${rname(rival)}【宿命对决】：跟掷，目标 ${v} 点。`, "sw_nemesis");
-        const matched = d6(s);
+        const matched = racerDie(s, c, rival);
         log(s, `${rname(rival)} 跟掷 ${matched}，${matched === v ? "相同，移动" : "不同，不移动"}。`, {
           kind: "roll",
           player: rival.owner,
@@ -907,6 +975,15 @@ function mainMove(s: MAState, c: Ctx, t: Token, f: TurnFlags) {
     }
   }
   let dist = base;
+  if (has(s, t, "sw_gloth")) {
+    dist -= 1;
+    fire(s, c, t, `${rname(t)}【慢有慢福】：主移动 −1。`, "sw_gloth");
+  }
+  for (const dad of holders(s, "sw_stepdad"))
+    if (leftOf(s, dad) === t && dad !== t) {
+      dist += 2;
+      fire(s, c, dad, `${rname(dad)}【扶你一把】：左侧 ${rname(t)} 主移动 +2。`, "sw_stepdad");
+    }
   if (has(s, t, "sw_penguin") && t.tripped && mainRoll !== null) {
     dist += mainRoll;
     fire(s, c, t, `${rname(t)}【肚皮滑行】：摔倒时主移动骰点翻倍。`, "sw_penguin");
@@ -1276,7 +1353,7 @@ function racerTurn(s: MAState, c: Ctx, t: Token, f: TurnFlags) {
         options: [{ value: "roll", label: "🎲 掷冲洗骰" }],
       });
       fire(s, c, t, `${rname(t)}【强力冲洗】：掷骰并绊倒前方范围内的选手。`);
-      const value = d6(s);
+      const value = racerDie(s, c, t);
       log(s, `${rname(t)} 的冲洗骰：${value}。`, {
         kind: "roll",
         player: t.owner,
@@ -1413,6 +1490,12 @@ function setupUnit(s: MAState, c: Ctx) {
     t.secondWind = { ...t.secondWind, soulmate: pick };
     fire(s, c, t, `${rname(t)}【心有灵犀】：选择 ${racerName(pick)}。`, "sw_soulmate");
   }
+  const nepoBabies = holders(s, "sw_nepo_baby");
+  if (nepoBabies.length) {
+    const corner = SECOND_WIND_FIRST_CORNERS[r.track] ?? fail("CHECK_REQUIRED", "第一个弯道位置未确认。");
+    for (const t of nepoBabies) fire(s, c, t, `${rname(t)}【赢在起点】：从第一个弯道出发。`, "sw_nepo_baby");
+    warp(s, c, nepoBabies[0], corner, undefined, nepoBabies);
+  }
   r.setup = true;
 }
 
@@ -1437,7 +1520,7 @@ function runUnit(snapshot: string, answers: string[]): { s: MAState; need: Decis
   } catch (e) {
     if (e instanceof Need) return { s, need: e.decision };
     if (e instanceof RaceOver) {
-      endRace(s);
+      endRace(s, c);
       return { s, need: null };
     }
     throw e;
@@ -1520,9 +1603,13 @@ function advance(s: MAState): MAState {
   return fail("LOOP", "自动结算次数过多。");
 }
 
-function endRace(s: MAState) {
+function endRace(s: MAState, c: Ctx = { answers: [], i: 0, guard: new Set(), depth: 0, criticUsed: new Set() }) {
   const r = race(s);
   r.over = true;
+  const corner = trackOf(s).secondCorner;
+  const bonuses = holders(s, "sw_gloth").filter((t) => corner !== null && t.pos <= corner);
+  for (const gloth of bonuses)
+    awardPower(s, c, gloth, 3, `${rname(gloth)}【慢有慢福】：赛后没超过第二个弯道，获得 3 分。`, "sw_gloth");
   const pts = s.settings.points[r.index] ?? DEFAULT_POINTS;
   const owner = (racer: string) => r.tokens.find((t) => t.racer === racer)!.owner;
   const [first, second] = r.finishers;
@@ -1582,7 +1669,7 @@ function endRace(s: MAState) {
   if (s.seats.length === 2 && s.settings.variant === "double") {
     const got = s.seats.map((id) => ({
       id,
-      v: total(player(s, id).chips.filter((ch) => ch.race === r.index)),
+      v: total(player(s, id).chips.filter((ch) => ch.race === r.index)) - (r.priorRaceSpending?.[id] ?? 0),
     }));
     next =
       got[0].v === got[1].v

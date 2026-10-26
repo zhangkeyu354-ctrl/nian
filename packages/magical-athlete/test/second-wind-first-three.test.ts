@@ -6,7 +6,7 @@ const make = (racers: string[], pos: number[], rolls: number[], extra: object = 
   testRace({ racers, pos, rolls, skipSetup: true, secondWindPreview: true, ...extra });
 
 describe("Second Wind首批：显式开发开关（不在正式房间开放）", () => {
-  it("默认仍只招募基础36名，显式开发房间才扩为54名", () => {
+  it("默认仍只招募基础36名，显式开发房间才扩为59名", () => {
     const opts = {
       players: [
         { id: "a", name: "A" },
@@ -22,7 +22,7 @@ describe("Second Wind首批：显式开发开关（不在正式房间开放）",
     expect(DRAFTABLE).toHaveLength(36);
     expect(all(normal)).toHaveLength(36);
     expect(all(normal).some((id) => id.startsWith("sw_"))).toBe(false);
-    expect(all(preview)).toHaveLength(54);
+    expect(all(preview)).toHaveLength(59);
     expect(racerName("sw_icarus")).toBe("伊卡洛斯");
   });
   it("Icarus正常：主移动加3", () => {

@@ -546,6 +546,181 @@
       "sha256": "9b1cc4f7cdbbf6bcfb55e0439a9f981f350ce4de9d842e96c106b86f2386c8cb",
       "token_sha256": "9b1cc4f7cdbbf6bcfb55e0439a9f981f350ce4de9d842e96c106b86f2386c8cb",
       "standee_sha256": "9b1cc4f7cdbbf6bcfb55e0439a9f981f350ce4de9d842e96c106b86f2386c8cb"
+    },
+    {
+      "id": "sw_gloth",
+      "en": "Gloth",
+      "zh": "慢吞吞",
+      "powerEn": "Glorpor",
+      "powerZh": "慢有慢福",
+      "text": "主移动 -1；比赛结束时，若没超过第二个弯道，获得 3 分。",
+      "notes": "含弯道本格；已冲线或淘汰者能力关闭，无赛后奖励。",
+      "status": "CONFIRMED",
+      "source_level": "D",
+      "source_ref": "SW-F01；用户2026-10-26确认采用；仅开发预览",
+      "translation_status": "DRAFT",
+      "field": "#b6d978",
+      "illustration": "cutouts/sw_gloth.png",
+      "token": "cutouts/sw_gloth.png",
+      "standee": "cutouts/sw_gloth.png",
+      "normalize_art_bounds": true,
+      "card_art_mode": "upper_body",
+      "portrait_frame": {
+        "left": 0.02,
+        "top": 0.03,
+        "width": 0.96
+      },
+      "exported_token_size": [
+        136,
+        238
+      ],
+      "exported_portrait_size": [
+        234,
+        172
+      ],
+      "sha256": "869dd9a844e336f015f8b7240858490d31f184d31ea3ebe86789c18f2597d6ba",
+      "token_sha256": "869dd9a844e336f015f8b7240858490d31f184d31ea3ebe86789c18f2597d6ba",
+      "standee_sha256": "869dd9a844e336f015f8b7240858490d31f184d31ea3ebe86789c18f2597d6ba"
+    },
+    {
+      "id": "sw_hotel",
+      "en": "Hotel",
+      "zh": "旅馆",
+      "powerEn": "Monopolize",
+      "powerZh": "过路房费",
+      "text": "其他选手停到我所在格时，付我 1 分；付不起则摔倒。",
+      "notes": "只收停格者，同步到达不触发；积分在双方玩家间转移，不凭空增减。",
+      "status": "CONFIRMED",
+      "source_level": "D",
+      "source_ref": "SW-F01；用户2026-10-26确认采用；仅开发预览",
+      "translation_status": "DRAFT",
+      "field": "#f49230",
+      "illustration": "cutouts/sw_hotel.png",
+      "token": "cutouts/sw_hotel.png",
+      "standee": "cutouts/sw_hotel.png",
+      "normalize_art_bounds": true,
+      "card_art_mode": "upper_body",
+      "portrait_frame": {
+        "left": 0.02,
+        "top": 0.03,
+        "width": 0.96
+      },
+      "exported_token_size": [
+        111,
+        238
+      ],
+      "exported_portrait_size": [
+        234,
+        172
+      ],
+      "sha256": "305359e75c15da6add7c20907698b71d8d7a00c78614ff03487ebaa9bb150610",
+      "token_sha256": "305359e75c15da6add7c20907698b71d8d7a00c78614ff03487ebaa9bb150610",
+      "standee_sha256": "305359e75c15da6add7c20907698b71d8d7a00c78614ff03487ebaa9bb150610"
+    },
+    {
+      "id": "sw_nepo_baby",
+      "en": "Nepo Baby",
+      "zh": "关系户宝宝",
+      "powerEn": "Hugely Rich",
+      "powerZh": "赢在起点",
+      "text": "比赛开始时，我直接位于赛道的第一个弯道。",
+      "notes": "沿用当前两面赛道第一弯道12；赛前复制到能力时同样生效，不改变旧赛道。",
+      "status": "CONFIRMED",
+      "source_level": "D",
+      "source_ref": "SW-F01；用户2026-10-26确认采用；仅开发预览",
+      "translation_status": "DRAFT",
+      "field": "#20b8b6",
+      "illustration": "cutouts/sw_nepo_baby.png",
+      "token": "cutouts/sw_nepo_baby.png",
+      "standee": "cutouts/sw_nepo_baby.png",
+      "normalize_art_bounds": true,
+      "card_art_mode": "upper_body",
+      "portrait_frame": {
+        "left": 0.02,
+        "top": 0.03,
+        "width": 0.96
+      },
+      "exported_token_size": [
+        134,
+        238
+      ],
+      "exported_portrait_size": [
+        234,
+        172
+      ],
+      "sha256": "e361998a6661af63758dcfc205c926c16527200048c6315c93f1c4f0630c15d1",
+      "token_sha256": "e361998a6661af63758dcfc205c926c16527200048c6315c93f1c4f0630c15d1",
+      "standee_sha256": "e361998a6661af63758dcfc205c926c16527200048c6315c93f1c4f0630c15d1"
+    },
+    {
+      "id": "sw_stepdad",
+      "en": "Stepdad",
+      "zh": "继父",
+      "powerEn": "Step Up",
+      "powerZh": "扶你一把",
+      "text": "左侧选手的主移动 +2；若其第一个冲线，我获得 3 分。",
+      "notes": "左侧按赛前选手顺序的下一名，不按领先/落后，也不跳过离场邻居。",
+      "status": "CONFIRMED",
+      "source_level": "D",
+      "source_ref": "SW-F01；用户2026-10-26确认采用；仅开发预览",
+      "translation_status": "DRAFT",
+      "field": "#ffc32f",
+      "illustration": "cutouts/sw_stepdad.png",
+      "token": "cutouts/sw_stepdad.png",
+      "standee": "cutouts/sw_stepdad.png",
+      "normalize_art_bounds": true,
+      "card_art_mode": "upper_body",
+      "portrait_frame": {
+        "left": 0.02,
+        "top": 0.03,
+        "width": 0.96
+      },
+      "exported_token_size": [
+        104,
+        238
+      ],
+      "exported_portrait_size": [
+        234,
+        172
+      ],
+      "sha256": "f4ee407d80d478c0b9a324e6ec79647d5a87ae0ee5538b8c672adc76ce216410",
+      "token_sha256": "f4ee407d80d478c0b9a324e6ec79647d5a87ae0ee5538b8c672adc76ce216410",
+      "standee_sha256": "f4ee407d80d478c0b9a324e6ec79647d5a87ae0ee5538b8c672adc76ce216410"
+    },
+    {
+      "id": "sw_stunner",
+      "en": "Stunner",
+      "zh": "惊艳者",
+      "powerEn": "Stop Traffic",
+      "powerZh": "全场看呆",
+      "text": "距离我不超过 1 格的其他选手，所有掷骰都视为 1。",
+      "notes": "包括同格、主骰、决斗、跟掷及冲洗骰；不改变不掷骰的移动或玩家先手比骰。",
+      "status": "CONFIRMED",
+      "source_level": "D",
+      "source_ref": "SW-F01；用户2026-10-26确认采用；仅开发预览",
+      "translation_status": "DRAFT",
+      "field": "#e27bb5",
+      "illustration": "cutouts/sw_stunner.png",
+      "token": "cutouts/sw_stunner.png",
+      "standee": "cutouts/sw_stunner.png",
+      "normalize_art_bounds": true,
+      "card_art_mode": "upper_body",
+      "portrait_frame": {
+        "left": 0.02,
+        "top": 0.03,
+        "width": 0.96
+      },
+      "exported_token_size": [
+        98,
+        238
+      ],
+      "exported_portrait_size": [
+        234,
+        172
+      ],
+      "sha256": "9f21d488bc96c920f1f1bfab79e0f392d1c611e86b4c21f08dfb0f769dac84a8",
+      "token_sha256": "9f21d488bc96c920f1f1bfab79e0f392d1c611e86b4c21f08dfb0f769dac84a8",
+      "standee_sha256": "9f21d488bc96c920f1f1bfab79e0f392d1c611e86b4c21f08dfb0f769dac84a8"
     }
   ],
   "standee_prompt": "Same character in a tightly upright compact pose, narrow silhouette about 1:2, arms and wings tucked inward, full body with both feet planted at the bottom, transparent background, same costume/colors/thick black outlines; no frame, text or shadows.",

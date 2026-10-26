@@ -38,6 +38,8 @@ export interface Token {
 }
 
 export interface RaceState {
+  /** Hotel payments funded from earlier-race chips, for this race's net score. */
+  priorRaceSpending?: Record<string, number>;
   index: number;
   track: TrackId;
   tokens: Token[];

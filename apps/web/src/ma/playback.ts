@@ -128,7 +128,9 @@ export function usePlayback(view: MAView) {
   latest.current = view;
 
   const fromRace = (tokens: Token[]) =>
-    new Map(tokens.map((t) => [t.racer, { racer: t.racer, pos: t.pos, tripped: t.tripped, out: t.out, place: t.place }]));
+    new Map(
+      tokens.map((t) => [t.racer, { racer: t.racer, pos: t.pos, tripped: t.tripped, out: t.out, place: t.place }]),
+    );
 
   useEffect(() => {
     const log = view.log;
@@ -219,7 +221,11 @@ export function usePlayback(view: MAView) {
       switch (fx.kind) {
         case "start": {
           const r = latest.current.race;
-          cur = r ? new Map(r.tokens.map((t) => [t.racer, { racer: t.racer, pos: 0, tripped: false, out: false, place: null }])) : null;
+          cur = r
+            ? new Map(
+                r.tokens.map((t) => [t.racer, { racer: t.racer, pos: 0, tripped: false, out: false, place: null }]),
+              )
+            : null;
           shownRef.current = cur;
           setShown(cur);
           showIt({ kind: "start", race: fx.race, track: fx.track, text: e.text });
@@ -325,7 +331,7 @@ export function usePlayback(view: MAView) {
           break;
         case "chip": {
           const tok = latest.current.race?.tokens.find((x) => x.owner === fx.player && !x.out);
-          if (tok) float(tok.racer, `★ +${fx.value} 分`, "good");
+          if (tok) float(tok.racer, `★ ${fx.value < 0 ? "" : "+"}${fx.value} 分`, fx.value < 0 ? "bad" : "good");
           await wait(300);
           break;
         }

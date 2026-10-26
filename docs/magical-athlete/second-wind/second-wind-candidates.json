@@ -349,7 +349,8 @@
     {
       "id": "sw_gloth",
       "en": "Gloth",
-      "zh_draft": "哥特懒兽",
+      "zh_draft": "慢吞吞",
+      "zh_previous_draft": "哥特懒兽",
       "translation_status": "DRAFT",
       "edition_claim": "second-wind",
       "membership_status": "CANDIDATE_FAN_LIST",
@@ -384,9 +385,13 @@
         "score_ledger"
       ],
       "artwork": {
-        "status": "NOT_LICENSED",
-        "public_asset_path": null,
-        "observed_reference": "来源图片未作为完整技能卡面核验；抽查可见插画裁切。"
+        "status": "ORIGINAL_ART_EXISTING_CARD_TEMPLATE",
+        "public_asset_path": "/assets/magical-athlete/cards/zh/sw_gloth.webp",
+        "portrait_path": "/assets/magical-athlete/portraits/sw_gloth.webp",
+        "token_path": "/assets/magical-athlete/tokens/sw_gloth.png",
+        "source_manifest": "assets/magical-athlete-second-wind/manifest.json",
+        "colored_standee_border": true,
+        "production_release_approved": false
       },
       "tests": {
         "status": "PLANNED_NOT_IMPLEMENTED",
@@ -395,7 +400,18 @@
         "interaction": "被取消的比赛是否仍有结束奖励",
         "passed": 0
       },
-      "source_acceptance": "USER_ACCEPTED_REFERENCE"
+      "source_acceptance": "USER_ACCEPTED_REFERENCE",
+      "development_implementation": {
+        "status": "BASE_ENGINE_OPT_IN_IMPLEMENTED",
+        "toggle": "settings.secondWindPreview",
+        "enabled_by_default": false,
+        "normal": true,
+        "boundary": true,
+        "interaction": true,
+        "test_file": "packages/magical-athlete/test/second-wind-batch-five.test.ts",
+        "production_release_approved": false,
+        "development_notes": "含弯道本格；已冲线或淘汰者能力关闭，无赛后奖励。"
+      }
     },
     {
       "id": "sw_hog_knight",
@@ -544,9 +560,13 @@
         "trip_status"
       ],
       "artwork": {
-        "status": "NOT_LICENSED",
-        "public_asset_path": null,
-        "observed_reference": "来源图片未作为完整技能卡面核验；抽查可见插画裁切。"
+        "status": "ORIGINAL_ART_EXISTING_CARD_TEMPLATE",
+        "public_asset_path": "/assets/magical-athlete/cards/zh/sw_hotel.webp",
+        "portrait_path": "/assets/magical-athlete/portraits/sw_hotel.webp",
+        "token_path": "/assets/magical-athlete/tokens/sw_hotel.png",
+        "source_manifest": "assets/magical-athlete-second-wind/manifest.json",
+        "colored_standee_border": true,
+        "production_release_approved": false
       },
       "tests": {
         "status": "PLANNED_NOT_IMPLEMENTED",
@@ -555,7 +575,18 @@
         "interaction": "西西弗斯扣分和坐骑停格事件",
         "passed": 0
       },
-      "source_acceptance": "USER_ACCEPTED_REFERENCE"
+      "source_acceptance": "USER_ACCEPTED_REFERENCE",
+      "development_implementation": {
+        "status": "BASE_ENGINE_OPT_IN_IMPLEMENTED",
+        "toggle": "settings.secondWindPreview",
+        "enabled_by_default": false,
+        "normal": true,
+        "boundary": true,
+        "interaction": true,
+        "test_file": "packages/magical-athlete/test/second-wind-batch-five.test.ts",
+        "production_release_approved": false,
+        "development_notes": "只收停格者，同步到达不触发；积分在双方玩家间转移，不凭空增减。"
+      }
     },
     {
       "id": "sw_icarus",
@@ -1109,7 +1140,8 @@
     {
       "id": "sw_nepo_baby",
       "en": "Nepo Baby",
-      "zh_draft": "关系户",
+      "zh_draft": "关系户宝宝",
+      "zh_previous_draft": "关系户",
       "translation_status": "DRAFT",
       "edition_claim": "second-wind",
       "membership_status": "CANDIDATE_FAN_LIST",
@@ -1140,9 +1172,13 @@
         "power_source_highlight"
       ],
       "artwork": {
-        "status": "NOT_LICENSED",
-        "public_asset_path": null,
-        "observed_reference": "来源图片未作为完整技能卡面核验；抽查可见插画裁切。"
+        "status": "ORIGINAL_ART_EXISTING_CARD_TEMPLATE",
+        "public_asset_path": "/assets/magical-athlete/cards/zh/sw_nepo_baby.webp",
+        "portrait_path": "/assets/magical-athlete/portraits/sw_nepo_baby.webp",
+        "token_path": "/assets/magical-athlete/tokens/sw_nepo_baby.png",
+        "source_manifest": "assets/magical-athlete-second-wind/manifest.json",
+        "colored_standee_border": true,
+        "production_release_approved": false
       },
       "tests": {
         "status": "PLANNED_NOT_IMPLEMENTED",
@@ -1151,7 +1187,18 @@
         "interaction": "第一弯道有巨婴时的调整",
         "passed": 0
       },
-      "source_acceptance": "USER_ACCEPTED_REFERENCE"
+      "source_acceptance": "USER_ACCEPTED_REFERENCE",
+      "development_implementation": {
+        "status": "BASE_ENGINE_OPT_IN_IMPLEMENTED",
+        "toggle": "settings.secondWindPreview",
+        "enabled_by_default": false,
+        "normal": true,
+        "boundary": true,
+        "interaction": true,
+        "test_file": "packages/magical-athlete/test/second-wind-batch-five.test.ts",
+        "production_release_approved": false,
+        "development_notes": "沿用当前两面赛道第一弯道12；赛前复制到能力时同样生效，不改变旧赛道。"
+      }
     },
     {
       "id": "sw_null",
@@ -1716,9 +1763,13 @@
         "score_ledger"
       ],
       "artwork": {
-        "status": "NOT_LICENSED",
-        "public_asset_path": null,
-        "observed_reference": "来源图片未作为完整技能卡面核验；抽查可见插画裁切。"
+        "status": "ORIGINAL_ART_EXISTING_CARD_TEMPLATE",
+        "public_asset_path": "/assets/magical-athlete/cards/zh/sw_stepdad.webp",
+        "portrait_path": "/assets/magical-athlete/portraits/sw_stepdad.webp",
+        "token_path": "/assets/magical-athlete/tokens/sw_stepdad.png",
+        "source_manifest": "assets/magical-athlete-second-wind/manifest.json",
+        "colored_standee_border": true,
+        "production_release_approved": false
       },
       "tests": {
         "status": "PLANNED_NOT_IMPLEMENTED",
@@ -1727,7 +1778,18 @@
         "interaction": "与冠军替换、控制权交换和多人顺序交互",
         "passed": 0
       },
-      "source_acceptance": "USER_ACCEPTED_REFERENCE"
+      "source_acceptance": "USER_ACCEPTED_REFERENCE",
+      "development_implementation": {
+        "status": "BASE_ENGINE_OPT_IN_IMPLEMENTED",
+        "toggle": "settings.secondWindPreview",
+        "enabled_by_default": false,
+        "normal": true,
+        "boundary": true,
+        "interaction": true,
+        "test_file": "packages/magical-athlete/test/second-wind-batch-five.test.ts",
+        "production_release_approved": false,
+        "development_notes": "左侧按赛前选手顺序的下一名，不按领先/落后，也不跳过离场邻居。"
+      }
     },
     {
       "id": "sw_streaker",
@@ -1825,9 +1887,13 @@
         "power_source_highlight"
       ],
       "artwork": {
-        "status": "NOT_LICENSED",
-        "public_asset_path": null,
-        "observed_reference": "来源图片未作为完整技能卡面核验；抽查可见插画裁切。"
+        "status": "ORIGINAL_ART_EXISTING_CARD_TEMPLATE",
+        "public_asset_path": "/assets/magical-athlete/cards/zh/sw_stunner.webp",
+        "portrait_path": "/assets/magical-athlete/portraits/sw_stunner.webp",
+        "token_path": "/assets/magical-athlete/tokens/sw_stunner.png",
+        "source_manifest": "assets/magical-athlete-second-wind/manifest.json",
+        "colored_standee_border": true,
+        "production_release_approved": false
       },
       "tests": {
         "status": "PLANNED_NOT_IMPLEMENTED",
@@ -1836,7 +1902,18 @@
         "interaction": "与Mr. Dice Guy、Nemesis、决斗和重掷交互",
         "passed": 0
       },
-      "source_acceptance": "USER_ACCEPTED_REFERENCE"
+      "source_acceptance": "USER_ACCEPTED_REFERENCE",
+      "development_implementation": {
+        "status": "BASE_ENGINE_OPT_IN_IMPLEMENTED",
+        "toggle": "settings.secondWindPreview",
+        "enabled_by_default": false,
+        "normal": true,
+        "boundary": true,
+        "interaction": true,
+        "test_file": "packages/magical-athlete/test/second-wind-batch-five.test.ts",
+        "production_release_approved": false,
+        "development_notes": "包括同格、主骰、决斗、跟掷及冲洗骰；不改变不掷骰的移动或玩家先手比骰。"
+      }
     },
     {
       "id": "sw_switcharoo",
@@ -2067,12 +2144,13 @@
   "user_accepted_source_id": "SW-F01",
   "source_acceptance_date": "2026-10-26",
   "development_summary": {
-    "implemented": 18,
+    "implemented": 23,
     "candidates": 36,
-    "pool_when_enabled": 54,
+    "pool_when_enabled": 59,
     "enabled_by_default": false,
     "production_enabled": false,
     "batch_three_report": "docs/handoff/魔法运动员_第三批5名_2026-10-26.md",
-    "batch_four_report": "docs/handoff/魔法运动员_第四批5名_2026-10-26.md"
+    "batch_four_report": "docs/handoff/魔法运动员_第四批5名_2026-10-26.md",
+    "batch_five_report": "docs/handoff/魔法运动员_第五批5名_2026-10-26.md"
   }
 }
