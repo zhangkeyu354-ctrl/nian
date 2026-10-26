@@ -133,7 +133,7 @@ export const SECOND_WIND_PREVIEW: RacerInfo[] = [
       powerEn: "Exhibit B",
       powerZh: "擦身得分",
       text: "一次移动经过其他选手时，获得 1 分。",
-      notes: "同段经过多人共得1分；传送不算经过；后退经过随香蕉一起留待最终核对。",
+      notes: "同段向前经过多人共得1分；传送和后退不计分。",
     },
     {
       id: "sw_kraken",
@@ -313,7 +313,7 @@ export const SECOND_WIND_PREVIEW: RacerInfo[] = [
       powerEn: "Globster Mash",
       powerZh: "百变糊糊",
       text: "主移动最终掷出1或2时，抽一名选手，获得其能力直到本场结束。",
-      notes: "取得能力的具体继承方式见用户裁定与最终验收。",
+      notes: "用户裁定：新能力替换原能力，本场不再用原抽卡能力。",
     },
     {
       id: "sw_null",
@@ -340,7 +340,7 @@ export const SECOND_WIND_PREVIEW: RacerInfo[] = [
       powerEn: "Marswapial",
       powerZh: "换手戏法",
       text: "回合结束时，可以与距离不超过1格的另一名选手交换控制者和角色卡。",
-      notes: "已得分不转移；后续归属见用户裁定。",
+      notes: "用户裁定：整局持续交换，角色卡及返场资格随卡转移；已得分不转移。",
     },
   ].map((r) => ({
     ...r,

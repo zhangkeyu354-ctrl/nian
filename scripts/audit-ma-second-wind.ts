@@ -22,7 +22,7 @@ const result = {
   productionFilesUnchangedByThisResearch: changedProductionFiles.length === 0,
   changedProductionFiles,
   developmentPreview: { enabledByDefault: false, serverLobbyExposesSwitch: true, ids: SECOND_WIND_PREVIEW_IDS, poolSize: DRAFTABLE.length + SECOND_WIND_PREVIEW_IDS.length },
-  rulesetDescription: "CMYK 2025 base + partial 2026 revisions + documented house rules; no versioned ruleset setting yet",
+  rulesetDescription: "CMYK 2025 base + partial 2026 revisions + user-adopted Second Wind transcription; new games use bananaBackwardPass=true, legacy saves retain forward-only replay",
   roster: RACERS.map(r => ({id:r.id,en:r.en,zh:r.zh,status:r.status,source_ref:r.source_ref,translation_status:r.translation_status})),
   counts: { current: RACERS.length, draftable: DRAFTABLE.length, reference2025: reference.length, secondWindCandidates: candidates.length,
     verifiedSecondWindRules: candidates.filter(r => r.rule_status === "CONFIRMED").length },

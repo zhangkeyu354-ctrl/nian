@@ -2,9 +2,39 @@ import { mkdtempSync } from "node:fs";
 import { tmpdir } from "node:os";
 import { join } from "node:path";
 import { describe, expect, it } from "vitest";
-import { MARoomStore } from "../src/ma-rooms.ts";
+import { MARoom, MARoomStore } from "../src/ma-rooms.ts";
 
 describe("魔法运动员房间", () => {
+  it("新开局采用香蕉双向经过，并在保存重启后保留", () => {
+    const dir = mkdtempSync(join(tmpdir(), "ma-banana-new-"));
+    const store = new MARoomStore(dir);
+    const room = store.create();
+    const host = room.claim("甲");
+    room.claim("乙");
+    room.lobby(host, { type: "START" });
+    expect(room.file.bananaBackwardPass).toBe(true);
+    expect(room.state!.settings.bananaBackwardPass).toBe(true);
+    store.save(room);
+    const restored = new MARoomStore(dir).rooms.get(room.code)!;
+    expect(restored.state).toEqual(room.state);
+    expect(restored.file.bananaBackwardPass).toBe(true);
+  });
+
+  it("旧存档缺少香蕉版本字段时，重放保持旧规则和旧状态结构", () => {
+    const store = new MARoomStore(mkdtempSync(join(tmpdir(), "ma-banana-old-")));
+    const room = store.create();
+    const host = room.claim("甲");
+    room.claim("乙");
+    room.lobby(host, { type: "START" });
+    const oldFile = structuredClone(room.file);
+    delete oldFile.bananaBackwardPass;
+    const restored = new MARoom(oldFile);
+    expect(restored.state!.settings).not.toHaveProperty("bananaBackwardPass");
+    const d = restored.state!.draft!;
+    const token = restored.file.players.find(p => p.playerId === d.order[d.step])!.token;
+    restored.apply(token, 0, { type: "DRAFT", racer: d.pool[0] });
+    expect(new MARoom(structuredClone(restored.file)).state).toEqual(restored.state);
+  });
   it("建房 → 3 人加入 → 房主开始 → 选秀；重启后重放恢复一致", () => {
     const dir = mkdtempSync(join(tmpdir(), "ma-"));
     const store = new MARoomStore(dir);

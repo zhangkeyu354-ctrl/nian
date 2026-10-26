@@ -12,7 +12,7 @@ describe("Second Wind 研究登记与发布隔离", () => {
     expect(new Set(db.characters.map((c: any) => c.en)).size).toBe(36);
     for (const c of db.characters) for (const key of ["en","zh_draft","source_locator","candidate_semantics","candidate_trigger","candidate_optionality","candidate_movement","candidate_targets","candidate_requires_choice","candidate_extra_turn","candidate_changes_controller","candidate_eliminates","candidate_changes_score","interaction_notes","animation_requirements","tests","rule_status"]) expect(c).toHaveProperty(key);
   });
-  it("108项角色测试是计划，不允许登记成通过；无未核规则进入生产", () => {
+  it("区分来源核验与用户采用版本：正式来源仍未核，用户已批准项目发布", () => {
     expect(db.production_enabled).toBe(false);
     for (const c of db.characters) {
       expect(c.rule_status).toBe("CHECK_REQUIRED");
@@ -21,7 +21,7 @@ describe("Second Wind 研究登记与发布隔离", () => {
       expect(c.tests.passed).toBe(0);
       for (const kind of ["normal","boundary","interaction"]) expect(c.tests[kind].length).toBeGreaterThan(5);
       if (c.development_implementation) {
-        expect(c.development_implementation.production_release_approved).toBe(false);
+        expect(c.development_implementation.production_release_approved).toBe(true);
         expect(c.artwork.status).toBe("ORIGINAL_ART_EXISTING_CARD_TEMPLATE");
         expect(c.artwork.public_asset_path).toBe(`/assets/magical-athlete/cards/zh/${c.id}.webp`);
       } else expect(c.artwork.public_asset_path).toBeNull();

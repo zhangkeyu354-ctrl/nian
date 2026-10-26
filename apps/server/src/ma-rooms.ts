@@ -43,6 +43,8 @@ export interface MARoomFile {
   /** 随机模式：每人随机发 4 名（旧存档没有这个字段 = 选秀） */
   deal?: "draft" | "random";
   secondWind?: boolean;
+  /** Absent on old saves: replay with the old forward-only Banana rule. */
+  bananaBackwardPass?: boolean;
   seed: number;
   commands: MACommand[];
 }
@@ -65,7 +67,14 @@ export class MARoom {
       players: this.file.players.map((p) => ({ id: p.playerId, name: p.name })),
       seed: this.file.seed,
       // 用户房规 HR-MA-01：每人每场只出 1 名选手（不开放双选手变体）
-      settings: { races: RACES, points: this.file.points, variant: "standard", deal: this.file.deal ?? "draft", ...(this.file.secondWind === true ? {secondWindPreview:true} : {}) },
+      settings: {
+        races: RACES,
+        points: this.file.points,
+        variant: "standard",
+        deal: this.file.deal ?? "draft",
+        bananaBackwardPass: this.file.bananaBackwardPass === true,
+        ...(this.file.secondWind === true ? { secondWindPreview: true } : {}),
+      },
     });
   }
   idByToken(token: string | null | undefined) {
@@ -122,6 +131,7 @@ export class MARoom {
       this.file.seed = randomInt(2 ** 31);
       this.file.stage = "game";
       this.file.commands = [];
+      this.file.bananaBackwardPass = true;
       this.state = this.create();
     } else throw new Error("BAD_ACTION");
   }

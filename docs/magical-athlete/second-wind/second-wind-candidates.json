@@ -2,7 +2,7 @@
   "schema_version": 1,
   "as_of": "2026-10-26",
   "production_enabled": false,
-  "warning": "36名候选登记。用户已确认采用SW-F01技能文字，可开展开发核验；未解决互动仍待核。不是官方身份核验或正式上线批准。",
+  "warning": "36名已按用户采用SW-F01技能文字实现并获最终验收、合并批准；官方逐卡来源核验仍CHECK_REQUIRED，尚未部署。",
   "characters": [
     {
       "id": "sw_bite_mark",
@@ -68,7 +68,7 @@
         "normal": true,
         "boundary": true,
         "interaction": true,
-        "production_release_approved": false,
+        "production_release_approved": true,
         "test_file": "packages/magical-athlete/test/second-wind-batch-six.test.ts"
       }
     },
@@ -133,7 +133,7 @@
         "boundary": true,
         "interaction": true,
         "test_file": "packages/magical-athlete/test/second-wind-batch-three.test.ts",
-        "production_release_approved": false
+        "production_release_approved": true
       }
     },
     {
@@ -197,7 +197,7 @@
         "normal": true,
         "boundary": true,
         "interaction": true,
-        "production_release_approved": false,
+        "production_release_approved": true,
         "test_file": "packages/magical-athlete/test/second-wind-final-batch.test.ts"
       }
     },
@@ -260,7 +260,7 @@
         "boundary": true,
         "interaction": true,
         "test_file": "packages/magical-athlete/test/second-wind-batch-three.test.ts",
-        "production_release_approved": false
+        "production_release_approved": true
       }
     },
     {
@@ -325,7 +325,7 @@
         "boundary": true,
         "interaction": true,
         "test_file": "packages/magical-athlete/test/second-wind-batch-three.test.ts",
-        "production_release_approved": false
+        "production_release_approved": true
       }
     },
     {
@@ -387,7 +387,7 @@
         "normal": true,
         "boundary": true,
         "interaction": true,
-        "production_release_approved": false,
+        "production_release_approved": true,
         "test_file": "packages/magical-athlete/test/second-wind-final-batch.test.ts"
       }
     },
@@ -454,7 +454,7 @@
         "boundary": true,
         "interaction": true,
         "test_file": "packages/magical-athlete/test/second-wind-batch-five.test.ts",
-        "production_release_approved": false,
+        "production_release_approved": true,
         "development_notes": "含弯道本格；已冲线或淘汰者能力关闭，无赛后奖励。"
       }
     },
@@ -518,7 +518,7 @@
         "normal": true,
         "boundary": true,
         "interaction": true,
-        "production_release_approved": false,
+        "production_release_approved": true,
         "test_file": "packages/magical-athlete/test/second-wind-final-batch.test.ts"
       }
     },
@@ -579,7 +579,7 @@
         "normal": true,
         "boundary": true,
         "interaction": true,
-        "production_release_approved": false,
+        "production_release_approved": true,
         "test_file": "packages/magical-athlete/test/second-wind-batch-two.test.ts"
       }
     },
@@ -643,7 +643,7 @@
         "boundary": true,
         "interaction": true,
         "test_file": "packages/magical-athlete/test/second-wind-batch-five.test.ts",
-        "production_release_approved": false,
+        "production_release_approved": true,
         "development_notes": "只收停格者，同步到达不触发；积分在双方玩家间转移，不凭空增减。"
       }
     },
@@ -712,7 +712,7 @@
           "direct_and_cross_cases": 6
         },
         "test_file": "packages/magical-athlete/test/second-wind-first-three.test.ts",
-        "production_release_approved": false
+        "production_release_approved": true
       }
     },
     {
@@ -778,7 +778,7 @@
           "direct_and_cross_cases": 6
         },
         "test_file": "packages/magical-athlete/test/second-wind-first-three.test.ts",
-        "production_release_approved": false
+        "production_release_approved": true
       }
     },
     {
@@ -844,7 +844,7 @@
         "boundary": true,
         "interaction": true,
         "test_file": "packages/magical-athlete/test/second-wind-batch-four.test.ts",
-        "production_release_approved": false,
+        "production_release_approved": true,
         "development_notes": "包含同格角色；所有目标同时到达，再结算地形。每名能力持有者每场一次。"
       }
     },
@@ -908,7 +908,7 @@
         "normal": true,
         "boundary": true,
         "interaction": true,
-        "production_release_approved": false,
+        "production_release_approved": true,
         "test_file": "packages/magical-athlete/test/second-wind-batch-two.test.ts"
       }
     },
@@ -977,7 +977,7 @@
         "normal": true,
         "boundary": true,
         "interaction": true,
-        "production_release_approved": false,
+        "production_release_approved": true,
         "test_file": "packages/magical-athlete/test/second-wind-final-batch.test.ts"
       }
     },
@@ -1042,7 +1042,7 @@
         "normal": true,
         "boundary": true,
         "interaction": true,
-        "production_release_approved": false,
+        "production_release_approved": true,
         "test_file": "packages/magical-athlete/test/second-wind-batch-two.test.ts"
       }
     },
@@ -1108,7 +1108,7 @@
         "normal": true,
         "boundary": true,
         "interaction": true,
-        "production_release_approved": false,
+        "production_release_approved": true,
         "test_file": "packages/magical-athlete/test/second-wind-batch-six.test.ts",
         "user_ruling": "docs/magical-athlete/second-wind/10_第六批用户裁定.md",
         "ruling_source": "USER_RULING"
@@ -1171,9 +1171,10 @@
         "normal": true,
         "boundary": true,
         "interaction": true,
-        "production_release_approved": false,
+        "production_release_approved": true,
         "test_file": "packages/magical-athlete/test/second-wind-final-batch.test.ts",
-        "provisional_interpretation_awaiting_user": true
+        "provisional_interpretation_awaiting_user": false,
+        "interpretation_status": "USER_RULING"
       }
     },
     {
@@ -1238,7 +1239,7 @@
         "boundary": true,
         "interaction": true,
         "test_file": "packages/magical-athlete/test/second-wind-batch-four.test.ts",
-        "production_release_approved": false,
+        "production_release_approved": true,
         "development_notes": "按最终主骰结算；跟掷是辅助骰，不继续触发主骰能力。"
       }
     },
@@ -1301,7 +1302,7 @@
         "boundary": true,
         "interaction": true,
         "test_file": "packages/magical-athlete/test/second-wind-batch-five.test.ts",
-        "production_release_approved": false,
+        "production_release_approved": true,
         "development_notes": "沿用当前两面赛道第一弯道12；赛前复制到能力时同样生效，不改变旧赛道。"
       }
     },
@@ -1365,7 +1366,7 @@
         "normal": true,
         "boundary": true,
         "interaction": true,
-        "production_release_approved": false,
+        "production_release_approved": true,
         "test_file": "packages/magical-athlete/test/second-wind-final-batch.test.ts"
       }
     },
@@ -1433,7 +1434,7 @@
           "direct_and_cross_cases": 5
         },
         "test_file": "packages/magical-athlete/test/second-wind-first-three.test.ts",
-        "production_release_approved": false
+        "production_release_approved": true
       }
     },
     {
@@ -1497,7 +1498,7 @@
         "normal": true,
         "boundary": true,
         "interaction": true,
-        "production_release_approved": false,
+        "production_release_approved": true,
         "test_file": "packages/magical-athlete/test/second-wind-batch-six.test.ts"
       }
     },
@@ -1563,7 +1564,7 @@
         "boundary": true,
         "interaction": true,
         "test_file": "packages/magical-athlete/test/second-wind-batch-four.test.ts",
-        "production_release_approved": false,
+        "production_release_approved": true,
         "development_notes": "翻倍的是骰点，滑行不自动起身；传送与后退经过沿用现有定义。"
       }
     },
@@ -1624,7 +1625,7 @@
         "normal": true,
         "boundary": true,
         "interaction": true,
-        "production_release_approved": false,
+        "production_release_approved": true,
         "test_file": "packages/magical-athlete/test/second-wind-final-batch.test.ts"
       }
     },
@@ -1690,7 +1691,7 @@
         "boundary": true,
         "interaction": true,
         "test_file": "packages/magical-athlete/test/second-wind-batch-four.test.ts",
-        "production_release_approved": false,
+        "production_release_approved": true,
         "development_notes": "每颗最终主骰各结算掷骰触发；累计后只应用一次移动修正，随时可收手。"
       }
     },
@@ -1756,7 +1757,7 @@
         "boundary": true,
         "interaction": true,
         "test_file": "packages/magical-athlete/test/second-wind-batch-four.test.ts",
-        "production_release_approved": false,
+        "production_release_approved": true,
         "development_notes": "仅对方玩家的角色；目标离场后不传送。赛前已复制本能力的角色也选择目标。"
       }
     },
@@ -1822,7 +1823,7 @@
         "boundary": true,
         "interaction": true,
         "test_file": "packages/magical-athlete/test/second-wind-batch-three.test.ts",
-        "production_release_approved": false
+        "production_release_approved": true
       }
     },
     {
@@ -1884,7 +1885,7 @@
         "normal": true,
         "boundary": true,
         "interaction": true,
-        "production_release_approved": false,
+        "production_release_approved": true,
         "test_file": "packages/magical-athlete/test/second-wind-batch-six.test.ts",
         "user_ruling": "docs/magical-athlete/second-wind/10_第六批用户裁定.md",
         "ruling_source": "USER_RULING"
@@ -1952,7 +1953,7 @@
         "boundary": true,
         "interaction": true,
         "test_file": "packages/magical-athlete/test/second-wind-batch-five.test.ts",
-        "production_release_approved": false,
+        "production_release_approved": true,
         "development_notes": "左侧按赛前选手顺序的下一名，不按领先/落后，也不跳过离场邻居。"
       }
     },
@@ -2015,7 +2016,7 @@
         "boundary": true,
         "interaction": true,
         "test_file": "packages/magical-athlete/test/second-wind-batch-three.test.ts",
-        "production_release_approved": false
+        "production_release_approved": true
       }
     },
     {
@@ -2076,7 +2077,7 @@
         "boundary": true,
         "interaction": true,
         "test_file": "packages/magical-athlete/test/second-wind-batch-five.test.ts",
-        "production_release_approved": false,
+        "production_release_approved": true,
         "development_notes": "包括同格、主骰、决斗、跟掷及冲洗骰；不改变不掷骰的移动或玩家先手比骰。"
       }
     },
@@ -2139,9 +2140,10 @@
         "normal": true,
         "boundary": true,
         "interaction": true,
-        "production_release_approved": false,
+        "production_release_approved": true,
         "test_file": "packages/magical-athlete/test/second-wind-final-batch.test.ts",
-        "provisional_interpretation_awaiting_user": true
+        "provisional_interpretation_awaiting_user": false,
+        "interpretation_status": "USER_RULING"
       }
     },
     {
@@ -2205,7 +2207,7 @@
         "normal": true,
         "boundary": true,
         "interaction": true,
-        "production_release_approved": false,
+        "production_release_approved": true,
         "test_file": "packages/magical-athlete/test/second-wind-batch-two.test.ts"
       }
     },
@@ -2267,7 +2269,7 @@
         "normal": true,
         "boundary": true,
         "interaction": true,
-        "production_release_approved": false,
+        "production_release_approved": true,
         "test_file": "packages/magical-athlete/test/second-wind-batch-two.test.ts"
       }
     },
@@ -2330,7 +2332,7 @@
         "normal": true,
         "boundary": true,
         "interaction": true,
-        "production_release_approved": false,
+        "production_release_approved": true,
         "test_file": "packages/magical-athlete/test/second-wind-batch-six.test.ts"
       }
     }
@@ -2349,10 +2351,17 @@
     "batch_five_report": "docs/handoff/魔法运动员_第五批5名_2026-10-26.md",
     "batch_six_report": "docs/handoff/魔法运动员_第六批5名_2026-10-26.md",
     "final_report": "docs/handoff/魔法运动员_36名新角色_最终验收报告_2026-10-26.md",
-    "pending_user_rulings": [
-      "banana_backward_pass",
-      "mush_power_replacement",
-      "switcharoo_persistent_ownership"
+    "pending_user_rulings": [],
+    "confirmed_user_rulings": [
+      "SW-PASS-01",
+      "SW-MUSH-01",
+      "SW-SWAP-01"
     ]
+  },
+  "project_release_approval": {
+    "status": "USER_APPROVED",
+    "date": "2026-10-26",
+    "deployment": "USER_MANUAL_ONLY",
+    "official_provenance_verified": false
   }
 }

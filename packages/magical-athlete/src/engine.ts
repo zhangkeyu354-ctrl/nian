@@ -79,6 +79,7 @@ export function createMAGame(opts: CreateMAOptions): MAState {
     if (!PLAYABLE_TRACKS.includes(t)) fail("TRACK_UNCONFIRMED", `${TRACKS[t].zh}：${TRACKS[t].missing}。`);
   const deal: "draft" | "random" = opts.settings?.deal === "random" && variant === "standard" ? "random" : "draft";
   const settings: Settings = {
+    ...(opts.settings?.bananaBackwardPass === false ? {} : { bananaBackwardPass: true }),
     ...(opts.settings?.secondWindPreview === true ? { secondWindPreview: true } : {}),
     races,
     variant,
@@ -587,9 +588,19 @@ function move(s: MAState, c: Ctx, t: Token, n: number, main: boolean, why: strin
   const arrivals = inOrder(s).filter((x) => group.includes(x));
   for (const g of arrivals) hugeBaby(s, c, g);
   const passed = new Map(group.map((g) => [g, passedOf(g)]));
+  // Only Banana's backwards ruling changed. Other passing powers keep their
+  // accepted semantics; do not give Centaur/Streaker new backwards effects.
+  const bananaPassed = new Map(
+    group.map((g) => [
+      g,
+      n < 0 && s.settings.bananaBackwardPass
+        ? others(s, g).filter((o) => !group.includes(o) && (before.get(o) ?? 0) < from && o.pos > g.pos)
+        : passed.get(g) ?? [],
+    ]),
+  );
   if (magicalTrip) magicPass(s, c, t, passed.get(t) ?? []);
   for (const g of arrivals) if (biting.has(g)) bitePass(s, c, g, passed.get(g) ?? []);
-  for (const g of arrivals) react(s, c, g, passed.get(g) ?? [], group.length > 1, streaking.has(g), penguins);
+  for (const g of arrivals) react(s, c, g, passed.get(g) ?? [], group.length > 1, streaking.has(g), penguins, bananaPassed.get(g));
   for (const f of riders) if (active(f)) fire(s, c, f, `${rname(f)}【吸附蹭车】发动。`);
 }
 
@@ -667,6 +678,7 @@ function react(
   simultaneous = false,
   streaking = false,
   penguins?: Set<Token>,
+  bananaPassed: Token[] = passed,
 ) {
   if (!active(t)) return;
   penguinPass(s, c, passed, penguins);
@@ -687,7 +699,7 @@ function react(
       // 箭头会开始新的一段移动并提前返回；必须先结算刚刚这段移动经过的香蕉。
       // 不能把 passed 交给下一段：下一段可能后退，或香蕉已经移动到别处。
       for (const x of inOrder(s)) {
-        if (powerOf(s, x) === "banana" && passed.includes(x)) {
+        if (powerOf(s, x) === "banana" && bananaPassed.includes(x)) {
           trip(s, t);
           fire(s, c, x, `${rname(x)}【香蕉皮】：${rname(t)} 经过时摔倒。`);
         }
@@ -720,7 +732,7 @@ function react(
         gainChip(s, t.owner, -1);
         gainChip(s, x.owner, 1);
       } else if (!canPay) trip(s, t);
-    } else if (p === "banana" && passed.includes(x)) {
+    } else if (p === "banana" && bananaPassed.includes(x)) {
       trip(s, t);
       fire(s, c, x, `${rname(x)}【香蕉皮】：${rname(t)} 经过时摔倒。`);
     } else if (p === "centaur" && x === t && passed.length) {

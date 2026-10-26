@@ -6,7 +6,7 @@ import { viewForMA } from "../src/privacy.ts";
 const fixture=JSON.parse(readFileSync("docs/magical-athlete/second-wind/legacy-replay-fixtures.json","utf8"));
 const hash=(s:unknown)=>createHash("sha256").update(JSON.stringify(s)).digest("hex");
 for(const c of fixture.cases) it(`旧版轨迹逐步保持：${c.options.players.length}人 ${c.options.settings.deal}`,()=>{
-  let s=createMAGame(c.options);
+  let s=createMAGame({...c.options,settings:{...c.options.settings,bananaBackwardPass:false}});
   for(const step of c.trace){
     s=reduceMA(s,step.cmd);
     expect(hash(s)).toBe(step.state);

@@ -224,10 +224,10 @@ describe("Second Wind第二批：5名走现有引擎", () => {
     expect(tok(s, "suckerfish").pos).toBe(7);
     expect(tok(s, "romantic").pos).toBe(25);
   });
-  it("破坏者触发挪挪蹭步；后退仍遵循现有香蕉经过定义，不改基础规则", () => {
+  it("破坏者触发挪挪蹭步；用户裁定后退经过香蕉也摔倒", () => {
     const s = answer(make(["twin", "sw_le_saboteur", "scoocher", "banana"], [10, 20, 25, 8], [3]), "roll");
-    expect(tok(s, "scoocher").pos).toBe(26);
+    expect(tok(s, "scoocher").pos).toBe(27); // 两名角色发动，分别蹭步
     expect(tok(s, "twin").pos).toBe(7);
-    expect(tok(s, "twin").tripped).toBe(false);
+    expect(tok(s, "twin").tripped).toBe(true);
   });
 });

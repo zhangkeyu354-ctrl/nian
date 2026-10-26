@@ -335,7 +335,7 @@ function Lobby({ snap, lobby }: { snap: MARoomSnapshot; lobby: (a: Parameters<Re
             onChange={(e) => void run({ type: "SET_SECOND_WIND", enabled: e.target.checked })}
           />
           <span>
-            <b>开启 Second Wind 新角色</b>
+            <b>开启新角色</b>
             <small>
               当前可用 {expansionRacers.length} 名：{expansionRacers.map((r) => r.zh).join("、")}
               。开启后与原版选手混合招募；关闭则只使用原版 36 名。

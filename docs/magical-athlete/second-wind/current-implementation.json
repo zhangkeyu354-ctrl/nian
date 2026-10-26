@@ -51,7 +51,7 @@
     ],
     "poolSize": 72
   },
-  "rulesetDescription": "CMYK 2025 base + partial 2026 revisions + documented house rules; no versioned ruleset setting yet",
+  "rulesetDescription": "CMYK 2025 base + partial 2026 revisions + user-adopted Second Wind transcription; new games use bananaBackwardPass=true, legacy saves retain forward-only replay",
   "roster": [
     {
       "id": "alchemist",
@@ -438,11 +438,11 @@
     "variant": "standard"
   },
   "hashes": {
-    "packages/magical-athlete/src/engine.ts": "79e8df21c8b731f4f8e5f365b01b20fade5961b9b7116e66b79f4665dc15a9de",
+    "packages/magical-athlete/src/engine.ts": "00b1f67489456371ac15da29aa577ab747b11383c7c0415e6e34c97a130de767",
     "packages/magical-athlete/src/racers.ts": "277107459d3e6cbe229400dfb3f4440e7e75af4913933720f72b3b8fbc3f280d",
     "packages/magical-athlete/src/tracks.ts": "65666458e21f2eabc45918df237055104b0f2b75442ea9dff23bdf6e1e6f2a39",
-    "packages/magical-athlete/src/types.ts": "0afddfcb349051a0c66d318c9e72a40b0b3a8817b474dbe10fe9a3be6def3213",
-    "apps/server/src/ma-rooms.ts": "4dda2df154f7828ae6618d43c47ee9593b0859208c228e3336586f9c22428964",
-    "apps/web/src/ma/MagicalAthlete.tsx": "0d1d00dedefee2376c356ecc477135e204f65718cdfa15ed8cb454531e0cff71"
+    "packages/magical-athlete/src/types.ts": "db655465f0094dbfd02551de5e8ebe2e73d80ce4d2f496b9e0b91b459d6121b3",
+    "apps/server/src/ma-rooms.ts": "2b0927bf7dabab079f767637ac6f65c5954574c472e16d571e621434a6540dfb",
+    "apps/web/src/ma/MagicalAthlete.tsx": "20c2ab66a6b8df4c84931c35f2645efb50ede52cfa1b69b9b808938bcdf3a958"
   }
 }

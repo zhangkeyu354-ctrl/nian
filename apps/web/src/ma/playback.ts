@@ -362,6 +362,8 @@ export function usePlayback(view: MAView) {
             for (const p of fx.places) owners.set(p.racer, p.owner);
             const rows = raceStats(latest.current.log, fx.race, owners);
             if (rows.length) {
+              // The podium tap advances to this page; it must not skip it too.
+              skip.current = false;
               showIt({ kind: "stats", race: fx.race, rows });
               await wait(6500);
             }

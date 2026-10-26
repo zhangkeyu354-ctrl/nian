@@ -31,6 +31,7 @@ for (const seed of [390, 17]) {
     ],
     points: Array.from({ length: 4 }, () => ({ gold: 3, silver: 1 })),
     secondWind: true,
+    bananaBackwardPass: true,
     seed,
     commands: [],
   });

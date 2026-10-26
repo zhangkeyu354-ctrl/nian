@@ -132,6 +132,8 @@ export interface LogEntry {
 }
 
 export interface Settings {
+  /** User ruling 2026-10-26; absent in legacy snapshots = forward only. */
+  bananaBackwardPass?: boolean;
   /** Server/development opt-in only. Existing rooms omit this and keep base36. */
   secondWindPreview?: boolean;
   races: number;

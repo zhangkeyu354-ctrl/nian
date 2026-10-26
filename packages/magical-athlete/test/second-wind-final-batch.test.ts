@@ -240,10 +240,10 @@ describe("Second Wind最后8名", () => {
     expect(tok(s, "twin").pos).toBe(10);
     expect(tok(s, "banana").pos).toBe(0);
   });
-  it("六面魔法5点后退经过香蕉仍维持旧版不触发", () => {
+  it("用户裁定：六面魔法5点后退经过香蕉也摔倒", () => {
     const s = answer(make(["sw_magical_athlete", "twin", "banana"], [0, 10, 8], [5]), "roll");
     expect(tok(s, "twin").pos).toBe(5);
-    expect(tok(s, "twin").tripped).toBe(false);
+    expect(tok(s, "twin").tripped).toBe(true);
   });
   it("虚无下的腿不能选择免骰，香蕉和企鹅被经过时不发动", () => {
     let s = make(["legs", "sw_null", "banana", "sw_penguin"], [5, 0, 7, 8], [4]);
