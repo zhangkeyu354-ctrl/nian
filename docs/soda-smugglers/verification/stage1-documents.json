@@ -1,0 +1,19 @@
+{
+  "checks": {
+    "five_stage_instruction_saved": true,
+    "basic_rows_34": true,
+    "event_rows_9": true,
+    "questions_8": true,
+    "assets_27": true,
+    "pdf_8_pages": true,
+    "pdf_hash_matches": true,
+    "component_arithmetic": true,
+    "unknown_event_slots_explicit": true,
+    "no_claim_implemented": true
+  },
+  "passed": 10,
+  "failed": 0,
+  "rule_rows": 43,
+  "asset_items": 27,
+  "questions": 8
+}

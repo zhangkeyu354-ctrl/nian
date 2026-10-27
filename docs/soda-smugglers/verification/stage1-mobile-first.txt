@@ -1,0 +1,33 @@
+
+> dbd-boardgame-private@0.2.2 verify:mobile-interfaces
+> vitest run --config apps/web/test/capture.config.ts && tsx scripts/collect-ui-scenarios.ts && tsx scripts/verify-mobile-interfaces.ts
+
+
+ RUN  v5.0.5 E:/DBD-BoardGame-Web
+
+
+ Test Files  12 passed (12)
+      Tests  197 passed (197)
+   Start at  11:25:13
+   Duration  6.43s (tests 82%, import 12%, transform 3%, setup 2%, worker 1%)
+
+    Isolate  12 workers spawned · ~243ms startup each (spawn + environment, per file)
+             at least ~1.21s faster with isolate: false — reuses workers across files instead of one per file
+
+UI_SCENARIOS_COLLECTED 64 (successful engine test inputs; generated, not shipped)
+node:internal/modules/run_main:107
+    triggerUncaughtException(
+    ^
+
+page.goto: net::ERR_CONNECTION_REFUSED at http://127.0.0.1:5173/test/interface.html?case=board_ace_1
+Call log:
+  - navigating to "http://127.0.0.1:5173/test/interface.html?case=board_ace_1", waiting until "load"
+
+    at <anonymous> (E:\DBD-BoardGame-Web\scripts\verify-mobile-interfaces.ts:34:13) {
+  log: [
+    '  - navigating to "http://127.0.0.1:5173/test/interface.html?case=board_ace_1", waiting until "load"'
+  ],
+  name: 'Error'
+}
+
+Node.js v24.14.0
