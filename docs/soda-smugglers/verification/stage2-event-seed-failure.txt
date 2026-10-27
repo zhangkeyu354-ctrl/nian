@@ -1,0 +1,26 @@
+
+ RUN  v5.0.5 E:/DBD-BoardGame-Web
+
+ ❯ packages/soda-smugglers/test/events.test.ts (10 tests | 1 failed) 64ms
+   × E03 领导视察: one bonus inspection may reveal the same traveler's second suitcase 35ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  packages/soda-smugglers/test/events.test.ts > E03 领导视察: one bonus inspection may reveal the same traveler's second suitcase
+Error: missing event seed
+ ❯ eventGame packages/soda-smugglers/test/events.test.ts:6:9
+      4| function eventGame(event:EventId,n=3) {
+      5|   for(let seed=1;seed<=1000;seed++){const s=game(n,seed,true);if(s.eve…
+      6|   throw Error("missing event seed");
+       |         ^
+      7| }
+      8| it("E01 生日礼物: 2 bank caps and legal two bottles still receive normal c…
+ ❯ packages/soda-smugglers/test/events.test.ts:19:13
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+
+ Test Files  1 failed | 2 passed (3)
+      Tests  1 failed | 16 passed (17)
+   Start at  11:40:14
+   Duration  371ms (tests 45%, transform 29%, import 21%, worker 5%)

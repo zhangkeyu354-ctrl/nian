@@ -1,0 +1,23 @@
+
+ RUN  v5.0.5 E:/DBD-BoardGame-Web
+
+ ❯ packages/soda-smugglers/test/creation.test.ts (0 test)
+
+⎯⎯⎯⎯⎯⎯ Failed Suites 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  packages/soda-smugglers/test/creation.test.ts [ packages/soda-smugglers/test/creation.test.ts ]
+Error: Cannot find module '../src/index.ts' imported from E:/DBD-BoardGame-Web/packages/soda-smugglers/test/creation.test.ts
+ ❯ packages/soda-smugglers/test/creation.test.ts:2:1
+      1| import { expect, it } from "vitest";
+      2| import { createSS, createDeckSS, actionBudgetSS, viewForSS, assertInva…
+       | ^
+      3| it("R01-R09: seeded creation, official inventory, budgets and public g…
+      4|   expect(createDeckSS()).toHaveLength(36);
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  no tests
+   Start at  11:36:37
+   Duration  288ms (worker 96%, environment 4%)
