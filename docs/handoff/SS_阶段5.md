@@ -37,6 +37,6 @@
 
 ## 最终全仓复跑
 
-- `npm test -- --testTimeout=30000`：在其他浏览器与截图测试结束后单独后台运行，84/84 个文件、1267/1267 项通过，0 失败，耗时182.53秒。按用户要求将单项超时提高到30秒；前两次默认5秒限制的失败仍保留在上文及 `verification/stage5-npm-first.txt`、`stage5-npm-second.txt`。
+- `npm test -- --testTimeout=30000`：在其他浏览器与截图测试结束后单独后台运行，84/84 个文件、1267/1267 项通过，0 失败，耗时182.53秒。为排除并发干扰临时放宽单项超时至30秒；前两次默认5秒限制的失败仍保留在上文及 `verification/stage5-npm-first.txt`、`stage5-npm-second.txt`。
 - 最终 `npm run typecheck`：通过；最终构建通过。测试日志 `verification/stage5-npm-final.txt`。
 - SS 联机浏览器和其他游戏浏览器测试使用隔离副本在最终印章/对比度背景微调之前构建；最新界面另完成真实浏览器截图、开关、按钮和对比度复测。不得把这两种验证说成同一次构建。
