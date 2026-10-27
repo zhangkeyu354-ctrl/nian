@@ -188,7 +188,7 @@ function BatchReveal({
   return (
     <div className="ss-reveal ss-clear" role="dialog" aria-label="本轮结算" data-testid="ss-reveal">
       <div className="ss-reveal-card ss-batch">
-        <small>本轮结算 · 其余旅客放行</small>
+        <small>{action.items!.every((x) => x.bribed) ? "贪得无厌 · 全收全放" : "本轮结算 · 其余旅客放行"}</small>
         <ul className="ss-batch-list">
           {action.items!.map((a, i) => (
             <li key={i}>
@@ -566,7 +566,7 @@ export function SodaSmugglers() {
         target: chosen,
         ...(eventMode ? { useEvent: true } : {}),
       };
-      actionLabel = `接受 ${chosen + 1}号 的受贿`;
+      actionLabel = `${eventMode ? "起早贪黑：" : ""}接受 ${chosen + 1}号 的受贿`;
       actionTest = `${eventMode ? "ss-event-accept" : "ss-accept"}-${chosen}`;
     }
     if (v.phase === "INSPECT") {
@@ -593,7 +593,7 @@ export function SodaSmugglers() {
           index: box,
           ...(eventMode ? { useEvent: true } : {}),
         };
-        actionLabel = `检查 ${chosen + 1}号`;
+        actionLabel = `${eventMode ? "领导视察：" : ""}检查 ${chosen + 1}号`;
         actionTest = `${eventMode ? "ss-event-inspect" : "ss-inspect"}-${chosen}-${box}`;
       }
     }
@@ -603,7 +603,7 @@ export function SodaSmugglers() {
         target: chosen,
         ...(eventMode ? { useEvent: true } : {}),
       };
-      actionLabel = `逮捕 ${chosen + 1}号`;
+      actionLabel = `${eventMode ? "铁面无私：" : ""}逮捕 ${chosen + 1}号`;
       actionTest = `${eventMode ? "ss-event-arrest" : "ss-arrest"}-${chosen}`;
     }
   }
@@ -1094,7 +1094,7 @@ export function SodaSmugglers() {
               </>
             ) : (
               <>
-                {v.event && (
+                {v.event && v.phase !== "FINISHED" && (
                   <EventCard
                     event={v.event}
                     onOpen={() => setEventOpen(true)}

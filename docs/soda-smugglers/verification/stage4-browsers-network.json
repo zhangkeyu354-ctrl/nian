@@ -11,36 +11,36 @@
       "players": 3,
       "events": true,
       "rounds": 6,
-      "commands": 53,
-      "frames": 332
+      "commands": 47,
+      "frames": 306
     },
     {
       "players": 5,
       "events": false,
       "rounds": 5,
       "commands": 59,
-      "frames": 558
+      "frames": 554
     },
     {
       "players": 5,
       "events": true,
       "rounds": 5,
       "commands": 62,
-      "frames": 578
+      "frames": 576
     },
     {
       "players": 8,
       "events": false,
       "rounds": 8,
       "commands": 143,
-      "frames": 1691
+      "frames": 1688
     },
     {
       "players": 8,
       "events": true,
       "rounds": 8,
       "commands": 138,
-      "frames": 1648
+      "frames": 1646
     }
   ],
   "gameCount": 6,
@@ -85,8 +85,8 @@
   ],
   "passed": 37,
   "failed": 0,
-  "networkChecks": 4191,
-  "domChecks": 3299,
+  "networkChecks": 4167,
+  "domChecks": 3281,
   "pageErrors": [],
   "screenshots": "output/playwright/ss-stage4-*.png",
   "timeoutFixture": "persisted deadline shortened to 15s; production server API unchanged"

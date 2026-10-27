@@ -1481,3 +1481,14 @@
 .ss-world .ss-batch-list li { display: grid; gap: 2px; text-align: left; padding: 8px 12px; border-radius: 10px; background: #ffffff10; }
 .ss-world .ss-batch-list b { font-size: 17px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
 .ss-world .dm-banner span { display: none; }
+/* v2：横屏受贿牌不再挤成省略号；电脑端不放大成巨卡 */
+@media (orientation: landscape) and (max-height: 600px) {
+  .ss-world .ss-bribe-cards { display: flex; overflow-x: auto; padding-bottom: 4px; }
+  .ss-world .ss-bribe-card { flex: 0 0 108px; }
+  .ss-world .ss-event p, .ss-world .ss-event-banner p { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .ss-world .dm-banner { right: auto; left: 30%; }
+}
+@media (min-width: 900px) and (min-height: 601px) {
+  .ss-world .ss-bribe-cards { grid-template-columns: repeat(auto-fill, minmax(140px, 170px)); }
+  .ss-world .ss-luggage button { max-width: 220px; }
+}
