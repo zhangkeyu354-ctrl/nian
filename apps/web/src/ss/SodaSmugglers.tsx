@@ -1369,35 +1369,6 @@ export function SodaSmugglers() {
                         <span>受贿 {v.budget.bribe}</span><span>检查 {v.budget.inspect}</span><span>逮捕 {v.budget.arrest}</span>
                       </div>
                     )}
-                    {["BRIBE", "INSPECT", "ARREST"].includes(v.phase) && (
-                      <div className="ss-bribe-cards" data-testid="ss-bribe-cards" aria-label={guard ? "选择旅客" : "公开的受贿牌"}>
-                        {v.players.map((player, i) => i === v.guard || !player.bribe ? null : (
-                          <button
-                            type="button"
-                            className={`ss-bribe-card ${guard && chosen === i ? "is-selected" : ""} ${player.settled ? "is-settled" : ""}`}
-                            data-testid={`ss-public-bribe-${i}`}
-                            data-ss-traveler-target={i}
-                            key={i}
-                            disabled={!guard || player.settled || blocked}
-                            aria-pressed={guard && chosen === i}
-                            onClick={() => chooseTarget(i)}
-                          >
-                            <strong title={player.name}>{i + 1}号 {player.name}</strong>
-                            <span className="ss-queue-person" aria-hidden="true" />
-                            <span className="ss-queue-luggage" aria-label="旅客的手提箱">
-                              {player.luggage.map((bag, bagIndex) => (
-                                <Suitcase key={bagIndex} back={!bag} bottles={bag?.bottles} />
-                              ))}
-                            </span>
-                            <Suitcase bottles={player.bribe.bottles} />
-                            <span>{player.settled ? "✅ 已结算" : `受贿${player.bribe.bottles}瓶`}</span>
-                          </button>
-                        ))}
-                      </div>
-                    )}
-                    {guard && ["BRIBE", "INSPECT", "ARREST"].includes(v.phase) && (
-                      <p className="ss-help ss-pick-hint">点旅客选择对象，或把行动筹码拖到旅客身上；检查时再选箱子。</p>
-                    )}
                     {guard &&
                       ["BRIBE", "INSPECT", "ARREST"].includes(v.phase) && (
                         <div
@@ -1439,6 +1410,35 @@ export function SodaSmugglers() {
                           )}
                         </div>
                       )}
+                    {["BRIBE", "INSPECT", "ARREST"].includes(v.phase) && (
+                      <div className="ss-bribe-cards" data-testid="ss-bribe-cards" aria-label={guard ? "选择旅客" : "公开的受贿牌"}>
+                        {v.players.map((player, i) => i === v.guard || !player.bribe ? null : (
+                          <button
+                            type="button"
+                            className={`ss-bribe-card ${guard && chosen === i ? "is-selected" : ""} ${player.settled ? "is-settled" : ""}`}
+                            data-testid={`ss-public-bribe-${i}`}
+                            data-ss-traveler-target={i}
+                            key={i}
+                            disabled={!guard || player.settled || blocked}
+                            aria-pressed={guard && chosen === i}
+                            onClick={() => chooseTarget(i)}
+                          >
+                            <strong title={player.name}>{i + 1}号 {player.name}</strong>
+                            <span className="ss-queue-person" aria-hidden="true" />
+                            <span className="ss-queue-luggage" aria-label="旅客的手提箱">
+                              {player.luggage.map((bag, bagIndex) => (
+                                <Suitcase key={bagIndex} back={!bag} bottles={bag?.bottles} />
+                              ))}
+                            </span>
+                            <Suitcase bottles={player.bribe.bottles} />
+                            <span>{player.settled ? "✅ 已结算" : `受贿${player.bribe.bottles}瓶`}</span>
+                          </button>
+                        ))}
+                      </div>
+                    )}
+                    {guard && ["BRIBE", "INSPECT", "ARREST"].includes(v.phase) && (
+                      <p className="ss-help ss-pick-hint">点旅客选择对象，或把行动筹码拖到旅客身上；检查时再选箱子。</p>
+                    )}
                     {person && !(guard && v.phase === "BRIBE") && (
                       <div
                         className="ss-traveler"
