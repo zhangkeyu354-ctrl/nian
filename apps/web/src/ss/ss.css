@@ -1521,3 +1521,15 @@
 .ss-world .ss-action-tokens button:active { cursor: grabbing; }
 .ss-world .ss-action-tokens img { border-radius: 50%; filter: drop-shadow(0 2px 2px #0009); }
 .ss-world .ss-bribe-card.ss-token-drop-active { outline: 3px solid #f8df93; outline-offset: 2px; }
+
+/* 纸牌微倾斜，翻箱时绕纵轴翻开。 */
+.ss-world .ss-hand button:nth-child(odd) .ss-case,
+.ss-world .ss-bribe-card:nth-child(odd) > .ss-case { transform: rotate(-2deg); }
+.ss-world .ss-hand button:nth-child(even) .ss-case,
+.ss-world .ss-bribe-card:nth-child(even) > .ss-case { transform: rotate(2deg); }
+.ss-world .ss-reveal-bags { perspective: 900px; }
+.ss-world .ss-reveal-bags > span.is-open img { animation: ss-card-turn .48s ease-out both; transform-origin: center; backface-visibility: hidden; }
+@keyframes ss-card-turn {
+  from { transform: rotateY(-90deg) scale(.94); }
+  to { transform: rotateY(0) scale(1); }
+}
