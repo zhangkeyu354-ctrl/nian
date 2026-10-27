@@ -1,0 +1,15 @@
+
+> dbd-boardgame-private@0.2.2 test
+> vitest run
+
+
+ RUN  v5.0.5 E:/DBD-BoardGame-Web
+
+ ❯ packages/witch-town/test/day.test.ts (76 tests | 1 failed) 27701ms
+   ❯ M2 day actions and trials (50)
+     × 11 players: 100 seeded controlled day scenarios conserve cards and hide opponents 5101ms
+
+ Test Files  1 failed | 83 passed (84)
+      Tests  1 failed | 1266 passed (1267)
+   Start at  16:46:59
+   Duration  203.09s (tests 98%, import 2%)

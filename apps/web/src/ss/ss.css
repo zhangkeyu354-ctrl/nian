@@ -1442,3 +1442,27 @@
 .ss-world .ss-avatar, .ss-world .ss-results details h3 { font-size: 17px; }
 .ss-world .ss-help { font-size: 17px !important; }
 .ss-world .ss-lobby-seats .ss-seat-bottom, .ss-world .ss-event strong { font-size: 17px; }
+.ss-world .ss-stage > * { flex-shrink: 0; }
+.ss-world .ss-scroll-hint { position: sticky; top: 0; z-index: 2; margin: 0; padding: 5px 8px; border-radius: 8px; background: #33243f; color: #fff; font-size: 17px; }
+.ss-world .ss-toggle { position: relative; display: inline-flex; flex: none; width: 82px; height: 44px; }
+.ss-world .ss-toggle input { position: absolute; inset: 0; width: 100%; height: 100%; margin: 0; opacity: 0; cursor: pointer; z-index: 1; }
+.ss-world .ss-toggle .ss-toggle-track { display: flex; align-items: center; justify-content: flex-end; width: 100%; height: 100%; padding: 0 12px; border: 1px solid #f1dfbd; border-radius: 24px; background: #4a394e; color: #fff; font-weight: 700; }
+.ss-world .ss-toggle .ss-toggle-track::before { content: ''; position: absolute; left: 5px; width: 32px; height: 32px; border-radius: 50%; background: #fff; }
+.ss-world .ss-toggle input:checked + .ss-toggle-track { justify-content: flex-start; background: #315b32; }
+.ss-world .ss-toggle input:checked + .ss-toggle-track::before { left: auto; right: 5px; }
+.ss-world .ss-toggle input:focus-visible + .ss-toggle-track { outline: 3px solid #fff; outline-offset: 2px; }
+.ss-world .ss-seat-top .ss-avatar { background: linear-gradient(#170e20f5,#170e20f5), url('/assets/soda-smugglers/cover.webp') 68% 18%/250% no-repeat; color: #fff; }
+.ss-world .ss-passport { background: #24162f; color: #fff; border: 1px solid #f4d47c; }
+.ss-world .ss-hand button > span, .ss-world .ss-luggage button > span, .ss-world .ss-bribe-card > span { display: block; background: #1c1126; color: #fff; border-radius: 4px; }
+.ss-world .ss-bribe-card strong { background: #160d20; color: #fff; }
+.ss-world .ss-bribe { background: #1c1126; color: #fff; border-radius: 5px; padding: 2px 4px; }
+@media (orientation: landscape) and (max-height: 600px) {
+  .ss-world .ss-hand .ss-case { max-height: 46px; object-fit: contain; }
+}
+.ss-world button:disabled, .ss-world .ss-primary:disabled { opacity: 1; background: #332b3b; color: #fff; }
+@media (orientation: landscape) and (max-height: 600px) {
+  .ss-world .ss-luggage button { max-width: 100px; }
+  .ss-world .ss-luggage button .ss-case { max-height: 48px; object-fit: contain; }
+}
+.ss-world .ss-stamp { position: relative; z-index: 2; background: #1b1124; }
+.ss-world .ss-flying-cap { z-index: 1; background: #1b1124; border-radius: 20px; padding: 2px 6px; }

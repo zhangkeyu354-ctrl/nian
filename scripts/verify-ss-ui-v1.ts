@@ -19,6 +19,7 @@ import {
 import { withHands } from "../packages/soda-smugglers/test/helpers.ts";
 import { eventCopy } from "../apps/web/src/ss/ui-model.ts";
 import { assertUiShot } from "./screenshot-check.ts";
+import { measureContrast } from "./ss-pixel-contrast.ts";
 const out = "docs/soda-smugglers/ui-v1";
 mkdirSync(out, { recursive: true });
 const root = mkdtempSync(join(tmpdir(), "ss-ui4-"));
@@ -176,6 +177,7 @@ const screenshots: {
 }[] = [];
 const checks: string[] = [];
 const accessibility: unknown[] = [];
+const pixelContrast: Array<{name:string; tested:number; passed:number; untested:string[]; failures: Array<{text:string;ratio:number;foreground:string;background:string}>}> = [];
 const errors: string[] = [];
 let browser: Awaited<ReturnType<typeof chromium.launch>> | undefined;
 async function connect(
@@ -273,6 +275,16 @@ async function shot(p: Page, filename: string, name: string, scope = "场景") {
     return {textCount:text.length,below17:text.filter(t=>t.px<17), contrastFailures:results.violations.flatMap((v:any)=>v.nodes.map((n:any)=>({target:n.target,summary:n.failureSummary}))), contrastIncomplete:results.incomplete.flatMap((v:any)=>v.nodes.map((n:any)=>({target:n.target,summary:n.failureSummary}))), contrastPassed:results.passes.reduce((n:number,v:any)=>n+v.nodes.length,0)};
   });
   accessibility.push({name,...a11y});
+  pixelContrast.push({name,...await measureContrast(p, ".ss-world")});
+  const stage=p.getByTestId("ss-stage");
+  if (await stage.count()) {
+    const scroll = await stage.evaluate(el => ({top:el.scrollTop,rest:el.scrollHeight-el.clientHeight-el.scrollTop}));
+    if (scroll.rest > 10) {
+      await stage.evaluate(el => {el.scrollTop=el.scrollHeight}); await p.waitForTimeout(100);
+      pixelContrast.push({name:`${name} · 舞台滚动到底`,...await measureContrast(p,".ss-world")});
+      await stage.evaluate((el,top)=>{el.scrollTop=top;},scroll.top);
+    }
+  }
   await assertUiShot(p, `${out}/${filename}.png`);
   const v = p.viewportSize()!;
   screenshots.push({
@@ -326,6 +338,7 @@ try {
       .locator(".dm-banner")
       .filter({ hasText: "下一位缉私警长" })
       .waitFor();
+    pixelContrast.push({name:"下一位缉私警长横幅",...await measureContrast(p, ".dm-banner")});
     await assertUiShot(p, `${out}/next-guard-banner.png`);
     screenshots.push({
       file: "next-guard-banner.png",
@@ -344,6 +357,11 @@ try {
       else {
         assert.match(await p.locator(".ss-stage-title .ss-kicker").innerText(), /^房间/);
         assert.match(await p.locator(".ss-event-setting").innerText(), /关/);
+        await p.getByTestId("ss-events").click();
+        await p.locator(".ss-event-setting").getByText("开", {exact:true}).waitFor();
+        await p.waitForFunction(() => !(document.querySelector('[data-testid="ss-events"]') as HTMLInputElement).disabled);
+        await p.getByTestId("ss-events").click();
+        await p.locator(".ss-event-setting").getByText("关", {exact:true}).waitFor();
         const fits = await p.getByTestId("ss-first-guard").evaluate((el:HTMLSelectElement) => { const c=document.createElement("canvas").getContext("2d")!; const st=getComputedStyle(el); c.font=`${st.fontWeight} ${st.fontSize} ${st.fontFamily}`; return c.measureText(el.selectedOptions[0].textContent ?? "").width <= el.clientWidth - 30; });
         assert(fits, "首位警长姓名不应被截断");
       }
@@ -359,12 +377,26 @@ try {
       const titles = {PACK:"秘密装包",BRIBE:"受贿与讨论",INSPECT:"检查手提箱",ARREST:"决定逮捕",ROUND_END:"本轮结束",FINISHED:"本局结束"};
       assert.equal(await p.getByTestId("ss-phase").innerText(), titles[phase]);
       const kicker = await p.locator(".ss-stage-title .ss-kicker").innerText();
-      if (phase === "ROUND_END") assert.equal(kicker, "本轮结束");
+      if (phase === "ROUND_END") { assert.equal(kicker, "结算完成"); assert(await p.getByTestId("ss-scroll-hint").isVisible()); }
       if (phase === "FINISHED") assert.equal(kicker, "最终结果");
+      if (["BRIBE","INSPECT","ARREST"].includes(phase)) {
+        const buttonText=await p.locator(".ss-dock-wrap .ss-primary").innerText();
+        const expected={BRIBE:"接受 2号 的受贿",INSPECT:"检查 2号",ARREST:"逮捕 2号"} as Record<string,string>;
+        assert.equal(buttonText.trim(),expected[phase],`主按钮座位号 ${phase}`);
+      }
       if (phase === "BRIBE") { assert.equal(await p.locator(".ss-bribe-card").count(), 7); assert.equal(await p.locator(".ss-bribe-card img").count(),7); }
       if (["BRIBE","INSPECT","ARREST"].includes(phase)) assert.match(await p.getByTestId("ss-budget").innerText(), /受贿.*检查.*逮捕/s);
       if (phase === "PACK" && suffix === "portrait") { const widths=await p.locator(".ss-hand button").evaluateAll(xs=>xs.map(x=>x.getBoundingClientRect().width)); assert(widths.every(x=>x>=100)); }
       await shot(p, `max-${phase.toLowerCase()}-${suffix}`, `8人长名字 ${phase} · ${suffix}`);
+      if (phase === "ROUND_END" && suffix === "portrait") {
+        const stage=p.getByTestId("ss-stage");
+        assert(await stage.evaluate(el => el.scrollHeight > el.clientHeight), "轮末舞台必须可滚动");
+        await stage.evaluate(el => {el.scrollTop=el.scrollHeight});
+        await p.waitForTimeout(200);
+        const fits=await p.locator(".ss-round-summary").evaluate(el=>{const s=el.closest(".ss-stage")!.getBoundingClientRect(),r=el.getBoundingClientRect();return r.top<s.bottom && r.bottom<=s.bottom+1;});
+        assert(fits, "滚动后本轮回顾不能被座位条遮挡");
+        await shot(p,"max-round_end-scrolled-portrait","8人轮末滚动查看本轮回顾");
+      }
       await ctx.close();
     }
   }
@@ -464,6 +496,7 @@ try {
         "汽水走私犯 Soda Smugglers",
       ),
     );
+    pixelContrast.push({name:"首页官方游戏盒",...await measureContrast(p, "body")});
     await assertUiShot(p, `${out}/homepage-box.png`);
     screenshots.push({
       file: "homepage-box.png",
@@ -527,6 +560,8 @@ try {
       {
         screenshots,
         accessibility,
+        pixelContrast,
+        pixelContrastSummary: {tested:pixelContrast.reduce((n,r)=>n+r.tested,0), passed:pixelContrast.reduce((n,r)=>n+r.passed,0), failed:pixelContrast.reduce((n,r)=>n+r.failures.length,0), untested:pixelContrast.reduce((n,r)=>n+r.untested.length,0)},
         accessibilitySummary: a11ySummary,
         accessibilityStatus: (a11ySummary.below17 || a11ySummary.contrastFailures || a11ySummary.contrastIncomplete) ? "unresolved" : "passed",
         checks,
@@ -538,8 +573,9 @@ try {
       2,
     ) + "\n",
   );
+  console.log("SS_PIXEL_CONTRAST", JSON.stringify({tested:pixelContrast.reduce((n,r)=>n+r.tested,0), passed:pixelContrast.reduce((n,r)=>n+r.passed,0), failed:pixelContrast.reduce((n,r)=>n+r.failures.length,0), untested:pixelContrast.reduce((n,r)=>n+r.untested.length,0)}));
   console.log("SS_A11Y_UNRESOLVED", JSON.stringify(a11ySummary));
-  if (a11ySummary.below17 || a11ySummary.contrastFailures || a11ySummary.contrastIncomplete) process.exitCode = 1;
+  if (a11ySummary.below17 || pixelContrast.some(r=>r.failures.length || r.untested.length)) process.exitCode = 1;
   console.log(
     "SS_LAYOUT_CHECKS_PASS",
     JSON.stringify({ screenshots: screenshots.length, checks: checks.length }),

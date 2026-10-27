@@ -512,7 +512,7 @@ export function SodaSmugglers() {
         target: chosen,
         ...(eventMode ? { useEvent: true } : {}),
       };
-      actionLabel = `接受 ${v.players[chosen].name} 的受贿`;
+      actionLabel = `接受 ${chosen + 1}号 的受贿`;
       actionTest = `${eventMode ? "ss-event-accept" : "ss-accept"}-${chosen}`;
     }
     if (v.phase === "INSPECT") {
@@ -524,7 +524,7 @@ export function SodaSmugglers() {
         p.luggage.every((c) => c === null)
       ) {
         action = { type: "INSPECT", target: chosen, useEvent: true };
-        actionLabel = `让犬长检查 ${p.name}`;
+        actionLabel = `犬长检查 ${chosen + 1}号`;
         actionTest = `ss-dog-${chosen}`;
       } else if (
         hidden &&
@@ -539,7 +539,7 @@ export function SodaSmugglers() {
           index: box,
           ...(eventMode ? { useEvent: true } : {}),
         };
-        actionLabel = `检查 ${p.name} 的第 ${box + 1} 箱`;
+        actionLabel = `检查 ${chosen + 1}号`;
         actionTest = `${eventMode ? "ss-event-inspect" : "ss-inspect"}-${chosen}-${box}`;
       }
     }
@@ -549,7 +549,7 @@ export function SodaSmugglers() {
         target: chosen,
         ...(eventMode ? { useEvent: true } : {}),
       };
-      actionLabel = `逮捕 ${v.players[chosen].name}`;
+      actionLabel = `逮捕 ${chosen + 1}号`;
       actionTest = `${eventMode ? "ss-event-arrest" : "ss-arrest"}-${chosen}`;
     }
   }
@@ -905,7 +905,8 @@ export function SodaSmugglers() {
         <div
           className={`ss-layout ${v ? `ss-phase-${v.phase.toLowerCase()}` : "ss-lobby"}`}
         >
-          <section className="ss-stage" data-testid="ss-stage">
+          <section className="ss-stage" data-testid="ss-stage" tabIndex={0}>
+            {v?.phase === "ROUND_END" && <p className="ss-scroll-hint" data-testid="ss-scroll-hint">↓ 向下滚动查看本轮回顾</p>}
             {!v ? (
               <>
                 <div className="ss-stage-title">
@@ -944,7 +945,7 @@ export function SodaSmugglers() {
                     </label>
                     <label className="ss-event-setting">
                       随机事件
-                      <input
+                      <span className="ss-toggle"><input
                         data-testid="ss-events"
                         type="checkbox"
                         checked={s.events}
@@ -955,8 +956,7 @@ export function SodaSmugglers() {
                             events: e.target.checked,
                           })
                         }
-                      />
-                      <span aria-hidden="true">{s.events ? "开" : "关"}</span>
+                      /><span className="ss-toggle-track" aria-hidden="true">{s.events ? "开" : "关"}</span></span>
                     </label>
                     <label>
                       计时
@@ -1037,7 +1037,7 @@ export function SodaSmugglers() {
                 )}
                 <div className="ss-stage-title">
                   <span className="ss-kicker">
-                    {v.phase === "FINISHED" ? "最终结果" : v.phase === "ROUND_END" ? "本轮结束" : guard
+                    {v.phase === "FINISHED" ? "最终结果" : v.phase === "ROUND_END" ? "结算完成" : guard
                       ? ["BRIBE", "INSPECT", "ARREST"].includes(
                           v.phase,
                         )

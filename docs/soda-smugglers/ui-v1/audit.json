@@ -211,6 +211,13 @@
       "scope": "场景"
     },
     {
+      "file": "max-round_end-scrolled-portrait.png",
+      "name": "8人轮末滚动查看本轮回顾",
+      "width": 390,
+      "height": 844,
+      "scope": "场景"
+    },
+    {
       "file": "max-round_end-landscape.png",
       "name": "8人长名字 ROUND_END · landscape",
       "width": 844,
@@ -407,7 +414,7 @@
         },
         {
           "target": [
-            "span[aria-hidden=\"true\"]"
+            ".ss-toggle-track"
           ],
           "summary": "Fix any of the following:\n  Element's background color could not be determined due to a pseudo element"
         },
@@ -662,7 +669,7 @@
         },
         {
           "target": [
-            "span[aria-hidden=\"true\"]"
+            ".ss-toggle-track"
           ],
           "summary": "Fix any of the following:\n  Element's background color could not be determined due to a pseudo element"
         },
@@ -2951,7 +2958,7 @@
     },
     {
       "name": "下一位警长与本轮回顾 · 竖屏",
-      "textCount": 34,
+      "textCount": 35,
       "below17": [],
       "contrastFailures": [],
       "contrastIncomplete": [
@@ -2972,6 +2979,12 @@
             ".ss-menu-button"
           ],
           "summary": "Fix any of the following:\n  Element content contains only non-text characters"
+        },
+        {
+          "target": [
+            ".ss-scroll-hint"
+          ],
+          "summary": "Fix any of the following:\n  Element's background color could not be determined due to a pseudo element"
         },
         {
           "target": [
@@ -3164,7 +3177,7 @@
     },
     {
       "name": "下一位警长与本轮回顾 · 横屏",
-      "textCount": 33,
+      "textCount": 34,
       "below17": [],
       "contrastFailures": [],
       "contrastIncomplete": [
@@ -3185,6 +3198,12 @@
             ".ss-menu-button"
           ],
           "summary": "Fix any of the following:\n  Element content contains only non-text characters"
+        },
+        {
+          "target": [
+            ".ss-scroll-hint"
+          ],
+          "summary": "Fix any of the following:\n  Element's background color could not be determined due to a pseudo element"
         },
         {
           "target": [
@@ -3261,12 +3280,6 @@
         {
           "target": [
             "button[data-testid=\"ss-box-1\"] > span"
-          ],
-          "summary": "Fix any of the following:\n  Element's background color could not be determined due to a pseudo element"
-        },
-        {
-          "target": [
-            ".ss-round-summary > h2"
           ],
           "summary": "Fix any of the following:\n  Element's background color could not be determined due to a pseudo element"
         },
@@ -3821,7 +3834,7 @@
         },
         {
           "target": [
-            "span[aria-hidden=\"true\"]"
+            ".ss-toggle-track"
           ],
           "summary": "Fix any of the following:\n  Element's background color could not be determined due to a pseudo element"
         },
@@ -4076,7 +4089,7 @@
         },
         {
           "target": [
-            "span[aria-hidden=\"true\"]"
+            ".ss-toggle-track"
           ],
           "summary": "Fix any of the following:\n  Element's background color could not be determined due to a pseudo element"
         },
@@ -7613,7 +7626,7 @@
     },
     {
       "name": "8人长名字 ROUND_END · portrait",
-      "textCount": 59,
+      "textCount": 60,
       "below17": [],
       "contrastFailures": [],
       "contrastIncomplete": [
@@ -7634,6 +7647,12 @@
             ".ss-menu-button"
           ],
           "summary": "Fix any of the following:\n  Element content contains only non-text characters"
+        },
+        {
+          "target": [
+            ".ss-scroll-hint"
+          ],
+          "summary": "Fix any of the following:\n  Element's background color could not be determined due to a pseudo element"
         },
         {
           "target": [
@@ -7698,6 +7717,303 @@
         {
           "target": [
             "b"
+          ],
+          "summary": "Fix any of the following:\n  Element's background color could not be determined due to a pseudo element"
+        },
+        {
+          "target": [
+            ".is-selected > span"
+          ],
+          "summary": "Fix any of the following:\n  Element's background color could not be determined due to a pseudo element"
+        },
+        {
+          "target": [
+            "button[data-testid=\"ss-box-1\"] > span"
+          ],
+          "summary": "Fix any of the following:\n  Element's background color could not be determined due to a pseudo element"
+        },
+        {
+          "target": [
+            ".ss-help"
+          ],
+          "summary": "Fix any of the following:\n  Element's background color could not be determined due to a pseudo element"
+        },
+        {
+          "target": [
+            ".ss-round-summary > h2"
+          ],
+          "summary": "Fix any of the following:\n  Element's background color could not be determined due to a pseudo element"
+        },
+        {
+          "target": [
+            "p:nth-child(2)"
+          ],
+          "summary": "Fix any of the following:\n  Element's background color could not be determined due to a pseudo element"
+        },
+        {
+          "target": [
+            ".ss-round-summary > p:nth-child(3)"
+          ],
+          "summary": "Fix any of the following:\n  Element's background color could not be determined due to a pseudo element"
+        },
+        {
+          "target": [
+            "p:nth-child(4)"
+          ],
+          "summary": "Fix any of the following:\n  Element's background color could not be determined due to a pseudo element"
+        },
+        {
+          "target": [
+            "p:nth-child(5)"
+          ],
+          "summary": "Fix any of the following:\n  Element's background color could not be determined due to a pseudo element"
+        },
+        {
+          "target": [
+            "p:nth-child(6)"
+          ],
+          "summary": "Fix any of the following:\n  Element's background color could not be determined due to a pseudo element"
+        },
+        {
+          "target": [
+            "p:nth-child(7)"
+          ],
+          "summary": "Fix any of the following:\n  Element's background color could not be determined due to a pseudo element"
+        },
+        {
+          "target": [
+            ".is-guard > .ss-seat-top > .ss-avatar[aria-hidden=\"true\"]"
+          ],
+          "summary": "Fix any of the following:\n  Element's background color could not be determined due to a pseudo element"
+        },
+        {
+          "target": [
+            ".is-guard > .ss-seat-top > strong"
+          ],
+          "summary": "Fix any of the following:\n  Element's background color could not be determined due to a pseudo element"
+        },
+        {
+          "target": [
+            ".is-guard > .ss-seat-bottom > span[aria-label=\"10 瓶盖\"]"
+          ],
+          "summary": "Fix any of the following:\n  Element's background color could not be determined due to a pseudo element"
+        },
+        {
+          "target": [
+            ".is-guard > .ss-seat-bottom > span:nth-child(2)"
+          ],
+          "summary": "Fix any of the following:\n  Element's background color could not be determined due to a pseudo element"
+        },
+        {
+          "target": [
+            "button[data-testid=\"ss-seat-1\"] > .ss-seat-top > .ss-avatar[aria-hidden=\"true\"]"
+          ],
+          "summary": "Fix any of the following:\n  Element's background color could not be determined due to a pseudo element"
+        },
+        {
+          "target": [
+            "button[data-testid=\"ss-seat-1\"] > .ss-seat-top > strong"
+          ],
+          "summary": "Fix any of the following:\n  Element's background color could not be determined due to a pseudo element"
+        },
+        {
+          "target": [
+            "button[data-testid=\"ss-seat-1\"] > .ss-seat-bottom > span[aria-label=\"12 瓶盖\"]"
+          ],
+          "summary": "Fix any of the following:\n  Element's background color could not be determined due to a pseudo element"
+        },
+        {
+          "target": [
+            "button[data-testid=\"ss-seat-1\"] > .ss-seat-bottom > span:nth-child(2)"
+          ],
+          "summary": "Fix any of the following:\n  Element's background color could not be determined due to a pseudo element"
+        },
+        {
+          "target": [
+            "button[data-testid=\"ss-seat-2\"] > .ss-seat-top > .ss-avatar[aria-hidden=\"true\"]"
+          ],
+          "summary": "Fix any of the following:\n  Element's background color could not be determined due to a pseudo element"
+        },
+        {
+          "target": [
+            "button[data-testid=\"ss-seat-2\"] > .ss-seat-top > strong"
+          ],
+          "summary": "Fix any of the following:\n  Element's background color could not be determined due to a pseudo element"
+        },
+        {
+          "target": [
+            "button[data-testid=\"ss-seat-2\"] > .ss-seat-bottom > span[aria-label=\"13 瓶盖\"]"
+          ],
+          "summary": "Fix any of the following:\n  Element's background color could not be determined due to a pseudo element"
+        },
+        {
+          "target": [
+            "button[data-testid=\"ss-seat-2\"] > .ss-seat-bottom > span:nth-child(2)"
+          ],
+          "summary": "Fix any of the following:\n  Element's background color could not be determined due to a pseudo element"
+        },
+        {
+          "target": [
+            "button[data-testid=\"ss-seat-3\"] > .ss-seat-top > .ss-avatar[aria-hidden=\"true\"]"
+          ],
+          "summary": "Fix any of the following:\n  Element's background color could not be determined due to a pseudo element"
+        },
+        {
+          "target": [
+            "button[data-testid=\"ss-seat-3\"] > .ss-seat-top > strong"
+          ],
+          "summary": "Fix any of the following:\n  Element's background color could not be determined due to a pseudo element"
+        },
+        {
+          "target": [
+            "span[aria-label=\"14 瓶盖\"]"
+          ],
+          "summary": "Fix any of the following:\n  Element's background color could not be determined due to a pseudo element"
+        },
+        {
+          "target": [
+            "button[data-testid=\"ss-seat-3\"] > .ss-seat-bottom > span:nth-child(2)"
+          ],
+          "summary": "Fix any of the following:\n  Element's background color could not be determined due to a pseudo element"
+        },
+        {
+          "target": [
+            "button[data-testid=\"ss-seat-4\"] > .ss-seat-top > .ss-avatar[aria-hidden=\"true\"]"
+          ],
+          "summary": "Fix any of the following:\n  Element's background color could not be determined due to a pseudo element"
+        },
+        {
+          "target": [
+            "button[data-testid=\"ss-seat-4\"] > .ss-seat-top > strong"
+          ],
+          "summary": "Fix any of the following:\n  Element's background color could not be determined due to a pseudo element"
+        },
+        {
+          "target": [
+            "span[aria-label=\"15 瓶盖\"]"
+          ],
+          "summary": "Fix any of the following:\n  Element's background color could not be determined due to a pseudo element"
+        },
+        {
+          "target": [
+            "button[data-testid=\"ss-seat-4\"] > .ss-seat-bottom > span:nth-child(2)"
+          ],
+          "summary": "Fix any of the following:\n  Element's background color could not be determined due to a pseudo element"
+        },
+        {
+          "target": [
+            "button[data-testid=\"ss-seat-5\"] > .ss-seat-top > .ss-avatar[aria-hidden=\"true\"]"
+          ],
+          "summary": "Fix any of the following:\n  Element's background color could not be determined due to a pseudo element"
+        },
+        {
+          "target": [
+            "button[data-testid=\"ss-seat-5\"] > .ss-seat-top > strong"
+          ],
+          "summary": "Fix any of the following:\n  Element's background color could not be determined due to a pseudo element"
+        },
+        {
+          "target": [
+            "button[data-testid=\"ss-seat-5\"] > .ss-seat-bottom > span[aria-label=\"10 瓶盖\"]"
+          ],
+          "summary": "Fix any of the following:\n  Element's background color could not be determined due to a pseudo element"
+        },
+        {
+          "target": [
+            "button[data-testid=\"ss-seat-5\"] > .ss-seat-bottom > span:nth-child(2)"
+          ],
+          "summary": "Fix any of the following:\n  Element's background color could not be determined due to a pseudo element"
+        },
+        {
+          "target": [
+            "button[data-testid=\"ss-seat-6\"] > .ss-seat-top > .ss-avatar[aria-hidden=\"true\"]"
+          ],
+          "summary": "Fix any of the following:\n  Element's background color could not be determined due to a pseudo element"
+        },
+        {
+          "target": [
+            "button[data-testid=\"ss-seat-6\"] > .ss-seat-top > strong"
+          ],
+          "summary": "Fix any of the following:\n  Element's background color could not be determined due to a pseudo element"
+        },
+        {
+          "target": [
+            "button[data-testid=\"ss-seat-6\"] > .ss-seat-bottom > span[aria-label=\"13 瓶盖\"]"
+          ],
+          "summary": "Fix any of the following:\n  Element's background color could not be determined due to a pseudo element"
+        },
+        {
+          "target": [
+            "button[data-testid=\"ss-seat-6\"] > .ss-seat-bottom > span:nth-child(2)"
+          ],
+          "summary": "Fix any of the following:\n  Element's background color could not be determined due to a pseudo element"
+        },
+        {
+          "target": [
+            "button[data-testid=\"ss-seat-7\"] > .ss-seat-top > .ss-avatar[aria-hidden=\"true\"]"
+          ],
+          "summary": "Fix any of the following:\n  Element's background color could not be determined due to a pseudo element"
+        },
+        {
+          "target": [
+            "button[data-testid=\"ss-seat-7\"] > .ss-seat-top > strong"
+          ],
+          "summary": "Fix any of the following:\n  Element's background color could not be determined due to a pseudo element"
+        },
+        {
+          "target": [
+            "button[data-testid=\"ss-seat-7\"] > .ss-seat-bottom > span[aria-label=\"12 瓶盖\"]"
+          ],
+          "summary": "Fix any of the following:\n  Element's background color could not be determined due to a pseudo element"
+        },
+        {
+          "target": [
+            "button[data-testid=\"ss-seat-7\"] > .ss-seat-bottom > span:nth-child(2)"
+          ],
+          "summary": "Fix any of the following:\n  Element's background color could not be determined due to a pseudo element"
+        },
+        {
+          "target": [
+            ".dm-dock-hint"
+          ],
+          "summary": "Fix any of the following:\n  Element's background color could not be determined due to a pseudo element"
+        },
+        {
+          "target": [
+            ".ss-primary"
+          ],
+          "summary": "Fix any of the following:\n  Element's background color could not be determined due to a pseudo element"
+        }
+      ],
+      "contrastPassed": 0
+    },
+    {
+      "name": "8人轮末滚动查看本轮回顾",
+      "textCount": 60,
+      "below17": [],
+      "contrastFailures": [],
+      "contrastIncomplete": [
+        {
+          "target": [
+            ".ss-roomno"
+          ],
+          "summary": "Fix any of the following:\n  Element's background color could not be determined due to a pseudo element"
+        },
+        {
+          "target": [
+            ".ss-round"
+          ],
+          "summary": "Fix any of the following:\n  Element's background color could not be determined due to a pseudo element"
+        },
+        {
+          "target": [
+            ".ss-menu-button"
+          ],
+          "summary": "Fix any of the following:\n  Element content contains only non-text characters"
+        },
+        {
+          "target": [
+            ".ss-scroll-hint"
           ],
           "summary": "Fix any of the following:\n  Element's background color could not be determined due to a pseudo element"
         },
@@ -7976,7 +8292,7 @@
     },
     {
       "name": "8人长名字 ROUND_END · landscape",
-      "textCount": 58,
+      "textCount": 59,
       "below17": [],
       "contrastFailures": [],
       "contrastIncomplete": [
@@ -7997,6 +8313,12 @@
             ".ss-menu-button"
           ],
           "summary": "Fix any of the following:\n  Element content contains only non-text characters"
+        },
+        {
+          "target": [
+            ".ss-scroll-hint"
+          ],
+          "summary": "Fix any of the following:\n  Element's background color could not be determined due to a pseudo element"
         },
         {
           "target": [
@@ -8073,12 +8395,6 @@
         {
           "target": [
             "button[data-testid=\"ss-box-1\"] > span"
-          ],
-          "summary": "Fix any of the following:\n  Element's background color could not be determined due to a pseudo element"
-        },
-        {
-          "target": [
-            ".ss-round-summary > h2"
           ],
           "summary": "Fix any of the following:\n  Element's background color could not be determined due to a pseudo element"
         },
@@ -12301,10 +12617,543 @@
       "contrastPassed": 0
     }
   ],
+  "pixelContrast": [
+    {
+      "name": "大厅与房主设置 · 竖屏",
+      "tested": 53,
+      "passed": 53,
+      "failures": [],
+      "untested": []
+    },
+    {
+      "name": "大厅与房主设置 · 竖屏 · 舞台滚动到底",
+      "tested": 53,
+      "passed": 53,
+      "failures": [],
+      "untested": []
+    },
+    {
+      "name": "大厅与房主设置 · 横屏",
+      "tested": 42,
+      "passed": 42,
+      "failures": [],
+      "untested": []
+    },
+    {
+      "name": "大厅与房主设置 · 横屏 · 舞台滚动到底",
+      "tested": 41,
+      "passed": 41,
+      "failures": [],
+      "untested": []
+    },
+    {
+      "name": "翻牌：本轮职务 · 竖屏",
+      "tested": 6,
+      "passed": 6,
+      "failures": [],
+      "untested": []
+    },
+    {
+      "name": "翻牌：本轮职务 · 横屏",
+      "tested": 6,
+      "passed": 6,
+      "failures": [],
+      "untested": []
+    },
+    {
+      "name": "翻牌：本轮职务 · 横屏 · 舞台滚动到底",
+      "tested": 6,
+      "passed": 6,
+      "failures": [],
+      "untested": []
+    },
+    {
+      "name": "秘密装包 · 竖屏",
+      "tested": 36,
+      "passed": 36,
+      "failures": [],
+      "untested": []
+    },
+    {
+      "name": "秘密装包 · 横屏",
+      "tested": 32,
+      "passed": 32,
+      "failures": [],
+      "untested": []
+    },
+    {
+      "name": "秘密装包 · 横屏 · 舞台滚动到底",
+      "tested": 32,
+      "passed": 32,
+      "failures": [],
+      "untested": []
+    },
+    {
+      "name": "声明与语音谈判 · 竖屏",
+      "tested": 57,
+      "passed": 57,
+      "failures": [],
+      "untested": []
+    },
+    {
+      "name": "声明与语音谈判 · 竖屏 · 舞台滚动到底",
+      "tested": 57,
+      "passed": 57,
+      "failures": [],
+      "untested": []
+    },
+    {
+      "name": "声明与语音谈判 · 横屏",
+      "tested": 44,
+      "passed": 44,
+      "failures": [],
+      "untested": []
+    },
+    {
+      "name": "声明与语音谈判 · 横屏 · 舞台滚动到底",
+      "tested": 45,
+      "passed": 45,
+      "failures": [],
+      "untested": []
+    },
+    {
+      "name": "检查手提箱 · 竖屏",
+      "tested": 46,
+      "passed": 46,
+      "failures": [],
+      "untested": []
+    },
+    {
+      "name": "检查手提箱 · 横屏",
+      "tested": 44,
+      "passed": 44,
+      "failures": [],
+      "untested": []
+    },
+    {
+      "name": "检查手提箱 · 横屏 · 舞台滚动到底",
+      "tested": 43,
+      "passed": 43,
+      "failures": [],
+      "untested": []
+    },
+    {
+      "name": "选择逮捕 · 竖屏",
+      "tested": 46,
+      "passed": 46,
+      "failures": [],
+      "untested": []
+    },
+    {
+      "name": "选择逮捕 · 横屏",
+      "tested": 44,
+      "passed": 44,
+      "failures": [],
+      "untested": []
+    },
+    {
+      "name": "选择逮捕 · 横屏 · 舞台滚动到底",
+      "tested": 43,
+      "passed": 43,
+      "failures": [],
+      "untested": []
+    },
+    {
+      "name": "下一位警长与本轮回顾 · 竖屏",
+      "tested": 52,
+      "passed": 52,
+      "failures": [],
+      "untested": []
+    },
+    {
+      "name": "下一位警长与本轮回顾 · 横屏",
+      "tested": 43,
+      "passed": 43,
+      "failures": [],
+      "untested": []
+    },
+    {
+      "name": "下一位警长与本轮回顾 · 横屏 · 舞台滚动到底",
+      "tested": 41,
+      "passed": 41,
+      "failures": [],
+      "untested": []
+    },
+    {
+      "name": "终局领奖台与回顾 · 竖屏",
+      "tested": 54,
+      "passed": 54,
+      "failures": [],
+      "untested": []
+    },
+    {
+      "name": "终局领奖台与回顾 · 横屏",
+      "tested": 35,
+      "passed": 35,
+      "failures": [],
+      "untested": []
+    },
+    {
+      "name": "终局领奖台与回顾 · 横屏 · 舞台滚动到底",
+      "tested": 46,
+      "passed": 46,
+      "failures": [],
+      "untested": []
+    },
+    {
+      "name": "下一位缉私警长横幅",
+      "tested": 0,
+      "passed": 0,
+      "failures": [],
+      "untested": []
+    },
+    {
+      "name": "8人长名字 LOBBY · portrait",
+      "tested": 55,
+      "passed": 55,
+      "failures": [],
+      "untested": []
+    },
+    {
+      "name": "8人长名字 LOBBY · portrait · 舞台滚动到底",
+      "tested": 55,
+      "passed": 55,
+      "failures": [],
+      "untested": []
+    },
+    {
+      "name": "8人长名字 LOBBY · landscape",
+      "tested": 44,
+      "passed": 44,
+      "failures": [],
+      "untested": []
+    },
+    {
+      "name": "8人长名字 LOBBY · landscape · 舞台滚动到底",
+      "tested": 43,
+      "passed": 43,
+      "failures": [],
+      "untested": []
+    },
+    {
+      "name": "8人长名字 IDENTITY · portrait",
+      "tested": 6,
+      "passed": 6,
+      "failures": [],
+      "untested": []
+    },
+    {
+      "name": "8人长名字 IDENTITY · landscape",
+      "tested": 6,
+      "passed": 6,
+      "failures": [],
+      "untested": []
+    },
+    {
+      "name": "8人长名字 PACK · portrait",
+      "tested": 60,
+      "passed": 60,
+      "failures": [],
+      "untested": []
+    },
+    {
+      "name": "8人长名字 PACK · landscape",
+      "tested": 51,
+      "passed": 51,
+      "failures": [],
+      "untested": []
+    },
+    {
+      "name": "8人长名字 BRIBE · portrait",
+      "tested": 100,
+      "passed": 100,
+      "failures": [],
+      "untested": []
+    },
+    {
+      "name": "8人长名字 BRIBE · portrait · 舞台滚动到底",
+      "tested": 71,
+      "passed": 71,
+      "failures": [],
+      "untested": []
+    },
+    {
+      "name": "8人长名字 BRIBE · landscape",
+      "tested": 91,
+      "passed": 91,
+      "failures": [],
+      "untested": []
+    },
+    {
+      "name": "8人长名字 BRIBE · landscape · 舞台滚动到底",
+      "tested": 92,
+      "passed": 92,
+      "failures": [],
+      "untested": []
+    },
+    {
+      "name": "8人长名字 INSPECT · portrait",
+      "tested": 73,
+      "passed": 73,
+      "failures": [],
+      "untested": []
+    },
+    {
+      "name": "8人长名字 INSPECT · portrait · 舞台滚动到底",
+      "tested": 72,
+      "passed": 72,
+      "failures": [],
+      "untested": []
+    },
+    {
+      "name": "8人长名字 INSPECT · landscape",
+      "tested": 66,
+      "passed": 66,
+      "failures": [],
+      "untested": []
+    },
+    {
+      "name": "8人长名字 INSPECT · landscape · 舞台滚动到底",
+      "tested": 65,
+      "passed": 65,
+      "failures": [],
+      "untested": []
+    },
+    {
+      "name": "8人长名字 ARREST · portrait",
+      "tested": 73,
+      "passed": 73,
+      "failures": [],
+      "untested": []
+    },
+    {
+      "name": "8人长名字 ARREST · portrait · 舞台滚动到底",
+      "tested": 72,
+      "passed": 72,
+      "failures": [],
+      "untested": []
+    },
+    {
+      "name": "8人长名字 ARREST · landscape",
+      "tested": 66,
+      "passed": 66,
+      "failures": [],
+      "untested": []
+    },
+    {
+      "name": "8人长名字 ARREST · landscape · 舞台滚动到底",
+      "tested": 65,
+      "passed": 65,
+      "failures": [],
+      "untested": []
+    },
+    {
+      "name": "8人长名字 ROUND_END · portrait",
+      "tested": 73,
+      "passed": 73,
+      "failures": [],
+      "untested": []
+    },
+    {
+      "name": "8人长名字 ROUND_END · portrait · 舞台滚动到底",
+      "tested": 77,
+      "passed": 77,
+      "failures": [],
+      "untested": []
+    },
+    {
+      "name": "8人轮末滚动查看本轮回顾",
+      "tested": 77,
+      "passed": 77,
+      "failures": [],
+      "untested": []
+    },
+    {
+      "name": "8人长名字 ROUND_END · landscape",
+      "tested": 65,
+      "passed": 65,
+      "failures": [],
+      "untested": []
+    },
+    {
+      "name": "8人长名字 ROUND_END · landscape · 舞台滚动到底",
+      "tested": 62,
+      "passed": 62,
+      "failures": [],
+      "untested": []
+    },
+    {
+      "name": "8人长名字 FINISHED · portrait",
+      "tested": 83,
+      "passed": 83,
+      "failures": [],
+      "untested": []
+    },
+    {
+      "name": "8人长名字 FINISHED · portrait · 舞台滚动到底",
+      "tested": 81,
+      "passed": 81,
+      "failures": [],
+      "untested": []
+    },
+    {
+      "name": "8人长名字 FINISHED · landscape",
+      "tested": 46,
+      "passed": 46,
+      "failures": [],
+      "untested": []
+    },
+    {
+      "name": "8人长名字 FINISHED · landscape · 舞台滚动到底",
+      "tested": 70,
+      "passed": 70,
+      "failures": [],
+      "untested": []
+    },
+    {
+      "name": "事件：领导视察",
+      "tested": 37,
+      "passed": 37,
+      "failures": [],
+      "untested": []
+    },
+    {
+      "name": "事件：生日礼物",
+      "tested": 37,
+      "passed": 37,
+      "failures": [],
+      "untested": []
+    },
+    {
+      "name": "事件：假日狂欢",
+      "tested": 36,
+      "passed": 36,
+      "failures": [],
+      "untested": []
+    },
+    {
+      "name": "事件：破釜沉舟",
+      "tested": 37,
+      "passed": 37,
+      "failures": [],
+      "untested": []
+    },
+    {
+      "name": "事件：贪得无厌",
+      "tested": 37,
+      "passed": 37,
+      "failures": [],
+      "untested": []
+    },
+    {
+      "name": "事件：铁面无私",
+      "tested": 37,
+      "passed": 37,
+      "failures": [],
+      "untested": []
+    },
+    {
+      "name": "事件：起早贪黑",
+      "tested": 36,
+      "passed": 36,
+      "failures": [],
+      "untested": []
+    },
+    {
+      "name": "事件：缉私犬长",
+      "tested": 37,
+      "passed": 37,
+      "failures": [],
+      "untested": []
+    },
+    {
+      "name": "抓到走私",
+      "tested": 5,
+      "passed": 5,
+      "failures": [],
+      "untested": []
+    },
+    {
+      "name": "误捕赔偿",
+      "tested": 6,
+      "passed": 6,
+      "failures": [],
+      "untested": []
+    },
+    {
+      "name": "铁面无私误捕",
+      "tested": 6,
+      "passed": 6,
+      "failures": [],
+      "untested": []
+    },
+    {
+      "name": "铁面无私误捕 · 舞台滚动到底",
+      "tested": 6,
+      "passed": 6,
+      "failures": [],
+      "untested": []
+    },
+    {
+      "name": "最大人数与长名字",
+      "tested": 60,
+      "passed": 60,
+      "failures": [],
+      "untested": []
+    },
+    {
+      "name": "断线重连提示",
+      "tested": 60,
+      "passed": 60,
+      "failures": [],
+      "untested": []
+    },
+    {
+      "name": "断线重连提示 · 舞台滚动到底",
+      "tested": 59,
+      "passed": 59,
+      "failures": [],
+      "untested": []
+    },
+    {
+      "name": "横屏最大人数与长名字",
+      "tested": 51,
+      "passed": 51,
+      "failures": [],
+      "untested": []
+    },
+    {
+      "name": "电脑 1280×800",
+      "tested": 40,
+      "passed": 40,
+      "failures": [],
+      "untested": []
+    },
+    {
+      "name": "电脑 1280×800 · 舞台滚动到底",
+      "tested": 40,
+      "passed": 40,
+      "failures": [],
+      "untested": []
+    },
+    {
+      "name": "首页官方游戏盒",
+      "tested": 12,
+      "passed": 12,
+      "failures": [],
+      "untested": []
+    }
+  ],
+  "pixelContrastSummary": {
+    "tested": 3546,
+    "passed": 3546,
+    "failed": 0,
+    "untested": 0
+  },
   "accessibilitySummary": {
     "below17": 0,
     "contrastFailures": 0,
-    "contrastIncomplete": 1922
+    "contrastIncomplete": 1972
   },
   "accessibilityStatus": "unresolved",
   "checks": [
@@ -12338,6 +13187,7 @@
     "8人长名字 ARREST · portrait: overflow, tap sizes, primary",
     "8人长名字 ARREST · landscape: overflow, tap sizes, primary",
     "8人长名字 ROUND_END · portrait: overflow, tap sizes, primary",
+    "8人轮末滚动查看本轮回顾: overflow, tap sizes, primary",
     "8人长名字 ROUND_END · landscape: overflow, tap sizes, primary",
     "8人长名字 FINISHED · portrait: overflow, tap sizes, primary",
     "8人长名字 FINISHED · landscape: overflow, tap sizes, primary",
@@ -12379,7 +13229,7 @@
     "mouse drag to luggage",
     "touch hold and drag to bribe"
   ],
-  "passed": 70,
+  "passed": 71,
   "layoutFailed": 0,
   "pageErrors": []
 }
