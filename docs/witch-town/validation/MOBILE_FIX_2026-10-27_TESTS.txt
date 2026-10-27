@@ -1,0 +1,13 @@
+
+> dbd-boardgame-private@0.2.2 test
+> vitest run --maxWorkers=2 --testTimeout=30000
+
+
+ RUN  v5.0.5 C:/Users/Lenovo/Documents/codex/2026-10-22/4-12-4-12-4-12/work/nian-witch-town
+
+
+ Test Files  78 passed (78)
+      Tests  1238 passed (1238)
+   Start at  10:43:37
+   Duration  198.49s (tests 98%, import 1%)
+

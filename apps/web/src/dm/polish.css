@@ -112,8 +112,9 @@
   animation: dm-blink 1s infinite;
 }
 .dm-app.dm-polish button.dm-sound {
-  min-height: 36px;
-  width: 36px;
+  min-height: 44px;
+  min-width: 44px;
+  width: 44px;
   padding: 0;
   display: grid;
   place-items: center;

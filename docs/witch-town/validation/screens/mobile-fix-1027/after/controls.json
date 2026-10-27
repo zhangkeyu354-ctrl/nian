@@ -1,0 +1,306 @@
+[
+  {
+    "width": 375,
+    "game": "tp",
+    "check": "44px targets",
+    "targets": [
+      {
+        "label": "3",
+        "w": 44,
+        "h": 44
+      },
+      {
+        "label": "4",
+        "w": 44,
+        "h": 44
+      },
+      {
+        "label": "5",
+        "w": 44,
+        "h": 44
+      },
+      {
+        "label": "6",
+        "w": 44,
+        "h": 44
+      },
+      {
+        "label": "7",
+        "w": 44,
+        "h": 44
+      },
+      {
+        "label": "8",
+        "w": 44,
+        "h": 44
+      },
+      {
+        "label": "9",
+        "w": 44,
+        "h": 44
+      },
+      {
+        "label": "10",
+        "w": 44,
+        "h": 44
+      }
+    ],
+    "pass": true
+  },
+  {
+    "width": 375,
+    "game": "fa",
+    "check": "44px targets",
+    "targets": [
+      {
+        "label": "3",
+        "w": 44,
+        "h": 44
+      },
+      {
+        "label": "4",
+        "w": 44,
+        "h": 44
+      },
+      {
+        "label": "5",
+        "w": 44,
+        "h": 44
+      },
+      {
+        "label": "6",
+        "w": 44,
+        "h": 44
+      },
+      {
+        "label": "7",
+        "w": 44,
+        "h": 44
+      },
+      {
+        "label": "8",
+        "w": 44,
+        "h": 44
+      },
+      {
+        "label": "9",
+        "w": 44,
+        "h": 44
+      },
+      {
+        "label": "10",
+        "w": 44,
+        "h": 44
+      }
+    ],
+    "pass": true
+  },
+  {
+    "width": 375,
+    "game": "dm",
+    "check": "44px targets",
+    "targets": [
+      {
+        "label": "",
+        "w": 44,
+        "h": 44
+      }
+    ],
+    "pass": true
+  },
+  {
+    "width": 375,
+    "game": "wt",
+    "check": "44px targets",
+    "targets": [
+      {
+        "label": "‹",
+        "w": 44,
+        "h": 44
+      }
+    ],
+    "pass": true
+  },
+  {
+    "width": 375,
+    "game": "wt",
+    "check": "offline create and join",
+    "buttons": [
+      {
+        "disabled": true,
+        "text": "正在连接服务器…"
+      },
+      {
+        "disabled": true,
+        "text": "正在连接服务器…"
+      }
+    ],
+    "pass": true
+  },
+  {
+    "width": 375,
+    "game": "wt",
+    "check": "offline claim",
+    "pass": true,
+    "disabled": true,
+    "text": "正在连接服务器…"
+  },
+  {
+    "width": 375,
+    "game": "wt",
+    "check": "offline real lobby claim",
+    "pass": true
+  },
+  {
+    "width": 390,
+    "game": "tp",
+    "check": "44px targets",
+    "targets": [
+      {
+        "label": "3",
+        "w": 44,
+        "h": 44
+      },
+      {
+        "label": "4",
+        "w": 44,
+        "h": 44
+      },
+      {
+        "label": "5",
+        "w": 44,
+        "h": 44
+      },
+      {
+        "label": "6",
+        "w": 44,
+        "h": 44
+      },
+      {
+        "label": "7",
+        "w": 44,
+        "h": 44
+      },
+      {
+        "label": "8",
+        "w": 44,
+        "h": 44
+      },
+      {
+        "label": "9",
+        "w": 44,
+        "h": 44
+      },
+      {
+        "label": "10",
+        "w": 44,
+        "h": 44
+      }
+    ],
+    "pass": true
+  },
+  {
+    "width": 390,
+    "game": "fa",
+    "check": "44px targets",
+    "targets": [
+      {
+        "label": "3",
+        "w": 44,
+        "h": 44
+      },
+      {
+        "label": "4",
+        "w": 44,
+        "h": 44
+      },
+      {
+        "label": "5",
+        "w": 44,
+        "h": 44
+      },
+      {
+        "label": "6",
+        "w": 44,
+        "h": 44
+      },
+      {
+        "label": "7",
+        "w": 44,
+        "h": 44
+      },
+      {
+        "label": "8",
+        "w": 44,
+        "h": 44
+      },
+      {
+        "label": "9",
+        "w": 44,
+        "h": 44
+      },
+      {
+        "label": "10",
+        "w": 44,
+        "h": 44
+      }
+    ],
+    "pass": true
+  },
+  {
+    "width": 390,
+    "game": "dm",
+    "check": "44px targets",
+    "targets": [
+      {
+        "label": "",
+        "w": 44,
+        "h": 44
+      }
+    ],
+    "pass": true
+  },
+  {
+    "width": 390,
+    "game": "wt",
+    "check": "44px targets",
+    "targets": [
+      {
+        "label": "‹",
+        "w": 44,
+        "h": 44
+      }
+    ],
+    "pass": true
+  },
+  {
+    "width": 390,
+    "game": "wt",
+    "check": "offline create and join",
+    "buttons": [
+      {
+        "disabled": true,
+        "text": "正在连接服务器…"
+      },
+      {
+        "disabled": true,
+        "text": "正在连接服务器…"
+      }
+    ],
+    "pass": true
+  },
+  {
+    "width": 390,
+    "game": "wt",
+    "check": "offline claim",
+    "pass": true,
+    "disabled": true,
+    "text": "正在连接服务器…"
+  },
+  {
+    "width": 390,
+    "game": "wt",
+    "check": "offline real lobby claim",
+    "pass": true
+  }
+]

@@ -1,0 +1,427 @@
+[
+  {
+    "label": "before",
+    "players": 4,
+    "clipped": [
+      {
+        "class": "wt-seat wt-self wt-active      ",
+        "client": [
+          91,
+          74
+        ],
+        "scroll": [
+          97,
+          80
+        ]
+      },
+      {
+        "class": "wt-accuse-row",
+        "client": [
+          79,
+          14
+        ],
+        "scroll": [
+          79,
+          15
+        ]
+      },
+      {
+        "class": "wt-accuse-row",
+        "client": [
+          79,
+          14
+        ],
+        "scroll": [
+          79,
+          15
+        ]
+      },
+      {
+        "class": "wt-accuse-row",
+        "client": [
+          79,
+          14
+        ],
+        "scroll": [
+          79,
+          15
+        ]
+      },
+      {
+        "class": "wt-accuse-row",
+        "client": [
+          79,
+          14
+        ],
+        "scroll": [
+          79,
+          15
+        ]
+      }
+    ],
+    "overlap": [],
+    "seatHeights": [
+      76,
+      76,
+      76,
+      76
+    ],
+    "blueIcons": [
+      1,
+      0,
+      0,
+      0
+    ]
+  },
+  {
+    "label": "after",
+    "players": 4,
+    "clipped": [],
+    "overlap": [],
+    "seatHeights": [
+      76,
+      76,
+      76,
+      76
+    ],
+    "blueIcons": [
+      1,
+      0,
+      0,
+      0
+    ]
+  },
+  {
+    "label": "before",
+    "players": 12,
+    "clipped": [
+      {
+        "class": "wt-seat wt-self wt-active      ",
+        "client": [
+          51,
+          44
+        ],
+        "scroll": [
+          58,
+          52
+        ]
+      },
+      {
+        "class": "wt-accuse-row",
+        "client": [
+          41,
+          13
+        ],
+        "scroll": [
+          41,
+          15
+        ]
+      },
+      {
+        "class": "wt-seat        ",
+        "client": [
+          51,
+          44
+        ],
+        "scroll": [
+          51,
+          52
+        ]
+      },
+      {
+        "class": "wt-accuse-row",
+        "client": [
+          41,
+          13
+        ],
+        "scroll": [
+          41,
+          15
+        ]
+      },
+      {
+        "class": "wt-seat        ",
+        "client": [
+          51,
+          44
+        ],
+        "scroll": [
+          51,
+          52
+        ]
+      },
+      {
+        "class": "wt-accuse-row",
+        "client": [
+          41,
+          13
+        ],
+        "scroll": [
+          41,
+          15
+        ]
+      },
+      {
+        "class": "wt-seat        ",
+        "client": [
+          51,
+          44
+        ],
+        "scroll": [
+          51,
+          52
+        ]
+      },
+      {
+        "class": "wt-accuse-row",
+        "client": [
+          41,
+          13
+        ],
+        "scroll": [
+          41,
+          15
+        ]
+      },
+      {
+        "class": "wt-seat        ",
+        "client": [
+          51,
+          44
+        ],
+        "scroll": [
+          51,
+          52
+        ]
+      },
+      {
+        "class": "wt-accuse-row",
+        "client": [
+          41,
+          13
+        ],
+        "scroll": [
+          41,
+          15
+        ]
+      },
+      {
+        "class": "wt-seat        ",
+        "client": [
+          51,
+          44
+        ],
+        "scroll": [
+          51,
+          52
+        ]
+      },
+      {
+        "class": "wt-accuse-row",
+        "client": [
+          41,
+          13
+        ],
+        "scroll": [
+          41,
+          15
+        ]
+      },
+      {
+        "class": "wt-seat        ",
+        "client": [
+          51,
+          44
+        ],
+        "scroll": [
+          51,
+          52
+        ]
+      },
+      {
+        "class": "wt-accuse-row",
+        "client": [
+          41,
+          13
+        ],
+        "scroll": [
+          41,
+          15
+        ]
+      },
+      {
+        "class": "wt-seat        ",
+        "client": [
+          51,
+          44
+        ],
+        "scroll": [
+          51,
+          52
+        ]
+      },
+      {
+        "class": "wt-accuse-row",
+        "client": [
+          41,
+          13
+        ],
+        "scroll": [
+          41,
+          15
+        ]
+      },
+      {
+        "class": "wt-seat        ",
+        "client": [
+          51,
+          44
+        ],
+        "scroll": [
+          51,
+          52
+        ]
+      },
+      {
+        "class": "wt-accuse-row",
+        "client": [
+          41,
+          13
+        ],
+        "scroll": [
+          41,
+          15
+        ]
+      },
+      {
+        "class": "wt-seat        ",
+        "client": [
+          51,
+          44
+        ],
+        "scroll": [
+          51,
+          52
+        ]
+      },
+      {
+        "class": "wt-accuse-row",
+        "client": [
+          41,
+          13
+        ],
+        "scroll": [
+          41,
+          15
+        ]
+      },
+      {
+        "class": "wt-seat        ",
+        "client": [
+          51,
+          44
+        ],
+        "scroll": [
+          51,
+          52
+        ]
+      },
+      {
+        "class": "wt-accuse-row",
+        "client": [
+          41,
+          13
+        ],
+        "scroll": [
+          41,
+          15
+        ]
+      },
+      {
+        "class": "wt-seat        ",
+        "client": [
+          51,
+          44
+        ],
+        "scroll": [
+          51,
+          52
+        ]
+      },
+      {
+        "class": "wt-accuse-row",
+        "client": [
+          41,
+          13
+        ],
+        "scroll": [
+          41,
+          15
+        ]
+      }
+    ],
+    "overlap": [],
+    "seatHeights": [
+      46,
+      46,
+      46,
+      46,
+      46,
+      46,
+      46,
+      46,
+      46,
+      46,
+      46,
+      46
+    ],
+    "blueIcons": [
+      1,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0
+    ]
+  },
+  {
+    "label": "after",
+    "players": 12,
+    "clipped": [],
+    "overlap": [],
+    "seatHeights": [
+      56,
+      56,
+      56,
+      56,
+      56,
+      56,
+      56,
+      56,
+      56,
+      56,
+      56,
+      56
+    ],
+    "blueIcons": [
+      1,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0
+    ]
+  }
+]

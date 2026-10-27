@@ -1,0 +1,306 @@
+[
+  {
+    "width": 375,
+    "game": "tp",
+    "check": "44px targets",
+    "targets": [
+      {
+        "label": "3",
+        "w": 33.375,
+        "h": 38
+      },
+      {
+        "label": "4",
+        "w": 33.375,
+        "h": 38
+      },
+      {
+        "label": "5",
+        "w": 33.375,
+        "h": 38
+      },
+      {
+        "label": "6",
+        "w": 33.375,
+        "h": 38
+      },
+      {
+        "label": "7",
+        "w": 33.375,
+        "h": 38
+      },
+      {
+        "label": "8",
+        "w": 33.375,
+        "h": 38
+      },
+      {
+        "label": "9",
+        "w": 33.375,
+        "h": 38
+      },
+      {
+        "label": "10",
+        "w": 33.375,
+        "h": 38
+      }
+    ],
+    "pass": false
+  },
+  {
+    "width": 375,
+    "game": "fa",
+    "check": "44px targets",
+    "targets": [
+      {
+        "label": "3",
+        "w": 33.375,
+        "h": 38
+      },
+      {
+        "label": "4",
+        "w": 33.375,
+        "h": 38
+      },
+      {
+        "label": "5",
+        "w": 33.375,
+        "h": 38
+      },
+      {
+        "label": "6",
+        "w": 33.375,
+        "h": 38
+      },
+      {
+        "label": "7",
+        "w": 33.375,
+        "h": 38
+      },
+      {
+        "label": "8",
+        "w": 33.375,
+        "h": 38
+      },
+      {
+        "label": "9",
+        "w": 33.375,
+        "h": 38
+      },
+      {
+        "label": "10",
+        "w": 33.375,
+        "h": 38
+      }
+    ],
+    "pass": false
+  },
+  {
+    "width": 375,
+    "game": "dm",
+    "check": "44px targets",
+    "targets": [
+      {
+        "label": "",
+        "w": 36,
+        "h": 36
+      }
+    ],
+    "pass": false
+  },
+  {
+    "width": 375,
+    "game": "wt",
+    "check": "44px targets",
+    "targets": [
+      {
+        "label": "‹",
+        "w": 44,
+        "h": 44
+      }
+    ],
+    "pass": true
+  },
+  {
+    "width": 375,
+    "game": "wt",
+    "check": "offline create and join",
+    "buttons": [
+      {
+        "disabled": false,
+        "text": "创建 6 人房间"
+      },
+      {
+        "disabled": false,
+        "text": "加入"
+      }
+    ],
+    "pass": false
+  },
+  {
+    "width": 375,
+    "game": "wt",
+    "check": "offline claim",
+    "pass": false,
+    "disabled": false,
+    "text": "入座"
+  },
+  {
+    "width": 375,
+    "game": "wt",
+    "check": "offline real lobby claim",
+    "pass": false
+  },
+  {
+    "width": 390,
+    "game": "tp",
+    "check": "44px targets",
+    "targets": [
+      {
+        "label": "3",
+        "w": 35.25,
+        "h": 38
+      },
+      {
+        "label": "4",
+        "w": 35.25,
+        "h": 38
+      },
+      {
+        "label": "5",
+        "w": 35.25,
+        "h": 38
+      },
+      {
+        "label": "6",
+        "w": 35.25,
+        "h": 38
+      },
+      {
+        "label": "7",
+        "w": 35.25,
+        "h": 38
+      },
+      {
+        "label": "8",
+        "w": 35.25,
+        "h": 38
+      },
+      {
+        "label": "9",
+        "w": 35.25,
+        "h": 38
+      },
+      {
+        "label": "10",
+        "w": 35.25,
+        "h": 38
+      }
+    ],
+    "pass": false
+  },
+  {
+    "width": 390,
+    "game": "fa",
+    "check": "44px targets",
+    "targets": [
+      {
+        "label": "3",
+        "w": 35.25,
+        "h": 38
+      },
+      {
+        "label": "4",
+        "w": 35.25,
+        "h": 38
+      },
+      {
+        "label": "5",
+        "w": 35.25,
+        "h": 38
+      },
+      {
+        "label": "6",
+        "w": 35.25,
+        "h": 38
+      },
+      {
+        "label": "7",
+        "w": 35.25,
+        "h": 38
+      },
+      {
+        "label": "8",
+        "w": 35.25,
+        "h": 38
+      },
+      {
+        "label": "9",
+        "w": 35.25,
+        "h": 38
+      },
+      {
+        "label": "10",
+        "w": 35.25,
+        "h": 38
+      }
+    ],
+    "pass": false
+  },
+  {
+    "width": 390,
+    "game": "dm",
+    "check": "44px targets",
+    "targets": [
+      {
+        "label": "",
+        "w": 36,
+        "h": 36
+      }
+    ],
+    "pass": false
+  },
+  {
+    "width": 390,
+    "game": "wt",
+    "check": "44px targets",
+    "targets": [
+      {
+        "label": "‹",
+        "w": 44,
+        "h": 44
+      }
+    ],
+    "pass": true
+  },
+  {
+    "width": 390,
+    "game": "wt",
+    "check": "offline create and join",
+    "buttons": [
+      {
+        "disabled": false,
+        "text": "创建 6 人房间"
+      },
+      {
+        "disabled": false,
+        "text": "加入"
+      }
+    ],
+    "pass": false
+  },
+  {
+    "width": 390,
+    "game": "wt",
+    "check": "offline claim",
+    "pass": false,
+    "disabled": false,
+    "text": "入座"
+  },
+  {
+    "width": 390,
+    "game": "wt",
+    "check": "offline real lobby claim",
+    "pass": false
+  }
+]

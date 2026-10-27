@@ -4575,3 +4575,6 @@
 
 .st-world .dp-floating-tools {z-index:80;animation:none;}
 .st-world .dp-floating-tools::after {display:none;}
+/* Touch targets stay usable when the player count wraps on a narrow phone. */
+.lb-seg { flex-wrap:wrap; }
+.lb-seg button,.lb-seg.is-small button { min-width:44px; min-height:44px; }

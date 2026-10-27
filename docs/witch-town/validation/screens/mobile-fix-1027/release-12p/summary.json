@@ -1,0 +1,26 @@
+{
+  "players": 12,
+  "viewport": {
+    "width": 375,
+    "height": 667
+  },
+  "room": "DC54812F",
+  "finished": true,
+  "actions": 321,
+  "ms": 203584,
+  "reloaded": true,
+  "offlined": true,
+  "layoutChecks": 2928,
+  "clippedChecks": 0,
+  "phases": [
+    "lobby",
+    "dawn",
+    "day",
+    "trial",
+    "choice",
+    "black-event",
+    "over"
+  ],
+  "overflow": [],
+  "consoleErrors": []
+}

@@ -1,0 +1,26 @@
+{
+  "players": 4,
+  "viewport": {
+    "width": 390,
+    "height": 844
+  },
+  "room": "FDE461CC",
+  "finished": true,
+  "actions": 327,
+  "ms": 173837,
+  "reloaded": true,
+  "offlined": true,
+  "layoutChecks": 1516,
+  "clippedChecks": 0,
+  "phases": [
+    "lobby",
+    "dawn",
+    "day",
+    "black-event",
+    "trial",
+    "choice",
+    "over"
+  ],
+  "overflow": [],
+  "consoleErrors": []
+}

@@ -1,0 +1,14 @@
+{
+  "layoutChecks": 2928,
+  "clippedChecks": 0,
+  "phases": [
+    "lobby",
+    "dawn",
+    "day",
+    "trial",
+    "choice",
+    "black-event",
+    "over"
+  ],
+  "overflow": []
+}

@@ -58,7 +58,9 @@ function useSeatLayout(count: number, el: React.RefObject<HTMLElement | null>) {
     const dense = count >= 9;
     const big = size.w > 600 && size.h > 500;
     let seatW = Math.round(Math.min(dense ? (big ? 120 : 96) : (big ? 142 : 116), Math.max(dense ? 66 : 84, size.w * (dense ? .2 : .25))));
-    let seatH = dense ? (size.h < 300 ? 50 : big ? 64 : 56) : (size.h < 320 ? 66 : big ? 88 : 76);
+    // Keep room for all three content rows. Fitting the perimeter may reduce width,
+    // but must never compress the rows or hide their contents.
+    const seatH = dense ? (big ? 64 : 56) : (big ? 88 : 76);
     // Seats spread at equal arc length on a superellipse (round → rounded rectangle);
     // if nothing fits, seats shrink a little and we try again. No per-count tables.
     const place = (e: number, w: number, h: number) => {
@@ -74,7 +76,7 @@ function useSeatLayout(count: number, el: React.RefObject<HTMLElement | null>) {
     let best = place(1, seatW, seatH);
     search: for (let shrink = 0; shrink < 6; shrink++) {
       for (const e of [1, .7, .5, .35, .22]) { const r = place(e, seatW, seatH); if (r.ok) { best = r; break search; } best = r; }
-      seatW = Math.round(seatW * .93); seatH = Math.round(seatH * .95);
+      if (shrink < 5) seatW = Math.max(dense ? 52 : 88, Math.round(seatW * .93));
     }
     return { seatW, seatH, dense, pos: best.out.map(p => ({ left: 50 + p.x / size.w * 100, top: 50 + p.y / size.h * 100, a: Math.atan2(p.y, p.x) })) };
   }, [size, count]);
@@ -221,10 +223,10 @@ function Entrance({ name, setName, code, setCode, create, claim, conn, toast }: 
       <div className="wt-entry-crest"><Candle/><h1>女巫镇</h1><p>1692 年，塞勒姆。<br/>找出隐藏在镇民中的女巫。</p></div>
       <section className="wt-entry-card">
         <label>你的昵称<input data-testid="wt-name" value={name} maxLength={12} placeholder="例如：阿宁" onChange={e => setName(e.target.value)}/></label>
-        {code ? <><p className="wt-entry-note">房间 <b>{code}</b></p><button className="wt-primary" data-testid="wt-claim" onClick={() => claim(code)}>入座</button></> : <>
+        {code ? <><p className="wt-entry-note">房间 <b>{code}</b></p><button className="wt-primary" data-testid="wt-claim" disabled={conn !== "online"} onClick={() => claim(code)}>{conn === "online" ? "入座" : "正在连接服务器…"}</button></> : <>
           <div className="wt-seg" role="radiogroup" aria-label="房间人数">{Array.from({ length: 9 }, (_, i) => i + 4).map(n => <button key={n} role="radio" aria-pressed={cap === n} onClick={() => setCap(n)}>{n}</button>)}</div>
-          <button className="wt-primary" data-testid="wt-create" onClick={() => create(cap)}>创建 {cap} 人房间</button>
-          <div className="wt-entry-join"><input data-testid="wt-code" value={joinCode} maxLength={8} placeholder="房间号" onChange={e => setJoinCode(e.target.value.toUpperCase())}/><button data-testid="wt-join" disabled={joinCode.length < 8} onClick={() => { setCode(joinCode); claim(joinCode); }}>加入</button></div>
+          <button className="wt-primary" data-testid="wt-create" disabled={conn !== "online"} onClick={() => create(cap)}>{conn === "online" ? `创建 ${cap} 人房间` : "正在连接服务器…"}</button>
+          <div className="wt-entry-join"><input data-testid="wt-code" value={joinCode} maxLength={8} placeholder="房间号" onChange={e => setJoinCode(e.target.value.toUpperCase())}/><button data-testid="wt-join" disabled={joinCode.length < 8 || conn !== "online"} onClick={() => { setCode(joinCode); claim(joinCode); }}>{conn === "online" ? "加入" : "正在连接服务器…"}</button></div>
         </>}
         <p className="wt-entry-status">{conn === "online" ? "已连接服务器" : conn === "offline" ? "连接中断，正在重连…" : "正在连接…"}</p>
       </section>
@@ -430,7 +432,7 @@ function Table({ snap, act, busy, conn, toast, say, name, setName, claim }: any)
   function eventPanel(): React.ReactNode {
     if (snap.stage === "lobby") return <div className="wt-lobby-form">
       <div className="wt-section-label"><b>房间 {snap.code}</b><span>{snap.players.length}/{snap.capacity}席</span></div>
-      {!me && <><label>你的昵称<input data-testid="wt-name" value={name} maxLength={12} onChange={e => setName(e.target.value)}/></label><button className="wt-primary" data-testid="wt-claim" disabled={snap.players.length >= snap.capacity} onClick={() => claim(snap.code)}>{snap.players.length >= snap.capacity ? "房间已满" : "入座"}</button></>}
+      {!me && <><label>你的昵称<input data-testid="wt-name" value={name} maxLength={12} onChange={e => setName(e.target.value)}/></label><button className="wt-primary" data-testid="wt-claim" disabled={conn !== "online" || snap.players.length >= snap.capacity} onClick={() => claim(snap.code)}>{conn !== "online" ? "正在连接服务器…" : snap.players.length >= snap.capacity ? "房间已满" : "入座"}</button></>}
       <button className="wt-invite" data-testid="wt-invite" onClick={async () => { const url = `${location.origin}/?game=wt&room=${snap.code}`; try { if (navigator.share) await navigator.share({ title: "女巫镇", text: `来女巫镇入座：房间 ${snap.code}`, url }); else { await navigator.clipboard.writeText(url); say("邀请链接已复制"); } } catch { /* cancelled */ } }}>邀请朋友入座 ↗</button>
       <div className="wt-lobby-list">{snap.players.map((p: any, i: number) => <div key={p.id} className={p.ready ? "is-ready" : ""}><b>{i + 1}</b><span>{p.name}{p.id === me ? "（我）" : ""}</span><em>{p.host ? "房主 · " : ""}{p.ready ? "已准备" : "未准备"}{p.connected ? "" : " · 离线"}</em></div>)}</div>
       <p className="wt-entry-note">4–12人 · 身份与人物开局随机发放</p>
@@ -520,14 +522,27 @@ function Table({ snap, act, busy, conn, toast, say, name, setName, claim }: any)
           const lobbyP = snap.players.find((x: any) => x.id === p.id);
           const th = snap.stage === "game" ? threshold(p) : 7, acc = p.accusations ?? 0;
           const blues: Card[] = (p.table ?? []).filter((c: Card) => cardInfo(c.kind, c.asWitness).color === "blue");
+          const hasGavel = v?.gavelTargetId === p.id;
+          // Budget the status row before rendering it: counts stay visible, blue
+          // cards use at most two icons and the rest remain accessible via +N/details.
+          const innerW = layout.seatW - (layout.dense ? 12 : 14);
+          const fixedW = 22 + (layout.dense ? 0 : 7 + String(p.handCount ?? 0).length * 7);
+          const fixedN = 1 + (layout.dense ? 0 : 1);
+          let blueIcons = Math.min(2, blues.length);
+          while (blueIcons > 0) {
+            const more = blues.length > blueIcons;
+            const used = fixedW + blueIcons * 12 + (more ? 14 : 0) + fixedN + blueIcons + Number(more) - 1;
+            if (used <= innerW) break;
+            blueIcons--;
+          }
           const hit = hits[p.id], recentHit = hit && now - Math.abs(hit) < 700;
           const pickable = (sel && p.id !== me && p.alive && (sel.step === "target" || sel.step === "recipient")) || ((choice?.kind === "night-witch" || (phase === "dawn" && priv?.witchAllies)) && p.alive) || (choice?.kind === "night-constable" && p.alive && p.id !== me);
           const selected = sel ? sel.targetId === p.id || sel.recipientId === p.id : nightSel === p.id;
           const active = snap.stage === "game" && (v?.turnPlayerId === p.id && phase === "day" || pending?.actorId === p.id || pending?.playerId === p.id);
           return <React.Fragment key={k}><button data-testid={`wt-seat-${i}`} data-player={p.id} className={`wt-seat ${p.id === me ? "wt-self" : ""} ${active ? "wt-active" : ""} ${pickable ? "wt-pickable" : ""} ${selected ? "wt-selected" : ""} ${!p.alive ? "wt-dead-seat" : ""} ${recentHit ? (hit > 0 ? "wt-hit" : "wt-shake") : ""} ${acc >= th - 1 && snap.stage === "game" && p.alive ? "wt-near" : ""} ${lobbyP && !lobbyP.connected ? "wt-away" : ""}`} style={style} onClick={() => seatTap(p)} aria-label={`${i + 1}号${p.name}，${charName(p.character)}，${acc}/${th}点指控`}>
-            <span className="wt-seat-person">{!layout.dense && <span className="wt-seat-face"><Portrait index={i}/></span>}<span className="wt-seat-text"><span className="wt-seat-name">{p.name}</span>{!layout.dense && <span className="wt-seat-role">{snap.stage === "lobby" ? (lobbyP?.ready ? "已准备" : "未准备") : charName(p.character)}</span>}</span></span>
+            <span className="wt-seat-person">{!layout.dense && <span className="wt-seat-face"><Portrait index={i}/></span>}<span className="wt-seat-text"><span className="wt-seat-name">{p.name}</span>{!layout.dense && <span className="wt-seat-role">{snap.stage === "lobby" ? (lobbyP?.ready ? "已准备" : "未准备") : charName(p.character)}</span>}</span>{hasGavel && <span className="wt-gavel-chip" title="警长木槌"><Sigil kind="constable"/></span>}</span>
             {snap.stage === "game" ? <span className="wt-accuse-row"><span className={`wt-accuse ${acc >= th ? "is-full" : ""}`}><i style={{ width: `${Math.min(100, acc / th * 100)}%` }}/></span><b key={acc} className={acc ? "wt-bump" : ""}>{acc}/{th}</b></span> : <span className="wt-accuse-row"><b>{lobbyP?.host ? "房主" : ""}</b></span>}
-            {snap.stage === "game" && <span className="wt-seat-public">{!layout.dense && <span className="wt-hand-count">▤{p.handCount}</span>}{blues.slice(0, 2).map(c => <span key={c.id} className="wt-effect-token" title={cardInfo(c.kind).name}><Sigil kind={c.kind === "black_cat" ? "cat" : c.kind}/></span>)}{blues.length > 2 && <span className="wt-more">+{blues.length - 2}</span>}{v?.gavelTargetId === p.id && <span className="wt-effect-token" title="警长木槌"><Sigil kind="constable"/></span>}{p.revealedTryals.length > 0 && <span className={`wt-public-mini ${p.revealedTryals.includes("witch") ? "is-witch" : ""}`}><Sigil kind={p.revealedTryals.includes("witch") ? "witch" : "not_witch"}/><span>{p.revealedTryals.length}</span></span>}{p.hiddenTryalCount > 0 && <span className="wt-hidden-count" title={`未公开审判牌${p.hiddenTryalCount}张`}><i className="wt-mini-seal"/>{p.hiddenTryalCount}</span>}</span>}
+            {snap.stage === "game" && <span className="wt-seat-public">{!layout.dense && <span className="wt-hand-count" title={`手牌${p.handCount}张`}>▤{p.handCount}</span>}{blues.slice(0, blueIcons).map(c => <span key={c.id} className="wt-effect-token" title={cardInfo(c.kind).name}><Sigil kind={c.kind === "black_cat" ? "cat" : c.kind}/></span>)}{blues.length > blueIcons && <span className="wt-more" title={`另有${blues.length-blueIcons}张蓝牌，点座位查看全部`}>+{blues.length - blueIcons}</span>}<span className={`wt-tryal-counts ${p.revealedTryals.includes("witch") ? "is-witch" : ""}`} title={`已公开${p.revealedTryals.length}张 / 隐藏${p.hiddenTryalCount}张审判牌`} aria-label={`已公开${p.revealedTryals.length}张，隐藏${p.hiddenTryalCount}张审判牌`}>{p.revealedTryals.length}/{p.hiddenTryalCount}</span></span>}
             {p.id === me && <i className="wt-me-tag wt-me-inside">我</i>}
             {sel && sel.targetId === p.id && sel.step !== "target" && <i className="wt-role-tag">{sel.card.kind === "robbery" ? "被抢" : sel.card.kind === "scapegoat" ? "转出" : "目标"}</i>}
             {sel?.recipientId === p.id && <i className="wt-role-tag is-to">接收</i>}

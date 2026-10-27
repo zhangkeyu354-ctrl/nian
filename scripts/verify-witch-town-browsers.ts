@@ -7,116 +7,389 @@
  */
 import { chromium, type Page, type Browser } from "playwright-core";
 import { mkdirSync, rmSync, writeFileSync } from "node:fs";
+import { resolve, sep } from "node:path";
+import assert from "node:assert/strict";
 
 const BASE = process.env.WT_URL ?? "http://127.0.0.1:3420";
 const N = Number(process.env.WT_PLAYERS ?? 4);
-const SHOTS = process.env.WT_SHOTS ?? `docs/witch-town/validation/screens/live-${N}p`;
+const SHOTS =
+  process.env.WT_SHOTS ?? `docs/witch-town/validation/screens/live-${N}p`;
 const MAX_MS = Number(process.env.WT_MAX_MS ?? 15 * 60_000);
-const VIEW = { width: Number(process.env.WT_W ?? 390), height: Number(process.env.WT_H ?? 844) };
-rmSync(SHOTS, { recursive: true, force: true });
+const VIEW = {
+  width: Number(process.env.WT_W ?? 390),
+  height: Number(process.env.WT_H ?? 844),
+};
+assert(
+  resolve(SHOTS).startsWith(
+    resolve("docs/witch-town/validation/screens") + sep,
+  ),
+  "Screenshot cleanup must remain inside the WT screen directory",
+);
+rmSync(resolve(SHOTS), { recursive: true, force: true });
 mkdirSync(SHOTS, { recursive: true });
-const rnd = <T,>(a: T[]) => a[Math.floor(Math.random() * a.length)];
+const rnd = <T>(a: T[]) => a[Math.floor(Math.random() * a.length)];
 const errors: string[] = [];
 const shot = new Set<string>();
 const overflow: string[] = [];
+let layoutChecks = 0,
+  clippedChecks = 0;
+const phases = new Set<string>();
 
 async function snapPhase(page: Page, i: number) {
   const key = await page.evaluate(() => {
-    const w = document.querySelector("[data-testid=wt-world]") as HTMLElement | null;
-    const h = document.querySelector("[data-testid=wt-hint]")?.textContent ?? "";
+    const w = document.querySelector(
+      "[data-testid=wt-world]",
+    ) as HTMLElement | null;
+    const h =
+      document.querySelector("[data-testid=wt-hint]")?.textContent ?? "";
     return `${w?.dataset.phase}|${h.replace(/[0-9０-９]+号\S*/g, "").slice(0, 14)}`;
   });
   const bad = await page.evaluate(() => {
-    const boxes = ".wt-entry-card,.wt-personal,.wt-dock,.wt-modal,.wt-seat,.wt-top";
-    return [...document.querySelectorAll(".wt-world *")].filter(e => {
-      if ((e as HTMLElement).closest(".wt-fly,.wt-bump,.wt-confetti,.wt-smoke-fx,.wt-phase-banner,.wt-fx-black,.wt-fx-reveal,.wt-table-wood")) return false;
-      const r = e.getBoundingClientRect(); if (!r.width || !r.height) return false;
-      if (r.right > innerWidth + 1 || r.left < -1 || r.bottom > innerHeight + 1) return true;
-      const box = e.parentElement?.closest(boxes) as HTMLElement | null; if (!box || getComputedStyle(box).overflow !== "visible") return false;
-      const b = box.getBoundingClientRect(); return r.right > b.right + 2 || r.left < b.left - 2 || r.bottom > b.bottom + 2;
-    }).map(e => `${(e as HTMLElement).className || e.tagName}`.slice(0, 50)).slice(0, 5);
+    const boxes =
+      ".wt-entry-card,.wt-personal,.wt-dock,.wt-modal,.wt-seat,.wt-top";
+    const outside = [...document.querySelectorAll(".wt-world *")]
+      .filter((e) => {
+        if (
+          (e as HTMLElement).closest(
+            ".wt-fly,.wt-bump,.wt-confetti,.wt-smoke-fx,.wt-phase-banner,.wt-fx-black,.wt-fx-reveal,.wt-table-wood",
+          )
+        )
+          return false;
+        const r = e.getBoundingClientRect();
+        if (!r.width || !r.height) return false;
+        if (r.right > innerWidth + 1 || r.left < -1) return true;
+        if (r.bottom > innerHeight + 1 || r.top < -1) {
+          // Result/event lists intentionally scroll vertically. Offscreen list items
+          // are reachable, unlike clipped seats (audited independently below).
+          let scrollable = false;
+          for (
+            let a = e.parentElement;
+            a && !a.classList.contains("wt-world");
+            a = a.parentElement
+          ) {
+            const s = getComputedStyle(a),
+              b = a.getBoundingClientRect();
+            if (
+              /^(auto|scroll)$/.test(s.overflowY) &&
+              a.scrollHeight > a.clientHeight &&
+              r.left >= b.left - 1 &&
+              r.right <= b.right + 1
+            ) {
+              scrollable = true;
+              break;
+            }
+          }
+          if (!scrollable) return true;
+        }
+        const box = e.parentElement?.closest(boxes) as HTMLElement | null;
+        if (!box || getComputedStyle(box).overflow !== "visible") return false;
+        const b = box.getBoundingClientRect();
+        return (
+          r.right > b.right + 2 ||
+          r.left < b.left - 2 ||
+          r.bottom > b.bottom + 2
+        );
+      })
+      .map((e) => `${(e as HTMLElement).className || e.tagName}`.slice(0, 50));
+    // A hidden overflow is still a failure. No 1px tolerance for clipped content.
+    const clipped = [
+      ...document.querySelectorAll<HTMLElement>(
+        ".wt-seat,.wt-seat-public,.wt-accuse-row",
+      ),
+    ]
+      .filter(
+        (e) =>
+          e.getBoundingClientRect().width > 0 &&
+          (e.scrollHeight > e.clientHeight || e.scrollWidth > e.clientWidth),
+      )
+      .map(
+        (e) =>
+          `clipped:${e.className} ${e.scrollWidth}x${e.scrollHeight}/${e.clientWidth}x${e.clientHeight}`,
+      );
+    const low = [
+      ...document.querySelectorAll<HTMLElement>(".wt-table-space .wt-seat"),
+    ]
+      .filter(
+        (e) =>
+          e.getBoundingClientRect().width > 0 &&
+          e.getBoundingClientRect().height < (e.closest(".wt-dense") ? 54 : 74),
+      )
+      .map((e) => `short-seat:${e.getBoundingClientRect().height}`);
+    const seats = [
+      ...document.querySelectorAll<HTMLElement>(".wt-table-space .wt-seat"),
+    ].filter((e) => e.getBoundingClientRect().width > 0);
+    const overlaps: string[] = [];
+    for (let i = 0; i < seats.length; i++)
+      for (let j = i + 1; j < seats.length; j++) {
+        const a = seats[i],
+          b = seats[j];
+        if (
+          Math.abs(a.offsetLeft - b.offsetLeft) <
+            (a.offsetWidth + b.offsetWidth) / 2 &&
+          Math.abs(a.offsetTop - b.offsetTop) <
+            (a.offsetHeight + b.offsetHeight) / 2
+        )
+          overlaps.push(`overlap:${i + 1}/${j + 1}`);
+      }
+    return [...outside, ...clipped, ...low, ...overlaps];
   });
+  layoutChecks++;
+  clippedChecks += bad.filter((x) => x.startsWith("clipped:")).length;
+  phases.add(key.split("|")[0]);
+  writeFileSync(
+    `${SHOTS}/layout-checkpoints.json`,
+    JSON.stringify(
+      {
+        layoutChecks,
+        clippedChecks,
+        phases: [...phases],
+        overflow: [...new Set(overflow.concat(bad.map((x) => `${key}: ${x}`)))],
+      },
+      null,
+      2,
+    ),
+  );
   if (bad.length) {
     overflow.push(`${key}: ${bad.join(" | ")}`);
-    const evidence = await page.evaluate((classes) => {
-      return [...document.querySelectorAll(".wt-world *")].filter(e => classes.includes(`${(e as HTMLElement).className || e.tagName}`.slice(0,50))).map(e => ({
-        className: e.className, rect: e.getBoundingClientRect().toJSON(), viewport:{width:innerWidth,height:innerHeight},
-        parent: e.parentElement && {className:e.parentElement.className,rect:e.parentElement.getBoundingClientRect().toJSON()},
-        animations: [...e.getAnimations(), ...(e.parentElement?.getAnimations() ?? [])].map(a => ({name:(a as CSSAnimation).animationName,state:a.playState,time:a.currentTime,timing:a.effect?.getComputedTiming()})),
-      }));
-    }, bad);
-    const prefix = `${SHOTS}/overflow-${overflow.length}-p${i+1}`;
-    await page.screenshot({path:`${prefix}.png`});
-    await page.waitForTimeout(800);
-    const settled = await page.evaluate((classes) => [...document.querySelectorAll(".wt-world *")].filter(e => classes.includes(`${(e as HTMLElement).className || e.tagName}`.slice(0,50))).map(e => { const r=e.getBoundingClientRect(); return {className:e.className,x:r.x,y:r.y,right:r.right,bottom:r.bottom}; }), bad);
-    writeFileSync(`${prefix}.json`,JSON.stringify({key,evidence,settled},null,2));
-    await page.screenshot({path:`${prefix}-settled.png`});
+    if (overflow.length <= 5) {
+      const evidence = await page.evaluate((classes) => {
+        return [...document.querySelectorAll(".wt-world *")]
+          .filter((e) =>
+            classes.includes(
+              `${(e as HTMLElement).className || e.tagName}`.slice(0, 50),
+            ),
+          )
+          .map((e) => ({
+            className: e.className,
+            rect: e.getBoundingClientRect().toJSON(),
+            viewport: { width: innerWidth, height: innerHeight },
+            parent: e.parentElement && {
+              className: e.parentElement.className,
+              rect: e.parentElement.getBoundingClientRect().toJSON(),
+            },
+            animations: [
+              ...e.getAnimations(),
+              ...(e.parentElement?.getAnimations() ?? []),
+            ].map((a) => ({
+              name: (a as CSSAnimation).animationName,
+              state: a.playState,
+              time: a.currentTime,
+              timing: a.effect?.getComputedTiming(),
+            })),
+          }));
+      }, bad);
+      const prefix = `${SHOTS}/overflow-${overflow.length}-p${i + 1}`;
+      await page.screenshot({ path: `${prefix}.png` });
+      await page.waitForTimeout(800);
+      const settled = await page.evaluate(
+        (classes) =>
+          [...document.querySelectorAll(".wt-world *")]
+            .filter((e) =>
+              classes.includes(
+                `${(e as HTMLElement).className || e.tagName}`.slice(0, 50),
+              ),
+            )
+            .map((e) => {
+              const r = e.getBoundingClientRect();
+              return {
+                className: e.className,
+                x: r.x,
+                y: r.y,
+                right: r.right,
+                bottom: r.bottom,
+              };
+            }),
+        bad,
+      );
+      writeFileSync(
+        `${prefix}.json`,
+        JSON.stringify({ key, evidence, settled }, null, 2),
+      );
+      await page.screenshot({ path: `${prefix}-settled.png` });
+    }
   }
   if (shot.has(key) || shot.size > 60) return;
   shot.add(key);
-  await page.screenshot({ path: `${SHOTS}/${String(shot.size).padStart(2, "0")}-p${i + 1}-${key.replace(/[^a-zA-Z0-9一-龥]+/g, "_")}.png` });
+  await page.screenshot({
+    path: `${SHOTS}/${String(shot.size).padStart(2, "0")}-p${i + 1}-${key.replace(/[^a-zA-Z0-9一-龥]+/g, "_")}.png`,
+  });
 }
 
 const fxShot = new Set<string>();
 async function snapFx(page: Page, i: number) {
-  for (const [sel, name] of [[".wt-fx-reveal.is-witch", "fx-witch"], [".wt-fx-reveal:not(.is-witch)", "fx-reveal"], [".wt-fx-black", "fx-black"], [".wt-fly", "fx-fly"]] as const)
-    if (!fxShot.has(name) && await page.locator(sel).count()) { fxShot.add(name); await page.screenshot({ path: `${SHOTS}/${name}-p${i + 1}.png` }); }
+  for (const [sel, name] of [
+    [".wt-fx-reveal.is-witch", "fx-witch"],
+    [".wt-fx-reveal:not(.is-witch)", "fx-reveal"],
+    [".wt-fx-black", "fx-black"],
+    [".wt-fly", "fx-fly"],
+  ] as const)
+    if (!fxShot.has(name) && (await page.locator(sel).count())) {
+      fxShot.add(name);
+      await page.screenshot({ path: `${SHOTS}/${name}-p${i + 1}.png` });
+    }
 }
-async function click(page: Page, sel: string) { const el = page.locator(sel).first(); if (await el.count() && await el.isEnabled().catch(() => false)) { await el.click({ timeout: 2000 }).catch(() => {}); return true; } return false; }
+async function click(page: Page, sel: string) {
+  const el = page.locator(sel).first();
+  if ((await el.count()) && (await el.isEnabled().catch(() => false))) {
+    await el.click({ timeout: 2000 }).catch(() => {});
+    return true;
+  }
+  return false;
+}
 
 const stuck = new Map<number, number>();
 async function step(page: Page, i: number): Promise<"over" | "acted" | "idle"> {
-  const phase = await page.getAttribute("[data-testid=wt-world]", "data-phase").catch(() => null);
+  const phase = await page
+    .getAttribute("[data-testid=wt-world]", "data-phase")
+    .catch(() => null);
   if (phase === "over") return "over";
   const active = await page.locator(".wt-dock-active").count();
   if (!active) {
-    if (Math.random() < .03 && await click(page, "[data-testid=wt-hourglass]")) return "acted";
+    if (
+      Math.random() < 0.03 &&
+      (await click(page, "[data-testid=wt-hourglass]"))
+    )
+      return "acted";
     return "idle";
   }
   if (await click(page, "[data-testid=wt-follow]")) return "acted"; // witches converge on an ally's target
   // choices that need a card / tile first
-  const picks = page.locator("[data-testid^=wt-pick-]:not([aria-pressed=true])");
-  if (await picks.count() && !(await page.locator("[data-testid^=wt-pick-][aria-pressed=true]").count())) { await picks.nth(Math.floor(Math.random() * await picks.count())).click().catch(() => {}); return "acted"; }
+  const picks = page.locator(
+    "[data-testid^=wt-pick-]:not([aria-pressed=true])",
+  );
+  if (
+    (await picks.count()) &&
+    !(await page.locator("[data-testid^=wt-pick-][aria-pressed=true]").count())
+  ) {
+    await picks
+      .nth(Math.floor(Math.random() * (await picks.count())))
+      .click()
+      .catch(() => {});
+    return "acted";
+  }
   const pickable = page.locator(".wt-seat.wt-pickable:not(.wt-selected)");
   const selected = await page.locator(".wt-seat.wt-selected").count();
-  const hint = (await page.textContent("[data-testid=wt-hint]").catch(() => "")) ?? "";
-  if (await pickable.count() && (selected === 0 || /接收者/.test(hint))) { await pickable.nth(Math.floor(Math.random() * await pickable.count())).click().catch(() => {}); return "acted"; }
-  const panelCards = page.locator(".wt-event-panel .wt-loot-cards button:not([aria-pressed=true])");
-  if (await panelCards.count() && !(await page.locator(".wt-event-panel .wt-loot-cards button[aria-pressed=true]").count())) { await panelCards.first().click().catch(() => {}); return "acted"; }
+  const hint =
+    (await page.textContent("[data-testid=wt-hint]").catch(() => "")) ?? "";
+  if ((await pickable.count()) && (selected === 0 || /接收者/.test(hint))) {
+    await pickable
+      .nth(Math.floor(Math.random() * (await pickable.count())))
+      .click()
+      .catch(() => {});
+    return "acted";
+  }
+  const panelCards = page.locator(
+    ".wt-event-panel .wt-loot-cards button:not([aria-pressed=true])",
+  );
+  if (/勾选要移除/.test(hint)) {
+    const legal = page.locator(
+      ".wt-event-panel .wt-loot-cards button[data-kind=accusation]:not([aria-pressed=true]),.wt-event-panel .wt-loot-cards button[data-kind=evidence]:not([aria-pressed=true])",
+    );
+    if (
+      !(await page
+        .locator(".wt-event-panel .wt-loot-cards button[aria-pressed=true]")
+        .count())
+    ) {
+      if (await legal.count()) await legal.first().click();
+      else await click(page, ".wt-dock-buttons button:not(.wt-primary)");
+      return "acted";
+    }
+  }
+  if (
+    (await panelCards.count()) &&
+    !(await page
+      .locator(".wt-event-panel .wt-loot-cards button[aria-pressed=true]")
+      .count())
+  ) {
+    await panelCards
+      .first()
+      .click()
+      .catch(() => {});
+    return "acted";
+  }
   if (await click(page, "[data-testid=wt-end]")) return "acted";
   if (await page.locator("[data-testid=wt-draw]").count()) {
-    const hand = page.locator(".wt-hand .wt-card:not([data-kind=conspiracy]):not([data-kind=night])");
-    if (await hand.count() && Math.random() < .6) {
-      await hand.nth(Math.floor(Math.random() * await hand.count())).click().catch(() => {});
+    const red = page.locator(".wt-hand .wt-card.wt-red");
+    const hand =
+      (await red.count()) > 0
+        ? red
+        : page.locator(
+            ".wt-hand .wt-card:not([data-kind=conspiracy]):not([data-kind=night])",
+          );
+    if (
+      (await hand.count()) &&
+      Math.random() < ((await red.count()) > 0 ? 0.95 : 0.6)
+    ) {
+      await hand
+        .nth(Math.floor(Math.random() * (await hand.count())))
+        .click()
+        .catch(() => {});
       if (await click(page, "[data-testid=wt-use-card]")) return "acted";
       await page.keyboard.press("Escape").catch(() => {});
       await click(page, ".wt-sheet-close");
     }
-    await click(page, "[data-testid=wt-draw]"); return "acted";
+    await click(page, "[data-testid=wt-draw]");
+    return "acted";
   }
-  if (await page.locator("[data-testid=wt-ability-yes]").count()) { await click(page, Math.random() < .5 ? "[data-testid=wt-ability-yes]" : ".wt-dock-buttons button:not(.wt-primary)"); return "acted"; }
-  if (await page.locator("[data-testid=wt-confess]").count() && Math.random() < .5) { return "idle"; } // sometimes don't confess
+  if (await page.locator("[data-testid=wt-ability-yes]").count()) {
+    await click(
+      page,
+      Math.random() < 0.5
+        ? "[data-testid=wt-ability-yes]"
+        : ".wt-dock-buttons button:not(.wt-primary)",
+    );
+    return "acted";
+  }
+  if (
+    (await page.locator("[data-testid=wt-confess]").count()) &&
+    Math.random() < 0.5
+  ) {
+    return "idle";
+  } // sometimes don't confess
   const primary = page.locator(".wt-dock-buttons .wt-primary:not([disabled])");
-  if (await primary.count()) { await primary.first().click().catch(() => {}); stuck.set(i, 0); return "acted"; }
-  const n = (stuck.get(i) ?? 0) + 1; stuck.set(i, n);
-  if (n > 6) { await click(page, ".wt-dock-buttons button:not(.wt-primary)"); stuck.set(i, 0); } // cancel a dead-end selection
+  if (await primary.count()) {
+    await primary
+      .first()
+      .click()
+      .catch(() => {});
+    stuck.set(i, 0);
+    return "acted";
+  }
+  const n = (stuck.get(i) ?? 0) + 1;
+  stuck.set(i, n);
+  if (n > 6) {
+    await click(page, ".wt-dock-buttons button:not(.wt-primary)");
+    stuck.set(i, 0);
+  } // cancel a dead-end selection
   return "idle";
 }
 
 async function main() {
-  const browser: Browser = await chromium.launch({ executablePath: process.env.PW_CHROME, args: ["--no-sandbox", "--disable-gpu"] });
+  const browser: Browser = await chromium.launch({
+    executablePath: process.env.PW_CHROME,
+    args: ["--no-sandbox", "--disable-gpu"],
+  });
   const pages: Page[] = [];
   for (let i = 0; i < N; i++) {
-    const ctx = await browser.newContext({ viewport: VIEW, deviceScaleFactor: 1, hasTouch: true, isMobile: true });
+    const ctx = await browser.newContext({
+      viewport: VIEW,
+      deviceScaleFactor: 1,
+      hasTouch: true,
+      isMobile: true,
+    });
     const p = await ctx.newPage();
-    p.on("console", m => { if (m.type() === "error") errors.push(`p${i + 1}: ${m.text()}`); });
-    p.on("pageerror", e => errors.push(`p${i + 1}: ${e.message}`));
+    p.on("console", (m) => {
+      if (m.type() === "error") errors.push(`p${i + 1}: ${m.text()}`);
+    });
+    p.on("pageerror", (e) => errors.push(`p${i + 1}: ${e.message}`));
     pages.push(p);
   }
   const host = pages[0];
   await host.goto(`${BASE}/?game=wt`);
   await host.fill("[data-testid=wt-name]", "玩家1");
-  await host.locator(".wt-seg button", { hasText: new RegExp(`^${N}$`) }).click();
+  await host
+    .locator(".wt-seg button", { hasText: new RegExp(`^${N}$`) })
+    .click();
   await host.click("[data-testid=wt-create]");
   await host.waitForURL(/room=/);
   const room = new URL(host.url()).searchParams.get("room")!;
@@ -126,35 +399,92 @@ async function main() {
     await pages[i].waitForSelector("[data-testid=wt-world][data-phase=lobby]");
     await pages[i].fill("[data-testid=wt-name]", `玩家${i + 1}`);
     await pages[i].click("[data-testid=wt-claim]");
-    await pages[i].waitForSelector("[data-testid=wt-ready]", { timeout: 20_000 }).catch(async () => { await pages[i].screenshot({ path: `${SHOTS}/join-fail-p${i + 1}.png` }); console.log("join retry", i + 1, (await pages[i].textContent("body"))?.slice(0, 200)); await pages[i].click("[data-testid=wt-claim]"); await pages[i].waitForSelector("[data-testid=wt-ready]", { timeout: 30_000 }); });
+    await pages[i]
+      .waitForSelector("[data-testid=wt-ready]", { timeout: 20_000 })
+      .catch(async () => {
+        await pages[i].screenshot({ path: `${SHOTS}/join-fail-p${i + 1}.png` });
+        console.log(
+          "join retry",
+          i + 1,
+          (await pages[i].textContent("body"))?.slice(0, 200),
+        );
+        await pages[i].click("[data-testid=wt-claim]");
+        await pages[i].waitForSelector("[data-testid=wt-ready]", {
+          timeout: 30_000,
+        });
+      });
   }
   for (const p of pages) await p.click("[data-testid=wt-ready]");
   await host.waitForSelector("[data-testid=wt-start]:not([disabled])");
   await host.screenshot({ path: `${SHOTS}/00-lobby-full.png` });
   await host.click("[data-testid=wt-start]");
   const t0 = Date.now();
-  let reloaded = false, offlined = false, turns = 0;
+  let reloaded = false,
+    offlined = false,
+    turns = 0;
   while (Date.now() - t0 < MAX_MS) {
     let over = false;
     for (let i = 0; i < N; i++) {
       const r = await step(pages[i], i);
       if (r === "over") over = true;
-      if (r === "acted") { turns++; await snapPhase(pages[i], i); }
+      if (r === "acted") turns++;
+      await snapPhase(pages[i], i);
       await snapFx(pages[i], i);
     }
     if (over) break;
-    if (!reloaded && turns > 25) { reloaded = true; await pages[1].reload(); await pages[1].waitForSelector("[data-testid=wt-world][data-phase]"); }
-    if (!offlined && turns > 45) { offlined = true; const c = pages[2 % N].context(); await c.setOffline(true); await new Promise(r => setTimeout(r, 2500)); await c.setOffline(false); }
-    await new Promise(r => setTimeout(r, 120));
+    if (!reloaded && turns > 25) {
+      reloaded = true;
+      await pages[1].reload();
+      await pages[1].waitForSelector("[data-testid=wt-world][data-phase]");
+    }
+    if (!offlined && turns > 45) {
+      offlined = true;
+      const c = pages[2 % N].context();
+      await c.setOffline(true);
+      await new Promise((r) => setTimeout(r, 2500));
+      await c.setOffline(false);
+    }
+    await new Promise((r) => setTimeout(r, 120));
   }
   const phase = await host.getAttribute("[data-testid=wt-world]", "data-phase");
-  await new Promise(r => setTimeout(r, 3500));
-  for (let i = 0; i < N; i++) await pages[i].screenshot({ path: `${SHOTS}/99-result-p${i + 1}.png` });
+  await new Promise((r) => setTimeout(r, 3500));
+  for (let i = 0; i < N; i++)
+    await pages[i].screenshot({ path: `${SHOTS}/99-result-p${i + 1}.png` });
   // privacy probe: no page's DOM shows another seat's hidden tryal kinds before the end is checked by protocol tests; here we only confirm the game finished.
-  const summary = { players: N, room, finished: phase === "over", actions: turns, ms: Date.now() - t0, reloaded, offlined, overflow: [...new Set(overflow)].slice(0, 30), consoleErrors: errors.filter(e => !/WebSocket|ERR_INTERNET_DISCONNECTED|net::|AudioContext/.test(e)) };
+  const summary = {
+    players: N,
+    viewport: VIEW,
+    room,
+    finished: phase === "over",
+    actions: turns,
+    ms: Date.now() - t0,
+    reloaded,
+    offlined,
+    layoutChecks,
+    clippedChecks,
+    phases: [...phases],
+    overflow: [...new Set(overflow)],
+    consoleErrors: errors.filter(
+      (e) => !/WebSocket|ERR_INTERNET_DISCONNECTED|net::|AudioContext/.test(e),
+    ),
+  };
   writeFileSync(`${SHOTS}/summary.json`, JSON.stringify(summary, null, 2));
-  console.log(JSON.stringify(summary));
+  console.log(
+    JSON.stringify({
+      ...summary,
+      overflowCount: summary.overflow.length,
+      overflow: summary.overflow.slice(0, 3),
+    }),
+  );
   await browser.close();
-  if (!summary.finished || summary.consoleErrors.length || summary.overflow.length) process.exit(1);
+  if (
+    !summary.finished ||
+    summary.consoleErrors.length ||
+    summary.overflow.length
+  )
+    process.exit(1);
 }
-main().catch(e => { console.error(e); process.exit(1); });
+main().catch((e) => {
+  console.error(e);
+  process.exit(1);
+});
