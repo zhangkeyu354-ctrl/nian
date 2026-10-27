@@ -1,0 +1,294 @@
+{
+  "screenshots": [
+    {
+      "file": "portrait-lobby.png",
+      "name": "大厅与房主设置 · 竖屏",
+      "width": 390,
+      "height": 844,
+      "scope": "场景"
+    },
+    {
+      "file": "landscape-lobby.png",
+      "name": "大厅与房主设置 · 横屏",
+      "width": 844,
+      "height": 390,
+      "scope": "场景"
+    },
+    {
+      "file": "portrait-identity.png",
+      "name": "翻牌：本轮职务 · 竖屏",
+      "width": 390,
+      "height": 844,
+      "scope": "场景"
+    },
+    {
+      "file": "landscape-identity.png",
+      "name": "翻牌：本轮职务 · 横屏",
+      "width": 844,
+      "height": 390,
+      "scope": "场景"
+    },
+    {
+      "file": "portrait-pack.png",
+      "name": "秘密装包 · 竖屏",
+      "width": 390,
+      "height": 844,
+      "scope": "场景"
+    },
+    {
+      "file": "landscape-pack.png",
+      "name": "秘密装包 · 横屏",
+      "width": 844,
+      "height": 390,
+      "scope": "场景"
+    },
+    {
+      "file": "portrait-bribe.png",
+      "name": "声明与语音谈判 · 竖屏",
+      "width": 390,
+      "height": 844,
+      "scope": "场景"
+    },
+    {
+      "file": "landscape-bribe.png",
+      "name": "声明与语音谈判 · 横屏",
+      "width": 844,
+      "height": 390,
+      "scope": "场景"
+    },
+    {
+      "file": "portrait-inspect.png",
+      "name": "检查手提箱 · 竖屏",
+      "width": 390,
+      "height": 844,
+      "scope": "场景"
+    },
+    {
+      "file": "landscape-inspect.png",
+      "name": "检查手提箱 · 横屏",
+      "width": 844,
+      "height": 390,
+      "scope": "场景"
+    },
+    {
+      "file": "portrait-arrest.png",
+      "name": "选择逮捕 · 竖屏",
+      "width": 390,
+      "height": 844,
+      "scope": "场景"
+    },
+    {
+      "file": "landscape-arrest.png",
+      "name": "选择逮捕 · 横屏",
+      "width": 844,
+      "height": 390,
+      "scope": "场景"
+    },
+    {
+      "file": "portrait-round.png",
+      "name": "下一位警长与本轮回顾 · 竖屏",
+      "width": 390,
+      "height": 844,
+      "scope": "场景"
+    },
+    {
+      "file": "landscape-round.png",
+      "name": "下一位警长与本轮回顾 · 横屏",
+      "width": 844,
+      "height": 390,
+      "scope": "场景"
+    },
+    {
+      "file": "portrait-finish.png",
+      "name": "终局领奖台与回顾 · 竖屏",
+      "width": 390,
+      "height": 844,
+      "scope": "场景"
+    },
+    {
+      "file": "landscape-finish.png",
+      "name": "终局领奖台与回顾 · 横屏",
+      "width": 844,
+      "height": 390,
+      "scope": "场景"
+    },
+    {
+      "file": "next-guard-banner.png",
+      "name": "下一位缉私警长横幅",
+      "width": 390,
+      "height": 844,
+      "scope": "阶段横幅"
+    },
+    {
+      "file": "event-inspection.png",
+      "name": "事件：领导视察",
+      "width": 390,
+      "height": 844,
+      "scope": "场景"
+    },
+    {
+      "file": "event-birthday.png",
+      "name": "事件：生日礼物",
+      "width": 390,
+      "height": 844,
+      "scope": "场景"
+    },
+    {
+      "file": "event-holiday.png",
+      "name": "事件：假日狂欢",
+      "width": 390,
+      "height": 844,
+      "scope": "场景"
+    },
+    {
+      "file": "event-desperate.png",
+      "name": "事件：破釜沉舟",
+      "width": 390,
+      "height": 844,
+      "scope": "场景"
+    },
+    {
+      "file": "event-greedy.png",
+      "name": "事件：贪得无厌",
+      "width": 390,
+      "height": 844,
+      "scope": "场景"
+    },
+    {
+      "file": "event-impartial.png",
+      "name": "事件：铁面无私",
+      "width": 390,
+      "height": 844,
+      "scope": "场景"
+    },
+    {
+      "file": "event-night.png",
+      "name": "事件：起早贪黑",
+      "width": 390,
+      "height": 844,
+      "scope": "场景"
+    },
+    {
+      "file": "event-dog.png",
+      "name": "事件：缉私犬长",
+      "width": 390,
+      "height": 844,
+      "scope": "场景"
+    },
+    {
+      "file": "reveal-caught.png",
+      "name": "抓到走私",
+      "width": 390,
+      "height": 844,
+      "scope": "场景"
+    },
+    {
+      "file": "reveal-wrong.png",
+      "name": "误捕赔偿",
+      "width": 390,
+      "height": 844,
+      "scope": "场景"
+    },
+    {
+      "file": "reveal-impartial.png",
+      "name": "铁面无私误捕",
+      "width": 390,
+      "height": 844,
+      "scope": "场景"
+    },
+    {
+      "file": "max-seats.png",
+      "name": "最大人数与长名字",
+      "width": 390,
+      "height": 844,
+      "scope": "场景"
+    },
+    {
+      "file": "disconnect.png",
+      "name": "断线重连提示",
+      "width": 390,
+      "height": 844,
+      "scope": "场景"
+    },
+    {
+      "file": "landscape-max-seats.png",
+      "name": "横屏最大人数与长名字",
+      "width": 844,
+      "height": 390,
+      "scope": "场景"
+    },
+    {
+      "file": "desktop-1280.png",
+      "name": "电脑 1280×800",
+      "width": 1280,
+      "height": 800,
+      "scope": "场景"
+    },
+    {
+      "file": "homepage-box.png",
+      "name": "首页官方游戏盒",
+      "width": 390,
+      "height": 844,
+      "scope": "首页"
+    }
+  ],
+  "checks": [
+    "大厅与房主设置 · 竖屏: overflow, tap sizes, primary",
+    "大厅与房主设置 · 横屏: overflow, tap sizes, primary",
+    "翻牌：本轮职务 · 竖屏: overflow, tap sizes, primary",
+    "翻牌：本轮职务 · 横屏: overflow, tap sizes, primary",
+    "秘密装包 · 竖屏: overflow, tap sizes, primary",
+    "秘密装包 · 横屏: overflow, tap sizes, primary",
+    "声明与语音谈判 · 竖屏: overflow, tap sizes, primary",
+    "声明与语音谈判 · 横屏: overflow, tap sizes, primary",
+    "检查手提箱 · 竖屏: overflow, tap sizes, primary",
+    "检查手提箱 · 横屏: overflow, tap sizes, primary",
+    "选择逮捕 · 竖屏: overflow, tap sizes, primary",
+    "选择逮捕 · 横屏: overflow, tap sizes, primary",
+    "下一位警长与本轮回顾 · 竖屏: overflow, tap sizes, primary",
+    "下一位警长与本轮回顾 · 横屏: overflow, tap sizes, primary",
+    "终局领奖台与回顾 · 竖屏: overflow, tap sizes, primary",
+    "终局领奖台与回顾 · 横屏: overflow, tap sizes, primary",
+    "下一位缉私警长横幅",
+    "事件：领导视察: overflow, tap sizes, primary",
+    "事件领导视察中文卡面与完整文字",
+    "事件领导视察不同座位均可见",
+    "事件：生日礼物: overflow, tap sizes, primary",
+    "事件生日礼物中文卡面与完整文字",
+    "事件生日礼物不同座位均可见",
+    "事件：假日狂欢: overflow, tap sizes, primary",
+    "事件假日狂欢中文卡面与完整文字",
+    "事件假日狂欢不同座位均可见",
+    "事件：破釜沉舟: overflow, tap sizes, primary",
+    "事件破釜沉舟中文卡面与完整文字",
+    "事件破釜沉舟不同座位均可见",
+    "事件：贪得无厌: overflow, tap sizes, primary",
+    "事件贪得无厌中文卡面与完整文字",
+    "事件贪得无厌不同座位均可见",
+    "事件：铁面无私: overflow, tap sizes, primary",
+    "事件铁面无私中文卡面与完整文字",
+    "事件铁面无私不同座位均可见",
+    "事件：起早贪黑: overflow, tap sizes, primary",
+    "事件起早贪黑中文卡面与完整文字",
+    "事件起早贪黑不同座位均可见",
+    "事件：缉私犬长: overflow, tap sizes, primary",
+    "事件缉私犬长中文卡面与完整文字",
+    "事件缉私犬长不同座位均可见",
+    "抓到走私: overflow, tap sizes, primary",
+    "抓到走私文字、揭晓与跳过",
+    "误捕赔偿: overflow, tap sizes, primary",
+    "误捕赔偿文字、揭晓与跳过",
+    "铁面无私误捕: overflow, tap sizes, primary",
+    "铁面无私误捕文字、揭晓与跳过",
+    "最大人数与长名字: overflow, tap sizes, primary",
+    "断线重连提示: overflow, tap sizes, primary",
+    "横屏最大人数与长名字: overflow, tap sizes, primary",
+    "电脑 1280×800: overflow, tap sizes, primary",
+    "首页入口与官方包装",
+    "mouse drag to luggage",
+    "touch hold and drag to bribe"
+  ],
+  "passed": 54,
+  "failed": 0,
+  "pageErrors": []
+}

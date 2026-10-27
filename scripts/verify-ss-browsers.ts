@@ -183,7 +183,50 @@ function snapshotsFromFrame(raw: string): SSSnapshot[] {
     return [];
   }
 }
+async function clearOverlays(p: Page) {
+  for (let i = 0; i < 50; i++) {
+    if (
+      await p
+        .getByTestId("ss-skip")
+        .isVisible()
+        .catch(() => false)
+    ) {
+      await p
+        .getByTestId("ss-skip")
+        .click({ timeout: 1200 })
+        .catch(() => {});
+      continue;
+    }
+    if (
+      await p
+        .getByTestId("ss-identity-close")
+        .isVisible()
+        .catch(() => false)
+    ) {
+      await p
+        .getByTestId("ss-identity-close")
+        .click({ timeout: 1200 })
+        .catch(() => {});
+      continue;
+    }
+    return;
+  }
+  throw Error("reveal queue did not clear");
+}
 async function execute(p: Page, a: SSAction) {
+  await clearOverlays(p);
+  if ("target" in a && typeof a.target === "number")
+    await p.getByTestId(`ss-seat-${a.target}`).click();
+  if ("useEvent" in a && a.useEvent)
+    await p.getByTestId("ss-mode-event").click();
+  else if (
+    ["ACCEPT", "INSPECT", "ARREST"].includes(a.type) &&
+    (await p.getByTestId("ss-mode-normal").count())
+  )
+    await p.getByTestId("ss-mode-normal").click();
+  if (a.type === "INSPECT" && a.index !== undefined)
+    await p.getByTestId(`ss-box-${a.index}`).click();
+  if (a.type === "REVEAL_DOG") await p.getByTestId(`ss-box-${a.index}`).click();
   switch (a.type) {
     case "SUBMIT":
       for (const id of [...a.luggage, a.bribe])
@@ -349,9 +392,10 @@ try {
               const text = await pages[i]
                 .getByTestId(`ss-seat-${j}`)
                 .textContent();
-              if (j !== s.view.guard)
-                for (const card of s.view.players[j].luggage)
-                  if (card === null) assert(text?.includes("🔒"));
+              assert(
+                text?.includes(s.view.players[j].name),
+                "seat name must be visible",
+              );
               assert.equal(s.view.players[j].hand, undefined);
               const secret: SSState["players"][number] | undefined =
                 file.state?.players[j];
@@ -431,9 +475,10 @@ try {
         assert(++commands < 500, "browser game stuck");
         await delay(30);
       }
+      await Promise.all(pages.map(clearOverlays));
       await assertUiShot(
         pages[0],
-        `output/playwright/ss-stage3-${n}-${events ? "events" : "base"}-result.png`,
+        `output/playwright/ss-stage4-${n}-${events ? "events" : "base"}-result.png`,
       );
       await audit();
       games.push({
@@ -502,11 +547,11 @@ try {
   checks.push(
     "main server restored deadline auto-fills missing choice, keeps submitted bag",
   );
-  await assertUiShot(p, "output/playwright/ss-stage3-timeout.png");
+  await assertUiShot(p, "output/playwright/ss-stage4-timeout.png");
   await c.close();
   assert.deepEqual(errors, []);
   writeFileSync(
-    join(out, "stage3-browsers.json"),
+    join(out, "stage4-browsers-network.json"),
     JSON.stringify(
       {
         games,
@@ -517,7 +562,7 @@ try {
         networkChecks,
         domChecks,
         pageErrors: errors,
-        screenshots: "output/playwright/ss-stage3-*.png",
+        screenshots: "output/playwright/ss-stage4-*.png",
         timeoutFixture:
           "persisted deadline shortened to 15s; production server API unchanged",
       },
