@@ -1405,3 +1405,40 @@
   .ss-world .ss-seat-bottom > span:first-child,
   .ss-world .ss-seat-bottom > span:last-child { font-size: 17px; }
 }
+.ss-world .ss-seatstrip { grid-template-columns: repeat(2, minmax(0, 1fr)) !important; max-height: 260px; }
+.ss-world .ss-seat { min-height: 48px; display: flex; flex-direction: column; justify-content: center; padding: 3px 6px; gap: 1px; overflow: hidden; }
+.ss-world .ss-seat-top { display: flex; align-items: center; width: 100%; gap: 4px; min-width: 0; }
+.ss-world .ss-seat-top .ss-avatar { float: none; flex: 0 0 18px; width: 18px; height: 18px; margin: 0; }
+.ss-world .ss-seat-top strong { display: block; min-width: 0; width: auto; flex: 1; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; overflow-wrap: normal; font-size: 17px; line-height: 1.1; }
+.ss-world .ss-seat-bottom { display: flex; flex-wrap: nowrap; gap: 7px; align-items: center; white-space: nowrap; width: 100%; line-height: 1.1; }
+.ss-world .ss-seat-bottom > span { flex: none; white-space: nowrap; font-size: 17px; }
+.ss-world .ss-event-setting span { padding: 3px 10px; border-radius: 1em; background: #5c4664; color: #fff; font-weight: bold; }
+.ss-world .ss-settings .ss-first-guard { grid-column: 1 / -1; }
+.ss-world .ss-settings .ss-first-guard select { max-width: none; flex: 1; min-width: 0; }
+.ss-world .ss-budget { display: flex; flex-wrap: wrap; gap: 6px 14px; font-size: 17px; color: #fff3d3; }
+.ss-world .ss-bribe-cards { display: grid; grid-template-columns: repeat(4,minmax(0,1fr)); gap: 5px; }
+.ss-world .ss-bribe-card { min-width: 0; text-align: center; background: #24182f; border: 1px solid #bca4b4; border-radius: 8px; padding: 4px; color: white; }
+.ss-world .ss-bribe-card strong { display: block; overflow: hidden; white-space: nowrap; text-overflow: ellipsis; font-size: 14px; }
+.ss-world .ss-bribe-card span { font-size: 17px; }
+.ss-world .ss-bribe-card .ss-case { width: 100%; }
+@media (orientation: portrait) { .ss-world .ss-hand { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 8px; } .ss-world .ss-hand button { min-width: 100px; } }
+@media (orientation: landscape) and (max-height: 600px) { .ss-world .ss-seat { min-height: 44px; } .ss-world .ss-seatstrip { grid-auto-rows: minmax(44px,1fr); } }
+@media (orientation: landscape) and (max-height: 600px) {
+  .ss-world .ss-seat { min-height: 44px; padding: 1px 4px; gap: 0; }
+  .ss-world .ss-seat-top strong, .ss-world .ss-seat-bottom, .ss-world .ss-seat-bottom > span { line-height: 1; }
+  .ss-world .ss-seat-top .ss-avatar { width: 16px; height: 16px; flex-basis: 16px; }
+}
+.ss-world .ss-seat-top { flex-direction: row; }
+@media (orientation: landscape) and (max-height: 600px) {
+  .ss-world .ss-seatstrip { flex: 0 0 auto; }
+  .ss-world .ss-bribe-cards { grid-template-columns: repeat(7,minmax(0,1fr)); }
+  .ss-world .ss-bribe-card { padding: 2px; }
+}
+.ss-world .ss-roomno, .ss-world .ss-round, .ss-world .ss-kicker,
+.ss-world .ss-event small, .ss-world .ss-bribe-card strong,
+.ss-world .ss-ranking strong { font-size: 17px; }
+.ss-world small, .ss-world .ss-help, .ss-world .ss-dropzone strong,
+.ss-world .ss-dropzone strong small, .ss-world .ss-seat-bottom > span,
+.ss-world .ss-avatar, .ss-world .ss-results details h3 { font-size: 17px; }
+.ss-world .ss-help { font-size: 17px !important; }
+.ss-world .ss-lobby-seats .ss-seat-bottom, .ss-world .ss-event strong { font-size: 17px; }

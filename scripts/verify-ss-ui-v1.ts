@@ -1,4 +1,6 @@
 import { chromium, devices, type Page } from "playwright";
+import { createRequire } from "node:module";
+const require = createRequire(import.meta.url);
 import { spawn, type ChildProcess } from "node:child_process";
 import { createServer } from "node:net";
 import { mkdirSync, mkdtempSync, writeFileSync } from "node:fs";
@@ -31,7 +33,7 @@ function code() {
 const names = (n: number) =>
   Array.from({ length: n }, (_, i) =>
     n === 8
-      ? `长名字旅客张三李${i + 1}`
+      ? `长名字旅客张三李赵${i + 1}`
       : i === 0
         ? "十个字的缉私警长名字"
         : `旅客 ${i + 1}`,
@@ -104,7 +106,9 @@ const fixtures = {
   round: makeFixture(stateAt("ROUND_END")),
   finish: makeFixture(stateAt("FINISHED")),
   max: makeFixture(stateAt("PACK", 8), 8),
+  maxLobby: makeFixture(null, 8, 8),
 };
+const maxFixtures = Object.fromEntries((["PACK", "BRIBE", "INSPECT", "ARREST", "ROUND_END", "FINISHED"] as const).map(phase => [phase, makeFixture(stateAt(phase, 8), 8)]));
 const eventFixtures = Object.fromEntries(
   EVENTS.map((e) => [e, makeFixture(stateAt("PACK", 3, e))]),
 ) as Record<EventId, ReturnType<typeof makeFixture>>;
@@ -171,6 +175,7 @@ const screenshots: {
   scope: string;
 }[] = [];
 const checks: string[] = [];
+const accessibility: unknown[] = [];
 const errors: string[] = [];
 let browser: Awaited<ReturnType<typeof chromium.launch>> | undefined;
 async function connect(
@@ -240,11 +245,16 @@ async function audit(p: Page, name: string) {
         ),
       primary: [...document.querySelectorAll(".ss-dock-wrap .ss-primary")]
         .length,
+      seatErrors: [...document.querySelectorAll<HTMLElement>(".ss-seat-bottom")].flatMap(el => [ ...(el.scrollWidth > el.clientWidth + 1 || el.getBoundingClientRect().bottom > el.closest('.ss-seat')!.getBoundingClientRect().bottom + 1 ? [el.textContent] : []), ...[...el.querySelectorAll<HTMLElement>("span")].filter(x => x.scrollWidth > x.clientWidth + 1 || x.getBoundingClientRect().height > parseFloat(getComputedStyle(x).lineHeight) + 3 || x.getBoundingClientRect().right > el.getBoundingClientRect().right + 1 || x.getBoundingClientRect().bottom > el.closest('.ss-seat')!.getBoundingClientRect().bottom + 1).map(x => x.textContent)]),
+      nameErrors: [...document.querySelectorAll<HTMLElement>(".ss-seat-top strong")].filter(x => getComputedStyle(x).whiteSpace !== 'nowrap' || x.getBoundingClientRect().height > parseFloat(getComputedStyle(x).lineHeight) + 3).map(x=>x.textContent),
     };
   });
   assert.equal(report.horizontal, false, `${name} horizontal scroll`);
   assert.deepEqual(report.oversized, [], `${name} oversized`);
   assert.deepEqual(report.small, [], `${name} buttons smaller than 44px`);
+  if (report.seatErrors.length) { await p.screenshot({path:"tmp/ss-research/seat-failure.png"}); console.log("SEAT_FAILURE",name,JSON.stringify(report)); }
+  assert.deepEqual(report.seatErrors, [], `${name} status wraps or clips`);
+  assert.deepEqual(report.nameErrors, [], `${name} name wraps`);
   if (await p.locator(".ss-dock-wrap").count())
     assert.equal(report.primary, 1, `${name} one primary action`);
   checks.push(`${name}: overflow, tap sizes, primary`);
@@ -256,6 +266,13 @@ async function shot(p: Page, filename: string, name: string, scope = "场景") {
       .waitFor({ state: "hidden", timeout: 5000 })
       .catch(() => {});
   await audit(p, name);
+  await p.addScriptTag({path: require.resolve("axe-core/axe.min.js")});
+  const a11y = await p.evaluate(async () => {
+    const results = await (window as any).axe.run(document.querySelector(".ss-world"), {runOnly:{type:"rule",values:["color-contrast"]}});
+    const text = [...document.querySelectorAll<HTMLElement>(".ss-world *")].filter(el => [...el.childNodes].some(n => n.nodeType === Node.TEXT_NODE && n.textContent?.trim()) && el.getBoundingClientRect().width > 0 && el.getBoundingClientRect().height > 0 && getComputedStyle(el).visibility === "visible").map(el => ({text:el.textContent?.trim().slice(0,40),px:parseFloat(getComputedStyle(el).fontSize)}));
+    return {textCount:text.length,below17:text.filter(t=>t.px<17), contrastFailures:results.violations.flatMap((v:any)=>v.nodes.map((n:any)=>({target:n.target,summary:n.failureSummary}))), contrastIncomplete:results.incomplete.flatMap((v:any)=>v.nodes.map((n:any)=>({target:n.target,summary:n.failureSummary}))), contrastPassed:results.passes.reduce((n:number,v:any)=>n+v.nodes.length,0)};
+  });
+  accessibility.push({name,...a11y});
   await assertUiShot(p, `${out}/${filename}.png`);
   const v = p.viewportSize()!;
   screenshots.push({
@@ -319,6 +336,37 @@ try {
     });
     checks.push("下一位缉私警长横幅");
     await ctx.close();
+  }
+  for (const [scene,fixture,seat,identity] of [["LOBBY",fixtures.maxLobby,0,false],["IDENTITY",fixtures.max,1,true]] as const) {
+    for (const [suffix,w,h] of [["portrait",390,844],["landscape",844,390]] as const) {
+      const {ctx,p}=await connect(fixture,seat,w,h,{identity});
+      if (identity) await p.getByTestId("ss-identity").waitFor();
+      else {
+        assert.match(await p.locator(".ss-stage-title .ss-kicker").innerText(), /^房间/);
+        assert.match(await p.locator(".ss-event-setting").innerText(), /关/);
+        const fits = await p.getByTestId("ss-first-guard").evaluate((el:HTMLSelectElement) => { const c=document.createElement("canvas").getContext("2d")!; const st=getComputedStyle(el); c.font=`${st.fontWeight} ${st.fontSize} ${st.fontFamily}`; return c.measureText(el.selectedOptions[0].textContent ?? "").width <= el.clientWidth - 30; });
+        assert(fits, "首位警长姓名不应被截断");
+      }
+      await shot(p,`max-${scene.toLowerCase()}-${suffix}`,`8人长名字 ${scene} · ${suffix}`); await ctx.close();
+    }
+  }
+  for (const phase of ["PACK", "BRIBE", "INSPECT", "ARREST", "ROUND_END", "FINISHED"] as const) {
+    for (const [suffix,w,h] of [["portrait",390,844],["landscape",844,390]] as const) {
+      const {ctx,p} = await connect(maxFixtures[phase], phase === "PACK" ? 1 : 0, w, h);
+      await p.getByTestId("ss-stage").waitFor();
+      await p.waitForTimeout(2000);
+      assert.equal(await p.locator(".ss-seatstrip .ss-seat").count(), 8);
+      const titles = {PACK:"秘密装包",BRIBE:"受贿与讨论",INSPECT:"检查手提箱",ARREST:"决定逮捕",ROUND_END:"本轮结束",FINISHED:"本局结束"};
+      assert.equal(await p.getByTestId("ss-phase").innerText(), titles[phase]);
+      const kicker = await p.locator(".ss-stage-title .ss-kicker").innerText();
+      if (phase === "ROUND_END") assert.equal(kicker, "本轮结束");
+      if (phase === "FINISHED") assert.equal(kicker, "最终结果");
+      if (phase === "BRIBE") { assert.equal(await p.locator(".ss-bribe-card").count(), 7); assert.equal(await p.locator(".ss-bribe-card img").count(),7); }
+      if (["BRIBE","INSPECT","ARREST"].includes(phase)) assert.match(await p.getByTestId("ss-budget").innerText(), /受贿.*检查.*逮捕/s);
+      if (phase === "PACK" && suffix === "portrait") { const widths=await p.locator(".ss-hand button").evaluateAll(xs=>xs.map(x=>x.getBoundingClientRect().width)); assert(widths.every(x=>x>=100)); }
+      await shot(p, `max-${phase.toLowerCase()}-${suffix}`, `8人长名字 ${phase} · ${suffix}`);
+      await ctx.close();
+    }
   }
   for (const event of EVENTS) {
     const { ctx, p } = await connect(eventFixtures[event], 1, 390, 844);
@@ -471,22 +519,29 @@ try {
     await ctx.close();
   }
   assert.deepEqual(errors, []);
+  const a11yRows = accessibility as Array<{below17:unknown[];contrastFailures:unknown[];contrastIncomplete:unknown[]}>;
+  const a11ySummary = {below17:a11yRows.reduce((n,r)=>n+r.below17.length,0), contrastFailures:a11yRows.reduce((n,r)=>n+r.contrastFailures.length,0), contrastIncomplete:a11yRows.reduce((n,r)=>n+r.contrastIncomplete.length,0)};
   writeFileSync(
     `${out}/audit.json`,
     JSON.stringify(
       {
         screenshots,
+        accessibility,
+        accessibilitySummary: a11ySummary,
+        accessibilityStatus: (a11ySummary.below17 || a11ySummary.contrastFailures || a11ySummary.contrastIncomplete) ? "unresolved" : "passed",
         checks,
         passed: checks.length,
-        failed: 0,
+        layoutFailed: 0,
         pageErrors: errors,
       },
       null,
       2,
     ) + "\n",
   );
+  console.log("SS_A11Y_UNRESOLVED", JSON.stringify(a11ySummary));
+  if (a11ySummary.below17 || a11ySummary.contrastFailures || a11ySummary.contrastIncomplete) process.exitCode = 1;
   console.log(
-    "SS_UI4_PASS",
+    "SS_LAYOUT_CHECKS_PASS",
     JSON.stringify({ screenshots: screenshots.length, checks: checks.length }),
   );
 } finally {

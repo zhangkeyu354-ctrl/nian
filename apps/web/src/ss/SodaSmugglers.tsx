@@ -94,7 +94,7 @@ function SeatStrip({
       data-testid="ss-seatstrip"
       aria-label="玩家座位"
       style={{
-        gridTemplateColumns: `repeat(${Math.min(v.players.length, 4)}, minmax(0,1fr))`,
+        gridTemplateColumns: `repeat(${Math.min(v.players.length, 2)}, minmax(0,1fr))`,
       }}
     >
       {v.players.map((p, i) => (
@@ -370,7 +370,7 @@ export function SodaSmugglers() {
       setBanner({
         key,
         title,
-        sub: guard ? "轮到你行动" : undefined,
+        sub: guard && !["ROUND_END", "FINISHED"].includes(v.phase) ? "轮到你行动" : undefined,
         tone: "guard",
       });
       const t = setTimeout(() => setBanner(null), 1900);
@@ -759,7 +759,7 @@ export function SodaSmugglers() {
           ? { ...previous, sub: "轮到你装包" }
           : {
               key: `active:${v.round}:${v.phase}`,
-              title: "轮到你行动",
+              title: v.phase === "ROUND_END" ? "本轮结束" : "轮到你行动",
               tone: "guard",
             },
       );
@@ -909,7 +909,7 @@ export function SodaSmugglers() {
             {!v ? (
               <>
                 <div className="ss-stage-title">
-                  <span className="ss-kicker">ROOM {s.code}</span>
+                  <span className="ss-kicker">房间 {s.code}</span>
                   <h1>准备出发</h1>
                   <p>
                     还差 {s.count - s.players.length} 人 · {s.players.length}/
@@ -942,7 +942,7 @@ export function SodaSmugglers() {
                         ))}
                       </select>
                     </label>
-                    <label>
+                    <label className="ss-event-setting">
                       随机事件
                       <input
                         data-testid="ss-events"
@@ -956,6 +956,7 @@ export function SodaSmugglers() {
                           })
                         }
                       />
+                      <span aria-hidden="true">{s.events ? "开" : "关"}</span>
                     </label>
                     <label>
                       计时
@@ -975,7 +976,7 @@ export function SodaSmugglers() {
                         <option value={120}>120 秒</option>
                       </select>
                     </label>
-                    <label>
+                    <label className="ss-first-guard">
                       首位警长
                       <select
                         data-testid="ss-first-guard"
@@ -1036,8 +1037,8 @@ export function SodaSmugglers() {
                 )}
                 <div className="ss-stage-title">
                   <span className="ss-kicker">
-                    {guard
-                      ? ["BRIBE", "INSPECT", "ARREST", "ROUND_END"].includes(
+                    {v.phase === "FINISHED" ? "最终结果" : v.phase === "ROUND_END" ? "本轮结束" : guard
+                      ? ["BRIBE", "INSPECT", "ARREST"].includes(
                           v.phase,
                         )
                         ? "轮到你行动 · 缉私警长"
@@ -1257,6 +1258,22 @@ export function SodaSmugglers() {
                   </div>
                 ) : (
                   <>
+                    {guard && (
+                      <div className="ss-budget" data-testid="ss-budget" aria-label="本轮剩余指示物">
+                        <span>受贿 {v.budget.bribe}</span><span>检查 {v.budget.inspect}</span><span>逮捕 {v.budget.arrest}</span>
+                      </div>
+                    )}
+                    {v.phase === "BRIBE" && (
+                      <div className="ss-bribe-cards" data-testid="ss-bribe-cards" aria-label="公开的受贿牌">
+                        {v.players.map((player, i) => i === v.guard || !player.bribe ? null : (
+                          <div className="ss-bribe-card" data-testid={`ss-public-bribe-${i}`} key={i}>
+                            <strong title={player.name}>{i + 1}号 {player.name}</strong>
+                            <Suitcase bottles={player.bribe.bottles} />
+                            <span>{player.bribe.bottles} 瓶</span>
+                          </div>
+                        ))}
+                      </div>
+                    )}
                     {guard &&
                       ["BRIBE", "INSPECT", "ARREST"].includes(v.phase) && (
                         <div
