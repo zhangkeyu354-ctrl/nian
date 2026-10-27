@@ -1,0 +1,142 @@
+/* Stage 3 functional network interface; final art and visual audit belong to stage 4. */
+.ss-world {
+  --ss-bg: #211a2d;
+  --ss-panel: #352942;
+  --ss-line: #74677d;
+  --ss-text: #fff8ed;
+  --ss-accent: #d6e9a7;
+  max-width: 1200px;
+  margin: auto;
+  min-height: 100dvh;
+  padding: 16px;
+  color: var(--ss-text);
+  background: radial-gradient(ellipse at top, #4b345f, var(--ss-bg));
+  font-size: 17px;
+}
+.ss-world header {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 12px;
+  min-height: 52px;
+  border-bottom: 1px solid var(--ss-line);
+}
+.ss-world section {
+  display: grid;
+  gap: 16px;
+  padding: 16px 0;
+}
+.ss-world label {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+.ss-world input,
+.ss-world select {
+  color: var(--ss-text);
+  background: var(--ss-bg);
+  border: 1px solid var(--ss-line);
+  border-radius: 8px;
+  min-height: 44px;
+  padding: 8px;
+  max-width: 100%;
+}
+.ss-world button {
+  border: 1px solid var(--ss-line);
+  border-radius: 12px;
+  min-height: 48px;
+  padding: 10px 16px;
+  color: var(--ss-text);
+  background: linear-gradient(#584568, #362c43);
+  box-shadow: 0 3px 7px #0004;
+  cursor: pointer;
+  font: inherit;
+}
+.ss-world button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+.ss-world button[aria-pressed="true"] {
+  outline: 3px solid var(--ss-accent);
+}
+.ss-world .ss-hand,
+.ss-world .ss-target-actions {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+.ss-world .ss-hand button {
+  flex: 1 1 100px;
+}
+.ss-world .ss-seats {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 250px), 1fr));
+  gap: 12px;
+}
+.ss-world article {
+  padding: 12px;
+  border: 1px solid var(--ss-line);
+  border-radius: 16px;
+  background: var(--ss-panel);
+  overflow-wrap: anywhere;
+}
+.ss-world h2 {
+  font-size: 18px;
+}
+.ss-world .dm-dock {
+  position: sticky;
+  bottom: 0;
+  background: var(--ss-bg);
+  padding: 12px;
+  border: 1px solid var(--ss-line);
+  border-radius: 16px;
+  box-shadow: 0 -3px 15px #0005;
+}
+.ss-world .dm-dock-actions {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+.ss-world .dm-dock-actions > button {
+  flex: 1;
+}
+.ss-world .ss-disconnect {
+  background: #6b500b;
+  padding: 12px;
+}
+.ss-world [role="alert"] {
+  background: #742f40;
+  padding: 12px;
+}
+.ss-world .ss-clock {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.ss-world .dm-ring {
+  width: 40px;
+  height: 40px;
+}
+.ss-world .dm-ring circle {
+  fill: none;
+  stroke-width: 7;
+}
+.ss-world .dm-ring .track {
+  stroke: var(--ss-line);
+}
+.ss-world .dm-ring .fill {
+  stroke: var(--ss-accent);
+}
+.ss-world .dm-ring.warn .fill {
+  stroke: #ffd17d;
+}
+.ss-world .dm-ring.urgent .fill {
+  stroke: #ff8395;
+}
+@media (prefers-reduced-motion: reduce) {
+  .ss-world * {
+    animation: none !important;
+    transition: none !important;
+  }
+}

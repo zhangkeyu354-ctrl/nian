@@ -1,0 +1,15 @@
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  packages/witch-town/test/day.test.ts > M2 day actions and trials > 12 players: 100 seeded controlled day scenarios conserve cards and hide opponents
+Error: Test timed out in 5000ms.
+If this is a long-running test, pass a timeout value as the last argument or configure it globally with "testTimeout".
+ ❯ packages/witch-town/test/day.test.ts:1006:5
+    1004|   });
+    1005|   for (let n = 4; n <= 12; n++)
+    1006|     it(`${n} players: 100 seeded controlled day scenarios conserve car…
+       |     ^
+    1007|       for (let seed = 1; seed <= 100; seed++) {
+    1008|         let s = fresh(n, seed);
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯

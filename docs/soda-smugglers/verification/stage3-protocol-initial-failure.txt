@@ -1,0 +1,16 @@
+
+> dbd-boardgame-private@0.2.2 verify:ss-protocol
+> tsx scripts/verify-ss-protocol.ts
+
+E:\DBD-BoardGame-Web\scripts\verify-ss-protocol.ts:19
+async function sync(){const room=store.rooms.get(code)!;for(let i=0;i<peers.length;i++){const a=await ask(peers[i],E.join,{code,token:claims[i].token});assert(a.ok);snaps[i]=a.snapshot!;assert.deepEqual(normal(a.snapshot),normal(room.snapshot(claims[i].token,now)));packetChecks++;}}
+                                                                                                                                                ^
+
+TypeError: Cannot read properties of undefined (reading 'token')
+    at sync (E:\DBD-BoardGame-Web\scripts\verify-ss-protocol.ts:19:145)
+    at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+    at async act (E:\DBD-BoardGame-Web\scripts\verify-ss-protocol.ts:20:49)
+    at async make (E:\DBD-BoardGame-Web\scripts\verify-ss-protocol.ts:22:246)
+    at async <anonymous> (E:\DBD-BoardGame-Web\scripts\verify-ss-protocol.ts:27:3)
+
+Node.js v24.14.0

@@ -1,0 +1,20 @@
+
+> dbd-boardgame-private@0.2.2 verify:ss-browsers
+> tsx scripts/verify-ss-browsers.ts
+
+node:internal/modules/run_main:107
+    triggerUncaughtException(
+    ^
+
+AssertionError [ERR_ASSERTION]: foreign secret card ID in DOM
+    at audit (E:\DBD-BoardGame-Web\scripts\verify-ss-browsers.ts:371:19)
+    at async <anonymous> (E:\DBD-BoardGame-Web\scripts\verify-ss-browsers.ts:407:9) {
+  generatedMessage: false,
+  code: 'ERR_ASSERTION',
+  actual: false,
+  expected: true,
+  operator: '==',
+  diff: 'simple'
+}
+
+Node.js v24.14.0

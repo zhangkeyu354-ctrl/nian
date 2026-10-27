@@ -1,0 +1,93 @@
+{
+  "games": [
+    {
+      "players": 3,
+      "events": false,
+      "rounds": 6,
+      "commands": 53,
+      "frames": 327
+    },
+    {
+      "players": 3,
+      "events": true,
+      "rounds": 6,
+      "commands": 48,
+      "frames": 309
+    },
+    {
+      "players": 5,
+      "events": false,
+      "rounds": 5,
+      "commands": 59,
+      "frames": 548
+    },
+    {
+      "players": 5,
+      "events": true,
+      "rounds": 5,
+      "commands": 63,
+      "frames": 575
+    },
+    {
+      "players": 8,
+      "events": false,
+      "rounds": 8,
+      "commands": 143,
+      "frames": 1653
+    },
+    {
+      "players": 8,
+      "events": true,
+      "rounds": 8,
+      "commands": 139,
+      "frames": 1616
+    }
+  ],
+  "gameCount": 6,
+  "checks": [
+    "server rejects forged/out-of-turn browser command",
+    "server rejects forged/out-of-turn browser command",
+    "server rejects forged/out-of-turn browser command",
+    "server rejects forged/out-of-turn browser command",
+    "browser non-host settings rejected",
+    "offline/reload token reconnect keeps secret choice",
+    "server rejects forged/out-of-turn browser command",
+    "server rejects forged/out-of-turn browser command",
+    "server rejects forged/out-of-turn browser command",
+    "server rejects forged/out-of-turn browser command",
+    "browser non-host settings rejected",
+    "offline/reload token reconnect keeps secret choice",
+    "server rejects forged/out-of-turn browser command",
+    "server rejects forged/out-of-turn browser command",
+    "server rejects forged/out-of-turn browser command",
+    "server rejects forged/out-of-turn browser command",
+    "browser non-host settings rejected",
+    "offline/reload token reconnect keeps secret choice",
+    "server rejects forged/out-of-turn browser command",
+    "server rejects forged/out-of-turn browser command",
+    "server rejects forged/out-of-turn browser command",
+    "server rejects forged/out-of-turn browser command",
+    "browser non-host settings rejected",
+    "offline/reload token reconnect keeps secret choice",
+    "server rejects forged/out-of-turn browser command",
+    "server rejects forged/out-of-turn browser command",
+    "server rejects forged/out-of-turn browser command",
+    "server rejects forged/out-of-turn browser command",
+    "browser non-host settings rejected",
+    "offline/reload token reconnect keeps secret choice",
+    "server rejects forged/out-of-turn browser command",
+    "server rejects forged/out-of-turn browser command",
+    "server rejects forged/out-of-turn browser command",
+    "server rejects forged/out-of-turn browser command",
+    "browser non-host settings rejected",
+    "offline/reload token reconnect keeps secret choice",
+    "main server restored deadline auto-fills missing choice, keeps submitted bag"
+  ],
+  "passed": 37,
+  "failed": 0,
+  "networkChecks": 4186,
+  "domChecks": 3297,
+  "pageErrors": [],
+  "screenshots": "output/playwright/ss-stage3-*.png",
+  "timeoutFixture": "persisted deadline shortened to 15s; production server API unchanged"
+}
