@@ -1,0 +1,11 @@
+
+> dbd-boardgame-private@0.2.2 verify:ss-browsers
+> tsx scripts/verify-ss-browsers.ts
+
+SS_BROWSER_GAME_PASS 3 false 53
+SS_BROWSER_GAME_PASS 3 true 50
+SS_BROWSER_GAME_PASS 5 false 59
+SS_BROWSER_GAME_PASS 5 true 63
+SS_BROWSER_GAME_PASS 8 false 143
+SS_BROWSER_GAME_PASS 8 true 139
+SS_BROWSERS_PASS {"games":6,"checks":37,"networkChecks":4194,"domChecks":3303}

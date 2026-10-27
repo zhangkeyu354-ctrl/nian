@@ -1,0 +1,18 @@
+
+> dbd-boardgame-private@0.2.2 test
+> vitest run
+
+
+ RUN  v5.0.5 E:/SS-Stage5-Regression
+
+ ❯ packages/witch-town/test/day.test.ts (76 tests | 1 failed) 28333ms
+   ❯ M2 day actions and trials (50)
+     × 12 players: 100 seeded controlled day scenarios conserve cards and hide opponents 5091ms
+ ❯ packages/magical-athlete/test/second-wind-registry.test.ts (6 tests | 1 failed) 78ms
+   ❯ Second Wind 研究登记与发布隔离 (6)
+     × 既有赛道保持冻结；引擎和开局设置兼容性另用旧轨迹与房间测试验证 22ms
+
+ Test Files  2 failed | 82 passed (84)
+      Tests  2 failed | 1265 passed (1267)
+   Start at  20:28:22
+   Duration  261.07s (tests 96%, transform 2%, import 2%)

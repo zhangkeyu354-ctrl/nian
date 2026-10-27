@@ -4,6 +4,8 @@
   "private": true,
   "type": "module",
   "scripts": {
+    "verify:ss-protocol": "tsx scripts/verify-ss-protocol.ts",
+    "verify:ss-browsers": "tsx scripts/verify-ss-browsers.ts",
     "verify:xb-topics": "tsx scripts/verify-xb-topics.ts",
     "verify:xb-feel": "tsx scripts/verify-xb-feel-v2.ts",
     "verify:xb-browsers": "tsx scripts/verify-xb-browsers.ts",
@@ -46,7 +48,9 @@
     "@types/qrcode": "1.5.5",
     "@types/react": "19.3.0",
     "@types/react-dom": "19.3.0",
+    "axe-core": "^4.14.0",
     "playwright": "1.64.1",
+    "pngjs": "^7.0.0",
     "prettier": "3.9.10",
     "tailwindcss": "4.3.3",
     "tsx": "4.23.15",

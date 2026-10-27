@@ -1,0 +1,12 @@
+
+> dbd-boardgame-private@0.2.2 test
+> vitest run --testTimeout=30000
+
+
+ RUN  v5.0.5 E:/SS-Stage5-Regression
+
+
+ Test Files  84 passed (84)
+      Tests  1267 passed (1267)
+   Start at  20:37:57
+   Duration  182.53s (tests 98%, import 2%, transform 1%)

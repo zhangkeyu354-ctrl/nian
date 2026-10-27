@@ -1,0 +1,23 @@
+
+> dbd-boardgame-private@0.2.2 verify:ss-browsers
+> tsx scripts/verify-ss-browsers.ts
+
+node:internal/modules/run_main:107
+    triggerUncaughtException(
+    ^
+
+AssertionError [ERR_ASSERTION]: The expression evaluated to a falsy value:
+
+  assert(text?.includes("🔒"))
+
+    at audit (E:\DBD-BoardGame-Web\scripts\verify-ss-browsers.ts:55:424)
+    at async <anonymous> (E:\DBD-BoardGame-Web\scripts\verify-ss-browsers.ts:58:163) {
+  generatedMessage: true,
+  code: 'ERR_ASSERTION',
+  actual: false,
+  expected: true,
+  operator: '==',
+  diff: 'simple'
+}
+
+Node.js v24.14.0

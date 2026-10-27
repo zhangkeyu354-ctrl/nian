@@ -1,0 +1,12 @@
+
+> dbd-boardgame-private@0.2.2 test
+> vitest run
+
+
+ RUN  v5.0.5 E:/SS-Premerge-Final
+
+
+ Test Files  84 passed (84)
+      Tests  1267 passed (1267)
+   Start at  21:07:43
+   Duration  187.51s (tests 97%, transform 2%, import 1%)

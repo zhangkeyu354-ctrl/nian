@@ -1,0 +1,74 @@
+
+ RUN  v5.0.5 E:/DBD-BoardGame-Web
+
+ ❯ packages/soda-smugglers/test/engine.test.ts (6 tests | 6 failed) 12ms
+   × R10-R12,R30-R33: pure locked choices, idempotency and no premature secrets 6ms
+   × R14-R26: accept bribe pays personal caps, release cashes only luggage once 1ms
+   × R18,R22,R24: zero bribe acceptance and full confiscation excluding bribe 1ms
+   × HR-SS-01: both bribe and wrongful payment clip at zero, never create debt 1ms
+   × R27-R29: clockwise rotation, exact rounds and shared ties 1ms
+   × R34: only server can time out; preserve submitted luggage and deadline 1ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 6 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  packages/soda-smugglers/test/engine.test.ts > R10-R12,R30-R33: pure locked choices, idempotency and no premature secrets
+TypeError: reduceSS is not a function
+ ❯ packages/soda-smugglers/test/engine.test.ts:10:10
+      8|  const s=game();const before=structuredClone(s);const h=s.players[1].h…
+      9|  const cmd:Command={type:"SUBMIT",actor:1,seq:1,now:1000,luggage:h.sli…
+     10|  const a=reduceSS(s,cmd);expect(s).toEqual(before);expect(a.phase).toB…
+       |          ^
+     11|  expect(viewForSS(a,0).players[1].luggage).toEqual([null,null]);expect…
+     12|  expect(viewForSS(a,0).players[1].hand).toBeUndefined();expect(viewFor…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/6]⎯
+
+ FAIL  packages/soda-smugglers/test/engine.test.ts > R14-R26: accept bribe pays personal caps, release cashes only luggage once
+TypeError: reduceSS is not a function
+ ❯ act packages/soda-smugglers/test/engine.test.ts:4:107
+
+ ❯ pack packages/soda-smugglers/test/engine.test.ts:5:172
+ ❯ packages/soda-smugglers/test/engine.test.ts:20:57
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[2/6]⎯
+
+ FAIL  packages/soda-smugglers/test/engine.test.ts > R18,R22,R24: zero bribe acceptance and full confiscation excluding bribe
+TypeError: reduceSS is not a function
+ ❯ act packages/soda-smugglers/test/engine.test.ts:4:107
+
+ ❯ pack packages/soda-smugglers/test/engine.test.ts:5:172
+ ❯ packages/soda-smugglers/test/engine.test.ts:31:8
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[3/6]⎯
+
+ FAIL  packages/soda-smugglers/test/engine.test.ts > HR-SS-01: both bribe and wrongful payment clip at zero, never create debt
+TypeError: reduceSS is not a function
+ ❯ act packages/soda-smugglers/test/engine.test.ts:4:107
+
+ ❯ pack packages/soda-smugglers/test/engine.test.ts:5:172
+ ❯ packages/soda-smugglers/test/engine.test.ts:36:8
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[4/6]⎯
+
+ FAIL  packages/soda-smugglers/test/engine.test.ts > R27-R29: clockwise rotation, exact rounds and shared ties
+TypeError: reduceSS is not a function
+ ❯ act packages/soda-smugglers/test/engine.test.ts:4:107
+
+ ❯ pack packages/soda-smugglers/test/engine.test.ts:5:172
+ ❯ packages/soda-smugglers/test/engine.test.ts:42:54
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[5/6]⎯
+
+ FAIL  packages/soda-smugglers/test/engine.test.ts > R34: only server can time out; preserve submitted luggage and deadline
+TypeError: reduceSS is not a function
+ ❯ act packages/soda-smugglers/test/engine.test.ts:4:107
+
+ ❯ packages/soda-smugglers/test/engine.test.ts:51:89
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[6/6]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  6 failed (6)
+   Start at  11:38:22
+   Duration  329ms (transform 55%, import 24%, tests 14%, worker 6%)
