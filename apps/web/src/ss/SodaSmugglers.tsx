@@ -146,7 +146,7 @@ function HistoryText({ a, v }: { a: PublicAction; v: View }) {
     const x = arrestText(a);
     return (
       <>
-        {target}：{x.title}，{x.detail}
+        {target}：{x.title.replace(/[！!]$/, "")}，{x.detail}
       </>
     );
   }
@@ -172,6 +172,41 @@ function HistoryText({ a, v }: { a: PublicAction; v: View }) {
     return <>警长向公共区付出 {a.amount ?? 0} 瓶盖。</>;
   return null;
 }
+type RevealItem = PublicAction & {
+  bribed?: boolean;
+  items?: RevealItem[];
+};
+function BatchReveal({
+  action,
+  v,
+  onClose,
+}: {
+  action: RevealItem;
+  v: View;
+  onClose: () => void;
+}) {
+  return (
+    <div className="ss-reveal ss-clear" role="dialog" aria-label="本轮结算" data-testid="ss-reveal">
+      <div className="ss-reveal-card ss-batch">
+        <small>本轮结算 · 其余旅客放行</small>
+        <ul className="ss-batch-list">
+          {action.items!.map((a, i) => (
+            <li key={i}>
+              <b>{label(v, a.target ?? a.seat)}</b>
+              <span>
+                {a.bribed ? "受贿放行" : arrestText(a).title} · 行李{" "}
+                {(a.bottles ?? []).join(" + ")} 瓶 · +{a.amount ?? 0} 瓶盖
+              </span>
+            </li>
+          ))}
+        </ul>
+        <button data-testid="ss-skip" onClick={onClose}>
+          知道了
+        </button>
+      </div>
+    </div>
+  );
+}
 function Reveal({
   action,
   v,
@@ -179,13 +214,18 @@ function Reveal({
   sound,
   vibration,
 }: {
-  action: PublicAction;
+  action: RevealItem;
   v: View;
   onClose: () => void;
   sound: boolean;
   vibration: boolean;
 }) {
   const x = arrestText(action);
+  const heading = action.bribed
+    ? "受贿放行"
+    : action.type === "RELEASE"
+      ? "放行开箱"
+      : "逮捕开箱";
   const [step, setStep] = useState(0);
   const target = action.target ?? action.seat;
   const receiver = action.type === "CONFISCATE" ? action.seat : target;
@@ -215,11 +255,11 @@ function Reveal({
     <div
       className={`ss-reveal ss-${x.tone}`}
       role="dialog"
-      aria-label="检查揭晓"
+      aria-label={heading}
       data-testid="ss-reveal"
     >
       <div className="ss-reveal-card">
-        <small>检查揭晓 · {label(v, target)}</small>
+        <small>{heading} · {label(v, target)}</small>
         <div className="ss-reveal-bags">
           {(action.bottles ?? []).map((n, i) => (
             <span key={i} className={step > i ? "is-open" : ""}>
@@ -230,7 +270,7 @@ function Reveal({
         {step >= 2 && (
           <>
             <strong className="ss-stamp" data-testid="ss-reveal-title">
-              {x.title}
+              {action.bribed ? "受贿放行" : x.title}
             </strong>
             <p>{x.detail}</p>
             <span
@@ -305,7 +345,7 @@ export function SodaSmugglers() {
     [vibration, setVibration] = useState(() => loadBool("ss-vibration", true)),
     [now, setNow] = useState(Date.now()),
     [identity, setIdentity] = useState(false),
-    [revealQueue, setRevealQueue] = useState<PublicAction[]>([]),
+    [revealQueue, setRevealQueue] = useState<RevealItem[]>([]),
     [banner, setBanner] = useState<{
       key: string;
       title: string;
@@ -387,11 +427,25 @@ export function SodaSmugglers() {
       historySeen.current = n;
       return;
     }
-    const actions = v.history
-      .slice(historySeen.current)
-      .filter((a) => ["CONFISCATE", "WRONGFUL", "RELEASE"].includes(a.type));
+    const fresh = v.history.slice(historySeen.current);
+    const items: RevealItem[] = fresh.flatMap((a, k) =>
+      ["CONFISCATE", "WRONGFUL", "RELEASE"].includes(a.type)
+        ? [
+            {
+              ...a,
+              bribed:
+                a.type === "RELEASE" &&
+                fresh[k - 1]?.type === "ACCEPT" &&
+                fresh[k - 1]?.target === a.target,
+            },
+          ]
+        : [],
+    );
     historySeen.current = n;
-    if (actions.length) setRevealQueue((q) => [...q, ...actions]);
+    // 本轮末自动放行、贪得无厌全放：多人合并成一个结算弹窗，只点一次。
+    if (items.length > 1)
+      setRevealQueue((q) => [...q, { type: "BATCH", round: v.round, seat: v.guard, items }]);
+    else if (items.length) setRevealQueue((q) => [...q, ...items]);
   }, [v?.history.length]);
   useEffect(() => {
     if (net.error) cue("lose");
@@ -572,6 +626,9 @@ export function SodaSmugglers() {
     if (!s || !s.mySeat) return null;
     if (!v) {
       const ready = s.players[seat]?.ready;
+      const othersReady =
+        s.players.length === s.count &&
+        s.players.every((p, i) => i === seat || p.ready);
       return (
         <>
           <button
@@ -584,9 +641,14 @@ export function SodaSmugglers() {
                 (s.players.length !== s.count ||
                   !s.players.every((p) => p.ready)))
             }
-            onClick={() =>
-              send(host && ready ? { type: "START" } : { type: "READY" })
-            }
+            onClick={async () => {
+              if (host && !ready && othersReady) {
+                cue("submit");
+                if (await net.act({ type: "READY" })) void net.act({ type: "START" });
+                return;
+              }
+              send(host && ready ? { type: "START" } : { type: "READY" });
+            }}
           >
             {net.pending ? (
               <span className="ss-pending">
@@ -595,6 +657,8 @@ export function SodaSmugglers() {
               </span>
             ) : host && ready ? (
               "开始对局"
+            ) : host && othersReady ? (
+              "准备并开始"
             ) : ready ? (
               "已准备"
             ) : (
@@ -711,7 +775,7 @@ export function SodaSmugglers() {
         </>
       );
     }
-    if (guard && v.phase === "ROUND_END")
+    if (v.phase === "ROUND_END")
       return (
         <button
           className="ss-primary"
@@ -749,7 +813,8 @@ export function SodaSmugglers() {
     canSubmit ||
     (guard &&
       !!v &&
-      ["BRIBE", "INSPECT", "ARREST", "ROUND_END"].includes(v.phase)) ||
+      ["BRIBE", "INSPECT", "ARREST"].includes(v.phase)) ||
+    v?.phase === "ROUND_END" ||
     v?.pendingDog === seat;
   const wasActive = useRef(false);
   useEffect(() => {
@@ -1152,7 +1217,13 @@ export function SodaSmugglers() {
                       data-testid="ss-hand"
                       aria-label="你的手提箱牌"
                     >
-                      {me?.hand?.map((c) => (
+                      {me?.hand
+                        ?.filter(
+                          (c) =>
+                            !choice.luggage.includes(c.id) &&
+                            choice.bribe !== c.id,
+                        )
+                        .map((c) => (
                         <button
                           key={c.id}
                           data-testid={`ss-card-${c.id}`}
@@ -1193,7 +1264,7 @@ export function SodaSmugglers() {
                       ))}
                     </div>
                     <p className="ss-help">
-                      点选手提箱，也可以拖到行李或受贿牌位置。
+                      点手牌放进行李（满了放进受贿牌）；点上方已放的牌可退回。也可以拖动。
                     </p>
                   </>
                 ) : v.phase === "FINISHED" ? (
@@ -1263,16 +1334,27 @@ export function SodaSmugglers() {
                         <span>受贿 {v.budget.bribe}</span><span>检查 {v.budget.inspect}</span><span>逮捕 {v.budget.arrest}</span>
                       </div>
                     )}
-                    {v.phase === "BRIBE" && (
-                      <div className="ss-bribe-cards" data-testid="ss-bribe-cards" aria-label="公开的受贿牌">
+                    {["BRIBE", "INSPECT", "ARREST"].includes(v.phase) && (
+                      <div className="ss-bribe-cards" data-testid="ss-bribe-cards" aria-label={guard ? "选择旅客" : "公开的受贿牌"}>
                         {v.players.map((player, i) => i === v.guard || !player.bribe ? null : (
-                          <div className="ss-bribe-card" data-testid={`ss-public-bribe-${i}`} key={i}>
+                          <button
+                            type="button"
+                            className={`ss-bribe-card ${guard && chosen === i ? "is-selected" : ""} ${player.settled ? "is-settled" : ""}`}
+                            data-testid={`ss-public-bribe-${i}`}
+                            key={i}
+                            disabled={!guard || player.settled || blocked}
+                            aria-pressed={guard && chosen === i}
+                            onClick={() => chooseTarget(i)}
+                          >
                             <strong title={player.name}>{i + 1}号 {player.name}</strong>
                             <Suitcase bottles={player.bribe.bottles} />
-                            <span>{player.bribe.bottles} 瓶</span>
-                          </div>
+                            <span>{player.settled ? "✅ 已结算" : `受贿 ${player.bribe.bottles} 瓶`}</span>
+                          </button>
                         ))}
                       </div>
+                    )}
+                    {guard && ["BRIBE", "INSPECT", "ARREST"].includes(v.phase) && (
+                      <p className="ss-help ss-pick-hint">点上面的旅客选择对象，再按下方按钮执行。</p>
                     )}
                     {guard &&
                       ["BRIBE", "INSPECT", "ARREST"].includes(v.phase) && (
@@ -1307,7 +1389,7 @@ export function SodaSmugglers() {
                           )}
                         </div>
                       )}
-                    {person && (
+                    {person && !(guard && v.phase === "BRIBE") && (
                       <div
                         className="ss-traveler"
                         data-testid={`ss-traveler-${focus}`}
@@ -1416,7 +1498,9 @@ export function SodaSmugglers() {
                             ? `等待 ${label(v, v.pendingDog)} 翻箱`
                             : guard
                               ? "轮到你行动"
-                              : `等待 ${waitName}…`
+                              : me?.submitted || v.phase !== "PACK"
+                                ? phases[v.phase]
+                                : "请装包"
                 }
               >
                 {primary()}
@@ -1447,7 +1531,10 @@ export function SodaSmugglers() {
           </div>
         </div>
       )}
-      {revealQueue[0] && v && (
+      {revealQueue[0]?.type === "BATCH" && v && (
+        <BatchReveal action={revealQueue[0]} v={v} onClose={clearReveal} />
+      )}
+      {revealQueue[0] && revealQueue[0].type !== "BATCH" && v && (
         <Reveal
           key={`${revealQueue[0].round}-${revealQueue[0].target}-${revealQueue[0].type}`}
           action={revealQueue[0]}

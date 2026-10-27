@@ -9,7 +9,7 @@
     {
       "players": 3,
       "events": true,
-      "commands": 48,
+      "commands": 47,
       "rounds": 6
     },
     {
@@ -21,7 +21,7 @@
     {
       "players": 5,
       "events": true,
-      "commands": 53,
+      "commands": 52,
       "rounds": 5
     },
     {
@@ -33,7 +33,7 @@
     {
       "players": 8,
       "events": true,
-      "commands": 132,
+      "commands": 131,
       "rounds": 8
     }
   ],
@@ -103,5 +103,5 @@
   ],
   "passed": 61,
   "failed": 0,
-  "packetChecks": 6402
+  "packetChecks": 6370
 }

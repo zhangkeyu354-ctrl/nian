@@ -1466,3 +1466,18 @@
 }
 .ss-world .ss-stamp { position: relative; z-index: 2; background: #1b1124; }
 .ss-world .ss-flying-cap { z-index: 1; background: #1b1124; border-radius: 20px; padding: 2px 6px; }
+
+/* v2：旅客选择、遮挡修复、合并结算 */
+.ss-world .ss-bribe-card { cursor: pointer; font: inherit; color: inherit; transition: transform .15s, box-shadow .15s, border-color .15s; }
+.ss-world .ss-bribe-card:disabled { cursor: default; }
+.ss-world .ss-bribe-card.is-selected { border-color: #f2cf7d; box-shadow: 0 0 0 2px #f2cf7d, 0 8px 22px #0008; transform: translateY(-3px); }
+.ss-world .ss-bribe-card.is-settled { opacity: .55; }
+.ss-world .ss-pick-hint { margin: 2px 0 8px; }
+.ss-world .ss-reveal-card > button { position: relative; z-index: 3; margin-top: 18px; }
+.ss-world .ss-flying-cap { top: 34%; }
+.ss-world .dm-banner { top: 58px; left: auto; right: 12px; transform: none; width: auto; max-width: 60%; padding: 6px 14px; border-radius: 999px; }
+.ss-world .dm-banner strong { font-size: 17px; }
+.ss-world .ss-batch-list { list-style: none; margin: 0; padding: 0; width: 100%; display: grid; gap: 8px; max-height: 50vh; overflow: auto; }
+.ss-world .ss-batch-list li { display: grid; gap: 2px; text-align: left; padding: 8px 12px; border-radius: 10px; background: #ffffff10; }
+.ss-world .ss-batch-list b { font-size: 17px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.ss-world .dm-banner span { display: none; }

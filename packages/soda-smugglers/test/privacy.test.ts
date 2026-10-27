@@ -126,7 +126,7 @@ it("random first guard is seeded and always a real seat, explicit selection stil
   ])
     expect(() => createSS(["a", "b", "c"], options as never)).toThrow();
 });
-it("dog timeout follows same maximum rule, normal tokens cannot inspect a second box", () => {
+it("dog reveal follows the maximum rule, normal tokens cannot inspect a second box", () => {
   let s: SSState | undefined;
   for (let seed = 1; seed < 100; seed++) {
     const candidate = createSS(["a", "b", "c"], {
@@ -144,14 +144,12 @@ it("dog timeout follows same maximum rule, normal tokens cannot inspect a second
   let t = pack(s!);
   t = act(t, { type: "ADVANCE" });
   t = act(t, { type: "INSPECT", target: 1, useEvent: true });
-  const old = t;
   const max = Math.max(...t.players[1].luggage.map(bottlesSS));
-  t = act(t, { type: "TIMEOUT" }, "server", 61000);
   const i = t.players[1].revealed[0];
   expect(bottlesSS(t.players[1].luggage[i])).toBe(max);
-  expect(old.pendingDog).toBe(1);
+  expect(t.pendingDog).toBe(null);
   expect(() =>
-    act(t, { type: "INSPECT", target: 1, index: 1 - i }, 0, 62000),
+    act(t, { type: "INSPECT", target: 1, index: 1 - i }, 0, 1000),
   ).toThrow("一个手提箱");
 });
 it("timeout skips each guard stage then releases all; unlimited games reject timeout", () => {

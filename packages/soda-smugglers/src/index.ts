@@ -571,9 +571,21 @@ function inspect(
       "本轮没有可用的额外检查指示物",
     );
     if (s.event === "dog") {
+      // 卡面：被犬长检查的旅客必须翻开汽水最多的箱子。并列时结果相同，
+      // 由服务器直接翻开，避免旅客离线时整桌卡住。
       ensure(p.revealed.length === 0, "缉私犬长不能再次检查同一名旅客");
+      const values = p.luggage.map(bottlesSS);
+      const max = values.indexOf(Math.max(...values));
       s.eventUsed = true;
-      s.pendingDog = target;
+      p.revealed.push(max);
+      s.history.push({
+        round: s.round,
+        type: "DOG_REVEAL",
+        seat: s.guard,
+        target,
+        bottles: [values[max]],
+        useEvent: true,
+      });
       return;
     }
   } else {
@@ -665,6 +677,15 @@ function applyCommand(s: SSState, c: Command) {
     deadline(s, c.now);
     return;
   }
+  if (c.type === "NEXT_ROUND") {
+    // 任何玩家都能进入下一轮：警长掉线时整桌不会卡住。
+    ensure(s.phase === "ROUND_END", "本轮尚未结束或对局已经结束");
+    if (s.event) s.eventDiscard.push(s.event);
+    s.round++;
+    s.guard = (s.guard + 1) % s.players.length;
+    startRound(s, c.now);
+    return;
+  }
   ensure(c.actor === s.guard, "只有当前缉私警长可以执行此操作");
   ensure(s.pendingDog === null, "请等待旅客翻开缉私犬长指定的手提箱");
   switch (c.type) {
@@ -721,13 +742,6 @@ function applyCommand(s: SSState, c: Command) {
       break;
     case "ADVANCE":
       advance(s, c.now);
-      break;
-    case "NEXT_ROUND":
-      ensure(s.phase === "ROUND_END", "本轮尚未结束或对局已经结束");
-      if (s.event) s.eventDiscard.push(s.event);
-      s.round++;
-      s.guard = (s.guard + 1) % s.players.length;
-      startRound(s, c.now);
       break;
     default:
       ensure(false, "未知的游戏操作");

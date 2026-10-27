@@ -101,35 +101,39 @@ it("E07 起早贪黑: optional extra bribe, usable once and before inspecting", 
   expect(s.players[2].settled).toBe(true);
   expect(s.eventUsed).toBe(true);
 });
-it("E08 缉私犬长: owner chooses maximal suitcase; tie does not reveal equality or other case", () => {
+it("E08 缉私犬长: server reveals the maximal suitcase at once; tie hides equality", () => {
   let s = pack(
     withHands(eventGame("dog"), [[], [1, 3, 0, 0, 0], [2, 2, 1, 0, 0]]),
   );
   s = act(s, { type: "ADVANCE" });
   s = act(s, { type: "INSPECT", target: 1, useEvent: true });
-  expect(viewForSS(s, 0).players[1].luggage).toEqual([null, null]);
-  expect(s.pendingDog).toBe(1);
-  expect(() => act(s, { type: "REVEAL_DOG", index: 0 }, 1)).toThrow("最多");
-  expect(() => act(s, { type: "ADVANCE" })).toThrow("等待");
-  s = act(s, { type: "REVEAL_DOG", index: 1 }, 1);
+  expect(s.pendingDog).toBe(null);
   expect(viewForSS(s, 0).players[1].luggage).toEqual([
     null,
     { index: 1, bottles: 3 },
   ]);
   expect(s.budget.inspect).toBe(1);
+  expect(() => act(s, { type: "INSPECT", target: 1, index: 0 })).toThrow(
+    "一个手提箱",
+  );
   let t = pack(
     withHands(eventGame("dog"), [[], [2, 2, 0, 0, 0], [1, 1, 1, 0, 0]]),
   );
   t = act(t, { type: "ADVANCE" });
   t = act(t, { type: "INSPECT", target: 1, useEvent: true });
-  t = act(t, { type: "REVEAL_DOG", index: 1 }, 1);
-  expect(viewForSS(t, 0).players[1].luggage).toEqual([
-    null,
-    { index: 1, bottles: 2 },
-  ]);
+  expect(viewForSS(t, 0).players[1].luggage.filter(Boolean)).toHaveLength(1);
   expect(JSON.stringify(viewForSS(t, 0))).not.toMatch(
     /equal|maximum|seed|random|eventDeck|discard/,
   );
+});
+it("NEXT_ROUND can be pressed by any player so an absent guard never blocks the table", () => {
+  let s = pack(eventGame("dog"));
+  for (const _ of [0, 1, 2]) s = act(s, { type: "ADVANCE" });
+  expect(s.phase).toBe("ROUND_END");
+  const guard = s.guard;
+  s = act(s, { type: "NEXT_ROUND" }, (guard + 1) % s.players.length);
+  expect(s.round).toBe(2);
+  expect(s.guard).toBe((guard + 1) % s.players.length);
 });
 it("E00 all 8 events drawn once, never shuffled again midgame", () => {
   let s = game(4, 17, true);
