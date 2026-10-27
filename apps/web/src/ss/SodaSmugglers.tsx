@@ -356,7 +356,9 @@ export function SodaSmugglers() {
     priorPhase = useRef<string>(""),
     touchTimer = useRef<ReturnType<typeof setTimeout> | null>(null),
     dragged = useRef<string | null>(null),
-    dragStarted = useRef(false);
+    dragStarted = useRef(false),
+    tokenDrag = useRef<{ x: number; y: number; mode: "normal" | "event"; moved: boolean } | null>(null),
+    suppressTokenClick = useRef(false);
   const seat = s?.players.findIndex((p) => p.id === s.mySeat) ?? -1,
     me = v?.players[seat],
     host = !!s?.mySeat && s.mySeat === s.hostId,
@@ -610,6 +612,39 @@ export function SodaSmugglers() {
   const send = (a: SSAction) => {
     cue("submit");
     void net.act(a);
+  };
+  const tokenPointerDown = (e: React.PointerEvent<HTMLButtonElement>, tokenMode: "normal" | "event") => {
+    if (blocked || !guard) return;
+    tokenDrag.current = { x: e.clientX, y: e.clientY, mode: tokenMode, moved: false };
+    e.currentTarget.setPointerCapture(e.pointerId);
+  };
+  const tokenPointerMove = (e: React.PointerEvent<HTMLButtonElement>) => {
+    const drag = tokenDrag.current;
+    if (!drag) return;
+    if (Math.hypot(e.clientX - drag.x, e.clientY - drag.y) > 12) drag.moved = true;
+    if (!drag.moved) return;
+    const dest = document.elementFromPoint(e.clientX, e.clientY)?.closest<HTMLElement>("[data-ss-traveler-target]");
+    document.querySelectorAll(".ss-token-drop-active").forEach((el) => el.classList.remove("ss-token-drop-active"));
+    dest?.classList.add("ss-token-drop-active");
+  };
+  const tokenPointerEnd = (e: React.PointerEvent<HTMLButtonElement>) => {
+    const drag = tokenDrag.current;
+    tokenDrag.current = null;
+    document.querySelectorAll(".ss-token-drop-active").forEach((el) => el.classList.remove("ss-token-drop-active"));
+    if (!drag?.moved || e.type === "pointercancel") return;
+    suppressTokenClick.current = true;
+    const dest = document.elementFromPoint(e.clientX, e.clientY)?.closest<HTMLElement>("[data-ss-traveler-target]");
+    const targetSeat = Number(dest?.dataset.ssTravelerTarget);
+    if (!v || blocked || !dest || !candidates.includes(targetSeat)) return;
+    const useEvent = drag.mode === "event" && eventAvailable;
+    setMode(useEvent ? "event" : "normal");
+    chooseTarget(targetSeat);
+    if (v.phase === "BRIBE" && (useEvent || v.budget.bribe > 0))
+      send({ type: "ACCEPT", target: targetSeat, ...(useEvent ? { useEvent: true } : {}) });
+    else if (v.phase === "ARREST" && (useEvent || v.budget.arrest > 0))
+      send({ type: "ARREST", target: targetSeat, ...(useEvent ? { useEvent: true } : {}) });
+    else if (v.phase === "INSPECT" && useEvent && v.event === "dog" && v.players[targetSeat].luggage.every((c) => c === null))
+      send({ type: "INSPECT", target: targetSeat, useEvent: true });
   };
   const waitingSeat =
     v?.phase === "PACK"
@@ -1341,6 +1376,7 @@ export function SodaSmugglers() {
                             type="button"
                             className={`ss-bribe-card ${guard && chosen === i ? "is-selected" : ""} ${player.settled ? "is-settled" : ""}`}
                             data-testid={`ss-public-bribe-${i}`}
+                            data-ss-traveler-target={i}
                             key={i}
                             disabled={!guard || player.settled || blocked}
                             aria-pressed={guard && chosen === i}
@@ -1360,7 +1396,7 @@ export function SodaSmugglers() {
                       </div>
                     )}
                     {guard && ["BRIBE", "INSPECT", "ARREST"].includes(v.phase) && (
-                      <p className="ss-help ss-pick-hint">点上面的旅客选择对象，再按下方按钮执行。</p>
+                      <p className="ss-help ss-pick-hint">点旅客选择对象，或把行动筹码拖到旅客身上；检查时再选箱子。</p>
                     )}
                     {guard &&
                       ["BRIBE", "INSPECT", "ARREST"].includes(v.phase) && (
@@ -1371,7 +1407,11 @@ export function SodaSmugglers() {
                           <button
                             data-testid="ss-mode-normal"
                             className={!eventMode ? "is-active" : ""}
-                            onClick={() => setMode("normal")}
+                            onPointerDown={(e) => tokenPointerDown(e, "normal")}
+                            onPointerMove={tokenPointerMove}
+                            onPointerUp={tokenPointerEnd}
+                            onPointerCancel={tokenPointerEnd}
+                            onClick={() => { if (suppressTokenClick.current) { suppressTokenClick.current = false; return; } setMode("normal"); }}
                           >
                             <img
                               src={`${A}action-${v.phase === "BRIBE" ? "bribe" : v.phase === "INSPECT" ? "inspect" : "arrest"}.webp`}
@@ -1387,7 +1427,11 @@ export function SodaSmugglers() {
                             <button
                               data-testid="ss-mode-event"
                               className={eventMode ? "is-active" : ""}
-                              onClick={() => setMode("event")}
+                              onPointerDown={(e) => tokenPointerDown(e, "event")}
+                              onPointerMove={tokenPointerMove}
+                              onPointerUp={tokenPointerEnd}
+                              onPointerCancel={tokenPointerEnd}
+                              onClick={() => { if (suppressTokenClick.current) { suppressTokenClick.current = false; return; } setMode("event"); }}
                             >
                               <img src={`${A}event-${v.event}.webp`} alt="" />
                               {eventCopy[v.event!].title}

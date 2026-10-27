@@ -1515,3 +1515,9 @@
 .ss-world .ss-queue-person::after { content: ''; position: absolute; width: 27px; height: 14px; left: 1px; bottom: 0; border-radius: 12px 12px 4px 4px; background: #78607d; border: 1px solid #dcc0a0; }
 .ss-world .ss-bribe-card .ss-queue-luggage { display: flex; justify-content: center; gap: 2px; background: transparent; }
 .ss-world .ss-bribe-card .ss-queue-luggage .ss-case { width: 30%; max-width: 40px; filter: drop-shadow(0 2px 2px #000a); }
+
+/* 行动指示物像桌面筹码，支持拖动，也能照常点选。 */
+.ss-world .ss-action-tokens button { touch-action: none; cursor: grab; border-radius: 28px; border: 2px solid #d9ba83; background: linear-gradient(145deg, #5b4052, #211628); box-shadow: inset 0 2px #fff5, 0 4px 0 #120a19, 0 6px 8px #0008; }
+.ss-world .ss-action-tokens button:active { cursor: grabbing; }
+.ss-world .ss-action-tokens img { border-radius: 50%; filter: drop-shadow(0 2px 2px #0009); }
+.ss-world .ss-bribe-card.ss-token-drop-active { outline: 3px solid #f8df93; outline-offset: 2px; }
