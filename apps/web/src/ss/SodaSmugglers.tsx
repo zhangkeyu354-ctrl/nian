@@ -1347,6 +1347,12 @@ export function SodaSmugglers() {
                             onClick={() => chooseTarget(i)}
                           >
                             <strong title={player.name}>{i + 1}号 {player.name}</strong>
+                            <span className="ss-queue-person" aria-hidden="true" />
+                            <span className="ss-queue-luggage" aria-label="旅客的手提箱">
+                              {player.luggage.map((bag, bagIndex) => (
+                                <Suitcase key={bagIndex} back={!bag} bottles={bag?.bottles} />
+                              ))}
+                            </span>
                             <Suitcase bottles={player.bribe.bottles} />
                             <span>{player.settled ? "✅ 已结算" : `受贿 ${player.bribe.bottles} 瓶`}</span>
                           </button>
