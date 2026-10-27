@@ -50,3 +50,7 @@
 - `npm run verify:ss-browsers`：6 局、37 项检查、4194 次网络检查、3303 次 DOM 检查通过。
 - `npm run verify:lan-browsers`：2 局、各5端，337 条命令、343 次杀手帧检查、10 张截图检查通过；运行前 3184 无监听。
 - 隔离副本的魔法运动员赛道文件仅换行字节与常用工作区不同；已用原工作区相同字节复现原有冻结哈希测试，逻辑内容一致。完整原始输出见 `verification/premerge-*.txt`。
+
+## 干净副本的生成文件依赖
+
+合并副本首次 `npm run typecheck` 因 `apps/web/test/scenarios.generated.json` 缺失失败。该文件被 `.gitignore` 忽略，`npm run verify:mobile-interfaces` 会生成；先运行该命令后，64 个场景通过，随后 `npm run typecheck` 和 `npm run build` 均通过。建议今后让干净副本的 typecheck 自动准备该生成文件，或调整类型检查依赖；本次不改相关机制。
