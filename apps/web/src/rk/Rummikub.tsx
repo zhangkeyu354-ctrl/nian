@@ -5,6 +5,7 @@ import {
   createTiles,
   tileName,
   validateMeld,
+  TURN_SECONDS,
   type Meld,
   type Interpretation,
 } from "../../../../packages/rummikub/src/index.ts";
@@ -94,7 +95,10 @@ export function Rummikub() {
     [drag, setDrag] = useState<Drag | null>(null),
     [target, setTarget] = useState(""),
     [drawnIds, setDrawnIds] = useState<string[]>([]),
-    [rackWidth, setRackWidth] = useState(0);
+    [rackWidth, setRackWidth] = useState(0),
+    [handOpen, setHandOpen] = useState(true);
+  const handSwipe = useRef<number | null>(null);
+  const setHandOpenRef = useRef(setHandOpen);
   const surface = useRef<HTMLDivElement>(null),
     rackArea = useRef<HTMLDivElement>(null),
     prior = useRef<
@@ -127,6 +131,7 @@ export function Rummikub() {
       active: boolean;
       type: string;
       timer: ReturnType<typeof setTimeout> | null;
+      inRack?: boolean;
     } | null>(null),
     suppressClick = useRef(0);
   const touch = useRef(new Map<number, { x: number; y: number }>()),
@@ -186,7 +191,10 @@ export function Rummikub() {
     if (p && p.current !== v.current) {
       setSelected([]);
       setMerge([]);
-      if (mine) buzz("turn");
+      if (mine) {
+        buzz("turn");
+        setHandOpen(true);
+      }
     }
     if (v.phase === "FINISHED" && p?.phase !== "FINISHED")
       buzz(v.result?.winners.includes(v.me) ? "win" : "lose");
@@ -268,7 +276,17 @@ export function Rummikub() {
       }
       if (!d.active && distance > 12 && d.type !== "mouse") {
         if (d.timer) clearTimeout(d.timer);
-        rackArea.current?.scrollBy(d.startX - d.x, 0);
+        if (
+          d.inRack &&
+          d.y - d.startY > 40 &&
+          Math.abs(d.y - d.startY) > Math.abs(d.x - d.startX)
+        ) {
+          pendingDrag.current = null;
+          suppressClick.current = Date.now() + 400;
+          setHandOpenRef.current(false);
+          return;
+        }
+        if (d.inRack) rackArea.current?.scrollBy(d.startX - d.x, 0);
         d.startX = d.x;
         return;
       }
@@ -352,6 +370,7 @@ export function Rummikub() {
       active: false,
       type: e.pointerType,
       timer: null as ReturnType<typeof setTimeout> | null,
+      inRack: !!(e.target as HTMLElement).closest(".rk-rack"),
     };
     pendingDrag.current = d;
     if (e.pointerType !== "mouse")
@@ -429,6 +448,13 @@ export function Rummikub() {
           m.tiles.join() !== officialBoard[i]?.tiles.join(),
       ));
   const drawMode = mine && !dirty;
+  const splitTarget = (() => {
+    if (selected.length !== 1) return null;
+    const m = board.find((m) => m.tiles.includes(selected[0]));
+    if (!m) return null;
+    const at = m.tiles.indexOf(selected[0]);
+    return at > 0 ? { meld: m.id, at } : null;
+  })();
   const openDraw = drawVisible && v?.phase === "PLAYING";
   const playerStrip = (lobby = false) => (
     <div className={"rk-players " + (lobby ? "rk-seats" : "")}>
@@ -534,7 +560,7 @@ export function Rummikub() {
               }
               aria-label={"剩余 " + left + " 秒"}
             >
-              <CountdownRing left={left} total={(v?.minutes ?? 1) * 60} />
+              <CountdownRing left={left} total={TURN_SECONDS[v?.minutes ?? 1] || 100} />
               <b>{left}</b>
             </span>
           )}
@@ -581,7 +607,7 @@ export function Rummikub() {
                       房间 <b>{s.code}</b> · {s.count} 人 ·{" "}
                       {s.variant === "xp" ? "XP 160 张" : "原版 106 张"} ·{" "}
                       {s.games} 局 ·{" "}
-                      {s.minutes ? s.minutes + " 分钟/回合" : "不限时"}
+                      {s.minutes ? TURN_SECONDS[s.minutes] + " 秒/回合" : "不限时"}
                     </p>
                   </div>
                   {playerStrip(true)}
@@ -636,8 +662,8 @@ export function Rummikub() {
                           })
                         }
                       >
-                        <option value="1">1 分钟</option>
-                        <option value="2">2 分钟</option>
+                        <option value="1">100 秒</option>
+                        <option value="2">200 秒</option>
                         <option value="0">不限</option>
                       </select>
                     </label>
@@ -850,8 +876,7 @@ export function Rummikub() {
                         clearTimeout(pendingDrag.current.timer);
                       pendingDrag.current = null;
                       setDrag(null);
-                    } else if (!(e.target as HTMLElement).closest("button"))
-                      pan.current = { x: e.clientX, y: e.clientY };
+                    } else pan.current = { x: e.clientX, y: e.clientY };
                   }}
                   onPointerMove={(e) => {
                     if (
@@ -876,7 +901,17 @@ export function Rummikub() {
                           ),
                         ),
                       );
-                    } else if (pan.current && surface.current) {
+                    } else if (
+                      pan.current &&
+                      surface.current &&
+                      !pendingDrag.current?.active
+                    ) {
+                      if (
+                        Math.abs(pan.current.x - e.clientX) +
+                          Math.abs(pan.current.y - e.clientY) >
+                        2
+                      )
+                        suppressClick.current = Date.now() + 300;
                       surface.current.scrollBy(
                         pan.current.x - e.clientX,
                         pan.current.y - e.clientY,
@@ -965,41 +1000,6 @@ export function Rummikub() {
                             {m.tiles.map((id, j) => (
                               <div className="rk-table-slot" key={id}>
                                 {tileButton(id, interpretation, true)}
-                                {mine && j < m.tiles.length - 1 && (
-                                  <button
-                                    data-rk-drop={m.id}
-                                    data-rk-index={j + 1}
-                                    className={
-                                      "rk-split " +
-                                      (splitHint === m.id + ":" + (j + 1)
-                                        ? "armed"
-                                        : "")
-                                    }
-                                    aria-label={
-                                      "拆分第 " +
-                                      (i + 1) +
-                                      " 组第 " +
-                                      (j + 1) +
-                                      " 张之后"
-                                    }
-                                    onClick={() => {
-                                      const key = m.id + ":" + (j + 1);
-                                      if (splitHint === key)
-                                        void send({
-                                          type: "SPLIT",
-                                          meld: m.id,
-                                          at: j + 1,
-                                        });
-                                      else setSplitHint(key);
-                                    }}
-                                  >
-                                    <span>
-                                      {splitHint === m.id + ":" + (j + 1)
-                                        ? "✂"
-                                        : "│"}
-                                    </span>
-                                  </button>
-                                )}
                               </div>
                             ))}
                           </div>
@@ -1055,6 +1055,22 @@ export function Rummikub() {
                             " 张"}
                   </div>
                 )}
+                {mine && splitTarget && !drag && (
+                  <button
+                    className="rk-quick-new rk-quick-split"
+                    data-testid="rk-quick-split"
+                    disabled={net.pending}
+                    onClick={() =>
+                      void send({
+                        type: "SPLIT",
+                        meld: splitTarget.meld,
+                        at: splitTarget.at,
+                      })
+                    }
+                  >
+                    ✂ 从这张牌前面拆开
+                  </button>
+                )}
                 {mine && selected.length > 0 && !drag && (
                   <button
                     className="rk-quick-new"
@@ -1072,20 +1088,39 @@ export function Rummikub() {
                       ? "已选 " +
                         selected.length +
                         " 张 · 点组合右侧「+」或「新建一组」 · 点空白处取消"
-                      : "点选牌再放置 · 长按拖动 · 点牌缝两下可拆分 · 双指缩放"}
+                      : "点任意牌选中 · 按住牌拖动 · 在桌面任意处滑动"}
                 </p>
               </section>
               <aside className="rk-sidebar">
                 {playerStrip()}
                 <section
-                  className="rk-hand"
+                  className={"rk-hand " + (handOpen ? "" : "collapsed")}
                   data-rk-drop="rack"
                   aria-label="我的牌架"
                 >
-                  <div className="rk-hand-heading">
-                    <h2>
-                      我的牌架 <span>{rack.length} 张</span>
-                    </h2>
+                  <div
+                    className="rk-hand-heading"
+                    onPointerDown={(e) => (handSwipe.current = e.clientY)}
+                    onPointerUp={(e) => {
+                      const y0 = handSwipe.current;
+                      handSwipe.current = null;
+                      if (y0 === null) return;
+                      if (e.clientY - y0 > 24) setHandOpen(false);
+                      else if (y0 - e.clientY > 24) setHandOpen(true);
+                    }}
+                  >
+                    <button
+                      className="rk-hand-toggle"
+                      aria-expanded={handOpen}
+                      aria-label={handOpen ? "收起牌架" : "展开牌架"}
+                      onClick={() => setHandOpen((o) => !o)}
+                    >
+                      <i aria-hidden="true" />
+                      <h2>
+                        我的牌架 <span>{rack.length} 张</span>
+                        <em>{handOpen ? "下拉收起" : "上拉展开"}</em>
+                      </h2>
+                    </button>
                     <div className="rk-sort">
                       <button
                         aria-pressed={sort === "color"}

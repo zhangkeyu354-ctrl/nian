@@ -86,10 +86,10 @@ describe("RK room authority and persistence", () => {
       /身份/,
     );
     expect(() => act(current, { type: "DRAW", now: 0 })).toThrow(/时间/);
-    expect(r.tick(60999)).toBe(false);
-    expect(r.tick(61000)).toBe(true);
+    expect(r.tick(100999)).toBe(false);
+    expect(r.tick(101000)).toBe(true);
     expect(r.file.state!.players[current].rack).toHaveLength(17);
-    expect(r.tick(61000)).toBe(false);
+    expect(r.tick(101000)).toBe(false);
   });
   it("settings validate counts and reset readiness", () => {
     const r = RKRoom.create("TEST", dir());

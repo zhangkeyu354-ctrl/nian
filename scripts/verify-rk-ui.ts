@@ -421,12 +421,9 @@ try {
     assert(await p.getByTestId("rk-commit").isDisabled());
     await shot(p, direction + "-invalid");
     await open(p, direction + "-split");
-    const cut = p.getByRole("button", {
-      name: "拆分第 1 组第 3 张之后",
-      exact: true,
-    });
-    await cut.click();
-    await cut.click();
+    const cutAt = (await snapshot(p)).view.draft.board[0].tiles[3];
+    await clickTile(p, cutAt);
+    await p.getByTestId("rk-quick-split").click();
     await p.waitForFunction(
       () =>
         JSON.parse(window.render_game_to_text()).view.draft.board.length === 2,

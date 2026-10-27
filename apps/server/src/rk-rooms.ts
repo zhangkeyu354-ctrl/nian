@@ -204,7 +204,7 @@ export class RKRoom {
             );
             ensure(
               [0, 1, 2].includes(minutes),
-              "计时只能为 1 分钟、2 分钟或不限",
+              "计时只能为 100 秒、200 秒或不限",
             );
             ensure(
               Number.isInteger(games) && games >= 1 && games <= 100,

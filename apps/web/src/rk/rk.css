@@ -2270,3 +2270,50 @@
     display: none;
   }
 }
+/* Hand drawer: swipe/tap the heading to show or hide the rack. */
+.rk-world .rk-hand-heading {
+  touch-action: none;
+}
+.rk-world .rk-hand-toggle {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  min-height: 44px;
+  padding: 0 4px;
+  border: 0;
+  background: none;
+  color: inherit;
+  position: relative;
+}
+.rk-world .rk-hand-toggle i {
+  width: 28px;
+  height: 5px;
+  border-radius: 3px;
+  background: #d8cfa6aa;
+  position: relative;
+}
+.rk-world .rk-hand-toggle h2 em {
+  font-style: normal;
+  font-size: 10px;
+  color: #b9c6ae;
+  margin-left: 6px;
+  font-weight: 400;
+}
+.rk-world .rk-hand.collapsed .rk-rack {
+  display: none;
+}
+.rk-world .rk-hand.collapsed .rk-hand-toggle i {
+  background: #f0d591;
+}
+.rk-world .rk-quick-split {
+  border-color: #c9d6bf;
+  background: #ffffff14;
+  color: #eef3e6;
+}
+.rk-world .rk-meld-error {
+  white-space: normal;
+  line-height: 1.2;
+}
+.rk-world .rk-meld.invalid {
+  min-width: 96px;
+}

@@ -89,7 +89,7 @@ function fixture(
     {
       seed: 1,
       minutes: timed ? 1 : 0,
-      now: Date.now() - (timed ? 45000 : 0),
+      now: Date.now() - (timed ? 85000 : 0),
       assertions: true,
     },
   );
@@ -224,7 +224,7 @@ try {
   const pages = await Promise.all(contexts.map((c) => c.newPage()));
   pages.forEach((p) => p.on("pageerror", (e) => errors.push(e.message)));
   await Promise.all(pages.map(boot));
-  // The timeout fixture represents a turn started 45 seconds before the test server.
+  // The timeout fixture represents a turn started 85 seconds (100s timer) before the test server.
   await connectFixture(pages, timeout);
   const initial = await snapshot(pages[0]);
   assert.equal(initial.view!.current, 0);

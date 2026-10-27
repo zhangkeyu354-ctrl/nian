@@ -237,16 +237,16 @@ describe("RK turns and scoring", () => {
   it("only trusted server deadline expires, penalty bounded by remaining pool", () => {
     const s = game();
     expect(() =>
-      reduceRK(s, { type: "TIMEOUT", actor: "server", seq: 1, now: 60999 }),
+      reduceRK(s, { type: "TIMEOUT", actor: "server", seq: 1, now: 100999 }),
     ).toThrow(/未到/);
     expect(() =>
-      reduceRK(s, { type: "TIMEOUT", actor: s.current, seq: 1, now: 61000 }),
+      reduceRK(s, { type: "TIMEOUT", actor: s.current, seq: 1, now: 101000 }),
     ).toThrow();
     const t = reduceRK(s, {
       type: "TIMEOUT",
       actor: "server",
       seq: 1,
-      now: 61000,
+      now: 101000,
     });
     expect(t.players[s.current].rack).toHaveLength(17);
     expect(t.current).not.toBe(s.current);
@@ -392,19 +392,19 @@ describe("RK official joker retrieval examples and boundary regressions", () => 
     expect(viewForRK(s, 0).lastAction?.error).toContain("红5");
     expect(JSON.stringify(viewForRK(s, 1))).not.toContain("红5");
   });
-  it("late player commands resolve timeout and 2-minute timer is respected", () => {
+  it("late player commands resolve timeout and 200-second timer is respected", () => {
     const s = createRK(["a", "b"], {
       seed: 2,
       now: 1000,
       minutes: 2,
       assertions: true,
     });
-    expect(s.deadline).toBe(121000);
+    expect(s.deadline).toBe(201000);
     const t = reduceRK(s, {
       type: "DRAW",
       actor: s.current,
       seq: 1,
-      now: 121000,
+      now: 201000,
     });
     expect(t.lastAction?.type).toBe("TIMEOUT");
     expect(t.lastAction?.count).toBe(3);
@@ -485,5 +485,15 @@ describe("RK initial multi-meld and safety checks", () => {
     expect(s.passes).toBe(0);
     expect(s.phase).toBe("PLAYING");
     assertInvariants(s);
+  });
+});
+
+import { orderMeld as __orderMeld } from "../src/index.ts";
+describe("run ordering", () => {
+  it("sorts a valid run ascending, joker by represented value; groups untouched", () => {
+    expect(__orderMeld(["R07a", "R05a", "R06a"])).toEqual(["R05a", "R06a", "R07a"]);
+    expect(__orderMeld(["R08a", "J1", "R06a"])).toEqual(["R06a", "J1", "R08a"]);
+    expect(__orderMeld(["K07a", "R07a", "O07a"])).toEqual(["K07a", "R07a", "O07a"]);
+    expect(__orderMeld(["R05a", "R06a", "R08a"])).toEqual(["R05a", "R06a", "R08a"]);
   });
 });

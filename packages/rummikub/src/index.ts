@@ -255,7 +255,7 @@ function beginTurn(s: RKState, now: number) {
   s.draft = copy(s.turn);
   s.undo = [];
   s.redo = [];
-  s.deadline = s.minutes ? now + s.minutes * 60000 : null;
+  s.deadline = s.minutes ? now + TURN_SECONDS[s.minutes] * 1000 : null;
 }
 function deal(s: RKState, now: number) {
   const tiles = createTiles(s.variant ?? "classic");
@@ -321,7 +321,7 @@ export function createRK(
   const now = options.now ?? 0,
     minutes = options.minutes ?? 1;
   check(Number.isFinite(now) && now >= 0, "服务器时间无效");
-  check([0, 1, 2].includes(minutes), "计时只能设置为 1 分钟、2 分钟或不限");
+  check([0, 1, 2].includes(minutes), "计时只能设置为 100 秒、200 秒或不限");
   const s: RKState = {
     variant,
     phase: "PLAYING",
@@ -548,6 +548,16 @@ function drawEnd(
   if (!s.pool.length && s.passes >= s.players.length) finish(s, true);
   else nextTurn(s, now);
 }
+/** 合法顺子按数字从小到大自动排列（百搭牌按所代表的数字）；其他组合保持原样。 */
+export function orderMeld(tiles: string[]): string[] {
+  const interp = validateMeld(tiles)[0];
+  if (!interp || interp.kind !== "run") return tiles;
+  const value = (id: string) =>
+    BY_ID.get(id)?.value ?? interp.jokers[id]?.value ?? 0;
+  return [...tiles].sort((a, b) => value(a) - value(b));
+}
+/** 每回合限时：1 档 = 100 秒，2 档 = 200 秒。 */
+export const TURN_SECONDS: Record<number, number> = { 0: 0, 1: 100, 2: 200 };
 function edit(s: RKState, c: Command) {
   const old = copy(s.draft);
   const d = s.draft;
@@ -650,6 +660,7 @@ function edit(s: RKState, c: Command) {
     default:
       throw new RKError("未知草稿命令");
   }
+  d.board.forEach((m) => (m.tiles = orderMeld(m.tiles)));
   validateConservation(s, d);
   s.undo.push(old);
   s.redo = [];

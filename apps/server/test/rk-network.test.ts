@@ -110,7 +110,7 @@ it("RK real sockets isolate draft packets, reject stolen tokens and reconnect bo
     });
     expect(duplicate.ok).toBe(true);
     expect(duplicate.consumed).toBe(false);
-    now = 61000;
+    now = 101000;
     const snap = await ask(clients[r.file.state!.current], E.action, {
       code,
       token: users[r.file.state!.current].token,
