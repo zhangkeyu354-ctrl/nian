@@ -1533,3 +1533,5 @@
   from { transform: rotateY(-90deg) scale(.94); }
   to { transform: rotateY(0) scale(1); }
 }
+.ss-world .ss-flying-cap img { filter: drop-shadow(0 3px 2px #0009); animation: ss-cap-spin 1s ease-in both; }
+@keyframes ss-cap-spin { to { transform: rotate(540deg); } }

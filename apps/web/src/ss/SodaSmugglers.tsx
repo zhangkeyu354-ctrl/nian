@@ -238,7 +238,7 @@ function Reveal({
       const r = el.getBoundingClientRect();
       setFlight({
         x: r.left + r.width / 2 - innerWidth / 2,
-        y: r.top + r.height / 2 - innerHeight / 2,
+        y: r.top + r.height / 2 - innerHeight * 0.34,
       });
     }
     const timers = [
