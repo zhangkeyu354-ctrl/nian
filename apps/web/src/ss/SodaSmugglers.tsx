@@ -1390,7 +1390,7 @@ export function SodaSmugglers() {
                               ))}
                             </span>
                             <Suitcase bottles={player.bribe.bottles} />
-                            <span>{player.settled ? "✅ 已结算" : `受贿 ${player.bribe.bottles} 瓶`}</span>
+                            <span>{player.settled ? "✅ 已结算" : `受贿${player.bribe.bottles}瓶`}</span>
                           </button>
                         ))}
                       </div>
