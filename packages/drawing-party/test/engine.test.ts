@@ -30,12 +30,13 @@ describe("3–10人传话", () => {
       for (const p of ps)
         s = act(s, p.id, { type: "TEXT", text: "初题" + p.id }, 1100);
       expect(s.phase).toBe("TASK");
-      expect(s.steps).toBe(n - (n % 2));
+      expect(s.steps).toBe(2 * Math.floor((n - 1) / 2));
       const seen = new Map<string, Set<string>>();
       for (let r = 1; r <= s.steps; r++) {
         const ids = new Set<string>();
         for (const p of ps) {
           const task = taskFor(s, p.id)!;
+          if (r === 1) expect(task.source.author).not.toBe(p.id);
           ids.add(task.chain);
           const set = seen.get(task.chain) ?? new Set();
           expect(set.has(p.id)).toBe(false);

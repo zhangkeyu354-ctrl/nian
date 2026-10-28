@@ -66,7 +66,7 @@ try {
         assert.equal((await snap()).view.theme, n % 2 ? "歌词" : undefined);
         for (let i = 0; i < n; i++)
           await action(i, { type: "TEXT", text: "秘密中文" + i });
-        for (let step = 1; step <= n - (n % 2); step++) {
+        for (let step = 1; step <= 2 * Math.floor((n - 1) / 2); step++) {
           if (step % 2) {
             const inkEvents = clients.map(() => 0);
             clients.forEach((s, i) => s.on("dp:ink", () => inkEvents[i]++));
@@ -135,13 +135,16 @@ try {
               n,
             );
           } else if (v.phase === "AWARD") {
-            for (let i = 0; i < n; i++)
+            const cands: string[] = v.awardCandidates;
+            for (let i = 0; i < n; i++) {
+              const pick = cands.find((c) => c !== ids[i]) ?? null;
               await action(i, {
                 type: "AWARD_VOTE",
                 chain: v.awardChain,
-                mvp: ids[(i + 1) % n],
-                dud: i % 2 ? null : ids[(i + 1) % n],
+                mvp: pick,
+                dud: i % 2 ? null : pick,
               });
+            }
             assert.equal((await snap()).view.phase, "AWARD_RESULT");
             assert.equal(
               (await snap()).view.awardResults.length,
