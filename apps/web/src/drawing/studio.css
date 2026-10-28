@@ -4578,3 +4578,32 @@
 /* Touch targets stay usable when the player count wraps on a narrow phone. */
 .lb-seg { flex-wrap:wrap; }
 .lb-seg button,.lb-seg.is-small button { min-width:44px; min-height:44px; }
+
+/* lobby: never wider than the phone (3–10 player picker) */
+.lb-body > *,
+.lb-card,
+.lb-card > * {
+  min-width: 0;
+}
+.lb-seg {
+  grid-auto-columns: minmax(0, 1fr);
+}
+.lb-seg button {
+  min-width: 0;
+}
+.lb-room-head > div {
+  min-width: 0;
+}
+@media (max-width: 520px) {
+  .lb-field.is-inline {
+    grid-template-columns: 1fr;
+    gap: 7px;
+  }
+  .lb-seg button {
+    font-size: 14px;
+  }
+  .lb-code strong {
+    font-size: 18px;
+    letter-spacing: 2px;
+  }
+}
