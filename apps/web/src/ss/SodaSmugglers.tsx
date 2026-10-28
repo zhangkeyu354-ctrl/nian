@@ -758,7 +758,7 @@ export function SodaSmugglers() {
       v.pendingDog === null
     ) {
       const next =
-        v.phase === "ARREST" ? "结束行动，放行其余旅客" : "进入下一阶段";
+        v.phase === "ARREST" ? "放行其余旅客" : "下一阶段";
       return (
         <>
           {action ? (

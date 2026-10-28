@@ -1,3 +1,4 @@
 * text=auto
 docs/phase1/games/*.jsonl text eol=lf
 docs/phase1/games/*.replay.json text eol=lf
+packages/magical-athlete/src/tracks.ts text eol=lf
