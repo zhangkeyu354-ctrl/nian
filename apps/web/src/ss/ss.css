@@ -1519,8 +1519,9 @@
 @media (orientation: portrait) {
   .ss-world .ss-bribe-cards:has(.ss-bribe-card:nth-child(5)) { grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 5px; }
   .ss-world .ss-bribe-cards:has(.ss-bribe-card:nth-child(5)) .ss-bribe-card { padding: 2px; }
-  .ss-world .ss-bribe-cards:has(.ss-bribe-card:nth-child(5)) .ss-queue-person { height: 20px; transform: scale(.7); margin: -2px auto -1px; }
-  .ss-world .ss-bribe-cards:has(.ss-bribe-card:nth-child(5)) .ss-queue-luggage .ss-case { max-height: 12px; }
+  .ss-world .ss-bribe-cards:has(.ss-bribe-card:nth-child(5)) .ss-queue-person { height: 14px; transform: scale(.65); margin: -2px auto 0; }
+  .ss-world .ss-bribe-cards:has(.ss-bribe-card:nth-child(5)) .ss-queue-luggage .ss-case { max-height: 9px; }
+  .ss-world .ss-bribe-cards:has(.ss-bribe-card:nth-child(5)) .ss-bribe-card > .ss-case { max-height: 35px; }
   .ss-world .ss-bribe-cards:has(.ss-bribe-card:nth-child(5)) .ss-bribe-card > span:last-child { white-space: nowrap; }
 }
 
