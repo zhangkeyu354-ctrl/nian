@@ -18,7 +18,10 @@ import {
   type Selection,
 } from "./ui-model.ts";
 import { useSSRoom } from "./ss-net.ts";
+import "@fontsource/zcool-kuaile/400.css";
 import "./ss.css";
+import "./ss-art2.css";
+import { Avatar, CapPile, Icon, Stamp } from "./art2.tsx";
 const A = "/assets/soda-smugglers/";
 type View = NonNullable<SSSnapshot["view"]>;
 const phases: Record<View["phase"], string> = {
@@ -108,26 +111,24 @@ function SeatStrip({
           onClick={() => onSelect(i)}
         >
           <span className="ss-seat-top">
-            <span className="ss-avatar" aria-hidden="true">
-              {i + 1}
-            </span>
+            <Avatar seat={i} guard={i === v.guard} />
+            <span className="ss2-seatno ss-avatar">{i + 1}</span>
             <strong>{p.name}</strong>
           </span>
           <span className="ss-seat-bottom">
-            <span aria-label={`${p.caps} 瓶盖`}>
-              <img src={`${A}cap-1.webp`} alt="瓶盖" />
-              {p.caps}
-            </span>
-            <span>
-              {i === v.guard
-                ? "🔍警长"
-                : p.settled
-                  ? "✅已结算"
-                  : v.phase === "BRIBE" && p.submitted
-                    ? "🤝谈判中"
-                    : p.submitted
-                      ? "✅已提交"
-                      : "等待提交"}
+            <CapPile caps={p.caps} base={A} />
+            <span className="ss2-status">
+              {i === v.guard ? (
+                <><Icon name="guard" />警长</>
+              ) : p.settled ? (
+                <><Icon name="check" />已结算</>
+              ) : v.phase === "BRIBE" && p.submitted ? (
+                <><Icon name="deal" />谈判中</>
+              ) : p.submitted ? (
+                <><Icon name="check" />已提交</>
+              ) : (
+                <><Icon name="wait" />等待提交</>
+              )}
             </span>
           </span>
         </button>
@@ -269,8 +270,11 @@ function Reveal({
         </div>
         {step >= 2 && (
           <>
-            <strong className="ss-stamp" data-testid="ss-reveal-title">
-              {action.bribed ? "受贿放行" : x.title}
+            <strong className="ss-stamp-wrap" data-testid="ss-reveal-title" aria-label={action.bribed ? "受贿放行" : x.title}>
+              <Stamp
+                text={action.bribed ? "受贿放行" : x.title}
+                tone={action.type === "CONFISCATE" ? "caught" : action.type === "WRONGFUL" ? "warn" : "clear"}
+              />
             </strong>
             <p>{x.detail}</p>
             <span
@@ -445,9 +449,19 @@ export function SodaSmugglers() {
     );
     historySeen.current = n;
     // 本轮末自动放行、贪得无厌全放：多人合并成一个结算弹窗，只点一次。
-    if (items.length > 1)
-      setRevealQueue((q) => [...q, { type: "BATCH", round: v.round, seat: v.guard, items }]);
-    else if (items.length) setRevealQueue((q) => [...q, ...items]);
+    // 逮捕和受贿单独揭晓；本轮末自动放行的人合并成一个弹窗。
+    const solo = items.filter((x) => x.type !== "RELEASE" || x.bribed);
+    const auto = items.filter((x) => x.type === "RELEASE" && !x.bribed);
+    const allBribed = items.length > 1 && items.every((x) => x.bribed);
+    const queue: RevealItem[] = allBribed
+      ? [{ type: "BATCH", round: v.round, seat: v.guard, items }]
+      : [
+          ...solo,
+          ...(auto.length > 1
+            ? [{ type: "BATCH", round: v.round, seat: v.guard, items: auto }]
+            : auto),
+        ];
+    if (queue.length) setRevealQueue((q) => [...q, ...queue]);
   }, [v?.history.length]);
   useEffect(() => {
     if (net.error) cue("lose");
@@ -1305,7 +1319,35 @@ export function SodaSmugglers() {
                 ) : v.phase === "FINISHED" ? (
                   <div className="ss-results" data-testid="ss-result">
                     <div className="ss-podium">
-                      <span>🏆</span>
+                      <div className="ss2-confetti" aria-hidden="true">
+                        {Array.from({ length: 18 }, (_, k) => (
+                          <i
+                            key={k}
+                            style={{
+                              left: `${(k * 53) % 100}%`,
+                              background: ["#ffd23f", "#ff5fa2", "#3ee6a8", "#4fc3ff"][k % 4],
+                              animationDelay: `${(k % 6) * 0.45}s`,
+                            }}
+                          />
+                        ))}
+                      </div>
+                      <div className="ss2-podium" aria-hidden="true">
+                        {[1, 0, 2].map((rank) => {
+                          const order = [...v.players.keys()].sort(
+                            (a, b) => v.players[b].caps - v.players[a].caps,
+                          );
+                          const who = order[rank];
+                          if (who === undefined) return null;
+                          return (
+                            <div key={rank} className={`ss2-place-${rank + 1}`}>
+                              <Avatar seat={who} size={56} />
+                              <span className="ss2-name">{v.players[who].name}</span>
+                              <span className="ss2-block">{rank + 1}</span>
+                            </div>
+                          );
+                        })}
+                      </div>
+                      <Icon name="trophy" size={30} />
                       <h2>胜利属于</h2>
                       <strong>
                         {v.result?.winners
@@ -1424,14 +1466,14 @@ export function SodaSmugglers() {
                             onClick={() => chooseTarget(i)}
                           >
                             <strong title={player.name}>{i + 1}号 {player.name}</strong>
-                            <span className="ss-queue-person" aria-hidden="true" />
+                            <Avatar seat={i} />
                             <span className="ss-queue-luggage" aria-label="旅客的手提箱">
                               {player.luggage.map((bag, bagIndex) => (
                                 <Suitcase key={bagIndex} back={!bag} bottles={bag?.bottles} />
                               ))}
                             </span>
                             <Suitcase bottles={player.bribe.bottles} />
-                            <span>{player.settled ? "✅ 已结算" : `受贿${player.bribe.bottles}瓶`}</span>
+                            <span>{player.settled ? "已结算" : `受贿 ${player.bribe.bottles} 瓶`}</span>
                           </button>
                         ))}
                       </div>
@@ -1447,7 +1489,9 @@ export function SodaSmugglers() {
                         <div className="ss-traveler-head">
                           <span className="ss-passport">{focus + 1}</span>
                           <div>
-                            <small>正在查看</small>
+                            <small className={focus === seat ? "ss2-mine" : ""}>
+                              {focus === seat ? "我的手提箱 · 只有你看得见" : "正在查看"}
+                            </small>
                             <h2>{person.name}</h2>
                           </div>
                           <span className="ss-bribe">
@@ -1556,6 +1600,24 @@ export function SodaSmugglers() {
                 {primary()}
               </ActionDock>
             </div>
+            {v && (
+              <div className="ss2-side-panel" aria-label="公共区与本轮记录">
+                <h3>公共区</h3>
+                <CapPile caps={v.bank} base={A} />
+                <h3>本轮记录</h3>
+                {v.history.filter((a) => a.round === v.round).length === 0 ? (
+                  <p>还没有动作。</p>
+                ) : (
+                  v.history
+                    .filter((a) => a.round === v.round)
+                    .map((a, i) => (
+                      <p key={i}>
+                        <HistoryText a={a} v={v} />
+                      </p>
+                    ))
+                )}
+              </div>
+            )}
           </aside>
         </div>
       )}
@@ -1569,7 +1631,7 @@ export function SodaSmugglers() {
         >
           <div>
             <small>第 {v.round} 轮 · 你的职务</small>
-            <img src={`${A}suitcase-back.webp`} alt="" />
+            <Avatar seat={seat} guard={guard} size={96} />
             <strong>{guard ? "缉私警长" : "旅客"}</strong>
             <p>{guard ? "你负责受贿、检查和逮捕。" : "秘密装包，准备过关。"}</p>
             <button

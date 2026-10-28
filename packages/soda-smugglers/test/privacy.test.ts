@@ -77,9 +77,8 @@ it("HR-SS-01 bank payouts are capped too; no overdraft and no invented caps", ()
   s = act(s, { type: "ACCEPT", target: 1 });
   expect(s.bank).toBe(0);
   expect(s.players[1].caps).toBe(10);
-  s = act(act(act(s, { type: "ADVANCE" }), { type: "ADVANCE" }), {
-    type: "ADVANCE",
-  });
+  s = act(act(s, { type: "ADVANCE" }), { type: "ADVANCE" });
+  expect(s.phase).toBe("ROUND_END");
   expect(s.players[2].caps).toBe(10);
   assertInvariants(s);
 });

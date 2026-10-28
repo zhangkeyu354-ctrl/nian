@@ -1,0 +1,69 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 800" preserveAspectRatio="xMidYMax slice">
+  <!-- 原创：深夜热带海关。只用于背景氛围，内容面板压在上面。 -->
+  <defs>
+    <linearGradient id="sky" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#120a2e"/>
+      <stop offset=".55" stop-color="#3b1561"/>
+      <stop offset="1" stop-color="#7a2a6e"/>
+    </linearGradient>
+    <linearGradient id="ground" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#24123a"/>
+      <stop offset="1" stop-color="#140a22"/>
+    </linearGradient>
+    <pattern id="dots" width="10" height="10" patternUnits="userSpaceOnUse">
+      <circle cx="2" cy="2" r="1.2" fill="#ffffff" opacity=".07"/>
+    </pattern>
+    <filter id="glow"><feGaussianBlur stdDeviation="6"/></filter>
+  </defs>
+  <rect width="1200" height="800" fill="url(#sky)"/>
+  <rect width="1200" height="800" fill="url(#dots)"/>
+  <!-- 星星与月亮 -->
+  <g fill="#fff6c8" opacity=".8">
+    <circle cx="120" cy="80" r="2"/><circle cx="300" cy="140" r="1.5"/><circle cx="520" cy="60" r="2"/>
+    <circle cx="760" cy="120" r="1.5"/><circle cx="980" cy="70" r="2"/><circle cx="1110" cy="170" r="1.5"/>
+    <circle cx="420" cy="210" r="1.2"/><circle cx="860" cy="230" r="1.2"/>
+  </g>
+  <circle cx="980" cy="150" r="58" fill="#ffe9a8" opacity=".95"/>
+  <circle cx="1002" cy="136" r="52" fill="#3b1561" opacity=".35"/>
+  <!-- 远处棕榈 -->
+  <g fill="#1a0b2a" stroke="#0d0617" stroke-width="3">
+    <path d="M90 560c10-120 14-200 30-260l12 2c-14 60-16 140-24 258z"/>
+    <path d="M126 300c-60-30-110-10-130 20 50-20 90-14 130-10zM126 300c-10-60 30-100 80-100-40 20-60 60-70 100zM126 300c50-40 120-30 150 0-50-14-100-10-150 0zM126 300c-40 10-70 50-80 90 20-40 50-70 80-90z"/>
+    <path d="M1100 580c-6-130-14-210-34-280l-12 3c18 70 22 150 26 277z"/>
+    <path d="M1060 300c50-36 110-24 140 6-50-14-96-14-140-6zM1060 300c0-60-40-96-90-96 40 20 66 60 76 96zM1060 300c-50-30-110-20-140 10 50-14 96-12 140-10z"/>
+  </g>
+  <!-- 地面与斑马线 -->
+  <rect y="560" width="1200" height="240" fill="url(#ground)"/>
+  <g fill="#ffd23f" opacity=".16">
+    <path d="M200 800l60-240h40l-50 240z"/><path d="M380 800l40-240h40l-30 240z"/>
+    <path d="M560 800l20-240h40l-10 240z"/><path d="M740 800l0-240h40l10 240z"/>
+    <path d="M920 800l-20-240h40l30 240z"/>
+  </g>
+  <!-- 岗亭 -->
+  <g stroke="#0d0617" stroke-width="5" stroke-linejoin="round">
+    <rect x="470" y="380" width="260" height="190" rx="10" fill="#2b2a6e"/>
+    <rect x="495" y="410" width="210" height="90" rx="6" fill="#ffe9a8" opacity=".85"/>
+    <path d="M450 380h300l-30-50H480z" fill="#ff4f5e"/>
+    <rect x="510" y="300" width="180" height="40" rx="8" fill="#120a2e"/>
+  </g>
+  <!-- 霓虹灯牌 -->
+  <g filter="url(#glow)" opacity=".9">
+    <rect x="514" y="304" width="172" height="32" rx="6" fill="none" stroke="#3ee6a8" stroke-width="6"/>
+  </g>
+  <rect x="514" y="304" width="172" height="32" rx="6" fill="none" stroke="#9dffd9" stroke-width="2.5"/>
+  <text x="600" y="329" text-anchor="middle" font-size="24" font-weight="bold" fill="#c6ffe9" font-family="sans-serif" letter-spacing="4">海关 CUSTOMS</text>
+  <!-- 升降杆 -->
+  <g stroke="#0d0617" stroke-width="5">
+    <rect x="740" y="470" width="30" height="100" fill="#3a3a5a"/>
+    <path d="M755 485l380-36" stroke="#0d0617" stroke-width="22" stroke-linecap="round"/>
+  </g>
+  <path d="M755 485l380-36" stroke="#fff" stroke-width="14" stroke-linecap="round" stroke-dasharray="36 36"/>
+  <path d="M791 482l36-3M863 475l36-3M935 468l36-3M1007 461l36-3M1079 454l36-3" stroke="#ff4f5e" stroke-width="14"/>
+  <!-- 汽水箱堆 -->
+  <g stroke="#0d0617" stroke-width="4">
+    <rect x="250" y="500" width="120" height="70" rx="6" fill="#b5652e"/>
+    <rect x="280" y="450" width="90" height="50" rx="6" fill="#d07a3a"/>
+    <path d="M250 535h120M280 475h90" stroke-width="3"/>
+  </g>
+  <g filter="url(#glow)" opacity=".6"><circle cx="600" cy="420" r="40" fill="#ffd23f"/></g>
+</svg>

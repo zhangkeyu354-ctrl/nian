@@ -50,7 +50,8 @@ it("R14-R26: accept bribe pays personal caps, release cashes only luggage once",
   s = act(s, { type: "ACCEPT", target: 1 });
   expect(s.players.map((p) => p.caps)).toEqual([11, 14, 10]);
   expect(s.players[1].settled).toBe(true);
-  s = act(s, { type: "ADVANCE" });
+  // 受贿筹码用完，自动进入检查阶段
+  expect(s.phase).toBe("INSPECT");
   expect(() => act(s, { type: "INSPECT", target: 1, index: 0 })).toThrow(
     "结算",
   );
@@ -59,8 +60,8 @@ it("R14-R26: accept bribe pays personal caps, release cashes only luggage once",
     null,
     { index: 1, bottles: 1 },
   ]);
+  expect(s.phase).toBe("ARREST");
   expect(() => act(s, { type: "INSPECT", target: 2, index: 0 })).toThrow();
-  s = act(s, { type: "ADVANCE" });
   s = act(s, { type: "ARREST", target: 2 });
   expect(s.players.map((p) => p.caps)).toEqual([9, 14, 13]);
   expect(s.history.at(-1)).toMatchObject({
@@ -68,7 +69,6 @@ it("R14-R26: accept bribe pays personal caps, release cashes only luggage once",
     penalty: 2,
     amount: 1,
   });
-  s = act(s, { type: "ADVANCE" });
   expect(s.phase).toBe("ROUND_END");
   expect(() => act(s, { type: "ARREST", target: 2 })).toThrow();
 });
@@ -76,7 +76,7 @@ it("R18,R22,R24: zero bribe acceptance and full confiscation excluding bribe", (
   let s = pack(withHands(game(), [[], [3, 2, 3, 0, 0], [0, 0, 0, 1, 1]]));
   s = act(s, { type: "ACCEPT", target: 2 });
   expect(s.players[0].caps).toBe(10);
-  s = act(act(s, { type: "ADVANCE" }), { type: "ADVANCE" });
+  s = act(s, { type: "ADVANCE" });
   s = act(s, { type: "ARREST", target: 1 });
   expect(s.players[0].caps).toBe(15);
   expect(s.players[1].caps).toBe(10);
@@ -90,7 +90,7 @@ it("HR-SS-01: both bribe and wrongful payment clip at zero, never create debt", 
   expect(s.players[0].caps).toBe(11);
   s.bank += 10;
   s.players[0].caps = 1;
-  s = act(act(s, { type: "ADVANCE" }), { type: "ADVANCE" });
+  s = act(s, { type: "ADVANCE" });
   s = act(s, { type: "ARREST", target: 2 });
   expect(s.players[0].caps).toBe(0);
   expect(s.players[2].caps).toBe(11);
@@ -141,4 +141,16 @@ it("R34: only server can time out; preserve submitted luggage and deadline", () 
   expect(s.deadline).toBe(121000);
   s = act(s, { type: "TIMEOUT" }, "server", 121000);
   expect(s.phase).toBe("INSPECT");
+});
+
+it("auto-advance: a stage with no usable token is skipped, choices are never made for the guard", () => {
+  let s = pack(game());
+  expect(s.phase).toBe("BRIBE");
+  s = act(s, { type: "ACCEPT", target: 1 });
+  expect(s.phase).toBe("INSPECT");
+  s = act(s, { type: "INSPECT", target: 2, index: 0 });
+  expect(s.phase).toBe("ARREST");
+  expect(s.players[2].settled).toBe(false);
+  s = act(s, { type: "ADVANCE" });
+  expect(s.phase).toBe("ROUND_END");
 });

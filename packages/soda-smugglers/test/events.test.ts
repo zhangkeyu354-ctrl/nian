@@ -42,9 +42,11 @@ it("E03 领导视察: one bonus inspection may reveal the same traveler's second
   s = act(s, { type: "INSPECT", target: 1, index: 0 });
   s = act(s, { type: "INSPECT", target: 1, index: 1, useEvent: true });
   expect(s.players[1].revealed).toEqual([0, 1]);
+  // 两次检查都用完，自动进入逮捕阶段，不能再检查
+  expect(s.phase).toBe("ARREST");
   expect(() =>
     act(s, { type: "INSPECT", target: 2, index: 0, useEvent: true }),
-  ).toThrow("额外检查");
+  ).toThrow();
 });
 it("E04 破釜沉舟: pay normal arrest count into bank, zero bottle threshold", () => {
   let s = eventGame("desperate", 5);

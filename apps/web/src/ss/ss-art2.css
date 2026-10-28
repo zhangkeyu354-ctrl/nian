@@ -1,0 +1,538 @@
+/* 汽水走私犯 UI 第二版：热带霓虹漫画风。只作用于 .ss-world，不影响其他游戏。
+   文字一律压在深色实底上，保证对比度；场景插画只在背景。 */
+.ss-world {
+  --ss-ink: #fffaf0;
+  --ss-muted: #e6dcf0;
+  --ss-gold: #ffd23f;
+  --ss-green: #3ee6a8;
+  --ss-red: #ff4f5e;
+  --ss2-pink: #ff5fa2;
+  --ss2-cyan: #4fc3ff;
+  --ss2-line: #0d0617;
+  --ss2-panel: #1d0f33ee;
+  --ss2-panel-2: #2a1650f2;
+  --ss2-display: "ZCOOL KuaiLe", "Microsoft YaHei", "PingFang SC", sans-serif;
+  background: #120a2e url("/assets/soda-smugglers/scene-night.svg") center bottom / cover no-repeat;
+}
+.ss-world:before {
+  opacity: 0.06;
+}
+/* 场景上方压一层渐暗，避免背景抢内容 */
+.ss-world:after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  background: linear-gradient(180deg, #0c061ccc 0%, #0c061c66 45%, #0c061caa 100%);
+}
+
+/* 字体：标题、数字、印章用站酷快乐体 */
+.ss-world .ss-stage-title h1,
+.ss-world .ss-stage-title h2,
+.ss-world .ss-entry h1,
+.ss-world .ss-round,
+.ss-world .ss-podium strong,
+.ss-world .ss-podium h2,
+.ss-world .ss-ranking b,
+.ss-world .ss-round-summary h2,
+.ss-world .ss-traveler h2,
+.ss-world .ss-reveal-card > small,
+.ss-world .ss2-caps b,
+.ss-world .ss-primary {
+  font-family: var(--ss2-display);
+  font-weight: 400;
+  letter-spacing: 0.02em;
+}
+.ss-world .ss-stage-title h1,
+.ss-world .ss-stage-title h2 {
+  font-size: 30px;
+  color: #fff;
+  text-shadow: 3px 3px 0 var(--ss2-line), 0 0 18px #ff5fa266;
+}
+.ss-world .ss-kicker,
+.ss-world .ss-stage-title > span:first-child,
+.ss-world .ss-stage-title small {
+  color: var(--ss-gold);
+}
+
+/* 漫画面板：粗黑描边 + 错位实心阴影 */
+.ss-world .ss-topbar {
+  background: #0d0617e6;
+  border-bottom: 3px solid var(--ss2-line);
+  box-shadow: 0 3px 0 var(--ss2-pink);
+}
+.ss-world .ss-stage {
+  background:
+    radial-gradient(#ffffff0d 1px, transparent 1.5px) 0 0 / 12px 12px,
+    linear-gradient(160deg, #2c1458f2, #1a0c33f5);
+  border: 3px solid var(--ss2-line);
+  border-radius: 18px;
+  box-shadow: 5px 5px 0 var(--ss2-line), inset 0 0 0 2px #ffffff14;
+}
+.ss-world .ss-event,
+.ss-world .ss-traveler,
+.ss-world .ss-round-summary,
+.ss-world .ss-dock-wrap,
+.ss-world .ss-entry-panel,
+.ss-world .ss-results > *,
+.ss-world .ss-reveal-card,
+.ss-world .ss-modal > div {
+  background: var(--ss2-panel-2);
+  border: 3px solid var(--ss2-line);
+  box-shadow: 4px 4px 0 var(--ss2-line);
+}
+.ss-world .ss-event {
+  background: linear-gradient(100deg, #5a1d7a, #2a1650);
+  border-color: var(--ss2-line);
+}
+.ss-world .ss-event strong {
+  color: var(--ss-gold);
+  font-family: var(--ss2-display);
+  font-size: 20px;
+}
+
+/* 按钮：主按钮柠檬黄、黑描边、按下有压扁感 */
+.ss-world button {
+  border: 2px solid var(--ss2-line);
+  background: linear-gradient(180deg, #4a2a7a, #33185c);
+  box-shadow: 3px 3px 0 var(--ss2-line);
+}
+.ss-world button:active:not(:disabled) {
+  transform: translate(2px, 2px);
+  box-shadow: 1px 1px 0 var(--ss2-line);
+}
+.ss-world .ss-primary {
+  background: linear-gradient(180deg, #ffe46b, #ffc21a);
+  border: 3px solid var(--ss2-line);
+  color: #1a0d05;
+  font-size: 21px;
+  box-shadow: 4px 4px 0 var(--ss2-line), inset 0 -4px 0 #e0a100, inset 0 2px 0 #fff5b8;
+}
+.ss-world .ss-primary:disabled {
+  background: #3d2d55;
+  color: #f4eefa;
+  border-color: var(--ss2-line);
+  box-shadow: 3px 3px 0 var(--ss2-line);
+}
+.ss-world .ss-secondary {
+  background: linear-gradient(180deg, #5b2f9a, #3d1c70);
+  color: #fff;
+}
+.ss-world .ss-dock-wrap.is-active {
+  box-shadow: 4px 4px 0 var(--ss2-line), 0 0 0 3px var(--ss-gold), 0 0 28px #ffd23f88;
+}
+
+/* 座位：角色头像 + 瓶盖堆 + 图标状态 */
+.ss-world .ss-seat {
+  background: var(--ss2-panel);
+  border: 2px solid var(--ss2-line);
+  box-shadow: 3px 3px 0 var(--ss2-line);
+}
+.ss-world .ss-seat.is-guard {
+  background: linear-gradient(120deg, #1d3a8a, #1d0f33);
+}
+.ss-world .ss-seat.is-selected {
+  box-shadow: 3px 3px 0 var(--ss2-line), 0 0 0 3px var(--ss-gold);
+}
+.ss-world .ss-seat .ss2-avatar {
+  flex: none;
+  width: 28px;
+  height: 28px;
+}
+.ss-world .ss-seat-top {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+.ss-world .ss-seat-top .ss2-seatno {
+  flex: none;
+  font-family: var(--ss2-display);
+  color: var(--ss-gold);
+}
+.ss-world .ss-seat-bottom {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+.ss-world .ss2-status {
+  display: inline-flex;
+  align-items: center;
+  gap: 3px;
+  white-space: nowrap;
+}
+.ss-world .ss2-icon {
+  flex: none;
+  vertical-align: -3px;
+}
+.ss-world .ss2-caps {
+  display: inline-flex;
+  align-items: center;
+  gap: 3px;
+}
+.ss-world .ss2-cap-stack {
+  position: relative;
+  display: inline-block;
+  width: 26px;
+  height: 22px;
+}
+.ss-world .ss2-cap-stack img {
+  position: absolute;
+  left: calc(var(--i, 0) * 2px);
+  bottom: calc(var(--i, 0) * 2px);
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  filter: drop-shadow(1px 1px 0 var(--ss2-line));
+}
+.ss-world .ss2-caps b {
+  font-size: 18px;
+  color: var(--ss-gold);
+}
+
+/* 排队的旅客：角色站在自己的箱子后面 */
+.ss-world .ss-bribe-card {
+  background: linear-gradient(180deg, #2d1858, #1b0d36);
+  border: 3px solid var(--ss2-line);
+  box-shadow: 4px 4px 0 var(--ss2-line);
+}
+.ss-world .ss-bribe-card.is-selected {
+  border-color: var(--ss-gold);
+  box-shadow: 4px 4px 0 var(--ss2-line), 0 0 0 3px var(--ss-gold), 0 0 22px #ffd23f88;
+}
+.ss-world .ss-bribe-card .ss2-avatar {
+  display: block;
+  margin: 2px auto 0;
+  width: 44px;
+  height: 44px;
+}
+.ss-world .ss-bribe-card strong {
+  background: transparent;
+  font-family: var(--ss2-display);
+  font-weight: 400;
+}
+.ss-world .ss-bribe-card > span:last-child {
+  background: #0d0617;
+  border-radius: 6px;
+}
+@media (orientation: portrait) {
+  .ss-world .ss-bribe-cards:has(.ss-bribe-card:nth-child(5)) .ss2-avatar {
+    width: 26px;
+    height: 26px;
+  }
+}
+.ss-world .ss2-watch {
+  position: absolute;
+  top: -10px;
+  right: -8px;
+  z-index: 2;
+  padding: 2px 8px;
+  border-radius: 999px;
+  background: var(--ss-gold);
+  color: #1a0d05;
+  border: 2px solid var(--ss2-line);
+  font-size: 15px;
+  font-family: var(--ss2-display);
+  animation: ss2-bob 1.2s ease-in-out infinite;
+}
+@keyframes ss2-bob {
+  50% {
+    transform: translateY(-3px);
+  }
+}
+
+/* 行动筹码 */
+.ss-world .ss-action-tokens {
+  background: transparent;
+}
+.ss-world .ss-action-tokens button {
+  border: 3px solid var(--ss2-line);
+  background: radial-gradient(circle at 35% 30%, #6a3cb0, #2e1460);
+  box-shadow: 3px 3px 0 var(--ss2-line), inset 0 0 0 3px #ffd23f55;
+}
+.ss-world .ss-action-tokens button.is-active {
+  background: radial-gradient(circle at 35% 30%, #ffe46b, #ffc21a);
+  color: #1a0d05;
+}
+
+/* 揭晓：X 光扫描 + 警灯 + 印章 */
+.ss-world .ss-reveal {
+  background: #05020dd9;
+}
+.ss-world .ss-reveal-card {
+  overflow: hidden;
+  position: relative;
+}
+.ss-world .ss-reveal-bags {
+  position: relative;
+  padding: 10px;
+  border-radius: 12px;
+  background: #0b2a3a;
+  border: 3px solid var(--ss2-line);
+  box-shadow: inset 0 0 30px #4fc3ff55;
+}
+.ss-world .ss-reveal-bags::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  height: 6px;
+  top: 0;
+  background: linear-gradient(90deg, transparent, #9be8ff, transparent);
+  box-shadow: 0 0 16px 4px #4fc3ffaa;
+  animation: ss2-scan 0.9s ease-in-out 1 both;
+}
+@keyframes ss2-scan {
+  from {
+    top: 0;
+    opacity: 1;
+  }
+  to {
+    top: calc(100% - 6px);
+    opacity: 0;
+  }
+}
+.ss-world .ss-caught .ss-reveal-card {
+  animation: ss2-shake 0.4s 0.95s both, ss2-alarm 0.6s 0.95s 3 alternate;
+}
+@keyframes ss2-shake {
+  20% { transform: translateX(-6px); }
+  40% { transform: translateX(6px); }
+  60% { transform: translateX(-4px); }
+  80% { transform: translateX(3px); }
+}
+@keyframes ss2-alarm {
+  to {
+    box-shadow: 4px 4px 0 var(--ss2-line), 0 0 60px 10px #ff4f5ecc;
+  }
+}
+.ss-world .ss-clear .ss-reveal-card {
+  box-shadow: 4px 4px 0 var(--ss2-line), 0 0 50px 6px #3ee6a866;
+}
+.ss-world .ss2-stamp {
+  width: min(240px, 70vw);
+  height: auto;
+  transform: rotate(-8deg);
+  animation: ss2-stamp-in 0.32s cubic-bezier(0.2, 1.6, 0.4, 1) both;
+}
+@keyframes ss2-stamp-in {
+  from {
+    opacity: 0;
+    transform: rotate(-8deg) scale(2.2);
+  }
+  to {
+    opacity: 1;
+    transform: rotate(-8deg) scale(1);
+  }
+}
+
+/* 终局领奖台 */
+.ss-world .ss2-podium {
+  display: flex;
+  justify-content: center;
+  align-items: flex-end;
+  gap: 10px;
+  padding: 12px 6px 0;
+}
+.ss-world .ss2-podium > div {
+  display: grid;
+  justify-items: center;
+  gap: 4px;
+  min-width: 0;
+  flex: 1;
+  max-width: 150px;
+}
+.ss-world .ss2-podium .ss2-avatar {
+  width: 56px;
+  height: 56px;
+}
+.ss-world .ss2-podium .ss2-place-1 .ss2-avatar {
+  width: 72px;
+  height: 72px;
+  animation: ss2-bob 1.4s ease-in-out infinite;
+}
+.ss-world .ss2-podium .ss2-name {
+  max-width: 100%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  font-weight: 700;
+}
+.ss-world .ss2-podium .ss2-block {
+  width: 100%;
+  display: grid;
+  place-items: center;
+  border: 3px solid var(--ss2-line);
+  border-bottom: none;
+  border-radius: 10px 10px 0 0;
+  font-family: var(--ss2-display);
+  font-size: 28px;
+  color: #1a0d05;
+  box-shadow: 4px 0 0 var(--ss2-line);
+}
+.ss-world .ss2-place-1 .ss2-block { height: 92px; background: var(--ss-gold); }
+.ss-world .ss2-place-2 .ss2-block { height: 66px; background: var(--ss2-cyan); }
+.ss-world .ss2-place-3 .ss2-block { height: 48px; background: var(--ss2-pink); }
+.ss-world .ss2-confetti {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  overflow: hidden;
+}
+.ss-world .ss2-confetti i {
+  position: absolute;
+  top: -20px;
+  width: 9px;
+  height: 14px;
+  border: 1.5px solid var(--ss2-line);
+  animation: ss2-fall 3.2s linear infinite;
+}
+@keyframes ss2-fall {
+  to {
+    transform: translateY(110vh) rotate(720deg);
+  }
+}
+.ss-world .ss-podium {
+  position: relative;
+  overflow: hidden;
+}
+
+/* 电脑端右侧：公共区与本轮记录 */
+.ss-world .ss2-side-panel {
+  display: none;
+}
+@media (min-width: 900px) and (min-height: 601px) {
+  .ss-world .ss2-side-panel {
+    display: grid;
+    gap: 8px;
+    padding: 12px;
+    border-radius: 14px;
+    background: var(--ss2-panel);
+    border: 3px solid var(--ss2-line);
+    box-shadow: 4px 4px 0 var(--ss2-line);
+    min-height: 0;
+    overflow: auto;
+  }
+  .ss-world .ss2-side-panel h3 {
+    margin: 0;
+    font-family: var(--ss2-display);
+    font-weight: 400;
+    color: var(--ss-gold);
+    font-size: 20px;
+  }
+  .ss-world .ss2-side-panel p {
+    margin: 0;
+    font-size: 17px;
+    color: var(--ss-muted);
+  }
+}
+
+/* 旅客视角：自己的箱子 */
+.ss-world .ss2-mine {
+  color: var(--ss-gold);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .ss-world .ss2-confetti,
+  .ss-world .ss-reveal-bags::after {
+    display: none;
+  }
+  .ss-world .ss-caught .ss-reveal-card,
+  .ss-world .ss2-stamp,
+  .ss-world .ss2-watch,
+  .ss-world .ss2-podium .ss2-place-1 .ss2-avatar {
+    animation: none;
+  }
+}
+.ss-world .ss-identity > div {
+  background: linear-gradient(170deg, #3a1a6e, #1d0f33);
+  border: 3px solid var(--ss2-line);
+  box-shadow: 5px 5px 0 var(--ss2-line), 0 0 40px #ff5fa255;
+}
+.ss-world .ss-identity strong {
+  font-family: var(--ss2-display);
+  font-weight: 400;
+  font-size: 34px;
+  color: var(--ss-gold);
+  text-shadow: 3px 3px 0 var(--ss2-line);
+}
+.ss-world .ss-identity .ss2-avatar {
+  margin: 6px auto;
+  animation: ss2-bob 1.4s ease-in-out infinite;
+}
+.ss-world .ss-flying-cap { top: 22%; }
+/* 舞台上半部分稍透明，让海关场景透出来 */
+.ss-world .ss-stage {
+  background:
+    radial-gradient(#ffffff0d 1px, transparent 1.5px) 0 0 / 12px 12px,
+    linear-gradient(180deg, #2c1458d9, #1a0c33f5 55%);
+}
+.ss-world .ss-seat-bottom .ss2-caps,
+.ss-world .ss-seat-bottom .ss2-cap-stack {
+  line-height: 22px;
+}
+.ss-world .ss-seat-bottom .ss2-cap-stack {
+  height: 20px;
+  width: 22px;
+}
+.ss-world .ss-seat-bottom .ss2-cap-stack img {
+  width: 16px;
+  height: 16px;
+}
+/* 横屏座位很窄：只留数字和文字，不放瓶盖堆和状态图标 */
+@media (orientation: landscape) and (max-height: 600px) {
+  .ss-world .ss-seat-bottom .ss2-cap-stack,
+  .ss-world .ss-seat-bottom .ss2-status .ss2-icon,
+  .ss-world .ss-seat .ss2-avatar {
+    display: none;
+  }
+  .ss-world .ss-seat-bottom {
+    gap: 4px;
+  }
+}
+/* 头像和瓶盖堆让座位变高：座位高度随内容 */
+@media not ((orientation: landscape) and (max-height: 600px)) {
+  .ss-world .ss-seatstrip { grid-auto-rows: auto; max-height: 260px; }
+  .ss-world .ss-seat { height: auto; min-height: 60px; }
+}
+.ss-world .ss2-stamp {
+  position: relative;
+  display: inline-grid;
+  place-items: center;
+}
+.ss-world .ss2-stamp svg {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+.ss-world .ss2-stamp-text {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  font-family: var(--ss2-display);
+  font-size: 32px;
+  line-height: 1;
+  white-space: nowrap;
+}
+/* 筹码条吸顶时要有实底，底下滚过的文字不能透出来 */
+.ss-world .ss-action-tokens {
+  background: #1d0f33;
+  box-shadow: 0 6px 10px #1d0f33;
+}
+/* 竖屏 5 人以上：座位条回到紧凑样式，把空间留给舞台 */
+@media (orientation: portrait) {
+  .ss-world .ss-seatstrip:has(.ss-seat:nth-child(5)) .ss2-avatar,
+  .ss-world .ss-seatstrip:has(.ss-seat:nth-child(5)) .ss2-cap-stack,
+  .ss-world .ss-seatstrip:has(.ss-seat:nth-child(5)) .ss2-status .ss2-icon {
+    display: none;
+  }
+  .ss-world .ss-seatstrip:has(.ss-seat:nth-child(5)) .ss-seat {
+    min-height: 44px;
+  }
+  .ss-world .ss-seatstrip:has(.ss-seat:nth-child(5)) {
+    max-height: 190px;
+  }
+}
+.ss-world .ss-action-tokens { z-index: 12; }
+@media (orientation: portrait) { .ss-world .ss-action-tokens { position: static; box-shadow: none; } }

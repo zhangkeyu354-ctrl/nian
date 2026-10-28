@@ -3,37 +3,37 @@
     {
       "players": 3,
       "events": false,
-      "commands": 51,
+      "commands": 33,
       "rounds": 6
     },
     {
       "players": 3,
       "events": true,
-      "commands": 47,
+      "commands": 33,
       "rounds": 6
     },
     {
       "players": 5,
       "events": false,
-      "commands": 55,
+      "commands": 40,
       "rounds": 5
     },
     {
       "players": 5,
       "events": true,
-      "commands": 52,
+      "commands": 40,
       "rounds": 5
     },
     {
       "players": 8,
       "events": false,
-      "commands": 136,
+      "commands": 112,
       "rounds": 8
     },
     {
       "players": 8,
       "events": true,
-      "commands": 131,
+      "commands": 110,
       "rounds": 8
     }
   ],
@@ -103,5 +103,5 @@
   ],
   "passed": 61,
   "failed": 0,
-  "packetChecks": 6370
+  "packetChecks": 5188
 }

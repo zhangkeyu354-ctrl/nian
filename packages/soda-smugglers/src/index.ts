@@ -747,6 +747,27 @@ function applyCommand(s: SSState, c: Command) {
       ensure(false, "未知的游戏操作");
   }
 }
+/** 警长在当前阶段已无事可做时自动进入下一阶段（不改变规则结果，只省掉空按）。 */
+function autoAdvance(s: SSState, now: number) {
+  for (let guardLoop = 0; guardLoop < 4; guardLoop++) {
+    if (!["BRIBE", "INSPECT", "ARREST"].includes(s.phase) || s.pendingDog !== null)
+      return;
+    const open = s.players.some((p, i) => i !== s.guard && !p.settled);
+    const eventLeft =
+      !s.eventUsed &&
+      ((s.phase === "BRIBE" && (s.event === "night" || s.event === "greedy")) ||
+        (s.phase === "INSPECT" && (s.event === "inspection" || s.event === "dog")) ||
+        (s.phase === "ARREST" && s.event === "impartial"));
+    const left =
+      s.phase === "BRIBE"
+        ? s.budget.bribe
+        : s.phase === "INSPECT"
+          ? s.budget.inspect
+          : s.budget.arrest;
+    if (open && (left > 0 || eventLeft)) return;
+    advance(s, now);
+  }
+}
 export function reduceSS(state: SSState, cmd: Command): SSState {
   ensure(cmd && typeof cmd === "object", "游戏操作无效");
   ensure(
@@ -764,6 +785,7 @@ export function reduceSS(state: SSState, cmd: Command): SSState {
   ensure(state.phase !== "FINISHED", "对局已经结束");
   const next = structuredClone(state);
   applyCommand(next, cmd);
+  autoAdvance(next, cmd.now);
   if (cmd.type !== "NEXT_ROUND" && cmd.type !== "TIMEOUT")
     state.players.forEach((p, i) => {
       if (i === cmd.actor) return;
