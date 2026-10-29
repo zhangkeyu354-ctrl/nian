@@ -336,7 +336,7 @@ export function DrawingParty({ mode }: { mode: Mode }) {
         edit={edit}
         onBusy={setInkBusy}
         invite={() => void invite()}
-        exportAlbum={exportAlbum}
+        exportAlbum={(a: any) => exportAlbum(a, snap.players)}
         clearError={() => setError("")}
         takeHost={
           !snap.players.find((p) => p.id === snap.host)?.connected
@@ -690,44 +690,79 @@ export function DrawingParty({ mode }: { mode: Mode }) {
     </main>
   );
 }
-function exportAlbum(a: { owner: { name: string }; entries: any[] }) {
+function exportAlbum(
+  a: { owner: { name: string }; entries: any[] },
+  players: { id: string; name: string }[] = [],
+) {
+  const name = (id: string) => players.find((p) => p.id === id)?.name ?? "未出题";
+  const color = (id: string) =>
+    COLORS[Math.max(0, players.findIndex((p) => p.id === id)) % COLORS.length];
+  const W = 1000,
+    drawH = (e: any) => Math.round(860 / (e.drawing?.aspect ?? 2));
   const c = document.createElement("canvas");
-  c.width = 1000;
+  c.width = W;
   c.height =
-    120 +
+    150 +
     a.entries.reduce(
-      (n, e) =>
-        n +
-        (e.kind === "drawing"
-          ? Math.round(860 / (e.drawing?.aspect ?? 2)) + 90
-          : 180),
+      (n, e) => n + (e.kind === "drawing" ? drawH(e) + 120 : 190),
       0,
-    );
+    ) +
+    40;
   const g = c.getContext("2d")!;
-  g.fillStyle = "#f8f5ef";
-  g.fillRect(0, 0, c.width, c.height);
-  g.fillStyle = "#272336";
-  g.font = "bold 36px sans-serif";
-  g.fillText(a.owner.name + "的传话本", 40, 65);
-  let y = 120;
+  g.fillStyle = "#f6f1fb";
+  g.fillRect(0, 0, W, c.height);
+  g.fillStyle = "#3d2470";
+  g.fillRect(0, 0, W, 110);
+  g.fillStyle = "#ffffff";
+  g.font = "bold 40px sans-serif";
+  g.fillText(a.owner.name + "的传话本", 40, 68);
+  g.font = "20px sans-serif";
+  g.fillStyle = "#cdbdf0";
+  g.fillText("传情画意 · 绘画派对", 40, 96);
+  let y = 140;
   for (const [i, e] of a.entries.entries()) {
-    g.fillStyle = "#675c7c";
+    const who = name(e.author),
+      label =
+        i === 0
+          ? "出题"
+          : e.kind === "drawing"
+            ? "第" + Math.ceil(i / 2) + "幅 · 画"
+            : "第" + i / 2 + "次 · 猜";
+    // author chip: colored dot + bold name + action
+    g.fillStyle = color(e.author);
+    g.beginPath();
+    g.arc(58, y + 22, 16, 0, Math.PI * 2);
+    g.fill();
+    g.fillStyle = "#ffffff";
+    g.font = "bold 18px sans-serif";
+    g.textAlign = "center";
+    g.fillText(String(i + 1), 58, y + 29);
+    g.textAlign = "left";
+    g.fillStyle = "#2c1a52";
+    g.font = "bold 28px sans-serif";
+    g.fillText(who, 86, y + 32);
+    const w = g.measureText(who).width;
+    g.fillStyle = "#7d6aa0";
     g.font = "22px sans-serif";
-    g.fillText(i === 0 ? "初始题目" : "第" + i + "步", 40, y + 30);
+    g.fillText(label, 86 + w + 14, y + 31);
     if (e.kind === "drawing") {
       const p = document.createElement("canvas");
       p.width = 860;
-      p.height = Math.round(p.width / (e.drawing?.aspect ?? 2));
+      p.height = drawH(e);
       paint(p, e.drawing ?? emptyDrawing());
-      g.drawImage(p, 70, y + 50);
-      y += p.height + 90;
+      g.fillStyle = "#ffffff";
+      g.fillRect(64, y + 56, 872, p.height + 12);
+      g.drawImage(p, 70, y + 62);
+      y += p.height + 120;
     } else {
-      g.fillStyle = "#272336";
-      g.font = "bold 30px sans-serif";
-      const text = String(e.text ?? "");
-      for (let j = 0; j < text.length; j += 24)
-        g.fillText(text.slice(j, j + 24), 40, y + 85 + (j / 24) * 42);
-      y += 180;
+      g.fillStyle = "#ffffff";
+      g.fillRect(64, y + 56, 872, 110);
+      g.fillStyle = "#2c1a52";
+      g.font = "bold 32px sans-serif";
+      const text = String(e.text ?? "") || (e.missing ? "（到时封存）" : "");
+      for (let j = 0; j < text.length && j < 48; j += 24)
+        g.fillText(text.slice(j, j + 24), 90, y + 104 + (j / 24) * 42);
+      y += 190;
     }
   }
   c.toBlob((blob) => {

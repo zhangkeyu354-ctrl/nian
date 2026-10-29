@@ -4607,3 +4607,120 @@
     letter-spacing: 2px;
   }
 }
+
+/* reveal: who made this page — large and unmistakable */
+.st-album-caption {
+  top: 10px;
+  left: 10px;
+  gap: 9px;
+  padding: 5px 16px 5px 5px;
+  background: rgba(255, 255, 255, 0.95);
+  box-shadow:
+    inset 0 0 0 2px var(--seat, #8c6bd0),
+    0 8px 18px -8px rgba(20, 0, 40, 0.55);
+  animation: st-pop-in 0.35s var(--spring) both;
+}
+.st-album-caption .st-portrait {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  box-shadow: 0 0 0 2.5px var(--seat, #8c6bd0);
+}
+.st-album-caption b {
+  font-size: 18px;
+  font-weight: 900;
+  line-height: 1.1;
+}
+.st-album-caption b em {
+  font-style: normal;
+  font-size: 13px;
+  font-weight: 800;
+  color: var(--seat, #8c6bd0);
+}
+.st-album-caption span {
+  font-size: 11px;
+}
+@media (orientation: landscape) and (max-height: 440px) {
+  .st-album-caption .st-portrait {
+    width: 32px;
+    height: 32px;
+  }
+  .st-album-caption b {
+    font-size: 15px;
+  }
+}
+/* caption sits above the page so it never covers the drawing */
+.st-album-page {
+  display: grid;
+  justify-items: start;
+  gap: 8px;
+  width: min(100cqw, (100cqh - 110px) * 2);
+}
+.st-album-page > :not(.st-album-caption) {
+  width: 100%;
+}
+.st-album-caption {
+  position: relative;
+  top: auto;
+  left: auto;
+  order: -1;
+}
+@media (orientation: portrait) {
+  .st-album-page {
+    width: 100%;
+  }
+  .st-album-caption {
+    margin-left: 8px;
+  }
+}
+
+/* ===== 揭晓：画布上不压任何东西，所有说明和按钮都在画布外 ===== */
+.st-album-page {
+  display: grid;
+  justify-items: start;
+  gap: 8px;
+  width: min(100cqw, (100cqh - 150px) * 2);
+}
+.st-album-page > :not(.st-album-caption) {
+  width: 100%;
+}
+.st-album-caption {
+  position: relative;
+  top: auto;
+  left: auto;
+  order: -1;
+}
+.st-album .dp-board {
+  display: grid;
+  gap: 8px;
+}
+.st-album .dp-board-footer,
+.st-world .st-album .dp-board-footer {
+  position: static;
+  justify-content: flex-end;
+  display: flex !important;
+}
+.st-album .st-brush-cursor {
+  display: none;
+}
+@media (orientation: portrait) {
+  .st-album-page {
+    width: 100%;
+  }
+  .st-album-caption {
+    margin-left: 8px;
+  }
+  .st-album .dp-board-footer {
+    padding-right: 8px;
+  }
+}
+.st-tp.has-award .st-album-caption {
+  display: flex;
+}
+.st-tp.has-award .st-album-caption .st-portrait {
+  width: 30px;
+  height: 30px;
+}
+.st-tp.has-award .st-album-caption b {
+  font-size: 14px;
+}

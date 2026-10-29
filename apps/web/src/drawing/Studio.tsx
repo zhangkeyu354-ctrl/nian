@@ -613,20 +613,39 @@ export function Studio(p: Props) {
                     <p>{entry?.missing ? "到时封存" : "脑洞正在传递"}</p>
                   </div>
                 )}
-                <div className="st-album-caption">
+                <div
+                  className={
+                    "st-album-caption is-" +
+                    (page === 0 ? "prompt" : page % 2 ? "drawing" : "guess")
+                  }
+                  style={
+                    {
+                      "--seat": COLORS[Math.max(0, indexOf(entry?.author)) % COLORS.length],
+                    } as React.CSSProperties
+                  }
+                >
                   <Portrait
                     index={indexOf(entry?.author)}
                     tale={mode === "tp"}
                   />
                   <div>
-                    <b>{album?.owner.name}的传话本</b>
+                    <b>
+                      {nameOf(entry?.author) ?? "未出题"}
+                      <em>
+                        {page === 0
+                          ? " 出的题"
+                          : page % 2
+                            ? " 画的"
+                            : " 猜的"}
+                      </em>
+                    </b>
                     <span>
+                      {album?.owner.name}的传话本 ·{" "}
                       {page === 0
                         ? "初始题目"
                         : page % 2
                           ? "第" + Math.ceil(page / 2) + "幅画"
-                          : "第" + page / 2 + "次猜测"}{" "}
-                      · {nameOf(entry?.author)}
+                          : "第" + page / 2 + "次猜测"}
                     </span>
                   </div>
                 </div>
