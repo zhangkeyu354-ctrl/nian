@@ -1,4 +1,7 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useLayoutEffect, useRef, useState } from "react";
+import {PawnMotion} from "./PawnMotion.tsx";
+import {useRaceCamera} from "./camera.ts";
+import type {TravelCue} from "./travel.ts";
 import { racerName, TRACKS } from "../../../../packages/magical-athlete/src/index.ts";
 import type { RaceState } from "../../../../packages/magical-athlete/src/types.ts";
 import type { Special } from "../../../../packages/magical-athlete/src/tracks.ts";
@@ -71,6 +74,7 @@ export function Track({
   me,
   shown,
   moving = [],
+  travel,
   onPawn,
   fit = true,
   layout = "art",
@@ -88,6 +92,7 @@ export function Track({
   shown?: Map<string, { pos: number; tripped: boolean; out: boolean; place: number | null }> | null;
   /** 正在走的选手：镜头跟着它，棋子有走路动画 */
   moving?: string[];
+  travel?: Map<string,TravelCue>;
   onPawn?: (racer: string) => void;
   /** 原版棋盘：true 整条赛道缩放到一屏内；false 放大，可滑动 */
   fit?: boolean;
@@ -113,6 +118,16 @@ export function Track({
   const [w, h] = board.canvas;
   const scroller = useRef<HTMLDivElement>(null);
   const vertical = useVerticalBoard() && layout === "art";
+  const surface=useRef<HTMLDivElement>(null);
+  const [size,setSize]=useState({w:0,h:0});
+  useLayoutEffect(()=>{
+    const el=surface.current;if(!el)return;
+    const read=()=>{const w=el.clientWidth,h=el.clientHeight;setSize(old=>old.w===w&&old.h===h?old:{w,h});};
+    read();
+    if(typeof ResizeObserver==="undefined"){window.addEventListener("resize",read);return()=>window.removeEventListener("resize",read);}
+    const observer=new ResizeObserver(read);observer.observe(el);
+    return()=>observer.disconnect();
+  },[layout,vertical,race.track,fit]);
 
   // 同格的棋子分组；冲线的站到领奖台（按名次）
   const groups = new Map<number, string[]>();
@@ -128,22 +143,11 @@ export function Track({
   if (podium.length) groups.set(-1, podium);
 
   // 自动滚到正在行动的选手附近（只有原版棋盘放大时需要）
-  const current =
-    race.tokens.find((t) => moving.includes(t.racer)) ?? race.tokens.find((t) => t.owner === race.current);
-  const focus = current && current.place === null && !current.out ? board.spaces[Math.min(current.pos, board.spaces.length - 1)] : null;
-  useEffect(() => {
-    const el = scroller.current;
-    if (!el || !focus || layout === "grid") return;
-    if (vertical) {
-      if (!fit) {
-        // 竖版放大：整页滚动（棋盘不再有自己的滚动框），把行动的选手滚到屏幕中间
-        const r = el.getBoundingClientRect();
-        window.scrollTo({ top: window.scrollY + r.top + focus.x * r.height - window.innerHeight / 2, behavior: "smooth" });
-      } else if (el.scrollHeight > el.clientHeight)
-        el.scrollTo({ top: focus.x * el.scrollHeight - el.clientHeight / 2, behavior: "smooth" });
-    } else if (el.scrollWidth > el.clientWidth)
-      el.scrollTo({ left: focus.x * el.scrollWidth - el.clientWidth / 2, behavior: "smooth" });
-  }, [focus?.index, race.current, vertical, moving.join(), layout]);
+  const followed=useRef<string|null>(null);
+  if(moving.length)followed.current=moving[0];
+  else if(spot)followed.current=spot;
+  else if(!shown)followed.current=null;
+  const current = race.tokens.find(t=>t.racer===followed.current) ?? race.tokens.find((t) => t.owner === race.current);
 
   /** 每个棋子画在哪（相对容器的 0–1 坐标）和缩放 */
   const place = (pos: number, k: number, n: number) => {
@@ -175,6 +179,9 @@ export function Track({
       : { x: sp.x + c.dx * cellW, y: sp.y + c.dy * cellH, scale: c.scale };
   };
 
+  const focused=current&&!current.out&&current.place===null?groups.get(current.pos):undefined;
+  const focus=current&&focused?place(current.pos,focused.indexOf(current.racer),focused.length):null;
+  useRaceCamera(scroller,surface,focus,vertical,layout==="grid");
   const spots = new Map<string, { x: number; y: number }>();
   const pawns = [...groups].flatMap(([pos, racers]) =>
     racers.map((rid, k) => {
@@ -185,8 +192,9 @@ export function Track({
       // 2.5D：越靠近屏幕下方（竖版是原图越往右）的小人越在前面
       const depth = Math.round((vertical ? at.x : at.y) * 100);
       return (
+        <PawnMotion key={rid} pose={{x:at.x*size.w,y:at.y*size.h,pos:t.pos,board:`${race.index}:${race.track}:${layout}:${vertical}`,w:size.w,h:size.h}}
+          cue={travel?.get(rid)} vertical={vertical} zIndex={10+depth+(fl?200:0)+(spot===rid?300:0)}>
         <div
-          key={rid}
           className={
             "ma-pawn" +
             (t.owner === me ? " mine" : "") +
@@ -199,10 +207,13 @@ export function Track({
             (link && (link.from === rid || link.to === rid) ? (link.from === rid ? " link-from" : " link-to") : "")
           }
           role={onPawn ? "button" : undefined}
+          data-ma-racer={rid}
           onClick={onPawn ? () => onPawn(rid) : undefined}
           style={{
-            left: `${at.x * 100}%`,
-            top: `${at.y * 100}%`,
+            left: 0,
+            top: 0,
+            width: size.w*(layout==="grid"?.1:vertical?(fit?.042:.036):.044),
+            height: size.w*(layout==="grid"?.1:vertical?(fit?.042:.036):.044)*2,
             ["--pc" as string]: colorOf(t.owner),
             ["--ps" as string]: at.scale,
             zIndex: 10 + depth + (fl ? 200 : 0) + (spot === rid ? 300 : 0),
@@ -228,7 +239,7 @@ export function Track({
               {fl.text}
             </span>
           )}
-        </div>
+        </div></PawnMotion>
       );
     }),
   );
@@ -261,6 +272,7 @@ export function Track({
     return (
       <div className="ma-board-scroll grid">
         <div
+          ref={surface}
           className="ma-grid"
           role="img"
           aria-label={`${track.zh}，第 ${race.index + 1} 场`}
@@ -308,6 +320,7 @@ export function Track({
 
   const art = (
     <div
+      ref={surface}
       className="ma-board-art"
       style={
         vertical

@@ -4,17 +4,17 @@ import { RACER_BY_ID, type MAView } from "../../../../packages/magical-athlete/s
 import { sfxCount, sfxCheer, sfxFanfare, sfxFinish, sfxLand, sfxOops, sfxPower, sfxRoll, sfxStep } from "./sfx.ts";
 
 /** 屏幕上正在播放的东西 */
-export type Show =
+export type Show = (
   | { kind: "roll"; player: string; racer: string; value: number; reroll?: boolean; rolling: boolean }
   | { kind: "duel"; a: { racer: string; value: number }; b: { racer: string; value: number }; rolling: boolean }
-  | { kind: "power"; racer: string; power: string; text: string }
+  | { kind: "power"; racer: string; power: string; text: string; duration?:number }
   | { kind: "finish"; racer: string; place: number; text: string }
   | { kind: "start"; race: number; track: string; text: string }
   | { kind: "note"; racer: string; text: string }
   | { kind: "count"; n: number }
   | { kind: "stats"; race: number; rows: RacerStat[] }
   | { kind: "podium"; race: number; places: Array<{ racer: string; owner: string; place: number; points: number }> }
-  | { kind: "champion"; winners: string[]; totals: Array<{ player: string; total: number }> };
+  | { kind: "champion"; winners: string[]; totals: Array<{ player: string; total: number }> }) & {duration?:number};
 
 /** 一场比赛里每名选手的数据（从比赛记录的 fx 统计，只用于展示） */
 export interface RacerStat {
@@ -75,26 +75,9 @@ export interface ShownToken {
 
 const sleep = (ms: number) => new Promise((r) => setTimeout(r, ms));
 
-/** 动画速度（每台手机自己选，存在本机）：慢 1.5 倍时长 / 正常 / 快 0.5 倍 */
-export type Speed = "slow" | "normal" | "fast";
-const SPEED_KEY = "ma-speed";
-const FACTOR: Record<Speed, number> = { slow: 1.5, normal: 1, fast: 0.5 };
-export function getSpeed(): Speed {
-  try {
-    const v = localStorage.getItem(SPEED_KEY);
-    return v === "slow" || v === "fast" ? v : "normal";
-  } catch {
-    return "normal";
-  }
-}
-export function setSpeed(s: Speed) {
-  try {
-    localStorage.setItem(SPEED_KEY, s);
-  } catch {
-    /* 忽略 */
-  }
-}
-const reduced = () => typeof matchMedia === "function" && matchMedia("(prefers-reduced-motion: reduce)").matches;
+export { getSpeed, setSpeed, type Speed } from "./motion-clock.ts";
+import { motionMs, reduced } from "./motion-clock.ts";
+import {classifyTravel,type TravelCue} from "./travel.ts";
 
 /**
  * 把服务器发来的新记录（带 fx 的条目）依次播放成动画：大骰子、技能弹出、逐格走路……
@@ -112,6 +95,7 @@ export function usePlayback(view: MAView) {
   const [busy, setBusy] = useState(false);
   const [show, setShow] = useState<Show | null>(null);
   const [moving, setMoving] = useState<string[]>([]);
+  const [travel,setTravel]=useState(new Map<string,TravelCue>());
   const [floats, setFloats] = useState<Map<string, Float>>(new Map());
   const [link, setLink] = useState<Link | null>(null);
   /** 被技能命中的特效（摔倒 / 被击退 / 淘汰飞出） */
@@ -160,16 +144,17 @@ export function usePlayback(view: MAView) {
     let cur = shownRef.current ?? null;
     /** 最近发动技能的选手：之后别人被移动 / 传送 / 绊倒，就从它拉一条线过去 */
     let lastPower: string | null = null;
+    let lastPowerKind:string|null=null;
     const float = (racer: string, text: string, tone: Float["tone"]) => {
       const f = { id: ++fxId.current, text, tone };
       setFloats((m) => new Map(m).set(racer, f));
-      setTimeout(() => setFloats((m) => (m.get(racer)?.id === f.id ? (m.delete(racer), new Map(m)) : m)), 2600);
+      setTimeout(() => setFloats((m) => (m.get(racer)?.id === f.id ? (m.delete(racer), new Map(m)) : m)), motionMs(2600));
     };
     const linkTo = (racer: string) => {
       if (!lastPower || lastPower === racer) return;
       const l = { id: ++fxId.current, from: lastPower, to: racer };
       setLink(l);
-      setTimeout(() => setLink((x) => (x?.id === l.id ? null : x)), 2800);
+      setTimeout(() => setLink((x) => (x?.id === l.id ? null : x)), motionMs(2800));
     };
     const signed = (n: number) => (n >= 0 ? `+${n}` : `${n}`);
     const hitFx = (racer: string, kind: "trip" | "knock" | "out", big = false) => {
@@ -177,9 +162,9 @@ export function usePlayback(view: MAView) {
       setHit(h);
       if (big) {
         setShake(h.id);
-        setTimeout(() => setShake((x) => (x === h.id ? 0 : x)), 480);
+        setTimeout(() => setShake((x) => (x === h.id ? 0 : x)), motionMs(480));
       }
-      setTimeout(() => setHit((x) => (x?.id === h.id ? null : x)), 1300);
+      setTimeout(() => setHit((x) => (x?.id === h.id ? null : x)), motionMs(1300));
     };
     while (queue.current.length) {
       const e = queue.current.shift()!;
@@ -191,7 +176,8 @@ export function usePlayback(view: MAView) {
       let popped = false;
       const showIt = (v: Show) => {
         popped = true;
-        setShow(v);
+        const duration=v.kind==="finish"?2500:v.kind==="podium"?4800:v.kind==="stats"?6500:v.kind==="champion"?9000:null;
+        setShow(duration===null?v:{...v,duration:motionMs(duration,k)});
       };
       // 用户反馈（2026-10-22）：连锁触发太快、眼花缭乱 → 不再因为排队多而加速（只有特别长的连锁才稍快一点）
       const k = reduced() ? 0 : queue.current.length > 30 ? 0.8 : 1;
@@ -204,7 +190,7 @@ export function usePlayback(view: MAView) {
                 wakers.current.delete(done);
                 res();
               };
-              const id = setTimeout(done, ms * k * FACTOR[getSpeed()]);
+              const id = setTimeout(done, motionMs(ms, k));
               wakers.current.add(done);
             });
       /** 快进（点屏幕跳过 / 积压太多）时不出声 */
@@ -249,6 +235,7 @@ export function usePlayback(view: MAView) {
         }
         case "roll":
           lastPower = null;
+          lastPowerKind=null;
           showIt({ ...fx, rolling: true });
           play(sfxRoll);
           await wait(750);
@@ -265,9 +252,10 @@ export function usePlayback(view: MAView) {
           await wait(1300);
           break;
         case "power":
-          showIt({ kind: "power", racer: fx.racer, power: fx.power, text: e.text });
+          showIt({ kind: "power", racer: fx.racer, power: fx.power, text: e.text, duration:motionMs(2600,k) });
           play(sfxPower);
           lastPower = fx.racer;
+          lastPowerKind=fx.power;
           float(fx.racer, `✨${RACER_BY_ID.get(fx.power)?.powerZh ?? "技能"}`, "power");
           setSpot(fx.racer);
           await wait(2600);
@@ -280,6 +268,7 @@ export function usePlayback(view: MAView) {
           if (!cur) cur = fromRace(latest.current.race?.tokens ?? []);
           const dir = fx.to >= fx.from ? 1 : -1;
           setMoving(fx.racers);
+          setTravel(new Map(fx.racers.map(r=>[r,{id:++fxId.current,kind:classifyTravel(fx),to:fx.to,weight:k}])));
           {
             const d = signed(fx.to - fx.from);
             const why = fx.why ?? "";
@@ -303,6 +292,7 @@ export function usePlayback(view: MAView) {
             await wait(480);
           }
           setMoving([]);
+          setTravel(new Map());
           await wait(380);
           setTarget(null);
           break;
@@ -310,11 +300,13 @@ export function usePlayback(view: MAView) {
         case "warp":
           if (!cur) cur = fromRace(latest.current.race?.tokens ?? []);
           setMoving([fx.racer]);
+          setTravel(new Map([[fx.racer,{id:++fxId.current,kind:classifyTravel(fx,lastPower!==fx.racer&&["hypnotist","party_animal","sw_magical_athlete"].includes(lastPowerKind??"")),to:fx.to,weight:k}]]));
           float(fx.racer, `传送 → 第 ${fx.to} 格`, "info");
           linkTo(fx.racer);
           setPos(fx.racer, { pos: fx.to });
           await wait(900);
           setMoving([]);
+          setTravel(new Map());
           break;
         case "trip":
           hitFx(fx.racer, "trip", true);
@@ -381,12 +373,13 @@ export function usePlayback(view: MAView) {
       }
       setShow(null);
       // 用户反馈（2026-10-23）：弹窗太快一个接一个会眼花 → 每个弹窗之后停 0.6 秒再出下一个
-      if (popped && queue.current.length && !skip.current && !reduced()) await sleep(600 * FACTOR[getSpeed()]);
+      if (popped && queue.current.length && !skip.current && !reduced()) await sleep(motionMs(600));
     }
     // 播放完：对齐服务器的真实状态
     const r = latest.current.race;
     shownRef.current = r ? fromRace(r.tokens) : null;
     setShown(null);
+    setTravel(new Map());
     running.current = false;
     setBusy(false);
   }
@@ -398,6 +391,7 @@ export function usePlayback(view: MAView) {
     busy: busy || unplayed,
     show,
     moving,
+    travel,
     shown: frozen,
     floats,
     link,

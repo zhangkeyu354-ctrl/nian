@@ -66,6 +66,7 @@ const phone = async () => {
       process.env.MA_REDUCED_MOTION === "1" ? "reduce" : "no-preference",
   });
   // MA_LAYOUT=art：手机用原版棋盘（操作卡在赛道中间）
+  if(process.env.MA_SPEED==="fast")await ctx.addInitScript(()=>localStorage.setItem("ma-speed","fast"));
   if (process.env.MA_LAYOUT === "art")
     await ctx.addInitScript(() =>
       localStorage.setItem("ma-board-layout", "art"),

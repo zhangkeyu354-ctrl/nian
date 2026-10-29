@@ -13,6 +13,10 @@ import { createMARoom, savedName, useMARoom } from "./ma-net.ts";
 import { ART, PLAYER_COLORS, Track, useVerticalBoard } from "./Track.tsx";
 import { installAudioUnlock, onMutedChange, setSfxMuted, sfxMuted, sfxShake, sfxTap, sfxYourTurn, vibrate } from "./sfx.ts";
 import { getSpeed, setSpeed, usePlayback, type Show, type Speed } from "./playback.ts";
+import { installMotionClock } from "./motion-clock.ts";
+import { usePreparedArt } from "./art-cache.ts";
+import {CubeDie,FlyingSkill,RollingScore,useWindowFade} from "./LiteMotion.tsx";
+import {motionMs} from "./motion-clock.ts";
 import "./ma.css";
 
 const roomFromUrl = () => new URLSearchParams(location.search).get("room")?.toUpperCase() ?? null;
@@ -430,6 +434,9 @@ function RacerCard({
 
 function Game({ snap, view, send, connected }: { snap: MARoomSnapshot; view: MAView; send: Send; connected: boolean }) {
   const me = snap.mySeat;
+  const gameRoot = useRef<HTMLElement>(null);
+  useEffect(() => gameRoot.current ? installMotionClock(gameRoot.current) : undefined, []);
+  usePreparedArt(view, me);
   const [error, setError] = useState("");
   const colorOf = useMemo(() => {
     const m = new Map(view.seats.map((id, i) => [id, PLAYER_COLORS[i % PLAYER_COLORS.length]]));
@@ -495,7 +502,7 @@ function Game({ snap, view, send, connected }: { snap: MARoomSnapshot; view: MAV
   // 比赛刚结束时，等动画（冲线、颁奖）播完再切到下一场的选人界面
   const showRace = !!view.race && (view.phase === "race" || view.phase === "over" || (view.phase === "choose" && pb.busy));
   return (
-    <main className={"ma-game phase-" + view.phase + (sending ? " is-sending" : "")} onPointerDownCapture={onPress}>
+    <main ref={gameRoot} className={"ma-game phase-" + view.phase + (sending ? " is-sending" : "")} onPointerDownCapture={onPress}>
       {pb.show && <Overlay show={pb.show} view={view} name={name} colorOf={colorOf} me={me} onSkip={pb.skip} />}
       {toast && !pb.show && (
         <button
@@ -644,8 +651,8 @@ function Scores({ view, me, colorOf, compact }: { view: MAView; me: string | nul
           <li key={p.id} className={p.id === me ? "me" : ""} style={{ borderColor: colorOf(p.id) }}>
             <span className="ma-dot" style={{ background: colorOf(p.id) }} />
             <span className="ma-pname">{p.name}</span>
-            <b key={bump.get(p.id)?.id ?? "t"} className={"ma-total" + (bump.has(p.id) ? " bump" : "")}>
-              {total(p.chips)}
+            <b className={"ma-total" + (bump.has(p.id) ? " bump" : "")}>
+              <RollingScore value={total(p.chips)}/>
             </b>
             {bump.has(p.id) && (
               <em className="ma-score-pop">
@@ -895,6 +902,7 @@ function Race({
           me={me}
           shown={pb.shown}
           moving={pb.moving}
+          travel={pb.travel}
           onPawn={openCard}
           fit={portrait ? false : fit}
           layout={useGrid ? "grid" : "art"}
@@ -1050,6 +1058,8 @@ export function Overlay({
   const owner = (racer: string) => view.race?.tokens.find((t) => t.racer === racer)?.owner ?? "";
   const artId = (racer: string) => racerArtId(view.race?.tokens.find((t) => t.racer === racer) ?? { racer });
   const seatNo = (pid: string) => (view.seats.indexOf(pid) % 6) + 1;
+  const overlayRef=useRef<HTMLDivElement>(null);
+  useWindowFade(overlayRef,["finish","podium","stats","champion"].includes(show.kind)?show.duration??0:0);
   let body: React.ReactNode;
   if (show.kind === "roll") {
     body = (
@@ -1086,14 +1096,14 @@ export function Overlay({
     const pid = owner(show.racer);
     const mine = pid === me;
     body = (
-      <div className={"ma-ov-skill" + (mine ? " mine" : "")} style={{ ["--pc" as string]: colorOf(pid) }}>
+      <FlyingSkill racer={show.racer} duration={show.duration??motionMs(2600)}><div className={"ma-ov-skill" + (mine ? " mine" : "")} style={{ ["--pc" as string]: colorOf(pid) }}>
         <p className="ma-skill-who">{mine ? "✨ 你的技能触发了！" : `✨ ${name(pid)} 的技能触发了！`}</p>
         <img src={`${ART}/portraits/${artId(show.racer)}.webp`} alt="" />
         <b className="ma-skill-name">
           {racerName(show.racer)}【{r?.powerZh ?? show.power}】
         </b>
         <p className="ma-skill-text">{show.text.replace(/^[^】]*】：?/, "")}</p>
-      </div>
+      </div></FlyingSkill>
     );
   } else if (show.kind === "finish") {
     body = (
@@ -1238,7 +1248,7 @@ export function Overlay({
     );
   }
   return (
-    <div className={"ma-overlay ov-" + show.kind} onClick={onSkip} role="status" aria-live="polite" title="点一下跳过动画">
+    <div ref={overlayRef} className={"ma-overlay ov-" + show.kind} onClick={onSkip} role="status" aria-live="polite" title="点一下跳过动画">
       {body}
       <span className="ma-ov-skip">{show.kind === "champion" ? "点屏幕查看成绩" : show.kind === "podium" || show.kind === "stats" ? "点屏幕继续" : "点屏幕跳过动画"}</span>
     </div>
@@ -1274,19 +1284,9 @@ function Confetti({ n }: { n: number }) {
   );
 }
 
-/** 转动中的骰子：每 90ms 换一面，落定后显示真实点数 */
+/** 六面3D骰子：落定面只取服务器结果，不生成客户端骰点。 */
 function RollingDie({ pid, value, rolling, seatNo }: { pid: string; value: number; rolling: boolean; seatNo: (p: string) => number }) {
-  const [face, setFace] = useState(1);
-  useEffect(() => {
-    if (!rolling) return;
-    const id = setInterval(() => setFace((f) => (f % 6) + 1), 90);
-    return () => clearInterval(id);
-  }, [rolling]);
-  return (
-    <div className={"ma-bigdie" + (rolling ? " rolling" : " landed")}>
-      <img src={`${ART}/dice/player-${seatNo(pid)}-${rolling ? face : value}.svg`} alt={rolling ? "骰子转动中" : `${value} 点`} />
-    </div>
-  );
+  return <CubeDie value={value} rolling={rolling} seat={seatNo(pid)}/>;
 }
 
 function Final({ view }: { view: MAView }) {

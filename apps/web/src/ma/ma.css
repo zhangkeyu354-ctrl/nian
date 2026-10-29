@@ -2751,3 +2751,63 @@
 .ma-expansion-toggle { display:flex; align-items:flex-start; gap:12px; padding:14px 0; cursor:pointer; }
 .ma-expansion-toggle input { width:24px; height:24px; min-width:24px; margin:4px 0; accent-color:#ffd25b; }
 .ma-expansion-toggle small { display:block; line-height:1.6; margin-top:5px; }
+
+/* Shared local clock only; no A rendering/layer experiments. */
+.ma-pawn { transition-duration: var(--ma-move-ms,400ms); }
+.ma-pawn.walking > img:not(.ma-pawn-trip), .ma-pawn.walking::after { animation-duration:var(--ma-step-ms,480ms); }
+.ma-float { animation-duration:var(--ma-float-ms,2600ms); }
+.ma-link path { animation-duration:var(--ma-flow-ms,500ms),var(--ma-link-ms,2800ms); }
+.ma-link-ring { animation-duration:var(--ma-ring-ms,900ms); }
+.ma-board.shake .ma-board-scroll { animation-duration:var(--ma-shake-ms,450ms); }
+.ma-pawn.spot > img:not(.ma-pawn-trip) { animation-duration:var(--ma-spot-ms,900ms)!important; }
+.ma-pawn.fx-trip > img,.ma-pawn.fx-out > img { animation-duration:var(--ma-hit-ms,1000ms)!important; }
+.ma-pawn.fx-knock > img { animation-duration:var(--ma-knock-ms,700ms)!important; }
+
+/* B: translation, posture and existing sprite effects use separate layers. */
+.ma-travel { position:absolute; left:0; top:0; width:0; height:0; pointer-events:none; }
+.ma-travel > .ma-pawn { left:0; top:0; transition:none; pointer-events:auto; }
+.ma-travel[data-motion] > .ma-pawn.walking > img:not(.ma-pawn-trip),
+.ma-travel[data-motion] > .ma-pawn.walking::after { animation:none; }
+.ma-travel[data-motion] > .ma-pawn.walking > img:not(.ma-pawn-trip) { transform-origin:50% 90%; }
+.ma-landing-dust { position:absolute; left:0; top:0; width:0; height:0; pointer-events:none; }
+.ma-landing-dust.vertical { transform:rotate(-90deg); }
+.ma-landing-dust i { position:absolute; width:7px; height:4px; border-radius:50%; background:#efdfaa; opacity:0;
+  animation:ma-dust var(--ma-dust-ms,180ms) ease-out var(--ma-dust-delay,280ms) both; }
+.ma-landing-dust i:nth-child(1) { --dust-x:-15px; --dust-y:-4px; }
+.ma-landing-dust i:nth-child(2) { --dust-x:10px; --dust-y:-7px; width:5px; }
+.ma-landing-dust i:nth-child(3) { --dust-x:19px; --dust-y:-2px; width:4px; }
+@keyframes ma-dust { from{opacity:.75;transform:translate(-3px,0) scale(.45);}to{opacity:0;transform:translate(var(--dust-x),var(--dust-y)) scale(1.2);} }
+@media (prefers-reduced-motion:reduce) { .ma-landing-dust { display:none; } }
+
+/* C+D light: compositor motion inside the existing playback windows. */
+.ma-app { --ma-ease-standard:cubic-bezier(.2,.7,.25,1); --ma-ease-out:cubic-bezier(.16,1,.3,1); --ma-ease-spring:cubic-bezier(.34,1.56,.64,1); }
+.ma-cube-scene { --cube-size:min(30vw,120px); width:var(--cube-size); height:var(--cube-size); aspect-ratio:1; perspective:600px; margin:24px auto; }
+.ma-bigdie.ma-cube-scene.rolling,.ma-bigdie.ma-cube-scene.landed { animation:none; }
+.ma-cube { width:100%;height:100%;position:relative;transform-style:preserve-3d;
+  transform:rotateX(-12deg) rotateY(-15deg) rotateX(var(--ma-die-x)) rotateY(var(--ma-die-y));
+  transition:transform var(--ma-settle-ms,180ms) var(--ma-ease-out); }
+.rolling .ma-cube { animation:ma-cube-roll var(--ma-dice-ms,750ms) linear infinite; }
+.ma-die-face { position:absolute;inset:0;backface-visibility:hidden;border-radius:12px;background:white; }
+.ma-die-face img { display:block; }
+.ma-die-face.face-1 { transform:translateZ(calc(var(--cube-size)/2)); }
+.ma-die-face.face-2 { transform:rotateY(180deg) translateZ(calc(var(--cube-size)/2)); }
+.ma-die-face.face-3 { transform:rotateY(90deg) translateZ(calc(var(--cube-size)/2)); }
+.ma-die-face.face-4 { transform:rotateY(-90deg) translateZ(calc(var(--cube-size)/2)); }
+.ma-die-face.face-5 { transform:rotateX(90deg) translateZ(calc(var(--cube-size)/2)); }
+.ma-die-face.face-6 { transform:rotateX(-90deg) translateZ(calc(var(--cube-size)/2)); }
+@keyframes ma-cube-roll { from{transform:translateY(0) rotateX(-12deg) rotateY(-15deg);}50%{transform:translateY(-16px) rotateX(348deg) rotateY(525deg);}to{transform:translateY(0) rotateX(708deg) rotateY(1065deg);} }
+.ma-skill-flight { width:min(88vw,400px); }
+.ma-skill-flight .ma-ov-skill { animation:none; }
+.ma-score-roll { display:inline-grid;position:relative;height:1.12em;line-height:1.12;min-width:1ch;overflow:hidden;vertical-align:middle;font-variant-numeric:tabular-nums; }
+.ma-score-before { position:absolute;inset:0;opacity:0; }
+.ma-travel .ma-pawn.fx-trip > img:not(.ma-pawn-trip) { animation-name:ma-trip-lite!important; }
+.ma-travel .ma-pawn.fx-knock > img:not(.ma-pawn-trip) { animation-name:ma-knock-lite!important; }
+.ma-travel .ma-pawn.fx-out > img:not(.ma-pawn-trip) { animation-name:ma-out-lite!important; }
+@keyframes ma-trip-lite { 0%{transform:rotate(0);}20%{transform:translateY(-16px) rotate(-20deg);}65%{transform:rotate(110deg) translate(20%,18%);}100%{transform:rotate(80deg) translate(28%,10%);} }
+@keyframes ma-knock-lite { 0%,100%{transform:translate3d(0,0,0) rotate(0);}35%{transform:translate3d(30px,-28px,0) rotate(28deg);}70%{transform:translate3d(12px,-12px,0) rotate(-12deg);} }
+@keyframes ma-out-lite { 0%{transform:translate3d(0,0,0) rotate(0);opacity:1;}35%{transform:translate3d(15px,-85px,0) rotate(140deg);opacity:1;}70%{transform:translate3d(80px,-55px,0) rotate(280deg) scale(.7);opacity:1;}100%{transform:translate3d(125px,65px,0) rotate(450deg) scale(.15);opacity:0;} }
+.ma-app,.ma-stage,.ma-race,.ma-final { animation:ma-soft-phase var(--ma-stage-ms,200ms) var(--ma-ease-out); }
+@keyframes ma-soft-phase { from{opacity:0;transform:scale(.985);}to{opacity:1;transform:scale(1);} }
+.ma-app button { transition:transform var(--ma-press-ms,120ms) var(--ma-ease-spring); }
+.ma-app button:active:not(:disabled) { transform:scale(.96); }
+@media(prefers-reduced-motion:reduce){ .ma-cube,.rolling .ma-cube,.ma-app,.ma-stage,.ma-race,.ma-final {animation:none!important;transition:none!important;} .ma-app button {transition:none;} }
