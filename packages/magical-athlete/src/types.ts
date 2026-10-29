@@ -41,6 +41,14 @@ export interface RaceState {
   /** Physical mounts are shared by every racer; rider ids are racer ids. */
   hogs?: Array<{ source: string; rider: string | null; pos: number }>;
   championIntercepted?: boolean;
+  /** User ruling: first crossing counts even when its champion is intercepted. */
+  firstCrossing?: string;
+  /** Server-only visited boundaries while completing one proven forced cycle. */
+  forcedCycle?: string;
+  /** Server-only: do not immediately re-enter a completed insertion cycle. */
+  forcedCycleBlocked?: { owner: string; states: string[] };
+  /** Server-only normal-order cursor if a proven insertion cycle is stopped. */
+  insertionResume?: string;
   /** Cancellation preserves finish history, but awards no medals. */
   cancelledBy?: string;
   /** Hotel payments funded from earlier-race chips, for this race's net score. */

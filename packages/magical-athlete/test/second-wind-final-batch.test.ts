@@ -263,7 +263,7 @@ describe("Second Wind最后8名", () => {
     tok(s, "sw_null").pos = 15;
     expect(powerOf(s, tok(s, "sw_bite_mark"))).toBe("sw_bite_mark");
   });
-  it("替身黑帮拦截不会误触发军师冠军猜测和继父奖金", () => {
+  it("替身黑帮拦截不算军师冠军猜中，但按用户裁定算继父首次冲线奖金", () => {
     let s = make(["twin", "sw_doppelgangster", "mastermind", "sw_stepdad"], [28, 0, 10, 20], [3]);
     s = snap(s, (x) => {
       x.race!.mastermindPick = "twin";
@@ -272,7 +272,7 @@ describe("Second Wind最后8名", () => {
     expect(tok(s, "twin").out).toBe(true);
     expect(s.race!.over).toBe(false);
     expect(pts(s, "p3")).toBe(0);
-    expect(pts(s, "p4")).toBe(0);
+    expect(pts(s, "p4")).toBe(3);
   });
   it("野猪接走后不改变原骑士能力，多个坐骑不重复生成", () => {
     let s = testRace({

@@ -1,0 +1,30 @@
+
+ RUN  v5.0.5 E:/DBD-MA-Bugfix
+
+ ❯ packages/magical-athlete/test/elimination-chain.test.ts (46 tests | 1 failed | 45 skipped) 185ms
+   ❯ 淘汰与冠军连锁 (46)
+     × 重掷改变循环路线后，按实际重复的一圈停下，不等待未再经过的旧起点 179ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  packages/magical-athlete/test/elimination-chain.test.ts > 淘汰与冠军连锁 > 重掷改变循环路线后，按实际重复的一圈停下，不等待未再经过的旧起点
+AssertionError: expected 'p1' to be 'p2' // Object.is equality
+
+Expected: "p2"
+Received: "p1"
+
+ ❯ packages/magical-athlete/test/elimination-chain.test.ts:199:29
+    197|       s = answer(s, value);
+    198|     }
+    199|     expect(s.race!.current).toBe("p2");
+       |                             ^
+    200|     expect(tok(s, "dicemonger").pos).toBe(13);
+    201|     expect(total(s.players[3].chips)).toBe(1);
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  1 failed | 45 skipped (46)
+   Start at  12:03:25
+   Duration  1.04s (transform 44%, tests 36%, import 17%, worker 3%)

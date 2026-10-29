@@ -11,6 +11,11 @@ export const HIDDEN_CHOICE = "?";
 export function viewForMA(s: MAState, playerId: string | null): MAView {
   const { deck, turn: _turn, rng: _rng, forcedRolls: _f, ...rest } = structuredClone(s);
   const v: MAView = { ...rest, deckCount: deck.length };
+  if (v.race) {
+    delete v.race.forcedCycle;
+    delete v.race.forcedCycleBlocked;
+    delete v.race.insertionResume;
+  }
   for (const p of v.players)
     if (p.id !== playerId) p.choices = p.choices.map(() => HIDDEN_CHOICE);
   // 待决定事项：只有决定人看得到选项（例如神秘蛋抽到的 3 张）

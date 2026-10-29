@@ -1,0 +1,1 @@
+MA_BROWSERS_PASS {"players":2,"deal":"draft","steps":99,"racesSeen":4,"speedChecked":true,"statsScreens":0,"newRacersPicked":[]}

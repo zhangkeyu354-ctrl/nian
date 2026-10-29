@@ -1,0 +1,30 @@
+
+ RUN  v5.0.5 E:/DBD-MA-Bugfix
+
+ ❯ packages/magical-athlete/test/elimination-chain.test.ts (51 tests | 1 failed | 50 skipped) 117ms
+   ❯ 淘汰与冠军连锁 (51)
+     × 替身取得船长后结束重复插队，接回被打断座位之后的正常顺序 114ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  packages/magical-athlete/test/elimination-chain.test.ts > 淘汰与冠军连锁 > 替身取得船长后结束重复插队，接回被打断座位之后的正常顺序
+AssertionError: expected 'p1' to be 'p3' // Object.is equality
+
+Expected: "p3"
+Received: "p1"
+
+ ❯ packages/magical-athlete/test/elimination-chain.test.ts:66:31
+
+     64|     });
+     65|     for (let i = 0; i < 24 && s.pending?.player !== "p3"; i++) s = ans…
+     66|     expect(s.pending?.player).toBe("p3");
+       |                               ^
+     67|   });
+     68|   it("船长起身后轮到酒店、酒店又让船长插队的闭合循环不会困住其他人", () => {
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+ Test Files  1 failed (1)
+      Tests  1 failed | 50 skipped (51)
+   Start at  12:37:01
+   Duration  664ms (transform 41%, tests 39%, import 17%, worker 3%)

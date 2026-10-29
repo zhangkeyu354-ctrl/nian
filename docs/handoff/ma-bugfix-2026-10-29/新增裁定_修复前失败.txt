@@ -1,0 +1,69 @@
+
+ RUN  v5.0.5 E:/DBD-MA-Bugfix
+
+ ❯ packages/magical-athlete/test/elimination-chain.test.ts (44 tests | 3 failed) 209ms
+   ❯ 淘汰与冠军连锁 (44)
+     × 用户裁定：浪漫者递归取星星只保留一圈所得分 15ms
+     × 用户裁定：跳蛙与尺蠖取星星的强制循环保留一圈得分后交给下一位 24ms
+     × 用户裁定：船长13至16格星星循环恰好保留完整一圈的1分 6ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 3 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  packages/magical-athlete/test/elimination-chain.test.ts > 淘汰与冠军连锁 > 用户裁定：浪漫者递归取星星只保留一圈所得分
+Error: 这组技能会反复加减分，需要先确认循环计分方式。
+ ❯ fail packages/magical-athlete/src/engine.ts:34:9
+     32| }
+     33| const fail = (code: string, message: string): never => {
+     34|   throw new MARuleError(code, message);
+       |         ^
+     35| };
+     36|
+ ❯ romanticReaction packages/magical-athlete/src/engine.ts:1878:5
+ ❯ react packages/magical-athlete/src/engine.ts:813:7
+ ❯ move packages/magical-athlete/src/engine.ts:659:29
+ ❯ packages/magical-athlete/src/engine.ts:814:9
+ ❯ romanticReaction packages/magical-athlete/src/engine.ts:1874:11
+ ❯ react packages/magical-athlete/src/engine.ts:813:7
+ ❯ move packages/magical-athlete/src/engine.ts:659:29
+ ❯ mainMove packages/magical-athlete/src/engine.ts:1419:3
+ ❯ racerTurn packages/magical-athlete/src/engine.ts:1707:29
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/3]⎯
+
+ FAIL  packages/magical-athlete/test/elimination-chain.test.ts > 淘汰与冠军连锁 > 用户裁定：跳蛙与尺蠖取星星的强制循环保留一圈得分后交给下一位
+AssertionError: expected 'p1' to be 'p2' // Object.is equality
+
+Expected: "p2"
+Received: "p1"
+
+ ❯ packages/magical-athlete/test/elimination-chain.test.ts:154:29
+    152|     });
+    153|     for (let i = 0; i < 20 && s.race!.current === "p1"; i++) s = answe…
+    154|     expect(s.race!.current).toBe("p2");
+       |                             ^
+    155|     expect(total(s.players[2].chips)).toBeGreaterThan(0);
+    156|     expect(s.race!.over).toBe(false);
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[2/3]⎯
+
+ FAIL  packages/magical-athlete/test/elimination-chain.test.ts > 淘汰与冠军连锁 > 用户裁定：船长13至16格星星循环恰好保留完整一圈的1分
+AssertionError: expected 'p1' to be 'p2' // Object.is equality
+
+Expected: "p2"
+Received: "p1"
+
+ ❯ packages/magical-athlete/test/elimination-chain.test.ts:166:29
+    164|     s = edit(s, (x) => { x.race!.firstTurnDone = ["p1"]; });
+    165|     for (let i = 0; i < 8 && s.race!.current === "p1"; i++) s = answer…
+    166|     expect(s.race!.current).toBe("p2");
+       |                             ^
+    167|     expect(tok(s, "skipper").pos).toBe(13);
+    168|     expect(total(s.players[0].chips)).toBe(1);
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[3/3]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  3 failed | 41 passed (44)
+   Start at  11:46:59
+   Duration  746ms (tests 58%, transform 28%, import 13%, worker 2%)

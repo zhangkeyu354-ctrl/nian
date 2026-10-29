@@ -38,6 +38,9 @@ class Need {
   constructor(public decision: Decision) {}
 }
 class RaceOver {}
+/** Only disposable cycle proofs request an exhaustive auxiliary die branch. */
+class ProofDie {}
+class ProofBudget {}
 
 // ---------------------------------------------------------------- 随机数（mulberry32，状态存在 state.rng）
 function nextRandom(s: MAState) {
@@ -268,6 +271,14 @@ function takeHogs(s: MAState, c: Ctx, t: Token, simultaneous: boolean) {
 
 // ---------------------------------------------------------------- 单元执行上下文
 interface Ctx {
+  choiceEpoch?: number;
+  unforcedEpoch?: number;
+  romanticSeen?: Map<string, string>;
+  provingForcedTurn?: boolean;
+  proofRolls?: number[];
+  proofRollIndex?: number;
+  unforcedDie?: boolean;
+  continuation?: boolean;
   answers: string[];
   i: number;
   guard: Set<string>;
@@ -276,6 +287,7 @@ interface Ctx {
 }
 
 function ask(s: MAState, c: Ctx, d: Decision): string {
+  if (d.options.length > 1) c.choiceEpoch = (c.choiceEpoch ?? 0) + 1;
   if (c.i < c.answers.length) return c.answers[c.i++];
   throw new Need(d);
 }
@@ -312,17 +324,24 @@ function loopCheck(s: MAState, c: Ctx, trigger: string, what: string): boolean {
 }
 
 /** 某个能力发动了：记录，并让挪挪各蹭 1 格 */
-function fire(s: MAState, c: Ctx, src: Token, text: string, powerOverride?: string) {
-  log(s, text, {
-    kind: "power",
-    racer: src.racer,
-    power: powerOverride ?? powerOf(s, src) ?? src.base,
-  });
+function fire(
+  s: MAState,
+  c: Ctx,
+  src: Token,
+  text: string,
+  powerOverride?: string,
+  commit?: () => void,
+  eliminationCard = false,
+) {
+  if (src.out && !eliminationCard) return;
+  log(s, text, { kind: "power", racer: src.racer, power: powerOverride ?? powerOf(s, src) ?? src.base });
+  commit?.();
   // End-of-race powers get the usual skill card, without resuming the race.
   if (race(s).over) return;
   for (const sc of holders(s, "scoocher")) {
     if (sc === src) continue;
-    if (loopCheck(s, c, `scooch:${src.racer}>${sc.racer}`, `${rname(sc)} 与 ${rname(src)} 互相触发`)) continue;
+    if (loopCheck(s, c, `scooch:${src.racer}>${sc.racer}`, `${rname(sc)} 与 ${rname(src)} 互相触发`))
+      continue;
     move(s, c, sc, 1, false, "蹭局王");
     if (active(sc)) fire(s, c, sc, `${rname(sc)}【蹭局王】：因 ${rname(src)} 的能力移动 1 格。`);
   }
@@ -377,24 +396,53 @@ function awardPower(s: MAState, c: Ctx, src: Token, amount: number, text: string
 
 function finish(s: MAState, c: Ctx, t: Token) {
   const r = race(s);
+  if (!active(t) || r.over) return;
+  const firstCrossing = !r.firstCrossing && !r.finishers.length && !r.championIntercepted;
+  if (firstCrossing && s.settings.secondWindPreview) r.firstCrossing = t.racer;
+  const stepdads = firstCrossing ? holders(s, "sw_stepdad").filter((dad) => leftOf(s, dad) === t) : [];
+  const awardStepdads = () => {
+    for (const dad of stepdads) gainChip(s, dad.owner, 3);
+    for (const dad of stepdads)
+      fire(s, c, dad, `${rname(dad)}【扶你一把】：左侧 ${rname(t)} 第一个冲线，获得 3 分。`, "sw_stepdad");
+  };
   const eligibleMasterminds = s.settings.secondWindPreview ? new Set(holders(s, "mastermind")) : null;
   if (!r.finishers.length && !r.championIntercepted) {
     const gang = holders(s, "sw_doppelgangster");
     if (gang.length) {
       const inherited = powerOf(s, t) ?? t.base;
       r.championIntercepted = true;
-      for (const d of gang) {
-        fire(s, c, d, `${rname(d)}【冠军替身】：${rname(t)} 改为淘汰，取得其能力。`, "sw_doppelgangster");
-        if (d !== t) {
-          d.base = inherited;
-          registerReturner(s, d);
+      eliminateWithPower(s, [t], () => {
+        // Commit every transfer before any reaction can inspect the new abilities.
+        for (const d of gang) {
+          if (d !== t) {
+            d.base = inherited;
+            registerReturner(s, d);
+          }
         }
-      }
-      eliminate(s, t);
+        try {
+          for (const d of gang)
+            fire(
+              s,
+              c,
+              d,
+              `${rname(d)}【冠军替身】：${rname(t)} 改为淘汰，取得其能力。`,
+              "sw_doppelgangster",
+              undefined,
+              d === t,
+            );
+        } catch (e) {
+          if (e instanceof RaceOver) {
+            // The finish action has already earned this award; no more movement.
+            r.over = true;
+            awardStepdads();
+          }
+          throw e;
+        }
+        awardStepdads();
+      });
       return;
     }
   }
-  const stepdads = holders(s, "sw_stepdad").filter((dad) => leftOf(s, dad) === t);
   t.pos = trackOf(s).length;
   r.finishers.push(t.racer);
   t.place = r.finishers.length;
@@ -403,9 +451,6 @@ function finish(s: MAState, c: Ctx, t: Token) {
     racer: t.racer,
     place: t.place,
   });
-  if (t.place === 1)
-    for (const dad of stepdads)
-      awardPower(s, c, dad, 3, `${rname(dad)}【扶你一把】：左侧 ${rname(t)} 第一个冲线，获得 3 分。`, "sw_stepdad");
   if (t.place === 1 && r.mastermindPick === t.racer) {
     const mm = r.tokens.find(
       (x) => x.base === "mastermind" && !x.out && (!eligibleMasterminds || eligibleMasterminds.has(x)),
@@ -416,19 +461,36 @@ function finish(s: MAState, c: Ctx, t: Token) {
         mm.place = 2;
         r.finishers.push(mm.racer);
       } else r.finishers.push(mm.racer);
+      // The correct prediction ends the race before any scoring reaction can
+      // create another finisher; the first-crossing award is already earned.
+      r.over = true;
+      awardStepdads();
       throw new RaceOver();
     }
   }
+  awardStepdads();
   checkEnd(s);
 }
 function checkEnd(s: MAState) {
   const r = race(s);
   if (r.finishers.length >= 2 || !r.tokens.some(active)) throw new RaceOver();
 }
-function eliminate(s: MAState, t: Token) {
-  t.out = true;
-  log(s, "", { kind: "out", racer: t.racer });
-  race(s).eliminated.push(t.owner);
+/** Atomic removal before reactions, with skill cards before the out animation. */
+function eliminateWithPower(s: MAState, targets: Token[], effect: () => void) {
+  const victims = targets.filter(active);
+  for (const t of victims) {
+    t.out = true;
+    race(s).eliminated.push(t.owner);
+  }
+  try {
+    effect();
+  } catch (e) {
+    // Need is a suspended unit, not a completed animation. Replay resumes it.
+    if (e instanceof RaceOver)
+      for (const t of victims) log(s, "", { kind: "out", racer: t.racer });
+    throw e;
+  }
+  for (const t of victims) log(s, "", { kind: "out", racer: t.racer });
   checkEnd(s);
 }
 
@@ -442,9 +504,9 @@ function hugeBaby(s: MAState, c: Ctx, t: Token) {
       fire(s, c, hb, `${rname(hb)}【块头太大】：${rname(t)} 被放到它身后一格。`);
     }
   }
-  if (has(s, t, "huge_baby"))
+  if (active(t) && t.pos > 0 && has(s, t, "huge_baby"))
     for (const o of others(s, t))
-      if (o.pos === t.pos) {
+      if (active(t) && t.pos > 0 && active(o) && o.pos === t.pos) {
         o.pos -= 1;
         log(s, "", {
           kind: "warp",
@@ -570,8 +632,7 @@ function move(s: MAState, c: Ctx, t: Token, n: number, main: boolean, why: strin
           penguins,
         );
         if (n > 0 && streaking.has(g) && others(s, g).some((o) => !group.includes(o) && (before.get(o) ?? 0) > from)) {
-          fire(s, c, g, `${rname(g)}【擦身得分】：经过其他选手，获得 1 分。`, "sw_streaker");
-          gainChip(s, g.owner, 1);
+          awardPower(s, c, g, 1, `${rname(g)}【擦身得分】：经过其他选手，获得 1 分。`, "sw_streaker");
         }
         finish(s, c, g);
       }
@@ -652,8 +713,7 @@ function warp(s: MAState, c: Ctx, t: Token, to: number, exchange?: Token, group?
 function bitePass(s: MAState, c: Ctx, source: Token, passed: Token[]) {
   const targets = passed.filter(active);
   if (!targets.length) return;
-  fire(s, c, source, `${rname(source)}【巨口变身】：淘汰经过的 ${targets.map(rname).join("、")}。`, "sw_bite_mark");
-  for (const target of targets) if (active(target)) eliminate(s, target);
+  eliminateWithPower(s, targets, () => fire(s, c, source, `${rname(source)}【巨口变身】：淘汰经过的 ${targets.map(rname).join("、")}。`, "sw_bite_mark"));
 }
 function magicPass(s: MAState, c: Ctx, t: Token, targets: Token[]) {
   const hit = targets.filter(active);
@@ -683,8 +743,7 @@ function react(
   if (!active(t)) return;
   penguinPass(s, c, passed, penguins);
   if (streaking && passed.length) {
-    fire(s, c, t, `${rname(t)}【擦身得分】：经过其他选手，获得 1 分。`, "sw_streaker");
-    gainChip(s, t.owner, 1);
+    awardPower(s, c, t, 1, `${rname(t)}【擦身得分】：经过其他选手，获得 1 分。`, "sw_streaker");
   }
   const pos = t.pos;
   const sp = trackOf(s).specials[pos];
@@ -726,12 +785,13 @@ function react(
         )
       )
         continue;
-      fire(s, c, x, `${rname(x)}【过路房费】：结算 ${rname(t)} 的 1 分房费。`, "sw_hotel");
-      const canPay = total(player(s, t.owner).chips) >= 1;
-      if (canPay && t.owner !== x.owner) {
-        gainChip(s, t.owner, -1);
-        gainChip(s, x.owner, 1);
-      } else if (!canPay) trip(s, t);
+      fire(s, c, x, `${rname(x)}【过路房费】：结算 ${rname(t)} 的 1 分房费。`, "sw_hotel", () => {
+        const canPay = total(player(s, t.owner).chips) >= 1;
+        if (canPay && t.owner !== x.owner) {
+          gainChip(s, t.owner, -1);
+          gainChip(s, x.owner, 1);
+        } else if (!canPay) trip(s, t);
+      });
     } else if (p === "banana" && bananaPassed.includes(x)) {
       trip(s, t);
       fire(s, c, x, `${rname(x)}【香蕉皮】：${rname(t)} 经过时摔倒。`);
@@ -752,12 +812,13 @@ function react(
     } else if (p === "mouth" && x === t && !simultaneous) {
       const o = onSpace(s, pos).filter((o) => o !== t);
       if (o.length === 1) {
-        fire(s, c, x, `${rname(x)}【一口吞人】：${rname(o[0])} 被吞掉，淘汰出本场比赛！`);
-        eliminate(s, o[0]);
+        eliminateWithPower(s, o, () => fire(s, c, x, `${rname(x)}【一口吞人】：${rname(o[0])} 被吞掉，淘汰出本场比赛！`));
       }
     } else if (p === "romantic" && t.pos === pos && !simultaneous && onSpace(s, pos).length === 2) {
-      move(s, c, x, 2, false, "见不得成双");
-      fire(s, c, x, `${rname(x)}【见不得成双】：${rname(t)} 停进了两人格子，移动 2 格。`);
+      romanticReaction(s, c, x, () => {
+        move(s, c, x, 2, false, "见不得成双");
+        fire(s, c, x, `${rname(x)}【见不得成双】：${rname(t)} 停进了两人格子，移动 2 格。`);
+      });
     } else if (p === "duelist" && t.pos === pos && !simultaneous) {
       const foes = x === t ? onSpace(s, pos).filter((o) => o !== x) : x.pos === pos ? [t] : [];
       if (!foes.length) continue;
@@ -806,13 +867,26 @@ function aloneLast(s: MAState, t: Token) {
 interface TurnFlags {
   extra: boolean;
   skipper: string | null;
+  resumeAfter?: string;
 }
 
 /** Racer-owned rolls, including auxiliary dice; player roll-offs stay unchanged. */
 function racerDie(s: MAState, c: Ctx, t: Token) {
   for (let safety = 0; safety < SAFETY; safety++) {
     const stunner = holders(s, "sw_stunner").find((o) => o !== t && Math.abs(o.pos - t.pos) <= 1);
-    const raw = d6(s);
+    if (!stunner) {
+      c.unforcedDie = true;
+      c.unforcedEpoch = (c.unforcedEpoch ?? 0) + 1;
+    }
+    let raw = d6(s);
+    if (!stunner && c.provingForcedTurn) {
+      const index = c.proofRollIndex ?? 0;
+      if (index >= 12) throw new ProofBudget();
+      const value = c.proofRolls?.[index];
+      if (value === undefined) throw new ProofDie();
+      c.proofRollIndex = index + 1;
+      raw = value;
+    }
     if (stunner) {
       fire(s, c, stunner, `${rname(stunner)}【全场看呆】：${rname(t)} 的骰点视为 1。`, "sw_stunner");
       return 1;
@@ -880,6 +954,7 @@ function mainMove(s: MAState, c: Ctx, t: Token, f: TurnFlags) {
     const o = others(s, t).find((x) => x.racer === how.slice(5))!;
     const [a, b] = [t.pos, o.pos];
     fire(s, c, t, `${rname(t)}【瞬间换位】：与 ${rname(o)} 交换位置。`);
+    if (!active(t) || !active(o)) return;
     t.pos = b;
     o.pos = a;
     log(s, "", { kind: "warp", racer: t.racer, from: a, to: b });
@@ -1075,12 +1150,14 @@ function mainMove(s: MAState, c: Ctx, t: Token, f: TurnFlags) {
           t,
           `${rname(t)}【百变糊糊】：${drawn ? `抽到 ${racerName(drawn)}，替换本场能力。` : "牌堆已空，保留当前能力。"}`,
           "sw_mush",
+          () => {
+            if (drawn) {
+              s.deck.shift();
+              t.base = drawn;
+              registerReturner(s, t);
+            }
+          },
         );
-        if (drawn) {
-          s.deck.shift();
-          t.base = drawn;
-          registerReturner(s, t);
-        }
       }
       if (has(s, t, "sw_bite_mark") && v <= 2 && !t.secondWind?.wereMouth) {
         fire(s, c, t, `${rname(t)}【巨口变身】：变成巨口，本场淘汰经过的选手。`, "sw_bite_mark");
@@ -1103,8 +1180,7 @@ function mainMove(s: MAState, c: Ctx, t: Token, f: TurnFlags) {
       // Final roll only: replaced rolls never eliminate Icarus. Apply its own
       // effect before other racers react, but still dispatch their roll triggers.
       if (has(s, t, "sw_icarus") && v === 6) {
-        fire(s, c, t, `${rname(t)}【飞行风险】：最终掷出 6，淘汰出本场。`, "sw_icarus");
-        eliminate(s, t);
+        eliminateWithPower(s, [t], () => fire(s, c, t, `${rname(t)}【飞行风险】：最终掷出 6，淘汰出本场。`, "sw_icarus", undefined, true));
       }
       for (const rival of holders(s, "sw_nemesis")) {
         if (rival === t) continue;
@@ -1552,8 +1628,7 @@ function racerTurn(s: MAState, c: Ctx, t: Token, f: TurnFlags) {
     if (has(s, t, "sw_speed_demon")) {
       const opponents = others(s, t);
       if (opponents.length && t.pos >= Math.max(...opponents.map((o) => o.pos)) + 4) {
-        fire(s, c, t, `${rname(t)}【极速失控】：领先至少 4 格，淘汰出本场。`);
-        eliminate(s, t);
+        eliminateWithPower(s, [t], () => fire(s, c, t, `${rname(t)}【极速失控】：领先至少 4 格，淘汰出本场。`, "sw_speed_demon", undefined, true));
         return;
       }
     }
@@ -1685,28 +1760,29 @@ function racerTurn(s: MAState, c: Ctx, t: Token, f: TurnFlags) {
         });
         const target = targets.find((o) => o.racer === id);
         if (target) {
-          fire(s, c, t, `${rname(t)}【换手戏法】：与 ${rname(target)} 交换控制者。`, "sw_switcharoo");
-          const previous = t.owner;
-          t.owner = target.owner;
-          target.owner = previous;
-          // Provisional interpretation: cards and future return rights transfer;
-          // already earned chips stay with their original players.
-          const oldPlayer = player(s, previous),
-            newPlayer = player(s, t.owner);
-          oldPlayer.hand = oldPlayer.hand.map((id) => (id === t.racer ? target.racer : id));
-          newPlayer.hand = newPlayer.hand.map((id) => (id === target.racer ? t.racer : id));
-          oldPlayer.used = oldPlayer.used.map((id) => (id === t.racer ? target.racer : id));
-          newPlayer.used = newPlayer.used.map((id) => (id === target.racer ? t.racer : id));
-          for (const returning of s.returningRacers ?? []) {
-            if (returning.racer === t.racer) returning.owner = t.owner;
-            if (returning.racer === target.racer) returning.owner = target.owner;
-          }
-          log(s, `${rname(t)} 由 ${pname(s, t.owner)} 控制，${rname(target)} 由 ${pname(s, target.owner)} 控制。`, {
-            kind: "control",
-            racer: t.racer,
-            target: target.racer,
-            owner: t.owner,
-            targetOwner: target.owner,
+          fire(s, c, t, `${rname(t)}【换手戏法】：与 ${rname(target)} 交换控制者。`, "sw_switcharoo", () => {
+            const previous = t.owner;
+            t.owner = target.owner;
+            target.owner = previous;
+            // Provisional interpretation: cards and future return rights transfer;
+            // already earned chips stay with their original players.
+            const oldPlayer = player(s, previous),
+              newPlayer = player(s, t.owner);
+            oldPlayer.hand = oldPlayer.hand.map((id) => (id === t.racer ? target.racer : id));
+            newPlayer.hand = newPlayer.hand.map((id) => (id === target.racer ? t.racer : id));
+            oldPlayer.used = oldPlayer.used.map((id) => (id === t.racer ? target.racer : id));
+            newPlayer.used = newPlayer.used.map((id) => (id === target.racer ? t.racer : id));
+            for (const returning of s.returningRacers ?? []) {
+              if (returning.racer === t.racer) returning.owner = t.owner;
+              if (returning.racer === target.racer) returning.owner = target.owner;
+            }
+            log(s, `${rname(t)} 由 ${pname(s, t.owner)} 控制，${rname(target)} 由 ${pname(s, target.owner)} 控制。`, {
+              kind: "control",
+              racer: t.racer,
+              target: target.racer,
+              owner: t.owner,
+              targetOwner: target.owner,
+            });
           });
         }
       }
@@ -1723,6 +1799,18 @@ function racerTurn(s: MAState, c: Ctx, t: Token, f: TurnFlags) {
 function turnUnit(s: MAState, c: Ctx) {
   const r = race(s);
   const f: TurnFlags = { extra: false, skipper: null };
+  const forcedFrog =
+    !c.provingForcedTurn &&
+    s.settings.secondWindPreview &&
+    r.tokens.some(
+      (t) =>
+        t.owner === r.current &&
+        active(t) &&
+        holders(s, "sw_stunner").some((o) => o !== t && Math.abs(o.pos - t.pos) <= 1),
+    );
+  // A Stunner-owned main die is forced to 1 regardless of the hidden raw die.
+  // Every semantic field must repeat; all allowed choice branches are proved.
+  const frogSnapshot = forcedFrog ? strip(s) : null;
   const mine = () => inOrder(s).filter((x) => x.owner === r.current && active(x));
   try {
     // 2026-08 规则：多名选手按赛前摆好的顺序（顺时针）行动，不再每回合重选顺序
@@ -1745,12 +1833,156 @@ function turnUnit(s: MAState, c: Ctx) {
     }
     if (!r.firstTurnDone.includes(r.current)) r.firstTurnDone.push(r.current);
     for (const t of seq) if (active(t) && t.owner === r.current) racerTurn(s, c, t, f);
+    // Prove a closed cycle before watching its actual completion. Its private
+    // anchor survives Need/recovery; never omit a stand-up or other cycle step.
+    const blocked = r.forcedCycleBlocked;
+    if (blocked) {
+      if (blocked.states.includes(forcedTurnKey(s, true, true))) {
+        if (f.skipper === blocked.owner) {
+          f.skipper = null;
+          log(s, "（循环：相同局面下不再重复插队，让其他座位继续行动）");
+        }
+      } else delete r.forcedCycleBlocked;
+    }
+    if (
+      (f.extra || f.skipper) &&
+      frogSnapshot &&
+      proveForcedTurn(frogSnapshot)
+    ) {
+      const previous = r.forcedCycle ? JSON.parse(r.forcedCycle) : null;
+      const visited: string[] = Array.isArray(previous) ? previous : [
+        r.forcedCycle ?? forcedTurnKey(JSON.parse(frogSnapshot), true, true),
+      ];
+      const completed = forcedTurnKey(s, true, true);
+      if (visited.includes(completed)) {
+        if (f.skipper) r.forcedCycleBlocked = { owner: f.skipper, states: visited };
+        f.resumeAfter = r.insertionResume;
+        delete r.forcedCycle;
+        if (f.extra) {
+          f.extra = false;
+          if (f.skipper === r.current) f.skipper = null;
+        } else f.skipper = null;
+        log(s, "（循环：固定骰点使额外回合或插队回到相同局面，保留完整一轮所得分，轮到下一位）");
+      } else r.forcedCycle = JSON.stringify([...visited, completed]);
+    } else if (!c.provingForcedTurn) delete r.forcedCycle;
+    c.continuation = !!(
+      (f.extra && mine().length) ||
+      (f.skipper && r.tokens.some((t) => t.owner === f.skipper && active(t)))
+    );
   } catch (e) {
     // 等人决定时回合还没结束，不能换人；比赛结束时照常记下一位
-    if (!(e instanceof Need)) nextTurn(s, f);
+    if (!(e instanceof Need) && !(e instanceof ProofDie)) nextTurn(s, f);
     throw e;
   }
   nextTurn(s, f);
+}
+
+function forcedTurnKey(s: MAState, ignoreCurrent = false, ignoreAwards = false) {
+  const { forcedCycle: _anchor, forcedCycleBlocked: _blocked, ...r } = race(s);
+  // USER_RULING 2026-10-29: added star/skill awards do not prevent a forced
+  // repeat. Keep every score value that can change a later legal outcome.
+  const sensitive = ignoreAwards
+    ? new Set(r.tokens.filter((t) => active(t) &&
+        (has(s, t, "sw_speed_demon") || has(s, t, "sisyphus"))).map((t) => t.owner))
+    : null;
+  const hotel = ignoreAwards && holders(s, "sw_hotel").length > 0;
+  return JSON.stringify({
+    ...s, rng: 0, forcedRolls: [], log: [], version: 0, turn: null, pending: null,
+    ...(ignoreAwards ? { players: s.players.map((p) => ({
+      ...p,
+      chips: sensitive!.has(p.id) ? p.chips : hotel && total(p.chips) > 0
+        ? [{kind: "bronze", value: 1, race: 0}] : [],
+    })) } : {}),
+    race: { ...r, lastRoll: null, ...(ignoreCurrent ? {current:""} : {}) },
+  });
+}
+
+function onlyAddedAwards(before: Chip[][], s: MAState) {
+  return s.players.every((p, i) => {
+    const previous = before[i];
+    return p.chips.length >= previous.length &&
+      JSON.stringify(p.chips.slice(0, previous.length)) === JSON.stringify(previous) &&
+      p.chips.slice(previous.length).every((c) => c.kind === "bronze" && c.value >= 0);
+  });
+}
+
+/** Guard recursive Romantic reactions without discarding real choices/dice. */
+function romanticReaction(s: MAState, c: Ctx, source: Token, action: () => void) {
+  const state: MAState = JSON.parse(forcedTurnKey(s, false, true));
+  const scores = JSON.stringify(s.players.map((p) => p.chips));
+  const key = `${source.racer}:${c.choiceEpoch ?? 0}:${c.unforcedEpoch ?? 0}:${JSON.stringify([...c.guard])}:${JSON.stringify(state)}`;
+  const seen = (c.romanticSeen ??= new Map());
+  const previous = seen.get(key);
+  if (previous === undefined) {
+    seen.set(key, scores);
+    try { action(); } finally { seen.delete(key); }
+    return;
+  }
+  if (previous !== scores && !onlyAddedAwards(JSON.parse(previous), s))
+    fail("CHECK_REQUIRED_SCORE_LOOP", "这组技能会反复加减分，需要先确认循环计分方式。");
+  log(s, `（循环：${rname(source)} 反复回到相同局面，保留完整一轮所得分，到此停止）`);
+}
+
+/** A bounded proof search, never a turn limit. Unknown branches keep the turn. */
+function proveForcedTurn(snapshot: string): boolean {
+  const start: MAState = JSON.parse(snapshot);
+  start.log = [];
+  const initial = forcedTurnKey(start, false, true);
+  const nodes = new Map([[initial, strip(start)]]);
+  const edges = new Map<string, Set<string>>();
+  const paths = [{ node: initial, answers: [] as string[], rolls: [] as number[] }];
+  for (let budget = 0; paths.length && budget < 1024; budget++) {
+    const { node, answers, rolls } = paths.pop()!;
+    let result: ReturnType<typeof runUnit>;
+    try {
+      result = runUnit(nodes.get(node)!, answers, true, rolls);
+    } catch {
+      return false;
+    } // A speculative branch must not reject a legal action.
+    // An auxiliary die may be random yet unable to escape. Prove all six
+    // outcomes as well as every player choice; any escaping branch rejects it.
+    if (result.proofDie) {
+      for (let value = 1; value <= 6; value++) paths.push({ node, answers, rolls: [...rolls, value] });
+    } else if (result.need) {
+      for (const option of result.need.options) paths.push({ node, answers: [...answers, option.value], rolls });
+    } else if (
+      result.s.phase !== "race" ||
+      race(result.s).over ||
+      (!result.continuation && race(result.s).current !== race(start).current)
+    ) {
+      return false;
+    } else {
+      const before: MAState = JSON.parse(nodes.get(node)!);
+      // Do not turn finite spending/score transfer into a permanent cycle.
+      if (!onlyAddedAwards(before.players.map((p) => p.chips), result.s)) return false;
+      const next = forcedTurnKey(result.s, false, true);
+      const targets = edges.get(node) ?? new Set<string>();
+      targets.add(next);
+      edges.set(node, targets);
+      if (!nodes.has(next)) {
+        result.s.log = [];
+        nodes.set(next, strip(result.s));
+        paths.push({ node: next, answers: [], rolls: [] });
+      }
+    }
+  }
+  if (paths.length) return false;
+  // Every reachable boundary must be able to return to the original state.
+  // This rejects transient progress, irreversible choices and score-sensitive
+  // progress. Pure added awards follow the one-cycle user ruling.
+  const semantic = forcedTurnKey(start, true, true);
+  const returns = new Set(
+    [...nodes].filter(([, value]) => forcedTurnKey(JSON.parse(value), true, true) === semantic).map(([key]) => key),
+  );
+  for (let changed = true; changed;) {
+    changed = false;
+    for (const [from, targets] of edges)
+      if (!returns.has(from) && [...targets].some((to) => returns.has(to))) {
+        returns.add(from);
+        changed = true;
+      }
+  }
+  return returns.size === nodes.size;
 }
 
 function nextTurn(s: MAState, f: TurnFlags) {
@@ -1758,10 +1990,13 @@ function nextTurn(s: MAState, f: TurnFlags) {
   const live = (id: string) => r.tokens.some((x) => x.owner === id && active(x));
   if (f.extra && live(r.current)) return;
   if (f.skipper && live(f.skipper)) {
+    if (s.settings.secondWindPreview && f.skipper !== r.current)
+      r.insertionResume ??= r.current;
     r.current = f.skipper;
     return;
   }
-  const i = r.order.indexOf(r.current);
+  const i = r.order.indexOf(f.resumeAfter ?? r.current);
+  delete r.insertionResume;
   for (let k = 1; k <= r.order.length; k++) {
     const id = r.order[(i + k) % r.order.length];
     if (live(id)) {
@@ -1900,9 +2135,13 @@ function setupUnit(s: MAState, c: Ctx) {
 // ---------------------------------------------------------------- 单元调度
 const strip = (s: MAState) => JSON.stringify({ ...s, turn: null, pending: null });
 
-function runUnit(snapshot: string, answers: string[]): { s: MAState; need: Decision | null } {
+function runUnit(snapshot: string, answers: string[], provingForcedTurn = false, proofRolls?: number[]): {
+  s: MAState; need: Decision | null; unforcedDie?: boolean; continuation?: boolean; proofDie?: boolean;
+} {
   const s: MAState = JSON.parse(snapshot);
   const c: Ctx = {
+    provingForcedTurn,
+    proofRolls,
     answers,
     i: 0,
     guard: new Set(),
@@ -1914,9 +2153,10 @@ function runUnit(snapshot: string, answers: string[]): { s: MAState; need: Decis
     if (!r.setup) setupUnit(s, c);
     else turnUnit(s, c);
     if (c.i < answers.length) fail("EXTRA_ANSWER", "多余的回答。");
-    return { s, need: null };
+    return { s, need: null, unforcedDie: c.unforcedDie, continuation: c.continuation };
   } catch (e) {
-    if (e instanceof Need) return { s, need: e.decision };
+    if (e instanceof ProofDie) return { s, need: null, proofDie: true };
+    if (e instanceof Need) return { s, need: e.decision, unforcedDie: c.unforcedDie };
     if (e instanceof RaceOver) {
       endRace(s, c);
       return { s, need: null };
@@ -1925,14 +2165,24 @@ function runUnit(snapshot: string, answers: string[]): { s: MAState; need: Decis
   }
 }
 
-/** Prove a terminal new-Diva cycle using disposable deterministic replays.
+/** Prove a terminal forced stand-up cycle using disposable deterministic replays.
  * Only compulsory stand-up answers may be supplied. Any choice, random roll,
  * actual movement or scoring invalidates this proof; it is never a chain cap.
  * Base-only games never enter this path. No hidden history is sent to clients.
  */
 function forcedStandupCycle(initial: MAState): boolean {
-  if (initial.pending?.kind !== "standup" || !initial.settings.secondWindPreview || !holders(initial, "sw_diva").length)
+  if (initial.pending?.kind !== "standup" || !initial.settings.secondWindPreview)
     return false;
+  const live = race(initial).tokens.filter(active);
+  // With exactly two active Diva/Hose racers on rocks, every Diva
+  // swap trips both again before either main move. Hose can only trip racers;
+  // every die outcome still leaves both main moves blocked by the next swap.
+  if (
+    live.length === 2 &&
+    live.some((t) => has(initial, t, "sw_diva")) &&
+    live.every((t) => t.tripped && trackOf(initial).specials[t.pos]?.kind === "rock" &&
+      ["sw_diva", "sw_the_hose"].includes(powerOf(initial, t) ?? ""))
+  ) return true;
   let probe: MAState = structuredClone(initial);
   const seen = new Set<string>();
   for (;;) {
@@ -1962,7 +2212,9 @@ function forcedStandupCycle(initial: MAState): boolean {
     seen.add(key);
     const snapshot = probe.turn?.snapshot ?? strip(probe);
     const answers = probe.pending ? [...probe.turn!.answers, "ok"] : [];
-    const res = runUnit(snapshot, answers);
+    let res: ReturnType<typeof runUnit>;
+    try { res = runUnit(snapshot, answers); }
+    catch { return false; }
     // Compare against the beginning of this unit because Need replays rebuild
     // its existing log. Warps/trips alone can form a closed forced cycle.
     const startLogLength = (JSON.parse(snapshot) as MAState).log.length;
@@ -2012,6 +2264,11 @@ function endRace(
   },
 ) {
   const r = race(s);
+  r.finishers = r.finishers.filter((id) => r.tokens.some((t) => t.racer === id && !t.out));
+  delete r.forcedCycle;
+  for (const [i, id] of r.finishers.entries())
+    if (r.finishers.indexOf(id) === i) r.tokens.find((t) => t.racer === id)!.place = i + 1;
+  for (const t of r.tokens) if (t.out) t.place = null;
   for (const t of r.tokens) registerReturner(s, t);
   r.over = true;
   const corner = trackOf(s).secondCorner;

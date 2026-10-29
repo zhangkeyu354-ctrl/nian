@@ -1,0 +1,30 @@
+
+ RUN  v5.0.5 E:/DBD-MA-Bugfix
+
+ ❯ packages/magical-athlete/test/elimination-chain.test.ts (50 tests | 1 failed | 49 skipped) 91ms
+   ❯ 淘汰与冠军连锁 (50)
+     × 船长循环结束后不能立刻从下一人手里再次插队，其他座位仍须得到行动 88ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  packages/magical-athlete/test/elimination-chain.test.ts > 淘汰与冠军连锁 > 船长循环结束后不能立刻从下一人手里再次插队，其他座位仍须得到行动
+AssertionError: expected 'p1' to be 'p3' // Object.is equality
+
+Expected: "p3"
+Received: "p1"
+
+ ❯ packages/magical-athlete/test/elimination-chain.test.ts:34:31
+     32|     });
+     33|     for (let i = 0; i < 16 && s.pending?.player !== "p3"; i++) s = ans…
+     34|     expect(s.pending?.player).toBe("p3");
+       |                               ^
+     35|     for (const seat of [...s.seats, null]) expect(viewForMA(s, seat).r…
+     36|   });
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  1 failed | 49 skipped (50)
+   Start at  12:32:27
+   Duration  694ms (transform 49%, tests 29%, import 19%, worker 3%)

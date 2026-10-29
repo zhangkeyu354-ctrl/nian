@@ -1,0 +1,12 @@
+
+> dbd-boardgame-private@0.2.2 test
+> vitest run --maxWorkers=1 --no-file-parallelism --pool=threads
+
+
+ RUN  v5.0.5 E:/DBD-MA-Bugfix
+
+
+ Test Files  86 passed (86)
+      Tests  1324 passed (1324)
+   Start at  12:43:27
+   Duration  311.13s (tests 99%, import 1%)

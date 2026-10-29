@@ -1,0 +1,1 @@
+XB_LAYOUT_PASS 48 stage fixtures

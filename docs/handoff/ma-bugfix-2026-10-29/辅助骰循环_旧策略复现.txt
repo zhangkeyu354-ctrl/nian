@@ -1,0 +1,19 @@
+{"previousPolicy":"decline all random auxiliary dice","current":"p1","nemesisPoints":2}
+node:internal/modules/run_main:107
+    triggerUncaughtException(
+    ^
+
+AssertionError [ERR_ASSERTION]: The old policy must fail the corrected closed-cycle regression.
+
+'p1' !== 'p2'
+
+    at <anonymous> (E:\DBD-MA-Bugfix\work\verify-before-auxiliary.ts:23:8) {
+  generatedMessage: false,
+  code: 'ERR_ASSERTION',
+  actual: 'p1',
+  expected: 'p2',
+  operator: 'strictEqual',
+  diff: 'simple'
+}
+
+Node.js v24.14.0

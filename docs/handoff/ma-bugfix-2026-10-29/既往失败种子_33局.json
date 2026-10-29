@@ -1,0 +1,563 @@
+[
+  {
+    "seed": 29200000,
+    "result": {
+      "players": 2,
+      "engineSHA256": "324cca94a77f1dfb39cded684188f12b66cfadc0389cdafc9e3c98893a51ca16",
+      "games": 1,
+      "attemptedGames": 1,
+      "seedStart": 29200000,
+      "seedEnd": 29200000,
+      "commands": 100,
+      "races": 4,
+      "nearFinishStressRaces": 1,
+      "completedStressRaces": 1,
+      "blocked": [],
+      "seconds": 0.049
+    }
+  },
+  {
+    "seed": 29300008,
+    "result": {
+      "players": 3,
+      "engineSHA256": "324cca94a77f1dfb39cded684188f12b66cfadc0389cdafc9e3c98893a51ca16",
+      "games": 1,
+      "attemptedGames": 1,
+      "seedStart": 29300008,
+      "seedEnd": 29300008,
+      "commands": 98,
+      "races": 4,
+      "nearFinishStressRaces": 1,
+      "completedStressRaces": 1,
+      "blocked": [],
+      "seconds": 0.037
+    }
+  },
+  {
+    "seed": 29300843,
+    "result": {
+      "players": 3,
+      "engineSHA256": "324cca94a77f1dfb39cded684188f12b66cfadc0389cdafc9e3c98893a51ca16",
+      "games": 1,
+      "attemptedGames": 1,
+      "seedStart": 29300843,
+      "seedEnd": 29300843,
+      "commands": 162,
+      "races": 4,
+      "nearFinishStressRaces": 0,
+      "completedStressRaces": 0,
+      "blocked": [],
+      "seconds": 0.059
+    }
+  },
+  {
+    "seed": 29301061,
+    "result": {
+      "players": 3,
+      "engineSHA256": "324cca94a77f1dfb39cded684188f12b66cfadc0389cdafc9e3c98893a51ca16",
+      "games": 1,
+      "attemptedGames": 1,
+      "seedStart": 29301061,
+      "seedEnd": 29301061,
+      "commands": 136,
+      "races": 4,
+      "nearFinishStressRaces": 0,
+      "completedStressRaces": 0,
+      "blocked": [],
+      "seconds": 0.049
+    }
+  },
+  {
+    "seed": 29400462,
+    "result": {
+      "players": 4,
+      "engineSHA256": "324cca94a77f1dfb39cded684188f12b66cfadc0389cdafc9e3c98893a51ca16",
+      "games": 1,
+      "attemptedGames": 1,
+      "seedStart": 29400462,
+      "seedEnd": 29400462,
+      "commands": 151,
+      "races": 4,
+      "nearFinishStressRaces": 0,
+      "completedStressRaces": 0,
+      "blocked": [],
+      "seconds": 0.047
+    }
+  },
+  {
+    "seed": 29400868,
+    "result": {
+      "players": 4,
+      "engineSHA256": "324cca94a77f1dfb39cded684188f12b66cfadc0389cdafc9e3c98893a51ca16",
+      "games": 1,
+      "attemptedGames": 1,
+      "seedStart": 29400868,
+      "seedEnd": 29400868,
+      "commands": 179,
+      "races": 4,
+      "nearFinishStressRaces": 1,
+      "completedStressRaces": 1,
+      "blocked": [],
+      "seconds": 0.074
+    }
+  },
+  {
+    "seed": 29401131,
+    "result": {
+      "players": 4,
+      "engineSHA256": "324cca94a77f1dfb39cded684188f12b66cfadc0389cdafc9e3c98893a51ca16",
+      "games": 1,
+      "attemptedGames": 1,
+      "seedStart": 29401131,
+      "seedEnd": 29401131,
+      "commands": 201,
+      "races": 4,
+      "nearFinishStressRaces": 0,
+      "completedStressRaces": 0,
+      "blocked": [],
+      "seconds": 0.125
+    }
+  },
+  {
+    "seed": 29500001,
+    "result": {
+      "players": 5,
+      "engineSHA256": "324cca94a77f1dfb39cded684188f12b66cfadc0389cdafc9e3c98893a51ca16",
+      "games": 1,
+      "attemptedGames": 1,
+      "seedStart": 29500001,
+      "seedEnd": 29500001,
+      "commands": 231,
+      "races": 4,
+      "nearFinishStressRaces": 0,
+      "completedStressRaces": 0,
+      "blocked": [],
+      "seconds": 0.093
+    }
+  },
+  {
+    "seed": 29500061,
+    "result": {
+      "players": 5,
+      "engineSHA256": "324cca94a77f1dfb39cded684188f12b66cfadc0389cdafc9e3c98893a51ca16",
+      "games": 1,
+      "attemptedGames": 1,
+      "seedStart": 29500061,
+      "seedEnd": 29500061,
+      "commands": 234,
+      "races": 4,
+      "nearFinishStressRaces": 0,
+      "completedStressRaces": 0,
+      "blocked": [],
+      "seconds": 0.116
+    }
+  },
+  {
+    "seed": 29500126,
+    "result": {
+      "players": 5,
+      "engineSHA256": "324cca94a77f1dfb39cded684188f12b66cfadc0389cdafc9e3c98893a51ca16",
+      "games": 1,
+      "attemptedGames": 1,
+      "seedStart": 29500126,
+      "seedEnd": 29500126,
+      "commands": 243,
+      "races": 4,
+      "nearFinishStressRaces": 0,
+      "completedStressRaces": 0,
+      "blocked": [],
+      "seconds": 0.111
+    }
+  },
+  {
+    "seed": 29500727,
+    "result": {
+      "players": 5,
+      "engineSHA256": "324cca94a77f1dfb39cded684188f12b66cfadc0389cdafc9e3c98893a51ca16",
+      "games": 1,
+      "attemptedGames": 1,
+      "seedStart": 29500727,
+      "seedEnd": 29500727,
+      "commands": 218,
+      "races": 4,
+      "nearFinishStressRaces": 0,
+      "completedStressRaces": 0,
+      "blocked": [],
+      "seconds": 0.097
+    }
+  },
+  {
+    "seed": 29501513,
+    "result": {
+      "players": 5,
+      "engineSHA256": "324cca94a77f1dfb39cded684188f12b66cfadc0389cdafc9e3c98893a51ca16",
+      "games": 1,
+      "attemptedGames": 1,
+      "seedStart": 29501513,
+      "seedEnd": 29501513,
+      "commands": 244,
+      "races": 4,
+      "nearFinishStressRaces": 0,
+      "completedStressRaces": 0,
+      "blocked": [],
+      "seconds": 0.115
+    }
+  },
+  {
+    "seed": 29600026,
+    "result": {
+      "players": 6,
+      "engineSHA256": "324cca94a77f1dfb39cded684188f12b66cfadc0389cdafc9e3c98893a51ca16",
+      "games": 1,
+      "attemptedGames": 1,
+      "seedStart": 29600026,
+      "seedEnd": 29600026,
+      "commands": 241,
+      "races": 4,
+      "nearFinishStressRaces": 0,
+      "completedStressRaces": 0,
+      "blocked": [],
+      "seconds": 0.11
+    }
+  },
+  {
+    "seed": 29600264,
+    "result": {
+      "players": 6,
+      "engineSHA256": "324cca94a77f1dfb39cded684188f12b66cfadc0389cdafc9e3c98893a51ca16",
+      "games": 1,
+      "attemptedGames": 1,
+      "seedStart": 29600264,
+      "seedEnd": 29600264,
+      "commands": 256,
+      "races": 4,
+      "nearFinishStressRaces": 1,
+      "completedStressRaces": 1,
+      "blocked": [],
+      "seconds": 0.12
+    }
+  },
+  {
+    "seed": 29600563,
+    "result": {
+      "players": 6,
+      "engineSHA256": "324cca94a77f1dfb39cded684188f12b66cfadc0389cdafc9e3c98893a51ca16",
+      "games": 1,
+      "attemptedGames": 1,
+      "seedStart": 29600563,
+      "seedEnd": 29600563,
+      "commands": 358,
+      "races": 4,
+      "nearFinishStressRaces": 0,
+      "completedStressRaces": 0,
+      "blocked": [],
+      "seconds": 0.42
+    }
+  },
+  {
+    "seed": 29601193,
+    "result": {
+      "players": 6,
+      "engineSHA256": "324cca94a77f1dfb39cded684188f12b66cfadc0389cdafc9e3c98893a51ca16",
+      "games": 1,
+      "attemptedGames": 1,
+      "seedStart": 29601193,
+      "seedEnd": 29601193,
+      "commands": 273,
+      "races": 4,
+      "nearFinishStressRaces": 0,
+      "completedStressRaces": 0,
+      "blocked": [],
+      "seconds": 0.144
+    }
+  },
+  {
+    "seed": 29601652,
+    "result": {
+      "players": 6,
+      "engineSHA256": "324cca94a77f1dfb39cded684188f12b66cfadc0389cdafc9e3c98893a51ca16",
+      "games": 1,
+      "attemptedGames": 1,
+      "seedStart": 29601652,
+      "seedEnd": 29601652,
+      "commands": 242,
+      "races": 4,
+      "nearFinishStressRaces": 1,
+      "completedStressRaces": 1,
+      "blocked": [],
+      "seconds": 0.128
+    }
+  },
+  {
+    "seed": 29601924,
+    "result": {
+      "players": 6,
+      "engineSHA256": "324cca94a77f1dfb39cded684188f12b66cfadc0389cdafc9e3c98893a51ca16",
+      "games": 1,
+      "attemptedGames": 1,
+      "seedStart": 29601924,
+      "seedEnd": 29601924,
+      "commands": 218,
+      "races": 4,
+      "nearFinishStressRaces": 1,
+      "completedStressRaces": 1,
+      "blocked": [],
+      "seconds": 0.117
+    }
+  },
+  {
+    "seed": 29700034,
+    "result": {
+      "players": 7,
+      "engineSHA256": "324cca94a77f1dfb39cded684188f12b66cfadc0389cdafc9e3c98893a51ca16",
+      "games": 1,
+      "attemptedGames": 1,
+      "seedStart": 29700034,
+      "seedEnd": 29700034,
+      "commands": 307,
+      "races": 4,
+      "nearFinishStressRaces": 0,
+      "completedStressRaces": 0,
+      "blocked": [],
+      "seconds": 0.148
+    }
+  },
+  {
+    "seed": 29700097,
+    "result": {
+      "players": 7,
+      "engineSHA256": "324cca94a77f1dfb39cded684188f12b66cfadc0389cdafc9e3c98893a51ca16",
+      "games": 1,
+      "attemptedGames": 1,
+      "seedStart": 29700097,
+      "seedEnd": 29700097,
+      "commands": 402,
+      "races": 4,
+      "nearFinishStressRaces": 0,
+      "completedStressRaces": 0,
+      "blocked": [],
+      "seconds": 0.197
+    }
+  },
+  {
+    "seed": 29700231,
+    "result": {
+      "players": 7,
+      "engineSHA256": "324cca94a77f1dfb39cded684188f12b66cfadc0389cdafc9e3c98893a51ca16",
+      "games": 1,
+      "attemptedGames": 1,
+      "seedStart": 29700231,
+      "seedEnd": 29700231,
+      "commands": 396,
+      "races": 4,
+      "nearFinishStressRaces": 0,
+      "completedStressRaces": 0,
+      "blocked": [],
+      "seconds": 0.303
+    }
+  },
+  {
+    "seed": 29700313,
+    "result": {
+      "players": 7,
+      "engineSHA256": "324cca94a77f1dfb39cded684188f12b66cfadc0389cdafc9e3c98893a51ca16",
+      "games": 1,
+      "attemptedGames": 1,
+      "seedStart": 29700313,
+      "seedEnd": 29700313,
+      "commands": 413,
+      "races": 4,
+      "nearFinishStressRaces": 0,
+      "completedStressRaces": 0,
+      "blocked": [],
+      "seconds": 0.413
+    }
+  },
+  {
+    "seed": 29700556,
+    "result": {
+      "players": 7,
+      "engineSHA256": "324cca94a77f1dfb39cded684188f12b66cfadc0389cdafc9e3c98893a51ca16",
+      "games": 1,
+      "attemptedGames": 1,
+      "seedStart": 29700556,
+      "seedEnd": 29700556,
+      "commands": 261,
+      "races": 4,
+      "nearFinishStressRaces": 1,
+      "completedStressRaces": 1,
+      "blocked": [],
+      "seconds": 0.156
+    }
+  },
+  {
+    "seed": 29700906,
+    "result": {
+      "players": 7,
+      "engineSHA256": "324cca94a77f1dfb39cded684188f12b66cfadc0389cdafc9e3c98893a51ca16",
+      "games": 1,
+      "attemptedGames": 1,
+      "seedStart": 29700906,
+      "seedEnd": 29700906,
+      "commands": 282,
+      "races": 4,
+      "nearFinishStressRaces": 0,
+      "completedStressRaces": 0,
+      "blocked": [],
+      "seconds": 0.123
+    }
+  },
+  {
+    "seed": 29800064,
+    "result": {
+      "players": 8,
+      "engineSHA256": "324cca94a77f1dfb39cded684188f12b66cfadc0389cdafc9e3c98893a51ca16",
+      "games": 1,
+      "attemptedGames": 1,
+      "seedStart": 29800064,
+      "seedEnd": 29800064,
+      "commands": 286,
+      "races": 4,
+      "nearFinishStressRaces": 1,
+      "completedStressRaces": 1,
+      "blocked": [],
+      "seconds": 0.176
+    }
+  },
+  {
+    "seed": 29800220,
+    "result": {
+      "players": 8,
+      "engineSHA256": "324cca94a77f1dfb39cded684188f12b66cfadc0389cdafc9e3c98893a51ca16",
+      "games": 1,
+      "attemptedGames": 1,
+      "seedStart": 29800220,
+      "seedEnd": 29800220,
+      "commands": 507,
+      "races": 4,
+      "nearFinishStressRaces": 1,
+      "completedStressRaces": 1,
+      "blocked": [],
+      "seconds": 0.334
+    }
+  },
+  {
+    "seed": 29800559,
+    "result": {
+      "players": 8,
+      "engineSHA256": "324cca94a77f1dfb39cded684188f12b66cfadc0389cdafc9e3c98893a51ca16",
+      "games": 1,
+      "attemptedGames": 1,
+      "seedStart": 29800559,
+      "seedEnd": 29800559,
+      "commands": 366,
+      "races": 4,
+      "nearFinishStressRaces": 0,
+      "completedStressRaces": 0,
+      "blocked": [],
+      "seconds": 0.223
+    }
+  },
+  {
+    "seed": 29800603,
+    "result": {
+      "players": 8,
+      "engineSHA256": "324cca94a77f1dfb39cded684188f12b66cfadc0389cdafc9e3c98893a51ca16",
+      "games": 1,
+      "attemptedGames": 1,
+      "seedStart": 29800603,
+      "seedEnd": 29800603,
+      "commands": 819,
+      "races": 4,
+      "nearFinishStressRaces": 0,
+      "completedStressRaces": 0,
+      "blocked": [],
+      "seconds": 20.091
+    }
+  },
+  {
+    "seed": 29801013,
+    "result": {
+      "players": 8,
+      "engineSHA256": "324cca94a77f1dfb39cded684188f12b66cfadc0389cdafc9e3c98893a51ca16",
+      "games": 1,
+      "attemptedGames": 1,
+      "seedStart": 29801013,
+      "seedEnd": 29801013,
+      "commands": 423,
+      "races": 4,
+      "nearFinishStressRaces": 0,
+      "completedStressRaces": 0,
+      "blocked": [],
+      "seconds": 0.239
+    }
+  },
+  {
+    "seed": 29801248,
+    "result": {
+      "players": 8,
+      "engineSHA256": "324cca94a77f1dfb39cded684188f12b66cfadc0389cdafc9e3c98893a51ca16",
+      "games": 1,
+      "attemptedGames": 1,
+      "seedStart": 29801248,
+      "seedEnd": 29801248,
+      "commands": 326,
+      "races": 4,
+      "nearFinishStressRaces": 1,
+      "completedStressRaces": 1,
+      "blocked": [],
+      "seconds": 0.183
+    }
+  },
+  {
+    "seed": 29801745,
+    "result": {
+      "players": 8,
+      "engineSHA256": "324cca94a77f1dfb39cded684188f12b66cfadc0389cdafc9e3c98893a51ca16",
+      "games": 1,
+      "attemptedGames": 1,
+      "seedStart": 29801745,
+      "seedEnd": 29801745,
+      "commands": 772,
+      "races": 4,
+      "nearFinishStressRaces": 0,
+      "completedStressRaces": 0,
+      "blocked": [],
+      "seconds": 4.637
+    }
+  },
+  {
+    "seed": 29801888,
+    "result": {
+      "players": 8,
+      "engineSHA256": "324cca94a77f1dfb39cded684188f12b66cfadc0389cdafc9e3c98893a51ca16",
+      "games": 1,
+      "attemptedGames": 1,
+      "seedStart": 29801888,
+      "seedEnd": 29801888,
+      "commands": 490,
+      "races": 4,
+      "nearFinishStressRaces": 1,
+      "completedStressRaces": 1,
+      "blocked": [],
+      "seconds": 0.362
+    }
+  },
+  {
+    "seed": 29800497,
+    "result": {
+      "players": 8,
+      "engineSHA256": "324cca94a77f1dfb39cded684188f12b66cfadc0389cdafc9e3c98893a51ca16",
+      "games": 1,
+      "attemptedGames": 1,
+      "seedStart": 29800497,
+      "seedEnd": 29800497,
+      "commands": 398,
+      "races": 4,
+      "nearFinishStressRaces": 0,
+      "completedStressRaces": 0,
+      "blocked": [],
+      "seconds": 0.254
+    }
+  }
+]
