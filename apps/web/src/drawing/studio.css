@@ -4724,3 +4724,19 @@
 .st-tp.has-award .st-album-caption b {
   font-size: 14px;
 }
+/* 竖屏全场结算：按钮放在标题下方，不再浮在卡片上 */
+@media (orientation: portrait) {
+  .st-tp .rs-tp .rs-actions {
+    position: static;
+    order: 1;
+    margin-top: 0;
+    background: none;
+    padding: 0;
+  }
+  .st-tp .rs-tp .rs-tp-head {
+    order: 0;
+  }
+  .st-tp .rs-tp > :not(.rs-tp-head):not(.rs-actions):not(.rs-curtain):not(.rs-confetti) {
+    order: 2;
+  }
+}
