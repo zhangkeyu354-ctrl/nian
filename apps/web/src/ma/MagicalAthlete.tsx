@@ -1032,7 +1032,7 @@ function CardLightbox({ id, onClose }: { id: string; onClose: () => void }) {
 }
 
 /** 屏幕中央的大骰子 / 技能发动 / 冲线 / 开场提示：所有人同时看到 */
-function Overlay({
+export function Overlay({
   show,
   view,
   name,
@@ -1114,23 +1114,26 @@ function Overlay({
         <small>第 {show.race + 1} 场 · {cancelled ? "本场取消，不发奖牌" : "颁奖"}</small>
         <div className="ma-podium">
           {[2, 1, 3].map((n) => {
-            const pl = at(n);
+            const entries = show.places.filter((x) => x.place === n);
+            const pl = entries[0];
             return (
               <div key={n} className={"ma-step p" + n + (pl ? "" : " empty")} style={{ ["--pc" as string]: pl ? colorOf(pl.owner) : "#999" }}>
-                {pl && (
-                  <div className="ma-step-who">
+                <div className={"ma-step-team" + (entries.length > 1 ? " multi" : "")}>
+                {entries.map((entry) => (
+                  <div key={entry.racer} className="ma-step-who" style={{ ["--pc" as string]: colorOf(entry.owner) }}>
                     {n === 1 && <span className="ma-crown">👑</span>}
-                    <img src={`${ART}/tokens/${artId(pl.racer)}.png`} alt="" />
-                    <b>{racerName(pl.racer)}</b>
+                    <img src={`${ART}/tokens/${artId(entry.racer)}.png`} alt="" />
+                    <b>{racerName(entry.racer)}</b>
                     <small>
-                      {pl.owner === me ? "你" : name(pl.owner)}
-                      {n === 2 && at(1)?.racer === pl.racer && " · 军师猜中，再拿亚军"}
+                      {entry.owner === me ? "你" : name(entry.owner)}
+                      {n === 2 && at(1)?.racer === entry.racer && " · 军师猜中，再拿亚军"}
                     </small>
                   </div>
-                )}
+                ))}
+                </div>
                 <div className="ma-step-block">
                   <span>{n}</span>
-                  {pl && <em>{pl.points ? `+${pl.points} 分` : "不计分"}</em>}
+                  {pl && <em>{pl.points ? `${entries.length > 1 ? "每人 " : ""}+${pl.points} 分` : "不计分"}</em>}
                 </div>
               </div>
             );

@@ -1,0 +1,8 @@
+
+ RUN  v5.0.5 E:/DBD-MA-Bugfix
+
+
+ Test Files  3 passed (3)
+      Tests  28 passed (28)
+   Start at  13:27:16
+   Duration  5.09s (tests 94%, transform 3%, import 3%)

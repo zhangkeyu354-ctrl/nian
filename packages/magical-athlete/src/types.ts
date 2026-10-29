@@ -63,6 +63,10 @@ export interface RaceState {
   finishers: string[];
   eliminated: string[];
   mastermindPick: string | null;
+  /** Independent predictions belong to each physical racer, not a shared seat. */
+  mastermindPicks?: Record<string, string>;
+  /** Correct predictions share second place and each receive full silver. */
+  mastermindWinners?: string[];
   /** 本回合骰子（显示用） */
   lastRoll: {
     player: string;
@@ -142,6 +146,8 @@ export interface LogEntry {
 export interface Settings {
   /** User ruling 2026-10-26; absent in legacy snapshots = forward only. */
   bananaBackwardPass?: boolean;
+  /** User ruling 2026-10-29; absent on old saves retains single-bet replay. */
+  independentMasterminds?: boolean;
   /** Server/development opt-in only. Existing rooms omit this and keep base36. */
   secondWindPreview?: boolean;
   races: number;

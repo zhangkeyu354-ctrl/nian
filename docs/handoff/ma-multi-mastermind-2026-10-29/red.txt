@@ -1,0 +1,84 @@
+
+ RUN  v5.0.5 E:/DBD-MA-Bugfix
+
+ ❯ packages/magical-athlete/test/multiple-masterminds.test.ts (4 tests | 4 failed) 21ms
+   ❯ 用户裁定：多人军师独立下注 (4)
+     × 两人押中同一冠军，各拿完整银牌，领奖台展示两个亚军 14ms
+     × 一人押中、一人押错，仅押中者获奖 1ms
+     × 山寨猫复制军师押中自己，同时拿金银牌并保留名单重复例外 2ms
+     × 所有人押的首位冲线者被冠军替身拦截，不结算任何猜中奖励 2ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 4 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  packages/magical-athlete/test/multiple-masterminds.test.ts > 用户裁定：多人军师独立下注 > 两人押中同一冠军，各拿完整银牌，领奖台展示两个亚军
+AssertionError: expected 'main' to be 'mastermind' // Object.is equality
+
+Expected: "mastermind"
+Received: "main"
+
+ ❯ twoBets packages/magical-athlete/test/multiple-masterminds.test.ts:22:27
+     20|   s = answer(s, first);
+     21|   s = answer(s, "roll");
+     22|   expect(s.pending?.kind).toBe("mastermind");
+       |                           ^
+     23|   expect(s.pending?.racer).toBe("twin");
+     24|   s = answer(s, second);
+ ❯ packages/magical-athlete/test/multiple-masterminds.test.ts:31:15
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/4]⎯
+
+ FAIL  packages/magical-athlete/test/multiple-masterminds.test.ts > 用户裁定：多人军师独立下注 > 一人押中、一人押错，仅押中者获奖
+AssertionError: expected 'main' to be 'mastermind' // Object.is equality
+
+Expected: "mastermind"
+Received: "main"
+
+ ❯ twoBets packages/magical-athlete/test/multiple-masterminds.test.ts:22:27
+     20|   s = answer(s, first);
+     21|   s = answer(s, "roll");
+     22|   expect(s.pending?.kind).toBe("mastermind");
+       |                           ^
+     23|   expect(s.pending?.racer).toBe("twin");
+     24|   s = answer(s, second);
+ ❯ packages/magical-athlete/test/multiple-masterminds.test.ts:46:15
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[2/4]⎯
+
+ FAIL  packages/magical-athlete/test/multiple-masterminds.test.ts > 用户裁定：多人军师独立下注 > 山寨猫复制军师押中自己，同时拿金银牌并保留名单重复例外
+AssertionError: expected 'main' to be 'mastermind' // Object.is equality
+
+Expected: "mastermind"
+Received: "main"
+
+ ❯ packages/magical-athlete/test/multiple-masterminds.test.ts:58:29
+     56|     s = answer(s, "banana");
+     57|     s = answer(s, "roll");
+     58|     expect(s.pending?.kind).toBe("mastermind");
+       |                             ^
+     59|     s = answer(s, "copycat");
+     60|     s = answer(s, "roll");
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[3/4]⎯
+
+ FAIL  packages/magical-athlete/test/multiple-masterminds.test.ts > 用户裁定：多人军师独立下注 > 所有人押的首位冲线者被冠军替身拦截，不结算任何猜中奖励
+AssertionError: expected 'main' to be 'mastermind' // Object.is equality
+
+Expected: "mastermind"
+Received: "main"
+
+ ❯ twoBets packages/magical-athlete/test/multiple-masterminds.test.ts:22:27
+     20|   s = answer(s, first);
+     21|   s = answer(s, "roll");
+     22|   expect(s.pending?.kind).toBe("mastermind");
+       |                           ^
+     23|   expect(s.pending?.racer).toBe("twin");
+     24|   s = answer(s, second);
+ ❯ packages/magical-athlete/test/multiple-masterminds.test.ts:66:15
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[4/4]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  4 failed (4)
+   Start at  13:16:26
+   Duration  352ms (transform 48%, import 28%, tests 19%, worker 5%)

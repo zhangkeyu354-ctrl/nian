@@ -26,11 +26,16 @@ export function checkChainInvariants(s: MAState) {
     );
     assert(p.chips.every((c) => Number.isInteger(c.value) && c.value >= 0));
     for (const kind of ["gold", "silver"] as const) {
-      for (let race = 0; race < s.settings.races; race++)
+      for (let race = 0; race < s.settings.races; race++) {
+        const podium = s.log.find((l) => l.race === race && l.fx?.kind === "podium")?.fx;
+        const silverLimit = kind === "silver" && s.settings.independentMasterminds
+          ? Math.max(1, podium?.kind === "podium" ? podium.places.filter((p) => p.place === 2).length : 0)
+          : 1;
         assert(
-          s.players.flatMap((p) => p.chips).filter((c) => c.race === race && c.kind === kind).length <= 1,
+          s.players.flatMap((p) => p.chips).filter((c) => c.race === race && c.kind === kind).length <= silverLimit,
           `duplicate ${kind}`,
         );
+      }
     }
   }
   const r = s.race;
@@ -48,11 +53,15 @@ export function checkChainInvariants(s: MAState) {
     }
     if (t.place === null) assert(t.pos >= 0 && t.pos <= 29, "unfinished position out of bounds");
   }
-  if (new Set(r.finishers).size !== r.finishers.length)
+  for (const id of new Set(r.finishers)) {
+    const count: number = r.finishers.filter((x) => x === id).length;
+    if (count === 1) continue;
     assert(
-      r.finishers.length === 2 && r.finishers[0] === r.finishers[1] && r.mastermindPick === r.finishers[0],
+      count === 2 && id === r.finishers[0] &&
+        (r.mastermindWinners?.includes(id) || r.mastermindPick === id),
       "unexpected duplicate finish",
     );
+  }
   const stopped = new Set<string>();
   const eliminated = new Set<string>();
   const dadAwards = new Set<string>();

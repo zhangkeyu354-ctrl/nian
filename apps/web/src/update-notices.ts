@@ -1,6 +1,13 @@
 /** 大厅更新公告：每次发布在顶部追加，使用玩家能看懂的简短说明。 */
 export const UPDATE_NOTICES = [
   {
+    id: "2026-10-29-ma-independent-masterminds",
+    date: "2026-10-29",
+    game: "魔法运动员",
+    title: "军师各自下注",
+    text: "多人拥有军师技能时，各自下注，押中都得分。每名押中者都拿完整奖励，领奖台会一起显示。",
+  },
+  {
     id: "2026-10-29-ma-champion-chains",
     date: "2026-10-29",
     game: "魔法运动员",

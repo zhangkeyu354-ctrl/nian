@@ -21,6 +21,11 @@ export async function tapPhoneCommand(
     document.documentElement.dataset.tilt = "off";
   });
   const direct = async () => {
+    // Earlier commands can leave the dock on a later page. Search the whole
+    // current action list rather than only its remaining pages.
+    const previous = page.locator(".mobile-dock").getByLabel("上一页操作", { exact: true });
+    for (let n = 0; n < 20 && await previous.count() && await previous.isEnabled(); n++)
+      await tap(previous);
     for (let n = 0; n < 20; n++) {
       const buttons = page.locator(".mobile-dock [data-command]:visible");
       const i = await buttons.evaluateAll(

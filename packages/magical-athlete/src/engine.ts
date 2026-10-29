@@ -83,6 +83,7 @@ export function createMAGame(opts: CreateMAOptions): MAState {
   const deal: "draft" | "random" = opts.settings?.deal === "random" && variant === "standard" ? "random" : "draft";
   const settings: Settings = {
     ...(opts.settings?.bananaBackwardPass === false ? {} : { bananaBackwardPass: true }),
+    ...(opts.settings?.independentMasterminds === false ? {} : { independentMasterminds: true }),
     ...(opts.settings?.secondWindPreview === true ? { secondWindPreview: true } : {}),
     races,
     variant,
@@ -405,7 +406,8 @@ function finish(s: MAState, c: Ctx, t: Token) {
     for (const dad of stepdads)
       fire(s, c, dad, `${rname(dad)}【扶你一把】：左侧 ${rname(t)} 第一个冲线，获得 3 分。`, "sw_stepdad");
   };
-  const eligibleMasterminds = s.settings.secondWindPreview ? new Set(holders(s, "mastermind")) : null;
+  const eligibleMasterminds = s.settings.secondWindPreview || s.settings.independentMasterminds
+    ? new Set(holders(s, "mastermind")) : null;
   if (!r.finishers.length && !r.championIntercepted) {
     const gang = holders(s, "sw_doppelgangster");
     if (gang.length) {
@@ -451,7 +453,25 @@ function finish(s: MAState, c: Ctx, t: Token) {
     racer: t.racer,
     place: t.place,
   });
-  if (t.place === 1 && r.mastermindPick === t.racer) {
+  if (t.place === 1 && s.settings.independentMasterminds) {
+    // Old snapshots/tests can contain the original shared prediction only.
+    const original = r.tokens.find((x) => x.base === "mastermind" && !x.out);
+    const bets = r.mastermindPicks ?? (original && r.mastermindPick
+      ? { [original.racer]: r.mastermindPick } : {});
+    const winners = r.tokens.filter((x) => bets[x.racer] === t.racer && eligibleMasterminds!.has(x));
+    if (winners.length) {
+      r.mastermindWinners = winners.map((x) => x.racer);
+      for (const mm of winners) {
+        if (mm !== t) mm.place = 2;
+        r.finishers.push(mm.racer);
+        log(s, `${rname(mm)}【开局下注】猜中了冠军，比赛立刻结束，获得第 2 名！`);
+      }
+      r.over = true;
+      awardStepdads();
+      throw new RaceOver();
+    }
+  }
+  if (!s.settings.independentMasterminds && t.place === 1 && r.mastermindPick === t.racer) {
     const mm = r.tokens.find(
       (x) => x.base === "mastermind" && !x.out && (!eligibleMasterminds || eligibleMasterminds.has(x)),
     );
@@ -1564,7 +1584,7 @@ function racerTurn(s: MAState, c: Ctx, t: Token, f: TurnFlags) {
   {
     if (!t.started) {
       t.started = true;
-      if (has(s, t, "mastermind") && r.mastermindPick === null) {
+      if (!s.settings.independentMasterminds && has(s, t, "mastermind") && r.mastermindPick === null) {
         const a = ask(s, c, {
           player: t.owner,
           racer: t.racer,
@@ -1587,6 +1607,16 @@ function racerTurn(s: MAState, c: Ctx, t: Token, f: TurnFlags) {
           options: lead.map((o) => ({ value: o.racer, label: rname(o) })),
         });
       }
+    }
+    if (s.settings.independentMasterminds && has(s, t, "mastermind") && !r.mastermindPicks?.[t.racer]) {
+      const pick = ask(s, c, {
+        player: t.owner, racer: t.racer, kind: "mastermind",
+        prompt: `${rname(t)}【开局下注】：预测哪名选手会赢得本场？`,
+        options: r.tokens.map((o) => ({ value: o.racer, label: rname(o) })),
+      });
+      (r.mastermindPicks ??= {})[t.racer] = pick;
+      r.mastermindPick ??= pick;
+      fire(s, c, t, `${rname(t)}【开局下注】：预测 ${racerName(pick)} 夺冠。`);
     }
     // New turn-start abilities are not skipped just because the main move is lost.
     if (has(s, t, "sw_spoilsport")) {
@@ -2267,7 +2297,8 @@ function endRace(
   r.finishers = r.finishers.filter((id) => r.tokens.some((t) => t.racer === id && !t.out));
   delete r.forcedCycle;
   for (const [i, id] of r.finishers.entries())
-    if (r.finishers.indexOf(id) === i) r.tokens.find((t) => t.racer === id)!.place = i + 1;
+    if (r.finishers.indexOf(id) === i) r.tokens.find((t) => t.racer === id)!.place =
+      i > 0 && r.mastermindWinners?.includes(id) ? 2 : i + 1;
   for (const t of r.tokens) if (t.out) t.place = null;
   for (const t of r.tokens) registerReturner(s, t);
   r.over = true;
@@ -2278,6 +2309,8 @@ function endRace(
   const pts = s.settings.points[r.index] ?? DEFAULT_POINTS;
   const owner = (racer: string) => r.tokens.find((t) => t.racer === racer)!.owner;
   const [first, second] = r.cancelledBy ? [] : r.finishers;
+  const seconds = r.cancelledBy ? [] : r.mastermindWinners?.length
+    ? [...new Set(r.mastermindWinners)].filter((id) => r.finishers.includes(id)) : second ? [second] : [];
   if (first) {
     player(s, owner(first)).chips.push({
       kind: "gold",
@@ -2286,13 +2319,13 @@ function endRace(
     });
     s.winners.push(first);
   }
-  if (second)
-    player(s, owner(second)).chips.push({
+  for (const id of seconds)
+    player(s, owner(id)).chips.push({
       kind: "silver",
       value: pts.silver,
       race: r.index,
     });
-  else log(s, "没有第二名，银牌作废。");
+  if (!seconds.length) log(s, "没有第二名，银牌作废。");
   // 领奖台（只是展示用）：第 3 名 = 还在场上、位置最靠前的选手（同格按本场行动顺序）；不计分
   const places: Array<{
     racer: string;
@@ -2307,17 +2340,17 @@ function endRace(
       place: 1,
       points: pts.gold,
     });
-  if (second)
+  for (const id of seconds)
     places.push({
-      racer: second,
-      owner: owner(second),
+      racer: id,
+      owner: owner(id),
       place: 2,
       points: pts.silver,
     });
   const rest = r.tokens
     .filter((t) => active(t) && !r.finishers.includes(t.racer))
     .sort((a, b) => b.pos - a.pos || r.order.indexOf(a.owner) - r.order.indexOf(b.owner));
-  if (rest[0] && places.length === 2)
+  if (rest[0] && first && seconds.length)
     places.push({
       racer: rest[0].racer,
       owner: rest[0].owner,
@@ -2328,7 +2361,7 @@ function endRace(
     s,
     r.cancelledBy
       ? `第 ${r.index + 1} 场已取消：保留已得分，不发本场金银牌。`
-      : `第 ${r.index + 1} 场结束：冠军 ${first ? racerName(first) : "无"}（+${pts.gold}），亚军 ${second ? racerName(second) : "无"}${second ? `（+${pts.silver}）` : ""}。`,
+      : `第 ${r.index + 1} 场结束：冠军 ${first ? racerName(first) : "无"}（+${pts.gold}），亚军 ${seconds.length ? seconds.map(racerName).join("、") : "无"}${seconds.length ? `（+${pts.silver}）` : ""}。`,
     { kind: "podium", race: r.index, places },
   );
   // 下一场先手：上一场最落后的选手（或第一个被淘汰的）；2 人变体：上一场得分较少的玩家，平分掷骰

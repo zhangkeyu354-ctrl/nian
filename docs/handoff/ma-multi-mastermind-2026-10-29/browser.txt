@@ -1,0 +1,1 @@
+MA_BROWSERS_PASS {"players":2,"deal":"draft","steps":131,"racesSeen":4,"speedChecked":true,"statsScreens":0,"newRacersPicked":["sw_re_runner","sw_cheatah","sw_stunner","sw_magical_athlete","sw_doppelgangster","sw_mush"]}

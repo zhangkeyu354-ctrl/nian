@@ -45,6 +45,7 @@ export interface MARoomFile {
   secondWind?: boolean;
   /** Absent on old saves: replay with the old forward-only Banana rule. */
   bananaBackwardPass?: boolean;
+  independentMasterminds?: boolean;
   seed: number;
   commands: MACommand[];
 }
@@ -73,6 +74,7 @@ export class MARoom {
         variant: "standard",
         deal: this.file.deal ?? "draft",
         bananaBackwardPass: this.file.bananaBackwardPass === true,
+        independentMasterminds: this.file.independentMasterminds === true,
         ...(this.file.secondWind === true ? { secondWindPreview: true } : {}),
       },
     });
@@ -132,6 +134,7 @@ export class MARoom {
       this.file.stage = "game";
       this.file.commands = [];
       this.file.bananaBackwardPass = true;
+      this.file.independentMasterminds = true;
       this.state = this.create();
     } else throw new Error("BAD_ACTION");
   }

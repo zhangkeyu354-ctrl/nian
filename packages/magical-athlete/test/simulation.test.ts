@@ -119,9 +119,13 @@ describe("魔法运动员 · 整局模拟", () => {
           const third = pd.places.find((x) => x.place === 3);
           if (third) expect(third.points).toBe(0);
           // 同一名选手占两个名次，只可能是军师预测自己猜中（同时拿第 1、2 名，卡面规则）
-          const [p1, p2] = [pd.places.find((x) => x.place === 1), pd.places.find((x) => x.place === 2)];
-          if (p1 && p2 && p1.racer === p2.racer) expect(p1.racer).toBe("mastermind");
-          else expect(new Set(pd.places.map((x) => x.racer)).size).toBe(pd.places.length);
+          for (const id of new Set(pd.places.map((x) => x.racer))) {
+            const entries = pd.places.filter((x) => x.racer === id);
+            if (entries.length === 1) continue;
+            expect(entries.map((x) => x.place)).toEqual([1, 2]);
+            expect(s.log.some((l) => l.race === i && l.fx?.kind === "power" &&
+              l.fx.power === "mastermind" && l.fx.racer === id)).toBe(true);
+          }
           // 拿分的人确实拿到了这场的奖牌
           for (const x of pd.places.filter((x) => x.points > 0))
             expect(s.players.find((p) => p.id === x.owner)!.chips.some((c) => c.race === i && c.value === x.points)).toBe(true);

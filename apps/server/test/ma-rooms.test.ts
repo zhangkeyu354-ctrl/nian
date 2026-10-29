@@ -14,10 +14,13 @@ describe("魔法运动员房间", () => {
     room.lobby(host, { type: "START" });
     expect(room.file.bananaBackwardPass).toBe(true);
     expect(room.state!.settings.bananaBackwardPass).toBe(true);
+    expect(room.file.independentMasterminds).toBe(true);
+    expect(room.state!.settings.independentMasterminds).toBe(true);
     store.save(room);
     const restored = new MARoomStore(dir).rooms.get(room.code)!;
     expect(restored.state).toEqual(room.state);
     expect(restored.file.bananaBackwardPass).toBe(true);
+    expect(restored.state!.settings.independentMasterminds).toBe(true);
   });
 
   it("旧存档缺少香蕉版本字段时，重放保持旧规则和旧状态结构", () => {
@@ -28,8 +31,10 @@ describe("魔法运动员房间", () => {
     room.lobby(host, { type: "START" });
     const oldFile = structuredClone(room.file);
     delete oldFile.bananaBackwardPass;
+    delete oldFile.independentMasterminds;
     const restored = new MARoom(oldFile);
     expect(restored.state!.settings).not.toHaveProperty("bananaBackwardPass");
+    expect(restored.state!.settings).not.toHaveProperty("independentMasterminds");
     const d = restored.state!.draft!;
     const token = restored.file.players.find(p => p.playerId === d.order[d.step])!.token;
     restored.apply(token, 0, { type: "DRAFT", racer: d.pool[0] });
