@@ -26,6 +26,7 @@ export function skillFlightFrames(
       opacity: 1,
       offset: 1 - 180 / 2600,
     },
-    { transform, opacity: 0, offset: 1 },
+    // 结束时原地淡出，不再缩回发动者
+    { transform: "translate3d(0,0,0) scale(.97) rotate(0)", opacity: 0, offset: 1 },
   ];
 }

@@ -1,4 +1,5 @@
-import React, { memo, useLayoutEffect, useRef } from "react";
+import React, { memo, useEffect, useLayoutEffect, useRef, useState } from "react";
+import type { DiceHandle } from "./dice3d.ts";
 import { motionMs, reduced } from "./motion-clock.ts";
 import { diePose, skillFlightFrames } from "./lite-motion.ts";
 import { ART } from "./Track.tsx";
@@ -6,8 +7,8 @@ import { ART } from "./Track.tsx";
 const DIE_COLORS = ["#e8443a", "#2f7fd8", "#f2b705", "#8a4fd6", "#1fa37a", "#f07c1e", "#e0569b", "#3f9fb5"];
 const PIPS: Record<number, number[]> = { 1: [5], 2: [3, 7], 3: [3, 5, 7], 4: [1, 3, 7, 9], 5: [1, 3, 5, 7, 9], 6: [1, 3, 4, 6, 7, 9] };
 
-/** 立体骰子：面和点都用 CSS 画，带倒角、高光和落地阴影；落定面只取服务器结果。 */
-export function CubeDie({
+/** 备用的 CSS 骰子（3D 引擎加载中或设备不支持 WebGL 时使用）：面和点都用 CSS 画，带倒角、高光和落地阴影；落定面只取服务器结果。 */
+function CssCubeDie({
   value,
   rolling,
   seat,
@@ -52,6 +53,54 @@ export function CubeDie({
           ))}
         </div>
       </div>
+    </div>
+  );
+}
+
+let dice3d: Promise<typeof import("./dice3d.ts")> | null = null;
+const loadDice = () => (dice3d ??= import("./dice3d.ts"));
+// 进入游戏后空闲时提前加载 3D 骰子，第一次掷骰就是 3D 版
+if (typeof window !== "undefined") setTimeout(() => void loadDice().catch(() => {}), 2500);
+
+/** 骰子：优先用真 3D（three.js），不可用时退回 CSS 版。点数只取服务器结果。 */
+export function CubeDie({ value, rolling, seat }: { value: number; rolling: boolean; seat: number }) {
+  const canvas = useRef<HTMLCanvasElement>(null);
+  const handle = useRef<DiceHandle | null>(null);
+  const [ready, setReady] = useState(false);
+  const [failed, setFailed] = useState(false);
+  const color = DIE_COLORS[(Math.max(1, seat) - 1) % DIE_COLORS.length];
+  useEffect(() => {
+    let alive = true;
+    loadDice()
+      .then((m) => {
+        if (!alive || !canvas.current) return;
+        handle.current = m.createDice(canvas.current, color);
+        setReady(true);
+      })
+      .catch(() => alive && setFailed(true));
+    return () => {
+      alive = false;
+      handle.current?.dispose();
+      handle.current = null;
+    };
+  }, [color]);
+  useEffect(() => {
+    handle.current?.setState(value, rolling, motionMs(620), reduced());
+  }, [value, rolling, ready]);
+  if (failed) return <CssCubeDie value={value} rolling={rolling} seat={seat} />;
+  return (
+    <div
+      className={"ma-bigdie ma-dice3d" + (rolling ? " rolling" : " landed")}
+      role="img"
+      aria-label={rolling ? "骰子转动中" : `${value} 点`}
+      data-value={rolling ? undefined : value}
+    >
+      <canvas ref={canvas} style={{ opacity: ready ? 1 : 0 }} />
+      {!ready && (
+        <div className="ma-dice3d-wait">
+          <CssCubeDie value={value} rolling={rolling} seat={seat} />
+        </div>
+      )}
     </div>
   );
 }

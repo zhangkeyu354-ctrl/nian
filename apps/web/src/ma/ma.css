@@ -2816,6 +2816,13 @@
 @keyframes ma-die-floor { 0%,100%{transform:scale(1);opacity:1;} 50%{transform:scale(.6);opacity:.45;} }
 @keyframes ma-die-land { 0%{transform:translateY(-30%) scale(1);} 45%{transform:translateY(0) scale(1.08,.9);} 70%{transform:translateY(-6%) scale(.98,1.03);} 100%{transform:none;} }
 @keyframes ma-cube-roll { from{transform:rotateX(-24deg) rotateY(-32deg);} to{transform:rotateX(336deg) rotateY(688deg) rotateZ(360deg);} }
+.ma-bigdie.ma-dice3d { filter:none; }
+.ma-dice3d { position:relative; width:min(46vw,190px); aspect-ratio:1; margin:0 auto; }
+.ma-bigdie.ma-dice3d.rolling,.ma-bigdie.ma-dice3d.landed { animation:none; }
+.ma-dice3d canvas { position:absolute; inset:0; width:100%; height:100%; display:block; transition:opacity .15s; }
+.ma-dice3d-wait { position:absolute; inset:0; display:grid; place-items:center; }
+.ma-dice3d-wait .ma-cube-scene { margin:0; }
+.ma-duel .ma-dice3d { width:min(34vw,150px); }
 .ma-skill-flight { width:min(88vw,400px); }
 .ma-skill-flight .ma-ov-skill { animation:none; }
 .ma-score-roll { display:inline-grid;position:relative;height:1.12em;line-height:1.12;min-width:1ch;overflow:hidden;vertical-align:middle;font-variant-numeric:tabular-nums; }
