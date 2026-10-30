@@ -5,7 +5,9 @@ import { join, resolve, extname } from "node:path";
 import assert from "node:assert/strict";
 import { testRace, reduceMA } from "../packages/magical-athlete/src/engine.ts";
 import { viewForMA } from "../packages/magical-athlete/src/privacy.ts";
-const out = resolve("output/ma-polish-checks");
+const out = resolve(
+  process.env.MA_POLISH_CHECKS_OUT ?? "output/ma-polish-checks",
+);
 mkdirSync(out, { recursive: true });
 const before = testRace({
   racers: ["sw_magical_athlete", "scoocher", "party_animal", "suckerfish"],
@@ -38,7 +40,10 @@ const server = createServer((req, res) => {
     res.end(JSON.stringify(fixture));
     return;
   }
-  const label = req.headers["x-ma-build"] === "before" ? "before" : "after";
+  const label =
+    req.headers["x-ma-build"] === "before"
+      ? "before"
+      : (process.env.MA_POLISH_CURRENT ?? "after");
   let file = join(
     resolve(`output/ma-polish-${label}/build`),
     path === "/" ? "index.html" : path,
@@ -80,7 +85,10 @@ try {
     const original = HTMLCanvasElement.prototype.getContext,
       seen = new WeakSet();
     (window as any).__gl = { created: 0, released: 0, frames: 0 };
-    HTMLCanvasElement.prototype.getContext = function (this: HTMLCanvasElement, ...args: any[]) {
+    HTMLCanvasElement.prototype.getContext = function (
+      this: HTMLCanvasElement,
+      ...args: any[]
+    ) {
       const gl = (original as any).apply(this, args);
       if (gl && String(args[0]).includes("webgl") && !seen.has(gl)) {
         seen.add(gl);
@@ -173,7 +181,10 @@ try {
   await setup(css);
   await css.addInitScript(() => {
     const original = HTMLCanvasElement.prototype.getContext;
-    HTMLCanvasElement.prototype.getContext = function (this: HTMLCanvasElement, ...args: any[]) {
+    HTMLCanvasElement.prototype.getContext = function (
+      this: HTMLCanvasElement,
+      ...args: any[]
+    ) {
       return String(args[0]).includes("webgl")
         ? null
         : (original as any).apply(this, args);
@@ -278,7 +289,9 @@ try {
     await mobile.close();
   }
   // One lightweight sample per version, no video/CPU slowdown and no three-round loop.
-  for (const label of ["before", "after"]) {
+  for (const label of process.env.MA_POLISH_NO_PERF === "1"
+    ? []
+    : ["before", "after"]) {
     const sample = await browser.newContext({
       viewport: { width: 390, height: 844 },
       extraHTTPHeaders: { "x-ma-build": label },

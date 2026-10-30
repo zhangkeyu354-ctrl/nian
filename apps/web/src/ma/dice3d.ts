@@ -3,7 +3,11 @@ import * as THREE from "three";
 import { RoundedBoxGeometry } from "three/examples/jsm/geometries/RoundedBoxGeometry.js";
 import { RoomEnvironment } from "three/examples/jsm/environments/RoomEnvironment.js";
 import { mergeGeometries } from "three/examples/jsm/utils/BufferGeometryUtils.js";
-import { rollSample, settleSample } from "./dice-motion.ts";
+import {
+  makeDiceThrow,
+  sampleDiceThrow,
+  type DiceThrow,
+} from "./dice-physics.ts";
 const NORMALS: Record<number, THREE.Vector3> = {
   1: new THREE.Vector3(0, 0, 1),
   6: new THREE.Vector3(0, 0, -1),
@@ -198,14 +202,10 @@ export function createDice(
       ),
     );
     [...pips, ...rims, pipBase, rimBase].forEach((g) => g.dispose());
-    let mode: "idle" | "rolling" | "settling" = "idle",
+    let mode: "idle" | "moving" = "idle",
       started = 0,
-      settleMs = 620,
-      rollMs = 750,
-      fromHeight = 0.2;
-    const axis = new THREE.Vector3(0.6, 0.8, 0.3).normalize(),
-      temporary = new THREE.Quaternion(),
-      from = new THREE.Quaternion();
+      duration = 1370;
+    let trajectory: DiceThrow | null = null;
     let target = diceTargetQuaternion(1, 0.46);
     const BASE = 0.5,
       render = () => {
@@ -233,28 +233,12 @@ export function createDice(
     }
     const loop = (now: number) => {
       if (disposed) return;
-      if (mode === "rolling") {
-        const sample = rollSample((now - started) / Math.max(1, rollMs));
-        temporary.setFromAxisAngle(axis, sample.angle);
-        die.quaternion.copy(from).premultiply(temporary);
-        die.position.set(sample.x, BASE + sample.height, 0);
-        die.scale.setScalar(1);
-      } else if (mode === "settling") {
-        const p = Math.min(1, (now - started) / Math.max(1, settleMs)),
-          sample = settleSample(p, fromHeight);
-        die.position.set(0, BASE + sample.height, 0);
-        die.scale.set(
-          1 / Math.sqrt(sample.squash),
-          sample.squash,
-          1 / Math.sqrt(sample.squash),
-        );
-        die.quaternion.slerpQuaternions(from, target, sample.orientation);
-        if (p >= 0.9) {
-          die.quaternion.copy(target);
-          die.position.set(0, BASE, 0);
-          die.scale.setScalar(1);
-          mode = "idle";
-        }
+      if (mode === "moving" && trajectory) {
+        const p = Math.min(1, (now - started) / Math.max(1, duration));
+        const sample = sampleDiceThrow(trajectory, p);
+        die.position.copy(sample.position);
+        die.quaternion.copy(sample.rotation);
+        if (p >= 1) mode = "idle";
       }
       render();
       if (mode !== "idle") raf = requestAnimationFrame(loop);
@@ -280,7 +264,8 @@ export function createDice(
             throwMs === lastRollMs)
         )
           return;
-        const wasRolling = lastRolling;
+        const wasRolling = lastRolling,
+          previousValue = lastValue;
         lastValue = value;
         lastRolling = rolling;
         lastReduced = reduced;
@@ -288,6 +273,7 @@ export function createDice(
         lastRollMs = throwMs;
         target = diceTargetQuaternion(value, 0.46);
         if (reduced) {
+          trajectory = null;
           cancelAnimationFrame(raf);
           mode = "idle";
           die.quaternion.copy(target);
@@ -296,17 +282,31 @@ export function createDice(
           render();
           return;
         }
-        if (rolling) {
-          axis
-            .set(Math.random() - 0.5, Math.random() - 0.5, Math.random() - 0.5)
-            .normalize();
-          from.copy(die.quaternion);
-          rollMs = throwMs;
-          mode = "rolling";
+        if (rolling && !wasRolling) {
+          trajectory = makeDiceThrow(
+            value,
+            Math.floor(Math.random() * 2 ** 31),
+          );
+          duration = throwMs + ms;
+          mode = "moving";
+          // Present the first physical frame immediately, not the old idle pose.
+          die.position.copy(trajectory.frames[0].position);
+          die.quaternion.copy(trajectory.frames[0].rotation);
           start();
           return;
         }
-        if (!wasRolling) {
+        if (trajectory && value === previousValue) {
+          // Server reveals the number halfway through the SAME trajectory.
+          // Do not restart the clock, change axes or interpolate to a result pose.
+          const progress = Math.min(
+            1,
+            (performance.now() - started) / Math.max(1, duration),
+          );
+          duration = throwMs + ms;
+          started = performance.now() - progress * duration;
+          return;
+        }
+        if (!rolling) {
           cancelAnimationFrame(raf);
           mode = "idle";
           die.quaternion.copy(target);
@@ -315,11 +315,6 @@ export function createDice(
           render();
           return;
         }
-        from.copy(die.quaternion);
-        fromHeight = Math.max(0.16, die.position.y - BASE);
-        settleMs = ms;
-        mode = "settling";
-        start();
       },
       dispose: release,
     };

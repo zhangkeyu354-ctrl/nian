@@ -67,6 +67,17 @@ writeFileSync(
       `if(location.search.includes('duel'))return <div className="ma-app"><Overlay show={{kind:'duel',a:{racer:'sw_magical_athlete',value:2},b:{racer:'scoocher',value:6},rolling:false}} view={f.before} name={id=>f.before.players.find(p=>p.id===id)?.name??'玩家'} colorOf={()=>'#e8443a'} me="p1" onSkip={()=>{}}/></div>;if(location.search.includes('gallery'))`,
     ),
 );
+if (process.env.MA_DICE_ONLY === "1")
+  writeFileSync(
+    entryPath,
+    `
+import React,{useState,useEffect}from'react';import{createRoot}from'react-dom/client';
+import{CubeDie}from'../../apps/web/src/ma/LiteMotion.tsx';import'../../apps/web/src/style.css';import'../../apps/web/src/ma/ma.css';
+function Demo(){const[value,setValue]=useState(1),[rolling,setRolling]=useState(false),[seat,setSeat]=useState(1);
+useEffect(()=>{window.__ready=true;window.render_game_to_text=()=>JSON.stringify({value,rolling,seat,coordinates:'画面中央为桌面，竖直向上为高度'});},[value,rolling,seat]);
+const go=()=>{setValue(n=>n%6+1);setSeat(n=>n%6+1);setRolling(true);setTimeout(()=>setRolling(false),750)};
+return <main className="ma-app" style={{minHeight:'100vh',padding:24,display:'flex',flexDirection:'column',alignItems:'center',justifyContent:'center',gap:32}}><h1>骰子翻滚小样</h1><div style={{transform:'scale(1.5)',margin:32}}><CubeDie value={value} rolling={rolling} seat={seat}/></div><p>{rolling?'抛出与碰撞':value+' 点'}</p><button id="throw" disabled={rolling} onClick={go}>再掷一次</button></main>};createRoot(document.getElementById('root')).render(<Demo/>);`,
+  );
 await build({
   configFile: false,
   root: work,
@@ -117,6 +128,7 @@ const server = createServer((req, res) => {
   res.end(readFileSync(f));
 });
 await new Promise<void>((r) => server.listen(5200, "127.0.0.1", r));
+if (process.env.MA_POLISH_SERVE_ONLY === "1") await new Promise(() => {});
 const browser = await chromium.launch({ channel: "chromium" });
 const errors: string[] = [];
 try {
@@ -137,67 +149,107 @@ try {
   await page.goto("http://127.0.0.1:5200/");
   await page.waitForFunction(() => (window as any).__ready);
   await page.evaluate(() => document.fonts.ready);
-  await page.evaluate(() => (window as any).__play());
-  await page.waitForTimeout(20000);
+  if (process.env.MA_DICE_ONLY === "1") {
+    await page.waitForTimeout(1800);
+    for (let i = 0; i < 6; i++) {
+      await page.locator("#throw").click();
+      await page.waitForTimeout(2800);
+    }
+  } else {
+    await page.evaluate(() => (window as any).__play());
+    await page.waitForTimeout(20000);
+  }
   await page.screenshot({ path: join(out, "phone.png"), fullPage: true });
   const video = page.video()!;
   await ctx.close();
   await video.saveAs(join(out, "phone.webm"));
-  const gallery = await browser.newContext({
-    viewport: { width: 1440, height: 430 },
-    deviceScaleFactor: 1,
-  });
-  await gallery.addInitScript("globalThis.__name=(fn)=>fn;");
-  const g = await gallery.newPage();
-  g.on("pageerror", (e) => errors.push(e.message));
-  await g.goto("http://127.0.0.1:5200/?gallery");
-  await g.waitForFunction(() => (window as any).__ready);
-  await g.waitForTimeout(2400);
-  await g.screenshot({ path: join(out, "dice-landed.png") });
-  await g.evaluate(() => (window as any).__galleryRoll(true));
-  await g.waitForTimeout(340);
-  await g.screenshot({ path: join(out, "dice-rolling.png") });
-  await gallery.close();
-  const top = PNG.sync.read(readFileSync(join(out, "dice-landed.png"))),
-    bottom = PNG.sync.read(readFileSync(join(out, "dice-rolling.png"))),
-    sheet = new PNG({ width: top.width, height: top.height + bottom.height });
-  PNG.bitblt(top, sheet, 0, 0, top.width, top.height, 0, 0);
-  PNG.bitblt(bottom, sheet, 0, 0, bottom.width, bottom.height, 0, top.height);
-  writeFileSync(join(out, "dice-contact-sheet.png"), PNG.sync.write(sheet));
-  const ffmpeg = createRequire(import.meta.url)(
-    resolve("work/ma-motion-tools/node_modules/ffmpeg-static"),
-  );
-  const result = spawnSync(
-    ffmpeg,
-    [
-      "-y",
-      "-loglevel",
-      "error",
-      "-i",
-      join(out, "phone.webm"),
-      "-t",
-      "20",
-      "-vf",
-      "fps=30,format=yuv420p",
-      "-c:v",
-      "libx264",
-      "-preset",
-      "veryfast",
-      "-crf",
-      "23",
-      "-movflags",
-      "+faststart",
-      join(out, "phone.mp4"),
-    ],
-    { encoding: "utf8" },
-  );
-  if (result.status !== 0) throw Error(result.stderr);
-  writeFileSync(
-    join(out, "results.json"),
-    JSON.stringify({ label, errors, viewport: [390, 844] }, null, 2),
-  );
-  if (errors.length) throw Error(errors.join(";"));
-  console.log("POLISH_CAPTURE_PASS", label);
+  if (process.env.MA_DICE_ONLY === "1") {
+    const ffmpeg = createRequire(import.meta.url)(
+      resolve("work/ma-motion-tools/node_modules/ffmpeg-static"),
+    );
+    const result = spawnSync(
+      ffmpeg,
+      [
+        "-y",
+        "-loglevel",
+        "error",
+        "-i",
+        join(out, "phone.webm"),
+        "-vf",
+        "fps=30,format=yuv420p",
+        "-c:v",
+        "libx264",
+        "-preset",
+        "veryfast",
+        "-crf",
+        "21",
+        "-movflags",
+        "+faststart",
+        join(out, "phone.mp4"),
+      ],
+      { encoding: "utf8" },
+    );
+    if (result.status !== 0) throw Error(result.stderr);
+    if (errors.length) throw Error(errors.join(";"));
+    console.log("DICE_CAPTURE_PASS", label);
+  }
+  if (process.env.MA_DICE_ONLY !== "1") {
+    const gallery = await browser.newContext({
+      viewport: { width: 1440, height: 430 },
+      deviceScaleFactor: 1,
+    });
+    await gallery.addInitScript("globalThis.__name=(fn)=>fn;");
+    const g = await gallery.newPage();
+    g.on("pageerror", (e) => errors.push(e.message));
+    await g.goto("http://127.0.0.1:5200/?gallery");
+    await g.waitForFunction(() => (window as any).__ready);
+    await g.waitForTimeout(2400);
+    await g.screenshot({ path: join(out, "dice-landed.png") });
+    await g.evaluate(() => (window as any).__galleryRoll(true));
+    await g.waitForTimeout(340);
+    await g.screenshot({ path: join(out, "dice-rolling.png") });
+    await gallery.close();
+    const top = PNG.sync.read(readFileSync(join(out, "dice-landed.png"))),
+      bottom = PNG.sync.read(readFileSync(join(out, "dice-rolling.png"))),
+      sheet = new PNG({ width: top.width, height: top.height + bottom.height });
+    PNG.bitblt(top, sheet, 0, 0, top.width, top.height, 0, 0);
+    PNG.bitblt(bottom, sheet, 0, 0, bottom.width, bottom.height, 0, top.height);
+    writeFileSync(join(out, "dice-contact-sheet.png"), PNG.sync.write(sheet));
+    const ffmpeg = createRequire(import.meta.url)(
+      resolve("work/ma-motion-tools/node_modules/ffmpeg-static"),
+    );
+    const result = spawnSync(
+      ffmpeg,
+      [
+        "-y",
+        "-loglevel",
+        "error",
+        "-i",
+        join(out, "phone.webm"),
+        "-t",
+        "20",
+        "-vf",
+        "fps=30,format=yuv420p",
+        "-c:v",
+        "libx264",
+        "-preset",
+        "veryfast",
+        "-crf",
+        "23",
+        "-movflags",
+        "+faststart",
+        join(out, "phone.mp4"),
+      ],
+      { encoding: "utf8" },
+    );
+    if (result.status !== 0) throw Error(result.stderr);
+    writeFileSync(
+      join(out, "results.json"),
+      JSON.stringify({ label, errors, viewport: [390, 844] }, null, 2),
+    );
+    if (errors.length) throw Error(errors.join(";"));
+    console.log("POLISH_CAPTURE_PASS", label);
+  }
 } finally {
   await browser.close();
   await new Promise<void>((r) => server.close(() => r()));
