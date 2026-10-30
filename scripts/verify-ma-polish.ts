@@ -135,6 +135,7 @@ try {
           .length === 6,
     );
   }
+  const beforeSeat = await p.evaluate(() => (window as any).__gl.created);
   await p.evaluate(() => (window as any).__gallerySeat());
   await p.waitForFunction(
     () =>
@@ -142,8 +143,13 @@ try {
       6,
   );
   const counts = await p.evaluate(() => (window as any).__gl);
+  assert.equal(
+    counts.created,
+    beforeSeat,
+    "changing dice colors recreated GPU contexts",
+  );
   assert.equal(counts.created - counts.released, 6);
-  assert.ok(counts.released >= 18);
+  assert.ok(counts.released >= 12);
   results.push({ resourceLifecycle: counts });
   for (const [speed, ms] of [
     ["slow", "1125ms"],

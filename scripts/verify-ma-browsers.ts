@@ -9,7 +9,7 @@ import { strict as assert } from "node:assert";
 import { chromium, type Page, type Video } from "playwright";
 import { assertUiShot } from "./screenshot-check.ts";
 
-const PORT = 3331;
+const PORT = Number(process.env.MA_PORT ?? 3331);
 const BASE = `http://127.0.0.1:${PORT}`;
 const out = process.env.MA_OUT ?? "output/ma-browsers";
 const viewport =
@@ -229,13 +229,13 @@ try {
     let acted = false;
     for (const p of pages) {
       const previewPick = p
-        .locator('[data-testid^="pick-sw_"]', { hasText: /选它|派它上场/ })
+        .locator('[data-testid^="pick-sw_"]:not(.sending):not(:disabled)', { hasText: /选它|派它上场/ })
         .first();
       const preferredPick = preferredRacers.length
         ? p
             .locator(
               preferredRacers
-                .map((id) => `[data-testid="pick-${id}"]`)
+                .map((id) => `[data-testid="pick-${id}"]:not(.sending):not(:disabled)`)
                 .join(","),
               { hasText: /选它|派它上场/ },
             )
@@ -247,7 +247,7 @@ try {
           : process.env.MA_SECOND_WIND === "1" && (await previewPick.count())
             ? previewPick
             : p
-                .locator('[data-testid^="pick-"]', { hasText: /选它|派它上场/ })
+            .locator('[data-testid^="pick-"]:not(.sending):not(:disabled)', { hasText: /选它|派它上场/ })
                 .first();
       // A sending button can outlive its decision for one render; never click it twice.
       // 清晰棋盘：操作在棋盘下面；原版棋盘：操作卡在赛道中间（下面那块隐藏）
@@ -274,7 +274,7 @@ try {
             : preferredRacers.length && (await moleOption.count())
               ? moleOption
               : allOptions.first();
-      const confirm = p.getByTestId("ma-choose-confirm");
+      const confirm = p.locator('[data-testid="ma-choose-confirm"]:not(.sending):not(:disabled)');
       if (await confirm.count()) {
         await confirm.click();
         acted = true;

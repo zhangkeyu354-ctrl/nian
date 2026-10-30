@@ -2840,7 +2840,7 @@
 @media(prefers-reduced-motion:reduce){ .ma-cube,.rolling .ma-cube,.rolling .ma-die-hop,.landed .ma-die-hop,.rolling .ma-die-floor,.ma-app,.ma-stage,.ma-race,.ma-final {animation:none!important;transition:none!important;} .ma-app button {transition:none;} }
 
 /* Polish: one presentation frame for both renderers, including duels. */
-.ma-dice3d { --ma-die-frame:min(56vw,224px); width:var(--ma-die-frame); height:var(--ma-die-frame); }
+.ma-dice3d { --ma-die-frame:min(72vw,280px); width:var(--ma-die-frame); height:var(--ma-die-frame); }
 .ma-dice3d canvas { transition:none; }
 .ma-dice3d-wait { opacity:1;visibility:visible;transition:none;pointer-events:none; }
 .ma-dice3d.is-ready .ma-dice3d-wait { opacity:0;visibility:hidden;transition:none; }
@@ -2854,14 +2854,8 @@
 .ma-cube { transition-duration:var(--ma-dice-settle-ms,620ms); }
 .ma-duel { width:min(92vw,360px);max-width:100%;align-items:start;gap:14px;margin:auto; }
 .ma-duel>div { flex:1;min-width:0; }
-.ma-duel .ma-dice3d { --ma-die-frame:min(38vw,154px);width:var(--ma-die-frame);height:var(--ma-die-frame); }
+.ma-duel .ma-dice3d { --ma-die-frame:min(43vw,166px,calc((100vw - 46px)/2));width:var(--ma-die-frame);height:var(--ma-die-frame); }
 .ma-duel small { max-width:100%;overflow:hidden;text-overflow:ellipsis;white-space:nowrap; }
-.ma-hand-die { display:inline-block;width:38px;height:38px; }
-.ma-hand-die .ma-cube-scene { --cube-size:24px;width:24px;height:24px;margin:6px auto; }
-.ma-hand-die .ma-die-hop,.ma-hand-die .ma-die-floor { animation:none; }
-.ma-hand-die .ma-die-floor { display:none; }
-.ma-hand-die .rolling .ma-cube { animation:ma-hand-rock .12s ease-in-out infinite alternate; }
-@keyframes ma-hand-rock { from{transform:rotateX(-20deg) rotateY(-27deg) rotateZ(-5deg);}to{transform:rotateX(-29deg) rotateY(-35deg) rotateZ(5deg);} }
 .ma-dice3d.is-six::after { content:"";position:absolute;inset:7%;border:1px solid rgba(255,222,128,.5);border-radius:50%;pointer-events:none;background:radial-gradient(circle at 10% 30%,#ffe9af 0 2px,transparent 3px),radial-gradient(circle at 90% 60%,#ffe9af 0 2px,transparent 3px);animation:ma-six-glow var(--ma-six-ms,520ms) ease-out both; }
 @keyframes ma-six-glow { 0%{opacity:0;transform:scale(.75);}35%{opacity:.7;}100%{opacity:0;transform:scale(1.15);} }
 .ma-float-layer { position:absolute;inset:0;z-index:600;pointer-events:none; }
@@ -2881,7 +2875,7 @@
 .ma-scores { scrollbar-width:thin;scrollbar-color:rgba(255,255,255,.4) transparent; }
 .ma-actbar { padding-bottom:calc(10px + env(safe-area-inset-bottom,0px)); }
 @media(max-width:420px){.ma-topbar{gap:7px;}.ma-topbar strong{font-size:19px;}.ma-topbar .ma-muted{font-size:11px;}.ma-game{padding-bottom:calc(100px + env(safe-area-inset-bottom,0px));}.ma-actbar{left:10px;right:10px;}.ma-actbar p{font-size:13px;line-height:1.35;}}
-@media(prefers-reduced-motion:reduce){.ma-hand-die .rolling .ma-cube,.ma-dice3d.is-six::after{animation:none!important;}.ma-float-anchor,.ma-dice3d canvas,.ma-dice3d-wait{transition:none;}}
+@media(prefers-reduced-motion:reduce){.ma-dice3d.is-six::after{animation:none!important;}.ma-float-anchor,.ma-dice3d canvas,.ma-dice3d-wait{transition:none;}}
 .ma-panel,.ma-fold,.ma-decide,.ma-cc { border-width:2px;box-shadow:0 3px 0 var(--ink); }
 .ma-app .ma-turn-toast { pointer-events:none;background:#f6d983;border-width:2px;padding:4px 12px;font-size:13px;box-shadow:0 2px 0 var(--ink); }
 .ma-mine-title>span { min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap; }
@@ -2900,3 +2894,25 @@
 .ma-step.p3 .ma-step-who { animation-delay:var(--ma-podium-third-ms,600ms); }
 .ma-step.p2 .ma-step-who { animation-delay:var(--ma-podium-second-ms,1200ms); }
 .ma-step.p1 .ma-step-who { animation-delay:var(--ma-podium-first-ms,1900ms); }
+
+/* Dice are visible in a settled pickup pose before the throw; no portal fade. */
+.ma-overlay.ov-roll,.ma-overlay.ov-duel { animation:none; }
+
+.ma-dice-standby { position:fixed;left:-10000px;top:0;width:360px;visibility:hidden;pointer-events:none; }
+.ma-single-die { position:relative; }
+.ma-single-die .ma-dice-spare { position:absolute;left:-10000px;top:0;width:166px;visibility:hidden;pointer-events:none; }
+
+/* A quiet tabletop makes the real contact shadow readable during the toss. */
+.ma-dice3d { background:#e9e3d6;border-radius:20px;box-shadow:0 4px 0 rgba(0,0,0,.16); }
+
+.ma-dice-loading { position:absolute;top:46%;left:0;right:0;text-align:center;color:#fff;font-weight:700; }
+
+/* 抛入式掷骰：单颗骰子的画布横跨整个屏幕宽度，骰子从屏幕边外飞进来，而不是从一个小框的边上冒出来 */
+.ma-single-die .ma-dice3d { width:100vw; margin-left:calc(50% - 50vw); }
+.ma-single-die { overflow:visible; }
+.ma-dice3d.rolling canvas { animation:ma-dice-in calc(140ms * var(--ma-dice-weight,1)) ease-out both; }
+@keyframes ma-dice-in { from { opacity:0; } to { opacity:1; } }
+/* 结果数字等骰子差不多停稳再出现 */
+.ov-roll .ma-ov-big, .ov-duel .ma-ov-big { animation:ma-result-in 260ms ease-out calc(650ms * var(--ma-dice-weight,1)) both; }
+@keyframes ma-result-in { from { opacity:0; transform:translateY(6px) scale(.92); } to { opacity:1; transform:none; } }
+@media (prefers-reduced-motion:reduce) { .ma-dice3d.rolling canvas, .ov-roll .ma-ov-big, .ov-duel .ma-ov-big { animation:none; } }

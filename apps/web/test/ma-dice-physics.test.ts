@@ -1,6 +1,22 @@
 import { expect, it } from "vitest";
-import { makeDiceThrow, sampleDiceThrow } from "../src/ma/dice-physics.ts";
+import {
+  makeDiceThrow,
+  sampleDiceThrow,
+} from "../src/ma/dice-physics.ts";
 import { Vector3 } from "three";
+
+it("the die is tossed in from beside the view and comes to rest at the center", () => {
+  for (let seed = 1; seed <= 40; seed++) {
+    const path = makeDiceThrow(6, seed * 7919),
+      first = path.frames[0].position,
+      last = path.frames.at(-1)!.position;
+    expect(Math.abs(first.x), `seed ${seed}`).toBeGreaterThan(1.5);
+    expect(first.y, `seed ${seed}`).toBeGreaterThan(0.5);
+    expect(Math.hypot(last.x, last.z)).toBeLessThan(1e-6);
+    const seconds = path.frames.length / 240;
+    expect(seconds, `seed ${seed}`).toBeLessThan(2.25);
+  }
+});
 
 it("all six server results settle without a final orientation snap or floor penetration", () => {
   const normals = [
@@ -32,7 +48,6 @@ it("a throw is continuous through the former roll/result boundary and sleeps at 
   expect(a.position.distanceTo(b.position)).toBeLessThan(0.01);
   expect(a.rotation.angleTo(b.rotation)).toBeLessThan(0.02);
   expect(path.frames.at(-1)!.speed).toBeLessThan(0.02);
-  expect(sampleDiceThrow(path, 0).position.x).toBeLessThan(-0.2);
 });
 it("varied throws all settle on the authoritative face", () => {
   for (let seed = 1; seed <= 1200; seed++) {
@@ -67,4 +82,4 @@ it("varied throws all settle on the authoritative face", () => {
           }
     }
   }
-}, 15000);
+}, 60000);

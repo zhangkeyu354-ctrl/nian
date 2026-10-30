@@ -46,9 +46,29 @@ writeFileSync(
 writeFileSync(
   join(work, "entry.tsx"),
   `import React,{useState,useEffect}from'react';import{createRoot}from'react-dom/client';import{Game}from'../../apps/web/src/ma/MagicalAthlete.tsx';import{CubeDie}from'../../apps/web/src/ma/LiteMotion.tsx';import'../../apps/web/src/style.css';
-const f=await(await fetch('/fixture.json')).json();function Harness(){const[v,setV]=useState(f.before);const[roll,setRoll]=useState(false);const[cycle,setCycle]=useState(0);useEffect(()=>{window.__play=()=>setV(f.after);window.__galleryRoll=setRoll;window.__galleryCycle=()=>setCycle(n=>n+1);window.__ready=true},[]);if(location.search.includes('gallery'))return <main className="ma-app"><h1 style={{padding:16}}>六色骰子 · {roll?'翻滚中':'落定'}</h1><section id="gallery" style={{display:'grid',gridTemplateColumns:'repeat(6,1fr)',gap:12,padding:16}}>{['红色','蓝色','黄色','紫色','绿色','橙色'].map((n,i)=><article key={cycle+'-'+i} style={{background:'#eee8dd',borderRadius:16,padding:12,textAlign:'center'}}><h2>{n} · {i+1} 点</h2><CubeDie seat={i+1} value={i+1} rolling={roll}/></article>)}</section></main>;const snap={code:'体验',stage:'game',version:v.version,mySeat:'p1',view:v,points:v.settings.points,variant:'standard',deal:'random',secondWind:true,players:v.players.map((p,i)=>({playerId:p.id,name:p.name,host:i===0,connected:true}))};return <div className="ma-app"><Game snap={snap} view={v} connected={true} send={async()=>null}/></div>}createRoot(document.getElementById('root')).render(<Harness/>);`,
+const f=await(await fetch('/fixture.json')).json();function Harness(){const[v,setV]=useState(f.before);const[roll,setRoll]=useState(location.search.includes('cold'));const[cycle,setCycle]=useState(0);useEffect(()=>{window.__play=()=>setV(f.after);window.__galleryRoll=setRoll;window.__galleryCycle=()=>setCycle(n=>n+1);window.__ready=true;if(location.search.includes('cold'))setTimeout(()=>setRoll(false),750)},[]);if(location.search.includes('gallery'))return <main className="ma-app"><h1 style={{padding:16}}>六色骰子 · {roll?'翻滚中':'落定'}</h1><section id="gallery" style={{display:'grid',gridTemplateColumns:'repeat(6,1fr)',gap:12,padding:16}}>{['红色','蓝色','黄色','紫色','绿色','橙色'].map((n,i)=><article key={cycle+'-'+i} style={{background:'#eee8dd',borderRadius:16,padding:12,textAlign:'center'}}><h2>{n} · {i+1} 点</h2><CubeDie seat={i+1} value={i+1} rolling={roll}/></article>)}</section></main>;const snap={code:'体验',stage:'game',version:v.version,mySeat:'p1',view:v,points:v.settings.points,variant:'standard',deal:'random',secondWind:true,players:v.players.map((p,i)=>({playerId:p.id,name:p.name,host:i===0,connected:true}))};return <div className="ma-app"><Game snap={snap} view={v} connected={true} send={async()=>null}/></div>}createRoot(document.getElementById('root')).render(<Harness/>);`,
 );
 const entryPath = join(work, "entry.tsx");
+writeFileSync(
+  entryPath,
+  readFileSync(entryPath, "utf8")
+    .replace(
+      "import{CubeDie}from'../../apps/web/src/ma/LiteMotion.tsx';",
+      "import{CubeDie}from'../../apps/web/src/ma/LiteMotion.tsx';import{DiceStage}from'../../apps/web/src/ma/DiceStage.tsx';",
+    )
+    .replace(
+      "const[cycle,setCycle]=useState(0);",
+      "const[cycle,setCycle]=useState(0);const[diceShow,setDiceShow]=useState(null);",
+    )
+    .replace(
+      "window.__ready=true",
+      "window.__setDiceShow=setDiceShow;window.__ready=true",
+    )
+    .replace(
+      "if(location.search.includes('gallery'))",
+      `if(location.search.includes('pool'))return <div className="ma-app"><DiceStage show={diceShow} view={f.before} name={id=>id} colorOf={()=>'#e8443a'} me="p1" onSkip={()=>{}}/></div>;if(location.search.includes('gallery'))`,
+    ),
+);
 writeFileSync(
   entryPath,
   readFileSync(entryPath, "utf8")
@@ -158,11 +178,19 @@ try {
     localStorage.setItem("ma-muted", "1");
     localStorage.setItem("ma-speed", "normal");
   });
+  if (process.env.MA_LAYOUT === "art")
+    await ctx.addInitScript(() =>
+      localStorage.setItem("ma-board-layout", "art"),
+    );
   const page = await ctx.newPage();
   page.on("pageerror", (e) => errors.push(e.message));
   await page.goto(
     "http://127.0.0.1:5200/" +
-      (process.env.MA_OVERLAY_DEMO === "1" ? "?single" : ""),
+      (process.env.MA_OVERLAY_DEMO === "1"
+        ? process.env.MA_COLD_START === "1"
+          ? "?single&cold"
+          : "?single"
+        : ""),
   );
   await page.waitForFunction(() => (window as any).__ready);
   await page.evaluate(() => document.fonts.ready);
@@ -184,6 +212,16 @@ try {
       await page.waitForTimeout(2800);
     }
   } else {
+    await page.waitForFunction(
+      () =>
+        document.querySelectorAll(
+          '.ma-dice-standby .ma-dice3d[data-renderer="webgl"]',
+        ).length === 2,
+    );
+    await page.screenshot({
+      path: join(out, "restored-button.png"),
+      fullPage: true,
+    });
     await page.evaluate(() => (window as any).__play());
     await page.waitForTimeout(20000);
   }

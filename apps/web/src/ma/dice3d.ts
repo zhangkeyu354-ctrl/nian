@@ -6,6 +6,7 @@ import { RoomEnvironment } from "three/examples/jsm/environments/RoomEnvironment
 import { mergeGeometries } from "three/examples/jsm/utils/BufferGeometryUtils.js";
 import {
   makeDiceThrow,
+  createDiceCamera,
   sampleDiceThrow,
   type DiceThrow,
 } from "./dice-physics.ts";
@@ -26,6 +27,7 @@ const PIPS: Record<number, number[]> = {
   6: [1, 3, 4, 6, 7, 9],
 };
 export type DiceHandle = {
+  setColor(color: string): void;
   setState(
     value: number,
     rolling: boolean,
@@ -60,6 +62,9 @@ export function disposeDiceScene(scene: THREE.Scene) {
   scene.environment = null;
   scene.clear();
 }
+const realMs = (t: DiceThrow, throwMs: number) =>
+  ((t.frames.length - 1) / 240) * 1000 * (throwMs / 750);
+
 export function createDice(
   canvas: HTMLCanvasElement,
   color: string,
@@ -107,9 +112,7 @@ export function createDice(
     }
     scene.environment = environment.texture;
     scene.environmentIntensity = 0.34;
-    const camera = new THREE.PerspectiveCamera(27, 1, 0.1, 50);
-    camera.position.set(0, 4.4, 3.2);
-    camera.lookAt(0, 0.45, 0);
+    const camera = createDiceCamera();
     const light = new THREE.DirectionalLight(0xfffbf4, 2.15);
     light.position.set(-3, 6, 4);
     light.castShadow = true;
@@ -122,7 +125,7 @@ export function createDice(
     scene.add(light, new THREE.HemisphereLight(0xffffff, 0x776d63, 0.55));
     const ground = new THREE.Mesh(
       new THREE.PlaneGeometry(8, 8),
-      new THREE.ShadowMaterial({ opacity: 0.2 }),
+      new THREE.ShadowMaterial({ opacity: 0.26 }),
     );
     ground.rotation.x = -Math.PI / 2;
     ground.receiveShadow = true;
@@ -138,7 +141,8 @@ export function createDice(
           clearcoatRoughness: 0.2,
         }),
       );
-    applyDicePaint(body.material, color);
+    const recolor = applyDicePaint(body.material, color);
+    let activeColor = color;
     body.castShadow = true;
     // An ink silhouette stays attached to the solid, not a screen-space wobble.
     const outline = new THREE.Mesh(
@@ -262,6 +266,13 @@ export function createDice(
       lastMs = 0,
       lastRollMs = 0;
     return {
+      setColor(next) {
+        if (!disposed && next !== activeColor) {
+          activeColor = next;
+          recolor(next);
+          render();
+        }
+      },
       setState(value, rolling, ms, reduced, throwMs = 750) {
         if (
           disposed ||
@@ -295,7 +306,10 @@ export function createDice(
             value,
             Math.floor(Math.random() * 2 ** 31),
           );
-          duration = throwMs + ms;
+          camera.fov = trajectory.fov;
+          camera.updateProjectionMatrix();
+          // 按物理真实时间播放（只随速度档缩放），不压缩、不拉伸
+          duration = realMs(trajectory, throwMs);
           mode = "moving";
           // Present the first physical frame immediately, not the old idle pose.
           die.position.copy(trajectory.frames[0].position);
@@ -311,7 +325,7 @@ export function createDice(
             1,
             (performance.now() - started) / Math.max(1, duration),
           );
-          duration = throwMs + ms;
+          duration = realMs(trajectory, throwMs);
           started = performance.now() - progress * duration;
           return;
         }

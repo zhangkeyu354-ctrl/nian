@@ -6,7 +6,7 @@ import React, {
   useState,
 } from "react";
 import type { DiceHandle } from "./dice3d.ts";
-import { motionMs, reduced } from "./motion-clock.ts";
+import { motionMs, reduced, DICE_SETTLE_MS } from "./motion-clock.ts";
 import { diePose, skillFlightFrames } from "./lite-motion.ts";
 import { ART, PLAYER_COLORS } from "./Track.tsx";
 import { dicePaintColors } from "./dice-paint-colors.ts";
@@ -92,37 +92,43 @@ export function CubeDie({
   rolling,
   seat,
   animationWeight = 1,
+  onReady,
 }: {
   value: number;
   rolling: boolean;
   seat: number;
   animationWeight?: number;
+  onReady?: () => void;
 }) {
   const canvas = useRef<HTMLCanvasElement>(null);
   const handle = useRef<DiceHandle | null>(null);
-  const [readyColor, setReadyColor] = useState<string | null>(null);
-  const [failedColor, setFailedColor] = useState<string | null>(null);
+  const [ready, setReady] = useState(false);
+  const [failed, setFailed] = useState(false);
   const color = PLAYER_COLORS[(Math.max(1, seat) - 1) % PLAYER_COLORS.length];
-  const ready = readyColor === color && failedColor !== color;
+
   const [clockVersion, setClockVersion] = useState(0);
-  const current = useRef({ value, rolling, animationWeight });
-  current.current = { value, rolling, animationWeight };
-  const sync = () =>
+  const current = useRef({ value, rolling, animationWeight, color });
+  const readyCallback = useRef(onReady);
+  readyCallback.current = onReady;
+  current.current = { value, rolling, animationWeight, color };
+  const sync = () => {
+    handle.current?.setColor(current.current.color);
     handle.current?.setState(
       current.current.value,
       current.current.rolling,
-      motionMs(620, current.current.animationWeight),
+      motionMs(DICE_SETTLE_MS, current.current.animationWeight),
       reduced(),
       motionMs(750, current.current.animationWeight),
     );
+  };
   useEffect(() => {
     let alive = true;
     const node = canvas.current;
     const lost = (e: Event) => {
       e.preventDefault();
       if (!alive) return;
-      setReadyColor(null);
-      setFailedColor(color);
+      setReady(false);
+      setFailed(true);
       handle.current?.dispose();
       handle.current = null;
     };
@@ -130,15 +136,17 @@ export function CubeDie({
     loadDice()
       .then((m) => {
         if (!alive || !node) return;
-        handle.current = m.createDice(node, color);
+        handle.current = m.createDice(node, current.current.color);
         sync();
-        setFailedColor(null);
-        setReadyColor(color);
+        setFailed(false);
+        setReady(true);
+        readyCallback.current?.();
       })
       .catch(() => {
         if (alive) {
-          setReadyColor(null);
-          setFailedColor(color);
+          setReady(false);
+          setFailed(true);
+          readyCallback.current?.();
         }
       });
     return () => {
@@ -147,10 +155,10 @@ export function CubeDie({
       handle.current?.dispose();
       handle.current = null;
     };
-  }, [color]);
-  useEffect(() => {
+  }, []);
+  useLayoutEffect(() => {
     sync();
-  }, [value, rolling, ready, animationWeight, clockVersion]);
+  }, [value, rolling, ready, color, animationWeight, clockVersion]);
   useEffect(() => {
     const query = matchMedia("(prefers-reduced-motion: reduce)");
     const changed = () => {
@@ -177,36 +185,27 @@ export function CubeDie({
       role="img"
       aria-label={rolling ? "骰子转动中" : `${value} 点`}
       data-value={rolling ? undefined : value}
-      data-renderer={ready ? "webgl" : "css"}
+      data-renderer={ready ? "webgl" : failed ? "css" : "loading"}
       style={{
         ["--ma-dice-ms" as string]: `${motionMs(750, animationWeight)}ms`,
-        ["--ma-dice-settle-ms" as string]: `${motionMs(620, animationWeight)}ms`,
+        ["--ma-dice-settle-ms" as string]: `${motionMs(DICE_SETTLE_MS, animationWeight)}ms`,
       }}
     >
       <canvas
-        key={color}
         ref={canvas}
         aria-hidden="true"
         style={{ opacity: ready ? 1 : 0 }}
       />
-      <div className="ma-dice3d-wait" aria-hidden="true">
+      <div
+        className="ma-dice3d-wait"
+        aria-hidden="true"
+        style={{ visibility: !ready && !failed ? "hidden" : undefined }}
+      >
         <CssCubeDie value={value} rolling={rolling} seat={seat} />
       </div>
     </div>
   );
 }
-
-export const HandDie = memo(function HandDie({
-  holding,
-}: {
-  holding: boolean;
-}) {
-  return (
-    <span className="ma-hand-die">
-      <CssCubeDie value={1} rolling={holding} seat={1} />
-    </span>
-  );
-});
 
 export function FlyingSkill({
   racer,

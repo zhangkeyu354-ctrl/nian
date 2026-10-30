@@ -48,4 +48,8 @@ diffuseColor.rgb=mix(diffuseColor.rgb,maPaint2,paintC);
     );
   };
   material.customProgramCacheKey = () => "ma-dice-paint-v2";
+  return (next: string) => {
+    material.color.set(next);
+    dicePaintColors(next).forEach((value, i) => colors[i].set(value));
+  };
 }

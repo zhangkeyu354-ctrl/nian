@@ -89,6 +89,24 @@ afterEach(() => {
   vi.restoreAllMocks();
   vi.unstubAllGlobals();
 });
+it("changing player color reuses the renderer without changing the physical pose", () => {
+  const h = create();
+  h.setState(3, true, 620, false, 750);
+  tick(250);
+  const group = die(),
+    q = group.quaternion.clone(),
+    p = group.position.clone(),
+    pending = frames.size;
+  h.setColor("#2f7fd8");
+  const body = group.children.find(
+    (o) => (o as any).material?.type === "MeshPhysicalMaterial",
+  ) as any;
+  expect(body.material.color.getHexString()).toBe("2f7fd8");
+  expect(group.quaternion.angleTo(q)).toBeLessThan(1e-7);
+  expect(group.position.distanceTo(p)).toBe(0);
+  expect(frames.size).toBe(pending);
+  h.dispose();
+});
 
 it("all six rendered results match server values without restarting at reveal", () => {
   for (let value = 1; value <= 6; value++) {
@@ -101,7 +119,7 @@ it("all six rendered results match server values without restarting at reveal", 
     h.setState(value, false, 620, false, 750);
     expect(die().position.distanceTo(p)).toBe(0);
     expect(die().quaternion.angleTo(q)).toBeLessThan(1e-7);
-    tick(1371);
+    tick(6000);
     expect(
       new Vector3(...normals[value - 1]).applyQuaternion(die().quaternion).y,
     ).toBeGreaterThan(0.9999);
@@ -124,7 +142,8 @@ it("changing speed preserves pose and repeating the same value starts a fresh th
   h.setState(6, false, 930, false, 1125);
   expect(die().quaternion.angleTo(settled)).toBeLessThan(1e-7);
   h.setState(6, true, 930, false, 1125);
-  expect(die().position.y).toBeGreaterThan(1);
+  expect(Math.abs(die().position.x)).toBeGreaterThan(1.5);
+  expect(frames.size).toBe(1);
   h.dispose();
   expect(frames.size).toBe(0);
 });
@@ -151,7 +170,7 @@ it("two duel dice retain independent server results and animation lifecycles", (
   tick(750);
   a.setState(2, false, 620, false, 750);
   b.setState(6, false, 620, false, 750);
-  tick(1371);
+  tick(6000);
   expect(
     new Vector3(...normals[1]).applyQuaternion(first.quaternion).y,
   ).toBeGreaterThan(0.9999);

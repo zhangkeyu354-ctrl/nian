@@ -1,4 +1,5 @@
 export type Speed = "slow" | "normal" | "fast";
+export const DICE_SETTLE_MS = 900;
 const FACTOR: Record<Speed, number> = { slow: 1.5, normal: 1, fast: 0.5 };
 const SPEED_EVENT = "ma-motion-speed";
 export function getSpeed(): Speed {
@@ -21,7 +22,9 @@ export function setSpeed(speed: Speed) {
 let mediaSource: typeof matchMedia | undefined;
 let preference: MediaQueryList | undefined;
 let minimal = false;
-const preferenceChanged = () => { minimal = !!preference?.matches; };
+const preferenceChanged = () => {
+  minimal = !!preference?.matches;
+};
 function motionPreference() {
   if (typeof matchMedia !== "function") return undefined;
   if (mediaSource !== matchMedia) {
@@ -33,7 +36,10 @@ function motionPreference() {
   }
   return preference;
 }
-export const reduced = () => { motionPreference(); return typeof matchMedia === "function" && minimal; };
+export const reduced = () => {
+  motionPreference();
+  return typeof matchMedia === "function" && minimal;
+};
 export function motionMs(ms: number, weight = 1) {
   return reduced() ? 0 : ms * weight * FACTOR[getSpeed()];
 }
@@ -53,16 +59,16 @@ export function installMotionClock(root: HTMLElement) {
     target: 600,
     pulse: 1100,
     spot: 900,
-    dice:750,
-    settle:180,
-    stage:200,
-    press:120,
-    "dice-settle":620,
-    six:520,
-    "podium-jump":600,
-    "podium-third":600,
-    "podium-second":1200,
-    "podium-first":1900,
+    dice: 750,
+    settle: 180,
+    stage: 200,
+    press: 120,
+    "dice-settle": DICE_SETTLE_MS,
+    six: 520,
+    "podium-jump": 600,
+    "podium-third": 600,
+    "podium-second": 1200,
+    "podium-first": 1900,
   };
   const update = () => {
     const factor = motionMs(1);

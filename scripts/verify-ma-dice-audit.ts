@@ -93,7 +93,7 @@ try {
       await p.evaluate(() => (window as any).__galleryRoll(true));
       await p.waitForTimeout(750 * factor);
       await p.evaluate(() => (window as any).__galleryRoll(false));
-      await p.waitForTimeout(620 * factor + 120);
+      await p.waitForTimeout(900 * factor + 120);
       check(await poses(p), [1, 2, 3, 4, 5, 6]);
       const sixDelay = await p
         .locator(".ma-dice3d")
@@ -103,7 +103,7 @@ try {
             parseFloat(getComputedStyle(el, "::after").animationDelay) * 1000,
         );
       assert.ok(
-        Math.abs(sixDelay - 620 * factor) < 1,
+        Math.abs(sixDelay - 900 * factor) < 1,
         "six celebration precedes the settle",
       );
     }
@@ -164,7 +164,7 @@ try {
       .evaluate((el) => +getComputedStyle(el).opacity)) < 0.1,
     "result caption appeared before the physical settle",
   );
-  await d.waitForTimeout(750);
+  await d.waitForTimeout(1000);
   assert.ok(
     (await d
       .locator(".ma-ov-big")
@@ -200,20 +200,29 @@ try {
     await single.setViewportSize({ width, height });
     await single.goto("http://127.0.0.1:5202/?single");
     await single.waitForFunction(
-      () => document.querySelectorAll("canvas[data-audit-pose]").length === 1,
+      () =>
+        !!document.querySelector(
+          ".ma-single-die>div:first-child canvas[data-audit-pose]",
+        ),
     );
     await single.waitForFunction(() =>
       document.querySelector(".ma-dice3d")?.classList.contains("is-ready"),
     );
-    const handoff = await single.locator(".ma-dice3d").evaluate((el) => ({
-      canvas: +getComputedStyle(el.querySelector("canvas")!).opacity,
-      fallback: +getComputedStyle(el.querySelector(".ma-dice3d-wait")!).opacity,
-      hidden: getComputedStyle(el.querySelector(".ma-dice3d-wait")!).visibility,
-    }));
+    const handoff = await single
+      .locator(".ma-single-die>div:first-child>.ma-dice3d")
+      .evaluate((el) => ({
+        canvas: +getComputedStyle(el.querySelector("canvas")!).opacity,
+        fallback: +getComputedStyle(el.querySelector(".ma-dice3d-wait")!)
+          .opacity,
+        hidden: getComputedStyle(el.querySelector(".ma-dice3d-wait")!)
+          .visibility,
+      }));
     assert.equal(handoff.canvas, 1);
     assert.equal(handoff.fallback, 0);
     assert.equal(handoff.hidden, "hidden");
-    const box = await single.locator(".ma-dice3d").boundingBox();
+    const box = await single
+      .locator(".ma-single-die>div:first-child>.ma-dice3d")
+      .boundingBox();
     assert.ok(box);
     assert.ok(box.width >= Math.min(width * 0.55, 223));
     assert.ok(
