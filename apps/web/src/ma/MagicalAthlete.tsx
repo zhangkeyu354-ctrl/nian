@@ -1297,8 +1297,7 @@ function RollingDie({ seat, value, rolling }: { seat: number; value: number; rol
     return () => clearInterval(id);
   }, [rolling]);
   return (
-    <div className={"ma-bigdie" + (rolling ? " rolling" : " landed") + (!rolling && value === 6 ? " six" : "")}>
-      <i className="ma-bigdie-shadow" aria-hidden="true" />
+    <div className={"ma-bigdie" + (rolling ? " rolling" : " landed")}>
       <img src={`${ART}/dice/player-${seat}-${rolling ? face : value}.svg`} alt={rolling ? "骰子转动中" : `${value} 点`} />
     </div>
   );
