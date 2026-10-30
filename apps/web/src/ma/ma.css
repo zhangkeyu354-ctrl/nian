@@ -2886,7 +2886,7 @@
 .ma-app .ma-turn-toast { pointer-events:none;background:#f6d983;border-width:2px;padding:4px 12px;font-size:13px;box-shadow:0 2px 0 var(--ink); }
 .ma-mine-title>span { min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap; }
 .ma-skill-flight .ma-ov-skill { max-height:calc(100dvh - 48px);overflow:auto;scrollbar-width:thin; }
-.ma-dice3d.is-six::after { animation-delay:calc(var(--ma-dice-settle-ms,620ms)*.7); }
+.ma-dice3d.is-six::after { animation-delay:var(--ma-dice-settle-ms,620ms); }
 
 /* Light hand-ink finish, also used while WebGL loads or is unavailable. */
 .ma-dice3d-wait .ma-die-face { outline:1px solid #252b3b;outline-offset:-1px; }

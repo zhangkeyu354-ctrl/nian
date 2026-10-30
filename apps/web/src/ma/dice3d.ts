@@ -185,18 +185,7 @@ export function createDice(
             .translate(x, y, 0.501)
             .applyQuaternion(q),
         );
-        const rim = rimBase.clone(),
-          rp = rim.attributes.position;
-        for (let i = 0; i < rp.count; i++) {
-          const px = rp.getX(i),
-            py = rp.getY(i),
-            angle = Math.atan2(py, px),
-            wobble =
-              1 +
-              0.023 * Math.sin(angle * 3 + cell) +
-              0.012 * Math.sin(angle * 7 + Number(v));
-          rp.setXY(i, px * wobble, py * wobble);
-        }
+        const rim = rimBase.clone();
         rims.push(
           rim.scale(big, big, big).translate(x, y, 0.517).applyQuaternion(q),
         );
@@ -215,7 +204,7 @@ export function createDice(
       new THREE.Mesh(
         mergeGeometries(rims),
         new THREE.MeshStandardMaterial({
-          color: new THREE.Color(color).multiplyScalar(0.43),
+          color: 0x52483c,
           roughness: 0.7,
         }),
       ),

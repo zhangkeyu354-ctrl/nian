@@ -24,7 +24,9 @@ uniform vec3 maPaint2;
 float maBlob(vec3 p,vec3 center,vec3 size,float phase){
   vec3 d=(p-center)/size;
   float wobble=.13*sin(p.x*19.+p.y*12.+phase)*sin(p.z*15.-p.y*18.+phase);
-  return 1.-smoothstep(.94,1.04,length(d)+wobble);
+  float edge=length(d)+wobble;
+  float aa=clamp(fwidth(edge)*.8,.008,.05);
+  return 1.-smoothstep(1.-aa,1.+aa,edge);
 }
 ` + shader.fragmentShader;
     shader.fragmentShader = shader.fragmentShader.replace(
@@ -45,5 +47,5 @@ diffuseColor.rgb=mix(diffuseColor.rgb,maPaint2,paintC);
 `,
     );
   };
-  material.customProgramCacheKey = () => "ma-dice-paint-v1";
+  material.customProgramCacheKey = () => "ma-dice-paint-v2";
 }

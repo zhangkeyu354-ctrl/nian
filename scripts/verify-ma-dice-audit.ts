@@ -95,6 +95,17 @@ try {
       await p.evaluate(() => (window as any).__galleryRoll(false));
       await p.waitForTimeout(620 * factor + 120);
       check(await poses(p), [1, 2, 3, 4, 5, 6]);
+      const sixDelay = await p
+        .locator(".ma-dice3d")
+        .last()
+        .evaluate(
+          (el) =>
+            parseFloat(getComputedStyle(el, "::after").animationDelay) * 1000,
+        );
+      assert.ok(
+        Math.abs(sixDelay - 620 * factor) < 1,
+        "six celebration precedes the settle",
+      );
     }
     results.push({ speed, repeatedThrows: 2, facesCorrect: 12 });
   }
@@ -106,7 +117,7 @@ try {
   await p.waitForTimeout(150);
   check(await poses(p), [1, 2, 3, 4, 5, 6]);
   results.push({ reducedMotion: "six exact faces" });
-  if (label === "paint") {
+  if (label === "paint" || label === "ready") {
     await p.emulateMedia({ reducedMotion: "no-preference" });
     await p.evaluate(() => (window as any).__galleryRoll(false));
     await p.setViewportSize({ width: 1280, height: 960 });
