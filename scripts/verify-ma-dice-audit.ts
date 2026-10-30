@@ -5,8 +5,13 @@ import { join, resolve, extname } from "node:path";
 import { chromium, type Page } from "playwright";
 import { Quaternion, Vector3 } from "three";
 import assert from "node:assert/strict";
-const root = resolve("output/ma-polish-doodle/build"),
-  out = resolve("output/ma-dice-audit");
+const label = process.env.MA_DICE_AUDIT_LABEL ?? "doodle";
+const root = resolve(`output/ma-polish-${label}/build`),
+  out = resolve(
+    process.env.MA_DICE_AUDIT_LABEL
+      ? `output/ma-dice-${label}-audit`
+      : "output/ma-dice-audit",
+  );
 mkdirSync(out, { recursive: true });
 const server = createServer((req, res) => {
   const path = new URL(req.url!, "http://localhost").pathname;
@@ -64,6 +69,13 @@ try {
   await ctx.addInitScript("globalThis.__name=fn=>fn;");
   const p = await ctx.newPage();
   p.on("pageerror", (e) => errors.push(e.message));
+  p.on("console", (message) => {
+    if (
+      message.type() === "error" &&
+      /THREE|shader|VALIDATE_STATUS/.test(message.text())
+    )
+      errors.push(message.text());
+  });
   await p.goto("http://127.0.0.1:5202/?gallery");
   await p.waitForFunction(
     () => document.querySelectorAll("canvas[data-audit-pose]").length === 6,
@@ -94,6 +106,32 @@ try {
   await p.waitForTimeout(150);
   check(await poses(p), [1, 2, 3, 4, 5, 6]);
   results.push({ reducedMotion: "six exact faces" });
+  if (label === "paint") {
+    await p.emulateMedia({ reducedMotion: "no-preference" });
+    await p.evaluate(() => (window as any).__galleryRoll(false));
+    await p.setViewportSize({ width: 1280, height: 960 });
+    await p.evaluate(() => {
+      (document.querySelector("h1") as HTMLElement).style.display = "none";
+      const grid = document.querySelector("#gallery") as HTMLElement;
+      Object.assign(grid.style, {
+        gridTemplateColumns: "repeat(3,1fr)",
+        gap: "20px",
+        padding: "24px",
+      });
+      document.querySelectorAll("#gallery article").forEach((a) => {
+        Object.assign((a as HTMLElement).style, {
+          height: "438px",
+          display: "grid",
+          placeItems: "center",
+        });
+        (a.querySelector("h2") as HTMLElement).style.display = "none";
+        const die = a.querySelector(".ma-dice3d") as HTMLElement;
+        die.style.setProperty("--ma-die-frame", "360px");
+      });
+    });
+    await p.waitForTimeout(350);
+    await p.screenshot({ path: join(out, "paint-six.png") });
+  }
   await ctx.close();
   const phone = await browser.newContext({
     viewport: { width: 390, height: 664 },

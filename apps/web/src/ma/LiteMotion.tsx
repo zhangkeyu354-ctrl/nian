@@ -9,6 +9,7 @@ import type { DiceHandle } from "./dice3d.ts";
 import { motionMs, reduced } from "./motion-clock.ts";
 import { diePose, skillFlightFrames } from "./lite-motion.ts";
 import { ART, PLAYER_COLORS } from "./Track.tsx";
+import { dicePaintColors } from "./dice-paint-colors.ts";
 
 const PIPS: Record<number, number[]> = {
   1: [5],
@@ -31,13 +32,19 @@ function CssCubeDie({
 }) {
   const pose = diePose(value);
   const color = PLAYER_COLORS[(Math.max(1, seat) - 1) % PLAYER_COLORS.length];
+  const paint = dicePaintColors(color);
   return (
     <div
       className={"ma-bigdie ma-cube-scene" + (rolling ? " rolling" : " landed")}
       role="img"
       aria-label={rolling ? "骰子转动中" : `${value} 点`}
       data-value={rolling ? undefined : value}
-      style={{ ["--die-color" as string]: color }}
+      style={{
+        ["--die-color" as string]: color,
+        ["--paint-a" as string]: paint[0],
+        ["--paint-b" as string]: paint[1],
+        ["--paint-c" as string]: paint[2],
+      }}
     >
       <i className="ma-die-floor" aria-hidden="true" />
       <div className="ma-die-hop">

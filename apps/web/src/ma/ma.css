@@ -2890,7 +2890,8 @@
 
 /* Light hand-ink finish, also used while WebGL loads or is unavailable. */
 .ma-dice3d-wait .ma-die-face { outline:1px solid #252b3b;outline-offset:-1px; }
-.ma-dice3d-wait .ma-die-face::after { content:"";position:absolute;right:9%;top:31%;width:1px;height:17%;background:#303449;opacity:.5;transform:rotate(-8deg);border-radius:50%; }
+.ma-dice3d-wait .ma-die-face::after { content:none; }
+.ma-dice3d-wait .ma-die-face { background:radial-gradient(ellipse 35% 29% at 5% 8%,var(--paint-a) 0 90%,transparent 96%),radial-gradient(ellipse 22% 37% at 93% 67%,var(--paint-a) 0 90%,transparent 96%),radial-gradient(ellipse 32% 21% at 18% 96%,var(--paint-b) 0 90%,transparent 96%),radial-gradient(ellipse 24% 28% at 86% 4%,var(--paint-c) 0 90%,transparent 96%),var(--die-color); }
 .ma-dice3d-wait .ma-die-face b { outline:1px solid rgba(37,43,59,.55);outline-offset:-1px; }
 .ma-ov-roll>.ma-ov-big { animation:ma-dice-result-show 90ms linear both;animation-delay:calc(var(--ma-dice-settle-ms,620ms)*var(--ma-dice-weight,1)); }
 @keyframes ma-dice-result-show { from{opacity:0;}to{opacity:1;} }

@@ -1,3 +1,4 @@
+import { applyDicePaint } from "./dice-paint.ts";
 /** Presentation only: every result comes from the server. */
 import * as THREE from "three";
 import { RoundedBoxGeometry } from "three/examples/jsm/geometries/RoundedBoxGeometry.js";
@@ -131,12 +132,13 @@ export function createDice(
         new RoundedBoxGeometry(1, 1, 1, 4, 0.13),
         new THREE.MeshPhysicalMaterial({
           color,
-          roughness: 0.3,
+          roughness: 0.24,
           metalness: 0.025,
-          clearcoat: 0.38,
-          clearcoatRoughness: 0.34,
+          clearcoat: 0.6,
+          clearcoatRoughness: 0.2,
         }),
       );
+    applyDicePaint(body.material, color);
     body.castShadow = true;
     // An ink silhouette stays attached to the solid, not a screen-space wobble.
     const outline = new THREE.Mesh(
@@ -166,36 +168,12 @@ export function createDice(
       normals.setXYZ(i, n.x, n.y, n.z);
     }
     const pips: THREE.BufferGeometry[] = [],
-      rims: THREE.BufferGeometry[] = [],
-      ink: number[] = [];
+      rims: THREE.BufferGeometry[] = [];
     for (const [v, n] of Object.entries(NORMALS)) {
       const q = new THREE.Quaternion().setFromUnitVectors(
         new THREE.Vector3(0, 0, 1),
         n,
       );
-      // Broken pencil accents on the face margins, away from every pip.
-      for (const points of [
-        [
-          [-0.414, -0.2],
-          [-0.422, -0.04],
-          [-0.416, 0.11],
-        ],
-        [
-          [0.415, 0.04],
-          [0.422, 0.18],
-        ],
-        [
-          [-0.2, 0.419],
-          [-0.09, 0.425],
-        ],
-      ])
-        for (let i = 1; i < points.length; i++)
-          for (const p of [points[i - 1], points[i]]) {
-            const vertex = new THREE.Vector3(p[0], p[1], 0.503).applyQuaternion(
-              q,
-            );
-            ink.push(vertex.x, vertex.y, vertex.z);
-          }
       for (const cell of PIPS[+v]) {
         const x = (((cell - 1) % 3) - 1) * 0.27,
           y = (1 - Math.floor((cell - 1) / 3)) * 0.27,
@@ -225,17 +203,6 @@ export function createDice(
       }
     }
     die.add(
-      new THREE.LineSegments(
-        new THREE.BufferGeometry().setAttribute(
-          "position",
-          new THREE.Float32BufferAttribute(ink, 3),
-        ),
-        new THREE.LineBasicMaterial({
-          color: 0x303449,
-          transparent: true,
-          opacity: 0.55,
-        }),
-      ),
       new THREE.Mesh(
         mergeGeometries(pips),
         new THREE.MeshPhysicalMaterial({
