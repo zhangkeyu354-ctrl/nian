@@ -64,8 +64,15 @@ writeFileSync(
     .replace("<CubeDie seat={i+1}", "<CubeDie seat={(i+offset)%6+1}")
     .replace(
       "if(location.search.includes('gallery'))",
-      `if(location.search.includes('duel'))return <div className="ma-app"><Overlay show={{kind:'duel',a:{racer:'sw_magical_athlete',value:2},b:{racer:'scoocher',value:6},rolling:false}} view={f.before} name={id=>f.before.players.find(p=>p.id===id)?.name??'玩家'} colorOf={()=>'#e8443a'} me="p1" onSkip={()=>{}}/></div>;if(location.search.includes('gallery'))`,
+      `if(location.search.includes('duel'))return <div className="ma-app"><Overlay show={{kind:'duel',a:{racer:'sw_magical_athlete',value:2},b:{racer:'scoocher',value:6},rolling:roll}} view={f.before} name={id=>f.before.players.find(p=>p.id===id)?.name??'玩家'} colorOf={()=>'#e8443a'} me="p1" onSkip={()=>{}}/></div>;if(location.search.includes('gallery'))`,
     ),
+);
+writeFileSync(
+  entryPath,
+  readFileSync(entryPath, "utf8").replace(
+    "if(location.search.includes('duel'))",
+    `if(location.search.includes('single'))return <div className="ma-app"><Overlay show={{kind:'roll',player:'p1',racer:'sw_magical_athlete',value:cycle%6+1,rolling:roll}} view={f.before} name={id=>id==='p1'?'你':id} colorOf={()=>'#e8443a'} me="p1" onSkip={()=>{}}/></div>;if(location.search.includes('duel'))`,
+  ),
 );
 if (process.env.MA_DICE_ONLY === "1")
   writeFileSync(
@@ -88,6 +95,12 @@ await build({
       name: "ma-private-preview",
       enforce: "pre",
       transform(code, id) {
+        if (process.env.MA_DICE_AUDIT === "1" && id.endsWith("/ma/dice3d.ts")) {
+          return code.replace(
+            "if (!disposed) renderer.render(scene, camera);",
+            "if (!disposed) { renderer.render(scene, camera); canvas.dataset.auditPose=JSON.stringify({q:die.quaternion.toArray(),p:die.position.toArray(),time:performance.now()}); }",
+          );
+        }
         if (id.endsWith("/ma/MagicalAthlete.tsx"))
           return code + "\nexport {Game};";
       },
@@ -96,6 +109,7 @@ await build({
   ],
   build: { outDir: join(out, "build"), emptyOutDir: true },
 });
+writeFileSync(join(out, "build", "fixture.json"), JSON.stringify(fixture));
 if (process.env.MA_POLISH_BUILD_ONLY === "1") process.exit(0);
 const server = createServer((req, res) => {
   const p = new URL(req.url!, "http://localhost").pathname;
@@ -146,10 +160,24 @@ try {
   });
   const page = await ctx.newPage();
   page.on("pageerror", (e) => errors.push(e.message));
-  await page.goto("http://127.0.0.1:5200/");
+  await page.goto(
+    "http://127.0.0.1:5200/" +
+      (process.env.MA_OVERLAY_DEMO === "1" ? "?single" : ""),
+  );
   await page.waitForFunction(() => (window as any).__ready);
   await page.evaluate(() => document.fonts.ready);
-  if (process.env.MA_DICE_ONLY === "1") {
+  if (process.env.MA_OVERLAY_DEMO === "1") {
+    await page.waitForTimeout(1200);
+    for (let i = 0; i < 6; i++) {
+      await page.evaluate(() => {
+        (window as any).__galleryCycle();
+        (window as any).__galleryRoll(true);
+      });
+      await page.waitForTimeout(750);
+      await page.evaluate(() => (window as any).__galleryRoll(false));
+      await page.waitForTimeout(2050);
+    }
+  } else if (process.env.MA_DICE_ONLY === "1") {
     await page.waitForTimeout(1800);
     for (let i = 0; i < 6; i++) {
       await page.locator("#throw").click();
@@ -195,7 +223,7 @@ try {
   }
   if (process.env.MA_DICE_ONLY !== "1") {
     const gallery = await browser.newContext({
-      viewport: { width: 1440, height: 430 },
+      viewport: { width: 1600, height: 460 },
       deviceScaleFactor: 1,
     });
     await gallery.addInitScript("globalThis.__name=(fn)=>fn;");

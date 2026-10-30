@@ -35,7 +35,7 @@ it("a throw is continuous through the former roll/result boundary and sleeps at 
   expect(sampleDiceThrow(path, 0).position.x).toBeLessThan(-0.2);
 });
 it("varied throws all settle on the authoritative face", () => {
-  for (let seed = 1; seed <= 120; seed++) {
+  for (let seed = 1; seed <= 1200; seed++) {
     const value = (seed % 6) + 1,
       path = makeDiceThrow(value, seed * 7919),
       end = path.frames.at(-1)!;
@@ -52,5 +52,19 @@ it("varied throws all settle on the authoritative face", () => {
       `seed ${seed}`,
     ).toBeGreaterThan(0.9999);
     expect(end.speed).toBeLessThan(0.05);
+    // Recompute clearance from rendered cube corners, including interpolated
+    // frames, rather than trusting the simulator's own clearance metadata.
+    for (let step = 0; step <= 12; step++) {
+      const pose = sampleDiceThrow(path, step / 12);
+      for (const x of [-0.37, 0.37])
+        for (const y of [-0.37, 0.37])
+          for (const z of [-0.37, 0.37]) {
+            const low =
+              new Vector3(x, y, z).applyQuaternion(pose.rotation).y +
+              pose.position.y -
+              0.13;
+            expect(low, `floor seed ${seed}`).toBeGreaterThan(-0.006);
+          }
+    }
   }
-});
+}, 15000);

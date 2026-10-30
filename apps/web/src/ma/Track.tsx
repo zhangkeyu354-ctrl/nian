@@ -9,7 +9,7 @@ import type { Special } from "../../../../packages/magical-athlete/src/tracks.ts
 import { racerArtId } from "../../../../packages/magical-athlete/src/second-wind-preview.ts";
 import coords from "../../public/assets/magical-athlete/boards/coordinates.json" with { type: "json" };
 
-// 第 7、8 位玩家：粉色、青色（骰子图沿用 1、2 号的样式）
+// 第 7、8 位玩家：粉色、青色；骰子和玩家标记共用这套颜色。
 export const PLAYER_COLORS = ["#e8443a", "#2f7fd8", "#f2b705", "#8a4fd6", "#1fa37a", "#f07c1e", "#e05aa8", "#20b2c8"];
 export const ART = "/assets/magical-athlete";
 

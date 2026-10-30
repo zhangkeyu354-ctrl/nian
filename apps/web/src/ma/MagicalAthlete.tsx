@@ -1057,29 +1057,31 @@ export function Overlay({
 }) {
   const owner = (racer: string) => view.race?.tokens.find((t) => t.racer === racer)?.owner ?? "";
   const artId = (racer: string) => racerArtId(view.race?.tokens.find((t) => t.racer === racer) ?? { racer });
-  const seatNo = (pid: string) => (view.seats.indexOf(pid) % 6) + 1;
+  const seatNo = (pid: string) => (view.seats.indexOf(pid) % PLAYER_COLORS.length) + 1;
   const overlayRef=useRef<HTMLDivElement>(null);
   useWindowFade(overlayRef,["finish","podium","stats","champion"].includes(show.kind)?show.duration??0:0);
+  const diceBase=show.kind==="roll"?(show.rolling?750:1500):show.kind==="duel"?(show.rolling?750:1300):0;
+  const diceWeight=diceBase&&show.duration!==undefined?show.duration/(motionMs(diceBase)||1):1;
   let body: React.ReactNode;
   if (show.kind === "roll") {
     body = (
-      <div className="ma-ov-roll">
+      <div className="ma-ov-roll" style={{["--ma-dice-weight" as string]:diceWeight}}>
         <p>
           <span className="ma-dot" style={{ background: colorOf(show.player) }} />
           {show.player === me ? "你" : name(show.player)} 为 {racerName(show.racer)}{show.reroll ? " 重掷" : " 掷骰"}
         </p>
-        <RollingDie pid={show.player} value={show.value} rolling={show.rolling} seatNo={seatNo} weight={show.duration===undefined?1:show.duration/(motionMs(show.rolling?750:1500)||1)}/>
+        <RollingDie pid={show.player} value={show.value} rolling={show.rolling} seatNo={seatNo} weight={diceWeight}/>
         {!show.rolling && <p className="ma-ov-big">掷出 {show.value}</p>}
       </div>
     );
   } else if (show.kind === "duel") {
     body = (
-      <div className="ma-ov-roll">
+      <div className="ma-ov-roll" style={{["--ma-dice-weight" as string]:diceWeight}}>
         <p>⚔️ 决斗！</p>
         <div className="ma-duel">
           {[show.a, show.b].map((d, i) => (
             <div key={i}>
-              <RollingDie pid={owner(d.racer)} value={d.value} rolling={show.rolling} seatNo={seatNo} weight={show.duration===undefined?1:show.duration/(motionMs(show.rolling?750:1300)||1)}/>
+              <RollingDie pid={owner(d.racer)} value={d.value} rolling={show.rolling} seatNo={seatNo} weight={diceWeight}/>
               <small>{racerName(d.racer)}</small>
             </div>
           ))}

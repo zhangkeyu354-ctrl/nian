@@ -8,18 +8,8 @@ import React, {
 import type { DiceHandle } from "./dice3d.ts";
 import { motionMs, reduced } from "./motion-clock.ts";
 import { diePose, skillFlightFrames } from "./lite-motion.ts";
-import { ART } from "./Track.tsx";
+import { ART, PLAYER_COLORS } from "./Track.tsx";
 
-const DIE_COLORS = [
-  "#e8443a",
-  "#2f7fd8",
-  "#f2b705",
-  "#8a4fd6",
-  "#1fa37a",
-  "#f07c1e",
-  "#e0569b",
-  "#3f9fb5",
-];
 const PIPS: Record<number, number[]> = {
   1: [5],
   2: [3, 7],
@@ -40,7 +30,7 @@ function CssCubeDie({
   seat: number;
 }) {
   const pose = diePose(value);
-  const color = DIE_COLORS[(Math.max(1, seat) - 1) % DIE_COLORS.length];
+  const color = PLAYER_COLORS[(Math.max(1, seat) - 1) % PLAYER_COLORS.length];
   return (
     <div
       className={"ma-bigdie ma-cube-scene" + (rolling ? " rolling" : " landed")}
@@ -105,7 +95,7 @@ export function CubeDie({
   const handle = useRef<DiceHandle | null>(null);
   const [readyColor, setReadyColor] = useState<string | null>(null);
   const [failedColor, setFailedColor] = useState<string | null>(null);
-  const color = DIE_COLORS[(Math.max(1, seat) - 1) % DIE_COLORS.length];
+  const color = PLAYER_COLORS[(Math.max(1, seat) - 1) % PLAYER_COLORS.length];
   const ready = readyColor === color && failedColor !== color;
   const [clockVersion, setClockVersion] = useState(0);
   const current = useRef({ value, rolling, animationWeight });

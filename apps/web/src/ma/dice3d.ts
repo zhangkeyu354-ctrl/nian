@@ -138,7 +138,16 @@ export function createDice(
         }),
       );
     body.castShadow = true;
-    die.add(body);
+    // An ink silhouette stays attached to the solid, not a screen-space wobble.
+    const outline = new THREE.Mesh(
+      body.geometry,
+      new THREE.MeshBasicMaterial({
+        color: 0x252b3b,
+        side: THREE.BackSide,
+      }),
+    );
+    outline.scale.setScalar(1.032);
+    die.add(outline, body);
     scene.add(die);
     const pipBase = new THREE.CircleGeometry(0.087, 32),
       rimBase = new THREE.RingGeometry(0.086, 0.103, 32),
@@ -157,12 +166,36 @@ export function createDice(
       normals.setXYZ(i, n.x, n.y, n.z);
     }
     const pips: THREE.BufferGeometry[] = [],
-      rims: THREE.BufferGeometry[] = [];
+      rims: THREE.BufferGeometry[] = [],
+      ink: number[] = [];
     for (const [v, n] of Object.entries(NORMALS)) {
       const q = new THREE.Quaternion().setFromUnitVectors(
         new THREE.Vector3(0, 0, 1),
         n,
       );
+      // Broken pencil accents on the face margins, away from every pip.
+      for (const points of [
+        [
+          [-0.414, -0.2],
+          [-0.422, -0.04],
+          [-0.416, 0.11],
+        ],
+        [
+          [0.415, 0.04],
+          [0.422, 0.18],
+        ],
+        [
+          [-0.2, 0.419],
+          [-0.09, 0.425],
+        ],
+      ])
+        for (let i = 1; i < points.length; i++)
+          for (const p of [points[i - 1], points[i]]) {
+            const vertex = new THREE.Vector3(p[0], p[1], 0.503).applyQuaternion(
+              q,
+            );
+            ink.push(vertex.x, vertex.y, vertex.z);
+          }
       for (const cell of PIPS[+v]) {
         const x = (((cell - 1) % 3) - 1) * 0.27,
           y = (1 - Math.floor((cell - 1) / 3)) * 0.27,
@@ -174,16 +207,35 @@ export function createDice(
             .translate(x, y, 0.501)
             .applyQuaternion(q),
         );
+        const rim = rimBase.clone(),
+          rp = rim.attributes.position;
+        for (let i = 0; i < rp.count; i++) {
+          const px = rp.getX(i),
+            py = rp.getY(i),
+            angle = Math.atan2(py, px),
+            wobble =
+              1 +
+              0.023 * Math.sin(angle * 3 + cell) +
+              0.012 * Math.sin(angle * 7 + Number(v));
+          rp.setXY(i, px * wobble, py * wobble);
+        }
         rims.push(
-          rimBase
-            .clone()
-            .scale(big, big, big)
-            .translate(x, y, 0.517)
-            .applyQuaternion(q),
+          rim.scale(big, big, big).translate(x, y, 0.517).applyQuaternion(q),
         );
       }
     }
     die.add(
+      new THREE.LineSegments(
+        new THREE.BufferGeometry().setAttribute(
+          "position",
+          new THREE.Float32BufferAttribute(ink, 3),
+        ),
+        new THREE.LineBasicMaterial({
+          color: 0x303449,
+          transparent: true,
+          opacity: 0.55,
+        }),
+      ),
       new THREE.Mesh(
         mergeGeometries(pips),
         new THREE.MeshPhysicalMaterial({
@@ -292,6 +344,7 @@ export function createDice(
           // Present the first physical frame immediately, not the old idle pose.
           die.position.copy(trajectory.frames[0].position);
           die.quaternion.copy(trajectory.frames[0].rotation);
+          render();
           start();
           return;
         }

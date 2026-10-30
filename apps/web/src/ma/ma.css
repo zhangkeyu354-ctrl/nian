@@ -2840,10 +2840,10 @@
 @media(prefers-reduced-motion:reduce){ .ma-cube,.rolling .ma-cube,.rolling .ma-die-hop,.landed .ma-die-hop,.rolling .ma-die-floor,.ma-app,.ma-stage,.ma-race,.ma-final {animation:none!important;transition:none!important;} .ma-app button {transition:none;} }
 
 /* Polish: one presentation frame for both renderers, including duels. */
-.ma-dice3d { --ma-die-frame:min(46vw,190px); width:var(--ma-die-frame); height:var(--ma-die-frame); }
-.ma-dice3d canvas { transition:opacity .18s ease-out; }
-.ma-dice3d-wait { opacity:1;visibility:visible;transition:opacity .18s ease-out;pointer-events:none; }
-.ma-dice3d.is-ready .ma-dice3d-wait { opacity:0;visibility:hidden;transition:opacity .18s ease-out,visibility 0s .18s; }
+.ma-dice3d { --ma-die-frame:min(56vw,224px); width:var(--ma-die-frame); height:var(--ma-die-frame); }
+.ma-dice3d canvas { transition:none; }
+.ma-dice3d-wait { opacity:1;visibility:visible;transition:none;pointer-events:none; }
+.ma-dice3d.is-ready .ma-dice3d-wait { opacity:0;visibility:hidden;transition:none; }
 .ma-dice3d.is-ready .ma-dice3d-wait * { animation-play-state:paused!important; }
 .ma-dice3d-wait .ma-cube-scene { --cube-size:calc(var(--ma-die-frame)*.43); }
 .ma-die-face { border-radius:15%; background:radial-gradient(circle at 28% 20%,rgba(255,255,255,.18),transparent 60%),var(--die-color);box-shadow:inset 0 0 0 1px rgba(0,0,0,.16),inset 0 -3px 5px rgba(0,0,0,.2),inset 0 3px 5px rgba(255,255,255,.18); }
@@ -2854,7 +2854,7 @@
 .ma-cube { transition-duration:var(--ma-dice-settle-ms,620ms); }
 .ma-duel { width:min(92vw,360px);max-width:100%;align-items:start;gap:14px;margin:auto; }
 .ma-duel>div { flex:1;min-width:0; }
-.ma-duel .ma-dice3d { --ma-die-frame:min(32vw,140px);width:var(--ma-die-frame);height:var(--ma-die-frame); }
+.ma-duel .ma-dice3d { --ma-die-frame:min(38vw,154px);width:var(--ma-die-frame);height:var(--ma-die-frame); }
 .ma-duel small { max-width:100%;overflow:hidden;text-overflow:ellipsis;white-space:nowrap; }
 .ma-hand-die { display:inline-block;width:38px;height:38px; }
 .ma-hand-die .ma-cube-scene { --cube-size:24px;width:24px;height:24px;margin:6px auto; }
@@ -2887,6 +2887,14 @@
 .ma-mine-title>span { min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap; }
 .ma-skill-flight .ma-ov-skill { max-height:calc(100dvh - 48px);overflow:auto;scrollbar-width:thin; }
 .ma-dice3d.is-six::after { animation-delay:calc(var(--ma-dice-settle-ms,620ms)*.7); }
+
+/* Light hand-ink finish, also used while WebGL loads or is unavailable. */
+.ma-dice3d-wait .ma-die-face { outline:1px solid #252b3b;outline-offset:-1px; }
+.ma-dice3d-wait .ma-die-face::after { content:"";position:absolute;right:9%;top:31%;width:1px;height:17%;background:#303449;opacity:.5;transform:rotate(-8deg);border-radius:50%; }
+.ma-dice3d-wait .ma-die-face b { outline:1px solid rgba(37,43,59,.55);outline-offset:-1px; }
+.ma-ov-roll>.ma-ov-big { animation:ma-dice-result-show 90ms linear both;animation-delay:calc(var(--ma-dice-settle-ms,620ms)*var(--ma-dice-weight,1)); }
+@keyframes ma-dice-result-show { from{opacity:0;}to{opacity:1;} }
+@media(prefers-reduced-motion:reduce){.ma-ov-roll>.ma-ov-big{animation:none;}}
 .ma-step-who { animation-duration:var(--ma-podium-jump-ms,600ms); }
 .ma-step.p3 .ma-step-who { animation-delay:var(--ma-podium-third-ms,600ms); }
 .ma-step.p2 .ma-step-who { animation-delay:var(--ma-podium-second-ms,1200ms); }
