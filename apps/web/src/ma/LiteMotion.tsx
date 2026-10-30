@@ -82,9 +82,6 @@ const loadDice = () =>
     dice3d = null;
     throw error;
   }));
-// 进入游戏后空闲时提前加载 3D 骰子，第一次掷骰就是 3D 版
-if (typeof window !== "undefined")
-  setTimeout(() => void loadDice().catch(() => {}), 2500);
 
 /** 骰子：优先用真 3D（three.js），不可用时退回 CSS 版。点数只取服务器结果。 */
 export function CubeDie({

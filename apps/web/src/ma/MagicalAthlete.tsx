@@ -1,5 +1,4 @@
-import {DiceStage,DiceReadyContext} from "./DiceStage.tsx";
-import React, { useContext, useEffect, useMemo, useRef, useState } from "react";
+import React, { useEffect, useMemo, useRef, useState } from "react";
 import {
   RACER_BY_ID,
   racerName,
@@ -500,13 +499,11 @@ function Game({ snap, view, send, connected }: { snap: MARoomSnapshot; view: MAV
     }
   }, [myTurn]);
   const [card, setCard] = useState<string | null>(null);
-  const [dicePrepared,setDicePrepared]=useState(false);
   // 比赛刚结束时，等动画（冲线、颁奖）播完再切到下一场的选人界面
   const showRace = !!view.race && (view.phase === "race" || view.phase === "over" || (view.phase === "choose" && pb.busy));
   return (
-    <DiceReadyContext.Provider value={dicePrepared}><main ref={gameRoot} className={"ma-game phase-" + view.phase + (sending ? " is-sending" : "")} onPointerDownCapture={onPress}>
-      <DiceStage onPrepared={()=>setDicePrepared(true)} show={pb.show?.kind==="roll"||pb.show?.kind==="duel"?pb.show:null} view={view} name={name} colorOf={colorOf} me={me} onSkip={pb.skip}/>
-      {pb.show && pb.show.kind!=="roll" && pb.show.kind!=="duel" && <Overlay show={pb.show} view={view} name={name} colorOf={colorOf} me={me} onSkip={pb.skip} />}
+    <main ref={gameRoot} className={"ma-game phase-" + view.phase + (sending ? " is-sending" : "")} onPointerDownCapture={onPress}>
+      {pb.show && <Overlay show={pb.show} view={view} name={name} colorOf={colorOf} me={me} onSkip={pb.skip} />}
       {toast && !pb.show && (
         <button
           type="button"
@@ -536,7 +533,7 @@ function Game({ snap, view, send, connected }: { snap: MARoomSnapshot; view: MAV
       )}
       {view.phase === "over" && <Final view={view} />}
       <Log view={view} />
-    </main></DiceReadyContext.Provider>
+    </main>
   );
 }
 
@@ -564,7 +561,6 @@ function OptionButton({ o, onPick }: { o: { value: string; label: string }; onPi
 
 /** 掷骰按钮：按住时骰子在手里晃（声音 + 震动），松手就掷；轻点也能直接掷 */
 function RollButton({ label, onRoll }: { label: string; onRoll: () => void }) {
-  const dicePrepared=useContext(DiceReadyContext);
   const [hold, setHold] = useState(false);
   const timer = useRef<ReturnType<typeof setInterval> | null>(null);
   const stop = () => {
@@ -575,7 +571,6 @@ function RollButton({ label, onRoll }: { label: string; onRoll: () => void }) {
   useEffect(() => stop, []);
   return (
     <button
-      disabled={!dicePrepared}
       className={"ma-go ma-roll" + (hold ? " holding" : "")}
       onPointerDown={() => {
         setHold(true);
@@ -588,7 +583,7 @@ function RollButton({ label, onRoll }: { label: string; onRoll: () => void }) {
       onClick={onRoll}
     >
       <span className="ma-roll-die" aria-hidden="true">🎲</span>
-      {dicePrepared?(label.replace("🎲", "").trim() || "掷骰"):"准备中…"}
+      {label.replace("🎲", "").trim() || "掷骰"}
       <small>{hold ? "松手掷出！" : "按住摇一摇"}</small>
     </button>
   );
@@ -1065,9 +1060,39 @@ export function Overlay({
   const seatNo = (pid: string) => (view.seats.indexOf(pid) % PLAYER_COLORS.length) + 1;
   const overlayRef=useRef<HTMLDivElement>(null);
   useWindowFade(overlayRef,["finish","podium","stats","champion"].includes(show.kind)?show.duration??0:0);
-  if(show.kind==="roll"||show.kind==="duel")return <DiceStage show={show} view={view} name={name} colorOf={colorOf} me={me} onSkip={onSkip}/>;
+  const dieSeat = (pid: string) => (Math.max(0, view.seats.indexOf(pid)) % 8) + 1;
   let body:React.ReactNode;
-  if (show.kind === "power") {
+  if (show.kind === "roll") {
+    body = (
+      <div className="ma-ov-roll">
+        <p>
+          <span className="ma-dot" style={{ background: colorOf(show.player) }} />
+          {show.player === me ? "你" : name(show.player)} 为 {racerName(show.racer)}{show.reroll ? " 重掷" : " 掷骰"}
+        </p>
+        <RollingDie seat={dieSeat(show.player)} value={show.value} rolling={show.rolling} />
+        {!show.rolling && <p className="ma-ov-big">掷出 {show.value}</p>}
+      </div>
+    );
+  } else if (show.kind === "duel") {
+    body = (
+      <div className="ma-ov-roll">
+        <p>⚔️ 决斗！</p>
+        <div className="ma-duel">
+          {[show.a, show.b].map((d, i) => (
+            <div key={i}>
+              <RollingDie seat={dieSeat(owner(d.racer))} value={d.value} rolling={show.rolling} />
+              <small>{racerName(d.racer)}</small>
+            </div>
+          ))}
+        </div>
+        {!show.rolling && (
+          <p className="ma-ov-big">
+            {show.a.value} : {show.b.value}
+          </p>
+        )}
+      </div>
+    );
+  } else if (show.kind === "power") {
     const r = RACER_BY_ID.get(show.power);
     const pid = owner(show.racer);
     const mine = pid === me;
@@ -1262,6 +1287,22 @@ function Confetti({ n }: { n: number }) {
 
 /** 六面3D骰子：落定面只取服务器结果，不生成客户端骰点。 */
 
+
+/** 2D 骰子：转动时每 90ms 换一面，落定后显示服务器给的真实点数 */
+function RollingDie({ seat, value, rolling }: { seat: number; value: number; rolling: boolean }) {
+  const [face, setFace] = useState(1);
+  useEffect(() => {
+    if (!rolling) return;
+    const id = setInterval(() => setFace((f) => (f % 6) + 1), 90);
+    return () => clearInterval(id);
+  }, [rolling]);
+  return (
+    <div className={"ma-bigdie" + (rolling ? " rolling" : " landed") + (!rolling && value === 6 ? " six" : "")}>
+      <i className="ma-bigdie-shadow" aria-hidden="true" />
+      <img src={`${ART}/dice/player-${seat}-${rolling ? face : value}.svg`} alt={rolling ? "骰子转动中" : `${value} 点`} />
+    </div>
+  );
+}
 
 function Final({ view }: { view: MAView }) {
   const rows = [...view.players].sort((a, b) => total(b.chips) - total(a.chips));

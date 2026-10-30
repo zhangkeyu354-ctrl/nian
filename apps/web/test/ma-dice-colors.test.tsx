@@ -1,3 +1,4 @@
+import { readFileSync } from "node:fs";
 import React from "react";
 import { renderToStaticMarkup } from "react-dom/server";
 import { expect, it } from "vitest";
@@ -28,6 +29,10 @@ it("all eight player dice match their player colors, including seats seven and e
         onSkip={() => {}}
       />,
     );
-    expect(html, `seat ${i + 1}`).toContain(`--die-color:${PLAYER_COLORS[i]}`);
+    expect(html, `seat ${i + 1}`).toContain(`/dice/player-${i + 1}-3.svg`);
+    expect(
+      readFileSync(`apps/web/public/assets/magical-athlete/dice/player-${i + 1}-3.svg`, "utf8").toLowerCase(),
+      `seat ${i + 1}`,
+    ).toContain(PLAYER_COLORS[i]);
   }
 });

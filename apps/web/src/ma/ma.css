@@ -2887,16 +2887,13 @@
 .ma-dice3d-wait .ma-die-face::after { content:none; }
 .ma-dice3d-wait .ma-die-face { background:radial-gradient(ellipse 35% 29% at 5% 8%,var(--paint-a) 0 90%,transparent 96%),radial-gradient(ellipse 22% 37% at 93% 67%,var(--paint-a) 0 90%,transparent 96%),radial-gradient(ellipse 32% 21% at 18% 96%,var(--paint-b) 0 90%,transparent 96%),radial-gradient(ellipse 24% 28% at 86% 4%,var(--paint-c) 0 90%,transparent 96%),var(--die-color); }
 .ma-dice3d-wait .ma-die-face b { outline:1px solid rgba(37,43,59,.55);outline-offset:-1px; }
-.ma-ov-roll>.ma-ov-big { animation:ma-dice-result-show 90ms linear both;animation-delay:calc(var(--ma-dice-settle-ms,620ms)*var(--ma-dice-weight,1)); }
 @keyframes ma-dice-result-show { from{opacity:0;}to{opacity:1;} }
-@media(prefers-reduced-motion:reduce){.ma-ov-roll>.ma-ov-big{animation:none;}}
 .ma-step-who { animation-duration:var(--ma-podium-jump-ms,600ms); }
 .ma-step.p3 .ma-step-who { animation-delay:var(--ma-podium-third-ms,600ms); }
 .ma-step.p2 .ma-step-who { animation-delay:var(--ma-podium-second-ms,1200ms); }
 .ma-step.p1 .ma-step-who { animation-delay:var(--ma-podium-first-ms,1900ms); }
 
 /* Dice are visible in a settled pickup pose before the throw; no portal fade. */
-.ma-overlay.ov-roll,.ma-overlay.ov-duel { animation:none; }
 
 .ma-dice-standby { position:fixed;left:-10000px;top:0;width:360px;visibility:hidden;pointer-events:none; }
 .ma-single-die { position:relative; }
@@ -2913,6 +2910,33 @@
 .ma-dice3d.rolling canvas { animation:ma-dice-in calc(140ms * var(--ma-dice-weight,1)) ease-out both; }
 @keyframes ma-dice-in { from { opacity:0; } to { opacity:1; } }
 /* 结果数字等骰子差不多停稳再出现 */
-.ov-roll .ma-ov-big, .ov-duel .ma-ov-big { animation:ma-result-in 260ms ease-out calc(650ms * var(--ma-dice-weight,1)) both; }
 @keyframes ma-result-in { from { opacity:0; transform:translateY(6px) scale(.92); } to { opacity:1; transform:none; } }
 @media (prefers-reduced-motion:reduce) { .ma-dice3d.rolling canvas, .ov-roll .ma-ov-big, .ov-duel .ma-ov-big { animation:none; } }
+
+/* 2D 骰子精修：抛起翻转 + 地面影子，落下压扁回弹，掷出 6 金光一闪 */
+.ma-bigdie { position:relative; filter:none; }
+.ma-bigdie img { position:relative; z-index:1; filter:drop-shadow(0 4px 0 var(--ink)); will-change:transform; }
+.ma-bigdie-shadow { position:absolute; left:18%; right:18%; bottom:-7%; height:9%; border-radius:50%; background:rgba(0,0,0,.38); filter:blur(3px); }
+.ma-bigdie.rolling { animation:none; }
+.ma-bigdie.rolling img { animation:ma-die2d-toss .42s cubic-bezier(.33,0,.67,1) infinite; }
+.ma-bigdie.rolling .ma-bigdie-shadow { animation:ma-die2d-shadow .42s cubic-bezier(.33,0,.67,1) infinite; }
+@keyframes ma-die2d-toss {
+  0% { transform:translateY(0) rotate(-8deg) scale(1,.94); }
+  12% { transform:translateY(-6%) rotate(10deg) scale(.97,1.04); }
+  50% { transform:translateY(-24%) rotate(185deg) scale(1); }
+  88% { transform:translateY(-4%) rotate(345deg) scale(.98,1.03); }
+  100% { transform:translateY(0) rotate(352deg) scale(1,.94); }
+}
+@keyframes ma-die2d-shadow { 0%,100% { transform:scale(1); opacity:1; } 50% { transform:scale(.62); opacity:.45; } }
+.ma-bigdie.landed { animation:none; }
+.ma-bigdie.landed img { animation:ma-die2d-land .5s cubic-bezier(.3,1.35,.5,1) both; }
+@keyframes ma-die2d-land {
+  0% { transform:translateY(-16%) rotate(-14deg) scale(1.06); }
+  38% { transform:translateY(0) rotate(4deg) scale(1.1,.88); }
+  62% { transform:translateY(-4%) rotate(-2deg) scale(.97,1.04); }
+  100% { transform:none; }
+}
+.ma-bigdie.six::after { content:""; position:absolute; inset:-14%; z-index:0; border-radius:50%;
+  background:radial-gradient(circle, rgba(255,214,90,.55) 0 35%, rgba(255,214,90,0) 70%); animation:ma-die2d-six .9s ease-out .25s both; }
+@keyframes ma-die2d-six { 0% { opacity:0; transform:scale(.6); } 40% { opacity:1; } 100% { opacity:0; transform:scale(1.25); } }
+@media (prefers-reduced-motion:reduce) { .ma-bigdie.rolling img, .ma-bigdie.rolling .ma-bigdie-shadow, .ma-bigdie.landed img, .ma-bigdie.six::after { animation:none; } }
