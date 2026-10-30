@@ -1,11 +1,33 @@
-import React, { memo, useEffect, useLayoutEffect, useRef, useState } from "react";
+import React, {
+  memo,
+  useEffect,
+  useLayoutEffect,
+  useRef,
+  useState,
+} from "react";
 import type { DiceHandle } from "./dice3d.ts";
 import { motionMs, reduced } from "./motion-clock.ts";
 import { diePose, skillFlightFrames } from "./lite-motion.ts";
 import { ART } from "./Track.tsx";
 
-const DIE_COLORS = ["#e8443a", "#2f7fd8", "#f2b705", "#8a4fd6", "#1fa37a", "#f07c1e", "#e0569b", "#3f9fb5"];
-const PIPS: Record<number, number[]> = { 1: [5], 2: [3, 7], 3: [3, 5, 7], 4: [1, 3, 7, 9], 5: [1, 3, 5, 7, 9], 6: [1, 3, 4, 6, 7, 9] };
+const DIE_COLORS = [
+  "#e8443a",
+  "#2f7fd8",
+  "#f2b705",
+  "#8a4fd6",
+  "#1fa37a",
+  "#f07c1e",
+  "#e0569b",
+  "#3f9fb5",
+];
+const PIPS: Record<number, number[]> = {
+  1: [5],
+  2: [3, 7],
+  3: [3, 5, 7],
+  4: [1, 3, 7, 9],
+  5: [1, 3, 5, 7, 9],
+  6: [1, 3, 4, 6, 7, 9],
+};
 
 /** 备用的 CSS 骰子（3D 引擎加载中或设备不支持 WebGL 时使用）：面和点都用 CSS 画，带倒角、高光和落地阴影；落定面只取服务器结果。 */
 function CssCubeDie({
@@ -58,52 +80,136 @@ function CssCubeDie({
 }
 
 let dice3d: Promise<typeof import("./dice3d.ts")> | null = null;
-const loadDice = () => (dice3d ??= import("./dice3d.ts"));
+const loadDice = () =>
+  (dice3d ??= import("./dice3d.ts").catch((error) => {
+    dice3d = null;
+    throw error;
+  }));
 // 进入游戏后空闲时提前加载 3D 骰子，第一次掷骰就是 3D 版
-if (typeof window !== "undefined") setTimeout(() => void loadDice().catch(() => {}), 2500);
+if (typeof window !== "undefined")
+  setTimeout(() => void loadDice().catch(() => {}), 2500);
 
 /** 骰子：优先用真 3D（three.js），不可用时退回 CSS 版。点数只取服务器结果。 */
-export function CubeDie({ value, rolling, seat }: { value: number; rolling: boolean; seat: number }) {
+export function CubeDie({
+  value,
+  rolling,
+  seat,
+  animationWeight = 1,
+}: {
+  value: number;
+  rolling: boolean;
+  seat: number;
+  animationWeight?: number;
+}) {
   const canvas = useRef<HTMLCanvasElement>(null);
   const handle = useRef<DiceHandle | null>(null);
-  const [ready, setReady] = useState(false);
-  const [failed, setFailed] = useState(false);
+  const [readyColor, setReadyColor] = useState<string | null>(null);
+  const [failedColor, setFailedColor] = useState<string | null>(null);
   const color = DIE_COLORS[(Math.max(1, seat) - 1) % DIE_COLORS.length];
+  const ready = readyColor === color && failedColor !== color;
+  const [clockVersion, setClockVersion] = useState(0);
+  const current = useRef({ value, rolling, animationWeight });
+  current.current = { value, rolling, animationWeight };
+  const sync = () =>
+    handle.current?.setState(
+      current.current.value,
+      current.current.rolling,
+      motionMs(620, current.current.animationWeight),
+      reduced(),
+      motionMs(750, current.current.animationWeight),
+    );
   useEffect(() => {
     let alive = true;
+    const node = canvas.current;
+    const lost = (e: Event) => {
+      e.preventDefault();
+      if (!alive) return;
+      setReadyColor(null);
+      setFailedColor(color);
+      handle.current?.dispose();
+      handle.current = null;
+    };
+    node?.addEventListener("webglcontextlost", lost);
     loadDice()
       .then((m) => {
-        if (!alive || !canvas.current) return;
-        handle.current = m.createDice(canvas.current, color);
-        setReady(true);
+        if (!alive || !node) return;
+        handle.current = m.createDice(node, color);
+        sync();
+        setFailedColor(null);
+        setReadyColor(color);
       })
-      .catch(() => alive && setFailed(true));
+      .catch(() => {
+        if (alive) {
+          setReadyColor(null);
+          setFailedColor(color);
+        }
+      });
     return () => {
       alive = false;
+      node?.removeEventListener("webglcontextlost", lost);
       handle.current?.dispose();
       handle.current = null;
     };
   }, [color]);
   useEffect(() => {
-    handle.current?.setState(value, rolling, motionMs(620), reduced());
-  }, [value, rolling, ready]);
-  if (failed) return <CssCubeDie value={value} rolling={rolling} seat={seat} />;
+    sync();
+  }, [value, rolling, ready, animationWeight, clockVersion]);
+  useEffect(() => {
+    const query = matchMedia("(prefers-reduced-motion: reduce)");
+    const changed = () => {
+      sync();
+      setClockVersion((v) => v + 1);
+    };
+    query.addEventListener?.("change", changed);
+    window.addEventListener("ma-motion-speed", changed);
+    window.addEventListener("storage", changed);
+    return () => {
+      query.removeEventListener?.("change", changed);
+      window.removeEventListener("ma-motion-speed", changed);
+      window.removeEventListener("storage", changed);
+    };
+  }, []);
   return (
     <div
-      className={"ma-bigdie ma-dice3d" + (rolling ? " rolling" : " landed")}
+      className={
+        "ma-bigdie ma-dice3d" +
+        (rolling ? " rolling" : " landed") +
+        (ready ? " is-ready" : "") +
+        (!rolling && value === 6 ? " is-six" : "")
+      }
       role="img"
       aria-label={rolling ? "骰子转动中" : `${value} 点`}
       data-value={rolling ? undefined : value}
+      data-renderer={ready ? "webgl" : "css"}
+      style={{
+        ["--ma-dice-ms" as string]: `${motionMs(750, animationWeight)}ms`,
+        ["--ma-dice-settle-ms" as string]: `${motionMs(620, animationWeight)}ms`,
+      }}
     >
-      <canvas ref={canvas} style={{ opacity: ready ? 1 : 0 }} />
-      {!ready && (
-        <div className="ma-dice3d-wait">
-          <CssCubeDie value={value} rolling={rolling} seat={seat} />
-        </div>
-      )}
+      <canvas
+        key={color}
+        ref={canvas}
+        aria-hidden="true"
+        style={{ opacity: ready ? 1 : 0 }}
+      />
+      <div className="ma-dice3d-wait" aria-hidden="true">
+        <CssCubeDie value={value} rolling={rolling} seat={seat} />
+      </div>
     </div>
   );
 }
+
+export const HandDie = memo(function HandDie({
+  holding,
+}: {
+  holding: boolean;
+}) {
+  return (
+    <span className="ma-hand-die">
+      <CssCubeDie value={1} rolling={holding} seat={1} />
+    </span>
+  );
+});
 
 export function FlyingSkill({
   racer,
@@ -213,7 +319,7 @@ export function useWindowFade(
   useLayoutEffect(() => {
     const node = ref.current;
     if (!node?.animate || duration <= 0 || reduced()) return;
-    const edge = Math.min(0.2, 120 / duration);
+    const edge = Math.min(0.2, motionMs(120) / duration);
     const animation = node.animate(
       [
         { opacity: 0, offset: 0 },

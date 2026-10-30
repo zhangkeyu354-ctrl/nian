@@ -15,7 +15,7 @@ import { installAudioUnlock, onMutedChange, setSfxMuted, sfxMuted, sfxShake, sfx
 import { getSpeed, setSpeed, usePlayback, type Show, type Speed } from "./playback.ts";
 import { installMotionClock } from "./motion-clock.ts";
 import { usePreparedArt } from "./art-cache.ts";
-import {CubeDie,FlyingSkill,RollingScore,useWindowFade} from "./LiteMotion.tsx";
+import {CubeDie,FlyingSkill,RollingScore,useWindowFade,HandDie} from "./LiteMotion.tsx";
 import {motionMs} from "./motion-clock.ts";
 import "./ma.css";
 
@@ -421,7 +421,7 @@ function RacerCard({
         <div className="ma-lightbox" role="dialog" aria-label={r.zh} onClick={() => setZoom(false)}>
           <img src={`${ART}/cards/zh/${id}.webp`} alt="" />
           <div className="ma-lightbox-text">
-            <h3>{r.zh} <small>{r.en}</small></h3>
+            <h3>{r.zh}</h3>
             <p><b>{r.powerZh}</b> {r.text}</p>
             {r.notes && <p className="ma-notes">{r.notes}</p>}
             <button type="button">关闭</button>
@@ -582,7 +582,7 @@ function RollButton({ label, onRoll }: { label: string; onRoll: () => void }) {
       onPointerCancel={stop}
       onClick={onRoll}
     >
-      <span className="ma-roll-die" aria-hidden="true">🎲</span>
+      <span className="ma-roll-die" aria-hidden="true"><HandDie holding={hold}/></span>
       {label.replace("🎲", "").trim() || "掷骰"}
       <small>{hold ? "松手掷出！" : "按住摇一摇"}</small>
     </button>
@@ -1030,7 +1030,7 @@ function CardLightbox({ id, onClose }: { id: string; onClose: () => void }) {
     <div className="ma-lightbox" role="dialog" aria-label={r.zh} onClick={onClose}>
       <img src={`${ART}/cards/zh/${id}.webp`} alt="" />
       <div className="ma-lightbox-text">
-        <h3>{r.zh} <small>{r.en}</small></h3>
+        <h3>{r.zh}</h3>
         <p><b>{r.powerZh}</b> {r.text}</p>
         {r.notes && <p className="ma-notes">{r.notes}</p>}
         <button type="button">关闭</button>
@@ -1068,7 +1068,7 @@ export function Overlay({
           <span className="ma-dot" style={{ background: colorOf(show.player) }} />
           {show.player === me ? "你" : name(show.player)} 为 {racerName(show.racer)}{show.reroll ? " 重掷" : " 掷骰"}
         </p>
-        <RollingDie pid={show.player} value={show.value} rolling={show.rolling} seatNo={seatNo} />
+        <RollingDie pid={show.player} value={show.value} rolling={show.rolling} seatNo={seatNo} weight={show.duration===undefined?1:show.duration/(motionMs(show.rolling?750:1500)||1)}/>
         {!show.rolling && <p className="ma-ov-big">掷出 {show.value}</p>}
       </div>
     );
@@ -1079,7 +1079,7 @@ export function Overlay({
         <div className="ma-duel">
           {[show.a, show.b].map((d, i) => (
             <div key={i}>
-              <RollingDie pid={owner(d.racer)} value={d.value} rolling={show.rolling} seatNo={seatNo} />
+              <RollingDie pid={owner(d.racer)} value={d.value} rolling={show.rolling} seatNo={seatNo} weight={show.duration===undefined?1:show.duration/(motionMs(show.rolling?750:1300)||1)}/>
               <small>{racerName(d.racer)}</small>
             </div>
           ))}
@@ -1285,8 +1285,8 @@ function Confetti({ n }: { n: number }) {
 }
 
 /** 六面3D骰子：落定面只取服务器结果，不生成客户端骰点。 */
-function RollingDie({ pid, value, rolling, seatNo }: { pid: string; value: number; rolling: boolean; seatNo: (p: string) => number }) {
-  return <CubeDie value={value} rolling={rolling} seat={seatNo(pid)}/>;
+function RollingDie({ pid, value, rolling, seatNo,weight=1 }: { pid: string; value: number; rolling: boolean; seatNo: (p: string) => number;weight?:number }) {
+  return <CubeDie key={pid} value={value} rolling={rolling} seat={seatNo(pid)} animationWeight={weight}/>;
 }
 
 function Final({ view }: { view: MAView }) {

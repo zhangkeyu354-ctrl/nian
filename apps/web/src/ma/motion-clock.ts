@@ -57,6 +57,12 @@ export function installMotionClock(root: HTMLElement) {
     settle:180,
     stage:200,
     press:120,
+    "dice-settle":620,
+    six:520,
+    "podium-jump":600,
+    "podium-third":600,
+    "podium-second":1200,
+    "podium-first":1900,
   };
   const update = () => {
     const factor = motionMs(1);

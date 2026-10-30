@@ -99,7 +99,7 @@ export function usePlayback(view: MAView) {
   const [floats, setFloats] = useState<Map<string, Float>>(new Map());
   const [link, setLink] = useState<Link | null>(null);
   /** 被技能命中的特效（摔倒 / 被击退 / 淘汰飞出） */
-  const [hit, setHit] = useState<{ id: number; racer: string; kind: "trip" | "knock" | "out" } | null>(null);
+  const [hit, setHit] = useState<{ id: number; racer: string; kind: "trip" | "knock" | "out"; duration:number } | null>(null);
   /** 棋盘震动：非 0 时震一下（约半秒后归零） */
   const [shake, setShake] = useState(0);
   /** 正在发动技能的选手：棋盘上放大发光 */
@@ -157,14 +157,15 @@ export function usePlayback(view: MAView) {
       setTimeout(() => setLink((x) => (x?.id === l.id ? null : x)), motionMs(2800));
     };
     const signed = (n: number) => (n >= 0 ? `+${n}` : `${n}`);
-    const hitFx = (racer: string, kind: "trip" | "knock" | "out", big = false) => {
-      const h = { id: ++fxId.current, racer, kind };
+    const hitFx = (racer: string, kind: "trip" | "knock" | "out", big = false, weight=1) => {
+      const h = { id: ++fxId.current, racer, kind,duration:motionMs(kind==="knock"?620:kind==="out"?900:1000,weight) };
       setHit(h);
       if (big) {
         setShake(h.id);
         setTimeout(() => setShake((x) => (x === h.id ? 0 : x)), motionMs(480));
       }
-      setTimeout(() => setHit((x) => (x?.id === h.id ? null : x)), motionMs(1300));
+      // Keep the invisible out pose until the token has been removed (1000ms).
+      setTimeout(() => setHit((x) => (x?.id === h.id ? null : x)), motionMs(kind==="trip"?1100:kind==="out"?1200:700,weight));
     };
     while (queue.current.length) {
       const e = queue.current.shift()!;
@@ -176,7 +177,7 @@ export function usePlayback(view: MAView) {
       let popped = false;
       const showIt = (v: Show) => {
         popped = true;
-        const duration=v.kind==="finish"?2500:v.kind==="podium"?4800:v.kind==="stats"?6500:v.kind==="champion"?9000:null;
+        const duration=v.kind==="roll"?(v.rolling?750:1500):v.kind==="duel"?(v.rolling?750:1300):v.kind==="finish"?2500:v.kind==="podium"?4800:v.kind==="stats"?6500:v.kind==="champion"?9000:null;
         setShow(duration===null?v:{...v,duration:motionMs(duration,k)});
       };
       // 用户反馈（2026-10-22）：连锁触发太快、眼花缭乱 → 不再因为排队多而加速（只有特别长的连锁才稍快一点）
@@ -280,7 +281,7 @@ export function usePlayback(view: MAView) {
             }
             // 被技能往后打退：先播「被击退」特效再往回走
             if (fx.to < fx.from && why !== "主移动") {
-              for (const r of fx.racers) hitFx(r, "knock", true);
+              for (const r of fx.racers) hitFx(r, "knock", true,k);
               play(sfxOops);
               await wait(700);
             }
@@ -309,7 +310,7 @@ export function usePlayback(view: MAView) {
           setTravel(new Map());
           break;
         case "trip":
-          hitFx(fx.racer, "trip", true);
+          hitFx(fx.racer, "trip", true,k);
           setPos(fx.racer, { tripped: true });
           float(fx.racer, "摔倒！下回合不动", "bad");
           linkTo(fx.racer);
@@ -320,7 +321,7 @@ export function usePlayback(view: MAView) {
           float(fx.racer, "淘汰！", "bad");
           linkTo(fx.racer);
           // 先播飞出棋盘的动画，再把它从棋盘上拿掉
-          hitFx(fx.racer, "out", true);
+          hitFx(fx.racer, "out", true,k);
           play(sfxOops);
           await wait(1000);
           setPos(fx.racer, { out: true });

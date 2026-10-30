@@ -6,7 +6,7 @@ import { tmpdir } from "node:os";
 import { join } from "node:path";
 import { pathToFileURL } from "node:url";
 import { strict as assert } from "node:assert";
-import { chromium, type Page } from "playwright";
+import { chromium, type Page, type Video } from "playwright";
 import { assertUiShot } from "./screenshot-check.ts";
 
 const PORT = 3331;
@@ -56,12 +56,15 @@ for (let i = 0; ; i++) {
   await new Promise((r) => setTimeout(r, 50));
 }
 
-const browser = await chromium.launch();
+const browser = await chromium.launch({channel:process.env.MA_BROWSER_CHANNEL});
 const errors: string[] = [];
+let recording:Video|null=null;
+let phoneCount=0;
 const phone = async () => {
   const ctx = await browser.newContext({
     viewport,
     deviceScaleFactor: 2,
+    ...(process.env.MA_RECORD==="1"&&phoneCount++===0?{recordVideo:{dir:join(out,"video"),size:viewport}}:{}),
     reducedMotion:
       process.env.MA_REDUCED_MOTION === "1" ? "reduce" : "no-preference",
   });
@@ -72,6 +75,7 @@ const phone = async () => {
       localStorage.setItem("ma-board-layout", "art"),
     );
   const p = await ctx.newPage();
+  if(p.video())recording=p.video();
   p.on("pageerror", (e) => errors.push(e.message));
   return p;
 };
@@ -255,7 +259,7 @@ try {
       const moleOption = allOptions.filter({ hasText: "挖地直行" }).first();
       const decline = allOptions.filter({ hasText: /^不用$/ }).first();
       const kingDecision = p
-        .locator(".ma-prompt", { hasText: "王者一绊" })
+        .locator(".ma-prompt, .ma-cc-prompt", { hasText: "王者一绊" })
         .filter({ visible: true });
       const secretSet = p
         .locator(".ma-prompt, .ma-cc-prompt", { hasText: "秘密设定" })
@@ -394,6 +398,7 @@ try {
     "应当看到要求的比赛场数",
   );
 } finally {
+  if(recording){await Promise.all(browser.contexts().map(ctx=>ctx.close()));await recording.saveAs(join(out,"full-game.webm"));}
   await browser.close();
   server.kill();
 }

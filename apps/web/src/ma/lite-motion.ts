@@ -1,10 +1,10 @@
 const POSES = [
   { x: 0, y: 0 },
-  { x: 0, y: 180 },
   { x: 0, y: -90 },
-  { x: 0, y: 90 },
   { x: -90, y: 0 },
   { x: 90, y: 0 },
+  { x: 0, y: 90 },
+  { x: 0, y: 180 },
 ];
 export function diePose(value: number) {
   return POSES[value - 1] ?? POSES[0];
@@ -27,6 +27,10 @@ export function skillFlightFrames(
       offset: 1 - 180 / 2600,
     },
     // 结束时原地淡出，不再缩回发动者
-    { transform: "translate3d(0,0,0) scale(.97) rotate(0)", opacity: 0, offset: 1 },
+    {
+      transform: "translate3d(0,0,0) scale(1) rotate(0)",
+      opacity: 0,
+      offset: 1,
+    },
   ];
 }

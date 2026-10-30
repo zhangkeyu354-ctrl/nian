@@ -6,6 +6,7 @@ interface Pose {
   x: number;
   y: number;
   pos: number;
+  scale: number;
   board: string;
   w: number;
   h: number;
@@ -55,7 +56,11 @@ export function PawnMotion({
       stop();
       return;
     }
-    if (before.x === pose.x && before.y === pose.y) {
+    if (
+      before.x === pose.x &&
+      before.y === pose.y &&
+      before.scale === pose.scale
+    ) {
       if (!cue) stop();
       return;
     }
@@ -67,6 +72,24 @@ export function PawnMotion({
     if (moved && !cue) return;
     const kind = moved && cue ? cue.kind : "drag";
     const duration = motionMs(kind === "warp" ? 900 : 400, cue?.weight ?? 1);
+    const pawn = root.current.firstElementChild as HTMLElement | null;
+    if (before.scale !== pose.scale && pawn?.animate) {
+      const anchor = vertical
+        ? "translate(-125%,-50%) rotate(-90deg)"
+        : "translate(-50%,-84%)";
+      animations.current.push(
+        pawn.animate(
+          [
+            { transform: `${anchor} scale(${before.scale})` },
+            { transform: `${anchor} scale(${pose.scale})` },
+          ],
+          {
+            duration: Math.min(duration, motionMs(400, cue?.weight ?? 1)),
+            easing: "cubic-bezier(.2,.7,.25,1)",
+          },
+        ),
+      );
+    }
     const animation = root.current.animate(
       travelFrames(before, pose, kind, vertical),
       {
@@ -75,7 +98,16 @@ export function PawnMotion({
       },
     );
     animations.current.push(animation);
-  }, [pose.x, pose.y, pose.pos, pose.board, pose.w, pose.h, cue?.id]);
+  }, [
+    pose.x,
+    pose.y,
+    pose.pos,
+    pose.scale,
+    pose.board,
+    pose.w,
+    pose.h,
+    cue?.id,
+  ]);
   const last = !!cue && pose.pos === cue.to && cue.kind !== "warp";
   return (
     <div

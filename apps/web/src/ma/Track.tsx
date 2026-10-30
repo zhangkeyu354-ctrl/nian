@@ -2,6 +2,7 @@ import React, { useEffect, useLayoutEffect, useRef, useState } from "react";
 import {PawnMotion} from "./PawnMotion.tsx";
 import {useRaceCamera} from "./camera.ts";
 import type {TravelCue} from "./travel.ts";
+import {layoutFloats} from "./float-layout.ts";
 import { racerName, TRACKS } from "../../../../packages/magical-athlete/src/index.ts";
 import type { RaceState } from "../../../../packages/magical-athlete/src/types.ts";
 import type { Special } from "../../../../packages/magical-athlete/src/tracks.ts";
@@ -106,7 +107,7 @@ export function Track({
   /** 正在发动技能的选手 */
   spot?: string | null;
   /** 被技能命中的特效 */
-  hit?: { id: number; racer: string; kind: string } | null;
+  hit?: { id: number; racer: string; kind: string; duration?:number } | null;
   /** 正在走的选手要停的格子 */
   target?: number | null;
 }) {
@@ -192,8 +193,8 @@ export function Track({
       // 2.5D：越靠近屏幕下方（竖版是原图越往右）的小人越在前面
       const depth = Math.round((vertical ? at.x : at.y) * 100);
       return (
-        <PawnMotion key={rid} pose={{x:at.x*size.w,y:at.y*size.h,pos:t.pos,board:`${race.index}:${race.track}:${layout}:${vertical}`,w:size.w,h:size.h}}
-          cue={travel?.get(rid)} vertical={vertical} zIndex={10+depth+(fl?200:0)+(spot===rid?300:0)}>
+        <PawnMotion key={rid} pose={{x:at.x*size.w,y:at.y*size.h,pos:t.pos,scale:at.scale,board:`${race.index}:${race.track}:${layout}:${vertical}`,w:size.w,h:size.h}}
+          cue={travel?.get(rid)} vertical={vertical} zIndex={10+depth+(spot===rid?300:0)}>
         <div
           className={
             "ma-pawn" +
@@ -216,7 +217,8 @@ export function Track({
             height: size.w*(layout==="grid"?.1:vertical?(fit?.042:.036):.044)*2,
             ["--pc" as string]: colorOf(t.owner),
             ["--ps" as string]: at.scale,
-            zIndex: 10 + depth + (fl ? 200 : 0) + (spot === rid ? 300 : 0),
+            ["--ma-impact-ms" as string]: hit?.racer===rid&&hit.duration!==undefined?`${hit.duration}ms`:undefined,
+            zIndex: 10 + depth + (spot === rid ? 300 : 0),
           }}
           title={`${racerName(rid)}${t.place ? ` · 第 ${t.place} 名` : ` · 第 ${t.pos} 格`}${t.tripped ? " · 摔倒" : ""}`}
         >
@@ -234,15 +236,19 @@ export function Track({
             </span>
           )}
           {hit?.racer === rid && hit.kind === "knock" && <span key={"k" + hit.id} className="ma-impact" aria-hidden="true" />}
-          {fl && (
-            <span key={fl.id} className={"ma-float " + fl.tone}>
-              {fl.text}
-            </span>
-          )}
         </div></PawnMotion>
       );
     }),
   );
+
+  const screenW=vertical?size.h:size.w,screenH=vertical?size.w:size.h;
+  const floatItems=[...(floats??[])].filter(([rid])=>spots.has(rid)).map(([rid,f])=>{
+    const at=spots.get(rid)!,token=race.tokens.find(t=>t.racer===rid)!,group=groups.get(token.place!==null?-1:token.pos)??[rid],scale=place(token.place!==null?-1:token.pos,group.indexOf(rid),group.length).scale;
+    const figureH=size.w*(layout==="grid"?.1:vertical?(fit?.042:.036):.044)*2*scale;
+    return{id:rid,x:(vertical?1-at.y:at.x)*screenW,y:(vertical?at.x:at.y)*screenH-figureH*.9-8,width:Math.min(170,Array.from(f.text).length*14+22)};
+  });
+  const placedFloats=layoutFloats(floatItems,screenW,screenH);
+  const floatLayer=<div className="ma-float-layer" aria-hidden="true">{[...(floats??[])].map(([rid,f])=>{const box=placedFloats.get(rid);if(!box)return null;const x=vertical?box.y:box.x,y=vertical?size.h-box.x:box.y;return <span className="ma-float-anchor" key={rid} style={{transform:`translate3d(${x}px,${y}px,0)${vertical?" rotate(-90deg)":""}`}}><span key={f.id} className={"ma-float "+f.tone} style={{width:box.width}} title={`${racerName(rid)}：${f.text}`}>{f.text}</span></span>;})}</div>;
 
   const a = link ? spots.get(link.from) : undefined;
   const b = link ? spots.get(link.to) : undefined;
@@ -313,6 +319,7 @@ export function Track({
           </div>
           {linkLayer}
           {pawns}
+          {floatLayer}
         </div>
       </div>
     );
@@ -354,6 +361,7 @@ export function Track({
       )}
       {linkLayer}
       {pawns}
+      {floatLayer}
     </div>
   );
   return (

@@ -4,8 +4,8 @@ import { diePose, skillFlightFrames } from "../src/ma/lite-motion.ts";
 it("all six server values select a distinct cube orientation without random rerolls", () => {
   expect(new Set([1, 2, 3, 4, 5, 6].map(diePose)).size).toBe(6);
   expect(diePose(1)).toMatchObject({ x: 0, y: 0 });
-  expect(diePose(3)).toMatchObject({ x: 0, y: -90 });
-  expect(diePose(5)).toMatchObject({ x: -90, y: 0 });
+  expect(diePose(3)).toMatchObject({ x: -90, y: 0 });
+  expect(diePose(5)).toMatchObject({ x: 0, y: 90 });
 });
 it("skill flight starts at the caster and fades out in place, preserving the existing whole window", () => {
   const frames = skillFlightFrames({ x: 20, y: 200 }, { x: 200, y: 400 });
