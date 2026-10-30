@@ -120,12 +120,22 @@ describe("Second Wind第四批5名", () => {
     expect(tok(s, "twin").pos).toBe(10);
     expect(tok(s, "sw_penguin").tripped).toBe(true);
   });
+  it("企鹅摔倒后只滑一次双倍，滑完起身，下回合正常走", () => {
+    let s = answer(
+      make(["sw_penguin", "twin"], [0, 20], [3, 2, 4], {
+        tripped: [true, false],
+      }),
+      "roll",
+    );
+    expect(tok(s, "sw_penguin").pos).toBe(6);
+    expect(tok(s, "sw_penguin").tripped).toBe(false);
+  });
   it("企鹅被传送到另一边不算被经过", () => {
     let s = make(["sw_tail", "sw_penguin", "twin"], [0, 5, 10], [2]);
     s = answer(s, "sw_penguin");
     expect(tok(s, "sw_penguin").tripped).toBe(false);
   });
-  it("企鹅滑行被较真怪阻挡时不发移动，不把摔倒当起身", () => {
+  it("企鹅滑行被较真怪阻挡时不发移动，但这次滑行仍算用掉了摔倒", () => {
     const s = answer(
       make(["sw_penguin", "stickler", "twin"], [28, 10, 20], [2], {
         tripped: [true, false, false],
@@ -133,7 +143,7 @@ describe("Second Wind第四批5名", () => {
       "roll",
     );
     expect(tok(s, "sw_penguin").pos).toBe(28);
-    expect(tok(s, "sw_penguin").tripped).toBe(true);
+    expect(tok(s, "sw_penguin").tripped).toBe(false);
   });
   it("炫耀者有主骰3时受破坏者影响，累计总移动后退", () => {
     let s = answer(
@@ -346,7 +356,7 @@ describe("Second Wind第四批5名", () => {
     );
     expect(s.log.findIndex((l) => l.fx?.kind === "trip")).toBeGreaterThan(p);
   });
-  it("企鹅摔倒主骰翻倍、保持滑行状态；教练只加1，不把全部修正翻倍", () => {
+  it("企鹅摔倒主骰翻倍、滑完起身；教练只加1，不把全部修正翻倍", () => {
     const s = answer(
       make(["sw_penguin", "coach", "twin"], [0, 0, 25], [3], {
         tripped: [true, false, false],
@@ -354,7 +364,7 @@ describe("Second Wind第四批5名", () => {
       "roll",
     );
     expect(tok(s, "sw_penguin").pos).toBe(7);
-    expect(tok(s, "sw_penguin").tripped).toBe(true);
+    expect(tok(s, "sw_penguin").tripped).toBe(false);
   });
   it("站着的企鹅正常主移动，不自动翻倍；后退经过暂随现有规则", () => {
     const s = answer(

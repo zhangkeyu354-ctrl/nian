@@ -1365,9 +1365,12 @@ function mainMove(s: MAState, c: Ctx, t: Token, f: TurnFlags) {
       dist += 2;
       fire(s, c, dad, `${rname(dad)}【扶你一把】：左侧 ${rname(t)} 主移动 +2。`, "sw_stepdad");
     }
-  if (has(s, t, "sw_penguin") && t.tripped && mainRoll !== null) {
-    dist += mainRoll;
-    fire(s, c, t, `${rname(t)}【肚皮滑行】：摔倒时主移动骰点翻倍。`, "sw_penguin");
+  const penguinSlide = has(s, t, "sw_penguin") && t.tripped && mainRoll !== null;
+  if (penguinSlide) {
+    dist += mainRoll ?? 0;
+    fire(s, c, t, `${rname(t)}【肚皮滑行】：摔倒时主移动骰点翻倍，滑完起身。`, "sw_penguin");
+    // 用户裁定 2026-10-31：滑行代替「跳过主移动」，所以和普通摔倒一样只管这一回合，滑完就起身。
+    t.tripped = false;
   }
   const blunderdog = has(s, t, "sw_blunderdog");
   if (blunderdog) {
@@ -1462,7 +1465,7 @@ function mainMove(s: MAState, c: Ctx, t: Token, f: TurnFlags) {
         ? "三点倒车"
         : how === "mole"
           ? "挖地直行"
-          : has(s, t, "sw_penguin") && t.tripped
+          : penguinSlide
             ? "肚皮滑行"
             : has(s, t, "sw_show_off")
               ? "看我表演"

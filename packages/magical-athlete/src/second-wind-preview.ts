@@ -160,7 +160,7 @@ export const SECOND_WIND_PREVIEW: RacerInfo[] = [
       powerEn: "Tummy Time",
       powerZh: "肚皮滑行",
       text: "被其他选手经过时自己摔倒；摔倒时主移动骰翻倍，代替跳过主移动。",
-      notes: "翻倍的是骰点，滑行不自动起身；传送与后退经过沿用现有定义。",
+      notes: "翻倍的是骰点；滑行代替跳过主移动，滑完即起身（用户裁定 2026-10-31）；传送与后退经过沿用现有定义。",
     },
     {
       id: "sw_show_off",
