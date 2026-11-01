@@ -29,22 +29,52 @@ export function recapRounds(history: readonly NDEvent[]) {
     }));
 }
 export function entertainmentTitles(history: readonly NDEvent[]) {
-  const captains = [
-    ...new Set(
-      history.filter((e) => e.type === "REVEALED").map((e) => e.captain),
-    ),
+  const reveals = history.filter((e) => e.type === "REVEALED");
+  const awards: { seat: number; title: string; detail: string }[] = [];
+  const captains = [...new Set(reveals.map((e) => e.captain))]
+    .map((seat) => {
+      const all = reveals.filter((e) => e.captain === seat && e.seat !== seat);
+      return {
+        seat,
+        total: all.length,
+        hits: all.filter((e) => e.correct).length,
+      };
+    })
+    .filter((x) => x.hits > 0)
+    .sort(
+      (a, b) =>
+        b.hits / b.total - a.hits / a.total ||
+        b.total - a.total ||
+        a.seat - b.seat,
+    );
+  if (captains[0]) {
+    const c = captains[0];
+    awards.push({
+      seat: c.seat,
+      title: "最准队长",
+      detail: `带队判对 ${c.hits} / ${c.total} 张`,
+    });
+  }
+  const seats = [
+    ...new Set(reveals.flatMap((e) => (e.seat === undefined ? [] : [e.seat]))),
   ];
-  return captains.map((seat) => {
-    const hits = history.filter(
-        (e) => e.type === "REVEALED" && e.captain === seat && e.correct,
-      ).length,
-      total = history.filter(
-        (e) => e.type === "REVEALED" && e.captain === seat,
-      ).length;
-    return {
-      seat,
-      title: total > 0 && hits === total ? "稳稳接住" : "一起动脑",
-      detail: `带队翻开 ${total} 张，判对 ${hits} 张`,
-    };
-  });
+  for (const correct of [false, true]) {
+    const ranked = seats
+      .map((seat) => ({
+        seat,
+        count: reveals.filter((e) => e.seat === seat && e.correct === correct)
+          .length,
+      }))
+      .filter((x) => x.count > 0)
+      .sort((a, b) => b.count - a.count || a.seat - b.seat);
+    if (ranked[0]) {
+      const x = ranked[0];
+      awards.push({
+        seat: x.seat,
+        title: correct ? "人形量表" : "最离谱答案",
+        detail: `秘密数字被排${correct ? "对" : "错"} ${x.count} 次`,
+      });
+    }
+  }
+  return awards.slice(0, 4);
 }

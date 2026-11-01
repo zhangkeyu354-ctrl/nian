@@ -145,12 +145,13 @@ async function play() {
       });
     else if (view.phase === "ANSWER") {
       const candidates = snaps
-        .map((s, i) =>
-          s.view!.myNumber !== null && !view.players[i].ready ? i : -1,
-        )
+        .map((s, i) => (i !== capt && !view.players[i].ready ? i : -1))
         .filter((i) => i >= 0);
-      const first = candidates.includes(capt) ? capt : candidates[0];
-      await act(first, { type: "READY" });
+      const first = candidates[0];
+      await act(first, {
+        type: "SUBMIT_ANSWER",
+        text: `协议回答${view.round}-${first}`,
+      });
     } else if (view.phase === "ORDER") {
       const order = snaps
         .map((s, i) => ({ seat: i, number: s.view!.myNumber }))
@@ -223,29 +224,72 @@ try {
       type: "CHOOSE_TOPIC",
       topicId: snaps[0].view!.choices[0].id,
     });
-    if (n !== 9) await bad(1, { type: "READY" }, "captain must answer first");
-    const first = n === 9 ? 1 : 0;
-    const ready = await act(first, { type: "READY" });
+    await bad(
+      0,
+      { type: "SUBMIT_ANSWER", text: "队长" },
+      "captain cannot submit answer cards",
+    );
+    await bad(1, { type: "SUBMIT_ANSWER", text: " " }, "empty answer rejected");
+    await bad(
+      1,
+      { type: "SUBMIT_ANSWER", text: "字".repeat(31) },
+      "31-codepoint answer rejected",
+    );
+    const first = 1;
+    const ready = await act(first, {
+      type: "SUBMIT_ANSWER",
+      text: "<img onerror>",
+    });
     const retry = await ask(peers[first], E.action, ready.req);
     assert.ok(retry.ok);
     assert.equal(retry.changed, false);
-    checks.push("accepted command retry is idempotent");
-    await bad(first, { type: "READY" }, "locked submission cannot be changed");
-    const beforeTimeout = structuredClone(r.file.state),
+    checks.push("accepted answer retry is idempotent");
+    await bad(
+      first,
+      { type: "SUBMIT_ANSWER", text: "换掉" },
+      "submitted answer cannot change before withdrawal",
+    );
+    await sync();
+    assert.equal(snaps[0].view!.answers[first], null);
+    assert.equal(snaps[first].view!.answers[first], "<img onerror>");
+    checks.push("answer-stage peers cannot see submitted text in packets");
+    const withdrawn = await act(first, { type: "WITHDRAW_ANSWER" });
+    const retryWithdrawal = await ask(peers[first], E.action, withdrawn.req);
+    assert.ok(retryWithdrawal.ok);
+    assert.equal(retryWithdrawal.changed, false);
+    await bad(
+      first,
+      { type: "WITHDRAW_ANSWER" },
+      "withdrawal with a new seq cannot repeat",
+    );
+    await act(first, { type: "SUBMIT_ANSWER", text: "<img onerror>" });
+    const numbers = [...r.file.state!.numbers],
       deadline = r.file.deadline!;
     box.advance(deadline - box.clock());
-    await until(() => r.file.expired, "automatic server deadline");
+    await until(
+      () => r.file.state!.phase !== "ANSWER",
+      "server answer deadline",
+    );
+    assert.deepEqual(r.file.state!.numbers, numbers);
+    assert.equal(r.file.state!.answers[first], "<img onerror>");
     assert.ok(
-      JSON.stringify(r.file.state) === JSON.stringify(beforeTimeout),
-      "timeout must not change the engine state",
+      r.file.state!.answers.every((text, i) =>
+        i === 0 ? text === null : text !== null,
+      ),
     );
     assert.equal(r.file.timeoutCount, 1);
     assert.equal(r.tick(box.clock() + 1), false);
-    checks.push("server-only timeout preserves all numbers and submissions");
+    checks.push(
+      "server-only deadline fills missing cards without changing numbers or submitted text",
+    );
+    await bad(
+      first,
+      { type: "WITHDRAW_ANSWER" },
+      "withdrawal after sorting begins rejected",
+    );
     await sync();
-    for (let i = 0; i < n; i++)
-      if (snaps[i].view!.myNumber !== null && !r.file.state!.ready.includes(i))
-        await act(i, { type: "READY" });
+    assert.equal(snaps[0].view!.answers[first], "<img onerror>");
+    checks.push("all card fronts become public at sorting/expert stage");
     if (!expert) {
       await sync();
       const order = snaps
@@ -253,6 +297,16 @@ try {
         .filter((p) => p.n !== null)
         .sort((a, b) => a.n! - b.n!)
         .map((p) => p.i);
+      await bad(
+        1,
+        { type: "UPDATE_ORDER", order },
+        "non-captain cannot reorder",
+      );
+      await act(0, { type: "UPDATE_ORDER", order: [...order].reverse() });
+      await sync();
+      for (const snap of snaps)
+        assert.deepEqual(snap.view!.order, [...order].reverse());
+      checks.push("live draft order broadcasts identically to every seat");
       const locked = await act(0, { type: "LOCK_ORDER", order });
       await bad(
         0,
@@ -278,6 +332,7 @@ try {
       assert.ok(rejoin.ok);
       assert.equal(rejoin.snapshot!.mySeat, 1);
       assert.equal(rejoin.snapshot!.view!.myNumber, oldNumber);
+      assert.equal(rejoin.snapshot!.view!.answers[1], "<img onerror>");
       assert.deepEqual(rejoin.snapshot!.view!.order, oldOrder);
       assert.equal(rejoin.snapshot!.nextSeq, oldSeq + 1);
       checks.push("token reconnect preserves secret, order and seq");
@@ -319,8 +374,9 @@ try {
   for (let i = 0; i < 4; i++) await act(i, { type: "READY" });
   await act(0, { type: "START", seed: 77 });
   await act(0, { type: "CHOOSE_TOPIC", topicId: snaps[0].view!.choices[0].id });
-  for (let i = 0; i < 4; i++) await act(i, { type: "READY" });
-  await act(0, { type: "LOCK_ORDER", order: [0, 1, 2, 3] });
+  for (let i = 1; i < 4; i++)
+    await act(i, { type: "SUBMIT_ANSWER", text: `持久化回答${i}` });
+  await act(0, { type: "LOCK_ORDER", order: [1, 2, 3] });
   const processRecovery = await verifyNDProcessRecovery(
     box.store.rooms.get(code)!.file,
   );
@@ -328,7 +384,7 @@ try {
   checks.push(
     "two fresh main.ts processes restore private numbers, order and seq; reveal continues and persists",
   );
-  const out = "docs/naodong-scale/stage3";
+  const out = "docs/naodong-scale/ui-v3/verification";
   mkdirSync(out, { recursive: true });
   const report = {
     games,

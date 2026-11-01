@@ -1,0 +1,4567 @@
+{
+  "games": [
+    {
+      "players": 4,
+      "rounds": 5,
+      "success": true
+    },
+    {
+      "players": 4,
+      "expert": true,
+      "rounds": 5,
+      "success": true
+    },
+    {
+      "players": 6,
+      "rounds": 5,
+      "success": true
+    },
+    {
+      "players": 9,
+      "rounds": 5,
+      "success": true
+    },
+    {
+      "players": 9,
+      "rounds": 2,
+      "success": false
+    }
+  ],
+  "checks": [
+    "4: compact rail, crown, self mark and complete roster dialog",
+    "4: topic selection labels and bright confirmation",
+    "4: draft survives reload; 31 characters cannot submit; own number stays visible and can be hidden",
+    "4: typed submit/withdraw/edit, submitted reconnect, literal XSS, peer DOM and network text privacy",
+    "4: reload reconnect preserves seat and number",
+    "4: tap swaps order and all other seats synchronize read-only fronts",
+    "4: mobile touch drag moves order",
+    "4: celebration can be skipped",
+    "4: selected expert teammate and exact number in confirmation",
+    "4: expert targets and common captain guess complete five rounds",
+    "6: compact rail, crown, self mark and complete roster dialog",
+    "6: topic selection labels and bright confirmation",
+    "6: draft survives reload; 31 characters cannot submit; own number stays visible and can be hidden",
+    "6: typed submit/withdraw/edit, submitted reconnect, literal XSS, peer DOM and network text privacy",
+    "6: reload reconnect preserves seat and number",
+    "6: tap swaps order and all other seats synchronize read-only fronts",
+    "6: mobile touch drag moves order",
+    "6: celebration can be skipped",
+    "9: compact rail, crown, self mark and complete roster dialog",
+    "9: topic selection labels and bright confirmation",
+    "9: draft survives reload; 31 characters cannot submit; own number stays visible and can be hidden",
+    "9: typed submit/withdraw/edit, submitted reconnect, literal XSS, peer DOM and network text privacy",
+    "9: one tick each second, mute skips audio, reduced motion preserves sound without animation",
+    "9: server deadline publishes missing cards and advances to sorting",
+    "9: reload reconnect preserves seat and number",
+    "9: tap swaps order and all other seats synchronize read-only fronts",
+    "9: mobile touch drag moves order",
+    "9: celebration can be skipped",
+    "9: red cross and immediate cooperative defeat"
+  ],
+  "packetChecks": 2888,
+  "layoutChecks": 180,
+  "domPrivacyChecks": 16,
+  "screens": [
+    {
+      "key": "4-lobby-390x844",
+      "w": 390,
+      "h": 844,
+      "scroll": 390,
+      "primary": 1,
+      "missing": 0,
+      "seatRailHeight": 68,
+      "stageEndGap": 97.546875,
+      "topicLines": null,
+      "portraitMaxBlank": 111.1875,
+      "evidence": {
+        "scope": "Visible UI / prototype region, not a full-map-count claim",
+        "region": {
+          "x": 0,
+          "y": 0,
+          "width": 390,
+          "height": 844
+        },
+        "pixels": {
+          "busy": 0.2508567262121765,
+          "std": 51.592042960919436
+        }
+      }
+    },
+    {
+      "key": "4-lobby-844x390",
+      "w": 844,
+      "h": 390,
+      "scroll": 844,
+      "primary": 1,
+      "missing": 0,
+      "seatRailHeight": 68,
+      "stageEndGap": null,
+      "topicLines": null,
+      "portraitMaxBlank": null,
+      "evidence": {
+        "scope": "Visible UI / prototype region, not a full-map-count claim",
+        "region": {
+          "x": 0,
+          "y": 0,
+          "width": 844,
+          "height": 390
+        },
+        "pixels": {
+          "busy": 0.1852716004374772,
+          "std": 42.847907546170816
+        }
+      }
+    },
+    {
+      "key": "4-lobby-1280x800",
+      "w": 1280,
+      "h": 800,
+      "scroll": 1280,
+      "primary": 1,
+      "missing": 0,
+      "seatRailHeight": 611,
+      "stageEndGap": null,
+      "topicLines": null,
+      "portraitMaxBlank": null,
+      "evidence": {
+        "scope": "Visible UI / prototype region, not a full-map-count claim",
+        "region": {
+          "x": 0,
+          "y": 0,
+          "width": 1280,
+          "height": 800
+        },
+        "pixels": {
+          "busy": 0.1995625,
+          "std": 30.64594332184737
+        }
+      }
+    },
+    {
+      "key": "4-full-players-390x844",
+      "w": 390,
+      "h": 844,
+      "scroll": 390,
+      "primary": 1,
+      "missing": 0,
+      "seatRailHeight": 68,
+      "stageEndGap": 97.546875,
+      "topicLines": null,
+      "portraitMaxBlank": 111.1875,
+      "evidence": {
+        "scope": "Visible UI / prototype region, not a full-map-count claim",
+        "region": {
+          "x": 0,
+          "y": 0,
+          "width": 390,
+          "height": 844
+        },
+        "pixels": {
+          "busy": 0.5039372949325556,
+          "std": 31.944128850504285
+        }
+      }
+    },
+    {
+      "key": "4-full-players-844x390",
+      "w": 844,
+      "h": 390,
+      "scroll": 844,
+      "primary": 1,
+      "missing": 0,
+      "seatRailHeight": 68,
+      "stageEndGap": null,
+      "topicLines": null,
+      "portraitMaxBlank": null,
+      "evidence": {
+        "scope": "Visible UI / prototype region, not a full-map-count claim",
+        "region": {
+          "x": 0,
+          "y": 0,
+          "width": 844,
+          "height": 390
+        },
+        "pixels": {
+          "busy": 0.5207315591201848,
+          "std": 31.182614648961803
+        }
+      }
+    },
+    {
+      "key": "4-full-players-1280x800",
+      "w": 1280,
+      "h": 800,
+      "scroll": 1280,
+      "primary": 1,
+      "missing": 0,
+      "seatRailHeight": 611,
+      "stageEndGap": null,
+      "topicLines": null,
+      "portraitMaxBlank": null,
+      "evidence": {
+        "scope": "Visible UI / prototype region, not a full-map-count claim",
+        "region": {
+          "x": 0,
+          "y": 0,
+          "width": 1280,
+          "height": 800
+        },
+        "pixels": {
+          "busy": 0.2074453125,
+          "std": 21.841675431815926
+        }
+      }
+    },
+    {
+      "key": "4-choose-topic-390x844",
+      "w": 390,
+      "h": 844,
+      "scroll": 390,
+      "primary": 1,
+      "missing": 0,
+      "seatRailHeight": 68,
+      "stageEndGap": 14,
+      "topicLines": null,
+      "portraitMaxBlank": 61.046875,
+      "evidence": {
+        "scope": "Visible UI / prototype region, not a full-map-count claim",
+        "region": {
+          "x": 0,
+          "y": 0,
+          "width": 390,
+          "height": 844
+        },
+        "pixels": {
+          "busy": 0.7365050431401142,
+          "std": 91.29853641461541
+        }
+      }
+    },
+    {
+      "key": "4-choose-topic-844x390",
+      "w": 844,
+      "h": 390,
+      "scroll": 844,
+      "primary": 1,
+      "missing": 0,
+      "seatRailHeight": 68,
+      "stageEndGap": null,
+      "topicLines": null,
+      "portraitMaxBlank": null,
+      "evidence": {
+        "scope": "Visible UI / prototype region, not a full-map-count claim",
+        "region": {
+          "x": 0,
+          "y": 0,
+          "width": 844,
+          "height": 390
+        },
+        "pixels": {
+          "busy": 0.4239640296512334,
+          "std": 83.64379614602618
+        }
+      }
+    },
+    {
+      "key": "4-choose-topic-1280x800",
+      "w": 1280,
+      "h": 800,
+      "scroll": 1280,
+      "primary": 1,
+      "missing": 0,
+      "seatRailHeight": 611,
+      "stageEndGap": null,
+      "topicLines": null,
+      "portraitMaxBlank": null,
+      "evidence": {
+        "scope": "Visible UI / prototype region, not a full-map-count claim",
+        "region": {
+          "x": 0,
+          "y": 0,
+          "width": 1280,
+          "height": 800
+        },
+        "pixels": {
+          "busy": 0.28129296875,
+          "std": 74.41754034205891
+        }
+      }
+    },
+    {
+      "key": "4-choose-topic-selected-390x844",
+      "w": 390,
+      "h": 844,
+      "scroll": 390,
+      "primary": 1,
+      "missing": 0,
+      "seatRailHeight": 68,
+      "stageEndGap": 14,
+      "topicLines": null,
+      "portraitMaxBlank": 62.328125,
+      "evidence": {
+        "scope": "Visible UI / prototype region, not a full-map-count claim",
+        "region": {
+          "x": 0,
+          "y": 0,
+          "width": 390,
+          "height": 844
+        },
+        "pixels": {
+          "busy": 0.7853202090168915,
+          "std": 80.15765371616878
+        }
+      }
+    },
+    {
+      "key": "4-choose-topic-selected-844x390",
+      "w": 844,
+      "h": 390,
+      "scroll": 844,
+      "primary": 1,
+      "missing": 0,
+      "seatRailHeight": 68,
+      "stageEndGap": null,
+      "topicLines": null,
+      "portraitMaxBlank": null,
+      "evidence": {
+        "scope": "Visible UI / prototype region, not a full-map-count claim",
+        "region": {
+          "x": 0,
+          "y": 0,
+          "width": 844,
+          "height": 390
+        },
+        "pixels": {
+          "busy": 0.4499088589135983,
+          "std": 71.71259234499632
+        }
+      }
+    },
+    {
+      "key": "4-choose-topic-selected-1280x800",
+      "w": 1280,
+      "h": 800,
+      "scroll": 1280,
+      "primary": 1,
+      "missing": 0,
+      "seatRailHeight": 611,
+      "stageEndGap": null,
+      "topicLines": null,
+      "portraitMaxBlank": null,
+      "evidence": {
+        "scope": "Visible UI / prototype region, not a full-map-count claim",
+        "region": {
+          "x": 0,
+          "y": 0,
+          "width": 1280,
+          "height": 800
+        },
+        "pixels": {
+          "busy": 0.29591796875,
+          "std": 63.41488267414729
+        }
+      }
+    },
+    {
+      "key": "4-captain-waiting-390x844",
+      "w": 390,
+      "h": 844,
+      "scroll": 390,
+      "primary": 1,
+      "missing": 0,
+      "seatRailHeight": 68,
+      "stageEndGap": 14,
+      "topicLines": null,
+      "portraitMaxBlank": 116.4375,
+      "evidence": {
+        "scope": "Visible UI / prototype region, not a full-map-count claim",
+        "region": {
+          "x": 0,
+          "y": 0,
+          "width": 390,
+          "height": 844
+        },
+        "pixels": {
+          "busy": 0.3411714667638838,
+          "std": 59.50597337880403
+        }
+      }
+    },
+    {
+      "key": "4-captain-waiting-844x390",
+      "w": 844,
+      "h": 390,
+      "scroll": 844,
+      "primary": 1,
+      "missing": 0,
+      "seatRailHeight": 68,
+      "stageEndGap": null,
+      "topicLines": null,
+      "portraitMaxBlank": null,
+      "evidence": {
+        "scope": "Visible UI / prototype region, not a full-map-count claim",
+        "region": {
+          "x": 0,
+          "y": 0,
+          "width": 844,
+          "height": 390
+        },
+        "pixels": {
+          "busy": 0.27753068416575527,
+          "std": 64.06488954847359
+        }
+      }
+    },
+    {
+      "key": "4-captain-waiting-1280x800",
+      "w": 1280,
+      "h": 800,
+      "scroll": 1280,
+      "primary": 1,
+      "missing": 0,
+      "seatRailHeight": 611,
+      "stageEndGap": null,
+      "topicLines": null,
+      "portraitMaxBlank": null,
+      "evidence": {
+        "scope": "Visible UI / prototype region, not a full-map-count claim",
+        "region": {
+          "x": 0,
+          "y": 0,
+          "width": 1280,
+          "height": 800
+        },
+        "pixels": {
+          "busy": 0.236453125,
+          "std": 49.57472327981232
+        }
+      }
+    },
+    {
+      "key": "4-writing-card-390x844",
+      "w": 390,
+      "h": 844,
+      "scroll": 390,
+      "primary": 1,
+      "missing": 0,
+      "seatRailHeight": 68,
+      "stageEndGap": 14,
+      "topicLines": null,
+      "portraitMaxBlank": 96.796875,
+      "evidence": {
+        "scope": "Visible UI / prototype region, not a full-map-count claim",
+        "region": {
+          "x": 0,
+          "y": 0,
+          "width": 390,
+          "height": 844
+        },
+        "pixels": {
+          "busy": 0.45224207072548306,
+          "std": 87.80156871082191
+        }
+      }
+    },
+    {
+      "key": "4-writing-card-844x390",
+      "w": 844,
+      "h": 390,
+      "scroll": 844,
+      "primary": 1,
+      "missing": 0,
+      "seatRailHeight": 68,
+      "stageEndGap": null,
+      "topicLines": null,
+      "portraitMaxBlank": null,
+      "evidence": {
+        "scope": "Visible UI / prototype region, not a full-map-count claim",
+        "region": {
+          "x": 0,
+          "y": 0,
+          "width": 844,
+          "height": 390
+        },
+        "pixels": {
+          "busy": 0.49303682099890633,
+          "std": 93.89247335734314
+        }
+      }
+    },
+    {
+      "key": "4-writing-card-1280x800",
+      "w": 1280,
+      "h": 800,
+      "scroll": 1280,
+      "primary": 1,
+      "missing": 0,
+      "seatRailHeight": 611,
+      "stageEndGap": null,
+      "topicLines": null,
+      "portraitMaxBlank": null,
+      "evidence": {
+        "scope": "Visible UI / prototype region, not a full-map-count claim",
+        "region": {
+          "x": 0,
+          "y": 0,
+          "width": 1280,
+          "height": 800
+        },
+        "pixels": {
+          "busy": 0.36692578125,
+          "std": 80.19843674503662
+        }
+      }
+    },
+    {
+      "key": "4-writing-number-hidden-390x844",
+      "w": 390,
+      "h": 844,
+      "scroll": 390,
+      "primary": 1,
+      "missing": 0,
+      "seatRailHeight": 68,
+      "stageEndGap": 14,
+      "topicLines": null,
+      "portraitMaxBlank": 96.796875,
+      "evidence": {
+        "scope": "Visible UI / prototype region, not a full-map-count claim",
+        "region": {
+          "x": 0,
+          "y": 0,
+          "width": 390,
+          "height": 844
+        },
+        "pixels": {
+          "busy": 0.4533843723417183,
+          "std": 87.89184215626305
+        }
+      }
+    },
+    {
+      "key": "4-writing-keyboard-simulated-390x844",
+      "w": 390,
+      "h": 844,
+      "scroll": 390,
+      "primary": 1,
+      "missing": 0,
+      "seatRailHeight": 0,
+      "stageEndGap": 8,
+      "topicLines": null,
+      "portraitMaxBlank": 19.5,
+      "evidence": {
+        "scope": "Visible UI / prototype region, not a full-map-count claim",
+        "region": {
+          "x": 0,
+          "y": 0,
+          "width": 390,
+          "height": 844
+        },
+        "pixels": {
+          "busy": 0.4674930125167092,
+          "std": 67.27755563636424
+        }
+      }
+    },
+    {
+      "key": "4-submitted-card-390x844",
+      "w": 390,
+      "h": 844,
+      "scroll": 390,
+      "primary": 0,
+      "missing": 0,
+      "seatRailHeight": 68,
+      "stageEndGap": 14,
+      "topicLines": null,
+      "portraitMaxBlank": 96.796875,
+      "evidence": {
+        "scope": "Visible UI / prototype region, not a full-map-count claim",
+        "region": {
+          "x": 0,
+          "y": 0,
+          "width": 390,
+          "height": 844
+        },
+        "pixels": {
+          "busy": 0.41274759995139143,
+          "std": 88.90064772927852
+        }
+      }
+    },
+    {
+      "key": "4-submitted-card-844x390",
+      "w": 844,
+      "h": 390,
+      "scroll": 844,
+      "primary": 0,
+      "missing": 0,
+      "seatRailHeight": 68,
+      "stageEndGap": null,
+      "topicLines": null,
+      "portraitMaxBlank": null,
+      "evidence": {
+        "scope": "Visible UI / prototype region, not a full-map-count claim",
+        "region": {
+          "x": 0,
+          "y": 0,
+          "width": 844,
+          "height": 390
+        },
+        "pixels": {
+          "busy": 0.4686231619880909,
+          "std": 94.80046084479056
+        }
+      }
+    },
+    {
+      "key": "4-submitted-card-1280x800",
+      "w": 1280,
+      "h": 800,
+      "scroll": 1280,
+      "primary": 0,
+      "missing": 0,
+      "seatRailHeight": 611,
+      "stageEndGap": null,
+      "topicLines": null,
+      "portraitMaxBlank": null,
+      "evidence": {
+        "scope": "Visible UI / prototype region, not a full-map-count claim",
+        "region": {
+          "x": 0,
+          "y": 0,
+          "width": 1280,
+          "height": 800
+        },
+        "pixels": {
+          "busy": 0.35733203125,
+          "std": 80.24454750529385
+        }
+      }
+    },
+    {
+      "key": "4-order-390x844",
+      "w": 390,
+      "h": 844,
+      "scroll": 390,
+      "primary": 1,
+      "missing": 0,
+      "seatRailHeight": 68,
+      "stageEndGap": 14,
+      "topicLines": 2,
+      "portraitMaxBlank": 28,
+      "evidence": {
+        "scope": "Visible UI / prototype region, not a full-map-count claim",
+        "region": {
+          "x": 0,
+          "y": 0,
+          "width": 390,
+          "height": 844
+        },
+        "pixels": {
+          "busy": 0.23030744926479524,
+          "std": 44.20610462916971
+        }
+      }
+    },
+    {
+      "key": "4-order-844x390",
+      "w": 844,
+      "h": 390,
+      "scroll": 844,
+      "primary": 1,
+      "missing": 0,
+      "seatRailHeight": 68,
+      "stageEndGap": null,
+      "topicLines": 2,
+      "portraitMaxBlank": null,
+      "evidence": {
+        "scope": "Visible UI / prototype region, not a full-map-count claim",
+        "region": {
+          "x": 0,
+          "y": 0,
+          "width": 844,
+          "height": 390
+        },
+        "pixels": {
+          "busy": 0.20847004496293595,
+          "std": 38.39490859598133
+        }
+      }
+    },
+    {
+      "key": "4-order-1280x800",
+      "w": 1280,
+      "h": 800,
+      "scroll": 1280,
+      "primary": 1,
+      "missing": 0,
+      "seatRailHeight": 611,
+      "stageEndGap": null,
+      "topicLines": 2,
+      "portraitMaxBlank": null,
+      "evidence": {
+        "scope": "Visible UI / prototype region, not a full-map-count claim",
+        "region": {
+          "x": 0,
+          "y": 0,
+          "width": 1280,
+          "height": 800
+        },
+        "pixels": {
+          "busy": 0.1908515625,
+          "std": 26.09416348030345
+        }
+      }
+    },
+    {
+      "key": "4-order-spectator-390x844",
+      "w": 390,
+      "h": 844,
+      "scroll": 390,
+      "primary": 1,
+      "missing": 0,
+      "seatRailHeight": 68,
+      "stageEndGap": 14,
+      "topicLines": 2,
+      "portraitMaxBlank": 28,
+      "evidence": {
+        "scope": "Visible UI / prototype region, not a full-map-count claim",
+        "region": {
+          "x": 0,
+          "y": 0,
+          "width": 390,
+          "height": 844
+        },
+        "pixels": {
+          "busy": 0.22602989427633977,
+          "std": 35.1795689698088
+        }
+      }
+    },
+    {
+      "key": "4-order-spectator-844x390",
+      "w": 844,
+      "h": 390,
+      "scroll": 844,
+      "primary": 1,
+      "missing": 0,
+      "seatRailHeight": 68,
+      "stageEndGap": null,
+      "topicLines": 2,
+      "portraitMaxBlank": null,
+      "evidence": {
+        "scope": "Visible UI / prototype region, not a full-map-count claim",
+        "region": {
+          "x": 0,
+          "y": 0,
+          "width": 844,
+          "height": 390
+        },
+        "pixels": {
+          "busy": 0.2041560335399198,
+          "std": 32.25521151927924
+        }
+      }
+    },
+    {
+      "key": "4-order-spectator-1280x800",
+      "w": 1280,
+      "h": 800,
+      "scroll": 1280,
+      "primary": 1,
+      "missing": 0,
+      "seatRailHeight": 611,
+      "stageEndGap": null,
+      "topicLines": 2,
+      "portraitMaxBlank": null,
+      "evidence": {
+        "scope": "Visible UI / prototype region, not a full-map-count claim",
+        "region": {
+          "x": 0,
+          "y": 0,
+          "width": 1280,
+          "height": 800
+        },
+        "pixels": {
+          "busy": 0.1873984375,
+          "std": 22.435819650269544
+        }
+      }
+    },
+    {
+      "key": "4-reveal-before-390x844",
+      "w": 390,
+      "h": 844,
+      "scroll": 390,
+      "primary": 1,
+      "missing": 0,
+      "seatRailHeight": 68,
+      "stageEndGap": 8,
+      "topicLines": 1.9090909090909092,
+      "portraitMaxBlank": 54,
+      "evidence": {
+        "scope": "Visible UI / prototype region, not a full-map-count claim",
+        "region": {
+          "x": 0,
+          "y": 0,
+          "width": 390,
+          "height": 844
+        },
+        "pixels": {
+          "busy": 0.38293838862559243,
+          "std": 80.08092294384178
+        }
+      }
+    },
+    {
+      "key": "4-reveal-before-844x390",
+      "w": 844,
+      "h": 390,
+      "scroll": 844,
+      "primary": 1,
+      "missing": 0,
+      "seatRailHeight": 68,
+      "stageEndGap": null,
+      "topicLines": 2,
+      "portraitMaxBlank": null,
+      "evidence": {
+        "scope": "Visible UI / prototype region, not a full-map-count claim",
+        "region": {
+          "x": 0,
+          "y": 0,
+          "width": 844,
+          "height": 390
+        },
+        "pixels": {
+          "busy": 0.25168307206221896,
+          "std": 71.27012962709722
+        }
+      }
+    },
+    {
+      "key": "4-reveal-before-1280x800",
+      "w": 1280,
+      "h": 800,
+      "scroll": 1280,
+      "primary": 1,
+      "missing": 0,
+      "seatRailHeight": 611,
+      "stageEndGap": null,
+      "topicLines": 2,
+      "portraitMaxBlank": null,
+      "evidence": {
+        "scope": "Visible UI / prototype region, not a full-map-count claim",
+        "region": {
+          "x": 0,
+          "y": 0,
+          "width": 1280,
+          "height": 800
+        },
+        "pixels": {
+          "busy": 0.26666015625,
+          "std": 71.06380615914713
+        }
+      }
+    },
+    {
+      "key": "4-reveal-first-390x844",
+      "w": 390,
+      "h": 844,
+      "scroll": 390,
+      "primary": 1,
+      "missing": 0,
+      "seatRailHeight": 68,
+      "stageEndGap": 8,
+      "topicLines": 1.9090909090909092,
+      "portraitMaxBlank": 54,
+      "evidence": {
+        "scope": "Visible UI / prototype region, not a full-map-count claim",
+        "region": {
+          "x": 0,
+          "y": 0,
+          "width": 390,
+          "height": 844
+        },
+        "pixels": {
+          "busy": 0.3945436869607486,
+          "std": 74.41935185782053
+        }
+      }
+    },
+    {
+      "key": "4-reveal-first-844x390",
+      "w": 844,
+      "h": 390,
+      "scroll": 844,
+      "primary": 1,
+      "missing": 0,
+      "seatRailHeight": 68,
+      "stageEndGap": null,
+      "topicLines": 2,
+      "portraitMaxBlank": null,
+      "evidence": {
+        "scope": "Visible UI / prototype region, not a full-map-count claim",
+        "region": {
+          "x": 0,
+          "y": 0,
+          "width": 844,
+          "height": 390
+        },
+        "pixels": {
+          "busy": 0.26187872159436143,
+          "std": 66.88137382370267
+        }
+      }
+    },
+    {
+      "key": "4-reveal-first-1280x800",
+      "w": 1280,
+      "h": 800,
+      "scroll": 1280,
+      "primary": 1,
+      "missing": 0,
+      "seatRailHeight": 611,
+      "stageEndGap": null,
+      "topicLines": 2,
+      "portraitMaxBlank": null,
+      "evidence": {
+        "scope": "Visible UI / prototype region, not a full-map-count claim",
+        "region": {
+          "x": 0,
+          "y": 0,
+          "width": 1280,
+          "height": 800
+        },
+        "pixels": {
+          "busy": 0.27805078125,
+          "std": 64.36661754830112
+        }
+      }
+    },
+    {
+      "key": "4-reveal-middle-390x844",
+      "w": 390,
+      "h": 844,
+      "scroll": 390,
+      "primary": 1,
+      "missing": 0,
+      "seatRailHeight": 68,
+      "stageEndGap": 8,
+      "topicLines": 1.9090909090909092,
+      "portraitMaxBlank": 40,
+      "evidence": {
+        "scope": "Visible UI / prototype region, not a full-map-count claim",
+        "region": {
+          "x": 0,
+          "y": 0,
+          "width": 390,
+          "height": 844
+        },
+        "pixels": {
+          "busy": 0.4216186656944951,
+          "std": 70.9378476036779
+        }
+      }
+    },
+    {
+      "key": "4-round-end-390x844",
+      "w": 390,
+      "h": 844,
+      "scroll": 390,
+      "primary": 1,
+      "missing": 0,
+      "seatRailHeight": 68,
+      "stageEndGap": 8,
+      "topicLines": 1.9090909090909092,
+      "portraitMaxBlank": 40,
+      "evidence": {
+        "scope": "Visible UI / prototype region, not a full-map-count claim",
+        "region": {
+          "x": 0,
+          "y": 0,
+          "width": 390,
+          "height": 844
+        },
+        "pixels": {
+          "busy": 0.4216186656944951,
+          "std": 70.9378476036779
+        }
+      }
+    },
+    {
+      "key": "4-round-end-844x390",
+      "w": 844,
+      "h": 390,
+      "scroll": 844,
+      "primary": 1,
+      "missing": 0,
+      "seatRailHeight": 68,
+      "stageEndGap": null,
+      "topicLines": 2,
+      "portraitMaxBlank": null,
+      "evidence": {
+        "scope": "Visible UI / prototype region, not a full-map-count claim",
+        "region": {
+          "x": 0,
+          "y": 0,
+          "width": 844,
+          "height": 390
+        },
+        "pixels": {
+          "busy": 0.3108640174990886,
+          "std": 63.96308905820708
+        }
+      }
+    },
+    {
+      "key": "4-round-end-1280x800",
+      "w": 1280,
+      "h": 800,
+      "scroll": 1280,
+      "primary": 1,
+      "missing": 0,
+      "seatRailHeight": 611,
+      "stageEndGap": null,
+      "topicLines": 2,
+      "portraitMaxBlank": null,
+      "evidence": {
+        "scope": "Visible UI / prototype region, not a full-map-count claim",
+        "region": {
+          "x": 0,
+          "y": 0,
+          "width": 1280,
+          "height": 800
+        },
+        "pixels": {
+          "busy": 0.2989296875,
+          "std": 62.06174242180872
+        }
+      }
+    },
+    {
+      "key": "4-rules-390x844",
+      "w": 390,
+      "h": 844,
+      "scroll": 390,
+      "primary": 1,
+      "missing": 0,
+      "seatRailHeight": 68,
+      "stageEndGap": 8,
+      "topicLines": null,
+      "portraitMaxBlank": 40,
+      "evidence": {
+        "scope": "Visible UI / prototype region, not a full-map-count claim",
+        "region": {
+          "x": 0,
+          "y": 0,
+          "width": 390,
+          "height": 844
+        },
+        "pixels": {
+          "busy": 0.6589865111192126,
+          "std": 44.63729537714438
+        }
+      }
+    },
+    {
+      "key": "4-rules-844x390",
+      "w": 844,
+      "h": 390,
+      "scroll": 844,
+      "primary": 1,
+      "missing": 0,
+      "seatRailHeight": 68,
+      "stageEndGap": null,
+      "topicLines": null,
+      "portraitMaxBlank": null,
+      "evidence": {
+        "scope": "Visible UI / prototype region, not a full-map-count claim",
+        "region": {
+          "x": 0,
+          "y": 0,
+          "width": 844,
+          "height": 390
+        },
+        "pixels": {
+          "busy": 0.5677725118483412,
+          "std": 41.78378208080828
+        }
+      }
+    },
+    {
+      "key": "4-rules-1280x800",
+      "w": 1280,
+      "h": 800,
+      "scroll": 1280,
+      "primary": 1,
+      "missing": 0,
+      "seatRailHeight": 611,
+      "stageEndGap": null,
+      "topicLines": null,
+      "portraitMaxBlank": null,
+      "evidence": {
+        "scope": "Visible UI / prototype region, not a full-map-count claim",
+        "region": {
+          "x": 0,
+          "y": 0,
+          "width": 1280,
+          "height": 800
+        },
+        "pixels": {
+          "busy": 0.31498828125,
+          "std": 30.68129496895075
+        }
+      }
+    },
+    {
+      "key": "4-review-390x844",
+      "w": 390,
+      "h": 844,
+      "scroll": 390,
+      "primary": 1,
+      "missing": 0,
+      "seatRailHeight": 68,
+      "stageEndGap": 8,
+      "topicLines": null,
+      "portraitMaxBlank": 40,
+      "evidence": {
+        "scope": "Visible UI / prototype region, not a full-map-count claim",
+        "region": {
+          "x": 0,
+          "y": 0,
+          "width": 390,
+          "height": 844
+        },
+        "pixels": {
+          "busy": 0.4696439421557905,
+          "std": 30.997526901908472
+        }
+      }
+    },
+    {
+      "key": "4-review-844x390",
+      "w": 844,
+      "h": 390,
+      "scroll": 844,
+      "primary": 1,
+      "missing": 0,
+      "seatRailHeight": 68,
+      "stageEndGap": null,
+      "topicLines": null,
+      "portraitMaxBlank": null,
+      "evidence": {
+        "scope": "Visible UI / prototype region, not a full-map-count claim",
+        "region": {
+          "x": 0,
+          "y": 0,
+          "width": 844,
+          "height": 390
+        },
+        "pixels": {
+          "busy": 0.5677725118483412,
+          "std": 31.170331893608374
+        }
+      }
+    },
+    {
+      "key": "4-review-1280x800",
+      "w": 1280,
+      "h": 800,
+      "scroll": 1280,
+      "primary": 1,
+      "missing": 0,
+      "seatRailHeight": 611,
+      "stageEndGap": null,
+      "topicLines": null,
+      "portraitMaxBlank": null,
+      "evidence": {
+        "scope": "Visible UI / prototype region, not a full-map-count claim",
+        "region": {
+          "x": 0,
+          "y": 0,
+          "width": 1280,
+          "height": 800
+        },
+        "pixels": {
+          "busy": 0.27844140625,
+          "std": 22.018056211540966
+        }
+      }
+    },
+    {
+      "key": "4-finished-390x844",
+      "w": 390,
+      "h": 844,
+      "scroll": 390,
+      "primary": 1,
+      "missing": 0,
+      "seatRailHeight": 68,
+      "stageEndGap": 14,
+      "topicLines": null,
+      "portraitMaxBlank": 73.015625,
+      "evidence": {
+        "scope": "Visible UI / prototype region, not a full-map-count claim",
+        "region": {
+          "x": 0,
+          "y": 0,
+          "width": 390,
+          "height": 844
+        },
+        "pixels": {
+          "busy": 0.2507352047636408,
+          "std": 44.349664437141875
+        }
+      }
+    },
+    {
+      "key": "4-finished-844x390",
+      "w": 844,
+      "h": 390,
+      "scroll": 844,
+      "primary": 1,
+      "missing": 0,
+      "seatRailHeight": 68,
+      "stageEndGap": null,
+      "topicLines": null,
+      "portraitMaxBlank": null,
+      "evidence": {
+        "scope": "Visible UI / prototype region, not a full-map-count claim",
+        "region": {
+          "x": 0,
+          "y": 0,
+          "width": 844,
+          "height": 390
+        },
+        "pixels": {
+          "busy": 0.1803499817717827,
+          "std": 37.64928769294408
+        }
+      }
+    },
+    {
+      "key": "4-finished-1280x800",
+      "w": 1280,
+      "h": 800,
+      "scroll": 1280,
+      "primary": 1,
+      "missing": 0,
+      "seatRailHeight": 611,
+      "stageEndGap": null,
+      "topicLines": null,
+      "portraitMaxBlank": null,
+      "evidence": {
+        "scope": "Visible UI / prototype region, not a full-map-count claim",
+        "region": {
+          "x": 0,
+          "y": 0,
+          "width": 1280,
+          "height": 800
+        },
+        "pixels": {
+          "busy": 0.1743046875,
+          "std": 26.577344794245537
+        }
+      }
+    },
+    {
+      "key": "4-expert-guess-390x844",
+      "w": 390,
+      "h": 844,
+      "scroll": 390,
+      "primary": 1,
+      "missing": 0,
+      "seatRailHeight": 68,
+      "stageEndGap": 14,
+      "topicLines": null,
+      "portraitMaxBlank": 91.859375,
+      "evidence": {
+        "scope": "Visible UI / prototype region, not a full-map-count claim",
+        "region": {
+          "x": 0,
+          "y": 0,
+          "width": 390,
+          "height": 844
+        },
+        "pixels": {
+          "busy": 0.3095758901446105,
+          "std": 40.24224314781434
+        }
+      }
+    },
+    {
+      "key": "4-expert-guess-844x390",
+      "w": 844,
+      "h": 390,
+      "scroll": 844,
+      "primary": 1,
+      "missing": 0,
+      "seatRailHeight": 68,
+      "stageEndGap": null,
+      "topicLines": null,
+      "portraitMaxBlank": null,
+      "evidence": {
+        "scope": "Visible UI / prototype region, not a full-map-count claim",
+        "region": {
+          "x": 0,
+          "y": 0,
+          "width": 844,
+          "height": 390
+        },
+        "pixels": {
+          "busy": 0.2368453031960141,
+          "std": 39.78647402014321
+        }
+      }
+    },
+    {
+      "key": "4-expert-guess-1280x800",
+      "w": 1280,
+      "h": 800,
+      "scroll": 1280,
+      "primary": 1,
+      "missing": 0,
+      "seatRailHeight": 611,
+      "stageEndGap": null,
+      "topicLines": null,
+      "portraitMaxBlank": null,
+      "evidence": {
+        "scope": "Visible UI / prototype region, not a full-map-count claim",
+        "region": {
+          "x": 0,
+          "y": 0,
+          "width": 1280,
+          "height": 800
+        },
+        "pixels": {
+          "busy": 0.22951953125,
+          "std": 27.402028194112162
+        }
+      }
+    },
+    {
+      "key": "4-expert-guess-selected-390x844",
+      "w": 390,
+      "h": 844,
+      "scroll": 390,
+      "primary": 1,
+      "missing": 0,
+      "seatRailHeight": 68,
+      "stageEndGap": 14,
+      "topicLines": null,
+      "portraitMaxBlank": 91.859375,
+      "evidence": {
+        "scope": "Visible UI / prototype region, not a full-map-count claim",
+        "region": {
+          "x": 0,
+          "y": 0,
+          "width": 390,
+          "height": 844
+        },
+        "pixels": {
+          "busy": 0.31435168307206224,
+          "std": 54.32497931904247
+        }
+      }
+    },
+    {
+      "key": "4-expert-guess-selected-844x390",
+      "w": 844,
+      "h": 390,
+      "scroll": 844,
+      "primary": 1,
+      "missing": 0,
+      "seatRailHeight": 68,
+      "stageEndGap": null,
+      "topicLines": null,
+      "portraitMaxBlank": null,
+      "evidence": {
+        "scope": "Visible UI / prototype region, not a full-map-count claim",
+        "region": {
+          "x": 0,
+          "y": 0,
+          "width": 844,
+          "height": 390
+        },
+        "pixels": {
+          "busy": 0.2505164661562766,
+          "std": 50.228205429799665
+        }
+      }
+    },
+    {
+      "key": "4-expert-guess-selected-1280x800",
+      "w": 1280,
+      "h": 800,
+      "scroll": 1280,
+      "primary": 1,
+      "missing": 0,
+      "seatRailHeight": 611,
+      "stageEndGap": null,
+      "topicLines": null,
+      "portraitMaxBlank": null,
+      "evidence": {
+        "scope": "Visible UI / prototype region, not a full-map-count claim",
+        "region": {
+          "x": 0,
+          "y": 0,
+          "width": 1280,
+          "height": 800
+        },
+        "pixels": {
+          "busy": 0.2324453125,
+          "std": 34.146797913207116
+        }
+      }
+    },
+    {
+      "key": "4-expert-captain-guess-390x844",
+      "w": 390,
+      "h": 844,
+      "scroll": 390,
+      "primary": 1,
+      "missing": 0,
+      "seatRailHeight": 68,
+      "stageEndGap": 14,
+      "topicLines": null,
+      "portraitMaxBlank": 96.6875,
+      "evidence": {
+        "scope": "Visible UI / prototype region, not a full-map-count claim",
+        "region": {
+          "x": 0,
+          "y": 0,
+          "width": 390,
+          "height": 844
+        },
+        "pixels": {
+          "busy": 0.2950905334791591,
+          "std": 47.94025836508114
+        }
+      }
+    },
+    {
+      "key": "4-expert-captain-guess-844x390",
+      "w": 844,
+      "h": 390,
+      "scroll": 844,
+      "primary": 1,
+      "missing": 0,
+      "seatRailHeight": 68,
+      "stageEndGap": null,
+      "topicLines": null,
+      "portraitMaxBlank": null,
+      "evidence": {
+        "scope": "Visible UI / prototype region, not a full-map-count claim",
+        "region": {
+          "x": 0,
+          "y": 0,
+          "width": 844,
+          "height": 390
+        },
+        "pixels": {
+          "busy": 0.22526430915056508,
+          "std": 44.8551693257107
+        }
+      }
+    },
+    {
+      "key": "4-expert-captain-guess-1280x800",
+      "w": 1280,
+      "h": 800,
+      "scroll": 1280,
+      "primary": 1,
+      "missing": 0,
+      "seatRailHeight": 611,
+      "stageEndGap": null,
+      "topicLines": null,
+      "portraitMaxBlank": null,
+      "evidence": {
+        "scope": "Visible UI / prototype region, not a full-map-count claim",
+        "region": {
+          "x": 0,
+          "y": 0,
+          "width": 1280,
+          "height": 800
+        },
+        "pixels": {
+          "busy": 0.21058203125,
+          "std": 30.224476613648804
+        }
+      }
+    },
+    {
+      "key": "4-expert-finished-390x844",
+      "w": 390,
+      "h": 844,
+      "scroll": 390,
+      "primary": 1,
+      "missing": 0,
+      "seatRailHeight": 68,
+      "stageEndGap": 14,
+      "topicLines": null,
+      "portraitMaxBlank": 73.015625,
+      "evidence": {
+        "scope": "Visible UI / prototype region, not a full-map-count claim",
+        "region": {
+          "x": 0,
+          "y": 0,
+          "width": 390,
+          "height": 844
+        },
+        "pixels": {
+          "busy": 0.2436991128934257,
+          "std": 44.371897845121964
+        }
+      }
+    },
+    {
+      "key": "4-expert-finished-844x390",
+      "w": 844,
+      "h": 390,
+      "scroll": 844,
+      "primary": 1,
+      "missing": 0,
+      "seatRailHeight": 68,
+      "stageEndGap": null,
+      "topicLines": null,
+      "portraitMaxBlank": null,
+      "evidence": {
+        "scope": "Visible UI / prototype region, not a full-map-count claim",
+        "region": {
+          "x": 0,
+          "y": 0,
+          "width": 844,
+          "height": 390
+        },
+        "pixels": {
+          "busy": 0.18788431158099406,
+          "std": 37.73767076053498
+        }
+      }
+    },
+    {
+      "key": "4-expert-finished-1280x800",
+      "w": 1280,
+      "h": 800,
+      "scroll": 1280,
+      "primary": 1,
+      "missing": 0,
+      "seatRailHeight": 611,
+      "stageEndGap": null,
+      "topicLines": null,
+      "portraitMaxBlank": null,
+      "evidence": {
+        "scope": "Visible UI / prototype region, not a full-map-count claim",
+        "region": {
+          "x": 0,
+          "y": 0,
+          "width": 1280,
+          "height": 800
+        },
+        "pixels": {
+          "busy": 0.1773828125,
+          "std": 26.58450899245251
+        }
+      }
+    },
+    {
+      "key": "6-lobby-390x844",
+      "w": 390,
+      "h": 844,
+      "scroll": 390,
+      "primary": 1,
+      "missing": 0,
+      "seatRailHeight": 68,
+      "stageEndGap": 97.546875,
+      "topicLines": null,
+      "portraitMaxBlank": 111.1875,
+      "evidence": {
+        "scope": "Visible UI / prototype region, not a full-map-count claim",
+        "region": {
+          "x": 0,
+          "y": 0,
+          "width": 390,
+          "height": 844
+        },
+        "pixels": {
+          "busy": 0.2540527403086645,
+          "std": 51.71683693414269
+        }
+      }
+    },
+    {
+      "key": "6-lobby-844x390",
+      "w": 844,
+      "h": 390,
+      "scroll": 844,
+      "primary": 1,
+      "missing": 0,
+      "seatRailHeight": 68,
+      "stageEndGap": null,
+      "topicLines": null,
+      "portraitMaxBlank": null,
+      "evidence": {
+        "scope": "Visible UI / prototype region, not a full-map-count claim",
+        "region": {
+          "x": 0,
+          "y": 0,
+          "width": 844,
+          "height": 390
+        },
+        "pixels": {
+          "busy": 0.18534451330659862,
+          "std": 42.87332626476692
+        }
+      }
+    },
+    {
+      "key": "6-lobby-1280x800",
+      "w": 1280,
+      "h": 800,
+      "scroll": 1280,
+      "primary": 1,
+      "missing": 0,
+      "seatRailHeight": 611,
+      "stageEndGap": null,
+      "topicLines": null,
+      "portraitMaxBlank": null,
+      "evidence": {
+        "scope": "Visible UI / prototype region, not a full-map-count claim",
+        "region": {
+          "x": 0,
+          "y": 0,
+          "width": 1280,
+          "height": 800
+        },
+        "pixels": {
+          "busy": 0.20329296875,
+          "std": 31.167321365637235
+        }
+      }
+    },
+    {
+      "key": "6-full-players-390x844",
+      "w": 390,
+      "h": 844,
+      "scroll": 390,
+      "primary": 1,
+      "missing": 0,
+      "seatRailHeight": 68,
+      "stageEndGap": 97.546875,
+      "topicLines": null,
+      "portraitMaxBlank": 111.1875,
+      "evidence": {
+        "scope": "Visible UI / prototype region, not a full-map-count claim",
+        "region": {
+          "x": 0,
+          "y": 0,
+          "width": 390,
+          "height": 844
+        },
+        "pixels": {
+          "busy": 0.6387410377931705,
+          "std": 34.649444466772714
+        }
+      }
+    },
+    {
+      "key": "6-full-players-844x390",
+      "w": 844,
+      "h": 390,
+      "scroll": 844,
+      "primary": 1,
+      "missing": 0,
+      "seatRailHeight": 68,
+      "stageEndGap": null,
+      "topicLines": null,
+      "portraitMaxBlank": null,
+      "evidence": {
+        "scope": "Visible UI / prototype region, not a full-map-count claim",
+        "region": {
+          "x": 0,
+          "y": 0,
+          "width": 844,
+          "height": 390
+        },
+        "pixels": {
+          "busy": 0.5207315591201848,
+          "std": 31.1798033622582
+        }
+      }
+    },
+    {
+      "key": "6-full-players-1280x800",
+      "w": 1280,
+      "h": 800,
+      "scroll": 1280,
+      "primary": 1,
+      "missing": 0,
+      "seatRailHeight": 611,
+      "stageEndGap": null,
+      "topicLines": null,
+      "portraitMaxBlank": null,
+      "evidence": {
+        "scope": "Visible UI / prototype region, not a full-map-count claim",
+        "region": {
+          "x": 0,
+          "y": 0,
+          "width": 1280,
+          "height": 800
+        },
+        "pixels": {
+          "busy": 0.275921875,
+          "std": 24.83943678451533
+        }
+      }
+    },
+    {
+      "key": "6-choose-topic-390x844",
+      "w": 390,
+      "h": 844,
+      "scroll": 390,
+      "primary": 1,
+      "missing": 0,
+      "seatRailHeight": 68,
+      "stageEndGap": 14,
+      "topicLines": null,
+      "portraitMaxBlank": 61.046875,
+      "evidence": {
+        "scope": "Visible UI / prototype region, not a full-map-count claim",
+        "region": {
+          "x": 0,
+          "y": 0,
+          "width": 390,
+          "height": 844
+        },
+        "pixels": {
+          "busy": 0.6524243528982866,
+          "std": 91.21927323033194
+        }
+      }
+    },
+    {
+      "key": "6-choose-topic-844x390",
+      "w": 844,
+      "h": 390,
+      "scroll": 844,
+      "primary": 1,
+      "missing": 0,
+      "seatRailHeight": 68,
+      "stageEndGap": null,
+      "topicLines": null,
+      "portraitMaxBlank": null,
+      "evidence": {
+        "scope": "Visible UI / prototype region, not a full-map-count claim",
+        "region": {
+          "x": 0,
+          "y": 0,
+          "width": 844,
+          "height": 390
+        },
+        "pixels": {
+          "busy": 0.42985781990521327,
+          "std": 85.34421018986131
+        }
+      }
+    },
+    {
+      "key": "6-choose-topic-1280x800",
+      "w": 1280,
+      "h": 800,
+      "scroll": 1280,
+      "primary": 1,
+      "missing": 0,
+      "seatRailHeight": 611,
+      "stageEndGap": null,
+      "topicLines": null,
+      "portraitMaxBlank": null,
+      "evidence": {
+        "scope": "Visible UI / prototype region, not a full-map-count claim",
+        "region": {
+          "x": 0,
+          "y": 0,
+          "width": 1280,
+          "height": 800
+        },
+        "pixels": {
+          "busy": 0.2816953125,
+          "std": 73.85331820623364
+        }
+      }
+    },
+    {
+      "key": "6-choose-topic-selected-390x844",
+      "w": 390,
+      "h": 844,
+      "scroll": 390,
+      "primary": 1,
+      "missing": 0,
+      "seatRailHeight": 68,
+      "stageEndGap": 14,
+      "topicLines": null,
+      "portraitMaxBlank": 62.328125,
+      "evidence": {
+        "scope": "Visible UI / prototype region, not a full-map-count claim",
+        "region": {
+          "x": 0,
+          "y": 0,
+          "width": 390,
+          "height": 844
+        },
+        "pixels": {
+          "busy": 0.7536031109490825,
+          "std": 79.60728523453746
+        }
+      }
+    },
+    {
+      "key": "6-choose-topic-selected-844x390",
+      "w": 844,
+      "h": 390,
+      "scroll": 844,
+      "primary": 1,
+      "missing": 0,
+      "seatRailHeight": 68,
+      "stageEndGap": null,
+      "topicLines": null,
+      "portraitMaxBlank": null,
+      "evidence": {
+        "scope": "Visible UI / prototype region, not a full-map-count claim",
+        "region": {
+          "x": 0,
+          "y": 0,
+          "width": 844,
+          "height": 390
+        },
+        "pixels": {
+          "busy": 0.45331145947259693,
+          "std": 73.87909520178995
+        }
+      }
+    },
+    {
+      "key": "6-choose-topic-selected-1280x800",
+      "w": 1280,
+      "h": 800,
+      "scroll": 1280,
+      "primary": 1,
+      "missing": 0,
+      "seatRailHeight": 611,
+      "stageEndGap": null,
+      "topicLines": null,
+      "portraitMaxBlank": null,
+      "evidence": {
+        "scope": "Visible UI / prototype region, not a full-map-count claim",
+        "region": {
+          "x": 0,
+          "y": 0,
+          "width": 1280,
+          "height": 800
+        },
+        "pixels": {
+          "busy": 0.295859375,
+          "std": 62.73467638838433
+        }
+      }
+    },
+    {
+      "key": "6-captain-waiting-390x844",
+      "w": 390,
+      "h": 844,
+      "scroll": 390,
+      "primary": 1,
+      "missing": 0,
+      "seatRailHeight": 68,
+      "stageEndGap": 14,
+      "topicLines": null,
+      "portraitMaxBlank": 38,
+      "evidence": {
+        "scope": "Visible UI / prototype region, not a full-map-count claim",
+        "region": {
+          "x": 0,
+          "y": 0,
+          "width": 390,
+          "height": 844
+        },
+        "pixels": {
+          "busy": 0.4141572487544051,
+          "std": 65.11739686892997
+        }
+      }
+    },
+    {
+      "key": "6-captain-waiting-844x390",
+      "w": 844,
+      "h": 390,
+      "scroll": 844,
+      "primary": 1,
+      "missing": 0,
+      "seatRailHeight": 68,
+      "stageEndGap": null,
+      "topicLines": null,
+      "portraitMaxBlank": null,
+      "evidence": {
+        "scope": "Visible UI / prototype region, not a full-map-count claim",
+        "region": {
+          "x": 0,
+          "y": 0,
+          "width": 844,
+          "height": 390
+        },
+        "pixels": {
+          "busy": 0.3352655243650504,
+          "std": 62.32494691568851
+        }
+      }
+    },
+    {
+      "key": "6-captain-waiting-1280x800",
+      "w": 1280,
+      "h": 800,
+      "scroll": 1280,
+      "primary": 1,
+      "missing": 0,
+      "seatRailHeight": 611,
+      "stageEndGap": null,
+      "topicLines": null,
+      "portraitMaxBlank": null,
+      "evidence": {
+        "scope": "Visible UI / prototype region, not a full-map-count claim",
+        "region": {
+          "x": 0,
+          "y": 0,
+          "width": 1280,
+          "height": 800
+        },
+        "pixels": {
+          "busy": 0.27490234375,
+          "std": 49.23456504338703
+        }
+      }
+    },
+    {
+      "key": "6-writing-card-390x844",
+      "w": 390,
+      "h": 844,
+      "scroll": 390,
+      "primary": 1,
+      "missing": 0,
+      "seatRailHeight": 68,
+      "stageEndGap": 14,
+      "topicLines": null,
+      "portraitMaxBlank": 86.53125,
+      "evidence": {
+        "scope": "Visible UI / prototype region, not a full-map-count claim",
+        "region": {
+          "x": 0,
+          "y": 0,
+          "width": 390,
+          "height": 844
+        },
+        "pixels": {
+          "busy": 0.47715396767529467,
+          "std": 89.32701114346598
+        }
+      }
+    },
+    {
+      "key": "6-writing-card-844x390",
+      "w": 844,
+      "h": 390,
+      "scroll": 844,
+      "primary": 1,
+      "missing": 0,
+      "seatRailHeight": 68,
+      "stageEndGap": null,
+      "topicLines": null,
+      "portraitMaxBlank": null,
+      "evidence": {
+        "scope": "Visible UI / prototype region, not a full-map-count claim",
+        "region": {
+          "x": 0,
+          "y": 0,
+          "width": 844,
+          "height": 390
+        },
+        "pixels": {
+          "busy": 0.49061854417304657,
+          "std": 93.56885626140638
+        }
+      }
+    },
+    {
+      "key": "6-writing-card-1280x800",
+      "w": 1280,
+      "h": 800,
+      "scroll": 1280,
+      "primary": 1,
+      "missing": 0,
+      "seatRailHeight": 611,
+      "stageEndGap": null,
+      "topicLines": null,
+      "portraitMaxBlank": null,
+      "evidence": {
+        "scope": "Visible UI / prototype region, not a full-map-count claim",
+        "region": {
+          "x": 0,
+          "y": 0,
+          "width": 1280,
+          "height": 800
+        },
+        "pixels": {
+          "busy": 0.3691796875,
+          "std": 79.91117544236111
+        }
+      }
+    },
+    {
+      "key": "6-writing-number-hidden-390x844",
+      "w": 390,
+      "h": 844,
+      "scroll": 390,
+      "primary": 1,
+      "missing": 0,
+      "seatRailHeight": 68,
+      "stageEndGap": 14,
+      "topicLines": null,
+      "portraitMaxBlank": 86.53125,
+      "evidence": {
+        "scope": "Visible UI / prototype region, not a full-map-count claim",
+        "region": {
+          "x": 0,
+          "y": 0,
+          "width": 390,
+          "height": 844
+        },
+        "pixels": {
+          "busy": 0.47844209502977275,
+          "std": 89.40594466628515
+        }
+      }
+    },
+    {
+      "key": "6-writing-keyboard-simulated-390x844",
+      "w": 390,
+      "h": 844,
+      "scroll": 390,
+      "primary": 1,
+      "missing": 0,
+      "seatRailHeight": 0,
+      "stageEndGap": 8,
+      "topicLines": null,
+      "portraitMaxBlank": 19.5,
+      "evidence": {
+        "scope": "Visible UI / prototype region, not a full-map-count claim",
+        "region": {
+          "x": 0,
+          "y": 0,
+          "width": 390,
+          "height": 844
+        },
+        "pixels": {
+          "busy": 0.47144245959411835,
+          "std": 67.71016355058946
+        }
+      }
+    },
+    {
+      "key": "6-submitted-card-390x844",
+      "w": 390,
+      "h": 844,
+      "scroll": 390,
+      "primary": 0,
+      "missing": 0,
+      "seatRailHeight": 68,
+      "stageEndGap": 14,
+      "topicLines": null,
+      "portraitMaxBlank": 86.53125,
+      "evidence": {
+        "scope": "Visible UI / prototype region, not a full-map-count claim",
+        "region": {
+          "x": 0,
+          "y": 0,
+          "width": 390,
+          "height": 844
+        },
+        "pixels": {
+          "busy": 0.43989549155425933,
+          "std": 90.53562608215505
+        }
+      }
+    },
+    {
+      "key": "6-submitted-card-844x390",
+      "w": 844,
+      "h": 390,
+      "scroll": 844,
+      "primary": 0,
+      "missing": 0,
+      "seatRailHeight": 68,
+      "stageEndGap": null,
+      "topicLines": null,
+      "portraitMaxBlank": null,
+      "evidence": {
+        "scope": "Visible UI / prototype region, not a full-map-count claim",
+        "region": {
+          "x": 0,
+          "y": 0,
+          "width": 844,
+          "height": 390
+        },
+        "pixels": {
+          "busy": 0.4656701907886742,
+          "std": 94.39140789092714
+        }
+      }
+    },
+    {
+      "key": "6-submitted-card-1280x800",
+      "w": 1280,
+      "h": 800,
+      "scroll": 1280,
+      "primary": 0,
+      "missing": 0,
+      "seatRailHeight": 611,
+      "stageEndGap": null,
+      "topicLines": null,
+      "portraitMaxBlank": null,
+      "evidence": {
+        "scope": "Visible UI / prototype region, not a full-map-count claim",
+        "region": {
+          "x": 0,
+          "y": 0,
+          "width": 1280,
+          "height": 800
+        },
+        "pixels": {
+          "busy": 0.3594140625,
+          "std": 79.91130979237852
+        }
+      }
+    },
+    {
+      "key": "6-order-390x844",
+      "w": 390,
+      "h": 844,
+      "scroll": 390,
+      "primary": 1,
+      "missing": 0,
+      "seatRailHeight": 68,
+      "stageEndGap": 14,
+      "topicLines": 3,
+      "portraitMaxBlank": 28,
+      "evidence": {
+        "scope": "Visible UI / prototype region, not a full-map-count claim",
+        "region": {
+          "x": 0,
+          "y": 0,
+          "width": 390,
+          "height": 844
+        },
+        "pixels": {
+          "busy": 0.25846396889050915,
+          "std": 47.98821839619205
+        }
+      }
+    },
+    {
+      "key": "6-order-844x390",
+      "w": 844,
+      "h": 390,
+      "scroll": 844,
+      "primary": 1,
+      "missing": 0,
+      "seatRailHeight": 68,
+      "stageEndGap": null,
+      "topicLines": 2,
+      "portraitMaxBlank": null,
+      "evidence": {
+        "scope": "Visible UI / prototype region, not a full-map-count claim",
+        "region": {
+          "x": 0,
+          "y": 0,
+          "width": 844,
+          "height": 390
+        },
+        "pixels": {
+          "busy": 0.22684408798152875,
+          "std": 42.867042231906446
+        }
+      }
+    },
+    {
+      "key": "6-order-1280x800",
+      "w": 1280,
+      "h": 800,
+      "scroll": 1280,
+      "primary": 1,
+      "missing": 0,
+      "seatRailHeight": 611,
+      "stageEndGap": null,
+      "topicLines": 2,
+      "portraitMaxBlank": null,
+      "evidence": {
+        "scope": "Visible UI / prototype region, not a full-map-count claim",
+        "region": {
+          "x": 0,
+          "y": 0,
+          "width": 1280,
+          "height": 800
+        },
+        "pixels": {
+          "busy": 0.19884765625,
+          "std": 29.07355294413545
+        }
+      }
+    },
+    {
+      "key": "6-order-spectator-390x844",
+      "w": 390,
+      "h": 844,
+      "scroll": 390,
+      "primary": 1,
+      "missing": 0,
+      "seatRailHeight": 68,
+      "stageEndGap": 14,
+      "topicLines": 3,
+      "portraitMaxBlank": 28,
+      "evidence": {
+        "scope": "Visible UI / prototype region, not a full-map-count claim",
+        "region": {
+          "x": 0,
+          "y": 0,
+          "width": 390,
+          "height": 844
+        },
+        "pixels": {
+          "busy": 0.25305626443067203,
+          "std": 39.971940364798144
+        }
+      }
+    },
+    {
+      "key": "6-order-spectator-844x390",
+      "w": 844,
+      "h": 390,
+      "scroll": 844,
+      "primary": 1,
+      "missing": 0,
+      "seatRailHeight": 68,
+      "stageEndGap": null,
+      "topicLines": 2,
+      "portraitMaxBlank": null,
+      "evidence": {
+        "scope": "Visible UI / prototype region, not a full-map-count claim",
+        "region": {
+          "x": 0,
+          "y": 0,
+          "width": 844,
+          "height": 390
+        },
+        "pixels": {
+          "busy": 0.2212419492040345,
+          "std": 37.480247284761184
+        }
+      }
+    },
+    {
+      "key": "6-order-spectator-1280x800",
+      "w": 1280,
+      "h": 800,
+      "scroll": 1280,
+      "primary": 1,
+      "missing": 0,
+      "seatRailHeight": 611,
+      "stageEndGap": null,
+      "topicLines": 2,
+      "portraitMaxBlank": null,
+      "evidence": {
+        "scope": "Visible UI / prototype region, not a full-map-count claim",
+        "region": {
+          "x": 0,
+          "y": 0,
+          "width": 1280,
+          "height": 800
+        },
+        "pixels": {
+          "busy": 0.19494140625,
+          "std": 25.82677450978701
+        }
+      }
+    },
+    {
+      "key": "6-reveal-before-390x844",
+      "w": 390,
+      "h": 844,
+      "scroll": 390,
+      "primary": 1,
+      "missing": 0,
+      "seatRailHeight": 68,
+      "stageEndGap": -20,
+      "topicLines": 2.909090909090909,
+      "portraitMaxBlank": 27,
+      "evidence": {
+        "scope": "Visible UI / prototype region, not a full-map-count claim",
+        "region": {
+          "x": 0,
+          "y": 0,
+          "width": 390,
+          "height": 844
+        },
+        "pixels": {
+          "busy": 0.5350103293231255,
+          "std": 89.47594058114845
+        }
+      }
+    },
+    {
+      "key": "6-reveal-before-scroll-end-390x844",
+      "w": 390,
+      "h": 844,
+      "scroll": 390,
+      "primary": 1,
+      "missing": 0,
+      "seatRailHeight": 68,
+      "stageEndGap": 8,
+      "topicLines": 2.909090909090909,
+      "portraitMaxBlank": 16,
+      "evidence": {
+        "scope": "Visible UI / prototype region, not a full-map-count claim",
+        "region": {
+          "x": 0,
+          "y": 0,
+          "width": 390,
+          "height": 844
+        },
+        "pixels": {
+          "busy": 0.5246810061975938,
+          "std": 89.74038407465008
+        }
+      }
+    },
+    {
+      "key": "6-reveal-before-844x390",
+      "w": 844,
+      "h": 390,
+      "scroll": 844,
+      "primary": 1,
+      "missing": 0,
+      "seatRailHeight": 68,
+      "stageEndGap": null,
+      "topicLines": 2,
+      "portraitMaxBlank": null,
+      "evidence": {
+        "scope": "Visible UI / prototype region, not a full-map-count claim",
+        "region": {
+          "x": 0,
+          "y": 0,
+          "width": 844,
+          "height": 390
+        },
+        "pixels": {
+          "busy": 0.3439543079353506,
+          "std": 81.5091165465481
+        }
+      }
+    },
+    {
+      "key": "6-reveal-before-scroll-end-844x390",
+      "w": 844,
+      "h": 390,
+      "scroll": 844,
+      "primary": 1,
+      "missing": 0,
+      "seatRailHeight": 68,
+      "stageEndGap": null,
+      "topicLines": 2,
+      "portraitMaxBlank": null,
+      "evidence": {
+        "scope": "Visible UI / prototype region, not a full-map-count claim",
+        "region": {
+          "x": 0,
+          "y": 0,
+          "width": 844,
+          "height": 390
+        },
+        "pixels": {
+          "busy": 0.2903755012759752,
+          "std": 77.49408830934048
+        }
+      }
+    },
+    {
+      "key": "6-reveal-before-1280x800",
+      "w": 1280,
+      "h": 800,
+      "scroll": 1280,
+      "primary": 1,
+      "missing": 0,
+      "seatRailHeight": 611,
+      "stageEndGap": null,
+      "topicLines": 2,
+      "portraitMaxBlank": null,
+      "evidence": {
+        "scope": "Visible UI / prototype region, not a full-map-count claim",
+        "region": {
+          "x": 0,
+          "y": 0,
+          "width": 1280,
+          "height": 800
+        },
+        "pixels": {
+          "busy": 0.38763671875,
+          "std": 83.75838541725916
+        }
+      }
+    },
+    {
+      "key": "6-reveal-first-390x844",
+      "w": 390,
+      "h": 844,
+      "scroll": 390,
+      "primary": 1,
+      "missing": 0,
+      "seatRailHeight": 68,
+      "stageEndGap": -20,
+      "topicLines": 2.909090909090909,
+      "portraitMaxBlank": 27,
+      "evidence": {
+        "scope": "Visible UI / prototype region, not a full-map-count claim",
+        "region": {
+          "x": 0,
+          "y": 0,
+          "width": 390,
+          "height": 844
+        },
+        "pixels": {
+          "busy": 0.544476850164054,
+          "std": 86.20327069708145
+        }
+      }
+    },
+    {
+      "key": "6-reveal-first-844x390",
+      "w": 844,
+      "h": 390,
+      "scroll": 844,
+      "primary": 1,
+      "missing": 0,
+      "seatRailHeight": 68,
+      "stageEndGap": null,
+      "topicLines": 2,
+      "portraitMaxBlank": null,
+      "evidence": {
+        "scope": "Visible UI / prototype region, not a full-map-count claim",
+        "region": {
+          "x": 0,
+          "y": 0,
+          "width": 844,
+          "height": 390
+        },
+        "pixels": {
+          "busy": 0.353870458135861,
+          "std": 78.37362306329149
+        }
+      }
+    },
+    {
+      "key": "6-reveal-first-1280x800",
+      "w": 1280,
+      "h": 800,
+      "scroll": 1280,
+      "primary": 1,
+      "missing": 0,
+      "seatRailHeight": 611,
+      "stageEndGap": null,
+      "topicLines": 2,
+      "portraitMaxBlank": null,
+      "evidence": {
+        "scope": "Visible UI / prototype region, not a full-map-count claim",
+        "region": {
+          "x": 0,
+          "y": 0,
+          "width": 1280,
+          "height": 800
+        },
+        "pixels": {
+          "busy": 0.3988984375,
+          "std": 79.1003096600478
+        }
+      }
+    },
+    {
+      "key": "6-reveal-middle-390x844",
+      "w": 390,
+      "h": 844,
+      "scroll": 390,
+      "primary": 1,
+      "missing": 0,
+      "seatRailHeight": 68,
+      "stageEndGap": -20,
+      "topicLines": 2.909090909090909,
+      "portraitMaxBlank": 27,
+      "evidence": {
+        "scope": "Visible UI / prototype region, not a full-map-count claim",
+        "region": {
+          "x": 0,
+          "y": 0,
+          "width": 390,
+          "height": 844
+        },
+        "pixels": {
+          "busy": 0.5494470774091628,
+          "std": 81.5472760885242
+        }
+      }
+    },
+    {
+      "key": "6-round-end-390x844",
+      "w": 390,
+      "h": 844,
+      "scroll": 390,
+      "primary": 1,
+      "missing": 0,
+      "seatRailHeight": 68,
+      "stageEndGap": -68,
+      "topicLines": 2.909090909090909,
+      "portraitMaxBlank": 27,
+      "evidence": {
+        "scope": "Visible UI / prototype region, not a full-map-count claim",
+        "region": {
+          "x": 0,
+          "y": 0,
+          "width": 390,
+          "height": 844
+        },
+        "pixels": {
+          "busy": 0.5613683315105116,
+          "std": 77.69778678446714
+        }
+      }
+    },
+    {
+      "key": "6-round-end-scroll-end-390x844",
+      "w": 390,
+      "h": 844,
+      "scroll": 390,
+      "primary": 1,
+      "missing": 0,
+      "seatRailHeight": 68,
+      "stageEndGap": 8,
+      "topicLines": 2.909090909090909,
+      "portraitMaxBlank": 28,
+      "evidence": {
+        "scope": "Visible UI / prototype region, not a full-map-count claim",
+        "region": {
+          "x": 0,
+          "y": 0,
+          "width": 390,
+          "height": 844
+        },
+        "pixels": {
+          "busy": 0.5210110584518167,
+          "std": 77.87121955471191
+        }
+      }
+    },
+    {
+      "key": "6-round-end-844x390",
+      "w": 844,
+      "h": 390,
+      "scroll": 844,
+      "primary": 1,
+      "missing": 0,
+      "seatRailHeight": 68,
+      "stageEndGap": null,
+      "topicLines": 2,
+      "portraitMaxBlank": null,
+      "evidence": {
+        "scope": "Visible UI / prototype region, not a full-map-count claim",
+        "region": {
+          "x": 0,
+          "y": 0,
+          "width": 844,
+          "height": 390
+        },
+        "pixels": {
+          "busy": 0.4086037185563252,
+          "std": 71.5818839089011
+        }
+      }
+    },
+    {
+      "key": "6-round-end-scroll-end-844x390",
+      "w": 844,
+      "h": 390,
+      "scroll": 844,
+      "primary": 1,
+      "missing": 0,
+      "seatRailHeight": 68,
+      "stageEndGap": null,
+      "topicLines": 2,
+      "portraitMaxBlank": null,
+      "evidence": {
+        "scope": "Visible UI / prototype region, not a full-map-count claim",
+        "region": {
+          "x": 0,
+          "y": 0,
+          "width": 844,
+          "height": 390
+        },
+        "pixels": {
+          "busy": 0.25370032810791104,
+          "std": 60.92264985111667
+        }
+      }
+    },
+    {
+      "key": "6-round-end-1280x800",
+      "w": 1280,
+      "h": 800,
+      "scroll": 1280,
+      "primary": 1,
+      "missing": 0,
+      "seatRailHeight": 611,
+      "stageEndGap": null,
+      "topicLines": 2,
+      "portraitMaxBlank": null,
+      "evidence": {
+        "scope": "Visible UI / prototype region, not a full-map-count claim",
+        "region": {
+          "x": 0,
+          "y": 0,
+          "width": 1280,
+          "height": 800
+        },
+        "pixels": {
+          "busy": 0.4218125,
+          "std": 72.4650715515172
+        }
+      }
+    },
+    {
+      "key": "6-round-end-scroll-end-1280x800",
+      "w": 1280,
+      "h": 800,
+      "scroll": 1280,
+      "primary": 1,
+      "missing": 0,
+      "seatRailHeight": 611,
+      "stageEndGap": null,
+      "topicLines": 2,
+      "portraitMaxBlank": null,
+      "evidence": {
+        "scope": "Visible UI / prototype region, not a full-map-count claim",
+        "region": {
+          "x": 0,
+          "y": 0,
+          "width": 1280,
+          "height": 800
+        },
+        "pixels": {
+          "busy": 0.41146875,
+          "std": 72.62635267784205
+        }
+      }
+    },
+    {
+      "key": "6-rules-390x844",
+      "w": 390,
+      "h": 844,
+      "scroll": 390,
+      "primary": 1,
+      "missing": 0,
+      "seatRailHeight": 68,
+      "stageEndGap": -68,
+      "topicLines": null,
+      "portraitMaxBlank": 27,
+      "evidence": {
+        "scope": "Visible UI / prototype region, not a full-map-count claim",
+        "region": {
+          "x": 0,
+          "y": 0,
+          "width": 390,
+          "height": 844
+        },
+        "pixels": {
+          "busy": 0.6498845546238912,
+          "std": 44.488842205482605
+        }
+      }
+    },
+    {
+      "key": "6-rules-844x390",
+      "w": 844,
+      "h": 390,
+      "scroll": 844,
+      "primary": 1,
+      "missing": 0,
+      "seatRailHeight": 68,
+      "stageEndGap": null,
+      "topicLines": null,
+      "portraitMaxBlank": null,
+      "evidence": {
+        "scope": "Visible UI / prototype region, not a full-map-count claim",
+        "region": {
+          "x": 0,
+          "y": 0,
+          "width": 844,
+          "height": 390
+        },
+        "pixels": {
+          "busy": 0.5940697533114595,
+          "std": 41.33707772871939
+        }
+      }
+    },
+    {
+      "key": "6-rules-1280x800",
+      "w": 1280,
+      "h": 800,
+      "scroll": 1280,
+      "primary": 1,
+      "missing": 0,
+      "seatRailHeight": 611,
+      "stageEndGap": null,
+      "topicLines": null,
+      "portraitMaxBlank": null,
+      "evidence": {
+        "scope": "Visible UI / prototype region, not a full-map-count claim",
+        "region": {
+          "x": 0,
+          "y": 0,
+          "width": 1280,
+          "height": 800
+        },
+        "pixels": {
+          "busy": 0.36826171875,
+          "std": 30.582934883021107
+        }
+      }
+    },
+    {
+      "key": "6-review-390x844",
+      "w": 390,
+      "h": 844,
+      "scroll": 390,
+      "primary": 1,
+      "missing": 0,
+      "seatRailHeight": 68,
+      "stageEndGap": -68,
+      "topicLines": null,
+      "portraitMaxBlank": 27,
+      "evidence": {
+        "scope": "Visible UI / prototype region, not a full-map-count claim",
+        "region": {
+          "x": 0,
+          "y": 0,
+          "width": 390,
+          "height": 844
+        },
+        "pixels": {
+          "busy": 0.6001458257382428,
+          "std": 34.34334487356871
+        }
+      }
+    },
+    {
+      "key": "6-review-844x390",
+      "w": 844,
+      "h": 390,
+      "scroll": 844,
+      "primary": 1,
+      "missing": 0,
+      "seatRailHeight": 68,
+      "stageEndGap": null,
+      "topicLines": null,
+      "portraitMaxBlank": null,
+      "evidence": {
+        "scope": "Visible UI / prototype region, not a full-map-count claim",
+        "region": {
+          "x": 0,
+          "y": 0,
+          "width": 844,
+          "height": 390
+        },
+        "pixels": {
+          "busy": 0.5940697533114595,
+          "std": 30.494719813830066
+        }
+      }
+    },
+    {
+      "key": "6-review-1280x800",
+      "w": 1280,
+      "h": 800,
+      "scroll": 1280,
+      "primary": 1,
+      "missing": 0,
+      "seatRailHeight": 611,
+      "stageEndGap": null,
+      "topicLines": null,
+      "portraitMaxBlank": null,
+      "evidence": {
+        "scope": "Visible UI / prototype region, not a full-map-count claim",
+        "region": {
+          "x": 0,
+          "y": 0,
+          "width": 1280,
+          "height": 800
+        },
+        "pixels": {
+          "busy": 0.3958828125,
+          "std": 24.99723279420026
+        }
+      }
+    },
+    {
+      "key": "6-finished-390x844",
+      "w": 390,
+      "h": 844,
+      "scroll": 390,
+      "primary": 1,
+      "missing": 0,
+      "seatRailHeight": 68,
+      "stageEndGap": 14,
+      "topicLines": null,
+      "portraitMaxBlank": 73.015625,
+      "evidence": {
+        "scope": "Visible UI / prototype region, not a full-map-count claim",
+        "region": {
+          "x": 0,
+          "y": 0,
+          "width": 390,
+          "height": 844
+        },
+        "pixels": {
+          "busy": 0.2453761088832179,
+          "std": 44.545980264857086
+        }
+      }
+    },
+    {
+      "key": "6-finished-844x390",
+      "w": 844,
+      "h": 390,
+      "scroll": 844,
+      "primary": 1,
+      "missing": 0,
+      "seatRailHeight": 68,
+      "stageEndGap": null,
+      "topicLines": null,
+      "portraitMaxBlank": null,
+      "evidence": {
+        "scope": "Visible UI / prototype region, not a full-map-count claim",
+        "region": {
+          "x": 0,
+          "y": 0,
+          "width": 844,
+          "height": 390
+        },
+        "pixels": {
+          "busy": 0.18015554745412565,
+          "std": 37.6399171231509
+        }
+      }
+    },
+    {
+      "key": "6-finished-1280x800",
+      "w": 1280,
+      "h": 800,
+      "scroll": 1280,
+      "primary": 1,
+      "missing": 0,
+      "seatRailHeight": 611,
+      "stageEndGap": null,
+      "topicLines": null,
+      "portraitMaxBlank": null,
+      "evidence": {
+        "scope": "Visible UI / prototype region, not a full-map-count claim",
+        "region": {
+          "x": 0,
+          "y": 0,
+          "width": 1280,
+          "height": 800
+        },
+        "pixels": {
+          "busy": 0.1780625,
+          "std": 27.22762890692671
+        }
+      }
+    },
+    {
+      "key": "9-lobby-390x844",
+      "w": 390,
+      "h": 844,
+      "scroll": 390,
+      "primary": 1,
+      "missing": 0,
+      "seatRailHeight": 68,
+      "stageEndGap": 97.546875,
+      "topicLines": null,
+      "portraitMaxBlank": 111.1875,
+      "evidence": {
+        "scope": "Visible UI / prototype region, not a full-map-count claim",
+        "region": {
+          "x": 0,
+          "y": 0,
+          "width": 390,
+          "height": 844
+        },
+        "pixels": {
+          "busy": 0.2535666545145218,
+          "std": 51.6923554173168
+        }
+      }
+    },
+    {
+      "key": "9-lobby-844x390",
+      "w": 844,
+      "h": 390,
+      "scroll": 844,
+      "primary": 1,
+      "missing": 0,
+      "seatRailHeight": 68,
+      "stageEndGap": null,
+      "topicLines": null,
+      "portraitMaxBlank": null,
+      "evidence": {
+        "scope": "Visible UI / prototype region, not a full-map-count claim",
+        "region": {
+          "x": 0,
+          "y": 0,
+          "width": 844,
+          "height": 390
+        },
+        "pixels": {
+          "busy": 0.1851014704095273,
+          "std": 42.88096385070194
+        }
+      }
+    },
+    {
+      "key": "9-lobby-1280x800",
+      "w": 1280,
+      "h": 800,
+      "scroll": 1280,
+      "primary": 1,
+      "missing": 0,
+      "seatRailHeight": 611,
+      "stageEndGap": null,
+      "topicLines": null,
+      "portraitMaxBlank": null,
+      "evidence": {
+        "scope": "Visible UI / prototype region, not a full-map-count claim",
+        "region": {
+          "x": 0,
+          "y": 0,
+          "width": 1280,
+          "height": 800
+        },
+        "pixels": {
+          "busy": 0.23817578125,
+          "std": 31.857783649028203
+        }
+      }
+    },
+    {
+      "key": "9-full-players-390x844",
+      "w": 390,
+      "h": 844,
+      "scroll": 390,
+      "primary": 1,
+      "missing": 0,
+      "seatRailHeight": 68,
+      "stageEndGap": 97.546875,
+      "topicLines": null,
+      "portraitMaxBlank": 111.1875,
+      "evidence": {
+        "scope": "Visible UI / prototype region, not a full-map-count claim",
+        "region": {
+          "x": 0,
+          "y": 0,
+          "width": 390,
+          "height": 844
+        },
+        "pixels": {
+          "busy": 0.26412686839227123,
+          "std": 37.11156101204082
+        }
+      }
+    },
+    {
+      "key": "9-full-players-844x390",
+      "w": 844,
+      "h": 390,
+      "scroll": 844,
+      "primary": 1,
+      "missing": 0,
+      "seatRailHeight": 68,
+      "stageEndGap": null,
+      "topicLines": null,
+      "portraitMaxBlank": null,
+      "evidence": {
+        "scope": "Visible UI / prototype region, not a full-map-count claim",
+        "region": {
+          "x": 0,
+          "y": 0,
+          "width": 844,
+          "height": 390
+        },
+        "pixels": {
+          "busy": 0.5207315591201848,
+          "std": 31.180993891337494
+        }
+      }
+    },
+    {
+      "key": "9-full-players-1280x800",
+      "w": 1280,
+      "h": 800,
+      "scroll": 1280,
+      "primary": 1,
+      "missing": 0,
+      "seatRailHeight": 611,
+      "stageEndGap": null,
+      "topicLines": null,
+      "portraitMaxBlank": null,
+      "evidence": {
+        "scope": "Visible UI / prototype region, not a full-map-count claim",
+        "region": {
+          "x": 0,
+          "y": 0,
+          "width": 1280,
+          "height": 800
+        },
+        "pixels": {
+          "busy": 0.33962109375,
+          "std": 27.18852713575191
+        }
+      }
+    },
+    {
+      "key": "9-choose-topic-390x844",
+      "w": 390,
+      "h": 844,
+      "scroll": 390,
+      "primary": 1,
+      "missing": 0,
+      "seatRailHeight": 68,
+      "stageEndGap": 14,
+      "topicLines": null,
+      "portraitMaxBlank": 61.046875,
+      "evidence": {
+        "scope": "Visible UI / prototype region, not a full-map-count claim",
+        "region": {
+          "x": 0,
+          "y": 0,
+          "width": 390,
+          "height": 844
+        },
+        "pixels": {
+          "busy": 0.7233807266982623,
+          "std": 91.14675111713704
+        }
+      }
+    },
+    {
+      "key": "9-choose-topic-844x390",
+      "w": 844,
+      "h": 390,
+      "scroll": 844,
+      "primary": 1,
+      "missing": 0,
+      "seatRailHeight": 68,
+      "stageEndGap": null,
+      "topicLines": null,
+      "portraitMaxBlank": null,
+      "evidence": {
+        "scope": "Visible UI / prototype region, not a full-map-count claim",
+        "region": {
+          "x": 0,
+          "y": 0,
+          "width": 844,
+          "height": 390
+        },
+        "pixels": {
+          "busy": 0.43580021873860736,
+          "std": 86.0603427634248
+        }
+      }
+    },
+    {
+      "key": "9-choose-topic-1280x800",
+      "w": 1280,
+      "h": 800,
+      "scroll": 1280,
+      "primary": 1,
+      "missing": 0,
+      "seatRailHeight": 611,
+      "stageEndGap": null,
+      "topicLines": null,
+      "portraitMaxBlank": null,
+      "evidence": {
+        "scope": "Visible UI / prototype region, not a full-map-count claim",
+        "region": {
+          "x": 0,
+          "y": 0,
+          "width": 1280,
+          "height": 800
+        },
+        "pixels": {
+          "busy": 0.28934765625,
+          "std": 74.43794773285927
+        }
+      }
+    },
+    {
+      "key": "9-choose-topic-selected-390x844",
+      "w": 390,
+      "h": 844,
+      "scroll": 390,
+      "primary": 1,
+      "missing": 0,
+      "seatRailHeight": 68,
+      "stageEndGap": 14,
+      "topicLines": null,
+      "portraitMaxBlank": 62.328125,
+      "evidence": {
+        "scope": "Visible UI / prototype region, not a full-map-count claim",
+        "region": {
+          "x": 0,
+          "y": 0,
+          "width": 390,
+          "height": 844
+        },
+        "pixels": {
+          "busy": 0.7784542471746263,
+          "std": 79.9234673969427
+        }
+      }
+    },
+    {
+      "key": "9-choose-topic-selected-844x390",
+      "w": 844,
+      "h": 390,
+      "scroll": 844,
+      "primary": 1,
+      "missing": 0,
+      "seatRailHeight": 68,
+      "stageEndGap": null,
+      "topicLines": null,
+      "portraitMaxBlank": null,
+      "evidence": {
+        "scope": "Visible UI / prototype region, not a full-map-count claim",
+        "region": {
+          "x": 0,
+          "y": 0,
+          "width": 844,
+          "height": 390
+        },
+        "pixels": {
+          "busy": 0.4604204642119334,
+          "std": 74.9549107758109
+        }
+      }
+    },
+    {
+      "key": "9-choose-topic-selected-1280x800",
+      "w": 1280,
+      "h": 800,
+      "scroll": 1280,
+      "primary": 1,
+      "missing": 0,
+      "seatRailHeight": 611,
+      "stageEndGap": null,
+      "topicLines": null,
+      "portraitMaxBlank": null,
+      "evidence": {
+        "scope": "Visible UI / prototype region, not a full-map-count claim",
+        "region": {
+          "x": 0,
+          "y": 0,
+          "width": 1280,
+          "height": 800
+        },
+        "pixels": {
+          "busy": 0.30340625,
+          "std": 63.504269899651256
+        }
+      }
+    },
+    {
+      "key": "9-captain-waiting-390x844",
+      "w": 390,
+      "h": 844,
+      "scroll": 390,
+      "primary": 1,
+      "missing": 0,
+      "seatRailHeight": 68,
+      "stageEndGap": 14,
+      "topicLines": null,
+      "portraitMaxBlank": 38,
+      "evidence": {
+        "scope": "Visible UI / prototype region, not a full-map-count claim",
+        "region": {
+          "x": 0,
+          "y": 0,
+          "width": 390,
+          "height": 844
+        },
+        "pixels": {
+          "busy": 0.4018592781625957,
+          "std": 65.30253390977111
+        }
+      }
+    },
+    {
+      "key": "9-captain-waiting-844x390",
+      "w": 844,
+      "h": 390,
+      "scroll": 844,
+      "primary": 1,
+      "missing": 0,
+      "seatRailHeight": 68,
+      "stageEndGap": null,
+      "topicLines": null,
+      "portraitMaxBlank": null,
+      "evidence": {
+        "scope": "Visible UI / prototype region, not a full-map-count claim",
+        "region": {
+          "x": 0,
+          "y": 0,
+          "width": 844,
+          "height": 390
+        },
+        "pixels": {
+          "busy": 0.38677846639931945,
+          "std": 62.34351624047917
+        }
+      }
+    },
+    {
+      "key": "9-captain-waiting-1280x800",
+      "w": 1280,
+      "h": 800,
+      "scroll": 1280,
+      "primary": 1,
+      "missing": 0,
+      "seatRailHeight": 611,
+      "stageEndGap": null,
+      "topicLines": null,
+      "portraitMaxBlank": null,
+      "evidence": {
+        "scope": "Visible UI / prototype region, not a full-map-count claim",
+        "region": {
+          "x": 0,
+          "y": 0,
+          "width": 1280,
+          "height": 800
+        },
+        "pixels": {
+          "busy": 0.319734375,
+          "std": 50.387573308947815
+        }
+      }
+    },
+    {
+      "key": "9-writing-card-390x844",
+      "w": 390,
+      "h": 844,
+      "scroll": 390,
+      "primary": 1,
+      "missing": 0,
+      "seatRailHeight": 68,
+      "stageEndGap": 14,
+      "topicLines": null,
+      "portraitMaxBlank": 86.53125,
+      "evidence": {
+        "scope": "Visible UI / prototype region, not a full-map-count claim",
+        "region": {
+          "x": 0,
+          "y": 0,
+          "width": 390,
+          "height": 844
+        },
+        "pixels": {
+          "busy": 0.4799975695710293,
+          "std": 89.6999429724347
+        }
+      }
+    },
+    {
+      "key": "9-writing-card-844x390",
+      "w": 844,
+      "h": 390,
+      "scroll": 844,
+      "primary": 1,
+      "missing": 0,
+      "seatRailHeight": 68,
+      "stageEndGap": null,
+      "topicLines": null,
+      "portraitMaxBlank": null,
+      "evidence": {
+        "scope": "Visible UI / prototype region, not a full-map-count claim",
+        "region": {
+          "x": 0,
+          "y": 0,
+          "width": 844,
+          "height": 390
+        },
+        "pixels": {
+          "busy": 0.49284238668124924,
+          "std": 93.77897381960689
+        }
+      }
+    },
+    {
+      "key": "9-writing-card-1280x800",
+      "w": 1280,
+      "h": 800,
+      "scroll": 1280,
+      "primary": 1,
+      "missing": 0,
+      "seatRailHeight": 611,
+      "stageEndGap": null,
+      "topicLines": null,
+      "portraitMaxBlank": null,
+      "evidence": {
+        "scope": "Visible UI / prototype region, not a full-map-count claim",
+        "region": {
+          "x": 0,
+          "y": 0,
+          "width": 1280,
+          "height": 800
+        },
+        "pixels": {
+          "busy": 0.37596875,
+          "std": 80.22326509650156
+        }
+      }
+    },
+    {
+      "key": "9-writing-number-hidden-390x844",
+      "w": 390,
+      "h": 844,
+      "scroll": 390,
+      "primary": 1,
+      "missing": 0,
+      "seatRailHeight": 68,
+      "stageEndGap": 14,
+      "topicLines": null,
+      "portraitMaxBlank": 86.53125,
+      "evidence": {
+        "scope": "Visible UI / prototype region, not a full-map-count claim",
+        "region": {
+          "x": 0,
+          "y": 0,
+          "width": 390,
+          "height": 844
+        },
+        "pixels": {
+          "busy": 0.4812856969255074,
+          "std": 89.76980246577357
+        }
+      }
+    },
+    {
+      "key": "9-writing-keyboard-simulated-390x844",
+      "w": 390,
+      "h": 844,
+      "scroll": 390,
+      "primary": 1,
+      "missing": 0,
+      "seatRailHeight": 0,
+      "stageEndGap": 8,
+      "topicLines": null,
+      "portraitMaxBlank": 19.5,
+      "evidence": {
+        "scope": "Visible UI / prototype region, not a full-map-count claim",
+        "region": {
+          "x": 0,
+          "y": 0,
+          "width": 390,
+          "height": 844
+        },
+        "pixels": {
+          "busy": 0.46754162109612346,
+          "std": 67.40533772715271
+        }
+      }
+    },
+    {
+      "key": "9-submitted-card-390x844",
+      "w": 390,
+      "h": 844,
+      "scroll": 390,
+      "primary": 0,
+      "missing": 0,
+      "seatRailHeight": 68,
+      "stageEndGap": 14,
+      "topicLines": null,
+      "portraitMaxBlank": 86.53125,
+      "evidence": {
+        "scope": "Visible UI / prototype region, not a full-map-count claim",
+        "region": {
+          "x": 0,
+          "y": 0,
+          "width": 390,
+          "height": 844
+        },
+        "pixels": {
+          "busy": 0.4427147891602868,
+          "std": 90.94795265443545
+        }
+      }
+    },
+    {
+      "key": "9-submitted-card-844x390",
+      "w": 844,
+      "h": 390,
+      "scroll": 844,
+      "primary": 0,
+      "missing": 0,
+      "seatRailHeight": 68,
+      "stageEndGap": null,
+      "topicLines": null,
+      "portraitMaxBlank": null,
+      "evidence": {
+        "scope": "Visible UI / prototype region, not a full-map-count claim",
+        "region": {
+          "x": 0,
+          "y": 0,
+          "width": 844,
+          "height": 390
+        },
+        "pixels": {
+          "busy": 0.468003402600559,
+          "std": 94.61739341744885
+        }
+      }
+    },
+    {
+      "key": "9-submitted-card-1280x800",
+      "w": 1280,
+      "h": 800,
+      "scroll": 1280,
+      "primary": 0,
+      "missing": 0,
+      "seatRailHeight": 611,
+      "stageEndGap": null,
+      "topicLines": null,
+      "portraitMaxBlank": null,
+      "evidence": {
+        "scope": "Visible UI / prototype region, not a full-map-count claim",
+        "region": {
+          "x": 0,
+          "y": 0,
+          "width": 1280,
+          "height": 800
+        },
+        "pixels": {
+          "busy": 0.36626171875,
+          "std": 80.23024140694474
+        }
+      }
+    },
+    {
+      "key": "9-last-ten-seconds-reduced-motion",
+      "w": 390,
+      "h": 844,
+      "scroll": 390,
+      "primary": 0,
+      "missing": 0,
+      "seatRailHeight": 68,
+      "stageEndGap": 14,
+      "topicLines": null,
+      "portraitMaxBlank": 86.53125,
+      "evidence": {
+        "scope": "Visible UI / prototype region, not a full-map-count claim",
+        "region": {
+          "x": 0,
+          "y": 0,
+          "width": 390,
+          "height": 844
+        },
+        "pixels": {
+          "busy": 0.4422651598007048,
+          "std": 90.93953300429953
+        }
+      }
+    },
+    {
+      "key": "9-order-390x844",
+      "w": 390,
+      "h": 844,
+      "scroll": 390,
+      "primary": 1,
+      "missing": 0,
+      "seatRailHeight": 68,
+      "stageEndGap": 14,
+      "topicLines": 2,
+      "portraitMaxBlank": 39.84375,
+      "evidence": {
+        "scope": "Visible UI / prototype region, not a full-map-count claim",
+        "region": {
+          "x": 0,
+          "y": 0,
+          "width": 390,
+          "height": 844
+        },
+        "pixels": {
+          "busy": 0.25016405395552316,
+          "std": 45.78392752821203
+        }
+      }
+    },
+    {
+      "key": "9-order-scroll-end-390x844",
+      "w": 390,
+      "h": 844,
+      "scroll": 390,
+      "primary": 1,
+      "missing": 0,
+      "seatRailHeight": 68,
+      "stageEndGap": 14,
+      "topicLines": 2,
+      "portraitMaxBlank": 22.15625,
+      "evidence": {
+        "scope": "Visible UI / prototype region, not a full-map-count claim",
+        "region": {
+          "x": 0,
+          "y": 0,
+          "width": 390,
+          "height": 844
+        },
+        "pixels": {
+          "busy": 0.2491189694981164,
+          "std": 45.282992608454954
+        }
+      }
+    },
+    {
+      "key": "9-order-844x390",
+      "w": 844,
+      "h": 390,
+      "scroll": 844,
+      "primary": 1,
+      "missing": 0,
+      "seatRailHeight": 68,
+      "stageEndGap": null,
+      "topicLines": 2,
+      "portraitMaxBlank": null,
+      "evidence": {
+        "scope": "Visible UI / prototype region, not a full-map-count claim",
+        "region": {
+          "x": 0,
+          "y": 0,
+          "width": 844,
+          "height": 390
+        },
+        "pixels": {
+          "busy": 0.2240126382306477,
+          "std": 39.98175816947893
+        }
+      }
+    },
+    {
+      "key": "9-order-scroll-end-844x390",
+      "w": 844,
+      "h": 390,
+      "scroll": 844,
+      "primary": 1,
+      "missing": 0,
+      "seatRailHeight": 68,
+      "stageEndGap": null,
+      "topicLines": 2,
+      "portraitMaxBlank": null,
+      "evidence": {
+        "scope": "Visible UI / prototype region, not a full-map-count claim",
+        "region": {
+          "x": 0,
+          "y": 0,
+          "width": 844,
+          "height": 390
+        },
+        "pixels": {
+          "busy": 0.21938267104143883,
+          "std": 39.40194131846938
+        }
+      }
+    },
+    {
+      "key": "9-order-1280x800",
+      "w": 1280,
+      "h": 800,
+      "scroll": 1280,
+      "primary": 1,
+      "missing": 0,
+      "seatRailHeight": 611,
+      "stageEndGap": null,
+      "topicLines": 2,
+      "portraitMaxBlank": null,
+      "evidence": {
+        "scope": "Visible UI / prototype region, not a full-map-count claim",
+        "region": {
+          "x": 0,
+          "y": 0,
+          "width": 1280,
+          "height": 800
+        },
+        "pixels": {
+          "busy": 0.205984375,
+          "std": 29.381151860000987
+        }
+      }
+    },
+    {
+      "key": "9-order-spectator-390x844",
+      "w": 390,
+      "h": 844,
+      "scroll": 390,
+      "primary": 1,
+      "missing": 0,
+      "seatRailHeight": 68,
+      "stageEndGap": 14,
+      "topicLines": 2,
+      "portraitMaxBlank": 39.84375,
+      "evidence": {
+        "scope": "Visible UI / prototype region, not a full-map-count claim",
+        "region": {
+          "x": 0,
+          "y": 0,
+          "width": 390,
+          "height": 844
+        },
+        "pixels": {
+          "busy": 0.24396646008020414,
+          "std": 37.0604057053463
+        }
+      }
+    },
+    {
+      "key": "9-order-spectator-844x390",
+      "w": 844,
+      "h": 390,
+      "scroll": 844,
+      "primary": 1,
+      "missing": 0,
+      "seatRailHeight": 68,
+      "stageEndGap": null,
+      "topicLines": 2,
+      "portraitMaxBlank": null,
+      "evidence": {
+        "scope": "Visible UI / prototype region, not a full-map-count claim",
+        "region": {
+          "x": 0,
+          "y": 0,
+          "width": 844,
+          "height": 390
+        },
+        "pixels": {
+          "busy": 0.217778587920768,
+          "std": 33.974171376783566
+        }
+      }
+    },
+    {
+      "key": "9-order-spectator-1280x800",
+      "w": 1280,
+      "h": 800,
+      "scroll": 1280,
+      "primary": 1,
+      "missing": 0,
+      "seatRailHeight": 611,
+      "stageEndGap": null,
+      "topicLines": 2,
+      "portraitMaxBlank": null,
+      "evidence": {
+        "scope": "Visible UI / prototype region, not a full-map-count claim",
+        "region": {
+          "x": 0,
+          "y": 0,
+          "width": 1280,
+          "height": 800
+        },
+        "pixels": {
+          "busy": 0.20188671875,
+          "std": 26.0226545969679
+        }
+      }
+    },
+    {
+      "key": "9-reveal-before-390x844",
+      "w": 390,
+      "h": 844,
+      "scroll": 390,
+      "primary": 1,
+      "missing": 0,
+      "seatRailHeight": 68,
+      "stageEndGap": -160,
+      "topicLines": 1.9090909090909092,
+      "portraitMaxBlank": 27,
+      "evidence": {
+        "scope": "Visible UI / prototype region, not a full-map-count claim",
+        "region": {
+          "x": 0,
+          "y": 0,
+          "width": 390,
+          "height": 844
+        },
+        "pixels": {
+          "busy": 0.6437720257625471,
+          "std": 88.76020480715393
+        }
+      }
+    },
+    {
+      "key": "9-reveal-before-scroll-end-390x844",
+      "w": 390,
+      "h": 844,
+      "scroll": 390,
+      "primary": 1,
+      "missing": 0,
+      "seatRailHeight": 68,
+      "stageEndGap": 8,
+      "topicLines": 1.9090909090909092,
+      "portraitMaxBlank": 16,
+      "evidence": {
+        "scope": "Visible UI / prototype region, not a full-map-count claim",
+        "region": {
+          "x": 0,
+          "y": 0,
+          "width": 390,
+          "height": 844
+        },
+        "pixels": {
+          "busy": 0.6577105359095881,
+          "std": 88.76522646668117
+        }
+      }
+    },
+    {
+      "key": "9-reveal-before-844x390",
+      "w": 844,
+      "h": 390,
+      "scroll": 844,
+      "primary": 1,
+      "missing": 0,
+      "seatRailHeight": 68,
+      "stageEndGap": null,
+      "topicLines": 2,
+      "portraitMaxBlank": null,
+      "evidence": {
+        "scope": "Visible UI / prototype region, not a full-map-count claim",
+        "region": {
+          "x": 0,
+          "y": 0,
+          "width": 844,
+          "height": 390
+        },
+        "pixels": {
+          "busy": 0.4506987483290801,
+          "std": 88.5159968975704
+        }
+      }
+    },
+    {
+      "key": "9-reveal-before-scroll-end-844x390",
+      "w": 844,
+      "h": 390,
+      "scroll": 844,
+      "primary": 1,
+      "missing": 0,
+      "seatRailHeight": 68,
+      "stageEndGap": null,
+      "topicLines": 2,
+      "portraitMaxBlank": null,
+      "evidence": {
+        "scope": "Visible UI / prototype region, not a full-map-count claim",
+        "region": {
+          "x": 0,
+          "y": 0,
+          "width": 844,
+          "height": 390
+        },
+        "pixels": {
+          "busy": 0.4527281565196257,
+          "std": 89.09012856600468
+        }
+      }
+    },
+    {
+      "key": "9-reveal-before-1280x800",
+      "w": 1280,
+      "h": 800,
+      "scroll": 1280,
+      "primary": 1,
+      "missing": 0,
+      "seatRailHeight": 611,
+      "stageEndGap": null,
+      "topicLines": 2,
+      "portraitMaxBlank": null,
+      "evidence": {
+        "scope": "Visible UI / prototype region, not a full-map-count claim",
+        "region": {
+          "x": 0,
+          "y": 0,
+          "width": 1280,
+          "height": 800
+        },
+        "pixels": {
+          "busy": 0.50445703125,
+          "std": 89.71272500455461
+        }
+      }
+    },
+    {
+      "key": "9-reveal-before-scroll-end-1280x800",
+      "w": 1280,
+      "h": 800,
+      "scroll": 1280,
+      "primary": 1,
+      "missing": 0,
+      "seatRailHeight": 611,
+      "stageEndGap": null,
+      "topicLines": 2,
+      "portraitMaxBlank": null,
+      "evidence": {
+        "scope": "Visible UI / prototype region, not a full-map-count claim",
+        "region": {
+          "x": 0,
+          "y": 0,
+          "width": 1280,
+          "height": 800
+        },
+        "pixels": {
+          "busy": 0.49897265625,
+          "std": 91.1781057754074
+        }
+      }
+    },
+    {
+      "key": "9-reveal-first-390x844",
+      "w": 390,
+      "h": 844,
+      "scroll": 390,
+      "primary": 1,
+      "missing": 0,
+      "seatRailHeight": 68,
+      "stageEndGap": -160,
+      "topicLines": 1.9090909090909092,
+      "portraitMaxBlank": 27,
+      "evidence": {
+        "scope": "Visible UI / prototype region, not a full-map-count claim",
+        "region": {
+          "x": 0,
+          "y": 0,
+          "width": 390,
+          "height": 844
+        },
+        "pixels": {
+          "busy": 0.6508810305018836,
+          "std": 86.6509014580724
+        }
+      }
+    },
+    {
+      "key": "9-reveal-first-844x390",
+      "w": 844,
+      "h": 390,
+      "scroll": 844,
+      "primary": 1,
+      "missing": 0,
+      "seatRailHeight": 68,
+      "stageEndGap": null,
+      "topicLines": 2,
+      "portraitMaxBlank": null,
+      "evidence": {
+        "scope": "Visible UI / prototype region, not a full-map-count claim",
+        "region": {
+          "x": 0,
+          "y": 0,
+          "width": 844,
+          "height": 390
+        },
+        "pixels": {
+          "busy": 0.4672499696196379,
+          "std": 84.66571811848209
+        }
+      }
+    },
+    {
+      "key": "9-reveal-first-1280x800",
+      "w": 1280,
+      "h": 800,
+      "scroll": 1280,
+      "primary": 1,
+      "missing": 0,
+      "seatRailHeight": 611,
+      "stageEndGap": null,
+      "topicLines": 2,
+      "portraitMaxBlank": null,
+      "evidence": {
+        "scope": "Visible UI / prototype region, not a full-map-count claim",
+        "region": {
+          "x": 0,
+          "y": 0,
+          "width": 1280,
+          "height": 800
+        },
+        "pixels": {
+          "busy": 0.5182890625,
+          "std": 84.57625471431619
+        }
+      }
+    },
+    {
+      "key": "9-reveal-middle-390x844",
+      "w": 390,
+      "h": 844,
+      "scroll": 390,
+      "primary": 1,
+      "missing": 0,
+      "seatRailHeight": 68,
+      "stageEndGap": -160,
+      "topicLines": 1.9090909090909092,
+      "portraitMaxBlank": 27,
+      "evidence": {
+        "scope": "Visible UI / prototype region, not a full-map-count claim",
+        "region": {
+          "x": 0,
+          "y": 0,
+          "width": 390,
+          "height": 844
+        },
+        "pixels": {
+          "busy": 0.7376959533357638,
+          "std": 81.1297669310747
+        }
+      }
+    },
+    {
+      "key": "9-round-end-390x844",
+      "w": 390,
+      "h": 844,
+      "scroll": 390,
+      "primary": 1,
+      "missing": 0,
+      "seatRailHeight": 68,
+      "stageEndGap": -208,
+      "topicLines": 1.9090909090909092,
+      "portraitMaxBlank": 27,
+      "evidence": {
+        "scope": "Visible UI / prototype region, not a full-map-count claim",
+        "region": {
+          "x": 0,
+          "y": 0,
+          "width": 390,
+          "height": 844
+        },
+        "pixels": {
+          "busy": 0.7978490703609187,
+          "std": 76.3374227104109
+        }
+      }
+    },
+    {
+      "key": "9-round-end-scroll-end-390x844",
+      "w": 390,
+      "h": 844,
+      "scroll": 390,
+      "primary": 1,
+      "missing": 0,
+      "seatRailHeight": 68,
+      "stageEndGap": 8,
+      "topicLines": 1.9090909090909092,
+      "portraitMaxBlank": 28,
+      "evidence": {
+        "scope": "Visible UI / prototype region, not a full-map-count claim",
+        "region": {
+          "x": 0,
+          "y": 0,
+          "width": 390,
+          "height": 844
+        },
+        "pixels": {
+          "busy": 0.6425082026977762,
+          "std": 77.74114540985967
+        }
+      }
+    },
+    {
+      "key": "9-round-end-844x390",
+      "w": 844,
+      "h": 390,
+      "scroll": 844,
+      "primary": 1,
+      "missing": 0,
+      "seatRailHeight": 68,
+      "stageEndGap": null,
+      "topicLines": 2,
+      "portraitMaxBlank": null,
+      "evidence": {
+        "scope": "Visible UI / prototype region, not a full-map-count claim",
+        "region": {
+          "x": 0,
+          "y": 0,
+          "width": 844,
+          "height": 390
+        },
+        "pixels": {
+          "busy": 0.5335520719406975,
+          "std": 76.84269797782007
+        }
+      }
+    },
+    {
+      "key": "9-round-end-scroll-end-844x390",
+      "w": 844,
+      "h": 390,
+      "scroll": 844,
+      "primary": 1,
+      "missing": 0,
+      "seatRailHeight": 68,
+      "stageEndGap": null,
+      "topicLines": 2,
+      "portraitMaxBlank": null,
+      "evidence": {
+        "scope": "Visible UI / prototype region, not a full-map-count claim",
+        "region": {
+          "x": 0,
+          "y": 0,
+          "width": 844,
+          "height": 390
+        },
+        "pixels": {
+          "busy": 0.4202940819054563,
+          "std": 74.3906624105712
+        }
+      }
+    },
+    {
+      "key": "9-round-end-1280x800",
+      "w": 1280,
+      "h": 800,
+      "scroll": 1280,
+      "primary": 1,
+      "missing": 0,
+      "seatRailHeight": 611,
+      "stageEndGap": null,
+      "topicLines": 2,
+      "portraitMaxBlank": null,
+      "evidence": {
+        "scope": "Visible UI / prototype region, not a full-map-count claim",
+        "region": {
+          "x": 0,
+          "y": 0,
+          "width": 1280,
+          "height": 800
+        },
+        "pixels": {
+          "busy": 0.5294453125,
+          "std": 77.20825872311917
+        }
+      }
+    },
+    {
+      "key": "9-round-end-scroll-end-1280x800",
+      "w": 1280,
+      "h": 800,
+      "scroll": 1280,
+      "primary": 1,
+      "missing": 0,
+      "seatRailHeight": 611,
+      "stageEndGap": null,
+      "topicLines": 2,
+      "portraitMaxBlank": null,
+      "evidence": {
+        "scope": "Visible UI / prototype region, not a full-map-count claim",
+        "region": {
+          "x": 0,
+          "y": 0,
+          "width": 1280,
+          "height": 800
+        },
+        "pixels": {
+          "busy": 0.49610546875,
+          "std": 78.27741249076243
+        }
+      }
+    },
+    {
+      "key": "9-rules-390x844",
+      "w": 390,
+      "h": 844,
+      "scroll": 390,
+      "primary": 1,
+      "missing": 0,
+      "seatRailHeight": 68,
+      "stageEndGap": -208,
+      "topicLines": null,
+      "portraitMaxBlank": 27,
+      "evidence": {
+        "scope": "Visible UI / prototype region, not a full-map-count claim",
+        "region": {
+          "x": 0,
+          "y": 0,
+          "width": 390,
+          "height": 844
+        },
+        "pixels": {
+          "busy": 0.6537246323976181,
+          "std": 44.47051541512171
+        }
+      }
+    },
+    {
+      "key": "9-rules-844x390",
+      "w": 844,
+      "h": 390,
+      "scroll": 844,
+      "primary": 1,
+      "missing": 0,
+      "seatRailHeight": 68,
+      "stageEndGap": null,
+      "topicLines": null,
+      "portraitMaxBlank": null,
+      "evidence": {
+        "scope": "Visible UI / prototype region, not a full-map-count claim",
+        "region": {
+          "x": 0,
+          "y": 0,
+          "width": 844,
+          "height": 390
+        },
+        "pixels": {
+          "busy": 0.5967675294689513,
+          "std": 40.84706831349139
+        }
+      }
+    },
+    {
+      "key": "9-rules-1280x800",
+      "w": 1280,
+      "h": 800,
+      "scroll": 1280,
+      "primary": 1,
+      "missing": 0,
+      "seatRailHeight": 611,
+      "stageEndGap": null,
+      "topicLines": null,
+      "portraitMaxBlank": null,
+      "evidence": {
+        "scope": "Visible UI / prototype region, not a full-map-count claim",
+        "region": {
+          "x": 0,
+          "y": 0,
+          "width": 1280,
+          "height": 800
+        },
+        "pixels": {
+          "busy": 0.45517578125,
+          "std": 30.25397492084302
+        }
+      }
+    },
+    {
+      "key": "9-review-390x844",
+      "w": 390,
+      "h": 844,
+      "scroll": 390,
+      "primary": 1,
+      "missing": 0,
+      "seatRailHeight": 68,
+      "stageEndGap": -208,
+      "topicLines": null,
+      "portraitMaxBlank": 27,
+      "evidence": {
+        "scope": "Visible UI / prototype region, not a full-map-count claim",
+        "region": {
+          "x": 0,
+          "y": 0,
+          "width": 390,
+          "height": 844
+        },
+        "pixels": {
+          "busy": 0.22843601895734597,
+          "std": 31.543038589056795
+        }
+      }
+    },
+    {
+      "key": "9-review-844x390",
+      "w": 844,
+      "h": 390,
+      "scroll": 844,
+      "primary": 1,
+      "missing": 0,
+      "seatRailHeight": 68,
+      "stageEndGap": null,
+      "topicLines": null,
+      "portraitMaxBlank": null,
+      "evidence": {
+        "scope": "Visible UI / prototype region, not a full-map-count claim",
+        "region": {
+          "x": 0,
+          "y": 0,
+          "width": 844,
+          "height": 390
+        },
+        "pixels": {
+          "busy": 0.5967675294689513,
+          "std": 28.35477651746843
+        }
+      }
+    },
+    {
+      "key": "9-review-1280x800",
+      "w": 1280,
+      "h": 800,
+      "scroll": 1280,
+      "primary": 1,
+      "missing": 0,
+      "seatRailHeight": 611,
+      "stageEndGap": null,
+      "topicLines": null,
+      "portraitMaxBlank": null,
+      "evidence": {
+        "scope": "Visible UI / prototype region, not a full-map-count claim",
+        "region": {
+          "x": 0,
+          "y": 0,
+          "width": 1280,
+          "height": 800
+        },
+        "pixels": {
+          "busy": 0.51602734375,
+          "std": 25.587619919637227
+        }
+      }
+    },
+    {
+      "key": "9-finished-390x844",
+      "w": 390,
+      "h": 844,
+      "scroll": 390,
+      "primary": 1,
+      "missing": 0,
+      "seatRailHeight": 68,
+      "stageEndGap": 14,
+      "topicLines": null,
+      "portraitMaxBlank": 73.015625,
+      "evidence": {
+        "scope": "Visible UI / prototype region, not a full-map-count claim",
+        "region": {
+          "x": 0,
+          "y": 0,
+          "width": 390,
+          "height": 844
+        },
+        "pixels": {
+          "busy": 0.24503584882731802,
+          "std": 44.47445989008981
+        }
+      }
+    },
+    {
+      "key": "9-finished-844x390",
+      "w": 844,
+      "h": 390,
+      "scroll": 844,
+      "primary": 1,
+      "missing": 0,
+      "seatRailHeight": 68,
+      "stageEndGap": null,
+      "topicLines": null,
+      "portraitMaxBlank": null,
+      "evidence": {
+        "scope": "Visible UI / prototype region, not a full-map-count claim",
+        "region": {
+          "x": 0,
+          "y": 0,
+          "width": 844,
+          "height": 390
+        },
+        "pixels": {
+          "busy": 0.1800583302952971,
+          "std": 37.665486325989804
+        }
+      }
+    },
+    {
+      "key": "9-finished-1280x800",
+      "w": 1280,
+      "h": 800,
+      "scroll": 1280,
+      "primary": 1,
+      "missing": 0,
+      "seatRailHeight": 611,
+      "stageEndGap": null,
+      "topicLines": null,
+      "portraitMaxBlank": null,
+      "evidence": {
+        "scope": "Visible UI / prototype region, not a full-map-count claim",
+        "region": {
+          "x": 0,
+          "y": 0,
+          "width": 1280,
+          "height": 800
+        },
+        "pixels": {
+          "busy": 0.18358984375,
+          "std": 28.0342651127226
+        }
+      }
+    },
+    {
+      "key": "9-desktop-1280x800",
+      "w": 1280,
+      "h": 800,
+      "scroll": 1280,
+      "primary": 1,
+      "missing": 0,
+      "seatRailHeight": 611,
+      "stageEndGap": null,
+      "topicLines": null,
+      "portraitMaxBlank": null,
+      "evidence": {
+        "scope": "Visible UI / prototype region, not a full-map-count claim",
+        "region": {
+          "x": 0,
+          "y": 0,
+          "width": 1280,
+          "height": 800
+        },
+        "pixels": {
+          "busy": 0.18358984375,
+          "std": 28.0342651127226
+        }
+      }
+    },
+    {
+      "key": "9-disconnected-390x844",
+      "w": 390,
+      "h": 844,
+      "scroll": 390,
+      "primary": 1,
+      "missing": 0,
+      "seatRailHeight": 68,
+      "stageEndGap": 14,
+      "topicLines": null,
+      "portraitMaxBlank": 73.015625,
+      "evidence": {
+        "scope": "Visible UI / prototype region, not a full-map-count claim",
+        "region": {
+          "x": 0,
+          "y": 0,
+          "width": 390,
+          "height": 844
+        },
+        "pixels": {
+          "busy": 0.26846518410499454,
+          "std": 47.91018413161319
+        }
+      }
+    },
+    {
+      "key": "9-wrong-reveal-390x844",
+      "w": 390,
+      "h": 844,
+      "scroll": 390,
+      "primary": 1,
+      "missing": 0,
+      "seatRailHeight": 68,
+      "stageEndGap": -230,
+      "topicLines": 2.909090909090909,
+      "portraitMaxBlank": 27,
+      "evidence": {
+        "scope": "Visible UI / prototype region, not a full-map-count claim",
+        "region": {
+          "x": 0,
+          "y": 0,
+          "width": 390,
+          "height": 844
+        },
+        "pixels": {
+          "busy": 0.7568112771904241,
+          "std": 71.89395875559165
+        }
+      }
+    },
+    {
+      "key": "9-wrong-reveal-844x390",
+      "w": 844,
+      "h": 390,
+      "scroll": 844,
+      "primary": 1,
+      "missing": 0,
+      "seatRailHeight": 68,
+      "stageEndGap": null,
+      "topicLines": 2,
+      "portraitMaxBlank": null,
+      "evidence": {
+        "scope": "Visible UI / prototype region, not a full-map-count claim",
+        "region": {
+          "x": 0,
+          "y": 0,
+          "width": 844,
+          "height": 390
+        },
+        "pixels": {
+          "busy": 0.5312188601288127,
+          "std": 71.71596566172992
+        }
+      }
+    },
+    {
+      "key": "9-wrong-reveal-1280x800",
+      "w": 1280,
+      "h": 800,
+      "scroll": 1280,
+      "primary": 1,
+      "missing": 0,
+      "seatRailHeight": 611,
+      "stageEndGap": null,
+      "topicLines": 2,
+      "portraitMaxBlank": null,
+      "evidence": {
+        "scope": "Visible UI / prototype region, not a full-map-count claim",
+        "region": {
+          "x": 0,
+          "y": 0,
+          "width": 1280,
+          "height": 800
+        },
+        "pixels": {
+          "busy": 0.5281875,
+          "std": 71.83138637380118
+        }
+      }
+    },
+    {
+      "key": "9-team-failed-390x844",
+      "w": 390,
+      "h": 844,
+      "scroll": 390,
+      "primary": 1,
+      "missing": 0,
+      "seatRailHeight": 68,
+      "stageEndGap": 14,
+      "topicLines": null,
+      "portraitMaxBlank": 62.46875,
+      "evidence": {
+        "scope": "Visible UI / prototype region, not a full-map-count claim",
+        "region": {
+          "x": 0,
+          "y": 0,
+          "width": 390,
+          "height": 844
+        },
+        "pixels": {
+          "busy": 0.25464819540648925,
+          "std": 45.31560959397801
+        }
+      }
+    },
+    {
+      "key": "9-team-failed-844x390",
+      "w": 844,
+      "h": 390,
+      "scroll": 844,
+      "primary": 1,
+      "missing": 0,
+      "seatRailHeight": 68,
+      "stageEndGap": null,
+      "topicLines": null,
+      "portraitMaxBlank": null,
+      "evidence": {
+        "scope": "Visible UI / prototype region, not a full-map-count claim",
+        "region": {
+          "x": 0,
+          "y": 0,
+          "width": 844,
+          "height": 390
+        },
+        "pixels": {
+          "busy": 0.19629359581966216,
+          "std": 38.76741499730485
+        }
+      }
+    },
+    {
+      "key": "9-team-failed-1280x800",
+      "w": 1280,
+      "h": 800,
+      "scroll": 1280,
+      "primary": 1,
+      "missing": 0,
+      "seatRailHeight": 611,
+      "stageEndGap": null,
+      "topicLines": null,
+      "portraitMaxBlank": null,
+      "evidence": {
+        "scope": "Visible UI / prototype region, not a full-map-count claim",
+        "region": {
+          "x": 0,
+          "y": 0,
+          "width": 1280,
+          "height": 800
+        },
+        "pixels": {
+          "busy": 0.18626171875,
+          "std": 28.580493840643836
+        }
+      }
+    },
+    {
+      "key": "rejection-chinese-feedback",
+      "w": 390,
+      "h": 844,
+      "scroll": 390,
+      "primary": 0,
+      "missing": 0,
+      "seatRailHeight": null,
+      "stageEndGap": null,
+      "topicLines": null,
+      "portraitMaxBlank": null,
+      "evidence": {
+        "scope": "Visible UI / prototype region, not a full-map-count claim",
+        "region": {
+          "x": 0,
+          "y": 0,
+          "width": 390,
+          "height": 844
+        },
+        "pixels": {
+          "busy": 0.2848098189330417,
+          "std": 70.02316306855539
+        }
+      }
+    },
+    {
+      "key": "homepage-box-390x844",
+      "w": 390,
+      "h": 844,
+      "scroll": 390,
+      "primary": 0,
+      "missing": 0,
+      "seatRailHeight": null,
+      "stageEndGap": null,
+      "topicLines": null,
+      "portraitMaxBlank": null,
+      "evidence": {
+        "scope": "Visible UI / prototype region, not a full-map-count claim",
+        "region": {
+          "x": 0,
+          "y": 0,
+          "width": 390,
+          "height": 844
+        },
+        "pixels": {
+          "busy": 0.5698991371977153,
+          "std": 68.80153353593184
+        }
+      }
+    }
+  ],
+  "errors": []
+}

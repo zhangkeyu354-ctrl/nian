@@ -79,12 +79,9 @@ function simulate(
     else if (s.phase === "ANSWER") {
       const allowed = s.players
         .map((_, i) => i)
-        .filter((i) => s.numbers[i] !== null && !s.ready.includes(i));
-      const actor =
-        s.players.length !== 9 && !s.ready.includes(s.captain)
-          ? s.captain
-          : allowed[Math.floor(random() * allowed.length)];
-      push("READY", {}, actor);
+        .filter((i) => i !== s.captain && !s.ready.includes(i));
+      const actor = allowed[Math.floor(random() * allowed.length)];
+      push("SUBMIT_ANSWER", { text: `模拟回答${s.round}-${actor}` }, actor);
     } else if (s.phase === "ORDER") {
       const order = s.players
         .map((_, i) => i)
@@ -194,7 +191,7 @@ const report = {
     "Oracle/descending strategies inspect server state solely to exercise success and failure boundaries; they do not represent human guessing or a client capability.",
   runs,
 };
-const out = resolve("docs/naodong-scale/stage2");
+const out = resolve("docs/naodong-scale/ui-v3/verification");
 mkdirSync(out, { recursive: true });
 writeFileSync(
   resolve(out, "SIMULATIONS.json"),

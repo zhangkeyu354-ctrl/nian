@@ -132,39 +132,55 @@ describe("ND rooms", () => {
       ),
     ).toThrow(/序号/);
   });
-  it("same-round concurrent ready accepts stale versions without losing submissions", () => {
+  it("same-round concurrent submissions accept stale versions without losing cards", () => {
     const x = start();
     choose(x);
-    act(x.r, x.claims[0].token, { type: "READY" });
     const version = x.r.file.version;
-    act(x.r, x.claims[1].token, { type: "READY" }, 1000, version);
-    act(x.r, x.claims[2].token, { type: "READY" }, 1000, version);
-    expect(x.r.file.state!.ready).toEqual([0, 1, 2]);
+    act(
+      x.r,
+      x.claims[1].token,
+      { type: "SUBMIT_ANSWER", text: "第一张" },
+      1000,
+      version,
+    );
+    act(
+      x.r,
+      x.claims[2].token,
+      { type: "SUBMIT_ANSWER", text: "第二张" },
+      1000,
+      version,
+    );
+    expect(x.r.file.state!.ready).toEqual([1, 2]);
     expect(() =>
       x.r.action(
         x.claims[3].token,
         x.r.file.version,
         2,
-        { type: "READY" },
+        { type: "SUBMIT_ANSWER", text: "跨轮" },
         1000,
         2,
       ),
     ).toThrow();
   });
-  it("timeout marks expiry once without changing numbers, ready flags or team result", () => {
+  it("answer deadline fills missing cards once and retains submitted text, numbers and tokens", () => {
     const x = start(4, { seconds: 60 });
     choose(x);
-    act(x.r, x.claims[0].token, { type: "READY" });
-    const state = structuredClone(x.r.file.state),
+    act(x.r, x.claims[1].token, { type: "SUBMIT_ANSWER", text: "已提交" });
+    const numbers = [...x.r.file.state!.numbers],
       deadline = x.r.file.deadline!;
     expect(deadline).toBe(61000);
     expect(x.r.tick(deadline - 1)).toBe(false);
     expect(x.r.tick(deadline)).toBe(true);
-    expect(x.r.file.expired).toBe(true);
-    expect(x.r.file.state).toEqual(state);
+    expect(x.r.file.state!.phase).toBe("ORDER");
+    expect(x.r.file.state!.answers).toEqual([
+      null,
+      "已提交",
+      "（没写）",
+      "（没写）",
+    ]);
+    expect(x.r.file.state!.numbers).toEqual(numbers);
+    expect(x.r.file.state!.unicorns).toBe(4);
     expect(x.r.tick(deadline + 1)).toBe(false);
-    act(x.r, x.claims[1].token, { type: "READY" }, deadline + 2);
-    expect(x.r.file.state!.ready).toContain(1);
   });
   it("no timer means no deadline and no fabricated timeout action", () => {
     const x = start();
@@ -179,18 +195,24 @@ describe("ND rooms", () => {
     const x = start(4, { seconds: 60 });
     choose(x);
     const old = x.r.file.deadline;
-    act(x.r, x.claims[0].token, { type: "READY" }, 2000);
+    act(x.r, x.claims[1].token, { type: "SUBMIT_ANSWER", text: "先写" }, 2000);
     expect(x.r.file.deadline).toBe(old);
-    for (let i = 1; i < 4; i++)
-      act(x.r, x.claims[i].token, { type: "READY" }, 3000);
+    for (let i = 2; i < 4; i++)
+      act(
+        x.r,
+        x.claims[i].token,
+        { type: "SUBMIT_ANSWER", text: `回答${i}` },
+        3000,
+      );
     expect(x.r.file.deadline).toBe(63000);
     expect(x.r.file.expired).toBe(false);
   });
   it("persisted token restores private number, readiness and locked order exactly", () => {
     const x = start();
     choose(x);
-    for (let i = 0; i < 4; i++) act(x.r, x.claims[i].token, { type: "READY" });
-    act(x.r, x.claims[0].token, { type: "LOCK_ORDER", order: [3, 1, 0, 2] });
+    for (let i = 1; i < 4; i++)
+      act(x.r, x.claims[i].token, { type: "SUBMIT_ANSWER", text: `回答${i}` });
+    act(x.r, x.claims[0].token, { type: "LOCK_ORDER", order: [3, 1, 2] });
     const file = JSON.parse(
       readFileSync(join(x.r.directory, "ABCD.json"), "utf8"),
     );
@@ -198,7 +220,7 @@ describe("ND rooms", () => {
     expect(restored.snapshot(x.claims[2].token, 1000).view).toEqual(
       x.r.snapshot(x.claims[2].token, 1000).view,
     );
-    expect(restored.file.state!.order).toEqual([3, 1, 0, 2]);
+    expect(restored.file.state!.order).toEqual([3, 1, 2]);
     expect(() =>
       act(restored, x.claims[0].token, {
         type: "LOCK_ORDER",
@@ -247,15 +269,16 @@ describe("ND rooms", () => {
   it("restored expired deadline does not repeat the timeout or lose a submitted answer", () => {
     const x = start(4, { seconds: 60 });
     choose(x);
-    act(x.r, x.claims[0].token, { type: "READY" });
+    act(x.r, x.claims[1].token, { type: "SUBMIT_ANSWER", text: "重连保留" });
     x.r.tick(x.r.file.deadline!);
     const saved = JSON.parse(
       readFileSync(join(x.r.directory, "ABCD.json"), "utf8"),
     );
     const restored = new NDRoom(saved, x.r.directory, x.r.options);
-    expect(restored.tick(1e9)).toBe(false);
+    expect(restored.tick(restored.file.deadline! - 1)).toBe(false);
     expect(restored.file.timeoutCount).toBe(1);
-    expect(restored.file.state!.ready).toEqual([0]);
+    expect(restored.file.state!.ready).toEqual([1, 2, 3]);
+    expect(restored.file.state!.answers[1]).toBe("重连保留");
   });
   it("lobby leave removes only that seat credential and its command records", () => {
     const { r, claims } = setup();
@@ -279,15 +302,19 @@ describe("ND rooms", () => {
           topicId: s.topicCards[s.round - 1].questions[0].id,
         });
       else if (s.phase === "ANSWER") {
-        const seat = !s.ready.includes(capt)
-          ? capt
-          : s.players.findIndex((_, i) => !s.ready.includes(i));
-        act(x.r, x.claims[seat].token, { type: "READY" });
+        const seat = s.players.findIndex(
+          (_, i) => i !== capt && !s.ready.includes(i),
+        );
+        act(x.r, x.claims[seat].token, {
+          type: "SUBMIT_ANSWER",
+          text: `回答${seat}`,
+        });
       } else if (s.phase === "ORDER")
         act(x.r, x.claims[capt].token, {
           type: "LOCK_ORDER",
           order: s.players
             .map((_, i) => i)
+            .filter((i) => i !== capt)
             .sort((a, b) => s.numbers[b]! - s.numbers[a]!),
         });
       else if (s.phase === "REVEAL")

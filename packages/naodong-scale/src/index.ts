@@ -22,6 +22,7 @@ export interface NDReveal {
   correct: boolean;
   penalty: number;
   guess?: number;
+  answer?: string;
 }
 export interface NDEvent {
   id: number;
@@ -29,6 +30,7 @@ export interface NDEvent {
     | "ROUND_STARTED"
     | "TOPIC_SELECTED"
     | "ANSWER_READY"
+    | "ANSWER_WITHDRAWN"
     | "ORDER_LOCKED"
     | "REVEALED"
     | "TEAM_RECOVERY"
@@ -40,6 +42,7 @@ export interface NDEvent {
   order?: number[];
   number?: number;
   guess?: number;
+  answer?: string;
   correct?: boolean;
   penalty?: number;
   recovered?: number;
@@ -66,6 +69,7 @@ export interface NDState {
   numbers: (number | null)[];
   unusedNumbers: number[];
   ready: number[];
+  answers: (string | null)[];
   order: number[];
   revealed: NDReveal[];
   tokenTotal: number;
@@ -87,7 +91,9 @@ type Envelope = { seat: number; seq: number };
 export type NDCommand = Envelope &
   (
     | { type: "CHOOSE_TOPIC"; topicId: string }
-    | { type: "READY" }
+    | { type: "SUBMIT_ANSWER"; text: string }
+    | { type: "WITHDRAW_ANSWER" }
+    | { type: "UPDATE_ORDER"; order: readonly number[] }
     | { type: "LOCK_ORDER"; order: readonly number[] }
     | { type: "REVEAL_NEXT" }
     | { type: "GUESS_EXACT"; target: number; guess: number }
@@ -113,7 +119,9 @@ function requireND(
 const ten = () => Array.from({ length: 10 }, (_, i) => i + 1);
 const commandFields: Record<NDCommand["type"], readonly string[]> = {
   CHOOSE_TOPIC: ["topicId"],
-  READY: [],
+  SUBMIT_ANSWER: ["text"],
+  WITHDRAW_ANSWER: [],
+  UPDATE_ORDER: ["order"],
   LOCK_ORDER: ["order"],
   REVEAL_NEXT: [],
   GUESS_EXACT: ["target", "guess"],
@@ -126,9 +134,7 @@ const validSeat = (s: NDState, seat: unknown): seat is number =>
   seat >= 0 &&
   seat < s.players.length;
 const members = (s: NDState) =>
-  s.players
-    .map((_, i) => i)
-    .filter((i) => s.players.length !== 9 || i !== s.captain);
+  s.players.map((_, i) => i).filter((i) => i !== s.captain);
 function shuffle<T>(s: { random: number }, items: readonly T[]): T[] {
   const result = [...items];
   for (let i = result.length - 1; i > 0; i--) {
@@ -284,6 +290,7 @@ export function createND(
     numbers: players.map(() => null),
     unusedNumbers: ten(),
     ready: [],
+    answers: players.map(() => null),
     order: [],
     revealed: [],
     tokenTotal: total,
@@ -301,8 +308,31 @@ export function createND(
 function drawNumbers(s: NDState) {
   const cards = shuffle(s, ten());
   s.numbers = s.players.map(() => null);
-  for (const seat of members(s)) s.numbers[seat] = cards.shift()!;
+  for (const seat of s.players
+    .map((_, i) => i)
+    .filter((i) => i !== s.captain || s.options.expert))
+    s.numbers[seat] = cards.shift()!;
   s.unusedNumbers = cards;
+}
+function advanceAnswers(s: NDState) {
+  if (s.ready.length !== s.players.length - 1) return;
+  s.phase = s.options.expert ? "EXPERT" : "ORDER";
+  if (!s.options.expert) s.order = members(s);
+}
+/** Server-only deadline transition; never accepted as a client command. */
+export function timeoutAnswersND(state: NDState): NDState {
+  assertInvariantsND(state);
+  requirePhase(state, "ANSWER");
+  const s = structuredClone(state);
+  for (let seat = 0; seat < s.players.length; seat++)
+    if (seat !== s.captain && !s.ready.includes(seat)) {
+      s.answers[seat] = "（没写）";
+      s.ready.push(seat);
+      emit(s, { type: "ANSWER_READY", seat });
+    }
+  advanceAnswers(s);
+  assertInvariantsND(s);
+  return s;
 }
 function finish(s: NDState, success: boolean) {
   s.phase = "FINISHED";
@@ -333,7 +363,13 @@ function reveal(s: NDState, seat: number, guess?: number) {
   const penalty = correct ? 0 : 1;
   s.unicorns -= penalty;
   s.poops += penalty;
-  const entry: NDReveal = { seat, number, correct, penalty };
+  const entry: NDReveal = {
+    seat,
+    number,
+    correct,
+    penalty,
+    ...(s.answers[seat] === null ? {} : { answer: s.answers[seat]! }),
+  };
   if (guess !== undefined) entry.guess = guess;
   s.revealed.push(entry);
   emit(s, { type: "REVEALED", ...entry, unicorns: s.unicorns, poops: s.poops });
@@ -367,7 +403,7 @@ export function reduceND(state: NDState, cmd: NDCommand): NDState {
   requireND(
     Object.keys(cmd).every((key) => allowed.includes(key)),
     "COMMAND",
-    "命令包含不允许的字段，请勿提交文字或录音",
+    "命令包含不允许的字段",
   );
   const fingerprint = canonical(cmd),
     prior = state.receipts[cmd.seat][String(cmd.seq)];
@@ -396,27 +432,37 @@ export function reduceND(state: NDState, cmd: NDCommand): NDState {
       emit(s, { type: "TOPIC_SELECTED", topicId: q.id });
       break;
     }
-    case "READY": {
+    case "SUBMIT_ANSWER": {
       requirePhase(s, "ANSWER");
-      requireND(members(s).includes(cmd.seat), "ROLE", "9 人游戏的队长不回答");
       requireND(
-        !s.ready.includes(cmd.seat),
-        "LOCKED",
-        "你已锁定回答，等待其他人",
+        cmd.seat !== s.captain,
+        "ROLE",
+        "队长不能提交答题卡，请等大家写卡",
       );
+      requireND(!s.ready.includes(cmd.seat), "LOCKED", "已提交，请先撤回修改");
+      requireND(typeof cmd.text === "string", "ANSWER", "回答必须是文字");
+      const text = cmd.text.trim();
       requireND(
-        s.players.length === 9 ||
-          cmd.seat === s.captain ||
-          s.ready.includes(s.captain),
-        "TURN",
-        "请等待队长先回答",
+        Array.from(text).length >= 1 && Array.from(text).length <= 30,
+        "ANSWER",
+        "回答不能为空，长度须为 1–30 字",
       );
+      s.answers[cmd.seat] = text;
       s.ready.push(cmd.seat);
       emit(s, { type: "ANSWER_READY", seat: cmd.seat });
-      if (s.ready.length === members(s).length)
-        s.phase = s.options.expert ? "EXPERT" : "ORDER";
+      advanceAnswers(s);
       break;
     }
+    case "WITHDRAW_ANSWER": {
+      requirePhase(s, "ANSWER");
+      requireND(cmd.seat !== s.captain, "ROLE", "队长不能撤回答题卡");
+      requireND(s.ready.includes(cmd.seat), "ANSWER", "尚未提交答题卡");
+      s.ready = s.ready.filter((i) => i !== cmd.seat);
+      s.answers[cmd.seat] = null;
+      emit(s, { type: "ANSWER_WITHDRAWN", seat: cmd.seat });
+      break;
+    }
+    case "UPDATE_ORDER":
     case "LOCK_ORDER": {
       requirePhase(s, "ORDER");
       requireCaptain(s, cmd.seat);
@@ -430,8 +476,10 @@ export function reduceND(state: NDState, cmd: NDCommand): NDState {
         "排序必须包含本轮每个回答者且不能重复",
       );
       s.order = [...cmd.order];
-      s.phase = "REVEAL";
-      emit(s, { type: "ORDER_LOCKED", order: [...s.order] });
+      if (cmd.type === "LOCK_ORDER") {
+        s.phase = "REVEAL";
+        emit(s, { type: "ORDER_LOCKED", order: [...s.order] });
+      }
       break;
     }
     case "REVEAL_NEXT":
@@ -502,6 +550,7 @@ export function reduceND(state: NDState, cmd: NDCommand): NDState {
       s.numbers = s.players.map(() => null);
       s.unusedNumbers = ten();
       s.ready = [];
+      s.answers = s.players.map(() => null);
       s.order = [];
       s.revealed = [];
       s.phase = "CHOOSE_TOPIC";
@@ -528,6 +577,7 @@ export interface NDView {
   tokenTotal: number;
   topic: NDQuestion | null;
   choices: NDQuestion[];
+  answers: (string | null)[];
   myNumber: number | null;
   mySeq: number | null;
   order: number[];
@@ -556,6 +606,11 @@ export function viewForND(s: NDState, seat: number | null): NDView {
       s.phase === "CHOOSE_TOPIC" && seat === s.captain
         ? s.topicCards[s.round - 1].questions
         : [],
+    answers: s.answers.map((text, i) =>
+      (s.phase !== "ANSWER" && s.phase !== "CHOOSE_TOPIC") || i === seat
+        ? text
+        : null,
+    ),
     myNumber: seat === null ? null : s.numbers[seat],
     mySeq: seat === null ? null : s.seq[seat],
     order: s.order,
@@ -619,16 +674,28 @@ export function assertInvariantsND(s: NDState): void {
       s.topic !== null &&
         s.topicCards[s.round - 1].questions.some((q) => q.id === s.topic?.id) &&
         s.numbers.every((v, i) =>
-          s.players.length === 9 && i === s.captain ? v === null : v !== null,
+          !s.options.expert && i === s.captain ? v === null : v !== null,
         ),
       "answer numbers/topic",
     );
   invariant(
-    unique(s.ready) && s.ready.every((i) => members(s).includes(i)),
+    unique(s.ready) && s.ready.every((i) => i !== s.captain && validSeat(s, i)),
     "ready membership",
   );
-  if (s.players.length !== 9 && s.ready.length)
-    invariant(s.ready[0] === s.captain, "captain first");
+  invariant(
+    Array.isArray(s.answers) &&
+      s.answers.length === s.players.length &&
+      s.answers.every((text, i) =>
+        text === null
+          ? !s.ready.includes(i)
+          : typeof text === "string" &&
+            text === text.trim() &&
+            Array.from(text).length >= 1 &&
+            Array.from(text).length <= 30 &&
+            s.ready.includes(i),
+      ),
+    "answer cards",
+  );
   invariant(
     unique(s.revealed.map((r) => r.seat)) &&
       s.revealed.every(
@@ -637,7 +704,10 @@ export function assertInvariantsND(s: NDState): void {
     "revealed numbers",
   );
   if (s.phase !== "CHOOSE_TOPIC" && s.phase !== "ANSWER")
-    invariant(s.ready.length === members(s).length, "all responses complete");
+    invariant(
+      s.ready.length === s.players.length - 1,
+      "all responses complete",
+    );
   invariant(
     s.order.length === 0 ||
       (!s.options.expert &&

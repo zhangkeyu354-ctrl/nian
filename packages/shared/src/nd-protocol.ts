@@ -16,6 +16,7 @@ export interface NDSettings {
 type Payload<T> = T extends unknown ? Omit<T, "seat" | "seq"> : never;
 export type NDAction =
   | Payload<NDCommand>
+  | { type: "READY" }
   | {
       type: "SET_SETTINGS";
       count?: number;

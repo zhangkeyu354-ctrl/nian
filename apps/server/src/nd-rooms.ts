@@ -12,6 +12,7 @@ import type { Server, Socket } from "socket.io";
 import {
   createND,
   reduceND,
+  timeoutAnswersND,
   viewForND,
   assertInvariantsND,
   type NDState,
@@ -59,7 +60,9 @@ function ensure(value: unknown, message: string): asserts value {
 const codePattern = /^[A-HJ-NP-Z2-9]{4}$/;
 const gameFields: Record<string, string[]> = {
   CHOOSE_TOPIC: ["topicId"],
-  READY: [],
+  SUBMIT_ANSWER: ["text"],
+  WITHDRAW_ANSWER: [],
+  UPDATE_ORDER: ["order"],
   LOCK_ORDER: ["order"],
   REVEAL_NEXT: [],
   GUESS_EXACT: ["target", "guess"],
@@ -68,6 +71,7 @@ const gameFields: Record<string, string[]> = {
 };
 const fields: Record<string, string[]> = {
   ...gameFields,
+  READY: [],
   SET_SETTINGS: ["count", "seconds", "scale", "expert", "firstCaptain"],
   START: ["seed"],
   LEAVE: [],
@@ -344,7 +348,7 @@ export class NDRoom {
     }
     ensure(seq === this.file.seq[me.id] + 1, "命令序号不连续，请同步状态");
     const concurrent =
-      c.type === "READY" &&
+      ["SUBMIT_ANSWER", "WITHDRAW_ANSWER"].includes(c.type) &&
       this.file.state?.phase === "ANSWER" &&
       round === this.file.state.round;
     ensure(
@@ -449,7 +453,10 @@ export class NDRoom {
     )
       return false;
     return this.transaction(now, () => {
-      this.file.expired = true;
+      if (this.file.state?.phase === "ANSWER") {
+        this.file.state = timeoutAnswersND(this.file.state);
+        this.resetDeadline(now);
+      } else this.file.expired = true;
       this.file.timeoutCount++;
       this.file.version++;
       return true;

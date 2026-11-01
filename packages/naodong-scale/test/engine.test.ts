@@ -32,21 +32,19 @@ const choose = (s: NDState) =>
     topicId: s.topicCards[s.round - 1].questions[0].id,
   });
 const answerers = (s: NDState) =>
-  s.players
-    .map((_, i) => i)
-    .filter((i) => s.players.length !== 9 || i !== s.captain);
+  s.players.map((_, i) => i).filter((i) => i !== s.captain);
 function ready(s: NDState) {
   const a = answerers(s);
-  if (a.includes(s.captain)) s = send(s, "READY", {}, s.captain);
+
   for (const seat of a.filter((i) => i !== s.captain))
-    s = send(s, "READY", {}, seat);
+    s = send(s, "SUBMIT_ANSWER", { text: `回答${seat}` }, seat);
   return s;
 }
 function fixed(s: NDState, values: number[]) {
   const copy = structuredClone(s);
   let i = 0;
   copy.numbers = copy.players.map((_, seat) =>
-    copy.players.length === 9 && seat === copy.captain ? null : values[i++],
+    !copy.options.expert && seat === copy.captain ? null : values[i++],
   );
   copy.unusedNumbers = Array.from({ length: 10 }, (_, i) => i + 1).filter(
     (v) => !copy.numbers.includes(v),
@@ -114,8 +112,10 @@ describe("Top Ten rules and deterministic reducer", () => {
   });
   it("ND04 gives unique 1–10 numbers and keeps unused numbers hidden", () => {
     const s = choose(make());
-    expect(new Set(s.numbers).size).toBe(4);
-    expect(s.numbers.every((v) => v !== null && v >= 1 && v <= 10)).toBe(true);
+    expect(new Set(s.numbers.filter((n) => n !== null)).size).toBe(3);
+    expect(
+      s.numbers.filter((v) => v !== null).every((v) => v! >= 1 && v! <= 10),
+    ).toBe(true);
     expect(viewForND(s, 0)).not.toHaveProperty("unusedNumbers");
   });
   it("ND05 draws five distinct pairs without repeating any of the ten candidate questions", () => {
@@ -151,20 +151,20 @@ describe("Top Ten rules and deterministic reducer", () => {
     s = send(s, "CHOOSE_TOPIC", { topicId: id });
     expect(s.topic?.id).toBe(id);
   });
-  it("ND09 includes the captain in basic 4–8 player answers", () => {
-    for (const n of [4, 8]) {
+  it("ND09 captain guesses and only other players write and sort cards", () => {
+    for (const n of [4, 7, 8, 9]) {
       const s = choose(make(n));
-      expect(s.numbers[s.captain]).not.toBeNull();
+      expect(s.numbers[s.captain]).toBeNull();
+      expect(answerers(s)).toHaveLength(n - 1);
     }
   });
-  it("ND10 requires the captain first and then allows any answer order", () => {
+  it("ND10 accepts non-captains in any order and rejects captain submission", () => {
     let s = choose(make());
-    expect(() => send(s, "READY", {}, 2)).toThrow(/队长/);
-    s = send(s, "READY");
-    s = send(s, "READY", {}, 3);
-    s = send(s, "READY", {}, 1);
-    s = send(s, "READY", {}, 2);
+    expect(() => send(s, "SUBMIT_ANSWER", { text: "队长" })).toThrow(/队长/);
+    for (const seat of [3, 1, 2])
+      s = send(s, "SUBMIT_ANSWER", { text: `回答${seat}` }, seat);
     expect(s.phase).toBe("ORDER");
+    expect(s.order).toEqual([1, 2, 3]);
   });
   it("ND11 preserves 1 and 10 endpoint directions exactly", () => {
     let s = make();
@@ -173,48 +173,46 @@ describe("Top Ten rules and deterministic reducer", () => {
     expect(s.topic).toEqual(q);
     expect(viewForND(s, 0).topic?.low).toBe(q.low);
   });
-  it("ND12 stores readiness without evaluating spoken answer content", () => {
-    const s = send(choose(make()), "READY");
-    expect(s.ready).toEqual([0]);
-    expect(JSON.stringify(viewForND(s, 1))).not.toMatch(
-      /transcript|recording|answerText/,
-    );
+  it("ND12 stores own text privately until all cards are submitted", () => {
+    const s = send(choose(make()), "SUBMIT_ANSWER", { text: "私密" }, 1);
+    expect(s.ready).toEqual([1]);
+    expect(JSON.stringify(viewForND(s, 0))).not.toContain("私密");
   });
-  it("ND13 rejects submitting a locked answer again with a new seq", () => {
-    const s = send(choose(make()), "READY");
-    expect(() => send(s, "READY")).toThrow(/已锁定/);
+  it("ND13 rejects changing a submitted card before withdrawal", () => {
+    const s = send(choose(make()), "SUBMIT_ANSWER", { text: "私密" }, 1);
+    expect(() => send(s, "SUBMIT_ANSWER", { text: "换" }, 1)).toThrow(/已提交/);
   });
   it("ND14 permits only the captain to reveal the next locked seat", () => {
     let s = ready(choose(make()));
-    s = send(s, "LOCK_ORDER", { order: [2, 0, 3, 1] });
+    s = send(s, "LOCK_ORDER", { order: [2, 3, 1] });
     expect(() => send(s, "REVEAL_NEXT", {}, 1)).toThrow(/队长/);
     s = send(s, "REVEAL_NEXT");
     expect(s.revealed[0].seat).toBe(2);
   });
   it("ND15 never penalizes the first revealed card", () => {
-    let s = ready(fixed(choose(make()), [10, 1, 2, 3]));
-    s = send(s, "LOCK_ORDER", { order: [0, 1, 2, 3] });
+    let s = ready(fixed(choose(make()), [10, 1, 2]));
+    s = send(s, "LOCK_ORDER", { order: [1, 2, 3] });
     s = send(s, "REVEAL_NEXT");
     expect(s.poops).toBe(0);
   });
   it("ND16 moves exactly one token for a descending neighbor", () => {
-    let s = ready(fixed(choose(make()), [4, 2, 3, 8]));
-    s = send(s, "LOCK_ORDER", { order: [0, 1, 2, 3] });
+    let s = ready(fixed(choose(make()), [4, 2, 3]));
+    s = send(s, "LOCK_ORDER", { order: [1, 2, 3] });
     s = send(send(s, "REVEAL_NEXT"), "REVEAL_NEXT");
     expect(s.poops).toBe(1);
     expect(s.unicorns).toBe(3);
   });
   it("ND17 counts 4→2→3 as one mistake, not two", () => {
-    let s = ready(fixed(choose(make()), [4, 2, 3, 8]));
-    s = send(s, "LOCK_ORDER", { order: [0, 1, 2, 3] });
+    let s = ready(fixed(choose(make()), [4, 2, 3]));
+    s = send(s, "LOCK_ORDER", { order: [1, 2, 3] });
     for (let i = 0; i < 3; i++) s = send(s, "REVEAL_NEXT");
     expect(s.poops).toBe(1);
   });
   it("ND18 continues after mistakes while unicorns remain", () => {
     const s = finishBaseRound(fixed(choose(make()), [4, 3, 2, 1]), true);
     expect(s.phase).toBe("ROUND_END");
-    expect(s.poops).toBe(3);
-    expect(s.unicorns).toBe(1);
+    expect(s.poops).toBe(2);
+    expect(s.unicorns).toBe(2);
   });
   it("ND19 has no exact-guess or distance scoring in base mode", () => {
     const s = ready(choose(make()));
@@ -251,10 +249,10 @@ describe("Top Ten rules and deterministic reducer", () => {
     s = send(s, "NEXT_ROUND");
     s = ready(choose(s));
     s = send(s, "LOCK_ORDER", { order: ascending(s).reverse() });
-    s = send(send(s, "REVEAL_NEXT"), "REVEAL_NEXT");
+    s = send(send(send(s, "REVEAL_NEXT"), "REVEAL_NEXT"), "REVEAL_NEXT");
     expect(s.phase).toBe("FINISHED");
     expect(s.result?.success).toBe(false);
-    expect(s.revealed).toHaveLength(2);
+    expect(s.revealed).toHaveLength(3);
     expect(() => send(s, "REVEAL_NEXT")).toThrow();
   });
   it("ND25 gives team-only rating at zero, half, more-poop and all-unicorn boundaries", () => {
@@ -425,14 +423,14 @@ describe("Top Ten rules and deterministic reducer", () => {
     } as const;
     const next = reduceND(s, command);
     expect(reduceND(next, command)).toBe(next);
-    const later = send(next, "READY");
+    const later = send(next, "SUBMIT_ANSWER", { text: "回答" }, 1);
     expect(reduceND(later, command)).toBe(later);
     expect(() => reduceND(later, { ...command, topicId: "different" })).toThrow(
       /序号/,
     );
-    expect(() => reduceND(next, { type: "READY", seat: 0, seq: 9 })).toThrow(
-      /序号/,
-    );
+    expect(() =>
+      reduceND(next, { type: "SUBMIT_ANSWER", text: "回答", seat: 0, seq: 9 }),
+    ).toThrow(/序号/);
   });
   it("invalid commands are atomic and views do not share mutable state", () => {
     const s = make();
@@ -447,7 +445,7 @@ describe("Top Ten rules and deterministic reducer", () => {
   it("invariants detect duplicate cards, token loss and invalid role state", () => {
     const s = choose(make());
     const bad = structuredClone(s);
-    bad.numbers[1] = bad.numbers[0];
+    bad.numbers[1] = bad.numbers[2];
     expect(() => assertInvariantsND(bad)).toThrow();
     const lost = structuredClone(s);
     lost.unicorns--;

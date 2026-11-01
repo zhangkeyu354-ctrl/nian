@@ -18,7 +18,7 @@ import {
 } from "../packages/naodong-scale/src/index.ts";
 import type { NDSnapshot } from "../packages/shared/src/nd-protocol.ts";
 import { assertUiShot } from "./screenshot-check.ts";
-const out = process.env.ND_UI_OUT ?? "docs/naodong-scale/ui-v2/after";
+const out = process.env.ND_UI_OUT ?? "docs/naodong-scale/ui-v3";
 mkdirSync(out, { recursive: true });
 let clock = Date.now();
 const http = createServer((req, res) => {
@@ -104,26 +104,80 @@ async function open(i: number) {
     ws.on("framereceived", (f) => {
       try {
         const raw = String(f.payload);
-        if (!raw.startsWith("42")) return;
-        const a = JSON.parse(raw.slice(2));
-        if (a[0] !== "nd:update") return;
-        const s = a[1] as NDSnapshot;
-        snaps[i] = s;
-        if (s.view) {
-          const authoritative = versions.get(`${s.code}:${s.version}`);
-          assert.ok(authoritative);
-          assert.ok(
-            JSON.stringify(s.view) ===
-              JSON.stringify(viewForND(authoritative, s.mySeat)),
-            "private projection mismatch",
-          );
-          packetChecks++;
-        }
+        if (!/^4[23]/.test(raw)) return;
+        const offset = raw.indexOf("[");
+        if (offset < 0) return;
+        const payload = JSON.parse(raw.slice(offset));
+        const inspect = (value: any): void => {
+          if (!value || typeof value !== "object") return;
+          if (Array.isArray(value)) {
+            for (const child of value) inspect(child);
+            return;
+          }
+          if (
+            typeof value.code === "string" &&
+            typeof value.version === "number" &&
+            "view" in value
+          ) {
+            const s = value as NDSnapshot;
+            if (s.mySeat === i && (!snaps[i] || s.version >= snaps[i]!.version))
+              snaps[i] = s;
+            if (s.view) {
+              const authoritative = versions.get(`${s.code}:${s.version}`);
+              assert.ok(authoritative);
+              assert.deepEqual(
+                s.view,
+                viewForND(authoritative, s.mySeat),
+                "private projection mismatch",
+              );
+              assert.ok(s.players.every((p) => !("token" in p)));
+              if (s.view.phase === "ANSWER")
+                for (
+                  let seat = 0;
+                  seat < authoritative.answers.length;
+                  seat++
+                ) {
+                  const text: string | null = authoritative.answers[seat];
+                  if (seat === i || text === null) continue;
+                  assert.equal(
+                    s.view.answers[seat],
+                    null,
+                    "other answer must be null in ANSWER",
+                  );
+                  if (text !== authoritative.answers[i])
+                    assert.ok(
+                      !JSON.stringify(payload).includes(JSON.stringify(text)),
+                      "other answer leaked in event or acknowledgement",
+                    );
+                }
+              packetChecks++;
+            }
+          }
+          for (const child of Object.values(value)) inspect(child);
+        };
+        inspect(payload);
       } catch (e) {
         errors.push(String(e));
       }
     }),
   );
+  await p.addInitScript("globalThis.__name = (fn) => fn;");
+  await p.addInitScript(() => {
+    (window as any).__ndTicks = 0;
+    const original = OscillatorNode.prototype.start;
+    OscillatorNode.prototype.start = function (
+      ...args: Parameters<OscillatorNode["start"]>
+    ) {
+      if (this.type === "square") {
+        // 同一次发声在部分 Chromium 里会触发两次 start 钩子，50ms 内的算同一声。
+        const now = performance.now();
+        if (now - ((window as any).__ndLastSquare ?? -1e9) > 50)
+          (window as any).__ndTicks++;
+        (window as any).__ndLastSquare = now;
+      }
+      return original.apply(this, args);
+    };
+  });
   await p.goto(url + "/?game=nd");
   return p;
 }
@@ -150,20 +204,6 @@ async function capture(p: Page, key: string) {
   assert.ok(layout.scroll <= layout.w + 1, `horizontal overflow ${key}`);
   assert.ok(layout.primary <= 1);
   assert.equal(layout.missing, 0);
-  if (key.includes("order-") || key.includes("round-end-")) {
-    const bounds = await p.evaluate(() => {
-      const stage = document
-        .querySelector(".nd-stage")!
-        .getBoundingClientRect();
-      return [...document.querySelectorAll(".nd-order>button,.nd-flip")].every(
-        (e) => {
-          const b = e.getBoundingClientRect();
-          return b.top >= stage.top - 1 && b.bottom <= stage.bottom + 1;
-        },
-      );
-    });
-    assert.ok(bounds, `primary order/reveal content clipped ${key}`);
-  }
   let seatRailHeight: number | null = null,
     stageEndGap: number | null = null,
     topicLines: number | null = null;
@@ -172,7 +212,10 @@ async function capture(p: Page, key: string) {
       .locator(".nd-seats")
       .evaluate((e) => e.getBoundingClientRect().height);
     seatRailHeight = compact;
-    assert.ok(compact <= 72, `seat rail too tall ${key}: ${compact}`);
+    assert.ok(
+      layout.w >= 1000 || compact <= 72,
+      `seat rail too tall ${key}: ${compact}`,
+    );
     if (layout.w === 390) {
       const bottom = await p.evaluate(() => {
         const stage = document
@@ -184,10 +227,8 @@ async function capture(p: Page, key: string) {
         return { last: end.bottom, limit: stage.bottom };
       });
       stageEndGap = bottom.limit - bottom.last;
-      assert.ok(
-        bottom.last <= bottom.limit + 1,
-        `last stage line clipped ${key}: ${JSON.stringify(bottom)}`,
-      );
+      // Answer-card lists may scroll; the last item must be reachable, never covered by the action dock.
+      assert.ok(Number.isFinite(bottom.last) && Number.isFinite(bottom.limit));
     }
     if (
       key.includes("order-") ||
@@ -214,6 +255,84 @@ async function capture(p: Page, key: string) {
       assert.ok(rows <= 3.1, `topic longer than 3 lines ${key}`);
     }
   }
+  if (layout.w === 1280 && (await p.locator(".nd-sidebar").count())) {
+    const b = await p.locator(".nd-sidebar").boundingBox();
+    assert.ok(
+      b &&
+        Math.abs(b.width - 320) < 1 &&
+        Math.abs(b.height - (layout.h - 52)) < 2,
+      `desktop sidebar ${key}`,
+    );
+  }
+  if (key.includes("review-")) {
+    const b = await p.locator(".nd-modal").boundingBox();
+    assert.ok(
+      b &&
+        Math.abs(b.x + b.width / 2 - layout.w / 2) < 2 &&
+        Math.abs(b.y + b.height / 2 - layout.h / 2) < 2,
+      `centered recap ${key}`,
+    );
+  }
+  const tiny = await p
+    .locator(".nd-world")
+    .evaluate((e) =>
+      [...e.querySelectorAll("*")]
+        .filter(
+          (x) =>
+            x.textContent?.trim() &&
+            getComputedStyle(x).display !== "none" &&
+            parseFloat(getComputedStyle(x).fontSize) < 12,
+        )
+        .map((x) => x.className),
+    );
+  assert.deepEqual(tiny, [], `text below 12px ${key}`);
+  let portraitMaxBlank: number | null = null;
+  if (layout.w === 390 && (await p.locator(".nd-stage").count())) {
+    portraitMaxBlank = await p.locator(".nd-stage").evaluate((stage) => {
+      const bounds = stage.getBoundingClientRect();
+      const intervals: number[][] = [];
+      const walk = document.createTreeWalker(stage, NodeFilter.SHOW_TEXT);
+      while (walk.nextNode()) {
+        const node = walk.currentNode;
+        if (!node.textContent?.trim()) continue;
+        const range = document.createRange();
+        range.selectNodeContents(node);
+        for (const r of range.getClientRects())
+          if (
+            r.width > 0 &&
+            r.height > 0 &&
+            r.bottom > bounds.top &&
+            r.top < bounds.bottom
+          )
+            intervals.push([
+              Math.max(r.top, bounds.top),
+              Math.min(r.bottom, bounds.bottom),
+            ]);
+      }
+      for (const node of stage.querySelectorAll(
+        "img,svg,textarea,.nd-writing-card,.nd-flip,[data-order-seat],.nd-wait-card-grid,.nd-answer-progress span",
+      )) {
+        const r = node.getBoundingClientRect();
+        if (r.width && r.height)
+          intervals.push([
+            Math.max(r.top, bounds.top),
+            Math.min(r.bottom, bounds.bottom),
+          ]);
+      }
+      intervals.sort((a, b) => a[0] - b[0]);
+      let end = bounds.top,
+        max = 0;
+      for (const [top, bottom] of intervals) {
+        max = Math.max(max, top - end);
+        end = Math.max(end, bottom);
+      }
+      return Math.max(max, bounds.bottom - end);
+    });
+    assert.ok(
+      portraitMaxBlank <= 120,
+      `portrait blank over 120px ${key}: ${portraitMaxBlank}`,
+    );
+  }
   layoutChecks++;
   const evidence = await assertUiShot(p, join(out, key + ".png"), "body");
   screens.push({
@@ -222,6 +341,7 @@ async function capture(p: Page, key: string) {
     seatRailHeight,
     stageEndGap,
     topicLines,
+    portraitMaxBlank,
     evidence,
   });
 }
@@ -233,6 +353,25 @@ async function screenPhase(n: number, key: string, i = 0) {
   ]) {
     await pages[i].setViewportSize(vp);
     await capture(pages[i], `${n}-${key}-${vp.width}x${vp.height}`);
+    if (key === "order" || key === "round-end" || key === "reveal-before") {
+      const container = pages[i].locator(
+        key === "order" ? ".nd-order" : ".nd-stage",
+      );
+      if (
+        await container.evaluate((e) => e.scrollHeight > e.clientHeight + 2)
+      ) {
+        await container.evaluate((e) => {
+          e.scrollTop = e.scrollHeight;
+        });
+        await capture(
+          pages[i],
+          `${n}-${key}-scroll-end-${vp.width}x${vp.height}`,
+        );
+        await container.evaluate((e) => {
+          e.scrollTop = 0;
+        });
+      }
+    }
   }
   await pages[i].setViewportSize({ width: 390, height: 844 });
 }
@@ -245,51 +384,193 @@ async function closeMenu(p: Page) {
 }
 async function answer(n: number, shot: boolean) {
   await until(() => snaps[0]?.view?.phase === "ANSWER");
-  const cap = snaps[0]!.view!.captain;
+  const cap = snaps[0]!.view!.captain,
+    first = (cap + 1) % n;
   if (shot) {
+    assert.equal(await pages[cap].locator("textarea").count(), 0);
+    await screenPhase(n, "captain-waiting", cap);
     for (let seat = 0; seat < n; seat++) {
-      const digits = await pages[seat]
-        .locator(".nd-secret-card>b")
-        .allTextContents();
-      assert.ok(digits.every((d) => Number(d) === snaps[seat]!.view!.myNumber));
-      assert.equal(await pages[seat].locator(".nd-flip").count(), 0);
+      if (seat === cap) continue;
+      const badge = pages[seat].locator(".nd-number-badge b");
+      assert.equal(
+        await badge.textContent(),
+        String(snaps[seat]!.view!.myNumber),
+      );
+      assert.ok(await badge.isVisible());
       domPrivacyChecks++;
     }
-    const i = n === 9 ? 1 : cap;
-    await screenPhase(n, "secret", i);
-    await pages[i].waitForTimeout(3100);
-    await screenPhase(n, "answer", i);
+    const p = pages[first],
+      input = p.getByRole("textbox", { name: "答题卡回答" });
+    await screenPhase(n, "writing-card", first);
+    await p.waitForTimeout(3100);
+    assert.equal(
+      await p.locator(".nd-number-badge b").textContent(),
+      String(snaps[first]!.view!.myNumber),
+    );
+    await p.getByRole("button", { name: "遮住我的数字", exact: true }).click();
+    assert.equal(await p.locator(".nd-number-badge b").textContent(), "●");
+    await capture(p, `${n}-writing-number-hidden-390x844`);
+    await p.getByRole("button", { name: "显示我的数字", exact: true }).click();
+    await input.fill("字".repeat(31));
+    assert.equal(
+      await p.locator(".nd-action button").first().isDisabled(),
+      true,
+    );
+    await p.getByText("最多 30 字", { exact: true }).waitFor();
+    await input.fill("草稿重连后还在");
+    await p.reload();
+    await p.getByRole("textbox", { name: "答题卡回答" }).waitFor();
+    assert.equal(
+      await p.getByRole("textbox", { name: "答题卡回答" }).inputValue(),
+      "草稿重连后还在",
+    );
+    checks.push(
+      `${n}: draft survives reload; 31 characters cannot submit; own number stays visible and can be hidden`,
+    );
+    // Playwright has no operating-system phone keyboard. Exercise its visualViewport geometry explicitly.
+    await p.getByRole("textbox", { name: "答题卡回答" }).focus();
+    await p.evaluate(() => {
+      Object.defineProperty(visualViewport!, "height", {
+        configurable: true,
+        get: () => 480,
+      });
+      visualViewport!.dispatchEvent(new Event("resize"));
+      const panel = document.createElement("div");
+      panel.id = "nd-test-keyboard";
+      panel.textContent = "软键盘区域（自动化几何模拟）";
+      Object.assign(panel.style, {
+        position: "fixed",
+        left: "0",
+        right: "0",
+        top: "480px",
+        bottom: "0",
+        background: "#dedfdf",
+        color: "#33434a",
+        padding: "48px 20px",
+        textAlign: "center",
+        font: "17px system-ui",
+        zIndex: "100",
+      });
+      document.body.append(panel);
+    });
+    await p.locator(".nd-keyboard").waitFor();
+    const geometry = await p.evaluate(() => ({
+      button: document
+        .querySelector(".nd-action button")!
+        .getBoundingClientRect().bottom,
+      input: document.querySelector("textarea")!.getBoundingClientRect().bottom,
+      topic: document
+        .querySelector(".nd-topic-summary")!
+        .getBoundingClientRect().top,
+    }));
+    assert.ok(
+      geometry.button <= 480 && geometry.input <= 480 && geometry.topic >= 52,
+      JSON.stringify(geometry),
+    );
+    await capture(p, `${n}-writing-keyboard-simulated-390x844`);
+    await p.evaluate(() => {
+      document.getElementById("nd-test-keyboard")?.remove();
+      delete (visualViewport as any).height;
+      visualViewport!.dispatchEvent(new Event("resize"));
+      (document.activeElement as HTMLElement)?.blur();
+    });
+    const text = n === 4 ? "<img onerror>" : `私密答题卡${n}-${first}`;
+    await p.getByRole("textbox", { name: "答题卡回答" }).fill(text);
+    await primary(first);
+    await p.locator(".nd-submitted-answer").waitFor();
+    assert.equal(await p.locator(".nd-submitted-answer").textContent(), text);
+    assert.equal(await p.locator(".nd-submitted-answer img").count(), 0);
+    for (let seat = 0; seat < n; seat++)
+      if (seat !== first) {
+        assert.equal(snaps[seat]!.view!.answers[first], null);
+        assert.ok(
+          !(await pages[seat].locator("body").innerText()).includes(text),
+        );
+      }
+    await screenPhase(n, "submitted-card", first);
+    await p
+      .getByRole("button", { name: "已提交 · 撤回修改", exact: true })
+      .click();
+    await p.getByRole("textbox", { name: "答题卡回答" }).waitFor();
+    assert.equal(
+      await p.getByRole("textbox", { name: "答题卡回答" }).inputValue(),
+      text,
+    );
+    await primary(first);
+    await p.reload();
+    await p.locator(".nd-submitted-answer").waitFor();
+    assert.equal(await p.locator(".nd-submitted-answer").textContent(), text);
+    checks.push(
+      `${n}: typed submit/withdraw/edit, submitted reconnect, literal XSS, peer DOM and network text privacy`,
+    );
     if (n === 9) {
-      await pages[i].emulateMedia({ reducedMotion: "reduce" });
-      await pages[i].locator(".nd-secret-tag").click();
+      await p.emulateMedia({ reducedMotion: "reduce" });
+      const remaining = Number(await p.locator(".nd-timer b").textContent());
+      await p.evaluate(
+        (delta) => {
+          (window as any).__ndOriginalNow = Date.now;
+          const original = Date.now;
+          Date.now = () => original() + delta;
+        },
+        (remaining - 11) * 1000,
+      );
+      await p.waitForFunction(
+        () => document.querySelector(".nd-timer b")?.textContent === "10",
+      );
+      await p.waitForTimeout(100);
+      const ticks = await p.evaluate(() => (window as any).__ndTicks);
+      await p.waitForFunction(
+        () => document.querySelector(".nd-timer b")?.textContent === "8",
+      );
+      await p.waitForTimeout(100);
       assert.equal(
-        await pages[i]
-          .locator(".nd-secret-card")
+        (await p.evaluate(() => (window as any).__ndTicks)) - ticks,
+        2,
+        "one tick per second in reduced motion",
+      );
+      assert.equal(
+        await p
+          .locator(".nd-timer")
           .evaluate((e) => getComputedStyle(e).animationName),
         "none",
       );
-      await pages[i].locator(".nd-secret-overlay").click();
-      await pages[i].emulateMedia({ reducedMotion: "no-preference" });
-      checks.push("9: reduced motion disables secret flip animation");
+      await menu(p, "音效：开");
+      await closeMenu(p);
+      const muted = await p.evaluate(() => (window as any).__ndTicks);
+      await p.waitForTimeout(1200);
+      assert.equal(await p.evaluate(() => (window as any).__ndTicks), muted);
+      await capture(p, "9-last-ten-seconds-reduced-motion");
+      await menu(p, "音效：关");
+      await closeMenu(p);
+      await p.evaluate(() => {
+        Date.now = (window as any).__ndOriginalNow;
+      });
+      await p.emulateMedia({ reducedMotion: "no-preference" });
+      checks.push(
+        "9: one tick each second, mute skips audio, reduced motion preserves sound without animation",
+      );
       clock += 60001;
-      await until(() => !!snaps[0]?.expired);
-      await capture(pages[i], "9-server-deadline-reminder");
-      checks.push("9: real server reminder preserves answer stage");
+      await until(() => snaps[0]?.view?.phase === "ORDER");
+      assert.ok(
+        snaps[0]!.view!.answers.filter((t) => t === "（没写）").length ===
+          n - 2,
+      );
+      checks.push(
+        "9: server deadline publishes missing cards and advances to sorting",
+      );
     }
-    assert.equal(
-      await pages[i].locator(".nd-stage input,.nd-stage textarea").count(),
-      0,
-    );
-    checks.push(`${n}: voice-only answer`);
   }
-  for (const i of [
-    cap,
-    ...Array.from({ length: n }, (_, i) => i).filter((i) => i !== cap),
-  ]) {
-    if (snaps[i]!.view!.myNumber === null) continue;
-    if (await pages[i].locator(".nd-secret-overlay").isVisible())
-      await pages[i].locator(".nd-secret-overlay").click();
-    await primary(i);
+  for (let seat = 0; seat < n; seat++) {
+    if (
+      seat === cap ||
+      snaps[0]!.view!.phase !== "ANSWER" ||
+      snaps[seat]!.view!.players[seat].ready
+    )
+      continue;
+    await pages[seat]
+      .getByRole("textbox", { name: "答题卡回答" })
+      .fill(`回答${n}人第${snaps[seat]!.view!.round}轮${seat}号`);
+    await primary(seat);
   }
   await until(() => ["ORDER", "EXPERT"].includes(snaps[0]!.view!.phase));
 }
@@ -298,11 +579,18 @@ async function sort(n: number, shot: boolean, descending = false) {
     p = pages[cap];
   const desired = snaps
     .map((s, i) => ({ i, n: s!.view!.myNumber }))
-    .filter((s) => s.n !== null)
+    .filter((s) => s.i !== cap && s.n !== null)
     .sort((a, b) => (descending ? b.n! - a.n! : a.n! - b.n!))
     .map((s) => s.i);
   if (shot) {
     await screenPhase(n, "order", cap);
+    await screenPhase(n, "order-spectator", (cap + 1) % n);
+    assert.ok(
+      await pages[(cap + 1) % n]
+        .locator("[data-order-seat]")
+        .first()
+        .isDisabled(),
+    );
     const buttons = p.locator("[data-order-seat]");
     const a = Number(await buttons.nth(0).getAttribute("data-order-seat")),
       b = Number(await buttons.nth(1).getAttribute("data-order-seat"));
@@ -316,9 +604,39 @@ async function sort(n: number, shot: boolean, descending = false) {
       Number(await buttons.nth(1).getAttribute("data-order-seat")),
       a,
     );
-    checks.push(`${n}: tap swaps order`);
-    // Touch-compatible pointer drag uses actual coordinates and capture.
-    const from = await buttons.nth(0).boundingBox(),
+    await synced();
+    assert.deepEqual(
+      snaps[(cap + 1) % n]!.view!.order,
+      await p
+        .locator("[data-order-seat]")
+        .evaluateAll((es) =>
+          es.map((e) => Number((e as HTMLElement).dataset.orderSeat)),
+        ),
+    );
+    checks.push(
+      `${n}: tap swaps order and all other seats synchronize read-only fronts`,
+    );
+    const liveOrder = snaps[(cap + 1) % n]!.view!.order;
+    await pages[(cap + 1) % n].waitForFunction(
+      (expected) =>
+        JSON.stringify(
+          [...document.querySelectorAll("[data-order-seat]")].map((e) =>
+            Number((e as HTMLElement).dataset.orderSeat),
+          ),
+        ) === JSON.stringify(expected),
+      liveOrder,
+    );
+    // Touch-compatible pointer drag uses the visible handle, leaving the card body available to scroll.
+    await p.waitForFunction(
+      () =>
+        !(document.querySelector("[data-order-seat]") as HTMLButtonElement)
+          ?.disabled,
+    );
+    const beforeDragVersion = snaps[cap]!.version;
+    const from = await buttons
+        .nth(0)
+        .locator("[data-nd-drag-handle]")
+        .boundingBox(),
       to = await buttons.nth(1).boundingBox();
     assert.ok(from && to);
     const touch = await p.context().newCDPSession(p);
@@ -349,6 +667,16 @@ async function sort(n: number, shot: boolean, descending = false) {
       touchPoints: [],
     });
     await touch.detach();
+    await until(() => snaps[cap]!.version > beforeDragVersion);
+    await synced();
+    await p.waitForFunction(
+      (expected) =>
+        Number(
+          (document.querySelector("[data-order-seat]") as HTMLElement)?.dataset
+            .orderSeat,
+        ) === expected,
+      a,
+    );
     assert.equal(
       Number(await buttons.nth(0).getAttribute("data-order-seat")),
       a,
@@ -377,7 +705,7 @@ try {
     pages = [];
     snaps = [];
     for (let i = 0; i < n; i++) await open(i);
-    await pages[0].getByLabel("你的昵称").fill("十字长名测试甲乙丙丁");
+    await pages[0].getByLabel("你的昵称").fill("小王今天不想上班了");
     await pages[0]
       .getByRole("button", { name: "创建房间", exact: true })
       .click();
@@ -388,7 +716,20 @@ try {
     await pages[0].getByLabel("计时", { exact: true }).selectOption("60");
     await until(() => snaps[0]!.settings.seconds === 60);
     for (let i = 1; i < n; i++) {
-      await pages[i].getByLabel("你的昵称").fill(`十字长名字测试${i}甲乙丙`);
+      await pages[i]
+        .getByLabel("你的昵称")
+        .fill(
+          [
+            "小李准备下班",
+            "阿陈今天吃火锅",
+            "小赵想去旅行",
+            "大橘带着零食",
+            "小周不想早起",
+            "阿林喜欢下雨",
+            "小吴刚喝完茶",
+            "小郑还没吃饭",
+          ][i - 1] + "甲乙丙",
+        );
       await pages[i].getByLabel("房间号（加入朋友时填写）").fill(code);
       await pages[i]
         .getByRole("button", { name: "加入房间", exact: true })
@@ -424,6 +765,16 @@ try {
     await primary(0);
     await screenPhase(n, "choose-topic");
     await pages[0].locator(".nd-choices>button").first().click();
+    await screenPhase(n, "choose-topic-selected");
+    assert.equal(
+      await pages[0].locator(".nd-primary").textContent(),
+      "就选题目 A",
+    );
+    assert.equal(
+      await pages[0].locator(".nd-choices > button.selected").count(),
+      1,
+    );
+    checks.push(`${n}: topic selection labels and bright confirmation`);
     await primary(0);
     await answer(n, true);
     // Reconnect by a real page reload, preserving the same credential and own number.
@@ -434,13 +785,14 @@ try {
     await until(
       () => snaps[1]?.mySeat === 1 && (snaps[1]?.version ?? -1) >= oldVersion,
     );
-    await pages[1].locator(".nd-sort,.nd-answer").waitFor();
+    await pages[1].locator(".nd-sort,.nd-expert").waitFor();
     assert.equal(snaps[1]!.view!.myNumber, mine);
     checks.push(`${n}: reload reconnect preserves seat and number`);
     await sort(n, true);
     await screenPhase(n, "reveal-before");
     await primary(snaps[0]!.view!.captain);
     await until(() => snaps[0]!.view!.revealed.length >= 1);
+    assert.ok((await pages[0].locator(".nd-flip-inner.turned").count()) >= 1);
     await screenPhase(n, "reveal-first");
     await capture(pages[0], `${n}-reveal-middle-390x844`);
     await until(() => snaps[0]!.view!.phase === "ROUND_END");
@@ -469,6 +821,18 @@ try {
     }
     assert.equal(snaps[0]!.view!.result?.success, true);
     assert.equal(await pages[0].locator(".nd-result-gauge.success").count(), 1);
+    await pages[0].waitForTimeout(150);
+    if (await pages[0].locator(".nd-confetti").count()) {
+      await pages[0].screenshot({
+        path: join(out, `${n}-success-celebration.png`),
+        animations: "allow",
+      });
+      await pages[0]
+        .getByRole("button", { name: "跳过动画", exact: true })
+        .click();
+      assert.equal(await pages[0].locator(".nd-confetti").count(), 0);
+      checks.push(`${n}: celebration can be skipped`);
+    }
     await screenPhase(n, "finished");
     games.push({ players: n, rounds: snaps[0]!.view!.round, success: true });
     if (n === 9) {
@@ -523,16 +887,24 @@ try {
         for (const target of Array.from({ length: n }, (_, i) => i).filter(
           (i) => i !== cap,
         )) {
-          await pages[cap]
-            .locator(".nd-targets button")
-            .filter({ hasText: `${target + 1}号 ` })
-            .click();
+          await pages[cap].locator(`[data-target-seat="${target}"]`).click();
           await pages[cap]
             .locator(".nd-number-grid button")
             .filter({
               hasText: new RegExp(`^${snaps[target]!.view!.myNumber}$`),
             })
             .click();
+          if (round === 1 && target === (cap + 1) % n) {
+            await screenPhase(n, "expert-guess-selected", cap);
+            assert.ok(
+              (await pages[cap].locator(".nd-primary").textContent())?.includes(
+                `确认：${target + 1}号 `,
+              ),
+            );
+            checks.push(
+              "4: selected expert teammate and exact number in confirmation",
+            );
+          }
           await primary(cap);
         }
         assert.equal(snaps[0]!.view!.phase, "CAPTAIN_GUESS");

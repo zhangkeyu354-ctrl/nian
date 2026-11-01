@@ -24,6 +24,8 @@ it("recap and entertainment use only actual public history", () => {
     },
   ];
   expect(recapRounds(h)[0].mistakes).toBe(1);
-  expect(entertainmentTitles(h)[0].seat).toBe(0);
+  expect(entertainmentTitles(h)).toEqual([
+    { seat: 2, title: "最离谱答案", detail: "秘密数字被排错 1 次" },
+  ]);
   expect(entertainmentTitles([])).toEqual([]);
 });
