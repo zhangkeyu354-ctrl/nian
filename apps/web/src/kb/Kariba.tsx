@@ -521,7 +521,7 @@ function Pond({ pond, sel, target, onPick, fx, hover }: { pond: number[]; sel: n
           <button
             key={val}
             className={cls}
-            style={{ left: `${50 + 38 * Math.cos(ang)}%`, top: `${50 + 38 * Math.sin(ang)}%`, ["--n" as string]: Math.min(n, 6) }}
+            style={{ left: `${50 + 36 * Math.cos(ang)}%`, top: `${50 + 36 * Math.sin(ang)}%`, ["--n" as string]: Math.min(n, 6) }}
             data-testid={"kb-slot-" + val}
             data-kb-slot={val}
             aria-label={`${ANIMALS[val]}（${val}）${n} 张`}

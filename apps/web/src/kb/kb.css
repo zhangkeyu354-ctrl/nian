@@ -531,3 +531,151 @@
   background: #ffffff0d; border: 1px dashed #ffffff26; box-shadow: none; color: #cfe0d6; opacity: 1;
 }
 .kb-world .kb-dock .kb-wait span::before { content: "⏳ "; }
+
+/* ===== v4 整体场景（2026-11-01）：一张桌面、一套语言 ===== */
+/* 1. 场景：全屏是模糊、调暖的水塘氛围；中间清晰水塘无边框羽化融入 */
+.kb-world .kb-game { position: relative; isolation: isolate; }
+.kb-world .kb-game::before {
+  content: ""; position: absolute; inset: -60px; z-index: -2;
+  background: url(/assets/kariba/pond.webp) center 30% / cover;
+  filter: blur(22px) saturate(0.85) brightness(0.5);
+}
+.kb-world .kb-game::after {
+  content: ""; position: absolute; inset: 0; z-index: -1; pointer-events: none;
+  background:
+    radial-gradient(120% 60% at 50% 40%, transparent 30%, #0e1a14cc 100%),
+    linear-gradient(180deg, #1a120acc 0%, transparent 18%, transparent 60%, #1a120a 100%),
+    linear-gradient(160deg, #ff9a4a22, transparent 50%, #ffcf7a18);
+}
+.kb-world .kb-pond {
+  background: none; box-shadow: none; border-radius: 0; overflow: visible;
+}
+.kb-world .kb-pond::before {
+  content: ""; position: absolute; inset: -9%; z-index: 0; pointer-events: none;
+  background:
+    linear-gradient(160deg, #ffb36b26, transparent 45%, #ffd27a1f),
+    url(/assets/kariba/pond.webp) center / cover;
+  filter: saturate(0.82) contrast(1.02) brightness(0.92) sepia(0.12);
+  -webkit-mask-image: radial-gradient(closest-side, #000 72%, transparent 100%);
+  mask-image: radial-gradient(closest-side, #000 72%, transparent 100%);
+}
+.kb-world .kb-water, .kb-world .kb-rule-hint, .kb-world .kb-slot { z-index: 1; }
+
+/* 2. 动物：站在岸边，脚下是接触阴影 + 状态光圈，不再是贴纸圆盘 */
+.kb-world .kb-pad {
+  inset: auto 10% 6% 10%; height: 22%; border-radius: 50%;
+  background: radial-gradient(closest-side, #0b140ecc, #0b140e55 60%, transparent);
+  box-shadow: none; transition: box-shadow 0.25s, background 0.25s;
+}
+.kb-world .kb-slot .kb-ico { width: 86% !important; height: 86% !important; bottom: 12%; }
+.kb-world .kb-slot.has .kb-ico { filter: drop-shadow(0 2px 0 #fffaf0aa) drop-shadow(0 6px 6px #0008); }
+.kb-world .kb-slot.empty .kb-pad { background: radial-gradient(closest-side, #0b140e88, transparent); }
+.kb-world .kb-slot.empty .kb-ico { opacity: 0.3; filter: brightness(0) invert(1) blur(0.3px); }
+.kb-world .kb-slot.hot .kb-pad { background: radial-gradient(closest-side, #ffd36a, #ffb2366b 55%, transparent); box-shadow: none; }
+.kb-world .kb-slot.sel .kb-pad, .kb-world .kb-slot.drop .kb-pad { background: radial-gradient(closest-side, #ffb27a, #ff8a3d88 55%, transparent); box-shadow: none; }
+.kb-world .kb-slot.target .kb-pad { background: radial-gradient(closest-side, #ff7a6e, #ff5a4e88 55%, transparent); box-shadow: none; animation: kb-glowpulse 0.8s infinite alternate; }
+@keyframes kb-glowpulse { to { transform: scale(1.18); opacity: 0.75; } }
+.kb-world .kb-slot.target::before { top: -2%; }
+
+/* 3. 张数 = 木质计数片；名字 = 小木牌 */
+.kb-world .kb-cnt {
+  right: 2%; top: 10%; min-width: 30px; height: 30px; border-radius: 50%;
+  background: radial-gradient(circle at 35% 30%, #a8743f, #6b4422 70%, #4a2e15);
+  color: #fff4dc !important; font-size: 16px !important;
+  box-shadow: inset 0 1px 0 #ffffff40, inset 0 -2px 0 #0004, 0 0 0 2px #f3e3c3, 0 3px 6px #000a;
+}
+.kb-world .kb-slot.empty .kb-cnt { opacity: 0.55; }
+.kb-world .kb-slot.hot .kb-cnt { background: radial-gradient(circle at 35% 30%, #ffad5c, #d9631f 70%, #a8430f); }
+.kb-world .kb-tag {
+  bottom: 0; padding: 1px 8px 1px 3px; background: linear-gradient(#fbf1dc, #ead3a6); color: #4a3218 !important;
+  box-shadow: inset 0 -1px 0 #c9ab72, 0 2px 4px #0008; font-size: 12px !important;
+}
+.kb-world .kb-slot.empty .kb-tag { opacity: 0.7; }
+.kb-world .kb-rule-hint { background: #2b1d10cc; border: 1px solid #f3e3c355; color: #fff4dc; }
+
+/* 4. 顶部：融进场景的纸质小标签 */
+.kb-world .kb-top { background: none; }
+.kb-world .kb-code, .kb-world .kb-deck {
+  padding: 3px 10px; border-radius: 999px; background: #2b1d10b3; border: 1px solid #f3e3c333; color: #f3e3c3; font-size: 14px; flex: 0 0 auto;
+}
+.kb-world .kb-deck { font-weight: 800; font-size: 15px; margin-right: auto; }
+.kb-world .kb-deck::before { content: "🂠 "; font-weight: 400; }
+.kb-world .kb-timer { background: radial-gradient(#2b1d10 58%, transparent 60%), conic-gradient(var(--c) var(--p), #f3e3c333 0); color: #fff4dc; }
+.kb-world .kb-top .kb-icon { background: #2b1d10b3; border-color: #f3e3c333; box-shadow: none; }
+.kb-world .kb-banner { color: #f3e3c3; text-shadow: 0 1px 2px #000; }
+.kb-world .kb-banner.turn {
+  justify-self: center; align-self: center; margin: 2px auto 0; width: fit-content; padding: 4px 26px; color: #3a1a06; text-shadow: none;
+  background: linear-gradient(#ffb06b, #ff8a3d); clip-path: polygon(0 0, 100% 0, 94% 50%, 100% 100%, 0 100%, 6% 50%);
+}
+
+/* 5. 底部木托盘：预判、名牌、手牌、按钮都放在同一块木头上 */
+.kb-world .kb-side {
+  position: relative; margin-top: 4px; border-radius: 22px 22px 0 0; padding-top: 8px;
+  background:
+    repeating-linear-gradient(92deg, #ffffff05 0 2px, transparent 2px 9px),
+    repeating-linear-gradient(88deg, #0000000d 0 1px, transparent 1px 23px),
+    linear-gradient(180deg, #6a4524, #4b2f17 40%, #3a2412);
+  box-shadow: inset 0 2px 0 #b07a4655, inset 0 -20px 30px #0005, 0 -10px 30px #0009;
+}
+.kb-world .kb-preview { background: #fff4dc; color: #4a3218; border: 0; box-shadow: inset 0 -2px 0 #d8bf8e, 0 3px 8px #0007; margin: 0 14px; }
+.kb-world .kb-preview:empty { display: none; }
+.kb-world .kb-chip .arrow { color: #8a6a3a; }
+.kb-world .kb-seats li {
+  background: linear-gradient(#fbf1dc, #ecd8b0); color: #4a3218; border: 0; border-left: 5px solid #c9ab72;
+  box-shadow: inset 0 -2px 0 #d2b783, 0 3px 6px #0007; border-radius: 10px;
+}
+.kb-world .kb-seats li.t0 { border-left-color: var(--kb-tA); }
+.kb-world .kb-seats li.t1 { border-left-color: var(--kb-tB); }
+.kb-world .kb-seats li.t2 { border-left-color: var(--kb-tC); }
+.kb-world .kb-seats li.t3 { border-left-color: var(--kb-tD); }
+.kb-world .kb-seats li.cur { background: linear-gradient(#fff2d6, #ffd9a8); box-shadow: 0 0 0 3px var(--kb-accent), 0 0 16px #ff8a3daa; }
+.kb-world .kb-seats .kb-name { color: #3a2412; }
+.kb-world .kb-seats .kb-score b { color: #4a3218; }
+.kb-world .kb-seats .kb-score small { color: #8a6a3a; }
+.kb-world .kb-seats .kb-hc i { background: #4a321822; }
+.kb-world .kb-seats .kb-hc i.on { background: #8a5a2b; }
+.kb-world .kb-seats em { background: #4a3218; color: #fff4dc; }
+.kb-world .kb-seats li .kb-team { color: #fff; text-shadow: 0 1px 1px #0006; }
+/* 手牌背景：与包装盒一致的黄昏天空 + 草地 */
+.kb-world .kb-card::before { background: linear-gradient(180deg, #ffd9a0 0%, #ffbe7a 45%, #f4dcae 58%, #d9c08a 100%); }
+.kb-world .kb-card { box-shadow: inset 0 0 0 2px #fffaf0, inset 0 0 0 4px #c9ab72, 0 6px 0 #2a190b55, 0 10px 18px -6px #000c; }
+.kb-world .kb-dock .kb-wait { background: #00000022; border: 1px solid #f3e3c333; color: #f3e3c3; }
+.kb-world .kb-dock .kb-btn:not(.kb-primary) { background: linear-gradient(#fbf1dc, #e6cf9f); color: #4a3218; border: 0; box-shadow: inset 0 -2px 0 #c9ab72, 0 3px 6px #0007; }
+.kb-world .kb-primary:not(:disabled) { box-shadow: inset 0 -3px 0 #c2571a, inset 0 1px 0 #ffd2a8, 0 4px 10px #000a; }
+@media (orientation: landscape) and (max-height: 520px), (min-width: 900px) and (min-height: 560px) {
+  .kb-world .kb-side { margin: 6px 8px 8px 0; border-radius: 22px; }
+}
+
+@media (orientation: portrait) {
+  .kb-world .kb-pond { width: min(100vw, 520px, calc(100dvh - 400px)); }
+}
+@media (orientation: portrait) and (max-height: 700px) {
+  .kb-world .kb-pond { width: min(100vw, calc(100dvh - 366px)); }
+}
+/* v4.1 细节 */
+.kb-world .kb-cnt { right: -6%; top: 2%; }
+.kb-world .kb-slot.empty .kb-ico { opacity: 0.16; }
+.kb-world .kb-slot.empty .kb-pad { background: radial-gradient(closest-side, #0b140e55, transparent); }
+.kb-world .kb-slot.empty .kb-cnt { opacity: 0.4; box-shadow: 0 0 0 2px #f3e3c366; }
+.kb-world .kb-card.sel::after { top: 4px; right: 4px; z-index: 2; }
+.kb-world .kb-hand { padding-top: 16px; }
+@media (orientation: portrait) and (min-height: 860px) {
+  .kb-world .kb-pond { width: min(108vw, 560px, calc(100dvh - 380px)); }
+  .kb-world .kb-slot { width: 29%; }
+}
+/* v4.2 修正：背景层不得撑宽页面；空位不画圈 */
+.kb-world { overflow: clip; }
+.kb-world .kb-game { overflow: clip; max-width: none; }
+@media (orientation: landscape) and (max-height: 520px), (min-width: 900px) and (min-height: 560px) {
+  .kb-world .kb-game { padding-inline: max(0px, calc((100vw - 1200px) / 2)); }
+}
+.kb-world .kb-slot .kb-pad { box-shadow: none !important; }
+@media (orientation: portrait) and (min-height: 860px) {
+  .kb-world .kb-pond { width: min(100vw, 560px, calc(100dvh - 380px)); }
+}
+@media (min-width: 900px) and (min-height: 560px) {
+  .kb-world .kb-side .kb-hand { flex-wrap: wrap; gap: 10px; padding: 14px 12px 0; }
+  .kb-world .kb-side .kb-card { width: 96px; height: 134px; }
+  .kb-world .kb-side .kb-card b { width: 28px; height: 28px; font-size: 16px; }
+  .kb-world .kb-side .kb-card small { font-size: 14px; }
+}
