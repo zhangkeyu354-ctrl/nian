@@ -16,6 +16,7 @@ import { attachReflexRace } from "./rr-rooms.ts";
 import { attachXiabaiwang } from "./xb-rooms.ts";
 import { attachWitchTown } from "./wt-rooms.ts";
 import { attachNaodongScale } from "./nd-rooms.ts";
+import { attachKariba } from "./kb-rooms.ts";
 import {
   EVENTS,
   type Ack,
@@ -91,6 +92,7 @@ const http = createServer((req, res) => {
         xbRooms: xbStore.rooms.size,
         dpRooms: dpStore.rooms.size,
         ndRooms: ndStore.rooms.size,
+        kbRooms: kbStore.rooms.size,
         ...(wtStore
           ? { witchTown: { milestone: "M5_PHONE_UI", rooms: wtStore.size, fullGame: true } }
           : {}),
@@ -172,6 +174,11 @@ const dpStore = attachDrawingParty(io, resolve(process.env.DP_DATA_DIR ?? join(D
 const dmStore = attachDyingMessage(
   io,
   resolve(process.env.DM_DATA_DIR ?? join(DATA, "../dm-rooms")),
+  { maxRooms: MAX_ROOMS, idleMs: ROOM_IDLE_MS },
+);
+const kbStore = attachKariba(
+  io,
+  resolve(process.env.KB_DATA_DIR ?? join(DATA, "../kb-rooms")),
   { maxRooms: MAX_ROOMS, idleMs: ROOM_IDLE_MS },
 );
 const ndStore = attachNaodongScale(

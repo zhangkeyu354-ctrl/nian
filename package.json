@@ -44,7 +44,9 @@
     "verify:nd-protocol": "tsx scripts/verify-nd-protocol.ts",
     "verify:nd-browsers": "tsx scripts/verify-nd-browsers.ts",
     "verify:nd-ui": "tsx scripts/verify-nd-ui.ts",
-    "verify:nd-lobby": "tsx scripts/verify-nd-lobby.ts"
+    "verify:nd-lobby": "tsx scripts/verify-nd-lobby.ts",
+    "verify:kb-browsers": "tsx scripts/verify-kb-browsers.ts",
+    "simulate:kb": "tsx scripts/simulate-kb.ts"
   },
   "devDependencies": {
     "@tailwindcss/vite": "4.3.3",
