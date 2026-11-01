@@ -58,7 +58,8 @@
 /* 大厅 / 加入 / 结算 */
 .kb-panel { max-width: 560px; margin: 0 auto; padding: 20px 16px 120px; display: grid; gap: 14px; }
 .kb-logo { display: grid; justify-items: center; gap: 2px; padding: 8px 0; }
-.kb-logo span { font-size: 44px; filter: drop-shadow(0 4px 8px #0008); }
+.kb-logo img { width: min(100%, 360px); border-radius: 14px; box-shadow: 0 8px 24px #0009; }
+.kb-art { display: block; object-fit: contain; filter: drop-shadow(0 2px 2px #0005); pointer-events: none; }
 .kb-logo b { font-size: 30px; letter-spacing: 4px; color: var(--kb-sand); }
 .kb-logo small { color: var(--kb-muted); letter-spacing: 3px; }
 .kb-join input { min-height: 48px; border-radius: 12px; border: 1px solid #ffffff33; background: #0d1d20; color: var(--kb-text); font-size: 18px; padding: 0 14px; }
@@ -99,7 +100,7 @@
   display: grid; grid-template-rows: auto auto auto; place-items: center; gap: 0; box-shadow: 0 4px 10px #0007; cursor: pointer; font: inherit;
   transition: box-shadow 0.2s, border-color 0.2s;
 }
-.kb-slot .kb-ico { font-size: clamp(18px, 6vw, 26px); line-height: 1.1; }
+.kb-slot .kb-ico { width: clamp(32px, 11vw, 52px); height: clamp(30px, 10vw, 48px); }
 .kb-slot b { font-size: 20px; line-height: 1; }
 .kb-slot small { font-size: 12px; line-height: 1.2; white-space: nowrap; }
 .kb-slot.hot { border-color: var(--kb-warn); box-shadow: 0 0 0 3px #ffc83d66, 0 4px 10px #0007; }
@@ -110,7 +111,7 @@
 @keyframes kb-pulse { to { box-shadow: 0 0 0 6px #ff5a4e66, 0 4px 14px #0009; } }
 @keyframes kb-pop { 50% { scale: 1.12; } }
 .kb-flee { position: absolute; inset: 0; pointer-events: none; }
-.kb-flee i { position: absolute; left: 35%; top: 30%; font-style: normal; font-size: 22px; animation: kb-run 1.4s ease-in forwards; animation-delay: calc(var(--i) * 90ms); }
+.kb-flee i { position: absolute; left: 35%; top: 30%; font-style: normal; width: 34px; height: 34px; animation: kb-run 1.4s ease-in forwards; animation-delay: calc(var(--i) * 90ms); }
 @keyframes kb-run { 0% { transform: none; opacity: 1; } 30% { transform: translate(calc((var(--i) - 2) * 8px), -12px) rotate(-12deg); } 100% { transform: translate(calc((var(--i) - 2) * 30px), 260px) scale(0.6); opacity: 0; } }
 
 .kb-preview { min-height: 52px; margin: 6px 16px 0; padding: 8px 12px; border-radius: 12px; background: #0c1b1d99; text-align: center; font-size: 16px; }
@@ -141,7 +142,7 @@
   transition: transform 0.12s, box-shadow 0.12s, opacity 0.12s;
 }
 .kb-card b { font-size: 20px; line-height: 1; }
-.kb-card span { font-size: 28px; line-height: 1; }
+.kb-card .kb-art { width: 52px; height: 46px; }
 .kb-card small { font-size: 12px; }
 .kb-card.sel { transform: translateY(-10px); border-color: var(--kb-accent); box-shadow: 0 0 0 3px #ff8a3d99, 0 10px 18px #000a; }
 .kb-card.dim { opacity: 0.55; }
@@ -169,7 +170,7 @@
   .kb-side .kb-seats li { min-width: 76px; padding: 4px 8px; }
   .kb-side .kb-hand { padding: 6px 8px 0; }
   .kb-side .kb-card { width: 48px; height: 68px; }
-  .kb-side .kb-card span { font-size: 22px; }
+  .kb-side .kb-card .kb-art { width: 38px; height: 34px; }
   .kb-side .kb-dock { position: static; background: none; padding: 6px 8px; margin-top: auto; }
 }
 @media (min-width: 900px) and (min-height: 600px) {
@@ -179,3 +180,5 @@
 @media (prefers-reduced-motion: reduce) {
   .kb-world *, .kb-world *::before, .kb-world *::after { animation: none !important; transition: none !important; }
 }
+
+.kb-flee .kb-art { width: 100%; height: 100%; }

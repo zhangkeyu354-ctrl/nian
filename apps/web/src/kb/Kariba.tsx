@@ -5,8 +5,10 @@ import { feel, setSoundOn, soundOn } from "../drawing/feel.ts";
 import { createKBRoom, savedName, useKBRoom } from "./kb-net.ts";
 import "./kb.css";
 
-/** 自绘占位图标（官方美术待取，见 docs/kariba/ASSETS.md） */
-export const ICON = ["", "🐭", "🦦", "🦓", "🦒", "🪶", "🐆", "🦏", "🐘"];
+/** 原创动物插画（ChatGPT 生成，用户提供，见 docs/kariba/ASSETS.md） */
+export const Art = ({ v, cls = "" }: { v: number; cls?: string }) => (
+  <img className={"kb-art " + cls} src={`/assets/kariba/${v}.webp`} alt="" draggable={false} />
+);
 const TEAM = ["A", "B", "C", "D"];
 const reduced = () =>
   typeof matchMedia === "function" && matchMedia("(prefers-reduced-motion: reduce)").matches;
@@ -67,7 +69,7 @@ function Join({ net, snap }: { net: Net; snap: KBRoomSnapshot }) {
 function Logo() {
   return (
     <div className="kb-logo">
-      <span>🐭🐘</span>
+      <img src="/assets/kariba/box.webp" alt="卡里巴湖" />
       <b>卡里巴湖</b>
       <small>Kariba</small>
     </div>
@@ -303,7 +305,7 @@ function Game({ net, snap }: { net: Net; snap: KBRoomSnapshot }) {
               onClick={() => toggle(id)}
             >
               <b>{val}</b>
-              <span>{ICON[val]}</span>
+              <Art v={val} />
               <small>{ANIMALS[val]}</small>
             </button>
           );
@@ -384,13 +386,13 @@ function Pond({ pond, sel, target, onPick, fx }: { pond: number[]; sel: number; 
             aria-label={`${ANIMALS[val]}（${val}）${n} 张`}
             onClick={() => onPick(val)}
           >
-            <span className="kb-ico">{ICON[val]}</span>
+            <Art v={val} cls="kb-ico" />
             <b>{n}</b>
             <small>{val} {ANIMALS[val]}</small>
             {chase && chase.type === "CHASE" && chase.target === val && (
               <span className="kb-flee" aria-hidden>
                 {Array.from({ length: Math.min(chase.cards, 6) }, (_, i) => (
-                  <i key={i} style={{ ["--i" as string]: i }}>{ICON[val]}</i>
+                  <i key={i} style={{ ["--i" as string]: i }}><Art v={val} /></i>
                 ))}
               </span>
             )}
