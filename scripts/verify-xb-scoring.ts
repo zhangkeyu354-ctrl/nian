@@ -5,6 +5,7 @@ import { tmpdir } from "node:os";
 import { join } from "node:path";
 import { strict as assert } from "node:assert";
 import { chromium } from "playwright";
+import { io } from "socket.io-client";
 import { createGame, act, viewFor } from "../packages/xiabaiwang/src/engine.ts";
 import { TOPICS } from "../packages/xiabaiwang/src/topics.ts";
 import { assertUiShot } from "./screenshot-check.ts";
@@ -17,6 +18,7 @@ const players = Array.from({ length: 10 }, (_, i) => ({
   name: `${i + 1}号特别长名字的电台朋友`,
 }));
 let final: ReturnType<typeof createGame> | undefined, reveal: typeof final;
+let beforeReveal: typeof final, finalGuess = "";
 let fixtureSeed = 0;
 for (let seed = 1; seed < 500; seed++) {
   let s = createGame(players, seed, TOPICS.slice(0, 20), 2);
@@ -30,6 +32,7 @@ for (let seed = 1; seed < 500; seed++) {
       target: s.truth,
       round: s.round,
     });
+    if (s.round === 20) { beforeReveal = structuredClone(s); finalGuess = liar; }
     s = act(s, s.guesser, { type: "GUESS", target: liar, round: s.round });
     if (s.round === 20) reveal = structuredClone(s);
     s = act(s, s.host, { type: "NEXT", round: s.round });
@@ -43,14 +46,15 @@ for (let seed = 1; seed < 500; seed++) {
     break;
   }
 }
-assert(final && reveal, "need naturally generated tie and negative scores");
+assert(final && reveal && beforeReveal, "need naturally generated tie and negative scores");
 const people = players.map((p, i) => ({
   ...p,
   token: `scoring-fixture-token-${i}`,
 }));
 const discussion = createGame(players, 1);
 for (const [code, state] of [
-  ["SCOR01", reveal],
+  ["SCOR01", beforeReveal],
+  ["SCOR04", beforeReveal],
   ["SCOR02", final],
   ["SCOR03", discussion],
 ] as const) {
@@ -100,21 +104,39 @@ try {
     viewport: { width: 390, height: 844 },
   });
   await ctx.addInitScript(
-    "for(const c of ['SCOR01','SCOR02','SCOR03'])localStorage.setItem('xb-token:'+c,'scoring-fixture-token-0');localStorage.setItem('xb-sound','off');",
+    "for(const c of ['SCOR01','SCOR02','SCOR03','SCOR04'])localStorage.setItem('xb-token:'+c,'scoring-fixture-token-0');localStorage.setItem('xb-sound','off');",
   );
   const page = await ctx.newPage();
   page.on("pageerror", (e) => errors.push(e.message));
+  // Freeze Date.now for the settlement timeline; RAF/image decoding stays live.
   const sizes = [
     { width: 390, height: 844 },
     { width: 844, height: 390 },
   ];
   for (const size of sizes) {
     await page.setViewportSize(size);
-    await page.goto(base + "/?game=xb&room=SCOR01");
+    const code = size.width === 390 ? "SCOR01" : "SCOR04";
+    await page.goto(base + "/?game=xb&room=" + code);
+    await page.locator('.xb-world[data-stage="discussion"]').waitFor();
+    if (await page.getByTestId("xb-tutorial-skip").isVisible())
+      await page.getByTestId("xb-tutorial-skip").click();
+    const frozenAt = Date.now();
+    await page.clock.setFixedTime(new Date(frozenAt));
+    const socket = io(base, { transports: ["websocket"] });
+    await new Promise<void>((resolve, reject) => {socket.once("connect", resolve);socket.once("connect_error", reject);});
+    const emit = (event: string, payload: object) => new Promise<any>((resolve, reject) => socket.timeout(8000).emit(event, payload, (error: any, result: any) => error || !result?.ok ? reject(error ?? Error(result?.error)) : resolve(result)));
+    try {
+      const token = people.find(p => p.id === beforeReveal!.guesser)!.token;
+      await emit("xb:join", { code, token });
+      // The real GUESS command establishes the server reveal timestamp. Restored
+      // historical reveal files have no timestamp and correctly skip animation.
+      await emit("xb:command", { command: { type: "GUESS", target: finalGuess, round: 20 } });
+    } finally { socket.disconnect(); }
     await page.getByTestId("xb-reveal").waitFor();
     await page.evaluate(
       "window.__scoreSequence=[];window.__scoreTimer=setInterval(()=>{const e=document.querySelector('[data-testid=xb-reveal]');if(e){const n=Number(e.getAttribute('data-settlement'));if(n>=0&&window.__scoreSequence.at(-1)!==n)window.__scoreSequence.push(n)}},30);",
     );
+    await page.clock.setFixedTime(new Date(frozenAt + 9700));
     await page.waitForFunction(
       () =>
         document
@@ -128,6 +150,7 @@ try {
       "body",
       "allow",
     );
+    await page.clock.setFixedTime(new Date(frozenAt + 10300));
     await page.waitForFunction(
       () =>
         document
@@ -141,6 +164,7 @@ try {
       "body",
       "allow",
     );
+    await page.clock.setFixedTime(new Date(frozenAt + 10900));
     await page.getByTestId("xb-settlement-total").waitFor();
     await page.getByTestId("xb-settlement-total").scrollIntoViewIfNeeded();
     await assertUiShot(
@@ -155,6 +179,7 @@ try {
       ),
       [0, 1, 2],
     );
+    await page.getByTestId("xb-skip").click();
     await page.waitForFunction(
       () =>
         document
@@ -169,7 +194,7 @@ try {
       "allow",
     );
     await page.reload();
-    await page.getByTestId("xb-skip").click();
+    await page.getByTestId("xb-settlement-total").waitFor();
     assert.equal(await page.getByTestId("xb-settlement-total").count(), 1);
     await page.goto(base + "/?game=xb&room=SCOR02");
     await page.getByTestId("xb-finale").waitFor();

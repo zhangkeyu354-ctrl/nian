@@ -1,0 +1,6 @@
+{
+  "observed": "21 images != 7 expected",
+  "cause": "Each public bribe card now includes an Avatar image and queued luggage image in addition to its direct bribe suitcase image",
+  "scope": "test selector only; expected count remains 7; matches existing verify-ss-ui-art.ts",
+  "productionFilesChanged": []
+}

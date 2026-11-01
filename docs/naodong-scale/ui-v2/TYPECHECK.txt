@@ -1,0 +1,4 @@
+
+> dbd-boardgame-private@0.2.2 typecheck
+> tsc --noEmit
+

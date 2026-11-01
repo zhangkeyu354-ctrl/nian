@@ -1,0 +1,1 @@
+PASS: offline comparison defaults, filters and both before/after images; 0 script errors

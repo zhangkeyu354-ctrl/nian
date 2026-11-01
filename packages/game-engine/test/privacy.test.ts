@@ -70,7 +70,7 @@ describe("联机隐藏信息", () => {
         checked++;
       }
       expect(checked).toBeGreaterThan(50);
-    });
+    }, 30_000); // 全回放逐座位检查，避免全量并行运行时受默认5秒上限影响
 
   it("计划阶段：杀手看不到逃生者已经提交的计划牌", () => {
     const r = replay(1701);

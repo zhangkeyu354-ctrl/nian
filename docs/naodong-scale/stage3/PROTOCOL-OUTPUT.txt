@@ -1,0 +1,94 @@
+
+> dbd-boardgame-private@0.2.2 verify:nd-protocol
+> tsx scripts/verify-nd-protocol.ts
+
+无法恢复脑洞量表房间 ZZZZ.json
+{
+  "games": [
+    {
+      "players": 4,
+      "expert": false,
+      "rounds": 5,
+      "result": "team-success",
+      "actions": 60
+    },
+    {
+      "players": 6,
+      "expert": false,
+      "rounds": 5,
+      "result": "team-success",
+      "actions": 82
+    },
+    {
+      "players": 9,
+      "expert": false,
+      "rounds": 5,
+      "result": "team-success",
+      "actions": 105
+    },
+    {
+      "players": 4,
+      "expert": true,
+      "rounds": 5,
+      "result": "team-success",
+      "actions": 55
+    }
+  ],
+  "checks": 47,
+  "checkDetails": [
+    "non-host settings rejected",
+    "bound token mismatch rejected",
+    "client actor injection rejected",
+    "future versions rejected",
+    "client timeout rejected",
+    "client clock injection rejected",
+    "captain must answer first",
+    "accepted command retry is idempotent",
+    "locked submission cannot be changed",
+    "server-only timeout preserves all numbers and submissions",
+    "locked order cannot be replaced",
+    "token reconnect preserves secret, order and seq",
+    "non-host settings rejected",
+    "bound token mismatch rejected",
+    "client actor injection rejected",
+    "future versions rejected",
+    "client timeout rejected",
+    "client clock injection rejected",
+    "captain must answer first",
+    "accepted command retry is idempotent",
+    "locked submission cannot be changed",
+    "server-only timeout preserves all numbers and submissions",
+    "locked order cannot be replaced",
+    "token reconnect preserves secret, order and seq",
+    "socket server/store rebuild restores the exact committed snapshot and skips corrupt files",
+    "non-host settings rejected",
+    "bound token mismatch rejected",
+    "client actor injection rejected",
+    "future versions rejected",
+    "client timeout rejected",
+    "client clock injection rejected",
+    "accepted command retry is idempotent",
+    "locked submission cannot be changed",
+    "server-only timeout preserves all numbers and submissions",
+    "locked order cannot be replaced",
+    "token reconnect preserves secret, order and seq",
+    "non-host settings rejected",
+    "bound token mismatch rejected",
+    "client actor injection rejected",
+    "future versions rejected",
+    "client timeout rejected",
+    "client clock injection rejected",
+    "captain must answer first",
+    "accepted command retry is idempotent",
+    "locked submission cannot be changed",
+    "server-only timeout preserves all numbers and submissions",
+    "two fresh main.ts processes restore private numbers, order and seq; reveal continues and persists"
+  ],
+  "packetChecks": 54082,
+  "processRecovery": {
+    "processStarts": 2,
+    "packets": 33,
+    "continuedReveals": 1
+  },
+  "failures": 0
+}

@@ -1,0 +1,1345 @@
+[
+  {
+    "id": "nd-orig-0299",
+    "type": "说东西排序类",
+    "origin": "用户示例",
+    "answer_format": "一个东西、一个地点或一句话",
+    "localized": {
+      "text": "你最想要哪种超能力？",
+      "low": "不太想要",
+      "high": "做梦都想要"
+    },
+    "spicy": false,
+    "source": {
+      "kind": "USER_PROVIDED",
+      "ref": "用户在对话提供的示例，2026-10-31"
+    },
+    "status": "DRAFT"
+  },
+  {
+    "id": "nd-orig-0300",
+    "type": "说东西排序类",
+    "origin": "用户示例",
+    "answer_format": "一个东西、一个地点或一句话",
+    "localized": {
+      "text": "早上醒来，发现旁边躺着一个完全没想到的人。是谁？",
+      "low": "惊吓",
+      "high": "惊喜"
+    },
+    "spicy": false,
+    "source": {
+      "kind": "USER_PROVIDED",
+      "ref": "用户在对话提供的示例，2026-10-31"
+    },
+    "status": "DRAFT"
+  },
+  {
+    "id": "nd-orig-0301",
+    "type": "说东西排序类",
+    "origin": "原创",
+    "answer_format": "一个东西、一个地点或一句话",
+    "localized": {
+      "text": "你一觉醒来变成了一种动物。是什么？",
+      "low": "还能过",
+      "high": "一天都过不了"
+    },
+    "spicy": false,
+    "source": {
+      "kind": "ORIGINAL",
+      "ref": "本项目原创"
+    },
+    "status": "DRAFT"
+  },
+  {
+    "id": "nd-orig-0302",
+    "type": "说东西排序类",
+    "origin": "原创",
+    "answer_format": "一个东西、一个地点或一句话",
+    "localized": {
+      "text": "你能让一样东西变大一百倍。你选什么？",
+      "low": "没啥好处",
+      "high": "赚大了"
+    },
+    "spicy": false,
+    "source": {
+      "kind": "ORIGINAL",
+      "ref": "本项目原创"
+    },
+    "status": "DRAFT"
+  },
+  {
+    "id": "nd-orig-0303",
+    "type": "说东西排序类",
+    "origin": "原创",
+    "answer_format": "一个东西、一个地点或一句话",
+    "localized": {
+      "text": "你每天只能说一句话。留下哪句最管用？",
+      "low": "基本白说",
+      "high": "走哪都好使"
+    },
+    "spicy": false,
+    "source": {
+      "kind": "ORIGINAL",
+      "ref": "本项目原创"
+    },
+    "status": "DRAFT"
+  },
+  {
+    "id": "nd-orig-0304",
+    "type": "说东西排序类",
+    "origin": "原创",
+    "answer_format": "一个东西、一个地点或一句话",
+    "localized": {
+      "text": "每天随机有五分钟，你会变成某样东西，自己控制不了。是什么？",
+      "low": "影响不大",
+      "high": "没法生活"
+    },
+    "spicy": false,
+    "source": {
+      "kind": "ORIGINAL",
+      "ref": "本项目原创"
+    },
+    "status": "DRAFT"
+  },
+  {
+    "id": "nd-orig-0305",
+    "type": "说东西排序类",
+    "origin": "原创",
+    "answer_format": "一个东西、一个地点或一句话",
+    "localized": {
+      "text": "家里突然有一样东西会开口说话。你最怕是哪样？",
+      "low": "随便它说",
+      "high": "连夜搬走"
+    },
+    "spicy": false,
+    "source": {
+      "kind": "ORIGINAL",
+      "ref": "本项目原创"
+    },
+    "status": "DRAFT"
+  },
+  {
+    "id": "nd-orig-0307",
+    "type": "说东西排序类",
+    "origin": "原创",
+    "answer_format": "一个东西、一个地点或一句话",
+    "localized": {
+      "text": "你能删掉一种日常麻烦。最想删掉什么？",
+      "low": "可有可无",
+      "high": "人生轻松一半"
+    },
+    "spicy": false,
+    "source": {
+      "kind": "ORIGINAL",
+      "ref": "本项目原创"
+    },
+    "status": "DRAFT"
+  },
+  {
+    "id": "nd-orig-0308",
+    "type": "说东西排序类",
+    "origin": "原创",
+    "answer_format": "一个东西、一个地点或一句话",
+    "localized": {
+      "text": "有一种东西会一直跟着你，甩也甩不掉。是什么？",
+      "low": "不耽误事",
+      "high": "出门都难"
+    },
+    "spicy": false,
+    "source": {
+      "kind": "ORIGINAL",
+      "ref": "本项目原创"
+    },
+    "status": "DRAFT"
+  },
+  {
+    "id": "nd-orig-0309",
+    "type": "说东西排序类",
+    "origin": "原创",
+    "answer_format": "一个东西、一个地点或一句话",
+    "localized": {
+      "text": "你可以瞬间学会一种本事。学什么？",
+      "low": "用不上",
+      "high": "天天都想用"
+    },
+    "spicy": false,
+    "source": {
+      "kind": "ORIGINAL",
+      "ref": "本项目原创"
+    },
+    "status": "DRAFT"
+  },
+  {
+    "id": "nd-orig-0310",
+    "type": "说东西排序类",
+    "origin": "原创",
+    "answer_format": "一个东西、一个地点或一句话",
+    "localized": {
+      "text": "以后下雨不下水，改下别的东西。下什么？",
+      "low": "还能出门",
+      "high": "谁也别出门"
+    },
+    "spicy": false,
+    "source": {
+      "kind": "ORIGINAL",
+      "ref": "本项目原创"
+    },
+    "status": "DRAFT"
+  },
+  {
+    "id": "nd-orig-0311",
+    "type": "说东西排序类",
+    "origin": "原创",
+    "answer_format": "一个东西、一个地点或一句话",
+    "localized": {
+      "text": "你能从梦里带出一样东西。最想带什么？",
+      "low": "拿了也白拿",
+      "high": "醒了都笑出来"
+    },
+    "spicy": false,
+    "source": {
+      "kind": "ORIGINAL",
+      "ref": "本项目原创"
+    },
+    "status": "DRAFT"
+  },
+  {
+    "id": "nd-orig-0313",
+    "type": "说东西排序类",
+    "origin": "原创",
+    "answer_format": "一个东西、一个地点或一句话",
+    "localized": {
+      "text": "每天一睁眼，枕头边都会出现一样东西。是什么？",
+      "low": "不想要",
+      "high": "天天盼着醒"
+    },
+    "spicy": false,
+    "source": {
+      "kind": "ORIGINAL",
+      "ref": "本项目原创"
+    },
+    "status": "DRAFT"
+  },
+  {
+    "id": "nd-orig-0314",
+    "type": "说东西排序类",
+    "origin": "原创",
+    "answer_format": "一个东西、一个地点或一句话",
+    "localized": {
+      "text": "你能凭空变出一种吃的，但只能变这一种。选什么？",
+      "low": "几天就腻",
+      "high": "怎么吃都行"
+    },
+    "spicy": false,
+    "source": {
+      "kind": "ORIGINAL",
+      "ref": "本项目原创"
+    },
+    "status": "DRAFT"
+  },
+  {
+    "id": "nd-orig-0318",
+    "type": "说东西排序类",
+    "origin": "原创",
+    "answer_format": "一个东西、一个地点或一句话",
+    "localized": {
+      "text": "你能把一种东西的保质期变成永久。选什么？",
+      "low": "没多大用",
+      "high": "太需要了"
+    },
+    "spicy": false,
+    "source": {
+      "kind": "ORIGINAL",
+      "ref": "本项目原创"
+    },
+    "status": "DRAFT"
+  },
+  {
+    "id": "nd-orig-0320",
+    "type": "说东西排序类",
+    "origin": "原创",
+    "answer_format": "一个东西、一个地点或一句话",
+    "localized": {
+      "text": "抽奖抽到一个月不用做一件事。最想免掉什么？",
+      "low": "没区别",
+      "high": "太幸福了"
+    },
+    "spicy": false,
+    "source": {
+      "kind": "ORIGINAL",
+      "ref": "本项目原创"
+    },
+    "status": "DRAFT"
+  },
+  {
+    "id": "nd-orig-0321",
+    "type": "说东西排序类",
+    "origin": "原创",
+    "answer_format": "一个东西、一个地点或一句话",
+    "localized": {
+      "text": "你要搬去一个虚构世界住一年。去哪儿？",
+      "low": "宁愿不去",
+      "high": "不想回来"
+    },
+    "spicy": false,
+    "source": {
+      "kind": "ORIGINAL",
+      "ref": "本项目原创"
+    },
+    "status": "DRAFT"
+  },
+  {
+    "id": "nd-orig-0322",
+    "type": "说东西排序类",
+    "origin": "原创",
+    "answer_format": "一个东西、一个地点或一句话",
+    "localized": {
+      "text": "你只能带一样东西回到十年前。带什么？",
+      "low": "没啥变化",
+      "high": "人生改写"
+    },
+    "spicy": false,
+    "source": {
+      "kind": "ORIGINAL",
+      "ref": "本项目原创"
+    },
+    "status": "DRAFT"
+  },
+  {
+    "id": "nd-orig-0324",
+    "type": "说东西排序类",
+    "origin": "原创",
+    "answer_format": "一个东西、一个地点或一句话",
+    "localized": {
+      "text": "你醒来发现自己成了某个虚构角色。是谁？",
+      "low": "倒霉透了",
+      "high": "求之不得"
+    },
+    "spicy": false,
+    "source": {
+      "kind": "ORIGINAL",
+      "ref": "本项目原创"
+    },
+    "status": "DRAFT"
+  },
+  {
+    "id": "nd-orig-0326",
+    "type": "说东西排序类",
+    "origin": "原创",
+    "answer_format": "一个东西、一个地点或一句话",
+    "localized": {
+      "text": "别人每次见你，都会先送你一样东西。你希望是什么？",
+      "low": "完全不需要",
+      "high": "多多益善"
+    },
+    "spicy": false,
+    "source": {
+      "kind": "ORIGINAL",
+      "ref": "本项目原创"
+    },
+    "status": "DRAFT"
+  },
+  {
+    "id": "nd-orig-0328",
+    "type": "说东西排序类",
+    "origin": "原创",
+    "answer_format": "一个东西、一个地点或一句话",
+    "localized": {
+      "text": "成年约会对象的床底下藏着一样东西。是什么？",
+      "low": "可以理解",
+      "high": "完全不想问"
+    },
+    "spicy": true,
+    "source": {
+      "kind": "ORIGINAL",
+      "ref": "本项目原创"
+    },
+    "status": "DRAFT"
+  },
+  {
+    "id": "nd-orig-0329",
+    "type": "说东西排序类",
+    "origin": "原创",
+    "answer_format": "一个东西、一个地点或一句话",
+    "localized": {
+      "text": "成人约会时，对方包里掉出一样东西。最不想是什么？",
+      "low": "不影响约会",
+      "high": "直接想走"
+    },
+    "spicy": true,
+    "source": {
+      "kind": "ORIGINAL",
+      "ref": "本项目原创"
+    },
+    "status": "DRAFT"
+  },
+  {
+    "id": "nd-orig-0332",
+    "type": "说东西排序类",
+    "origin": "原创",
+    "answer_format": "一个东西、一个地点或一句话",
+    "localized": {
+      "text": "你有一种和上厕所有关的超能力。是什么？",
+      "low": "没啥用",
+      "high": "太需要了"
+    },
+    "spicy": true,
+    "source": {
+      "kind": "ORIGINAL",
+      "ref": "本项目原创"
+    },
+    "status": "DRAFT"
+  },
+  {
+    "id": "nd-orig-0338",
+    "type": "说东西排序类",
+    "origin": "原创",
+    "answer_format": "一个东西、一个地点或一句话",
+    "localized": {
+      "text": "成年伴侣要给你安排一种特别的叫醒方式。是什么？",
+      "low": "只想接着睡",
+      "high": "一下就醒了"
+    },
+    "spicy": true,
+    "source": {
+      "kind": "ORIGINAL",
+      "ref": "本项目原创"
+    },
+    "status": "DRAFT"
+  },
+  {
+    "id": "nd-orig-0341",
+    "type": "场景选择类",
+    "origin": "原创",
+    "answer_format": "一个东西、一个地点或一句话",
+    "localized": {
+      "text": "你获得一天隐身时间，但必须待在一个地方。你选哪儿？",
+      "low": "浪费了",
+      "high": "太值了"
+    },
+    "spicy": false,
+    "source": {
+      "kind": "ORIGINAL",
+      "ref": "本项目原创"
+    },
+    "status": "DRAFT"
+  },
+  {
+    "id": "nd-orig-0343",
+    "type": "场景选择类",
+    "origin": "原创",
+    "answer_format": "一个东西、一个地点或一句话",
+    "localized": {
+      "text": "你回到家，发现客厅里坐着一位虚构角色。是谁？",
+      "low": "想赶紧送走",
+      "high": "舍不得他走"
+    },
+    "spicy": false,
+    "source": {
+      "kind": "ORIGINAL",
+      "ref": "本项目原创"
+    },
+    "status": "DRAFT"
+  },
+  {
+    "id": "nd-orig-0344",
+    "type": "场景选择类",
+    "origin": "原创",
+    "answer_format": "一个东西、一个地点或一句话",
+    "localized": {
+      "text": "你必须在一个公共场所睡一晚。你选哪儿？",
+      "low": "睡不着",
+      "high": "比家里还舒服"
+    },
+    "spicy": false,
+    "source": {
+      "kind": "ORIGINAL",
+      "ref": "本项目原创"
+    },
+    "status": "DRAFT"
+  },
+  {
+    "id": "nd-orig-0347",
+    "type": "场景选择类",
+    "origin": "原创",
+    "answer_format": "一个东西、一个地点或一句话",
+    "localized": {
+      "text": "你可以暂停时间十分钟。第一件想干的事是什么？",
+      "low": "有点可惜",
+      "high": "太会用了"
+    },
+    "spicy": false,
+    "source": {
+      "kind": "ORIGINAL",
+      "ref": "本项目原创"
+    },
+    "status": "DRAFT"
+  },
+  {
+    "id": "nd-orig-0348",
+    "type": "场景选择类",
+    "origin": "原创",
+    "answer_format": "一个东西、一个地点或一句话",
+    "localized": {
+      "text": "你一开口，所有人都会忍不住笑。你最不想在哪儿说话？",
+      "low": "没什么影响",
+      "high": "后果很严重"
+    },
+    "spicy": false,
+    "source": {
+      "kind": "ORIGINAL",
+      "ref": "本项目原创"
+    },
+    "status": "DRAFT"
+  },
+  {
+    "id": "nd-orig-0349",
+    "type": "场景选择类",
+    "origin": "原创",
+    "answer_format": "一个东西、一个地点或一句话",
+    "localized": {
+      "text": "你坐进出租车，司机说今天可以免费去任何地方。你说去哪儿？",
+      "low": "不占便宜",
+      "high": "赚大了"
+    },
+    "spicy": false,
+    "source": {
+      "kind": "ORIGINAL",
+      "ref": "本项目原创"
+    },
+    "status": "DRAFT"
+  },
+  {
+    "id": "nd-orig-0350",
+    "type": "场景选择类",
+    "origin": "原创",
+    "answer_format": "一个东西、一个地点或一句话",
+    "localized": {
+      "text": "你突然能看见物品以前经历过的事。先看哪样东西？",
+      "low": "没什么好看",
+      "high": "后悔看了"
+    },
+    "spicy": false,
+    "source": {
+      "kind": "ORIGINAL",
+      "ref": "本项目原创"
+    },
+    "status": "DRAFT"
+  },
+  {
+    "id": "nd-orig-0351",
+    "type": "场景选择类",
+    "origin": "原创",
+    "answer_format": "一个东西、一个地点或一句话",
+    "localized": {
+      "text": "你可以穿越进一部虚构作品里吃一顿饭。去哪儿？",
+      "low": "不想动筷",
+      "high": "吃完不想走"
+    },
+    "spicy": false,
+    "source": {
+      "kind": "ORIGINAL",
+      "ref": "本项目原创"
+    },
+    "status": "DRAFT"
+  },
+  {
+    "id": "nd-orig-0354",
+    "type": "场景选择类",
+    "origin": "原创",
+    "answer_format": "一个东西、一个地点或一句话",
+    "localized": {
+      "text": "你必须和一种动物交换一天生活。选哪种？",
+      "low": "很遭罪",
+      "high": "不想换回来"
+    },
+    "spicy": false,
+    "source": {
+      "kind": "ORIGINAL",
+      "ref": "本项目原创"
+    },
+    "status": "DRAFT"
+  },
+  {
+    "id": "nd-orig-0356",
+    "type": "场景选择类",
+    "origin": "原创",
+    "answer_format": "一个东西、一个地点或一句话",
+    "localized": {
+      "text": "你能在一个地方开一扇直达家里的门。开在哪儿？",
+      "low": "用不上",
+      "high": "天天都要用"
+    },
+    "spicy": false,
+    "source": {
+      "kind": "ORIGINAL",
+      "ref": "本项目原创"
+    },
+    "status": "DRAFT"
+  },
+  {
+    "id": "nd-orig-0357",
+    "type": "场景选择类",
+    "origin": "用户示例",
+    "answer_format": "一个东西、一个地点或一句话",
+    "localized": {
+      "text": "你突然憋不住，在公共场合拉肚子了。最怕是在哪儿？",
+      "low": "能接受",
+      "high": "不能接受"
+    },
+    "spicy": true,
+    "source": {
+      "kind": "USER_PROVIDED",
+      "ref": "用户在对话提供的示例，2026-10-31"
+    },
+    "status": "DRAFT"
+  },
+  {
+    "id": "nd-orig-0358",
+    "type": "场景选择类",
+    "origin": "用户示例",
+    "answer_format": "一个东西、一个地点或一句话",
+    "localized": {
+      "text": "你在急诊室值班，来了个直肠里卡着异物的病人。会是什么？",
+      "low": "不太严重",
+      "high": "极其严重"
+    },
+    "spicy": true,
+    "source": {
+      "kind": "USER_PROVIDED",
+      "ref": "用户在对话提供的示例，2026-10-31"
+    },
+    "status": "DRAFT"
+  },
+  {
+    "id": "nd-orig-0359",
+    "type": "场景选择类",
+    "origin": "用户示例",
+    "answer_format": "一个东西、一个地点或一句话",
+    "localized": {
+      "text": "你去捐精，房间里只有一本杂志。会是什么杂志？",
+      "low": "毫无帮助",
+      "high": "正合适"
+    },
+    "spicy": true,
+    "source": {
+      "kind": "USER_PROVIDED",
+      "ref": "用户在对话提供的示例，2026-10-31"
+    },
+    "status": "DRAFT"
+  },
+  {
+    "id": "nd-orig-0361",
+    "type": "场景选择类",
+    "origin": "原创",
+    "answer_format": "一个东西、一个地点或一句话",
+    "localized": {
+      "text": "成年约会对象说想和你独处一会儿。去哪儿？",
+      "low": "毫无暧昧",
+      "high": "气氛拉满"
+    },
+    "spicy": true,
+    "source": {
+      "kind": "ORIGINAL",
+      "ref": "本项目原创"
+    },
+    "status": "DRAFT"
+  },
+  {
+    "id": "nd-orig-0362",
+    "type": "场景选择类",
+    "origin": "原创",
+    "answer_format": "一个东西、一个地点或一句话",
+    "localized": {
+      "text": "成年人刚开始交往，就要一起做件事。做什么会有点太快？",
+      "low": "很正常",
+      "high": "快得想后退"
+    },
+    "spicy": true,
+    "source": {
+      "kind": "ORIGINAL",
+      "ref": "本项目原创"
+    },
+    "status": "DRAFT"
+  },
+  {
+    "id": "nd-orig-0364",
+    "type": "场景选择类",
+    "origin": "原创",
+    "answer_format": "一个东西、一个地点或一句话",
+    "localized": {
+      "text": "你在一个绝不能出声的地方，突然很想放屁。会是哪里？",
+      "low": "没人在意",
+      "high": "当场社死"
+    },
+    "spicy": true,
+    "source": {
+      "kind": "ORIGINAL",
+      "ref": "本项目原创"
+    },
+    "status": "DRAFT"
+  },
+  {
+    "id": "nd-orig-0365",
+    "type": "场景选择类",
+    "origin": "原创",
+    "answer_format": "一个东西、一个地点或一句话",
+    "localized": {
+      "text": "你穿错了成年伴侣的衣服出门，到了才发现。你最不想到了哪儿？",
+      "low": "无所谓",
+      "high": "想原地消失"
+    },
+    "spicy": true,
+    "source": {
+      "kind": "ORIGINAL",
+      "ref": "本项目原创"
+    },
+    "status": "DRAFT"
+  },
+  {
+    "id": "nd-orig-0368",
+    "type": "场景选择类",
+    "origin": "原创",
+    "answer_format": "一个东西、一个地点或一句话",
+    "localized": {
+      "text": "成年人约会到一半，突然遇见一个熟人。最怕是什么身份的人？",
+      "low": "没什么影响",
+      "high": "不想继续约了"
+    },
+    "spicy": true,
+    "source": {
+      "kind": "ORIGINAL",
+      "ref": "本项目原创"
+    },
+    "status": "DRAFT"
+  },
+  {
+    "id": "nd-orig-0157",
+    "type": "说东西排序类",
+    "origin": "原创",
+    "answer_format": "一个东西或一个词",
+    "localized": {
+      "text": "朋友说给你带了点家乡特产。打开是什么，你会愣住？",
+      "low": "没什么稀奇",
+      "high": "大开眼界"
+    },
+    "spicy": false,
+    "source": {
+      "kind": "ORIGINAL",
+      "ref": "本项目原创"
+    },
+    "status": "DRAFT"
+  },
+  {
+    "id": "nd-orig-0158",
+    "type": "说东西排序类",
+    "origin": "原创",
+    "answer_format": "一个东西或一个词",
+    "localized": {
+      "text": "带一样东西去露营，能让整队人都觉得没白带你。带什么？",
+      "low": "用处不大",
+      "high": "离了不行"
+    },
+    "spicy": false,
+    "source": {
+      "kind": "ORIGINAL",
+      "ref": "本项目原创"
+    },
+    "status": "DRAFT"
+  },
+  {
+    "id": "nd-orig-0159",
+    "type": "说东西排序类",
+    "origin": "原创",
+    "answer_format": "一个东西或一个词",
+    "localized": {
+      "text": "在高铁小桌板上摆个什么，旁边的人会忍不住多看两眼？",
+      "low": "没人在意",
+      "high": "全程围观"
+    },
+    "spicy": false,
+    "source": {
+      "kind": "ORIGINAL",
+      "ref": "本项目原创"
+    },
+    "status": "DRAFT"
+  },
+  {
+    "id": "nd-orig-0160",
+    "type": "说东西排序类",
+    "origin": "原创",
+    "answer_format": "一个东西或一个词",
+    "localized": {
+      "text": "朋友把这个落在你家，你能忍多久才催他来拿？选一样东西。",
+      "low": "不急着拿",
+      "high": "马上拿走"
+    },
+    "spicy": false,
+    "source": {
+      "kind": "ORIGINAL",
+      "ref": "本项目原创"
+    },
+    "status": "DRAFT"
+  },
+  {
+    "id": "nd-orig-0161",
+    "type": "说东西排序类",
+    "origin": "原创",
+    "answer_format": "一个东西或一个词",
+    "localized": {
+      "text": "哪种食物适合边赶路边吃？",
+      "low": "一点不费事",
+      "high": "根本吃不了"
+    },
+    "spicy": false,
+    "source": {
+      "kind": "ORIGINAL",
+      "ref": "本项目原创"
+    },
+    "status": "DRAFT"
+  },
+  {
+    "id": "nd-orig-0162",
+    "type": "说东西排序类",
+    "origin": "原创",
+    "answer_format": "一个东西或一个词",
+    "localized": {
+      "text": "奶茶里加点什么，能让你喝之前犹豫一下？",
+      "low": "可以接受",
+      "high": "实在下不去嘴"
+    },
+    "spicy": false,
+    "source": {
+      "kind": "ORIGINAL",
+      "ref": "本项目原创"
+    },
+    "status": "DRAFT"
+  },
+  {
+    "id": "nd-orig-0163",
+    "type": "说东西排序类",
+    "origin": "原创",
+    "answer_format": "一个东西或一个词",
+    "localized": {
+      "text": "带哪样东西去公司，会让同事以为你准备辞职？",
+      "low": "看不出来",
+      "high": "就差说再见"
+    },
+    "spicy": false,
+    "source": {
+      "kind": "ORIGINAL",
+      "ref": "本项目原创"
+    },
+    "status": "DRAFT"
+  },
+  {
+    "id": "nd-orig-0164",
+    "type": "说东西排序类",
+    "origin": "原创",
+    "answer_format": "一个东西或一个词",
+    "localized": {
+      "text": "睡前发现床上有个什么，你会立刻清醒？",
+      "low": "翻身接着睡",
+      "high": "彻底睡不着"
+    },
+    "spicy": false,
+    "source": {
+      "kind": "ORIGINAL",
+      "ref": "本项目原创"
+    },
+    "status": "DRAFT"
+  },
+  {
+    "id": "nd-orig-0165",
+    "type": "说东西排序类",
+    "origin": "原创",
+    "answer_format": "一个东西或一个词",
+    "localized": {
+      "text": "电梯快关门了，有人抱着什么进来，你会想换一趟？",
+      "low": "无所谓",
+      "high": "立刻出去"
+    },
+    "spicy": false,
+    "source": {
+      "kind": "ORIGINAL",
+      "ref": "本项目原创"
+    },
+    "status": "DRAFT"
+  },
+  {
+    "id": "nd-orig-0171",
+    "type": "说东西排序类",
+    "origin": "原创",
+    "answer_format": "一个东西或一个词",
+    "localized": {
+      "text": "谁要是在办公室热了这份饭，同事就都知道他在吃什么。是哪道菜？",
+      "low": "几乎没味道",
+      "high": "满屋都知道"
+    },
+    "spicy": false,
+    "source": {
+      "kind": "ORIGINAL",
+      "ref": "本项目原创"
+    },
+    "status": "DRAFT"
+  },
+  {
+    "id": "nd-orig-0173",
+    "type": "说东西排序类",
+    "origin": "原创",
+    "answer_format": "一个东西或一个词",
+    "localized": {
+      "text": "一开门看见什么，你会怀疑室友趁你不在干了大事？",
+      "low": "没什么变化",
+      "high": "不敢认这是家"
+    },
+    "spicy": false,
+    "source": {
+      "kind": "ORIGINAL",
+      "ref": "本项目原创"
+    },
+    "status": "DRAFT"
+  },
+  {
+    "id": "nd-orig-0175",
+    "type": "说东西排序类",
+    "origin": "原创",
+    "answer_format": "一个东西或一个词",
+    "localized": {
+      "text": "朋友说借你的东西用两天。借的是什么，你会一直惦记？",
+      "low": "想都想不起来",
+      "high": "天天问进度"
+    },
+    "spicy": false,
+    "source": {
+      "kind": "ORIGINAL",
+      "ref": "本项目原创"
+    },
+    "status": "DRAFT"
+  },
+  {
+    "id": "nd-orig-0176",
+    "type": "说东西排序类",
+    "origin": "原创",
+    "answer_format": "一个东西或一个词",
+    "localized": {
+      "text": "哪种食物吃起来最容易弄得满身都是？",
+      "low": "干干净净",
+      "high": "得换身衣服"
+    },
+    "spicy": false,
+    "source": {
+      "kind": "ORIGINAL",
+      "ref": "本项目原创"
+    },
+    "status": "DRAFT"
+  },
+  {
+    "id": "nd-orig-0177",
+    "type": "说东西排序类",
+    "origin": "原创",
+    "answer_format": "一个东西或一个词",
+    "localized": {
+      "text": "朋友说自己在减肥，桌上却摆着什么？",
+      "low": "还能理解",
+      "high": "完全不信"
+    },
+    "spicy": false,
+    "source": {
+      "kind": "ORIGINAL",
+      "ref": "本项目原创"
+    },
+    "status": "DRAFT"
+  },
+  {
+    "id": "nd-orig-0178",
+    "type": "说东西排序类",
+    "origin": "原创",
+    "answer_format": "一个东西或一个词",
+    "localized": {
+      "text": "租房看房时，你最不想在角落里看见什么？",
+      "low": "不影响入住",
+      "high": "扭头就走"
+    },
+    "spicy": false,
+    "source": {
+      "kind": "ORIGINAL",
+      "ref": "本项目原创"
+    },
+    "status": "DRAFT"
+  },
+  {
+    "id": "nd-orig-0180",
+    "type": "说东西排序类",
+    "origin": "原创",
+    "answer_format": "一个东西或一个词",
+    "localized": {
+      "text": "什么东西放进洗衣机，洗完会让你后悔没掏口袋？",
+      "low": "没多大影响",
+      "high": "整桶都完了"
+    },
+    "spicy": false,
+    "source": {
+      "kind": "ORIGINAL",
+      "ref": "本项目原创"
+    },
+    "status": "DRAFT"
+  },
+  {
+    "id": "nd-orig-0181",
+    "type": "说东西排序类",
+    "origin": "原创",
+    "answer_format": "一个东西或一个词",
+    "localized": {
+      "text": "哪种零食一开袋，就很难只吃一口？",
+      "low": "尝尝就够",
+      "high": "停不下来"
+    },
+    "spicy": false,
+    "source": {
+      "kind": "ORIGINAL",
+      "ref": "本项目原创"
+    },
+    "status": "DRAFT"
+  },
+  {
+    "id": "nd-orig-0182",
+    "type": "说东西排序类",
+    "origin": "原创",
+    "answer_format": "一个东西或一个词",
+    "localized": {
+      "text": "搬家时，哪样东西会让你后悔当初买了它？",
+      "low": "顺手就搬了",
+      "high": "恨不得送人"
+    },
+    "spicy": false,
+    "source": {
+      "kind": "ORIGINAL",
+      "ref": "本项目原创"
+    },
+    "status": "DRAFT"
+  },
+  {
+    "id": "nd-orig-0183",
+    "type": "说东西排序类",
+    "origin": "原创",
+    "answer_format": "一个东西或一个词",
+    "localized": {
+      "text": "只靠一件衣服上的图案，能有多容易认出你？选个图案。",
+      "low": "容易撞衫",
+      "high": "全场唯一"
+    },
+    "spicy": false,
+    "source": {
+      "kind": "ORIGINAL",
+      "ref": "本项目原创"
+    },
+    "status": "DRAFT"
+  },
+  {
+    "id": "nd-orig-0185",
+    "type": "说东西排序类",
+    "origin": "原创",
+    "answer_format": "一个东西或一个词",
+    "localized": {
+      "text": "停电时摸黑碰到什么，你会先愣一下才敢开灯确认？",
+      "low": "完全不慌",
+      "high": "吓得不敢动"
+    },
+    "spicy": false,
+    "source": {
+      "kind": "ORIGINAL",
+      "ref": "本项目原创"
+    },
+    "status": "DRAFT"
+  },
+  {
+    "id": "nd-orig-0186",
+    "type": "说东西排序类",
+    "origin": "原创",
+    "answer_format": "一个东西或一个词",
+    "localized": {
+      "text": "哪种动物要是在你家借住一晚，你会担心家还在不在？",
+      "low": "省心得很",
+      "high": "一夜翻天"
+    },
+    "spicy": false,
+    "source": {
+      "kind": "ORIGINAL",
+      "ref": "本项目原创"
+    },
+    "status": "DRAFT"
+  },
+  {
+    "id": "nd-orig-0207",
+    "type": "说东西排序类",
+    "origin": "原创",
+    "answer_format": "一个东西或一个词",
+    "localized": {
+      "text": "第一次去成年约会对象家，玄关放着什么，你会想多问一句？",
+      "low": "毫不在意",
+      "high": "满肚子疑问"
+    },
+    "spicy": true,
+    "source": {
+      "kind": "ORIGINAL",
+      "ref": "本项目原创"
+    },
+    "status": "DRAFT"
+  },
+  {
+    "id": "nd-orig-0208",
+    "type": "说东西排序类",
+    "origin": "原创",
+    "answer_format": "一个东西或一个词",
+    "localized": {
+      "text": "跟成年伴侣出门过夜，包里带个什么，会让对方心领神会？",
+      "low": "看不出意思",
+      "high": "一眼就懂"
+    },
+    "spicy": true,
+    "source": {
+      "kind": "ORIGINAL",
+      "ref": "本项目原创"
+    },
+    "status": "DRAFT"
+  },
+  {
+    "id": "nd-orig-0210",
+    "type": "说东西排序类",
+    "origin": "原创",
+    "answer_format": "一个东西或一个词",
+    "localized": {
+      "text": "成年人约会到一半，手机弹出哪种提醒最尴尬？",
+      "low": "扫一眼就过",
+      "high": "赶紧扣住手机"
+    },
+    "spicy": true,
+    "source": {
+      "kind": "ORIGINAL",
+      "ref": "本项目原创"
+    },
+    "status": "DRAFT"
+  },
+  {
+    "id": "nd-orig-0223",
+    "type": "说一句话类",
+    "origin": "原创",
+    "answer_format": "一句话",
+    "localized": {
+      "text": "理发师问你满意吗。你怎么让他知道你不太满意？",
+      "low": "听不出不满",
+      "high": "气氛凝固"
+    },
+    "spicy": false,
+    "source": {
+      "kind": "ORIGINAL",
+      "ref": "本项目原创"
+    },
+    "status": "DRAFT"
+  },
+  {
+    "id": "nd-orig-0250",
+    "type": "场景选择类",
+    "origin": "原创",
+    "answer_format": "一句话",
+    "localized": {
+      "text": "超市只给你一分钟免费拿东西。你先冲哪个区？",
+      "low": "占不到便宜",
+      "high": "稳赚不亏"
+    },
+    "spicy": false,
+    "source": {
+      "kind": "ORIGINAL",
+      "ref": "本项目原创"
+    },
+    "status": "DRAFT"
+  },
+  {
+    "id": "nd-orig-0251",
+    "type": "场景选择类",
+    "origin": "原创",
+    "answer_format": "一句话",
+    "localized": {
+      "text": "公司年会让你自带奖品，预算二十块。你买什么？",
+      "low": "没人想抽到",
+      "high": "全场都想要"
+    },
+    "spicy": false,
+    "source": {
+      "kind": "ORIGINAL",
+      "ref": "本项目原创"
+    },
+    "status": "DRAFT"
+  },
+  {
+    "id": "nd-orig-0255",
+    "type": "场景选择类",
+    "origin": "原创",
+    "answer_format": "一句话",
+    "localized": {
+      "text": "朋友让你帮忙占个座。你放个什么在椅子上，别人就不敢坐？",
+      "low": "随手挪开",
+      "high": "碰都不敢碰"
+    },
+    "spicy": false,
+    "source": {
+      "kind": "ORIGINAL",
+      "ref": "本项目原创"
+    },
+    "status": "DRAFT"
+  },
+  {
+    "id": "nd-orig-0259",
+    "type": "场景选择类",
+    "origin": "原创",
+    "answer_format": "一句话",
+    "localized": {
+      "text": "同事让你帮忙带早饭。你带什么回来，他会觉得你对早饭理解有问题？",
+      "low": "很常见",
+      "high": "压根不像早饭"
+    },
+    "spicy": false,
+    "source": {
+      "kind": "ORIGINAL",
+      "ref": "本项目原创"
+    },
+    "status": "DRAFT"
+  },
+  {
+    "id": "nd-orig-0260",
+    "type": "场景选择类",
+    "origin": "原创",
+    "answer_format": "一句话",
+    "localized": {
+      "text": "有人来你家，你来不及收拾。先把什么藏起来？",
+      "low": "不藏也没事",
+      "high": "一定不能看见"
+    },
+    "spicy": false,
+    "source": {
+      "kind": "ORIGINAL",
+      "ref": "本项目原创"
+    },
+    "status": "DRAFT"
+  },
+  {
+    "id": "nd-orig-0272",
+    "type": "场景选择类",
+    "origin": "原创",
+    "answer_format": "一句话",
+    "localized": {
+      "text": "你想在周一请假。给出的理由是什么？",
+      "low": "一听就是借口",
+      "high": "实在没法不批"
+    },
+    "spicy": false,
+    "source": {
+      "kind": "ORIGINAL",
+      "ref": "本项目原创"
+    },
+    "status": "DRAFT"
+  },
+  {
+    "id": "nd-orig-0021",
+    "type": "说东西排序类",
+    "origin": "原创",
+    "answer_format": "一个东西或一个词",
+    "localized": {
+      "text": "说出一样最不适合放进透明背包的日用品。",
+      "low": "很正常",
+      "high": "很可疑"
+    },
+    "spicy": false,
+    "source": {
+      "kind": "ORIGINAL",
+      "ref": "本项目原创"
+    },
+    "status": "DRAFT"
+  },
+  {
+    "id": "nd-orig-0027",
+    "type": "说东西排序类",
+    "origin": "原创",
+    "answer_format": "一个东西或一个词",
+    "localized": {
+      "text": "说出一样适合放在摸鱼专用桌上的东西。",
+      "low": "装得像",
+      "high": "一眼露馅"
+    },
+    "spicy": false,
+    "source": {
+      "kind": "ORIGINAL",
+      "ref": "本项目原创"
+    },
+    "status": "DRAFT"
+  },
+  {
+    "id": "nd-orig-0031",
+    "type": "说东西排序类",
+    "origin": "原创",
+    "answer_format": "一个东西或一个词",
+    "localized": {
+      "text": "说出一样放在枕头下面会让人睡不踏实的东西。",
+      "low": "不影响睡觉",
+      "high": "根本睡不了"
+    },
+    "spicy": false,
+    "source": {
+      "kind": "ORIGINAL",
+      "ref": "本项目原创"
+    },
+    "status": "DRAFT"
+  },
+  {
+    "id": "nd-orig-0045",
+    "type": "说东西排序类",
+    "origin": "原创",
+    "answer_format": "一个东西或一个词",
+    "localized": {
+      "text": "说出一样拿在手里等电梯会让人觉得你很忙的东西。",
+      "low": "看着很闲",
+      "high": "忙得要命"
+    },
+    "spicy": false,
+    "source": {
+      "kind": "ORIGINAL",
+      "ref": "本项目原创"
+    },
+    "status": "DRAFT"
+  },
+  {
+    "id": "nd-orig-0103",
+    "type": "说一句话类",
+    "origin": "原创",
+    "answer_format": "一句话",
+    "localized": {
+      "text": "说一句成年人想邀请约会对象再多待一会儿的话。",
+      "low": "客气挽留",
+      "high": "明显在撩"
+    },
+    "spicy": true,
+    "source": {
+      "kind": "ORIGINAL",
+      "ref": "本项目原创"
+    },
+    "status": "DRAFT"
+  },
+  {
+    "id": "nd-orig-0107",
+    "type": "说一句话类",
+    "origin": "原创",
+    "answer_format": "一句话",
+    "localized": {
+      "text": "说一句解释自己为什么在浴室里待了太久的话。",
+      "low": "没什么奇怪",
+      "high": "越听越可疑"
+    },
+    "spicy": true,
+    "source": {
+      "kind": "ORIGINAL",
+      "ref": "本项目原创"
+    },
+    "status": "DRAFT"
+  }
+]

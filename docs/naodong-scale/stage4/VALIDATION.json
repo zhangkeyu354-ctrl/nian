@@ -1,0 +1,73 @@
+{
+  "date": "2026-11-01",
+  "stage": 4,
+  "bank": {
+    "total": 102,
+    "spicy": 20,
+    "changed": 11,
+    "added": 23,
+    "extra_term_replacements": 0,
+    "forbidden_word_matches": 0,
+    "endpoints_preserved": true
+  },
+  "initialR2Tests": {
+    "files": 99,
+    "passed": 1424,
+    "failed": 0
+  },
+  "finalTests": {
+    "files": 100,
+    "passed": 1426,
+    "failed": 0
+  },
+  "targeted": {
+    "files": 4,
+    "passed": 63,
+    "failed": 0
+  },
+  "typecheck": "PASS",
+  "build": "PASS_WITH_CHUNK_SIZE_WARNING",
+  "protocol": {
+    "checks": 47,
+    "packetChecks": 54082,
+    "failures": 0
+  },
+  "ui": {
+    "games": [
+      {
+        "players": 4,
+        "rounds": 5,
+        "success": true
+      },
+      {
+        "players": 4,
+        "expert": true,
+        "rounds": 5,
+        "success": true
+      },
+      {
+        "players": 6,
+        "rounds": 5,
+        "success": true
+      },
+      {
+        "players": 9,
+        "rounds": 5,
+        "success": true
+      },
+      {
+        "players": 9,
+        "rounds": 2,
+        "success": false
+      }
+    ],
+    "checks": 16,
+    "packetChecks": 2131,
+    "domPrivacyChecks": 19,
+    "screenshots": 122,
+    "layoutChecks": 122,
+    "errors": []
+  },
+  "pushed": false,
+  "deployed": false
+}

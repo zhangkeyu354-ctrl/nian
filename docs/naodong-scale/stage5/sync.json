@@ -1,0 +1,23 @@
+{
+  "untracked": 891,
+  "missing": [],
+  "changed": [],
+  "lineEndingsRestored": 91,
+  "head": "a010a5a9919b5bbce83f2e8262182d6f51f236c8",
+  "main": "a010a5a9919b5bbce83f2e8262182d6f51f236c8",
+  "stash": "f87c97e2d936a54bd749e2879022ac296035340e",
+  "conflicts": [],
+  "mixedLineEndingsRestored": [
+    "tmp/rk-stage5-wt-diagnostic.mjs",
+    "tmp/rk-stage5-wt-fix.mjs",
+    "tmp/ss-research/create-overview.py",
+    "tmp/ss-research/final-hint-smoke.ts",
+    "tmp/ss-research/premerge-test-run.ps1",
+    "tmp/ss-research/run-final-full.ps1",
+    "tmp/ss-research/run-stage3-full-retry.ps1",
+    "tmp/ss-research/run-stage3-full.ps1",
+    "tmp/ss-research/stage5-regression-runner.ps1",
+    "tmp/wt-animation-candidate.mjs",
+    "tmp/wt-animation-probe.mjs"
+  ]
+}

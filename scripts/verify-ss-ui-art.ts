@@ -494,6 +494,8 @@ try {
     const box = p.locator('[data-game="ss"]');
     await p.getByTestId("game-ss").waitFor();
     await p.getByTestId("game-ss").scrollIntoViewIfNeeded();
+    // Contrast metadata and screenshots must sample the same settled entry frame.
+    await p.waitForFunction(() => getComputedStyle(document.querySelector(".hall")!).opacity === "1");
     assert(
       (await p.getByTestId("game-ss").innerText()).includes(
         "汽水走私犯 Soda Smugglers",

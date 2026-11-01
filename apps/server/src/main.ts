@@ -15,6 +15,7 @@ import { attachCodenames } from "./cn-rooms.ts";
 import { attachReflexRace } from "./rr-rooms.ts";
 import { attachXiabaiwang } from "./xb-rooms.ts";
 import { attachWitchTown } from "./wt-rooms.ts";
+import { attachNaodongScale } from "./nd-rooms.ts";
 import {
   EVENTS,
   type Ack,
@@ -89,6 +90,7 @@ const http = createServer((req, res) => {
         rrRooms: rrStore.rooms.size,
         xbRooms: xbStore.rooms.size,
         dpRooms: dpStore.rooms.size,
+        ndRooms: ndStore.rooms.size,
         ...(wtStore
           ? { witchTown: { milestone: "M5_PHONE_UI", rooms: wtStore.size, fullGame: true } }
           : {}),
@@ -152,6 +154,11 @@ const http = createServer((req, res) => {
 });
 
 const io = new Server(http, { cors: { origin: true } });
+// Each enabled game installs one connection/disconnect handler. Keep a finite
+// budget above the current multi-game count instead of disabling leak warnings.
+const GAME_LISTENER_LIMIT = 16;
+io.of("/").setMaxListeners(GAME_LISTENER_LIMIT);
+io.on("connection", (socket) => socket.setMaxListeners(GAME_LISTENER_LIMIT));
 /** 女巫镇：M5 手机界面完成，默认开启（WT_DISABLE=1 可关闭）。张数为候选59，房间内已提示待核实。 */
 const wtStore = process.env.WT_DISABLE !== "1"
   ? attachWitchTown(
@@ -166,6 +173,15 @@ const dmStore = attachDyingMessage(
   io,
   resolve(process.env.DM_DATA_DIR ?? join(DATA, "../dm-rooms")),
   { maxRooms: MAX_ROOMS, idleMs: ROOM_IDLE_MS },
+);
+const ndStore = attachNaodongScale(
+  io,
+  resolve(process.env.ND_DATA_DIR ?? join(DATA, "../nd-rooms")),
+  {
+    maxRooms: MAX_ROOMS,
+    idleMs: ROOM_IDLE_MS,
+    allowFixedSeed: process.env.ND_ALLOW_FIXED_SEED === "1",
+  },
 );
 const rkStore = attachRummikub(
   io,

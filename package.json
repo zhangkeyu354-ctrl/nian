@@ -40,7 +40,11 @@
     "verify:rr-browsers": "tsx scripts/verify-rr-browsers.ts",
     "verify:xb-ui-v3": "tsx scripts/verify-xb-ui-v3.ts",
     "verify:xb-art": "tsx scripts/verify-xb-art-v4.ts",
-    "verify:xb-word-change": "tsx scripts/verify-xb-word-change.ts"
+    "verify:xb-word-change": "tsx scripts/verify-xb-word-change.ts",
+    "verify:nd-protocol": "tsx scripts/verify-nd-protocol.ts",
+    "verify:nd-browsers": "tsx scripts/verify-nd-browsers.ts",
+    "verify:nd-ui": "tsx scripts/verify-nd-ui.ts",
+    "verify:nd-lobby": "tsx scripts/verify-nd-lobby.ts"
   },
   "devDependencies": {
     "@tailwindcss/vite": "4.3.3",

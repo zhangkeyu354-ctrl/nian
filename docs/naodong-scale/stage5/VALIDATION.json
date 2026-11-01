@@ -1,0 +1,58 @@
+{
+  "stage": 5,
+  "executionComplete": true,
+  "availableRegressionCommands": 43,
+  "finalPassedCommands": 43,
+  "finalFailedCommands": 0,
+  "allRequestedPassed": false,
+  "requiredUnavailable": [
+    "老二哲学：当前main及工作区没有代码或浏览器验收入口"
+  ],
+  "conditionalSkips": [
+    "卡里巴湖：未在main，按条件跳过"
+  ],
+  "historicalFailedExecutions": 5,
+  "interruptedAttempts": 2,
+  "unitTests": {
+    "files": 100,
+    "passed": 1426,
+    "failed": 0
+  },
+  "ndProtocol": {
+    "checks": 47,
+    "networkProjections": 54082,
+    "failed": 0
+  },
+  "ndBrowserProtocol": {
+    "players": [
+      4,
+      6,
+      9
+    ],
+    "checks": 21,
+    "networkChecks": 2172,
+    "domChecks": 3202,
+    "failed": 0
+  },
+  "ndUI": {
+    "games": 5,
+    "checks": 19,
+    "screens": 131,
+    "networkChecks": 2131,
+    "domPrivacySeats": 19,
+    "failed": 0
+  },
+  "homeChecks": 5,
+  "homeContrast": {
+    "passed": 15,
+    "failed": 0
+  },
+  "otherEngineStyleChanges": false,
+  "axeComplexBackgroundIncomplete": {
+    "ssUI": 1979,
+    "ssArt": 2747
+  },
+  "pushed": false,
+  "deployed": false,
+  "merged": false
+}

@@ -1,0 +1,7 @@
+
+> dbd-boardgame-private@0.2.2 verify:replays
+> tsx scripts/verify-replays.ts
+
+Replay 1701: survivor, every event reproduced, SHA-256 003023f949f2c4873d031fac0c3f2c32eea1ef48861459f02a2bd9566f5a066a
+Replay 2903: survivor, every event reproduced, SHA-256 957d9d25558d5622a6b47d08c42d178fb6db55ac0f298e40658e2e97e570a91c
+Replay 4111: killer, every event reproduced, SHA-256 2fa6a8fa6f5eabbdcc72d83b5683cb6b81b1a0b22a6aedbbd64d9bad84e4463f

@@ -1,0 +1,805 @@
+{
+  "baseCommit": "a010a5a9919b5bbce83f2e8262182d6f51f236c8",
+  "branch": "codex/naodong-scale",
+  "finishedLocal": "2026-11-01T10:52:14.042606",
+  "commands": [
+    {
+      "command": "npm test",
+      "passed": 1426,
+      "failed": 0,
+      "scope": "测试（100文件）",
+      "log": "npm-test-final.log"
+    },
+    {
+      "command": "npm run typecheck",
+      "passed": 1,
+      "failed": 0,
+      "scope": "执行，TS诊断错误0",
+      "log": "typecheck-final.log"
+    },
+    {
+      "command": "npm run build",
+      "passed": 1,
+      "failed": 0,
+      "scope": "构建；已有主chunk体积提示，非错误",
+      "log": "build-final.log"
+    },
+    {
+      "command": "npm run verify:nd-lobby",
+      "passed": 5,
+      "failed": 0,
+      "scope": "首页游戏盒/正式入口/真实建房/离座检查",
+      "log": "nd-lobby-final.log"
+    },
+    {
+      "id": "replays",
+      "command": "npm run verify:replays",
+      "passed": 3,
+      "failed": 0,
+      "scope": "局逐事件回放",
+      "log": "replays.log",
+      "firstExitCode": 0
+    },
+    {
+      "id": "lan-protocol",
+      "command": "npm run verify:lan-protocol",
+      "passed": 3,
+      "failed": 0,
+      "scope": "局；605 条命令、3025 次视图核对、64 次预期非法拒绝",
+      "log": "lan-protocol.log",
+      "firstExitCode": 0
+    },
+    {
+      "id": "cn-protocol",
+      "command": "npm run verify:cn-protocol",
+      "passed": 12,
+      "failed": 0,
+      "scope": "检查组",
+      "log": "cn-protocol.log",
+      "firstExitCode": 0
+    },
+    {
+      "id": "nd-protocol",
+      "command": "npm run verify:nd-protocol",
+      "passed": 47,
+      "failed": 0,
+      "scope": "检查；54082 次视图核对，含两次全新进程恢复",
+      "log": "nd-protocol.log",
+      "firstExitCode": 0
+    },
+    {
+      "id": "mobile-interfaces",
+      "command": "npm run verify:mobile-interfaces",
+      "passed": "197 + 64",
+      "failed": 0,
+      "scope": "捕获测试 + 实际手机界面场景（三步管线均通过）",
+      "log": "mobile-interfaces-browser.log",
+      "firstExitCode": 0
+    },
+    {
+      "id": "lan-lobby",
+      "command": "npm run verify:lan-lobby",
+      "passed": 3,
+      "failed": 0,
+      "scope": "大厅人数/阵营场景",
+      "log": "lan-lobby.log",
+      "firstExitCode": 0
+    },
+    {
+      "id": "lan-browsers",
+      "command": "npm run verify:lan-browsers",
+      "passed": 2,
+      "failed": 0,
+      "scope": "整局；337 条 UI 命令、343 次隐私帧核对、10 次完整棋盘截图核对",
+      "log": "lan-browsers.log",
+      "firstExitCode": 0
+    },
+    {
+      "id": "ma-browsers",
+      "command": "npm run verify:ma-browsers",
+      "passed": 4,
+      "failed": 0,
+      "scope": "场比赛（1 个4人整局），速度切换正常",
+      "log": "ma-browsers.log",
+      "firstExitCode": 0
+    },
+    {
+      "id": "cn-browsers",
+      "command": "npm run verify:cn-browsers",
+      "passed": 2,
+      "failed": 0,
+      "scope": "局，4 个隔离上下文",
+      "log": "cn-browsers.log",
+      "firstExitCode": 0
+    },
+    {
+      "id": "dm-browsers",
+      "command": "npm run verify:dm-browsers",
+      "passed": 1,
+      "failed": 0,
+      "scope": "4人完整对局",
+      "log": "dm-browsers.log",
+      "firstExitCode": 0
+    },
+    {
+      "id": "dm-teamplay",
+      "command": "npm run verify:dm-teamplay",
+      "passed": 1,
+      "failed": 0,
+      "scope": "8人团队协作场景",
+      "log": "dm-teamplay.log",
+      "firstExitCode": 0
+    },
+    {
+      "id": "dm-assets",
+      "command": "npx tsx scripts/verify-dm-assets.ts",
+      "passed": 153,
+      "failed": 0,
+      "scope": "素材，另检查桌面/360px布局",
+      "log": "dm-assets.log",
+      "firstExitCode": 0
+    },
+    {
+      "id": "dm-photo-visual",
+      "command": "npx tsx scripts/verify-dm-photo-visual.ts",
+      "passed": 15,
+      "failed": 0,
+      "scope": "高清角色+原生标签与手机/桌面验证（现行HD入口别名）",
+      "log": "dm-photo-visual.log",
+      "firstExitCode": 0
+    },
+    {
+      "id": "dm-hd-visual",
+      "command": "npx tsx scripts/verify-dm-hd-visual.ts",
+      "passed": 15,
+      "failed": 0,
+      "scope": "高清角色+原生标签与手机/桌面验证",
+      "log": "dm-hd-visual.log",
+      "firstExitCode": 0
+    },
+    {
+      "id": "drawing-browsers",
+      "command": "npx tsx scripts/verify-drawing-browsers.ts",
+      "passed": 2,
+      "failed": 0,
+      "scope": "模式的真实浏览器完整流程",
+      "log": "drawing-browsers.log",
+      "firstExitCode": 0
+    },
+    {
+      "id": "drawing-eight",
+      "command": "npx tsx scripts/verify-drawing-studio-eight.ts",
+      "passed": 2,
+      "failed": 0,
+      "scope": "8人画布/工具场景",
+      "log": "drawing-eight.log",
+      "firstExitCode": 0
+    },
+    {
+      "id": "drawing-clear",
+      "command": "npx tsx scripts/verify-drawing-canvas-clear.ts",
+      "passed": 14,
+      "failed": 0,
+      "scope": "画布清理/布局/导出场景",
+      "log": "drawing-clear.log",
+      "firstExitCode": 0
+    },
+    {
+      "id": "drawing-party",
+      "command": "npx tsx scripts/verify-drawing-party.ts",
+      "passed": 16,
+      "failed": 0,
+      "scope": "隔离复跑整局：tp/fa各3–10人；首轮14局通过后1次建房失败",
+      "log": "drawing-party-retry.log",
+      "firstExitCode": 1
+    },
+    {
+      "id": "drawing-load",
+      "command": "npx tsx scripts/verify-drawing-load.ts",
+      "passed": 200,
+      "failed": 0,
+      "scope": "8人笔迹包，8个客户端各收到25个私密增量；首轮1次建房失败",
+      "log": "drawing-load-retry.log",
+      "firstExitCode": 1
+    },
+    {
+      "id": "rk-browsers",
+      "command": "npx tsx scripts/verify-rk-browsers.ts",
+      "passed": 11,
+      "failed": 0,
+      "scope": "检查，含2/3/4人完整对局",
+      "log": "rk-browsers.log",
+      "firstExitCode": 0
+    },
+    {
+      "id": "rk-ui",
+      "command": "npx tsx scripts/verify-rk-ui.ts",
+      "passed": 29,
+      "failed": 0,
+      "scope": "正式UI截图/布局/图像断言场景",
+      "log": "rk-ui.log",
+      "firstExitCode": 0
+    },
+    {
+      "id": "rk-xp-browsers",
+      "command": "npx tsx scripts/verify-rk-xp-browsers.ts",
+      "passed": 4,
+      "failed": 0,
+      "scope": "检查+13张截图；5人162回合、6人135回合整局",
+      "log": "rk-xp-browsers.log",
+      "firstExitCode": 0
+    },
+    {
+      "id": "xb-topics",
+      "command": "npm run verify:xb-topics",
+      "passed": 160,
+      "failed": 0,
+      "scope": "题库条目检查（类型64/64/32）",
+      "log": "xb-topics.log",
+      "firstExitCode": 0
+    },
+    {
+      "id": "xb-browsers",
+      "command": "npm run verify:xb-browsers",
+      "passed": 3,
+      "failed": 0,
+      "scope": "3/6/10人整局，共19轮",
+      "log": "xb-browsers.log",
+      "firstExitCode": 0
+    },
+    {
+      "id": "xb-feel",
+      "command": "npm run verify:xb-feel",
+      "passed": 1,
+      "failed": 0,
+      "scope": "完整交互脚本；8项特性报告通过，1646帧采样最低每秒141帧（桌面仿真）",
+      "log": "xb-feel.log",
+      "firstExitCode": 0
+    },
+    {
+      "id": "xb-layout",
+      "command": "npm run verify:xb-layout",
+      "passed": 48,
+      "failed": 0,
+      "scope": "阶段布局样例",
+      "log": "xb-layout.log",
+      "firstExitCode": 0
+    },
+    {
+      "id": "xb-ui-v3",
+      "command": "npm run verify:xb-ui-v3",
+      "passed": 30,
+      "failed": 0,
+      "scope": "截图/交互场景",
+      "log": "xb-ui-v3.log",
+      "firstExitCode": 0
+    },
+    {
+      "id": "xb-art",
+      "command": "npm run verify:xb-art",
+      "passed": 42,
+      "failed": 0,
+      "scope": "美术/交互截图用例",
+      "log": "xb-art.log",
+      "firstExitCode": 0
+    },
+    {
+      "id": "xb-word-change",
+      "command": "npm run verify:xb-word-change",
+      "passed": 1,
+      "failed": 0,
+      "scope": "完整换词场景（含重连、角色/分数保留和答案隐私）",
+      "log": "xb-word-change.log",
+      "firstExitCode": 0
+    },
+    {
+      "id": "xb-audio",
+      "command": "npx tsx scripts/verify-xb-audio.ts",
+      "passed": 9,
+      "failed": 0,
+      "scope": "音效离线渲染响度/峰值样例",
+      "log": "xb-audio.log",
+      "firstExitCode": 0
+    },
+    {
+      "id": "ss-protocol",
+      "command": "npm run verify:ss-protocol",
+      "passed": 61,
+      "failed": 0,
+      "scope": "检查；6局、5188次视图核对",
+      "log": "ss-protocol.log",
+      "firstExitCode": 0
+    },
+    {
+      "id": "ss-browsers",
+      "command": "npm run verify:ss-browsers",
+      "passed": 37,
+      "failed": 0,
+      "scope": "检查；6局、3454次网络核对、2675次DOM核对",
+      "log": "ss-browsers.log",
+      "firstExitCode": 0
+    },
+    {
+      "id": "ss-ui",
+      "command": "npx tsx scripts/verify-ss-ui-v1.ts",
+      "passed": 71,
+      "failed": 0,
+      "scope": "检查；50张截图、4134像素样本全通过；axe复杂背景未完成1979项",
+      "log": "ss-ui-retry-final.log",
+      "firstExitCode": 1
+    },
+    {
+      "id": "ss-art",
+      "command": "npx tsx scripts/verify-ss-ui-art.ts",
+      "passed": 89,
+      "failed": 0,
+      "scope": "检查；66张截图、5633像素样本全通过；axe复杂背景未完成2747项",
+      "log": "ss-art-retry-final.log",
+      "firstExitCode": 1
+    },
+    {
+      "id": "rr-protocol",
+      "command": "npm run verify:rr-protocol",
+      "passed": 15,
+      "failed": 0,
+      "scope": "协议检查组",
+      "log": "rr-protocol.log",
+      "firstExitCode": 0
+    },
+    {
+      "id": "rr-browsers",
+      "command": "npm run verify:rr-browsers",
+      "passed": 6,
+      "failed": 0,
+      "scope": "浏览器验收步骤",
+      "log": "rr-browsers.log",
+      "firstExitCode": 0
+    },
+    {
+      "id": "wt-browsers",
+      "command": "npx tsx scripts/verify-witch-town-browsers.ts",
+      "passed": 1,
+      "failed": 0,
+      "scope": "4人整局，2176次布局检查、0溢出/页面错误",
+      "log": "wt-browsers.log",
+      "firstExitCode": 0
+    },
+    {
+      "id": "nd-browsers",
+      "command": "npm run verify:nd-browsers",
+      "passed": 21,
+      "failed": 0,
+      "scope": "4/6/9人三局五轮；2172网络、3202DOM核对",
+      "log": "nd-browsers.log",
+      "firstExitCode": 0
+    },
+    {
+      "id": "nd-ui",
+      "command": "npm run verify:nd-ui",
+      "passed": 19,
+      "failed": 0,
+      "scope": "正式UI检查；5局、131张截图、2131网络投影、19座位隐私检查",
+      "log": "nd-ui-final.log",
+      "firstExitCode": 0
+    }
+  ],
+  "rawRunnerResults": {
+    "data": "C:\\Users\\Lenovo\\AppData\\Local\\Temp\\nd-stage5-YPNiX9",
+    "active": null,
+    "results": [
+      {
+        "id": "replays",
+        "display": "npm run verify:replays",
+        "started": "2026-10-31T16:22:02.926Z",
+        "finished": "2026-10-31T16:22:03.348Z",
+        "durationMs": 417,
+        "exitCode": 0,
+        "log": "replays.log"
+      },
+      {
+        "id": "lan-protocol",
+        "display": "npm run verify:lan-protocol",
+        "started": "2026-10-31T16:22:03.350Z",
+        "finished": "2026-10-31T16:22:20.667Z",
+        "durationMs": 17316,
+        "exitCode": 0,
+        "log": "lan-protocol.log"
+      },
+      {
+        "id": "cn-protocol",
+        "display": "npm run verify:cn-protocol",
+        "started": "2026-10-31T16:22:20.668Z",
+        "finished": "2026-10-31T16:22:36.857Z",
+        "durationMs": 16188,
+        "exitCode": 0,
+        "log": "cn-protocol.log"
+      },
+      {
+        "id": "nd-protocol",
+        "display": "npm run verify:nd-protocol",
+        "started": "2026-10-31T16:22:36.858Z",
+        "finished": "2026-10-31T16:23:10.127Z",
+        "durationMs": 33268,
+        "exitCode": 0,
+        "log": "nd-protocol.log"
+      },
+      {
+        "id": "mobile-interfaces",
+        "display": "npm run verify:mobile-interfaces",
+        "started": "2026-10-31T16:23:10.127Z",
+        "finished": "2026-10-31T16:23:15.659Z",
+        "durationMs": 5530,
+        "exitCode": 0,
+        "log": "mobile-interfaces.log"
+      },
+      {
+        "id": "mobile-interfaces-collect",
+        "display": "tsx scripts/collect-ui-scenarios.ts",
+        "started": "2026-10-31T16:23:15.660Z",
+        "finished": "2026-10-31T16:23:16.045Z",
+        "durationMs": 384,
+        "exitCode": 0,
+        "log": "mobile-interfaces-collect.log"
+      },
+      {
+        "id": "mobile-interfaces-browser",
+        "display": "tsx scripts/verify-mobile-interfaces.ts",
+        "started": "2026-10-31T16:23:16.045Z",
+        "finished": "2026-10-31T16:24:20.545Z",
+        "durationMs": 64499,
+        "exitCode": 0,
+        "log": "mobile-interfaces-browser.log"
+      },
+      {
+        "id": "lan-lobby",
+        "display": "npm run verify:lan-lobby",
+        "started": "2026-10-31T16:24:20.545Z",
+        "finished": "2026-10-31T16:24:45.495Z",
+        "durationMs": 24949,
+        "exitCode": 0,
+        "log": "lan-lobby.log"
+      },
+      {
+        "id": "lan-browsers",
+        "display": "npm run verify:lan-browsers",
+        "started": "2026-10-31T16:24:45.496Z",
+        "finished": "2026-10-31T16:30:28.369Z",
+        "durationMs": 342872,
+        "exitCode": 0,
+        "log": "lan-browsers.log"
+      },
+      {
+        "id": "ma-browsers",
+        "display": "npm run verify:ma-browsers",
+        "started": "2026-10-31T16:30:28.370Z",
+        "finished": "2026-10-31T16:41:17.433Z",
+        "durationMs": 649062,
+        "exitCode": 0,
+        "log": "ma-browsers.log"
+      },
+      {
+        "id": "cn-browsers",
+        "display": "npm run verify:cn-browsers",
+        "started": "2026-10-31T16:41:17.434Z",
+        "finished": "2026-10-31T16:42:26.562Z",
+        "durationMs": 69127,
+        "exitCode": 0,
+        "log": "cn-browsers.log"
+      },
+      {
+        "id": "dm-browsers",
+        "display": "npm run verify:dm-browsers",
+        "started": "2026-10-31T16:42:26.563Z",
+        "finished": "2026-10-31T16:42:47.376Z",
+        "durationMs": 20812,
+        "exitCode": 0,
+        "log": "dm-browsers.log"
+      },
+      {
+        "id": "dm-teamplay",
+        "display": "npm run verify:dm-teamplay",
+        "started": "2026-10-31T16:42:47.377Z",
+        "finished": "2026-10-31T16:43:09.080Z",
+        "durationMs": 21702,
+        "exitCode": 0,
+        "log": "dm-teamplay.log"
+      },
+      {
+        "id": "dm-assets",
+        "display": "npx tsx scripts/verify-dm-assets.ts",
+        "started": "2026-10-31T16:43:09.081Z",
+        "finished": "2026-10-31T16:43:13.845Z",
+        "durationMs": 4762,
+        "exitCode": 0,
+        "log": "dm-assets.log"
+      },
+      {
+        "id": "dm-photo-visual",
+        "display": "npx tsx scripts/verify-dm-photo-visual.ts",
+        "started": "2026-10-31T16:43:13.846Z",
+        "finished": "2026-10-31T16:43:20.961Z",
+        "durationMs": 7113,
+        "exitCode": 0,
+        "log": "dm-photo-visual.log"
+      },
+      {
+        "id": "dm-hd-visual",
+        "display": "npx tsx scripts/verify-dm-hd-visual.ts",
+        "started": "2026-10-31T16:43:20.963Z",
+        "finished": "2026-10-31T16:43:27.311Z",
+        "durationMs": 6347,
+        "exitCode": 0,
+        "log": "dm-hd-visual.log"
+      },
+      {
+        "id": "drawing-browsers",
+        "display": "npx tsx scripts/verify-drawing-browsers.ts",
+        "started": "2026-10-31T16:43:27.312Z",
+        "finished": "2026-10-31T16:44:37.980Z",
+        "durationMs": 70667,
+        "exitCode": 0,
+        "log": "drawing-browsers.log"
+      },
+      {
+        "id": "drawing-eight",
+        "display": "npx tsx scripts/verify-drawing-studio-eight.ts",
+        "started": "2026-10-31T16:44:37.981Z",
+        "finished": "2026-10-31T16:44:57.152Z",
+        "durationMs": 19170,
+        "exitCode": 0,
+        "log": "drawing-eight.log"
+      },
+      {
+        "id": "drawing-clear",
+        "display": "npx tsx scripts/verify-drawing-canvas-clear.ts",
+        "started": "2026-10-31T16:44:57.153Z",
+        "finished": "2026-10-31T16:45:39.740Z",
+        "durationMs": 42586,
+        "exitCode": 0,
+        "log": "drawing-clear.log"
+      },
+      {
+        "id": "drawing-party",
+        "display": "npx tsx scripts/verify-drawing-party.ts",
+        "started": "2026-10-31T16:45:39.742Z",
+        "finished": "2026-10-31T16:56:43.024Z",
+        "durationMs": 663281,
+        "exitCode": 1,
+        "log": "drawing-party.log"
+      },
+      {
+        "id": "drawing-load",
+        "display": "npx tsx scripts/verify-drawing-load.ts",
+        "started": "2026-10-31T16:56:43.025Z",
+        "finished": "2026-10-31T16:56:43.349Z",
+        "durationMs": 322,
+        "exitCode": 1,
+        "log": "drawing-load.log"
+      },
+      {
+        "id": "rk-browsers",
+        "display": "npx tsx scripts/verify-rk-browsers.ts",
+        "started": "2026-10-31T16:56:43.350Z",
+        "finished": "2026-10-31T16:57:47.437Z",
+        "durationMs": 64086,
+        "exitCode": 0,
+        "log": "rk-browsers.log"
+      },
+      {
+        "id": "rk-ui",
+        "display": "npx tsx scripts/verify-rk-ui.ts",
+        "started": "2026-10-31T16:57:47.437Z",
+        "finished": "2026-10-31T16:58:42.243Z",
+        "durationMs": 54804,
+        "exitCode": 0,
+        "log": "rk-ui.log"
+      },
+      {
+        "id": "rk-xp-browsers",
+        "display": "npx tsx scripts/verify-rk-xp-browsers.ts",
+        "started": "2026-10-31T16:58:42.243Z",
+        "finished": "2026-10-31T17:00:06.886Z",
+        "durationMs": 84641,
+        "exitCode": 0,
+        "log": "rk-xp-browsers.log"
+      },
+      {
+        "id": "xb-topics",
+        "display": "npm run verify:xb-topics",
+        "started": "2026-10-31T17:00:06.887Z",
+        "finished": "2026-10-31T17:00:08.849Z",
+        "durationMs": 1960,
+        "exitCode": 0,
+        "log": "xb-topics.log"
+      },
+      {
+        "id": "xb-browsers",
+        "display": "npm run verify:xb-browsers",
+        "started": "2026-10-31T17:00:08.850Z",
+        "finished": "2026-10-31T17:05:32.555Z",
+        "durationMs": 323704,
+        "exitCode": 0,
+        "log": "xb-browsers.log"
+      },
+      {
+        "id": "xb-feel",
+        "display": "npm run verify:xb-feel",
+        "started": "2026-11-01T01:15:01.247Z",
+        "finished": "2026-11-01T01:17:27.103Z",
+        "durationMs": 145850,
+        "exitCode": 0,
+        "log": "xb-feel.log"
+      },
+      {
+        "id": "xb-layout",
+        "display": "npm run verify:xb-layout",
+        "started": "2026-11-01T01:17:27.104Z",
+        "finished": "2026-11-01T01:18:38.550Z",
+        "durationMs": 71445,
+        "exitCode": 0,
+        "log": "xb-layout.log"
+      },
+      {
+        "id": "xb-ui-v3",
+        "display": "npm run verify:xb-ui-v3",
+        "started": "2026-11-01T01:18:38.550Z",
+        "finished": "2026-11-01T01:19:37.631Z",
+        "durationMs": 59080,
+        "exitCode": 0,
+        "log": "xb-ui-v3.log"
+      },
+      {
+        "id": "xb-art",
+        "display": "npm run verify:xb-art",
+        "started": "2026-11-01T01:19:37.632Z",
+        "finished": "2026-11-01T01:20:46.545Z",
+        "durationMs": 68912,
+        "exitCode": 0,
+        "log": "xb-art.log"
+      },
+      {
+        "id": "xb-word-change",
+        "display": "npm run verify:xb-word-change",
+        "started": "2026-11-01T01:20:46.546Z",
+        "finished": "2026-11-01T01:21:11.360Z",
+        "durationMs": 24813,
+        "exitCode": 0,
+        "log": "xb-word-change.log"
+      },
+      {
+        "id": "xb-audio",
+        "display": "npx tsx scripts/verify-xb-audio.ts",
+        "started": "2026-11-01T01:21:11.360Z",
+        "finished": "2026-11-01T01:21:14.170Z",
+        "durationMs": 2809,
+        "exitCode": 0,
+        "log": "xb-audio.log"
+      },
+      {
+        "id": "ss-protocol",
+        "display": "npm run verify:ss-protocol",
+        "started": "2026-11-01T01:21:14.171Z",
+        "finished": "2026-11-01T01:21:38.381Z",
+        "durationMs": 24209,
+        "exitCode": 0,
+        "log": "ss-protocol.log"
+      },
+      {
+        "id": "ss-browsers",
+        "display": "npm run verify:ss-browsers",
+        "started": "2026-11-01T01:21:38.382Z",
+        "finished": "2026-11-01T01:28:18.329Z",
+        "durationMs": 399946,
+        "exitCode": 0,
+        "log": "ss-browsers.log"
+      },
+      {
+        "id": "ss-ui",
+        "display": "npx tsx scripts/verify-ss-ui-v1.ts",
+        "started": "2026-11-01T01:28:18.329Z",
+        "finished": "2026-11-01T01:29:22.139Z",
+        "durationMs": 63809,
+        "exitCode": 1,
+        "log": "ss-ui.log"
+      },
+      {
+        "id": "ss-art",
+        "display": "npx tsx scripts/verify-ss-ui-art.ts",
+        "started": "2026-11-01T01:29:22.139Z",
+        "finished": "2026-11-01T01:32:53.454Z",
+        "durationMs": 211313,
+        "exitCode": 1,
+        "log": "ss-art.log"
+      },
+      {
+        "id": "rr-protocol",
+        "display": "npm run verify:rr-protocol",
+        "started": "2026-11-01T01:32:53.454Z",
+        "finished": "2026-11-01T01:33:03.549Z",
+        "durationMs": 10094,
+        "exitCode": 0,
+        "log": "rr-protocol.log"
+      },
+      {
+        "id": "rr-browsers",
+        "display": "npm run verify:rr-browsers",
+        "started": "2026-11-01T01:33:03.550Z",
+        "finished": "2026-11-01T01:33:39.017Z",
+        "durationMs": 35465,
+        "exitCode": 0,
+        "log": "rr-browsers.log"
+      },
+      {
+        "id": "wt-browsers",
+        "display": "npx tsx scripts/verify-witch-town-browsers.ts",
+        "started": "2026-11-01T01:33:39.018Z",
+        "finished": "2026-11-01T01:36:17.284Z",
+        "durationMs": 158265,
+        "exitCode": 0,
+        "log": "wt-browsers.log"
+      },
+      {
+        "id": "nd-browsers",
+        "display": "npm run verify:nd-browsers",
+        "started": "2026-11-01T01:36:17.284Z",
+        "finished": "2026-11-01T01:37:00.569Z",
+        "durationMs": 43283,
+        "exitCode": 0,
+        "log": "nd-browsers.log"
+      },
+      {
+        "id": "nd-ui",
+        "display": "npm run verify:nd-ui",
+        "started": "2026-11-01T01:37:00.569Z",
+        "finished": "2026-11-01T01:38:58.793Z",
+        "durationMs": 118223,
+        "exitCode": 0,
+        "log": "nd-ui.log"
+      }
+    ]
+  },
+  "retries": [
+    {
+      "id": "drawing-party",
+      "started": "2026-11-01T01:15:11.083Z",
+      "finished": "2026-11-01T01:27:04.894Z",
+      "exitCode": 0,
+      "log": "drawing-party-retry.log",
+      "isolation": "fresh process and data directory per command",
+      "data": "C:\\Users\\Lenovo\\AppData\\Local\\Temp\\nd-stage5-drawing-fresh-gzAy18"
+    },
+    {
+      "id": "drawing-load",
+      "started": "2026-11-01T01:27:05.775Z",
+      "finished": "2026-11-01T01:27:13.354Z",
+      "exitCode": 0,
+      "log": "drawing-load-retry.log",
+      "isolation": "fresh process and data directory per command",
+      "data": "C:\\Users\\Lenovo\\AppData\\Local\\Temp\\nd-stage5-drawing-fresh-e7GT8x"
+    },
+    {
+      "id": "ss-ui",
+      "log": "ss-ui-retry-final.log",
+      "started": "2026-11-01T01:37:53.443Z",
+      "finished": "2026-11-01T01:40:51.490Z",
+      "exitCode": 0
+    },
+    {
+      "id": "ss-art",
+      "log": "ss-art-retry-final.log",
+      "started": "2026-11-01T01:40:51.492Z",
+      "finished": "2026-11-01T01:44:29.561Z",
+      "exitCode": 0
+    }
+  ],
+  "interruptedAttempts": {
+    "mainRunner": {
+      "id": "xb-feel",
+      "display": "npm run verify:xb-feel",
+      "started": "2026-10-31T17:05:32.556Z"
+    },
+    "drawingRetry": "interrupted after tp 3..8; no successful command exit recorded",
+    "detected": "2026-11-01 morning; old runner processes absent, test ports not listening"
+  },
+  "scriptExpansion": "Early npm aliases executed their exact script entry via node --import tsx; mobile pipeline split into three matching && steps; resumed npm aliases invoked npm-cli run directly."
+}

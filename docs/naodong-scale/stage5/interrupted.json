@@ -1,0 +1,9 @@
+{
+  "mainRunner": {
+    "id": "xb-feel",
+    "display": "npm run verify:xb-feel",
+    "started": "2026-10-31T17:05:32.556Z"
+  },
+  "drawingRetry": "interrupted after tp 3..8; no successful command exit recorded",
+  "detected": "2026-11-01 morning; old runner processes absent, test ports not listening"
+}

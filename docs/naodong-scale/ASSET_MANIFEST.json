@@ -1,0 +1,111 @@
+{
+  "source_ref": "https://www.cocktailgames.com/wp-content/uploads/2021/03/Top_ten.zip",
+  "archive_sha256": "85c8601fbea42f8ef1947248fcf0903f60b024725df8d6e9dee49661fc5a65cb",
+  "archive_bytes": 21539179,
+  "files": [
+    {
+      "archive_path": "HD/Top_ten_boite_3D_HD.jpg",
+      "bytes": 3162410,
+      "sha256": "bb57b1401a768d3c0facecb766d2df578bcb66c641d2baa6368ffaaed95728a0",
+      "source_ref": "https://www.cocktailgames.com/wp-content/uploads/2021/03/Top_ten.zip",
+      "status": "DOWNLOADED_NOT_INTEGRATED",
+      "kind": "OFFICIAL_VISUAL"
+    },
+    {
+      "archive_path": "HD/Top_ten_face_logo_HD.jpg",
+      "bytes": 1202416,
+      "sha256": "c04e47c8767d94bfce150975ba3d63c91746cf446951c2164ac4a2e0eaff7a8f",
+      "source_ref": "https://www.cocktailgames.com/wp-content/uploads/2021/03/Top_ten.zip",
+      "status": "DOWNLOADED_NOT_INTEGRATED",
+      "kind": "OFFICIAL_VISUAL"
+    },
+    {
+      "archive_path": "HD/.DS_Store",
+      "bytes": 6148,
+      "sha256": "bea151a61ff8678c1deae674a5f7d2bb73004d988801321480ae9207cc4100c1",
+      "source_ref": "https://www.cocktailgames.com/wp-content/uploads/2021/03/Top_ten.zip",
+      "status": "DOWNLOADED_NOT_INTEGRATED",
+      "kind": "ARCHIVE_METADATA"
+    },
+    {
+      "archive_path": "HD/Top_ten_boite_3D_logo_HD.jpg",
+      "bytes": 3317337,
+      "sha256": "278c21d0526ded065c9f3a999ff7d28518a2d1da251be4f6e599b9a53b7c28c3",
+      "source_ref": "https://www.cocktailgames.com/wp-content/uploads/2021/03/Top_ten.zip",
+      "status": "DOWNLOADED_NOT_INTEGRATED",
+      "kind": "OFFICIAL_VISUAL"
+    },
+    {
+      "archive_path": "HD/Top_ten_visuel_3_HD.jpg",
+      "bytes": 322606,
+      "sha256": "0b1979caa1f845b77caf69af70415c1772dab6e67b1bb30dea8a61b619ca24cb",
+      "source_ref": "https://www.cocktailgames.com/wp-content/uploads/2021/03/Top_ten.zip",
+      "status": "DOWNLOADED_NOT_INTEGRATED",
+      "kind": "OFFICIAL_VISUAL"
+    },
+    {
+      "archive_path": "HD/Top_ten_visuel_1_HD.jpg",
+      "bytes": 2845861,
+      "sha256": "46150bc4d851270b1a481c71086b0622a33e5c3cab5f84914aa3aec9e47f802f",
+      "source_ref": "https://www.cocktailgames.com/wp-content/uploads/2021/03/Top_ten.zip",
+      "status": "DOWNLOADED_NOT_INTEGRATED",
+      "kind": "OFFICIAL_VISUAL"
+    },
+    {
+      "archive_path": "HD/Top_ten_face_HD.jpg",
+      "bytes": 1499241,
+      "sha256": "d5b98d153416fd1c4828bae0260563d2372eeee35d6a5c20a4fd01b1dddf69f6",
+      "source_ref": "https://www.cocktailgames.com/wp-content/uploads/2021/03/Top_ten.zip",
+      "status": "DOWNLOADED_NOT_INTEGRATED",
+      "kind": "OFFICIAL_VISUAL"
+    },
+    {
+      "archive_path": "HD/Top_ten_visuel_4_HD.jpg",
+      "bytes": 87021,
+      "sha256": "433c53b43f77f9d4e721f167bc3fa975e60b7c5fef9cedb34e758b2a11910b59",
+      "source_ref": "https://www.cocktailgames.com/wp-content/uploads/2021/03/Top_ten.zip",
+      "status": "DOWNLOADED_NOT_INTEGRATED",
+      "kind": "OFFICIAL_VISUAL"
+    },
+    {
+      "archive_path": "HD/Top_ten_logo_HD.jpg",
+      "bytes": 299572,
+      "sha256": "37277b0b7356bf5711e2425734a94db412482872af8eb84a28ac6430dd351453",
+      "source_ref": "https://www.cocktailgames.com/wp-content/uploads/2021/03/Top_ten.zip",
+      "status": "DOWNLOADED_NOT_INTEGRATED",
+      "kind": "OFFICIAL_VISUAL"
+    },
+    {
+      "archive_path": "HD/Top_ten_dos_HD.jpg",
+      "bytes": 1757213,
+      "sha256": "76a71467a802364352d4587bf1e743b28dff992c6d0a01d6a4fde988fea8bad3",
+      "source_ref": "https://www.cocktailgames.com/wp-content/uploads/2021/03/Top_ten.zip",
+      "status": "DOWNLOADED_NOT_INTEGRATED",
+      "kind": "OFFICIAL_VISUAL"
+    },
+    {
+      "archive_path": "HD/Top_ten_visuel_2_HD.jpg",
+      "bytes": 3479227,
+      "sha256": "dd73f0e51d556bce0c42d3e0ea4049ab4422d060f76d0fce45d042091f8b05c2",
+      "source_ref": "https://www.cocktailgames.com/wp-content/uploads/2021/03/Top_ten.zip",
+      "status": "DOWNLOADED_NOT_INTEGRATED",
+      "kind": "OFFICIAL_VISUAL"
+    },
+    {
+      "archive_path": "HD/Top_ten_visuel_2_logo_HD.jpg",
+      "bytes": 2014044,
+      "sha256": "97d4b7da4e71409dd84e47b041ce968fe0d824533ddbc3ee1ea18d651176e0bc",
+      "source_ref": "https://www.cocktailgames.com/wp-content/uploads/2021/03/Top_ten.zip",
+      "status": "DOWNLOADED_NOT_INTEGRATED",
+      "kind": "OFFICIAL_VISUAL"
+    },
+    {
+      "archive_path": "HD/Top_ten_boite_3D_gauche_logo_HD.jpg",
+      "bytes": 3233883,
+      "sha256": "71d9ecb721c9d80bab978e13dc3939c29a50eb820229817d7153480afca52a6a",
+      "source_ref": "https://www.cocktailgames.com/wp-content/uploads/2021/03/Top_ten.zip",
+      "status": "DOWNLOADED_NOT_INTEGRATED",
+      "kind": "OFFICIAL_VISUAL"
+    }
+  ]
+}

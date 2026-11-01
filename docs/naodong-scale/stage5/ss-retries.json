@@ -1,0 +1,16 @@
+[
+  {
+    "id": "ss-ui",
+    "log": "ss-ui-retry-final.log",
+    "started": "2026-11-01T01:37:53.443Z",
+    "finished": "2026-11-01T01:40:51.490Z",
+    "exitCode": 0
+  },
+  {
+    "id": "ss-art",
+    "log": "ss-art-retry-final.log",
+    "started": "2026-11-01T01:40:51.492Z",
+    "finished": "2026-11-01T01:44:29.561Z",
+    "exitCode": 0
+  }
+]

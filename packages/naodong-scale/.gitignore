@@ -1,0 +1,7 @@
+# Only the stage-1 content files belong in Git; room snapshots remain ignored.
+!data/
+data/*
+!data/cards.json
+!data/cards.zh.json
+!data/README.md
+!data/approved-bank.json

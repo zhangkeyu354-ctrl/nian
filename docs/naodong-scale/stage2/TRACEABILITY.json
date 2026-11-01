@@ -1,0 +1,246 @@
+{
+  "ruleRows": 40,
+  "behaviorTests": 43,
+  "mappings": [
+    {
+      "id": "ND01",
+      "interface": "createND / assertInvariantsND",
+      "test": "ND01 accepts 4–9, rejects invalid sizes, options and seeds",
+      "file": "packages/naodong-scale/test/engine.test.ts"
+    },
+    {
+      "id": "ND02",
+      "interface": "reduceND",
+      "test": "ND02 finishes with one team outcome and no personal scores",
+      "file": "packages/naodong-scale/test/engine.test.ts"
+    },
+    {
+      "id": "ND03",
+      "interface": "createND / assertInvariantsND",
+      "test": "ND03 conserves ten number cards and the active team tokens",
+      "file": "packages/naodong-scale/test/engine.test.ts"
+    },
+    {
+      "id": "ND04",
+      "interface": "reduceND / viewForND",
+      "test": "ND04 gives unique 1–10 numbers and keeps unused numbers hidden",
+      "file": "packages/naodong-scale/test/engine.test.ts"
+    },
+    {
+      "id": "ND05",
+      "interface": "createND / assertInvariantsND",
+      "test": "ND05 draws five distinct pairs without repeating any of the ten candidate questions",
+      "file": "packages/naodong-scale/test/engine.test.ts"
+    },
+    {
+      "id": "ND06",
+      "interface": "createND / assertInvariantsND",
+      "test": "ND06 starts with one unicorn per player at 4–8",
+      "file": "packages/naodong-scale/test/engine.test.ts"
+    },
+    {
+      "id": "ND07",
+      "interface": "reduceND (NEXT_ROUND)",
+      "test": "ND07 uses the selected first captain and advances to the next seat",
+      "file": "packages/naodong-scale/test/engine.test.ts"
+    },
+    {
+      "id": "ND08",
+      "interface": "reduceND (CHOOSE_TOPIC)",
+      "test": "ND08 restricts choice to this pair and to the captain",
+      "file": "packages/naodong-scale/test/engine.test.ts"
+    },
+    {
+      "id": "ND09",
+      "interface": "reduceND (CHOOSE_TOPIC)",
+      "test": "ND09 includes the captain in basic 4–8 player answers",
+      "file": "packages/naodong-scale/test/engine.test.ts"
+    },
+    {
+      "id": "ND10",
+      "interface": "reduceND (READY)",
+      "test": "ND10 requires the captain first and then allows any answer order",
+      "file": "packages/naodong-scale/test/engine.test.ts"
+    },
+    {
+      "id": "ND11",
+      "interface": "reduceND / viewForND",
+      "test": "ND11 preserves 1 and 10 endpoint directions exactly",
+      "file": "packages/naodong-scale/test/engine.test.ts"
+    },
+    {
+      "id": "ND12",
+      "interface": "reduceND / viewForND",
+      "test": "ND12 stores readiness without evaluating spoken answer content",
+      "file": "packages/naodong-scale/test/engine.test.ts"
+    },
+    {
+      "id": "ND13",
+      "interface": "reduceND (READY)",
+      "test": "ND13 rejects submitting a locked answer again with a new seq",
+      "file": "packages/naodong-scale/test/engine.test.ts"
+    },
+    {
+      "id": "ND14",
+      "interface": "reduceND (REVEAL_NEXT)",
+      "test": "ND14 permits only the captain to reveal the next locked seat",
+      "file": "packages/naodong-scale/test/engine.test.ts"
+    },
+    {
+      "id": "ND15",
+      "interface": "reduceND (REVEAL_NEXT)",
+      "test": "ND15 never penalizes the first revealed card",
+      "file": "packages/naodong-scale/test/engine.test.ts"
+    },
+    {
+      "id": "ND16",
+      "interface": "reduceND (REVEAL_NEXT)",
+      "test": "ND16 moves exactly one token for a descending neighbor",
+      "file": "packages/naodong-scale/test/engine.test.ts"
+    },
+    {
+      "id": "ND17",
+      "interface": "reduceND (REVEAL_NEXT)",
+      "test": "ND17 counts 4→2→3 as one mistake, not two",
+      "file": "packages/naodong-scale/test/engine.test.ts"
+    },
+    {
+      "id": "ND18",
+      "interface": "reduceND (REVEAL_NEXT)",
+      "test": "ND18 continues after mistakes while unicorns remain",
+      "file": "packages/naodong-scale/test/engine.test.ts"
+    },
+    {
+      "id": "ND19",
+      "interface": "reduceND / viewForND",
+      "test": "ND19 has no exact-guess or distance scoring in base mode",
+      "file": "packages/naodong-scale/test/engine.test.ts"
+    },
+    {
+      "id": "ND20",
+      "interface": "reduceND (LOCK_ORDER)",
+      "test": "ND20 rejects duplicate, missing, out-of-range and malformed order entries",
+      "file": "packages/naodong-scale/test/engine.test.ts"
+    },
+    {
+      "id": "ND21",
+      "interface": "reduceND (NEXT_ROUND)",
+      "test": "ND21 returns all number cards and deals again in the next round",
+      "file": "packages/naodong-scale/test/engine.test.ts"
+    },
+    {
+      "id": "ND22",
+      "interface": "reduceND (NEXT_ROUND)",
+      "test": "ND22 carries mistakes across rounds",
+      "file": "packages/naodong-scale/test/engine.test.ts"
+    },
+    {
+      "id": "ND23",
+      "interface": "reduceND (REVEAL_NEXT)",
+      "test": "ND23 loses immediately with no remaining unicorns, mid-round",
+      "file": "packages/naodong-scale/test/engine.test.ts"
+    },
+    {
+      "id": "ND24",
+      "interface": "reduceND (REVEAL_NEXT)",
+      "test": "ND24 stops exactly at round five and cannot start a sixth round",
+      "file": "packages/naodong-scale/test/engine.test.ts"
+    },
+    {
+      "id": "ND25",
+      "interface": "reduceND (FINISHED / result)",
+      "test": "ND25 gives team-only rating at zero, half, more-poop and all-unicorn boundaries",
+      "file": "packages/naodong-scale/test/engine.test.ts"
+    },
+    {
+      "id": "ND26",
+      "interface": "createND / assertInvariantsND",
+      "test": "ND26 gives nine players eight numbers and no captain answer",
+      "file": "packages/naodong-scale/test/engine.test.ts"
+    },
+    {
+      "id": "ND27",
+      "interface": "reduceND (GUESS_EXACT)",
+      "test": "ND27 wrong exact guesses cost one token and validate guess bounds",
+      "file": "packages/naodong-scale/test/engine.test.ts"
+    },
+    {
+      "id": "ND28",
+      "interface": "reduceND (GUESS_EXACT)",
+      "test": "ND28 expert guesses need not ascend and can repeat without double penalties",
+      "file": "packages/naodong-scale/test/engine.test.ts"
+    },
+    {
+      "id": "ND29",
+      "interface": "reduceND (GUESS_CAPTAIN)",
+      "test": "ND29 leaves the captain hidden until a non-captain submits the team guess",
+      "file": "packages/naodong-scale/test/engine.test.ts"
+    },
+    {
+      "id": "ND30",
+      "interface": "reduceND (GUESS_CAPTAIN)",
+      "test": "ND30 recovery transfers an existing token only and wrong team guesses cost nothing",
+      "file": "packages/naodong-scale/test/engine.test.ts"
+    },
+    {
+      "id": "ND31",
+      "interface": "reduceND (GUESS_EXACT)",
+      "test": "ND31 cannot recover after expert tokens have all been lost",
+      "file": "packages/naodong-scale/test/engine.test.ts"
+    },
+    {
+      "id": "ND32",
+      "interface": "createND / assertInvariantsND",
+      "test": "ND32 defaults expert off and keeps nine-player adaptation mandatory",
+      "file": "packages/naodong-scale/test/engine.test.ts"
+    },
+    {
+      "id": "NDA01",
+      "interface": "reduceND (LOCK_ORDER)",
+      "test": "NDA01 freezes the full base order before any reveals",
+      "file": "packages/naodong-scale/test/engine.test.ts"
+    },
+    {
+      "id": "NDA02",
+      "interface": "reduceND / viewForND",
+      "test": "NDA02 views cannot distinguish changes to other hidden numbers or future topics",
+      "file": "packages/naodong-scale/test/engine.test.ts"
+    },
+    {
+      "id": "NDA03",
+      "interface": "reduceND (命令字段白名单)",
+      "test": "NDA03 rejects text/audio attachments rather than storing them in receipts",
+      "file": "packages/naodong-scale/test/engine.test.ts"
+    },
+    {
+      "id": "NDA04",
+      "interface": "reduceND / viewForND",
+      "test": "NDA04 emits one public reveal event per shown number with team token counts",
+      "file": "packages/naodong-scale/test/engine.test.ts"
+    },
+    {
+      "id": "NDA05",
+      "interface": "createND / assertInvariantsND",
+      "test": "NDA05 explicitly refuses unsupported expert and nine-player combination",
+      "file": "packages/naodong-scale/test/engine.test.ts"
+    },
+    {
+      "id": "NDA06",
+      "interface": "reduceND (拒绝 TIMEOUT / 未知命令)",
+      "test": "NDA06 has no invented timeout, recording or skip commands",
+      "file": "packages/naodong-scale/test/engine.test.ts"
+    },
+    {
+      "id": "NDA07",
+      "interface": "createND / assertInvariantsND",
+      "test": "NDA07 filters spicy in normal mode and validates unique, sufficient content",
+      "file": "packages/naodong-scale/test/engine.test.ts"
+    },
+    {
+      "id": "NDA08",
+      "interface": "createND / assertInvariantsND",
+      "test": "NDA08 loads the authorized 79-question bank without exposing it in views",
+      "file": "packages/naodong-scale/test/engine.test.ts"
+    }
+  ]
+}

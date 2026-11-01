@@ -22,17 +22,20 @@ export async function drainUI(
   onDice?: () => Promise<void>,
   onEffect?: () => Promise<void>,
 ) {
-  while (
-    (await page.getByTestId("ack-dice").count()) ||
-    (await page.getByTestId("ack-feedback").count())
-  ) {
+  let idle = 0;
+  for (let i = 0; i < 120; i++) {
     if (await page.getByTestId("ack-dice").count()) {
       await onDice?.();
       await page.getByTestId("ack-dice").click();
-    } else {
+      idle = 0;
+    } else if (await page.getByTestId("ack-feedback").count()) {
       await onEffect?.();
       await page.getByTestId("ack-feedback").click();
-    }
+      idle = 0;
+    } else if (++idle >= 3) break;
+    // Dice can enqueue feedback on the next render. Observe a settled queue.
+    await page.waitForTimeout(50);
+    if (i === 119) throw new Error("UI feedback queue did not settle");
   }
   if (await page.getByTestId("uncover").count())
     await page.getByTestId("uncover").click();
@@ -186,14 +189,14 @@ export async function clickUI(page: Page, c: Command) {
       if (await target.getAttribute("data-prop"))
         await target.locator(":scope > rect").click();
       else await target.locator(":scope > rect").click();
-      // 联机模式下结果要等服务器回传；最多等 1.5 秒
+      // 联机模式下结果要等服务器回传；与联机验收的同步窗口一致。
       const view = async () =>
         JSON.parse(await page.evaluate(() => window.render_game_to_text()));
       const start = await view();
       let after = start;
       if (start.online && start.events === before) {
         const t = Date.now();
-        while (Date.now() - t < 1500) {
+        while (Date.now() - t < 8000) {
           await page.waitForTimeout(40);
           after = await view();
           if (

@@ -1,0 +1,33 @@
+{
+  "date": "2026-10-31T12:54:45.645Z",
+  "passed": 20,
+  "failed": 0,
+  "checks": [
+    "feedback version and complete unique IDs match the archived reviewed bank",
+    "only user keeps and revised candidates remain; no automatic backfill",
+    "the revised question follows the note and preserves its scale",
+    "current counts, origin and short endpoints remain valid",
+    "content hash version matches the actual bank",
+    "mobile page defaults to the one revised question needing confirmation",
+    "embedded bank and carried user decisions match the current files",
+    "kept and all-question filters show correct counts",
+    "type and spicy filters still combine correctly after deletions",
+    "revised wording is searchable and authoring commentary is absent",
+    "confirming the revision persists through reload",
+    "export has the new version and selected question IDs only",
+    "stale full-bank imports cannot overwrite selected-bank decisions",
+    "deleted IDs are rejected on import without changing decisions",
+    "valid same-version import restores the review state",
+    "no horizontal overflow at 390x844",
+    "no horizontal overflow at 844x390",
+    "no horizontal overflow at 1280x800",
+    "storage restrictions still allow review and warn to export",
+    "no page script errors"
+  ],
+  "totalQuestions": 79,
+  "userKept": 78,
+  "revisedPending": 1,
+  "removed": 71,
+  "spicy": 17,
+  "nextStageAuthorized": false
+}

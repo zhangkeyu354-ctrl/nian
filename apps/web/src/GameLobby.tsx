@@ -1,5 +1,6 @@
 import React, { useEffect, useRef, useState } from "react";
 import "./game-lobby.css";
+import "./nd/nd.css";
 import { ObjectArt } from "./rr/Objects.tsx";
 import { FakeArtistCover, TelephoneCover } from "./drawing/Covers.tsx";
 import { UPDATE_NOTICES } from "./update-notices.ts";
@@ -36,6 +37,7 @@ export function GameLobby() {
         </div>
       </dialog>
       <div className="hall-boxes">
+        <GameBox id="nd" title="脑洞量表 Top Ten" sub="Cocktail Games · Aurélien Picolet" meta="4–9 人 · 语音合作" blurb="一个数字，一句回答。队长把大家从小到大排好，一起闯过五轮。" art={<img src="/assets/naodong-scale/box.webp" alt="脑洞量表 Top Ten 官方包装" style={{height:"130px",maxWidth:"100%",objectFit:"contain"}}/>} online="/?game=nd" join={code=>"/?game=nd&room="+code.toUpperCase()}/>
         <GameBox id="ss" title="汽水走私犯 Soda Smugglers" sub="官方桌游 · Reiner Knizia" meta="3–8 人 · 受贿与推理" blurb="秘密装好手提箱，和缉私警长斗智，带着汽水顺利过关。" art={<img src="/assets/soda-smugglers/box-logo.webp" alt="汽水走私犯官方包装及标志" style={{width:"100%",height:"100%",objectFit:"contain"}}/>} online="/?game=ss" join={code=>"/?game=ss&room="+code.toUpperCase()}/>
         <GameBox id="rk" title="拉密 Rummikub" sub="The Original · Classic / XP" meta="2–6 人 · 数字组合" blurb="同色连成顺子，同数凑成一组。拆开桌面的可能，把手中的牌全部打出去。" art={<span style={{display:'flex',height:'100%',gap:12,alignItems:'center',background:'#1f4d3a',borderRadius:8,padding:8}}><img src="/assets/rummikub/box-classic.webp" alt="官方 Classic 包装" style={{height:76,width:105,objectFit:'contain'}}/><img src="/assets/rummikub/logo.webp" alt="Rummikub" style={{width:150,maxWidth:'45%'}}/></span>} online="/?game=rk" join={code=>'/?game=rk&room='+code.toUpperCase()}/>
         <GameBox id="xb" title="瞎掰王" sub="冷知识 · 身份推理" meta="3–10人 · 自由讨论" blurb="谁知道真正答案，谁又在一本正经地瞎掰？配合朋友的语音，一起找出老实人。" art={<img className="box-xb-art" src="/assets/xiabaiwang-v4/host-1.webp" alt="" />} online="/?game=xb" join={code=>'/?game=xb&room='+code.toUpperCase()} codeLength={6}/>
@@ -150,7 +152,7 @@ function GameBox(props: {
   const [code, setCode] = useState("");
   return (
     <section
-      className={"hall-box box-" + props.id}
+      className={"hall-box box-" + props.id + (props.id==="nd"?" nd-world nd-cover":"")}
       data-testid={"game-" + props.id}
       style={props.id === "ss" ? {background:"radial-gradient(circle at 75% 0%, #685174, #281d34 70%)",border:"1px solid #ad98af",color:"#fff8ef"} : undefined}
     >

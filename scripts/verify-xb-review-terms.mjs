@@ -2,6 +2,7 @@ import assert from 'node:assert/strict';
 import fs from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
+import { execFileSync } from 'node:child_process';
 const repo=path.resolve(path.dirname(fileURLToPath(import.meta.url)),'..');
 const directory=path.join(repo,'docs/xiabaiwang/original/terms-review');
 const rows=JSON.parse(fs.readFileSync(path.join(directory,'terms-review.json'),'utf8'));
@@ -29,8 +30,10 @@ const md=fs.readFileSync(path.join(directory,'XB_TERMS_REVIEW_2026-10-24.md'),'u
 assert.equal((md.match(/^\| \d{3} \|/gm)||[]).length,160,'文字版条数错误');
 for(const r of rows)assert.ok(md.includes(`**${r.question}**`),`${r.id}：文字版漏词`);
 const oldFiles=['packages/xiabaiwang/src/topics.ts','packages/xiabaiwang/src/topics-v1.ts','packages/xiabaiwang/src/topics-v2.ts'];
-const oldFronts=oldFiles.filter(f=>fs.existsSync(path.join(repo,f))).flatMap(f=>{
- const code=fs.readFileSync(path.join(repo,f),'utf8');
+// Compare against the immutable question bank this historical review replaced,
+// rather than the accepted terms now installed in topics.ts.
+const oldFronts=oldFiles.flatMap(f=>{
+ let code;try{code=execFileSync('git',['show',`d96fed5:${f}`],{cwd:repo,encoding:'utf8',stdio:['ignore','pipe','ignore']});}catch{return [];}
  return [...code.matchAll(/question:\s*["']([^"']+)["']/gu),...code.matchAll(/\[\s*"((?:[^"\\]|\\.)+)"\s*,/gu)].map(m=>m[1].normalize('NFKC').replace(/\s/gu,''));
 });
 assert.equal(oldFronts.length,160,'旧题提取必须覆盖160题，不能用空比较伪装去重');

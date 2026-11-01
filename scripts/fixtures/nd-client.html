@@ -1,0 +1,175 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <link rel="icon" href="data:," />
+    <title>ND 协议测试客户端</title>
+    <style>
+      body {
+        margin: 16px;
+        font: 16px/1.5 system-ui;
+        max-width: 850px;
+      }
+      input,
+      button,
+      textarea {
+        font: inherit;
+        max-width: 100%;
+        box-sizing: border-box;
+        min-height: 44px;
+      }
+      label {
+        display: block;
+        margin: 8px 0;
+      }
+      textarea {
+        width: 100%;
+        height: 90px;
+      }
+      pre {
+        white-space: pre-wrap;
+        overflow-wrap: anywhere;
+        background: #eee;
+        padding: 12px;
+      }
+      button {
+        margin: 4px;
+      }
+      h1 {
+        font-size: 23px;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>ND 协议验收客户端（非游戏 UI）</h1>
+    <p id="status">连接中</p>
+    <label>房间号<input id="code" maxlength="4" /></label
+    ><label>昵称<input id="name" value="测试玩家" /></label>
+    <button id="create">创建测试房间</button><button id="claim">入座</button
+    ><button id="sync">同步</button>
+    <label>协议动作<textarea id="command">{"type":"READY"}</textarea></label
+    ><button id="send">提交命令</button>
+    <p id="result"></p>
+    <pre id="view"></pre>
+    <script src="/socket.io/socket.io.js"></script>
+    <script>
+      const stored = JSON.parse(
+        sessionStorage.getItem("nd-test-credentials") || "{}",
+      );
+      const socket = io({ transports: ["websocket"], reconnection: false });
+      const nd = (window.nd = {
+        socket,
+        code: stored.code || "",
+        token: stored.token || "",
+        snapshot: null,
+        last: null,
+        online: false,
+      });
+      const el = (id) => document.getElementById(id);
+      function display(snapshot) {
+        if (!snapshot) return;
+        if (
+          nd.snapshot &&
+          nd.snapshot.code === snapshot.code &&
+          snapshot.version < nd.snapshot.version
+        )
+          return;
+        nd.snapshot = snapshot;
+        el("view").textContent = JSON.stringify(snapshot, null, 2);
+      }
+      function save() {
+        sessionStorage.setItem(
+          "nd-test-credentials",
+          JSON.stringify({ code: nd.code, token: nd.token }),
+        );
+        el("code").value = nd.code;
+      }
+      nd.request = (event, payload) =>
+        new Promise((resolve, reject) =>
+          socket.timeout(8000).emit(event, payload, (err, ack) => {
+            if (err) {
+              reject(err);
+              return;
+            }
+            display(ack.snapshot);
+            nd.last = ack;
+            el("result").textContent = ack.ok ? "操作成功" : ack.error;
+            resolve(ack);
+          }),
+        );
+      nd.create = async () => {
+        const a = await nd.request("nd:create", {});
+        if (a.ok) {
+          nd.code = a.code;
+          nd.token = "";
+          save();
+        }
+        return a;
+      };
+      nd.claim = async (code, name) => {
+        const a = await nd.request("nd:claim", { code, name });
+        if (a.ok) {
+          nd.code = code;
+          nd.token = a.token;
+          save();
+        }
+        return a;
+      };
+      nd.join = async () =>
+        nd.request("nd:join", {
+          code: nd.code,
+          ...(nd.token ? { token: nd.token } : {}),
+        });
+      nd.act = async (action) => {
+        const s = nd.snapshot;
+        return nd.request("nd:action", {
+          code: nd.code,
+          token: nd.token,
+          version: s.version,
+          seq: s.nextSeq,
+          ...(s.view ? { round: s.view.round } : {}),
+          action,
+        });
+      };
+      nd.disconnect = () => {
+        socket.disconnect();
+        nd.online = false;
+      };
+      nd.resume = () =>
+        new Promise((resolve, reject) => {
+          socket.once("connect", async () => {
+            try {
+              const a = await nd.join();
+              nd.online = true;
+              resolve(a);
+            } catch (e) {
+              reject(e);
+            }
+          });
+          socket.connect();
+        });
+      socket.on("nd:update", display);
+      socket.once("connect", async () => {
+        if (nd.code && nd.token) await nd.join();
+        nd.online = true;
+        el("status").textContent = "已连接测试服务器";
+      });
+      socket.on("disconnect", () => {
+        el("status").textContent = "已断线";
+        nd.online = false;
+      });
+      el("code").value = nd.code;
+      el("create").onclick = () => nd.create();
+      el("claim").onclick = () => nd.claim(el("code").value, el("name").value);
+      el("sync").onclick = () => nd.join();
+      el("send").onclick = async () => {
+        try {
+          await nd.act(JSON.parse(el("command").value));
+        } catch (e) {
+          el("result").textContent = e.message;
+        }
+      };
+    </script>
+  </body>
+</html>

@@ -36,6 +36,14 @@ let layoutChecks = 0,
 const phases = new Set<string>();
 
 async function snapPhase(page: Page, i: number) {
+  // A bottom sheet enters from outside the viewport. Audit its settled layout,
+  // while retaining the overflow assertions for the actual visible controls.
+  await page.locator(".wt-modal").evaluateAll(async elements => {
+    const animations = elements.flatMap(el => el.getAnimations({ subtree: true }));
+    await Promise.all(animations
+      .filter(a => Number.isFinite(a.effect?.getComputedTiming().endTime))
+      .map(a => a.finished.catch(() => {})));
+  });
   const key = await page.evaluate(() => {
     const w = document.querySelector(
       "[data-testid=wt-world]",

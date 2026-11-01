@@ -102,6 +102,15 @@ export async function tapPhoneCommand(
           requestAnimationFrame(() => requestAnimationFrame(r)),
         ),
     );
+    if (before.online) {
+      // A map tap may have sent the command already. Wait for the real server
+      // acknowledgement before falling back to an action button.
+      await page.waitForFunction(
+        events => JSON.parse(window.render_game_to_text()).events !== events,
+        before.events,
+        { timeout: 8000 },
+      ).catch(() => {});
+    }
     const after = JSON.parse(
       await page.evaluate(() => window.render_game_to_text()),
     );

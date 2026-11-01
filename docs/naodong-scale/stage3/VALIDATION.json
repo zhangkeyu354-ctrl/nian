@@ -1,0 +1,77 @@
+{
+  "date": "2026-10-31",
+  "stage": 3,
+  "unitTests": {
+    "filesPassed": 98,
+    "passed": 1423,
+    "failed": 0,
+    "ndEngineTests": 43,
+    "ndRoomTests": 17,
+    "targetedPassed": 60
+  },
+  "typecheck": "PASS",
+  "legacyReplays": {
+    "games": 3,
+    "status": "PASS"
+  },
+  "legacyLanProtocol": {
+    "games": [
+      {
+        "seed": 1701,
+        "code": "T4DZ",
+        "commands": 228,
+        "winner": "survivor",
+        "events": 450,
+        "rejectedAsExpected": 24
+      },
+      {
+        "seed": 2903,
+        "code": "KB67",
+        "commands": 268,
+        "winner": "survivor",
+        "events": 535,
+        "rejectedAsExpected": 28
+      },
+      {
+        "seed": 4111,
+        "code": "Q32D",
+        "commands": 109,
+        "winner": "killer",
+        "events": 223,
+        "rejectedAsExpected": 12
+      }
+    ],
+    "viewChecks": 3025,
+    "status": "PASS",
+    "maxListenerWarnings": 0
+  },
+  "ndProtocol": {
+    "checks": 47,
+    "packetChecks": 54082,
+    "completedGames": 4,
+    "failures": 0,
+    "processRecovery": {
+      "processStarts": 2,
+      "packets": 33,
+      "continuedReveals": 1
+    }
+  },
+  "ndBrowsers": {
+    "checks": 21,
+    "packetChecks": 2172,
+    "domChecks": 3202,
+    "completedGames": 3,
+    "failures": 0
+  },
+  "defaultSeconds": 0,
+  "optionalSeconds": [
+    60,
+    120
+  ],
+  "timeoutPolicy": "SERVER_REMINDER_ONLY_PRESERVE_STATE",
+  "bankQuestions": 79,
+  "spicyQuestions": 17,
+  "productionUiImplemented": false,
+  "pushedMain": false,
+  "deployed": false
+}

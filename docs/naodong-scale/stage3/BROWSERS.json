@@ -1,0 +1,54 @@
+{
+  "games": [
+    {
+      "players": 4,
+      "rounds": 5,
+      "result": "team-success",
+      "actions": 65,
+      "isolatedBrowserContexts": 4
+    },
+    {
+      "players": 6,
+      "rounds": 5,
+      "result": "team-success",
+      "actions": 87,
+      "isolatedBrowserContexts": 6
+    },
+    {
+      "players": 9,
+      "rounds": 5,
+      "result": "team-success",
+      "actions": 109,
+      "isolatedBrowserContexts": 9
+    }
+  ],
+  "checks": 21,
+  "checkDetails": [
+    "4: non-host settings rejected",
+    "4: illegal server/seat commands rejected",
+    "4: locked answer cannot be resubmitted",
+    "4: automatic server timeout preserves secret and locked response",
+    "4: locked sort cannot be edited",
+    "4: token reconnect preserves number, order and seq",
+    "4: reload rejoins the same seat",
+    "6: non-host settings rejected",
+    "6: illegal server/seat commands rejected",
+    "6: locked answer cannot be resubmitted",
+    "6: automatic server timeout preserves secret and locked response",
+    "6: locked sort cannot be edited",
+    "6: token reconnect preserves number, order and seq",
+    "6: reload rejoins the same seat",
+    "9: non-host settings rejected",
+    "9: illegal server/seat commands rejected",
+    "9: locked answer cannot be resubmitted",
+    "9: automatic server timeout preserves secret and locked response",
+    "9: locked sort cannot be edited",
+    "9: token reconnect preserves number, order and seq",
+    "9: reload rejoins the same seat"
+  ],
+  "packetChecks": 2172,
+  "domChecks": 3202,
+  "scriptOrPrivacyErrors": 0,
+  "failures": 0,
+  "scope": "Real browser Socket.IO fixture, not production UI. Only seat order is injected by a controller aggregating separate legal private views."
+}

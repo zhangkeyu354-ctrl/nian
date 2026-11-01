@@ -14,7 +14,7 @@ const results:any[]=[];
 for(const name of groups[group]) {
   const startedAt=new Date().toISOString();
   const child=spawn(process.execPath,["--import","tsx",`scripts/${name}.ts`],{
-    env:{...process.env,DM_URL:"http://127.0.0.1:3409",DP_URL:"http://127.0.0.1:3409",DM_SCREEN_DIR:`${dir}/dm`},stdio:["ignore","pipe","pipe"],
+    env:{...process.env,DM_URL:process.env.DM_URL??"http://127.0.0.1:3409",DP_URL:process.env.DP_URL??"http://127.0.0.1:3409",DM_SCREEN_DIR:`${dir}/dm`},stdio:["ignore","pipe","pipe"],
   });
   let log="";
   const collect=(chunk:Buffer)=>{log+=chunk.toString();writeFileSync(`${dir}/${name}.log`,log);};

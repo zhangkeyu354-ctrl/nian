@@ -1,0 +1,48 @@
+{
+  "date": "2026-11-01",
+  "stage": "4 UI v2",
+  "metrics": {
+    "maxSeatRailHeight": 68,
+    "minPortraitStageEndGap": 109.546875,
+    "maxTopicLines": 3,
+    "portraitStageChecks": 46
+  },
+  "checks": 19,
+  "screens": 131,
+  "packetChecks": 2131,
+  "domPrivacyChecks": 19,
+  "games": [
+    {
+      "players": 4,
+      "rounds": 5,
+      "success": true
+    },
+    {
+      "players": 4,
+      "expert": true,
+      "rounds": 5,
+      "success": true
+    },
+    {
+      "players": 6,
+      "rounds": 5,
+      "success": true
+    },
+    {
+      "players": 9,
+      "rounds": 5,
+      "success": true
+    },
+    {
+      "players": 9,
+      "rounds": 2,
+      "success": false
+    }
+  ],
+  "errors": [],
+  "targetedTests": 63,
+  "typecheck": "PASS",
+  "build": "PASS_WITH_EXISTING_CHUNK_WARNING",
+  "pushed": false,
+  "deployed": false
+}

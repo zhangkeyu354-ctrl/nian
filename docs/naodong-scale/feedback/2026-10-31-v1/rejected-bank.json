@@ -1,0 +1,2702 @@
+[
+  {
+    "id": "nd-orig-0005",
+    "type": "说东西排序类",
+    "origin": "原创",
+    "answer_format": "一个东西或一个词",
+    "localized": {
+      "text": "说出一个想贴在门铃旁的提示词。",
+      "low": "看了也不想按",
+      "high": "看了就想按一下"
+    },
+    "spicy": false,
+    "source": {
+      "kind": "ORIGINAL",
+      "ref": "本项目独立创作，2026-10-31，纯语音回答版"
+    },
+    "editing_note": "沿用本项目原有原创样稿创意，统一为简短口头回答。",
+    "status": "DRAFT"
+  },
+  {
+    "id": "nd-orig-0021",
+    "type": "说东西排序类",
+    "origin": "原创",
+    "answer_format": "一个东西或一个词",
+    "localized": {
+      "text": "说出一样最不适合放进透明背包的日用品。",
+      "low": "看见也没人多想",
+      "high": "看见就想问你带它干吗"
+    },
+    "spicy": false,
+    "source": {
+      "kind": "ORIGINAL",
+      "ref": "本项目独立创作，2026-10-31，纯语音回答版"
+    },
+    "editing_note": "本轮新增原创题，回答只需一个东西、一个词或一句话。",
+    "status": "DRAFT"
+  },
+  {
+    "id": "nd-orig-0022",
+    "type": "说东西排序类",
+    "origin": "原创",
+    "answer_format": "一个东西或一个词",
+    "localized": {
+      "text": "说出一种适合给扫地机器人起的名字。",
+      "low": "像出厂编号",
+      "high": "像全家的顶梁柱"
+    },
+    "spicy": false,
+    "source": {
+      "kind": "ORIGINAL",
+      "ref": "本项目独立创作，2026-10-31，纯语音回答版"
+    },
+    "editing_note": "本轮新增原创题，回答只需一个东西、一个词或一句话。",
+    "status": "DRAFT"
+  },
+  {
+    "id": "nd-orig-0023",
+    "type": "说东西排序类",
+    "origin": "原创",
+    "answer_format": "一个东西或一个词",
+    "localized": {
+      "text": "说出一种能当会议室名字的食物。",
+      "low": "开会时完全不分心",
+      "high": "听见名字就想散会吃饭"
+    },
+    "spicy": false,
+    "source": {
+      "kind": "ORIGINAL",
+      "ref": "本项目独立创作，2026-10-31，纯语音回答版"
+    },
+    "editing_note": "本轮新增原创题，回答只需一个东西、一个词或一句话。",
+    "status": "DRAFT"
+  },
+  {
+    "id": "nd-orig-0024",
+    "type": "说东西排序类",
+    "origin": "原创",
+    "answer_format": "一个东西或一个词",
+    "localized": {
+      "text": "说出一样适合夹在书里当书签的东西。",
+      "low": "几乎不影响合书",
+      "high": "夹进去就根本合不上"
+    },
+    "spicy": false,
+    "source": {
+      "kind": "ORIGINAL",
+      "ref": "本项目独立创作，2026-10-31，纯语音回答版"
+    },
+    "editing_note": "本轮新增原创题，回答只需一个东西、一个词或一句话。",
+    "status": "DRAFT"
+  },
+  {
+    "id": "nd-orig-0025",
+    "type": "说东西排序类",
+    "origin": "原创",
+    "answer_format": "一个东西或一个词",
+    "localized": {
+      "text": "说出一样可以放进幸运饼干的小礼物。",
+      "low": "惊喜几乎为零",
+      "high": "拆开就想拍照炫耀"
+    },
+    "spicy": false,
+    "source": {
+      "kind": "ORIGINAL",
+      "ref": "本项目独立创作，2026-10-31，纯语音回答版"
+    },
+    "editing_note": "本轮新增原创题，回答只需一个东西、一个词或一句话。",
+    "status": "DRAFT"
+  },
+  {
+    "id": "nd-orig-0026",
+    "type": "说东西排序类",
+    "origin": "原创",
+    "answer_format": "一个东西或一个词",
+    "localized": {
+      "text": "说出一种很适合叫醒周一的饮料名。",
+      "low": "听着还想继续睡",
+      "high": "听着就觉得精神抖擞"
+    },
+    "spicy": false,
+    "source": {
+      "kind": "ORIGINAL",
+      "ref": "本项目独立创作，2026-10-31，纯语音回答版"
+    },
+    "editing_note": "本轮新增原创题，回答只需一个东西、一个词或一句话。",
+    "status": "DRAFT"
+  },
+  {
+    "id": "nd-orig-0027",
+    "type": "说东西排序类",
+    "origin": "原创",
+    "answer_format": "一个东西或一个词",
+    "localized": {
+      "text": "说出一样适合放在摸鱼专用桌上的东西。",
+      "low": "老板路过也察觉不到",
+      "high": "老板路过立刻明白"
+    },
+    "spicy": false,
+    "source": {
+      "kind": "ORIGINAL",
+      "ref": "本项目独立创作，2026-10-31，纯语音回答版"
+    },
+    "editing_note": "本轮新增原创题，回答只需一个东西、一个词或一句话。",
+    "status": "DRAFT"
+  },
+  {
+    "id": "nd-orig-0028",
+    "type": "说东西排序类",
+    "origin": "原创",
+    "answer_format": "一个东西或一个词",
+    "localized": {
+      "text": "说出一个适合当家庭无线网络名的词。",
+      "low": "像默认名称",
+      "high": "让邻居好奇这是谁家"
+    },
+    "spicy": false,
+    "source": {
+      "kind": "ORIGINAL",
+      "ref": "本项目独立创作，2026-10-31，纯语音回答版"
+    },
+    "editing_note": "本轮新增原创题，回答只需一个东西、一个词或一句话。",
+    "status": "DRAFT"
+  },
+  {
+    "id": "nd-orig-0029",
+    "type": "说东西排序类",
+    "origin": "原创",
+    "answer_format": "一个东西或一个词",
+    "localized": {
+      "text": "说出一种能当游戏加载画面主角的家用电器。",
+      "low": "看着毫无悬念",
+      "high": "光看名字就想等它加载完"
+    },
+    "spicy": false,
+    "source": {
+      "kind": "ORIGINAL",
+      "ref": "本项目独立创作，2026-10-31，纯语音回答版"
+    },
+    "editing_note": "本轮新增原创题，回答只需一个东西、一个词或一句话。",
+    "status": "DRAFT"
+  },
+  {
+    "id": "nd-orig-0030",
+    "type": "说东西排序类",
+    "origin": "原创",
+    "answer_format": "一个东西或一个词",
+    "localized": {
+      "text": "说出一种应该配上豪华包装的便宜小物。",
+      "low": "包装只贵了一点点",
+      "high": "包装比东西隆重太多"
+    },
+    "spicy": false,
+    "source": {
+      "kind": "ORIGINAL",
+      "ref": "本项目独立创作，2026-10-31，纯语音回答版"
+    },
+    "editing_note": "本轮新增原创题，回答只需一个东西、一个词或一句话。",
+    "status": "DRAFT"
+  },
+  {
+    "id": "nd-orig-0031",
+    "type": "说东西排序类",
+    "origin": "原创",
+    "answer_format": "一个东西或一个词",
+    "localized": {
+      "text": "说出一样放在枕头下面会让人睡不踏实的东西。",
+      "low": "翻个身就忘了",
+      "high": "整夜都想着它"
+    },
+    "spicy": false,
+    "source": {
+      "kind": "ORIGINAL",
+      "ref": "本项目独立创作，2026-10-31，纯语音回答版"
+    },
+    "editing_note": "本轮新增原创题，回答只需一个东西、一个词或一句话。",
+    "status": "DRAFT"
+  },
+  {
+    "id": "nd-orig-0032",
+    "type": "说东西排序类",
+    "origin": "原创",
+    "answer_format": "一个东西或一个词",
+    "localized": {
+      "text": "说出一种适合当电脑回收站名字的词。",
+      "low": "十分中性",
+      "high": "删文件时会产生负罪感"
+    },
+    "spicy": false,
+    "source": {
+      "kind": "ORIGINAL",
+      "ref": "本项目独立创作，2026-10-31，纯语音回答版"
+    },
+    "editing_note": "本轮新增原创题，回答只需一个东西、一个词或一句话。",
+    "status": "DRAFT"
+  },
+  {
+    "id": "nd-orig-0033",
+    "type": "说东西排序类",
+    "origin": "原创",
+    "answer_format": "一个东西或一个词",
+    "localized": {
+      "text": "说出一样适合给电量只剩百分之一的手机当告别礼物的东西。",
+      "low": "毫无仪式感",
+      "high": "像在送别老朋友"
+    },
+    "spicy": false,
+    "source": {
+      "kind": "ORIGINAL",
+      "ref": "本项目独立创作，2026-10-31，纯语音回答版"
+    },
+    "editing_note": "本轮新增原创题，回答只需一个东西、一个词或一句话。",
+    "status": "DRAFT"
+  },
+  {
+    "id": "nd-orig-0034",
+    "type": "说东西排序类",
+    "origin": "原创",
+    "answer_format": "一个东西或一个词",
+    "localized": {
+      "text": "说出一种可以成为冰箱镇场担当的食物。",
+      "low": "自己都需要保护",
+      "high": "名字听起来就镇得住场"
+    },
+    "spicy": false,
+    "source": {
+      "kind": "ORIGINAL",
+      "ref": "本项目独立创作，2026-10-31，纯语音回答版"
+    },
+    "editing_note": "本轮新增原创题，回答只需一个东西、一个词或一句话。",
+    "status": "DRAFT"
+  },
+  {
+    "id": "nd-orig-0035",
+    "type": "说东西排序类",
+    "origin": "原创",
+    "answer_format": "一个东西或一个词",
+    "localized": {
+      "text": "说出一样可以作为整理房间冠军奖杯的东西。",
+      "low": "随手就能找到",
+      "high": "搬上领奖台都费劲"
+    },
+    "spicy": false,
+    "source": {
+      "kind": "ORIGINAL",
+      "ref": "本项目独立创作，2026-10-31，纯语音回答版"
+    },
+    "editing_note": "本轮新增原创题，回答只需一个东西、一个词或一句话。",
+    "status": "DRAFT"
+  },
+  {
+    "id": "nd-orig-0036",
+    "type": "说东西排序类",
+    "origin": "原创",
+    "answer_format": "一个东西或一个词",
+    "localized": {
+      "text": "说出一个适合当周末群聊名字的词。",
+      "low": "看起来只聊正事",
+      "high": "看起来周一都不想解散"
+    },
+    "spicy": false,
+    "source": {
+      "kind": "ORIGINAL",
+      "ref": "本项目独立创作，2026-10-31，纯语音回答版"
+    },
+    "editing_note": "本轮新增原创题，回答只需一个东西、一个词或一句话。",
+    "status": "DRAFT"
+  },
+  {
+    "id": "nd-orig-0037",
+    "type": "说东西排序类",
+    "origin": "原创",
+    "answer_format": "一个东西或一个词",
+    "localized": {
+      "text": "说出一样在静音车厢里拆包装会有压力的零食。",
+      "low": "几乎没声音",
+      "high": "想开封都得先深呼吸"
+    },
+    "spicy": false,
+    "source": {
+      "kind": "ORIGINAL",
+      "ref": "本项目独立创作，2026-10-31，纯语音回答版"
+    },
+    "editing_note": "本轮新增原创题，回答只需一个东西、一个词或一句话。",
+    "status": "DRAFT"
+  },
+  {
+    "id": "nd-orig-0038",
+    "type": "说东西排序类",
+    "origin": "原创",
+    "answer_format": "一个东西或一个词",
+    "localized": {
+      "text": "说出一种适合给家里储物间取的名字。",
+      "low": "谁都知道放着杂物",
+      "high": "听起来藏着惊天秘密"
+    },
+    "spicy": false,
+    "source": {
+      "kind": "ORIGINAL",
+      "ref": "本项目独立创作，2026-10-31，纯语音回答版"
+    },
+    "editing_note": "本轮新增原创题，回答只需一个东西、一个词或一句话。",
+    "status": "DRAFT"
+  },
+  {
+    "id": "nd-orig-0039",
+    "type": "说东西排序类",
+    "origin": "原创",
+    "answer_format": "一个东西或一个词",
+    "localized": {
+      "text": "说出一样能象征成年人小小自由的东西。",
+      "low": "微不足道",
+      "high": "拥有它就想宣布独立"
+    },
+    "spicy": false,
+    "source": {
+      "kind": "ORIGINAL",
+      "ref": "本项目独立创作，2026-10-31，纯语音回答版"
+    },
+    "editing_note": "本轮新增原创题，回答只需一个东西、一个词或一句话。",
+    "status": "DRAFT"
+  },
+  {
+    "id": "nd-orig-0040",
+    "type": "说东西排序类",
+    "origin": "原创",
+    "answer_format": "一个东西或一个词",
+    "localized": {
+      "text": "说出一种不适合印在催款单上的可爱图案。",
+      "low": "不影响认真催款",
+      "high": "看完反而想继续拖一会儿"
+    },
+    "spicy": false,
+    "source": {
+      "kind": "ORIGINAL",
+      "ref": "本项目独立创作，2026-10-31，纯语音回答版"
+    },
+    "editing_note": "本轮新增原创题，回答只需一个东西、一个词或一句话。",
+    "status": "DRAFT"
+  },
+  {
+    "id": "nd-orig-0041",
+    "type": "说东西排序类",
+    "origin": "原创",
+    "answer_format": "一个东西或一个词",
+    "localized": {
+      "text": "说出一样适合做迷你博物馆镇馆之宝的东西。",
+      "low": "像路边随手捡的",
+      "high": "看起来值得专程排队"
+    },
+    "spicy": false,
+    "source": {
+      "kind": "ORIGINAL",
+      "ref": "本项目独立创作，2026-10-31，纯语音回答版"
+    },
+    "editing_note": "本轮新增原创题，回答只需一个东西、一个词或一句话。",
+    "status": "DRAFT"
+  },
+  {
+    "id": "nd-orig-0042",
+    "type": "说东西排序类",
+    "origin": "原创",
+    "answer_format": "一个东西或一个词",
+    "localized": {
+      "text": "说出一个适合给自动回复功能起的名字。",
+      "low": "像冷冰冰的工具",
+      "high": "像比本人更会交际的助手"
+    },
+    "spicy": false,
+    "source": {
+      "kind": "ORIGINAL",
+      "ref": "本项目独立创作，2026-10-31，纯语音回答版"
+    },
+    "editing_note": "本轮新增原创题，回答只需一个东西、一个词或一句话。",
+    "status": "DRAFT"
+  },
+  {
+    "id": "nd-orig-0043",
+    "type": "说东西排序类",
+    "origin": "原创",
+    "answer_format": "一个东西或一个词",
+    "localized": {
+      "text": "说出一样适合垫在摇晃桌腿下面的东西。",
+      "low": "实在太合适",
+      "high": "下手前会心疼半天"
+    },
+    "spicy": false,
+    "source": {
+      "kind": "ORIGINAL",
+      "ref": "本项目独立创作，2026-10-31，纯语音回答版"
+    },
+    "editing_note": "本轮新增原创题，回答只需一个东西、一个词或一句话。",
+    "status": "DRAFT"
+  },
+  {
+    "id": "nd-orig-0044",
+    "type": "说东西排序类",
+    "origin": "原创",
+    "answer_format": "一个东西或一个词",
+    "localized": {
+      "text": "说出一种适合印在午睡请勿打扰牌上的植物名。",
+      "low": "温和得没有威慑力",
+      "high": "看完就不敢喊你起床"
+    },
+    "spicy": false,
+    "source": {
+      "kind": "ORIGINAL",
+      "ref": "本项目独立创作，2026-10-31，纯语音回答版"
+    },
+    "editing_note": "本轮新增原创题，回答只需一个东西、一个词或一句话。",
+    "status": "DRAFT"
+  },
+  {
+    "id": "nd-orig-0045",
+    "type": "说东西排序类",
+    "origin": "原创",
+    "answer_format": "一个东西或一个词",
+    "localized": {
+      "text": "说出一样拿在手里等电梯会让人觉得你很忙的东西。",
+      "low": "像刚出来透气",
+      "high": "像全公司都等你救场"
+    },
+    "spicy": false,
+    "source": {
+      "kind": "ORIGINAL",
+      "ref": "本项目独立创作，2026-10-31，纯语音回答版"
+    },
+    "editing_note": "本轮新增原创题，回答只需一个东西、一个词或一句话。",
+    "status": "DRAFT"
+  },
+  {
+    "id": "nd-orig-0046",
+    "type": "说东西排序类",
+    "origin": "原创",
+    "answer_format": "一个东西或一个词",
+    "localized": {
+      "text": "说出一个适合给每天多走几步计划起的名字。",
+      "low": "像随手记的提醒",
+      "high": "像要完成史诗远征"
+    },
+    "spicy": false,
+    "source": {
+      "kind": "ORIGINAL",
+      "ref": "本项目独立创作，2026-10-31，纯语音回答版"
+    },
+    "editing_note": "本轮新增原创题，回答只需一个东西、一个词或一句话。",
+    "status": "DRAFT"
+  },
+  {
+    "id": "nd-orig-0047",
+    "type": "说东西排序类",
+    "origin": "原创",
+    "answer_format": "一个东西或一个词",
+    "localized": {
+      "text": "说出一样可以放进时间胶囊的办公室用品。",
+      "low": "以后看也毫无感觉",
+      "high": "多年后能立刻想起上班日子"
+    },
+    "spicy": false,
+    "source": {
+      "kind": "ORIGINAL",
+      "ref": "本项目独立创作，2026-10-31，纯语音回答版"
+    },
+    "editing_note": "本轮新增原创题，回答只需一个东西、一个词或一句话。",
+    "status": "DRAFT"
+  },
+  {
+    "id": "nd-orig-0048",
+    "type": "说东西排序类",
+    "origin": "原创",
+    "answer_format": "一个东西或一个词",
+    "localized": {
+      "text": "说出一种适合当外卖备注专用印章的词。",
+      "low": "店员看了不会在意",
+      "high": "店员看了会记住你"
+    },
+    "spicy": false,
+    "source": {
+      "kind": "ORIGINAL",
+      "ref": "本项目独立创作，2026-10-31，纯语音回答版"
+    },
+    "editing_note": "本轮新增原创题，回答只需一个东西、一个词或一句话。",
+    "status": "DRAFT"
+  },
+  {
+    "id": "nd-orig-0049",
+    "type": "说东西排序类",
+    "origin": "原创",
+    "answer_format": "一个东西或一个词",
+    "localized": {
+      "text": "说出一样可以成为夜宵守门员的东西。",
+      "low": "根本拦不住你",
+      "high": "看见就愿意回去睡觉"
+    },
+    "spicy": false,
+    "source": {
+      "kind": "ORIGINAL",
+      "ref": "本项目独立创作，2026-10-31，纯语音回答版"
+    },
+    "editing_note": "本轮新增原创题，回答只需一个东西、一个词或一句话。",
+    "status": "DRAFT"
+  },
+  {
+    "id": "nd-orig-0050",
+    "type": "说东西排序类",
+    "origin": "原创",
+    "answer_format": "一个东西或一个词",
+    "localized": {
+      "text": "说出一个适合给密码管理器起的名字。",
+      "low": "听着像普通文件夹",
+      "high": "听着像秘密总部"
+    },
+    "spicy": false,
+    "source": {
+      "kind": "ORIGINAL",
+      "ref": "本项目独立创作，2026-10-31，纯语音回答版"
+    },
+    "editing_note": "本轮新增原创题，回答只需一个东西、一个词或一句话。",
+    "status": "DRAFT"
+  },
+  {
+    "id": "nd-orig-0051",
+    "type": "说东西排序类",
+    "origin": "原创",
+    "answer_format": "一个东西或一个词",
+    "localized": {
+      "text": "说出一样适合当沙发失物招领处标志的东西。",
+      "low": "一眼就认出来",
+      "high": "完全想不到它怎么会掉进去"
+    },
+    "spicy": false,
+    "source": {
+      "kind": "ORIGINAL",
+      "ref": "本项目独立创作，2026-10-31，纯语音回答版"
+    },
+    "editing_note": "本轮新增原创题，回答只需一个东西、一个词或一句话。",
+    "status": "DRAFT"
+  },
+  {
+    "id": "nd-orig-0052",
+    "type": "说东西排序类",
+    "origin": "原创",
+    "answer_format": "一个东西或一个词",
+    "localized": {
+      "text": "说出一种适合放在泡面包装上的工作职位名。",
+      "low": "朴实得像临时工",
+      "high": "豪华得像掌管整个厨房"
+    },
+    "spicy": false,
+    "source": {
+      "kind": "ORIGINAL",
+      "ref": "本项目独立创作，2026-10-31，纯语音回答版"
+    },
+    "editing_note": "本轮新增原创题，回答只需一个东西、一个词或一句话。",
+    "status": "DRAFT"
+  },
+  {
+    "id": "nd-orig-0053",
+    "type": "说东西排序类",
+    "origin": "原创",
+    "answer_format": "一个东西或一个词",
+    "localized": {
+      "text": "说出一样适合成为离线一天纪念品的东西。",
+      "low": "随处可见",
+      "high": "拿出来就像战绩证明"
+    },
+    "spicy": false,
+    "source": {
+      "kind": "ORIGINAL",
+      "ref": "本项目独立创作，2026-10-31，纯语音回答版"
+    },
+    "editing_note": "本轮新增原创题，回答只需一个东西、一个词或一句话。",
+    "status": "DRAFT"
+  },
+  {
+    "id": "nd-orig-0054",
+    "type": "说东西排序类",
+    "origin": "原创",
+    "answer_format": "一个东西或一个词",
+    "localized": {
+      "text": "说出一个适合给手机相册清理计划起的名字。",
+      "low": "像普通家务",
+      "high": "像要重建一座城市"
+    },
+    "spicy": false,
+    "source": {
+      "kind": "ORIGINAL",
+      "ref": "本项目独立创作，2026-10-31，纯语音回答版"
+    },
+    "editing_note": "本轮新增原创题，回答只需一个东西、一个词或一句话。",
+    "status": "DRAFT"
+  },
+  {
+    "id": "nd-orig-0055",
+    "type": "说东西排序类",
+    "origin": "原创",
+    "answer_format": "一个东西或一个词",
+    "localized": {
+      "text": "说出一样可以放在开会迟到通道入口的东西。",
+      "low": "让人顺利溜进去",
+      "high": "让迟到的人当场成为焦点"
+    },
+    "spicy": false,
+    "source": {
+      "kind": "ORIGINAL",
+      "ref": "本项目独立创作，2026-10-31，纯语音回答版"
+    },
+    "editing_note": "本轮新增原创题，回答只需一个东西、一个词或一句话。",
+    "status": "DRAFT"
+  },
+  {
+    "id": "nd-orig-0056",
+    "type": "说东西排序类",
+    "origin": "原创",
+    "answer_format": "一个东西或一个词",
+    "localized": {
+      "text": "说出一种适合给家务机器人当工牌头像的物品。",
+      "low": "看不出任何性格",
+      "high": "看起来比老板还难惹"
+    },
+    "spicy": false,
+    "source": {
+      "kind": "ORIGINAL",
+      "ref": "本项目独立创作，2026-10-31，纯语音回答版"
+    },
+    "editing_note": "本轮新增原创题，回答只需一个东西、一个词或一句话。",
+    "status": "DRAFT"
+  },
+  {
+    "id": "nd-orig-0057",
+    "type": "说东西排序类",
+    "origin": "原创",
+    "answer_format": "一个东西或一个词",
+    "localized": {
+      "text": "说出一样可以象征终于下班的办公用品。",
+      "low": "还带着上班气息",
+      "high": "一眼就看出今天谁也别找我"
+    },
+    "spicy": false,
+    "source": {
+      "kind": "ORIGINAL",
+      "ref": "本项目独立创作，2026-10-31，纯语音回答版"
+    },
+    "editing_note": "本轮新增原创题，回答只需一个东西、一个词或一句话。",
+    "status": "DRAFT"
+  },
+  {
+    "id": "nd-orig-0058",
+    "type": "说东西排序类",
+    "origin": "原创",
+    "answer_format": "一个东西或一个词",
+    "localized": {
+      "text": "说出一个适合印在周末日历上的词。",
+      "low": "像平常的一天",
+      "high": "像人生限时嘉年华"
+    },
+    "spicy": false,
+    "source": {
+      "kind": "ORIGINAL",
+      "ref": "本项目独立创作，2026-10-31，纯语音回答版"
+    },
+    "editing_note": "本轮新增原创题，回答只需一个东西、一个词或一句话。",
+    "status": "DRAFT"
+  },
+  {
+    "id": "nd-orig-0059",
+    "type": "说东西排序类",
+    "origin": "原创",
+    "answer_format": "一个东西或一个词",
+    "localized": {
+      "text": "说出一样可以让搬家纸箱显得特别贵重的东西。",
+      "low": "搬运时随手一抱",
+      "high": "搬运时想给它单独系安全带"
+    },
+    "spicy": false,
+    "source": {
+      "kind": "ORIGINAL",
+      "ref": "本项目独立创作，2026-10-31，纯语音回答版"
+    },
+    "editing_note": "本轮新增原创题，回答只需一个东西、一个词或一句话。",
+    "status": "DRAFT"
+  },
+  {
+    "id": "nd-orig-0060",
+    "type": "说东西排序类",
+    "origin": "原创",
+    "answer_format": "一个东西或一个词",
+    "localized": {
+      "text": "说出一个适合给厕所排队群起的名字。",
+      "low": "像物业通知群",
+      "high": "一眼看出全群都很着急"
+    },
+    "spicy": true,
+    "source": {
+      "kind": "ORIGINAL",
+      "ref": "本项目独立创作，2026-10-31，纯语音回答版"
+    },
+    "editing_note": "本轮新增原创题，回答只需一个东西、一个词或一句话。",
+    "status": "DRAFT"
+  },
+  {
+    "id": "nd-orig-0061",
+    "type": "说东西排序类",
+    "origin": "原创",
+    "answer_format": "一个东西或一个词",
+    "localized": {
+      "text": "说出一种适合印在成人约会备用包上的词。",
+      "low": "完全看不出用途",
+      "high": "暧昧得一眼就懂"
+    },
+    "spicy": true,
+    "source": {
+      "kind": "ORIGINAL",
+      "ref": "本项目独立创作，2026-10-31，纯语音回答版"
+    },
+    "editing_note": "本轮新增原创题，回答只需一个东西、一个词或一句话。",
+    "status": "DRAFT"
+  },
+  {
+    "id": "nd-orig-0062",
+    "type": "说东西排序类",
+    "origin": "原创",
+    "answer_format": "一个东西或一个词",
+    "localized": {
+      "text": "说出一样适合做马桶维修师傅专属奖杯的东西。",
+      "low": "朴素得像普通工具",
+      "high": "摆出来像厕所界最高荣誉"
+    },
+    "spicy": true,
+    "source": {
+      "kind": "ORIGINAL",
+      "ref": "本项目独立创作，2026-10-31，纯语音回答版"
+    },
+    "editing_note": "本轮新增原创题，回答只需一个东西、一个词或一句话。",
+    "status": "DRAFT"
+  },
+  {
+    "id": "nd-orig-0063",
+    "type": "说东西排序类",
+    "origin": "原创",
+    "answer_format": "一个东西或一个词",
+    "localized": {
+      "text": "说出一个适合给单身成年人深夜购物车起的名字。",
+      "low": "像普通采购清单",
+      "high": "像突然上头的人生计划"
+    },
+    "spicy": true,
+    "source": {
+      "kind": "ORIGINAL",
+      "ref": "本项目独立创作，2026-10-31，纯语音回答版"
+    },
+    "editing_note": "本轮新增原创题，回答只需一个东西、一个词或一句话。",
+    "status": "DRAFT"
+  },
+  {
+    "id": "nd-orig-0064",
+    "type": "说东西排序类",
+    "origin": "原创",
+    "answer_format": "一个东西或一个词",
+    "localized": {
+      "text": "说出一样会让约会对象看到购物小票后追问的日用品。",
+      "low": "完全不值得一问",
+      "high": "必须认真解释买来干什么"
+    },
+    "spicy": true,
+    "source": {
+      "kind": "ORIGINAL",
+      "ref": "本项目独立创作，2026-10-31，纯语音回答版"
+    },
+    "editing_note": "本轮新增原创题，回答只需一个东西、一个词或一句话。",
+    "status": "DRAFT"
+  },
+  {
+    "id": "nd-orig-0065",
+    "type": "说东西排序类",
+    "origin": "原创",
+    "answer_format": "一个东西或一个词",
+    "localized": {
+      "text": "说出一个适合给便秘期间的作息表起的名字。",
+      "low": "像日常提醒",
+      "high": "像一项迟迟不能竣工的工程"
+    },
+    "spicy": true,
+    "source": {
+      "kind": "ORIGINAL",
+      "ref": "本项目独立创作，2026-10-31，纯语音回答版"
+    },
+    "editing_note": "本轮新增原创题，回答只需一个东西、一个词或一句话。",
+    "status": "DRAFT"
+  },
+  {
+    "id": "nd-orig-0066",
+    "type": "说东西排序类",
+    "origin": "原创",
+    "answer_format": "一个东西或一个词",
+    "localized": {
+      "text": "说出一种适合印在成年人浴室防尴尬门牌上的词。",
+      "low": "像普通占用提醒",
+      "high": "让人立刻停止敲门"
+    },
+    "spicy": true,
+    "source": {
+      "kind": "ORIGINAL",
+      "ref": "本项目独立创作，2026-10-31，纯语音回答版"
+    },
+    "editing_note": "本轮新增原创题，回答只需一个东西、一个词或一句话。",
+    "status": "DRAFT"
+  },
+  {
+    "id": "nd-orig-0067",
+    "type": "说东西排序类",
+    "origin": "原创",
+    "answer_format": "一个东西或一个词",
+    "localized": {
+      "text": "说出一个适合给恋爱中两人共享的被子起的名字。",
+      "low": "像普通床上用品",
+      "high": "像每天都在争夺的地盘"
+    },
+    "spicy": true,
+    "source": {
+      "kind": "ORIGINAL",
+      "ref": "本项目独立创作，2026-10-31，纯语音回答版"
+    },
+    "editing_note": "本轮新增原创题，回答只需一个东西、一个词或一句话。",
+    "status": "DRAFT"
+  },
+  {
+    "id": "nd-orig-0068",
+    "type": "说东西排序类",
+    "origin": "原创",
+    "answer_format": "一个东西或一个词",
+    "localized": {
+      "text": "说出一样适合放进防止约会冷场应急盒的东西。",
+      "low": "大概派不上用场",
+      "high": "看见就有聊不完的话"
+    },
+    "spicy": true,
+    "source": {
+      "kind": "ORIGINAL",
+      "ref": "本项目独立创作，2026-10-31，纯语音回答版"
+    },
+    "editing_note": "本轮新增原创题，回答只需一个东西、一个词或一句话。",
+    "status": "DRAFT"
+  },
+  {
+    "id": "nd-orig-0069",
+    "type": "说东西排序类",
+    "origin": "原创",
+    "answer_format": "一个东西或一个词",
+    "localized": {
+      "text": "说出一个适合给成年人酒后后悔清单起的名字。",
+      "low": "像小小提醒",
+      "high": "像一本不敢再翻的档案"
+    },
+    "spicy": true,
+    "source": {
+      "kind": "ORIGINAL",
+      "ref": "本项目独立创作，2026-10-31，纯语音回答版"
+    },
+    "editing_note": "本轮新增原创题，回答只需一个东西、一个词或一句话。",
+    "status": "DRAFT"
+  },
+  {
+    "id": "nd-orig-0002",
+    "type": "说一句话类",
+    "origin": "原创",
+    "answer_format": "一句话",
+    "localized": {
+      "text": "说一句迟到五分钟时的借口。",
+      "low": "完全可信",
+      "high": "连自己都编不下去"
+    },
+    "spicy": false,
+    "source": {
+      "kind": "ORIGINAL",
+      "ref": "本项目独立创作，2026-10-31，纯语音回答版"
+    },
+    "editing_note": "沿用本项目原有原创样稿创意，统一为简短口头回答。",
+    "status": "DRAFT"
+  },
+  {
+    "id": "nd-orig-0006",
+    "type": "说一句话类",
+    "origin": "原创",
+    "answer_format": "一句话",
+    "localized": {
+      "text": "说一句领到拖延症年度奖时的获奖感言。",
+      "low": "勉强承认",
+      "high": "得意得不得了"
+    },
+    "spicy": false,
+    "source": {
+      "kind": "ORIGINAL",
+      "ref": "本项目独立创作，2026-10-31，纯语音回答版"
+    },
+    "editing_note": "沿用本项目原有原创样稿创意，统一为简短口头回答。",
+    "status": "DRAFT"
+  },
+  {
+    "id": "nd-orig-0008",
+    "type": "说一句话类",
+    "origin": "原创",
+    "answer_format": "一句话",
+    "localized": {
+      "text": "说一句你会对电梯里突然开口的盆栽说的话。",
+      "low": "像平常打招呼",
+      "high": "尴尬得想立刻爬楼梯"
+    },
+    "spicy": false,
+    "source": {
+      "kind": "ORIGINAL",
+      "ref": "本项目独立创作，2026-10-31，纯语音回答版"
+    },
+    "editing_note": "沿用本项目原有原创样稿创意，统一为简短口头回答。",
+    "status": "DRAFT"
+  },
+  {
+    "id": "nd-orig-0010",
+    "type": "说一句话类",
+    "origin": "原创",
+    "answer_format": "一句话",
+    "localized": {
+      "text": "说一句把洗碗经历写进简历的话。",
+      "low": "完全实事求是",
+      "high": "像拯救过世界"
+    },
+    "spicy": false,
+    "source": {
+      "kind": "ORIGINAL",
+      "ref": "本项目独立创作，2026-10-31，纯语音回答版"
+    },
+    "editing_note": "沿用本项目原有原创样稿创意，统一为简短口头回答。",
+    "status": "DRAFT"
+  },
+  {
+    "id": "nd-orig-0013",
+    "type": "说一句话类",
+    "origin": "原创",
+    "answer_format": "一句话",
+    "localized": {
+      "text": "说一句给周末闹钟写的提示语。",
+      "low": "看了愿意起床",
+      "high": "看了只想关机"
+    },
+    "spicy": false,
+    "source": {
+      "kind": "ORIGINAL",
+      "ref": "本项目独立创作，2026-10-31，纯语音回答版"
+    },
+    "editing_note": "沿用本项目原有原创样稿创意，统一为简短口头回答。",
+    "status": "DRAFT"
+  },
+  {
+    "id": "nd-orig-0014",
+    "type": "说一句话类",
+    "origin": "原创",
+    "answer_format": "一句话",
+    "localized": {
+      "text": "说一句为纸箱小屋招租的广告语。",
+      "low": "诚实得有点寒酸",
+      "high": "听着像豪华度假村"
+    },
+    "spicy": false,
+    "source": {
+      "kind": "ORIGINAL",
+      "ref": "本项目独立创作，2026-10-31，纯语音回答版"
+    },
+    "editing_note": "沿用本项目原有原创样稿创意，统一为简短口头回答。",
+    "status": "DRAFT"
+  },
+  {
+    "id": "nd-orig-0015",
+    "type": "说一句话类",
+    "origin": "原创",
+    "answer_format": "一句话",
+    "localized": {
+      "text": "说一句推销会自己回家的拖鞋的话。",
+      "low": "似乎没什么必要",
+      "high": "听完就想马上拥有"
+    },
+    "spicy": false,
+    "source": {
+      "kind": "ORIGINAL",
+      "ref": "本项目独立创作，2026-10-31，纯语音回答版"
+    },
+    "editing_note": "沿用本项目原有原创样稿创意，统一为简短口头回答。",
+    "status": "DRAFT"
+  },
+  {
+    "id": "nd-orig-0070",
+    "type": "说一句话类",
+    "origin": "原创",
+    "answer_format": "一句话",
+    "localized": {
+      "text": "说一句结束无效会议的话。",
+      "low": "客气但不太管用",
+      "high": "说完大家立刻开始收东西"
+    },
+    "spicy": false,
+    "source": {
+      "kind": "ORIGINAL",
+      "ref": "本项目独立创作，2026-10-31，纯语音回答版"
+    },
+    "editing_note": "本轮新增原创题，回答只需一个东西、一个词或一句话。",
+    "status": "DRAFT"
+  },
+  {
+    "id": "nd-orig-0071",
+    "type": "说一句话类",
+    "origin": "原创",
+    "answer_format": "一句话",
+    "localized": {
+      "text": "说一句向枯萎多肉解释自己忘记浇水的话。",
+      "low": "没什么诚意",
+      "high": "像在求一位老朋友原谅"
+    },
+    "spicy": false,
+    "source": {
+      "kind": "ORIGINAL",
+      "ref": "本项目独立创作，2026-10-31，纯语音回答版"
+    },
+    "editing_note": "本轮新增原创题，回答只需一个东西、一个词或一句话。",
+    "status": "DRAFT"
+  },
+  {
+    "id": "nd-orig-0072",
+    "type": "说一句话类",
+    "origin": "原创",
+    "answer_format": "一句话",
+    "localized": {
+      "text": "说一句告诉同事自己今天不加班的话。",
+      "low": "还留着商量余地",
+      "high": "像已经登上离开的飞机"
+    },
+    "spicy": false,
+    "source": {
+      "kind": "ORIGINAL",
+      "ref": "本项目独立创作，2026-10-31，纯语音回答版"
+    },
+    "editing_note": "本轮新增原创题，回答只需一个东西、一个词或一句话。",
+    "status": "DRAFT"
+  },
+  {
+    "id": "nd-orig-0073",
+    "type": "说一句话类",
+    "origin": "原创",
+    "answer_format": "一句话",
+    "localized": {
+      "text": "说一句劝朋友别再给群聊改名的话。",
+      "low": "轻轻提醒",
+      "high": "像要召开紧急会议"
+    },
+    "spicy": false,
+    "source": {
+      "kind": "ORIGINAL",
+      "ref": "本项目独立创作，2026-10-31，纯语音回答版"
+    },
+    "editing_note": "本轮新增原创题，回答只需一个东西、一个词或一句话。",
+    "status": "DRAFT"
+  },
+  {
+    "id": "nd-orig-0074",
+    "type": "说一句话类",
+    "origin": "原创",
+    "answer_format": "一句话",
+    "localized": {
+      "text": "说一句向手机解释今天没给它充电的话。",
+      "low": "敷衍得很",
+      "high": "像认真挽回一段友谊"
+    },
+    "spicy": false,
+    "source": {
+      "kind": "ORIGINAL",
+      "ref": "本项目独立创作，2026-10-31，纯语音回答版"
+    },
+    "editing_note": "本轮新增原创题，回答只需一个东西、一个词或一句话。",
+    "status": "DRAFT"
+  },
+  {
+    "id": "nd-orig-0075",
+    "type": "说一句话类",
+    "origin": "原创",
+    "answer_format": "一句话",
+    "localized": {
+      "text": "说一句评价全新白板上唯一一道划痕的话。",
+      "low": "完全不在意",
+      "high": "仿佛看见了一段传奇"
+    },
+    "spicy": false,
+    "source": {
+      "kind": "ORIGINAL",
+      "ref": "本项目独立创作，2026-10-31，纯语音回答版"
+    },
+    "editing_note": "本轮新增原创题，回答只需一个东西、一个词或一句话。",
+    "status": "DRAFT"
+  },
+  {
+    "id": "nd-orig-0076",
+    "type": "说一句话类",
+    "origin": "原创",
+    "answer_format": "一句话",
+    "localized": {
+      "text": "说一句为吃掉最后一块饼干辩护的话。",
+      "low": "理由十分牵强",
+      "high": "听完觉得你做了大好事"
+    },
+    "spicy": false,
+    "source": {
+      "kind": "ORIGINAL",
+      "ref": "本项目独立创作，2026-10-31，纯语音回答版"
+    },
+    "editing_note": "本轮新增原创题，回答只需一个东西、一个词或一句话。",
+    "status": "DRAFT"
+  },
+  {
+    "id": "nd-orig-0077",
+    "type": "说一句话类",
+    "origin": "原创",
+    "answer_format": "一句话",
+    "localized": {
+      "text": "说一句提醒室友取走洗衣机里衣服的话。",
+      "low": "像日常留言",
+      "high": "像在发布最后通牒"
+    },
+    "spicy": false,
+    "source": {
+      "kind": "ORIGINAL",
+      "ref": "本项目独立创作，2026-10-31，纯语音回答版"
+    },
+    "editing_note": "本轮新增原创题，回答只需一个东西、一个词或一句话。",
+    "status": "DRAFT"
+  },
+  {
+    "id": "nd-orig-0078",
+    "type": "说一句话类",
+    "origin": "原创",
+    "answer_format": "一句话",
+    "localized": {
+      "text": "说一句给电脑重启画面配的旁白。",
+      "low": "像普通操作提示",
+      "high": "像电影最终决战"
+    },
+    "spicy": false,
+    "source": {
+      "kind": "ORIGINAL",
+      "ref": "本项目独立创作，2026-10-31，纯语音回答版"
+    },
+    "editing_note": "本轮新增原创题，回答只需一个东西、一个词或一句话。",
+    "status": "DRAFT"
+  },
+  {
+    "id": "nd-orig-0079",
+    "type": "说一句话类",
+    "origin": "原创",
+    "answer_format": "一句话",
+    "localized": {
+      "text": "说一句向新买的跑步鞋保证会使用它的话。",
+      "low": "自己都不太信",
+      "high": "像刚签下郑重契约"
+    },
+    "spicy": false,
+    "source": {
+      "kind": "ORIGINAL",
+      "ref": "本项目独立创作，2026-10-31，纯语音回答版"
+    },
+    "editing_note": "本轮新增原创题，回答只需一个东西、一个词或一句话。",
+    "status": "DRAFT"
+  },
+  {
+    "id": "nd-orig-0080",
+    "type": "说一句话类",
+    "origin": "原创",
+    "answer_format": "一句话",
+    "localized": {
+      "text": "说一句形容终于找到了匹配盒盖的话。",
+      "low": "只是松了口气",
+      "high": "仿佛完成世纪重逢"
+    },
+    "spicy": false,
+    "source": {
+      "kind": "ORIGINAL",
+      "ref": "本项目独立创作，2026-10-31，纯语音回答版"
+    },
+    "editing_note": "本轮新增原创题，回答只需一个东西、一个词或一句话。",
+    "status": "DRAFT"
+  },
+  {
+    "id": "nd-orig-0081",
+    "type": "说一句话类",
+    "origin": "原创",
+    "answer_format": "一句话",
+    "localized": {
+      "text": "说一句把昨天的剩饭介绍成新品的话。",
+      "low": "听起来就是剩饭",
+      "high": "听起来值得预约品尝"
+    },
+    "spicy": false,
+    "source": {
+      "kind": "ORIGINAL",
+      "ref": "本项目独立创作，2026-10-31，纯语音回答版"
+    },
+    "editing_note": "本轮新增原创题，回答只需一个东西、一个词或一句话。",
+    "status": "DRAFT"
+  },
+  {
+    "id": "nd-orig-0082",
+    "type": "说一句话类",
+    "origin": "原创",
+    "answer_format": "一句话",
+    "localized": {
+      "text": "说一句祝朋友第一次独自装家具顺利的话。",
+      "low": "普通祝福",
+      "high": "像在送人踏上险途"
+    },
+    "spicy": false,
+    "source": {
+      "kind": "ORIGINAL",
+      "ref": "本项目独立创作，2026-10-31，纯语音回答版"
+    },
+    "editing_note": "本轮新增原创题，回答只需一个东西、一个词或一句话。",
+    "status": "DRAFT"
+  },
+  {
+    "id": "nd-orig-0083",
+    "type": "说一句话类",
+    "origin": "原创",
+    "answer_format": "一句话",
+    "localized": {
+      "text": "说一句请快递员别再把包裹放高处的话。",
+      "low": "非常客气",
+      "high": "像在向高山喊话"
+    },
+    "spicy": false,
+    "source": {
+      "kind": "ORIGINAL",
+      "ref": "本项目独立创作，2026-10-31，纯语音回答版"
+    },
+    "editing_note": "本轮新增原创题，回答只需一个东西、一个词或一句话。",
+    "status": "DRAFT"
+  },
+  {
+    "id": "nd-orig-0084",
+    "type": "说一句话类",
+    "origin": "原创",
+    "answer_format": "一句话",
+    "localized": {
+      "text": "说一句安慰考试没过的扫地机器人的话。",
+      "low": "像安慰普通工具",
+      "high": "像鼓励未来的行业巨星"
+    },
+    "spicy": false,
+    "source": {
+      "kind": "ORIGINAL",
+      "ref": "本项目独立创作，2026-10-31，纯语音回答版"
+    },
+    "editing_note": "本轮新增原创题，回答只需一个东西、一个词或一句话。",
+    "status": "DRAFT"
+  },
+  {
+    "id": "nd-orig-0085",
+    "type": "说一句话类",
+    "origin": "原创",
+    "answer_format": "一句话",
+    "localized": {
+      "text": "说一句邀请朋友参观你刚整理好的抽屉的话。",
+      "low": "像顺便看一眼",
+      "high": "像在为盛大展览揭幕"
+    },
+    "spicy": false,
+    "source": {
+      "kind": "ORIGINAL",
+      "ref": "本项目独立创作，2026-10-31，纯语音回答版"
+    },
+    "editing_note": "本轮新增原创题，回答只需一个东西、一个词或一句话。",
+    "status": "DRAFT"
+  },
+  {
+    "id": "nd-orig-0086",
+    "type": "说一句话类",
+    "origin": "原创",
+    "answer_format": "一句话",
+    "localized": {
+      "text": "说一句为只剩一片叶子的葱加油的话。",
+      "low": "随口鼓励",
+      "high": "像全场都押它夺冠"
+    },
+    "spicy": false,
+    "source": {
+      "kind": "ORIGINAL",
+      "ref": "本项目独立创作，2026-10-31，纯语音回答版"
+    },
+    "editing_note": "本轮新增原创题，回答只需一个东西、一个词或一句话。",
+    "status": "DRAFT"
+  },
+  {
+    "id": "nd-orig-0087",
+    "type": "说一句话类",
+    "origin": "原创",
+    "answer_format": "一句话",
+    "localized": {
+      "text": "说一句宣布开始清理浏览器收藏夹的话。",
+      "low": "像普通整理",
+      "high": "像要考察远古遗迹"
+    },
+    "spicy": false,
+    "source": {
+      "kind": "ORIGINAL",
+      "ref": "本项目独立创作，2026-10-31，纯语音回答版"
+    },
+    "editing_note": "本轮新增原创题，回答只需一个东西、一个词或一句话。",
+    "status": "DRAFT"
+  },
+  {
+    "id": "nd-orig-0088",
+    "type": "说一句话类",
+    "origin": "原创",
+    "answer_format": "一句话",
+    "localized": {
+      "text": "说一句向已经打烊的零食柜申请加餐的话。",
+      "low": "试探性询问",
+      "high": "像在递交紧急申请"
+    },
+    "spicy": false,
+    "source": {
+      "kind": "ORIGINAL",
+      "ref": "本项目独立创作，2026-10-31，纯语音回答版"
+    },
+    "editing_note": "本轮新增原创题，回答只需一个东西、一个词或一句话。",
+    "status": "DRAFT"
+  },
+  {
+    "id": "nd-orig-0089",
+    "type": "说一句话类",
+    "origin": "原创",
+    "answer_format": "一句话",
+    "localized": {
+      "text": "说一句帮朋友解释为什么只买了一个收纳盒却花了整天的话。",
+      "low": "解释完仍然奇怪",
+      "high": "听完觉得一天都不够用"
+    },
+    "spicy": false,
+    "source": {
+      "kind": "ORIGINAL",
+      "ref": "本项目独立创作，2026-10-31，纯语音回答版"
+    },
+    "editing_note": "本轮新增原创题，回答只需一个东西、一个词或一句话。",
+    "status": "DRAFT"
+  },
+  {
+    "id": "nd-orig-0090",
+    "type": "说一句话类",
+    "origin": "原创",
+    "answer_format": "一句话",
+    "localized": {
+      "text": "说一句在群聊里提醒大家别只回收到的话。",
+      "low": "普通建议",
+      "high": "像决心改变群聊文化"
+    },
+    "spicy": false,
+    "source": {
+      "kind": "ORIGINAL",
+      "ref": "本项目独立创作，2026-10-31，纯语音回答版"
+    },
+    "editing_note": "本轮新增原创题，回答只需一个东西、一个词或一句话。",
+    "status": "DRAFT"
+  },
+  {
+    "id": "nd-orig-0091",
+    "type": "说一句话类",
+    "origin": "原创",
+    "answer_format": "一句话",
+    "localized": {
+      "text": "说一句给洗碗海绵写的退休感言。",
+      "low": "像用完就扔",
+      "high": "像送别功勋员工"
+    },
+    "spicy": false,
+    "source": {
+      "kind": "ORIGINAL",
+      "ref": "本项目独立创作，2026-10-31，纯语音回答版"
+    },
+    "editing_note": "本轮新增原创题，回答只需一个东西、一个词或一句话。",
+    "status": "DRAFT"
+  },
+  {
+    "id": "nd-orig-0092",
+    "type": "说一句话类",
+    "origin": "原创",
+    "answer_format": "一句话",
+    "localized": {
+      "text": "说一句阻止朋友给所有家具贴标签的话。",
+      "low": "温和地劝一下",
+      "high": "像发现家里即将变成仓库"
+    },
+    "spicy": false,
+    "source": {
+      "kind": "ORIGINAL",
+      "ref": "本项目独立创作，2026-10-31，纯语音回答版"
+    },
+    "editing_note": "本轮新增原创题，回答只需一个东西、一个词或一句话。",
+    "status": "DRAFT"
+  },
+  {
+    "id": "nd-orig-0093",
+    "type": "说一句话类",
+    "origin": "原创",
+    "answer_format": "一句话",
+    "localized": {
+      "text": "说一句为周一上班的自己颁发奖励的话。",
+      "low": "奖励聊胜于无",
+      "high": "像达成重大人生成就"
+    },
+    "spicy": false,
+    "source": {
+      "kind": "ORIGINAL",
+      "ref": "本项目独立创作，2026-10-31，纯语音回答版"
+    },
+    "editing_note": "本轮新增原创题，回答只需一个东西、一个词或一句话。",
+    "status": "DRAFT"
+  },
+  {
+    "id": "nd-orig-0094",
+    "type": "说一句话类",
+    "origin": "原创",
+    "answer_format": "一句话",
+    "localized": {
+      "text": "说一句给永远配不上的袜子写的寻物启事。",
+      "low": "平静地描述情况",
+      "high": "像在呼唤失散多年亲人"
+    },
+    "spicy": false,
+    "source": {
+      "kind": "ORIGINAL",
+      "ref": "本项目独立创作，2026-10-31，纯语音回答版"
+    },
+    "editing_note": "本轮新增原创题，回答只需一个东西、一个词或一句话。",
+    "status": "DRAFT"
+  },
+  {
+    "id": "nd-orig-0095",
+    "type": "说一句话类",
+    "origin": "原创",
+    "answer_format": "一句话",
+    "localized": {
+      "text": "说一句夸朋友把预算表做得漂亮的话。",
+      "low": "像普通夸奖",
+      "high": "仿佛看见传世作品"
+    },
+    "spicy": false,
+    "source": {
+      "kind": "ORIGINAL",
+      "ref": "本项目独立创作，2026-10-31，纯语音回答版"
+    },
+    "editing_note": "本轮新增原创题，回答只需一个东西、一个词或一句话。",
+    "status": "DRAFT"
+  },
+  {
+    "id": "nd-orig-0096",
+    "type": "说一句话类",
+    "origin": "原创",
+    "answer_format": "一句话",
+    "localized": {
+      "text": "说一句宣布今天不看工作群的话。",
+      "low": "像暂时静音",
+      "high": "像已经远离文明世界"
+    },
+    "spicy": false,
+    "source": {
+      "kind": "ORIGINAL",
+      "ref": "本项目独立创作，2026-10-31，纯语音回答版"
+    },
+    "editing_note": "本轮新增原创题，回答只需一个东西、一个词或一句话。",
+    "status": "DRAFT"
+  },
+  {
+    "id": "nd-orig-0097",
+    "type": "说一句话类",
+    "origin": "原创",
+    "answer_format": "一句话",
+    "localized": {
+      "text": "说一句请打折标签别再诱惑自己的话。",
+      "low": "没什么抵抗力",
+      "high": "仿佛正在抵御终极诱惑"
+    },
+    "spicy": false,
+    "source": {
+      "kind": "ORIGINAL",
+      "ref": "本项目独立创作，2026-10-31，纯语音回答版"
+    },
+    "editing_note": "本轮新增原创题，回答只需一个东西、一个词或一句话。",
+    "status": "DRAFT"
+  },
+  {
+    "id": "nd-orig-0098",
+    "type": "说一句话类",
+    "origin": "原创",
+    "answer_format": "一句话",
+    "localized": {
+      "text": "说一句向正在化冻的冰箱解释停电的话。",
+      "low": "语气非常随意",
+      "high": "像是在进行重大危机公关"
+    },
+    "spicy": false,
+    "source": {
+      "kind": "ORIGINAL",
+      "ref": "本项目独立创作，2026-10-31，纯语音回答版"
+    },
+    "editing_note": "本轮新增原创题，回答只需一个东西、一个词或一句话。",
+    "status": "DRAFT"
+  },
+  {
+    "id": "nd-orig-0099",
+    "type": "说一句话类",
+    "origin": "原创",
+    "answer_format": "一句话",
+    "localized": {
+      "text": "说一句为捡回掉在沙发缝里的硬币庆祝的话。",
+      "low": "只是顺手一捡",
+      "high": "像发现了一座金矿"
+    },
+    "spicy": false,
+    "source": {
+      "kind": "ORIGINAL",
+      "ref": "本项目独立创作，2026-10-31，纯语音回答版"
+    },
+    "editing_note": "本轮新增原创题，回答只需一个东西、一个词或一句话。",
+    "status": "DRAFT"
+  },
+  {
+    "id": "nd-orig-0100",
+    "type": "说一句话类",
+    "origin": "原创",
+    "answer_format": "一句话",
+    "localized": {
+      "text": "说一句告诉朋友自己的手帐还停在一月份的话。",
+      "low": "坦然接受",
+      "high": "像在坚守某种高深传统"
+    },
+    "spicy": false,
+    "source": {
+      "kind": "ORIGINAL",
+      "ref": "本项目独立创作，2026-10-31，纯语音回答版"
+    },
+    "editing_note": "本轮新增原创题，回答只需一个东西、一个词或一句话。",
+    "status": "DRAFT"
+  },
+  {
+    "id": "nd-orig-0101",
+    "type": "说一句话类",
+    "origin": "原创",
+    "answer_format": "一句话",
+    "localized": {
+      "text": "说一句给正在安装更新的打印机加油的话。",
+      "low": "像随口催一下",
+      "high": "像全队最后的希望"
+    },
+    "spicy": false,
+    "source": {
+      "kind": "ORIGINAL",
+      "ref": "本项目独立创作，2026-10-31，纯语音回答版"
+    },
+    "editing_note": "本轮新增原创题，回答只需一个东西、一个词或一句话。",
+    "status": "DRAFT"
+  },
+  {
+    "id": "nd-orig-0102",
+    "type": "说一句话类",
+    "origin": "原创",
+    "answer_format": "一句话",
+    "localized": {
+      "text": "说一句形容终于把数据线解开的心情。",
+      "low": "没有特别感觉",
+      "high": "像刚获得自由"
+    },
+    "spicy": false,
+    "source": {
+      "kind": "ORIGINAL",
+      "ref": "本项目独立创作，2026-10-31，纯语音回答版"
+    },
+    "editing_note": "本轮新增原创题，回答只需一个东西、一个词或一句话。",
+    "status": "DRAFT"
+  },
+  {
+    "id": "nd-orig-0017",
+    "type": "说一句话类",
+    "origin": "原创",
+    "answer_format": "一句话",
+    "localized": {
+      "text": "说一句发现厕所没纸时隔门求助的话。",
+      "low": "镇定得像问时间",
+      "high": "像在宣布紧急疏散"
+    },
+    "spicy": true,
+    "source": {
+      "kind": "ORIGINAL",
+      "ref": "本项目独立创作，2026-10-31，纯语音回答版"
+    },
+    "editing_note": "沿用本项目原有原创样稿创意，统一为简短口头回答。",
+    "status": "DRAFT"
+  },
+  {
+    "id": "nd-orig-0018",
+    "type": "说一句话类",
+    "origin": "原创",
+    "answer_format": "一句话",
+    "localized": {
+      "text": "说一句第一次约会时解释自己为什么紧张的话。",
+      "low": "体面又自然",
+      "high": "说完更想钻地缝"
+    },
+    "spicy": true,
+    "source": {
+      "kind": "ORIGINAL",
+      "ref": "本项目独立创作，2026-10-31，纯语音回答版"
+    },
+    "editing_note": "沿用本项目原有原创样稿创意，统一为简短口头回答。",
+    "status": "DRAFT"
+  },
+  {
+    "id": "nd-orig-0019",
+    "type": "说一句话类",
+    "origin": "原创",
+    "answer_format": "一句话",
+    "localized": {
+      "text": "说一句为聚会时自己放屁发出的声音找的借口。",
+      "low": "大家或许真会信",
+      "high": "越解释越像你放的"
+    },
+    "spicy": true,
+    "source": {
+      "kind": "ORIGINAL",
+      "ref": "本项目独立创作，2026-10-31，纯语音回答版"
+    },
+    "editing_note": "沿用本项目原有原创样稿创意，统一为简短口头回答。",
+    "status": "DRAFT"
+  },
+  {
+    "id": "nd-orig-0020",
+    "type": "说一句话类",
+    "origin": "原创",
+    "answer_format": "一句话",
+    "localized": {
+      "text": "说一句解释自己为什么把穿过的袜子塞进花盆的话。",
+      "low": "勉强还能圆过去",
+      "high": "一本正经地胡说八道"
+    },
+    "spicy": true,
+    "source": {
+      "kind": "ORIGINAL",
+      "ref": "本项目独立创作，2026-10-31，纯语音回答版"
+    },
+    "editing_note": "沿用本项目原有原创样稿创意，统一为简短口头回答。",
+    "status": "DRAFT"
+  },
+  {
+    "id": "nd-orig-0103",
+    "type": "说一句话类",
+    "origin": "原创",
+    "answer_format": "一句话",
+    "localized": {
+      "text": "说一句成年人想邀请约会对象再多待一会儿的话。",
+      "low": "只是普通挽留",
+      "high": "暧昧得对方一听就懂"
+    },
+    "spicy": true,
+    "source": {
+      "kind": "ORIGINAL",
+      "ref": "本项目独立创作，2026-10-31，纯语音回答版"
+    },
+    "editing_note": "本轮新增原创题，回答只需一个东西、一个词或一句话。",
+    "status": "DRAFT"
+  },
+  {
+    "id": "nd-orig-0104",
+    "type": "说一句话类",
+    "origin": "原创",
+    "answer_format": "一句话",
+    "localized": {
+      "text": "说一句发现成人约会对象在你家留下牙刷时的话。",
+      "low": "像普通失物招领",
+      "high": "像在宣布关系重大进展"
+    },
+    "spicy": true,
+    "source": {
+      "kind": "ORIGINAL",
+      "ref": "本项目独立创作，2026-10-31，纯语音回答版"
+    },
+    "editing_note": "本轮新增原创题，回答只需一个东西、一个词或一句话。",
+    "status": "DRAFT"
+  },
+  {
+    "id": "nd-orig-0105",
+    "type": "说一句话类",
+    "origin": "原创",
+    "answer_format": "一句话",
+    "localized": {
+      "text": "说一句向厕所里的自己催进度的话。",
+      "low": "像日常提醒",
+      "high": "像项目即将严重延期"
+    },
+    "spicy": true,
+    "source": {
+      "kind": "ORIGINAL",
+      "ref": "本项目独立创作，2026-10-31，纯语音回答版"
+    },
+    "editing_note": "本轮新增原创题，回答只需一个东西、一个词或一句话。",
+    "status": "DRAFT"
+  },
+  {
+    "id": "nd-orig-0106",
+    "type": "说一句话类",
+    "origin": "原创",
+    "answer_format": "一句话",
+    "localized": {
+      "text": "说一句成年人宿醉醒来后给昨晚的自己留的话。",
+      "low": "只是随口吐槽",
+      "high": "像要立刻断绝来往"
+    },
+    "spicy": true,
+    "source": {
+      "kind": "ORIGINAL",
+      "ref": "本项目独立创作，2026-10-31，纯语音回答版"
+    },
+    "editing_note": "本轮新增原创题，回答只需一个东西、一个词或一句话。",
+    "status": "DRAFT"
+  },
+  {
+    "id": "nd-orig-0107",
+    "type": "说一句话类",
+    "origin": "原创",
+    "answer_format": "一句话",
+    "localized": {
+      "text": "说一句解释自己为什么在浴室里待了太久的话。",
+      "low": "完全平常",
+      "high": "听完更想追问细节"
+    },
+    "spicy": true,
+    "source": {
+      "kind": "ORIGINAL",
+      "ref": "本项目独立创作，2026-10-31，纯语音回答版"
+    },
+    "editing_note": "本轮新增原创题，回答只需一个东西、一个词或一句话。",
+    "status": "DRAFT"
+  },
+  {
+    "id": "nd-orig-0108",
+    "type": "说一句话类",
+    "origin": "原创",
+    "answer_format": "一句话",
+    "localized": {
+      "text": "说一句成年人约会时拒绝和对方共用一根吸管的话。",
+      "low": "礼貌又清楚",
+      "high": "让对方以为你在欲擒故纵"
+    },
+    "spicy": true,
+    "source": {
+      "kind": "ORIGINAL",
+      "ref": "本项目独立创作，2026-10-31，纯语音回答版"
+    },
+    "editing_note": "本轮新增原创题，回答只需一个东西、一个词或一句话。",
+    "status": "DRAFT"
+  },
+  {
+    "id": "nd-orig-0001",
+    "type": "场景选择类",
+    "origin": "原创",
+    "answer_format": "一句话",
+    "localized": {
+      "text": "你能给只会做一件事的家用机器人下指令，说出一个你想让它完成的任务。",
+      "low": "省不了什么事",
+      "high": "简直改变生活"
+    },
+    "spicy": false,
+    "source": {
+      "kind": "ORIGINAL",
+      "ref": "本项目独立创作，2026-10-31，纯语音回答版"
+    },
+    "editing_note": "沿用本项目原有原创样稿创意，统一为简短口头回答。",
+    "status": "DRAFT"
+  },
+  {
+    "id": "nd-orig-0003",
+    "type": "场景选择类",
+    "origin": "原创",
+    "answer_format": "一句话",
+    "localized": {
+      "text": "你突然多了一天带薪假，用一句话说出你的庆祝安排。",
+      "low": "邻居完全察觉不到",
+      "high": "整栋楼都知道你放假了"
+    },
+    "spicy": false,
+    "source": {
+      "kind": "ORIGINAL",
+      "ref": "本项目独立创作，2026-10-31，纯语音回答版"
+    },
+    "editing_note": "沿用本项目原有原创样稿创意，统一为简短口头回答。",
+    "status": "DRAFT"
+  },
+  {
+    "id": "nd-orig-0007",
+    "type": "场景选择类",
+    "origin": "原创",
+    "answer_format": "一句话",
+    "localized": {
+      "text": "朋友说随便吃点，说出一道你会端上桌的菜。",
+      "low": "确实很随便",
+      "high": "隆重得像要办宴席"
+    },
+    "spicy": false,
+    "source": {
+      "kind": "ORIGINAL",
+      "ref": "本项目独立创作，2026-10-31，纯语音回答版"
+    },
+    "editing_note": "沿用本项目原有原创样稿创意，统一为简短口头回答。",
+    "status": "DRAFT"
+  },
+  {
+    "id": "nd-orig-0011",
+    "type": "场景选择类",
+    "origin": "原创",
+    "answer_format": "一句话",
+    "localized": {
+      "text": "朋友请你照看一天仙人掌，用一句话说出你会安排的照料方式。",
+      "low": "刚好尽责",
+      "high": "照顾得过于隆重"
+    },
+    "spicy": false,
+    "source": {
+      "kind": "ORIGINAL",
+      "ref": "本项目独立创作，2026-10-31，纯语音回答版"
+    },
+    "editing_note": "沿用本项目原有原创样稿创意，统一为简短口头回答。",
+    "status": "DRAFT"
+  },
+  {
+    "id": "nd-orig-0109",
+    "type": "场景选择类",
+    "origin": "原创",
+    "answer_format": "一句话",
+    "localized": {
+      "text": "社区要举办拖鞋博览会，说出一个你想设置的展区。",
+      "low": "和普通鞋店没差别",
+      "high": "光听名字就想买票"
+    },
+    "spicy": false,
+    "source": {
+      "kind": "ORIGINAL",
+      "ref": "本项目独立创作，2026-10-31，纯语音回答版"
+    },
+    "editing_note": "本轮新增原创题，回答只需一个东西、一个词或一句话。",
+    "status": "DRAFT"
+  },
+  {
+    "id": "nd-orig-0110",
+    "type": "场景选择类",
+    "origin": "原创",
+    "answer_format": "一句话",
+    "localized": {
+      "text": "办公室要给打印机庆生，说出一样你会准备的东西。",
+      "low": "像完成普通任务",
+      "high": "隆重得像公司周年庆"
+    },
+    "spicy": false,
+    "source": {
+      "kind": "ORIGINAL",
+      "ref": "本项目独立创作，2026-10-31，纯语音回答版"
+    },
+    "editing_note": "本轮新增原创题，回答只需一个东西、一个词或一句话。",
+    "status": "DRAFT"
+  },
+  {
+    "id": "nd-orig-0111",
+    "type": "场景选择类",
+    "origin": "原创",
+    "answer_format": "一句话",
+    "localized": {
+      "text": "你的闹钟获得了一天休假，说出一个它最可能去的地方。",
+      "low": "几乎没离开工作岗位",
+      "high": "完全不想回来上班"
+    },
+    "spicy": false,
+    "source": {
+      "kind": "ORIGINAL",
+      "ref": "本项目独立创作，2026-10-31，纯语音回答版"
+    },
+    "editing_note": "本轮新增原创题，回答只需一个东西、一个词或一句话。",
+    "status": "DRAFT"
+  },
+  {
+    "id": "nd-orig-0112",
+    "type": "场景选择类",
+    "origin": "原创",
+    "answer_format": "一句话",
+    "localized": {
+      "text": "家里的椅子想成为最受欢迎家具，说出一句你会替它写的宣传语。",
+      "low": "像普通产品介绍",
+      "high": "像非它不可的郑重推荐"
+    },
+    "spicy": false,
+    "source": {
+      "kind": "ORIGINAL",
+      "ref": "本项目独立创作，2026-10-31，纯语音回答版"
+    },
+    "editing_note": "本轮新增原创题，回答只需一个东西、一个词或一句话。",
+    "status": "DRAFT"
+  },
+  {
+    "id": "nd-orig-0113",
+    "type": "场景选择类",
+    "origin": "原创",
+    "answer_format": "一句话",
+    "localized": {
+      "text": "你要在阳台上开一家只营业十分钟的小店，说出一样会卖的东西。",
+      "low": "毫无赶来购买的必要",
+      "high": "错过十分钟就想后悔一整天"
+    },
+    "spicy": false,
+    "source": {
+      "kind": "ORIGINAL",
+      "ref": "本项目独立创作，2026-10-31，纯语音回答版"
+    },
+    "editing_note": "本轮新增原创题，回答只需一个东西、一个词或一句话。",
+    "status": "DRAFT"
+  },
+  {
+    "id": "nd-orig-0114",
+    "type": "场景选择类",
+    "origin": "原创",
+    "answer_format": "一句话",
+    "localized": {
+      "text": "你被邀请给周末举办闭幕式，说出一项你会安排的环节。",
+      "low": "像普通睡前收尾",
+      "high": "像一场不舍得结束的盛典"
+    },
+    "spicy": false,
+    "source": {
+      "kind": "ORIGINAL",
+      "ref": "本项目独立创作，2026-10-31，纯语音回答版"
+    },
+    "editing_note": "本轮新增原创题，回答只需一个东西、一个词或一句话。",
+    "status": "DRAFT"
+  },
+  {
+    "id": "nd-orig-0115",
+    "type": "场景选择类",
+    "origin": "原创",
+    "answer_format": "一句话",
+    "localized": {
+      "text": "你可以让一种家用品每天自动补货，说出你选的东西。",
+      "low": "几乎感觉不到方便",
+      "high": "再也离不开这个功能"
+    },
+    "spicy": false,
+    "source": {
+      "kind": "ORIGINAL",
+      "ref": "本项目独立创作，2026-10-31，纯语音回答版"
+    },
+    "editing_note": "本轮新增原创题，回答只需一个东西、一个词或一句话。",
+    "status": "DRAFT"
+  },
+  {
+    "id": "nd-orig-0116",
+    "type": "场景选择类",
+    "origin": "原创",
+    "answer_format": "一句话",
+    "localized": {
+      "text": "你的手机要给你颁一张使用习惯证书，说出证书上的称号。",
+      "low": "听起来很自律",
+      "high": "听起来手机也想劝你休息"
+    },
+    "spicy": false,
+    "source": {
+      "kind": "ORIGINAL",
+      "ref": "本项目独立创作，2026-10-31，纯语音回答版"
+    },
+    "editing_note": "本轮新增原创题，回答只需一个东西、一个词或一句话。",
+    "status": "DRAFT"
+  },
+  {
+    "id": "nd-orig-0117",
+    "type": "场景选择类",
+    "origin": "原创",
+    "answer_format": "一句话",
+    "localized": {
+      "text": "你要给家里最大的空纸箱安排工作，说出一个职位。",
+      "low": "完全符合纸箱本职",
+      "high": "像掌握全家的命运"
+    },
+    "spicy": false,
+    "source": {
+      "kind": "ORIGINAL",
+      "ref": "本项目独立创作，2026-10-31，纯语音回答版"
+    },
+    "editing_note": "本轮新增原创题，回答只需一个东西、一个词或一句话。",
+    "status": "DRAFT"
+  },
+  {
+    "id": "nd-orig-0118",
+    "type": "场景选择类",
+    "origin": "原创",
+    "answer_format": "一句话",
+    "localized": {
+      "text": "公司新增一个用来拒绝无效会议的按钮，说出按钮上的文字。",
+      "low": "点了也未必有人懂",
+      "high": "一看就知道会议到此为止"
+    },
+    "spicy": false,
+    "source": {
+      "kind": "ORIGINAL",
+      "ref": "本项目独立创作，2026-10-31，纯语音回答版"
+    },
+    "editing_note": "本轮新增原创题，回答只需一个东西、一个词或一句话。",
+    "status": "DRAFT"
+  },
+  {
+    "id": "nd-orig-0119",
+    "type": "场景选择类",
+    "origin": "原创",
+    "answer_format": "一句话",
+    "localized": {
+      "text": "你要为捡到的唯一一只手套找新用途，说出一个用途。",
+      "low": "勉强能将就",
+      "high": "像它本来就是为此设计"
+    },
+    "spicy": false,
+    "source": {
+      "kind": "ORIGINAL",
+      "ref": "本项目独立创作，2026-10-31，纯语音回答版"
+    },
+    "editing_note": "本轮新增原创题，回答只需一个东西、一个词或一句话。",
+    "status": "DRAFT"
+  },
+  {
+    "id": "nd-orig-0120",
+    "type": "场景选择类",
+    "origin": "原创",
+    "answer_format": "一句话",
+    "localized": {
+      "text": "你家的冰箱准备发布新品，说出一句发布会开场白。",
+      "low": "像正常家电介绍",
+      "high": "像即将改变整个厨房"
+    },
+    "spicy": false,
+    "source": {
+      "kind": "ORIGINAL",
+      "ref": "本项目独立创作，2026-10-31，纯语音回答版"
+    },
+    "editing_note": "本轮新增原创题，回答只需一个东西、一个词或一句话。",
+    "status": "DRAFT"
+  },
+  {
+    "id": "nd-orig-0121",
+    "type": "场景选择类",
+    "origin": "原创",
+    "answer_format": "一句话",
+    "localized": {
+      "text": "书桌上的文具要选一位队长，说出你会选的文具。",
+      "low": "完全镇不住其他文具",
+      "high": "感觉谁都得听它的"
+    },
+    "spicy": false,
+    "source": {
+      "kind": "ORIGINAL",
+      "ref": "本项目独立创作，2026-10-31，纯语音回答版"
+    },
+    "editing_note": "本轮新增原创题，回答只需一个东西、一个词或一句话。",
+    "status": "DRAFT"
+  },
+  {
+    "id": "nd-orig-0122",
+    "type": "场景选择类",
+    "origin": "原创",
+    "answer_format": "一句话",
+    "localized": {
+      "text": "你可以给电梯增加一个不影响安全的新功能，说出这个功能。",
+      "low": "似乎可有可无",
+      "high": "每次坐电梯都盼着它"
+    },
+    "spicy": false,
+    "source": {
+      "kind": "ORIGINAL",
+      "ref": "本项目独立创作，2026-10-31，纯语音回答版"
+    },
+    "editing_note": "本轮新增原创题，回答只需一个东西、一个词或一句话。",
+    "status": "DRAFT"
+  },
+  {
+    "id": "nd-orig-0123",
+    "type": "场景选择类",
+    "origin": "原创",
+    "answer_format": "一句话",
+    "localized": {
+      "text": "你要给月底空钱包写一条自动回复，说出回复内容。",
+      "low": "像暂时不方便",
+      "high": "像已经永久停止营业"
+    },
+    "spicy": false,
+    "source": {
+      "kind": "ORIGINAL",
+      "ref": "本项目独立创作，2026-10-31，纯语音回答版"
+    },
+    "editing_note": "本轮新增原创题，回答只需一个东西、一个词或一句话。",
+    "status": "DRAFT"
+  },
+  {
+    "id": "nd-orig-0124",
+    "type": "场景选择类",
+    "origin": "原创",
+    "answer_format": "一句话",
+    "localized": {
+      "text": "朋友要办一个不花钱的生日会，说出一样你会提供的服务。",
+      "low": "像顺便帮个忙",
+      "high": "诚意比花钱还足"
+    },
+    "spicy": false,
+    "source": {
+      "kind": "ORIGINAL",
+      "ref": "本项目独立创作，2026-10-31，纯语音回答版"
+    },
+    "editing_note": "本轮新增原创题，回答只需一个东西、一个词或一句话。",
+    "status": "DRAFT"
+  },
+  {
+    "id": "nd-orig-0125",
+    "type": "场景选择类",
+    "origin": "原创",
+    "answer_format": "一句话",
+    "localized": {
+      "text": "你要给每次都能找到停车位的购物车颁奖，说出奖项名称。",
+      "low": "像普通店内表扬",
+      "high": "像一项世界级成就"
+    },
+    "spicy": false,
+    "source": {
+      "kind": "ORIGINAL",
+      "ref": "本项目独立创作，2026-10-31，纯语音回答版"
+    },
+    "editing_note": "本轮新增原创题，回答只需一个东西、一个词或一句话。",
+    "status": "DRAFT"
+  },
+  {
+    "id": "nd-orig-0126",
+    "type": "场景选择类",
+    "origin": "原创",
+    "answer_format": "一句话",
+    "localized": {
+      "text": "你有一次机会让一种家务从世界上消失，说出你会选的家务。",
+      "low": "几乎省不了时间",
+      "high": "所有人都会想感谢你"
+    },
+    "spicy": false,
+    "source": {
+      "kind": "ORIGINAL",
+      "ref": "本项目独立创作，2026-10-31，纯语音回答版"
+    },
+    "editing_note": "本轮新增原创题，回答只需一个东西、一个词或一句话。",
+    "status": "DRAFT"
+  },
+  {
+    "id": "nd-orig-0127",
+    "type": "场景选择类",
+    "origin": "原创",
+    "answer_format": "一句话",
+    "localized": {
+      "text": "你要给忘记关掉的台灯安排一项新工作，说出这项工作。",
+      "low": "像在找借口",
+      "high": "感觉一夜没关非常值得"
+    },
+    "spicy": false,
+    "source": {
+      "kind": "ORIGINAL",
+      "ref": "本项目独立创作，2026-10-31，纯语音回答版"
+    },
+    "editing_note": "本轮新增原创题，回答只需一个东西、一个词或一句话。",
+    "status": "DRAFT"
+  },
+  {
+    "id": "nd-orig-0128",
+    "type": "场景选择类",
+    "origin": "原创",
+    "answer_format": "一句话",
+    "localized": {
+      "text": "你可以给快递盒写一条防拆封警告，说出警告内容。",
+      "low": "毫无威慑力",
+      "high": "让人先端正坐姿再拆"
+    },
+    "spicy": false,
+    "source": {
+      "kind": "ORIGINAL",
+      "ref": "本项目独立创作，2026-10-31，纯语音回答版"
+    },
+    "editing_note": "本轮新增原创题，回答只需一个东西、一个词或一句话。",
+    "status": "DRAFT"
+  },
+  {
+    "id": "nd-orig-0129",
+    "type": "场景选择类",
+    "origin": "原创",
+    "answer_format": "一句话",
+    "localized": {
+      "text": "下雨天朋友要来借东西，说出一样你借出前会犹豫的东西。",
+      "low": "几乎不用想",
+      "high": "得先认真谈好归还条件"
+    },
+    "spicy": false,
+    "source": {
+      "kind": "ORIGINAL",
+      "ref": "本项目独立创作，2026-10-31，纯语音回答版"
+    },
+    "editing_note": "本轮新增原创题，回答只需一个东西、一个词或一句话。",
+    "status": "DRAFT"
+  },
+  {
+    "id": "nd-orig-0130",
+    "type": "场景选择类",
+    "origin": "原创",
+    "answer_format": "一句话",
+    "localized": {
+      "text": "你要给一座只有两级台阶的楼梯办开通仪式，说出一句主持词。",
+      "low": "十分朴实",
+      "high": "像在见证伟大工程"
+    },
+    "spicy": false,
+    "source": {
+      "kind": "ORIGINAL",
+      "ref": "本项目独立创作，2026-10-31，纯语音回答版"
+    },
+    "editing_note": "本轮新增原创题，回答只需一个东西、一个词或一句话。",
+    "status": "DRAFT"
+  },
+  {
+    "id": "nd-orig-0131",
+    "type": "场景选择类",
+    "origin": "原创",
+    "answer_format": "一句话",
+    "localized": {
+      "text": "朋友让你设计一个防止忘带钥匙的提醒，说出一句提醒语。",
+      "low": "很容易忽略",
+      "high": "看一眼就想摸口袋确认"
+    },
+    "spicy": false,
+    "source": {
+      "kind": "ORIGINAL",
+      "ref": "本项目独立创作，2026-10-31，纯语音回答版"
+    },
+    "editing_note": "本轮新增原创题，回答只需一个东西、一个词或一句话。",
+    "status": "DRAFT"
+  },
+  {
+    "id": "nd-orig-0132",
+    "type": "场景选择类",
+    "origin": "原创",
+    "answer_format": "一句话",
+    "localized": {
+      "text": "你要给午休室增加一个规定，说出这条规定。",
+      "low": "对午休没什么影响",
+      "high": "让人每天都期待午休"
+    },
+    "spicy": false,
+    "source": {
+      "kind": "ORIGINAL",
+      "ref": "本项目独立创作，2026-10-31，纯语音回答版"
+    },
+    "editing_note": "本轮新增原创题，回答只需一个东西、一个词或一句话。",
+    "status": "DRAFT"
+  },
+  {
+    "id": "nd-orig-0133",
+    "type": "场景选择类",
+    "origin": "原创",
+    "answer_format": "一句话",
+    "localized": {
+      "text": "你的行李箱只有最后一点空间，说出一样你坚持还要带上的东西。",
+      "low": "少了也完全不影响",
+      "high": "没有它就不想出门"
+    },
+    "spicy": false,
+    "source": {
+      "kind": "ORIGINAL",
+      "ref": "本项目独立创作，2026-10-31，纯语音回答版"
+    },
+    "editing_note": "本轮新增原创题，回答只需一个东西、一个词或一句话。",
+    "status": "DRAFT"
+  },
+  {
+    "id": "nd-orig-0134",
+    "type": "场景选择类",
+    "origin": "原创",
+    "answer_format": "一句话",
+    "localized": {
+      "text": "你要给每天准时送来的外卖写一句感谢语，说出这句话。",
+      "low": "像普通礼貌用语",
+      "high": "像终于等到救援队"
+    },
+    "spicy": false,
+    "source": {
+      "kind": "ORIGINAL",
+      "ref": "本项目独立创作，2026-10-31，纯语音回答版"
+    },
+    "editing_note": "本轮新增原创题，回答只需一个东西、一个词或一句话。",
+    "status": "DRAFT"
+  },
+  {
+    "id": "nd-orig-0135",
+    "type": "场景选择类",
+    "origin": "原创",
+    "answer_format": "一句话",
+    "localized": {
+      "text": "你可以让自动售货机随机送你一件生活小物，说出你想收到的东西。",
+      "low": "收到了也没感觉",
+      "high": "像它提前读懂了你的需求"
+    },
+    "spicy": false,
+    "source": {
+      "kind": "ORIGINAL",
+      "ref": "本项目独立创作，2026-10-31，纯语音回答版"
+    },
+    "editing_note": "本轮新增原创题，回答只需一个东西、一个词或一句话。",
+    "status": "DRAFT"
+  },
+  {
+    "id": "nd-orig-0136",
+    "type": "场景选择类",
+    "origin": "原创",
+    "answer_format": "一句话",
+    "localized": {
+      "text": "你要给下班后仍闪烁的工作群设置一条门禁提示，说出提示内容。",
+      "low": "还可以试着打扰",
+      "high": "仿佛整座大门已经落锁"
+    },
+    "spicy": false,
+    "source": {
+      "kind": "ORIGINAL",
+      "ref": "本项目独立创作，2026-10-31，纯语音回答版"
+    },
+    "editing_note": "本轮新增原创题，回答只需一个东西、一个词或一句话。",
+    "status": "DRAFT"
+  },
+  {
+    "id": "nd-orig-0137",
+    "type": "场景选择类",
+    "origin": "原创",
+    "answer_format": "一句话",
+    "localized": {
+      "text": "你能把一种包装设计得特别难拆，说出你会用在哪种商品上。",
+      "low": "难拆也无所谓",
+      "high": "拆不开会急得想找工具"
+    },
+    "spicy": false,
+    "source": {
+      "kind": "ORIGINAL",
+      "ref": "本项目独立创作，2026-10-31，纯语音回答版"
+    },
+    "editing_note": "本轮新增原创题，回答只需一个东西、一个词或一句话。",
+    "status": "DRAFT"
+  },
+  {
+    "id": "nd-orig-0138",
+    "type": "场景选择类",
+    "origin": "原创",
+    "answer_format": "一句话",
+    "localized": {
+      "text": "朋友说他已经提前开始准备年底大扫除，说出你会建议的第一步。",
+      "low": "今天就能轻松完成",
+      "high": "像要从现在一直忙到年底"
+    },
+    "spicy": false,
+    "source": {
+      "kind": "ORIGINAL",
+      "ref": "本项目独立创作，2026-10-31，纯语音回答版"
+    },
+    "editing_note": "本轮新增原创题，回答只需一个东西、一个词或一句话。",
+    "status": "DRAFT"
+  },
+  {
+    "id": "nd-orig-0139",
+    "type": "场景选择类",
+    "origin": "原创",
+    "answer_format": "一句话",
+    "localized": {
+      "text": "你要给一年没打开的抽屉举办重开仪式，说出一句开场白。",
+      "low": "像普通开门",
+      "high": "像沉睡王国重新苏醒"
+    },
+    "spicy": false,
+    "source": {
+      "kind": "ORIGINAL",
+      "ref": "本项目独立创作，2026-10-31，纯语音回答版"
+    },
+    "editing_note": "本轮新增原创题，回答只需一个东西、一个词或一句话。",
+    "status": "DRAFT"
+  },
+  {
+    "id": "nd-orig-0140",
+    "type": "场景选择类",
+    "origin": "原创",
+    "answer_format": "一句话",
+    "localized": {
+      "text": "家里的遥控器想申请固定住所，说出你替它选的位置。",
+      "low": "明天照样找不到",
+      "high": "以后闭着眼都能找到"
+    },
+    "spicy": false,
+    "source": {
+      "kind": "ORIGINAL",
+      "ref": "本项目独立创作，2026-10-31，纯语音回答版"
+    },
+    "editing_note": "本轮新增原创题，回答只需一个东西、一个词或一句话。",
+    "status": "DRAFT"
+  },
+  {
+    "id": "nd-orig-0141",
+    "type": "场景选择类",
+    "origin": "原创",
+    "answer_format": "一句话",
+    "localized": {
+      "text": "你要给家务分工表加一项奖励，说出奖励内容。",
+      "low": "没人会为它抢活",
+      "high": "大家可能开始争着打扫"
+    },
+    "spicy": false,
+    "source": {
+      "kind": "ORIGINAL",
+      "ref": "本项目独立创作，2026-10-31，纯语音回答版"
+    },
+    "editing_note": "本轮新增原创题，回答只需一个东西、一个词或一句话。",
+    "status": "DRAFT"
+  },
+  {
+    "id": "nd-orig-0142",
+    "type": "场景选择类",
+    "origin": "原创",
+    "answer_format": "一句话",
+    "localized": {
+      "text": "朋友宣布今天只回复特别重要的消息，说出一句你会发给他的消息。",
+      "low": "看了完全不用回复",
+      "high": "看了会立刻放下手里的事"
+    },
+    "spicy": false,
+    "source": {
+      "kind": "ORIGINAL",
+      "ref": "本项目独立创作，2026-10-31，纯语音回答版"
+    },
+    "editing_note": "本轮新增原创题，回答只需一个东西、一个词或一句话。",
+    "status": "DRAFT"
+  },
+  {
+    "id": "nd-orig-0143",
+    "type": "场景选择类",
+    "origin": "原创",
+    "answer_format": "一句话",
+    "localized": {
+      "text": "你要给充满碎屑的键盘取一个景区名，说出这个名字。",
+      "low": "像普通办公区域",
+      "high": "像需要专门派导游带路"
+    },
+    "spicy": false,
+    "source": {
+      "kind": "ORIGINAL",
+      "ref": "本项目独立创作，2026-10-31，纯语音回答版"
+    },
+    "editing_note": "本轮新增原创题，回答只需一个东西、一个词或一句话。",
+    "status": "DRAFT"
+  },
+  {
+    "id": "nd-orig-0144",
+    "type": "场景选择类",
+    "origin": "原创",
+    "answer_format": "一句话",
+    "localized": {
+      "text": "你可以给周一发一条退货理由，说出这条理由。",
+      "low": "很难让客服同意",
+      "high": "听起来十分有理有据"
+    },
+    "spicy": false,
+    "source": {
+      "kind": "ORIGINAL",
+      "ref": "本项目独立创作，2026-10-31，纯语音回答版"
+    },
+    "editing_note": "本轮新增原创题，回答只需一个东西、一个词或一句话。",
+    "status": "DRAFT"
+  },
+  {
+    "id": "nd-orig-0145",
+    "type": "场景选择类",
+    "origin": "原创",
+    "answer_format": "一句话",
+    "localized": {
+      "text": "成年人约会结束要各自回家，说出一句你会发的到家消息。",
+      "low": "像普通报平安",
+      "high": "暧昧得想继续聊到天亮"
+    },
+    "spicy": true,
+    "source": {
+      "kind": "ORIGINAL",
+      "ref": "本项目独立创作，2026-10-31，纯语音回答版"
+    },
+    "editing_note": "本轮新增原创题，回答只需一个东西、一个词或一句话。",
+    "status": "DRAFT"
+  },
+  {
+    "id": "nd-orig-0146",
+    "type": "场景选择类",
+    "origin": "原创",
+    "answer_format": "一句话",
+    "localized": {
+      "text": "成年人第一次在约会对象家过夜，说出一样你会带来缓解尴尬的小物。",
+      "low": "谁看都不会多想",
+      "high": "一拿出来就需要解释"
+    },
+    "spicy": true,
+    "source": {
+      "kind": "ORIGINAL",
+      "ref": "本项目独立创作，2026-10-31，纯语音回答版"
+    },
+    "editing_note": "本轮新增原创题，回答只需一个东西、一个词或一句话。",
+    "status": "DRAFT"
+  },
+  {
+    "id": "nd-orig-0147",
+    "type": "场景选择类",
+    "origin": "原创",
+    "answer_format": "一句话",
+    "localized": {
+      "text": "你订的双人酒店房间被布置得过分浪漫，说出一样你最怕看到的装饰。",
+      "low": "只会觉得有点用心",
+      "high": "一进门就想给朋友发消息吐槽"
+    },
+    "spicy": true,
+    "source": {
+      "kind": "ORIGINAL",
+      "ref": "本项目独立创作，2026-10-31，纯语音回答版"
+    },
+    "editing_note": "本轮新增原创题，回答只需一个东西、一个词或一句话。",
+    "status": "DRAFT"
+  },
+  {
+    "id": "nd-orig-0148",
+    "type": "场景选择类",
+    "origin": "原创",
+    "answer_format": "一句话",
+    "localized": {
+      "text": "你发现洗手间的占用指示灯坏了，说出一句你想贴在门上的提示。",
+      "low": "还有人会试着敲门",
+      "high": "谁看了都会主动绕开"
+    },
+    "spicy": true,
+    "source": {
+      "kind": "ORIGINAL",
+      "ref": "本项目独立创作，2026-10-31，纯语音回答版"
+    },
+    "editing_note": "本轮新增原创题，回答只需一个东西、一个词或一句话。",
+    "status": "DRAFT"
+  },
+  {
+    "id": "nd-orig-0149",
+    "type": "场景选择类",
+    "origin": "原创",
+    "answer_format": "一句话",
+    "localized": {
+      "text": "你去成年伴侣家做客，发现自己的袜子被当成了门挡，说出一句你的反应。",
+      "low": "像普通物品归还",
+      "high": "像发现了袜子的第二人生"
+    },
+    "spicy": true,
+    "source": {
+      "kind": "ORIGINAL",
+      "ref": "本项目独立创作，2026-10-31，纯语音回答版"
+    },
+    "editing_note": "本轮新增原创题，回答只需一个东西、一个词或一句话。",
+    "status": "DRAFT"
+  },
+  {
+    "id": "nd-orig-0150",
+    "type": "场景选择类",
+    "origin": "原创",
+    "answer_format": "一句话",
+    "localized": {
+      "text": "你和成年伴侣争同一床被子，说出一句你的谈判条件。",
+      "low": "几乎没吸引力",
+      "high": "对方可能立刻愿意让步"
+    },
+    "spicy": true,
+    "source": {
+      "kind": "ORIGINAL",
+      "ref": "本项目独立创作，2026-10-31，纯语音回答版"
+    },
+    "editing_note": "本轮新增原创题，回答只需一个东西、一个词或一句话。",
+    "status": "DRAFT"
+  },
+  {
+    "id": "nd-orig-0151",
+    "type": "场景选择类",
+    "origin": "原创",
+    "answer_format": "一句话",
+    "localized": {
+      "text": "聚餐后大家讨论谁把厕所堵了，说出一句你会用来转移话题的话。",
+      "low": "根本转移不了",
+      "high": "大家真会开始聊别的"
+    },
+    "spicy": true,
+    "source": {
+      "kind": "ORIGINAL",
+      "ref": "本项目独立创作，2026-10-31，纯语音回答版"
+    },
+    "editing_note": "本轮新增原创题，回答只需一个东西、一个词或一句话。",
+    "status": "DRAFT"
+  },
+  {
+    "id": "nd-orig-0152",
+    "type": "场景选择类",
+    "origin": "原创",
+    "answer_format": "一句话",
+    "localized": {
+      "text": "成年朋友酒后发了十八条晚安，说出一句你第二天会回的话。",
+      "low": "像什么都没发生",
+      "high": "让他看完更想撤回昨晚的消息"
+    },
+    "spicy": true,
+    "source": {
+      "kind": "ORIGINAL",
+      "ref": "本项目独立创作，2026-10-31，纯语音回答版"
+    },
+    "editing_note": "本轮新增原创题，回答只需一个东西、一个词或一句话。",
+    "status": "DRAFT"
+  },
+  {
+    "id": "nd-orig-0153",
+    "type": "场景选择类",
+    "origin": "原创",
+    "answer_format": "一句话",
+    "localized": {
+      "text": "你的约会对象给你发来一句过分含蓄的想念，说出一句你会回的话。",
+      "low": "继续保持礼貌距离",
+      "high": "暧昧得完全不用再猜"
+    },
+    "spicy": true,
+    "source": {
+      "kind": "ORIGINAL",
+      "ref": "本项目独立创作，2026-10-31，纯语音回答版"
+    },
+    "editing_note": "本轮新增原创题，回答只需一个东西、一个词或一句话。",
+    "status": "DRAFT"
+  },
+  {
+    "id": "nd-orig-0154",
+    "type": "场景选择类",
+    "origin": "原创",
+    "answer_format": "一句话",
+    "localized": {
+      "text": "朋友把脱单计划做成了工作汇报，说出一句你给他的评语。",
+      "low": "像普通进度反馈",
+      "high": "像在庆祝全年最大项目签约"
+    },
+    "spicy": true,
+    "source": {
+      "kind": "ORIGINAL",
+      "ref": "本项目独立创作，2026-10-31，纯语音回答版"
+    },
+    "editing_note": "本轮新增原创题，回答只需一个东西、一个词或一句话。",
+    "status": "DRAFT"
+  }
+]

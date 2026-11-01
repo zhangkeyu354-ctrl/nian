@@ -1,0 +1,27 @@
+
+ RUN  v5.0.5 E:/DBD-BoardGame-Web
+
+ ❯ packages/naodong-scale/test/engine.test.ts (43 tests | 1 failed | 42 skipped) 19ms
+   ❯ Top Ten rules and deterministic reducer (43)
+     × NDA03 rejects text/audio attachments rather than storing them in receipts 16ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  packages/naodong-scale/test/engine.test.ts > Top Ten rules and deterministic reducer > NDA03 rejects text/audio attachments rather than storing them in receipts
+AssertionError: expected [Function] to throw an error
+ ❯ packages/naodong-scale/test/engine.test.ts:178:91
+    176|  });
+    177|  it('NDA03 rejects text/audio attachments rather than storing them in …
+    178|   const s=choose(make());expect(()=>send(s,'READY',{answerText:'privat…
+       |                                                                                           ^
+    179|   expect(()=>send(s,'READY',{recording:'private audio'})).toThrow();ex…
+    180|  });
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  1 failed | 42 skipped (43)
+   Start at  22:21:42
+   Duration  484ms (transform 55%, import 26%, tests 13%, worker 7%)
+

@@ -1,0 +1,2616 @@
+{
+  "games": [
+    {
+      "players": 4,
+      "rounds": 5,
+      "success": true
+    },
+    {
+      "players": 4,
+      "expert": true,
+      "rounds": 5,
+      "success": true
+    },
+    {
+      "players": 6,
+      "rounds": 5,
+      "success": true
+    },
+    {
+      "players": 9,
+      "rounds": 5,
+      "success": true
+    },
+    {
+      "players": 9,
+      "rounds": 2,
+      "success": false
+    }
+  ],
+  "checks": [
+    "4: voice-only answer",
+    "4: reload reconnect preserves seat and number",
+    "4: tap swaps order",
+    "4: mobile touch drag moves order",
+    "4: expert targets and common captain guess complete five rounds",
+    "6: voice-only answer",
+    "6: reload reconnect preserves seat and number",
+    "6: tap swaps order",
+    "6: mobile touch drag moves order",
+    "9: reduced motion disables secret flip animation",
+    "9: real server reminder preserves answer stage",
+    "9: voice-only answer",
+    "9: reload reconnect preserves seat and number",
+    "9: tap swaps order",
+    "9: mobile touch drag moves order",
+    "9: red cross and immediate cooperative defeat"
+  ],
+  "packetChecks": 2131,
+  "layoutChecks": 122,
+  "domPrivacyChecks": 19,
+  "screens": [
+    {
+      "key": "4-lobby-390x844",
+      "w": 390,
+      "h": 844,
+      "scroll": 390,
+      "primary": 1,
+      "missing": 0,
+      "evidence": {
+        "scope": "Visible UI / prototype region, not a full-map-count claim",
+        "region": {
+          "x": 0,
+          "y": 0,
+          "width": 390,
+          "height": 844
+        },
+        "pixels": {
+          "busy": 0.4300644063677239,
+          "std": 61.06720559569767
+        }
+      }
+    },
+    {
+      "key": "4-lobby-844x390",
+      "w": 844,
+      "h": 390,
+      "scroll": 844,
+      "primary": 1,
+      "missing": 0,
+      "evidence": {
+        "scope": "Visible UI / prototype region, not a full-map-count claim",
+        "region": {
+          "x": 0,
+          "y": 0,
+          "width": 844,
+          "height": 390
+        },
+        "pixels": {
+          "busy": 0.403281079110463,
+          "std": 53.62094451340124
+        }
+      }
+    },
+    {
+      "key": "4-lobby-1280x800",
+      "w": 1280,
+      "h": 800,
+      "scroll": 1280,
+      "primary": 1,
+      "missing": 0,
+      "evidence": {
+        "scope": "Visible UI / prototype region, not a full-map-count claim",
+        "region": {
+          "x": 0,
+          "y": 0,
+          "width": 1280,
+          "height": 800
+        },
+        "pixels": {
+          "busy": 0.3496875,
+          "std": 41.69072413939679
+        }
+      }
+    },
+    {
+      "key": "4-choose-topic-390x844",
+      "w": 390,
+      "h": 844,
+      "scroll": 390,
+      "primary": 1,
+      "missing": 0,
+      "evidence": {
+        "scope": "Visible UI / prototype region, not a full-map-count claim",
+        "region": {
+          "x": 0,
+          "y": 0,
+          "width": 390,
+          "height": 844
+        },
+        "pixels": {
+          "busy": 0.5947381212784056,
+          "std": 94.69743232582702
+        }
+      }
+    },
+    {
+      "key": "4-choose-topic-844x390",
+      "w": 844,
+      "h": 390,
+      "scroll": 844,
+      "primary": 1,
+      "missing": 0,
+      "evidence": {
+        "scope": "Visible UI / prototype region, not a full-map-count claim",
+        "region": {
+          "x": 0,
+          "y": 0,
+          "width": 844,
+          "height": 390
+        },
+        "pixels": {
+          "busy": 0.5228095758901447,
+          "std": 91.4834837352273
+        }
+      }
+    },
+    {
+      "key": "4-choose-topic-1280x800",
+      "w": 1280,
+      "h": 800,
+      "scroll": 1280,
+      "primary": 1,
+      "missing": 0,
+      "evidence": {
+        "scope": "Visible UI / prototype region, not a full-map-count claim",
+        "region": {
+          "x": 0,
+          "y": 0,
+          "width": 1280,
+          "height": 800
+        },
+        "pixels": {
+          "busy": 0.4208203125,
+          "std": 90.18363218206278
+        }
+      }
+    },
+    {
+      "key": "4-secret-390x844",
+      "w": 390,
+      "h": 844,
+      "scroll": 390,
+      "primary": 1,
+      "missing": 0,
+      "evidence": {
+        "scope": "Visible UI / prototype region, not a full-map-count claim",
+        "region": {
+          "x": 0,
+          "y": 0,
+          "width": 390,
+          "height": 844
+        },
+        "pixels": {
+          "busy": 0.3375015190181067,
+          "std": 83.39208142168071
+        }
+      }
+    },
+    {
+      "key": "4-secret-844x390",
+      "w": 844,
+      "h": 390,
+      "scroll": 844,
+      "primary": 1,
+      "missing": 0,
+      "evidence": {
+        "scope": "Visible UI / prototype region, not a full-map-count claim",
+        "region": {
+          "x": 0,
+          "y": 0,
+          "width": 844,
+          "height": 390
+        },
+        "pixels": {
+          "busy": 0.3738485842751246,
+          "std": 83.46136632967978
+        }
+      }
+    },
+    {
+      "key": "4-secret-1280x800",
+      "w": 1280,
+      "h": 800,
+      "scroll": 1280,
+      "primary": 1,
+      "missing": 0,
+      "evidence": {
+        "scope": "Visible UI / prototype region, not a full-map-count claim",
+        "region": {
+          "x": 0,
+          "y": 0,
+          "width": 1280,
+          "height": 800
+        },
+        "pixels": {
+          "busy": 0.203140625,
+          "std": 52.88177850511537
+        }
+      }
+    },
+    {
+      "key": "4-answer-390x844",
+      "w": 390,
+      "h": 844,
+      "scroll": 390,
+      "primary": 1,
+      "missing": 0,
+      "evidence": {
+        "scope": "Visible UI / prototype region, not a full-map-count claim",
+        "region": {
+          "x": 0,
+          "y": 0,
+          "width": 390,
+          "height": 844
+        },
+        "pixels": {
+          "busy": 0.5053347915907158,
+          "std": 91.71817901853292
+        }
+      }
+    },
+    {
+      "key": "4-answer-844x390",
+      "w": 844,
+      "h": 390,
+      "scroll": 844,
+      "primary": 1,
+      "missing": 0,
+      "evidence": {
+        "scope": "Visible UI / prototype region, not a full-map-count claim",
+        "region": {
+          "x": 0,
+          "y": 0,
+          "width": 844,
+          "height": 390
+        },
+        "pixels": {
+          "busy": 0.5929274516952242,
+          "std": 91.4108223679355
+        }
+      }
+    },
+    {
+      "key": "4-answer-1280x800",
+      "w": 1280,
+      "h": 800,
+      "scroll": 1280,
+      "primary": 1,
+      "missing": 0,
+      "evidence": {
+        "scope": "Visible UI / prototype region, not a full-map-count claim",
+        "region": {
+          "x": 0,
+          "y": 0,
+          "width": 1280,
+          "height": 800
+        },
+        "pixels": {
+          "busy": 0.3571484375,
+          "std": 78.82588197827677
+        }
+      }
+    },
+    {
+      "key": "4-order-390x844",
+      "w": 390,
+      "h": 844,
+      "scroll": 390,
+      "primary": 1,
+      "missing": 0,
+      "evidence": {
+        "scope": "Visible UI / prototype region, not a full-map-count claim",
+        "region": {
+          "x": 0,
+          "y": 0,
+          "width": 390,
+          "height": 844
+        },
+        "pixels": {
+          "busy": 0.36208530805687206,
+          "std": 53.22523523934942
+        }
+      }
+    },
+    {
+      "key": "4-order-844x390",
+      "w": 844,
+      "h": 390,
+      "scroll": 844,
+      "primary": 1,
+      "missing": 0,
+      "evidence": {
+        "scope": "Visible UI / prototype region, not a full-map-count claim",
+        "region": {
+          "x": 0,
+          "y": 0,
+          "width": 844,
+          "height": 390
+        },
+        "pixels": {
+          "busy": 0.36856240126382306,
+          "std": 47.17080438415022
+        }
+      }
+    },
+    {
+      "key": "4-order-1280x800",
+      "w": 1280,
+      "h": 800,
+      "scroll": 1280,
+      "primary": 1,
+      "missing": 0,
+      "evidence": {
+        "scope": "Visible UI / prototype region, not a full-map-count claim",
+        "region": {
+          "x": 0,
+          "y": 0,
+          "width": 1280,
+          "height": 800
+        },
+        "pixels": {
+          "busy": 0.273421875,
+          "std": 34.42531468455952
+        }
+      }
+    },
+    {
+      "key": "4-reveal-before-390x844",
+      "w": 390,
+      "h": 844,
+      "scroll": 390,
+      "primary": 1,
+      "missing": 0,
+      "evidence": {
+        "scope": "Visible UI / prototype region, not a full-map-count claim",
+        "region": {
+          "x": 0,
+          "y": 0,
+          "width": 390,
+          "height": 844
+        },
+        "pixels": {
+          "busy": 0.25921740187143033,
+          "std": 50.16159970701849
+        }
+      }
+    },
+    {
+      "key": "4-reveal-before-844x390",
+      "w": 844,
+      "h": 390,
+      "scroll": 844,
+      "primary": 1,
+      "missing": 0,
+      "evidence": {
+        "scope": "Visible UI / prototype region, not a full-map-count claim",
+        "region": {
+          "x": 0,
+          "y": 0,
+          "width": 844,
+          "height": 390
+        },
+        "pixels": {
+          "busy": 0.19381455826953456,
+          "std": 42.13749640526904
+        }
+      }
+    },
+    {
+      "key": "4-reveal-before-1280x800",
+      "w": 1280,
+      "h": 800,
+      "scroll": 1280,
+      "primary": 1,
+      "missing": 0,
+      "evidence": {
+        "scope": "Visible UI / prototype region, not a full-map-count claim",
+        "region": {
+          "x": 0,
+          "y": 0,
+          "width": 1280,
+          "height": 800
+        },
+        "pixels": {
+          "busy": 0.19348046875,
+          "std": 31.351848998129853
+        }
+      }
+    },
+    {
+      "key": "4-reveal-first-390x844",
+      "w": 390,
+      "h": 844,
+      "scroll": 390,
+      "primary": 1,
+      "missing": 0,
+      "evidence": {
+        "scope": "Visible UI / prototype region, not a full-map-count claim",
+        "region": {
+          "x": 0,
+          "y": 0,
+          "width": 390,
+          "height": 844
+        },
+        "pixels": {
+          "busy": 0.2727062826588893,
+          "std": 47.82595852740208
+        }
+      }
+    },
+    {
+      "key": "4-reveal-first-844x390",
+      "w": 844,
+      "h": 390,
+      "scroll": 844,
+      "primary": 1,
+      "missing": 0,
+      "evidence": {
+        "scope": "Visible UI / prototype region, not a full-map-count claim",
+        "region": {
+          "x": 0,
+          "y": 0,
+          "width": 844,
+          "height": 390
+        },
+        "pixels": {
+          "busy": 0.22943249483533842,
+          "std": 43.78931841101567
+        }
+      }
+    },
+    {
+      "key": "4-reveal-first-1280x800",
+      "w": 1280,
+      "h": 800,
+      "scroll": 1280,
+      "primary": 1,
+      "missing": 0,
+      "evidence": {
+        "scope": "Visible UI / prototype region, not a full-map-count claim",
+        "region": {
+          "x": 0,
+          "y": 0,
+          "width": 1280,
+          "height": 800
+        },
+        "pixels": {
+          "busy": 0.2155546875,
+          "std": 36.19138164556817
+        }
+      }
+    },
+    {
+      "key": "4-reveal-middle-390x844",
+      "w": 390,
+      "h": 844,
+      "scroll": 390,
+      "primary": 1,
+      "missing": 0,
+      "evidence": {
+        "scope": "Visible UI / prototype region, not a full-map-count claim",
+        "region": {
+          "x": 0,
+          "y": 0,
+          "width": 390,
+          "height": 844
+        },
+        "pixels": {
+          "busy": 0.2929031474055171,
+          "std": 54.21465699498866
+        }
+      }
+    },
+    {
+      "key": "4-round-end-390x844",
+      "w": 390,
+      "h": 844,
+      "scroll": 390,
+      "primary": 1,
+      "missing": 0,
+      "evidence": {
+        "scope": "Visible UI / prototype region, not a full-map-count claim",
+        "region": {
+          "x": 0,
+          "y": 0,
+          "width": 390,
+          "height": 844
+        },
+        "pixels": {
+          "busy": 0.4181066958318143,
+          "std": 67.63081261774866
+        }
+      }
+    },
+    {
+      "key": "4-round-end-844x390",
+      "w": 844,
+      "h": 390,
+      "scroll": 844,
+      "primary": 1,
+      "missing": 0,
+      "evidence": {
+        "scope": "Visible UI / prototype region, not a full-map-count claim",
+        "region": {
+          "x": 0,
+          "y": 0,
+          "width": 844,
+          "height": 390
+        },
+        "pixels": {
+          "busy": 0.3842143638352169,
+          "std": 65.95582874140766
+        }
+      }
+    },
+    {
+      "key": "4-round-end-1280x800",
+      "w": 1280,
+      "h": 800,
+      "scroll": 1280,
+      "primary": 1,
+      "missing": 0,
+      "evidence": {
+        "scope": "Visible UI / prototype region, not a full-map-count claim",
+        "region": {
+          "x": 0,
+          "y": 0,
+          "width": 1280,
+          "height": 800
+        },
+        "pixels": {
+          "busy": 0.31177734375,
+          "std": 56.68963158418417
+        }
+      }
+    },
+    {
+      "key": "4-rules-390x844",
+      "w": 390,
+      "h": 844,
+      "scroll": 390,
+      "primary": 1,
+      "missing": 0,
+      "evidence": {
+        "scope": "Visible UI / prototype region, not a full-map-count claim",
+        "region": {
+          "x": 0,
+          "y": 0,
+          "width": 390,
+          "height": 844
+        },
+        "pixels": {
+          "busy": 0.4058937902539798,
+          "std": 47.409518414265506
+        }
+      }
+    },
+    {
+      "key": "4-rules-844x390",
+      "w": 844,
+      "h": 390,
+      "scroll": 844,
+      "primary": 1,
+      "missing": 0,
+      "evidence": {
+        "scope": "Visible UI / prototype region, not a full-map-count claim",
+        "region": {
+          "x": 0,
+          "y": 0,
+          "width": 844,
+          "height": 390
+        },
+        "pixels": {
+          "busy": 0.5828411714667638,
+          "std": 46.129063257331794
+        }
+      }
+    },
+    {
+      "key": "4-rules-1280x800",
+      "w": 1280,
+      "h": 800,
+      "scroll": 1280,
+      "primary": 1,
+      "missing": 0,
+      "evidence": {
+        "scope": "Visible UI / prototype region, not a full-map-count claim",
+        "region": {
+          "x": 0,
+          "y": 0,
+          "width": 1280,
+          "height": 800
+        },
+        "pixels": {
+          "busy": 0.28350390625,
+          "std": 31.380887810041497
+        }
+      }
+    },
+    {
+      "key": "4-review-390x844",
+      "w": 390,
+      "h": 844,
+      "scroll": 390,
+      "primary": 1,
+      "missing": 0,
+      "evidence": {
+        "scope": "Visible UI / prototype region, not a full-map-count claim",
+        "region": {
+          "x": 0,
+          "y": 0,
+          "width": 390,
+          "height": 844
+        },
+        "pixels": {
+          "busy": 0.4434925264309151,
+          "std": 32.37162756140977
+        }
+      }
+    },
+    {
+      "key": "4-review-844x390",
+      "w": 844,
+      "h": 390,
+      "scroll": 844,
+      "primary": 1,
+      "missing": 0,
+      "evidence": {
+        "scope": "Visible UI / prototype region, not a full-map-count claim",
+        "region": {
+          "x": 0,
+          "y": 0,
+          "width": 844,
+          "height": 390
+        },
+        "pixels": {
+          "busy": 0.5828411714667638,
+          "std": 32.10838819247914
+        }
+      }
+    },
+    {
+      "key": "4-review-1280x800",
+      "w": 1280,
+      "h": 800,
+      "scroll": 1280,
+      "primary": 1,
+      "missing": 0,
+      "evidence": {
+        "scope": "Visible UI / prototype region, not a full-map-count claim",
+        "region": {
+          "x": 0,
+          "y": 0,
+          "width": 1280,
+          "height": 800
+        },
+        "pixels": {
+          "busy": 0.24744140625,
+          "std": 21.75840411691437
+        }
+      }
+    },
+    {
+      "key": "4-finished-390x844",
+      "w": 390,
+      "h": 844,
+      "scroll": 390,
+      "primary": 1,
+      "missing": 0,
+      "evidence": {
+        "scope": "Visible UI / prototype region, not a full-map-count claim",
+        "region": {
+          "x": 0,
+          "y": 0,
+          "width": 390,
+          "height": 844
+        },
+        "pixels": {
+          "busy": 0.3951999027828412,
+          "std": 57.93786676503417
+        }
+      }
+    },
+    {
+      "key": "4-finished-844x390",
+      "w": 844,
+      "h": 390,
+      "scroll": 844,
+      "primary": 1,
+      "missing": 0,
+      "evidence": {
+        "scope": "Visible UI / prototype region, not a full-map-count claim",
+        "region": {
+          "x": 0,
+          "y": 0,
+          "width": 844,
+          "height": 390
+        },
+        "pixels": {
+          "busy": 0.38332725726090655,
+          "std": 47.63277099908598
+        }
+      }
+    },
+    {
+      "key": "4-finished-1280x800",
+      "w": 1280,
+      "h": 800,
+      "scroll": 1280,
+      "primary": 1,
+      "missing": 0,
+      "evidence": {
+        "scope": "Visible UI / prototype region, not a full-map-count claim",
+        "region": {
+          "x": 0,
+          "y": 0,
+          "width": 1280,
+          "height": 800
+        },
+        "pixels": {
+          "busy": 0.3028984375,
+          "std": 37.17294415599416
+        }
+      }
+    },
+    {
+      "key": "4-expert-guess-390x844",
+      "w": 390,
+      "h": 844,
+      "scroll": 390,
+      "primary": 1,
+      "missing": 0,
+      "evidence": {
+        "scope": "Visible UI / prototype region, not a full-map-count claim",
+        "region": {
+          "x": 0,
+          "y": 0,
+          "width": 390,
+          "height": 844
+        },
+        "pixels": {
+          "busy": 0.42644306720136105,
+          "std": 46.83416500619295
+        }
+      }
+    },
+    {
+      "key": "4-expert-guess-844x390",
+      "w": 844,
+      "h": 390,
+      "scroll": 844,
+      "primary": 1,
+      "missing": 0,
+      "evidence": {
+        "scope": "Visible UI / prototype region, not a full-map-count claim",
+        "region": {
+          "x": 0,
+          "y": 0,
+          "width": 844,
+          "height": 390
+        },
+        "pixels": {
+          "busy": 0.4615627658281687,
+          "std": 44.44443429593045
+        }
+      }
+    },
+    {
+      "key": "4-expert-guess-1280x800",
+      "w": 1280,
+      "h": 800,
+      "scroll": 1280,
+      "primary": 1,
+      "missing": 0,
+      "evidence": {
+        "scope": "Visible UI / prototype region, not a full-map-count claim",
+        "region": {
+          "x": 0,
+          "y": 0,
+          "width": 1280,
+          "height": 800
+        },
+        "pixels": {
+          "busy": 0.31712109375,
+          "std": 32.55962997786597
+        }
+      }
+    },
+    {
+      "key": "4-expert-captain-guess-390x844",
+      "w": 390,
+      "h": 844,
+      "scroll": 390,
+      "primary": 1,
+      "missing": 0,
+      "evidence": {
+        "scope": "Visible UI / prototype region, not a full-map-count claim",
+        "region": {
+          "x": 0,
+          "y": 0,
+          "width": 390,
+          "height": 844
+        },
+        "pixels": {
+          "busy": 0.38809089804350466,
+          "std": 54.842244629641755
+        }
+      }
+    },
+    {
+      "key": "4-expert-captain-guess-844x390",
+      "w": 844,
+      "h": 390,
+      "scroll": 844,
+      "primary": 1,
+      "missing": 0,
+      "evidence": {
+        "scope": "Visible UI / prototype region, not a full-map-count claim",
+        "region": {
+          "x": 0,
+          "y": 0,
+          "width": 844,
+          "height": 390
+        },
+        "pixels": {
+          "busy": 0.4636893911775428,
+          "std": 50.79609112938326
+        }
+      }
+    },
+    {
+      "key": "4-expert-captain-guess-1280x800",
+      "w": 1280,
+      "h": 800,
+      "scroll": 1280,
+      "primary": 1,
+      "missing": 0,
+      "evidence": {
+        "scope": "Visible UI / prototype region, not a full-map-count claim",
+        "region": {
+          "x": 0,
+          "y": 0,
+          "width": 1280,
+          "height": 800
+        },
+        "pixels": {
+          "busy": 0.30692578125,
+          "std": 36.78943637022218
+        }
+      }
+    },
+    {
+      "key": "4-expert-finished-390x844",
+      "w": 390,
+      "h": 844,
+      "scroll": 390,
+      "primary": 1,
+      "missing": 0,
+      "evidence": {
+        "scope": "Visible UI / prototype region, not a full-map-count claim",
+        "region": {
+          "x": 0,
+          "y": 0,
+          "width": 390,
+          "height": 844
+        },
+        "pixels": {
+          "busy": 0.3951999027828412,
+          "std": 57.93786676503417
+        }
+      }
+    },
+    {
+      "key": "4-expert-finished-844x390",
+      "w": 844,
+      "h": 390,
+      "scroll": 844,
+      "primary": 1,
+      "missing": 0,
+      "evidence": {
+        "scope": "Visible UI / prototype region, not a full-map-count claim",
+        "region": {
+          "x": 0,
+          "y": 0,
+          "width": 844,
+          "height": 390
+        },
+        "pixels": {
+          "busy": 0.38307206221898166,
+          "std": 47.63539591203737
+        }
+      }
+    },
+    {
+      "key": "4-expert-finished-1280x800",
+      "w": 1280,
+      "h": 800,
+      "scroll": 1280,
+      "primary": 1,
+      "missing": 0,
+      "evidence": {
+        "scope": "Visible UI / prototype region, not a full-map-count claim",
+        "region": {
+          "x": 0,
+          "y": 0,
+          "width": 1280,
+          "height": 800
+        },
+        "pixels": {
+          "busy": 0.3028984375,
+          "std": 37.17294415599416
+        }
+      }
+    },
+    {
+      "key": "6-lobby-390x844",
+      "w": 390,
+      "h": 844,
+      "scroll": 390,
+      "primary": 1,
+      "missing": 0,
+      "evidence": {
+        "scope": "Visible UI / prototype region, not a full-map-count claim",
+        "region": {
+          "x": 0,
+          "y": 0,
+          "width": 390,
+          "height": 844
+        },
+        "pixels": {
+          "busy": 0.4396159922226273,
+          "std": 62.52247687474398
+        }
+      }
+    },
+    {
+      "key": "6-lobby-844x390",
+      "w": 844,
+      "h": 390,
+      "scroll": 844,
+      "primary": 1,
+      "missing": 0,
+      "evidence": {
+        "scope": "Visible UI / prototype region, not a full-map-count claim",
+        "region": {
+          "x": 0,
+          "y": 0,
+          "width": 844,
+          "height": 390
+        },
+        "pixels": {
+          "busy": 0.3975574188844331,
+          "std": 54.74178927749131
+        }
+      }
+    },
+    {
+      "key": "6-lobby-1280x800",
+      "w": 1280,
+      "h": 800,
+      "scroll": 1280,
+      "primary": 1,
+      "missing": 0,
+      "evidence": {
+        "scope": "Visible UI / prototype region, not a full-map-count claim",
+        "region": {
+          "x": 0,
+          "y": 0,
+          "width": 1280,
+          "height": 800
+        },
+        "pixels": {
+          "busy": 0.3564765625,
+          "std": 42.684493799424715
+        }
+      }
+    },
+    {
+      "key": "6-choose-topic-390x844",
+      "w": 390,
+      "h": 844,
+      "scroll": 390,
+      "primary": 1,
+      "missing": 0,
+      "evidence": {
+        "scope": "Visible UI / prototype region, not a full-map-count claim",
+        "region": {
+          "x": 0,
+          "y": 0,
+          "width": 390,
+          "height": 844
+        },
+        "pixels": {
+          "busy": 0.6081662413415968,
+          "std": 93.86076152989644
+        }
+      }
+    },
+    {
+      "key": "6-choose-topic-844x390",
+      "w": 844,
+      "h": 390,
+      "scroll": 844,
+      "primary": 1,
+      "missing": 0,
+      "evidence": {
+        "scope": "Visible UI / prototype region, not a full-map-count claim",
+        "region": {
+          "x": 0,
+          "y": 0,
+          "width": 844,
+          "height": 390
+        },
+        "pixels": {
+          "busy": 0.5437841779074006,
+          "std": 92.99681017071634
+        }
+      }
+    },
+    {
+      "key": "6-choose-topic-1280x800",
+      "w": 1280,
+      "h": 800,
+      "scroll": 1280,
+      "primary": 1,
+      "missing": 0,
+      "evidence": {
+        "scope": "Visible UI / prototype region, not a full-map-count claim",
+        "region": {
+          "x": 0,
+          "y": 0,
+          "width": 1280,
+          "height": 800
+        },
+        "pixels": {
+          "busy": 0.42330859375,
+          "std": 89.90262522706199
+        }
+      }
+    },
+    {
+      "key": "6-secret-390x844",
+      "w": 390,
+      "h": 844,
+      "scroll": 390,
+      "primary": 1,
+      "missing": 0,
+      "evidence": {
+        "scope": "Visible UI / prototype region, not a full-map-count claim",
+        "region": {
+          "x": 0,
+          "y": 0,
+          "width": 390,
+          "height": 844
+        },
+        "pixels": {
+          "busy": 0.3277554988455462,
+          "std": 82.87503534187606
+        }
+      }
+    },
+    {
+      "key": "6-secret-844x390",
+      "w": 844,
+      "h": 390,
+      "scroll": 844,
+      "primary": 1,
+      "missing": 0,
+      "evidence": {
+        "scope": "Visible UI / prototype region, not a full-map-count claim",
+        "region": {
+          "x": 0,
+          "y": 0,
+          "width": 844,
+          "height": 390
+        },
+        "pixels": {
+          "busy": 0.36965609430064406,
+          "std": 83.05654491390447
+        }
+      }
+    },
+    {
+      "key": "6-secret-1280x800",
+      "w": 1280,
+      "h": 800,
+      "scroll": 1280,
+      "primary": 1,
+      "missing": 0,
+      "evidence": {
+        "scope": "Visible UI / prototype region, not a full-map-count claim",
+        "region": {
+          "x": 0,
+          "y": 0,
+          "width": 1280,
+          "height": 800
+        },
+        "pixels": {
+          "busy": 0.2034140625,
+          "std": 52.55543917639963
+        }
+      }
+    },
+    {
+      "key": "6-answer-390x844",
+      "w": 390,
+      "h": 844,
+      "scroll": 390,
+      "primary": 1,
+      "missing": 0,
+      "evidence": {
+        "scope": "Visible UI / prototype region, not a full-map-count claim",
+        "region": {
+          "x": 0,
+          "y": 0,
+          "width": 390,
+          "height": 844
+        },
+        "pixels": {
+          "busy": 0.5191274759995139,
+          "std": 91.52881303471928
+        }
+      }
+    },
+    {
+      "key": "6-answer-844x390",
+      "w": 844,
+      "h": 390,
+      "scroll": 844,
+      "primary": 1,
+      "missing": 0,
+      "evidence": {
+        "scope": "Visible UI / prototype region, not a full-map-count claim",
+        "region": {
+          "x": 0,
+          "y": 0,
+          "width": 844,
+          "height": 390
+        },
+        "pixels": {
+          "busy": 0.6021752339287885,
+          "std": 91.37436845128919
+        }
+      }
+    },
+    {
+      "key": "6-answer-1280x800",
+      "w": 1280,
+      "h": 800,
+      "scroll": 1280,
+      "primary": 1,
+      "missing": 0,
+      "evidence": {
+        "scope": "Visible UI / prototype region, not a full-map-count claim",
+        "region": {
+          "x": 0,
+          "y": 0,
+          "width": 1280,
+          "height": 800
+        },
+        "pixels": {
+          "busy": 0.35991015625,
+          "std": 79.01928758343719
+        }
+      }
+    },
+    {
+      "key": "6-order-390x844",
+      "w": 390,
+      "h": 844,
+      "scroll": 390,
+      "primary": 1,
+      "missing": 0,
+      "evidence": {
+        "scope": "Visible UI / prototype region, not a full-map-count claim",
+        "region": {
+          "x": 0,
+          "y": 0,
+          "width": 390,
+          "height": 844
+        },
+        "pixels": {
+          "busy": 0.42661319722931096,
+          "std": 56.58823306674742
+        }
+      }
+    },
+    {
+      "key": "6-order-844x390",
+      "w": 844,
+      "h": 390,
+      "scroll": 844,
+      "primary": 1,
+      "missing": 0,
+      "evidence": {
+        "scope": "Visible UI / prototype region, not a full-map-count claim",
+        "region": {
+          "x": 0,
+          "y": 0,
+          "width": 844,
+          "height": 390
+        },
+        "pixels": {
+          "busy": 0.4131486207315591,
+          "std": 50.66753572232365
+        }
+      }
+    },
+    {
+      "key": "6-order-1280x800",
+      "w": 1280,
+      "h": 800,
+      "scroll": 1280,
+      "primary": 1,
+      "missing": 0,
+      "evidence": {
+        "scope": "Visible UI / prototype region, not a full-map-count claim",
+        "region": {
+          "x": 0,
+          "y": 0,
+          "width": 1280,
+          "height": 800
+        },
+        "pixels": {
+          "busy": 0.30602734375,
+          "std": 36.80157478442492
+        }
+      }
+    },
+    {
+      "key": "6-reveal-before-390x844",
+      "w": 390,
+      "h": 844,
+      "scroll": 390,
+      "primary": 1,
+      "missing": 0,
+      "evidence": {
+        "scope": "Visible UI / prototype region, not a full-map-count claim",
+        "region": {
+          "x": 0,
+          "y": 0,
+          "width": 390,
+          "height": 844
+        },
+        "pixels": {
+          "busy": 0.2500060760724268,
+          "std": 52.3729620999534
+        }
+      }
+    },
+    {
+      "key": "6-reveal-before-844x390",
+      "w": 844,
+      "h": 390,
+      "scroll": 844,
+      "primary": 1,
+      "missing": 0,
+      "evidence": {
+        "scope": "Visible UI / prototype region, not a full-map-count claim",
+        "region": {
+          "x": 0,
+          "y": 0,
+          "width": 844,
+          "height": 390
+        },
+        "pixels": {
+          "busy": 0.20283144975088102,
+          "std": 43.851512342920216
+        }
+      }
+    },
+    {
+      "key": "6-reveal-before-1280x800",
+      "w": 1280,
+      "h": 800,
+      "scroll": 1280,
+      "primary": 1,
+      "missing": 0,
+      "evidence": {
+        "scope": "Visible UI / prototype region, not a full-map-count claim",
+        "region": {
+          "x": 0,
+          "y": 0,
+          "width": 1280,
+          "height": 800
+        },
+        "pixels": {
+          "busy": 0.19478125,
+          "std": 32.893359047796544
+        }
+      }
+    },
+    {
+      "key": "6-reveal-first-390x844",
+      "w": 390,
+      "h": 844,
+      "scroll": 390,
+      "primary": 1,
+      "missing": 0,
+      "evidence": {
+        "scope": "Visible UI / prototype region, not a full-map-count claim",
+        "region": {
+          "x": 0,
+          "y": 0,
+          "width": 390,
+          "height": 844
+        },
+        "pixels": {
+          "busy": 0.2710292866690971,
+          "std": 50.12556837970111
+        }
+      }
+    },
+    {
+      "key": "6-reveal-first-844x390",
+      "w": 844,
+      "h": 390,
+      "scroll": 844,
+      "primary": 1,
+      "missing": 0,
+      "evidence": {
+        "scope": "Visible UI / prototype region, not a full-map-count claim",
+        "region": {
+          "x": 0,
+          "y": 0,
+          "width": 844,
+          "height": 390
+        },
+        "pixels": {
+          "busy": 0.23844938631668489,
+          "std": 45.37252240707598
+        }
+      }
+    },
+    {
+      "key": "6-reveal-first-1280x800",
+      "w": 1280,
+      "h": 800,
+      "scroll": 1280,
+      "primary": 1,
+      "missing": 0,
+      "evidence": {
+        "scope": "Visible UI / prototype region, not a full-map-count claim",
+        "region": {
+          "x": 0,
+          "y": 0,
+          "width": 1280,
+          "height": 800
+        },
+        "pixels": {
+          "busy": 0.222046875,
+          "std": 37.463719827533794
+        }
+      }
+    },
+    {
+      "key": "6-reveal-middle-390x844",
+      "w": 390,
+      "h": 844,
+      "scroll": 390,
+      "primary": 1,
+      "missing": 0,
+      "evidence": {
+        "scope": "Visible UI / prototype region, not a full-map-count claim",
+        "region": {
+          "x": 0,
+          "y": 0,
+          "width": 390,
+          "height": 844
+        },
+        "pixels": {
+          "busy": 0.297812613926358,
+          "std": 56.05001577447433
+        }
+      }
+    },
+    {
+      "key": "6-round-end-390x844",
+      "w": 390,
+      "h": 844,
+      "scroll": 390,
+      "primary": 1,
+      "missing": 0,
+      "evidence": {
+        "scope": "Visible UI / prototype region, not a full-map-count claim",
+        "region": {
+          "x": 0,
+          "y": 0,
+          "width": 390,
+          "height": 844
+        },
+        "pixels": {
+          "busy": 0.5247782233564224,
+          "std": 73.75185079239706
+        }
+      }
+    },
+    {
+      "key": "6-round-end-844x390",
+      "w": 844,
+      "h": 390,
+      "scroll": 844,
+      "primary": 1,
+      "missing": 0,
+      "evidence": {
+        "scope": "Visible UI / prototype region, not a full-map-count claim",
+        "region": {
+          "x": 0,
+          "y": 0,
+          "width": 844,
+          "height": 390
+        },
+        "pixels": {
+          "busy": 0.46532993073277434,
+          "std": 72.83902470572424
+        }
+      }
+    },
+    {
+      "key": "6-round-end-1280x800",
+      "w": 1280,
+      "h": 800,
+      "scroll": 1280,
+      "primary": 1,
+      "missing": 0,
+      "evidence": {
+        "scope": "Visible UI / prototype region, not a full-map-count claim",
+        "region": {
+          "x": 0,
+          "y": 0,
+          "width": 1280,
+          "height": 800
+        },
+        "pixels": {
+          "busy": 0.37791796875,
+          "std": 64.43976325329874
+        }
+      }
+    },
+    {
+      "key": "6-rules-390x844",
+      "w": 390,
+      "h": 844,
+      "scroll": 390,
+      "primary": 1,
+      "missing": 0,
+      "evidence": {
+        "scope": "Visible UI / prototype region, not a full-map-count claim",
+        "region": {
+          "x": 0,
+          "y": 0,
+          "width": 390,
+          "height": 844
+        },
+        "pixels": {
+          "busy": 0.3638838254951999,
+          "std": 47.14586926385054
+        }
+      }
+    },
+    {
+      "key": "6-rules-844x390",
+      "w": 844,
+      "h": 390,
+      "scroll": 844,
+      "primary": 1,
+      "missing": 0,
+      "evidence": {
+        "scope": "Visible UI / prototype region, not a full-map-count claim",
+        "region": {
+          "x": 0,
+          "y": 0,
+          "width": 844,
+          "height": 390
+        },
+        "pixels": {
+          "busy": 0.5808239154210718,
+          "std": 45.944959892478195
+        }
+      }
+    },
+    {
+      "key": "6-rules-1280x800",
+      "w": 1280,
+      "h": 800,
+      "scroll": 1280,
+      "primary": 1,
+      "missing": 0,
+      "evidence": {
+        "scope": "Visible UI / prototype region, not a full-map-count claim",
+        "region": {
+          "x": 0,
+          "y": 0,
+          "width": 1280,
+          "height": 800
+        },
+        "pixels": {
+          "busy": 0.3136484375,
+          "std": 31.270933694741448
+        }
+      }
+    },
+    {
+      "key": "6-review-390x844",
+      "w": 390,
+      "h": 844,
+      "scroll": 390,
+      "primary": 1,
+      "missing": 0,
+      "evidence": {
+        "scope": "Visible UI / prototype region, not a full-map-count claim",
+        "region": {
+          "x": 0,
+          "y": 0,
+          "width": 390,
+          "height": 844
+        },
+        "pixels": {
+          "busy": 0.48103050188358243,
+          "std": 35.176886680616164
+        }
+      }
+    },
+    {
+      "key": "6-review-844x390",
+      "w": 844,
+      "h": 390,
+      "scroll": 844,
+      "primary": 1,
+      "missing": 0,
+      "evidence": {
+        "scope": "Visible UI / prototype region, not a full-map-count claim",
+        "region": {
+          "x": 0,
+          "y": 0,
+          "width": 844,
+          "height": 390
+        },
+        "pixels": {
+          "busy": 0.5808239154210718,
+          "std": 31.80139971424232
+        }
+      }
+    },
+    {
+      "key": "6-review-1280x800",
+      "w": 1280,
+      "h": 800,
+      "scroll": 1280,
+      "primary": 1,
+      "missing": 0,
+      "evidence": {
+        "scope": "Visible UI / prototype region, not a full-map-count claim",
+        "region": {
+          "x": 0,
+          "y": 0,
+          "width": 1280,
+          "height": 800
+        },
+        "pixels": {
+          "busy": 0.3138671875,
+          "std": 24.07928899752535
+        }
+      }
+    },
+    {
+      "key": "6-finished-390x844",
+      "w": 390,
+      "h": 844,
+      "scroll": 390,
+      "primary": 1,
+      "missing": 0,
+      "evidence": {
+        "scope": "Visible UI / prototype region, not a full-map-count claim",
+        "region": {
+          "x": 0,
+          "y": 0,
+          "width": 390,
+          "height": 844
+        },
+        "pixels": {
+          "busy": 0.44386924292137564,
+          "std": 59.32647785896842
+        }
+      }
+    },
+    {
+      "key": "6-finished-844x390",
+      "w": 844,
+      "h": 390,
+      "scroll": 844,
+      "primary": 1,
+      "missing": 0,
+      "evidence": {
+        "scope": "Visible UI / prototype region, not a full-map-count claim",
+        "region": {
+          "x": 0,
+          "y": 0,
+          "width": 844,
+          "height": 390
+        },
+        "pixels": {
+          "busy": 0.38227002065864624,
+          "std": 48.951251234281465
+        }
+      }
+    },
+    {
+      "key": "6-finished-1280x800",
+      "w": 1280,
+      "h": 800,
+      "scroll": 1280,
+      "primary": 1,
+      "missing": 0,
+      "evidence": {
+        "scope": "Visible UI / prototype region, not a full-map-count claim",
+        "region": {
+          "x": 0,
+          "y": 0,
+          "width": 1280,
+          "height": 800
+        },
+        "pixels": {
+          "busy": 0.31148828125,
+          "std": 39.141115709574834
+        }
+      }
+    },
+    {
+      "key": "9-lobby-390x844",
+      "w": 390,
+      "h": 844,
+      "scroll": 390,
+      "primary": 1,
+      "missing": 0,
+      "evidence": {
+        "scope": "Visible UI / prototype region, not a full-map-count claim",
+        "region": {
+          "x": 0,
+          "y": 0,
+          "width": 390,
+          "height": 844
+        },
+        "pixels": {
+          "busy": 0.44715032203183863,
+          "std": 64.76308620609727
+        }
+      }
+    },
+    {
+      "key": "9-lobby-844x390",
+      "w": 844,
+      "h": 390,
+      "scroll": 844,
+      "primary": 1,
+      "missing": 0,
+      "evidence": {
+        "scope": "Visible UI / prototype region, not a full-map-count claim",
+        "region": {
+          "x": 0,
+          "y": 0,
+          "width": 844,
+          "height": 390
+        },
+        "pixels": {
+          "busy": 0.3957224450115445,
+          "std": 56.40625458687707
+        }
+      }
+    },
+    {
+      "key": "9-lobby-1280x800",
+      "w": 1280,
+      "h": 800,
+      "scroll": 1280,
+      "primary": 1,
+      "missing": 0,
+      "evidence": {
+        "scope": "Visible UI / prototype region, not a full-map-count claim",
+        "region": {
+          "x": 0,
+          "y": 0,
+          "width": 1280,
+          "height": 800
+        },
+        "pixels": {
+          "busy": 0.3656015625,
+          "std": 44.16105050829512
+        }
+      }
+    },
+    {
+      "key": "9-choose-topic-390x844",
+      "w": 390,
+      "h": 844,
+      "scroll": 390,
+      "primary": 1,
+      "missing": 0,
+      "evidence": {
+        "scope": "Visible UI / prototype region, not a full-map-count claim",
+        "region": {
+          "x": 0,
+          "y": 0,
+          "width": 390,
+          "height": 844
+        },
+        "pixels": {
+          "busy": 0.5676874468343662,
+          "std": 92.48290376085384
+        }
+      }
+    },
+    {
+      "key": "9-choose-topic-844x390",
+      "w": 844,
+      "h": 390,
+      "scroll": 844,
+      "primary": 1,
+      "missing": 0,
+      "evidence": {
+        "scope": "Visible UI / prototype region, not a full-map-count claim",
+        "region": {
+          "x": 0,
+          "y": 0,
+          "width": 844,
+          "height": 390
+        },
+        "pixels": {
+          "busy": 0.502017256045692,
+          "std": 90.29512528115379
+        }
+      }
+    },
+    {
+      "key": "9-choose-topic-1280x800",
+      "w": 1280,
+      "h": 800,
+      "scroll": 1280,
+      "primary": 1,
+      "missing": 0,
+      "evidence": {
+        "scope": "Visible UI / prototype region, not a full-map-count claim",
+        "region": {
+          "x": 0,
+          "y": 0,
+          "width": 1280,
+          "height": 800
+        },
+        "pixels": {
+          "busy": 0.43230078125,
+          "std": 89.91353938843557
+        }
+      }
+    },
+    {
+      "key": "9-secret-390x844",
+      "w": 390,
+      "h": 844,
+      "scroll": 390,
+      "primary": 1,
+      "missing": 0,
+      "evidence": {
+        "scope": "Visible UI / prototype region, not a full-map-count claim",
+        "region": {
+          "x": 0,
+          "y": 0,
+          "width": 390,
+          "height": 844
+        },
+        "pixels": {
+          "busy": 0.32768258597642486,
+          "std": 83.51543662135107
+        }
+      }
+    },
+    {
+      "key": "9-secret-844x390",
+      "w": 844,
+      "h": 390,
+      "scroll": 844,
+      "primary": 1,
+      "missing": 0,
+      "evidence": {
+        "scope": "Visible UI / prototype region, not a full-map-count claim",
+        "region": {
+          "x": 0,
+          "y": 0,
+          "width": 844,
+          "height": 390
+        },
+        "pixels": {
+          "busy": 0.36057844209502976,
+          "std": 83.38207530042862
+        }
+      }
+    },
+    {
+      "key": "9-secret-1280x800",
+      "w": 1280,
+      "h": 800,
+      "scroll": 1280,
+      "primary": 1,
+      "missing": 0,
+      "evidence": {
+        "scope": "Visible UI / prototype region, not a full-map-count claim",
+        "region": {
+          "x": 0,
+          "y": 0,
+          "width": 1280,
+          "height": 800
+        },
+        "pixels": {
+          "busy": 0.18363671875,
+          "std": 53.00022884483134
+        }
+      }
+    },
+    {
+      "key": "9-answer-390x844",
+      "w": 390,
+      "h": 844,
+      "scroll": 390,
+      "primary": 1,
+      "missing": 0,
+      "evidence": {
+        "scope": "Visible UI / prototype region, not a full-map-count claim",
+        "region": {
+          "x": 0,
+          "y": 0,
+          "width": 390,
+          "height": 844
+        },
+        "pixels": {
+          "busy": 0.5256167213513185,
+          "std": 89.89273288615408
+        }
+      }
+    },
+    {
+      "key": "9-answer-844x390",
+      "w": 844,
+      "h": 390,
+      "scroll": 844,
+      "primary": 1,
+      "missing": 0,
+      "evidence": {
+        "scope": "Visible UI / prototype region, not a full-map-count claim",
+        "region": {
+          "x": 0,
+          "y": 0,
+          "width": 844,
+          "height": 390
+        },
+        "pixels": {
+          "busy": 0.6138899015676267,
+          "std": 91.28051404110728
+        }
+      }
+    },
+    {
+      "key": "9-answer-1280x800",
+      "w": 1280,
+      "h": 800,
+      "scroll": 1280,
+      "primary": 1,
+      "missing": 0,
+      "evidence": {
+        "scope": "Visible UI / prototype region, not a full-map-count claim",
+        "region": {
+          "x": 0,
+          "y": 0,
+          "width": 1280,
+          "height": 800
+        },
+        "pixels": {
+          "busy": 0.33362109375,
+          "std": 74.45467474811328
+        }
+      }
+    },
+    {
+      "key": "9-server-deadline-reminder",
+      "w": 390,
+      "h": 844,
+      "scroll": 390,
+      "primary": 1,
+      "missing": 0,
+      "evidence": {
+        "scope": "Visible UI / prototype region, not a full-map-count claim",
+        "region": {
+          "x": 0,
+          "y": 0,
+          "width": 390,
+          "height": 844
+        },
+        "pixels": {
+          "busy": 0.5374286061489852,
+          "std": 91.21973180168051
+        }
+      }
+    },
+    {
+      "key": "9-order-390x844",
+      "w": 390,
+      "h": 844,
+      "scroll": 390,
+      "primary": 1,
+      "missing": 0,
+      "evidence": {
+        "scope": "Visible UI / prototype region, not a full-map-count claim",
+        "region": {
+          "x": 0,
+          "y": 0,
+          "width": 390,
+          "height": 844
+        },
+        "pixels": {
+          "busy": 0.5139506622918946,
+          "std": 61.0625933813849
+        }
+      }
+    },
+    {
+      "key": "9-order-844x390",
+      "w": 844,
+      "h": 390,
+      "scroll": 844,
+      "primary": 1,
+      "missing": 0,
+      "evidence": {
+        "scope": "Visible UI / prototype region, not a full-map-count claim",
+        "region": {
+          "x": 0,
+          "y": 0,
+          "width": 844,
+          "height": 390
+        },
+        "pixels": {
+          "busy": 0.43120670798395916,
+          "std": 54.209661953744856
+        }
+      }
+    },
+    {
+      "key": "9-order-1280x800",
+      "w": 1280,
+      "h": 800,
+      "scroll": 1280,
+      "primary": 1,
+      "missing": 0,
+      "evidence": {
+        "scope": "Visible UI / prototype region, not a full-map-count claim",
+        "region": {
+          "x": 0,
+          "y": 0,
+          "width": 1280,
+          "height": 800
+        },
+        "pixels": {
+          "busy": 0.32930859375,
+          "std": 39.422862178898505
+        }
+      }
+    },
+    {
+      "key": "9-reveal-before-390x844",
+      "w": 390,
+      "h": 844,
+      "scroll": 390,
+      "primary": 1,
+      "missing": 0,
+      "evidence": {
+        "scope": "Visible UI / prototype region, not a full-map-count claim",
+        "region": {
+          "x": 0,
+          "y": 0,
+          "width": 390,
+          "height": 844
+        },
+        "pixels": {
+          "busy": 0.2726333697897679,
+          "std": 55.70525068085133
+        }
+      }
+    },
+    {
+      "key": "9-reveal-before-844x390",
+      "w": 844,
+      "h": 390,
+      "scroll": 844,
+      "primary": 1,
+      "missing": 0,
+      "evidence": {
+        "scope": "Visible UI / prototype region, not a full-map-count claim",
+        "region": {
+          "x": 0,
+          "y": 0,
+          "width": 844,
+          "height": 390
+        },
+        "pixels": {
+          "busy": 0.21588285332361162,
+          "std": 46.39070221342252
+        }
+      }
+    },
+    {
+      "key": "9-reveal-before-1280x800",
+      "w": 1280,
+      "h": 800,
+      "scroll": 1280,
+      "primary": 1,
+      "missing": 0,
+      "evidence": {
+        "scope": "Visible UI / prototype region, not a full-map-count claim",
+        "region": {
+          "x": 0,
+          "y": 0,
+          "width": 1280,
+          "height": 800
+        },
+        "pixels": {
+          "busy": 0.1858359375,
+          "std": 34.980441507197135
+        }
+      }
+    },
+    {
+      "key": "9-reveal-first-390x844",
+      "w": 390,
+      "h": 844,
+      "scroll": 390,
+      "primary": 1,
+      "missing": 0,
+      "evidence": {
+        "scope": "Visible UI / prototype region, not a full-map-count claim",
+        "region": {
+          "x": 0,
+          "y": 0,
+          "width": 390,
+          "height": 844
+        },
+        "pixels": {
+          "busy": 0.28901446105237577,
+          "std": 53.593868165595964
+        }
+      }
+    },
+    {
+      "key": "9-reveal-first-844x390",
+      "w": 844,
+      "h": 390,
+      "scroll": 844,
+      "primary": 1,
+      "missing": 0,
+      "evidence": {
+        "scope": "Visible UI / prototype region, not a full-map-count claim",
+        "region": {
+          "x": 0,
+          "y": 0,
+          "width": 844,
+          "height": 390
+        },
+        "pixels": {
+          "busy": 0.2515007898894155,
+          "std": 47.730996464274014
+        }
+      }
+    },
+    {
+      "key": "9-reveal-first-1280x800",
+      "w": 1280,
+      "h": 800,
+      "scroll": 1280,
+      "primary": 1,
+      "missing": 0,
+      "evidence": {
+        "scope": "Visible UI / prototype region, not a full-map-count claim",
+        "region": {
+          "x": 0,
+          "y": 0,
+          "width": 1280,
+          "height": 800
+        },
+        "pixels": {
+          "busy": 0.20990625,
+          "std": 39.219950455924995
+        }
+      }
+    },
+    {
+      "key": "9-reveal-middle-390x844",
+      "w": 390,
+      "h": 844,
+      "scroll": 390,
+      "primary": 1,
+      "missing": 0,
+      "evidence": {
+        "scope": "Visible UI / prototype region, not a full-map-count claim",
+        "region": {
+          "x": 0,
+          "y": 0,
+          "width": 390,
+          "height": 844
+        },
+        "pixels": {
+          "busy": 0.3119091019564953,
+          "std": 58.972282478331024
+        }
+      }
+    },
+    {
+      "key": "9-round-end-390x844",
+      "w": 390,
+      "h": 844,
+      "scroll": 390,
+      "primary": 1,
+      "missing": 0,
+      "evidence": {
+        "scope": "Visible UI / prototype region, not a full-map-count claim",
+        "region": {
+          "x": 0,
+          "y": 0,
+          "width": 390,
+          "height": 844
+        },
+        "pixels": {
+          "busy": 0.5775063798760481,
+          "std": 78.10166772236975
+        }
+      }
+    },
+    {
+      "key": "9-round-end-844x390",
+      "w": 844,
+      "h": 390,
+      "scroll": 844,
+      "primary": 1,
+      "missing": 0,
+      "evidence": {
+        "scope": "Visible UI / prototype region, not a full-map-count claim",
+        "region": {
+          "x": 0,
+          "y": 0,
+          "width": 844,
+          "height": 390
+        },
+        "pixels": {
+          "busy": 0.5421314862073155,
+          "std": 77.13275231541792
+        }
+      }
+    },
+    {
+      "key": "9-round-end-1280x800",
+      "w": 1280,
+      "h": 800,
+      "scroll": 1280,
+      "primary": 1,
+      "missing": 0,
+      "evidence": {
+        "scope": "Visible UI / prototype region, not a full-map-count claim",
+        "region": {
+          "x": 0,
+          "y": 0,
+          "width": 1280,
+          "height": 800
+        },
+        "pixels": {
+          "busy": 0.425359375,
+          "std": 70.37291051265224
+        }
+      }
+    },
+    {
+      "key": "9-rules-390x844",
+      "w": 390,
+      "h": 844,
+      "scroll": 390,
+      "primary": 1,
+      "missing": 0,
+      "evidence": {
+        "scope": "Visible UI / prototype region, not a full-map-count claim",
+        "region": {
+          "x": 0,
+          "y": 0,
+          "width": 390,
+          "height": 844
+        },
+        "pixels": {
+          "busy": 0.32600558998663265,
+          "std": 46.85383516390199
+        }
+      }
+    },
+    {
+      "key": "9-rules-844x390",
+      "w": 844,
+      "h": 390,
+      "scroll": 844,
+      "primary": 1,
+      "missing": 0,
+      "evidence": {
+        "scope": "Visible UI / prototype region, not a full-map-count claim",
+        "region": {
+          "x": 0,
+          "y": 0,
+          "width": 844,
+          "height": 390
+        },
+        "pixels": {
+          "busy": 0.46693401385344513,
+          "std": 45.71285884117196
+        }
+      }
+    },
+    {
+      "key": "9-rules-1280x800",
+      "w": 1280,
+      "h": 800,
+      "scroll": 1280,
+      "primary": 1,
+      "missing": 0,
+      "evidence": {
+        "scope": "Visible UI / prototype region, not a full-map-count claim",
+        "region": {
+          "x": 0,
+          "y": 0,
+          "width": 1280,
+          "height": 800
+        },
+        "pixels": {
+          "busy": 0.349546875,
+          "std": 31.193378728102257
+        }
+      }
+    },
+    {
+      "key": "9-review-390x844",
+      "w": 390,
+      "h": 844,
+      "scroll": 390,
+      "primary": 1,
+      "missing": 0,
+      "evidence": {
+        "scope": "Visible UI / prototype region, not a full-map-count claim",
+        "region": {
+          "x": 0,
+          "y": 0,
+          "width": 390,
+          "height": 844
+        },
+        "pixels": {
+          "busy": 0.3872159436140479,
+          "std": 37.316741087390014
+        }
+      }
+    },
+    {
+      "key": "9-review-844x390",
+      "w": 844,
+      "h": 390,
+      "scroll": 844,
+      "primary": 1,
+      "missing": 0,
+      "evidence": {
+        "scope": "Visible UI / prototype region, not a full-map-count claim",
+        "region": {
+          "x": 0,
+          "y": 0,
+          "width": 844,
+          "height": 390
+        },
+        "pixels": {
+          "busy": 0.5342447441973508,
+          "std": 31.685306144489136
+        }
+      }
+    },
+    {
+      "key": "9-review-1280x800",
+      "w": 1280,
+      "h": 800,
+      "scroll": 1280,
+      "primary": 1,
+      "missing": 0,
+      "evidence": {
+        "scope": "Visible UI / prototype region, not a full-map-count claim",
+        "region": {
+          "x": 0,
+          "y": 0,
+          "width": 1280,
+          "height": 800
+        },
+        "pixels": {
+          "busy": 0.39371875,
+          "std": 26.150278992187882
+        }
+      }
+    },
+    {
+      "key": "9-finished-390x844",
+      "w": 390,
+      "h": 844,
+      "scroll": 390,
+      "primary": 1,
+      "missing": 0,
+      "evidence": {
+        "scope": "Visible UI / prototype region, not a full-map-count claim",
+        "region": {
+          "x": 0,
+          "y": 0,
+          "width": 390,
+          "height": 844
+        },
+        "pixels": {
+          "busy": 0.46813707619394823,
+          "std": 60.318936708571265
+        }
+      }
+    },
+    {
+      "key": "9-finished-844x390",
+      "w": 844,
+      "h": 390,
+      "scroll": 844,
+      "primary": 1,
+      "missing": 0,
+      "evidence": {
+        "scope": "Visible UI / prototype region, not a full-map-count claim",
+        "region": {
+          "x": 0,
+          "y": 0,
+          "width": 844,
+          "height": 390
+        },
+        "pixels": {
+          "busy": 0.3791104629967189,
+          "std": 50.89808259064025
+        }
+      }
+    },
+    {
+      "key": "9-finished-1280x800",
+      "w": 1280,
+      "h": 800,
+      "scroll": 1280,
+      "primary": 1,
+      "missing": 0,
+      "evidence": {
+        "scope": "Visible UI / prototype region, not a full-map-count claim",
+        "region": {
+          "x": 0,
+          "y": 0,
+          "width": 1280,
+          "height": 800
+        },
+        "pixels": {
+          "busy": 0.32115234375,
+          "std": 40.69056283985931
+        }
+      }
+    },
+    {
+      "key": "9-desktop-1280x800",
+      "w": 1280,
+      "h": 800,
+      "scroll": 1280,
+      "primary": 1,
+      "missing": 0,
+      "evidence": {
+        "scope": "Visible UI / prototype region, not a full-map-count claim",
+        "region": {
+          "x": 0,
+          "y": 0,
+          "width": 1280,
+          "height": 800
+        },
+        "pixels": {
+          "busy": 0.32115234375,
+          "std": 40.69056283985931
+        }
+      }
+    },
+    {
+      "key": "9-disconnected-390x844",
+      "w": 390,
+      "h": 844,
+      "scroll": 390,
+      "primary": 1,
+      "missing": 0,
+      "evidence": {
+        "scope": "Visible UI / prototype region, not a full-map-count claim",
+        "region": {
+          "x": 0,
+          "y": 0,
+          "width": 390,
+          "height": 844
+        },
+        "pixels": {
+          "busy": 0.47928059302466886,
+          "std": 61.319109405296686
+        }
+      }
+    },
+    {
+      "key": "9-wrong-reveal-390x844",
+      "w": 390,
+      "h": 844,
+      "scroll": 390,
+      "primary": 1,
+      "missing": 0,
+      "evidence": {
+        "scope": "Visible UI / prototype region, not a full-map-count claim",
+        "region": {
+          "x": 0,
+          "y": 0,
+          "width": 390,
+          "height": 844
+        },
+        "pixels": {
+          "busy": 0.5703366144124438,
+          "std": 74.46481993859723
+        }
+      }
+    },
+    {
+      "key": "9-wrong-reveal-844x390",
+      "w": 844,
+      "h": 390,
+      "scroll": 844,
+      "primary": 1,
+      "missing": 0,
+      "evidence": {
+        "scope": "Visible UI / prototype region, not a full-map-count claim",
+        "region": {
+          "x": 0,
+          "y": 0,
+          "width": 844,
+          "height": 390
+        },
+        "pixels": {
+          "busy": 0.5321059667031232,
+          "std": 72.99136376792407
+        }
+      }
+    },
+    {
+      "key": "9-wrong-reveal-1280x800",
+      "w": 1280,
+      "h": 800,
+      "scroll": 1280,
+      "primary": 1,
+      "missing": 0,
+      "evidence": {
+        "scope": "Visible UI / prototype region, not a full-map-count claim",
+        "region": {
+          "x": 0,
+          "y": 0,
+          "width": 1280,
+          "height": 800
+        },
+        "pixels": {
+          "busy": 0.4209140625,
+          "std": 66.04036051457956
+        }
+      }
+    },
+    {
+      "key": "9-team-failed-390x844",
+      "w": 390,
+      "h": 844,
+      "scroll": 390,
+      "primary": 1,
+      "missing": 0,
+      "evidence": {
+        "scope": "Visible UI / prototype region, not a full-map-count claim",
+        "region": {
+          "x": 0,
+          "y": 0,
+          "width": 390,
+          "height": 844
+        },
+        "pixels": {
+          "busy": 0.46554866934013855,
+          "std": 60.247347774201295
+        }
+      }
+    },
+    {
+      "key": "9-team-failed-844x390",
+      "w": 844,
+      "h": 390,
+      "scroll": 844,
+      "primary": 1,
+      "missing": 0,
+      "evidence": {
+        "scope": "Visible UI / prototype region, not a full-map-count claim",
+        "region": {
+          "x": 0,
+          "y": 0,
+          "width": 844,
+          "height": 390
+        },
+        "pixels": {
+          "busy": 0.3786000729128691,
+          "std": 51.58194888717891
+        }
+      }
+    },
+    {
+      "key": "9-team-failed-1280x800",
+      "w": 1280,
+      "h": 800,
+      "scroll": 1280,
+      "primary": 1,
+      "missing": 0,
+      "evidence": {
+        "scope": "Visible UI / prototype region, not a full-map-count claim",
+        "region": {
+          "x": 0,
+          "y": 0,
+          "width": 1280,
+          "height": 800
+        },
+        "pixels": {
+          "busy": 0.31116015625,
+          "std": 38.443992813851274
+        }
+      }
+    },
+    {
+      "key": "rejection-chinese-feedback",
+      "w": 390,
+      "h": 844,
+      "scroll": 390,
+      "primary": 0,
+      "missing": 0,
+      "evidence": {
+        "scope": "Visible UI / prototype region, not a full-map-count claim",
+        "region": {
+          "x": 0,
+          "y": 0,
+          "width": 390,
+          "height": 844
+        },
+        "pixels": {
+          "busy": 0.3350103293231255,
+          "std": 71.06485464456054
+        }
+      }
+    },
+    {
+      "key": "homepage-box-390x844",
+      "w": 390,
+      "h": 844,
+      "scroll": 390,
+      "primary": 0,
+      "missing": 0,
+      "evidence": {
+        "scope": "Visible UI / prototype region, not a full-map-count claim",
+        "region": {
+          "x": 0,
+          "y": 0,
+          "width": 390,
+          "height": 844
+        },
+        "pixels": {
+          "busy": 0.5819905213270142,
+          "std": 69.26288068669366
+        }
+      }
+    }
+  ],
+  "errors": []
+}

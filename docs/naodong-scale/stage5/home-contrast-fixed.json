@@ -1,0 +1,43 @@
+{
+  "beforeOpacity": "0.684563",
+  "before": {
+    "tested": 15,
+    "passed": 13,
+    "failures": [
+      {
+        "text": "脑洞量表 Top Ten",
+        "ratio": 4.36,
+        "background": "0.1110",
+        "foreground": "rgb(255, 248, 232)",
+        "element": "H2.",
+        "rect": {
+          "x": 37,
+          "y": 6.765625,
+          "width": 262.484375,
+          "height": 39
+        }
+      },
+      {
+        "text": "一个数字，一句回答。队长把大家从小到大排好，一起闯过五轮。",
+        "ratio": 4.31,
+        "background": "0.0896",
+        "foreground": "rgb(255, 248, 232)",
+        "element": "P.box-blurb",
+        "rect": {
+          "x": 37,
+          "y": 105.296875,
+          "width": 306,
+          "height": 22
+        }
+      }
+    ],
+    "untested": []
+  },
+  "afterOpacity": "1",
+  "after": {
+    "tested": 15,
+    "passed": 15,
+    "failures": [],
+    "untested": []
+  }
+}

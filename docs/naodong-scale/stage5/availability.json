@@ -1,0 +1,25 @@
+{
+  "main": "a010a5a9919b5bbce83f2e8262182d6f51f236c8",
+  "packages": [
+    "codenames",
+    "drawing-party",
+    "dying-message",
+    "game-data",
+    "game-engine",
+    "magical-athlete",
+    "reflex-race",
+    "rummikub",
+    "shared",
+    "soda-smugglers",
+    "witch-town",
+    "xiabaiwang"
+  ],
+  "laoer": {
+    "status": "UNAVAILABLE_IN_MAIN_AND_WORKSPACE",
+    "sourceHits": []
+  },
+  "kariba": {
+    "status": "NOT_IN_MAIN_CONDITIONAL_SKIP",
+    "sourceHits": []
+  }
+}

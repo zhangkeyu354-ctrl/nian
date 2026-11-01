@@ -36,15 +36,18 @@ const themes = Object.fromEntries(
     ),
   ]),
 );
+// The user-approved 160-term replacement keeps every public theme populated;
+// it no longer uses the earlier draft's minimum-eight-per-theme distribution.
 for (const v of Object.values(themes))
-  assert(v.reduce((a, b) => a + b, 0) >= 8);
+  assert(v.reduce((a, b) => a + b, 0) > 0);
+assert(TOPICS.every(t => TOPIC_THEMES.includes(t.theme as typeof TOPIC_THEMES[number])));
 assert(TOPICS.length >= 160);
 const difficulties = [1, 2, 3].map(
   (d) => TOPICS.filter((t) => t.difficulty === d).length,
 );
 assert.deepEqual(difficulties, [64, 64, 32]);
 assert(
-  TOPICS.filter((t) => t.id.startsWith("xb-v2-")).every(
+  TOPICS.every(
     (t) => t.sourceNote && t.source.startsWith("https://"),
   ),
 );

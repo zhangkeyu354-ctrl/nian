@@ -384,7 +384,7 @@ try {
         const expected={BRIBE:"接受 2号 的受贿",INSPECT:"检查 2号",ARREST:"逮捕 2号"} as Record<string,string>;
         assert.equal(buttonText.trim(),expected[phase],`主按钮座位号 ${phase}`);
       }
-      if (phase === "BRIBE") { assert.equal(await p.locator(".ss-bribe-card").count(), 7); assert.equal(await p.locator(".ss-bribe-card img").count(),7); }
+      if (phase === "BRIBE") { assert.equal(await p.locator(".ss-bribe-card").count(), 7); assert.equal(await p.locator(".ss-bribe-card > .ss-case").count(),7); }
       if (["BRIBE","INSPECT","ARREST"].includes(phase)) assert.match(await p.getByTestId("ss-budget").innerText(), /受贿.*检查.*逮捕/s);
       if (phase === "PACK" && suffix === "portrait") { const widths=await p.locator(".ss-hand button").evaluateAll(xs=>xs.map(x=>x.getBoundingClientRect().width)); assert(widths.every(x=>x>=100)); }
       await shot(p, `max-${phase.toLowerCase()}-${suffix}`, `8人长名字 ${phase} · ${suffix}`);
@@ -491,6 +491,8 @@ try {
     const box = p.locator('[data-game="ss"]');
     await p.getByTestId("game-ss").waitFor();
     await p.getByTestId("game-ss").scrollIntoViewIfNeeded();
+    // Contrast metadata and screenshots must sample the same settled entry frame.
+    await p.waitForFunction(() => getComputedStyle(document.querySelector(".hall")!).opacity === "1");
     assert(
       (await p.getByTestId("game-ss").innerText()).includes(
         "汽水走私犯 Soda Smugglers",
@@ -512,18 +514,23 @@ try {
   {
     const { ctx, p } = await connect(dragDesk, 1, 390, 844);
     const card = p.locator('[data-testid^="ss-card-"]').first();
+    const cardId = await card.getAttribute("data-testid");
+    const suitcaseSrc = await card.locator("img").getAttribute("src");
     await card.dragTo(p.getByTestId("ss-drop-luggage"));
-    assert.equal(await card.getAttribute("aria-pressed"), "true");
+    await p.getByTestId(cardId!).waitFor({state:"detached"});
     assert.equal(
       await p.getByTestId("ss-drop-luggage").locator("img").count(),
       1,
     );
+    assert.equal(await p.getByTestId("ss-drop-luggage").locator("img").getAttribute("src"), suitcaseSrc);
     checks.push("mouse drag to luggage");
     await ctx.close();
   }
   {
     const { ctx, p } = await connect(dragTouch, 1, 390, 844, { touch: true });
     const card = p.locator('[data-testid^="ss-card-"]').first();
+    const cardId = await card.getAttribute("data-testid");
+    const suitcaseSrc = await card.locator("img").getAttribute("src");
     const from = (await card.boundingBox())!,
       to = (await p.getByTestId("ss-drop-bribe").boundingBox())!;
     const cdp = await ctx.newCDPSession(p);
@@ -543,11 +550,12 @@ try {
       touchPoints: [],
     });
     await p.waitForTimeout(100);
-    assert.equal(await card.getAttribute("aria-pressed"), "true");
+    await p.getByTestId(cardId!).waitFor({state:"detached"});
     assert.equal(
       await p.getByTestId("ss-drop-bribe").locator("img").count(),
       1,
     );
+    assert.equal(await p.getByTestId("ss-drop-bribe").locator("img").getAttribute("src"), suitcaseSrc);
     checks.push("touch hold and drag to bribe");
     await ctx.close();
   }

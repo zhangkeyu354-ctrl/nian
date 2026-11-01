@@ -1,0 +1,148 @@
+{
+  "beforeOpacity": "0.590862",
+  "before": {
+    "tested": 15,
+    "passed": 6,
+    "failures": [
+      {
+        "text": "脑洞量表 Top Ten",
+        "ratio": 3.8,
+        "background": "0.1110",
+        "foreground": "rgb(255, 248, 232)",
+        "element": "H2.",
+        "rect": {
+          "x": 37,
+          "y": 6.765625,
+          "width": 262.484375,
+          "height": 39
+        }
+      },
+      {
+        "text": "Cocktail Games · Aurélien Picolet",
+        "ratio": 2.92,
+        "background": "0.1022",
+        "foreground": "rgb(255, 248, 232)",
+        "element": "SMALL.",
+        "rect": {
+          "x": 37,
+          "y": 47.5625,
+          "width": 233.71875,
+          "height": 16.09375
+        }
+      },
+      {
+        "text": "4–9 人 · 语音合作",
+        "ratio": 4.45,
+        "background": "0.0821",
+        "foreground": "rgb(255, 248, 232)",
+        "element": "P.box-meta",
+        "rect": {
+          "x": 37,
+          "y": 72.65625,
+          "width": 137.8125,
+          "height": 22
+        }
+      },
+      {
+        "text": "一个数字，一句回答。队长把大家从小到大排好，一起闯过五轮。",
+        "ratio": 3.76,
+        "background": "0.0896",
+        "foreground": "rgb(255, 248, 232)",
+        "element": "P.box-blurb",
+        "rect": {
+          "x": 37,
+          "y": 105.296875,
+          "width": 306,
+          "height": 22
+        }
+      },
+      {
+        "text": "一个数字，一句回答。队长把大家从小到大排好，一起闯过五轮。",
+        "ratio": 4,
+        "background": "0.0784",
+        "foreground": "rgb(255, 248, 232)",
+        "element": "P.box-blurb",
+        "rect": {
+          "x": 37,
+          "y": 129.9375,
+          "width": 187,
+          "height": 22
+        }
+      },
+      {
+        "text": "开房间",
+        "ratio": 3.81,
+        "background": "0.6732",
+        "foreground": "rgb(23, 63, 69)",
+        "element": "A.box-open",
+        "rect": {
+          "x": 168,
+          "y": 175.53125,
+          "width": 54,
+          "height": 24
+        }
+      },
+      {
+        "text": "加入",
+        "ratio": 4.1,
+        "background": "0.7775",
+        "foreground": "rgb(25, 61, 69)",
+        "element": "BUTTON.",
+        "rect": {
+          "x": 178,
+          "y": 294.21875,
+          "width": 34,
+          "height": 22
+        }
+      },
+      {
+        "text": "官方桌游 · Reiner Knizia",
+        "ratio": 4.36,
+        "background": "0.0343",
+        "foreground": "rgb(255, 248, 239)",
+        "element": "SMALL.",
+        "rect": {
+          "x": 37,
+          "y": 605.234375,
+          "width": 161.84375,
+          "height": 15.390625
+        }
+      },
+      {
+        "text": "开房间",
+        "ratio": 4.37,
+        "background": "0.5068",
+        "foreground": "rgb(36, 25, 35)",
+        "element": "A.box-open",
+        "rect": {
+          "x": 168,
+          "y": 733.390625,
+          "width": 54,
+          "height": 24
+        }
+      }
+    ],
+    "untested": []
+  },
+  "afterOpacity": "1",
+  "after": {
+    "tested": 15,
+    "passed": 14,
+    "failures": [
+      {
+        "text": "Cocktail Games · Aurélien Picolet",
+        "ratio": 4.43,
+        "background": "0.1022",
+        "foreground": "rgb(255, 248, 232)",
+        "element": "SMALL.",
+        "rect": {
+          "x": 37,
+          "y": 47.5625,
+          "width": 233.71875,
+          "height": 16.09375
+        }
+      }
+    ],
+    "untested": []
+  }
+}

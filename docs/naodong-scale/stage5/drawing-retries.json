@@ -1,0 +1,20 @@
+[
+  {
+    "id": "drawing-party",
+    "started": "2026-11-01T01:15:11.083Z",
+    "finished": "2026-11-01T01:27:04.894Z",
+    "exitCode": 0,
+    "log": "drawing-party-retry.log",
+    "isolation": "fresh process and data directory per command",
+    "data": "C:\\Users\\Lenovo\\AppData\\Local\\Temp\\nd-stage5-drawing-fresh-gzAy18"
+  },
+  {
+    "id": "drawing-load",
+    "started": "2026-11-01T01:27:05.775Z",
+    "finished": "2026-11-01T01:27:13.354Z",
+    "exitCode": 0,
+    "log": "drawing-load-retry.log",
+    "isolation": "fresh process and data directory per command",
+    "data": "C:\\Users\\Lenovo\\AppData\\Local\\Temp\\nd-stage5-drawing-fresh-e7GT8x"
+  }
+]

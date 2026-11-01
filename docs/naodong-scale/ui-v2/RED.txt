@@ -1,0 +1,23 @@
+
+> dbd-boardgame-private@0.2.2 verify:nd-ui
+> tsx scripts/verify-nd-ui.ts
+
+node:internal/modules/run_main:107
+    triggerUncaughtException(
+    ^
+
+AssertionError [ERR_ASSERTION]: seat rail too tall 4-lobby-390x844: 165.875
+    at capture (E:\DBD-BoardGame-Web\scripts\verify-nd-ui.ts:169:12)
+    at runNextTicks (node:internal/process/task_queues:65:5)
+    at process.processImmediate (node:internal/timers:472:9)
+    at async screenPhase (E:\DBD-BoardGame-Web\scripts\verify-nd-ui.ts:191:5)
+    at async <anonymous> (E:\DBD-BoardGame-Web\scripts\verify-nd-ui.ts:355:5) {
+  generatedMessage: false,
+  code: 'ERR_ASSERTION',
+  actual: false,
+  expected: true,
+  operator: '==',
+  diff: 'simple'
+}
+
+Node.js v24.14.0
