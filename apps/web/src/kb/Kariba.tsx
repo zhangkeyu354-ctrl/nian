@@ -169,7 +169,6 @@ function Game({ net, snap }: { net: Net; snap: KBRoomSnapshot }) {
   const [shake, setShake] = useState("");
   const [sound, setSound] = useState(soundOn());
   const [menu, setMenu] = useState(false);
-  const now = useNow(net.now);
   const team = v.options.mode === "team";
 
   // 新版本到来：清掉不在手里的选择
@@ -211,17 +210,11 @@ function Game({ net, snap }: { net: Net; snap: KBRoomSnapshot }) {
     };
   }, [snap.version]);
   useEffect(() => {
+    document.querySelector(`[data-kb-seat="${v.turn}"]`)?.scrollIntoView({ block: "nearest", inline: "center", behavior: "smooth" });
+  }, [v.turn]);
+  useEffect(() => {
     if (myTurn) feel("turn", { vibration: true });
   }, [myTurn, v.turnNo]);
-
-  const left = v.deadline ? Math.max(0, Math.ceil((v.deadline - now) / 1000)) : null;
-  const lastTick = useRef<number | null>(null);
-  useEffect(() => {
-    if (myTurn && left !== null && left <= 5 && left > 0 && lastTick.current !== left) {
-      lastTick.current = left;
-      feel("tick");
-    }
-  }, [left, myTurn]);
 
   const selValue = sel.length ? valueOf(sel[0]) : 0;
   const pv = selValue ? previewKB(v.pond.map((n) => Array(n).fill("x")), selValue, sel.length) : null;
@@ -335,7 +328,7 @@ function Game({ net, snap }: { net: Net; snap: KBRoomSnapshot }) {
       <header className="kb-top">
         <span className="kb-code">房间 {snap.code}</span>
         <span className="kb-deck" data-testid="kb-deck">库 {v.deck}{v.lastRound ? " · 最后一圈" : ""}</span>
-        <Timer left={left} total={v.options.seconds} />
+        <Timer deadline={v.deadline} total={v.options.seconds} now={net.now} myTurn={myTurn} />
         <button className="kb-btn kb-icon" aria-label="菜单" onClick={() => setMenu(!menu)}>☰</button>
         {menu && (
           <div className="kb-menu" role="menu">
@@ -390,8 +383,8 @@ function Game({ net, snap }: { net: Net; snap: KBRoomSnapshot }) {
         ) : fx
             ? describe(fx.events, v.players)
             : myTurn
-              ? "点手牌或水塘里的动物来选牌"
-              : " "}
+              ? "点手牌选牌，或长按拖进水塘"
+              : null}
       </div>
 
       <ol className="kb-seats" data-testid="kb-seats">
@@ -399,8 +392,15 @@ function Game({ net, snap }: { net: Net; snap: KBRoomSnapshot }) {
           <li key={i} data-kb-seat={i} className={(i === v.turn ? "cur " : "") + (i === seat ? "me " : "") + (team ? "t" + p.team : "")}>
             {team && <span className="kb-team">{TEAM[p.team]}</span>}
             <span className="kb-name">{p.name}</span>
-            <span className="kb-score">🃏{p.score}{team ? ` · 队${p.teamScore}` : ""}</span>
-            <span className="kb-hc">手 {p.handCount}</span>
+            <span className="kb-score" title={team ? `本人 ${p.score} · 队伍 ${p.teamScore}` : undefined}>
+              <b>{team ? p.teamScore : p.score}</b>
+              <small>{team ? "队分" : "张"}</small>
+            </span>
+            <span className="kb-hc" aria-label={`手牌 ${p.handCount} 张`}>
+              {Array.from({ length: 5 }, (_, k) => (
+                <i key={k} className={k < p.handCount ? "on" : ""} />
+              ))}
+            </span>
             {i === seat && <em>我</em>}
             {!snap.players.find((x) => x.playerId === snap.seats[i])?.connected && <em>🔌</em>}
           </li>
@@ -445,7 +445,7 @@ function Game({ net, snap }: { net: Net; snap: KBRoomSnapshot }) {
             {sel.length > 0 && <button className="kb-btn" onClick={() => setSel([])}>取消</button>}
           </>
         ) : (
-          <button className="kb-btn kb-primary" disabled>等待 {v.turn + 1}号 {cur.name}…</button>
+          <button className="kb-btn kb-primary kb-wait" disabled><span>等待 {v.turn + 1}号 {cur.name}…</span></button>
         )}
       </div>
       {shake && <p className="kb-error" role="alert">{shake}</p>}
@@ -467,7 +467,16 @@ function describe(ev: KBEvent[], players: { name: string }[]) {
   return s;
 }
 
-function Timer({ left, total }: { left: number | null; total: number }) {
+function Timer({ deadline, total, now, myTurn }: { deadline: number | null; total: number; now: () => number; myTurn: boolean }) {
+  const t = useNow(now);
+  const left = deadline ? Math.max(0, Math.ceil((deadline - t) / 1000)) : null;
+  const lastTick = useRef<number | null>(null);
+  useEffect(() => {
+    if (myTurn && left !== null && left <= 5 && left > 0 && lastTick.current !== left) {
+      lastTick.current = left;
+      feel("tick");
+    }
+  }, [left, myTurn]);
   if (left === null || !total) return <span className="kb-timer">∞</span>;
   const r = left / total;
   const color = r > 0.5 ? "var(--kb-ok)" : r > 0.2 ? "var(--kb-warn)" : "var(--kb-bad)";
