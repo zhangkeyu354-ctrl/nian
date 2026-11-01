@@ -48,7 +48,8 @@
     "verify:kb-browsers": "tsx scripts/verify-kb-browsers.ts",
     "simulate:kb": "tsx scripts/simulate-kb.ts",
     "verify:kb-drag": "tsx scripts/verify-kb-drag.ts",
-    "audit:kb-ui": "tsx scripts/audit-kb-ui.ts"
+    "audit:kb-ui": "tsx scripts/audit-kb-ui.ts",
+    "verify:kb-motion": "tsx scripts/verify-kb-motion.ts"
   },
   "devDependencies": {
     "@tailwindcss/vite": "4.3.3",

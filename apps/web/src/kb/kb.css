@@ -679,3 +679,29 @@
   .kb-world .kb-side .kb-card b { width: 28px; height: 28px; font-size: 16px; }
   .kb-world .kb-side .kb-card small { font-size: 14px; }
 }
+/* 动效 v2：飞行卡与落水涟漪（挂在 body 上） */
+.kb-flycard {
+  position: fixed; left: 0; top: 0; z-index: 60; pointer-events: none; border-radius: 12px; overflow: hidden;
+  background: linear-gradient(180deg, #fffaf0, #f3e3c3);
+  box-shadow: inset 0 0 0 2px #fffaf0, inset 0 0 0 4px #c9ab72, 0 18px 28px -8px #000c;
+  will-change: transform, opacity; backface-visibility: hidden;
+}
+.kb-flycard::before { content: ""; position: absolute; inset: 4px 4px 22px; border-radius: 8px; background: linear-gradient(180deg, #ffd9a0 0%, #ffbe7a 45%, #f4dcae 58%, #d9c08a 100%); }
+.kb-flycard img { position: absolute; left: 50%; bottom: 20px; translate: -50% 0; width: 96%; height: 72%; object-fit: contain; }
+.kb-flycard b {
+  position: absolute; z-index: 1; top: 6px; left: 6px; width: 22px; height: 22px; display: grid; place-items: center; border-radius: 50%;
+  background: #4a3218; color: #fffaf0; font: 800 14px system-ui, sans-serif; box-shadow: 0 0 0 2px #fffaf0;
+}
+.kb-fly { background: none !important; box-shadow: none !important; will-change: transform, opacity; filter: drop-shadow(0 8px 8px #0009); }
+.kb-ripplefx {
+  position: fixed; z-index: 55; pointer-events: none; border-radius: 50%;
+  border: 2px solid #fffaf0cc; box-shadow: 0 0 10px #bfefff88, inset 0 0 8px #bfefff66;
+}
+/* 新摸到的牌从下方滑入（只对新挂载的牌生效，key 为牌 ID） */
+.kb-world .kb-hand .kb-card { animation: kb-dealin 0.42s cubic-bezier(.2,.9,.3,1.15) both; }
+.kb-world .kb-hand .kb-card:nth-child(2) { animation-delay: 0.04s; }
+.kb-world .kb-hand .kb-card:nth-child(3) { animation-delay: 0.08s; }
+.kb-world .kb-hand .kb-card:nth-child(4) { animation-delay: 0.12s; }
+.kb-world .kb-hand .kb-card:nth-child(5) { animation-delay: 0.16s; }
+@keyframes kb-dealin { from { transform: translateY(46px) rotate(4deg) scale(0.9); opacity: 0; } }
+.kb-world .kb-hand .kb-card.sel { animation: none; }

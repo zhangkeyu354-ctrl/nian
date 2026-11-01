@@ -1,98 +1,246 @@
-// 卡里巴湖动效：用 Web Animations 在页面最上层放「飞行的牌」，不进 React 状态，不挡点击。
+// 卡里巴湖动效 v2：真实卡牌起飞 → 贝塞尔弧线 → 落水（动物跳一下 + 涟漪 + 计数弹跳）。
+// 全部用 Web Animations 挂在 body 上，不进 React 状态，不挡点击。
 import type { KBEvent } from "../../../../packages/kariba/src/index.ts";
 
 export const reducedMotion = () =>
   typeof matchMedia === "function" && matchMedia("(prefers-reduced-motion: reduce)").matches;
 
-const center = (el: Element | null) => {
-  if (!el) return null;
-  const r = el.getBoundingClientRect();
-  return { x: r.left + r.width / 2, y: r.top + r.height / 2 };
-};
-const q = (sel: string) => document.querySelector(sel);
-const seatEl = (seat: number, me: number) =>
-  seat === me ? q('[data-testid="kb-hand"]') ?? q(`[data-kb-seat="${seat}"]`) : q(`[data-kb-seat="${seat}"]`);
+type Pt = { x: number; y: number };
+const q = (sel: string) => document.querySelector(sel) as HTMLElement | null;
+const rectOf = (el: Element | null) => el?.getBoundingClientRect() ?? null;
+const mid = (r: DOMRect): Pt => ({ x: r.left + r.width / 2, y: r.top + r.height / 2 });
 const slotEl = (v: number) => q(`[data-testid="kb-slot-${v}"]`);
+const seatEl = (s: number) => q(`[data-kb-seat="${s}"]`);
 
-function sprite(v: number, size: number) {
+/** 二次贝塞尔采样成关键帧：位置连续、速度由 easing 控制，避免折线感 */
+function arcFrames(from: Pt, to: Pt, lift: number, size: { w: number; h: number }, s0: number, s1: number, r0: number, r1: number, o1: number) {
+  const c = { x: (from.x + to.x) / 2, y: Math.min(from.y, to.y) - lift };
+  const N = 14;
+  const frames: Keyframe[] = [];
+  for (let i = 0; i <= N; i++) {
+    const t = i / N;
+    const x = (1 - t) ** 2 * from.x + 2 * (1 - t) * t * c.x + t * t * to.x;
+    const y = (1 - t) ** 2 * from.y + 2 * (1 - t) * t * c.y + t * t * to.y;
+    // 中途略放大（离开桌面的感觉），到达时缩到目标大小
+    const bulge = Math.sin(Math.PI * t) * 0.12;
+    const sc = s0 + (s1 - s0) * t + bulge;
+    const rot = r0 + (r1 - r0) * t;
+    frames.push({
+      transform: `translate(${x - size.w / 2}px, ${y - size.h / 2}px) rotate(${rot}deg) scale(${sc})`,
+      opacity: t < 0.85 ? 1 : 1 - ((t - 0.85) / 0.15) * (1 - o1),
+      offset: t,
+    });
+  }
+  return frames;
+}
+
+function cardSprite(v: number, w: number, h: number) {
   const el = document.createElement("div");
-  el.className = "kb-fly";
-  el.style.width = el.style.height = size + "px";
-  el.innerHTML = `<img src="/assets/kariba/${v}.webp" alt="" draggable="false">`;
+  el.className = "kb-flycard";
+  el.style.width = w + "px";
+  el.style.height = h + "px";
+  el.innerHTML = `<b>${v}</b><img src="/assets/kariba/${v}.webp" alt="" draggable="false">`;
   document.body.appendChild(el);
   return el;
 }
 
-function fly(v: number, from: { x: number; y: number }, to: { x: number; y: number }, opts: { delay: number; dur: number; size: number; arc: number; spin: number }) {
-  const el = sprite(v, opts.size);
-  const h = opts.size / 2;
-  const mx = (from.x + to.x) / 2;
-  const my = Math.min(from.y, to.y) - opts.arc;
-  const a = el.animate(
-    [
-      { transform: `translate(${from.x - h}px, ${from.y - h}px) scale(0.7) rotate(0deg)`, opacity: 0 },
-      { transform: `translate(${from.x - h}px, ${from.y - h}px) scale(1) rotate(0deg)`, opacity: 1, offset: 0.08 },
-      { transform: `translate(${mx - h}px, ${my - h}px) scale(1.15) rotate(${opts.spin / 2}deg)`, opacity: 1, offset: 0.5 },
-      { transform: `translate(${to.x - h}px, ${to.y - h}px) scale(0.55) rotate(${opts.spin}deg)`, opacity: 0.2 },
-    ],
-    { duration: opts.dur, delay: opts.delay, easing: "cubic-bezier(.45,.05,.4,1)", fill: "both" },
-  );
-  a.onfinish = a.oncancel = () => el.remove();
-  return opts.delay + opts.dur;
+/* ---------- 我自己出牌：点下就从手里抬起来，服务器确认后再飞 ---------- */
+type Lifted = { el: HTMLElement; src: HTMLElement; from: DOMRect; v: number };
+let lifted: Lifted[] = [];
+
+export function liftFromHand(ids: string[]) {
+  dropLifted(false);
+  if (reducedMotion()) return;
+  lifted = ids.flatMap((id, i) => {
+    const src = q(`[data-testid="kb-card-${id}"]`);
+    const r = rectOf(src);
+    if (!src || !r) return [];
+    const v = Number(id[1]);
+    const el = cardSprite(v, r.width, r.height);
+    el.style.transform = `translate(${r.left}px, ${r.top}px)`;
+    el.animate(
+      [
+        { transform: `translate(${r.left}px, ${r.top}px) rotate(0deg) scale(1)` },
+        { transform: `translate(${r.left}px, ${r.top - 26 - i * 3}px) rotate(${(i - (ids.length - 1) / 2) * 5}deg) scale(1.08)` },
+      ],
+      { duration: 180, easing: "cubic-bezier(.2,.9,.3,1.3)", fill: "forwards" },
+    );
+    src.style.visibility = "hidden";
+    return [{ el, src, from: r, v }];
+  });
 }
 
-function pop(text: string, at: { x: number; y: number }, delay: number, cls = "") {
+/** 服务器拒绝：飞回原位 */
+export function dropLifted(animateBack = true) {
+  for (const l of lifted) {
+    if (animateBack && !reducedMotion()) {
+      const a = l.el.animate([{ transform: `translate(${l.from.left}px, ${l.from.top}px) rotate(0deg) scale(1)` }], {
+        duration: 220,
+        easing: "ease-out",
+        fill: "forwards",
+      });
+      a.onfinish = () => {
+        l.el.remove();
+        l.src.style.visibility = "";
+      };
+    } else {
+      l.el.remove();
+      l.src.style.visibility = "";
+    }
+  }
+  lifted = [];
+}
+
+/* ---------- 落地反馈 ---------- */
+function land(v: number, at: number) {
+  const slot = slotEl(v);
+  if (!slot) return;
+  const ico = slot.querySelector(".kb-ico") as HTMLElement | null;
+  const cnt = slot.querySelector(".kb-cnt") as HTMLElement | null;
+  ico?.animate(
+    [
+      { transform: "translateY(0) scale(1,1)" },
+      { transform: "translateY(4px) scale(1.12,0.86)", offset: 0.18 },
+      { transform: "translateY(-16px) scale(0.94,1.08)", offset: 0.48 },
+      { transform: "translateY(0) scale(1.05,0.95)", offset: 0.78 },
+      { transform: "translateY(0) scale(1,1)" },
+    ],
+    { duration: 560, delay: at, easing: "ease-out" },
+  );
+  cnt?.animate(
+    [{ transform: "scale(1)" }, { transform: "scale(1.45)", offset: 0.35 }, { transform: "scale(0.92)", offset: 0.7 }, { transform: "scale(1)" }],
+    { duration: 480, delay: at + 60, easing: "ease-out" },
+  );
+  const r = rectOf(slot);
+  if (!r) return;
+  for (let k = 0; k < 2; k++) {
+    const ring = document.createElement("i");
+    ring.className = "kb-ripplefx";
+    const w = r.width * 0.9;
+    ring.style.width = w + "px";
+    ring.style.height = w * 0.38 + "px";
+    ring.style.left = r.left + r.width / 2 - w / 2 + "px";
+    ring.style.top = r.top + r.height * 0.86 - w * 0.19 + "px";
+    document.body.appendChild(ring);
+    const a = ring.animate(
+      [{ transform: "scale(0.35)", opacity: 0.9 }, { transform: "scale(1.5)", opacity: 0 }],
+      { duration: 700, delay: at + k * 140, easing: "cubic-bezier(.2,.7,.3,1)", fill: "both" },
+    );
+    a.onfinish = a.oncancel = () => ring.remove();
+  }
+}
+
+function pop(text: string, at: Pt, delay: number, cls = "") {
   const el = document.createElement("div");
   el.className = "kb-pop " + cls;
   el.textContent = text;
   document.body.appendChild(el);
   const a = el.animate(
     [
-      { transform: `translate(${at.x}px, ${at.y}px) translate(-50%, -50%) scale(0.4)`, opacity: 0 },
-      { transform: `translate(${at.x}px, ${at.y - 18}px) translate(-50%, -50%) scale(1.25)`, opacity: 1, offset: 0.25 },
-      { transform: `translate(${at.x}px, ${at.y - 46}px) translate(-50%, -50%) scale(1)`, opacity: 0 },
+      { transform: `translate(${at.x}px, ${at.y}px) translate(-50%, -50%) scale(0.3)`, opacity: 0 },
+      { transform: `translate(${at.x}px, ${at.y - 22}px) translate(-50%, -50%) scale(1.2)`, opacity: 1, offset: 0.22 },
+      { transform: `translate(${at.x}px, ${at.y - 30}px) translate(-50%, -50%) scale(1)`, opacity: 1, offset: 0.7 },
+      { transform: `translate(${at.x}px, ${at.y - 50}px) translate(-50%, -50%) scale(0.95)`, opacity: 0 },
     ],
-    { duration: 1300, delay, easing: "ease-out", fill: "both" },
+    { duration: 1400, delay, easing: "cubic-bezier(.2,.8,.3,1)", fill: "both" },
   );
   a.onfinish = a.oncancel = () => el.remove();
 }
 
-function bump(el: Element | null, delay: number) {
-  el?.animate(
-    [{ transform: "scale(1)" }, { transform: "scale(1.12)" }, { transform: "scale(1)" }],
-    { duration: 420, delay, easing: "ease-out" },
-  );
-}
-
-/** 播放一次出牌的动效；返回总时长（毫秒），供结算画面延迟出现 */
+/** 播放一次出牌；返回总时长（毫秒） */
 export function playFlights(events: KBEvent[], me: number, onChase?: (mine: boolean) => void): number {
-  if (reducedMotion()) return 0;
+  if (reducedMotion()) {
+    dropLifted(false);
+    return 0;
+  }
   let end = 0;
   const play = events.find((e) => e.type === "PLAY");
   const chase = events.find((e) => e.type === "CHASE");
-  const slotSize = (slotEl(1)?.getBoundingClientRect().width ?? 80) * 0.62;
-  if (play && play.type === "PLAY") {
-    const from = center(seatEl(play.seat, me));
-    const to = center(slotEl(play.value));
-    if (from && to) {
-      for (let i = 0; i < Math.min(play.count, 4); i++)
-        end = Math.max(end, fly(play.value, from, to, { delay: i * 90, dur: 460, size: slotSize, arc: 40, spin: (i - 1) * 8 }));
-      bump(slotEl(play.value), end - 60);
+  const slotR = play && play.type === "PLAY" ? rectOf(slotEl(play.value)) : null;
+
+  if (play && play.type === "PLAY" && slotR) {
+    const to = { x: slotR.left + slotR.width / 2, y: slotR.top + slotR.height * 0.55 };
+    const mine = play.seat === me && lifted.length > 0;
+    const sources: { el: HTMLElement; from: Pt; w: number; h: number }[] = [];
+    if (mine) {
+      for (const l of lifted) {
+        // 从抬起后的位置接着飞（先取消抬起动画，固定当前位置）
+        const now = l.el.getBoundingClientRect();
+        l.el.getAnimations().forEach((a) => a.cancel());
+        sources.push({ el: l.el, from: mid(now), w: l.from.width, h: l.from.height });
+      }
+      lifted = [];
+    } else {
+      const seat = rectOf(seatEl(play.seat));
+      const hand = rectOf(q('[data-testid="kb-hand"] .kb-card'));
+      const w = hand?.width ?? 60, h = hand?.height ?? 84;
+      const from = seat ? mid(seat) : { x: innerWidth / 2, y: innerHeight };
+      for (let i = 0; i < Math.min(play.count, 5); i++) sources.push({ el: cardSprite(play.value, w, h), from, w, h });
     }
+    const targetScale = (slotR.width * 0.62) / (sources[0]?.w ?? 60);
+    sources.forEach((s, i) => {
+      const delay = i * 85;
+      const dur = 520 + Math.min(240, Math.hypot(to.x - s.from.x, to.y - s.from.y) * 0.35);
+      const spin = (i - (sources.length - 1) / 2) * 7;
+      const startScale = mine ? 1.08 : 0.4;
+      const a = s.el.animate(arcFrames(s.from, { x: to.x + (i - (sources.length - 1) / 2) * 4, y: to.y }, 70 + i * 6, { w: s.w, h: s.h }, startScale, targetScale, spin, spin * -0.4, 0), {
+        duration: dur,
+        delay,
+        easing: "cubic-bezier(.33,.0,.2,1)",
+        fill: "both",
+      });
+      a.onfinish = a.oncancel = () => {
+        s.el.remove();
+        if (mine) document.querySelectorAll('[data-testid^="kb-card-"]').forEach((c) => ((c as HTMLElement).style.visibility = ""));
+      };
+      end = Math.max(end, delay + dur);
+    });
+    land(play.value, end - 120);
+  } else {
+    dropLifted(false);
   }
+
   if (chase && chase.type === "CHASE") {
-    const from = center(slotEl(chase.target));
-    const seat = q(`[data-kb-seat="${chase.seat}"]`);
-    const to = center(seat);
-    const start = end + 120;
-    if (from && to) {
+    const fromR = rectOf(slotEl(chase.target));
+    const seatR = rectOf(seatEl(chase.seat));
+    if (fromR && seatR) {
+      const start = end + 160;
+      const from = { x: fromR.left + fromR.width / 2, y: fromR.top + fromR.height * 0.5 };
+      const to = mid(seatR);
+      // 被赶的动物先慌张一抖
+      (slotEl(chase.target)?.querySelector(".kb-ico") as HTMLElement | null)?.animate(
+        [{ transform: "rotate(0)" }, { transform: "rotate(-10deg) translateY(-4px)" }, { transform: "rotate(10deg)" }, { transform: "rotate(-6deg) translateY(-2px)" }, { transform: "rotate(0)" }],
+        { duration: 360, delay: start - 360 > 0 ? start - 360 : 0 },
+      );
       setTimeout(() => onChase?.(chase.seat === me), start);
+      const n = Math.min(chase.cards, 8);
+      const w = fromR.width * 0.78, h = w;
       let last = start;
-      for (let i = 0; i < Math.min(chase.cards, 8); i++)
-        last = Math.max(last, fly(chase.target, from, to, { delay: start + i * 70, dur: 720, size: slotSize, arc: 90, spin: (i % 2 ? 1 : -1) * (20 + i * 6) }));
-      bump(seat, last - 100);
-      pop(`+${chase.cards}`, to, last - 200, chase.by === 1 ? "mouse" : "");
-      if (chase.by === 1) pop("🐭 吓跑大象！", center(slotEl(1)) ?? from, start, "big");
+      for (let i = 0; i < n; i++) {
+        const el = document.createElement("div");
+        el.className = "kb-fly";
+        el.style.width = w + "px";
+        el.style.height = h + "px";
+        el.innerHTML = `<img src="/assets/kariba/${chase.target}.webp" alt="" draggable="false">`;
+        document.body.appendChild(el);
+        const delay = start + i * 70;
+        const dur = 640 + i * 20;
+        const jitter = { x: from.x + (i % 3 - 1) * 10, y: from.y + (i % 2) * 6 };
+        const a = el.animate(arcFrames(jitter, to, 110 + (i % 3) * 18, { w, h }, 1, 0.35, 0, (i % 2 ? 1 : -1) * (18 + i * 5), 0.15), {
+          duration: dur,
+          delay,
+          easing: "cubic-bezier(.45,0,.25,1)",
+          fill: "both",
+        });
+        a.onfinish = a.oncancel = () => el.remove();
+        last = Math.max(last, delay + dur);
+      }
+      seatEl(chase.seat)?.animate(
+        [{ transform: "scale(1)" }, { transform: "scale(1.1)", offset: 0.4 }, { transform: "scale(0.97)", offset: 0.75 }, { transform: "scale(1)" }],
+        { duration: 460, delay: last - 160, easing: "ease-out" },
+      );
+      pop(`+${chase.cards}`, to, last - 220, chase.by === 1 ? "mouse" : "");
+      if (chase.by === 1) pop("🐭 吓跑大象！", { x: from.x, y: from.y - 30 }, start, "big");
       end = last + 300;
     }
   }

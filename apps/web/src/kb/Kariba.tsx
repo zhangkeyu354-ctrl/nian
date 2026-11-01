@@ -3,7 +3,7 @@ import { ANIMALS, previewKB, valueOf, type KBEvent } from "../../../../packages/
 import type { KBRoomSnapshot } from "../../../../packages/shared/src/kb-protocol.ts";
 import { feel, setSoundOn, soundOn } from "../drawing/feel.ts";
 import { createKBRoom, savedName, useKBRoom } from "./kb-net.ts";
-import { confetti, playFlights } from "./fx.ts";
+import { confetti, dropLifted, liftFromHand, playFlights } from "./fx.ts";
 import "./kb.css";
 
 /** 原创动物插画（ChatGPT 生成，用户提供，见 docs/kariba/ASSETS.md） */
@@ -235,9 +235,11 @@ function Game({ net, snap }: { net: Net; snap: KBRoomSnapshot }) {
     if (!ids.length || busy) return;
     setBusy(true);
     feel("submit");
+    liftFromHand(ids);
     const e = await net.play(ids, snap.version);
     setBusy(false);
     if (e) {
+      dropLifted(true);
       setShake(e);
       feel("lose");
       setTimeout(() => setShake(""), 2500);
