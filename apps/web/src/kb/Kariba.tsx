@@ -3,6 +3,7 @@ import { ANIMALS, previewKB, valueOf, type KBEvent } from "../../../../packages/
 import type { KBRoomSnapshot } from "../../../../packages/shared/src/kb-protocol.ts";
 import { feel, setSoundOn, soundOn } from "../drawing/feel.ts";
 import { createKBRoom, savedName, useKBRoom } from "./kb-net.ts";
+import { confetti, playFlights } from "./fx.ts";
 import "./kb.css";
 
 /** 原创动物插画（ChatGPT 生成，用户提供，见 docs/kariba/ASSETS.md） */
@@ -10,8 +11,6 @@ export const Art = ({ v, cls = "" }: { v: number; cls?: string }) => (
   <img className={"kb-art " + cls} src={`/assets/kariba/${v}.webp`} alt="" draggable={false} />
 );
 const TEAM = ["A", "B", "C", "D"];
-const reduced = () =>
-  typeof matchMedia === "function" && matchMedia("(prefers-reduced-motion: reduce)").matches;
 
 export function Kariba() {
   const q = new URLSearchParams(location.search);
@@ -180,6 +179,16 @@ function Game({ net, snap }: { net: Net; snap: KBRoomSnapshot }) {
 
   // 出牌后的效果：赶走动画 + 音效
   const [fx, setFx] = useState<{ key: number; events: KBEvent[] } | null>(null);
+  const [showFinal, setShowFinal] = useState(v.phase === "FINISHED" && !v.lastEvents.length);
+  const endTimer = useRef<ReturnType<typeof setTimeout> | undefined>(undefined);
+  useEffect(() => () => clearTimeout(endTimer.current), []);
+  useEffect(() => {
+    if (v.phase === "FINISHED" && !endTimer.current) endTimer.current = setTimeout(() => setShowFinal(true), 3500);
+    if (v.phase !== "FINISHED") setShowFinal(false);
+  }, [v.phase]);
+  const [rules, setRules] = useState(false);
+  const drag = useRef<{ id: string; x: number; y: number; timer: number; ghost: HTMLElement | null; over: number; moved: boolean } | null>(null);
+  const [hover, setHover] = useState(0);
   const seen = useRef(snap.version);
   useEffect(() => {
     if (snap.version === seen.current) return;
@@ -187,15 +196,22 @@ function Game({ net, snap }: { net: Net; snap: KBRoomSnapshot }) {
     const ev = v.lastEvents;
     if (!ev.length) return;
     setFx({ key: snap.version, events: ev });
-    const chase = ev.find((e) => e.type === "CHASE");
-    if (chase) feel(chase.seat === seat ? "win" : "stamp");
-    else feel("page");
-    if (ev.some((e) => e.type === "END")) feel(v.winners.includes(seat) ? "win" : "lose");
-    const t = setTimeout(() => setFx(null), reduced() ? 1200 : 2200);
-    return () => clearTimeout(t);
+    feel("page");
+    let dur = 0;
+    const raf = requestAnimationFrame(() => {
+      dur = playFlights(ev, seat, (mine) => feel(mine ? "win" : "stamp", { vibration: mine }));
+      if (!dur && ev.some((e) => e.type === "CHASE")) feel("stamp");
+      if (ev.some((e) => e.type === "END"))
+        endTimer.current = setTimeout(() => setShowFinal(true), dur + 600);
+    });
+    const t = setTimeout(() => setFx(null), Math.max(2400, dur + 1200));
+    return () => {
+      cancelAnimationFrame(raf);
+      clearTimeout(t);
+    };
   }, [snap.version]);
   useEffect(() => {
-    if (myTurn) feel("turn");
+    if (myTurn) feel("turn", { vibration: true });
   }, [myTurn, v.turnNo]);
 
   const left = v.deadline ? Math.max(0, Math.ceil((v.deadline - now) / 1000)) : null;
@@ -222,11 +238,11 @@ function Game({ net, snap }: { net: Net; snap: KBRoomSnapshot }) {
     feel("select");
     setSel(selValue === val && sel.length < ids.length ? ids.slice(0, sel.length + 1) : selValue === val ? [] : [ids[0]]);
   };
-  const submit = async () => {
-    if (!sel.length || busy) return;
+  const submit = async (ids = sel) => {
+    if (!ids.length || busy) return;
     setBusy(true);
     feel("submit");
-    const e = await net.play(sel, snap.version);
+    const e = await net.play(ids, snap.version);
     setBusy(false);
     if (e) {
       setShake(e);
@@ -235,10 +251,84 @@ function Game({ net, snap }: { net: Net; snap: KBRoomSnapshot }) {
     } else setSel([]);
   };
 
+  // 拖拽：长按 150ms 拿起，拖到水塘对应位置松手即出牌（同种已选中的牌一起出）
+  const endDrag = () => {
+    const d = drag.current;
+    if (!d) return;
+    clearTimeout(d.timer);
+    d.ghost?.remove();
+    document.querySelector(`[data-testid="kb-card-${d.id}"]`)?.classList.remove("lifting");
+    drag.current = null;
+    setHover(0);
+  };
+  const onDown = (e: React.PointerEvent, id: string) => {
+    if (!myTurn || busy) return;
+    const d = { id, x: e.clientX, y: e.clientY, timer: 0, ghost: null as HTMLElement | null, over: 0, moved: false };
+    try {
+      (e.currentTarget as Element).setPointerCapture(e.pointerId);
+    } catch {}
+    d.timer = window.setTimeout(() => {
+      const g = (e.currentTarget as HTMLElement | null)?.cloneNode(true) as HTMLElement | undefined;
+      const src = document.querySelector(`[data-testid="kb-card-${id}"]`) as HTMLElement | null;
+      const ghost = (g ?? src?.cloneNode(true)) as HTMLElement | undefined;
+      if (!ghost) return;
+      ghost.classList.add("kb-ghost");
+      ghost.removeAttribute("data-testid");
+      ghost.style.left = d.x + "px";
+      ghost.style.top = d.y + "px";
+      document.body.appendChild(ghost);
+      d.ghost = ghost;
+      src?.classList.add("lifting");
+      feel("select");
+    }, 150);
+    drag.current = d;
+  };
+  const onMove = (e: React.PointerEvent) => {
+    const d = drag.current;
+    if (!d) return;
+    if (!d.ghost) {
+      if (Math.hypot(e.clientX - d.x, e.clientY - d.y) > 12) {
+        clearTimeout(d.timer);
+        drag.current = null;
+      }
+      return;
+    }
+    e.preventDefault();
+    d.moved = true;
+    d.ghost.style.left = e.clientX + "px";
+    d.ghost.style.top = e.clientY + "px";
+    d.ghost.style.display = "none";
+    const under = document.elementFromPoint(e.clientX, e.clientY)?.closest("[data-kb-slot]") as HTMLElement | null;
+    d.ghost.style.display = "";
+    const over = under ? Number(under.dataset.kbSlot) : 0;
+    if (over !== d.over) {
+      d.over = over;
+      setHover(over);
+    }
+  };
+  const onUp = () => {
+    const d = drag.current;
+    if (!d) return;
+    const dropped = d.ghost && d.over;
+    const val = valueOf(d.id);
+    const over = d.over;
+    endDrag();
+    if (!dropped) return;
+    if (over !== val) {
+      setShake(`${ANIMALS[val]}只能放到 ${val} 号「${ANIMALS[val]}」的位置`);
+      feel("lose");
+      setTimeout(() => setShake(""), 2200);
+      return;
+    }
+    const same = sel.length && valueOf(sel[0]) === val ? (sel.includes(d.id) ? sel : [...sel, d.id]) : [d.id];
+    setSel(same);
+    void submit(same);
+  };
+
   const sortedHand = useMemo(() => v.hand.slice().sort((a, b) => valueOf(a) - valueOf(b) || a.localeCompare(b)), [v.hand]);
   const cur = v.players[v.turn];
 
-  if (v.phase === "FINISHED") return <Final snap={snap} net={net} />;
+  if (v.phase === "FINISHED" && showFinal) return <Final snap={snap} net={net} />;
 
   return (
     <div className={"kb-game" + (myTurn ? " my-turn" : "")}>
@@ -250,28 +340,54 @@ function Game({ net, snap }: { net: Net; snap: KBRoomSnapshot }) {
         {menu && (
           <div className="kb-menu" role="menu">
             <button className="kb-btn" onClick={() => { setSoundOn(!sound); setSound(!sound); }}>音效：{sound ? "开" : "关"}</button>
+            <button className="kb-btn" onClick={() => { setRules(true); setMenu(false); }}>规则</button>
             <a className="kb-btn" href="/">退出到大厅</a>
           </div>
         )}
       </header>
 
-      {myTurn ? (
+      {rules && (
+        <div className="kb-modal" role="dialog" aria-label="规则" onClick={() => setRules(false)}>
+          <div className="kb-panel kb-rules-card" onClick={(e) => e.stopPropagation()}>
+            <h3>怎么玩</h3>
+            <ul className="kb-rules">
+              <li>轮到你时，打出 1 张或几张<b>同一种</b>动物，放到水塘里它的位置。</li>
+              <li>这个位置凑满 <b>3 只或更多</b>，就把<b>比它小、最近的一种</b>动物全部赶走，那些牌归你。中间空着的位置跳过。</li>
+              <li><b>老鼠</b>只能赶大象，大象被老鼠赶。</li>
+              <li>出完补到 5 张。牌库空后有人打完最后一张，游戏结束。收的<b>张数</b>最多的人{team ? "（队伍）" : ""}赢。</li>
+              <li>操作：点手牌或点水塘位置选牌，或者长按手牌拖到水塘。</li>
+            </ul>
+            <button className="kb-btn kb-primary" onClick={() => setRules(false)}>知道了</button>
+          </div>
+        </div>
+      )}
+      {v.lastRound && <div className="kb-banner last">🏁 牌库空了 · 补完这一圈就结束</div>}
+      {v.phase === "FINISHED" ? (
+        <div className="kb-banner turn">本局结束，马上结算…</div>
+      ) : myTurn ? (
         <div className="kb-banner turn">轮到你了</div>
       ) : (
         <div className="kb-banner">轮到 {v.turn + 1}号 {cur.name}{team ? `（${TEAM[cur.team]}队）` : ""}</div>
       )}
 
-      <Pond pond={v.pond} sel={selValue} target={pv?.target ?? 0} onPick={pickSlot} fx={fx} />
+      <Pond pond={v.pond} sel={selValue || hover} target={pv?.target ?? 0} onPick={pickSlot} fx={fx} hover={hover} />
 
       <div className="kb-side">
       <div className="kb-preview" data-testid="kb-preview" aria-live="polite">
-        {pv
-          ? pv.target
-            ? `放下后 ${ANIMALS[selValue]} 共 ${pv.total} 只 → 赶走 ${ANIMALS[pv.target]} ×${pv.cards}，你拿 ${pv.cards} 张`
-            : pv.total >= 3
-              ? `${ANIMALS[selValue]} 共 ${pv.total} 只，但没有可赶的动物`
-              : `${ANIMALS[selValue]} 将有 ${pv.total} 只，不会触发`
-          : fx
+        {pv ? (
+          <span className={"kb-chip" + (pv.target ? " gain" : "")}>
+            <Art v={selValue} cls="mini" />×{pv.total}
+            {pv.target ? (
+              <>
+                <span className="arrow">赶走</span>
+                <Art v={pv.target} cls="mini" />×{pv.cards}
+                <b>+{pv.cards} 张</b>
+              </>
+            ) : (
+              <span className="arrow">{pv.total >= 3 ? "没有可赶的动物" : `还差 ${3 - pv.total} 只触发`}</span>
+            )}
+          </span>
+        ) : fx
             ? describe(fx.events, v.players)
             : myTurn
               ? "点手牌或水塘里的动物来选牌"
@@ -280,7 +396,7 @@ function Game({ net, snap }: { net: Net; snap: KBRoomSnapshot }) {
 
       <ol className="kb-seats" data-testid="kb-seats">
         {v.players.map((p, i) => (
-          <li key={i} className={(i === v.turn ? "cur " : "") + (i === seat ? "me " : "") + (team ? "t" + p.team : "")}>
+          <li key={i} data-kb-seat={i} className={(i === v.turn ? "cur " : "") + (i === seat ? "me " : "") + (team ? "t" + p.team : "")}>
             {team && <span className="kb-team">{TEAM[p.team]}</span>}
             <span className="kb-name">{p.name}</span>
             <span className="kb-score">🃏{p.score}{team ? ` · 队${p.teamScore}` : ""}</span>
@@ -302,7 +418,15 @@ function Game({ net, snap }: { net: Net; snap: KBRoomSnapshot }) {
               aria-pressed={sel.includes(id)}
               aria-label={`${ANIMALS[val]} ${val}`}
               disabled={!myTurn}
-              onClick={() => toggle(id)}
+              onClick={() => {
+                if (drag.current?.moved) return;
+                toggle(id);
+              }}
+              onPointerDown={(e) => onDown(e, id)}
+              onPointerMove={onMove}
+              onPointerUp={onUp}
+              onPointerCancel={endDrag}
+              onContextMenu={(e) => e.preventDefault()}
             >
               <b>{val}</b>
               <Art v={val} />
@@ -315,7 +439,7 @@ function Game({ net, snap }: { net: Net; snap: KBRoomSnapshot }) {
       <div className={"kb-dock" + (myTurn ? " glow" : "")}>
         {myTurn ? (
           <>
-            <button className={"kb-btn kb-primary" + (shake ? " shake" : "")} data-testid="kb-play" disabled={!sel.length || busy} onClick={submit}>
+            <button className={"kb-btn kb-primary" + (shake ? " shake" : "")} data-testid="kb-play" disabled={!sel.length || busy} onClick={() => submit()}>
               {busy ? "…" : sel.length ? `放 ${sel.length} 只${ANIMALS[selValue]}` : "先选牌"}
             </button>
             {sel.length > 0 && <button className="kb-btn" onClick={() => setSel([])}>取消</button>}
@@ -355,14 +479,18 @@ function Timer({ left, total }: { left: number | null; total: number }) {
 }
 
 /** 水塘：8 个位置排成一圈，1→8 顺时针，老鼠与大象相邻 */
-function Pond({ pond, sel, target, onPick, fx }: { pond: number[]; sel: number; target: number; onPick: (v: number) => void; fx: { key: number; events: KBEvent[] } | null }) {
+function Pond({ pond, sel, target, onPick, fx, hover }: { pond: number[]; sel: number; target: number; onPick: (v: number) => void; fx: { key: number; events: KBEvent[] } | null; hover: number }) {
   const chase = fx?.events.find((e) => e.type === "CHASE");
   const played = fx?.events.find((e) => e.type === "PLAY");
   return (
     <div className="kb-pond" data-testid="kb-pond">
       <div className="kb-water">
-        <span>水塘</span>
-        <small>🐭 赶 🐘</small>
+        <i className="ripple" />
+        <i className="ripple r2" />
+        <span>卡里巴湖</span>
+        <small>
+          <Art v={1} cls="mini" /> 赶 <Art v={8} cls="mini" />
+        </small>
       </div>
       {Array.from({ length: 8 }, (_, k) => {
         const val = k + 1;
@@ -376,26 +504,22 @@ function Pond({ pond, sel, target, onPick, fx }: { pond: number[]; sel: number; 
           target === val ? "target" : "",
           played && played.type === "PLAY" && played.value === val ? "just" : "",
           chase && chase.type === "CHASE" && chase.target === val ? "fled" : "",
+          hover === val ? "drop" : "",
+          n ? "has" : "empty",
         ].join(" ");
         return (
           <button
-            key={fx?.key + "-" + val}
+            key={val}
             className={cls}
-            style={{ left: `${50 + 38 * Math.cos(ang)}%`, top: `${50 + 38 * Math.sin(ang)}%` }}
+            style={{ left: `${50 + 38 * Math.cos(ang)}%`, top: `${50 + 38 * Math.sin(ang)}%`, ["--n" as string]: Math.min(n, 6) }}
             data-testid={"kb-slot-" + val}
+            data-kb-slot={val}
             aria-label={`${ANIMALS[val]}（${val}）${n} 张`}
             onClick={() => onPick(val)}
           >
             <Art v={val} cls="kb-ico" />
             <b>{n}</b>
             <small>{val} {ANIMALS[val]}</small>
-            {chase && chase.type === "CHASE" && chase.target === val && (
-              <span className="kb-flee" aria-hidden>
-                {Array.from({ length: Math.min(chase.cards, 6) }, (_, i) => (
-                  <i key={i} style={{ ["--i" as string]: i }}><Art v={val} /></i>
-                ))}
-              </span>
-            )}
           </button>
         );
       })}
@@ -417,8 +541,13 @@ function Final({ snap, net }: { snap: KBRoomSnapshot; net: Net }) {
   best((p) => p.stats?.mouseElephant ?? 0, "老鼠英雄");
   best((p) => p.stats?.chases ?? 0, "驱赶次数最多");
   const win = v.winners;
+  const mine = win.includes(v.you);
+  useEffect(() => {
+    if (mine) confetti();
+  }, []);
   return (
-    <div className="kb-panel kb-final" data-testid="kb-final">
+    <div className={"kb-panel kb-final" + (mine ? " won" : " lost")} data-testid="kb-final">
+      <p className="kb-result">{mine ? "🎉 你赢了！" : "差一点！下一局再来"}</p>
       <Logo />
       <h2>
         {team

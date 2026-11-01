@@ -89,7 +89,7 @@ async function game(n: number, mode: "solo" | "team", viewport = { width: 390, h
     const group = [...counts.values()].sort((a, b) => b.length - a.length)[0];
     for (const id of group) await cur.getByTestId("kb-card-" + id).click();
     const preview = (await cur.getByTestId("kb-preview").textContent()) ?? "";
-    assert.match(preview, /放下后|将有|没有可赶/, "预判提示缺失");
+    assert.match(preview, /×\d+.*(赶走|还差|没有可赶)/, "预判提示缺失");
     assert.match((await cur.getByTestId("kb-play").textContent())!, /放 \d+ 只/);
     if (tag && !shotsDone && turns >= 6) {
       await shot(cur, `${tag}-myturn-selected`);

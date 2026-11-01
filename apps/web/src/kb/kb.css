@@ -182,3 +182,123 @@
 }
 
 .kb-flee .kb-art { width: 100%; height: 100%; }
+
+/* ===== 精修 2026-11-01：材质、层次、动效 ===== */
+/* 纸卡材质：细纸纹 + 内描边，消除"贴图感" */
+.kb-world .kb-card,
+.kb-world .kb-slot {
+  background:
+    radial-gradient(120% 90% at 30% 15%, #fffdf6 0%, transparent 55%),
+    repeating-linear-gradient(115deg, #0000 0 3px, #8a6a3a08 3px 4px),
+    linear-gradient(165deg, #fff8e8, #efdcb4);
+  box-shadow:
+    inset 0 0 0 2px #fff9,
+    inset 0 0 0 3px #d9c19455,
+    0 1px 0 #fff4 ,
+    0 6px 14px -4px #000a;
+}
+.kb-card { position: relative; overflow: visible; touch-action: none; user-select: none; -webkit-user-select: none; }
+.kb-card b {
+  position: absolute; top: 3px; left: 5px; font-size: 15px; color: #6b4a22;
+}
+.kb-card .kb-art { width: 58px !important; height: 58px !important; margin-top: 6px; }
+.kb-card small { color: #6b4a22; font-weight: 600; }
+.kb-card:not(:disabled):active { transform: scale(0.96); }
+.kb-card.sel {
+  transform: translateY(-12px) rotate(-2deg);
+  box-shadow: inset 0 0 0 2px #fff9, 0 0 0 3px var(--kb-accent), 0 14px 22px -6px #000c;
+}
+.kb-card.sel::after {
+  content: "✓"; position: absolute; top: -8px; right: -8px; width: 22px; height: 22px; border-radius: 50%;
+  display: grid; place-items: center; background: var(--kb-accent); color: #2a1406; font-weight: 900; font-size: 13px;
+  box-shadow: 0 2px 6px #0008;
+}
+.kb-hand .kb-card:disabled { opacity: 0.88; filter: saturate(0.85); }
+
+/* 水塘位置：按张数叠出厚度，空位变成浅色沙坑 */
+.kb-slot {
+  --n: 0;
+  box-shadow:
+    inset 0 0 0 2px #fff9,
+    calc(var(--n) * 1.5px) calc(var(--n) * 1.5px) 0 -1px #e6d0a4,
+    calc(var(--n) * 2.5px) calc(var(--n) * 2.5px) 0 -2px #cdb282,
+    0 calc(6px + var(--n) * 1px) 14px -4px #000b !important;
+  transition: transform 0.15s, box-shadow 0.25s, filter 0.2s;
+}
+.kb-slot.empty { background: radial-gradient(#e9d6ad, #d2b98a) !important; filter: saturate(0.6) brightness(0.92); }
+.kb-slot.empty .kb-ico { opacity: 0.45; }
+.kb-slot b { font-size: 20px; color: #4a3218; }
+.kb-slot small { color: #6b4a22; }
+.kb-slot:active { transform: translate(-50%, -50%) scale(0.95); }
+.kb-slot.hot b::after { content: " 🔥"; font-size: 12px; }
+.kb-slot.drop { transform: translate(-50%, -50%) scale(1.12); outline: 3px dashed var(--kb-accent); outline-offset: 3px; }
+.kb-slot.target { filter: none; }
+.kb-slot.target::before {
+  content: "会被赶走"; position: absolute; top: -12px; left: 50%; translate: -50% 0; white-space: nowrap;
+  font-size: 12px; font-weight: 800; padding: 1px 8px; border-radius: 999px; background: var(--kb-bad); color: #fff;
+}
+.kb-slot.fled { animation: kb-shiver 0.5s 0.5s; }
+@keyframes kb-shiver { 20%, 60% { rotate: -6deg; } 40%, 80% { rotate: 6deg; } }
+
+/* 水面：涟漪 + 高光 */
+.kb-water { overflow: hidden; }
+.kb-water span { font-weight: 800; letter-spacing: 3px; font-size: 18px; text-shadow: 0 2px 4px #0a2f35; position: relative; }
+.kb-water small { display: flex; align-items: center; justify-content: center; gap: 2px; position: relative; }
+.kb-art.mini { display: inline-block; width: 22px; height: 22px; vertical-align: middle; }
+.kb-water .ripple {
+  position: absolute; inset: 30%; border-radius: 50%; border: 2px solid #ffffff55;
+  animation: kb-ripple 4s linear infinite;
+}
+.kb-water .ripple.r2 { animation-delay: 2s; }
+@keyframes kb-ripple { from { transform: scale(0.4); opacity: 0.9; } to { transform: scale(2.4); opacity: 0; } }
+
+/* 预判提示：图标化 */
+.kb-chip { display: inline-flex; align-items: center; gap: 4px; flex-wrap: wrap; justify-content: center; font-weight: 700; }
+.kb-chip .arrow { color: var(--kb-muted); font-weight: 500; margin: 0 4px; }
+.kb-chip.gain b { margin-left: 8px; padding: 1px 10px; border-radius: 999px; background: var(--kb-ok); color: #06301a; }
+.kb-chip .kb-art.mini { width: 30px; height: 30px; }
+
+/* 座位：被收牌时弹一下 */
+.kb-seats li { transition: transform 0.2s; }
+
+/* 横幅 */
+.kb-banner.last { background: #ffc83d22; color: var(--kb-warn); font-weight: 700; }
+
+/* 飞行的牌 / 加分 / 拖拽 / 彩纸（挂在 body 上，所以不在 .kb-world 作用域内也要写全） */
+.kb-fly {
+  position: fixed; left: 0; top: 0; z-index: 60; pointer-events: none; border-radius: 14px;
+  background: linear-gradient(165deg, #fff8e8, #efdcb4); box-shadow: 0 8px 18px #000a; display: grid; place-items: center;
+}
+.kb-fly img { width: 84%; height: 84%; object-fit: contain; }
+.kb-pop {
+  position: fixed; left: 0; top: 0; z-index: 61; pointer-events: none; white-space: nowrap;
+  font: 900 26px/1 system-ui, sans-serif; color: #4cd18a; text-shadow: 0 2px 0 #06301a, 0 0 12px #000;
+}
+.kb-pop.mouse { color: #ffc83d; }
+.kb-pop.big { font-size: 22px; color: #fff; background: #ff5a4e; padding: 6px 12px; border-radius: 999px; text-shadow: none; box-shadow: 0 6px 18px #000a; }
+.kb-ghost {
+  position: fixed !important; z-index: 70; pointer-events: none; translate: -50% -60%; scale: 1.15; rotate: -4deg;
+  width: 64px; height: 90px; border-radius: 10px; border: 2px solid var(--kb-accent);
+  background: linear-gradient(165deg, #fff8e8, #efdcb4); display: grid; place-items: center; box-shadow: 0 16px 30px #000c;
+  font: 700 15px system-ui, sans-serif; color: #6b4a22;
+}
+.kb-ghost img { width: 52px; height: 52px; object-fit: contain; }
+.kb-ghost b { position: absolute; top: 3px; left: 5px; }
+.kb-confetti { position: fixed; top: 0; z-index: 80; width: 9px; height: 14px; border-radius: 2px; pointer-events: none; }
+
+/* 规则弹窗 */
+.kb-modal { position: fixed; inset: 0; z-index: 50; background: #000a; display: grid; place-items: center; padding: 16px; }
+.kb-rules-card { padding: 16px; background: var(--kb-bg2); border-radius: 18px; box-shadow: 0 20px 50px #000c; max-height: 90dvh; overflow: auto; }
+.kb-rules-card h3 { margin: 0; text-align: center; color: var(--kb-sand); }
+
+/* 结算 */
+.kb-result { text-align: center; font-size: 22px; font-weight: 800; margin: 0; }
+.kb-final.won .kb-result { color: var(--kb-warn); }
+.kb-final.lost { animation: kb-sink 0.6s ease-out; }
+@keyframes kb-sink { from { transform: translateY(-12px); opacity: 0; } }
+.kb-podium li:first-child.win { transform: scale(1.03); }
+
+@media (prefers-reduced-motion: reduce) {
+  .kb-water .ripple { display: none; }
+}
+.kb-card.lifting { opacity: 0.3; transform: scale(0.92); }
