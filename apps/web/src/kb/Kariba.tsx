@@ -458,7 +458,7 @@ function describe(ev: KBEvent[], players: { name: string }[]) {
   const play = ev.find((e) => e.type === "PLAY");
   const chase = ev.find((e) => e.type === "CHASE");
   const to = ev.find((e) => e.type === "TIMEOUT");
-  if (!play || play.type !== "PLAY") return " ";
+  if (!play || play.type !== "PLAY") return null;
   const who = players[play.seat].name;
   let s = `${to ? "⏱ 超时，" : ""}${who} 放了 ${play.count} 只${ANIMALS[play.value]}`;
   if (chase && chase.type === "CHASE")
@@ -493,13 +493,14 @@ function Pond({ pond, sel, target, onPick, fx, hover }: { pond: number[]; sel: n
   const played = fx?.events.find((e) => e.type === "PLAY");
   return (
     <div className="kb-pond" data-testid="kb-pond">
-      <div className="kb-water">
+      <div className="kb-water" aria-hidden>
         <i className="ripple" />
         <i className="ripple r2" />
-        <span>卡里巴湖</span>
-        <small>
-          <Art v={1} cls="mini" /> 赶 <Art v={8} cls="mini" />
-        </small>
+      </div>
+      <div className="kb-rule-hint" aria-hidden>
+        <Art v={1} cls="mini" />
+        <span>赶</span>
+        <Art v={8} cls="mini" />
       </div>
       {Array.from({ length: 8 }, (_, k) => {
         const val = k + 1;
@@ -526,9 +527,10 @@ function Pond({ pond, sel, target, onPick, fx, hover }: { pond: number[]; sel: n
             aria-label={`${ANIMALS[val]}（${val}）${n} 张`}
             onClick={() => onPick(val)}
           >
+            <span className="kb-pad" aria-hidden />
             <Art v={val} cls="kb-ico" />
-            <b>{n}</b>
-            <small>{val} {ANIMALS[val]}</small>
+            <b className="kb-cnt">{n}</b>
+            <small className="kb-tag"><i>{val}</i>{ANIMALS[val]}</small>
           </button>
         );
       })}

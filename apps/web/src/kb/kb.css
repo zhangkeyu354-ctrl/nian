@@ -426,3 +426,108 @@
   .kb-water .kb-art.mini { width: 32px; height: 32px; }
   .kb-banner { font-size: 17px; }
 }
+
+/* ===== 棋盘重设计 v3（2026-11-01）：水塘插画为棋盘，动物为岸边棋子 ===== */
+.kb-world {
+  --kb-bg: #0f2a26;      /* 深湖绿 */
+  --kb-lake: #2a8a95;    /* 湖水蓝 */
+  --kb-sand: #f3e3c3;    /* 暖沙米 */
+  --kb-accent: #ff8a3d;  /* 日落橙 */
+  --kb-ivory: #fffaf0;   /* 象牙白 */
+  --kb-brown: #4a3218;   /* 深棕 */
+  background:
+    radial-gradient(90% 55% at 50% 38%, #1f4a3f 0%, transparent 70%),
+    linear-gradient(180deg, #12302b, #0b1f1c) fixed;
+}
+.kb-top { background: linear-gradient(#0b1f1cf2, #0b1f1c00); }
+.kb-banner { color: #cfe0d6; }
+
+/* 棋盘：方形水塘插画，圆角+内阴影，像一块实体游戏板 */
+.kb-world .kb-pond {
+  border-radius: 28px;
+  background: url(/assets/kariba/pond.webp) center / cover no-repeat;
+  box-shadow: inset 0 0 0 3px #ffffff1f, inset 0 0 40px #0008, 0 14px 40px -10px #000c;
+}
+.kb-world .kb-water { inset: 30%; background: none; box-shadow: none; }
+.kb-water .ripple { border-color: #ffffff40; }
+.kb-rule-hint {
+  position: absolute; left: 50%; top: 50%; translate: -50% -50%; display: flex; align-items: center; gap: 2px; z-index: 1;
+  padding: 3px 10px; border-radius: 999px; background: #0b1f1ccc; color: var(--kb-ivory); font-size: 12px; font-weight: 700;
+  box-shadow: 0 4px 12px #0008; pointer-events: none;
+}
+.kb-rule-hint .kb-art.mini { width: 24px; height: 24px; }
+
+/* 位置 = 岸边棋子：没有按钮外框，动物站在一块沙色圆台上 */
+.kb-world .kb-slot {
+  width: 27%; aspect-ratio: 1; padding: 0; border: 0; border-radius: 50%;
+  background: none !important; box-shadow: none !important; filter: none !important;
+  display: block; overflow: visible;
+}
+.kb-pad {
+  position: absolute; inset: 22% 6% 0 6%; border-radius: 50%;
+  background: radial-gradient(circle at 50% 35%, #f8ecd2, #e2c99a 62%, #b9975f);
+  box-shadow: 0 0 0 3px #fffaf055, 0 calc(4px + var(--n) * 1.4px) 0 #8e6c3c, 0 calc(10px + var(--n) * 1.4px) 16px -4px #000b;
+  transition: box-shadow 0.25s, transform 0.2s;
+}
+.kb-world .kb-slot .kb-ico {
+  position: absolute; left: 50%; bottom: 16%; translate: -50% 0; width: 92% !important; height: 92% !important;
+  filter: drop-shadow(0 4px 3px #0007); transition: transform 0.2s;
+}
+.kb-slot.empty .kb-pad { background: radial-gradient(circle at 50% 35%, #f3e3c399, #d7bd8c88); box-shadow: 0 0 0 2px #fffaf033, 0 6px 14px -6px #0009; }
+.kb-world .kb-slot.empty .kb-ico { opacity: 0.38; filter: grayscale(0.7) brightness(1.15) drop-shadow(0 2px 2px #0005); }
+.kb-cnt {
+  position: absolute; right: 0; top: 14%; min-width: 30px; height: 30px; padding: 0 6px; border-radius: 15px;
+  display: grid; place-items: center; font-size: 17px !important; font-weight: 900; color: var(--kb-ivory) !important;
+  background: var(--kb-brown); box-shadow: 0 0 0 2px var(--kb-ivory), 0 3px 8px #000a; line-height: 1;
+}
+.kb-slot.empty .kb-cnt { background: #4a321899; color: #fffaf0aa !important; box-shadow: 0 0 0 2px #fffaf055; }
+.kb-tag {
+  position: absolute; left: 50%; bottom: -2%; translate: -50% 0; white-space: nowrap; display: flex; gap: 4px; align-items: center;
+  padding: 1px 8px 1px 2px; border-radius: 999px; background: #fffaf0e6; color: var(--kb-brown) !important; font-size: 12px !important; font-weight: 700;
+  box-shadow: 0 2px 6px #0007;
+}
+.kb-tag i { font-style: normal; display: grid; place-items: center; width: 18px; height: 18px; border-radius: 50%; background: var(--kb-brown); color: var(--kb-ivory); font-size: 12px; }
+.kb-slot.hot b::after { content: none; }
+.kb-slot.hot .kb-pad { box-shadow: 0 0 0 3px #ffc83d, 0 calc(4px + var(--n) * 1.4px) 0 #8e6c3c, 0 0 22px #ffc83d88; }
+.kb-slot.hot .kb-cnt { background: #c4561a; }
+.kb-world .kb-slot.sel .kb-pad, .kb-world .kb-slot.drop .kb-pad { box-shadow: 0 0 0 4px var(--kb-accent), 0 calc(4px + var(--n) * 1.4px) 0 #8e6c3c, 0 0 26px #ff8a3dcc; }
+.kb-world .kb-slot.sel .kb-ico, .kb-world .kb-slot.drop .kb-ico { transform: translateY(-6px) scale(1.06); }
+.kb-world .kb-slot.drop { outline: 0; transform: translate(-50%, -50%) scale(1.08); }
+.kb-world .kb-slot.target { animation: none; }
+.kb-world .kb-slot.target .kb-pad { box-shadow: 0 0 0 4px var(--kb-bad), 0 0 26px #ff5a4ecc; animation: kb-pulse2 0.8s infinite alternate; }
+.kb-world .kb-slot.target .kb-ico { animation: kb-shiver 0.6s infinite; }
+@keyframes kb-pulse2 { to { box-shadow: 0 0 0 7px #ff5a4e88, 0 0 34px #ff5a4e; } }
+.kb-world .kb-slot.target::before { top: 4%; z-index: 2; }
+.kb-world .kb-slot:active { transform: translate(-50%, -50%) scale(0.95); }
+
+/* 手牌：实体卡，动物为主体，大数字角标 */
+.kb-world .kb-card {
+  border: 0; border-radius: 12px; padding: 0; overflow: hidden;
+  background: linear-gradient(180deg, #fffaf0 0%, var(--kb-sand) 100%);
+  box-shadow: inset 0 0 0 2px #fffaf0, inset 0 0 0 4px #d8bf8e, 0 8px 16px -6px #000c;
+}
+.kb-world .kb-card::before {
+  content: ""; position: absolute; inset: 4px 4px 22px; border-radius: 8px;
+  background: radial-gradient(circle at 50% 70%, #cfe7c4 0%, #9ccfb6 55%, #5aa6a6 100%);
+}
+.kb-world .kb-card .kb-art { position: absolute; left: 50%; bottom: 20px; translate: -50% 0; width: 96% !important; height: 72% !important; margin: 0; }
+.kb-world .kb-card b {
+  z-index: 1; top: 6px; left: 6px; min-width: 22px; height: 22px; display: grid; place-items: center; border-radius: 50%;
+  background: var(--kb-brown); color: var(--kb-ivory); font-size: 14px; box-shadow: 0 0 0 2px var(--kb-ivory);
+}
+.kb-world .kb-card small { position: absolute; left: 0; right: 0; bottom: 3px; text-align: center; font-size: 12px; font-weight: 800; color: var(--kb-brown); }
+.kb-world .kb-card.sel { transform: translateY(-14px); box-shadow: inset 0 0 0 2px #fffaf0, inset 0 0 0 4px var(--kb-accent), 0 0 18px #ff8a3daa, 0 16px 22px -8px #000c; }
+.kb-world .kb-card.dim { opacity: 0.45; filter: saturate(0.5); }
+.kb-world .kb-hand .kb-card:disabled { opacity: 0.95; filter: none; }
+
+/* 座位与预判：暖色、贴近手牌 */
+.kb-world .kb-preview { background: #0b1f1caa; border: 1px solid #ffffff14; }
+.kb-world .kb-seats li { background: #ffffff0f; }
+.kb-world .kb-seats li.cur { background: #ff8a3d22; }
+
+/* 等待时：底部只留一条细提示，不占大按钮 */
+.kb-world .kb-dock .kb-wait {
+  min-height: 40px; font-size: 15px; font-weight: 600; border-radius: 999px;
+  background: #ffffff0d; border: 1px dashed #ffffff26; box-shadow: none; color: #cfe0d6; opacity: 1;
+}
+.kb-world .kb-dock .kb-wait span::before { content: "⏳ "; }
