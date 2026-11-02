@@ -418,6 +418,20 @@ export function Rummikub() {
         onPointerDown={(e) => startDrag(e, id)}
         onClick={(e) => {
           if (e.detail > 0 && Date.now() < suppressClick.current) return;
+          const sel = selectRef.current;
+          const home = onTable
+            ? board.find((m) => m.tiles.includes(id))
+            : undefined;
+          if (
+            home &&
+            sel.length &&
+            !sel.some((x) => home.tiles.includes(x)) &&
+            !mergeMode
+          ) {
+            e.stopPropagation();
+            move(sel, home.id);
+            return;
+          }
           buzz("select");
           setSelected((x) => selectionAfterClick(x, id));
         }}
@@ -937,12 +951,13 @@ export function Rummikub() {
                     }
                     onClick={(e) => {
                       if (
-                        !(e.target as HTMLElement).closest(
-                          "button, .rk-meld",
-                        ) &&
-                        selected.length
+                        mine &&
+                        selected.length &&
+                        !net.pending &&
+                        Date.now() >= suppressClick.current &&
+                        !(e.target as HTMLElement).closest("button, .rk-meld")
                       )
-                        setSelected([]);
+                        move(selected, null);
                     }}
                     style={{ zoom, "--rk-zoom": zoom } as React.CSSProperties}
                     data-testid="rk-table"
@@ -976,6 +991,20 @@ export function Rummikub() {
                           }
                           data-rk-drop={m.id}
                           data-testid={"rk-meld-" + m.id}
+                          onClick={(e) => {
+                            if (
+                              !mine ||
+                              !selected.length ||
+                              mergeMode ||
+                              net.pending ||
+                              Date.now() < suppressClick.current ||
+                              (e.target as HTMLElement).closest("button") ||
+                              selected.some((x) => m.tiles.includes(x))
+                            )
+                              return;
+                            e.stopPropagation();
+                            move(selected, m.id);
+                          }}
                         >
                           <span className="rk-meld-number">
                             {String(i + 1).padStart(2, "0")}
@@ -1003,17 +1032,6 @@ export function Rummikub() {
                               </div>
                             ))}
                           </div>
-                          {mine && selected.length > 0 && (
-                            <button
-                              className="rk-add"
-                              data-rk-drop={m.id}
-                              aria-label={"放入第 " + (i + 1) + " 组"}
-                              disabled={net.pending}
-                              onClick={() => move(selected, m.id)}
-                            >
-                              +
-                            </button>
-                          )}
                           {!interpretation && (
                             <small className="rk-meld-error">
                               {m.tiles.length < 3
@@ -1078,7 +1096,9 @@ export function Rummikub() {
                     disabled={net.pending}
                     onClick={() => move(selected, null)}
                   >
-                    ＋ 用选中的 {selected.length} 张新建一组
+                    {selected.every((id) => board.some((m) => m.tiles.includes(id)))
+                      ? "⇱ 把选中的 " + selected.length + " 张拿出来单独成组"
+                      : "＋ 用选中的 " + selected.length + " 张新建一组"}
                   </button>
                 )}
                 <p className="rk-table-foot">
@@ -1086,8 +1106,10 @@ export function Rummikub() {
                     ? "拖到组合末尾或新建一组"
                     : selected.length
                       ? "已选 " +
+                        selected.map((id) => tileName(id)).join(" ") +
+                        " · 共 " +
                         selected.length +
-                        " 张 · 点组合右侧「+」或「新建一组」 · 点空白处取消"
+                        " 张 · 点桌上某一组放进去 · 点空白处新建一组"
                       : "点任意牌选中 · 按住牌拖动 · 在桌面任意处滑动"}
                 </p>
               </section>

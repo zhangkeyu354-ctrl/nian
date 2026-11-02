@@ -2317,3 +2317,39 @@
 .rk-world .rk-meld.invalid {
   min-width: 96px;
 }
+/* Selected tiles: tap any group to drop them in. */
+.rk-world .rk-table-content.picking .rk-meld {
+  cursor: pointer;
+}
+.rk-world .rk-table-content.picking .rk-meld:active {
+  transform: scale(0.98);
+  box-shadow: 0 0 0 3px #f3d68a, 0 4px 10px #0003;
+}
+/* Clear feedback for a selected table tile. */
+.rk-world .rk-table-slot .rk-hit.selected {
+  z-index: 4;
+}
+.rk-world .rk-table-slot .rk-hit.selected .rk-tile {
+  transform: translateY(-9px) scale(1.14);
+  outline: 3px solid #ffd76a;
+  outline-offset: 1px;
+  box-shadow: 0 0 0 6px #ffd76a55, 0 10px 14px #0007;
+  animation: rk-picked 0.22s ease-out, rk-picked-pulse 1.2s ease-in-out 0.22s infinite;
+}
+.rk-world .rk-meld:has(.rk-hit.selected) .rk-hit:not(.selected) .rk-tile {
+  opacity: 0.55;
+}
+@keyframes rk-picked {
+  0% { transform: translateY(0) scale(1); }
+  60% { transform: translateY(-12px) scale(1.2); }
+}
+@keyframes rk-picked-pulse {
+  50% { box-shadow: 0 0 0 9px #ffd76a33, 0 10px 14px #0007; }
+}
+.rk-world .rk-table-foot {
+  font-weight: 600;
+}
+.rk-world .rk-table-content.picking ~ * .rk-table-foot,
+.rk-world .rk-table-section:has(.rk-hit.selected) .rk-table-foot {
+  color: #ffe08a;
+}

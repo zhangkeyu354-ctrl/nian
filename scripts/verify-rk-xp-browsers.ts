@@ -209,7 +209,7 @@ async function place(p: Page, ids: string[], meld?: string) {
   if (meld)
     await p
       .getByTestId("rk-meld-" + meld)
-      .locator(".rk-add")
+      .locator(".rk-meld-number")
       .click();
   else await p.getByTestId("rk-quick-new").click();
   await p.waitForFunction(

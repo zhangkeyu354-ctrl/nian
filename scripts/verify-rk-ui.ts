@@ -694,7 +694,7 @@ try {
           if (target) {
             await clickTile(pg, id);
             await pg
-              .locator('[data-testid="rk-meld-' + target.id + '"] .rk-add')
+              .locator('[data-testid="rk-meld-' + target.id + '"] .rk-meld-number')
               .click();
             await pg.waitForTimeout(60);
             moved = true;
