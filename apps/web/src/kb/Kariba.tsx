@@ -7,6 +7,17 @@ import { confetti, dropLifted, liftFromHand, playFlights } from "./fx.ts";
 import "./kb.css";
 
 /** 原创动物插画（ChatGPT 生成，用户提供，见 docs/kariba/ASSETS.md） */
+/** 卡面：与飞行卡共用同一套结构 */
+export const Face = ({ v }: { v: number }) => (
+  <span className="kb-face">
+    <span className="kb-window">
+      <img className="kb-cimg" src={`/assets/kariba/${v}.webp`} alt="" draggable={false} />
+    </span>
+    <i className="kb-pip tl">{v}</i>
+    <i className="kb-pip br">{v}</i>
+    <span className="kb-cname">{ANIMALS[v]}</span>
+  </span>
+);
 export const Art = ({ v, cls = "" }: { v: number; cls?: string }) => (
   <img className={"kb-art " + cls} src={`/assets/kariba/${v}.webp`} alt="" draggable={false} />
 );
@@ -267,7 +278,7 @@ function Game({ net, snap }: { net: Net; snap: KBRoomSnapshot }) {
       const src = document.querySelector(`[data-testid="kb-card-${id}"]`) as HTMLElement | null;
       const ghost = (g ?? src?.cloneNode(true)) as HTMLElement | undefined;
       if (!ghost) return;
-      ghost.classList.add("kb-ghost");
+      ghost.classList.add("kb-ghost", "kb-cardlike");
       ghost.removeAttribute("data-testid");
       ghost.style.left = d.x + "px";
       ghost.style.top = d.y + "px";
@@ -430,9 +441,7 @@ function Game({ net, snap }: { net: Net; snap: KBRoomSnapshot }) {
               onPointerCancel={endDrag}
               onContextMenu={(e) => e.preventDefault()}
             >
-              <b>{val}</b>
-              <Art v={val} />
-              <small>{ANIMALS[val]}</small>
+              <Face v={val} />
             </button>
           );
         })}
@@ -530,6 +539,11 @@ function Pond({ pond, sel, target, onPick, fx, hover }: { pond: number[]; sel: n
             onClick={() => onPick(val)}
           >
             <span className="kb-pad" aria-hidden />
+            <span className="kb-stack" aria-hidden>
+              {Array.from({ length: Math.min(n, 6) }, (_, i) => (
+                <i key={i} style={{ ["--i" as string]: i, ["--k" as string]: Math.min(n, 6) }} />
+              ))}
+            </span>
             <Art v={val} cls="kb-ico" />
             <b className="kb-cnt">{n}</b>
             <small className="kb-tag"><i>{val}</i>{ANIMALS[val]}</small>

@@ -36,10 +36,10 @@ function arcFrames(from: Pt, to: Pt, lift: number, size: { w: number; h: number 
 
 function cardSprite(v: number, w: number, h: number) {
   const el = document.createElement("div");
-  el.className = "kb-flycard";
+  el.className = "kb-flycard kb-cardlike v" + v;
   el.style.width = w + "px";
   el.style.height = h + "px";
-  el.innerHTML = `<b>${v}</b><img src="/assets/kariba/${v}.webp" alt="" draggable="false">`;
+  el.innerHTML = `<span class="kb-face"><span class="kb-window"><img class="kb-cimg" src="/assets/kariba/${v}.webp" alt="" draggable="false"></span><i class="kb-pip tl">${v}</i><i class="kb-pip br">${v}</i></span>`;
   document.body.appendChild(el);
   return el;
 }
