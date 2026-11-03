@@ -175,7 +175,7 @@ describe("special roles and roundtable timing", () => {
     expect(s.phase).toBe("INVESTIGATION");
   });
   it("only current living speaker can finish; 5min timeout advances and voting waits all speakers", () => {
-    let s = setup(["killer"]);
+    let s = setup(["killer", "civilian"]);
     s = truth(kill(s, ["p1"]));
     s = act(s, "p0", "FAKE", { cards: s.pool.slice(1, 3) });
     expect(s.speaker).toBe("p0");
@@ -191,7 +191,7 @@ describe("special roles and roundtable timing", () => {
     expect(s.phase).toBe("FIRST_VOTE");
   });
   it("public snapshots never reveal murderer identities or true-card provenance during the night", () => {
-    let s = setup(["killer"]);
+    let s = setup(["killer", "civilian"]);
     s = kill(s, ["p1"]);
     expect(viewDM(s, "p2").players[1].alive).toBe(true);
     expect(viewDM(s, "p2").killers).toEqual([]);
@@ -254,5 +254,15 @@ describe("special roles and roundtable timing", () => {
     });
     expect(s.phase).toBe("INVESTIGATION");
     expect(viewDM(s, "p1").forensic).toBe(true);
+  });
+  it("killers cannot target themselves or fellow killers, but can target mastermind", () => {
+    let s = setup(["killer", "serial-killer", "mastermind", "civilian", "civilian"]);
+    const legal = viewDM(s, "p0").legalTargets;
+    expect(legal).not.toContain("p0");
+    expect(legal).not.toContain("p1");
+    expect(legal).toContain("p2");
+    expect(() => kill(s, ["p1", "p3"])).toThrow();
+    s = kill(s, ["p2", "p3"]);
+    expect(s.players[2].alive).toBe(false);
   });
 });

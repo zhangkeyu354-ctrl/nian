@@ -466,7 +466,7 @@ export function reduceDM(
           targets.length ===
             Math.min(
               1 + killers(s).filter((p) => p.roleId === "serial-killer").length,
-              living(s).length - 1,
+              living(s).filter((p) => !isKiller(p) && !Object.values(s.protected).includes(p.id)).length,
             ) &&
           new Set(targets).size === targets.length,
         "击杀人数不符",
@@ -475,9 +475,10 @@ export function reduceDM(
         targets.every(
           (id) =>
             s.players.some((p) => p.id === id && p.alive) &&
-            !Object.values(s.protected).includes(id),
+            !Object.values(s.protected).includes(id) &&
+            !isKiller(s.players.find((p) => p.id === id)!),
         ),
-        "目标无效或受到保护",
+        "目标无效、受到保护或是杀手",
       );
       if (
         !consensus(
@@ -785,7 +786,7 @@ export function viewDM(s: DMState, id: string) {
       s.phase === "KILLER_SELECTION"
         ? Math.min(
             1 + killers(s).filter((p) => p.roleId === "serial-killer").length,
-            living(s).length - 1,
+            living(s).filter((p) => !isKiller(p) && !Object.values(s.protected).includes(p.id)).length,
           )
         : s.phase === "VICTIM_EVIDENCE"
           ? (currentGroup(s)?.count ?? 1)
@@ -822,7 +823,7 @@ export function viewDM(s: DMState, id: string) {
                 (p.id !== id &&
                   (me.roleId !== "wonder-dog" || p.roleId !== "wonder-dog"))) &&
               (s.phase !== "KILLER_SELECTION" ||
-                !Object.values(s.protected).includes(p.id)),
+                (!Object.values(s.protected).includes(p.id) && !isKiller(p))),
           )
           .map((p) => p.id)
       : [],
