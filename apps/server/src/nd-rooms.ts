@@ -42,6 +42,8 @@ export interface NDFile {
   players: NDSeat[];
   /** 房主的玩家 id；换座后房主不一定坐 1 号位。旧存档没有此字段时视为 1 号位。 */
   hostId?: string;
+  /** 这个房间已经出过的题；全部出完一遍后重新开始记。旧存档没有此字段时视为空。 */
+  usedTopics?: string[];
   state: NDState | null;
   seq: Record<string, number>;
   receipts: Record<string, Record<string, string>>;
@@ -437,8 +439,19 @@ export class NDRoom {
                 expert: this.file.settings.expert,
                 scale: this.file.settings.scale,
                 firstCaptain: this.file.settings.firstCaptain,
+                avoid: this.file.usedTopics ?? [],
               },
             );
+            {
+              const used = new Set(this.file.usedTopics ?? []);
+              const ids = this.file.state.topicCards.flatMap((c) =>
+                c.questions.map((q) => q.id),
+              );
+              // 没出过的题不够一局时，说明题库已经轮完一遍，从这局开始重新记。
+              const fresh = ids.filter((id) => !used.has(id));
+              this.file.usedTopics =
+                fresh.length < ids.length ? ids : [...used, ...ids];
+            }
             break;
           }
           case "LEAVE": {

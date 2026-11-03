@@ -86,6 +86,8 @@ export interface NDCreateOptions {
   expert?: boolean;
   scale?: "open" | "normal";
   bank?: readonly NDQuestion[];
+  /** 同一房间之前几局已经出过的题 id：优先抽没出过的，不够 10 道才用旧题补。 */
+  avoid?: readonly string[];
 }
 type Envelope = { seat: number; seq: number };
 export type NDCommand = Envelope &
@@ -268,10 +270,15 @@ export function createND(
     "首位队长座位不正确",
   );
   const random = { random: options.seed >>> 0 || 0x6d2b79f5 };
-  const selected = shuffle(
+  const avoid = new Set(options.avoid ?? []);
+  const shuffled = shuffle(
     random,
     validateBank(options.bank ?? approved.questions, scale),
-  ).slice(0, 10);
+  );
+  const selected = [
+    ...shuffled.filter((q) => !avoid.has(q.id)),
+    ...shuffled.filter((q) => avoid.has(q.id)),
+  ].slice(0, 10);
   const total = Math.min(players.length, 8);
   const s: NDState = {
     phase: "CHOOSE_TOPIC",
