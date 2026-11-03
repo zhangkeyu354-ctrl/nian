@@ -25,7 +25,8 @@ for (const n of [3, 6, 10])
     expect(viewFor(s, "p0").explainer).toBeNull();
     s = act(s, s.guesser, { type: "GUESS", target: s.truth, round: 1 });
     s = act(s, s.host, { type: "NEXT", round: 1 });
-    expect(viewFor(s, "p0").explainer).toBe("p0");
+    // 第二轮想想是 p1，解释从他左手边下一位 p2 开始（原版：按座位从想想下家轮流）
+    expect(viewFor(s, "p0").explainer).toBe("p2");
   });
 it("质疑禁言不淘汰，解释队列跳过禁言者", () => {
   let s = createGame(

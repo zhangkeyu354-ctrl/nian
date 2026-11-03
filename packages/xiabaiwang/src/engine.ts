@@ -44,12 +44,26 @@ export interface State {
   scores: Record<string, number>;
   history: Result[];
   cycles?: Cycles;
+  /** 第一轮想想的座位下标（开局随机）；旧存档没有此字段时为 0。 */
+  firstGuesser?: number;
+  /** true：解释顺序从想想左手边下一位开始。旧存档保持原顺序。 */
+  orderFromGuesser?: boolean;
+}
+/** 本轮按座位顺序解释的玩家（跳过想想）。 */
+export function speakOrder(s: Pick<State, "players" | "guesser" | "orderFromGuesser">) {
+  const others = s.players.filter((p) => p.id !== s.guesser);
+  if (!s.orderFromGuesser) return others;
+  const g = s.players.findIndex((p) => p.id === s.guesser);
+  const n = s.players.length;
+  return Array.from({ length: n - 1 }, (_, i) => s.players[(g + 1 + i) % n]);
 }
 export function createGame(
   players: Player[],
   seed: number,
   topics: Topic[] = TOPICS,
   cycles: Cycles = XB_RULES.defaultCycles,
+  host: string = players[0]?.id,
+  firstGuesser = 0,
 ): State {
   if (!(XB_RULES.cycleOptions as readonly number[]).includes(cycles))
     throw Error("圈数无效");
@@ -63,7 +77,7 @@ export function createGame(
     throw Error("可用题目不足，请增加主题或选择全部随机");
   const s: State = {
     players: structuredClone(players),
-    host: players[0].id,
+    host: players.some((p) => p.id === host) ? host : players[0].id,
     phase: "discussion",
     round: 0,
     guesser: "",
@@ -78,11 +92,16 @@ export function createGame(
     ),
     history: [],
     cycles,
+    orderFromGuesser: true,
   };
   for (let i = s.deck.length - 1; i > 0; i--) {
     const j = random(s, i + 1);
     [s.deck[i], s.deck[j]] = [s.deck[j], s.deck[i]];
   }
+  s.firstGuesser =
+    Number.isInteger(firstGuesser) && firstGuesser >= 0
+      ? firstGuesser % s.players.length
+      : 0;
   next(s);
   return s;
 }
@@ -92,13 +111,13 @@ function random(s: State, n: number) {
 }
 function next(s: State) {
   s.round++;
-  s.guesser = s.players[(s.round - 1) % s.players.length].id;
+  s.guesser = s.players[((s.firstGuesser ?? 0) + s.round - 1) % s.players.length].id;
   const others = s.players.filter((p) => p.id !== s.guesser);
   s.truth = others[random(s, others.length)].id;
   s.topic = s.deck[s.round - 1];
   s.muted = null;
   s.explanationIndex = 0;
-  s.speaker = s.players.find((p) => p.id !== s.guesser)!.id;
+  s.speaker = speakOrder(s)[0].id;
   s.phase = "discussion";
 }
 export function act(state: State, actor: string, c: Command): State {
@@ -129,11 +148,11 @@ export function act(state: State, actor: string, c: Command): State {
     s.deck.splice(s.round - 1, 1);
     s.topic = s.deck[s.round - 1];
     s.explanationIndex = 0;
-    s.speaker = s.players.find((p) => p.id !== s.guesser)!.id;
+    s.speaker = speakOrder(s)[0].id;
     return s;
   }
   if (c.type === "EXPLAIN_NEXT") {
-    const order = s.players.filter((p) => p.id !== s.guesser);
+    const order = speakOrder(s);
     const index = s.explanationIndex ?? 0;
     if (actor !== s.guesser && actor !== order[index]?.id)
       throw Error("请等待当前玩家解释，或由想想推进");
@@ -165,7 +184,7 @@ export function act(state: State, actor: string, c: Command): State {
     if ((s.muted ? 1 : 0) >= XB_RULES.challengesPerRound)
       throw Error("本轮质疑已使用");
     s.muted = c.target;
-    const order = s.players.filter((p) => p.id !== s.guesser);
+    const order = speakOrder(s);
     if (order[s.explanationIndex ?? 0]?.id === c.target) {
       s.explanationIndex = (s.explanationIndex ?? 0) + 1;
       s.speaker = order[s.explanationIndex]?.id ?? null;
@@ -241,12 +260,10 @@ export function viewFor(s: State, me: string | null) {
     })),
     muted: s.muted,
     speaker: s.speaker,
-    explanationOrder: s.players
-      .filter((p) => p.id !== s.guesser)
-      .map((p) => p.id),
+    explanationOrder: speakOrder(s).map((p) => p.id),
     explainer: reveal
       ? null
-      : (s.players.filter((p) => p.id !== s.guesser)[s.explanationIndex ?? 0]
+      : (speakOrder(s)[s.explanationIndex ?? 0]
           ?.id ?? null),
     history: structuredClone(s.history),
   };

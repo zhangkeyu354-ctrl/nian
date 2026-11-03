@@ -34,6 +34,7 @@ it("娱乐请求不会限制紧接着的合法规则操作", async () => {
     const { code } = await ask(socket, E.create, {});
     const a = await ask(socket, E.join, { code, name: "甲" });
     const room = store.rooms.get(code)!;
+    room.pickFirstGuesser = () => 0;
     room.join("乙");
     room.join("丙");
     expect(
@@ -106,6 +107,7 @@ it("真实Socket.IO：3～10人完整对局、并发互动、秘密隔离、刷�
         expect(joined.ok).toBe(true);
         c.token = joined.token;
       }
+      store.rooms.get(created.code)!.pickFirstGuesser = () => 0;
       expect(
         (await ask(first, E.command, { command: { type: "START" } })).ok,
       ).toBe(true);

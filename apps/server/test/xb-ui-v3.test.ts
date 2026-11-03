@@ -1,7 +1,9 @@
 import { expect, it, vi } from "vitest";
 import { XBRoom } from "../src/xb-rooms.ts";
+/** 旧用例默认 1 号位先当想想；随机先手由 xb-seats.test.ts 覆盖。 */
+const pinFirst = (r: XBRoom) => ((r.pickFirstGuesser = () => 0), r);
 const setup = (seconds: 0 | 30 | 60 = 0) => {
-  const room = new XBRoom("UIV333");
+  const room = pinFirst(new XBRoom("UIV333"));
   const tokens = ["甲", "乙", "丙"].map((n) => room.join(n));
   room.command(tokens[0], { type: "SET_SPEECH", seconds });
   room.command(tokens[0], { type: "START" });
@@ -101,7 +103,7 @@ it("皇冠每人每轮一次且只在揭晓，计票及重连不改引擎任何�
   ).toBe(target);
 });
 it("同步9秒窗口和揭晓时刻存档，房主可设30/60/不限且普通人不能改", () => {
-  const room = new XBRoom("UIV334"),
+  const room = pinFirst(new XBRoom("UIV334")),
     a = room.join("甲"),
     b = room.join("乙");
   room.join("丙");

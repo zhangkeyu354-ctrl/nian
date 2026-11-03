@@ -961,6 +961,10 @@ export function Xiabaiwang() {
             >
               ↗ 一键复制邀请链接
             </button>
+            <p className="xb-seat-hint" data-testid="xb-seat-hint">
+              🪑 想换座位？点下面别人的头像，就和他互换。发言按座位顺序轮流，第一个
+              {ROLES.guesser}开局时随机抽。
+            </p>
             <label className="xb-round-setting">
               本局轮数
               <select
@@ -1512,17 +1516,25 @@ export function Xiabaiwang() {
                 id={"xb-avatar-" + p.id}
                 key={p.id}
                 data-testid={"xb-seat-" + i}
-                aria-label={`${!mode && isGuesser ? "点名" : "选择"} ${p.name}${mode === "POOP" && p.id === me ? "，不能扔自己" : ""}`}
+                aria-label={`${!view ? (p.id === me ? "你的座位" : "和他换座位") : !mode && isGuesser ? "点名" : "选择"} ${p.name}${mode === "POOP" && p.id === me ? "，不能扔自己" : ""}`}
                 title={p.name}
                 className={`xb-seat ${selected === p.id ? "is-selected" : ""} ${view?.speaker === p.id ? "is-speaking" : ""} ${hitNow ? "is-hit" : ""} ${p.id === view?.guesser ? "is-guesser" : ""} ${!p.connected ? "is-offline" : ""}`}
                 disabled={
                   disabled ||
-                  (!mode &&
+                  (!view ? p.id === me || !me : false) ||
+                  (!!view &&
+                    !mode &&
                     !(isGuesser && view?.phase === "discussion" && !intro)) ||
-                  (!mode && view?.muted === p.id) ||
-                  (mode === "POOP" ? p.id === me : p.id === view?.guesser)
+                  (!!view && !mode && view?.muted === p.id) ||
+                  (!!view &&
+                    (mode === "POOP" ? p.id === me : p.id === view?.guesser))
                 }
                 onClick={() => {
+                  if (!view) {
+                    void command({ type: "SWAP_SEAT", target: i });
+                    sfx("select");
+                    return;
+                  }
                   if (!mode && isGuesser && view?.phase === "discussion") {
                     void command({
                       type: "CALL",

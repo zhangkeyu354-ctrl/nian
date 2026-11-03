@@ -1,7 +1,9 @@
 import { it, expect } from "vitest";
 import { XBRoom } from "../src/xb-rooms.ts";
+/** 旧用例默认 1 号位先当想想；随机先手由 xb-seats.test.ts 覆盖。 */
+const pinFirst = (r: XBRoom) => ((r.pickFirstGuesser = () => 0), r);
 it("UI v1：拒绝扔自己，娱乐统计独立于规则，只有房主可在终局再来一局", () => {
-  const r = new XBRoom("UIVONE");
+  const r = pinFirst(new XBRoom("UIVONE"));
   const a = r.join("甲"),
     b = r.join("乙");
   r.join("丙");
@@ -25,7 +27,7 @@ it("UI v1：拒绝扔自己，娱乐统计独立于规则，只有房主可在�
   expect(r.file.players).toHaveLength(3);
 });
 it("房间恢复身份分数、娱乐冷却不修改游戏状态、越权与开局后加入被拒绝", () => {
-  const r = new XBRoom("TEST");
+  const r = pinFirst(new XBRoom("TEST"));
   const a = r.join("甲"),
     b = r.join("乙"),
     c = r.join("丙");

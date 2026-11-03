@@ -46,8 +46,12 @@ interface File {
   usedTopics?: string[];
   cycles?: Cycles;
   aids?: XBAids;
+  /** 房主 id；换座后房主不一定坐 1 号位。旧存档没有时视为 1 号位。 */
+  hostId?: string;
 }
 export class XBRoom {
+  /** 开局时抽第一个想想的座位下标；测试可以固定成 () => 0。 */
+  pickFirstGuesser = (n: number) => randomInt(n);
   funHits: Record<string, number> = {};
   file: File;
   connections = new Map<string, number>();
@@ -55,6 +59,9 @@ export class XBRoom {
   pending = new Map<string, XBEffect>();
   constructor(code: string, file?: File) {
     this.file = file ?? { code, players: [], state: null, version: 0 };
+  }
+  hostId() {
+    return this.file.hostId ?? this.file.players[0]?.id ?? null;
   }
   player(token: string) {
     return this.file.players.find((p) => token && p.token === token);
@@ -81,14 +88,25 @@ export class XBRoom {
     if (!p) throw Error("请先加入房间");
     if (c && applyAid(this.file, p.id, c)) {
       // Auxiliary metadata is deliberately separate from engine state.
+    } else if (c?.type === "SWAP_SEAT") {
+      if (this.file.state) throw Error("开局后不能换座位");
+      const seat = this.file.players.findIndex((x) => x.id === p.id);
+      const t = c.target;
+      if (!Number.isInteger(t) || t < 0 || t >= this.file.players.length)
+        throw Error("这个座位没人，不能交换");
+      if (t === seat) throw Error("你已经坐在这里了");
+      this.file.hostId ??= this.file.players[0].id;
+      const a = this.file.players[seat];
+      this.file.players[seat] = this.file.players[t];
+      this.file.players[t] = a;
     } else if (c?.type === "SET_CYCLES") {
-      if (p.id !== this.file.players[0].id) throw Error("仅房主可以设置圈数");
+      if (p.id !== this.hostId()) throw Error("仅房主可以设置圈数");
       if (this.file.state) throw Error("开局后不能更换圈数");
       if (!(XB_RULES.cycleOptions as readonly number[]).includes(c.cycles))
         throw Error("圈数无效");
       this.file.cycles = c.cycles;
     } else if (c?.type === "SET_TOPICS") {
-      if (p.id !== this.file.players[0].id) throw Error("仅房主可以设置主题");
+      if (p.id !== this.hostId()) throw Error("仅房主可以设置主题");
       if (this.file.state) throw Error("开局后不能更换主题");
       if (
         !Array.isArray(c.themes) ||
@@ -97,7 +115,7 @@ export class XBRoom {
         throw Error("主题无效");
       this.file.topicThemes = [...new Set(c.themes)];
     } else if (c?.type === "REMATCH") {
-      if (p.id !== this.file.players[0].id || this.file.state?.phase !== "over")
+      if (p.id !== this.hostId() || this.file.state?.phase !== "over")
         throw Error("只有房主可在本局结束后再来一局");
       this.file.usedTopics = [
         ...new Set([
@@ -112,13 +130,15 @@ export class XBRoom {
       this.file.aids = freshAids(this.file.aids?.speechSeconds);
       this.file.discussionAt = 0;
     } else if (c?.type === "START") {
-      if (p.id !== this.file.players[0].id) throw Error("仅房主可以开局");
+      if (p.id !== this.hostId()) throw Error("仅房主可以开局");
       if (this.file.state) throw Error("已开局");
       this.file.state = createGame(
         this.file.players.map(({ id, name }) => ({ id, name })),
         randomInt(2 ** 31),
         this.availableTopics(),
         this.file.cycles ?? XB_RULES.defaultCycles,
+        this.hostId() ?? undefined,
+        this.pickFirstGuesser(this.file.players.length),
       );
       this.file.usedTopics = [
         ...(this.file.usedTopics ?? []),
@@ -196,7 +216,7 @@ export class XBRoom {
     return {
       code: this.file.code,
       me,
-      host: this.file.players[0]?.id ?? null,
+      host: this.hostId(),
       version: this.file.version,
       players: this.file.players.map(({ id, name }) => ({
         id,

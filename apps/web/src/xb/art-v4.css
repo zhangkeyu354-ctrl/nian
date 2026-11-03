@@ -894,3 +894,15 @@
   opacity: 0.7;
   margin: 0;
 }
+
+/* 大厅换座提示 */
+.xb-world .xb-seat-hint {
+  margin: 8px 0 0;
+  padding: 10px 12px;
+  border-radius: 12px;
+  background: #ffc83d14;
+  border: 1px solid #ffc83d55;
+  color: #f6efe3;
+  font-size: 14px;
+  line-height: 1.5;
+}

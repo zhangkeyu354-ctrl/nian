@@ -21,6 +21,7 @@ interface RoomData {
   players: { id: string }[];
   state: State | null;
   aids?: XBAids;
+  hostId?: string;
 }
 export function freshAids(seconds: 0 | 30 | 60 = 0): XBAids {
   return {
@@ -63,7 +64,7 @@ export function applyAid(f: RoomData, actor: string, c: XBCommand) {
   const a = f.aids ?? { ...freshAids(), gameId: `legacy-${f.code}` },
     s = f.state;
   if (c.type === "SET_SPEECH") {
-    if (actor !== f.players[0]?.id) throw Error("仅房主可以设置发言计时");
+    if (actor !== (f.hostId ?? f.players[0]?.id)) throw Error("仅房主可以设置发言计时");
     if (s) throw Error("开局后不能更换发言计时");
     if (![0, 30, 60].includes(c.seconds)) throw Error("发言计时无效");
     a.speechSeconds = c.seconds;

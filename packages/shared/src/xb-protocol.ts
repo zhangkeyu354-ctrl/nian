@@ -50,7 +50,9 @@ export type XBCommand =
   | { type: "START" }
   | { type: "REMATCH" }
   | { type: "SET_TOPICS"; themes: string[] }
-  | { type: "SET_CYCLES"; cycles: Cycles };
+  | { type: "SET_CYCLES"; cycles: Cycles }
+  /** 大厅换座：和 target 号座位（0 起）上的玩家交换位置 */
+  | { type: "SWAP_SEAT"; target: number };
 export interface XBEffect {
   from: string;
   target: string;
