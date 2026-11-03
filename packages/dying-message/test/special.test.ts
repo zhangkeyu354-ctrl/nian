@@ -237,4 +237,22 @@ describe("special roles and roundtable timing", () => {
     s = act(s, "p1", "CHAT", { text: "选有猫的" });
     expect(viewDM(s, "p3").chat?.messages).toHaveLength(1);
   });
+  it("forensic scientist murdered at night first leaves true evidence, then identifies by day", () => {
+    let s = setup(["killer", "forensic-scientist"]);
+    s.round = 2;
+    s.history = [
+      { round: 1, victims: ["p9"], cards: ["a", "b"], truth: ["a"], revealed: {} },
+    ];
+    s.players[9].alive = false;
+    s = kill(s, ["p1"]);
+    expect(s.phase).toBe("VICTIM_EVIDENCE");
+    expect(viewDM(s, "p1").forensic).toBe(false);
+    expect(viewDM(s, "p1").required).toBe(1);
+    s = truth(s);
+    s = act(s, "p0", "FAKE", {
+      cards: s.pool.filter((x) => !s.truth.includes(x)).slice(0, 2),
+    });
+    expect(s.phase).toBe("INVESTIGATION");
+    expect(viewDM(s, "p1").forensic).toBe(true);
+  });
 });

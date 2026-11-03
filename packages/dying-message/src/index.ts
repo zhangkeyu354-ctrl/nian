@@ -725,6 +725,10 @@ export function viewDM(s: DMState, id: string) {
     isKiller(me) || evidenceDead.includes(id) || !!s.winner;
   const team = chatTeam(s);
   const key = chatKey(s);
+  const forensicNow =
+    active &&
+    s.forensics.includes(id) &&
+    ["INVESTIGATION", "ROUND_END"].includes(s.phase);
   const showTruth =
     (s.phase === "SPECIAL_INFORMATION" && active) ||
     (s.phase === "KILLER_FAKE_EVIDENCE" && active);
@@ -830,9 +834,10 @@ export function viewDM(s: DMState, id: string) {
     voted: Object.keys(s.votes).length,
     myVote: s.votes[id] ?? null,
     voteResults: s.voteResults,
-    forensic: active && s.forensics.includes(id),
+    // 鉴定专家只在白天（发言/本轮结束）鉴定；夜里遇害时先留遗言
+    forensic: forensicNow,
     forensicCards:
-      active && s.forensics.includes(id)
+      forensicNow
         ? (s.history.find((h) => h.round === s.round - 1)?.cards ?? [])
         : [],
   };
