@@ -1,8 +1,8 @@
 {
   "schema": "nd-approved-bank-v1",
-  "authorization": "用户 2026-11-04 审核通过第三批 39 道",
-  "reviewBankVersion": "nd-approved-r3-ee41f8672d0cec34",
-  "sourceSha256": "ee41f8672d0cec34b32ac0039b9478a3928427c4de39dddfcb0623b246f73cc5",
+  "authorization": "用户 2026-11-04 审核通过第四批 34 道",
+  "reviewBankVersion": "nd-approved-r4-9dd7127d7bfa2107",
+  "sourceSha256": "9dd7127d7bfa2107fb8af98ac888b8b403b8bc0316a999efe5e37641990e62b1",
   "questions": [
     {
       "id": "nd-orig-0299",
@@ -989,6 +989,244 @@
       "text": "你在电梯里放了个屁，说一句话甩锅。",
       "low": "很自然",
       "high": "此地无银三百两",
+      "spicy": true
+    },
+    {
+      "id": "nd-orig-0431",
+      "text": "把哪种食物做成冰淇淋口味，你会排队去买？",
+      "low": "白送都不吃",
+      "high": "排两小时也值",
+      "spicy": false
+    },
+    {
+      "id": "nd-orig-0432",
+      "text": "哪道菜要是做成泡面口味，会卖爆？",
+      "low": "没人买",
+      "high": "全网断货",
+      "spicy": false
+    },
+    {
+      "id": "nd-orig-0433",
+      "text": "火锅里下什么，会被同桌的人骂？",
+      "low": "没人管",
+      "high": "被赶出火锅店",
+      "spicy": false
+    },
+    {
+      "id": "nd-orig-0434",
+      "text": "室友偷偷吃了你的什么，你会当场翻脸？",
+      "low": "随便吃",
+      "high": "友谊到此为止",
+      "spicy": false
+    },
+    {
+      "id": "nd-orig-0435",
+      "text": "室友在宿舍养了什么，你会连夜搬走？",
+      "low": "挺可爱",
+      "high": "一秒都待不下去",
+      "spicy": false
+    },
+    {
+      "id": "nd-orig-0436",
+      "text": "哪种零食的最后一口最让人舍不得？",
+      "low": "无所谓",
+      "high": "不舍得吃完",
+      "spicy": false
+    },
+    {
+      "id": "nd-orig-0437",
+      "text": "什么东西明明很便宜，却让你特别开心？",
+      "low": "没感觉",
+      "high": "开心一整天",
+      "spicy": false
+    },
+    {
+      "id": "nd-orig-0438",
+      "text": "哪样东西你用了很多年，一直没舍得换？",
+      "low": "说换就换",
+      "high": "坏了都不换",
+      "spicy": false
+    },
+    {
+      "id": "nd-orig-0439",
+      "text": "什么东西一旦开始吃，就停不下来，但吃完会后悔？",
+      "low": "没负担",
+      "high": "后悔一整晚",
+      "spicy": false
+    },
+    {
+      "id": "nd-orig-0440",
+      "text": "你最想在家里装一台自动出什么的机器？",
+      "low": "用不上",
+      "high": "天天离不开",
+      "spicy": false
+    },
+    {
+      "id": "nd-orig-0441",
+      "text": "哪种早餐最适合边走边吃？",
+      "low": "根本没法吃",
+      "high": "走一路吃一路",
+      "spicy": false
+    },
+    {
+      "id": "nd-orig-0442",
+      "text": "什么水果最麻烦吃？",
+      "low": "张口就吃",
+      "high": "懒得碰",
+      "spicy": false
+    },
+    {
+      "id": "nd-orig-0443",
+      "text": "什么东西你永远找不到第二个，只要一丢就得重新买？",
+      "low": "从没丢过",
+      "high": "每月买一次",
+      "spicy": false
+    },
+    {
+      "id": "nd-orig-0444",
+      "text": "宿舍或家里突然停水，你最怕正在做什么？",
+      "low": "没影响",
+      "high": "崩溃",
+      "spicy": false
+    },
+    {
+      "id": "nd-orig-0445",
+      "text": "室友把什么放在公共区域，你会忍不住发群里说？",
+      "low": "无所谓",
+      "high": "必须说清楚",
+      "spicy": false
+    },
+    {
+      "id": "nd-orig-0446",
+      "text": "什么东西加了辣椒反而变难吃？",
+      "low": "更好吃了",
+      "high": "彻底毁了",
+      "spicy": false
+    },
+    {
+      "id": "nd-orig-0447",
+      "text": "超市打折打到一折，你会扛走一整箱的是什么？",
+      "low": "不需要",
+      "high": "搬空货架",
+      "spicy": false
+    },
+    {
+      "id": "nd-orig-0448",
+      "text": "什么东西你绝对不会借给别人用？",
+      "low": "随便借",
+      "high": "打死不借",
+      "spicy": false
+    },
+    {
+      "id": "nd-orig-0449",
+      "text": "打开外卖，发现多送了什么，你会给五星好评？",
+      "low": "没感觉",
+      "high": "老板我爱你",
+      "spicy": false
+    },
+    {
+      "id": "nd-orig-0450",
+      "text": "什么东西你会偷偷留着，被家人发现会很尴尬？",
+      "low": "大方展示",
+      "high": "赶紧藏好",
+      "spicy": false
+    },
+    {
+      "id": "nd-orig-0451",
+      "text": "一个人在家时，你最常干的“没人知道”的事是什么？",
+      "low": "很正常",
+      "high": "千万别被看见",
+      "spicy": false
+    },
+    {
+      "id": "nd-orig-0452",
+      "text": "哪种东西明明不贵，你却总舍不得买？",
+      "low": "随手就买",
+      "high": "犹豫半年",
+      "spicy": false
+    },
+    {
+      "id": "nd-orig-0453",
+      "text": "家里最容易“自己消失”的东西是什么？",
+      "low": "从不丢",
+      "high": "每天都在找",
+      "spicy": false
+    },
+    {
+      "id": "nd-orig-0454",
+      "text": "你被困在一家店里一整晚，最希望是哪种店？",
+      "low": "度日如年",
+      "high": "不想出来",
+      "spicy": false
+    },
+    {
+      "id": "nd-orig-0455",
+      "text": "你在哪儿突然想上厕所最绝望？",
+      "low": "马上解决",
+      "high": "绝望",
+      "spicy": false
+    },
+    {
+      "id": "nd-orig-0456",
+      "text": "你在哪儿手机突然大声外放最尴尬？",
+      "low": "没人在意",
+      "high": "全场看你",
+      "spicy": false
+    },
+    {
+      "id": "nd-orig-0457",
+      "text": "你在哪儿突然饿到不行最难受？",
+      "low": "马上能吃",
+      "high": "根本没吃的",
+      "spicy": false
+    },
+    {
+      "id": "nd-orig-0458",
+      "text": "你在哪儿笑出声会被骂？",
+      "low": "随便笑",
+      "high": "当场被赶出去",
+      "spicy": false
+    },
+    {
+      "id": "nd-orig-0459",
+      "text": "说一句话让妈妈同意你今晚不回家吃饭。",
+      "low": "没戏",
+      "high": "妈妈秒同意",
+      "spicy": false
+    },
+    {
+      "id": "nd-orig-0460",
+      "text": "外卖迟到一小时，你给骑手发一句话。",
+      "low": "很宽容",
+      "high": "骑手想哭",
+      "spicy": false
+    },
+    {
+      "id": "nd-orig-0461",
+      "text": "说一句话让朋友把最后一块肉让给你。",
+      "low": "他直接吃了",
+      "high": "他双手奉上",
+      "spicy": false
+    },
+    {
+      "id": "nd-orig-0462",
+      "text": "你最不想让爸妈看到的手机相册分类是什么？",
+      "low": "随便看",
+      "high": "手机藏好",
+      "spicy": true
+    },
+    {
+      "id": "nd-orig-0463",
+      "text": "你在哪儿放了个闷屁，最怕被闻出来？",
+      "low": "没人发现",
+      "high": "全场找凶手",
+      "spicy": true
+    },
+    {
+      "id": "nd-orig-0464",
+      "text": "说一句你最怕被爸妈翻到的聊天记录。",
+      "low": "还好",
+      "high": "家庭会议",
       "spicy": true
     }
   ]

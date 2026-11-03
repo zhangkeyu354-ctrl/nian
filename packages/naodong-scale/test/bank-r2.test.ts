@@ -4,12 +4,12 @@ import { readFileSync } from "node:fs";
 import bank from "../data/approved-bank.json" with { type: "json" };
 import cards from "../data/cards.zh.json" with { type: "json" };
 import { createND } from "../src/index.ts";
-it("uses all 141 authorized questions with 27 spicy and matching source hash", () => {
-  expect(bank.questions).toHaveLength(141);
-  expect(cards).toHaveLength(141);
-  expect(bank.questions.filter((q) => q.spicy)).toHaveLength(27);
+it("uses all 175 authorized questions with 30 spicy and matching source hash", () => {
+  expect(bank.questions).toHaveLength(175);
+  expect(cards).toHaveLength(175);
+  expect(bank.questions.filter((q) => q.spicy)).toHaveLength(30);
   expect(JSON.stringify([bank, cards])).not.toMatch(/成年|成人/);
-  expect(new Set(cards.map((c) => c.id)).size).toBe(141);
+  expect(new Set(cards.map((c) => c.id)).size).toBe(175);
   const raw = readFileSync(
     new URL("../data/cards.zh.json", import.meta.url),
     "utf8",
@@ -18,9 +18,9 @@ it("uses all 141 authorized questions with 27 spicy and matching source hash", (
     bank.sourceSha256,
   );
   const seen = new Set<string>();
-  for (let seed = 1; seed <= 400; seed++) {
+  for (let seed = 1; seed <= 600; seed++) {
     const s = createND(["甲", "乙", "丙", "丁"], { seed });
     s.topicCards.forEach((c) => c.questions.forEach((q) => seen.add(q.id)));
   }
-  expect(seen.size).toBe(141);
+  expect(seen.size).toBe(175);
 });
