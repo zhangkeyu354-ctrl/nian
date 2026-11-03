@@ -794,7 +794,8 @@ export function DyingMessage() {
                     )}
                   </div>
                   {Array.from({ length: snap.count }, (_, i) => {
-                    const p = snap.players[i],
+                    const p = snap.players.find((x) => x.seat === i + 1),
+                      canSit = !v && !p && !!snap.mySeat,
                       vp = v?.players.find((x) => x.id === p?.id),
                       target =
                         p &&
@@ -815,7 +816,7 @@ export function DyingMessage() {
                           left: 50 + 40 * Math.cos(angle) + "%",
                           top: 50 + 39 * Math.sin(angle) + "%",
                         }}
-                        disabled={!target || disabled}
+                        disabled={(!target && !canSit) || disabled}
                         aria-pressed={p ? selection.includes(p.id) : false}
                         className={
                           "dm-seat " +
@@ -823,11 +824,16 @@ export function DyingMessage() {
                           (p && v?.speaker && p.id === v.speaker ? "speaking " : "") +
                           (p && p.id === snap.mySeat ? "self " : "") +
                           (target && !disabled ? "pickable " : "") +
+                          (canSit ? "open-seat " : "") +
                           (vp && v?.killers.some((k) => k.id === vp.id) && !v.winner
                             ? "known-killer"
                             : "")
                         }
                         onClick={() => {
+                          if (canSit) {
+                            act({ type: "SIT", seat: i + 1 }, "select");
+                            return;
+                          }
                           if (!p) return;
                           feel("select");
                           toggle(
@@ -855,7 +861,7 @@ export function DyingMessage() {
                             ? vp.alive
                               ? vp.roleId && v?.winner
                                 ? roleName(vp.roleId)
-                                : p.id === snap.mySeat
+                                : p?.id === snap.mySeat
                                   ? "你"
                                   : "存活"
                               : roleName(vp.roleId ?? "") + " · 已死亡"
@@ -865,7 +871,9 @@ export function DyingMessage() {
                                 : p.connected
                                   ? "未准备"
                                   : "离线"
-                              : "等待入座"}
+                              : canSit
+                                ? "点击换到这里"
+                                : "等待入座"}
                         </small>
                       </button>
                     );
@@ -874,8 +882,19 @@ export function DyingMessage() {
                 <aside className="dm-sidebar">
                   {!v ? (
                     <section className="dm-controls">
+                      <p className="dm-seat-tip">
+                        点圆桌上的空座位可以换座。按座位号 1 起轮流发言。
+                      </p>
                       {host && (
                         <>
+                          <button
+                            className="ghost"
+                            data-testid="dm-shuffle-seats"
+                            disabled={disabled || snap.players.length < 2}
+                            onClick={() => act({ type: "SHUFFLE_SEATS" }, "page")}
+                          >
+                            🎲 随机排座
+                          </button>
                           <label>
                             本局人数
                             <select

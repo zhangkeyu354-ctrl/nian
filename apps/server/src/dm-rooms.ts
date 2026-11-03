@@ -31,6 +31,8 @@ interface Seat {
   name: string;
   token: string;
   ready: boolean;
+  /** 圆桌座位号（1 起）。大厅里可自由换到空座位。 */
+  seat?: number;
 }
 interface File {
   game: "dying-message";
@@ -40,6 +42,8 @@ interface File {
   pool: string[];
   players: Seat[];
   state: DMState | null;
+  /** 房主（建房后第一个入座的人）；与座位号无关 */
+  hostId?: string;
   createdAt: number;
   updatedAt: number;
 }
@@ -65,6 +69,22 @@ export class DMRoom {
       directory,
     );
   }
+  /** 旧存档没有座位号时按入座顺序补上 */
+  normalizeSeats() {
+    const used = new Set<number>();
+    for (const p of this.file.players)
+      if (p.seat && p.seat <= this.file.count && !used.has(p.seat)) used.add(p.seat);
+      else p.seat = undefined;
+    for (const p of this.file.players)
+      if (!p.seat) {
+        let n = 1;
+        while (used.has(n)) n++;
+        p.seat = n;
+        used.add(n);
+      }
+    this.file.players.sort((a, b) => a.seat! - b.seat!);
+    this.file.hostId ??= this.file.players[0]?.id;
+  }
   me(token: string | undefined) {
     return token ? this.file.players.find((p) => p.token === token) : undefined;
   }
@@ -82,6 +102,7 @@ export class DMRoom {
       ready: false,
     };
     this.file.players.push(p);
+    this.normalizeSeats();
     this.file.version++;
     this.save();
     return { token: p.token, playerId: p.id };
@@ -94,7 +115,8 @@ export class DMRoom {
     // 对话不依赖版本，避免同伴刚发言就让自己的提交失效
     if (c.type !== "CHAT" && version !== this.file.version)
       throw Error("状态已更新，请重试");
-    const host = this.file.players[0]?.id === p.id;
+    this.normalizeSeats();
+    const host = this.file.hostId === p.id;
     if (["SET_COUNT", "SET_POOL", "START", "RESTART"].includes(c.type) && !host)
       throw Error("只有房主可以操作");
     if (c.type === "RESTART") {
@@ -112,6 +134,7 @@ export class DMRoom {
           this.file.count = defaultPool(n).length;
           this.file.pool = defaultPool(n);
           this.file.players.forEach((p) => (p.ready = false));
+          this.normalizeSeats(); // 座位号超出新人数的人挪到空位
           break;
         }
         case "SET_POOL": {
@@ -119,6 +142,31 @@ export class DMRoom {
           validatePool(pool, this.file.count);
           this.file.pool = [...pool];
           this.file.players.forEach((p) => (p.ready = false));
+          break;
+        }
+        case "SIT": {
+          const seat = Number((c as { seat?: number }).seat);
+          if (!Number.isInteger(seat) || seat < 1 || seat > this.file.count)
+            throw Error("座位无效");
+          if (this.file.players.some((x) => x.id !== p.id && x.seat === seat))
+            throw Error("这个座位已经有人");
+          p.seat = seat;
+          p.ready = false;
+          this.normalizeSeats();
+          break;
+        }
+        case "SHUFFLE_SEATS": {
+          if (!host) throw Error("只有房主可以操作");
+          const seats = Array.from({ length: this.file.count }, (_, i) => i + 1);
+          for (let i = seats.length - 1; i > 0; i--) {
+            const j = randomInt(i + 1);
+            [seats[i], seats[j]] = [seats[j], seats[i]];
+          }
+          this.file.players.forEach((x, i) => {
+            x.seat = seats[i];
+            x.ready = false;
+          });
+          this.normalizeSeats();
           break;
         }
         case "READY":
@@ -143,6 +191,8 @@ export class DMRoom {
         }
         case "LEAVE":
           this.file.players = this.file.players.filter((x) => x.id !== p.id);
+          if (this.file.hostId === p.id)
+            this.file.hostId = this.file.players[0]?.id;
           break;
         default:
           throw Error("请先开始对局");
@@ -180,13 +230,13 @@ export class DMRoom {
       code: this.file.code,
       version: this.file.version,
       mySeat: me?.id ?? null,
-      hostId: this.file.players[0]?.id ?? null,
+      hostId: this.file.hostId ?? this.file.players[0]?.id ?? null,
       count: this.file.count,
       pool: this.file.pool,
       players: this.file.players.map((p, i) => ({
         id: p.id,
         name: p.name,
-        seat: i + 1,
+        seat: p.seat ?? i + 1,
         ready: p.ready,
         connected: (this.connections.get(p.id) ?? 0) > 0,
       })),

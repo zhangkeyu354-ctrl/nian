@@ -63,6 +63,12 @@ try {
   await pages[0].getByLabel("本局人数").selectOption("10");
   await pages[0].getByTestId("dm-seat-10").waitFor();
   await shot(pages[0], "lobby-10-seats");
+  // 房主换到 3 号座位，之后入座的朋友依次坐空位
+  await pages[0].getByTestId("dm-seat-3").click();
+  await pages[0].waitForFunction(
+    () =>
+      JSON.parse((window as any).render_game_to_text()).seats?.[0]?.seat === 3,
+  );
   await pages[0].getByLabel("本局人数").selectOption("4");
   for (let i = 1; i < 4; i++) {
     await pages[i].goto(base + "/?game=dm&room=" + code);

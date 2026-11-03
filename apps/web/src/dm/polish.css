@@ -1279,3 +1279,24 @@
     max-height: 92px;
   }
 }
+/* 大厅空座位可换座 */
+.dm-app.dm-polish .dm-seat.open-seat .dm-seat-portrait {
+  opacity: 0.75;
+  outline: 2px dashed #ffffff66;
+  outline-offset: 3px;
+}
+.dm-app.dm-polish .dm-seat.open-seat:enabled:active .dm-seat-portrait {
+  transform: scale(0.92);
+}
+.dm-app.dm-polish .dm-seat.open-seat > small {
+  color: #f5bfdc;
+}
+.dm-seat-tip {
+  margin: 0 0 10px;
+  font-size: 13px;
+  color: #b3a3bd;
+}
+.dm-app.dm-polish button[data-testid="dm-shuffle-seats"] {
+  width: 100%;
+  margin-bottom: 12px;
+}

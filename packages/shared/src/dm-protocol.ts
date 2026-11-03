@@ -10,6 +10,8 @@ export type DMLobbyAction =
   | { type: "SET_COUNT"; count: number }
   | { type: "SET_POOL"; pool: string[] }
   | { type: "READY" }
+  | { type: "SIT"; seat: number }
+  | { type: "SHUFFLE_SEATS" }
   | { type: "START" }
   | { type: "RESTART" }
   | { type: "LEAVE" };
