@@ -50,7 +50,8 @@
     "verify:kb-drag": "tsx scripts/verify-kb-drag.ts",
     "audit:kb-ui": "tsx scripts/audit-kb-ui.ts",
     "verify:kb-motion": "tsx scripts/verify-kb-motion.ts",
-    "perf:kb-tap": "tsx scripts/perf-kb-tap.ts"
+    "perf:kb-tap": "tsx scripts/perf-kb-tap.ts",
+    "verify:kb-seats": "tsx scripts/verify-kb-seats.ts"
   },
   "devDependencies": {
     "@tailwindcss/vite": "4.3.3",

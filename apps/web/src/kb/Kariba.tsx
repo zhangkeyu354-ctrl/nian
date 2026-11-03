@@ -129,17 +129,8 @@ function Lobby({ net, snap }: { net: Net; snap: KBRoomSnapshot }) {
           ))}
         </div>
       </div>
-      {snap.mode === "team" && <p className="kb-note">开局随机分队，两人一队、交叉入座；队友手牌互相看不到，可以开麦商量。</p>}
-      <ol className="kb-players">
-        {snap.players.map((p) => (
-          <li key={p.playerId} className={p.connected ? "" : "off"}>
-            <span className="kb-name">{p.name}</span>
-            {p.host && <em>房主</em>}
-            {p.playerId === snap.mySeat && <em>我</em>}
-            {!p.connected && <em>🔌</em>}
-          </li>
-        ))}
-      </ol>
+      {snap.mode === "team" && <p className="kb-note">两人一队，队友隔开坐（不会连着出牌）。下面选座位就是选队伍；队友手牌互相看不到，可以开麦商量。</p>}
+      <SeatTable snap={snap} host={host} act={act} />
       <button
         className="kb-btn"
         onClick={() => {
@@ -159,6 +150,70 @@ function Lobby({ net, snap }: { net: Net; snap: KBRoomSnapshot }) {
       </div>
       {msg && <p className="kb-error">{msg}</p>}
     </div>
+  );
+}
+
+/** 大厅选座：圆桌上 n 个座位，点空位坐下，点自己的座位站起；组队时座位颜色即队伍 */
+function SeatTable({ snap, host, act }: { snap: KBRoomSnapshot; host: boolean; act: (a: Parameters<Net["lobby"]>[0]) => void }) {
+  const n = snap.players.length;
+  const team = snap.mode === "team" && [4, 6, 8].includes(n);
+  const teams = team ? n / 2 : 0;
+  const bySeat = new Map<number, (typeof snap.players)[number]>();
+  for (const p of snap.players) {
+    const s = snap.chosen[p.playerId];
+    if (s !== undefined) bySeat.set(s, p);
+  }
+  const mine = snap.mySeat ? snap.chosen[snap.mySeat] : undefined;
+  const free = snap.players.filter((p) => snap.chosen[p.playerId] === undefined);
+  return (
+    <section className="kb-table-wrap" aria-label="选座位">
+      <div className="kb-table-head">
+        <b>选座位</b>
+        <small>{team ? "颜色相同的座位是队友" : "按座位顺序轮流出牌"}</small>
+        {host && (
+          <button className="kb-btn kb-mini" data-testid="kb-shuffle" onClick={() => act({ type: "SHUFFLE" })}>
+            🎲 随机
+          </button>
+        )}
+      </div>
+      <div className="kb-table" data-testid="kb-table" style={{ ["--n" as string]: n }}>
+        <div className="kb-tabletop">
+          <span>{n} 人</span>
+          {team && <small>{teams} 队</small>}
+        </div>
+        {Array.from({ length: n }, (_, i) => {
+          const ang = ((i / n) * 360 - 90) * (Math.PI / 180);
+          const who = bySeat.get(i);
+          const me = who?.playerId === snap.mySeat;
+          const t = team ? i % teams : -1;
+          return (
+            <button
+              key={i}
+              data-testid={"kb-seat-" + i}
+              className={"kb-seatbtn" + (who ? " taken" : " free") + (me ? " me" : "") + (t >= 0 ? " t" + t : "")}
+              style={{ left: `${50 + 41 * Math.cos(ang)}%`, top: `${50 + 38 * Math.sin(ang)}%` }}
+              disabled={!!who && !me}
+              aria-label={who ? `${i + 1}号座位：${who.name}${me ? "（点击站起）" : ""}` : `${i + 1}号座位：空，点击坐下`}
+              onClick={() => act(me ? { type: "STAND" } : { type: "SIT", seat: i })}
+            >
+              <i className="kb-seatno">
+                {t >= 0 ? TEAM[t] : ""}
+                {i + 1}
+              </i>
+              <span className="kb-seatname">{who ? who.name : mine === undefined ? "坐这里" : "换到这"}</span>
+              {who?.host && <em>房主</em>}
+              {me && <em className="me">我</em>}
+            </button>
+          );
+        })}
+      </div>
+      <p className="kb-note">
+        {free.length
+          ? `还没选座：${free.map((p) => p.name).join("、")}（开始时随机补到空位）`
+          : "所有人都选好座位了"}
+        {" · 先手随机"}
+      </p>
+    </section>
   );
 }
 

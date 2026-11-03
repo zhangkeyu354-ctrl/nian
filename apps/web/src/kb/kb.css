@@ -864,3 +864,47 @@
   .kb-world .kb-side .kb-hand { flex-wrap: nowrap; gap: 8px; justify-content: center; }
   .kb-world .kb-side .kb-card { width: calc((100% - 40px) / 5); max-width: 92px; height: auto; aspect-ratio: 0.7; }
 }
+
+/* ===== 大厅选座 ===== */
+.kb-table-wrap { display: grid; gap: 8px; }
+.kb-table-head { display: flex; align-items: center; gap: 8px; }
+.kb-table-head b { font-size: 17px; color: var(--kb-sand); }
+.kb-table-head small { flex: 1; color: var(--kb-muted); font-size: 13px; }
+.kb-mini { min-height: 36px; padding: 4px 12px; font-size: 14px; }
+.kb-table { position: relative; width: 100%; max-width: 420px; aspect-ratio: 1.15; margin: 0 auto; }
+.kb-tabletop {
+  position: absolute; inset: 22% 20%; border-radius: 50%; display: grid; place-content: center; text-align: center; gap: 2px;
+  background: var(--kb-grain, none), radial-gradient(circle at 45% 35%, #3a8f98, #1f5f66 60%, #163f44);
+  box-shadow: inset 0 0 0 6px #6a4524, inset 0 0 0 8px #e2b47a66, inset 0 -12px 24px #0006, 0 10px 24px #0009;
+  color: #fff4dc;
+}
+.kb-tabletop span { font-size: 20px; font-weight: 800; }
+.kb-tabletop small { color: #cfe6e3; }
+.kb-seatbtn {
+  position: absolute; translate: -50% -50%; width: 84px; min-height: 58px; padding: 6px 4px; border-radius: 14px; border: 0;
+  display: grid; justify-items: center; gap: 2px; font: inherit; cursor: pointer;
+  background: var(--kb-grain, none), linear-gradient(#fbf1dc, #ecd8b0); color: #3a2412;
+  box-shadow: inset 0 -2px 0 #d2b783, 0 4px 10px #0008; transition: transform 0.12s, box-shadow 0.15s;
+}
+.kb-seatbtn.free { background: #ffffff10; color: #f3e3c3; box-shadow: inset 0 0 0 2px #f3e3c355; border: 0; }
+.kb-seatbtn.free .kb-seatname { opacity: 0.85; }
+.kb-seatbtn.free:active { transform: scale(0.94); }
+.kb-seatbtn.me { box-shadow: 0 0 0 3px var(--kb-accent), 0 0 16px #ff8a3daa, 0 4px 10px #0008; }
+.kb-seatbtn:disabled { cursor: default; opacity: 1; }
+.kb-seatno {
+  font-style: normal; display: grid; place-items: center; min-width: 26px; height: 22px; padding: 0 6px; border-radius: 11px;
+  font-size: 12px; font-weight: 900; color: #fffaf0; background: #4a3218;
+}
+.kb-seatbtn.t0 .kb-seatno { background: var(--kb-tA); color: #2a1406; }
+.kb-seatbtn.t1 .kb-seatno { background: var(--kb-tB); color: #08223a; }
+.kb-seatbtn.t2 .kb-seatno { background: var(--kb-tC); color: #24083a; }
+.kb-seatbtn.t3 .kb-seatno { background: var(--kb-tD); color: #0b2a08; }
+.kb-seatbtn.free.t0 { box-shadow: inset 0 0 0 2px var(--kb-tA); }
+.kb-seatbtn.free.t1 { box-shadow: inset 0 0 0 2px var(--kb-tB); }
+.kb-seatbtn.free.t2 { box-shadow: inset 0 0 0 2px var(--kb-tC); }
+.kb-seatbtn.free.t3 { box-shadow: inset 0 0 0 2px var(--kb-tD); }
+.kb-seatname { font-size: 14px; font-weight: 700; max-width: 78px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.kb-seatbtn em { position: absolute; top: -8px; right: -6px; font-style: normal; font-size: 12px; padding: 0 6px; border-radius: 999px; background: #4a3218; color: #fff4dc; }
+.kb-seatbtn em.me { left: -6px; right: auto; background: var(--kb-accent); color: #2a1406; }
+@media (max-width: 380px) { .kb-seatbtn { width: 74px; } .kb-seatname { font-size: 13px; max-width: 68px; } }
+.kb-seatbtn em:not(.me) { top: auto; bottom: -9px; right: 50%; translate: 50% 0; }

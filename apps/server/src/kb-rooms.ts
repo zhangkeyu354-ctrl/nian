@@ -37,6 +37,8 @@ export interface KBRoomFile {
   startedAt: number;
   /** 座位顺序（playerId），组队时已交叉排好 */
   lineup: string[];
+  /** 大厅选座：playerId → 座位号（0 起）；没选的人开局时随机补位 */
+  chosen?: Record<string, number>;
   commands: Command[];
 }
 
@@ -52,6 +54,19 @@ function teamLineup(ids: string[]): string[] {
     [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
   }
   return shuffled; // 引擎默认 teams = i % (n/2)，所以随机顺序即随机分队 + 交叉座位
+}
+
+/** 按大厅选座排座位；没选或座位失效的人随机补到空位。组队时引擎按 座位号 % 队数 分队，所以座位即队伍。 */
+export function seatLineup(ids: string[], chosen: Record<string, number>): string[] {
+  const n = ids.length;
+  const out: (string | null)[] = Array(n).fill(null);
+  for (const id of ids) {
+    const s = chosen[id];
+    if (Number.isInteger(s) && s >= 0 && s < n && out[s] === null) out[s] = id;
+  }
+  const rest = teamLineup(ids.filter((id) => !out.includes(id)));
+  for (let i = 0; i < n; i++) if (out[i] === null) out[i] = rest.shift()!;
+  return out as string[];
 }
 
 export class KBRoom {
@@ -96,9 +111,23 @@ export class KBRoom {
   }
   lobby(token: string, action: KBLobbyAction, at = Date.now()) {
     const me = this.me(token);
-    if (me.playerId !== this.file.hostId) fail("HOST_ONLY");
     const over = this.state?.phase === "FINISHED";
     const t = action?.type;
+    const chosen = (this.file.chosen ??= {});
+    if (t === "SIT" || t === "STAND") {
+      if (this.file.stage === "game" && !over) fail("ALREADY_STARTED");
+      if (t === "STAND") {
+        delete chosen[me.playerId];
+        return;
+      }
+      const seat = Math.trunc(Number(action.seat));
+      if (!(seat >= 0 && seat < this.file.players.length)) fail("KB_BAD_SEAT");
+      const taken = Object.entries(chosen).find(([id, x]) => x === seat && id !== me.playerId);
+      if (taken) fail("KB_SEAT_TAKEN");
+      chosen[me.playerId] = seat;
+      return;
+    }
+    if (me.playerId !== this.file.hostId) fail("HOST_ONLY");
     if (t !== "START" && this.file.stage === "game" && !over) fail("ALREADY_STARTED");
     if (t === "SET_MODE") {
       if (action.mode !== "solo" && action.mode !== "team") fail("BAD_ACTION");
@@ -106,16 +135,26 @@ export class KBRoom {
     } else if (t === "SET_SECONDS") {
       if (![0, 30, 60].includes(action.seconds)) fail("BAD_ACTION");
       this.file.seconds = action.seconds;
+    } else if (t === "SHUFFLE") {
+      if (this.file.stage === "game" && !over) fail("ALREADY_STARTED");
+      const ids = this.file.players.map((p) => p.playerId);
+      for (let i = ids.length - 1; i > 0; i--) {
+        const j = randomInt(i + 1);
+        [ids[i], ids[j]] = [ids[j], ids[i]];
+      }
+      this.file.chosen = Object.fromEntries(ids.map((id, i) => [id, i]));
     } else if (t === "KICK") {
       if (action.playerId === me.playerId) fail("BAD_ACTION");
       this.file.players = this.file.players.filter((p) => p.playerId !== action.playerId);
+      delete chosen[action.playerId];
+      for (const [id, x] of Object.entries(chosen)) if (x >= this.file.players.length) delete chosen[id];
     } else if (t === "START") {
       if (this.file.stage === "game" && !over) fail("ALREADY_STARTED");
       const n = this.file.players.length;
       if (this.file.mode === "solo" && (n < 2 || n > 5)) fail("KB_SOLO_COUNT");
       if (this.file.mode === "team" && ![4, 6, 8].includes(n)) fail("KB_TEAM_COUNT");
       const ids = this.file.players.map((p) => p.playerId);
-      this.file.lineup = this.file.mode === "team" ? teamLineup(ids) : ids;
+      this.file.lineup = seatLineup(ids, chosen);
       this.file.seed = randomInt(2 ** 31);
       this.file.startedAt = at;
       this.file.commands = [];
@@ -160,6 +199,9 @@ export class KBRoom {
       })),
       mySeat: me,
       seats: this.file.lineup,
+      chosen: Object.fromEntries(
+        Object.entries(this.file.chosen ?? {}).filter(([id, x]) => x < this.file.players.length && this.file.players.some((p) => p.playerId === id)),
+      ),
       mode: this.file.mode,
       seconds: this.file.seconds,
       version: this.file.commands.length,
@@ -231,6 +273,8 @@ export function kbErrorText(e: unknown): { error: string; code: string } {
     KB_SOLO_COUNT: "个人战需要 2–5 人。",
     KB_TEAM_COUNT: "组队需要 4、6 或 8 人（两人一队）。",
     KB_STALE: "画面已更新，请再选一次。",
+    KB_SEAT_TAKEN: "这个座位已经有人了。",
+    KB_BAD_SEAT: "座位无效。",
     TOO_MANY_ROOMS: "服务器上的房间太多了，请稍后再试。",
     BAD_ACTION: "操作无效。",
   };

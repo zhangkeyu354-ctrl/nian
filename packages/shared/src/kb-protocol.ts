@@ -24,6 +24,8 @@ export interface KBRoomSnapshot {
   mySeat: string | null;
   /** 开局后：playerId → 座位号 */
   seats: string[];
+  /** 大厅选座：playerId → 座位号（0 起） */
+  chosen: Record<string, number>;
   mode: Mode;
   seconds: 0 | 30 | 60;
   version: number;
@@ -36,6 +38,9 @@ export type KBLobbyAction =
   | { type: "SET_MODE"; mode: Mode }
   | { type: "SET_SECONDS"; seconds: 0 | 30 | 60 }
   | { type: "KICK"; playerId: string }
+  | { type: "SIT"; seat: number }
+  | { type: "STAND" }
+  | { type: "SHUFFLE" }
   | { type: "START" };
 
 /** version = 客户端看到的 snapshot.version，防止重复点击/旧画面出牌 */
