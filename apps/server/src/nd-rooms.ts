@@ -40,6 +40,8 @@ export interface NDFile {
   version: number;
   settings: NDSettings;
   players: NDSeat[];
+  /** 房主的玩家 id；换座后房主不一定坐 1 号位。旧存档没有此字段时视为 1 号位。 */
+  hostId?: string;
   state: NDState | null;
   seq: Record<string, number>;
   receipts: Record<string, Record<string, string>>;
@@ -74,6 +76,7 @@ const fields: Record<string, string[]> = {
   READY: [],
   SET_SETTINGS: ["count", "seconds", "scale", "expert", "firstCaptain"],
   START: ["seed"],
+  SWAP_SEAT: ["target"],
   LEAVE: [],
   REMATCH: [],
 };
@@ -356,8 +359,9 @@ export class NDRoom {
       "状态已更新，请重新同步",
     );
     const seat = this.file.players.findIndex((p) => p.id === me.id);
+    const hostId = this.file.hostId ?? this.file.players[0]?.id;
     if (["SET_SETTINGS", "START", "REMATCH"].includes(c.type))
-      ensure(seat === 0, "只有房主可以操作");
+      ensure(me.id === hostId, "只有房主可以操作");
     return this.transaction(now, () => {
       if (c.type === "REMATCH") {
         ensure(this.file.state?.phase === "FINISHED", "本局尚未结束");
@@ -396,6 +400,21 @@ export class NDRoom {
           case "READY":
             me.ready = !me.ready;
             break;
+          case "SWAP_SEAT": {
+            const t = c.target;
+            ensure(
+              Number.isInteger(t) && t >= 0 && t < this.file.players.length,
+              "这个座位没人，不能交换",
+            );
+            ensure(t !== seat, "你已经坐在这里了");
+            this.file.hostId ??= this.file.players[0].id;
+            const a = this.file.players[seat],
+              b = this.file.players[t];
+            this.file.players[seat] = b;
+            this.file.players[t] = a;
+            this.file.players.forEach((p) => (p.ready = false));
+            break;
+          }
           case "START": {
             ensure(
               this.file.players.length === this.file.settings.count &&
@@ -424,6 +443,8 @@ export class NDRoom {
           }
           case "LEAVE": {
             this.file.players.splice(seat, 1);
+            if (this.file.hostId === me.id)
+              this.file.hostId = this.file.players[0]?.id;
             delete this.file.seq[me.id];
             delete this.file.receipts[me.id];
             this.file.players.forEach((p) => (p.ready = false));
@@ -472,7 +493,7 @@ export class NDRoom {
       code: this.file.code,
       version: this.file.version,
       mySeat: seat,
-      hostId: this.file.players[0]?.id ?? null,
+      hostId: this.file.hostId ?? this.file.players[0]?.id ?? null,
       settings: this.file.settings,
       players: this.file.players.map((p, seat) => ({
         id: p.id,

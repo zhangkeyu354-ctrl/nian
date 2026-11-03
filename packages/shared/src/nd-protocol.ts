@@ -26,6 +26,8 @@ export type NDAction =
       firstCaptain?: number;
     }
   | { type: "START"; seed?: number }
+  /** 大厅换座：和目标座位的人交换位置（座位顺序决定队长轮换顺序）。 */
+  | { type: "SWAP_SEAT"; target: number }
   | { type: "LEAVE" }
   | { type: "REMATCH" };
 export interface NDSnapshot {

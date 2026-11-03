@@ -155,6 +155,9 @@ export function NaodongScale() {
     [keyboard, setKeyboard] = useState(false),
     [viewport, setViewport] = useState({ height: window.innerHeight, top: 0 }),
     [celebrating, setCelebrating] = useState(false),
+    // 游戏刚结束时，先停在最后一轮的翻牌结果，让大家看清楚再进结算。
+    [lastLook, setLastLook] = useState(false),
+    prevPhase = useRef<string | null>(null),
     [order, setOrder] = useState<number[]>([]),
     [selected, setSelected] = useState<number | null>(null),
     [topic, setTopic] = useState<string | null>(null),
@@ -221,18 +224,25 @@ export function NaodongScale() {
     setHiddenNumber(false);
   }, [v?.round, v?.phase]);
   useEffect(() => {
-    if (v?.phase !== "FINISHED") return;
+    const prev = prevPhase.current;
+    prevPhase.current = v?.phase ?? null;
+    if (v?.phase !== "FINISHED") setLastLook(false);
+    else if (prev && prev !== "FINISHED") setLastLook(true);
+  }, [v?.phase]);
+  useEffect(() => {
+    if (v?.phase !== "FINISHED" || lastLook) return;
     setCelebrating(true);
     const t = setTimeout(() => setCelebrating(false), 1500);
     return () => clearTimeout(t);
-  }, [v?.phase]);
+  }, [v?.phase, lastLook]);
   useEffect(() => {
     if (!v?.revealed.length) return;
     feel(v.revealed.at(-1)?.correct ? "stamp" : "lose");
   }, [v?.round, v?.revealed.length]);
   useEffect(() => {
-    if (v?.phase === "FINISHED") feel(v.result?.success ? "win" : "lose");
-  }, [v?.phase]);
+    if (v?.phase === "FINISHED" && !lastLook)
+      feel(v.result?.success ? "win" : "lose");
+  }, [v?.phase, lastLook]);
   // Reuse XB's 1.2s warmup / 0.8s rhythm. Each next card is authorized by the server.
   useEffect(() => {
     if (
@@ -427,6 +437,12 @@ export function NaodongScale() {
         action = () => void send({ type: "NEXT_ROUND" });
         break;
       case "FINISHED":
+        if (lastLook) {
+          primary = "查看最终结算";
+          disabled = false;
+          action = () => setLastLook(false);
+          break;
+        }
         primary = host ? "再来一局" : "等待房主再来一局";
         disabled = !host;
         action = () => void send({ type: "REMATCH" });
@@ -617,7 +633,7 @@ export function NaodongScale() {
           <>
             <div className="nd-layout">
               <section
-                className={`nd-stage nd-phase-${v?.phase ?? "LOBBY"}`}
+                className={`nd-stage nd-phase-${lastLook ? "ROUND_END" : (v?.phase ?? "LOBBY")}`}
                 aria-label="当前舞台"
               >
                 {!v ? (
@@ -642,6 +658,50 @@ export function NaodongScale() {
                       <p>队长把所有回答从小到大排序。</p>
                       <p>一起闯过 5 轮，保住全队的独角兽。</p>
                     </div>
+                    <section className="nd-seat-pick" aria-label="选座位">
+                      <h2>
+                        选座位
+                        <small>
+                          队长按 1 → 2 → 3… 的顺序轮流当，点别人的座位就能换过去
+                        </small>
+                      </h2>
+                      <div className="nd-seat-grid">
+                        {Array.from({ length: s.settings.count }, (_, i) => {
+                          const p = s.players.find((x) => x.seat === i);
+                          const mine = p && p.seat === me;
+                          const first = i === s.settings.firstCaptain;
+                          return (
+                            <button
+                              key={i}
+                              data-pick-seat={i}
+                              className={`${mine ? "mine" : ""} ${p ? "" : "empty"}`}
+                              disabled={!p || !!mine || me === null || net.pending}
+                              aria-label={
+                                p
+                                  ? mine
+                                    ? `${i + 1} 号座位，你坐在这里`
+                                    : `和 ${p.name} 换座位（${i + 1} 号）`
+                                  : `${i + 1} 号座位，等人加入`
+                              }
+                              onClick={() =>
+                                void send({ type: "SWAP_SEAT", target: i })
+                              }
+                            >
+                              <b>{i + 1}</b>
+                              <span>{p ? p.name : "空位"}</span>
+                              <small>
+                                {mine
+                                  ? "我"
+                                  : p
+                                    ? "点击换座"
+                                    : "等人加入"}
+                                {first ? " · 首位队长" : ""}
+                              </small>
+                            </button>
+                          );
+                        })}
+                      </div>
+                    </section>
                     {host ? (
                       <fieldset className="nd-settings" disabled={net.pending}>
                         <legend>房主设置</legend>
@@ -735,9 +795,9 @@ export function NaodongScale() {
                   </>
                 ) : (
                   <>
-                    {v.phase !== "FINISHED" && (
+                    {(v.phase !== "FINISHED" || lastLook) && (
                       <div className="nd-phase-line">
-                        <span>{titles[v.phase]}</span>
+                        <span>{lastLook ? "最后一轮结果" : titles[v.phase]}</span>
                         {v.myNumber !== null && v.phase !== "ANSWER" && (
                           <button
                             className="nd-peek"
@@ -773,7 +833,7 @@ export function NaodongScale() {
                           <p>这轮会聊点什么呢？</p>
                         </div>
                       )
-                    ) : v.phase === "FINISHED" ? (
+                    ) : v.phase === "FINISHED" && !lastLook ? (
                       <div
                         className={`nd-finale ${celebrating ? (v.result?.success ? "celebrate" : "sink") : ""}`}
                       >
@@ -1005,25 +1065,44 @@ export function NaodongScale() {
                             </div>
                           </div>
                         )}
-                        {(v.phase === "REVEAL" || v.phase === "ROUND_END") && (
+                        {(v.phase === "REVEAL" ||
+                          v.phase === "ROUND_END" ||
+                          lastLook) && (
                           <div className="nd-reveal">
-                            <p className="nd-reveal-intro">
-                              按队长的顺序，逐张翻开答题卡
-                            </p>
+                            {lastLook && (
+                              <p
+                                className={`nd-next nd-last-verdict ${v.result?.success ? "win" : "lose"}`}
+                              >
+                                {v.result?.success
+                                  ? "五轮闯完，全队成功！"
+                                  : "独角兽用完了，全队失败"}
+                                · 点下面看最终结算
+                              </p>
+                            )}
+                            {!lastLook && (
+                              <p className="nd-reveal-intro">
+                                按队长的顺序，逐张翻开答题卡
+                              </p>
+                            )}
                             <div className="nd-flip-row">
                               {(v.order.length ? v.order : members).map(
                                 (n, i) => {
                                   const r = v.revealed.find(
                                     (r) => r.seat === n,
                                   );
+                                  // 结束后没来得及翻开的卡也亮出数字，标成「未翻开」。
+                                  const late =
+                                    !r && lastLook
+                                      ? (v.finalNumbers?.[n] ?? null)
+                                      : null;
                                   return (
                                     <div
                                       key={n}
-                                      className={`nd-flip ${r ? (r.correct ? "correct" : "wrong") : "hidden"}`}
+                                      className={`nd-flip ${r ? (r.correct ? "correct" : "wrong") : late !== null ? "late" : "hidden"}`}
                                       data-reveal-seat={n}
                                     >
                                       <div
-                                        className={`nd-flip-inner ${r ? "turned" : ""}`}
+                                        className={`nd-flip-inner ${r || late !== null ? "turned" : ""}`}
                                       >
                                         <div className="nd-card-front">
                                           <small>{i + 1}</small>
@@ -1031,7 +1110,7 @@ export function NaodongScale() {
                                           <span>{v.players[n].name}</span>
                                         </div>
                                         <div className="nd-card-back">
-                                          <b>{r?.number ?? "?"}</b>
+                                          <b>{r?.number ?? late ?? "?"}</b>
                                           <p>{v.answers[n] ?? "（没写）"}</p>
                                           <span>{v.players[n].name}</span>
                                           <strong>
@@ -1039,7 +1118,9 @@ export function NaodongScale() {
                                               ? r.correct
                                                 ? "✓ 排对"
                                                 : "✗ 失误"
-                                              : "待揭晓"}
+                                              : late !== null
+                                                ? "未翻开"
+                                                : "待揭晓"}
                                           </strong>
                                         </div>
                                       </div>

@@ -120,7 +120,8 @@ async function open(i: number) {
             "view" in value
           ) {
             const s = value as NDSnapshot;
-            if (s.mySeat === i && (!snaps[i] || s.version >= snaps[i]!.version))
+            // 每个页面只收到自己的快照；换座后座位号会变，所以按页面记录。
+            if (s.mySeat !== null && (!snaps[i] || s.version >= snaps[i]!.version))
               snaps[i] = s;
             if (s.view) {
               const authoritative = versions.get(`${s.code}:${s.version}`);
@@ -180,6 +181,20 @@ async function open(i: number) {
   });
   await p.goto(url + "/?game=nd");
   return p;
+}
+// 游戏结束时，每个人先停在最后一轮的翻牌结果，点「查看最终结算」才进结算。
+async function lastLook(n: number, key: string) {
+  for (let i = 0; i < n; i++) {
+    const btn = pages[i].getByRole("button", { name: "查看最终结算" });
+    await btn.waitFor();
+    assert.ok(await pages[i].locator(".nd-last-verdict").count());
+    assert.equal(await pages[i].locator(".nd-finale").count(), 0);
+  }
+  await screenPhase(n, key);
+  for (let i = 0; i < n; i++)
+    await pages[i].getByRole("button", { name: "查看最终结算" }).click();
+  await pages[0].locator(".nd-finale").waitFor();
+  checks.push(`${n}: ${key} shown to every seat before final settlement`);
 }
 async function synced() {
   await until(() => snaps.every((s) => s && s.version === snaps[0]?.version));
@@ -761,6 +776,20 @@ try {
     checks.push(
       `${n}: compact rail, crown, self mark and complete roster dialog`,
     );
+    // 大厅选座：2 号玩家点 3 号座位换过去，再换回来，房主身份不变。
+    {
+      const a = snaps[0]!.players[1].name,
+        b = snaps[0]!.players[2].name;
+      await pages[1].locator('[data-pick-seat="2"]').click();
+      await until(() => snaps[0]!.players[2]?.name === a && snaps[1]?.mySeat === 2);
+      assert.equal(snaps[0]!.players[1].name, b);
+      if (n === 6) await screenPhase(n, "seat-swapped", 1);
+      await pages[1].locator('[data-pick-seat="1"]').click();
+      await until(() => snaps[1]?.mySeat === 1 && snaps[0]!.players[2]?.name === b);
+      assert.equal(snaps[0]!.hostId, snaps[0]!.players[0].id);
+      await synced();
+      checks.push(`${n}: lobby seat swap moves captain order and keeps host`);
+    }
     for (let i = 0; i < n; i++) await primary(i);
     await primary(0);
     await screenPhase(n, "choose-topic");
@@ -820,6 +849,7 @@ try {
       await synced();
     }
     assert.equal(snaps[0]!.view!.result?.success, true);
+    await lastLook(n, "last-round");
     assert.equal(await pages[0].locator(".nd-result-gauge.success").count(), 1);
     await pages[0].waitForTimeout(150);
     if (await pages[0].locator(".nd-confetti").count()) {
@@ -866,6 +896,7 @@ try {
         }
       }
       assert.equal(snaps[0]!.view!.result?.success, false);
+      await lastLook(n, "last-round-failed");
       assert.equal(await pages[0].locator(".nd-result-gauge.empty").count(), 1);
       await screenPhase(n, "team-failed");
       games.push({ players: 9, rounds: snaps[0]!.view!.round, success: false });
@@ -919,6 +950,7 @@ try {
         if (round < 5) await primary(cap);
       }
       assert.equal(snaps[0]!.view!.result?.success, true);
+      await lastLook(n, "expert-last-round");
       await screenPhase(n, "expert-finished");
       games.push({ players: 4, expert: true, rounds: 5, success: true });
       checks.push(

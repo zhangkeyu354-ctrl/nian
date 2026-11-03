@@ -582,6 +582,8 @@ export interface NDView {
   mySeq: number | null;
   order: number[];
   revealed: NDReveal[];
+  /** 游戏结束后公开最后一轮每人的秘密数字（含没来得及翻开的）；结束前为 null。 */
+  finalNumbers: (number | null)[] | null;
   history: NDEvent[];
   result: NDResult | null;
 }
@@ -615,6 +617,7 @@ export function viewForND(s: NDState, seat: number | null): NDView {
     mySeq: seat === null ? null : s.seq[seat],
     order: s.order,
     revealed: s.revealed,
+    finalNumbers: s.phase === "FINISHED" ? [...s.numbers] : null,
     history: s.history,
     result: s.result,
   });

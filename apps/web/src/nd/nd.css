@@ -3206,3 +3206,49 @@
     font-size: 36px;
   }
 }
+/* 游戏结束前的最后一轮停留 */
+.nd-world .nd-last-verdict {
+  font-weight: 700;
+  font-size: 17px;
+  text-align: center;
+}
+.nd-world .nd-last-verdict.win { color: #f5d38a; }
+.nd-world .nd-last-verdict.lose { color: #f2a99c; }
+.nd-world .nd-last-verdict { margin: 0 0 10px; }
+.nd-world.nd-answer-cards .nd-flip.late .nd-card-back {
+  background: linear-gradient(140deg, #3a6670, #2a515a);
+  color: #e6efe9;
+}
+/* 大厅选座 */
+.nd-world .nd-seat-pick { display: flex; flex-direction: column; gap: 8px; }
+.nd-world .nd-seat-pick h2 {
+  margin: 0; font-size: 16px; display: flex; flex-direction: column; gap: 2px;
+}
+.nd-world .nd-seat-pick h2 small { font-size: 12px; font-weight: 400; opacity: 0.75; }
+.nd-world .nd-seat-grid {
+  display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 8px;
+}
+.nd-world .nd-seat-grid button {
+  display: grid; grid-template-columns: auto 1fr; grid-template-rows: auto auto;
+  column-gap: 8px; align-items: center; text-align: left;
+  min-height: 56px; padding: 8px 10px; border-radius: 12px;
+  border: 1px solid #bedbd055; background: #ffffff10; color: inherit; cursor: pointer;
+}
+.nd-world .nd-seat-grid button > b {
+  grid-row: 1 / 3; width: 30px; height: 30px; border-radius: 50%;
+  display: grid; place-items: center; background: #f5d38a; color: #143c43; font-size: 15px;
+}
+.nd-world .nd-seat-grid button > span {
+  font-size: 14px; font-weight: 700; min-width: 0;
+  white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+}
+.nd-world .nd-seat-grid button > small { font-size: 12px; opacity: 0.75; }
+.nd-world .nd-seat-grid button.mine { border-color: #f5d38a; background: #f5d38a22; }
+.nd-world .nd-seat-grid button.empty { border-style: dashed; opacity: 0.6; cursor: default; }
+.nd-world .nd-seat-grid button.empty > b { background: #ffffff22; color: inherit; }
+.nd-world .nd-seat-grid button:disabled:not(.empty):not(.mine) { opacity: 0.6; }
+.nd-world .nd-seat-grid button.mine:disabled { opacity: 1; cursor: default; }
+.nd-world .nd-seat-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+@media (min-width: 700px) {
+  .nd-world .nd-seat-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+}
