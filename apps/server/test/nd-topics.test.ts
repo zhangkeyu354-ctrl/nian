@@ -29,14 +29,14 @@ describe("ND 同房间不重复出题", () => {
     const c = [0, 1, 2, 3].map((i) => r.claim("玩家" + i));
     const seen = new Set<string>();
     let cycleReset = false;
-    for (let game = 0; game < 12; game++) {
+    for (let game = 0; game < 16; game++) {
       for (const p of c) act(r, p.token, { type: "READY" });
       act(r, c[0].token, { type: "START", seed: 100 + game });
       const now = ids(r);
       const repeats = now.filter((id) => seen.has(id));
       if (repeats.length) {
         // 只有在没出过的题已经不够一局时才允许重复
-        expect(seen.size + 10).toBeGreaterThan(102);
+        expect(seen.size + 10).toBeGreaterThan(141);
         cycleReset = true;
         seen.clear();
       }

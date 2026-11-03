@@ -1732,5 +1732,668 @@
       "ref": "用户 2026-11-01 审核通过第二批"
     },
     "status": "DRAFT"
+  },
+  {
+    "id": "nd-orig-0392",
+    "type": "说东西排序类",
+    "origin": "原创",
+    "answer_format": "一个东西或一个词",
+    "localized": {
+      "text": "便利店里买什么，店员会多看你一眼？",
+      "low": "没人在意",
+      "high": "店员都愣了"
+    },
+    "spicy": false,
+    "source": {
+      "kind": "ORIGINAL",
+      "ref": "用户 2026-11-04 审核通过第三批（R3-01）"
+    },
+    "status": "DRAFT"
+  },
+  {
+    "id": "nd-orig-0393",
+    "type": "说东西排序类",
+    "origin": "原创",
+    "answer_format": "一个东西或一个词",
+    "localized": {
+      "text": "室友半夜在厨房做什么菜，你会忍不住爬起来？",
+      "low": "接着睡",
+      "high": "立刻起床"
+    },
+    "spicy": false,
+    "source": {
+      "kind": "ORIGINAL",
+      "ref": "用户 2026-11-04 审核通过第三批（R3-03）"
+    },
+    "status": "DRAFT"
+  },
+  {
+    "id": "nd-orig-0394",
+    "type": "说东西排序类",
+    "origin": "原创",
+    "answer_format": "一个东西或一个词",
+    "localized": {
+      "text": "哪种早餐最能撑到中午？",
+      "low": "十点就饿",
+      "high": "撑到下午"
+    },
+    "spicy": false,
+    "source": {
+      "kind": "ORIGINAL",
+      "ref": "用户 2026-11-04 审核通过第三批（R3-04）"
+    },
+    "status": "DRAFT"
+  },
+  {
+    "id": "nd-orig-0395",
+    "type": "说东西排序类",
+    "origin": "原创",
+    "answer_format": "一个东西或一个词",
+    "localized": {
+      "text": "你最想把哪样家电换成会自己干活的？",
+      "low": "无所谓",
+      "high": "做梦都想"
+    },
+    "spicy": false,
+    "source": {
+      "kind": "ORIGINAL",
+      "ref": "用户 2026-11-04 审核通过第三批（R3-05）"
+    },
+    "status": "DRAFT"
+  },
+  {
+    "id": "nd-orig-0396",
+    "type": "说东西排序类",
+    "origin": "原创",
+    "answer_format": "一个东西或一个词",
+    "localized": {
+      "text": "夏天出门忘带什么最要命？",
+      "low": "没影响",
+      "high": "一天都毁了"
+    },
+    "spicy": false,
+    "source": {
+      "kind": "ORIGINAL",
+      "ref": "用户 2026-11-04 审核通过第三批（R3-06）"
+    },
+    "status": "DRAFT"
+  },
+  {
+    "id": "nd-orig-0397",
+    "type": "说东西排序类",
+    "origin": "原创",
+    "answer_format": "一个东西或一个词",
+    "localized": {
+      "text": "考试前一晚，哪件事最让你分心？",
+      "low": "完全不耽误",
+      "high": "今晚白学了"
+    },
+    "spicy": false,
+    "source": {
+      "kind": "ORIGINAL",
+      "ref": "用户 2026-11-04 审核通过第三批（R3-08）"
+    },
+    "status": "DRAFT"
+  },
+  {
+    "id": "nd-orig-0398",
+    "type": "说东西排序类",
+    "origin": "原创",
+    "answer_format": "一个东西或一个词",
+    "localized": {
+      "text": "楼上邻居一直在弄出什么声音，你会去敲门？",
+      "low": "能忍",
+      "high": "马上上楼"
+    },
+    "spicy": false,
+    "source": {
+      "kind": "ORIGINAL",
+      "ref": "用户 2026-11-04 审核通过第三批（R3-09）"
+    },
+    "status": "DRAFT"
+  },
+  {
+    "id": "nd-orig-0399",
+    "type": "说东西排序类",
+    "origin": "原创",
+    "answer_format": "一个东西或一个词",
+    "localized": {
+      "text": "超市试吃区摆着什么，你会绕三圈回来再吃？",
+      "low": "吃一口就够",
+      "high": "赖着不走"
+    },
+    "spicy": false,
+    "source": {
+      "kind": "ORIGINAL",
+      "ref": "用户 2026-11-04 审核通过第三批（R3-10）"
+    },
+    "status": "DRAFT"
+  },
+  {
+    "id": "nd-orig-0400",
+    "type": "说东西排序类",
+    "origin": "原创",
+    "answer_format": "一个东西或一个词",
+    "localized": {
+      "text": "过年回家，饭桌上最不能少的菜是什么？",
+      "low": "有没有都行",
+      "high": "没有不算过年"
+    },
+    "spicy": false,
+    "source": {
+      "kind": "ORIGINAL",
+      "ref": "用户 2026-11-04 审核通过第三批（R3-12）"
+    },
+    "status": "DRAFT"
+  },
+  {
+    "id": "nd-orig-0401",
+    "type": "说东西排序类",
+    "origin": "原创",
+    "answer_format": "一个东西或一个词",
+    "localized": {
+      "text": "放假在家，哪件小事最能让你开心一整天？",
+      "low": "没感觉",
+      "high": "开心到睡前"
+    },
+    "spicy": false,
+    "source": {
+      "kind": "ORIGINAL",
+      "ref": "用户 2026-11-04 审核通过第三批（R3-13）"
+    },
+    "status": "DRAFT"
+  },
+  {
+    "id": "nd-orig-0402",
+    "type": "说东西排序类",
+    "origin": "原创",
+    "answer_format": "一个东西或一个词",
+    "localized": {
+      "text": "哪种饮料最适合熬夜赶作业？",
+      "low": "喝完更困",
+      "high": "通宵不睡"
+    },
+    "spicy": false,
+    "source": {
+      "kind": "ORIGINAL",
+      "ref": "用户 2026-11-04 审核通过第三批（R3-14）"
+    },
+    "status": "DRAFT"
+  },
+  {
+    "id": "nd-orig-0403",
+    "type": "说东西排序类",
+    "origin": "原创",
+    "answer_format": "一个东西或一个词",
+    "localized": {
+      "text": "什么东西丢了，你会翻遍整个家？",
+      "low": "丢就丢了",
+      "high": "翻箱倒柜"
+    },
+    "spicy": false,
+    "source": {
+      "kind": "ORIGINAL",
+      "ref": "用户 2026-11-04 审核通过第三批（R3-15）"
+    },
+    "status": "DRAFT"
+  },
+  {
+    "id": "nd-orig-0404",
+    "type": "说东西排序类",
+    "origin": "原创",
+    "answer_format": "一个东西或一个词",
+    "localized": {
+      "text": "哪种食物放冰箱一晚上之后最难吃？",
+      "low": "一样好吃",
+      "high": "没法下口"
+    },
+    "spicy": false,
+    "source": {
+      "kind": "ORIGINAL",
+      "ref": "用户 2026-11-04 审核通过第三批（R3-17）"
+    },
+    "status": "DRAFT"
+  },
+  {
+    "id": "nd-orig-0405",
+    "type": "说东西排序类",
+    "origin": "原创",
+    "answer_format": "一个东西或一个词",
+    "localized": {
+      "text": "出差住酒店，房间里少了什么你会打电话找前台？",
+      "low": "无所谓",
+      "high": "必须要有"
+    },
+    "spicy": false,
+    "source": {
+      "kind": "ORIGINAL",
+      "ref": "用户 2026-11-04 审核通过第三批（R3-18）"
+    },
+    "status": "DRAFT"
+  },
+  {
+    "id": "nd-orig-0406",
+    "type": "说东西排序类",
+    "origin": "原创",
+    "answer_format": "一个东西或一个词",
+    "localized": {
+      "text": "一年不买新衣服，换来一样东西随便买。你买什么？",
+      "low": "不值得",
+      "high": "太值了"
+    },
+    "spicy": false,
+    "source": {
+      "kind": "ORIGINAL",
+      "ref": "用户 2026-11-04 审核通过第三批（R3-19）"
+    },
+    "status": "DRAFT"
+  },
+  {
+    "id": "nd-orig-0407",
+    "type": "说东西排序类",
+    "origin": "原创",
+    "answer_format": "一个东西或一个词",
+    "localized": {
+      "text": "什么零食最适合和朋友分着吃？",
+      "low": "不想分",
+      "high": "越分越香"
+    },
+    "spicy": false,
+    "source": {
+      "kind": "ORIGINAL",
+      "ref": "用户 2026-11-04 审核通过第三批（R3-22）"
+    },
+    "status": "DRAFT"
+  },
+  {
+    "id": "nd-orig-0408",
+    "type": "说东西排序类",
+    "origin": "原创",
+    "answer_format": "一个东西或一个词",
+    "localized": {
+      "text": "什么东西你小时候很想要，现在买得起却不买了？",
+      "low": "无所谓了",
+      "high": "还是有点想"
+    },
+    "spicy": false,
+    "source": {
+      "kind": "ORIGINAL",
+      "ref": "用户 2026-11-04 审核通过第三批（R3-24）"
+    },
+    "status": "DRAFT"
+  },
+  {
+    "id": "nd-orig-0409",
+    "type": "说东西排序类",
+    "origin": "原创",
+    "answer_format": "一个东西或一个词",
+    "localized": {
+      "text": "哪种东西你一定要自己挑，不能让别人帮买？",
+      "low": "谁买都行",
+      "high": "必须自己挑"
+    },
+    "spicy": false,
+    "source": {
+      "kind": "ORIGINAL",
+      "ref": "用户 2026-11-04 审核通过第三批（R3-25）"
+    },
+    "status": "DRAFT"
+  },
+  {
+    "id": "nd-orig-0410",
+    "type": "说东西排序类",
+    "origin": "原创",
+    "answer_format": "一个东西或一个词",
+    "localized": {
+      "text": "什么东西你会在网上买，但从不敢在网上买第二次？",
+      "low": "放心回购",
+      "high": "再也不买"
+    },
+    "spicy": false,
+    "source": {
+      "kind": "ORIGINAL",
+      "ref": "用户 2026-11-04 审核通过第三批（R3-28）"
+    },
+    "status": "DRAFT"
+  },
+  {
+    "id": "nd-orig-0411",
+    "type": "说东西排序类",
+    "origin": "原创",
+    "answer_format": "一个东西或一个词",
+    "localized": {
+      "text": "出门旅游，行李箱里哪样东西最占地方？",
+      "low": "几乎不占",
+      "high": "一半都是它"
+    },
+    "spicy": false,
+    "source": {
+      "kind": "ORIGINAL",
+      "ref": "用户 2026-11-04 审核通过第三批（R3-30）"
+    },
+    "status": "DRAFT"
+  },
+  {
+    "id": "nd-orig-0412",
+    "type": "说东西排序类",
+    "origin": "原创",
+    "answer_format": "一个东西或一个词",
+    "localized": {
+      "text": "打开冰箱发现什么，你会觉得今天运气不错？",
+      "low": "没惊喜",
+      "high": "乐开花"
+    },
+    "spicy": false,
+    "source": {
+      "kind": "ORIGINAL",
+      "ref": "用户 2026-11-04 审核通过第三批（R3-32）"
+    },
+    "status": "DRAFT"
+  },
+  {
+    "id": "nd-orig-0413",
+    "type": "说东西排序类",
+    "origin": "原创",
+    "answer_format": "一个东西或一个词",
+    "localized": {
+      "text": "什么东西用久了反而越来越舍不得扔？",
+      "low": "说扔就扔",
+      "high": "死也不扔"
+    },
+    "spicy": false,
+    "source": {
+      "kind": "ORIGINAL",
+      "ref": "用户 2026-11-04 审核通过第三批（R3-33）"
+    },
+    "status": "DRAFT"
+  },
+  {
+    "id": "nd-orig-0414",
+    "type": "说东西排序类",
+    "origin": "原创",
+    "answer_format": "一个东西或一个词",
+    "localized": {
+      "text": "在宿舍或合租房里，哪种室友习惯最难忍？",
+      "low": "能接受",
+      "high": "想搬走"
+    },
+    "spicy": false,
+    "source": {
+      "kind": "ORIGINAL",
+      "ref": "用户 2026-11-04 审核通过第三批（R3-36）"
+    },
+    "status": "DRAFT"
+  },
+  {
+    "id": "nd-orig-0415",
+    "type": "说东西排序类",
+    "origin": "原创",
+    "answer_format": "一个东西或一个词",
+    "localized": {
+      "text": "夜市里买什么，你会边走边吃完都不停？",
+      "low": "吃一口就够",
+      "high": "停不下来"
+    },
+    "spicy": false,
+    "source": {
+      "kind": "ORIGINAL",
+      "ref": "用户 2026-11-04 审核通过第三批（R3-38）"
+    },
+    "status": "DRAFT"
+  },
+  {
+    "id": "nd-orig-0416",
+    "type": "说东西排序类",
+    "origin": "原创",
+    "answer_format": "一个东西或一个词",
+    "localized": {
+      "text": "哪种快餐最适合加班到半夜吃？",
+      "low": "吃完更累",
+      "high": "续命神器"
+    },
+    "spicy": false,
+    "source": {
+      "kind": "ORIGINAL",
+      "ref": "用户 2026-11-04 审核通过第三批（R3-39）"
+    },
+    "status": "DRAFT"
+  },
+  {
+    "id": "nd-orig-0417",
+    "type": "场景选择类",
+    "origin": "原创",
+    "answer_format": "一个地点或一句话",
+    "localized": {
+      "text": "如果只能在一个地方吃一辈子早餐，选哪儿？",
+      "low": "会腻死",
+      "high": "天天都想去"
+    },
+    "spicy": false,
+    "source": {
+      "kind": "ORIGINAL",
+      "ref": "用户 2026-11-04 审核通过第三批（R3-45）"
+    },
+    "status": "DRAFT"
+  },
+  {
+    "id": "nd-orig-0418",
+    "type": "场景选择类",
+    "origin": "原创",
+    "answer_format": "一个地点或一句话",
+    "localized": {
+      "text": "你要在一个地方等人一小时，没带手机。最希望在哪儿？",
+      "low": "度秒如年",
+      "high": "一会儿就过去"
+    },
+    "spicy": false,
+    "source": {
+      "kind": "ORIGINAL",
+      "ref": "用户 2026-11-04 审核通过第三批（R3-48）"
+    },
+    "status": "DRAFT"
+  },
+  {
+    "id": "nd-orig-0419",
+    "type": "场景选择类",
+    "origin": "原创",
+    "answer_format": "一个地点或一句话",
+    "localized": {
+      "text": "一个人去吃饭，哪种店最尴尬？",
+      "low": "很自在",
+      "high": "坐立不安"
+    },
+    "spicy": false,
+    "source": {
+      "kind": "ORIGINAL",
+      "ref": "用户 2026-11-04 审核通过第三批（R3-49）"
+    },
+    "status": "DRAFT"
+  },
+  {
+    "id": "nd-orig-0420",
+    "type": "场景选择类",
+    "origin": "原创",
+    "answer_format": "一个地点或一句话",
+    "localized": {
+      "text": "哪个地方的厕所，你宁愿憋着也不去？",
+      "low": "放心去",
+      "high": "死也不进"
+    },
+    "spicy": false,
+    "source": {
+      "kind": "ORIGINAL",
+      "ref": "用户 2026-11-04 审核通过第三批（R3-51）"
+    },
+    "status": "DRAFT"
+  },
+  {
+    "id": "nd-orig-0421",
+    "type": "场景选择类",
+    "origin": "原创",
+    "answer_format": "一个地点或一句话",
+    "localized": {
+      "text": "你被邀请去一个陌生人的婚礼，坐哪一桌最自在？",
+      "low": "浑身不自在",
+      "high": "吃得最开心"
+    },
+    "spicy": false,
+    "source": {
+      "kind": "ORIGINAL",
+      "ref": "用户 2026-11-04 审核通过第三批（R3-52）"
+    },
+    "status": "DRAFT"
+  },
+  {
+    "id": "nd-orig-0422",
+    "type": "说一句话类",
+    "origin": "原创",
+    "answer_format": "一句话",
+    "localized": {
+      "text": "给群里发一句话，让大家立刻回复。",
+      "low": "没人理",
+      "high": "群里炸了"
+    },
+    "spicy": false,
+    "source": {
+      "kind": "ORIGINAL",
+      "ref": "用户 2026-11-04 审核通过第三批（R3-63）"
+    },
+    "status": "DRAFT"
+  },
+  {
+    "id": "nd-orig-0423",
+    "type": "说一句话类",
+    "origin": "原创",
+    "answer_format": "一句话",
+    "localized": {
+      "text": "用一句话让室友帮你带饭。",
+      "low": "他不理你",
+      "high": "他马上答应"
+    },
+    "spicy": false,
+    "source": {
+      "kind": "ORIGINAL",
+      "ref": "用户 2026-11-04 审核通过第三批（R3-65）"
+    },
+    "status": "DRAFT"
+  },
+  {
+    "id": "nd-orig-0424",
+    "type": "说东西排序类",
+    "origin": "原创",
+    "answer_format": "一个东西或一个词",
+    "localized": {
+      "text": "厕所隔间里贴着一张纸，上面写的什么最让你蹲不住？",
+      "low": "继续蹲",
+      "high": "提裤就跑"
+    },
+    "spicy": true,
+    "source": {
+      "kind": "ORIGINAL",
+      "ref": "用户 2026-11-04 审核通过第三批（R3-67）"
+    },
+    "status": "DRAFT"
+  },
+  {
+    "id": "nd-orig-0425",
+    "type": "说东西排序类",
+    "origin": "原创",
+    "answer_format": "一个东西或一个词",
+    "localized": {
+      "text": "洗澡时发现没热水了，你最怕这时候正在干什么？",
+      "low": "无所谓",
+      "high": "绝望"
+    },
+    "spicy": true,
+    "source": {
+      "kind": "ORIGINAL",
+      "ref": "用户 2026-11-04 审核通过第三批（R3-70）"
+    },
+    "status": "DRAFT"
+  },
+  {
+    "id": "nd-orig-0426",
+    "type": "说东西排序类",
+    "origin": "原创",
+    "answer_format": "一个东西或一个词",
+    "localized": {
+      "text": "健身房更衣室里，看到什么你会立刻转身？",
+      "low": "习以为常",
+      "high": "马上出去"
+    },
+    "spicy": true,
+    "source": {
+      "kind": "ORIGINAL",
+      "ref": "用户 2026-11-04 审核通过第三批（R3-72）"
+    },
+    "status": "DRAFT"
+  },
+  {
+    "id": "nd-orig-0427",
+    "type": "场景选择类",
+    "origin": "原创",
+    "answer_format": "一个地点或一句话",
+    "localized": {
+      "text": "你在哪儿睡着打呼噜最丢人？",
+      "low": "无所谓",
+      "high": "想换城市生活"
+    },
+    "spicy": true,
+    "source": {
+      "kind": "ORIGINAL",
+      "ref": "用户 2026-11-04 审核通过第三批（R3-78）"
+    },
+    "status": "DRAFT"
+  },
+  {
+    "id": "nd-orig-0428",
+    "type": "场景选择类",
+    "origin": "原创",
+    "answer_format": "一个地点或一句话",
+    "localized": {
+      "text": "你在哪儿被前任撞见最尴尬？",
+      "low": "笑着打招呼",
+      "high": "想原地消失"
+    },
+    "spicy": true,
+    "source": {
+      "kind": "ORIGINAL",
+      "ref": "用户 2026-11-04 审核通过第三批（R3-82）"
+    },
+    "status": "DRAFT"
+  },
+  {
+    "id": "nd-orig-0429",
+    "type": "说一句话类",
+    "origin": "原创",
+    "answer_format": "一句话",
+    "localized": {
+      "text": "说一句在厕所隔间里最不该说出口的话。",
+      "low": "还好",
+      "high": "隔壁吓跑"
+    },
+    "spicy": true,
+    "source": {
+      "kind": "ORIGINAL",
+      "ref": "用户 2026-11-04 审核通过第三批（R3-84）"
+    },
+    "status": "DRAFT"
+  },
+  {
+    "id": "nd-orig-0430",
+    "type": "说一句话类",
+    "origin": "原创",
+    "answer_format": "一句话",
+    "localized": {
+      "text": "你在电梯里放了个屁，说一句话甩锅。",
+      "low": "很自然",
+      "high": "此地无银三百两"
+    },
+    "spicy": true,
+    "source": {
+      "kind": "ORIGINAL",
+      "ref": "用户 2026-11-04 审核通过第三批（R3-86）"
+    },
+    "status": "DRAFT"
   }
 ]
