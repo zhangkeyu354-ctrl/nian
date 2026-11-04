@@ -11,3 +11,4 @@
 @media (prefers-reduced-motion:reduce){.my-flip{animation:none;opacity:1}}
 .my-skill{margin:10px 0;color:var(--mu)}
 .my-world .my-mute{display:inline;width:auto;min-height:28px;margin:0;padding:0 6px}
+.my-ic{width:1.15em;height:1.15em;vertical-align:-.2em;margin-right:3px}.my-hand .my-ic{display:block;width:34px;height:34px;margin:0 auto 4px}
