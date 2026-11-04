@@ -10,3 +10,5 @@
 动效库：tsParticles、react-dice-complete（npm，开源）。
 
 胜利特效：canvas-confetti（npm，ISC）。路线图标：game-icons.net（CC-BY 3.0）。
+
+过场动效：GSAP（npm，官方标准免费授权）。

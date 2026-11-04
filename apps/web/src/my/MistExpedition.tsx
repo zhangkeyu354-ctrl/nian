@@ -3,6 +3,7 @@ import { io } from "socket.io-client";
 import DiceRaw from "react-dice-complete";
 import { tsParticles } from "@tsparticles/engine";
 import { loadSlim } from "@tsparticles/slim";
+import gsap from "gsap";
 import confetti from "canvas-confetti";
 import "./my.css";
 const sock = io({ transports: ["websocket", "polling"] });
@@ -21,11 +22,24 @@ const EMBERS: any = { fullScreen: { enable: false }, fpsLimit: 30, detectRetina:
 function Embers() { const id = useRef("my-embers-" + Math.random().toString(36).slice(2)).current; useEffect(() => { if (reduced()) return; let dead = false, c: any; (engineReady ??= Promise.resolve(loadSlim(tsParticles))).then(() => tsParticles.load({ id, options: EMBERS })).then((x: any) => { c = x; if (dead) c?.destroy(); }).catch(() => {}); return () => { dead = true; c?.destroy(); }; }, [id]); return <div id={id} className="my-embers" />; }
 function Dice3D({ values }: { values: number[] }) { const r = useRef<any>(null); useEffect(() => { const t = setTimeout(() => r.current?.rollAll(values), 60); return () => clearTimeout(t); }, [values.join()]); return <div className="my-dice"><ReactDice ref={r} numDice={values.length} defaultRoll={1} dieSize={54} faceColor="#e9dfc7" dotColor="#2a2118" outline outlineColor="#7a5a2a" rollTime={1.1} disableIndividual rollDone={() => {}} /></div>; }
 function Trail({ idx }: { idx: number }) { return <div className="my-trail" aria-label={`第 ${idx + 1} 场`}>{[0, 1, 2, 3].map((i) => <span key={i} className={i < idx ? "done" : i === idx ? "now" : ""}><img src={`/assets/mist-expedition/icons/n${i}.svg`} alt="" /></span>)}</div>; }
+const ACT = ["第一幕", "第二幕", "第三幕", "终幕"];
+function Cinematic({ art, kicker, title, tone, onDone }: any) {
+  const r = useRef<HTMLDivElement>(null);
+  useEffect(() => { const q = gsap.utils.selector(r); const tl = gsap.timeline({ onComplete: onDone });
+    tl.from(r.current, { opacity: 0, duration: .35 }).from(q("img"), { scale: 1.45, y: 50, duration: 3.2, ease: "power2.out" }, 0)
+      .from(q(".bar"), { scaleY: 0, duration: .5, ease: "power3.out" }, .05).from(q("small"), { opacity: 0, y: 12, duration: .5 }, .55)
+      .from(q("h1"), { opacity: 0, scale: 1.7, letterSpacing: "0.5em", duration: .8, ease: "power4.out" }, .8).to(r.current, { opacity: 0, duration: .4 }, 2.9);
+    if (tone === "bad") tl.to(q("img"), { x: "+=10", yoyo: true, repeat: 7, duration: .05 }, .8);
+    return () => { tl.kill(); }; }, []);
+  return <div ref={r} className={`my-cine ${tone}`} onClick={onDone} data-testid="my-cine"><img src={art} alt="" /><i className="bar t" /><i className="bar b" /><div><small>{kicker}</small><h1>{title}</h1></div></div>;
+}
 const STEP: any = { COUNCIL: "营地议事", FORK: "岔路抉择", PLAN: "商量方案", CONTRIBUTE: "暗中出力", ROLL: "掷骰", FLASHBACK: "闪回窗口" };
 export function MistExpedition() {
   const q = new URLSearchParams(location.search); const [code, setCode] = useState(q.get("room")?.toUpperCase() ?? "");
   const [name, setName] = useState(get("my-name") ?? ""); const [v, setV] = useState<any>(null); const [err, setErr] = useState(""); const [busy, setBusy] = useState(false); const [now, setNow] = useState(Date.now());
   useEffect(() => { sock.on("my:state", setV); const t = setInterval(() => setNow(Date.now()), 500); const rejoin = () => { const c = new URLSearchParams(location.search).get("room")?.toUpperCase(); const tk = c && get("my-seat-" + c); if (tk) call("my:join", { code: c, token: tk }).then((r) => r.ok && setV(r.snapshot)); }; sock.on("connect", rejoin); if (sock.connected) rejoin(); return () => { sock.off("my:state", setV); sock.off("connect", rejoin); clearInterval(t); }; }, []);
+  const [cine, setCine] = useState<any>(null); const seen = useRef("");
+  useEffect(() => { if (!v?.started || reduced()) return; const art = v.sceneInfo ? `/assets/mist-expedition/scenes/${v.sceneInfo.id}.webp` : ""; const scene = v.ending ? "end" + v.ending : "s" + v.sceneIdx; if (seen.current === scene) return; seen.current = scene; setCine(v.ending ? { art, kicker: "终章", title: v.endingInfo.title, tone: v.ending === "E02" ? "bad" : "good" } : { art, kicker: ACT[v.sceneIdx], title: v.sceneInfo.title, tone: "" }); }, [v?.sceneIdx, v?.ending, v?.started]);
   const key = v?.started ? `${v.sceneIdx}|${v.phase}|${v.ending ?? ""}` : "";
   useEffect(() => { if (!key) return; if (v.ending) { if (v.ending !== "E02" && !reduced()) confetti({ particleCount: 120, spread: 80, origin: { y: .35 }, colors: ["#d9b45b", "#fff3c9", "#8fc7c0"], disableForReducedMotion: true }); return sfx(v.ending === "E02" ? "lose" : "win"); } if (v.phase === "PLAN") sfx("scene"); if (v.phase === "ROLL") { sfx("shuffle"); (v.reveal ?? []).forEach((_: any, i: number) => setTimeout(() => sfx("card"), i * 1000)); } if (v.phase === "FLASHBACK") sfx(v.roll?.panic ? "panic" : "dice"); }, [key]);
   const track = !v?.started ? "" : v.ending ? (v.ending === "E02" ? "tense" : "win") : v.sceneIdx === 3 ? "final" : v.doom >= 6 || ["CONTRIBUTE", "ROLL", "FLASHBACK"].includes(v.phase) ? "tense" : "explore";
@@ -38,6 +52,7 @@ export function MistExpedition() {
   const left = v.deadline ? Math.max(0, Math.ceil((v.deadline - (now + 0)) / 1000)) : 0; const me = v.players[v.me]; const actor = v.actor === v.me; const dn = (s: number) => v.names[s];
   const fx = `my-world${v.roll?.panic && v.phase === "FLASHBACK" ? " my-shake" : ""}${v.doom >= 6 ? " my-danger" : ""}`;
   return <div className={fx}>
+    {cine && <Cinematic {...cine} onDone={() => setCine(null)} />}
     <header className="my-top"><b>第 {v.sceneIdx + 1}/4 场</b><span data-testid="my-doom"><I n="doom" />{v.doom}/8</span><span><I n="supplies" />{v.supplies}</span><span><I n="clues" />{v.clues}</span><span><I n="omen" />{v.omen}</span><button className="my-mute" aria-label="音效开关" onClick={() => { set("my-mute", get("my-mute") === "1" ? "0" : "1"); playBgm(track); setNow(Date.now()); }}>{get("my-mute") === "1" ? "🔇" : "🔊"}</button>{left > 0 && <span>⏱{left}</span>}</header>
     {v.ending ? <End v={v} dn={dn} /> : <>
       <Trail idx={v.sceneIdx} /><section className="my-scene"><div className="my-stage" key={v.sceneInfo.id}><img className="my-art" src={`/assets/mist-expedition/scenes/${v.sceneInfo.id}.webp`} alt="" /><i className="my-glow" /><Embers /><i className="my-fog" /><i className="my-fog b" /></div><small>{v.sceneInfo.type} · {STEP[v.phase]}</small><h2>{v.sceneInfo.title}</h2><p>{v.sceneInfo.narration}</p><p className="my-actor">主行动者：{dn(v.actor)}{actor && "（你）"}</p></section>
