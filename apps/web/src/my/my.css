@@ -71,3 +71,4 @@
 .my-drawer{position:relative}
 .my-world{overflow-x:clip}.my-spacer{min-height:6vh}.my-world>section{padding:7px 10px;margin:4px 0}.my-world>section h3{margin:2px 0;font-size:15px}
 .my-actor{padding:2px 8px!important}.my-intel p{margin:2px 0;font-size:13px}.my-hand button,.my-flip{aspect-ratio:3/4;max-height:26vh}
+.my-boss i{display:block;height:12px;margin:5px 0;background:#000a;border:1px solid #8a6a35;border-radius:6px;overflow:hidden}.my-boss u{display:block;height:100%;background:linear-gradient(90deg,#8e1f18,#e0523f);transition:width .6s}.my-boss small{color:#ffb4a6}
