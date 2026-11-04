@@ -8,3 +8,5 @@
 场景图：用户用 ChatGPT 生成，已裁掉模糊边或白边并压缩为 WebP。
 
 动效库：tsParticles、react-dice-complete（npm，开源）。
+
+胜利特效：canvas-confetti（npm，ISC）。路线图标：game-icons.net（CC-BY 3.0）。

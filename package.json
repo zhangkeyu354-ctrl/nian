@@ -55,6 +55,7 @@
   },
   "devDependencies": {
     "@tailwindcss/vite": "4.3.3",
+    "@types/canvas-confetti": "^1.9.0",
     "@types/node": "26.6.5",
     "@types/qrcode": "1.5.5",
     "@types/react": "19.3.0",
@@ -78,6 +79,7 @@
     "@tsparticles/slim": "^4.5.1",
     "@types/three": "^0.170.0",
     "cannon-es": "0.20.0",
+    "canvas-confetti": "^1.9.4",
     "qrcode": "1.5.4",
     "react": "19.3.1",
     "react-dice-complete": "^2.3.2",
