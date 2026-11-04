@@ -23,6 +23,7 @@ const NaodongScale = lazy(() => import("./nd/NaodongScale.tsx").then(m => ({defa
 const q = new URLSearchParams(location.search);
 const Xiabaiwang = lazy(() => import('./xb/Xiabaiwang.tsx').then(m => ({default:m.Xiabaiwang})));
 import { GameLobby } from "./GameLobby.tsx";
+import { FxPreview } from "./BoardFx.tsx";
 const Codenames = lazy(() =>
   import("./cn/Codenames.tsx").then((m) => ({ default: m.Codenames })),
 );
@@ -50,6 +51,8 @@ createRoot(document.getElementById("root")!).render(
       <Suspense fallback={<p>正在打开手机样稿…</p>}>
         <MobilePreview />
       </Suspense>
+    ) : q.get("view") === "fx" ? (
+      <FxPreview />
     ) : q.get("view") === "props" ? (
       <Gallery />
     ) : q.get("game") === "tp" || q.get("game") === "fa" ? (

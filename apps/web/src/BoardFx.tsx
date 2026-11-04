@@ -5,17 +5,19 @@ import layoutData from "./layout.json" with { type: "json" };
 import { useSettings } from "./Settings.tsx";
 import { actorColor } from "./playerColors.ts";
 import "./board-fx.css";
+import { playFxSound } from "./game-sound.ts";
+import vfxMeta from "./vfx-meta.json" with { type: "json" };
 
 /**
  * 动作特效（2026-10-22 第二版）：每个行动都有棋盘特效 + 顶部动作播报。
  * 只读公开事件 / 公开状态（与所有人看到的一样），不改变规则；关闭动画时不显示。
  */
-type Kind =
+export type Kind =
   | "slash" | "lift" | "hook" | "sacrifice" | "rescue" | "pallet" | "break" | "chest"
   | "repair" | "sparks" | "complete" | "heal" | "healed" | "cleanse" | "totem"
   | "hide" | "search" | "exit" | "sabotage" | "reveal" | "trap" | "escape"
   | "power" | "teleport" | "item" | "crow";
-interface Fx { id: string; kind: Kind; x: number; y: number; color?: string }
+export interface Fx { id: string; kind: Kind; x: number; y: number; color?: string }
 export interface Callout { id: string; icon: string; text: string; color: string; tone: string }
 const LIFE: Partial<Record<Kind, number>> = { hook: 1700, sacrifice: 1700, complete: 1900, escape: 1900, repair: 1500, cleanse: 1500, heal: 1500 };
 
@@ -180,25 +182,120 @@ export function fxFrom(before: GameState, after: GameState, events: Event[]) {
 }
 
 const SLASH = "M-70 -46 Q 0 0 70 46";
-export function BoardFx({ state }: { state: GameState }) {
-  const { effectiveAnimations } = useSettings();
-  const prev = useRef(state);
-  const [fx, setFx] = useState<Fx[]>([]);
-  useEffect(() => {
-    const old = prev.current;
-    prev.current = state;
-    if (old === state || !effectiveAnimations) return;
-    const fresh = fxFrom(old, state, state.events.slice(old.events.length)).fx;
-    if (!fresh.length) return;
-    setFx((q) => [...q, ...fresh].slice(-12));
-    for (const f of fresh) setTimeout(() => setFx((q) => q.filter((x) => x.id !== f.id)), LIFE[f.kind] ?? 1300);
-  }, [state, effectiveAnimations]);
-  if (!fx.length) return null;
+/** PVFX Foundry（CC0）像素序列帧特效：每个棋盘动作配 1–2 个 */
+type Vfx = { w: number; h: number; n: number; ms: number; px: number; py: number };
+const VFX_OF: Partial<Record<Kind, Array<[string, number, number?]>>> = {
+  slash: [["slash", 4], ["blood", 2.9, 160]],
+  lift: [["lift", 4.2], ["shock", 2.6]],
+  hook: [["hook", 3.8], ["blood", 2.2, 200]],
+  sacrifice: [["sacrifice", 4.8], ["power", 2.6, 200]],
+  rescue: [["rescue", 4.2]],
+  pallet: [["pallet", 2.9, 350], ["dust", 3.5, 380]],
+  break: [["break", 4.5], ["dust", 3.2]],
+  chest: [["chest", 5.1], ["coins", 3.8, 250]],
+  repair: [["repair", 2.9]],
+  sparks: [["sabotage", 2.2]],
+  complete: [["complete", 4.2], ["shock", 2.9]],
+  heal: [["heal", 3.8]],
+  healed: [["healed", 4.5]],
+  cleanse: [["cleanse", 3.5]],
+  totem: [["cleanse", 3.5]],
+  hide: [["hide", 4.2]],
+  search: [["reveal", 4.2]],
+  exit: [["exit", 3.4]],
+  sabotage: [["sabotage", 3.8], ["break", 2.9, 120]],
+  reveal: [["reveal", 3.5]],
+  trap: [["trap", 3.2]],
+  escape: [["escape", 3.6], ["exit", 3]],
+  power: [["power", 3.5]],
+  teleport: [["teleport", 4.2], ["portal", 2.6, 150]],
+  item: [["reveal", 4.2]],
+  crow: [["crow", 3.5]],
+};
+function Sprite({ id, scale, delay }: { id: string; scale: number; delay?: number }) {
+  const m = (vfxMeta as Record<string, Vfx>)[id];
+  if (!m) return null;
   return (
-    <g className="board-fx" pointerEvents="none" aria-hidden="true">
-      {fx.map((f) => (
-        <g key={f.id} transform={`translate(${f.x} ${f.y}) scale(1.35)`} className={"fx fx-" + f.kind} data-fx={f.kind} style={{ ["--fx" as string]: f.color ?? "#ffd23a" }}>
+    <svg x={-m.px * scale} y={-m.py * scale} width={m.w * scale} height={m.h * scale} viewBox={`0 0 ${m.w} ${m.h}`} overflow="hidden" className="fx-vfx">
+      <image
+        href={`/assets/cc0/vfx/${id}.png`}
+        width={m.w * m.n}
+        height={m.h}
+        imageRendering="pixelated"
+        style={{ animation: `vfx-steps ${m.n * m.ms}ms steps(${m.n}) ${delay ?? 0}ms forwards`, ["--dx" as string]: `-${m.w * m.n}px` }}
+      />
+    </svg>
+  );
+}
+/** Kenney CC0 粒子贴图：[贴图, 颜色, 大小, 动画, 延迟ms] */
+const P = "/assets/cc0/particles/";
+type Part = [string, "red" | "gold" | "green" | "purple" | "white" | "smoke" | "blue", number, "burst" | "rise" | "spin" | "pop" | "drift", number?];
+const PARTICLES: Partial<Record<Kind, Part[]>> = {
+  slash: [["slash_03", "red", 240, "pop"], ["scratch_01", "red", 200, "pop", 120], ["smoke_04", "red", 220, "drift", 80]],
+  lift: [["twirl_02", "red", 220, "spin"], ["smoke_07", "smoke", 200, "rise"]],
+  hook: [["spark_05", "white", 160, "burst"], ["scorch_02", "red", 220, "pop", 100], ["light_02", "red", 260, "burst"]],
+  sacrifice: [["magic_04", "purple", 300, "spin"], ["smoke_09", "purple", 260, "rise", 150], ["flame_03", "purple", 160, "rise", 80]],
+  rescue: [["light_03", "green", 260, "burst"], ["star_06", "green", 120, "rise"]],
+  pallet: [["dirt_02", "smoke", 240, "drift", 300], ["smoke_02", "smoke", 220, "drift", 350]],
+  break: [["dirt_03", "gold", 240, "burst"], ["spark_06", "gold", 180, "burst"]],
+  chest: [["star_04", "gold", 180, "rise"], ["light_02", "gold", 260, "burst"], ["star_08", "gold", 110, "rise", 150]],
+  repair: [["spark_02", "gold", 180, "burst"], ["spark_04", "gold", 150, "burst", 300], ["muzzle_02", "gold", 140, "pop", 600]],
+  sparks: [["spark_01", "gold", 140, "burst"]],
+  complete: [["flare_01", "gold", 340, "burst"], ["circle_05", "gold", 300, "burst", 120], ["star_09", "gold", 200, "spin"]],
+  heal: [["light_01", "green", 240, "burst"], ["star_06", "green", 120, "rise", 200]],
+  healed: [["circle_03", "green", 240, "burst"], ["star_02", "green", 140, "rise"]],
+  cleanse: [["magic_02", "white", 260, "spin"], ["smoke_10", "smoke", 220, "rise", 200]],
+  totem: [["symbol_01", "white", 220, "pop"], ["smoke_05", "smoke", 240, "rise"]],
+  hide: [["smoke_03", "smoke", 200, "drift"]],
+  search: [["light_02", "white", 220, "burst"]],
+  exit: [["trace_05", "gold", 260, "rise"], ["light_03", "gold", 300, "burst"]],
+  sabotage: [["spark_07", "white", 180, "burst"], ["smoke_06", "smoke", 220, "rise", 100]],
+  reveal: [["star_01", "white", 150, "pop"]],
+  trap: [["spark_03", "white", 140, "burst"]],
+  escape: [["light_03", "gold", 320, "burst"], ["star_05", "gold", 160, "rise", 150]],
+  power: [["magic_05", "red", 300, "spin"], ["scorch_01", "red", 260, "pop"]],
+  teleport: [["twirl_03", "purple", 260, "spin"], ["magic_01", "purple", 220, "burst", 100]],
+  item: [["star_07", "gold", 180, "pop"], ["light_01", "gold", 220, "burst"]],
+  crow: [["smoke_08", "smoke", 180, "drift"]],
+};
+const TINT: Record<string, string> = {
+  red: "1 0 0 0 0  0 .12 0 0 0  0 0 .1 0 0  0 0 0 1 0",
+  gold: "1 0 0 0 0  0 .8 0 0 0  0 0 .25 0 0  0 0 0 1 0",
+  green: ".35 0 0 0 0  0 1 0 0 0  0 0 .5 0 0  0 0 0 1 0",
+  purple: ".7 0 0 0 0  0 .2 0 0 0  0 0 1 0 0  0 0 0 1 0",
+  blue: ".4 0 0 0 0  0 .75 0 0 0  0 0 1 0 0  0 0 0 1 0",
+  white: "1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 1 0",
+  smoke: ".75 0 0 0 0  0 .72 0 0 0  0 0 .66 0 0  0 0 0 .85 0",
+};
+export function FxDefs() {
+  return (
+    <defs>
+        {Object.entries(TINT).map(([k, m]) => (
+          <filter key={k} id={"tint-" + k} colorInterpolationFilters="sRGB">
+            <feColorMatrix type="matrix" values={m} />
+          </filter>
+        ))}
+    </defs>
+  );
+}
+export function FxNode({ f }: { f: Fx }) {
+  return (
+        <g transform={`translate(${f.x} ${f.y}) scale(1.35)`} className={"fx fx-" + f.kind} data-fx={f.kind} style={{ ["--fx" as string]: f.color ?? "#ffd23a" }}>
           <circle className="fx-flash" r="120" />
+          {(VFX_OF[f.kind] ?? []).map(([id, sc, d], i) => <Sprite key={"v" + i} id={id} scale={sc} delay={d} />)}
+          {(PARTICLES[f.kind] ?? []).map((p, i) => (
+            <image
+              key={i}
+              href={P + p[0] + ".webp"}
+              x={-p[2] / 2}
+              y={-p[2] / 2}
+              width={p[2]}
+              height={p[2]}
+              filter={`url(#tint-${p[1]})`}
+              className={"fx-p fx-p-" + p[3]}
+              style={{ animationDelay: (p[4] ?? 0) + "ms" }}
+            />
+          ))}
           {f.kind === "slash" && (
             <>
               <circle className="fx-burst" r="100" />
@@ -310,7 +407,31 @@ export function BoardFx({ state }: { state: GameState }) {
           )}
           {f.kind === "crow" && [0, 1, 2].map((i) => <path key={i} className="fx-crow" d="M-18 0 Q-9 -10 0 0 Q9 -10 18 0" style={{ animationDelay: i * 90 + "ms" }} />)}
         </g>
-      ))}
+  );
+}
+export function BoardFx({ state }: { state: GameState }) {
+  const { effectiveAnimations, sound } = useSettings();
+  const prev = useRef(state);
+  const [fx, setFx] = useState<Fx[]>([]);
+  useEffect(() => {
+    const old = prev.current;
+    prev.current = state;
+    if (old === state || state.events.length < old.events.length) return;
+    const added = state.events.slice(old.events.length);
+    const fresh = fxFrom(old, state, added).fx;
+    // 音效：关闭动画也照常播放；同一批同类只响一次
+    const kinds = new Set(fresh.map((f) => f.kind as string));
+    if (added.some((e) => e.type === "MOVED")) kinds.add("step");
+    [...kinds].slice(0, 3).forEach((k, i) => setTimeout(() => playFxSound(k, sound), i * 140));
+    if (!effectiveAnimations || !fresh.length) return;
+    setFx((q) => [...q, ...fresh].slice(-12));
+    for (const f of fresh) setTimeout(() => setFx((q) => q.filter((x) => x.id !== f.id)), LIFE[f.kind] ?? 1800);
+  }, [state, effectiveAnimations, sound]);
+  if (!fx.length) return null;
+  return (
+    <g className="board-fx" pointerEvents="none" aria-hidden="true">
+      <FxDefs />
+      {fx.map((f) => <FxNode key={f.id} f={f} />)}
     </g>
   );
 }
@@ -342,5 +463,40 @@ export function ActionCallouts({ state }: { state: GameState }) {
         </div>
       ))}
     </div>
+  );
+}
+
+/** 特效预览页 /?view=fx：循环播放每种棋盘动作特效（配音效），方便检查 */
+export const FX_KINDS: Kind[] = ["slash", "lift", "hook", "sacrifice", "rescue", "pallet", "break", "chest", "repair", "complete", "heal", "healed", "cleanse", "hide", "search", "exit", "sabotage", "reveal", "trap", "escape", "power", "teleport", "item", "crow"];
+const FX_NAME: Record<string, string> = { slash: "攻击受伤", lift: "扛起", hook: "挂上钩子", sacrifice: "献祭", rescue: "救下", pallet: "放木板", break: "破坏木板/墙", chest: "开箱子", repair: "修发电机", complete: "发电机修好", heal: "治疗", healed: "恢复健康", cleanse: "净化图腾", hide: "躲储物柜", search: "搜柜", exit: "开大门", sabotage: "破坏发电机", reveal: "翻道具", trap: "捕兽夹", escape: "逃脱", power: "杀手力量", teleport: "瞬移", item: "用物品", crow: "惊飞乌鸦" };
+export function FxPreview() {
+  const { sound } = useSettings();
+  const [tick, setTick] = useState(0);
+  useEffect(() => {
+    const t = setInterval(() => setTick((n) => n + 1), 2200);
+    return () => clearInterval(t);
+  }, []);
+  const [solo, setSolo] = useState<Kind | null>(null);
+  useEffect(() => {
+    if (solo) playFxSound(solo, sound);
+  }, [solo, tick]);
+  const cols = 4, cell = 320;
+  return (
+    <main style={{ background: "#141d20", minHeight: "100vh", color: "#eee", padding: 12, fontFamily: "system-ui" }}>
+      <h2 style={{ margin: "4px 0 8px" }}>黎明杀机 · 特效预览（点一格单独看并播放音效）</h2>
+      <svg viewBox={`0 0 ${cols * cell} ${Math.ceil(FX_KINDS.length / cols) * cell}`} style={{ width: "100%", maxWidth: 1100 }}>
+        <FxDefs />
+        {FX_KINDS.map((k, i) => {
+          const x = (i % cols) * cell + cell / 2, y = Math.floor(i / cols) * cell + cell / 2;
+          return (
+            <g key={k} onClick={() => setSolo(k)} style={{ cursor: "pointer" }}>
+              <rect x={x - cell / 2 + 6} y={y - cell / 2 + 6} width={cell - 12} height={cell - 12} rx="10" fill={solo === k ? "#2c4046" : "#1d2a2e"} />
+              <text x={x} y={y + cell / 2 - 20} textAnchor="middle" fill="#e9e3c9" fontSize="26">{FX_NAME[k]}</text>
+              {(!solo || solo === k) && <FxNode key={k + tick} f={{ id: k + tick, kind: k, x, y: y - 10, color: "#ffd23a" }} />}
+            </g>
+          );
+        })}
+      </svg>
+    </main>
   );
 }

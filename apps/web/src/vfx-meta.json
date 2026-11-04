@@ -1,0 +1,272 @@
+{
+"slash": {
+"w": 56,
+"h": 56,
+"n": 12,
+"ms": 50,
+"px": 28,
+"py": 28,
+"loop": false,
+"src": "melee/shadow-claw"
+},
+"blood": {
+"w": 128,
+"h": 120,
+"n": 16,
+"ms": 70,
+"px": 28,
+"py": 62,
+"loop": false,
+"src": "impacts/blood-splat"
+},
+"hook": {
+"w": 96,
+"h": 80,
+"n": 11,
+"ms": 70,
+"px": 48,
+"py": 40,
+"loop": false,
+"src": "impacts/crit-hit"
+},
+"sacrifice": {
+"w": 96,
+"h": 48,
+"n": 23,
+"ms": 65,
+"px": 0,
+"py": 0,
+"loop": false,
+"src": "shadow/soul-drain"
+},
+"lift": {
+"w": 68,
+"h": 32,
+"n": 13,
+"ms": 60,
+"px": 24,
+"py": 28,
+"loop": false,
+"src": "smoke/dash-dust"
+},
+"pallet": {
+"w": 128,
+"h": 64,
+"n": 19,
+"ms": 70,
+"px": 64,
+"py": 44,
+"loop": false,
+"src": "impacts/ground-slam"
+},
+"dust": {
+"w": 72,
+"h": 40,
+"n": 14,
+"ms": 70,
+"px": 36,
+"py": 33,
+"loop": false,
+"src": "smoke/dust-puff"
+},
+"break": {
+"w": 64,
+"h": 56,
+"n": 18,
+"ms": 60,
+"px": 30,
+"py": 44,
+"loop": false,
+"src": "impacts/rock-shatter"
+},
+"chest": {
+"w": 48,
+"h": 48,
+"n": 16,
+"ms": 75,
+"px": 24,
+"py": 24,
+"loop": true,
+"src": "ui/treasure-glint"
+},
+"coins": {
+"w": 32,
+"h": 32,
+"n": 10,
+"ms": 60,
+"px": 16,
+"py": 16,
+"loop": false,
+"src": "ui/coin-pickup"
+},
+"repair": {
+"w": 112,
+"h": 112,
+"n": 13,
+"ms": 60,
+"px": 56,
+"py": 58,
+"loop": false,
+"src": "lightning/static-burst"
+},
+"complete": {
+"w": 64,
+"h": 96,
+"n": 20,
+"ms": 70,
+"px": 32,
+"py": 88,
+"loop": false,
+"src": "ui/level-up"
+},
+"heal": {
+"w": 64,
+"h": 96,
+"n": 21,
+"ms": 80,
+"px": 32,
+"py": 86,
+"loop": false,
+"src": "holy/holy-heal"
+},
+"healed": {
+"w": 48,
+"h": 64,
+"n": 16,
+"ms": 80,
+"px": 24,
+"py": 57,
+"loop": true,
+"src": "holy/regen-aura"
+},
+"cleanse": {
+"w": 80,
+"h": 120,
+"n": 14,
+"ms": 80,
+"px": 40,
+"py": 108,
+"loop": false,
+"src": "holy/holy-smite"
+},
+"hide": {
+"w": 64,
+"h": 56,
+"n": 21,
+"ms": 70,
+"px": 32,
+"py": 50,
+"loop": false,
+"src": "smoke/smoke-bomb"
+},
+"exit": {
+"w": 48,
+"h": 96,
+"n": 19,
+"ms": 70,
+"px": 24,
+"py": 88,
+"loop": false,
+"src": "holy/divine-beam"
+},
+"sabotage": {
+"w": 64,
+"h": 64,
+"n": 8,
+"ms": 80,
+"px": 32,
+"py": 32,
+"loop": false,
+"src": "impacts/hit-spark"
+},
+"reveal": {
+"w": 40,
+"h": 40,
+"n": 13,
+"ms": 60,
+"px": 20,
+"py": 26,
+"loop": false,
+"src": "ui/star-burst-pickup"
+},
+"trap": {
+"w": 96,
+"h": 80,
+"n": 13,
+"ms": 60,
+"px": 48,
+"py": 38,
+"loop": false,
+"src": "impacts/parry"
+},
+"escape": {
+"w": 48,
+"h": 80,
+"n": 21,
+"ms": 70,
+"px": 24,
+"py": 72,
+"loop": false,
+"src": "holy/resurrect"
+},
+"power": {
+"w": 96,
+"h": 112,
+"n": 27,
+"ms": 80,
+"px": 48,
+"py": 66,
+"loop": false,
+"src": "shadow/curse"
+},
+"teleport": {
+"w": 64,
+"h": 80,
+"n": 19,
+"ms": 60,
+"px": 32,
+"py": 72,
+"loop": false,
+"src": "arcane/blink-out"
+},
+"portal": {
+"w": 108,
+"h": 128,
+"n": 22,
+"ms": 80,
+"px": 54,
+"py": 108,
+"loop": false,
+"src": "arcane/portal-summon"
+},
+"rescue": {
+"w": 56,
+"h": 72,
+"n": 21,
+"ms": 70,
+"px": 28,
+"py": 17,
+"loop": false,
+"src": "holy/angel-feathers"
+},
+"crow": {
+"w": 96,
+"h": 48,
+"n": 9,
+"ms": 70,
+"px": 48,
+"py": 24,
+"loop": false,
+"src": "wind/wind-gust"
+},
+"shock": {
+"w": 120,
+"h": 52,
+"n": 16,
+"ms": 70,
+"px": 60,
+"py": 30,
+"loop": false,
+"src": "impacts/shockwave-ring"
+}
+}
