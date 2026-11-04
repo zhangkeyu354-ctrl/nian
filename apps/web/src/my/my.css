@@ -13,3 +13,24 @@
 .my-world .my-mute{display:inline;width:auto;min-height:28px;margin:0;padding:0 6px}
 .my-ic{width:1.15em;height:1.15em;vertical-align:-.2em;margin-right:3px}.my-hand .my-ic{display:block;width:34px;height:34px;margin:0 auto 4px}
 .my-art{display:block;width:calc(100% + 32px);margin:0 -16px 8px;height:min(62vw,300px);object-fit:cover;object-position:top;-webkit-mask-image:linear-gradient(#000 80%,transparent);mask-image:linear-gradient(#000 80%,transparent)}
+.my-stage{position:relative;overflow:hidden;margin:0 -16px 8px;height:min(62vw,300px);animation:my-fade .7s ease-out}
+.my-stage .my-art{width:100%;height:100%;margin:0;transform-origin:50% 20%;animation:my-drift 26s ease-in-out infinite alternate}
+.my-fog{position:absolute;left:-50%;bottom:-8%;width:200%;height:70%;background:url(/assets/mist-expedition/fog.webp) repeat-x 0 0/50% 100%;opacity:.42;mix-blend-mode:screen;pointer-events:none;-webkit-mask-image:linear-gradient(transparent,#000 45%);mask-image:linear-gradient(transparent,#000 45%);animation:my-fog 38s linear infinite}
+.my-fog.b{bottom:-20%;opacity:.28;animation-duration:24s;animation-direction:reverse}
+.my-glow{position:absolute;inset:0;background:radial-gradient(circle at 50% 28%,rgba(255,190,90,.22),transparent 48%);mix-blend-mode:screen;pointer-events:none;animation:my-flicker 3.6s steps(9) infinite}
+.my-flip{animation:my-flip .55s cubic-bezier(.2,.8,.3,1.2) forwards;transform-style:preserve-3d}
+.my-pop{animation:my-pop .45s cubic-bezier(.2,1.6,.4,1)}
+.my-shake{animation:my-shake .5s 2}
+.my-danger .my-stage::after{content:"";position:absolute;inset:0;box-shadow:inset 0 0 60px rgba(190,40,30,.65);animation:my-pulse 1.8s ease-in-out infinite}
+.my-danger [data-testid=my-doom]{color:#ff8a78;animation:my-pulse 1.8s infinite}
+.my-world>section{animation:my-rise .35s ease-out}
+@keyframes my-drift{from{transform:scale(1.03)}to{transform:scale(1.12) translate(-1.5%,1%)}}
+@keyframes my-fog{from{transform:translateX(0)}to{transform:translateX(25%)}}
+@keyframes my-flicker{0%,100%{opacity:.75}20%{opacity:1}35%{opacity:.6}55%{opacity:.95}75%{opacity:.7}}
+@keyframes my-fade{from{opacity:0;filter:blur(6px)}to{opacity:1}}
+@keyframes my-rise{from{opacity:0;transform:translateY(8px)}to{opacity:1}}
+@keyframes my-flip{from{opacity:0;transform:perspective(500px) rotateY(100deg) scale(.8)}to{opacity:1;transform:none}}
+@keyframes my-pop{from{transform:scale(.6);opacity:0}to{transform:none}}
+@keyframes my-shake{0%,100%{transform:none}25%{transform:translate(-5px,2px)}75%{transform:translate(5px,-2px)}}
+@keyframes my-pulse{50%{opacity:.45}}
+@media (prefers-reduced-motion:reduce){.my-stage,.my-stage *,.my-pop,.my-shake,.my-world>section,.my-danger *{animation:none!important}}
