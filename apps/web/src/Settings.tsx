@@ -1,5 +1,6 @@
 declare const __APP_VERSION__: string;
 import { TapButton } from "./TapButton.tsx";
+import { setUiSound, setMusicEnabled } from "./game-sound.ts";
 import React, { createContext, useContext, useEffect, useState } from "react";
 type Settings = {
   animations: boolean;
@@ -7,6 +8,7 @@ type Settings = {
   sound: boolean;
   vibration: boolean;
   tilt: boolean;
+  music: boolean;
 };
 const Context = createContext({
   animations: true,
@@ -14,6 +16,7 @@ const Context = createContext({
   sound: true,
   vibration: true,
   tilt: true,
+  music: true,
   effectiveAnimations: true,
   set: (_k: keyof Settings, _v: boolean) => {},
 });
@@ -26,10 +29,11 @@ export function SettingsProvider({ children }: { children: React.ReactNode }) {
         sound: true,
         vibration: true,
         tilt: true,
+        music: true,
         ...JSON.parse(localStorage.getItem("dbd-visual-settings") ?? "{}"),
       };
     } catch {
-      return { animations: true, art: true, sound: true, vibration: true, tilt: true };
+      return { animations: true, art: true, sound: true, vibration: true, tilt: true, music: true };
     }
   });
   const [reduced, setReduced] = useState(
@@ -46,6 +50,8 @@ export function SettingsProvider({ children }: { children: React.ReactNode }) {
     document.documentElement.dataset.motion = effectiveAnimations
       ? "on"
       : "off";
+    setUiSound(settings.sound);
+    setMusicEnabled(settings.music);
     document.documentElement.dataset.tilt = settings.tilt ? "on" : "off";
     try {
       localStorage.setItem("dbd-visual-settings", JSON.stringify(settings));
@@ -108,6 +114,15 @@ export function SettingsButton() {
                 onChange={(e) => s.set("sound", e.target.checked)}
               />
               游戏音效
+            </label>
+            <label>
+              <input
+                type="checkbox"
+                data-testid="music-setting"
+                checked={s.music}
+                onChange={(e) => s.set("music", e.target.checked)}
+              />
+              背景音乐
             </label>
             <label>
               <input

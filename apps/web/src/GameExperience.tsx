@@ -6,7 +6,7 @@ import {
   type MajorNotice,
 } from "./experience-model.ts";
 import { useSettings } from "./Settings.tsx";
-import { playCue } from "./game-sound.ts";
+import { playCue, setMusic } from "./game-sound.ts";
 export function GameExperience({
   state,
   seat,
@@ -72,6 +72,18 @@ export function GameExperience({
       playCue("danger", settings.sound, settings.vibration);
     previousDanger.current = danger.level;
   }, [danger.level, masked]);
+  // 背景音乐：准备/计划 = 平静，行动 = 紧张，杀手在身边 = 危险，结束 = 钢琴
+  const track = state.winner
+    ? "bgm_piano"
+    : danger.level !== "none"
+      ? "bgm_danger"
+      : state.phase === "ACTING" || state.phase === "BONUS_OFFER"
+        ? "bgm_tense"
+        : "bgm_calm";
+  useEffect(() => {
+    setMusic(track, !state.winner);
+  }, [track, state.winner]);
+  useEffect(() => () => setMusic(null), []);
   if (masked) return null;
   return (
     <>
