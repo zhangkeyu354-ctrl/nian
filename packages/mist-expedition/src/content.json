@@ -1,0 +1,3500 @@
+{
+ "game": {
+  "id": "mist_expedition",
+  "name": "迷雾远征",
+  "version": "0.4",
+  "language": "zh-CN",
+  "players": {
+   "min": 3,
+   "max": 8
+  },
+  "tone": [
+   "轻松奇幻",
+   "黑色幽默",
+   "手机点选合作冒险"
+  ],
+  "premise": "晨鸣铃被雾账官盗走，冒险者穿越迷雾，夺回圣物。",
+  "classes": [
+   {
+    "id": "warrior",
+    "name": "战士",
+    "attributes": {
+     "力量": 2,
+     "敏捷": 1,
+     "智识": 0,
+     "魅力": 0
+    }
+   },
+   {
+    "id": "ranger",
+    "name": "游侠",
+    "attributes": {
+     "力量": 0,
+     "敏捷": 2,
+     "智识": 1,
+     "魅力": 0
+    }
+   },
+   {
+    "id": "mage",
+    "name": "法师",
+    "attributes": {
+     "力量": 0,
+     "敏捷": 0,
+     "智识": 2,
+     "魅力": 1
+    }
+   },
+   {
+    "id": "bard",
+    "name": "吟游诗人",
+    "attributes": {
+     "力量": 1,
+     "敏捷": 0,
+     "智识": 0,
+     "魅力": 2
+    }
+   }
+  ],
+  "power_card_colors": [
+   "刚",
+   "影",
+   "智",
+   "言"
+  ],
+  "public_resources": [
+   "supplies",
+   "clues",
+   "omen",
+   "doom"
+  ],
+  "personal_resources": [
+   "stress",
+   "hp"
+  ],
+  "rules_source": "docs/mist-expedition/RULEBOOK_V0.1.md，规则以规则书为准",
+  "initial_state": {
+   "public": {
+    "supplies": 4,
+    "clues": 1,
+    "omen": 0,
+    "doom": 0
+   },
+   "personal": {
+    "stress": 0,
+    "hp": 3
+   }
+  },
+  "ranges": {
+   "supplies": [
+    0,
+    8
+   ],
+   "clues": [
+    0,
+    8
+   ],
+   "omen": [
+    0,
+    8
+   ],
+   "doom": [
+    0,
+    8
+   ],
+   "stress": [
+    0,
+    6
+   ],
+   "hp": [
+    0,
+    3
+   ]
+  },
+  "engine_notes": {
+   "next_seat": "主行动者座位下一位",
+   "secret_support": "暗出有效色牌者仅用于誓约判定，绝不公开",
+   "intel": "分配给玩家即生效，每条一次；线索奖励叠加基础奖励后再套上限",
+   "shared_vs_personal": "公共数值每个效果只结算一次，stress/hp 按目标逐人结算",
+   "attribution": "effect_applied 只统计可归属到具体玩家的效果"
+  },
+  "oath_notes": "participant=主行动者或暗出有效牌者"
+ },
+ "scenes": [
+  {
+   "id": "S01",
+   "type": "开端",
+   "title": "迷雾入境管理局",
+   "narration": "通往迷雾的第一条道路，被一座破旧木亭挡住。亭子里坐着一名骷髅公务员，正在给自己的骨头盖章。它说所有来客都必须登记死亡日期；有人抗议自己还活着，它便遗憾地拿出加急死亡申请表。远处传来晨鸣铃断断续续的声响，窗口告示却写着：本机构拒绝一切合理诉求，除非理由更加荒唐。",
+   "tags": [
+    "边境",
+    "机关",
+    "交涉",
+    "荒诞"
+   ],
+   "prerequisites": {
+    "stage": "开端",
+    "required_classes": [],
+    "required_resources": {}
+   },
+   "plans": [
+    {
+     "id": "S01_P1",
+     "name": "伪造一张活人死亡证明",
+     "attribute": "敏捷",
+     "difficulty": "普通",
+     "valid_colors": [
+      "影",
+      "言"
+     ],
+     "tags": [
+      "欺瞒",
+      "冒险"
+     ],
+     "outcomes": {
+      "完全成功": {
+       "text": "骷髅夸奖你们的文书很有生命力，盖章放行，还赠送一份内部路线。",
+       "effect": {
+        "target": "team",
+        "changes": {
+         "supplies": 1,
+         "clues": 1,
+         "omen": 0,
+         "doom": 0,
+         "stress": 0,
+         "hp": 0
+        }
+       }
+      },
+      "代价成功": {
+       "text": "你们获准通过，但有人被登记成“已死亡待确认”，一路上都能听见追债脚步。",
+       "effect": {
+        "target": "actor",
+        "changes": {
+         "supplies": 0,
+         "clues": 1,
+         "omen": 1,
+         "doom": 0,
+         "stress": 1,
+         "hp": 0
+        }
+       }
+      },
+      "失败": {
+       "text": "假证露馅。骷髅愤怒地把头扔在地上，你们趁它寻头溜过，却惊动巡逻队。",
+       "effect": {
+        "target": "actor",
+        "changes": {
+         "supplies": -1,
+         "clues": 0,
+         "omen": 0,
+         "doom": 2,
+         "stress": 1,
+         "hp": 0
+        }
+       }
+      }
+     }
+    },
+    {
+     "id": "S01_P2",
+     "name": "要求出示合法执法证明",
+     "attribute": "魅力",
+     "difficulty": "简单",
+     "valid_colors": [
+      "言",
+      "刚"
+     ],
+     "tags": [
+      "交涉",
+      "守序"
+     ],
+     "outcomes": {
+      "完全成功": {
+       "text": "骷髅发现自己从未取得执法资格，当场陷入职业危机，急忙放行并送出线索。",
+       "effect": {
+        "target": "team",
+        "changes": {
+         "supplies": 0,
+         "clues": 2,
+         "omen": 0,
+         "doom": 0,
+         "stress": 0,
+         "hp": 0
+        }
+       }
+      },
+      "代价成功": {
+       "text": "骷髅承认程序有问题，但仍收走一份纠错费，才把路障搬开。",
+       "effect": {
+        "target": "team",
+        "changes": {
+         "supplies": -1,
+         "clues": 1,
+         "omen": 0,
+         "doom": 0,
+         "stress": 0,
+         "hp": 0
+        }
+       }
+      },
+      "失败": {
+       "text": "骷髅开始背诵三百页法规，你们逃过窗口，却被记入全境通报。",
+       "effect": {
+        "target": "team",
+        "changes": {
+         "supplies": 0,
+         "clues": 0,
+         "omen": 0,
+         "doom": 2,
+         "stress": 0,
+         "hp": 0
+        }
+       }
+      }
+     }
+    }
+   ],
+   "clue_unlock": null,
+   "intel": [
+    {
+     "id": "S01_I1",
+     "text": "骷髅今天查得很严，伪造证明的总值 -1。",
+     "truth": true,
+     "effect_type": "risk",
+     "engine_effect": {
+      "plan": "S01_P1",
+      "total_bonus": -1
+     },
+     "applies": "assigned"
+    },
+    {
+     "id": "S01_I2",
+     "text": "它最怕被查证件，要求它出示执法证明时，言色牌每张再 +1。",
+     "truth": true,
+     "effect_type": "color",
+     "engine_effect": {
+      "plan": "S01_P2",
+      "color": "言",
+      "card_bonus": 1
+     },
+     "applies": "assigned"
+    },
+    {
+     "id": "S01_I3",
+     "text": "巡逻队已在路上，下一场灾厄额外 +1。",
+     "truth": true,
+     "effect_type": "next_danger",
+     "engine_effect": {
+      "next_scene_doom": 1
+     },
+     "applies": "assigned"
+    }
+   ],
+   "twists": [
+    {
+     "id": "S01_T1",
+     "title": "误聘通知",
+     "text": "骷髅把你们其中一人误聘为兼职员工，附赠办公物资，迷雾则开始发送打卡提醒。",
+     "effect": {
+      "target": "team",
+      "changes": {
+       "supplies": 1,
+       "clues": 0,
+       "omen": 1,
+       "doom": 0,
+       "stress": 0,
+       "hp": 0
+      }
+     }
+    },
+    {
+     "id": "S01_T2",
+     "title": "遗失卷宗",
+     "text": "柜里掉出雾账官的旧档案，夹着一张你们从未拍过的合影。",
+     "effect": {
+      "target": "actor",
+      "changes": {
+       "supplies": 0,
+       "clues": 1,
+       "omen": 0,
+       "doom": 0,
+       "stress": 1,
+       "hp": 0
+      }
+     }
+    }
+   ]
+  },
+  {
+   "id": "S02",
+   "type": "开端",
+   "title": "最后一盏不肯熄灭的灯",
+   "narration": "你们来到城外最后一座亮着灯的小镇。镇民把影子锁在门外，因为影子最近学会了主人的坏习惯。卖灯的老妇人听过晨鸣铃的声音，愿意提供盗铃者的消息，条件是先修好她那盏会说话的油灯。油灯正对自己的灯芯进行无情的人身攻击，还声称自己是镇上唯一具备文化素养的照明设备。",
+   "tags": [
+    "小镇",
+    "谜题",
+    "怪谈",
+    "灯火"
+   ],
+   "prerequisites": {
+    "stage": "开端",
+    "required_classes": [],
+    "required_resources": {}
+   },
+   "plans": [
+    {
+     "id": "S02_P1",
+     "name": "拆开油灯寻找异常灯芯",
+     "attribute": "智识",
+     "difficulty": "普通",
+     "valid_colors": [
+      "智",
+      "影"
+     ],
+     "tags": [
+      "调查",
+      "修理"
+     ],
+     "outcomes": {
+      "完全成功": {
+       "text": "你们发现灯芯里缠着雾账官的银线，修好灯，老妇人指出一条近路。",
+       "effect": {
+        "target": "team",
+        "changes": {
+         "supplies": 0,
+         "clues": 2,
+         "omen": 0,
+         "doom": 0,
+         "stress": 0,
+         "hp": 0
+        }
+       }
+      },
+      "代价成功": {
+       "text": "油灯恢复照明，却把你们的秘密念了出来；老妇人照样告诉了方向。",
+       "effect": {
+        "target": "actor",
+        "changes": {
+         "supplies": 0,
+         "clues": 1,
+         "omen": 1,
+         "doom": 0,
+         "stress": 1,
+         "hp": 0
+        }
+       }
+      },
+      "失败": {
+       "text": "灯芯突然喷出一团抱怨的火，烧掉物资。大家追着火花跑，仍撞见通向迷雾的路牌。",
+       "effect": {
+        "target": "team",
+        "changes": {
+         "supplies": -1,
+         "clues": 0,
+         "omen": 1,
+         "doom": 1,
+         "stress": 0,
+         "hp": 0
+        }
+       }
+      }
+     }
+    },
+    {
+     "id": "S02_P2",
+     "name": "当众列出油灯的错误",
+     "attribute": "魅力",
+     "difficulty": "普通",
+     "valid_colors": [
+      "言",
+      "刚"
+     ],
+     "tags": [
+      "交涉"
+     ],
+     "outcomes": {
+      "完全成功": {
+       "text": "你们逐条指出油灯的毛病，它羞愧闭嘴。老妇人免费补给，并透露盗铃者去向。",
+       "effect": {
+        "target": "team",
+        "changes": {
+         "supplies": 1,
+         "clues": 1,
+         "omen": 0,
+         "doom": 0,
+         "stress": 0,
+         "hp": 0
+        }
+       }
+      },
+      "代价成功": {
+       "text": "油灯勉强认错，却要求以后给它署名。老妇人如约指路。",
+       "effect": {
+        "target": "actor",
+        "changes": {
+         "supplies": 0,
+         "clues": 1,
+         "omen": 0,
+         "doom": 0,
+         "stress": 1,
+         "hp": 0
+        }
+       }
+      },
+      "失败": {
+       "text": "油灯骂走了所有镇民，你们只好随它滚向雾里，途中丢了补给，也找到了入口。",
+       "effect": {
+        "target": "team",
+        "changes": {
+         "supplies": -1,
+         "clues": 0,
+         "omen": 1,
+         "doom": 1,
+         "stress": 0,
+         "hp": 0
+        }
+       }
+      }
+     }
+    }
+   ],
+   "clue_unlock": null,
+   "intel": [
+    {
+     "id": "S02_I1",
+     "text": "灯芯里有银线，拆灯方案总值 +1。",
+     "truth": true,
+     "effect_type": "risk",
+     "engine_effect": {
+      "plan": "S02_P1",
+      "total_bonus": 1
+     },
+     "applies": "assigned"
+    },
+    {
+     "id": "S02_I2",
+     "text": "油灯认错后，老妇人还藏着话：完全成功时再得 1 线索。",
+     "truth": true,
+     "effect_type": "clue",
+     "engine_effect": {
+      "plan": "S02_P2",
+      "full_success_clues": 1
+     },
+     "applies": "assigned"
+    },
+    {
+     "id": "S02_I3",
+     "text": "影子在跟踪你们，下一场灾厄额外 +1。",
+     "truth": true,
+     "effect_type": "next_danger",
+     "engine_effect": {
+      "next_scene_doom": 1
+     },
+     "applies": "assigned"
+    }
+   ],
+   "twists": [
+    {
+     "id": "S02_T1",
+     "title": "影子的工资",
+     "text": "一只影子自称是你们的临时向导，索要一点吃的后交出一张折旧地图。",
+     "effect": {
+      "target": "team",
+      "changes": {
+       "supplies": -1,
+       "clues": 1,
+       "omen": 0,
+       "doom": 0,
+       "stress": 0,
+       "hp": 0
+      }
+     }
+    },
+    {
+     "id": "S02_T2",
+     "title": "灯火的馈赠",
+     "text": "油灯终于学会夸人，夸奖声令大家恢复精神，但引来了远处一道不祥的回音。",
+     "effect": {
+      "target": "all",
+      "changes": {
+       "supplies": 0,
+       "clues": 0,
+       "omen": 1,
+       "doom": 0,
+       "stress": -1,
+       "hp": 0
+      }
+     }
+    }
+   ]
+  },
+  {
+   "id": "S03",
+   "type": "障碍",
+   "title": "收过路费的断桥",
+   "narration": "一座石桥横跨黑水河，桥头的哥布林自称河流税务专员。它要求每人交三枚金币，还坚持按鞋带数量加收“桥梁磨损费”。桥身遍布裂纹，河底不时浮起戴礼帽的鱼。你们发现哥布林手中的收费表全是歪歪扭扭的叉号；它其实不会算数，却非常擅长对质疑者摆出被侮辱的表情。",
+   "tags": [
+    "断桥",
+    "过路",
+    "交涉",
+    "探索"
+   ],
+   "prerequisites": {
+    "stage": "障碍",
+    "required_classes": [],
+    "required_resources": {}
+   },
+   "plans": [
+    {
+     "id": "S03_P1",
+     "name": "用假免税条例说服收费员",
+     "attribute": "魅力",
+     "difficulty": "普通",
+     "valid_colors": [
+      "言",
+      "智"
+     ],
+     "tags": [
+      "欺瞒",
+      "交涉"
+     ],
+     "outcomes": {
+      "完全成功": {
+       "text": "哥布林相信你们是上级审计团，免费让路，甚至交出失踪商队的通行记录。",
+       "effect": {
+        "target": "team",
+        "changes": {
+         "supplies": 0,
+         "clues": 2,
+         "omen": 0,
+         "doom": 0,
+         "stress": 0,
+         "hp": 0
+        }
+       }
+      },
+      "代价成功": {
+       "text": "哥布林放行，却要求留下“税务样本”，你们交出补给。",
+       "effect": {
+        "target": "team",
+        "changes": {
+         "supplies": -1,
+         "clues": 1,
+         "omen": 0,
+         "doom": 0,
+         "stress": 0,
+         "hp": 0
+        }
+       }
+      },
+      "失败": {
+       "text": "哥布林识破漏洞，鸣笛叫来河警；你们趁其争吵过桥，灾厄却又近了一步。",
+       "effect": {
+        "target": "team",
+        "changes": {
+         "supplies": 0,
+         "clues": 0,
+         "omen": 1,
+         "doom": 2,
+         "stress": 0,
+         "hp": 0
+        }
+       }
+      }
+     }
+    },
+    {
+     "id": "S03_P2",
+     "name": "沿桥底攀爬寻找另一条路",
+     "attribute": "敏捷",
+     "difficulty": "困难",
+     "valid_colors": [
+      "影",
+      "刚"
+     ],
+     "tags": [
+      "探索",
+      "冒险"
+     ],
+     "outcomes": {
+      "完全成功": {
+       "text": "你们找到被藤蔓遮住的维修栈道，顺便捡回前人遗失的补给。",
+       "effect": {
+        "target": "team",
+        "changes": {
+         "supplies": 2,
+         "clues": 0,
+         "omen": 0,
+         "doom": 0,
+         "stress": 0,
+         "hp": 0
+        }
+       }
+      },
+      "代价成功": {
+       "text": "全队通过栈道，但主行动者的绳索断裂，被队友拖上来时受了伤。",
+       "effect": {
+        "target": "actor",
+        "changes": {
+         "supplies": 1,
+         "clues": 0,
+         "omen": 0,
+         "doom": 0,
+         "stress": 0,
+         "hp": -1
+        }
+       }
+      },
+      "失败": {
+       "text": "维修栈道断成两截。众人被水流冲到对岸，物资漂走，河面浮起灾厄的倒影。",
+       "effect": {
+        "target": "team",
+        "changes": {
+         "supplies": -1,
+         "clues": 0,
+         "omen": 0,
+         "doom": 2,
+         "stress": 0,
+         "hp": 0
+        }
+       }
+      }
+     }
+    }
+   ],
+   "clue_unlock": {
+    "cost": {
+     "supplies": 0,
+     "clues": -2,
+     "omen": 0,
+     "doom": 0,
+     "stress": 0,
+     "hp": 0
+    },
+    "cost_applied": "选择隐藏方案时立即扣除，不计入方案结果变化",
+    "plans": [
+     {
+      "id": "S03_P3",
+      "name": "按旧收据找到废弃索道",
+      "attribute": "智识",
+      "difficulty": "普通",
+      "valid_colors": [
+       "智",
+       "影"
+      ],
+      "outcomes": {
+       "完全成功": {
+        "text": "你们在收据背面发现注销的索道编号，找到桥下完好的吊篮，平稳过河，连哥布林都无从索要额外通行费。",
+        "effect": {
+         "target": "team",
+         "changes": {
+          "supplies": 1,
+          "clues": 0,
+          "omen": 0,
+          "doom": -1,
+          "stress": 0,
+          "hp": 0
+         }
+        }
+       },
+       "代价成功": {
+        "text": "索道还能用，但滑轮一边运行一边喊疼。你们消耗一批维修用品过河，还发现一枚指向雾账官领地的标记。",
+        "effect": {
+         "target": "team",
+         "changes": {
+          "supplies": -1,
+          "clues": 1,
+          "omen": 0,
+          "doom": 0,
+          "stress": 0,
+          "hp": 0
+         }
+        }
+       },
+       "失败": {
+        "text": "吊篮在半途散架，全队落进河上的旧渔网。网兜通向对岸，河是过了，迷雾也听见了动静。",
+        "effect": {
+         "target": "team",
+         "changes": {
+          "supplies": -1,
+          "clues": 0,
+          "omen": 0,
+          "doom": 1,
+          "stress": 0,
+          "hp": 0
+         }
+        }
+       }
+      },
+      "tags": []
+     }
+    ]
+   },
+   "intel": [
+    {
+     "id": "S03_I1",
+     "text": "收费表是抄的，假条例方案总值 +1。",
+     "truth": true,
+     "effect_type": "risk",
+     "engine_effect": {
+      "plan": "S03_P1",
+      "total_bonus": 1
+     },
+     "applies": "assigned"
+    },
+    {
+     "id": "S03_I2",
+     "text": "桥底栈道已腐朽，攀爬方案总值 -1。",
+     "truth": true,
+     "effect_type": "risk",
+     "engine_effect": {
+      "plan": "S03_P2",
+      "total_bonus": -1
+     },
+     "applies": "assigned"
+    },
+    {
+     "id": "S03_I3",
+     "text": "哥布林记下了你们，下一场灾厄额外 +1。",
+     "truth": true,
+     "effect_type": "next_danger",
+     "engine_effect": {
+      "next_scene_doom": 1
+     },
+     "applies": "assigned"
+    }
+   ],
+   "twists": [
+    {
+     "id": "S03_T1",
+     "title": "收费员的找零",
+     "text": "哥布林为表示诚意退还了多收的铜币，却把你们的名字写进欠债簿。",
+     "effect": {
+      "target": "team",
+      "changes": {
+       "supplies": 1,
+       "clues": 0,
+       "omen": 1,
+       "doom": 0,
+       "stress": 0,
+       "hp": 0
+      }
+     }
+    },
+    {
+     "id": "S03_T2",
+     "title": "桥下旧路标",
+     "text": "桥下石壁露出与圣物相同的刻痕，但有人看见自己的倒影晚了一拍。",
+     "effect": {
+      "target": "actor",
+      "changes": {
+       "supplies": 0,
+       "clues": 1,
+       "omen": 0,
+       "doom": 0,
+       "stress": 1,
+       "hp": 0
+      }
+     }
+    }
+   ]
+  },
+  {
+   "id": "S04",
+   "type": "障碍",
+   "title": "会计蘑菇的地下市场",
+   "narration": "迷雾深处藏着一座蘑菇市场，每朵蘑菇都把孢子记在账本上。商贩们只收回忆、歌声和令人难堪的秘密，拒绝现金，因为“钱不会生长”。中央货摊出售一张去往圣物遗址的地图，标价却是你们昨天最开心的五分钟。一位巨大的蘑菇老板微笑着强调，交易不满意可以退货，但退货的人必须先记起自己买过什么。",
+   "tags": [
+    "市场",
+    "交易",
+    "记忆",
+    "谜题"
+   ],
+   "prerequisites": {
+    "stage": "障碍",
+    "required_classes": [],
+    "required_resources": {}
+   },
+   "plans": [
+    {
+     "id": "S04_P1",
+     "name": "辨认假账并找出地图真价",
+     "attribute": "智识",
+     "difficulty": "普通",
+     "valid_colors": [
+      "智",
+      "言"
+     ],
+     "tags": [
+      "调查",
+      "守序"
+     ],
+     "outcomes": {
+      "完全成功": {
+       "text": "你们指出账本里一串自相矛盾的数字，老板羞愧地用地图与补给赔礼。",
+       "effect": {
+        "target": "team",
+        "changes": {
+         "supplies": 1,
+         "clues": 2,
+         "omen": 0,
+         "doom": 0,
+         "stress": 0,
+         "hp": 0
+        }
+       }
+      },
+      "代价成功": {
+       "text": "老板承认算错账，但坚持收一份保管费；地图仍然到手。",
+       "effect": {
+        "target": "team",
+        "changes": {
+         "supplies": -1,
+         "clues": 2,
+         "omen": 0,
+         "doom": 0,
+         "stress": 0,
+         "hp": 0
+        }
+       }
+      },
+      "失败": {
+       "text": "你们被绕进一套无法结束的退款流程，只得从后门逃走，带走半张地图和上面的一条线索。",
+       "effect": {
+        "target": "team",
+        "changes": {
+         "supplies": 0,
+         "clues": 1,
+         "omen": 1,
+         "doom": 2,
+         "stress": 0,
+         "hp": 0
+        }
+       }
+      }
+     }
+    },
+    {
+     "id": "S04_P2",
+     "name": "用一桩丑闻换取地图",
+     "attribute": "魅力",
+     "difficulty": "简单",
+     "valid_colors": [
+      "言",
+      "影"
+     ],
+     "tags": [
+      "交涉",
+      "冒险"
+     ],
+     "outcomes": {
+      "完全成功": {
+       "text": "这桩丑闻让整座市场笑得孢子乱飞。老板交出地图，还塞来旅途干粮。",
+       "effect": {
+        "target": "team",
+        "changes": {
+         "supplies": 1,
+         "clues": 1,
+         "omen": 0,
+         "doom": 0,
+         "stress": 0,
+         "hp": 0
+        }
+       }
+      },
+      "代价成功": {
+       "text": "老板收下丑闻，地图到手，主行动者却从此被蘑菇们指指点点。",
+       "effect": {
+        "target": "actor",
+        "changes": {
+         "supplies": 0,
+         "clues": 1,
+         "omen": 0,
+         "doom": 0,
+         "stress": 1,
+         "hp": 0
+        }
+       }
+      },
+      "失败": {
+       "text": "蘑菇们把丑闻当成宣战信号，市场轰然关门，你们循着逃生标记找到出口。",
+       "effect": {
+        "target": "team",
+        "changes": {
+         "supplies": 0,
+         "clues": 0,
+         "omen": 2,
+         "doom": 1,
+         "stress": 0,
+         "hp": 0
+        }
+       }
+      }
+     }
+    }
+   ],
+   "clue_unlock": null,
+   "intel": [
+    {
+     "id": "S04_I1",
+     "text": "账本错在数字，查账方案中智色牌每张再 +1。",
+     "truth": true,
+     "effect_type": "color",
+     "engine_effect": {
+      "plan": "S04_P1",
+      "color": "智",
+      "card_bonus": 1
+     },
+     "applies": "assigned"
+    },
+    {
+     "id": "S04_I2",
+     "text": "老板今天心情很差，用丑闻换地图的方案总值 -1。",
+     "truth": true,
+     "effect_type": "risk",
+     "engine_effect": {
+      "plan": "S04_P2",
+      "total_bonus": -1
+     },
+     "applies": "assigned"
+    },
+    {
+     "id": "S04_I3",
+     "text": "地图夹层有字，查账完全成功时再得 1 线索。",
+     "truth": true,
+     "effect_type": "clue",
+     "engine_effect": {
+      "plan": "S04_P1",
+      "full_success_clues": 1
+     },
+     "applies": "assigned"
+    }
+   ],
+   "twists": [
+    {
+     "id": "S04_T1",
+     "title": "过期优惠券",
+     "text": "摊主突然给出一张快过期的抵扣券；你们换来补给，却被迫登记了未来住址。",
+     "effect": {
+      "target": "team",
+      "changes": {
+       "supplies": 1,
+       "clues": 0,
+       "omen": 1,
+       "doom": 0,
+       "stress": 0,
+       "hp": 0
+      }
+     }
+    },
+    {
+     "id": "S04_T2",
+     "title": "遗忘的留言",
+     "text": "地图背面显出雾账官留下的潦草留言：他似乎也在躲避某种东西。",
+     "effect": {
+      "target": "actor",
+      "changes": {
+       "supplies": 0,
+       "clues": 1,
+       "omen": 0,
+       "doom": 0,
+       "stress": 1,
+       "hp": 0
+      }
+     }
+    }
+   ]
+  },
+  {
+   "id": "S05",
+   "type": "障碍",
+   "title": "倒着流淌的河",
+   "narration": "你们抵达一条倒流的河：浪花先拍上岸，随后才有石头落入水中。河岸竖着警示牌——禁止向昨天投掷垃圾。一艘空船自己驶来，船头刻着一句话：“乘客必须先回答下船时的问题。”对岸的树上挂满湿漉漉的鞋子，其中一双竟与队友脚上的完全一样，只是鞋底写着明天的日期。",
+   "tags": [
+    "河流",
+    "时间",
+    "探索",
+    "异象"
+   ],
+   "prerequisites": {
+    "stage": "障碍",
+    "required_classes": [],
+    "required_resources": {}
+   },
+   "plans": [
+    {
+     "id": "S05_P1",
+     "name": "记录浪潮规律寻找渡河时机",
+     "attribute": "智识",
+     "difficulty": "普通",
+     "valid_colors": [
+      "智",
+      "影"
+     ],
+     "tags": [
+      "观察",
+      "探索"
+     ],
+     "outcomes": {
+      "完全成功": {
+       "text": "你们看懂了逆流节奏，安全登岸，并在船底找到先行者留下的记号。",
+       "effect": {
+        "target": "team",
+        "changes": {
+         "supplies": 0,
+         "clues": 2,
+         "omen": 0,
+         "doom": 0,
+         "stress": 0,
+         "hp": 0
+        }
+       }
+      },
+      "代价成功": {
+       "text": "渡河成功，但一名队友短暂忘记今天的日期，大家因此心神不宁。",
+       "effect": {
+        "target": "next_seat",
+        "changes": {
+         "supplies": 0,
+         "clues": 1,
+         "omen": 1,
+         "doom": 0,
+         "stress": 1,
+         "hp": 0
+        }
+       }
+      },
+      "失败": {
+       "text": "船先抵达对岸才突然翻覆，你们狼狈地从河里爬出，丢失补给，岸边钟声加快。",
+       "effect": {
+        "target": "team",
+        "changes": {
+         "supplies": -1,
+         "clues": 0,
+         "omen": 0,
+         "doom": 2,
+         "stress": 0,
+         "hp": 0
+        }
+       }
+      }
+     }
+    },
+    {
+     "id": "S05_P2",
+     "name": "用绳索强行拖船过河",
+     "attribute": "力量",
+     "difficulty": "简单",
+     "valid_colors": [
+      "刚",
+      "言"
+     ],
+     "tags": [
+      "强行",
+      "合作"
+     ],
+     "outcomes": {
+      "完全成功": {
+       "text": "绳索牢牢绷紧，你们将船拖到对岸，还顺手救出一箱漂浮的物资。",
+       "effect": {
+        "target": "team",
+        "changes": {
+         "supplies": 2,
+         "clues": 0,
+         "omen": 0,
+         "doom": 0,
+         "stress": 0,
+         "hp": 0
+        }
+       }
+      },
+      "代价成功": {
+       "text": "众人顺利登岸，但主行动者被逆流划伤，河水偷走一段梦话。",
+       "effect": {
+        "target": "actor",
+        "changes": {
+         "supplies": 0,
+         "clues": 0,
+         "omen": 1,
+         "doom": 0,
+         "stress": 0,
+         "hp": -1
+        }
+       }
+      },
+      "失败": {
+       "text": "绳索崩断，船把你们甩向对岸泥滩。没有人被困住，但应急补给全湿了。",
+       "effect": {
+        "target": "team",
+        "changes": {
+         "supplies": -2,
+         "clues": 0,
+         "omen": 0,
+         "doom": 1,
+         "stress": 0,
+         "hp": 0
+        }
+       }
+      }
+     }
+    }
+   ],
+   "clue_unlock": {
+    "cost": {
+     "supplies": 0,
+     "clues": -2,
+     "omen": 0,
+     "doom": 0,
+     "stress": 0,
+     "hp": 0
+    },
+    "cost_applied": "选择隐藏方案时立即扣除，不计入方案结果变化",
+    "plans": [
+     {
+      "id": "S05_P3",
+      "name": "用下船时的答案反向登船",
+      "attribute": "敏捷",
+      "difficulty": "普通",
+      "valid_colors": [
+       "影",
+       "智"
+      ],
+      "outcomes": {
+       "完全成功": {
+        "text": "你们照鞋底的日期先答出下船时的问题，空船满意地靠岸，吐出一段盗铃者的记忆，附近的异象随之消散。",
+        "effect": {
+         "target": "team",
+         "changes": {
+          "supplies": 0,
+          "clues": 1,
+          "omen": -2,
+          "doom": 0,
+          "stress": 0,
+          "hp": 0
+         }
+        }
+       },
+       "代价成功": {
+        "text": "空船接受了答案，却让答题者提前听见明天的抱怨，登岸后许久不敢看水面。",
+        "effect": {
+         "target": "actor",
+         "changes": {
+          "supplies": 0,
+          "clues": 1,
+          "omen": 0,
+          "doom": 0,
+          "stress": 1,
+          "hp": 0
+         }
+        }
+       },
+       "失败": {
+        "text": "答案比问题先过期。空船把你们倒着卸在对岸，全队得以前进，但迷雾注意到了这次提前。",
+        "effect": {
+         "target": "team",
+         "changes": {
+          "supplies": 0,
+          "clues": 0,
+          "omen": 1,
+          "doom": 1,
+          "stress": 0,
+          "hp": 0
+         }
+        }
+       }
+      },
+      "tags": []
+     }
+    ]
+   },
+   "intel": [
+    {
+     "id": "S05_I1",
+     "text": "浪潮七拍一循环，观察方案总值 +1。",
+     "truth": true,
+     "effect_type": "risk",
+     "engine_effect": {
+      "plan": "S05_P1",
+      "total_bonus": 1
+     },
+     "applies": "assigned"
+    },
+    {
+     "id": "S05_I2",
+     "text": "绳索已被河水泡烂，拖船方案总值 -1。",
+     "truth": true,
+     "effect_type": "risk",
+     "engine_effect": {
+      "plan": "S05_P2",
+      "total_bonus": -1
+     },
+     "applies": "assigned"
+    },
+    {
+     "id": "S05_I3",
+     "text": "对岸的鞋是警告，下一场灾厄额外 +1。",
+     "truth": true,
+     "effect_type": "next_danger",
+     "engine_effect": {
+      "next_scene_doom": 1
+     },
+     "applies": "assigned"
+    }
+   ],
+   "twists": [
+    {
+     "id": "S05_T1",
+     "title": "未来的求救信",
+     "text": "岸边漂来未来写下的求救信，笔迹属于队伍中的一人，里面藏着通往圣物的提示。",
+     "effect": {
+      "target": "actor",
+      "changes": {
+       "supplies": 0,
+       "clues": 1,
+       "omen": 0,
+       "doom": 0,
+       "stress": 1,
+       "hp": 0
+      }
+     }
+    },
+    {
+     "id": "S05_T2",
+     "title": "逆流的礼物",
+     "text": "河流吐出一只尚未被打开的补给箱；箱盖内侧却写着“请归还”。",
+     "effect": {
+      "target": "team",
+      "changes": {
+       "supplies": 1,
+       "clues": 0,
+       "omen": 1,
+       "doom": 0,
+       "stress": 0,
+       "hp": 0
+      }
+     }
+    }
+   ]
+  },
+  {
+   "id": "S06",
+   "type": "大变局",
+   "title": "石巨人的失业面试",
+   "narration": "山谷里的石巨人坐在古神殿门前，怀里抱着一座巨大的钟架。它曾负责守护晨鸣铃，如今圣物被盗，雇主却认定它工作不力，扣掉了整整四百年的薪水。巨人说自己正准备应聘新的看门工作，希望你们充当面试官。它的拳头比房门还大，简历却只有一句话：“擅长保持沉默，除非被问到为什么失业。”",
+   "tags": [
+    "对抗",
+    "巨人",
+    "战斗",
+    "交涉"
+   ],
+   "prerequisites": {
+    "stage": "大变局",
+    "required_classes": [],
+    "required_resources": {}
+   },
+   "plans": [
+    {
+     "id": "S06_P1",
+     "name": "利用钟架机关限制巨人行动",
+     "attribute": "敏捷",
+     "difficulty": "困难",
+     "valid_colors": [
+      "影",
+      "刚"
+     ],
+     "tags": [
+      "战斗",
+      "合作"
+     ],
+     "outcomes": {
+      "完全成功": {
+       "text": "你们配合引开巨人，用机关锁住钟架。巨人佩服你们的工作效率，交出通往圣物的碎片。",
+       "effect": {
+        "target": "team",
+        "changes": {
+         "supplies": 1,
+         "clues": 2,
+         "omen": 0,
+         "doom": 0,
+         "stress": 0,
+         "hp": 0
+        }
+       }
+      },
+      "代价成功": {
+       "text": "钟架机关启动，巨人暂时被困，但主行动者为护住同伴挨了一记石臂。",
+       "effect": {
+        "target": "actor",
+        "changes": {
+         "supplies": 0,
+         "clues": 1,
+         "omen": 0,
+         "doom": 1,
+         "stress": 0,
+         "hp": -2
+        }
+       }
+      },
+      "失败": {
+       "text": "机关碎裂，巨人挥臂掀翻石门。你们穿过新开的缺口继续前进，警钟却响彻山谷。",
+       "effect": {
+        "target": "team",
+        "changes": {
+         "supplies": -1,
+         "clues": 1,
+         "omen": 0,
+         "doom": 2,
+         "stress": 0,
+         "hp": 0
+        }
+       }
+      }
+     }
+    },
+    {
+     "id": "S06_P2",
+     "name": "替巨人争取合法遣散补偿",
+     "attribute": "魅力",
+     "difficulty": "普通",
+     "valid_colors": [
+      "言",
+      "智"
+     ],
+     "tags": [
+      "交涉",
+      "调查"
+     ],
+     "outcomes": {
+      "完全成功": {
+       "text": "你们指出合同条款漏洞，巨人终于露出笑容，主动带你们穿过神殿并留下线索。",
+       "effect": {
+        "target": "team",
+        "changes": {
+         "supplies": 1,
+         "clues": 2,
+         "omen": 0,
+         "doom": 0,
+         "stress": 0,
+         "hp": 0
+        }
+       }
+      },
+      "代价成功": {
+       "text": "巨人愿意协助，但要求预付新工作的伙食费。它边哭边搬开大门。",
+       "effect": {
+        "target": "team",
+        "changes": {
+         "supplies": -1,
+         "clues": 1,
+         "omen": 1,
+         "doom": 0,
+         "stress": 0,
+         "hp": 0
+        }
+       }
+      },
+      "失败": {
+       "text": "巨人误解了“集体协商”，一掌拍碎通道；碎石形成可走的坡道，你们从中冲出。",
+       "effect": {
+        "target": "team",
+        "changes": {
+         "supplies": 0,
+         "clues": 0,
+         "omen": 1,
+         "doom": 2,
+         "stress": 0,
+         "hp": 0
+        }
+       }
+      }
+     }
+    }
+   ],
+   "clue_unlock": {
+    "cost": {
+     "supplies": 0,
+     "clues": -2,
+     "omen": 0,
+     "doom": 0,
+     "stress": 0,
+     "hp": 0
+    },
+    "cost_applied": "选择隐藏方案时立即扣除，不计入方案结果变化",
+    "plans": [
+     {
+      "id": "S06_P3",
+      "name": "提交巨人遗忘的退休申请",
+      "attribute": "魅力",
+      "difficulty": "普通",
+      "valid_colors": [
+       "言",
+       "智"
+      ],
+      "outcomes": {
+       "完全成功": {
+        "text": "你们从旧档案拼出退休编号。石巨人庄严宣告正式下班，放下钟架，顺手把保养工具交给你们。",
+        "effect": {
+         "target": "team",
+         "changes": {
+          "supplies": 1,
+          "clues": 0,
+          "omen": 0,
+          "doom": -1,
+          "stress": 0,
+          "hp": 0
+         }
+        }
+       },
+       "代价成功": {
+        "text": "石巨人接受退休申请，却坚持收取档案归档费。神殿大门打开，它开始研究养老金标准。",
+        "effect": {
+         "target": "team",
+         "changes": {
+          "supplies": -1,
+          "clues": 1,
+          "omen": 0,
+          "doom": 0,
+          "stress": 0,
+          "hp": 0
+         }
+        }
+       },
+       "失败": {
+        "text": "你们误触了“退休后返聘”条款。巨人猛然转身撞坏门轴，反倒开出通道，警钟也响了一轮。",
+        "effect": {
+         "target": "team",
+         "changes": {
+          "supplies": 0,
+          "clues": 0,
+          "omen": 1,
+          "doom": 1,
+          "stress": 0,
+          "hp": 0
+         }
+        }
+       }
+      },
+      "tags": []
+     }
+    ]
+   },
+   "intel": [
+    {
+     "id": "S06_I1",
+     "text": "钟架机关还能用，限制巨人方案总值 +1。",
+     "truth": true,
+     "effect_type": "risk",
+     "engine_effect": {
+      "plan": "S06_P1",
+      "total_bonus": 1
+     },
+     "applies": "assigned"
+    },
+    {
+     "id": "S06_I2",
+     "text": "合同有硬伤，争取补偿时智色牌每张再 +1。",
+     "truth": true,
+     "effect_type": "color",
+     "engine_effect": {
+      "plan": "S06_P2",
+      "color": "智",
+      "card_bonus": 1
+     },
+     "applies": "assigned"
+    },
+    {
+     "id": "S06_I3",
+     "text": "巨人的简历背面有字，争取补偿完全成功时再得 1 线索。",
+     "truth": true,
+     "effect_type": "clue",
+     "engine_effect": {
+      "plan": "S06_P2",
+      "full_success_clues": 1
+     },
+     "applies": "assigned"
+    }
+   ],
+   "twists": [
+    {
+     "id": "S06_T1",
+     "title": "赔偿清单",
+     "text": "巨人塞给你们一袋前雇主拖欠的工具，里面有补给，也附着追讨者的气息。",
+     "effect": {
+      "target": "team",
+      "changes": {
+       "supplies": 1,
+       "clues": 0,
+       "omen": 1,
+       "doom": 0,
+       "stress": 0,
+       "hp": 0
+      }
+     }
+    },
+    {
+     "id": "S06_T2",
+     "title": "钟架上的名字",
+     "text": "钟架内壁刻着雾账官曾使用的别名，读出它时，一名队友听见自己的回声。",
+     "effect": {
+      "target": "actor",
+      "changes": {
+       "supplies": 0,
+       "clues": 1,
+       "omen": 0,
+       "doom": 0,
+       "stress": 1,
+       "hp": 0
+      }
+     }
+    }
+   ]
+  },
+  {
+   "id": "S07",
+   "type": "大变局",
+   "title": "送葬乐队的罢工",
+   "narration": "穿过灰白树林，你们遇到一支没有脚的送葬乐队。乐手们围着空棺材争吵：委托他们演奏的死者迟到了，雇主却坚持按时开葬。乐队的首席幽灵误把你们当作临时替补，要求立刻上台。更糟的是，棺材里传出迷雾复制的晨鸣铃回响，附近的墓碑开始随着节拍移动，仿佛准备先把听众埋进去。",
+   "tags": [
+    "对抗",
+    "幽灵",
+    "战斗",
+    "音乐"
+   ],
+   "prerequisites": {
+    "stage": "大变局",
+    "required_classes": [],
+    "required_resources": {}
+   },
+   "plans": [
+    {
+     "id": "S07_P1",
+     "name": "打乱乐队节拍冲破墓碑阵",
+     "attribute": "力量",
+     "difficulty": "普通",
+     "valid_colors": [
+      "刚",
+      "影"
+     ],
+     "tags": [
+      "战斗",
+      "强行"
+     ],
+     "outcomes": {
+      "完全成功": {
+       "text": "墓碑阵失去节奏，乐手们宣布临时休演，棺材里露出盗铃者留下的地图。",
+       "effect": {
+        "target": "team",
+        "changes": {
+         "supplies": 1,
+         "clues": 2,
+         "omen": 0,
+         "doom": 0,
+         "stress": 0,
+         "hp": 0
+        }
+       }
+      },
+      "代价成功": {
+       "text": "你们打开通路，但一名队友被幽灵小号震得头晕，墓碑仍让出了一条缝。",
+       "effect": {
+        "target": "actor",
+        "changes": {
+         "supplies": 0,
+         "clues": 1,
+         "omen": 0,
+         "doom": 0,
+         "stress": 1,
+         "hp": -1
+        }
+       }
+      },
+      "失败": {
+       "text": "节奏反而越来越快。全队跟着墓碑一路狂奔，冲出森林却丢了补给。",
+       "effect": {
+        "target": "team",
+        "changes": {
+         "supplies": -1,
+         "clues": 0,
+         "omen": 1,
+         "doom": 2,
+         "stress": 0,
+         "hp": 0
+        }
+       }
+      }
+     }
+    },
+    {
+     "id": "S07_P2",
+     "name": "替死者补办迟到手续",
+     "attribute": "魅力",
+     "difficulty": "困难",
+     "valid_colors": [
+      "言",
+      "智"
+     ],
+     "tags": [
+      "调查",
+      "合作"
+     ],
+     "outcomes": {
+      "完全成功": {
+       "text": "你们补齐全部手续，幽灵们感动地掀开棺材，送出珍藏线索和干粮。",
+       "effect": {
+        "target": "team",
+        "changes": {
+         "supplies": 1,
+         "clues": 2,
+         "omen": 0,
+         "doom": 0,
+         "stress": 0,
+         "hp": 0
+        }
+       }
+      },
+      "代价成功": {
+       "text": "手续勉强通过，乐队放行，但主行动者被登记成下一场的候补。",
+       "effect": {
+        "target": "actor",
+        "changes": {
+         "supplies": 0,
+         "clues": 1,
+         "omen": 1,
+         "doom": 0,
+         "stress": 1,
+         "hp": 0
+        }
+       }
+      },
+      "失败": {
+       "text": "手续被盖错章，墓碑炸开一条出路。你们逃出去了，鼓点仍在身后追赶。",
+       "effect": {
+        "target": "team",
+        "changes": {
+         "supplies": 0,
+         "clues": 0,
+         "omen": 1,
+         "doom": 2,
+         "stress": 0,
+         "hp": 0
+        }
+       }
+      }
+     }
+    }
+   ],
+   "clue_unlock": {
+    "cost": {
+     "supplies": 0,
+     "clues": -2,
+     "omen": 0,
+     "doom": 0,
+     "stress": 0,
+     "hp": 0
+    },
+    "cost_applied": "选择隐藏方案时立即扣除，不计入方案结果变化",
+    "plans": [
+     {
+      "id": "S07_P3",
+      "name": "伪造迟到死者的改期函",
+      "attribute": "智识",
+      "difficulty": "普通",
+      "valid_colors": [
+       "智",
+       "言"
+      ],
+      "outcomes": {
+       "完全成功": {
+        "text": "一份毫无破绽的改期函让首席幽灵主动带路。你们拿到葬礼清单和备用物资，它还询问是否需要开发票。",
+        "effect": {
+         "target": "team",
+         "changes": {
+          "supplies": 1,
+          "clues": 1,
+          "omen": 0,
+          "doom": 0,
+          "stress": 0,
+          "hp": 0
+         }
+        }
+       },
+       "代价成功": {
+        "text": "改期函被接受，但乐队查出一笔未结的演出费。你们付清费用，换来穿过墓碑阵的机会。",
+        "effect": {
+         "target": "team",
+         "changes": {
+          "supplies": -1,
+          "clues": 1,
+          "omen": 0,
+          "doom": 0,
+          "stress": 0,
+          "hp": 0
+         }
+        }
+       },
+       "失败": {
+        "text": "改期函被小号手识破，全队在哀乐中被撵出树林。墓碑倒成一条路，你们趁机逃走。",
+        "effect": {
+         "target": "team",
+         "changes": {
+          "supplies": 0,
+          "clues": 0,
+          "omen": 1,
+          "doom": 1,
+          "stress": 0,
+          "hp": 0
+         }
+        }
+       }
+      },
+      "tags": []
+     }
+    ]
+   },
+   "intel": [
+    {
+     "id": "S07_I1",
+     "text": "鼓手已经累了，打乱节拍方案总值 +1。",
+     "truth": true,
+     "effect_type": "risk",
+     "engine_effect": {
+      "plan": "S07_P1",
+      "total_bonus": 1
+     },
+     "applies": "assigned"
+    },
+    {
+     "id": "S07_I2",
+     "text": "首席最认规矩，第二方案中言色牌每张再 +1。",
+     "truth": true,
+     "effect_type": "color",
+     "engine_effect": {
+      "plan": "S07_P2",
+      "color": "言",
+      "card_bonus": 1
+     },
+     "applies": "assigned"
+    },
+    {
+     "id": "S07_I3",
+     "text": "墓碑记住了路线，下一场灾厄额外 +1。",
+     "truth": true,
+     "effect_type": "next_danger",
+     "engine_effect": {
+      "next_scene_doom": 1
+     },
+     "applies": "assigned"
+    }
+   ],
+   "twists": [
+    {
+     "id": "S07_T1",
+     "title": "昂贵的安可",
+     "text": "乐队为你们预留了免费门票，票根可换旅粮，但每张票都印着不祥的座位号。",
+     "effect": {
+      "target": "team",
+      "changes": {
+       "supplies": 1,
+       "clues": 0,
+       "omen": 1,
+       "doom": 0,
+       "stress": 0,
+       "hp": 0
+      }
+     }
+    },
+    {
+     "id": "S07_T2",
+     "title": "棺材的回声",
+     "text": "棺材底部留下盗铃者的一段悔过词，读完的人却莫名想哭。",
+     "effect": {
+      "target": "actor",
+      "changes": {
+       "supplies": 0,
+       "clues": 1,
+       "omen": 0,
+       "doom": 0,
+       "stress": 1,
+       "hp": 0
+      }
+     }
+    }
+   ]
+  },
+  {
+   "id": "S08",
+   "type": "终局",
+   "title": "雾账官的最后审计",
+   "narration": "在迷雾最深处，你们终于找到雾账官。他坐在一座由失物堆成的高台上，怀里抱着被盗的晨鸣铃，脚边铺满写着“亏损”的账簿。他承认自己偷走圣物，是为了阻止某位更古老的债主收回所有人的明天。可他也趁机收了不少手续费。晨鸣铃正逐渐失声，高台下的迷雾像被拖欠薪水的员工一样越聚越多。",
+   "tags": [
+    "终局",
+    "圣物",
+    "审判",
+    "谈判"
+   ],
+   "prerequisites": {
+    "stage": "终局",
+    "required_classes": [],
+    "required_resources": {}
+   },
+   "plans": [
+    {
+     "id": "S08_P1",
+     "name": "公布账簿漏洞迫使雾账官交铃",
+     "attribute": "智识",
+     "difficulty": "普通",
+     "valid_colors": [
+      "智",
+      "言"
+     ],
+     "tags": [
+      "调查",
+      "交涉"
+     ],
+     "outcomes": {
+      "完全成功": {
+       "text": "你们找到账簿里不合理的条目，雾账官无话可说，主动交回晨鸣铃，并透露未来债主的秘密。",
+       "effect": {
+        "target": "team",
+        "changes": {
+         "supplies": 0,
+         "clues": 1,
+         "omen": 0,
+         "doom": -2,
+         "stress": 0,
+         "hp": 0
+        }
+       }
+      },
+      "代价成功": {
+       "text": "雾账官交铃，但要求你们承担撤销合同的费用。圣物归还，迷雾暂时没有散尽。",
+       "effect": {
+        "target": "team",
+        "changes": {
+         "supplies": -1,
+         "clues": 0,
+         "omen": 1,
+         "doom": -1,
+         "stress": 0,
+         "hp": 0
+        }
+       }
+      },
+      "失败": {
+       "text": "你们没能说服他。账簿突然自行起火，铃声在火光里越来越远，迷雾追兵已到身后。",
+       "effect": {
+        "target": "team",
+        "changes": {
+         "supplies": 0,
+         "clues": 0,
+         "omen": 1,
+         "doom": 2,
+         "stress": 0,
+         "hp": 0
+        }
+       }
+      }
+     }
+    },
+    {
+     "id": "S08_P2",
+     "name": "利用钟声掩护抢回圣物",
+     "attribute": "敏捷",
+     "difficulty": "困难",
+     "valid_colors": [
+      "影",
+      "刚"
+     ],
+     "tags": [
+      "冒险",
+      "强行"
+     ],
+     "outcomes": {
+      "完全成功": {
+       "text": "队友制造声浪，你们一跃夺回晨鸣铃。钟声驱散迷雾，大家还收回了高台上散落的物资。",
+       "effect": {
+        "target": "team",
+        "changes": {
+         "supplies": 1,
+         "clues": 0,
+         "omen": 0,
+         "doom": -2,
+         "stress": 0,
+         "hp": 0
+        }
+       }
+      },
+      "代价成功": {
+       "text": "你们夺回铃铛，但主行动者被雾气击中；圣物敲响时，仍有部分迷雾留下。",
+       "effect": {
+        "target": "actor",
+        "changes": {
+         "supplies": 0,
+         "clues": 0,
+         "omen": 0,
+         "doom": -1,
+         "stress": 0,
+         "hp": -2
+        }
+       }
+      },
+      "失败": {
+       "text": "抢夺时高台崩塌。你们的指尖只碰到铃身，雾账官就抱着它消失在雾里。",
+       "effect": {
+        "target": "team",
+        "changes": {
+         "supplies": -1,
+         "clues": 0,
+         "omen": 0,
+         "doom": 2,
+         "stress": 0,
+         "hp": 0
+        }
+       }
+      }
+     }
+    }
+   ],
+   "clue_unlock": {
+    "cost": {
+     "supplies": 0,
+     "clues": -2,
+     "omen": 0,
+     "doom": 0,
+     "stress": 0,
+     "hp": 0
+    },
+    "cost_applied": "选择隐藏方案时立即扣除，不计入方案结果变化",
+    "plans": [
+     {
+      "id": "S08_P3",
+      "name": "引用账本里漏写的免责条款",
+      "attribute": "魅力",
+      "difficulty": "普通",
+      "valid_colors": [
+       "言",
+       "智"
+      ],
+      "outcomes": {
+       "完全成功": {
+        "text": "你们读出被刮掉的细则：被抵押的黎明拥有自行归还权。晨鸣铃立刻响应，雾账官的账簿像受潮的饼干一样碎了。",
+        "effect": {
+         "target": "team",
+         "changes": {
+          "supplies": 0,
+          "clues": 0,
+          "omen": 0,
+          "doom": -2,
+          "stress": 0,
+          "hp": 0
+         }
+        }
+       },
+       "代价成功": {
+        "text": "雾账官承认条款有效，却发动最后一次复核。你们拿到晨鸣铃，顶着崩裂的高台仓促离场。",
+        "effect": {
+         "target": "actor",
+         "changes": {
+          "supplies": 0,
+          "clues": 0,
+          "omen": 0,
+          "doom": 1,
+          "stress": 1,
+          "hp": 0
+         }
+        }
+       },
+       "失败": {
+        "text": "雾账官当众销毁条款，把晨鸣铃重新锁进账本。迷雾从高台下涌来，最后的路就此断绝。",
+        "effect": {
+         "target": "team",
+         "changes": {
+          "supplies": 0,
+          "clues": 0,
+          "omen": 0,
+          "doom": 2,
+          "stress": 0,
+          "hp": 0
+         }
+        }
+       }
+      },
+      "tags": []
+     }
+    ]
+   },
+   "intel": [
+    {
+     "id": "S08_I1",
+     "text": "账簿漏洞比看起来大，公布漏洞方案总值 +1。",
+     "truth": true,
+     "effect_type": "risk",
+     "engine_effect": {
+      "plan": "S08_P1",
+      "total_bonus": 1
+     },
+     "applies": "assigned"
+    },
+    {
+     "id": "S08_I2",
+     "text": "高台地基已松，抢夺方案总值 -1。",
+     "truth": true,
+     "effect_type": "risk",
+     "engine_effect": {
+      "plan": "S08_P2",
+      "total_bonus": -1
+     },
+     "applies": "assigned"
+    },
+    {
+     "id": "S08_I3",
+     "text": "雾账官最怕被查账，公布漏洞时智色牌每张再 +1。",
+     "truth": true,
+     "effect_type": "color",
+     "engine_effect": {
+      "plan": "S08_P1",
+      "color": "智",
+      "card_bonus": 1
+     },
+     "applies": "assigned"
+    }
+   ],
+   "twists": [
+    {
+     "id": "S08_T1",
+     "title": "最后的手续费",
+     "text": "账簿化成一袋有用的工具，但其中混着未来才会出现的收据。",
+     "effect": {
+      "target": "team",
+      "changes": {
+       "supplies": 1,
+       "clues": 0,
+       "omen": 1,
+       "doom": 0,
+       "stress": 0,
+       "hp": 0
+      }
+     }
+    },
+    {
+     "id": "S08_T2",
+     "title": "圣物的记忆",
+     "text": "铃身浮现盗窃当夜的真相，让你们多一条证据，也让握铃者彻夜难安。",
+     "effect": {
+      "target": "actor",
+      "changes": {
+       "supplies": 0,
+       "clues": 1,
+       "omen": 0,
+       "doom": 0,
+       "stress": 1,
+       "hp": 0
+      }
+     }
+    }
+   ]
+  },
+  {
+   "id": "S09",
+   "type": "终局",
+   "title": "欠条上的黎明",
+   "narration": "你们循着钟声抵达一间没有窗户的清晨。房间中央悬着晨鸣铃，周围贴满居民写给明天的欠条。一个由旧日历拼成的日历守夜人说，雾账官盗走圣物后，把它抵押给了迷雾，以换取整座城暂缓消失。现在赎回圣物的期限到了，而赎金是一个真相或一次勇敢的拒绝。它微笑着补充，逾期将自动续费一百年。",
+   "tags": [
+    "终局",
+    "圣物",
+    "代价",
+    "选择"
+   ],
+   "prerequisites": {
+    "stage": "终局",
+    "required_classes": [],
+    "required_resources": {}
+   },
+   "plans": [
+    {
+     "id": "S09_P1",
+     "name": "拼出欠条背后的契约真相",
+     "attribute": "智识",
+     "difficulty": "困难",
+     "valid_colors": [
+      "智",
+      "影"
+     ],
+     "tags": [
+      "调查",
+      "谜题"
+     ],
+     "outcomes": {
+      "完全成功": {
+       "text": "你们将矛盾的日期拼回正确顺序，找出契约的空白条款，成功赎回晨鸣铃。",
+       "effect": {
+        "target": "team",
+        "changes": {
+         "supplies": 0,
+         "clues": 1,
+         "omen": 0,
+         "doom": -2,
+         "stress": 0,
+         "hp": 0
+        }
+       }
+      },
+      "代价成功": {
+       "text": "契约被解开一半，铃铛脱离锁链，但大家不得不留下部分物资充当保管费。",
+       "effect": {
+        "target": "team",
+        "changes": {
+         "supplies": -2,
+         "clues": 0,
+         "omen": 0,
+         "doom": -1,
+         "stress": 0,
+         "hp": 0
+        }
+       }
+      },
+      "失败": {
+       "text": "日历守夜人拒绝认可解释，满屋纸页把晨鸣铃卷走，整个房间开始倒数。",
+       "effect": {
+        "target": "team",
+        "changes": {
+         "supplies": 0,
+         "clues": 0,
+         "omen": 1,
+         "doom": 2,
+         "stress": 0,
+         "hp": 0
+        }
+       }
+      }
+     }
+    },
+    {
+     "id": "S09_P2",
+     "name": "全队共同宣告拒绝续约",
+     "attribute": "魅力",
+     "difficulty": "普通",
+     "valid_colors": [
+      "言",
+      "刚"
+     ],
+     "tags": [
+      "交涉",
+      "合作"
+     ],
+     "outcomes": {
+      "完全成功": {
+       "text": "你们齐声否认这份不公平的契约，日历守夜人无奈盖章，晨鸣铃重新发出清澈钟声。",
+       "effect": {
+        "target": "team",
+        "changes": {
+         "supplies": 1,
+         "clues": 0,
+         "omen": 0,
+         "doom": -2,
+         "stress": 0,
+         "hp": 0
+        }
+       }
+      },
+      "代价成功": {
+       "text": "日历守夜人接受拒绝，却扣下一包补给作为解约费；圣物仍回到了你们手中。",
+       "effect": {
+        "target": "team",
+        "changes": {
+         "supplies": -1,
+         "clues": 0,
+         "omen": 0,
+         "doom": -1,
+         "stress": 0,
+         "hp": 0
+        }
+       }
+      },
+      "失败": {
+       "text": "拒约声明被风吹散，日历守夜人盖下续约章。铃声隔着纸墙渐渐远去。",
+       "effect": {
+        "target": "team",
+        "changes": {
+         "supplies": 0,
+         "clues": 0,
+         "omen": 1,
+         "doom": 2,
+         "stress": 0,
+         "hp": 0
+        }
+       }
+      }
+     }
+    }
+   ],
+   "clue_unlock": {
+    "cost": {
+     "supplies": 0,
+     "clues": -2,
+     "omen": 0,
+     "doom": 0,
+     "stress": 0,
+     "hp": 0
+    },
+    "cost_applied": "选择隐藏方案时立即扣除，不计入方案结果变化",
+    "plans": [
+     {
+      "id": "S09_P3",
+      "name": "用旧钟谱唤回真正的铃音",
+      "attribute": "智识",
+      "difficulty": "普通",
+      "valid_colors": [
+       "智",
+       "刚"
+      ],
+      "outcomes": {
+       "完全成功": {
+        "text": "你们按欠条上的日期敲出失传的清晨节拍。晨鸣铃回应了自己的名字，日历守夜人一页页剥落，房间终于有了窗。",
+        "effect": {
+         "target": "team",
+         "changes": {
+          "supplies": 0,
+          "clues": 0,
+          "omen": -1,
+          "doom": -2,
+          "stress": 0,
+          "hp": 0
+         }
+        }
+       },
+       "代价成功": {
+        "text": "铃声重现，却震落了满墙欠条。你们接住坠落的圣物狼狈逃离，身后的迷雾又逼近一截。",
+        "effect": {
+         "target": "all",
+         "changes": {
+          "supplies": 0,
+          "clues": 0,
+          "omen": 0,
+          "doom": 1,
+          "stress": 1,
+          "hp": 0
+         }
+        }
+       },
+       "失败": {
+        "text": "最后一个音符被迷雾吞没，晨鸣铃彻底沉默。日历守夜人微笑着盖下“自动续费”，出口消失了。",
+        "effect": {
+         "target": "team",
+         "changes": {
+          "supplies": 0,
+          "clues": 0,
+          "omen": 0,
+          "doom": 2,
+          "stress": 0,
+          "hp": 0
+         }
+        }
+       }
+      },
+      "tags": []
+     }
+    ]
+   },
+   "intel": [
+    {
+     "id": "S09_I1",
+     "text": "欠条日期有规律，拼真相方案总值 +1。",
+     "truth": true,
+     "effect_type": "risk",
+     "engine_effect": {
+      "plan": "S09_P1",
+      "total_bonus": 1
+     },
+     "applies": "assigned"
+    },
+    {
+     "id": "S09_I2",
+     "text": "日历守夜人只听强硬表态，拒绝续约时刚色牌每张再 +1。",
+     "truth": true,
+     "effect_type": "color",
+     "engine_effect": {
+      "plan": "S09_P2",
+      "color": "刚",
+      "card_bonus": 1
+     },
+     "applies": "assigned"
+    },
+    {
+     "id": "S09_I3",
+     "text": "拒约声明难以获得认可，拒绝续约方案总值 -1。",
+     "truth": true,
+     "effect_type": "risk",
+     "engine_effect": {
+      "plan": "S09_P2",
+      "total_bonus": -1
+     },
+     "applies": "assigned"
+    }
+   ],
+   "twists": [
+    {
+     "id": "S09_T1",
+     "title": "提前到来的早餐",
+     "text": "日历守夜人送给你们一份明天的早餐，足够补充力气，却让迷雾留下一个未来的约定。",
+     "effect": {
+      "target": "team",
+      "changes": {
+       "supplies": 1,
+       "clues": 0,
+       "omen": 1,
+       "doom": 0,
+       "stress": 0,
+       "hp": 0
+      }
+     }
+    },
+    {
+     "id": "S09_T2",
+     "title": "欠条背面的真相",
+     "text": "有人发现赎回凭证上藏着新的线索，但那笔债似乎仍记在自己名下。",
+     "effect": {
+      "target": "actor",
+      "changes": {
+       "supplies": 0,
+       "clues": 1,
+       "omen": 0,
+       "doom": 0,
+       "stress": 1,
+       "hp": 0
+      }
+     }
+    }
+   ]
+  }
+ ],
+ "secret_oaths": [
+  {
+   "id": "O01",
+   "text": "你相信团队精神首先是一种表演。只要动作足够热烈，就没人会追问你的牌到底帮上了什么忙。",
+   "mischief_motive": true,
+   "covert_sabotage_motive": true,
+   "completion_condition": {
+    "all": [
+     {
+      "kind": "event_count",
+      "event_type": "hidden_card_played",
+      "player_id": "self",
+      "filters": {
+       "color_effective": false
+      },
+      "op": ">=",
+      "value": 2
+     }
+    ]
+   },
+   "reward": {
+    "team_win_and_completed": "大赢家",
+    "team_loss_and_completed": "独自逃生"
+   },
+   "name": "无效贡献大师"
+  },
+  {
+   "id": "O02",
+   "text": "你认为那口钟已经很久没响过了。至少让它走到五格，才能证明这趟冒险不是一次普通郊游。",
+   "mischief_motive": true,
+   "covert_sabotage_motive": true,
+   "completion_condition": {
+    "all": [
+     {
+      "kind": "final_metric",
+      "metric": "doom",
+      "target": "team",
+      "op": ">=",
+      "value": 5
+     }
+    ]
+   },
+   "reward": {
+    "team_win_and_completed": "大赢家",
+    "team_loss_and_completed": null
+   },
+   "name": "灾厄钟维修员"
+  },
+  {
+   "id": "O03",
+   "text": "你已私下选定一位队友作为研究对象。只要对方足够虚弱或焦虑，你就可以郑重宣布治疗需求已经被你成功创造。",
+   "mischief_motive": true,
+   "covert_sabotage_motive": true,
+   "target_assignment": {
+    "when": "誓约发放时",
+    "method": "从其他玩家中随机指定一人并锁定player_id",
+    "target_ref": "assigned_player"
+   },
+   "completion_condition": {
+    "any": [
+     {
+      "kind": "final_metric",
+      "metric": "hp",
+      "target": "assigned_player",
+      "op": "<=",
+      "value": 1
+     },
+     {
+      "kind": "final_metric",
+      "metric": "stress",
+      "target": "assigned_player",
+      "op": ">=",
+      "value": 5
+     }
+    ]
+   },
+   "reward": {
+    "team_win_and_completed": "大赢家",
+    "team_loss_and_completed": "独自逃生"
+   },
+   "name": "私人康复顾问"
+  },
+  {
+   "id": "O04",
+   "text": "你坚信胜利的真正意义，在于回城时几乎没有什么值得分赃的东西。物资堆得太满，像是一场没有灵魂的旅行。",
+   "mischief_motive": true,
+   "covert_sabotage_motive": true,
+   "completion_condition": {
+    "all": [
+     {
+      "kind": "team_victory",
+      "value": true
+     },
+     {
+      "kind": "final_metric",
+      "metric": "supplies",
+      "target": "team",
+      "op": "<=",
+      "value": 1
+     }
+    ]
+   },
+   "reward": {
+    "team_win_and_completed": "大赢家",
+    "team_loss_and_completed": null
+   },
+   "name": "清仓式英雄主义"
+  },
+  {
+   "id": "O05",
+   "text": "你认为预兆太少的冒险不值得投资。至少让预兆涨到 4，才算回本。",
+   "mischief_motive": true,
+   "covert_sabotage_motive": true,
+   "completion_condition": {
+    "all": [
+     {
+      "kind": "final_metric",
+      "metric": "omen",
+      "target": "team",
+      "op": ">=",
+      "value": 4
+     }
+    ]
+   },
+   "reward": {
+    "team_win_and_completed": "大赢家",
+    "team_loss_and_completed": null
+   },
+   "name": "不祥投资人"
+  },
+  {
+   "id": "O06",
+   "text": "你不喜欢等灾厄自己找上门。这趟旅程至少要有两次方案彻底失败，才算你的私人实验成功。",
+   "mischief_motive": true,
+   "covert_sabotage_motive": true,
+   "completion_condition": {
+    "all": [
+     {
+      "kind": "event_count",
+      "event_type": "plan_resolved",
+      "filters": {
+       "outcome": "失败"
+      },
+      "op": ">=",
+      "value": 2
+     }
+    ]
+   },
+   "reward": {
+    "team_win_and_completed": "大赢家",
+    "team_loss_and_completed": "独自逃生"
+   },
+   "name": "提前敲钟的人"
+  },
+  {
+   "id": "O07",
+   "name": "毫无必要的英雄",
+   "text": "你希望自己每逢硬仗都在场，即使你其实很怕痛。",
+   "theme": "保护",
+   "mischief_motive": false,
+   "completion_condition": {
+    "all": [
+     {
+      "kind": "event_count",
+      "event_type": "plan_resolved",
+      "filters": {
+       "participant": "self",
+       "tags_any": [
+        "合作",
+        "战斗"
+       ]
+      },
+      "op": ">=",
+      "value": 1
+     }
+    ]
+   },
+   "condition_explanation": "自己作为主行动者或暗出有效牌者完成至少一次合作或战斗行动。",
+   "reward": {
+    "team_win_and_completed": "大赢家",
+    "team_loss_and_completed": null
+   },
+   "covert_sabotage_motive": false
+  },
+  {
+   "id": "O08",
+   "name": "档案室的老鼠",
+   "text": "你对调查资料有难以解释的执着。",
+   "theme": "调查",
+   "mischief_motive": false,
+   "completion_condition": {
+    "all": [
+     {
+      "kind": "event_count",
+      "event_type": "plan_resolved",
+      "filters": {
+       "participant": "self",
+       "tags_any": [
+        "调查",
+        "观察"
+       ]
+      },
+      "op": ">=",
+      "value": 1
+     }
+    ]
+   },
+   "condition_explanation": "作为主行动者或暗出有效牌，参与至少一次调查或观察行动。",
+   "reward": {
+    "team_win_and_completed": "大赢家",
+    "team_loss_and_completed": null
+   },
+   "covert_sabotage_motive": false
+  },
+  {
+   "id": "O09",
+   "name": "准点强迫症",
+   "text": "你无法容忍迷雾乱走。只要灾厄钟最后不超过 3，你就能安心睡觉。",
+   "theme": "守序",
+   "mischief_motive": false,
+   "completion_condition": {
+    "all": [
+     {
+      "kind": "final_metric",
+      "metric": "doom",
+      "target": "team",
+      "op": "<=",
+      "value": 3
+     }
+    ]
+   },
+   "condition_explanation": "终局时灾厄不超过 3。",
+   "reward": {
+    "team_win_and_completed": "大赢家",
+    "team_loss_and_completed": null
+   },
+   "covert_sabotage_motive": false
+  },
+  {
+   "id": "O10",
+   "name": "别怕，我拿着绳",
+   "text": "你想让别人相信，只要你在，掉进河里也有人捞。",
+   "theme": "支援",
+   "mischief_motive": false,
+   "completion_condition": {
+    "all": [
+     {
+      "kind": "event_count",
+      "event_type": "plan_resolved",
+      "filters": {
+       "participant": "self",
+       "outcome_in": [
+        "完全成功",
+        "代价成功"
+       ]
+      },
+      "op": ">=",
+      "value": 1
+     }
+    ]
+   },
+   "condition_explanation": "自己担任暗出有效牌者，参与一次成功或代价成功的行动。",
+   "reward": {
+    "team_win_and_completed": "大赢家",
+    "team_loss_and_completed": null
+   },
+   "covert_sabotage_motive": false
+  },
+  {
+   "id": "O11",
+   "name": "拾荒哲学家",
+   "text": "你对物资的态度十分虔诚：只要能吃，就值得尊重。",
+   "theme": "补给",
+   "mischief_motive": false,
+   "completion_condition": {
+    "all": [
+     {
+      "kind": "event_count",
+      "event_type": "effect_applied",
+      "filters": {
+       "participant": "self",
+       "field": "supplies",
+       "delta_gt": 0
+      },
+      "op": ">=",
+      "value": 1
+     }
+    ]
+   },
+   "condition_explanation": "自己参与的行动、岔路或转折曾使全队物资净增加至少1。",
+   "reward": {
+    "team_win_and_completed": "大赢家",
+    "team_loss_and_completed": null
+   },
+   "covert_sabotage_motive": false
+  },
+  {
+   "id": "O12",
+   "name": "迷雾见证人",
+   "text": "你希望记下别人忽略的证据，免得历史由收费员来书写。",
+   "theme": "线索",
+   "mischief_motive": false,
+   "completion_condition": {
+    "all": [
+     {
+      "kind": "event_count",
+      "event_type": "effect_applied",
+      "filters": {
+       "participant": "self",
+       "field": "clues",
+       "delta_gt": 0
+      },
+      "op": ">=",
+      "value": 1
+     }
+    ]
+   },
+   "condition_explanation": "自己参与的行动、岔路或转折曾使全队线索净增加至少1。",
+   "reward": {
+    "team_win_and_completed": "大赢家",
+    "team_loss_and_completed": null
+   },
+   "covert_sabotage_motive": false
+  }
+ ],
+ "fork_events": [
+  {
+   "id": "F01",
+   "title": "免费的保险柜",
+   "hidden_trigger": {
+    "all": [
+     {
+      "stage_in": [
+       "障碍",
+       "大变局"
+      ]
+     },
+     {
+      "metric": "supplies",
+      "op": "lte",
+      "value": 2
+     }
+    ]
+   },
+   "text": "路边出现一只无人看守的保险柜，柜门写着“免费领取”，背面写着“免费解释权归本柜所有”。",
+   "options": [
+    {
+     "id": "F01_A",
+     "name": "拿走里面的物资",
+     "text": "你们找到了急需的干粮，保险柜却在身后小声念起全队姓名。",
+     "effect": {
+      "target": "team",
+      "changes": {
+       "supplies": 2,
+       "clues": 0,
+       "omen": 2,
+       "doom": 0,
+       "stress": 0,
+       "hp": 0
+      }
+     }
+    },
+    {
+     "id": "F01_B",
+     "name": "拆下柜门作为临时盾牌",
+     "text": "你们将柜门变成坚固掩体，路过的人提供了一张旧路线草图。",
+     "effect": {
+      "target": "team",
+      "changes": {
+       "supplies": 0,
+       "clues": 1,
+       "omen": 0,
+       "doom": -1,
+       "stress": 0,
+       "hp": 0
+      }
+     }
+    }
+   ]
+  },
+  {
+   "id": "F02",
+   "title": "很会安慰人的乌鸦",
+   "hidden_trigger": {
+    "all": [
+     {
+      "stage_in": [
+       "障碍",
+       "大变局"
+      ]
+     },
+     {
+      "metric": "omen",
+      "op": "gte",
+      "value": 2
+     }
+    ]
+   },
+   "text": "一只乌鸦准确说出队友昨天做过的蠢事，还表示愿意提供心理辅导。",
+   "options": [
+    {
+     "id": "F02_A",
+     "name": "接受乌鸦的心理辅导",
+     "text": "乌鸦言辞刻薄但方法有效，压力得以缓解；它把你们的糗事送给了迷雾。",
+     "effect": {
+      "target": "all",
+      "changes": {
+       "supplies": 0,
+       "clues": 0,
+       "omen": 1,
+       "doom": 0,
+       "stress": -1,
+       "hp": 0
+      }
+     }
+    },
+    {
+     "id": "F02_B",
+     "name": "用零食换乌鸦闭嘴",
+     "text": "乌鸦满意地噤声，顺便用羽毛指出追兵的方向。",
+     "effect": {
+      "target": "team",
+      "changes": {
+       "supplies": -1,
+       "clues": 1,
+       "omen": 0,
+       "doom": 0,
+       "stress": 0,
+       "hp": 0
+      }
+     }
+    }
+   ]
+  },
+  {
+   "id": "F03",
+   "title": "被涂改的英雄碑",
+   "hidden_trigger": {
+    "all": [
+     {
+      "stage_in": [
+       "障碍",
+       "大变局"
+      ]
+     },
+     {
+      "metric": "clues",
+      "op": "gte",
+      "value": 3
+     }
+    ]
+   },
+   "text": "一座英雄碑上刻着你们的事迹，内容却比真实经历提前了二十年。",
+   "options": [
+    {
+     "id": "F03_A",
+     "name": "读完未来战绩",
+     "text": "你们提前了解到关键陷阱，代价是看见了一段不愉快的自己。",
+     "effect": {
+      "target": "actor",
+      "changes": {
+       "supplies": 0,
+       "clues": 1,
+       "omen": 0,
+       "doom": 0,
+       "stress": 2,
+       "hp": 0
+      }
+     }
+    },
+    {
+     "id": "F03_B",
+     "name": "抹去不准确的碑文",
+     "text": "碑文被抹平，迷雾的倒数随之放慢；大家为维护历史公正耗去一些工具。",
+     "effect": {
+      "target": "team",
+      "changes": {
+       "supplies": -1,
+       "clues": 0,
+       "omen": 0,
+       "doom": -1,
+       "stress": 0,
+       "hp": 0
+      }
+     }
+    }
+   ]
+  },
+  {
+   "id": "F04",
+   "title": "一折出售的回头路",
+   "hidden_trigger": {
+    "all": [
+     {
+      "stage_in": [
+       "障碍",
+       "大变局"
+      ]
+     },
+     {
+      "metric": "doom",
+      "op": "gte",
+      "value": 3
+     }
+    ]
+   },
+   "text": "路口商人推销一张“回到十分钟前”的车票，票面背后印着不可退换。",
+   "options": [
+    {
+     "id": "F04_A",
+     "name": "买下车票延缓灾厄",
+     "text": "钟声慢了一拍，车票同时偷走了队伍的干粮。",
+     "effect": {
+      "target": "team",
+      "changes": {
+       "supplies": -2,
+       "clues": 0,
+       "omen": 0,
+       "doom": -2,
+       "stress": 0,
+       "hp": 0
+      }
+     }
+    },
+    {
+     "id": "F04_B",
+     "name": "拒买并索要投诉地址",
+     "text": "商人被投诉吓得逃走，你们听见他口中泄露了秘密地址。",
+     "effect": {
+      "target": "team",
+      "changes": {
+       "supplies": 0,
+       "clues": 1,
+       "omen": 1,
+       "doom": 0,
+       "stress": 0,
+       "hp": 0
+      }
+     }
+    }
+   ]
+  },
+  {
+   "id": "F05",
+   "title": "不会拒诊的雾医",
+   "hidden_trigger": {
+    "all": [
+     {
+      "stage_in": [
+       "障碍",
+       "大变局"
+      ]
+     },
+     {
+      "any_player_metric": {
+       "metric": "hp",
+       "op": "lte",
+       "value": 1
+      }
+     }
+    ]
+   },
+   "text": "一位披着雾的医生愿意免费治疗，但它声称收据应寄给患者的未来。",
+   "options": [
+    {
+     "id": "F05_A",
+     "name": "让生命最低者接受治疗",
+     "text": "伤者恢复了气力，医生留下账单和一句令人不安的祝福。",
+     "effect": {
+      "target": "lowest_hp_player",
+      "changes": {
+       "supplies": 0,
+       "clues": 0,
+       "omen": 1,
+       "doom": 0,
+       "stress": 0,
+       "hp": 2
+      }
+     }
+    },
+    {
+     "id": "F05_B",
+     "name": "请医生提供野外急救用品",
+     "text": "医生递来缠了三圈纱布的药箱，并警告里面的药会抱怨。",
+     "effect": {
+      "target": "team",
+      "changes": {
+       "supplies": 2,
+       "clues": 0,
+       "omen": 0,
+       "doom": 1,
+       "stress": 0,
+       "hp": 0
+      }
+     }
+    }
+   ]
+  },
+  {
+   "id": "F06",
+   "title": "大家都没见过的生日蛋糕",
+   "hidden_trigger": {
+    "all": [
+     {
+      "stage_in": [
+       "障碍",
+       "大变局"
+      ]
+     },
+     {
+      "any_player_metric": {
+       "metric": "stress",
+       "op": "gte",
+       "value": 4
+      }
+     }
+    ]
+   },
+   "text": "草地上摆着一块写着“祝你终于出生”的蛋糕，蜡烛数量每看一次都不同。",
+   "options": [
+    {
+     "id": "F06_A",
+     "name": "分蛋糕给所有人",
+     "text": "大家精神一振，蛋糕却放出甜得不正常的迷雾。",
+     "effect": {
+      "target": "all",
+      "changes": {
+       "supplies": 0,
+       "clues": 0,
+       "omen": 2,
+       "doom": 0,
+       "stress": -1,
+       "hp": 0
+      }
+     }
+    },
+    {
+     "id": "F06_B",
+     "name": "吹灭蜡烛请求指路",
+     "text": "蜡烛烧出前方路线图，但吹灭它们耗尽了一份应急火种。",
+     "effect": {
+      "target": "team",
+      "changes": {
+       "supplies": -1,
+       "clues": 2,
+       "omen": 0,
+       "doom": 0,
+       "stress": 0,
+       "hp": 0
+      }
+     }
+    }
+   ]
+  }
+ ],
+ "out_of_control_results": [
+  {
+   "id": "I01",
+   "title": "绊倒的是队友",
+   "text": "主行动者突然摔倒，连带撞翻身旁的队友。两人顺势滚过障碍，谁也没能保持尊严。",
+   "effect": {
+    "target": "next_seat",
+    "changes": {
+     "supplies": 0,
+     "clues": 0,
+     "omen": 0,
+     "doom": 0,
+     "stress": 1,
+     "hp": -1
+    }
+   }
+  },
+  {
+   "id": "I02",
+   "title": "全队同步打喷嚏",
+   "text": "一阵迷雾让所有人同一时间打了个喷嚏，埋伏的敌人鼓掌表示感谢定位。",
+   "effect": {
+    "target": "team",
+    "changes": {
+     "supplies": 0,
+     "clues": 0,
+     "omen": 1,
+     "doom": 1,
+     "stress": 0,
+     "hp": 0
+    }
+   }
+  },
+  {
+   "id": "I03",
+   "title": "背包连坐制",
+   "text": "主行动者的背包突然把队友的行囊一起吸了进去，取出东西时已经少了一大半。",
+   "effect": {
+    "target": "team",
+    "changes": {
+     "supplies": -2,
+     "clues": 0,
+     "omen": 1,
+     "doom": 0,
+     "stress": 0,
+     "hp": 0
+    }
+   }
+  },
+  {
+   "id": "I04",
+   "title": "借来的恐惧",
+   "text": "身旁的队友突然听见主行动者心里的求救声，心理压力从一个人转移给了另一个人。",
+   "effect": {
+    "target": "next_seat",
+    "changes": {
+     "supplies": 0,
+     "clues": 0,
+     "omen": 0,
+     "doom": 0,
+     "stress": 2,
+     "hp": 0
+    }
+   }
+  },
+  {
+   "id": "I05",
+   "title": "喊错了队友名字",
+   "text": "你们高喊战术口令，却莫名念出了一个不在队伍里的名字。迷雾中有人回应“收到”。",
+   "effect": {
+    "target": "team",
+    "changes": {
+     "supplies": 0,
+     "clues": 0,
+     "omen": 2,
+     "doom": 1,
+     "stress": 0,
+     "hp": 0
+    }
+   }
+  },
+  {
+   "id": "I06",
+   "title": "反方向的救援",
+   "text": "另一名队友伸手相救，却碰到了一只不属于任何人的手。大家趁混乱逃走，但不再信任影子。",
+   "effect": {
+    "target": "others",
+    "changes": {
+     "supplies": 0,
+     "clues": 0,
+     "omen": 1,
+     "doom": 0,
+     "stress": 1,
+     "hp": 0
+    }
+   }
+  },
+  {
+   "id": "I07",
+   "title": "危险的团体照",
+   "text": "一架凭空出现的相机为全队拍照，照片里每个人背后都站着一位陌生人。",
+   "effect": {
+    "target": "all",
+    "changes": {
+     "supplies": 0,
+     "clues": 1,
+     "omen": 0,
+     "doom": 0,
+     "stress": 1,
+     "hp": 0
+    }
+   }
+  },
+  {
+   "id": "I08",
+   "title": "错误的胜利宣言",
+   "text": "你们还没脱险，队友便宣布成功，迷雾把这句话当作正式验收申请，派来检查员。",
+   "effect": {
+    "target": "team",
+    "changes": {
+     "supplies": -1,
+     "clues": 0,
+     "omen": 0,
+     "doom": 1,
+     "stress": 0,
+     "hp": 0
+    }
+   }
+  }
+ ],
+ "devil_deals": [
+  {
+   "id": "D01",
+   "name": "借走明天的体力",
+   "text": "雾中有人愿意预支你明天的精力，条件是你现在就偿还疲惫。",
+   "roll_total_bonus": 2,
+   "accepted_cost": {
+    "target": "actor",
+    "changes": {
+     "supplies": 0,
+     "clues": 0,
+     "omen": 0,
+     "doom": 0,
+     "stress": 2,
+     "hp": 0
+    }
+   },
+   "availability": {
+    "actor_stress_at_most": 6
+   },
+   "cost_timing": "接受交易时立即结算；不论完全成功、代价成功或失败，代价都不可退还。",
+   "applies_to": "当前主行动判定"
+  },
+  {
+   "id": "D02",
+   "name": "磨损你的护甲",
+   "text": "一只看不见的手替你扶正武器，却在皮肤上留下两道紫色印痕。",
+   "roll_total_bonus": 2,
+   "accepted_cost": {
+    "target": "actor",
+    "changes": {
+     "supplies": 0,
+     "clues": 0,
+     "omen": 0,
+     "doom": 0,
+     "stress": 0,
+     "hp": -2
+    }
+   },
+   "availability": {
+    "hp_at_least": 2
+   },
+   "cost_timing": "接受交易时立即结算；不论完全成功、代价成功或失败，代价都不可退还。",
+   "applies_to": "当前主行动判定"
+  },
+  {
+   "id": "D03",
+   "name": "午夜加急费",
+   "text": "黑雾替你安排优先通道，代价是灾厄钟向前跳动一格。",
+   "roll_total_bonus": 2,
+   "accepted_cost": {
+    "target": "team",
+    "changes": {
+     "supplies": 0,
+     "clues": 0,
+     "omen": 0,
+     "doom": 1,
+     "stress": 0,
+     "hp": 0
+    }
+   },
+   "availability": {
+    "doom_at_most": 6
+   },
+   "cost_timing": "接受交易时立即结算；不论完全成功、代价成功或失败，代价都不可退还。",
+   "applies_to": "当前主行动判定"
+  },
+  {
+   "id": "D04",
+   "name": "预兆赊购",
+   "text": "有人提前告诉你该如何掷骰，却悄悄把两段坏预兆塞进队伍口袋。",
+   "roll_total_bonus": 2,
+   "accepted_cost": {
+    "target": "team",
+    "changes": {
+     "supplies": 0,
+     "clues": 0,
+     "omen": 2,
+     "doom": 0,
+     "stress": 0,
+     "hp": 0
+    }
+   },
+   "availability": {
+    "omen_at_most": 6
+   },
+   "cost_timing": "接受交易时立即结算；不论完全成功、代价成功或失败，代价都不可退还。",
+   "applies_to": "当前主行动判定"
+  },
+  {
+   "id": "D05",
+   "name": "丢弃救命干粮",
+   "text": "雾灵咬掉你们两份物资，才肯把幸运还给你。",
+   "roll_total_bonus": 2,
+   "accepted_cost": {
+    "target": "team",
+    "changes": {
+     "supplies": -2,
+     "clues": 0,
+     "omen": 0,
+     "doom": 0,
+     "stress": 0,
+     "hp": 0
+    }
+   },
+   "availability": {
+    "supplies_at_least": 2
+   },
+   "cost_timing": "接受交易时立即结算；不论完全成功、代价成功或失败，代价都不可退还。",
+   "applies_to": "当前主行动判定"
+  },
+  {
+   "id": "D06",
+   "name": "以一条消息为价",
+   "text": "一只纸蛾吞掉你们辛苦搜集的两条线索，吐出对当下最有用的运气。",
+   "roll_total_bonus": 2,
+   "accepted_cost": {
+    "target": "team",
+    "changes": {
+     "supplies": 0,
+     "clues": -2,
+     "omen": 0,
+     "doom": 0,
+     "stress": 0,
+     "hp": 0
+    }
+   },
+   "availability": {
+    "clues_at_least": 2
+   },
+   "cost_timing": "接受交易时立即结算；不论完全成功、代价成功或失败，代价都不可退还。",
+   "applies_to": "当前主行动判定"
+  },
+  {
+   "id": "D07",
+   "name": "把压力分给同伴",
+   "text": "雾灵提出共同担保：你获益，但身旁的队友替你承担精神账单。",
+   "roll_total_bonus": 2,
+   "accepted_cost": {
+    "target": "next_seat",
+    "changes": {
+     "supplies": 0,
+     "clues": 0,
+     "omen": 0,
+     "doom": 0,
+     "stress": 2,
+     "hp": 0
+    }
+   },
+   "availability": {
+    "target_stress_at_most": 6,
+    "requires_affected_player_consent": true
+   },
+   "cost_timing": "接受交易时立即结算；不论完全成功、代价成功或失败，代价都不可退还。",
+   "applies_to": "当前主行动判定"
+  },
+  {
+   "id": "D08",
+   "name": "全队请客",
+   "text": "众人的背包都被雾气扒拉一遍，所有人都得忍受突如其来的精神噪音。",
+   "roll_total_bonus": 2,
+   "accepted_cost": {
+    "target": "others",
+    "changes": {
+     "supplies": 0,
+     "clues": 0,
+     "omen": 1,
+     "doom": 0,
+     "stress": 1,
+     "hp": 0
+    }
+   },
+   "availability": {
+    "omen_at_most": 6,
+    "requires_team_majority_consent": true
+   },
+   "cost_timing": "接受交易时立即结算；不论完全成功、代价成功或失败，代价都不可退还。",
+   "applies_to": "当前主行动判定"
+  }
+ ],
+ "omen_events": {
+  "trigger": {
+   "when": "第3场开始时，场景正文展示之前",
+   "roll": "1D6",
+   "condition": "roll <= 当前omen",
+   "on_success": "从下列2个事件中随机触发1个",
+   "on_failure": "不触发事件"
+  },
+  "events": [
+   {
+    "id": "OE01",
+    "title": "迷雾的临时继承人",
+    "text": "一位戴着纸袋的遗产公证员从雾里走出，宣布队伍里有一人刚刚继承了一份「不祥」。他不说明遗产的来源，只把一张写有私人要求的纸塞进那人手里，并提醒大家：遗产税通常比遗产更有生命力。",
+    "effects": [
+     {
+      "target": "team",
+      "changes": {
+       "supplies": 0,
+       "clues": 0,
+       "omen": 1,
+       "doom": 0,
+       "stress": 0,
+       "hp": 0
+      }
+     },
+     {
+      "target": "selected_player",
+      "changes": {
+       "supplies": 0,
+       "clues": 0,
+       "omen": 0,
+       "doom": 0,
+       "stress": 1,
+       "hp": 0
+      }
+     }
+    ],
+    "hidden_goal": {
+     "id": "HG01",
+     "title": "替迷雾保管焦虑",
+     "text": "你必须在冒险结束时保持至少3点压力且仍有生命值。不要告诉同伴，否则他们可能真心想帮你减压。",
+     "assign_to": "与 selected_player 为同一人，仅本人可见",
+     "completion_condition": {
+      "all": [
+       {
+        "kind": "final_metric",
+        "metric": "stress",
+        "target": "self",
+        "op": ">=",
+        "value": 3
+       },
+       {
+        "kind": "final_metric",
+        "metric": "hp",
+        "target": "self",
+        "op": ">=",
+        "value": 1
+       }
+      ]
+     },
+     "reward": {
+      "team_win_and_completed": "额外称号：焦虑遗产继承人",
+      "team_loss_and_completed": null
+     }
+    }
+   },
+   {
+    "id": "OE02",
+    "title": "末日预算临时会议",
+    "text": "一队披着账本的雾中审计员突然拦路，宣布你们的冒险已经超支。它们拿走一部分物资，却意外留下了一份雾账官的内部行程表；等你们发现表格很有价值，审计员已经把灾厄钟往前拨了一格。",
+    "effects": [
+     {
+      "target": "team",
+      "changes": {
+       "supplies": -1,
+       "clues": 1,
+       "omen": 0,
+       "doom": 1,
+       "stress": 0,
+       "hp": 0
+      }
+     }
+    ]
+   }
+  ]
+ },
+ "endings": [
+  {
+   "id": "E02",
+   "priority": 1,
+   "title": "迷雾吞噬",
+   "type": "失败",
+   "team_victory": false,
+   "condition": {
+    "any": [
+     {
+      "final_scene_outcome": "失败"
+     },
+     {
+      "metric": "doom",
+      "op": ">=",
+      "value": 8
+     }
+    ]
+   },
+   "text": "晨鸣铃就在眼前，却没能再次响起。迷雾像一张盖错章的公文，将你们、圣物和归途一并归档。城里从此没有清晨，人们最初十分恐慌，随后逐渐习惯了永远不用赶早班的生活。雾账官宣布本次危机已得到妥善解决，并把冒险者的名字列进「不建议再次聘用」名单。有人或许独自从雾里逃出，但再没有人能证明太阳曾经存在。"
+  },
+  {
+   "id": "E03",
+   "priority": 2,
+   "title": "惨胜",
+   "type": "惨胜",
+   "team_victory": true,
+   "condition": {
+    "all": [
+     {
+      "final_scene_outcome_in": [
+       "完全成功",
+       "代价成功"
+      ]
+     },
+     {
+      "metric": "doom",
+      "op": "<",
+      "value": 8
+     },
+     {
+      "any": [
+       {
+        "final_scene_outcome": "代价成功"
+       },
+       {
+        "metric": "doom",
+        "op": ">=",
+        "value": 6
+       }
+      ]
+     }
+    ]
+   },
+   "text": "晨鸣铃终于被带回城，第一道晨光却像一个加班到凌晨的工匠，疲惫得几乎站不稳。迷雾虽然退去，却在街角和窗缝里留下许多小小的阴影。城民把你们当成英雄，热情地送来鲜花、拥抱，以及一张巨额城市修复账单。你们救回了黎明，只是没人敢保证明天还能准时日出；最清醒的队友提议，至少先睡一觉。"
+  },
+  {
+   "id": "E01",
+   "priority": 3,
+   "title": "圣物归还",
+   "type": "胜利",
+   "team_victory": true,
+   "condition": {
+    "all": [
+     {
+      "final_scene_outcome": "完全成功"
+     },
+     {
+      "metric": "doom",
+      "op": "<",
+      "value": 6
+     }
+    ]
+   },
+   "text": "晨鸣铃被郑重放回城的旧址。钟声一响，迷雾像欠了房租的房客，连夜收拾行李逃出城门。阔别已久的阳光照亮街道，居民纷纷走出家门，发现原来邻居真的长成自己记忆里的模样。城主宣布为冒险者举办盛大庆功宴，并保证每人都会得到一份英雄证书。至于奖金，财务部门仍在研究「拯救世界」是否属于可报销项目。"
+  }
+ ]
+}
