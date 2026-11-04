@@ -1,7 +1,7 @@
 import { useEffect, useMemo, useRef, useState } from "react";
 import { io } from "socket.io-client";
-import ReactDice from "react-dice-complete";
-import Particles, { initParticlesEngine } from "@tsparticles/react";
+import DiceRaw from "react-dice-complete";
+import { tsParticles } from "@tsparticles/engine";
 import { loadSlim } from "@tsparticles/slim";
 import "./my.css";
 const sock = io({ transports: ["websocket", "polling"] });
@@ -13,11 +13,12 @@ const bgm = new Audio(); bgm.loop = true; bgm.volume = .3; let want = "";
 const playBgm = (n: string) => { if (get("my-mute") === "1" || !n) { bgm.pause(); return; } if (want !== n) { want = n; bgm.src = `/assets/mist-expedition/audio/bgm-${n}.mp3`; } void bgm.play().catch(() => {}); };
 const I = ({ n }: { n: string }) => <img className="my-ic" src={`/assets/mist-expedition/icons/${n}.svg`} alt="" />;
 const CI: any = { 刚: "gang", 影: "ying", 智: "zhi", 言: "yan" };
+const ReactDice: any = (DiceRaw as any).default ?? DiceRaw;
 let engineReady: Promise<void> | null = null;
 const reduced = () => { try { return matchMedia("(prefers-reduced-motion: reduce)").matches; } catch { return false; } };
 const EMBERS: any = { fullScreen: { enable: false }, fpsLimit: 30, detectRetina: false, background: { color: "transparent" }, particles: { number: { value: 16 }, color: { value: ["#ffc46b", "#ff9a4d", "#dfe7ea"] }, opacity: { value: { min: .15, max: .7 }, animation: { enable: true, speed: .6 } }, size: { value: { min: 1, max: 2.6 } }, move: { enable: true, speed: { min: .2, max: .8 }, direction: "top", random: true, straight: false, outModes: "out" } } };
-function Embers() { const [ok, setOk] = useState(false); useEffect(() => { if (reduced()) return; (engineReady ??= initParticlesEngine(loadSlim)).then(() => setOk(true)); }, []); return ok ? <Particles className="my-embers" options={EMBERS} /> : null; }
-function Dice3D({ values }: { values: number[] }) { const r = useRef<any>(null); useEffect(() => { const t = setTimeout(() => r.current?.rollAll(values), 60); return () => clearTimeout(t); }, [values.join()]); return <div className="my-dice"><ReactDice ref={r} numDice={values.length} defaultRoll={1} dieSize={54} faceColor="#e9dfc7" dotColor="#2a2118" outline outlineColor="#7a5a2a" rollTime={1.1} disableIndividual /></div>; }
+function Embers() { const id = useRef("my-embers-" + Math.random().toString(36).slice(2)).current; useEffect(() => { if (reduced()) return; let dead = false, c: any; (engineReady ??= Promise.resolve(loadSlim(tsParticles))).then(() => tsParticles.load({ id, options: EMBERS })).then((x: any) => { c = x; if (dead) c?.destroy(); }).catch(() => {}); return () => { dead = true; c?.destroy(); }; }, [id]); return <div id={id} className="my-embers" />; }
+function Dice3D({ values }: { values: number[] }) { const r = useRef<any>(null); useEffect(() => { const t = setTimeout(() => r.current?.rollAll(values), 60); return () => clearTimeout(t); }, [values.join()]); return <div className="my-dice"><ReactDice ref={r} numDice={values.length} defaultRoll={1} dieSize={54} faceColor="#e9dfc7" dotColor="#2a2118" outline outlineColor="#7a5a2a" rollTime={1.1} disableIndividual rollDone={() => {}} /></div>; }
 const STEP: any = { COUNCIL: "营地议事", FORK: "岔路抉择", PLAN: "商量方案", CONTRIBUTE: "暗中出力", ROLL: "掷骰", FLASHBACK: "闪回窗口" };
 export function MistExpedition() {
   const q = new URLSearchParams(location.search); const [code, setCode] = useState(q.get("room")?.toUpperCase() ?? "");
