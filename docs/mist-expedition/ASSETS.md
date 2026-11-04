@@ -6,3 +6,5 @@
 图标：game-icons.net（https://github.com/game-icons/icons），CC-BY 3.0，作者 Lorc、Delapouite、Skoll；已改色并去掉黑底。
 
 场景图：用户用 ChatGPT 生成，已裁掉模糊边或白边并压缩为 WebP。
+
+动效库：tsParticles、react-dice-complete（npm，开源）。

@@ -34,3 +34,5 @@
 @keyframes my-shake{0%,100%{transform:none}25%{transform:translate(-5px,2px)}75%{transform:translate(5px,-2px)}}
 @keyframes my-pulse{50%{opacity:.45}}
 @media (prefers-reduced-motion:reduce){.my-stage,.my-stage *,.my-pop,.my-shake,.my-world>section,.my-danger *{animation:none!important}}
+.my-embers{position:absolute;inset:0;pointer-events:none}.my-embers canvas{width:100%!important;height:100%!important}
+.my-dice{display:flex;justify-content:center;margin:8px 0;min-height:70px}

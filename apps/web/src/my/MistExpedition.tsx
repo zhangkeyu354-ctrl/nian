@@ -1,5 +1,8 @@
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { io } from "socket.io-client";
+import ReactDice from "react-dice-complete";
+import Particles, { initParticlesEngine } from "@tsparticles/react";
+import { loadSlim } from "@tsparticles/slim";
 import "./my.css";
 const sock = io({ transports: ["websocket", "polling"] });
 const call = (ev: string, a?: any) => new Promise<any>((ok) => sock.timeout(8000).emit(ev, a ?? {}, (e: any, r: any) => ok(e ? { ok: false, error: "连接超时，请检查网络" } : r)));
@@ -10,6 +13,11 @@ const bgm = new Audio(); bgm.loop = true; bgm.volume = .3; let want = "";
 const playBgm = (n: string) => { if (get("my-mute") === "1" || !n) { bgm.pause(); return; } if (want !== n) { want = n; bgm.src = `/assets/mist-expedition/audio/bgm-${n}.mp3`; } void bgm.play().catch(() => {}); };
 const I = ({ n }: { n: string }) => <img className="my-ic" src={`/assets/mist-expedition/icons/${n}.svg`} alt="" />;
 const CI: any = { 刚: "gang", 影: "ying", 智: "zhi", 言: "yan" };
+let engineReady: Promise<void> | null = null;
+const reduced = () => { try { return matchMedia("(prefers-reduced-motion: reduce)").matches; } catch { return false; } };
+const EMBERS: any = { fullScreen: { enable: false }, fpsLimit: 30, detectRetina: false, background: { color: "transparent" }, particles: { number: { value: 16 }, color: { value: ["#ffc46b", "#ff9a4d", "#dfe7ea"] }, opacity: { value: { min: .15, max: .7 }, animation: { enable: true, speed: .6 } }, size: { value: { min: 1, max: 2.6 } }, move: { enable: true, speed: { min: .2, max: .8 }, direction: "top", random: true, straight: false, outModes: "out" } } };
+function Embers() { const [ok, setOk] = useState(false); useEffect(() => { if (reduced()) return; (engineReady ??= initParticlesEngine(loadSlim)).then(() => setOk(true)); }, []); return ok ? <Particles className="my-embers" options={EMBERS} /> : null; }
+function Dice3D({ values }: { values: number[] }) { const r = useRef<any>(null); useEffect(() => { const t = setTimeout(() => r.current?.rollAll(values), 60); return () => clearTimeout(t); }, [values.join()]); return <div className="my-dice"><ReactDice ref={r} numDice={values.length} defaultRoll={1} dieSize={54} faceColor="#e9dfc7" dotColor="#2a2118" outline outlineColor="#7a5a2a" rollTime={1.1} disableIndividual /></div>; }
 const STEP: any = { COUNCIL: "营地议事", FORK: "岔路抉择", PLAN: "商量方案", CONTRIBUTE: "暗中出力", ROLL: "掷骰", FLASHBACK: "闪回窗口" };
 export function MistExpedition() {
   const q = new URLSearchParams(location.search); const [code, setCode] = useState(q.get("room")?.toUpperCase() ?? "");
@@ -29,7 +37,7 @@ export function MistExpedition() {
   return <div className={fx}>
     <header className="my-top"><b>第 {v.sceneIdx + 1}/4 场</b><span data-testid="my-doom"><I n="doom" />灾厄 {v.doom}/8</span><span><I n="supplies" />物资 {v.supplies}</span><span><I n="clues" />线索 {v.clues}</span><span><I n="omen" />预兆 {v.omen}</span><button className="my-mute" aria-label="音效开关" onClick={() => { set("my-mute", get("my-mute") === "1" ? "0" : "1"); playBgm(track); setNow(Date.now()); }}>{get("my-mute") === "1" ? "🔇" : "🔊"}</button>{left > 0 && <span>⏱{left}</span>}</header>
     {v.ending ? <End v={v} dn={dn} /> : <>
-      <section className="my-scene"><div className="my-stage" key={v.sceneInfo.id}><img className="my-art" src={`/assets/mist-expedition/scenes/${v.sceneInfo.id}.webp`} alt="" /><i className="my-glow" /><i className="my-fog" /><i className="my-fog b" /></div><small>{v.sceneInfo.type} · {STEP[v.phase]}</small><h2>{v.sceneInfo.title}</h2><p>{v.sceneInfo.narration}</p><p className="my-actor">主行动者：{dn(v.actor)}{actor && "（你）"}</p></section>
+      <section className="my-scene"><div className="my-stage" key={v.sceneInfo.id}><img className="my-art" src={`/assets/mist-expedition/scenes/${v.sceneInfo.id}.webp`} alt="" /><i className="my-glow" /><Embers /><i className="my-fog" /><i className="my-fog b" /></div><small>{v.sceneInfo.type} · {STEP[v.phase]}</small><h2>{v.sceneInfo.title}</h2><p>{v.sceneInfo.narration}</p><p className="my-actor">主行动者：{dn(v.actor)}{actor && "（你）"}</p></section>
       {v.intelText.map((t: string, i: number) => <section key={i} className="my-intel" data-testid="my-intel"><b>🔒 独家情报，只有你能看到</b><p>{t}</p></section>)}
       <Act v={v} me={me} actor={actor} cmd={cmd} dn={dn} /><Skill v={v} me={me} cmd={cmd} dn={dn} />
     </>}
@@ -70,6 +78,6 @@ function Act({ v, me, actor, cmd, dn }: any) {
   if (v.phase === "CONTRIBUTE" && v.jailed === v.me) return <p>你被关禁闭，这一场不能行动。</p>;
   const cards = <div className="my-hand">{reveal.map((c: any, i: number) => <span key={c.id} className="my-flip" style={{ animationDelay: i + "s" }}><I n={CI[c.color]} />{c.color}<b>{c.value}</b></span>)}</div>;
   if (v.phase === "ROLL") return <section><h3>翻牌结果</h3>{cards}{actor ? <><button data-testid="my-roll" onClick={() => cmd({ t: "ROLL", push: false })}>稳妥掷骰</button><button onClick={() => cmd({ t: "ROLL", push: true })}>加压力骰（压力 +1，可能失控）</button></> : <p>等待 {dn(v.actor)} 掷骰…</p>}</section>;
-  return <section><h3 className="my-pop" key={v.total}>总值 {v.total}</h3><p>骰子 {v.roll?.dice.join("+")}{v.roll?.pd?.length ? ` · 压力骰 ${v.roll.pd.join(",")}` : ""}{v.roll?.panic && " · ⚠失控！"}</p>{cards}{me.flashback && v.jailed !== v.me && <button onClick={() => cmd({ t: "FLASHBACK", pay: v.supplies > 0 ? "supplies" : "stress" })}>闪回：其实我早有准备（总值 +3）</button>}{v.passed.includes(v.me) ? <p>等待其他人…</p> : <button data-testid="my-pass" onClick={() => cmd({ t: "PASS" })}>不闪回，继续</button>}</section>;
+  return <section><h3 className="my-pop" key={v.total}>总值 {v.total}</h3>{v.roll && <Dice3D values={v.roll.dice} />}<p>骰子 {v.roll?.dice.join("+")}{v.roll?.pd?.length ? ` · 压力骰 ${v.roll.pd.join(",")}` : ""}{v.roll?.panic && " · ⚠失控！"}</p>{cards}{me.flashback && v.jailed !== v.me && <button onClick={() => cmd({ t: "FLASHBACK", pay: v.supplies > 0 ? "supplies" : "stress" })}>闪回：其实我早有准备（总值 +3）</button>}{v.passed.includes(v.me) ? <p>等待其他人…</p> : <button data-testid="my-pass" onClick={() => cmd({ t: "PASS" })}>不闪回，继续</button>}</section>;
 }
 function End({ v, dn }: any) { const r = v.reveal_all; return <section data-testid="my-end"><h2>{v.endingInfo.title}</h2><p>{v.endingInfo.text}</p><h3>秘密誓约</h3><ul>{r.oaths.map((o: any) => <li key={o.seat}>{dn(o.seat)}（{o.role}）：{o.name} {o.done ? "✅" : "❌"}</li>)}</ul><h3>独家情报回顾</h3><ul>{r.intel.map((i: any, k: number) => <li key={k}>{dn(i.seat)}：{i.text}</li>)}</ul><small>音乐：North Fantasy Music（CC-BY 4.0）· 音效：Kenney（CC0）· 图标：game-icons.net（Lorc、Delapouite、Skoll，CC-BY 3.0）</small></section>; }
