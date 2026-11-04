@@ -92,3 +92,8 @@
 .my-endart{display:block;width:calc(100% + 24px);margin:-7px -12px 8px;aspect-ratio:4/3;object-fit:cover;object-position:top;border-radius:12px 12px 0 0}
 @media (prefers-reduced-motion:reduce){.my-fx{display:none}}
 .my-flip::before{content:"";position:absolute;inset:0;z-index:3;background:url(/assets/mist-expedition/cards/back.webp) center/cover;animation:my-back .5s forwards;animation-delay:inherit}@keyframes my-back{0%,45%{opacity:1}55%,100%{opacity:0}}.my-fx.fogb{top:4%;width:90%;max-width:420px;animation-duration:1.1s}
+.my-map{position:relative;margin:0 auto;width:min(100%,62vh);aspect-ratio:941/1672}.my-map>img{width:100%;height:100%;display:block;border-radius:10px}
+.my-world .my-node{position:absolute;width:12%;min-height:0;aspect-ratio:1;margin:0;padding:0;translate:-50% -50%;background:#f4e6bfcc;border:2px solid #6e5a33;border-radius:50%}.my-node img{position:absolute;inset:-8%;width:116%;height:116%;object-fit:contain}.my-node:disabled{opacity:.8}
+.my-world .my-node.near{border-color:var(--ac);box-shadow:0 0 10px var(--ac)}.my-world .my-node.here{border:3px solid #e0523f;box-shadow:0 0 14px #e0523f}.my-node .mk{inset:auto -30% -30% auto;width:70%;height:70%}.my-node .mk.mon{inset:-30% auto auto -30%}
+.my-maptip{position:absolute;left:0;right:0;bottom:0;margin:0;text-align:center;background:#0009;font-size:13px}.my-quest{font-size:13px}.my-quest small{display:block;color:var(--mu)}
+.my-map{width:min(100%,48vh)}.my-ph-MAP .my-spacer{display:none}.my-ph-MAP .my-quest{padding:5px 8px}.my-node img:first-child{opacity:1}

@@ -7,7 +7,7 @@ const {code}=await call(S[0],"my:create");for(let i=0;i<N;i++){const r=await cal
 await call(S[0],"my:start");await new Promise(r=>setTimeout(r,100));
 for(let g=0;g<400&&!V[0].ending;g++){const v=V[0],a=v.actor;
  if(JSON.stringify(V[1]).includes('"oath"')&&false)throw 0;
- if(v.phase==="FORK")await call(S[a],"my:cmd",{t:"FORK",optionId:v.fork.options[0].id});
+ if(v.phase==="MAP")await call(S[a],"my:cmd",{t:"MOVE",pos:Math.min(11,v.mapView.pos+1)});
  else if(v.phase==="PLAN")await call(S[a],"my:cmd",{t:"PLAN",planId:v.plans[0].id});
  else if(v.phase==="CONTRIBUTE"){for(let i=0;i<N;i++)if(i!==a&&i!==v.jailed){await new Promise(r=>setTimeout(r,5));await call(S[i],"my:cmd",{t:"CONTRIBUTE",cardId:V[i].players[i].hand[0].id})}}
  else if(v.phase==="COUNCIL"){for(let i=0;i<N;i++)await call(S[i],"my:cmd",{t:"VOTE",target:null})}
