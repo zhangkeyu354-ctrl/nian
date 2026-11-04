@@ -86,7 +86,7 @@ function Council({ v, me, cmd, dn }: any) {
     {v.voted.includes(v.me) ? <p>已投票，等待其他人…</p> : <><p>关禁闭投票：过半数通过，下一场不能行动，全队灾厄 +1。</p><button data-testid="my-novote" onClick={() => cmd({ t: "VOTE", target: null })}>不关任何人</button>{pickers("VOTE")}</>}
   </section>;
 }
-const FOE: any = { s01: "clerk", s06: "golem" };
+const FOE: any = { s06: "golem" };
 function Party({ v, dn }: any) {
   const foe = v.bossView?.art === "boss-accountant" ? "accountant" : FOE[v.sceneInfo.id]; const foeRef = useRef<HTMLImageElement>(null); const hp = useRef(v.bossView?.hp); const [dmg, setDmg] = useState<any>(null);
   const actRef = useRef<HTMLDivElement>(null);
