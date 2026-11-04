@@ -81,6 +81,7 @@
     "cannon-es": "0.20.0",
     "canvas-confetti": "^1.9.4",
     "gsap": "^3.15.1",
+    "pixi.js": "^8.22.0",
     "qrcode": "1.5.4",
     "react": "19.3.1",
     "react-dice-complete": "^2.3.2",

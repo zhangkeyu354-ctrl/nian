@@ -20,3 +20,5 @@
 结局图、Boss 立牌、特效图：用户用 ChatGPT 生成；已清理杂色边。
 
 V0.2 地图、地点、怪物、裂隙、牌背：用户用 ChatGPT 生成，位于 v2/。
+
+新增音效 attack/hit/monster/rift：Kenney（CC0）。特效库：pixi.js（MIT）。旁白：浏览器自带语音。

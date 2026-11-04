@@ -21,7 +21,7 @@ export function attachMist(io: Server, dir: string, opt: { maxRooms: number; idl
     if (!s) return base;
     const v: any = viewForMY(s, seat), mine = s.players[seat], sc = scene(s), oath = CONTENT.secret_oaths.find((o: any) => o.id === mine.oath);
     Object.assign(base, v, { myOath: { name: oath.name, text: oath.text, target: mine.oathTarget }, sceneInfo: { id: sc.id.toLowerCase(), loc: sc.loc, mon: sc.kind === "monster" ? sc.id : null, title: sc.title, type: sc.type, narration: sc.narration }, plans: plansOf(s).map((p: any) => ({ id: p.id, name: p.name, attribute: p.attribute, difficulty: p.difficulty, valid_colors: p.valid_colors })), intelText: s.intel.filter((i) => i.seat === seat).map((i) => sc.intel.find((x: any) => x.id === i.id).text), dealOffer: s.dealOffer && seat === s.actor ? { name: s.dealOffer.name, text: s.dealOffer.text } : null, fork: s.fork ?? null, validNow: s.planId ? validColors(s) : [] });
-    if (s.ending) { base.endingInfo = CONTENT.endings.find((e: any) => e.id === s.ending); base.reveal_all = { oaths: s.players.map((p) => ({ seat: p.seat, role: p.traitor ? "内奸" : p.recruit ? "被策反" : p.defected ? "投诚者" : "冒险者", name: CONTENT.secret_oaths.find((o: any) => o.id === p.oath).name, done: oathDone(s, p.seat) })), intel: s.log.filter((l) => l.type === "intel_given") }; }
+    if (s.ending) { base.endingInfo = CONTENT.endings.find((e: any) => e.id === s.ending); base.traitors = s.players.filter((p) => p.traitor || p.recruit).map((p) => p.seat); base.defectors = s.players.filter((p) => p.defected).map((p) => p.seat); base.reveal_all = { oaths: s.players.map((p) => ({ seat: p.seat, role: p.traitor ? "内奸" : p.recruit ? "被策反" : p.defected ? "投诚者" : "冒险者", name: CONTENT.secret_oaths.find((o: any) => o.id === p.oath).name, done: oathDone(s, p.seat) })), intel: s.log.filter((l) => l.type === "intel_given") }; }
     return base;
   };
   const push = (r: Room) => { for (const [sid, b] of bySocket) if (b.code === r.code) io.to(sid).emit("my:state", view(r, b.id)); };
@@ -58,6 +58,7 @@ export function attachMist(io: Server, dir: string, opt: { maxRooms: number; idl
       bySocket.set(sock.id, { code: r.code, id: p.id }); save(r); push(r); return { token: p.token, snapshot: view(r, p.id) };
     }));
     sock.on("my:start", guard(() => { const { b, r } = cur(); if (b.id !== r.hostId) throw new Error("只有房主能开始"); if (r.state) throw new Error("已经开始"); if (r.players.length < 2) throw new Error("至少 2 人"); r.state = createGame(r.players.length, r.seed); (r as any).begun = true; arm(r); save(r); push(r); return {}; }));
+    sock.on("my:rematch", guard(() => { const { b, r } = cur(); if (b.id !== r.hostId) throw new Error("只有房主能再来一局"); if (!r.state?.ending) throw new Error("本局还没结束"); r.seed = randomInt(1, 2 ** 31); r.commands = []; r.state = createGame(r.players.length, r.seed); arm(r); save(r); push(r); return {}; }));
     sock.on("my:cmd", guard((c) => {
       const { b, r } = cur(); if (!r.state) throw new Error("游戏未开始"); const seat = r.players.findIndex((p) => p.id === b.id), key = r.state.phase + r.state.sceneIdx;
       run(r, { ...c, seat }); arm(r, key); save(r); push(r); return {};
