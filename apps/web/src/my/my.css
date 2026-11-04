@@ -82,3 +82,8 @@
 @keyframes my-idle{50%{transform:translateY(-3px) scaleY(1.012)}}
 @keyframes my-float{from{opacity:0;transform:translateY(20px) scale(.6)}25%{opacity:1;transform:scale(1.3)}to{opacity:0;transform:translateY(-50px)}}
 @media (prefers-reduced-motion:reduce){.my-foe,.my-party div{animation:none}}
+.my-ph-CONTRIBUTE .my-scene,.my-ph-ROLL .my-scene,.my-ph-FLASHBACK .my-scene,.my-ph-COUNCIL .my-scene{display:none}
+.my-ph-CONTRIBUTE .my-field,.my-ph-ROLL .my-field,.my-ph-FLASHBACK .my-field{height:min(34vh,290px)}
+.my-ph-CONTRIBUTE .my-party img,.my-ph-ROLL .my-party img,.my-ph-FLASHBACK .my-party img{height:clamp(80px,17vh,140px)}
+.my-ph-CONTRIBUTE .my-spacer,.my-ph-ROLL .my-spacer,.my-ph-FLASHBACK .my-spacer{min-height:0;flex:0}
+.my-ph-FLASHBACK .my-dice{min-height:50px;margin:0}.my-ph-FLASHBACK .my-hand{display:none}
