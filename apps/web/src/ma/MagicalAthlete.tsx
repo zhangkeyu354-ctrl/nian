@@ -11,7 +11,7 @@ import type { MARoomSnapshot } from "../../../../packages/shared/src/ma-protocol
 import { racerArtId } from "../../../../packages/magical-athlete/src/second-wind-preview.ts";
 import { createMARoom, savedName, useMARoom } from "./ma-net.ts";
 import { ART, PLAYER_COLORS, Track, useVerticalBoard } from "./Track.tsx";
-import { installAudioUnlock, onMutedChange, setSfxMuted, sfxMuted, sfxShake, sfxTap, sfxYourTurn, vibrate } from "./sfx.ts";
+import { installAudioUnlock, musicIsOff, onMusicChange, onMutedChange, setMusicOff, setSfxMuted, sfxMuted, sfxShake, sfxTap, sfxYourTurn, vibrate, wantMusic } from "./sfx.ts";
 import { getSpeed, setSpeed, usePlayback, type Show, type Speed } from "./playback.ts";
 import { installMotionClock } from "./motion-clock.ts";
 import { usePreparedArt } from "./art-cache.ts";
@@ -433,6 +433,11 @@ function RacerCard({
 }
 
 function Game({ snap, view, send, connected }: { snap: MARoomSnapshot; view: MAView; send: Send; connected: boolean }) {
+  // 进入比赛播放背景音乐，离开就停
+  useEffect(() => {
+    wantMusic(true);
+    return () => wantMusic(false);
+  }, []);
   const me = snap.mySeat;
   const gameRoot = useRef<HTMLElement>(null);
   useEffect(() => gameRoot.current ? installMotionClock(gameRoot.current) : undefined, []);
@@ -522,6 +527,7 @@ function Game({ snap, view, send, connected }: { snap: MARoomSnapshot; view: MAV
         <strong>魔法运动员</strong>
         <span className="ma-muted">房间 {snap.code}{!connected && " · 重新连接中…"}</span>
         <SpeedToggle />
+        <MusicToggle />
         <SoundToggle />
       </div>
       <Scores view={view} me={me} colorOf={colorOf} compact={showRace} />
@@ -607,6 +613,19 @@ function SpeedToggle() {
       }}
     >
       {label[s]}
+    </button>
+  );
+}
+
+/** 背景音乐开关：只管音乐，音效照常；存本机 */
+function MusicToggle() {
+  const [off, setOff] = useState(musicIsOff);
+  const [m, setM] = useState(sfxMuted);
+  useEffect(() => onMusicChange(setOff), []);
+  useEffect(() => onMutedChange(setM), []);
+  return (
+    <button type="button" className={"ma-sound ma-music" + (off || m ? " off" : "")} onClick={() => setMusicOff(!off)} aria-label={off ? "打开音乐" : "关闭音乐"} title={off ? "打开音乐" : "关闭音乐"} data-testid="ma-music">
+      🎵
     </button>
   );
 }

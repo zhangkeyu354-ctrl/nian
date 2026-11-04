@@ -1563,6 +1563,10 @@
 .ma-topbar {
   align-items: center;
 }
+.ma-sound.ma-music.off {
+  opacity: 0.45;
+  text-decoration: line-through;
+}
 .ma-sound {
   flex: none;
   min-height: 36px !important;
