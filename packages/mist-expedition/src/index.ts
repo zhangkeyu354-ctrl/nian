@@ -1,7 +1,7 @@
 // 迷雾远征引擎：纯函数 reduceMY / viewForMY，所有随机来自 state.rng。
 import content from "./content.json";
 const C: any = content;
-export const PLAYER_BONUS: Record<number, number> = { 3: 0, 4: 1, 5: 3, 6: 4, 7: 6, 8: 7 };
+export const PLAYER_BONUS: Record<number, number> = { 3: 1, 4: 2, 5: 4, 6: 4, 7: 6, 8: 7 };
 export const BASE: Record<string, number> = { 简单: 9, 普通: 11, 困难: 13 };
 export const COLORS = ["刚", "影", "智", "言"];
 const STAGES = ["开端", "障碍", "大变局", "终局"];

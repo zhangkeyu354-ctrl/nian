@@ -2434,14 +2434,14 @@
       "metric": "hp",
       "target": "assigned_player",
       "op": "<=",
-      "value": 1
+      "value": 2
      },
      {
       "kind": "final_metric",
       "metric": "stress",
       "target": "assigned_player",
       "op": ">=",
-      "value": 5
+      "value": 3
      }
     ]
    },
@@ -2467,7 +2467,7 @@
       "metric": "supplies",
       "target": "team",
       "op": "<=",
-      "value": 1
+      "value": 2
      }
     ]
    },
@@ -2586,7 +2586,7 @@
   {
    "id": "O09",
    "name": "准点强迫症",
-   "text": "你无法容忍迷雾乱走。只要灾厄钟最后不超过 3，你就能安心睡觉。",
+   "text": "你无法容忍迷雾乱走。只要灾厄钟最后不超过 4，你就能安心睡觉。",
    "theme": "守序",
    "mischief_motive": false,
    "completion_condition": {
@@ -2596,11 +2596,11 @@
       "metric": "doom",
       "target": "team",
       "op": "<=",
-      "value": 3
+      "value": 4
      }
     ]
    },
-   "condition_explanation": "终局时灾厄不超过 3。",
+   "condition_explanation": "终局时灾厄不超过 4。",
    "reward": {
     "team_win_and_completed": "大赢家",
     "team_loss_and_completed": null
