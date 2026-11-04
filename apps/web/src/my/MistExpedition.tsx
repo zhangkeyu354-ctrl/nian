@@ -86,7 +86,14 @@ function Council({ v, me, cmd, dn }: any) {
     {v.voted.includes(v.me) ? <p>已投票，等待其他人…</p> : <><p>关禁闭投票：过半数通过，下一场不能行动，全队灾厄 +1。</p><button data-testid="my-novote" onClick={() => cmd({ t: "VOTE", target: null })}>不关任何人</button>{pickers("VOTE")}</>}
   </section>;
 }
-function Party({ v, dn }: any) { return <div className="my-party">{v.players.map((p: any) => <div key={p.seat} className={`${p.seat === v.actor ? "act" : ""}${p.seat === v.jailed ? " jail" : ""}${p.seat === v.me ? " me" : ""}`}><img src={`/assets/mist-expedition/classes/${p.cls}.webp`} alt="" /><i className="hp"><u style={{ width: p.hp / 3 * 100 + "%" }} /></i><i className="st"><u style={{ width: p.stress / 6 * 100 + "%" }} /></i><span>{dn(p.seat)}</span></div>)}</div>; }
+const FOE: any = { s01: "clerk", s06: "golem" };
+function Party({ v, dn }: any) {
+  const foe = v.bossView?.art === "boss-accountant" ? "accountant" : FOE[v.sceneInfo.id]; const foeRef = useRef<HTMLImageElement>(null); const hp = useRef(v.bossView?.hp); const [dmg, setDmg] = useState<any>(null);
+  const actRef = useRef<HTMLDivElement>(null);
+  useEffect(() => { const h = v.bossView?.hp; if (h !== undefined && hp.current !== undefined && h < hp.current && !reduced()) { const d = hp.current - h; setDmg({ d, k: Date.now() }); if (actRef.current) gsap.fromTo(actRef.current, { y: 0 }, { y: -46, scale: 1.2, duration: .16, yoyo: true, repeat: 1 }); if (foeRef.current) gsap.fromTo(foeRef.current, { filter: "brightness(3)", x: -10 }, { filter: "brightness(1)", x: 0, duration: .5, ease: "elastic.out(1,.3)" }); sfx("panic"); } hp.current = h; }, [v.bossView?.hp]);
+  return <div className="my-field">{foe && <img ref={foeRef} className={`my-foe${v.bossView ? " boss" : ""}`} src={`/assets/mist-expedition/standees/${foe}.webp`} alt="" />}{dmg && <b key={dmg.k} className="my-dmg">-{dmg.d}</b>}
+    <div className="my-party">{v.players.map((p: any) => <div key={p.seat} ref={p.seat === v.actor ? actRef : undefined} style={{ animationDelay: p.seat * .23 + "s" }} className={`${p.seat === v.actor ? "act" : ""}${p.seat === v.jailed ? " jail" : ""}${p.seat === v.me ? " me" : ""}${p.hp <= 0 ? " down" : ""}`}><img src={`/assets/mist-expedition/standees/${p.cls}.webp`} alt="" /><i className="hp"><u style={{ width: p.hp / 3 * 100 + "%" }} /></i><i className="st"><u style={{ width: p.stress / 6 * 100 + "%" }} /></i><span>{dn(p.seat)}</span></div>)}</div></div>;
+}
 function Err({ m }: { m: string }) { return m ? <p className="my-err">{m}</p> : null; }
 function Act({ v, me, actor, cmd, dn }: any) {
   const [deal, setDeal] = useState(false); const reveal = useMemo(() => v.reveal ?? [], [v.reveal]);

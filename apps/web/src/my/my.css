@@ -72,3 +72,13 @@
 .my-world{overflow-x:clip}.my-spacer{min-height:6vh}.my-world>section{padding:7px 10px;margin:4px 0}.my-world>section h3{margin:2px 0;font-size:15px}
 .my-actor{padding:2px 8px!important}.my-intel p{margin:2px 0;font-size:13px}.my-hand button,.my-flip{aspect-ratio:3/4;max-height:26vh}
 .my-boss i{display:block;height:12px;margin:5px 0;background:#000a;border:1px solid #8a6a35;border-radius:6px;overflow:hidden}.my-boss u{display:block;height:100%;background:linear-gradient(90deg,#8e1f18,#e0523f);transition:width .6s}.my-boss small{color:#ffb4a6}
+.my-field{position:relative;height:min(48vh,380px);margin:0 -16px;overflow:visible}
+.my-foe{position:absolute;right:6%;top:0;height:62%;filter:drop-shadow(0 8px 12px #000a);animation:my-idle 3.4s ease-in-out infinite}.my-foe.boss{right:50%;transform-origin:bottom;translate:50% 0;height:72%}
+.my-dmg{position:absolute;right:30%;top:14%;z-index:5;font-size:46px;color:#ffe7a8;text-shadow:0 0 12px #e0523f,0 3px 6px #000;animation:my-float 1s forwards}
+.my-party{position:absolute;left:0;right:0;bottom:0;display:flex;flex-wrap:nowrap;justify-content:center;align-items:flex-end;gap:0;margin:0}
+.my-party div{flex:1 1 0;min-width:0;max-width:96px;width:auto;animation:my-idle 3s ease-in-out infinite;transform-origin:bottom}
+.my-party img{width:auto;max-width:150%;height:clamp(90px,21vh,170px);border:0!important;border-radius:0;object-fit:contain;object-position:bottom;margin:0 auto;box-shadow:none!important;position:relative;left:50%;translate:-50% 0;filter:drop-shadow(0 4px 6px #000b)}
+.my-party .act{z-index:2}.my-party .act img{filter:drop-shadow(0 0 9px var(--ac)) drop-shadow(0 4px 6px #000b);scale:1.12}.my-party .jail img{filter:grayscale(1) brightness(.6)}.my-party .down img{filter:grayscale(1) brightness(.4)}
+@keyframes my-idle{50%{transform:translateY(-3px) scaleY(1.012)}}
+@keyframes my-float{from{opacity:0;transform:translateY(20px) scale(.6)}25%{opacity:1;transform:scale(1.3)}to{opacity:0;transform:translateY(-50px)}}
+@media (prefers-reduced-motion:reduce){.my-foe,.my-party div{animation:none}}
