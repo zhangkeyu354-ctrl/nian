@@ -87,3 +87,7 @@
 .my-ph-CONTRIBUTE .my-party img,.my-ph-ROLL .my-party img,.my-ph-FLASHBACK .my-party img{height:clamp(80px,17vh,140px)}
 .my-ph-CONTRIBUTE .my-spacer,.my-ph-ROLL .my-spacer,.my-ph-FLASHBACK .my-spacer{min-height:0;flex:0}
 .my-ph-FLASHBACK .my-dice{min-height:50px;margin:0}.my-ph-FLASHBACK .my-hand{display:none}
+.my-fx{position:absolute;left:50%;top:12%;width:70%;max-width:320px;translate:-50% 0;pointer-events:none;z-index:4;animation:my-burst .7s ease-out forwards}.my-fx.hit{animation-delay:.12s;opacity:0;width:55%}.my-fx.magic{position:fixed;top:25%;z-index:20}
+@keyframes my-burst{from{opacity:0;transform:scale(.4) rotate(-12deg)}30%{opacity:1}to{opacity:0;transform:scale(1.25) rotate(4deg)}}
+.my-endart{display:block;width:calc(100% + 24px);margin:-7px -12px 8px;aspect-ratio:4/3;object-fit:cover;object-position:top;border-radius:12px 12px 0 0}
+@media (prefers-reduced-motion:reduce){.my-fx{display:none}}
