@@ -55,7 +55,7 @@ export function MistExpedition() {
     {cine && <Cinematic {...cine} onDone={() => setCine(null)} />}
     <header className="my-top"><b>第 {v.sceneIdx + 1}/4 场</b><span data-testid="my-doom"><I n="doom" />{v.doom}/8</span><span><I n="supplies" />{v.supplies}</span><span><I n="clues" />{v.clues}</span><span><I n="omen" />{v.omen}</span><button className="my-mute" aria-label="音效开关" onClick={() => { set("my-mute", get("my-mute") === "1" ? "0" : "1"); playBgm(track); setNow(Date.now()); }}>{get("my-mute") === "1" ? "🔇" : "🔊"}</button>{left > 0 && <span>⏱{left}</span>}</header>
     {v.ending ? <End v={v} dn={dn} /> : <>
-      <Trail idx={v.sceneIdx} /><section className="my-scene"><div className="my-stage" key={v.sceneInfo.id}><img className="my-art" src={`/assets/mist-expedition/scenes/${v.sceneInfo.id}.webp`} alt="" /><i className="my-glow" /><Embers /><i className="my-fog" /><i className="my-fog b" /></div><small>{v.sceneInfo.type} · {STEP[v.phase]}</small><h2>{v.sceneInfo.title}</h2><p>{v.sceneInfo.narration}</p><p className="my-actor">主行动者：{dn(v.actor)}{actor && "（你）"}</p></section>
+      <div className="my-stage" key={v.sceneInfo.id}><img className="my-art" src={`/assets/mist-expedition/scenes/${v.sceneInfo.id}.webp`} alt="" /><i className="my-glow" /><Embers /><i className="my-fog" /><i className="my-fog b" /></div><Trail idx={v.sceneIdx} /><Party v={v} dn={dn} /><div className="my-spacer" /><section className="my-scene"><small>{v.sceneInfo.type} · {STEP[v.phase]}</small><h2>{v.sceneInfo.title}</h2>{(v.phase === "PLAN" || v.phase === "FORK") && <p>{v.sceneInfo.narration}</p>}<p className="my-actor">主行动者：{dn(v.actor)}{actor && "（你）"}</p></section>
       {v.intelText.map((t: string, i: number) => <section key={i} className="my-intel" data-testid="my-intel"><b>🔒 独家情报，只有你能看到</b><p>{t}</p></section>)}
       <Act v={v} me={me} actor={actor} cmd={cmd} dn={dn} /><Skill v={v} me={me} cmd={cmd} dn={dn} />
     </>}
@@ -86,6 +86,7 @@ function Council({ v, me, cmd, dn }: any) {
     {v.voted.includes(v.me) ? <p>已投票，等待其他人…</p> : <><p>关禁闭投票：过半数通过，下一场不能行动，全队灾厄 +1。</p><button data-testid="my-novote" onClick={() => cmd({ t: "VOTE", target: null })}>不关任何人</button>{pickers("VOTE")}</>}
   </section>;
 }
+function Party({ v, dn }: any) { return <div className="my-party">{v.players.map((p: any) => <div key={p.seat} className={`${p.seat === v.actor ? "act" : ""}${p.seat === v.jailed ? " jail" : ""}${p.seat === v.me ? " me" : ""}`}><img src={`/assets/mist-expedition/classes/${p.cls}.webp`} alt="" /><i className="hp"><u style={{ width: p.hp / 3 * 100 + "%" }} /></i><i className="st"><u style={{ width: p.stress / 6 * 100 + "%" }} /></i><span>{dn(p.seat)}</span></div>)}</div>; }
 function Err({ m }: { m: string }) { return m ? <p className="my-err">{m}</p> : null; }
 function Act({ v, me, actor, cmd, dn }: any) {
   const [deal, setDeal] = useState(false); const reveal = useMemo(() => v.reveal ?? [], [v.reveal]);

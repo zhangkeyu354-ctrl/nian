@@ -53,3 +53,19 @@
 .my-hand em,.my-hand b{position:absolute;z-index:1;left:0;right:0;font-style:normal;text-shadow:0 1px 4px #000,0 0 8px #000}.my-hand em{top:6px;font-size:13px}.my-hand b{bottom:6px;font-size:28px;color:#ffe7a8}
 .my-portrait{display:block;width:96px;height:96px;object-fit:cover;border-radius:50%;margin:8px 0;border:2px solid #8a6a35}
 .my-cover{display:block;width:calc(100% + 32px);margin:-12px -16px 8px;aspect-ratio:16/9;object-fit:cover}
+.my-world{position:relative;display:flex;flex-direction:column;isolation:isolate;padding-bottom:12px}
+.my-world>.my-stage{position:fixed;inset:0;height:auto;margin:0;z-index:-1}
+.my-stage .my-art{height:100%;object-fit:cover;object-position:top;-webkit-mask-image:none;mask-image:none}
+.my-stage::before{content:"";position:absolute;inset:0;z-index:1;background:linear-gradient(rgba(8,11,14,.55),transparent 16%,transparent 34%,rgba(12,16,20,.9) 62%)}
+.my-glow,.my-fog,.my-embers{z-index:2}
+.my-top{background:rgba(10,14,18,.62);margin:-12px -16px 4px;padding:8px 12px;backdrop-filter:blur(4px)}
+.my-party{display:flex;flex-wrap:wrap;justify-content:center;gap:6px;margin:2px 0}
+.my-party div{width:calc(12.5% - 6px);min-width:46px;text-align:center;font-size:10px;text-shadow:0 1px 3px #000}
+.my-party img{width:42px;height:42px;border-radius:50%;object-fit:cover;border:2px solid #52626d;display:block;margin:auto}
+.my-party .act img{border-color:var(--ac);box-shadow:0 0 12px var(--ac)}.my-party .me span{color:var(--ac)}.my-party .jail img{filter:grayscale(1);opacity:.6}
+.my-party span{display:block;overflow:hidden;white-space:nowrap}.my-party i{display:block;height:3px;margin:2px 4px 0;background:#0009}.my-party u{display:block;height:100%}.my-party .hp u{background:#d9584a}.my-party .st u{background:#a58bd6}
+.my-spacer{flex:1 1 auto;min-height:22vh}
+.my-world>section{background:rgba(13,18,23,.86);border:1px solid #6e5a33;border-radius:12px;padding:10px 12px;margin:6px 0}
+.my-scene h2{font-size:18px;margin:2px 0}.my-scene p{margin:4px 0;font-size:14px}.my-scene small{font-size:12px}
+.my-world>section .my-hand{flex-wrap:nowrap}.my-hand button{min-width:0}
+.my-drawer{position:relative}
