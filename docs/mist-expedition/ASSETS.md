@@ -12,3 +12,5 @@
 胜利特效：canvas-confetti（npm，ISC）。路线图标：game-icons.net（CC-BY 3.0）。
 
 过场动效：GSAP（npm，官方标准免费授权）。
+
+封面、卡牌、职业图：用户用 ChatGPT 生成。
