@@ -12,3 +12,4 @@
 .my-skill{margin:10px 0;color:var(--mu)}
 .my-world .my-mute{display:inline;width:auto;min-height:28px;margin:0;padding:0 6px}
 .my-ic{width:1.15em;height:1.15em;vertical-align:-.2em;margin-right:3px}.my-hand .my-ic{display:block;width:34px;height:34px;margin:0 auto 4px}
+.my-art{display:block;width:calc(100% + 32px);margin:0 -16px 8px;height:min(62vw,300px);object-fit:cover;object-position:top;-webkit-mask-image:linear-gradient(#000 80%,transparent);mask-image:linear-gradient(#000 80%,transparent)}
