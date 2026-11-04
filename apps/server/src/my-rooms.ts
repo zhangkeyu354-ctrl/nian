@@ -5,7 +5,7 @@ import type { Server, Socket } from "socket.io";
 import { CONTENT, validColors, createGame, oathDone, plansOf, reduceMY, scene, viewForMY, type Cmd, type State } from "../../../packages/mist-expedition/src/index.ts";
 
 const CHARS = "ABCDEFGHJKLMNPQRSTUVWXYZ23456789";
-const LIMIT: Record<string, number> = { FORK: 30, PLAN: 90, CONTRIBUTE: 30, ROLL: 20, FLASHBACK: 10 };
+const LIMIT: Record<string, number> = { FORK: 30, PLAN: 90, CONTRIBUTE: 30, ROLL: 20, FLASHBACK: 10, COUNCIL: 45 };
 type P = { id: string; token: string; name: string };
 type File = { code: string; hostId: string; players: P[]; seed: number; commands: Cmd[]; touched: number };
 type Room = File & { state: State | null; deadline: number; timer?: NodeJS.Timeout };
@@ -21,15 +21,16 @@ export function attachMist(io: Server, dir: string, opt: { maxRooms: number; idl
     if (!s) return base;
     const v: any = viewForMY(s, seat), mine = s.players[seat], sc = scene(s), oath = CONTENT.secret_oaths.find((o: any) => o.id === mine.oath);
     Object.assign(base, v, { myOath: { name: oath.name, text: oath.text, target: mine.oathTarget }, sceneInfo: { title: sc.title, type: sc.type, narration: sc.narration }, plans: plansOf(s).map((p: any) => ({ id: p.id, name: p.name, attribute: p.attribute, difficulty: p.difficulty, valid_colors: p.valid_colors })), intelText: s.intel.filter((i) => i.seat === seat).map((i) => sc.intel.find((x: any) => x.id === i.id).text), dealOffer: s.dealOffer && seat === s.actor ? { name: s.dealOffer.name, text: s.dealOffer.text } : null, fork: s.fork ?? null, validNow: s.planId ? validColors(s) : [] });
-    if (s.ending) { base.endingInfo = CONTENT.endings.find((e: any) => e.id === s.ending); base.reveal_all = { oaths: s.players.map((p) => ({ seat: p.seat, name: CONTENT.secret_oaths.find((o: any) => o.id === p.oath).name, done: oathDone(s, p.seat) })), intel: s.log.filter((l) => l.type === "intel_given") }; }
+    if (s.ending) { base.endingInfo = CONTENT.endings.find((e: any) => e.id === s.ending); base.reveal_all = { oaths: s.players.map((p) => ({ seat: p.seat, role: p.traitor ? "内奸" : p.recruit ? "被策反" : p.defected ? "投诚者" : "冒险者", name: CONTENT.secret_oaths.find((o: any) => o.id === p.oath).name, done: oathDone(s, p.seat) })), intel: s.log.filter((l) => l.type === "intel_given") }; }
     return base;
   };
   const push = (r: Room) => { for (const [sid, b] of bySocket) if (b.code === r.code) io.to(sid).emit("my:state", view(r, b.id)); };
   const auto = (s: State): Cmd[] => {
     if (s.phase === "FORK") return [{ t: "FORK", seat: s.actor, optionId: s.fork.options[0].id }];
     if (s.phase === "PLAN") return [{ t: "PLAN", seat: s.actor, planId: scene(s).plans[0].id }];
-    if (s.phase === "CONTRIBUTE") { const q = s.players.find((p) => p.seat !== s.actor && !s.played.some((x) => x.seat === p.seat))!; return [{ t: "CONTRIBUTE", seat: q.seat, cardId: q.hand[randomInt(q.hand.length)].id }]; }
+    if (s.phase === "CONTRIBUTE") { const q = s.players.find((p) => p.seat !== s.actor && p.seat !== s.jailed && !s.played.some((x) => x.seat === p.seat))!; return [{ t: "CONTRIBUTE", seat: q.seat, cardId: q.hand[randomInt(q.hand.length)].id }]; }
     if (s.phase === "ROLL") return [{ t: "ROLL", seat: s.actor, push: false }];
+    if (s.phase === "COUNCIL") return s.players.filter((p) => !(p.seat in s.votes)).map((p) => ({ t: "VOTE", seat: p.seat, target: null }) as Cmd);
     return s.players.filter((p) => !s.passed.includes(p.seat)).map((p) => ({ t: "PASS", seat: p.seat }) as Cmd);
   };
   const run = (r: Room, c: Cmd) => { r.state = reduceMY(r.state!, c); r.commands.push(c); };

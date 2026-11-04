@@ -10,7 +10,7 @@ const bgm = new Audio(); bgm.loop = true; bgm.volume = .3; let want = "";
 const playBgm = (n: string) => { if (get("my-mute") === "1" || !n) { bgm.pause(); return; } if (want !== n) { want = n; bgm.src = `/assets/mist-expedition/audio/bgm-${n}.mp3`; } void bgm.play().catch(() => {}); };
 const I = ({ n }: { n: string }) => <img className="my-ic" src={`/assets/mist-expedition/icons/${n}.svg`} alt="" />;
 const CI: any = { 刚: "gang", 影: "ying", 智: "zhi", 言: "yan" };
-const STEP: any = { FORK: "岔路抉择", PLAN: "商量方案", CONTRIBUTE: "暗中出力", ROLL: "掷骰", FLASHBACK: "闪回窗口" };
+const STEP: any = { COUNCIL: "营地议事", FORK: "岔路抉择", PLAN: "商量方案", CONTRIBUTE: "暗中出力", ROLL: "掷骰", FLASHBACK: "闪回窗口" };
 export function MistExpedition() {
   const q = new URLSearchParams(location.search); const [code, setCode] = useState(q.get("room")?.toUpperCase() ?? "");
   const [name, setName] = useState(get("my-name") ?? ""); const [v, setV] = useState<any>(null); const [err, setErr] = useState(""); const [busy, setBusy] = useState(false); const [now, setNow] = useState(Date.now());
@@ -33,7 +33,7 @@ export function MistExpedition() {
       <Act v={v} me={me} actor={actor} cmd={cmd} dn={dn} /><Skill v={v} me={me} cmd={cmd} dn={dn} />
     </>}
     <Err m={err} />
-    <details className="my-drawer"><summary>我的角色与誓约</summary><p><I n={me.cls} />生命 {me.hp} · 压力 {me.stress} · 闪回 {me.flashback ? "可用" : "已用"}</p><p><b>{v.myOath.name}</b>：{v.myOath.text}{v.myOath.target !== undefined && `（目标：${dn(v.myOath.target)}）`}</p></details>
+    <details className="my-drawer"><summary>我的角色与誓约</summary>{(me.traitor || me.recruit) && <p className="my-err">你是{me.traitor ? "内奸" : "被策反者"}：全队失败，你就获胜。</p>}<p><I n={me.cls} />生命 {me.hp} · 压力 {me.stress} · 闪回 {me.flashback ? "可用" : "已用"}</p><p><b>{v.myOath.name}</b>：{v.myOath.text}{v.myOath.target !== undefined && `（目标：${dn(v.myOath.target)}）`}</p></details>
   </div>;
 }
 const CLS: any = { warrior: "战士：队友受伤时自动替他承受（生命大于 1 时）", ranger: "游侠", mage: "法师", bard: "吟游诗人" };
@@ -44,14 +44,31 @@ function Skill({ v, me, cmd, dn }: any) {
   if (me.cls === "mage") return v.phase === "CONTRIBUTE" && !v.colorSwap ? <section className="my-skill"><p>把第一种有效色改成（剩 {me.uses} 次）：</p><div className="my-hand">{["刚", "影", "智", "言"].filter((c) => !v.validNow.includes(c)).map((c) => <button key={c} onClick={() => cmd({ t: "ABILITY", to: c })}>{c}</button>)}</div></section> : null;
   return <details className="my-skill"><summary>安抚队友，压力 -2（剩 {me.uses} 次）</summary>{v.players.filter((p: any) => p.seat !== v.me).map((p: any) => <button key={p.seat} onClick={() => cmd({ t: "ABILITY", target: p.seat })}>{dn(p.seat)}（压力 {p.stress}）</button>)}</details>;
 }
+function Council({ v, me, cmd, dn }: any) {
+  const [mode, setMode] = useState("");
+  const others = v.players.filter((p: any) => p.seat !== v.me);
+  const pickers = (t: string) => others.map((p: any) => <button key={p.seat} onClick={() => { cmd({ t, target: p.seat }); setMode(""); }}>{dn(p.seat)}</button>);
+  return <section data-testid="my-council"><h3>营地议事（{v.voted.length}/{v.n} 已投票）</h3>
+    {v.defections > 0 && <p>📜 已有 {v.defections} 人投诚。</p>}
+    {v.myInspect && <p className="my-intel">🔒 搜身结果：{dn(v.myInspect.target)} 上一场{v.myInspect.effective === null ? "没有出牌" : v.myInspect.effective ? "出了有效牌" : "出了无效牌"}。只有你知道。</p>}
+    {me.letter && <div className="my-intel"><b>✉️ 匿名密信：跟我合作吧，胜利后分你一份。</b><button onClick={() => cmd({ t: "ANSWER", accept: true })}>接受（改为随内奸获胜）</button><button onClick={() => cmd({ t: "ANSWER", accept: false })}>拒绝</button></div>}
+    {!v.inspected && v.inspectLeft > 0 && v.clues > 0 && <button onClick={() => setMode("INSPECT")}>搜身：花 1 线索（全队剩 {v.inspectLeft} 次）</button>}
+    {me.traitor && <button onClick={() => cmd({ t: "DEFECT" })}>投诚：放弃内奸身份，灾厄 -1</button>}
+    {me.traitor && !me.letterUsed && <button onClick={() => setMode("LETTER")}>发送匿名密信</button>}
+    {mode && pickers(mode)}
+    {v.voted.includes(v.me) ? <p>已投票，等待其他人…</p> : <><p>关禁闭投票：过半数通过，下一场不能行动，全队灾厄 +1。</p><button data-testid="my-novote" onClick={() => cmd({ t: "VOTE", target: null })}>不关任何人</button>{pickers("VOTE")}</>}
+  </section>;
+}
 function Err({ m }: { m: string }) { return m ? <p className="my-err">{m}</p> : null; }
 function Act({ v, me, actor, cmd, dn }: any) {
   const [deal, setDeal] = useState(false); const reveal = useMemo(() => v.reveal ?? [], [v.reveal]);
   if (v.phase === "FORK") return <section><h3>{v.fork.title}</h3><p>{v.fork.text}</p>{actor ? v.fork.options.map((o: any) => <button key={o.id} onClick={() => cmd({ t: "FORK", optionId: o.id })}>{o.name}</button>) : <p>等待 {dn(v.actor)} 选择…</p>}</section>;
   if (v.phase === "PLAN") return <section><h3>方案（可语音商量）</h3>{v.plans.map((p: any) => <button key={p.id} data-testid="my-plan" disabled={!actor} onClick={() => cmd({ t: "PLAN", planId: p.id, acceptDeal: deal })}>{p.name}<small>{p.attribute} · {p.difficulty} · 有效 {p.valid_colors.join("、")}</small></button>)}{actor && v.dealOffer && <label className="my-deal"><input type="checkbox" checked={deal} onChange={(e) => setDeal(e.target.checked)} /> 魔鬼交易「{v.dealOffer.name}」：{v.dealOffer.text}（+2）</label>}{!actor && <p>等待 {dn(v.actor)} 决定…</p>}</section>;
-  if (v.phase === "CONTRIBUTE") { if (actor) return <p>队友正在暗中出牌（{v.playedCount}/{v.n - 1}）…</p>; if (me.hand.length < 3) return <p>已出牌，等待其他人（{v.playedCount}/{v.n - 1}）…</p>; const p = v.plans.find((x: any) => x.id === v.planId); return <section><h3>暗中出 1 张牌{p ? `（有效：${v.validNow.join("、")}）` : ""}</h3><div className="my-hand">{me.hand.map((c: any) => <button key={c.id} data-testid="my-card" onClick={() => cmd({ t: "CONTRIBUTE", cardId: c.id })}><I n={CI[c.color]} />{c.color}<b>{c.value}</b></button>)}</div></section>; }
+  if (v.phase === "CONTRIBUTE" && v.jailed !== v.me) { if (actor) return <p>队友正在暗中出牌（{v.playedCount}/{v.n - 1}）…</p>; if (me.hand.length < 3) return <p>已出牌，等待其他人（{v.playedCount}/{v.n - 1}）…</p>; const p = v.plans.find((x: any) => x.id === v.planId); return <section><h3>暗中出 1 张牌{p ? `（有效：${v.validNow.join("、")}）` : ""}</h3><div className="my-hand">{me.hand.map((c: any) => <button key={c.id} data-testid="my-card" onClick={() => cmd({ t: "CONTRIBUTE", cardId: c.id })}><I n={CI[c.color]} />{c.color}<b>{c.value}</b></button>)}</div></section>; }
+  if (v.phase === "COUNCIL") return <Council v={v} me={me} cmd={cmd} dn={dn} />;
+  if (v.phase === "CONTRIBUTE" && v.jailed === v.me) return <p>你被关禁闭，这一场不能行动。</p>;
   const cards = <div className="my-hand">{reveal.map((c: any, i: number) => <span key={c.id} className="my-flip" style={{ animationDelay: i + "s" }}><I n={CI[c.color]} />{c.color}<b>{c.value}</b></span>)}</div>;
   if (v.phase === "ROLL") return <section><h3>翻牌结果</h3>{cards}{actor ? <><button data-testid="my-roll" onClick={() => cmd({ t: "ROLL", push: false })}>稳妥掷骰</button><button onClick={() => cmd({ t: "ROLL", push: true })}>加压力骰（压力 +1，可能失控）</button></> : <p>等待 {dn(v.actor)} 掷骰…</p>}</section>;
-  return <section><h3>总值 {v.total}</h3><p>骰子 {v.roll?.dice.join("+")}{v.roll?.pd?.length ? ` · 压力骰 ${v.roll.pd.join(",")}` : ""}{v.roll?.panic && " · ⚠失控！"}</p>{cards}{me.flashback && <button onClick={() => cmd({ t: "FLASHBACK", pay: v.supplies > 0 ? "supplies" : "stress" })}>闪回：其实我早有准备（总值 +3）</button>}{v.passed.includes(v.me) ? <p>等待其他人…</p> : <button data-testid="my-pass" onClick={() => cmd({ t: "PASS" })}>不闪回，继续</button>}</section>;
+  return <section><h3>总值 {v.total}</h3><p>骰子 {v.roll?.dice.join("+")}{v.roll?.pd?.length ? ` · 压力骰 ${v.roll.pd.join(",")}` : ""}{v.roll?.panic && " · ⚠失控！"}</p>{cards}{me.flashback && v.jailed !== v.me && <button onClick={() => cmd({ t: "FLASHBACK", pay: v.supplies > 0 ? "supplies" : "stress" })}>闪回：其实我早有准备（总值 +3）</button>}{v.passed.includes(v.me) ? <p>等待其他人…</p> : <button data-testid="my-pass" onClick={() => cmd({ t: "PASS" })}>不闪回，继续</button>}</section>;
 }
-function End({ v, dn }: any) { const r = v.reveal_all; return <section data-testid="my-end"><h2>{v.endingInfo.title}</h2><p>{v.endingInfo.text}</p><h3>秘密誓约</h3><ul>{r.oaths.map((o: any) => <li key={o.seat}>{dn(o.seat)}：{o.name} {o.done ? "✅" : "❌"}</li>)}</ul><h3>独家情报回顾</h3><ul>{r.intel.map((i: any, k: number) => <li key={k}>{dn(i.seat)}：{i.text}</li>)}</ul><small>音乐：North Fantasy Music（CC-BY 4.0）· 音效：Kenney（CC0）· 图标：game-icons.net（Lorc、Delapouite、Skoll，CC-BY 3.0）</small></section>; }
+function End({ v, dn }: any) { const r = v.reveal_all; return <section data-testid="my-end"><h2>{v.endingInfo.title}</h2><p>{v.endingInfo.text}</p><h3>秘密誓约</h3><ul>{r.oaths.map((o: any) => <li key={o.seat}>{dn(o.seat)}（{o.role}）：{o.name} {o.done ? "✅" : "❌"}</li>)}</ul><h3>独家情报回顾</h3><ul>{r.intel.map((i: any, k: number) => <li key={k}>{dn(i.seat)}：{i.text}</li>)}</ul><small>音乐：North Fantasy Music（CC-BY 4.0）· 音效：Kenney（CC0）· 图标：game-icons.net（Lorc、Delapouite、Skoll，CC-BY 3.0）</small></section>; }

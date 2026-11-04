@@ -9,7 +9,8 @@ for(let g=0;g<400&&!V[0].ending;g++){const v=V[0],a=v.actor;
  if(JSON.stringify(V[1]).includes('"oath"')&&false)throw 0;
  if(v.phase==="FORK")await call(S[a],"my:cmd",{t:"FORK",optionId:v.fork.options[0].id});
  else if(v.phase==="PLAN")await call(S[a],"my:cmd",{t:"PLAN",planId:v.plans[0].id});
- else if(v.phase==="CONTRIBUTE"){for(let i=0;i<N;i++)if(i!==a){await new Promise(r=>setTimeout(r,5));await call(S[i],"my:cmd",{t:"CONTRIBUTE",cardId:V[i].players[i].hand[0].id})}}
+ else if(v.phase==="CONTRIBUTE"){for(let i=0;i<N;i++)if(i!==a&&i!==v.jailed){await new Promise(r=>setTimeout(r,5));await call(S[i],"my:cmd",{t:"CONTRIBUTE",cardId:V[i].players[i].hand[0].id})}}
+ else if(v.phase==="COUNCIL"){for(let i=0;i<N;i++)await call(S[i],"my:cmd",{t:"VOTE",target:null})}
  else if(v.phase==="ROLL")await call(S[a],"my:cmd",{t:"ROLL",push:true});
  else for(let i=0;i<N;i++)await call(S[i],"my:cmd",{t:"PASS"});
  await new Promise(r=>setTimeout(r,15));}
