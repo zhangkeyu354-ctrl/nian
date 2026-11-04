@@ -5,7 +5,9 @@ const sock = io({ transports: ["websocket", "polling"] });
 const call = (ev: string, a?: any) => new Promise<any>((ok) => sock.timeout(8000).emit(ev, a ?? {}, (e: any, r: any) => ok(e ? { ok: false, error: "连接超时，请检查网络" } : r)));
 const get = (k: string) => { try { return localStorage.getItem(k); } catch { return null; } };
 const set = (k: string, v: string) => { try { localStorage.setItem(k, v); } catch { /* 隐私模式 */ } };
-const sfx = (n: string) => { if (get("my-mute") === "1") return; try { const a = new Audio(`/assets/mist-expedition/audio/${n}.ogg`); a.volume = .6; void a.play().catch(() => {}); } catch { /* 无声继续 */ } };
+const sfx = (n: string) => { if (get("my-mute") === "1") return; try { const a = new Audio(`/assets/mist-expedition/audio/${n}.mp3`); a.volume = .6; void a.play().catch(() => {}); } catch { /* 无声继续 */ } };
+const bgm = new Audio(); bgm.loop = true; bgm.volume = .3; let want = "";
+const playBgm = (n: string) => { if (get("my-mute") === "1" || !n) { bgm.pause(); return; } if (want !== n) { want = n; bgm.src = `/assets/mist-expedition/audio/bgm-${n}.mp3`; } void bgm.play().catch(() => {}); };
 const STEP: any = { FORK: "岔路抉择", PLAN: "商量方案", CONTRIBUTE: "暗中出力", ROLL: "掷骰", FLASHBACK: "闪回窗口" };
 export function MistExpedition() {
   const q = new URLSearchParams(location.search); const [code, setCode] = useState(q.get("room")?.toUpperCase() ?? "");
@@ -13,6 +15,8 @@ export function MistExpedition() {
   useEffect(() => { sock.on("my:state", setV); const t = setInterval(() => setNow(Date.now()), 500); const rejoin = () => { const c = new URLSearchParams(location.search).get("room")?.toUpperCase(); const tk = c && get("my-seat-" + c); if (tk) call("my:join", { code: c, token: tk }).then((r) => r.ok && setV(r.snapshot)); }; sock.on("connect", rejoin); if (sock.connected) rejoin(); return () => { sock.off("my:state", setV); sock.off("connect", rejoin); clearInterval(t); }; }, []);
   const key = v?.started ? `${v.sceneIdx}|${v.phase}|${v.ending ?? ""}` : "";
   useEffect(() => { if (!key) return; if (v.ending) return sfx(v.ending === "E02" ? "lose" : "win"); if (v.phase === "PLAN") sfx("scene"); if (v.phase === "ROLL") { sfx("shuffle"); (v.reveal ?? []).forEach((_: any, i: number) => setTimeout(() => sfx("card"), i * 1000)); } if (v.phase === "FLASHBACK") sfx(v.roll?.panic ? "panic" : "dice"); }, [key]);
+  const track = !v?.started ? "" : v.ending ? (v.ending === "E02" ? "tense" : "win") : v.sceneIdx === 3 ? "final" : v.doom >= 6 || ["CONTRIBUTE", "ROLL", "FLASHBACK"].includes(v.phase) ? "tense" : "explore";
+  useEffect(() => { playBgm(track); const f = () => playBgm(track); addEventListener("pointerdown", f); return () => removeEventListener("pointerdown", f); }, [track]);
   const join = async (c: string) => { set("my-name", name); const r = await call("my:join", { code: c, name, token: get("my-seat-" + c) }); if (!r.ok) return setErr(r.error); set("my-seat-" + c, r.token); history.replaceState(null, "", "/?game=my&room=" + c); setV(r.snapshot); };
   const create = async () => { const r = await call("my:create"); if (!r.ok) return setErr(r.error); setCode(r.code); join(r.code); };
   const cmd = async (c: any) => { if (busy) return; sfx("click"); setBusy(true); const r = await call("my:cmd", c); setBusy(false); setErr(r.ok ? "" : r.error); };
@@ -20,7 +24,7 @@ export function MistExpedition() {
   if (!v.started) return <div className="my-world"><h1>房间 {v.code}</h1><p>把网址发给朋友。{v.names.length} / 8 人</p><ul>{v.names.map((n: string, i: number) => <li key={i}>{n}</li>)}</ul>{v.host ? <button data-testid="my-start" disabled={v.names.length < 3} onClick={async () => { const r = await call("my:start"); if (!r.ok) setErr(r.error); }}>{v.names.length < 3 ? "至少 3 人" : "开始冒险"}</button> : <p>等待房主开始…</p>}<Err m={err} /></div>;
   const left = v.deadline ? Math.max(0, Math.ceil((v.deadline - (now + 0)) / 1000)) : 0; const me = v.players[v.me]; const actor = v.actor === v.me; const dn = (s: number) => v.names[s];
   return <div className="my-world">
-    <header className="my-top"><b>第 {v.sceneIdx + 1}/4 场</b><span data-testid="my-doom">灾厄 {v.doom}/8</span><span>物资 {v.supplies}</span><span>线索 {v.clues}</span><span>预兆 {v.omen}</span><button className="my-mute" aria-label="音效开关" onClick={() => { set("my-mute", get("my-mute") === "1" ? "0" : "1"); setNow(Date.now()); }}>{get("my-mute") === "1" ? "🔇" : "🔊"}</button>{left > 0 && <span>⏱{left}</span>}</header>
+    <header className="my-top"><b>第 {v.sceneIdx + 1}/4 场</b><span data-testid="my-doom">灾厄 {v.doom}/8</span><span>物资 {v.supplies}</span><span>线索 {v.clues}</span><span>预兆 {v.omen}</span><button className="my-mute" aria-label="音效开关" onClick={() => { set("my-mute", get("my-mute") === "1" ? "0" : "1"); playBgm(track); setNow(Date.now()); }}>{get("my-mute") === "1" ? "🔇" : "🔊"}</button>{left > 0 && <span>⏱{left}</span>}</header>
     {v.ending ? <End v={v} dn={dn} /> : <>
       <section className="my-scene"><small>{v.sceneInfo.type} · {STEP[v.phase]}</small><h2>{v.sceneInfo.title}</h2><p>{v.sceneInfo.narration}</p><p className="my-actor">主行动者：{dn(v.actor)}{actor && "（你）"}</p></section>
       {v.intelText.map((t: string, i: number) => <section key={i} className="my-intel" data-testid="my-intel"><b>🔒 独家情报，只有你能看到</b><p>{t}</p></section>)}
@@ -48,4 +52,4 @@ function Act({ v, me, actor, cmd, dn }: any) {
   if (v.phase === "ROLL") return <section><h3>翻牌结果</h3>{cards}{actor ? <><button data-testid="my-roll" onClick={() => cmd({ t: "ROLL", push: false })}>稳妥掷骰</button><button onClick={() => cmd({ t: "ROLL", push: true })}>加压力骰（压力 +1，可能失控）</button></> : <p>等待 {dn(v.actor)} 掷骰…</p>}</section>;
   return <section><h3>总值 {v.total}</h3><p>骰子 {v.roll?.dice.join("+")}{v.roll?.pd?.length ? ` · 压力骰 ${v.roll.pd.join(",")}` : ""}{v.roll?.panic && " · ⚠失控！"}</p>{cards}{me.flashback && <button onClick={() => cmd({ t: "FLASHBACK", pay: v.supplies > 0 ? "supplies" : "stress" })}>闪回：其实我早有准备（总值 +3）</button>}{v.passed.includes(v.me) ? <p>等待其他人…</p> : <button data-testid="my-pass" onClick={() => cmd({ t: "PASS" })}>不闪回，继续</button>}</section>;
 }
-function End({ v, dn }: any) { const r = v.reveal_all; return <section data-testid="my-end"><h2>{v.endingInfo.title}</h2><p>{v.endingInfo.text}</p><h3>秘密誓约</h3><ul>{r.oaths.map((o: any) => <li key={o.seat}>{dn(o.seat)}：{o.name} {o.done ? "✅" : "❌"}</li>)}</ul><h3>独家情报回顾</h3><ul>{r.intel.map((i: any, k: number) => <li key={k}>{dn(i.seat)}：{i.text}</li>)}</ul></section>; }
+function End({ v, dn }: any) { const r = v.reveal_all; return <section data-testid="my-end"><h2>{v.endingInfo.title}</h2><p>{v.endingInfo.text}</p><h3>秘密誓约</h3><ul>{r.oaths.map((o: any) => <li key={o.seat}>{dn(o.seat)}：{o.name} {o.done ? "✅" : "❌"}</li>)}</ul><h3>独家情报回顾</h3><ul>{r.intel.map((i: any, k: number) => <li key={k}>{dn(i.seat)}：{i.text}</li>)}</ul><small>音乐：North Fantasy Music（CC-BY 4.0）· 音效：Kenney（CC0）</small></section>; }
