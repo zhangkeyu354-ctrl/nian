@@ -69,3 +69,5 @@
 .my-scene h2{font-size:18px;margin:2px 0}.my-scene p{margin:4px 0;font-size:14px}.my-scene small{font-size:12px}
 .my-world>section .my-hand{flex-wrap:nowrap}.my-hand button{min-width:0}
 .my-drawer{position:relative}
+.my-world{overflow-x:clip}.my-spacer{min-height:6vh}.my-world>section{padding:7px 10px;margin:4px 0}.my-world>section h3{margin:2px 0;font-size:15px}
+.my-actor{padding:2px 8px!important}.my-intel p{margin:2px 0;font-size:13px}.my-hand button,.my-flip{aspect-ratio:3/4;max-height:26vh}
