@@ -10,3 +10,4 @@
 .my-drawer{margin-top:16px;color:var(--mu)}.my-err{color:#ff9a8a}.my-deal{display:block;margin:8px 0;color:var(--ac)}
 @media (prefers-reduced-motion:reduce){.my-flip{animation:none;opacity:1}}
 .my-skill{margin:10px 0;color:var(--mu)}
+.my-world .my-mute{display:inline;width:auto;min-height:28px;margin:0;padding:0 6px}

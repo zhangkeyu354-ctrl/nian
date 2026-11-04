@@ -5,19 +5,22 @@ const sock = io({ transports: ["websocket", "polling"] });
 const call = (ev: string, a?: any) => new Promise<any>((ok) => sock.timeout(8000).emit(ev, a ?? {}, (e: any, r: any) => ok(e ? { ok: false, error: "连接超时，请检查网络" } : r)));
 const get = (k: string) => { try { return localStorage.getItem(k); } catch { return null; } };
 const set = (k: string, v: string) => { try { localStorage.setItem(k, v); } catch { /* 隐私模式 */ } };
+const sfx = (n: string) => { if (get("my-mute") === "1") return; try { const a = new Audio(`/assets/mist-expedition/audio/${n}.ogg`); a.volume = .6; void a.play().catch(() => {}); } catch { /* 无声继续 */ } };
 const STEP: any = { FORK: "岔路抉择", PLAN: "商量方案", CONTRIBUTE: "暗中出力", ROLL: "掷骰", FLASHBACK: "闪回窗口" };
 export function MistExpedition() {
   const q = new URLSearchParams(location.search); const [code, setCode] = useState(q.get("room")?.toUpperCase() ?? "");
   const [name, setName] = useState(get("my-name") ?? ""); const [v, setV] = useState<any>(null); const [err, setErr] = useState(""); const [busy, setBusy] = useState(false); const [now, setNow] = useState(Date.now());
   useEffect(() => { sock.on("my:state", setV); const t = setInterval(() => setNow(Date.now()), 500); const rejoin = () => { const c = new URLSearchParams(location.search).get("room")?.toUpperCase(); const tk = c && get("my-seat-" + c); if (tk) call("my:join", { code: c, token: tk }).then((r) => r.ok && setV(r.snapshot)); }; sock.on("connect", rejoin); if (sock.connected) rejoin(); return () => { sock.off("my:state", setV); sock.off("connect", rejoin); clearInterval(t); }; }, []);
+  const key = v?.started ? `${v.sceneIdx}|${v.phase}|${v.ending ?? ""}` : "";
+  useEffect(() => { if (!key) return; if (v.ending) return sfx(v.ending === "E02" ? "lose" : "win"); if (v.phase === "PLAN") sfx("scene"); if (v.phase === "ROLL") { sfx("shuffle"); (v.reveal ?? []).forEach((_: any, i: number) => setTimeout(() => sfx("card"), i * 1000)); } if (v.phase === "FLASHBACK") sfx(v.roll?.panic ? "panic" : "dice"); }, [key]);
   const join = async (c: string) => { set("my-name", name); const r = await call("my:join", { code: c, name, token: get("my-seat-" + c) }); if (!r.ok) return setErr(r.error); set("my-seat-" + c, r.token); history.replaceState(null, "", "/?game=my&room=" + c); setV(r.snapshot); };
   const create = async () => { const r = await call("my:create"); if (!r.ok) return setErr(r.error); setCode(r.code); join(r.code); };
-  const cmd = async (c: any) => { if (busy) return; setBusy(true); const r = await call("my:cmd", c); setBusy(false); setErr(r.ok ? "" : r.error); };
+  const cmd = async (c: any) => { if (busy) return; sfx("click"); setBusy(true); const r = await call("my:cmd", c); setBusy(false); setErr(r.ok ? "" : r.error); };
   if (!v) return <div className="my-world"><h1>迷雾远征</h1><p>夺回圣物。提防身边的人。</p><input data-testid="my-name" placeholder="你的名字" value={name} maxLength={12} onChange={(e) => setName(e.target.value)} />{code ? <button data-testid="my-join" onClick={() => join(code)}>加入房间 {code}</button> : <><button data-testid="my-create" onClick={create}>创建房间</button><input placeholder="房间码" onChange={(e) => setCode(e.target.value.toUpperCase())} /></>}<Err m={err} /></div>;
   if (!v.started) return <div className="my-world"><h1>房间 {v.code}</h1><p>把网址发给朋友。{v.names.length} / 8 人</p><ul>{v.names.map((n: string, i: number) => <li key={i}>{n}</li>)}</ul>{v.host ? <button data-testid="my-start" disabled={v.names.length < 3} onClick={async () => { const r = await call("my:start"); if (!r.ok) setErr(r.error); }}>{v.names.length < 3 ? "至少 3 人" : "开始冒险"}</button> : <p>等待房主开始…</p>}<Err m={err} /></div>;
   const left = v.deadline ? Math.max(0, Math.ceil((v.deadline - (now + 0)) / 1000)) : 0; const me = v.players[v.me]; const actor = v.actor === v.me; const dn = (s: number) => v.names[s];
   return <div className="my-world">
-    <header className="my-top"><b>第 {v.sceneIdx + 1}/4 场</b><span data-testid="my-doom">灾厄 {v.doom}/8</span><span>物资 {v.supplies}</span><span>线索 {v.clues}</span><span>预兆 {v.omen}</span>{left > 0 && <span>⏱{left}</span>}</header>
+    <header className="my-top"><b>第 {v.sceneIdx + 1}/4 场</b><span data-testid="my-doom">灾厄 {v.doom}/8</span><span>物资 {v.supplies}</span><span>线索 {v.clues}</span><span>预兆 {v.omen}</span><button className="my-mute" aria-label="音效开关" onClick={() => { set("my-mute", get("my-mute") === "1" ? "0" : "1"); setNow(Date.now()); }}>{get("my-mute") === "1" ? "🔇" : "🔊"}</button>{left > 0 && <span>⏱{left}</span>}</header>
     {v.ending ? <End v={v} dn={dn} /> : <>
       <section className="my-scene"><small>{v.sceneInfo.type} · {STEP[v.phase]}</small><h2>{v.sceneInfo.title}</h2><p>{v.sceneInfo.narration}</p><p className="my-actor">主行动者：{dn(v.actor)}{actor && "（你）"}</p></section>
       {v.intelText.map((t: string, i: number) => <section key={i} className="my-intel" data-testid="my-intel"><b>🔒 独家情报，只有你能看到</b><p>{t}</p></section>)}
