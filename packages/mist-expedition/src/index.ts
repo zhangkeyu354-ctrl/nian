@@ -6,14 +6,14 @@ export const BASE: Record<string, number> = { 简单: 9, 普通: 11, 困难: 13 
 export const COLORS = ["刚", "影", "智", "言"];
 const STAGES = ["开端", "障碍", "大变局", "终局"];
 export type Card = { id: string; color: string; value: number };
-export type Player = { seat: number; cls: string; hp: number; stress: number; flashback: boolean; hand: Card[]; oath: string; oathTarget?: number; hiddenGoal?: string; acted: number; intelCount: number; out: boolean };
+export type Player = { seat: number; cls: string; hp: number; stress: number; flashback: boolean; hand: Card[]; oath: string; oathTarget?: number; hiddenGoal?: string; acted: number; intelCount: number; out: boolean; uses: number; peek?: Card };
 export type Log = { type: string; [k: string]: any };
 export type State = {
   rng: number; n: number; phase: string; players: Player[]; deck: Card[]; discard: Card[];
   supplies: number; clues: number; omen: number; doom: number; sceneIdx: number; sceneIds: string[];
   actor: number; planId?: string; deal?: any; dealOffer?: any; intel: { seat: number; id: string }[]; nextDoom: number;
   played: { seat: number; card: Card }[]; reveal: Card[]; roll?: any; total: number; passed: number[]; forkDone: boolean;
-  fork?: any; log: Log[]; finalOutcome?: string; ending?: string; seq: number; usedIncidents: string[];
+  fork?: any; colorSwap?: { from: string; to: string }; log: Log[]; finalOutcome?: string; ending?: string; seq: number; usedIncidents: string[];
 };
 export type Cmd =
   | { t: "PLAN"; seat: number; planId: string; acceptDeal?: boolean }
@@ -21,7 +21,8 @@ export type Cmd =
   | { t: "CONTRIBUTE"; seat: number; cardId: string }
   | { t: "ROLL"; seat: number; push: boolean }
   | { t: "FLASHBACK"; seat: number; pay: "supplies" | "stress" }
-  | { t: "PASS"; seat: number };
+  | { t: "PASS"; seat: number }
+  | { t: "ABILITY"; seat: number; target?: number; to?: string };
 const clone = <T,>(x: T): T => JSON.parse(JSON.stringify(x));
 function rnd(s: State) { s.rng = (s.rng * 1664525 + 1013904223) >>> 0; let x = s.rng; x ^= x >>> 15; x = Math.imul(x, 2246822519) >>> 0; x ^= x >>> 13; return (x >>> 0) / 4294967296; }
 const die = (s: State) => 1 + Math.floor(rnd(s) * 6);
@@ -39,7 +40,7 @@ export function createGame(n: number, seed: number, classes?: string[]): State {
   let i = 0; for (const color of COLORS) for (let g = 0; g < 2; g++) for (const value of [1, 1, 1, 2, 2, 3]) s.deck.push({ id: `c${i++}`, color, value });
   shuffle(s, s.deck);
   const oaths = shuffle(s, C.secret_oaths.map((o: any) => o.id)) as string[];
-  s.players = Array.from({ length: n }, (_, seat) => { const oath = oaths[seat]; const p: Player = { seat, cls: classes?.[seat] ?? C.game.classes[seat % 4].id, hp: 3, stress: 0, flashback: true, hand: [], oath, acted: 0, intelCount: 0, out: false };
+  s.players = Array.from({ length: n }, (_, seat) => { const oath = oaths[seat]; const p: Player = { seat, cls: classes?.[seat] ?? C.game.classes[seat % 4].id, hp: 3, stress: 0, flashback: true, hand: [], oath, acted: 0, intelCount: 0, out: false, uses: 2 };
     if (oath === "O03") p.oathTarget = (seat + 1 + Math.floor(rnd(s) * (n - 1))) % n; return p; });
   for (const p of s.players) p.hand = [draw(s), draw(s), draw(s)];
   s.sceneIds = STAGES.map((st) => (pick(s, C.scenes.filter((x: any) => x.type === st)) as any).id);
@@ -54,7 +55,7 @@ function startScene(s: State) {
   if (s.nextDoom) { s.doom = clamp(s.doom + s.nextDoom, 0, 8); s.nextDoom = 0; checkDoom(s); if (s.ending) return; }
   const free = s.players.filter((p) => !p.out); const min = Math.min(...free.map((p) => p.acted));
   s.actor = (free.filter((p) => p.acted === min).sort((a, b) => ((a.seat - s.sceneIdx + 8) % 8) - ((b.seat - s.sceneIdx + 8) % 8))[0] ?? s.players[0]).seat;
-  s.players[s.actor].acted++; s.planId = undefined; s.deal = undefined; s.played = []; s.reveal = []; s.roll = undefined; s.passed = []; s.intel = [];
+  s.players[s.actor].acted++; s.planId = undefined; s.deal = undefined; s.colorSwap = undefined; for (const q of s.players) q.peek = undefined; s.played = []; s.reveal = []; s.roll = undefined; s.passed = []; s.intel = [];
   const cnt = s.n >= 6 ? 2 : 1; const pool = shuffle(s, [...scene(s).intel]) as any[];
   const cand = s.players.filter((p) => p.seat !== s.actor).sort((a, b) => a.intelCount - b.intelCount || a.seat - b.seat).slice(0, cnt);
   cand.forEach((p, i) => { p.intelCount++; s.intel.push({ seat: p.seat, id: pool[i].id }); s.log.push({ type: "intel_given", seat: p.seat, id: pool[i].id, text: pool[i].text }); });
@@ -71,12 +72,13 @@ function targets(s: State, t: string, who: number): number[] {
 function apply(s: State, e: any, who: number, src: string) {
   const c = e.changes; const part = [s.actor, ...s.played.filter((x) => valid(s, x.card)).map((x) => x.seat)];
   for (const f of ["supplies", "clues", "omen", "doom"]) if (c[f]) { const b = (s as any)[f]; (s as any)[f] = clamp(b + c[f], 0, 8); s.log.push({ type: "effect_applied", field: f, delta: (s as any)[f] - b, src, participants: src === "plan" ? part : [] }); }
-  for (const t of targets(s, e.target, who)) { const p = s.players[t]; p.stress = clamp(p.stress + (c.stress ?? 0), 0, 6); p.hp = clamp(p.hp + (c.hp ?? 0), 0, 3); }
+  for (const t of targets(s, e.target, who)) { let p = s.players[t]; p.stress = clamp(p.stress + (c.stress ?? 0), 0, 6); if ((c.hp ?? 0) < 0 && p.cls !== "warrior") { const w = s.players.find((q) => q.cls === "warrior" && q.hp > 1); if (w) { p = w; s.log.push({ type: "guard", seat: w.seat }); } } p.hp = clamp(p.hp + (c.hp ?? 0), 0, 3); }
   checkDoom(s);
 }
 function checkDoom(s: State) { if (s.doom >= 8 && !s.ending) finish(s); }
 const plan = (s: State) => [...scene(s).plans, ...(scene(s).clue_unlock?.plans ?? [])].find((p: any) => p.id === s.planId);
-function valid(s: State, c: Card) { return plan(s)?.valid_colors.includes(c.color); }
+export function validColors(s: State): string[] { const v: string[] = plan(s)?.valid_colors ?? []; const x = s.colorSwap; return x ? v.map((c) => (c === x.from ? x.to : c)) : v; }
+function valid(s: State, c: Card) { return validColors(s).includes(c.color); }
 const myIntel = (s: State) => s.intel.map((i) => scene(s).intel.find((x: any) => x.id === i.id).engine_effect).filter((e: any) => e.plan === s.planId);
 function cardScore(s: State, c: Card) { const b = myIntel(s).filter((e: any) => e.color === c.color).reduce((a: number, e: any) => a + e.card_bonus, 0); return valid(s, c) ? c.value + b : -c.value; }
 export function need(s: State) { return BASE[plan(s).difficulty] + PLAYER_BONUS[s.n]; }
@@ -106,6 +108,11 @@ function checkCond(s: State, c: any, p: Player): boolean {
 export function oathDone(s: State, seat: number) { const p = s.players[seat]; return checkCond(s, C.secret_oaths.find((o: any) => o.id === p.oath).completion_condition, p); }
 export function reduceMY(prev: State, c: Cmd): State {
   const s = clone(prev), bad = (m: string) => { throw new Error(m); }; if (s.ending) bad("游戏已结束");
+  if (c.t === "ABILITY") { const p = s.players[c.seat]; if (p.uses < 1) bad("技能次数已用完");
+    if (p.cls === "ranger") { if (s.phase !== "CONTRIBUTE" || !s.deck.length) bad("暗中出力时才能偷看"); p.peek = s.deck[s.deck.length - 1]; }
+    else if (p.cls === "mage") { if (s.phase !== "CONTRIBUTE" || s.colorSwap) bad("现在不能改颜色"); if (!COLORS.includes(c.to!) || validColors(s).includes(c.to!)) bad("请选一种当前无效的颜色"); s.colorSwap = { from: validColors(s)[0], to: c.to! }; }
+    else if (p.cls === "bard") { const q = s.players[c.target!]; if (!q || q.seat === c.seat) bad("请选择一名队友"); q.stress = clamp(q.stress - 2, 0, 6); }
+    else bad("战士的护卫是自动生效的"); p.uses--; s.log.push({ type: "ability", seat: c.seat, cls: p.cls }); return s; }
   if (c.t === "FORK") { if (s.phase !== "FORK") bad("现在不是岔路"); if (c.seat !== s.actor) bad("只有主行动者能选择"); const o = s.fork.options.find((x: any) => x.id === c.optionId) ?? bad("没有这个选项"); apply(s, o.effect, s.actor, "fork"); s.fork = undefined; if (!s.ending) s.phase = "PLAN"; return s; }
   if (c.t === "PLAN") { if (s.phase !== "PLAN") bad("现在不能选方案"); if (c.seat !== s.actor) bad("只有主行动者能选方案"); if (!plansOf(s).some((p) => p.id === c.planId)) bad("这个方案不可用"); s.planId = c.planId; if (hiddenPlan(s, c.planId)) s.clues -= 2;
     if (c.acceptDeal) { if (!s.dealOffer) bad("没有可用交易"); s.deal = s.dealOffer; s.log.push({ type: "deal_accepted", seat: s.actor, id: s.deal.id }); apply(s, s.deal.accepted_cost, s.actor, "deal"); if (s.ending) return s; } s.phase = "CONTRIBUTE"; return s; }
@@ -118,4 +125,4 @@ export function reduceMY(prev: State, c: Cmd): State {
   if (c.t === "FLASHBACK") { const p = s.players[c.seat]; if (!p.flashback) bad("你已用过闪回"); if (c.pay === "supplies") { if (s.supplies < 1) bad("物资不足"); s.supplies--; } else p.stress = clamp(p.stress + 2, 0, 6); p.flashback = false; s.total += 3; s.log.push({ type: "flashback", seat: c.seat }); return s; }
   if (!s.passed.includes(c.seat)) s.passed.push(c.seat); if (s.passed.length === s.n) { s.phase = "RESOLVE"; resolve(s); } return s;
 }
-export function viewForMY(s: State, seat: number) { const { rng, deck, discard, played, intel, log, players, ...pub } = s; return { ...pub, deckCount: deck.length, myIntel: intel.filter((i) => i.seat === seat), players: players.map((p) => p.seat === seat ? p : { seat: p.seat, cls: p.cls, hp: p.hp, stress: p.stress, flashback: p.flashback, out: p.out, handCount: p.hand.length }), playedCount: played.length, log: log.filter((e) => e.type !== "hidden_card_played" && e.type !== "intel_given" && e.type !== "effect_applied").map(({ participants, ...e }) => e) }; }
+export function viewForMY(s: State, seat: number) { const { rng, deck, discard, played, intel, log, players, ...pub } = s; return { ...pub, deckCount: deck.length, myIntel: intel.filter((i) => i.seat === seat), players: players.map((p) => p.seat === seat ? p : { seat: p.seat, cls: p.cls, hp: p.hp, stress: p.stress, flashback: p.flashback, out: p.out, uses: p.uses, handCount: p.hand.length }), playedCount: played.length, log: log.filter((e) => e.type !== "hidden_card_played" && e.type !== "intel_given" && e.type !== "effect_applied").map(({ participants, ...e }) => e) }; }

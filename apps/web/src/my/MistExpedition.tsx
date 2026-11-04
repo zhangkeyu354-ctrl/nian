@@ -21,18 +21,26 @@ export function MistExpedition() {
     {v.ending ? <End v={v} dn={dn} /> : <>
       <section className="my-scene"><small>{v.sceneInfo.type} · {STEP[v.phase]}</small><h2>{v.sceneInfo.title}</h2><p>{v.sceneInfo.narration}</p><p className="my-actor">主行动者：{dn(v.actor)}{actor && "（你）"}</p></section>
       {v.intelText.map((t: string, i: number) => <section key={i} className="my-intel" data-testid="my-intel"><b>🔒 独家情报，只有你能看到</b><p>{t}</p></section>)}
-      <Act v={v} me={me} actor={actor} cmd={cmd} dn={dn} />
+      <Act v={v} me={me} actor={actor} cmd={cmd} dn={dn} /><Skill v={v} me={me} cmd={cmd} dn={dn} />
     </>}
     <Err m={err} />
     <details className="my-drawer"><summary>我的角色与誓约</summary><p>生命 {me.hp} · 压力 {me.stress} · 闪回 {me.flashback ? "可用" : "已用"}</p><p><b>{v.myOath.name}</b>：{v.myOath.text}{v.myOath.target !== undefined && `（目标：${dn(v.myOath.target)}）`}</p></details>
   </div>;
+}
+const CLS: any = { warrior: "战士：队友受伤时自动替他承受（生命大于 1 时）", ranger: "游侠", mage: "法师", bard: "吟游诗人" };
+function Skill({ v, me, cmd, dn }: any) {
+  if (me.cls === "warrior") return <p className="my-skill">{CLS.warrior}</p>;
+  if (me.uses < 1) return null;
+  if (me.cls === "ranger") return <section className="my-skill">{me.peek ? <p>下一张命运牌：{me.peek.color} {me.peek.value}</p> : v.phase === "CONTRIBUTE" && <button onClick={() => cmd({ t: "ABILITY" })}>偷看 1 张命运牌（剩 {me.uses} 次）</button>}</section>;
+  if (me.cls === "mage") return v.phase === "CONTRIBUTE" && !v.colorSwap ? <section className="my-skill"><p>把第一种有效色改成（剩 {me.uses} 次）：</p><div className="my-hand">{["刚", "影", "智", "言"].filter((c) => !v.validNow.includes(c)).map((c) => <button key={c} onClick={() => cmd({ t: "ABILITY", to: c })}>{c}</button>)}</div></section> : null;
+  return <details className="my-skill"><summary>安抚队友，压力 -2（剩 {me.uses} 次）</summary>{v.players.filter((p: any) => p.seat !== v.me).map((p: any) => <button key={p.seat} onClick={() => cmd({ t: "ABILITY", target: p.seat })}>{dn(p.seat)}（压力 {p.stress}）</button>)}</details>;
 }
 function Err({ m }: { m: string }) { return m ? <p className="my-err">{m}</p> : null; }
 function Act({ v, me, actor, cmd, dn }: any) {
   const [deal, setDeal] = useState(false); const reveal = useMemo(() => v.reveal ?? [], [v.reveal]);
   if (v.phase === "FORK") return <section><h3>{v.fork.title}</h3><p>{v.fork.text}</p>{actor ? v.fork.options.map((o: any) => <button key={o.id} onClick={() => cmd({ t: "FORK", optionId: o.id })}>{o.name}</button>) : <p>等待 {dn(v.actor)} 选择…</p>}</section>;
   if (v.phase === "PLAN") return <section><h3>方案（可语音商量）</h3>{v.plans.map((p: any) => <button key={p.id} data-testid="my-plan" disabled={!actor} onClick={() => cmd({ t: "PLAN", planId: p.id, acceptDeal: deal })}>{p.name}<small>{p.attribute} · {p.difficulty} · 有效 {p.valid_colors.join("、")}</small></button>)}{actor && v.dealOffer && <label className="my-deal"><input type="checkbox" checked={deal} onChange={(e) => setDeal(e.target.checked)} /> 魔鬼交易「{v.dealOffer.name}」：{v.dealOffer.text}（+2）</label>}{!actor && <p>等待 {dn(v.actor)} 决定…</p>}</section>;
-  if (v.phase === "CONTRIBUTE") { if (actor) return <p>队友正在暗中出牌（{v.playedCount}/{v.n - 1}）…</p>; if (me.hand.length < 3) return <p>已出牌，等待其他人（{v.playedCount}/{v.n - 1}）…</p>; const p = v.plans.find((x: any) => x.id === v.planId); return <section><h3>暗中出 1 张牌{p ? `（有效：${p.valid_colors.join("、")}）` : ""}</h3><div className="my-hand">{me.hand.map((c: any) => <button key={c.id} data-testid="my-card" onClick={() => cmd({ t: "CONTRIBUTE", cardId: c.id })}>{c.color}<b>{c.value}</b></button>)}</div></section>; }
+  if (v.phase === "CONTRIBUTE") { if (actor) return <p>队友正在暗中出牌（{v.playedCount}/{v.n - 1}）…</p>; if (me.hand.length < 3) return <p>已出牌，等待其他人（{v.playedCount}/{v.n - 1}）…</p>; const p = v.plans.find((x: any) => x.id === v.planId); return <section><h3>暗中出 1 张牌{p ? `（有效：${v.validNow.join("、")}）` : ""}</h3><div className="my-hand">{me.hand.map((c: any) => <button key={c.id} data-testid="my-card" onClick={() => cmd({ t: "CONTRIBUTE", cardId: c.id })}>{c.color}<b>{c.value}</b></button>)}</div></section>; }
   const cards = <div className="my-hand">{reveal.map((c: any, i: number) => <span key={c.id} className="my-flip" style={{ animationDelay: i + "s" }}>{c.color}<b>{c.value}</b></span>)}</div>;
   if (v.phase === "ROLL") return <section><h3>翻牌结果</h3>{cards}{actor ? <><button data-testid="my-roll" onClick={() => cmd({ t: "ROLL", push: false })}>稳妥掷骰</button><button onClick={() => cmd({ t: "ROLL", push: true })}>加压力骰（压力 +1，可能失控）</button></> : <p>等待 {dn(v.actor)} 掷骰…</p>}</section>;
   return <section><h3>总值 {v.total}</h3><p>骰子 {v.roll?.dice.join("+")}{v.roll?.pd?.length ? ` · 压力骰 ${v.roll.pd.join(",")}` : ""}{v.roll?.panic && " · ⚠失控！"}</p>{cards}{me.flashback && <button onClick={() => cmd({ t: "FLASHBACK", pay: v.supplies > 0 ? "supplies" : "stress" })}>闪回：其实我早有准备（总值 +3）</button>}{v.passed.includes(v.me) ? <p>等待其他人…</p> : <button data-testid="my-pass" onClick={() => cmd({ t: "PASS" })}>不闪回，继续</button>}</section>;
