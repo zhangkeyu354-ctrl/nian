@@ -1,5 +1,5 @@
 import { describe, it, expect } from "vitest";
-import { createGame, reduceMY, viewForMY, plansOf, outcomeOf, State } from "../src/index";
+import { createGame, reduceMY, viewForMY, plansOf, outcomeOf, State } from "../src/index.ts";
 function auto(n:number,seed:number){let s:State=createGame(n,seed);let g=0;while(!s.ending&&g++<500){const a=s.actor;
  if(s.phase==="FORK")s=reduceMY(s,{t:"FORK",seat:a,optionId:s.fork.options[1].id});
  else if(s.phase==="PLAN")s=reduceMY(s,{t:"PLAN",seat:a,planId:plansOf(s)[0].id});

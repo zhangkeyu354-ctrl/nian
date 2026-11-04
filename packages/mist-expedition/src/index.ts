@@ -1,5 +1,5 @@
 // 迷雾远征引擎：纯函数 reduceMY / viewForMY，所有随机来自 state.rng。
-import content from "./content.json";
+import content from "./content.json" with { type: "json" };
 const C: any = content;
 export const PLAYER_BONUS: Record<number, number> = { 3: 1, 4: 2, 5: 4, 6: 4, 7: 6, 8: 7 };
 export const BASE: Record<string, number> = { 简单: 9, 普通: 11, 困难: 13 };
@@ -27,6 +27,7 @@ function rnd(s: State) { s.rng = (s.rng * 1664525 + 1013904223) >>> 0; let x = s
 const die = (s: State) => 1 + Math.floor(rnd(s) * 6);
 function shuffle<T>(s: State, a: T[]) { for (let i = a.length - 1; i > 0; i--) { const j = Math.floor(rnd(s) * (i + 1)); [a[i], a[j]] = [a[j], a[i]]; } return a; }
 const pick = <T,>(s: State, a: T[]) => a[Math.floor(rnd(s) * a.length)];
+export const CONTENT = C;
 export const scene = (s: State) => C.scenes.find((x: any) => x.id === s.sceneIds[s.sceneIdx]);
 const clamp = (v: number, a: number, b: number) => Math.max(a, Math.min(b, v));
 export function plansOf(s: State) { const sc = scene(s); return [...sc.plans, ...(s.clues >= 2 ? sc.clue_unlock?.plans ?? [] : [])]; }
@@ -41,14 +42,14 @@ export function createGame(n: number, seed: number, classes?: string[]): State {
   s.players = Array.from({ length: n }, (_, seat) => { const oath = oaths[seat]; const p: Player = { seat, cls: classes?.[seat] ?? C.game.classes[seat % 4].id, hp: 3, stress: 0, flashback: true, hand: [], oath, acted: 0, intelCount: 0, out: false };
     if (oath === "O03") p.oathTarget = (seat + 1 + Math.floor(rnd(s) * (n - 1))) % n; return p; });
   for (const p of s.players) p.hand = [draw(s), draw(s), draw(s)];
-  s.sceneIds = STAGES.map((st) => pick(s, C.scenes.filter((x: any) => x.type === st)).id);
+  s.sceneIds = STAGES.map((st) => (pick(s, C.scenes.filter((x: any) => x.type === st)) as any).id);
   startScene(s); return s;
 }
 function metric(s: State, m: string) { return (s as any)[m]; }
 const cmp = (a: number, op: string, b: number) => ({ ">=": a >= b, gte: a >= b, "<=": a <= b, lte: a <= b, "<": a < b, ">": a > b } as any)[op];
 function forkReady(s: State, f: any) { return f.hidden_trigger.all.every((c: any) => c.stage_in ? c.stage_in.includes(STAGES[s.sceneIdx]) : c.metric ? cmp(metric(s, c.metric), c.op, c.value) : s.players.some((p: any) => cmp(p[c.any_player_metric.metric], c.any_player_metric.op, c.any_player_metric.value))); }
 function startScene(s: State) {
-  if (s.sceneIdx === 2) { const r = die(s); s.log.push({ type: "omen_roll", roll: r }); if (r <= s.omen) { const e = pick(s, C.omen_events.events) as any; const who = Math.floor(rnd(s) * s.n); s.log.push({ type: "omen_trigger", id: e.id }); for (const x of e.effects) apply(s, x, who, "omen"); if (e.hidden_goal) s.players[who].hiddenGoal = e.hidden_goal.id; } }
+  if (s.sceneIdx === 2) { const r = die(s); s.log.push({ type: "omen_roll", roll: r }); if (r <= s.omen) { const e: any = pick(s, C.omen_events.events as any[]); const who = Math.floor(rnd(s) * s.n); s.log.push({ type: "omen_trigger", id: e.id }); for (const x of e.effects) apply(s, x, who, "omen"); if (e.hidden_goal) s.players[who].hiddenGoal = e.hidden_goal.id; } }
   if (s.ending) return;
   if (s.nextDoom) { s.doom = clamp(s.doom + s.nextDoom, 0, 8); s.nextDoom = 0; checkDoom(s); if (s.ending) return; }
   const free = s.players.filter((p) => !p.out); const min = Math.min(...free.map((p) => p.acted));
@@ -56,8 +57,8 @@ function startScene(s: State) {
   s.players[s.actor].acted++; s.planId = undefined; s.deal = undefined; s.played = []; s.reveal = []; s.roll = undefined; s.passed = []; s.intel = [];
   const cnt = s.n >= 6 ? 2 : 1; const pool = shuffle(s, [...scene(s).intel]) as any[];
   const cand = s.players.filter((p) => p.seat !== s.actor).sort((a, b) => a.intelCount - b.intelCount || a.seat - b.seat).slice(0, cnt);
-  cand.forEach((p, i) => { p.intelCount++; s.intel.push({ seat: p.seat, id: pool[i].id }); });
-  const av = C.devil_deals.filter((d: any) => dealOk(s, d)); s.dealOffer = av.length ? pick(s, av) : undefined;
+  cand.forEach((p, i) => { p.intelCount++; s.intel.push({ seat: p.seat, id: pool[i].id }); s.log.push({ type: "intel_given", seat: p.seat, id: pool[i].id, text: pool[i].text }); });
+  const av: any[] = C.devil_deals.filter((d: any) => dealOk(s, d)); s.dealOffer = av.length ? pick(s, av) : undefined;
   const forks = !s.forkDone && (s.sceneIdx === 1 || s.sceneIdx === 2) ? C.fork_events.filter((f: any) => forkReady(s, f)) : [];
   if (forks.length) { s.fork = pick(s, forks); s.forkDone = true; s.phase = "FORK"; } else s.phase = "PLAN";
 }
@@ -83,7 +84,7 @@ export function outcomeOf(total: number, N: number) { return total >= N + 3 ? "�
 function resolve(s: State) {
   const p = plan(s), out = outcomeOf(s.total, need(s)); const sc = scene(s);
   s.log.push({ type: "plan_resolved", scene: sc.id, plan: p.id, actor: s.actor, outcome: out, tags: p.tags ?? [], difficulty: p.difficulty, participants: [s.actor, ...s.played.filter((x) => valid(s, x.card)).map((x) => x.seat)] });
-  if (s.roll.panic) { const pool = C.out_of_control_results.filter((x: any) => !s.usedIncidents.includes(x.id)); const i = pick(s, pool) as any; s.usedIncidents.push(i.id); s.log.push({ type: "incident_triggered", id: i.id }); if (s.players[s.actor].stress >= 6) s.players[s.actor].out = true; apply(s, i.effect, s.actor, "incident"); }
+  if (s.roll.panic) { const pool = C.out_of_control_results.filter((x: any) => !s.usedIncidents.includes(x.id)); const i: any = pick(s, pool); s.usedIncidents.push(i.id); s.log.push({ type: "incident_triggered", id: i.id }); if (s.players[s.actor].stress >= 6) s.players[s.actor].out = true; apply(s, i.effect, s.actor, "incident"); }
   apply(s, p.outcomes[out].effect, s.actor, "plan"); if (s.ending) return;
   if (out === "完全成功") for (const e of myIntel(s)) if (e.full_success_clues) apply(s, { target: "team", changes: { clues: e.full_success_clues } }, s.actor, "plan");
   for (const i of s.intel) { const e = sc.intel.find((x: any) => x.id === i.id).engine_effect; if (e.next_scene_doom) s.nextDoom += e.next_scene_doom; }
@@ -117,4 +118,4 @@ export function reduceMY(prev: State, c: Cmd): State {
   if (c.t === "FLASHBACK") { const p = s.players[c.seat]; if (!p.flashback) bad("你已用过闪回"); if (c.pay === "supplies") { if (s.supplies < 1) bad("物资不足"); s.supplies--; } else p.stress = clamp(p.stress + 2, 0, 6); p.flashback = false; s.total += 3; s.log.push({ type: "flashback", seat: c.seat }); return s; }
   if (!s.passed.includes(c.seat)) s.passed.push(c.seat); if (s.passed.length === s.n) { s.phase = "RESOLVE"; resolve(s); } return s;
 }
-export function viewForMY(s: State, seat: number) { const { rng, deck, discard, played, intel, log, players, ...pub } = s; return { ...pub, deckCount: deck.length, myIntel: intel.filter((i) => i.seat === seat), players: players.map((p) => p.seat === seat ? p : { seat: p.seat, cls: p.cls, hp: p.hp, stress: p.stress, flashback: p.flashback, out: p.out, handCount: p.hand.length }), playedCount: played.length, log: log.filter((e) => e.type !== "hidden_card_played" && e.type !== "effect_applied").map(({ participants, ...e }) => e) }; }
+export function viewForMY(s: State, seat: number) { const { rng, deck, discard, played, intel, log, players, ...pub } = s; return { ...pub, deckCount: deck.length, myIntel: intel.filter((i) => i.seat === seat), players: players.map((p) => p.seat === seat ? p : { seat: p.seat, cls: p.cls, hp: p.hp, stress: p.stress, flashback: p.flashback, out: p.out, handCount: p.hand.length }), playedCount: played.length, log: log.filter((e) => e.type !== "hidden_card_played" && e.type !== "intel_given" && e.type !== "effect_applied").map(({ participants, ...e }) => e) }; }

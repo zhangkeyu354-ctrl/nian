@@ -1,4 +1,5 @@
-import { createGame, reduceMY, plansOf, BASE, PLAYER_BONUS, oathDone, outcomeOf, need, State } from "../src/index";
+// @ts-nocheck
+import { createGame, reduceMY, plansOf, BASE, PLAYER_BONUS, oathDone, outcomeOf, need, State } from "../src/index.ts";
 const C: any = (await import("../src/content.json")).default;
 const sabOath = ["O01","O02","O03","O04","O05","O06"];
 function play(n:number,seed:number,mode:string){ let s:State=createGame(n,seed); let g=0;
