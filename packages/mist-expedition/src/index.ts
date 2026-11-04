@@ -5,7 +5,7 @@ const W: any = content2;
 export const ROUTE = ["loc-01","loc-02","loc-03","loc-12","loc-04","loc-05","loc-11","loc-06","loc-10","loc-09","loc-07","loc-08"];
 export const MAX_ROUNDS = 7; export const WORLD = W;
 const C: any = content;
-export const PLAYER_BONUS: Record<number, number> = { 3: 1, 4: 2, 5: 4, 6: 4, 7: 6, 8: 7 };
+export const PLAYER_BONUS: Record<number, number> = { 2: 2, 3: 1, 4: 2, 5: 4, 6: 4, 7: 6, 8: 7 };
 export const BASE: Record<string, number> = { 简单: 9, 普通: 11, 困难: 13 };
 export const COLORS = ["刚", "影", "智", "言"];
 const STAGES = ["开端", "障碍", "大变局", "终局"];
@@ -50,7 +50,7 @@ export function plansOf(s: State) { if (s.boss) return bossPlans(s); const sc = 
 const hiddenPlan = (_s: State, _id: string) => false;
 function draw(s: State): Card { if (!s.deck.length) { s.deck = shuffle(s, s.discard); s.discard = []; } return s.deck.pop()!; }
 export function createGame(n: number, seed: number, classes?: string[]): State {
-  if (n < 3 || n > 8) throw new Error("人数必须是 3–8");
+  if (n < 2 || n > 8) throw new Error("人数必须是 2–8");
   const s: any = { rng: seed >>> 0, n, phase: "PLAN", deck: [], discard: [], supplies: 4, clues: 1, omen: 0, doom: 0, sceneIdx: 0, nextDoom: 0, intel: [], played: [], reveal: [], total: 0, passed: [], forkDone: false, log: [], seq: 0, usedIncidents: [], votes: {}, inspectLeft: 2, inspected: false, lastPlays: {}, inspectResults: {}, recruited: false, defections: 0, cur: null, pos: 0, round: 0, rifts: [], monsters: {}, solved: 0, progress: { kills: 0, closed: 0, spent: 0 }, usedEnc: [], usedMyth: [], visited: ["loc-01"], awakened: false };
   let i = 0; for (const color of COLORS) for (let g = 0; g < 2; g++) for (const value of [1, 1, 1, 2, 2, 3]) s.deck.push({ id: `c${i++}`, color, value });
   shuffle(s, s.deck);
@@ -58,7 +58,7 @@ export function createGame(n: number, seed: number, classes?: string[]): State {
   s.players = Array.from({ length: n }, (_, seat) => { const oath = oaths[seat]; const p: Player = { seat, cls: classes?.[seat] ?? C.game.classes[seat % 4].id, hp: 3, stress: 0, flashback: true, hand: [], oath, acted: 0, intelCount: 0, out: false, uses: 2, traitor: false, recruit: false, defected: false, letterUsed: false, letter: false };
     if (oath === "O03") p.oathTarget = (seat + 1 + Math.floor(rnd(s) * (n - 1))) % n; return p; });
   for (const p of s.players) p.hand = [draw(s), draw(s), draw(s)];
-  const roll = rnd(s); const tc = n <= 5 ? (roll < 0.2 ? 0 : 1) : roll < 0.15 ? 0 : roll < 0.65 ? 1 : 2;
+  const roll = rnd(s); const tc = n === 2 ? 0 : n <= 5 ? (roll < 0.2 ? 0 : 1) : roll < 0.15 ? 0 : roll < 0.65 ? 1 : 2;
   for (const seat of (shuffle(s, s.players.map((p: Player) => p.seat)) as number[]).slice(0, tc)) s.players[seat].traitor = true;
   s.sceneIds = []; s.bossId = pick(s, W.boss_rules as any[]).id; s.mysteries = shuffle(s, W.mysteries.filter((m: any) => m.boss === s.bossId).map((m: any) => m.id)).slice(0, 3);
   startScene(s); return s;
@@ -126,7 +126,7 @@ function resolve(s: State) {
   s.lastPlays = Object.fromEntries(s.played.map((x) => [x.seat, !!valid(s, x.card)]));
   for (const x of s.played) { s.discard.push(x.card); s.players[x.seat].hand.push(draw(s)); }
   for (const p2 of s.players) if (p2.out && p2.seat !== s.actor) p2.out = false;
-  s.discard.push(...s.reveal.filter((c2) => !s.played.some((x) => x.card.id === c2.id))); s.votes = {}; s.inspected = false; if (!s.boss) mythos(s); if (s.ending) return; s.phase = "COUNCIL";
+  s.discard.push(...s.reveal.filter((c2) => !s.played.some((x) => x.card.id === c2.id))); s.votes = {}; s.inspected = false; if (!s.boss) mythos(s); if (s.ending) return; if (s.n === 2) { closeCouncil(s); return; } s.phase = "COUNCIL";
 }
 function closeCouncil(s: State) {
   const tally: Record<number, number> = {}; for (const v of Object.values(s.votes)) if (v !== null) tally[v] = (tally[v] ?? 0) + 1;
@@ -160,8 +160,8 @@ export function reduceMY(prev: State, c: Cmd): State {
   if (c.t === "FORK") { if (s.phase !== "FORK") bad("现在不是岔路"); if (c.seat !== s.actor) bad("只有主行动者能选择"); const o = s.fork.options.find((x: any) => x.id === c.optionId) ?? bad("没有这个选项"); apply(s, o.effect, s.actor, "fork"); s.fork = undefined; if (!s.ending) s.phase = "PLAN"; return s; }
   if (c.t === "PLAN") { if (s.phase !== "PLAN") bad("现在不能选方案"); if (c.seat !== s.actor) bad("只有主行动者能选方案"); if (!plansOf(s).some((p) => p.id === c.planId)) bad("这个方案不可用"); s.planId = c.planId; if (!s.boss && hiddenPlan(s, c.planId)) s.clues -= 2; if (c.planId === "OPN") s.clues -= 1;
     if (c.acceptDeal) { if (!s.dealOffer) bad("没有可用交易"); s.deal = s.dealOffer; s.log.push({ type: "deal_accepted", seat: s.actor, id: s.deal.id }); apply(s, s.deal.accepted_cost, s.actor, "deal"); if (s.ending) return s; } s.phase = "CONTRIBUTE"; return s; }
-  if (c.t === "CONTRIBUTE") { if (s.phase !== "CONTRIBUTE") bad("现在不能出牌"); if (c.seat === s.actor) bad("主行动者不出牌"); if (c.seat === s.jailed) bad("你被关禁闭了"); if (s.played.some((x) => x.seat === c.seat)) bad("你已经出过牌"); const p = s.players[c.seat]; const i = p.hand.findIndex((x) => x.id === c.cardId); if (i < 0) bad("这张牌不在你手里"); const card = p.hand.splice(i, 1)[0]; s.played.push({ seat: c.seat, card }); s.log.push({ type: "hidden_card_played", seat: c.seat, color_effective: !!valid(s, card) });
-    if (s.played.length === s.n - 1 - (s.jailed !== undefined ? 1 : 0)) { s.reveal = shuffle(s, [...s.played.map((x) => x.card), draw(s), draw(s)]); s.log.push({ type: "card_reveal", cards: s.reveal }); s.phase = "ROLL"; } return s; }
+  if (c.t === "CONTRIBUTE") { if (s.phase !== "CONTRIBUTE") bad("现在不能出牌"); if (c.seat === s.actor && s.n > 2) bad("主行动者不出牌"); if (c.seat === s.jailed) bad("你被关禁闭了"); if (s.played.some((x) => x.seat === c.seat)) bad("你已经出过牌"); const p = s.players[c.seat]; const i = p.hand.findIndex((x) => x.id === c.cardId); if (i < 0) bad("这张牌不在你手里"); const card = p.hand.splice(i, 1)[0]; s.played.push({ seat: c.seat, card }); s.log.push({ type: "hidden_card_played", seat: c.seat, color_effective: !!valid(s, card) });
+    if (s.played.length === (s.n === 2 ? 2 : s.n - 1 - (s.jailed !== undefined ? 1 : 0))) { s.reveal = shuffle(s, [...s.played.map((x) => x.card), draw(s), draw(s)]); s.log.push({ type: "card_reveal", cards: s.reveal }); s.phase = "ROLL"; } return s; }
   if (c.t === "ROLL") { if (s.phase !== "ROLL") bad("现在不能掷骰"); if (c.seat !== s.actor) bad("只有主行动者能掷骰"); const p = s.players[s.actor]; if (c.push) p.stress = clamp(p.stress + 1, 0, 6); const dice = [die(s), die(s)], pd = c.push ? Array.from({ length: p.stress }, () => die(s)) : [];
     const attr = C.game.classes.find((x: any) => x.id === p.cls).attributes[plan(s).attribute]; const cards = s.reveal.reduce((a, x) => a + cardScore(s, x), 0); const intel = myIntel(s).reduce((a: number, e: any) => a + (e.total_bonus ?? 0), 0);
     s.total = dice[0] + dice[1] + attr + cards + intel + pd.filter((x) => x >= 4).length + (s.deal ? 2 : 0) + (s.boss?.bonus ?? 0); s.roll = { dice, pd, panic: pd.includes(1) }; s.log.push({ type: "dice_roll", ...s.roll, total: s.total }); s.phase = "FLASHBACK"; s.passed = []; return s; }

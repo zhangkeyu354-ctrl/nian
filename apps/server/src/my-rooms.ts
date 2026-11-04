@@ -29,7 +29,7 @@ export function attachMist(io: Server, dir: string, opt: { maxRooms: number; idl
     if (s.phase === "MAP") return [{ t: "MOVE", seat: s.actor, pos: Math.min(11, s.pos + 1) }];
     if (s.phase === "FORK") return [{ t: "FORK", seat: s.actor, optionId: s.fork.options[0].id }];
     if (s.phase === "PLAN") return [{ t: "PLAN", seat: s.actor, planId: plansOf(s)[0].id }];
-    if (s.phase === "CONTRIBUTE") { const q = s.players.find((p) => p.seat !== s.actor && p.seat !== s.jailed && !s.played.some((x) => x.seat === p.seat))!; return [{ t: "CONTRIBUTE", seat: q.seat, cardId: q.hand[randomInt(q.hand.length)].id }]; }
+    if (s.phase === "CONTRIBUTE") { const q = s.players.find((p) => (s.n === 2 || p.seat !== s.actor) && p.seat !== s.jailed && !s.played.some((x) => x.seat === p.seat))!; return [{ t: "CONTRIBUTE", seat: q.seat, cardId: q.hand[randomInt(q.hand.length)].id }]; }
     if (s.phase === "ROLL") return [{ t: "ROLL", seat: s.actor, push: false }];
     if (s.phase === "COUNCIL") return s.players.filter((p) => !(p.seat in s.votes)).map((p) => ({ t: "VOTE", seat: p.seat, target: null }) as Cmd);
     return s.players.filter((p) => !s.passed.includes(p.seat)).map((p) => ({ t: "PASS", seat: p.seat }) as Cmd);
@@ -43,7 +43,7 @@ export function attachMist(io: Server, dir: string, opt: { maxRooms: number; idl
   };
   for (const f of readdirSync(dir)) if (f.endsWith(".json")) try {
     const d: File = JSON.parse(readFileSync(join(dir, f), "utf8")); const r: Room = { ...d, state: null, deadline: 0 };
-    if (d.commands !== undefined && (d as any).started !== false && d.seed && d.players.length >= 3 && (d as any).begun) { let s = createGame(d.players.length, d.seed); for (const c of d.commands) s = reduceMY(s, c); r.state = s; }
+    if (d.commands !== undefined && (d as any).started !== false && d.seed && d.players.length >= 2 && (d as any).begun) { let s = createGame(d.players.length, d.seed); for (const c of d.commands) s = reduceMY(s, c); r.state = s; }
     rooms.set(r.code, r); arm(r);
   } catch { /* 损坏存档跳过 */ }
   setInterval(() => { for (const [c, r] of rooms) if (Date.now() - r.touched > opt.idleMs) { clearTimeout(r.timer); rooms.delete(c); rmSync(join(dir, c + ".json"), { force: true }); } }, 60000).unref();
@@ -57,7 +57,7 @@ export function attachMist(io: Server, dir: string, opt: { maxRooms: number; idl
       if (!p) { if (r.state) throw new Error("游戏已开始"); if (r.players.length >= 8) throw new Error("房间已满 8 人"); p = { id: randomBytes(6).toString("hex"), token: randomBytes(16).toString("hex"), name: String(name || "玩家").slice(0, 12) }; r.players.push(p); r.hostId ||= p.id; }
       bySocket.set(sock.id, { code: r.code, id: p.id }); save(r); push(r); return { token: p.token, snapshot: view(r, p.id) };
     }));
-    sock.on("my:start", guard(() => { const { b, r } = cur(); if (b.id !== r.hostId) throw new Error("只有房主能开始"); if (r.state) throw new Error("已经开始"); if (r.players.length < 3) throw new Error("至少 3 人"); r.state = createGame(r.players.length, r.seed); (r as any).begun = true; arm(r); save(r); push(r); return {}; }));
+    sock.on("my:start", guard(() => { const { b, r } = cur(); if (b.id !== r.hostId) throw new Error("只有房主能开始"); if (r.state) throw new Error("已经开始"); if (r.players.length < 2) throw new Error("至少 2 人"); r.state = createGame(r.players.length, r.seed); (r as any).begun = true; arm(r); save(r); push(r); return {}; }));
     sock.on("my:cmd", guard((c) => {
       const { b, r } = cur(); if (!r.state) throw new Error("游戏未开始"); const seat = r.players.findIndex((p) => p.id === b.id), key = r.state.phase + r.state.sceneIdx;
       run(r, { ...c, seat }); arm(r, key); save(r); push(r); return {};
