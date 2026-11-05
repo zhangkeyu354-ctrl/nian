@@ -46,7 +46,7 @@ function Game({ snap, send, msg, clear, restart, host, online }: { snap: any; se
   const acting = v.phase === "action" && myTurn && !q;
   const abilities: string[] = me.character ? CHARACTERS[me.character].ab : [];
   const step = flow?.steps[Object.keys(flow.args).filter((k) => k !== "_").length];
-  const put = (key: string, val: any) => { const args = { ...flow!.args, [key]: val }; const left = flow!.steps.slice(Object.keys(args).length); if (!left.length) { send({ t: "ability", ab: flow!.ab, args }); setFlow(null); setPick([]); } else setFlow({ ...flow!, args }); };
+  const put = (key: string, val: any) => { const args = { ...flow!.args, [key]: val }; const steps = key === "ab" ? [flow!.steps[0], ...ABILITIES[val].steps] : flow!.steps; flow!.steps = steps; const left = steps.slice(Object.keys(args).length); if (!left.length) { send({ t: "ability", ab: flow!.ab, args }); setFlow(null); setPick([]); } else setFlow({ ...flow!, args }); };
   const hint = useMemo(() => { if (v.phase === "over") return v.winner === "crew" ? "船员修复了飞船" : "内鬼得逞了"; if (q) return "需要你决定"; if (myTurn) return v.phase === "accuse" ? "讨论结束后由你结束回合" : "轮到你了"; if (v.waiting.length) return "等待 " + v.waiting.map(name).join("、"); return ""; }, [v]);
   const targets = (other: boolean) => v.players.filter((p: any) => !p.killed && (!other || p.seat !== v.you));
   const cardChoice = (cards: any[], onPick: (id: number) => void) => <div className="ta-hand inline">{cards.map((c) => <button key={c.id} className="ta-card" onClick={() => onPick(c.id)}><img src={img(c.type)} alt={CARD_TEXT[c.type]?.[0]} /></button>)}</div>;
@@ -73,7 +73,7 @@ function Game({ snap, send, msg, clear, restart, host, online }: { snap: any; se
       {step.kind === "aside" ? <>{cardChoice(v.aside, (id) => setPick(pick.includes(id) ? pick.filter((x) => x !== id) : [...pick, id]))}<button className="ta-primary" onClick={() => put(step.key, pick)}>打出 {pick.length} 张</button></> : null}
       {step.kind === "used" ? <div className="ta-grid">{v.roundAbilities.filter((x: string) => x !== "mimic").map((x: string) => <button key={x} onClick={() => put(step.key, x)}>{ABILITIES[x].name}</button>)}</div> : null}
       <button onClick={() => setFlow(null)}>取消</button></section>; }
-  return <div className="ta-world ta-game">
+  return <div className={"ta-world ta-game ph-" + (v.phase === "over" ? (v.winner === "crew" ? "win" : "lose") : v.phase) + (v.oxygen <= 6 ? " danger" : "")}>
     <header className="ta-hud"><div className="ta-top"><b>{PHASE[v.phase]}{v.round ? ` · 第 ${v.round} 回合` : ""}</b><button className="ta-mute" onClick={() => { setMute(!mute); setM(!mute); }}>{mute ? "开声音" : "静音"}</button><span className={online ? "" : "off"}>{online ? hint : "连接中断，正在重连…"}</span></div>
       <Bar label="氧气" v={v.oxygen} max={OXYGEN_MAX} cls="o" /><Bar label="能量" v={v.energy} max={ENERGY_GOAL} mark={ENERGY_SAFE} cls="e" /></header>
     <ul className="ta-seats">{v.players.map((p: any) => <li key={p.seat} className={[v.waiting.includes(p.seat) ? "turn" : "", p.killed ? "dead" : "", p.exiled ? "exiled" : "", p.seat === v.you ? "me" : ""].join(" ")} onClick={() => p.character && setZoom({ src: img("c_" + p.character), text: CHAR_NAME[p.character] })}>

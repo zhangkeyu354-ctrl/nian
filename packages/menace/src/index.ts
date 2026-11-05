@@ -3,7 +3,7 @@ export * from "./data.ts";
 export interface Card{id:number;type:CardType}
 interface Played{seat:number;card:Card} // seat=-1 表示 EmMA
 export interface Player{seat:number;agenda:string;character:string|null;choices:string[];hand:Card[];deck:Card[];aside:Card[];wounds:WoundType[];exiled:boolean;killed:boolean;revealed:boolean;used:Ability[];severed:Ability|null;resoluteUsed:boolean;austereUsed:boolean;}
-type Task={k:"ask";seat:number;q:string;data?:any}|{k:"wound";seat:number;st:number}|{k:"ability";seat:number;ab:Ability;args:any;free:boolean;copy?:boolean}|{k:"effect";type:CardType}|{k:"death";seat:number}|{k:"reveal"}|{k:"finish"};
+type Task={k:"ask";seat:number;q:string;data?:any}|{k:"wound";seat:number;st:number}|{k:"ability";seat:number;ab:Ability;args:any;free:boolean;copy?:boolean}|{k:"effect";type:CardType}|{k:"copy";type:CardType}|{k:"death";seat:number}|{k:"reveal"}|{k:"finish"};
 export interface State{n:number;mode:"basic"|"advanced";rng:number;nextId:number;phase:"setup"|"action"|"resolve"|"accuse"|"vote"|"over";round:number;leader:number;oxygen:number;energy:number;resStart:number;players:Player[];emma:Card[];emmaUsed:Card[];woundDeck:WoundType[];discard:Card[];played:Played[];queue:Played[];revealed:Played[];stack:Task[];turn:number;sub:number[];lastType:string|null;playedSeats:number[];armed:boolean;
  flags:{veto?:number;deflect?:number;helping?:number;moxie?:number;damage?:number;rewind?:number;restructure?:number;guard?:number;lockdown?:boolean;brawl?:boolean;backstab?:boolean;bad?:boolean;woundedRound?:boolean;};
  roundAbilities:Ability[];stage:string;votes:Record<number,number|null>;log:string[];notes:string[][];winner:"crew"|"menace"|null;winners:number[];}
@@ -37,7 +37,7 @@ function afterChoice(s:State){
  if(ps.length>5&&ps.slice(0,5).every(p=>p.character)&&ps.slice(5).every(p=>!p.choices.length&&!p.character)){const pool:string[]=(s as any).pool;shuffle(s,pool);const rest=ps.slice(5);let i=0;while(pool.length){rest[i%rest.length].choices.push(pool.shift()!);i++}}
 }
 const merge=(a:any,b:any)=>{const o={...a};for(const k in b)o[k]=(o[k]||0)+b[k];return o};
-function beginRound(s:State){(s as any).shown=[];s.phase="action";s.round++;s.turn=0;s.sub=[];s.lastType=null;s.playedSeats=[];s.flags={};s.roundAbilities=[];s.played=[];for(const p of s.players)p.used=[];say(s,`第 ${s.round} 回合开始`)}
+function beginRound(s:State){(s as any).endPaid=false;(s as any).shown=[];s.phase="action";s.round++;s.turn=0;s.sub=[];s.lastType=null;s.playedSeats=[];s.flags={};s.roundAbilities=[];s.played=[];for(const p of s.players)p.used=[];say(s,`第 ${s.round} 回合开始`)}
 function addO(s:State,n:number){s.oxygen=Math.max(0,Math.min(OXYGEN_MAX,s.oxygen+n));if(s.oxygen===0)zeroO(s)}
 function zeroO(s:State){const a=hasAgenda(s,"austere");if(a&&!a.austereUsed&&a.hand.length&&!a.exiled){a.austereUsed=true;ask(s,a.seat,"austere")}}
 function addE(s:State,n:number,free=false){if(n>0&&!free&&s.phase==="resolve")s.energy=Math.max(s.energy,Math.min(s.energy+n,s.resStart+5));else s.energy+=n;s.energy=Math.max(0,Math.min(ENERGY_GOAL,s.energy))}
@@ -81,7 +81,7 @@ function reveal(s:State){const it=s.queue.shift()!;s.revealed.push(it);const typ
 function resolveCard(s:State,type:CardType,vetoed:boolean){if(vetoed){say(s,"否决：取消费用和效果");return}
  const c=COSTO[type];if(c)addO(s,-c);
  const copy=s.armed&&type!=="replicate";if(type==="replicate"){s.armed=true;return}
- if(copy){s.armed=false;if(type!=="brawl"&&type!=="backstab"){effect(s,type,true)}}
+ if(copy){s.armed=false;if(type!=="brawl"&&type!=="backstab")s.stack.push({k:"copy",type})}
  effect(s,type,false)}
 function ability(s:State,t:Extract<Task,{k:"ability"}>){const p=s.players[t.seat],a=t.args??{},c=COST[t.ab];
  if(!t.free){if(c.e)addE(s,-c.e);if(c.o)addO(s,-c.o)}
@@ -106,7 +106,7 @@ function ability(s:State,t:Extract<Task,{k:"ability"}>){const p=s.players[t.seat
  case "deflect":s.flags.deflect=p.seat;break;
  case "rewind":s.flags.rewind=p.seat;break;
  case "efficiency":{const ids:number[]=(a.cards??[]).slice(0,2);if(!ids.length)break;for(const id of ids)playCard(s,p,takeCard(p,id));break}
- case "formulate":ask(s,p.seat,"formulate");{const n=p.deck.splice(0,3);p.hand.push(...n)}break;
+ case "formulate":{const n=p.deck.splice(0,3);p.hand.push(...n);if(p.hand.length)ask(s,p.seat,"formulate");break}
  case "system_refresh":{const o=tgt(a.target);const n=o.hand.length;o.deck.push(...o.hand.splice(0));shuffle(s,o.deck);draw(s,o.seat,n+1);break}
  case "synchronize":{const x=tgt(a.a),y=tgt(a.b);if(x===y)fail("BAD_TARGET");draw(s,x.seat,1);draw(s,y.seat,1);break}
  case "surveillance":{const it=s.played.find(x=>x.seat===a.target);if(it)s.notes[p.seat].push(`监控：座位${it.seat+1} 的牌是 ${it.card.type}`);break}
@@ -133,7 +133,7 @@ function death(s:State,seat:number){const p=s.players[seat];if(p.killed)return;p
  if(!p.exiled&&(p.agenda==="contagion"||p.agenda==="butcher"))ask(s,seat,p.agenda);
  if(p.agenda==="vengeant")ask(s,seat,"vengeant");
  if(p.agenda==="reckless"&&!p.exiled)addE(s,2,true);}
-function endRound(s:State){if(s.stage!=="end"){s.stage="end";if(s.flags.moxie!==undefined&&s.flags.woundedRound)addO(s,3);if(s.flags.damage!==undefined&&s.flags.bad)addE(s,3,true);}
+function endRound(s:State){if(!(s as any).endPaid){(s as any).endPaid=true;if(s.flags.moxie!==undefined&&s.flags.woundedRound)addO(s,3);if(s.flags.damage!==undefined&&s.flags.bad)addE(s,3,true);}
  const d=s.players.find(p=>!p.killed&&p.wounds.length>=2);if(d){s.stack.push({k:"death",seat:d.seat});return}
  if(check(s))return;if(s.energy>=ENERGY_GOAL&&s.oxygen>0){over(s,"crew");return}
  do{s.leader=(s.leader+1)%s.n}while(s.players[s.leader].killed);s.stage="";beginRound(s)}
@@ -147,7 +147,7 @@ function run(s:State){for(let g=0;g<5000;g++){
  if(s.phase==="over")return;
  const top=s.stack[s.stack.length-1];
  if(top){if(top.k==="ask")return;s.stack.pop();
-  if(top.k==="wound")doWound(s,top);else if(top.k==="ability")ability(s,top);else if(top.k==="effect")resolveCard(s,top.type,!!(s as any).vetoNow),(s as any).vetoNow=false;else if(top.k==="death")death(s,top.seat);continue}
+  if(top.k==="wound")doWound(s,top);else if(top.k==="ability")ability(s,top);else if(top.k==="effect")resolveCard(s,top.type,!!(s as any).vetoNow),(s as any).vetoNow=false;else if(top.k==="copy")effect(s,top.type,true);else if(top.k==="death")death(s,top.seat);continue}
  if(s.oxygen===0||check(s)){check(s);continue}
  if(s.phase==="action"){if(s.sub.length){const p=s.players[s.sub[s.sub.length-1]];if(p.killed){s.sub.pop();continue}return}
   if(s.turn>=s.n){startResolve(s);continue}
