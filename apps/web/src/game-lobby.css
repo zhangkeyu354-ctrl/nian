@@ -295,3 +295,5 @@
 @keyframes hall-enter { from {opacity:0;} to {opacity:1;} }
 @media(prefers-reduced-motion:reduce){.hall{animation:none;}}
 .box-kb{background:radial-gradient(ellipse at 50% 0%,#2c7f8c,#164a52 55%,#12262a);color:#f6efe1;border:2px solid #ff8a3d}.box-kb .box-open,.box-kb button{background:linear-gradient(#ffa25c,#ff8a3d);color:#2a1406;font-weight:800;border:0;border-radius:10px;box-shadow:0 3px 0 #b85a1d}.box-kb input{background:#0c1b1d;color:#f6efe1;border-color:#ff8a3d;text-transform:uppercase}.box-kb .box-meta,.box-kb .box-blurb{color:#cfe0dc}.box-kb h2 small{color:#ffc83d}.box-kb .box-art{height:130px}
+
+.box-ta{background:radial-gradient(ellipse at 50% 0%,#5a1a16,#23201c 55%,#111513);color:#f1ece0;border:2px solid #e0a92a}.box-ta .box-open,.box-ta button{background:linear-gradient(#ffd566,#d59a22);color:#1b1407;font-weight:800;border:0;border-radius:10px;box-shadow:0 3px 0 #7c5a12}.box-ta input{background:#111513;color:#f1ece0;border-color:#e0a92a;text-transform:uppercase}.box-ta .box-meta,.box-ta .box-blurb{color:#d3cfc2}.box-ta h2 small{color:#ffc95a}.box-ta .box-art{height:170px;overflow:hidden;border-radius:10px}
