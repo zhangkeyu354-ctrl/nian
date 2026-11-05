@@ -29,6 +29,11 @@ function Room({ code }: { code: string }) {
     {host ? <><div className="ta-row"><button className={s.mode === "basic" ? "on" : ""} onClick={() => r.lobby({ type: "SET_MODE", mode: "basic" })}>基础模式</button><button className={s.mode === "advanced" ? "on" : ""} onClick={() => r.lobby({ type: "SET_MODE", mode: "advanced" })}>进阶模式</button></div><button className="ta-primary" onClick={async () => setMsg((await r.lobby({ type: "START" })) ?? "")}>开始（{s.players.length} 人）</button></> : <p>{s.mode === "basic" ? "基础模式" : "进阶模式"}，等待房主开始。</p>}<p className="ta-err">{msg}</p></div>;
   return <Game snap={s} send={async (c) => setMsg((await r.command(c)) ?? "")} msg={msg} clear={() => setMsg("")} restart={() => r.lobby({ type: "START" })} host={host} online={r.connected} />;
 }
+const TONE: Record<string, string> = { advanced_repair: "#f0a020", airlock: "#2f8fe0", backstab: "#d9352c", basic_repair: "#f0b81e", brawl: "#f07020", command: "#8a55c8", explosion: "#f05a20", panic: "#ee3f92", raise_morale: "#2f9fe0", reactor: "#74c52c", replicate: "#2fc0a0" };
+function GameCard({ type }: { type: string }) {
+  const [name, text] = CARD_TEXT[type];
+  return <div className="ta-gc" style={{ "--k": TONE[type] } as any}><div className="h"><small>舱面下行动</small><b>{name}</b></div><div className="m"><img src={img("m_" + type)} alt={name} /></div><div className="t"><span>{text}</span></div><div className="s" /></div>;
+}
 function Bar({ label, v, max, mark, cls }: { label: string; v: number; max: number; mark?: number; cls: string }) {
   return <div className={"ta-bar " + cls}><span>{label}</span><i><b style={{ width: `${(v / max) * 100}%` }} />{mark ? <u style={{ left: `${(mark / max) * 100}%` }} /> : null}</i><em>{v}/{max}</em></div>;
 }
@@ -53,7 +58,7 @@ function Game({ snap, send, msg, clear, restart, host, online }: { snap: any; se
   const put = (key: string, val: any) => { const args = { ...flow!.args, [key]: val }; const steps = key === "ab" ? [flow!.steps[0], ...ABILITIES[val].steps] : flow!.steps; flow!.steps = steps; const left = steps.slice(Object.keys(args).length); if (!left.length) { send({ t: "ability", ab: flow!.ab, args }); setFlow(null); setPick([]); } else setFlow({ ...flow!, args }); };
   const hint = useMemo(() => { if (v.phase === "over") return v.winner === "crew" ? "船员修复了飞船" : "内鬼得逞了"; if (q) return "需要你决定"; if (myTurn) return v.phase === "accuse" ? "讨论结束后由你结束回合" : "轮到你了"; if (v.waiting.length) return "等待 " + v.waiting.map(name).join("、"); return ""; }, [v]);
   const targets = (other: boolean) => v.players.filter((p: any) => !p.killed && (!other || p.seat !== v.you));
-  const cardChoice = (cards: any[], onPick: (id: number) => void) => <div className="ta-hand inline">{cards.map((c) => <button key={c.id} className="ta-card" onClick={() => onPick(c.id)}><img src={img(c.type)} alt={CARD_TEXT[c.type]?.[0]} /></button>)}</div>;
+  const cardChoice = (cards: any[], onPick: (id: number) => void) => <div className="ta-hand inline">{cards.map((c) => <button key={c.id} className="ta-card" onClick={() => onPick(c.id)}><GameCard type={c.type} /></button>)}</div>;
   const seatChoice = (list: any[], onPick: (s: number) => void) => <div className="ta-grid">{list.map((p: any) => <button key={p.seat} onClick={() => onPick(p.seat)}>{name(p.seat)}</button>)}</div>;
   function question() { if (!q) return null; const a = (value: any) => send({ t: "answer", value }); const yes = <div className="ta-grid"><button className="ta-primary" onClick={() => a(true)}>是</button><button onClick={() => a(false)}>否</button></div>;
     const skip = (t: string) => <button onClick={() => a(null)}>{t}</button>;
@@ -86,7 +91,7 @@ function Game({ snap, send, msg, clear, restart, host, online }: { snap: any; se
       {msg ? <p className="ta-err">{msg}</p> : null}
       {v.phase === "setup" ? <section className="ta-panel"><h3>你的身份：<a onClick={() => setZoom({ src: img(v.agenda), text: AGENDA_TEXT[v.agenda].join("\n") })}>{AGENDA_TEXT[v.agenda][0]}</a></h3>{v.choices.length ? <div className="ta-chars">{v.choices.map((c: string) => <figure key={c}><img src={img("c_" + c)} alt={CHAR_NAME[c]} onClick={() => setZoom({ src: img("c_" + c), text: CHAR_NAME[c] })} /><button className="ta-primary" onClick={() => send({ t: "choose", name: c })}>选 {CHAR_NAME[c]}</button></figure>)}</div> : <p>等待其他玩家选角色…</p>}</section> : null}
       {question()}{flowPanel()}
-      {v.phase === "resolve" || v.revealed.length ? <section className="ta-panel"><h3>已揭示 · 还剩 {v.remaining} 张</h3><div className="ta-hand inline">{v.revealed.map((t: string, i: number) => <button key={i} className="ta-card flip" onClick={() => setZoom({ src: img(t), text: CARD_TEXT[t].join("：") })}><img src={img(t)} alt={CARD_TEXT[t][0]} /></button>)}</div></section> : null}
+      {v.phase === "resolve" || v.revealed.length ? <section className="ta-panel"><h3>已揭示 · 还剩 {v.remaining} 张</h3><div className="ta-hand inline">{v.revealed.map((t: string, i: number) => <button key={i} className="ta-card flip" onClick={() => setZoom({ src: img(t), text: CARD_TEXT[t].join("：") })}><GameCard type={t} /></button>)}</div></section> : null}
       {v.phase === "resolve" && !q && v.leader === v.you ? <button className="ta-primary" onClick={() => send({ t: "reveal" })}>揭示下一张（还剩 {v.remaining}）</button> : null}
       {acting && !flow ? <section className="ta-panel"><h3>选择一项行动</h3><div className="ta-grid"><button onClick={() => send({ t: "draw" })}>抽一张牌</button><button onClick={() => send({ t: "pass" })}>无可行动时跳过</button></div>
         {me.exiled ? null : <div className="ta-abs">{abilities.map((a) => { const m = ABILITIES[a]; const used = me.used.includes(a); return <button key={a} disabled={used} onClick={() => m.steps.length ? setFlow({ ab: a, steps: m.steps, args: {} }) : send({ t: "ability", ab: a, args: {} })}><b>{m.name}{m.cost ? ` · ${m.cost}` : ""}</b><small>{m.text}</small></button>; })}</div>}</section> : null}
@@ -97,9 +102,9 @@ function Game({ snap, send, msg, clear, restart, host, online }: { snap: any; se
       <details className="ta-log"><summary>航行日志</summary>{[...v.log].reverse().map((l: string, i: number) => <p key={i}>{zh(l)}</p>)}</details>
     </main>
     {v.agenda && v.phase !== "setup" ? <button className="ta-id" onClick={() => setZoom({ src: img(v.agenda), text: AGENDA_TEXT[v.agenda].join("\n") })}>身份</button> : null}
-    {v.hand?.length && v.phase !== "setup" ? <nav className="ta-hand">{v.hand.map((c: any) => <button key={c.id} className="ta-card" onClick={() => setZoom({ src: img(c.type), text: CARD_TEXT[c.type].join("：\n"), play: acting ? c.id : undefined })}><img src={img(c.type)} alt={CARD_TEXT[c.type][0]} /></button>)}</nav> : null}
+    {v.hand?.length && v.phase !== "setup" ? <nav className="ta-hand">{v.hand.map((c: any) => <button key={c.id} className="ta-card" onClick={() => setZoom({ src: img(c.type), text: CARD_TEXT[c.type].join("：\n"), play: acting ? c.id : undefined })}><GameCard type={c.type} /></button>)}</nav> : null}
     {door ? <div className="ta-door"><i /><i /><b>舱门关闭</b></div> : null}
     {banner ? <div key={banner} className={"ta-banner b-" + v.phase}><b>{banner}</b></div> : null}
-    {zoom ? <div className="ta-zoom" onClick={() => setZoom(null)}>{zoom.src.includes("w_frenzied") ? null : <img src={zoom.src} alt="" />}<p>{zoom.text}</p>{zoom.play !== undefined ? <button className="ta-primary" onClick={() => send({ t: "play", card: zoom.play })}>暗置打出</button> : null}</div> : null}
+    {zoom ? <div className="ta-zoom" onClick={() => setZoom(null)}>{zoom.src.includes("w_frenzied") ? null : CARD_TEXT[zoom.src.split("/").pop()!.replace(".webp", "")] ? <div className="ta-big"><GameCard type={zoom.src.split("/").pop()!.replace(".webp", "")} /></div> : <img src={zoom.src} alt="" />}<p>{zoom.text}</p>{zoom.play !== undefined ? <button className="ta-primary" onClick={() => send({ t: "play", card: zoom.play })}>暗置打出</button> : null}</div> : null}
   </div>;
 }

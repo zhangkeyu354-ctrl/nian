@@ -66,3 +66,14 @@
 .ta-world .ta-grid button,.ta-abs button{background:linear-gradient(#37443d,#20292a);border-color:#6f8350;box-shadow:inset 0 1px 0 #ffffff26,0 2px 0 #000}
 .ta-world .ta-primary{background:linear-gradient(#ffd566,#d59a22)!important;color:#1b1407;border:0;box-shadow:inset 0 1px 0 #fff8,0 2px 0 #000}.ta-world .ta-danger{box-shadow:inset 0 1px 0 #fff5,0 2px 0 #000}
 .ta-world .ta-card{align-self:flex-start;height:auto;line-height:0}.ta-banner{align-items:flex-start;padding-top:25dvh}
+
+/* 网页绘制卡牌：1em = 卡宽/34 */
+.ta-card{font-size:calc(78px/34)}nav.ta-hand .ta-card{font-size:calc(104px/34)}.ta-big{font-size:calc(min(82vw,380px)/34)}.ta-card::after{display:none}
+.ta-gc{width:34em;height:48.6em;position:relative;overflow:hidden;border-radius:1.6em;text-align:left;line-height:1.35;background:radial-gradient(70% 45% at 50% 36%,#5d6652,transparent),linear-gradient(160deg,#4d5443,#23281f 62%,#151815);box-shadow:0 0 0 .15em #000,0 0 0 .35em #a7a990,0 0 0 .5em #000,0 1em 1.6em #000c}
+.ta-gc::before{content:"";position:absolute;inset:0;background:repeating-linear-gradient(135deg,#ffffff06 0 .2em,transparent .2em .7em)}
+.ta-gc::after{content:"";position:absolute;inset:0;pointer-events:none;border-radius:inherit;background:linear-gradient(120deg,#ffffff2e,transparent 30%,transparent 70%,#0005);box-shadow:inset 0 0 0 .08em #ffffff30}
+.ta-gc .h{position:absolute;left:0;right:0;top:0;height:6.4em;background:linear-gradient(#454d3e,#1e221c);border-bottom:.3em solid var(--k);box-shadow:0 .3em 0 #000}
+.ta-gc small{position:absolute;left:1.8em;top:.7em;font-size:1.3em;color:#bec2aa;letter-spacing:.2em}.ta-gc .h b{position:absolute;left:1.5em;top:.42em;margin-top:.5em;font:3.6em/1.1 TATitle,sans-serif;font-size:3.6em;left:.5em;top:.2em;color:#fff4d8;text-shadow:0 .05em 0 #000}
+.ta-gc .m{position:absolute;left:50%;top:8em;width:23.2em;height:23.2em;margin-left:-11.6em;border-radius:50%;background:#000;box-shadow:0 0 0 .6em #111,0 0 0 .9em #9b9e88,0 0 0 1.05em #000,0 0 2.8em var(--k)}.ta-gc .m img{width:100%;height:100%;display:block;border-radius:50%}
+.ta-gc .t{position:absolute;left:1.4em;right:1.4em;bottom:1.4em;top:33.4em;background:linear-gradient(#e6e0cc,#c6bea4);clip-path:polygon(1.4em 0,100% 0,100% calc(100% - 1.4em),calc(100% - 1.4em) 100%,0 100%,0 1.4em);display:flex;align-items:center;justify-content:center;text-align:center;padding:0 1.4em}
+.ta-gc .t span{font-size:2em;font-weight:700;color:#1d1d1a}.ta-gc .s{position:absolute;left:0;top:33em;bottom:0;width:.7em;background:var(--k)}
