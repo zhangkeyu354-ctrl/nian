@@ -80,3 +80,8 @@
 .ta-world .ta-card,.ta-world .ta-card.flip,.ta-world .ta-card.flip:last-child{font-size:calc(78px/34);flex:0 0 78px;width:78px;overflow:visible}
 .ta-world nav.ta-hand .ta-card{font-size:calc(104px/34);flex:0 0 104px;width:104px}
 .ta-world .ta-card .ta-gc .t span{font-size:2.5em;line-height:1.2;overflow:hidden;display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical}.ta-gc .t{padding:0 .8em}
+
+.ta-gc .h{background:repeating-linear-gradient(115deg,#ffffff08 0 .3em,transparent .3em .9em),linear-gradient(#4b5443,#1c201a)}
+.ta-gc .t{box-shadow:inset 0 .2em .5em #fff8}.ta-gc .t span{white-space:pre-line}
+.ta-gc.tall .m{top:7.4em;left:1.4em;margin:0;width:31.2em;height:26em;border-radius:.8em;overflow:hidden;box-shadow:0 0 0 .3em #000,0 0 0 .5em #9b9e88}.ta-gc.tall .m img{object-fit:cover;object-position:50% 12%;border-radius:0}.ta-gc.tall .t span{font-size:1.65em;text-align:left}
+.ta-pick{font-size:calc(min(58vw,230px)/34);justify-self:center}.ta-chars{grid-template-columns:1fr}
