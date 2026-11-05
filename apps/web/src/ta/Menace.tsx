@@ -64,7 +64,7 @@ function Game({ snap, send, msg, clear, restart, host, online }: { snap: any; se
   useEffect(() => { if (!count || v.phase !== "resolve") return; const id = Date.now(); setShow({ id, type: lastT }); const t = setTimeout(() => setShow((x) => (x?.id === id ? null : x)), 2000); return () => clearTimeout(t); }, [count]);
   const [hit, setHit] = useState<{ id: number; who: string; w: string } | null>(null);
   const seen = useRef<string[]>(v.players.map((p: any) => p.wounds.join()));
-  useEffect(() => { v.players.forEach((p: any, i: number) => { const w = p.wounds.join(); if (w !== seen.current[i] && p.wounds.length > seen.current[i].split(",").filter(Boolean).length) { const id = Date.now() + i; const w2 = p.wounds[p.wounds.length - 1], who = name(p.seat), d = v.phase === "resolve" ? 1500 : 0; setTimeout(() => { setShow(null); setHit({ id, who, w: w2 }); sfx("sabotage"); setTimeout(() => setHit((x) => (x?.id === id ? null : x)), 2200); }, d); } seen.current[i] = w; }); }, [v.players]);
+  useEffect(() => { v.players.forEach((p: any, i: number) => { const w = p.wounds.join(); if (w !== seen.current[i] && p.wounds.length > seen.current[i].split(",").filter(Boolean).length) { const id = Date.now() + i; const w2 = p.wounds[p.wounds.length - 1], who = name(p.seat), d = v.phase === "resolve" ? 1500 : 0; setTimeout(() => { setShow(null); setHit({ id, who, w: w2 }); sfx("sabotage"); setTimeout(() => setHit((x) => (x?.id === id ? null : x)), 3200); }, d); } seen.current[i] = w; }); }, [v.players]);
   const [mute, setM] = useState(muted());
   const exiled = v.players.filter((p: any) => p.exiled).length; const [door, setDoor] = useState(false); const prevEx = useRef(exiled);
   useEffect(() => { if (exiled > prevEx.current) { setDoor(true); sfx("sabotage"); setTimeout(() => setDoor(false), 2600); } prevEx.current = exiled; }, [exiled]);
@@ -130,7 +130,7 @@ function Game({ snap, send, msg, clear, restart, host, online }: { snap: any; se
     {v.hand?.length && v.phase !== "setup" ? <nav className="ta-hand">{v.hand.map((c: any) => <button key={c.id} className="ta-card" onClick={() => setZoom({ src: img(c.type), text: CARD_TEXT[c.type].join("：\n"), play: acting ? c.id : undefined })}><GameCard type={c.type} /></button>)}</nav> : null}
     {gun ? <div className="ta-gun"><svg viewBox="0 0 200 120"><path d="M8 28h150l14 12v16H92l-10 12-8 44H34l10-52H8z" fill="#2c332c" stroke="#000" strokeWidth="5"/><path d="M8 28h150v10H8z" fill="#6f8350"/><rect x="150" y="44" width="46" height="9" fill="#e0a92a" stroke="#000" strokeWidth="3"/></svg></div> : null}
     {show ? <div key={show.id} className="ta-stage" onClick={() => setShow(null)}><div className="card"><GameCard type={show.type} /></div><Vfx id={CARD_FX[show.type]} />{fly.map((x) => <b key={x.id} style={{ color: x.c }}>{x.t}</b>)}</div> : null}
-    {hit ? <div key={hit.id} className="ta-hit"><Vfx id="blood" /><b>{hit.who} 受伤</b><p>{WOUND_TEXT[hit.w]}</p></div> : null}
+    {hit ? <div key={hit.id} className="ta-hit"><Vfx id="blood" /><small>{hit.who} 受伤，抽取伤害牌…</small><div className="wc"><i className="back">伤害报告</i><div className="face">{zoomOf.wound(hit.w)}</div></div></div> : null}
     {hurt ? <div key={hurt} className="ta-hurt" /> : null}
     <div className="ta-fly">{show ? null : fly.map((x) => <b key={x.id} style={{ color: x.c }}>{x.t}</b>)}</div>
     {help ? <div className="ta-zoom" onClick={() => setHelp(false)}><Rules /></div> : null}
