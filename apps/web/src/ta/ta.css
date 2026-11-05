@@ -210,3 +210,13 @@
 .ta-hud::after{content:"";position:absolute;left:0;right:0;top:0;height:100%;pointer-events:none;background:linear-gradient(100deg,transparent 40%,#ffffff12 50%,transparent 60%) -100% 0/60% 100% no-repeat;animation:ta-sheen 7s infinite}@keyframes ta-sheen{60%,100%{background-position:220% 0}}.ta-hud{position:relative}
 .ta-world nav.ta-hand .ta-card{animation:ta-float 4.5s ease-in-out infinite}.ta-world nav.ta-hand .ta-card:nth-child(2){animation-delay:-1.5s}.ta-world nav.ta-hand .ta-card:nth-child(3){animation-delay:-3s}@keyframes ta-float{50%{translate:0 -4px}}
 @media (prefers-reduced-motion:reduce){.ta-seat.turn,.ta-seat.turn .face::before,.ta-table::before,.ta-table::after,.ta-table .core::after,.ta-game,.ta-hud::after,.ta-world nav.ta-hand .ta-card{animation:none}}
+
+/* 边框流光 */
+.ta-seat .face::before{background:conic-gradient(from var(--a,0deg),#59634e,#e9ecd6 8%,#4a5240 22%,#9aa386 45%,#3b4235 60%,#e9ecd6 70%,#4a5240 85%,#59634e);animation:ta-spin 7s linear infinite}
+.ta-seat.me .face::before{background:conic-gradient(from var(--a,0deg),#2f6f80,#e6fbff 10%,#2f6f80 30%,#7fd6ee 55%,#2f6f80 70%,#e6fbff 80%,#2f6f80);animation-duration:5s}
+.ta-seat.turn .face::before{background:conic-gradient(from var(--a,0deg),#ffd976,#7a5a12 25%,#fff0b0 50%,#7a5a12 75%,#ffd976);animation-duration:2.4s}
+.ta-seat.dead .face::before{animation:none;background:#5a1a16}.ta-seat.exiled .face::before{animation:none;background:repeating-conic-gradient(#e0a92a 0 18deg,#17191a 0 36deg)}
+.ta-game .ta-panel,.ta-end ul li.w,.ta-gc{isolation:isolate}
+.ta-game .ta-panel{position:relative}.ta-game .ta-panel::before{content:"";position:absolute;inset:0;border-radius:inherit;padding:1.5px;pointer-events:none;background:conic-gradient(from var(--a,0deg),transparent 0 70%,#ffd976 85%,transparent 100%);-webkit-mask:linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0);-webkit-mask-composite:xor;mask:linear-gradient(#000 0 0) content-box exclude,linear-gradient(#000 0 0);animation:ta-spin 6s linear infinite}.ta-game .ta-panel.alert::before{background:conic-gradient(from var(--a,0deg),transparent 0 60%,#ff5a4a 85%,transparent 100%);animation-duration:2.6s}
+.ta-gc::before{display:block;content:"";position:absolute;inset:0;border-radius:inherit;padding:.14em;z-index:3;pointer-events:none;background:conic-gradient(from var(--a,0deg),transparent 0 65%,var(--k) 85%,#fff 92%,transparent 100%);-webkit-mask:linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0);-webkit-mask-composite:xor;mask:linear-gradient(#000 0 0) content-box exclude,linear-gradient(#000 0 0);animation:ta-spin 5s linear infinite}
+@media (prefers-reduced-motion:reduce){.ta-seat .face::before,.ta-game .ta-panel::before,.ta-gc::before{animation:none}}
