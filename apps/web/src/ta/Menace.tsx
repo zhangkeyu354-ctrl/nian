@@ -1,6 +1,6 @@
 import { useEffect, useMemo, useRef, useState } from "react";
 import { createTARoom, savedName, useTARoom } from "./ta-net.ts";
-import { ABILITIES, AGENDA_TEXT, CARD_TEXT, CHAR_NAME, QUESTION, WOUND_TEXT, type Step } from "./text.ts";
+import { ABILITIES, AGENDA_TEXT, CARD_TEXT, CHAR_NAME, QUESTION, WOUND_TEXT, zh, type Step } from "./text.ts";
 import { CHARACTERS, ENERGY_GOAL, ENERGY_SAFE, OXYGEN_MAX } from "../../../../packages/menace/src/data.ts";
 import "./ta.css";
 import { music, sfx, setMute, muted } from "./sound.ts";
@@ -93,13 +93,13 @@ function Game({ snap, send, msg, clear, restart, host, online }: { snap: any; se
       {v.phase === "accuse" && !q ? <section className="ta-panel"><h3>语音讨论</h3><p>可以开枪发起放逐投票，发起后不能撤回。</p><div className="ta-grid">{!me.killed && !me.exiled ? <button className="ta-danger" onClick={() => send({ t: "call_vote" })}>拿起手枪</button> : null}{v.leader === v.you ? <button className="ta-primary" onClick={() => send({ t: "end_accuse" })}>结束本回合</button> : null}</div></section> : null}
       {v.phase === "vote" ? <section className="ta-panel alert"><h3>放逐投票 · 已投 {v.voted}</h3>{myTurn ? <>{seatChoice(v.players.filter((p: any) => !p.killed && !p.exiled && p.seat !== v.you), (s) => send({ t: "vote", target: s }))}<button onClick={() => send({ t: "vote", target: null })}>弃权</button></> : <p>等待其他人投票…</p>}</section> : null}
       {v.phase === "over" ? <section className="ta-panel"><h2>{v.winner === "crew" ? "飞船得救" : "内鬼胜利"}</h2><p>获胜：{v.winners.map(name).join("、") || "无人"}</p><ul className="ta-list">{v.players.map((p: any) => <li key={p.seat}>{name(p.seat)}：{AGENDA_TEXT[p.agenda][0]}</li>)}</ul>{host ? <button className="ta-primary" onClick={restart}>再来一局</button> : null}</section> : null}
-      {v.notes?.length ? <details className="ta-log"><summary>私密记录</summary>{v.notes.map((n: string, i: number) => <p key={i}>{n}</p>)}</details> : null}
-      <details className="ta-log"><summary>航行日志</summary>{[...v.log].reverse().map((l: string, i: number) => <p key={i}>{l}</p>)}</details>
+      {v.notes?.length ? <details className="ta-log"><summary>私密记录</summary>{v.notes.map((n: string, i: number) => <p key={i}>{zh(n)}</p>)}</details> : null}
+      <details className="ta-log"><summary>航行日志</summary>{[...v.log].reverse().map((l: string, i: number) => <p key={i}>{zh(l)}</p>)}</details>
     </main>
     {v.agenda && v.phase !== "setup" ? <button className="ta-id" onClick={() => setZoom({ src: img(v.agenda), text: AGENDA_TEXT[v.agenda].join("\n") })}>身份</button> : null}
     {v.hand?.length && v.phase !== "setup" ? <nav className="ta-hand">{v.hand.map((c: any) => <button key={c.id} className="ta-card" onClick={() => setZoom({ src: img(c.type), text: CARD_TEXT[c.type].join("：\n"), play: acting ? c.id : undefined })}><img src={img(c.type)} alt={CARD_TEXT[c.type][0]} /></button>)}</nav> : null}
     {door ? <div className="ta-door"><i /><i /><b>舱门关闭</b></div> : null}
     {banner ? <div key={banner} className={"ta-banner b-" + v.phase}><b>{banner}</b></div> : null}
-    {zoom ? <div className="ta-zoom" onClick={() => setZoom(null)}><img src={zoom.src} alt="" /><p>{zoom.text}</p>{zoom.play !== undefined ? <button className="ta-primary" onClick={() => send({ t: "play", card: zoom.play })}>暗置打出</button> : null}</div> : null}
+    {zoom ? <div className="ta-zoom" onClick={() => setZoom(null)}>{zoom.src.includes("w_frenzied") ? null : <img src={zoom.src} alt="" />}<p>{zoom.text}</p>{zoom.play !== undefined ? <button className="ta-primary" onClick={() => send({ t: "play", card: zoom.play })}>暗置打出</button> : null}</div> : null}
   </div>;
 }
