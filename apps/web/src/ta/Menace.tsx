@@ -45,6 +45,8 @@ function Game({ snap, send, msg, clear, restart, host, online }: { snap: any; se
   const [mute, setM] = useState(muted());
   const exiled = v.players.filter((p: any) => p.exiled).length; const [door, setDoor] = useState(false); const prevEx = useRef(exiled);
   useEffect(() => { if (exiled > prevEx.current) { setDoor(true); sfx("sabotage"); setTimeout(() => setDoor(false), 2600); } prevEx.current = exiled; }, [exiled]);
+  const [banner, setBanner] = useState("");
+  useEffect(() => { if (v.phase === "setup") return; setBanner(v.phase === "over" ? (v.winner === "crew" ? "飞船得救" : "内鬼胜利") : PHASE[v.phase]); const t = setTimeout(() => setBanner(""), v.phase === "over" ? 2200 : 1100); return () => clearTimeout(t); }, [v.phase]);
   const acting = v.phase === "action" && myTurn && !q;
   const abilities: string[] = me.character ? CHARACTERS[me.character].ab : [];
   const step = flow?.steps[Object.keys(flow.args).filter((k) => k !== "_").length];
@@ -96,7 +98,8 @@ function Game({ snap, send, msg, clear, restart, host, online }: { snap: any; se
     </main>
     {v.agenda && v.phase !== "setup" ? <button className="ta-id" onClick={() => setZoom({ src: img(v.agenda), text: AGENDA_TEXT[v.agenda].join("\n") })}>身份</button> : null}
     {v.hand?.length && v.phase !== "setup" ? <nav className="ta-hand">{v.hand.map((c: any) => <button key={c.id} className="ta-card" onClick={() => setZoom({ src: img(c.type), text: CARD_TEXT[c.type].join("：\n"), play: acting ? c.id : undefined })}><img src={img(c.type)} alt={CARD_TEXT[c.type][0]} /></button>)}</nav> : null}
-    {door ? <div className="ta-door"><b>舱门关闭</b></div> : null}
+    {door ? <div className="ta-door"><i /><i /><b>舱门关闭</b></div> : null}
+    {banner ? <div key={banner} className={"ta-banner b-" + v.phase}><b>{banner}</b></div> : null}
     {zoom ? <div className="ta-zoom" onClick={() => setZoom(null)}><img src={zoom.src} alt="" /><p>{zoom.text}</p>{zoom.play !== undefined ? <button className="ta-primary" onClick={() => send({ t: "play", card: zoom.play })}>暗置打出</button> : null}</div> : null}
   </div>;
 }
