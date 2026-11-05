@@ -142,7 +142,7 @@ function check(s:State){if(s.phase==="over")return true;if(s.oxygen===0)return o
  if(s.players.filter(p=>side(p)==="menace").every(p=>p.killed)&&s.energy>=ENERGY_SAFE)return over(s,"crew"),true;return false}
 function individual(s:State,p:Player){const a=p.agenda;if(a==="austere"){const l=alive(s).map(x=>x.seat);const i=l.indexOf(p.seat);if(i<0)return p.hand.length>0;const L=s.players[l[(i-1+l.length)%l.length]],R=s.players[l[(i+1)%l.length]];return p.hand.length>L.hand.length&&p.hand.length>R.hand.length}
  if(a==="paragon")return !s.players.some(x=>x!==p&&x.killed&&side(x)==="crew");if(a==="reckless")return p.deck.length<=11;if(a==="resolute")return p.revealed;if(a==="saint")return s.oxygen>=4;if(a==="vengeant")return s.players.some(x=>x!==p&&x.killed);if(a==="coward")return !p.exiled;return true}
-function over(s:State,w:"crew"|"menace"){s.phase="over";s.winner=w;s.stack=[];s.winners=s.players.filter(p=>{if(side(p)==="neutral")return !p.killed&&(s.mode==="basic"||individual(s,p));return side(p)===w&&(s.mode==="basic"||individual(s,p))}).map(p=>p.seat);say(s,w==="crew"?"船员胜利":"内鬼胜利")}
+function over(s:State,w:"crew"|"menace"){s.phase="over";s.winner=w;s.stack=[];s.winners=s.players.filter(p=>{if(side(p)==="neutral"){const m=s.players.filter(x=>side(x)==="menace");const turned=m.some(x=>x.revealed)&&m.some(x=>!x.killed);return (turned?w==="menace":w==="crew")&&(s.mode==="basic"||individual(s,p))}return side(p)===w&&(s.mode==="basic"||individual(s,p))}).map(p=>p.seat);say(s,w==="crew"?"船员胜利":"内鬼胜利")}
 function run(s:State){for(let g=0;g<5000;g++){
  if(s.phase==="over")return;
  const top=s.stack[s.stack.length-1];

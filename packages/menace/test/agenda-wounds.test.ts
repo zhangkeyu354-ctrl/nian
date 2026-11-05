@@ -15,7 +15,7 @@ describe("Agenda",()=>{
  it("屠夫死前伤人",()=>{let s=g(["butcher","loyal","loyal","loyal"]);s.players[0].wounds=["flesh","flesh"];s=end(s);s=ans(s,0,2);expect(s.players[2].wounds.length).toBe(1)});
  it("复仇者死前伤人并扣2氧",()=>{let s=g(["contagion","vengeant","loyal","loyal"]);s.players[1].wounds=["flesh","flesh"];s=end(s);expect(s.oxygen).toBe(13);s=ans(s,1,2);expect(s.players[2].wounds.length).toBe(1)});
  it("鲁莽者死亡加2能",()=>{let s=g(["contagion","reckless","loyal","loyal"]);s.players[1].wounds=["flesh","flesh"];s=end(s);expect(s.energy).toBe(2)});
- it("懦夫存活即胜",()=>{let s=createGame(7,3);for(let i=0;i<9&&s.phase==="setup";i++)for(const p of s.players)if(p.choices.length&&!p.character)s=reduce(s,{seat:p.seat,t:"choose",name:p.choices[0]});const c=s.players.find(p=>p.agenda==="coward")!.seat;s=structuredClone(s);s.oxygen=1;s=res(s,["airlock"]);s=rv(s);while(s.phase!=="over")s=ans(s,(s.stack.at(-1) as any).seat,null);expect(s.winners).toContain(c)});
+ it("胆小鬼：内鬼未公开时跟船员，公开后跟内鬼",()=>{let s=createGame(7,3);for(let i=0;i<9&&s.phase==="setup";i++)for(const p of s.players)if(p.choices.length&&!p.character)s=reduce(s,{seat:p.seat,t:"choose",name:p.choices[0]});const c=s.players.find(p=>p.agenda==="coward")!.seat;s=structuredClone(s);s.oxygen=1;const t=structuredClone(s);s=res(s,["airlock"]);s=rv(s);while(s.phase!=="over")s=ans(s,(s.stack.at(-1) as any).seat,null);expect(s.winners).not.toContain(c);let u=t;u.players.find(p=>p.agenda==="contagion"||p.agenda==="butcher")!.revealed=true;u=res(u,["airlock"]);u=rv(u);while(u.phase!=="over")u=ans(u,(u.stack.at(-1) as any).seat,null);expect(u.winners).toContain(c)});
 });
 describe("伤害牌",()=>{
  it("皮肉伤无效果",()=>{const s=hit(g(),1,"flesh");expect(s.players[1].wounds).toEqual(["flesh"])});
