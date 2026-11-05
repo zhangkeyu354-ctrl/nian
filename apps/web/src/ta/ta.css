@@ -226,3 +226,34 @@
 .ph-setup .ta-chars{flex:1;min-height:0;display:flex;gap:14px;overflow-x:auto;scroll-snap-type:x mandatory;padding:6px 8vw;margin:0 -14px;align-items:center}.ph-setup .ta-chars figure{flex:0 0 min(76vw,300px);scroll-snap-align:center;display:flex;flex-direction:column;gap:12px;align-items:center}
 .ph-setup .ta-pick{font-size:calc(min(76vw,300px, 46dvh)/34)}
 .ta-table::before{clip-path:polygon(29% 0,71% 0,100% 29%,100% 71%,71% 100%,29% 100%,0 71%,0 29%)}
+
+/* 版面重排：桌子随屏幕缩放，操作不再被挤压 */
+.ta-game .ta-hud{padding:6px 12px 4px}.ta-game .ta-top{min-height:36px}.ta-world .ta-mute{min-height:36px;min-width:44px;font-size:12px}.ta-bar{margin-top:2px}.ta-bar i{height:9px}.ta-bar em{font-size:13px}
+.ta-table{width:min(100%,calc(100dvh - 300px));min-width:236px;flex:0 1 auto}
+.ta-seat .face{width:46px;height:46px}.ta-seat .face img{width:36px;height:36px}.ta-seat b{font-size:11px;margin-top:2px}.ta-seat small{font-size:10px}
+.ta-main{flex:0 0 auto;overflow:visible;padding:4px 10px 0;margin:0}.ta-main>:first-child{margin-top:0}.ta-main>details{display:none}
+.ta-game .ta-dock{padding:6px;gap:6px;background:none;box-shadow:none;backdrop-filter:none;-webkit-backdrop-filter:none}.ta-game .ta-dock::before{display:none}.ta-dock .ta-grid,.ta-dock .ta-abs{grid-template-columns:1fr 1fr;display:grid;gap:6px}.ta-dock .ta-abs button{min-height:44px;padding:4px 8px;align-items:center;justify-content:center;font-size:13px}
+.ta-game .ta-panel:not(.ta-dock):not(.ph){position:fixed;left:8px;right:8px;bottom:calc(8px + env(safe-area-inset-bottom));z-index:5;max-height:62dvh;overflow-y:auto;background:#0d1214f2}
+.ph-setup .ta-panel:not(.ta-dock):not(.ph){position:static;max-height:none;background:#0d1214b8}.ph-setup .ta-main{flex:1 1 0;min-height:0}
+.ta-world nav.ta-hand{min-height:0;margin-top:auto;padding:4px 0 calc(6px + env(safe-area-inset-bottom));overflow:hidden}.ta-world nav.ta-hand .ta-card{font-size:calc(78px/34);flex-basis:78px;width:78px;height:112px;margin-left:-8px;overflow:hidden}.ta-world nav.ta-hand .ta-card:first-child:nth-last-child(n+4)~.ta-card{margin-left:-26px}
+.ta-world .ta-id{position:fixed;top:44px;right:auto;left:auto;bottom:auto;right:8px;min-height:32px;padding:2px 8px;font-size:12px;z-index:4}
+.ta-table::before{clip-path:polygon(29% 0,71% 0,100% 29%,100% 71%,71% 100%,29% 100%,0 71%,0 29%)}
+
+/* 手机点按：禁止长按选字和拖图，保证点头像必响应 */
+.ta-world{-webkit-user-select:none;user-select:none;-webkit-touch-callout:none;-webkit-tap-highlight-color:transparent}.ta-world input{-webkit-user-select:text;user-select:text}
+.ta-world img{pointer-events:none;-webkit-user-drag:none}
+.ta-table::before,.ta-table::after,.ta-table .core{pointer-events:none}.ta-world .ta-seat{z-index:3;touch-action:manipulation;min-width:64px;min-height:64px}.ta-world .ta-seat:active{filter:brightness(1.35)}.ta-seat.turn{animation:none}
+
+
+/* 场景页为主，只有讨论和投票上圆桌 */
+.ta-game:not(.ph-accuse):not(.ph-vote) .ta-table{width:100%;min-width:0;aspect-ratio:auto;display:grid;grid-template-columns:repeat(4,1fr);gap:4px;padding:4px 8px;margin:0}
+.ta-game:not(.ph-accuse):not(.ph-vote) .ta-table::before,.ta-game:not(.ph-accuse):not(.ph-vote) .ta-table::after,.ta-game:not(.ph-accuse):not(.ph-vote) .ta-table .core{display:none}
+.ta-game:not(.ph-accuse):not(.ph-vote) .ta-seat{position:relative;left:auto!important;top:auto!important;transform:none;width:auto;min-height:0;padding:4px 2px;border-radius:10px;background:#0d1214b8}
+.ta-game:not(.ph-accuse):not(.ph-vote) .ta-seat .face{width:34px;height:34px}.ta-game:not(.ph-accuse):not(.ph-vote) .ta-seat .face img{width:26px;height:26px}
+.ta-game:not(.ph-accuse):not(.ph-vote) .ta-main{flex:1 1 0;min-height:0;overflow-y:auto;padding:8px 12px}
+.ta-game:not(.ph-accuse):not(.ph-vote) .ta-panel:not(.ph){position:static;max-height:none;background:#0d1214c9;padding:14px;gap:10px}
+.ta-dock h3{display:block}.ta-game .ta-dock{background:#0d1214c9}.ta-game .ta-dock .ta-abs{grid-template-columns:1fr}.ta-dock .ta-abs button{align-items:flex-start;min-height:48px}
+.ta-game.ph-action nav.ta-hand .ta-card{font-size:calc(104px/34);flex-basis:104px;width:104px;height:149px;transform:none}.ta-world nav.ta-hand{overflow-x:auto;justify-content:safe center}
+.ta-game.ph-accuse nav.ta-hand,.ta-game.ph-vote nav.ta-hand{display:none}
+.ta-world .ta-id{top:auto;bottom:calc(10px + env(safe-area-inset-bottom));right:8px}.ph-action .ta-id{bottom:166px}
+.ta-game .ta-main{z-index:6}
