@@ -3,6 +3,7 @@ import { createTARoom, savedName, useTARoom } from "./ta-net.ts";
 import { ABILITIES, AGENDA_TEXT, CARD_TEXT, CHAR_NAME, QUESTION, WOUND_TEXT, RULES, zh, type Step } from "./text.ts";
 import { CHARACTERS, ENERGY_GOAL, ENERGY_SAFE, OXYGEN_MAX } from "../../../../packages/menace/src/data.ts";
 import "./ta.css";
+import vfxMeta from "../vfx-meta.json" with { type: "json" };
 import { music, sfx, setMute, muted } from "./sound.ts";
 const img = (n: string) => `/assets/menace/${n}.webp`;
 const PHASE: Record<string, string> = { setup: "选择角色", action: "行动阶段", resolve: "匿名结算", accuse: "讨论与指控", vote: "放逐投票", over: "对局结束" };
@@ -40,6 +41,11 @@ function InfoCard({ tone, kind, name, pic, text, round }: { tone: string; kind: 
 }
 const AGENDA_TONE = (a: string) => (["contagion", "butcher"].includes(a) ? "#d9352c" : a === "coward" ? "#e0a92a" : "#74a83c");
 const zoomOf = { agenda: (a: string) => <InfoCard round tone={AGENDA_TONE(a)} kind="身份" name={AGENDA_TEXT[a][0].split("（")[0]} pic={img("a_" + a)} text={AGENDA_TEXT[a][1]} />, wound: (w: string) => <InfoCard round tone="#b3201a" kind="伤害报告" name={WOUND_TEXT[w].split("：")[0]} pic="" text={WOUND_TEXT[w].split("：")[1]} />, char: (c: string) => { const [x, y] = CHARACTERS[c].ab; return <InfoCard tone="#3fb0a0" kind="角色" name={CHAR_NAME[c]} pic={img("p_" + c)} text={`${ABILITIES[x].name}${ABILITIES[x].cost ? "（" + ABILITIES[x].cost + "）" : ""}：${ABILITIES[x].text}\n${ABILITIES[y].name}${ABILITIES[y].cost ? "（" + ABILITIES[y].cost + "）" : ""}：${ABILITIES[y].text}`} />; } };
+const CARD_FX: Record<string, string> = { basic_repair: "repair", advanced_repair: "repair", raise_morale: "heal", command: "complete", replicate: "teleport", brawl: "hook", backstab: "slash", panic: "shock", airlock: "crow", explosion: "pallet", reactor: "power" };
+function Vfx({ id }: { id: string }) {
+  const m = (vfxMeta as any)[id]; if (!m) return null; const k = Math.min(5, 300 / m.w);
+  return <div className="ta-vfx" style={{ width: m.w, height: m.h, zoom: undefined, transform: `translate(-50%,-50%) scale(${k})` }}><i style={{ width: m.w * m.n, height: m.h, backgroundImage: `url(/assets/cc0/vfx/${id}.png)`, animation: `ta-vfx ${m.n * m.ms}ms steps(${m.n}) forwards`, "--x": `-${m.w * m.n}px` } as any} /></div>;
+}
 function Bar({ label, v, max, mark, cls }: { label: string; v: number; max: number; mark?: number; cls: string }) {
   return <div className={"ta-bar " + cls}><span>{label}</span><i><b style={{ width: `${(v / max) * 100}%` }} />{mark ? <u style={{ left: `${(mark / max) * 100}%` }} /> : null}</i><em>{v}/{max}</em></div>;
 }
@@ -53,6 +59,11 @@ function Game({ snap, send, msg, clear, restart, host, online }: { snap: any; se
   const lastT = v.revealed[v.revealed.length - 1]; const count = v.revealed.length;
   useEffect(() => { if (count) sfx(["airlock", "explosion", "panic", "reactor", "backstab", "brawl"].includes(lastT) ? "sabotage" : lastT?.includes("repair") ? "repair" : "reveal"); }, [count]);
   useEffect(() => { if (myTurn) sfx("commit"); }, [myTurn]);
+  const [show, setShow] = useState<{ id: number; type: string } | null>(null);
+  useEffect(() => { if (!count || v.phase !== "resolve") return; const id = Date.now(); setShow({ id, type: lastT }); const t = setTimeout(() => setShow((x) => (x?.id === id ? null : x)), 2000); return () => clearTimeout(t); }, [count]);
+  const [hit, setHit] = useState<{ id: number; who: string; w: string } | null>(null);
+  const seen = useRef<string[]>(v.players.map((p: any) => p.wounds.join()));
+  useEffect(() => { v.players.forEach((p: any, i: number) => { const w = p.wounds.join(); if (w !== seen.current[i] && p.wounds.length > seen.current[i].split(",").filter(Boolean).length) { const id = Date.now() + i; setHit({ id, who: name(p.seat), w: p.wounds[p.wounds.length - 1] }); sfx("sabotage"); setTimeout(() => setHit((x) => (x?.id === id ? null : x)), 2200); } seen.current[i] = w; }); }, [v.players]);
   const [mute, setM] = useState(muted());
   const exiled = v.players.filter((p: any) => p.exiled).length; const [door, setDoor] = useState(false); const prevEx = useRef(exiled);
   useEffect(() => { if (exiled > prevEx.current) { setDoor(true); sfx("sabotage"); setTimeout(() => setDoor(false), 2600); } prevEx.current = exiled; }, [exiled]);
@@ -117,8 +128,10 @@ function Game({ snap, send, msg, clear, restart, host, online }: { snap: any; se
     {v.agenda && v.phase !== "setup" ? <button className="ta-id" onClick={() => setZoom({ src: "", text: "", node: zoomOf.agenda(v.agenda) })}>身份</button> : null}
     {v.hand?.length && v.phase !== "setup" ? <nav className="ta-hand">{v.hand.map((c: any) => <button key={c.id} className="ta-card" onClick={() => setZoom({ src: img(c.type), text: CARD_TEXT[c.type].join("：\n"), play: acting ? c.id : undefined })}><GameCard type={c.type} /></button>)}</nav> : null}
     {gun ? <div className="ta-gun"><svg viewBox="0 0 200 120"><path d="M8 28h150l14 12v16H92l-10 12-8 44H34l10-52H8z" fill="#2c332c" stroke="#000" strokeWidth="5"/><path d="M8 28h150v10H8z" fill="#6f8350"/><rect x="150" y="44" width="46" height="9" fill="#e0a92a" stroke="#000" strokeWidth="3"/></svg></div> : null}
+    {show ? <div key={show.id} className="ta-stage" onClick={() => setShow(null)}><div className="card"><GameCard type={show.type} /></div><Vfx id={CARD_FX[show.type]} />{fly.map((x) => <b key={x.id} style={{ color: x.c }}>{x.t}</b>)}</div> : null}
+    {hit ? <div key={hit.id} className="ta-hit"><Vfx id="blood" /><b>{hit.who} 受伤</b><p>{WOUND_TEXT[hit.w]}</p></div> : null}
     {hurt ? <div key={hurt} className="ta-hurt" /> : null}
-    <div className="ta-fly">{fly.map((x) => <b key={x.id} style={{ color: x.c }}>{x.t}</b>)}</div>
+    <div className="ta-fly">{show ? null : fly.map((x) => <b key={x.id} style={{ color: x.c }}>{x.t}</b>)}</div>
     {help ? <div className="ta-zoom" onClick={() => setHelp(false)}><Rules /></div> : null}
     {v.phase === "over" ? <div className={"ta-end " + (v.winner === "crew" ? "win" : "lose")}><div className="fx">{Array.from({ length: 28 }, (_, i) => <i key={i} style={{ left: `${(i * 37) % 100}%`, animationDelay: `${(i % 9) * .35}s` }} />)}</div>
       <small>{v.winner === "crew" ? "ISV-警戒号 · 引擎重启" : "ISV-警戒号 · 生命维持终止"}</small><h1>{v.winner === "crew" ? "劫后余生" : "全员窒息"}</h1><p className="why">{v.winner === "crew" ? (v.energy >= ENERGY_GOAL ? `能量充满，氧气仅剩 ${v.oxygen} 格。你们活下来了。` : "内鬼全部伏诛，飞船脱离危险。") : (v.oxygen === 0 ? "最后一口氧气耗尽，内鬼的计划得逞。" : "船员无一生还，飞船落入内鬼之手。")}</p>

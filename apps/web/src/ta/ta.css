@@ -126,3 +126,12 @@
 @keyframes ta-endin{from{filter:brightness(0)}to{filter:none}}@keyframes ta-slam{from{opacity:0;transform:scale(2.6)}to{opacity:1;transform:none}}@keyframes ta-row{from{opacity:0;transform:translateX(-24px)}to{opacity:1;transform:none}}@keyframes ta-rise{to{transform:translateY(-105vh);opacity:0}}@keyframes ta-fall{to{transform:translateY(105vh);opacity:.2}}
 @media (prefers-reduced-motion:reduce){.ta-end,.ta-end *{animation:none!important}}
 .ta-main{padding-bottom:60px}
+
+.ta-stage{position:fixed;inset:0;z-index:7;background:radial-gradient(#0009,#000c);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:6px;animation:ta-h2 2s both}.ta-stage .card{font-size:calc(min(52vw,210px)/34);animation:ta-show .5s both;perspective:600px}.ta-stage b{z-index:2;font:700 40px TATitle,sans-serif;text-shadow:0 3px 0 #000,0 0 18px currentColor;animation:ta-pop .5s .35s both}
+@keyframes ta-show{from{transform:rotateY(100deg) scale(.6)}to{transform:none}}@keyframes ta-pop{from{opacity:0;transform:scale(2)}to{opacity:1;transform:none}}@keyframes ta-h2{0%,85%{opacity:1}100%{opacity:0}}
+.ta-vfx{position:absolute;left:50%;top:44%;overflow:hidden;pointer-events:none;z-index:1;transform-origin:center}.ta-vfx i{display:block;background-repeat:no-repeat;image-rendering:pixelated}@keyframes ta-vfx{to{transform:translateX(var(--x))}}
+.ta-hit{position:fixed;inset:0;z-index:7;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:24px;gap:6px;background:radial-gradient(#5a0d0a99,#000c);pointer-events:none;animation:ta-h2 2.2s both,ta-shake .35s}.ta-hit b{z-index:2;font:700 44px TATitle,sans-serif;color:#ff5a4a;text-shadow:0 3px 0 #000}.ta-hit p{z-index:2;margin:0;max-width:320px;color:#fff;text-shadow:0 2px 0 #000}
+@keyframes ta-shake{25%{transform:translate(-8px,4px)}50%{transform:translate(8px,-4px)}75%{transform:translate(-4px,2px)}}
+.ta-bar i{transition:box-shadow .3s}
+@media (prefers-reduced-motion:reduce){.ta-stage,.ta-stage *,.ta-hit{animation:none!important}}
+.ta-stage{pointer-events:none}
