@@ -10,3 +10,7 @@
 - `vfx/`：PVFX Foundry 1.0.0（Pixel VFX Studio / nerijs，itch.io），`effects/**/sprite-sheet.png` 为 CC0 1.0（见 `vfx/PVFX_LICENSE.txt`）。选了 27 个，重排成单行序列帧；帧数据在 `apps/web/src/vfx-meta.json`。
 - `music/` 与 `sfx/sting_*.mp3`：Sami Hiltunen「Free Audio Asset Collection」系列（itch.io，页面声明全部 CC0）——Dark Ambient Soundscape、Underground Facility Ambient Pack、Free Audio Asset Collection、Piano Pack 中挑选、压缩为 MP3。
 - 所有音频已转 MP3（iPhone Safari 兼容）。
+
+## 2026-11-05 追加（背景、转场）
+- `bg/`：12 张背景（WebP，1280px）。墓地取自 vgdr「Graveyard Background Pack」（CC0）；其余取自 the-outlander「Horror Backgrounds Free CC0」（CC0）。两包均为作者用 AI 生成。
+- `transitions/`：Screaming Brain Studios「Animated Transitions Pack」（CC0，见 SBS_LICENSE.txt），挑 6 种转为单行 alpha 遮罩序列帧（文件名后缀 = 帧数，每帧 128×128）。

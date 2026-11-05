@@ -134,7 +134,7 @@ function CreateOrJoin() {
     goto(`/?room=${res.code}`);
   }
   return (
-    <main className="lobby room-flow">
+    <main className="lobby room-flow dbd-lobby">
       <Brand line="开一个房间，大家用自己的手机加入。每个人只看得到自己的秘密移动牌。" />
       <section className="setup">
         <h2>加入房间</h2>
@@ -229,7 +229,7 @@ function JoinRoom({
   const l = room.snap!.lobby;
   const full = l.players.length >= l.playerCount;
   return (
-    <main className="lobby room-flow">
+    <main className="lobby room-flow dbd-lobby">
       <Brand line={`房间 ${code} · ${l.players.length}/${l.playerCount} 人`} />
       <section className="setup">
         {l.stage !== "lobby" ? (
@@ -295,7 +295,7 @@ function LobbyRoom({
   const ready = full && l.players.every((p) => p.side);
   const killers = l.players.filter((p) => p.side === "killer").length;
   return (
-    <main className="lobby room-flow">
+    <main className="lobby room-flow dbd-lobby">
       <Brand line={`房间 ${code} · ${l.players.length}/${l.playerCount} 人`} />
       <section className="setup" data-testid="lobby-room">
         <div className="room-title">
@@ -427,7 +427,7 @@ function DraftRoom({
   const phone = usePhone();
   const mapName = maps.maps.find((m) => m.id === d.mapId)?.name_zh;
   return (
-    <main className="lobby room-flow">
+    <main className="lobby room-flow dbd-lobby">
       <Brand line={`房间 ${code} · 地图：${mapName}`} />
       <section className="setup" data-testid="draft-room">
         <p className="draft-banner">
@@ -630,7 +630,7 @@ function SeatPicker({
       </main>
     );
   return (
-    <main className="lobby room-flow">
+    <main className="lobby room-flow dbd-lobby">
       <Brand line="选择你要扮演的座位。同一座位只能有一个人，刷新页面会自动回到原座位。" />
       <section className="setup">
         <InvitePanel code={code} />
@@ -683,7 +683,7 @@ function RoomView({ code }: { code: string }) {
   const room = useRoom(code);
   if (room.error && !room.snap)
     return (
-      <main className="lobby room-flow">
+      <main className="lobby room-flow dbd-lobby">
         <Brand line="" />
         <section className="setup">
           <div role="alert" className="error">
@@ -697,7 +697,7 @@ function RoomView({ code }: { code: string }) {
     );
   if (!room.snap)
     return (
-      <main className="lobby room-flow">
+      <main className="lobby room-flow dbd-lobby">
         <p className="muted">正在连接房间 {code} …</p>
       </main>
     );
@@ -710,7 +710,7 @@ function RoomView({ code }: { code: string }) {
   if (l.stage === "draft") return <DraftRoom room={room} code={code} />;
   if (!room.snap.view || !room.snap.mySeat)
     return (
-      <main className="lobby room-flow">
+      <main className="lobby room-flow dbd-lobby">
         <p className="muted">正在进入对局…</p>
       </main>
     );
