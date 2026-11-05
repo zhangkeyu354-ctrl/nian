@@ -164,3 +164,7 @@
 .ta-entry input,.ta-row input{border-radius:12px;border:0;background:#0009;box-shadow:inset 0 0 0 1.5px #ffd97688}
 @media (max-height:640px){.ta-game .ta-seats li{min-height:60px;padding-top:22px}.ta-world nav.ta-hand{min-height:112px}.ta-world nav.ta-hand .ta-card{font-size:calc(72px/34);flex-basis:72px;width:72px;margin-left:-12px;height:auto}.ta-world .ta-id{bottom:120px}}
 .ta-world nav.ta-hand .ta-card:first-child:nth-last-child(4)~.ta-card{margin-left:-46px}.ta-world nav.ta-hand .ta-card:first-child:nth-last-child(n+5)~.ta-card{margin-left:-62px}
+.ta-panel .ta-hand.inline{flex-wrap:nowrap;overflow-x:auto;padding-bottom:6px}.ta-panel .ta-card .ta-gc .t{display:none}.ta-panel .ta-card .ta-gc{height:40em}
+.ta-game .ta-seats .turn .ta-av{opacity:1}.ta-main>*{animation:ta-up .28s both}@keyframes ta-up{from{opacity:0;transform:translateY(10px)}}
+.ta-banner b{background:none;text-shadow:0 3px 0 #000,0 0 24px currentColor}
+@media (prefers-reduced-motion:reduce){.ta-main>*{animation:none}}
