@@ -3,6 +3,7 @@ import { createTARoom, savedName, useTARoom } from "./ta-net.ts";
 import { ABILITIES, AGENDA_TEXT, CARD_TEXT, CHAR_NAME, QUESTION, WOUND_TEXT, type Step } from "./text.ts";
 import { CHARACTERS, ENERGY_GOAL, ENERGY_SAFE, OXYGEN_MAX } from "../../../../packages/menace/src/data.ts";
 import "./ta.css";
+import { music, sfx, setMute, muted } from "./sound.ts";
 const img = (n: string) => `/assets/menace/${n}.webp`;
 const PHASE: Record<string, string> = { setup: "选择角色", action: "行动阶段", resolve: "匿名结算", accuse: "讨论与指控", vote: "放逐投票", over: "对局结束" };
 export function Menace() {
@@ -37,6 +38,11 @@ function Game({ snap, send, msg, clear, restart, host, online }: { snap: any; se
   const me = v.players[v.you]; const myTurn = v.waiting.includes(v.you); const q = v.question;
   useEffect(() => { setFlow(null); setPick([]); }, [v.phase, v.round, q?.q]);
   useEffect(() => { if (msg) { const t = setTimeout(clear, 3000); return () => clearTimeout(t); } }, [msg]);
+  useEffect(() => { music(v.phase === "over" ? null : v.oxygen <= 6 ? "urgent" : v.phase === "vote" ? "pulse" : "transmission"); if (v.phase === "over") sfx(v.winner === "crew" ? "victory" : "sabotage"); }, [v.phase, v.oxygen <= 6]);
+  const lastT = v.revealed[v.revealed.length - 1]; const count = v.revealed.length;
+  useEffect(() => { if (count) sfx(["airlock", "explosion", "panic", "reactor", "backstab", "brawl"].includes(lastT) ? "sabotage" : lastT?.includes("repair") ? "repair" : "reveal"); }, [count]);
+  useEffect(() => { if (myTurn) sfx("commit"); }, [myTurn]);
+  const [mute, setM] = useState(muted());
   const acting = v.phase === "action" && myTurn && !q;
   const abilities: string[] = me.character ? CHARACTERS[me.character].ab : [];
   const step = flow?.steps[Object.keys(flow.args).filter((k) => k !== "_").length];
@@ -68,7 +74,7 @@ function Game({ snap, send, msg, clear, restart, host, online }: { snap: any; se
       {step.kind === "used" ? <div className="ta-grid">{v.roundAbilities.filter((x: string) => x !== "mimic").map((x: string) => <button key={x} onClick={() => put(step.key, x)}>{ABILITIES[x].name}</button>)}</div> : null}
       <button onClick={() => setFlow(null)}>取消</button></section>; }
   return <div className="ta-world ta-game">
-    <header className="ta-hud"><div className="ta-top"><b>{PHASE[v.phase]}{v.round ? ` · 第 ${v.round} 回合` : ""}</b><span className={online ? "" : "off"}>{online ? hint : "连接中断，正在重连…"}</span></div>
+    <header className="ta-hud"><div className="ta-top"><b>{PHASE[v.phase]}{v.round ? ` · 第 ${v.round} 回合` : ""}</b><button className="ta-mute" onClick={() => { setMute(!mute); setM(!mute); }}>{mute ? "开声音" : "静音"}</button><span className={online ? "" : "off"}>{online ? hint : "连接中断，正在重连…"}</span></div>
       <Bar label="氧气" v={v.oxygen} max={OXYGEN_MAX} cls="o" /><Bar label="能量" v={v.energy} max={ENERGY_GOAL} mark={ENERGY_SAFE} cls="e" /></header>
     <ul className="ta-seats">{v.players.map((p: any) => <li key={p.seat} className={[v.waiting.includes(p.seat) ? "turn" : "", p.killed ? "dead" : "", p.exiled ? "exiled" : "", p.seat === v.you ? "me" : ""].join(" ")} onClick={() => p.character && setZoom({ src: img("c_" + p.character), text: CHAR_NAME[p.character] })}>
       <b>{name(p.seat)}{p.seat === v.leader ? " ★" : ""}</b><small>{p.character ? CHAR_NAME[p.character] : "选择中"}</small><small>手{p.hand} 库{p.deck}{p.played ? ` · 已出${p.played}` : ""}{p.wounds.length ? ` · 伤${p.wounds.length}` : ""}</small>{p.agenda && p.seat !== v.you ? <small className="rev">{AGENDA_TEXT[p.agenda][0]}</small> : null}{p.wounds.map((w: string, i: number) => <em key={i} onClick={(e) => { e.stopPropagation(); setZoom({ src: img("w_" + w), text: WOUND_TEXT[w] }); }}>{WOUND_TEXT[w].split("：")[0]}</em>)}</li>)}</ul>
@@ -77,6 +83,7 @@ function Game({ snap, send, msg, clear, restart, host, online }: { snap: any; se
       {v.phase === "setup" ? <section className="ta-panel"><h3>你的身份：<a onClick={() => setZoom({ src: img(v.agenda), text: AGENDA_TEXT[v.agenda].join("\n") })}>{AGENDA_TEXT[v.agenda][0]}</a></h3>{v.choices.length ? <div className="ta-chars">{v.choices.map((c: string) => <figure key={c}><img src={img("c_" + c)} alt={CHAR_NAME[c]} onClick={() => setZoom({ src: img("c_" + c), text: CHAR_NAME[c] })} /><button className="ta-primary" onClick={() => send({ t: "choose", name: c })}>选 {CHAR_NAME[c]}</button></figure>)}</div> : <p>等待其他玩家选角色…</p>}</section> : null}
       {question()}{flowPanel()}
       {v.phase === "resolve" || v.revealed.length ? <section className="ta-panel"><h3>已揭示 · 还剩 {v.remaining} 张</h3><div className="ta-hand inline">{v.revealed.map((t: string, i: number) => <button key={i} className="ta-card flip" onClick={() => setZoom({ src: img(t), text: CARD_TEXT[t].join("：") })}><img src={img(t)} alt={CARD_TEXT[t][0]} /></button>)}</div></section> : null}
+      {v.phase === "resolve" && !q && v.leader === v.you ? <button className="ta-primary" onClick={() => send({ t: "reveal" })}>揭示下一张（还剩 {v.remaining}）</button> : null}
       {acting && !flow ? <section className="ta-panel"><h3>选择一项行动</h3><div className="ta-grid"><button onClick={() => send({ t: "draw" })}>抽一张牌</button><button onClick={() => send({ t: "pass" })}>无可行动时跳过</button></div>
         {me.exiled ? null : <div className="ta-abs">{abilities.map((a) => { const m = ABILITIES[a]; const used = me.used.includes(a); return <button key={a} disabled={used} onClick={() => m.steps.length ? setFlow({ ab: a, steps: m.steps, args: {} }) : send({ t: "ability", ab: a, args: {} })}><b>{m.name}{m.cost ? ` · ${m.cost}` : ""}</b><small>{m.text}</small></button>; })}</div>}</section> : null}
       {v.phase === "accuse" && !q ? <section className="ta-panel"><h3>语音讨论</h3><p>可以开枪发起放逐投票，发起后不能撤回。</p><div className="ta-grid">{!me.killed && !me.exiled ? <button className="ta-danger" onClick={() => send({ t: "call_vote" })}>拿起手枪</button> : null}{v.leader === v.you ? <button className="ta-primary" onClick={() => send({ t: "end_accuse" })}>结束本回合</button> : null}</div></section> : null}

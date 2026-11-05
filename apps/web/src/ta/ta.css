@@ -14,3 +14,4 @@
 .ta-world .ta-id{position:fixed;right:10px;bottom:128px;min-height:44px;z-index:3;background:#33413f}
 .ta-zoom{position:fixed;inset:0;z-index:9;background:#000c;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px;padding:16px;white-space:pre-line;text-align:center}.ta-zoom img{max-width:100%;max-height:62dvh;border-radius:8px}
 @media (prefers-reduced-motion:reduce){.ta-card.flip{animation:none}.ta-bar b{transition:none}}
+.ta-world .ta-mute{min-height:32px;padding:2px 8px;font-size:12px;margin-left:auto}.ta-top{align-items:center}.ta-panel .ta-card.flip:last-child{flex-basis:130px}

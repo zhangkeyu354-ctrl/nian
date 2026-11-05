@@ -7,7 +7,7 @@ type Task={k:"ask";seat:number;q:string;data?:any}|{k:"wound";seat:number;st:num
 export interface State{n:number;mode:"basic"|"advanced";rng:number;nextId:number;phase:"setup"|"action"|"resolve"|"accuse"|"vote"|"over";round:number;leader:number;oxygen:number;energy:number;resStart:number;players:Player[];emma:Card[];emmaUsed:Card[];woundDeck:WoundType[];discard:Card[];played:Played[];queue:Played[];revealed:Played[];stack:Task[];turn:number;sub:number[];lastType:string|null;playedSeats:number[];armed:boolean;
  flags:{veto?:number;deflect?:number;helping?:number;moxie?:number;damage?:number;rewind?:number;restructure?:number;guard?:number;lockdown?:boolean;brawl?:boolean;backstab?:boolean;bad?:boolean;woundedRound?:boolean;};
  roundAbilities:Ability[];stage:string;votes:Record<number,number|null>;log:string[];notes:string[][];winner:"crew"|"menace"|null;winners:number[];}
-export type Command={seat:number}&({t:"choose";name:string}|{t:"draw"}|{t:"play";card:number}|{t:"ability";ab:Ability;args?:any}|{t:"pass"}|{t:"answer";value:any}|{t:"call_vote"}|{t:"end_accuse"}|{t:"vote";target:number|null});
+export type Command={seat:number}&({t:"choose";name:string}|{t:"draw"}|{t:"play";card:number}|{t:"ability";ab:Ability;args?:any}|{t:"pass"}|{t:"answer";value:any}|{t:"reveal"}|{t:"call_vote"}|{t:"end_accuse"}|{t:"vote";target:number|null});
 const fail=(c:string):never=>{throw new Error(c)};
 const rnd=(s:State)=>{s.rng=(s.rng+0x6D2B79F5)|0;let t=Math.imul(s.rng^(s.rng>>>15),1|s.rng);t=(t+Math.imul(t^(t>>>7),61|t))^t;return((t^(t>>>14))>>>0)/4294967296};
 function shuffle<T>(s:State,a:T[]){for(let i=a.length-1;i>0;i--){const j=Math.floor(rnd(s)*(i+1));[a[i],a[j]]=[a[j],a[i]]}return a}
@@ -154,7 +154,7 @@ function run(s:State){for(let g=0;g<5000;g++){
   const p=s.players[(s.leader+s.turn)%s.n];if(p.killed){s.turn++;continue}
   if(!p.hand.length&&!p.deck.length){p.wounds.length;s.stack.push({k:"death",seat:p.seat});s.turn++;continue}
   return}
- if(s.phase==="resolve"){if(s.queue.length){reveal(s);continue}finishResolve(s);continue}
+ if(s.phase==="resolve"){if(s.queue.length)return;finishResolve(s);continue}
  if(s.phase==="accuse"&&s.stage==="end"){endRound(s);continue}
  if(s.stage==="end"){endRound(s);continue}
  return}
@@ -195,6 +195,7 @@ export function reduce(prev:State,c:Command):State{const s=structuredClone(prev)
    endAction(s,"ability");s.stack.push({k:"ability",seat:c.seat,ab:c.ab,args:a,free:false});
    const h=s.flags.helping;const cost=COST[c.ab];if(h!==undefined&&h!==c.seat&&(cost.o||cost.e))ask(s,h,"assist",{ab:c.ab})}
   run(s);return s}
+ if(c.t==="reveal"){if(s.phase!=="resolve"||c.seat!==s.leader||!s.queue.length)fail("BAD");reveal(s);run(s);return s}
  if(c.t==="call_vote"){if(s.phase!=="accuse"||p.killed||p.exiled)fail("BAD");s.phase="vote";s.votes={};return s}
  if(c.t==="end_accuse"){if(s.phase!=="accuse"||c.seat!==s.leader)fail("BAD");s.stage="end";run(s);return s}
  if(c.t==="vote"){if(s.phase!=="vote"||p.killed||p.exiled||s.votes[c.seat]!==undefined)fail("BAD");if(c.target!==null){const o=s.players[c.target];if(!o||o.killed||o.exiled||o===p)fail("BAD_TARGET")}s.votes[c.seat]=c.target;
@@ -203,7 +204,7 @@ export function reduce(prev:State,c:Command):State{const s=structuredClone(prev)
   run(s);return s}
  return fail("BAD_COMMAND")}
 /** 当前必须操作的座位（用于界面提示与模拟） */
-export function waitingFor(s:State):number[]{if(s.phase==="over")return[];const t=s.stack[s.stack.length-1];if(t&&t.k==="ask")return[t.seat];if(s.phase==="setup")return s.players.filter(p=>p.choices.length&&!p.character).map(p=>p.seat);const a=actor(s);if(a!==null)return[a];if(s.phase==="accuse")return s.players.filter(p=>p.seat===s.leader).map(p=>p.seat);if(s.phase==="vote")return s.players.filter(p=>!p.killed&&!p.exiled&&s.votes[p.seat]===undefined).map(p=>p.seat);return[]}
+export function waitingFor(s:State):number[]{if(s.phase==="over")return[];const t=s.stack[s.stack.length-1];if(t&&t.k==="ask")return[t.seat];if(s.phase==="setup")return s.players.filter(p=>p.choices.length&&!p.character).map(p=>p.seat);if(s.phase==="resolve")return[s.leader];const a=actor(s);if(a!==null)return[a];if(s.phase==="accuse")return s.players.filter(p=>p.seat===s.leader).map(p=>p.seat);if(s.phase==="vote")return s.players.filter(p=>!p.killed&&!p.exiled&&s.votes[p.seat]===undefined).map(p=>p.seat);return[]}
 export function viewFor(s:State,seat:number){const over=s.phase==="over";const t=s.stack[s.stack.length-1];
  return{phase:s.phase,mode:s.mode,round:s.round,leader:s.leader,oxygen:s.oxygen,energy:s.energy,armed:undefined,you:seat,hand:s.players[seat]?.hand,aside:s.players[seat]?.aside,choices:s.players[seat]?.choices,agenda:s.players[seat]?.agenda,notes:s.notes[seat],deckCount:s.players[seat]?.deck.length,
  players:s.players.map(p=>({seat:p.seat,character:p.character,wounds:p.wounds,exiled:p.exiled,killed:p.killed,hand:p.hand.length,deck:p.deck.length,used:p.used,played:s.played.filter(x=>x.seat===p.seat).length,agenda:over||p.revealed||p.seat===seat?p.agenda:null})),
