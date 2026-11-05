@@ -99,3 +99,4 @@
 .ta-fly{top:auto;bottom:178px;right:auto;left:14px}.ta-banner{align-items:center;padding-top:0}
 .ta-world .ta-mute{min-width:44px;padding:2px 6px}
 @media (max-height:640px){.ta-seats li{flex-basis:110px;min-height:52px}.ta-seats em{display:none}.ta-world nav.ta-hand .ta-card{font-size:calc(66px/34);flex-basis:66px;width:66px;height:95px}.ta-world nav.ta-hand{max-height:112px}.ta-world .ta-id{bottom:118px}.ta-fly{bottom:120px}}
+.ta-help{max-height:76dvh;overflow-y:auto;font-size:14px}.ta-help section+section{margin-top:10px}.ta-rules summary{min-height:44px;display:flex;align-items:center;color:#ffc95a;font-weight:700;cursor:pointer}.ta-rules .ta-help{max-height:50dvh}

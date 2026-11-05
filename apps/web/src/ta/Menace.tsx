@@ -1,6 +1,6 @@
 import { useEffect, useMemo, useRef, useState } from "react";
 import { createTARoom, savedName, useTARoom } from "./ta-net.ts";
-import { ABILITIES, AGENDA_TEXT, CARD_TEXT, CHAR_NAME, QUESTION, WOUND_TEXT, zh, type Step } from "./text.ts";
+import { ABILITIES, AGENDA_TEXT, CARD_TEXT, CHAR_NAME, QUESTION, WOUND_TEXT, RULES, zh, type Step } from "./text.ts";
 import { CHARACTERS, ENERGY_GOAL, ENERGY_SAFE, OXYGEN_MAX } from "../../../../packages/menace/src/data.ts";
 import "./ta.css";
 import { music, sfx, setMute, muted } from "./sound.ts";
@@ -11,10 +11,11 @@ export function Menace() {
   if (!code) return <Entry />;
   return <Room code={code} />;
 }
+function Rules() { return <div className="ta-help" onClick={(e) => e.stopPropagation()}>{RULES.map(([h, ps]) => <section key={h}><h3>{h}</h3>{ps.map((t) => <p key={t}>{t}</p>)}</section>)}</div>; }
 function Entry() {
   const [code, setCode] = useState(""); const [err, setErr] = useState("");
   const go = (c: string) => { const u = new URL(location.href); u.searchParams.set("room", c); location.href = u.toString(); };
-  return <div className="ta-world ta-entry"><h1>我们之中的威胁</h1><p>ISV-VIGILANT 失去动力，氧气正在流失。修好飞船，或者让所有人窒息。</p>
+  return <div className="ta-world ta-entry"><h1>我们之中的威胁</h1><details className="ta-rules"><summary>查看游戏规则</summary><Rules /></details><p>ISV-VIGILANT 失去动力，氧气正在流失。修好飞船，或者让所有人窒息。</p>
     <button className="ta-primary" onClick={async () => { const r = await createTARoom(); r.ok ? go((r as any).code) : setErr(r.error); }}>创建房间</button>
     <div className="ta-row"><input value={code} maxLength={4} placeholder="房间号" onChange={(e) => setCode(e.target.value.toUpperCase())} /><button onClick={() => code && go(code)}>加入</button></div><p className="ta-err">{err}</p></div>;
 }
@@ -25,7 +26,7 @@ function Room({ code }: { code: string }) {
   if (!s) return <div className="ta-world ta-entry"><p>正在连接…</p></div>;
   if (!s.mySeat) return <div className="ta-world ta-entry"><h2>房间 {code}</h2>{s.stage === "game" ? <p>游戏已开始。</p> : <><input value={name} placeholder="昵称" maxLength={12} onChange={(e) => setName(e.target.value)} /><button className="ta-primary" onClick={async () => setMsg((await r.claim(name)) ?? "")}>登舰</button></>}<p className="ta-err">{msg}</p></div>;
   const host = s.hostId === s.mySeat;
-  if (s.stage === "lobby") return <div className="ta-world ta-entry"><h2>房间 {code}</h2><p>把房间号发给朋友，需要 4–8 人。</p><ul className="ta-list">{s.players.map((p: any) => <li key={p.playerId}>{p.name}{p.host ? "（房主）" : ""}{p.connected ? "" : " · 离线"}</li>)}</ul>
+  if (s.stage === "lobby") return <div className="ta-world ta-entry"><h2>房间 {code}</h2><p>把房间号发给朋友，需要 4–8 人。</p><details className="ta-rules"><summary>查看游戏规则</summary><Rules /></details><ul className="ta-list">{s.players.map((p: any) => <li key={p.playerId}>{p.name}{p.host ? "（房主）" : ""}{p.connected ? "" : " · 离线"}</li>)}</ul>
     {host ? <><div className="ta-row"><button className={s.mode === "basic" ? "on" : ""} onClick={() => r.lobby({ type: "SET_MODE", mode: "basic" })}>基础模式</button><button className={s.mode === "advanced" ? "on" : ""} onClick={() => r.lobby({ type: "SET_MODE", mode: "advanced" })}>进阶模式</button></div><button className="ta-primary" onClick={async () => setMsg((await r.lobby({ type: "START" })) ?? "")}>开始（{s.players.length} 人）</button></> : <p>{s.mode === "basic" ? "基础模式" : "进阶模式"}，等待房主开始。</p>}<p className="ta-err">{msg}</p></div>;
   return <Game snap={s} send={async (c) => setMsg((await r.command(c)) ?? "")} msg={msg} clear={() => setMsg("")} restart={() => r.lobby({ type: "START" })} host={host} online={r.connected} />;
 }
@@ -118,7 +119,7 @@ function Game({ snap, send, msg, clear, restart, host, online }: { snap: any; se
     {gun ? <div className="ta-gun"><svg viewBox="0 0 200 120"><path d="M8 28h150l14 12v16H92l-10 12-8 44H34l10-52H8z" fill="#2c332c" stroke="#000" strokeWidth="5"/><path d="M8 28h150v10H8z" fill="#6f8350"/><rect x="150" y="44" width="46" height="9" fill="#e0a92a" stroke="#000" strokeWidth="3"/></svg></div> : null}
     {hurt ? <div key={hurt} className="ta-hurt" /> : null}
     <div className="ta-fly">{fly.map((x) => <b key={x.id} style={{ color: x.c }}>{x.t}</b>)}</div>
-    {help ? <div className="ta-zoom" onClick={() => setHelp(false)}><div className="ta-help"><h3>怎么玩</h3><p>每轮从任务领袖开始，依次三选一：抽牌、暗置一张行动牌、使用角色能力（台面上行动）。</p><p>全员行动后，暗置牌洗混匿名翻开。出牌不足半数人时，系统补牌。</p><p>翻完后可以讨论，任何人可发起放逐投票。</p><p><b>船员：</b>能量到 100%，或消灭全部内鬼且能量过红线。</p><p><b>内鬼：</b>氧气归零，或船员全灭。</p><p>两处伤害在回合结束时死亡。</p></div></div> : null}
+    {help ? <div className="ta-zoom" onClick={() => setHelp(false)}><Rules /></div> : null}
     {door ? <div className="ta-door"><i /><i /><b>舱门关闭</b></div> : null}
     {banner ? <div key={banner} className={"ta-banner b-" + v.phase}><b>{banner}</b></div> : null}
     {zoom ? <div className="ta-zoom" onClick={() => setZoom(null)}>{zoom.node ? <div className="ta-big">{zoom.node}</div> : CARD_TEXT[zoom.src.split("/").pop()!.replace(".webp", "")] ? <div className="ta-big"><GameCard type={zoom.src.split("/").pop()!.replace(".webp", "")} /></div> : <img src={zoom.src} alt="" />}{zoom.node ? null : <p>{zoom.text}</p>}{zoom.play !== undefined ? <button className="ta-primary" onClick={() => send({ t: "play", card: zoom.play })}>暗置打出</button> : null}</div> : null}
