@@ -38,6 +38,7 @@ import { EventJournal } from "./EventJournal.tsx";
 import { MobileDock, MobileParameters, usePhone } from "./MobileDock.tsx";
 import { VerdictBanner, verdictsFrom, type VerdictInfo } from "./Verdict.tsx";
 import { RoomSheet } from "./RoomSheet.tsx";
+import { SceneFx } from "./SceneFx.tsx";
 import { ActionCallouts } from "./BoardFx.tsx";
 import { usePhoneExperience } from "./phone-experience.ts";
 import { skillRouteActions } from "./ui-actions.ts";
@@ -711,7 +712,7 @@ export function App({ net }: { net?: NetBinding } = {}) {
           <a href="/?view=props">道具状态一览</a>
           <SettingsButton />
         </div>
-        <main className="lobby">
+        <main className="lobby dbd-lobby">
           <div className="lobby-brand">
             <div className="tally" aria-hidden="true">
               <Token
@@ -854,6 +855,7 @@ export function App({ net }: { net?: NetBinding } = {}) {
       data-pending={pending || undefined}
       data-rejected={!!error || undefined}
     >
+      <SceneFx state={state} />
       {phone && !masked && (
         <MobileDock
           state={state}
