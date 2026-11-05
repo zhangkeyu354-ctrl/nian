@@ -1,6 +1,6 @@
 import { chromium } from "playwright";
 import { readFileSync } from "node:fs";
-import { startUI, drainUI } from "./hotseat-driver.ts";
+import { startUI, drainUI } from "../hotseat-driver.ts";
 const SP = "/tmp/claude-0/-home-claude/0a870597-12c0-57a6-95e3-7ad188679444/scratchpad/";
 const r = JSON.parse(readFileSync(`docs/phase1/games/4111.replay.json`, "utf8"));
 const b = await chromium.launch(); const p = await b.newPage({ viewport: { width: Number(process.env.W ?? 1100), height: Number(process.env.H ?? 900) }, deviceScaleFactor: 2 });
