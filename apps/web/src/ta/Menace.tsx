@@ -12,7 +12,8 @@ export function Menace() {
   if (!code) return <Entry />;
   return <Room code={code} />;
 }
-function Rules() { return <div className="ta-help" onClick={(e) => e.stopPropagation()}>{RULES.map(([h, ps]) => <section key={h}><h3>{h}</h3>{ps.map((t) => <p key={t}>{t}</p>)}</section>)}</div>; }
+const TABS: [string, string[]][] = [["玩法", ["游戏目标", "胜利条件", "开局", "每轮流程", "重要限制", "操作提示"]], ["名词", ["卡牌和名词"]], ["受伤投票", ["受伤是什么", "死亡", "投票与放逐", "伤害牌一览"]], ["卡牌", ["行动牌一览"]], ["身份", ["身份牌一览"]], ["角色", ["角色能力一览"]]];
+function Rules() { const [t, setT] = useState(0); return <div className="ta-help" onClick={(e) => e.stopPropagation()}><div className="ta-tabs">{TABS.map(([n], i) => <button key={n} type="button" className={i === t ? "on" : ""} onClick={() => setT(i)}>{n}</button>)}</div><div className="ta-tabbody">{RULES.filter(([h]) => TABS[t][1].includes(h)).map(([h, ps]) => <section key={h}><h3>{h}</h3>{ps.map((x) => <p key={x}>{x}</p>)}</section>)}</div></div>; }
 function Entry() {
   const [code, setCode] = useState(""); const [err, setErr] = useState("");
   const go = (c: string) => { const u = new URL(location.href); u.searchParams.set("room", c); location.href = u.toString(); };
