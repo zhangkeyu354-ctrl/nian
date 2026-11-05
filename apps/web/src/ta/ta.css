@@ -17,3 +17,5 @@
 .ta-world .ta-mute{min-height:32px;padding:2px 8px;font-size:12px;margin-left:auto}.ta-top{align-items:center}.ta-panel .ta-card.flip:last-child{flex-basis:130px}
 @font-face{font-family:TATitle;src:url(/assets/menace/title.woff2) format("woff2");font-display:swap}
 .ta-world h1,.ta-world h2,.ta-panel h3,.ta-top b{font-family:TATitle,sans-serif;letter-spacing:.04em}
+.ta-game{background:#0d1416 url(/assets/menace/bg_action.webp) center/cover no-repeat}
+.ta-game .ta-hud{background:#141d1fd9}.ta-game .ta-panel{background:#1c2628e6}.ta-game .ta-seats li{background:#1c2628e0}.ta-game .ta-hand:not(.inline){background:#111a1be6}
