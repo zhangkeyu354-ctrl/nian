@@ -13,11 +13,12 @@ import { MotionIcon } from "./MotionIcon.tsx";
 import { useSettings } from "./Settings.tsx";
 import { Token } from "./Token.tsx";
 import { TapButton, suppressCompatibilityClick } from "./TapButton.tsx";
-import layoutData from "./layout.json" with { type: "json" };
+import { BOARD_LAYOUT } from "./boardLayout.ts";
+import { FloorUnder, FloorDoors } from "./BoardFloor.tsx";
 import { BoardMotion } from "./BoardMotion.tsx";
 import { BoardFx } from "./BoardFx.tsx";
 import { threatFor } from "./experience-model.ts";
-import { actorColor, ROOM_ACCENTS } from "./playerColors.ts";
+import { actorColor } from "./playerColors.ts";
 // 路线颜色：提高饱和度与亮度，并在下面垫一条深色描边，保证在棋盘上清楚可辨（2026-10-21）
 const colors: Record<string, string> = {
   blue: "#33a8ff",
@@ -55,16 +56,7 @@ export function Board({
     (state.window ? state.window.actors[state.window.index] : null) ??
     state.turn?.actorId ??
     null;
-  const layout = (
-    layoutData as Record<
-      string,
-      {
-        rooms: Record<string, number[]>;
-        paths: Record<string, string[]>;
-        markers: Record<string, number[]>;
-      }
-    >
-  )[map.id];
+  const layout = BOARD_LAYOUT[map.id];
   const height = map.id === "macmillan_estate" ? 1520 : 1320;
   const settings = useSettings();
   const [expanded, setExpanded] = useState(false);
@@ -459,156 +451,9 @@ export function Board({
             height={view.h}
             fill="url(#board-floor)"
           />
-          {Object.values(state.paths).map((p) => {
-            const segments = (layout.paths[p.id] ?? []).map((segment) =>
-              segment
-                .split(" ")
-                .map((point) => {
-                  const [x, y] = point.split(",").map(Number);
-                  return `${x},${y * yScale}`;
-                })
-                .join(" "),
-            );
-            const lit = highlight.some((r) => r.pathId === p.id);
-            const pts =
-              segments[0]?.split(" ").map((v) => v.split(",").map(Number)) ??
-              [];
-            const marker = layout.markers[p.id];
-            const candidate = marker
-              ? [marker[0], marker[1] * yScale]
-              : (pts[1] ?? [0, 0]);
-            let m = candidate,
-              best = Infinity;
-            const safe = (q: number[]) =>
-              map.nodes.every((n) => {
-                const [x, y] = layout.rooms[n.id];
-                return (
-                  Math.abs(q[0] - x) > 157 ||
-                  q[1] < y * yScale - 109 ||
-                  q[1] > y * yScale + 145
-                );
-              });
-            for (const seg of segments) {
-              const ps = seg.split(" ").map((v) => v.split(",").map(Number));
-              for (let j = 1; j < ps.length; j++) {
-                const a = ps[j - 1],
-                  b = ps[j],
-                  length = Math.hypot(b[0] - a[0], b[1] - a[1]);
-                for (let k = 0; k <= Math.ceil(length / 4); k++) {
-                  const f = k / Math.ceil(length / 4),
-                    q = [a[0] + (b[0] - a[0]) * f, a[1] + (b[1] - a[1]) * f];
-                  const d = Math.hypot(
-                    q[0] - candidate[0],
-                    q[1] - candidate[1],
-                  );
-                  if (safe(q) && d < best) {
-                    m = q;
-                    best = d;
-                  }
-                }
-              }
-            }
-            if (segments.length === 3) {
-              const p = segments[0].split(" ").at(-1)!;
-              m = p.split(",").map(Number);
-            }
-            return (
-              <g
-                key={p.id}
-                data-path={p.id}
-                data-highlighted={lit ? "true" : "false"}
-              >
-                {segments.map((points, i) => (
-                  <React.Fragment key={i}>
-                    {lit && (
-                      <polyline
-                        points={points}
-                        className="route-glow"
-                        stroke={colors[p.color]}
-                      />
-                    )}
-                    <polyline
-                      points={points}
-                      fill="none"
-                      stroke="#05090a"
-                      strokeWidth={lit ? 14 : 11}
-                      opacity={0.85}
-                      strokeLinejoin="round"
-                    />
-                    <polyline
-                      points={points}
-                      fill="none"
-                      stroke={colors[p.color]}
-                      strokeWidth={lit ? 9 : 6.5}
-                      opacity={lit ? 1 : 0.92}
-                      strokeLinejoin="round"
-                      markerEnd={
-                        p.direction !== "both"
-                          ? "url(#arrow-" + p.color + ")"
-                          : undefined
-                      }
-                    />
-                  </React.Fragment>
-                ))}
-                <g
-                  transform={`translate(${m[0]} ${m[1]})`}
-                  className={"route-badge" + (lit ? " is-lit" : "")}
-                  data-route-icon={p.id}
-                  aria-label={cardNames[p.color] + "路线"}
-                >
-                  <rect
-                    x="-22"
-                    y="-22"
-                    width="44"
-                    height="44"
-                    rx="22"
-                    fill="#0d1416"
-                    stroke={colors[p.color]}
-                    strokeWidth="5"
-                  />
-                  {map.edges.find((e) => e.id === p.id)?.jagged && (
-                    <path
-                      d="M-30-30l8-5 8 5 8-5 8 5 8-5 8 5 8-5 8 5v60l-8 5-8-5-8 5-8-5-8 5-8-5-8 5-8-5z"
-                      fill="none"
-                      stroke={colors[p.color]}
-                      strokeWidth="3"
-                    />
-                  )}
-                  <g transform="translate(-16 -16)" color="#f4efdb">
-                    <MotionIcon card={p.color} size={32} />
-                  </g>
-                </g>
-                {visuals.paths
-                  .filter((v) => v.id === p.id)
-                  .map((v, i) => (
-                    <g
-                      key={v.kind}
-                      transform={`translate(${m[0] + 28 + i * 38} ${m[1] - 23})`}
-                      data-testid={v.kind === "wall" ? "wall" : undefined}
-                    >
-                      <Token token={v} size={44} />
-                    </g>
-                  ))}
-                {state.entity?.id === p.id && (
-                  <g transform={`translate(${m[0] - 20} ${m[1] - 65})`}>
-                    <Token
-                      token={{
-                        id: p.id,
-                        kind: "entity",
-                        state: "active",
-                        label: "恶灵封锁",
-                        asset: "entity",
-                        location: "path",
-                      }}
-                      size={40}
-                    />
-                  </g>
-                )}
-              </g>
-            );
-          })}
-          {map.nodes.map((n, roomIndex) => {
-            const accent = ROOM_ACCENTS[roomIndex % ROOM_ACCENTS.length];
+          <FloorUnder layout={layout} colors={colors} edges={map.edges} />
+          {map.nodes.map((n) => {
+            const accent = "#6b5a3e"; // 改版：房间不再各自带颜色，只有路带颜色
             const [x, sourceY] = layout.rooms[n.id];
             const y = sourceY * yScale;
             const occupants = visuals.actors.filter((a) => a.room === n.id);
@@ -639,7 +484,7 @@ export function Board({
               <g
                 key={n.id}
                 data-room-container={n.id}
-                transform={`translate(${x} ${y})`}
+                transform={`translate(${x} ${y}) scale(${layout.scale[n.id] ?? 1})`}
               >
                 <g
                   role="button"
@@ -669,7 +514,7 @@ export function Board({
                   {/* 2.5D：房间像一块有厚度的板块——下方投影 + 底边厚度（2026-10-21） */}
                   <g pointerEvents="none" className="room-extrude">
                     <rect x="-112" y="-50" width="268" height="222" rx="14" fill="#000" opacity=".5" />
-                    <rect x="-130" y="80" width="260" height="70" rx="6" fill={accent} />
+                    <rect x="-130" y="80" width="260" height="70" rx="6" fill="#3a3026" />
                     <rect x="-130" y="80" width="260" height="70" rx="6" fill="url(#wall-shade)" />
                   </g>
                   <rect
@@ -737,8 +582,8 @@ export function Board({
                       y="-79"
                       width="254"
                       height="33"
-                      fill={accent}
-                      opacity=".9"
+                      fill="#1c1813"
+                      opacity=".88"
                     />
                     <text
                       x="0"
@@ -960,6 +805,127 @@ export function Board({
                       <Token token={v} size={30} />
                     </g>
                   ))}
+              </g>
+            );
+          })}
+          <FloorDoors layout={layout} colors={colors} edges={map.edges} lit={highlight.map((h) => h.pathId)} />
+          {Object.values(state.paths).map((p) => {
+            const segments = (layout.paths[p.id] ?? []).map((segment) =>
+              segment
+                .split(" ")
+                .map((point) => {
+                  const [x, y] = point.split(",").map(Number);
+                  return `${x},${y * yScale}`;
+                })
+                .join(" "),
+            );
+            const lit = highlight.some((r) => r.pathId === p.id);
+            const pts =
+              segments[0]?.split(" ").map((v) => v.split(",").map(Number)) ??
+              [];
+            const marker = layout.markers[p.id];
+            const candidate = marker
+              ? [marker[0], marker[1] * yScale]
+              : (pts[1] ?? [0, 0]);
+            let m = candidate,
+              best = Infinity;
+            const safe = (q: number[]) =>
+              map.nodes.every((n) => {
+                const [x, y] = layout.rooms[n.id];
+                return (
+                  Math.abs(q[0] - x) > 157 ||
+                  q[1] < y * yScale - 109 ||
+                  q[1] > y * yScale + 145
+                );
+              });
+            for (const seg of marker ? [] : segments) {
+              const ps = seg.split(" ").map((v) => v.split(",").map(Number));
+              for (let j = 1; j < ps.length; j++) {
+                const a = ps[j - 1],
+                  b = ps[j],
+                  length = Math.hypot(b[0] - a[0], b[1] - a[1]);
+                for (let k = 0; k <= Math.ceil(length / 4); k++) {
+                  const f = k / Math.ceil(length / 4),
+                    q = [a[0] + (b[0] - a[0]) * f, a[1] + (b[1] - a[1]) * f];
+                  const d = Math.hypot(
+                    q[0] - candidate[0],
+                    q[1] - candidate[1],
+                  );
+                  if (safe(q) && d < best) {
+                    m = q;
+                    best = d;
+                  }
+                }
+              }
+            }
+            if (!marker && segments.length === 3) {
+              const p = segments[0].split(" ").at(-1)!;
+              m = p.split(",").map(Number);
+            }
+            return (
+              <g
+                key={p.id}
+                data-path={p.id}
+                data-highlighted={lit ? "true" : "false"}
+              >
+                {lit &&
+                  segments.map((points, i) => (
+                    <polyline key={i} points={points} className="route-glow" stroke={colors[p.color]} />
+                  ))}
+                <g
+                  transform={`translate(${m[0]} ${m[1]})`}
+                  className={"route-badge" + (lit ? " is-lit" : "")}
+                  data-route-icon={p.id}
+                  aria-label={cardNames[p.color] + "路线"}
+                >
+                  <rect
+                    x="-22"
+                    y="-22"
+                    width="44"
+                    height="44"
+                    rx="22"
+                    fill="#0d1416"
+                    stroke={colors[p.color]}
+                    strokeWidth="5"
+                  />
+                  {map.edges.find((e) => e.id === p.id)?.jagged && (
+                    <path
+                      d="M-30-30l8-5 8 5 8-5 8 5 8-5 8 5 8-5 8 5v60l-8 5-8-5-8 5-8-5-8 5-8-5-8 5-8-5z"
+                      fill="none"
+                      stroke={colors[p.color]}
+                      strokeWidth="3"
+                    />
+                  )}
+                  <g transform="translate(-16 -16)" color="#f4efdb">
+                    <MotionIcon card={p.color} size={32} />
+                  </g>
+                </g>
+                {visuals.paths
+                  .filter((v) => v.id === p.id)
+                  .map((v, i) => (
+                    <g
+                      key={v.kind}
+                      transform={`translate(${m[0] + 28 + i * 38} ${m[1] - 23})`}
+                      data-testid={v.kind === "wall" ? "wall" : undefined}
+                    >
+                      <Token token={v} size={44} />
+                    </g>
+                  ))}
+                {state.entity?.id === p.id && (
+                  <g transform={`translate(${m[0] - 20} ${m[1] - 65})`}>
+                    <Token
+                      token={{
+                        id: p.id,
+                        kind: "entity",
+                        state: "active",
+                        label: "恶灵封锁",
+                        asset: "entity",
+                        location: "path",
+                      }}
+                      size={40}
+                    />
+                  </g>
+                )}
               </g>
             );
           })}

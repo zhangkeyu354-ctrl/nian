@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState } from "react";
 import type { GameState, Event } from "../../../packages/shared/src/types.ts";
 import { boardVisuals, actorName, roomName } from "../../../packages/game-engine/src/index.ts";
-import layoutData from "./layout.json" with { type: "json" };
+import { BOARD_LAYOUT as layoutData } from "./boardLayout.ts";
 import { useSettings } from "./Settings.tsx";
 import { actorColor } from "./playerColors.ts";
 import "./board-fx.css";

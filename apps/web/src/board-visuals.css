@@ -469,7 +469,7 @@
 
 /* ===== 2026-10-21 辨识度强化 ===== */
 .room-art { filter: brightness(1.35) saturate(1.25) contrast(1.06); }
-.room-label { fill: #0b1113 !important; font-weight: 800; stroke: none !important; font-size: 24px; }
+.room-label { fill: #f1e4c2 !important; paint-order: stroke; font-weight: 800; stroke: none !important; font-size: 24px; }
 .foot-halo { fill-opacity: .42; stroke-width: 3; stroke-opacity: .95; }
 .killer-halo { fill-opacity: .5; stroke-width: 5; animation: killer-pulse 1.6s ease-in-out infinite; transform-box: fill-box; transform-origin: center; }
 .current-halo { animation: current-pulse 1.1s ease-in-out infinite; transform-box: fill-box; transform-origin: center; }
@@ -501,3 +501,7 @@ svg[data-zoom="far"] .route-badge { opacity: .75; }
 [data-tilt="on"] .map-viewport { overflow: hidden; contain: paint; }
 [data-tilt="on"] .map-viewport > svg[data-full] { transform: none; }
 [data-tilt="on"] .board-overview .map-viewport > svg { transform: none; }
+/* 改版地图：可走的门发光呼吸 */
+.floor-door-lit { animation: floor-door-pulse 1.1s ease-in-out infinite; }
+@keyframes floor-door-pulse { 0%,100% { opacity: .5; } 50% { opacity: .22; } }
+[data-motion="off"] .floor-door-lit { animation: none; }

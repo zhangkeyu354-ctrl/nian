@@ -86,13 +86,13 @@ for (const seed of [1701, 2903]) {
     document.documentElement.dataset.tilt = "off";
     const out = els.map((el) => {
       const b = el.getBoundingClientRect();
+      // 改版地图：路线图标放在两个房间之间的门洞或小路上——图标中心不能落在任何房间里
+      const cx = b.x + b.width / 2, cy = b.y + b.height / 2;
       const overlaps = [
         ...document.querySelectorAll("[data-room] > rect"),
       ].some((r) => {
         const a = r.getBoundingClientRect();
-        return (
-          b.x < a.right && b.right > a.x && b.y < a.bottom && b.bottom > a.y
-        );
+        return cx > a.x + 2 && cx < a.right - 2 && cy > a.y + 2 && cy < a.bottom - 2;
       });
       return { id: el.getAttribute("data-route-icon"), overlaps };
     });
