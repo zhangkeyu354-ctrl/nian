@@ -2,7 +2,7 @@ import {chromium} from "playwright";import {spawn} from "node:child_process";
 const sv=spawn("npx",["tsx","apps/server/src/main.ts"],{env:{...process.env,PORT:"3191",TA_DATA_DIR:"/tmp/ta-v"},stdio:"ignore"});
 const wait=(ms:number)=>new Promise(r=>setTimeout(r,ms));await wait(14000);
 const b=await chromium.launch({executablePath:process.env.CH||undefined});const url="http://localhost:3191/?game=ta";const ps=[];const errs:string[]=[];
-const N=8;for(let i=0;i<N;i++){const c=await b.newContext({viewport:{width:390,height:844}});const p=await c.newPage();p.setDefaultTimeout(9000);p.on("pageerror",e=>errs.push(e.message));ps.push(p)}
+const N=8;for(let i=0;i<N;i++){const c=await b.newContext({viewport:{width:+(process.env.VW??390),height:+(process.env.VH??844)}});const p=await c.newPage();p.setDefaultTimeout(9000);p.on("pageerror",e=>errs.push(e.message));ps.push(p)}
 console.log("start");await ps[0].goto(url);console.log("loaded");await ps[0].click("text=创建房间");await ps[0].waitForURL(/room=/);const u=ps[0].url();
 for(let i=0;i<N;i++){const p=ps[i];if(i)await p.goto(u);await p.fill("input","玩家"+i);await p.click("text=登舰");await p.waitForSelector("text=需要 4–8 人")}
 await ps[0].click("text=开始（8 人）");for(let w=0;w<12;w++){for(const p of ps){const c=p.locator(".ta-chars .ta-primary");if(await c.count())await c.first().click().catch(()=>{})}await wait(250)}
@@ -17,4 +17,4 @@ let rounds=0;for(let k=0;k<400&&rounds<6&&!(await ps[0].locator("text=再来一�
  const gun=p.locator("text=拿起手枪");if(rounds===1&&await gun.count()){await gun.click();await wait(250);await p.screenshot({path:"/tmp/ta_v.png"});continue}
  const e=p.locator("text=结束本回合");if(await e.count()){await p.screenshot({path:"/tmp/ta2.png"});await e.click();rounds++;await wait(150)}
  const resolve=p;void resolve;}}
-await ps[1].reload();await wait(1500);console.log("reload",(await ps[1].locator(".ta-top b").textContent()));console.log("over",await ps[0].locator("text=再来一局").count());console.log("rounds",rounds,"errs",errs);await ps[0].screenshot({path:"/tmp/ta3.png"});await b.close();process.exit(0)
+await ps[1].reload();await wait(1500);console.log("reload",(await ps[1].locator(".ta-top b").textContent()));console.log("overflow",await ps[0].evaluate(()=>[document.documentElement.scrollWidth,innerWidth,...[...document.querySelectorAll("button")].filter(b=>!b.closest(".ta-card")&&b.getBoundingClientRect().height<44).map(b=>b.textContent)]));console.log("over",await ps[0].locator("text=再来一局").count());console.log("rounds",rounds,"errs",errs);await ps[0].screenshot({path:"/tmp/ta3.png"});await b.close();process.exit(0)

@@ -2,7 +2,7 @@ import { randomBytes, randomInt } from "node:crypto";
 import { mkdirSync, readdirSync, readFileSync, renameSync, rmSync, statSync, writeFileSync } from "node:fs";
 import { join } from "node:path";
 import type { Server, Socket } from "socket.io";
-import { createGame, reduce, viewFor, type Command, type State } from "../../../packages/menace/src/index.ts";
+import { autoMove, waitingFor, createGame, reduce, viewFor, type Command, type State } from "../../../packages/menace/src/index.ts";
 import { TA_EVENTS, type TAClientCommand, type TALobbyAction, type TARoomSnapshot } from "../../../packages/shared/src/ta-protocol.ts";
 import type { Ack } from "../../../packages/shared/src/protocol.ts";
 
@@ -14,13 +14,13 @@ const TEXT: Record<string, string> = {
   NOT_YOUR_TURN: "还没轮到你。", MUST_ACT: "你还有可执行的行动，不能跳过。", BRAIN_DAMAGE: "脑损伤：你必须重复上一名船员的行动类型。", CANNOT_PLAY: "你现在不能打出行动牌。", BAD_TARGET: "这个目标不合法。", BAD_ABILITY: "现在不能使用这个能力。", NEED_DISCARD: "需要先选一张要弃的牌。", VETO_FORCED: "这是最后一张牌，否决必须在此使用。", WAITING: "请等待其他玩家完成选择。", BAD: "操作无效。",
 };
 interface PlayerFile { playerId: string; token: string; name: string }
-export interface TARoomFile { game: "menace"; code: string; createdAt: string; stage: "lobby" | "game"; hostId: string | null; players: PlayerFile[]; mode: "basic" | "advanced"; round: number; seed: number; lineup: string[]; commands: Command[] }
+export interface TARoomFile { game: "menace"; code: string; createdAt: string; stage: "lobby" | "game"; hostId: string | null; players: PlayerFile[]; mode: "basic" | "advanced"; round: number; seed: number; lineup: string[]; commands: Command[]; snapshot?: State }
 
 export class TARoom {
   state: State | null = null;
   connections = new Map<string, number>();
   constructor(public file: TARoomFile) {
-    if (file.stage === "game") { let s = createGame(file.lineup.length, file.seed, file.mode); for (const c of file.commands) s = reduce(s, c); this.state = s; }
+    if (file.stage === "game") { let s = file.snapshot ?? createGame(file.lineup.length, file.seed, file.mode); if (!file.snapshot) for (const c of file.commands) s = reduce(s, c); this.state = s; }
   }
   get code() { return this.file.code; }
   private me(token: string) { return (token ? this.file.players.find((x) => x.token === token) : undefined) ?? fail("NOT_SEATED"); }
@@ -42,18 +42,21 @@ export class TARoom {
       const n = this.file.players.length; if (n < 4 || n > 8) fail("TA_COUNT");
       const ids = this.file.players.map((p) => p.playerId);
       for (let i = n - 1; i > 0; i--) { const j = randomInt(i + 1); [ids[i], ids[j]] = [ids[j], ids[i]]; }
-      this.file.lineup = ids; this.file.seed = randomInt(2 ** 31); this.file.commands = []; this.file.round += 1; this.file.stage = "game";
+      this.file.lineup = ids; this.file.seed = randomInt(2 ** 31); this.file.commands = []; delete this.file.snapshot; this.file.round += 1; this.file.stage = "game";
       this.state = createGame(n, this.file.seed, this.file.mode);
     } else fail("BAD");
   }
   apply(token: string, cmd: TAClientCommand) {
     const me = this.me(token).playerId; const s = this.state ?? fail("NOT_STARTED");
     const seat = this.file.lineup.indexOf(me); if (seat < 0) fail("NOT_SEATED");
-    const c = { ...cmd, seat } as Command; this.state = reduce(s as State, c); this.file.commands.push(c);
+    if (cmd?.t === "auto") { if (me !== this.file.hostId) fail("HOST_ONLY"); const target = this.file.lineup.indexOf(String(cmd.player)); const st = s as State; if (target < 0 || (this.connections.get(String(cmd.player)) ?? 0) > 0 || !waitingFor(st).includes(target)) fail("BAD"); const before = st; const next = autoMove(before, target); this.state = next; this.file.commands = this.file.commands; this.autos(before, next); return; }
+    const c = { ...cmd, seat } as Command; this.state = reduce(s as State, c); if (this.file.snapshot) this.file.snapshot = this.state; else this.file.commands.push(c);
   }
+  /** 代操作不进命令重放：存档改存整局快照 */
+  private autos(_a: State, b: State) { this.file.snapshot = b; }
   snapshot(me: string | null): TARoomSnapshot {
     const seat = me ? this.file.lineup.indexOf(me) : -1;
-    return { code: this.code, stage: this.file.stage, hostId: this.file.hostId, mySeat: me, mode: this.file.mode, round: this.file.round, version: this.file.commands.length,
+    return { code: this.code, stage: this.file.stage, hostId: this.file.hostId, mySeat: me, mode: this.file.mode, round: this.file.round, version: Date.now(),
       players: this.file.players.map((p) => ({ playerId: p.playerId, name: p.name, connected: (this.connections.get(p.playerId) ?? 0) > 0, host: p.playerId === this.file.hostId })),
       seats: this.file.lineup, view: this.state && seat >= 0 ? viewFor(this.state, seat) : null };
   }

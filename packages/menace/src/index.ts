@@ -209,3 +209,12 @@ export function viewFor(s:State,seat:number){const over=s.phase==="over";const t
  return{phase:s.phase,mode:s.mode,round:s.round,leader:s.leader,oxygen:s.oxygen,energy:s.energy,armed:undefined,you:seat,hand:s.players[seat]?.hand,aside:s.players[seat]?.aside,choices:s.players[seat]?.choices,agenda:s.players[seat]?.agenda,notes:s.notes[seat],deckCount:s.players[seat]?.deck.length,
  players:s.players.map(p=>({seat:p.seat,character:p.character,wounds:p.wounds,exiled:p.exiled,killed:p.killed,hand:p.hand.length,deck:p.deck.length,used:p.used,played:s.played.filter(x=>x.seat===p.seat).length,agenda:over||p.revealed||p.seat===seat?p.agenda:null})),
  revealed:s.revealed.length?s.revealed.map(r=>r.card.type):((s as any).shown??[]),remaining:s.queue.length,waiting:waitingFor(s),question:t&&t.k==="ask"&&t.seat===seat?{q:t.q,data:t.data}:null,log:s.log.slice(-30),winner:s.winner,winners:s.winners,voted:Object.keys(s.votes).length,roundAbilities:s.roundAbilities,lastType:s.lastType}}
+
+/** 掉线代操作：对指定座位执行一个安全的默认动作（不做主动选择） */
+export function autoMove(s:State,seat:number):State{const p=s.players[seat];const t:any=s.stack[s.stack.length-1];const alive2=s.players.filter(x=>!x.killed&&x.seat!==seat).map(x=>x.seat);
+ const tries:Command[]=[];
+ if(t?.k==="ask"){for(const v of [null,false,[],p.hand[0]?.id,t.data?.options?.[0],t.data?.cards?.[0]?.id,true,...alive2])tries.push({seat,t:"answer",value:v})}
+ else if(s.phase==="setup")tries.push({seat,t:"choose",name:p.choices[0]});
+ else if(s.phase==="action"){tries.push({seat,t:"draw"});if(p.hand[0])tries.push({seat,t:"play",card:p.hand[0].id});tries.push({seat,t:"pass"})}
+ else if(s.phase==="resolve")tries.push({seat,t:"reveal"});else if(s.phase==="accuse")tries.push({seat,t:"end_accuse"});else if(s.phase==="vote")tries.push({seat,t:"vote",target:null});
+ for(const c of tries){try{return reduce(s,c)}catch{}}return fail("NO_AUTO")}

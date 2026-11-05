@@ -42,3 +42,5 @@ describe("角色能力",()=>{
  it("护卫",()=>{let s=g("gurg");s=use(s,"guard");s=q(s,["backstab"]);s=rv(s);expect(s.players[s.leader].wounds.length).toBe(0)});
  it("每回合一次",()=>{let s=g("gurg");s=use(s,"guard");s.turn=0;s.sub=[];expect(()=>use(s,"guard")).toThrow()});
 });
+import {autoMove,waitingFor} from "../src/index.ts";
+it("离线代操作能打完整局",()=>{let s=createGame(8,7);for(let i=0;i<5000&&s.phase!=="over";i++)s=autoMove(s,waitingFor(s)[0]);expect(s.phase).toBe("over")});
