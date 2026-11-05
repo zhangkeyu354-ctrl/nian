@@ -32,7 +32,7 @@ function Room({ code }: { code: string }) {
 const TONE: Record<string, string> = { advanced_repair: "#f0a020", airlock: "#2f8fe0", backstab: "#d9352c", basic_repair: "#f0b81e", brawl: "#f07020", command: "#8a55c8", explosion: "#f05a20", panic: "#ee3f92", raise_morale: "#2f9fe0", reactor: "#74c52c", replicate: "#2fc0a0" };
 function GameCard({ type }: { type: string }) {
   const [name, text] = CARD_TEXT[type];
-  return <div className="ta-gc" style={{ "--k": TONE[type] } as any}><div className="h"><small>舱面下行动</small><b>{name}</b></div><div className="m"><img src={img("m_" + type)} alt={name} /></div><div className="t"><span>{text}</span></div><div className="s" /></div>;
+  return <div className="ta-gc" style={{ "--k": TONE[type] } as any}><div className="h"><small>台面下行动</small><b>{name}</b></div><div className="m"><img src={img("m_" + type)} alt={name} /></div><div className="t"><span>{text}</span></div><div className="s" /></div>;
 }
 function InfoCard({ tone, kind, name, pic, text, round }: { tone: string; kind: string; name: string; pic: string; text: string; round?: boolean }) {
   return <div className={"ta-gc" + (round ? "" : " tall")} style={{ "--k": tone } as any}><div className="h"><small>{kind}</small><b>{name}</b></div><div className="m">{pic ? <img src={pic} alt={name} /> : null}</div><div className="t"><span>{text}</span></div><div className="s" /></div>;
