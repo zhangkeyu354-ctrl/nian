@@ -135,3 +135,32 @@
 .ta-bar i{transition:box-shadow .3s}
 @media (prefers-reduced-motion:reduce){.ta-stage,.ta-stage *,.ta-hit{animation:none!important}}
 .ta-stage{pointer-events:none}
+
+/* v3：实物感与玻璃层，信息保留 */
+.ta-game{background-position:center top}.ta-game::before{background:linear-gradient(#070a0bb0,#070a0b30 26%,#070a0b55 55%,#070a0bd9)}
+.ta-world button,.ta-world .ta-grid button,.ta-abs button{border-radius:12px;background:#ffffff1f;backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);box-shadow:inset 0 0 0 1px #ffffff2e,0 6px 14px #0007;font-weight:600;text-shadow:none}
+.ta-world button:active{transform:scale(.97);box-shadow:inset 0 0 0 1px #ffffff2e}
+.ta-world .ta-primary{background:linear-gradient(#ffd976,#efb53c)!important;color:#1a1408;text-shadow:none;box-shadow:0 8px 20px #efb53c55,inset 0 1px 0 #fff9}.ta-world .ta-danger{background:linear-gradient(#ee5346,#c62d24);box-shadow:0 8px 20px #c62d2455}
+.ta-world .ta-card,.ta-world .ta-card:active{background:none;backdrop-filter:none;-webkit-backdrop-filter:none;box-shadow:none;border-radius:0}
+.ta-game .ta-panel,.ta-game .ta-panel.alert{margin:0;padding:14px;border-radius:16px;background:#0d1214b8;backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);box-shadow:inset 0 0 0 1px #ffffff1f,0 12px 26px #0009}
+.ta-game .ta-panel.alert{box-shadow:inset 0 0 0 1px #ff6a5e88,0 12px 26px #0009}.ta-game .ta-panel h3{border:0;box-shadow:none;padding:0;font-size:21px;color:#ffd976}
+.ta-game .ta-hud{background:linear-gradient(#070a0bee,#070a0b00);box-shadow:none;animation:none;padding:10px 14px 12px}
+.ta-bar{font-size:13px;font-weight:700;gap:8px}.ta-bar span{min-width:30px}.ta-bar i{height:12px;border:0;border-radius:6px;box-shadow:inset 0 0 0 1px #ffffff30;background:#0009}.ta-bar b{border-radius:6px}.ta-bar em{font-size:16px;font-weight:700}.ta-bar.o em{color:#7fd6ee}.ta-bar.e em{color:#d6ef7a}
+.ta-game .ta-seats{display:grid;grid-template-columns:repeat(4,1fr);gap:6px;padding:0 10px;overflow:visible}
+.ta-game .ta-seats li{all:unset;position:relative;box-sizing:border-box;display:block;min-width:0;min-height:74px;padding:30px 5px 4px;border-radius:10px;overflow:hidden;font-size:11px;background:#0d1214c4;box-shadow:inset 0 0 0 1px #ffffff24}
+.ta-game .ta-seats li .ta-av{position:absolute;left:0;top:0;width:100%;height:42px;object-fit:cover;object-position:50% 10%;box-shadow:none;opacity:.85;-webkit-mask:linear-gradient(#000 45%,transparent);mask:linear-gradient(#000 45%,transparent)}
+.ta-game .ta-seats li b{position:relative;display:block;font-size:12px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;text-shadow:0 1px 3px #000}.ta-game .ta-seats li b::after{content:none!important}
+.ta-game .ta-seats small,.ta-game .ta-seats em{position:relative;display:block;font-size:10px;line-height:1.3;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.ta-game .ta-seats .turn{box-shadow:inset 0 0 0 2px #ffd976,0 0 14px #ffd97688}.ta-game .ta-seats .me{background:#1d2a2ccc}.ta-game .ta-seats .dead{filter:grayscale(1);background:#3a100ecc}.ta-game .ta-seats .exiled{background:#22262acc;box-shadow:inset 0 0 0 1px #ffc95a88}
+.ta-gc{border-radius:14px;background:linear-gradient(170deg,#262c2e,#101314);box-shadow:0 10px 22px #000b,inset 0 0 0 .08em #ffffff30}.ta-gc::before{display:none}.ta-gc::after{background:linear-gradient(125deg,#ffffff1c,transparent 35%)}
+.ta-gc .h{background:none;border:0;box-shadow:none;height:0}.ta-gc small{display:none}.ta-gc .h b{left:0;right:0;top:27.8em;text-align:center;margin:0;font-size:4em;top:7.1em;left:0}
+.ta-gc .m,.ta-card .ta-gc .m{top:2.6em;width:25em;height:25em;margin-left:-12.5em;box-shadow:0 0 0 .25em #0009,0 0 3.4em var(--k)}
+.ta-gc .t,.ta-card .ta-gc .t{top:35.6em;left:1.6em;right:1.6em;bottom:1em;background:none;clip-path:none;box-shadow:none;padding:0}.ta-gc .t span,.ta-world .ta-card .ta-gc .t span{color:#dcdad0;font-weight:500;font-size:2.5em;line-height:1.25}.ta-gc .s{display:none}
+.ta-gc.tall .m{top:1.4em;height:22em;margin:0}.ta-gc.tall .h b{top:6.2em;text-align:left;left:.4em}.ta-gc.tall .t{top:31em}
+.ta-world nav.ta-hand{background:none;box-shadow:none;padding:0 0 calc(10px + env(safe-area-inset-bottom));overflow:visible;min-height:176px;align-items:flex-end}.ta-world nav.ta-hand::before{display:none}
+.ta-world nav.ta-hand .ta-card{font-size:calc(116px/34);flex:0 0 116px;width:116px;margin-left:-26px;transform-origin:50% 120%}.ta-world nav.ta-hand .ta-card:nth-child(1){margin-left:0}
+.ta-world nav.ta-hand .ta-card:first-child:not(:last-child){transform:rotate(-6deg)}.ta-world nav.ta-hand .ta-card:last-child:not(:first-child){transform:rotate(6deg)}
+.ta-world .ta-id{bottom:190px;border-radius:12px;clip-path:none;background:#0d1214c4}.ta-main{padding-bottom:64px}.ta-fly{bottom:190px}
+.ta-entry input,.ta-row input{border-radius:12px;border:0;background:#0009;box-shadow:inset 0 0 0 1.5px #ffd97688}
+@media (max-height:640px){.ta-game .ta-seats li{min-height:60px;padding-top:22px}.ta-world nav.ta-hand{min-height:112px}.ta-world nav.ta-hand .ta-card{font-size:calc(72px/34);flex-basis:72px;width:72px;margin-left:-12px;height:auto}.ta-world .ta-id{bottom:120px}}
+.ta-world nav.ta-hand .ta-card:first-child:nth-last-child(4)~.ta-card{margin-left:-46px}.ta-world nav.ta-hand .ta-card:first-child:nth-last-child(n+5)~.ta-card{margin-left:-62px}
