@@ -2,7 +2,7 @@ import { randomBytes, randomInt } from "node:crypto";
 import { mkdirSync, readdirSync, readFileSync, renameSync, rmSync, statSync, writeFileSync } from "node:fs";
 import { join } from "node:path";
 import type { Server, Socket } from "socket.io";
-import { autoMove, waitingFor, createGame, reduce, viewFor, type Command, type State } from "../../../packages/menace/src/index.ts";
+import { autoMove, botMove, waitingFor, createGame, reduce, viewFor, type Command, type State } from "../../../packages/menace/src/index.ts";
 import { TA_EVENTS, type TAClientCommand, type TALobbyAction, type TARoomSnapshot } from "../../../packages/shared/src/ta-protocol.ts";
 import type { Ack } from "../../../packages/shared/src/protocol.ts";
 
@@ -13,7 +13,7 @@ const TEXT: Record<string, string> = {
   NO_ROOM: "房间不存在，请检查房间号。", NOT_SEATED: "请先加入房间。", ROOM_FULL: "房间已满（最多 8 人）。", ALREADY_STARTED: "游戏已经开始了。", HOST_ONLY: "只有房主可以这样做。", NOT_STARTED: "游戏还没开始。", NAME_REQUIRED: "请填写昵称。", TA_COUNT: "需要 4–8 人。", TOO_MANY_ROOMS: "服务器房间太多，请稍后再试。",
   NOT_YOUR_TURN: "还没轮到你。", MUST_ACT: "你还有可执行的行动，不能跳过。", BRAIN_DAMAGE: "脑损伤：你必须重复上一名船员的行动类型。", CANNOT_PLAY: "你现在不能打出行动牌。", BAD_TARGET: "这个目标不合法。", BAD_ABILITY: "现在不能使用这个能力。", NEED_DISCARD: "需要先选一张要弃的牌。", VETO_FORCED: "这是最后一张牌，否决必须在此使用。", WAITING: "请等待其他玩家完成选择。", BAD: "操作无效。",
 };
-interface PlayerFile { playerId: string; token: string; name: string }
+interface PlayerFile { playerId: string; token: string; name: string; bot?: boolean }
 export interface TARoomFile { game: "menace"; code: string; createdAt: string; stage: "lobby" | "game"; hostId: string | null; players: PlayerFile[]; mode: "basic" | "advanced"; round: number; seed: number; lineup: string[]; commands: Command[]; snapshot?: State }
 
 export class TARoom {
@@ -37,6 +37,7 @@ export class TARoom {
     const me = this.me(token); if (me.playerId !== this.file.hostId) fail("HOST_ONLY");
     const over = this.state?.phase === "over"; if (this.file.stage === "game" && !over) fail("ALREADY_STARTED");
     if (a?.type === "SET_MODE") { if (a.mode !== "basic" && a.mode !== "advanced") fail("BAD"); this.file.mode = a.mode; }
+    else if (a?.type === "ADD_BOT") { if (this.file.players.length >= MAX_PLAYERS) fail("ROOM_FULL"); const n = this.file.players.filter((p) => p.bot).length + 1; this.file.players.push({ playerId: "bot" + randomBytes(3).toString("hex"), token: randomBytes(18).toString("base64url"), name: "人机" + n, bot: true }); }
     else if (a?.type === "KICK") { if (a.playerId === me.playerId) fail("BAD"); this.file.players = this.file.players.filter((p) => p.playerId !== a.playerId); }
     else if (a?.type === "START") {
       const n = this.file.players.length; if (n < 4 || n > 8) fail("TA_COUNT");
@@ -52,12 +53,14 @@ export class TARoom {
     if (cmd?.t === "auto") { if (me !== this.file.hostId) fail("HOST_ONLY"); const target = this.file.lineup.indexOf(String(cmd.player)); const st = s as State; if (target < 0 || (this.connections.get(String(cmd.player)) ?? 0) > 0 || !waitingFor(st).includes(target)) fail("BAD"); const before = st; const next = autoMove(before, target); this.state = next; this.file.commands = this.file.commands; this.autos(before, next); return; }
     const c = { ...cmd, seat } as Command; this.state = reduce(s as State, c); if (this.file.snapshot) this.file.snapshot = this.state; else this.file.commands.push(c);
   }
+  botStep() { const s = this.state; if (!s || s.phase === "over") return false; for (const seat of waitingFor(s)) { const p = this.file.players.find((x) => x.playerId === this.file.lineup[seat]); if (p?.bot) { this.state = botMove(s, seat); this.autos(s, this.state); return true; } } return false; }
+  botDelay() { return this.state?.phase === "accuse" ? 5000 : this.state?.phase === "resolve" ? 2400 : 900; }
   /** 代操作不进命令重放：存档改存整局快照 */
   private autos(_a: State, b: State) { this.file.snapshot = b; }
   snapshot(me: string | null): TARoomSnapshot {
     const seat = me ? this.file.lineup.indexOf(me) : -1;
     return { code: this.code, stage: this.file.stage, hostId: this.file.hostId, mySeat: me, mode: this.file.mode, round: this.file.round, version: Date.now(),
-      players: this.file.players.map((p) => ({ playerId: p.playerId, name: p.name, connected: (this.connections.get(p.playerId) ?? 0) > 0, host: p.playerId === this.file.hostId })),
+      players: this.file.players.map((p) => ({ playerId: p.playerId, name: p.name, connected: !!p.bot || (this.connections.get(p.playerId) ?? 0) > 0, host: p.playerId === this.file.hostId })),
       seats: this.file.lineup, view: this.state && seat >= 0 ? viewFor(this.state, seat) : null };
   }
 }
@@ -125,6 +128,8 @@ export function attachMenace(io: Server, dataDir: string, opts: { maxRooms: numb
     if (n) console.log(`清理闲置威胁房间 ${n} 个`);
   }, 30 * 60_000).unref();
 
+  const pending = new Set<string>();
+  const drive = (room: TARoom) => { if (pending.has(room.code)) return; pending.add(room.code); setTimeout(() => { pending.delete(room.code); try { if (room.botStep()) { store.save(room); broadcast(room); drive(room); } } catch (e) { console.warn("人机出错", room.code, e instanceof Error ? e.message : e); } }, room.botDelay()); };
   const broadcast = (room: TARoom) => {
     const now = Date.now();
     for (const id of io.sockets.adapter.rooms.get(sockRoom(room.code)) ?? []) {
@@ -190,6 +195,7 @@ export function attachMenace(io: Server, dataDir: string, opts: { maxRooms: numb
       const room = find(req?.code) ?? fail("NO_ROOM");
       room.lobby(req.token, req.action);
       store.save(room);
+      drive(room);
       broadcast(room);
       return {};
     }));
@@ -197,6 +203,7 @@ export function attachMenace(io: Server, dataDir: string, opts: { maxRooms: numb
       const room = find(req?.code) ?? fail("NO_ROOM");
       room.apply(req.token, req.command);
       store.save(room);
+      drive(room);
       broadcast(room);
       return {};
     }));

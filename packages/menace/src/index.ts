@@ -218,3 +218,8 @@ export function autoMove(s:State,seat:number):State{const p=s.players[seat];cons
  else if(s.phase==="action"){tries.push({seat,t:"draw"});if(p.hand[0])tries.push({seat,t:"play",card:p.hand[0].id});tries.push({seat,t:"pass"})}
  else if(s.phase==="resolve")tries.push({seat,t:"reveal"});else if(s.phase==="accuse")tries.push({seat,t:"end_accuse"});else if(s.phase==="vote")tries.push({seat,t:"vote",target:null});
  for(const c of tries){try{return reduce(s,c)}catch{}}return fail("NO_AUTO")}
+
+/** 人机：好人出好牌，内鬼出坏牌；其余走默认动作 */
+export function botMove(s:State,seat:number):State{const p=s.players[seat];
+ if(s.phase==="action"&&!s.stack.length){const bad=["airlock","explosion","panic","reactor","backstab","brawl"];const m=side(p)==="menace";const c=p.hand.find(x=>bad.includes(x.type)===m);if(c){try{return reduce(s,{seat,t:"play",card:c.id})}catch{}}}
+ return autoMove(s,seat)}
