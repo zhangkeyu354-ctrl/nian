@@ -168,3 +168,4 @@
 .ta-game .ta-seats .turn .ta-av{opacity:1}.ta-main>*{animation:ta-up .28s both}@keyframes ta-up{from{opacity:0;transform:translateY(10px)}}
 .ta-banner b{background:none;text-shadow:0 3px 0 #000,0 0 24px currentColor}
 @media (prefers-reduced-motion:reduce){.ta-main>*{animation:none}}
+.ta-help{font-size:15px}.ta-help h3{font-size:18px;margin-top:6px}
