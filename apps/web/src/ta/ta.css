@@ -220,3 +220,9 @@
 .ta-game .ta-panel{position:relative}.ta-game .ta-panel::before{content:"";position:absolute;inset:0;border-radius:inherit;padding:1.5px;pointer-events:none;background:conic-gradient(from var(--a,0deg),transparent 0 70%,#ffd976 85%,transparent 100%);-webkit-mask:linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0);-webkit-mask-composite:xor;mask:linear-gradient(#000 0 0) content-box exclude,linear-gradient(#000 0 0);animation:ta-spin 6s linear infinite}.ta-game .ta-panel.alert::before{background:conic-gradient(from var(--a,0deg),transparent 0 60%,#ff5a4a 85%,transparent 100%);animation-duration:2.6s}
 .ta-gc::before{display:block;content:"";position:absolute;inset:0;border-radius:inherit;padding:.14em;z-index:3;pointer-events:none;background:conic-gradient(from var(--a,0deg),transparent 0 65%,var(--k) 85%,#fff 92%,transparent 100%);-webkit-mask:linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0);-webkit-mask-composite:xor;mask:linear-gradient(#000 0 0) content-box exclude,linear-gradient(#000 0 0);animation:ta-spin 5s linear infinite}
 @media (prefers-reduced-motion:reduce){.ta-seat .face::before,.ta-game .ta-panel::before,.ta-gc::before{animation:none}}
+
+/* 全屏选角 */
+.ph-setup .ta-table{display:none}.ph-setup .ta-bar{display:none}.ph-setup .ta-main{padding:6px 12px 12px}.ph-setup .ta-main>:first-child{margin-top:0}.ph-setup .ta-panel{flex:1;min-height:0;display:flex;flex-direction:column}.ph-setup .ta-id{display:none}
+.ph-setup .ta-chars{flex:1;min-height:0;display:flex;gap:14px;overflow-x:auto;scroll-snap-type:x mandatory;padding:6px 8vw;margin:0 -14px;align-items:center}.ph-setup .ta-chars figure{flex:0 0 min(76vw,300px);scroll-snap-align:center;display:flex;flex-direction:column;gap:12px;align-items:center}
+.ph-setup .ta-pick{font-size:calc(min(76vw,300px, 46dvh)/34)}
+.ta-table::before{clip-path:polygon(29% 0,71% 0,100% 29%,100% 71%,71% 100%,29% 100%,0 71%,0 29%)}
