@@ -37,7 +37,7 @@ function afterChoice(s:State){
  if(ps.length>5&&ps.slice(0,5).every(p=>p.character)&&ps.slice(5).every(p=>!p.choices.length&&!p.character)){const pool:string[]=(s as any).pool;shuffle(s,pool);const rest=ps.slice(5);let i=0;while(pool.length){rest[i%rest.length].choices.push(pool.shift()!);i++}}
 }
 const merge=(a:any,b:any)=>{const o={...a};for(const k in b)o[k]=(o[k]||0)+b[k];return o};
-function beginRound(s:State){s.phase="action";s.round++;s.turn=0;s.sub=[];s.lastType=null;s.playedSeats=[];s.flags={};s.roundAbilities=[];s.played=[];for(const p of s.players)p.used=[];say(s,`第 ${s.round} 回合开始`)}
+function beginRound(s:State){(s as any).shown=[];s.phase="action";s.round++;s.turn=0;s.sub=[];s.lastType=null;s.playedSeats=[];s.flags={};s.roundAbilities=[];s.played=[];for(const p of s.players)p.used=[];say(s,`第 ${s.round} 回合开始`)}
 function addO(s:State,n:number){s.oxygen=Math.max(0,Math.min(OXYGEN_MAX,s.oxygen+n));if(s.oxygen===0)zeroO(s)}
 function zeroO(s:State){const a=hasAgenda(s,"austere");if(a&&!a.austereUsed&&a.hand.length&&!a.exiled){a.austereUsed=true;ask(s,a.seat,"austere")}}
 function addE(s:State,n:number,free=false){if(n>0&&!free&&s.phase==="resolve")s.energy=Math.max(s.energy,Math.min(s.energy+n,s.resStart+5));else s.energy+=n;s.energy=Math.max(0,Math.min(ENERGY_GOAL,s.energy))}
@@ -47,7 +47,7 @@ function discardRandom(s:State,p:Player){if(p.hand.length)s.discard.push(p.hand.
 function takeCard(p:Player,id:number){const i=p.hand.findIndex(c=>c.id===id);if(i<0)fail("NOT_IN_HAND");return p.hand.splice(i,1)[0]}
 function playCard(s:State,p:Player,c:Card){s.played.push({seat:p.seat,card:c});mark(s,p.seat);if(has(p,"punctured_lung"))s.discard.push(...p.deck.splice(0,2))}
 const canPlay=(s:State,p:Player)=>!(has(p,"broken_limbs")&&!s.playedSeats.some(x=>x!==p.seat))&&!(s.flags.lockdown&&p.wounds.length>0);
-function abilityList(p:Player){return p.character?CHARACTERS[p.character].ab:[]}
+function abilityList(p:Player):Ability[]{return p.character?[...CHARACTERS[p.character].ab]:[]}
 function canAbility(s:State,p:Player,ab:Ability,args:any){if(p.exiled)return false;const cost=COST[ab];if(p.severed===ab)return false;if(p.used.includes(ab))return false;if((cost.e??0)>s.energy)return false;if((cost.d??0)>p.hand.length)return false;return true}
 export function actor(s:State){if(s.phase!=="action"||s.stack.length)return null;if(s.sub.length)return s.sub[s.sub.length-1];const seat=(s.leader+s.turn)%s.n;return seat}
 function legalKinds(s:State,p:Player){const k:string[]=[];if(p.deck.length)k.push("draw");if(p.hand.length&&canPlay(s,p))k.push("play");if(!p.exiled&&abilityList(p).some(a=>canAbility(s,p,a,{})))k.push("ability");return k}
@@ -109,7 +109,7 @@ function ability(s:State,t:Extract<Task,{k:"ability"}>){const p=s.players[t.seat
  case "formulate":ask(s,p.seat,"formulate");{const n=p.deck.splice(0,3);p.hand.push(...n)}break;
  case "system_refresh":{const o=tgt(a.target);const n=o.hand.length;o.deck.push(...o.hand.splice(0));shuffle(s,o.deck);draw(s,o.seat,n+1);break}
  case "synchronize":{const x=tgt(a.a),y=tgt(a.b);if(x===y)fail("BAD_TARGET");draw(s,x.seat,1);draw(s,y.seat,1);break}
- case "surveillance":{const it=s.played[a.index]??s.queue[a.index];if(it)s.notes[p.seat].push(`监控：座位${it.seat+1} 的牌是 ${it.card.type}`);break}
+ case "surveillance":{const it=s.played.find(x=>x.seat===a.target);if(it)s.notes[p.seat].push(`监控：座位${it.seat+1} 的牌是 ${it.card.type}`);break}
  case "equip":draw(s,p.seat,2);break;
  case "resupply":{const o=tgt(a.target);if(o===p)fail("BAD_TARGET");draw(s,o.seat,2);break}
  case "rush":{const x=p.deck.shift();if(x)playCard(s,p,x);break}
@@ -126,7 +126,7 @@ function startResolve(s:State){s.phase="resolve";s.resStart=s.energy;
  s.queue=shuffle(s,s.played);s.played=[];s.revealed=[];s.stage="reveal";
  if(s.flags.restructure!==undefined)ask(s,s.flags.restructure,"restructure",{cards:s.queue.map(q=>q.card)})}
 function finishResolve(s:State){if(s.flags.rewind!==undefined&&s.revealed.length){ask(s,s.flags.rewind,"rewind",{cards:s.revealed.map(r=>r.card)});delete s.flags.rewind;return}
- for(const r of s.revealed)(r.seat<0?s.emmaUsed:s.discard).push(r.card);s.revealed=[];s.phase="accuse";s.stage=""}
+ (s as any).shown=s.revealed.map(r=>r.card.type);for(const r of s.revealed)(r.seat<0?s.emmaUsed:s.discard).push(r.card);s.revealed=[];s.phase="accuse";s.stage=""}
 function death(s:State,seat:number){const p=s.players[seat];if(p.killed)return;p.killed=true;p.revealed=true;say(s,`座位${seat+1} 死亡，身份 ${p.agenda}`);
  const sd=side(p);if(sd==="crew")addO(s,-2);if(sd==="neutral")addO(s,-1);
  s.discard.push(...p.hand.splice(0));
@@ -189,7 +189,7 @@ export function reduce(prev:State,c:Command):State{const s=structuredClone(prev)
   if(c.t==="pass"){const need=bd&&kinds.includes(bd)?[bd]:kinds;if(need.some(k=>k==="play"||(k==="draw"&&!sub)))fail("MUST_ACT");endAction(s,"pass")}
   if(c.t==="draw"){if(sub)fail("NOT_ALLOWED");if(!p.deck.length)fail("EMPTY");draw(s,c.seat,1);endAction(s,"draw")}
   if(c.t==="play"){if(!canPlay(s,p))fail("CANNOT_PLAY");playCard(s,p,takeCard(p,c.card));endAction(s,"play")}
-  if(c.t==="ability"){if(!abilityList(p).includes(c.ab)||!canAbility(s,p,c.ab,c.args))fail("BAD_ABILITY");p.used.push(c.ab);const a=c.args??{};
+  if(c.t==="ability"){if(!(abilityList(p) as string[]).includes(c.ab)||!canAbility(s,p,c.ab,c.args))fail("BAD_ABILITY");p.used.push(c.ab);const a=c.args??{};
    if(COST[c.ab].d&&!p.hand.some(x=>x.id===a.discard))fail("NEED_DISCARD");
    ability(structuredClone(s),{k:"ability",seat:c.seat,ab:c.ab,args:a,free:false}); // 先试算，非法目标在这里拒绝
    endAction(s,"ability");s.stack.push({k:"ability",seat:c.seat,ab:c.ab,args:a,free:false});
@@ -207,4 +207,4 @@ export function waitingFor(s:State):number[]{if(s.phase==="over")return[];const 
 export function viewFor(s:State,seat:number){const over=s.phase==="over";const t=s.stack[s.stack.length-1];
  return{phase:s.phase,mode:s.mode,round:s.round,leader:s.leader,oxygen:s.oxygen,energy:s.energy,armed:undefined,you:seat,hand:s.players[seat]?.hand,aside:s.players[seat]?.aside,choices:s.players[seat]?.choices,agenda:s.players[seat]?.agenda,notes:s.notes[seat],deckCount:s.players[seat]?.deck.length,
  players:s.players.map(p=>({seat:p.seat,character:p.character,wounds:p.wounds,exiled:p.exiled,killed:p.killed,hand:p.hand.length,deck:p.deck.length,used:p.used,played:s.played.filter(x=>x.seat===p.seat).length,agenda:over||p.revealed||p.seat===seat?p.agenda:null})),
- revealed:s.revealed.map(r=>r.card.type),remaining:s.queue.length,waiting:waitingFor(s),question:t&&t.k==="ask"&&t.seat===seat?{q:t.q,data:t.data}:null,log:s.log.slice(-30),winner:s.winner,winners:s.winners,voted:Object.keys(s.votes).length}}
+ revealed:s.revealed.length?s.revealed.map(r=>r.card.type):((s as any).shown??[]),remaining:s.queue.length,waiting:waitingFor(s),question:t&&t.k==="ask"&&t.seat===seat?{q:t.q,data:t.data}:null,log:s.log.slice(-30),winner:s.winner,winners:s.winners,voted:Object.keys(s.votes).length,roundAbilities:s.roundAbilities,lastType:s.lastType}}

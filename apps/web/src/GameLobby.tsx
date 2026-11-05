@@ -37,6 +37,7 @@ export function GameLobby() {
         </div>
       </dialog>
       <div className="hall-boxes">
+        <GameBox id="ta" title="我们之中的威胁 The Menace Among Us" sub="Smirk & Dagger" meta="4–8 人 · 隐藏身份" blurb="飞船失去动力，氧气一格格流失。大家暗中出牌修船，内鬼却在其中破坏。" />
         <GameBox id="kb" title="卡里巴湖 Kariba" sub="Reiner Knizia" meta="2–5 人 · 组队最多 8 人" blurb="凑满三只同种动物，就能把水塘边较小的动物赶跑收走。只有老鼠吓得跑大象。" art={<img src="/assets/kariba/box.webp" alt="卡里巴湖 原创封面" style={{width:"100%",height:"100%",objectFit:"contain"}}/>} online="/?game=kb" join={code=>"/?game=kb&room="+code.toUpperCase()}/>
         <GameBox id="nd" title="脑洞量表 Top Ten" sub="Cocktail Games · Aurélien Picolet" meta="4–9 人 · 合作" blurb="一个数字，一张答题卡。队长看卡把大家从小到大排好，一起闯过五轮。" art={<img src="/assets/naodong-scale/box.webp" alt="脑洞量表 Top Ten 官方包装" style={{height:"130px",maxWidth:"100%",objectFit:"contain"}}/>} online="/?game=nd" join={code=>"/?game=nd&room="+code.toUpperCase()}/>
         <GameBox id="ss" title="汽水走私犯 Soda Smugglers" sub="官方桌游 · Reiner Knizia" meta="3–8 人 · 受贿与推理" blurb="秘密装好手提箱，和缉私警长斗智，带着汽水顺利过关。" art={<img src="/assets/soda-smugglers/box-logo.webp" alt="汽水走私犯官方包装及标志" style={{width:"100%",height:"100%",objectFit:"contain"}}/>} online="/?game=ss" join={code=>"/?game=ss&room="+code.toUpperCase()}/>
