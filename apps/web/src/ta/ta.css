@@ -192,3 +192,21 @@
 .ta-table .core{z-index:1;width:27%;background:radial-gradient(#0a0f10 56%,transparent 57%),conic-gradient(#7fd6ee var(--o),#ffffff14 0);box-shadow:0 0 18px #7fd6ee44}.ta-table .core::before{content:"";position:absolute;inset:-9%;border-radius:50%;background:radial-gradient(transparent 63%,#000 64%,transparent 65%),conic-gradient(#d6ef7a var(--e),transparent 0);-webkit-mask:radial-gradient(transparent 63%,#000 64%);mask:radial-gradient(transparent 63%,#000 64%)}
 .ta-gun svg{width:44vw;max-width:190px}.ta-main{margin-top:4px}
 .ta-table .core{width:25%}.ta-table::before{clip-path:none}
+
+/* 头像框与呼吸感 */
+.ta-seat .face{width:54px;height:54px;background:none;box-shadow:0 6px 12px #000c!important}.ta-seat .face img{position:relative;z-index:1;width:44px;height:44px;margin:5px;display:block}
+.ta-seat .face::before{content:"";position:absolute;inset:-3px;clip-path:polygon(29% 0,71% 0,100% 29%,100% 71%,71% 100%,29% 100%,0 71%,0 29%);background:conic-gradient(from 22deg,#59634e,#c9cdb6 12%,#4a5240 25%,#9aa386 38%,#3b4235 50%,#c9cdb6 62%,#4a5240 75%,#9aa386 88%,#59634e)}
+.ta-seat .face::after{content:"";position:absolute;inset:1px;clip-path:polygon(29% 0,71% 0,100% 29%,100% 71%,71% 100%,29% 100%,0 71%,0 29%);background:#0a0d0c}
+.ta-seat .face u,.ta-seat .face s{z-index:2}
+.ta-seat.me .face::before{background:conic-gradient(from 22deg,#2f6f80,#c6f1fb 12%,#2f6f80 25%,#7fd6ee 38%,#2f6f80 50%,#c6f1fb 62%,#2f6f80 75%,#7fd6ee 88%,#2f6f80)}
+.ta-seat.turn .face{animation:none}.ta-seat.turn .face::before{background:conic-gradient(from var(--a,0deg),#ffd976,#7a5a12 25%,#fff0b0 50%,#7a5a12 75%,#ffd976);animation:ta-spin 2.4s linear infinite}
+@property --a{syntax:"<angle>";inherits:false;initial-value:0deg}@keyframes ta-spin{to{--a:360deg}}
+.ta-seat.turn{animation:ta-bob 1.6s ease-in-out infinite}@keyframes ta-bob{50%{transform:translate(-50%,calc(-50% - 3px))}}
+.ta-seat.dead .face::before{background:#5a1a16}.ta-seat.exiled .face::before{background:repeating-conic-gradient(#e0a92a 0 18deg,#17191a 0 36deg)}
+.ta-table::before{animation:ta-tbl 5s ease-in-out infinite}@keyframes ta-tbl{50%{filter:brightness(1.3) contrast(1.05)}}
+.ta-table::after{animation:ta-breath 4.5s ease-in-out infinite;inset:2%;background:radial-gradient(#ffb84a30,transparent 66%)}
+.ta-table .core::after{content:"";position:absolute;inset:-22%;border-radius:50%;border:1.5px dashed #ffffff30;animation:ta-rot 26s linear infinite}@keyframes ta-rot{to{transform:rotate(360deg)}}
+.ta-game{animation:ta-pan 28s ease-in-out infinite alternate;background-size:112% auto}@keyframes ta-pan{from{background-position:44% top}to{background-position:56% top}}
+.ta-hud::after{content:"";position:absolute;left:0;right:0;top:0;height:100%;pointer-events:none;background:linear-gradient(100deg,transparent 40%,#ffffff12 50%,transparent 60%) -100% 0/60% 100% no-repeat;animation:ta-sheen 7s infinite}@keyframes ta-sheen{60%,100%{background-position:220% 0}}.ta-hud{position:relative}
+.ta-world nav.ta-hand .ta-card{animation:ta-float 4.5s ease-in-out infinite}.ta-world nav.ta-hand .ta-card:nth-child(2){animation-delay:-1.5s}.ta-world nav.ta-hand .ta-card:nth-child(3){animation-delay:-3s}@keyframes ta-float{50%{translate:0 -4px}}
+@media (prefers-reduced-motion:reduce){.ta-seat.turn,.ta-seat.turn .face::before,.ta-table::before,.ta-table::after,.ta-table .core::after,.ta-game,.ta-hud::after,.ta-world nav.ta-hand .ta-card{animation:none}}
