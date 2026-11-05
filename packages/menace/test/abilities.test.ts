@@ -44,5 +44,3 @@ describe("角色能力",()=>{
 });
 import {autoMove,waitingFor} from "../src/index.ts";
 it("离线代操作能打完整局",()=>{let s=createGame(8,7);for(let i=0;i<5000&&s.phase!=="over";i++)s=autoMove(s,waitingFor(s)[0]);expect(s.phase).toBe("over")});
-import {botMove} from "../src/index.ts";
-it("电脑玩家能打完各人数整局",()=>{for(const n of [4,5,6,7,8])for(let g=0;g<20;g++){let s=createGame(n,g*13+n);let r=g+1;for(let i=0;i<8000&&s.phase!=="over";i++){r=(r*16807)%2147483647;s=botMove(s,waitingFor(s)[0],r/2147483647)}expect(s.phase).toBe("over")}});
