@@ -17,7 +17,6 @@ import { attachXiabaiwang } from "./xb-rooms.ts";
 import { attachWitchTown } from "./wt-rooms.ts";
 import { attachNaodongScale } from "./nd-rooms.ts";
 import { attachKariba } from "./kb-rooms.ts";
-import { attachMist } from "./my-rooms.ts";
 import {
   EVENTS,
   type Ack,
@@ -94,7 +93,6 @@ const http = createServer((req, res) => {
         dpRooms: dpStore.rooms.size,
         ndRooms: ndStore.rooms.size,
         kbRooms: kbStore.rooms.size,
-        myRooms: myStore.rooms.size,
         ...(wtStore
           ? { witchTown: { milestone: "M5_PHONE_UI", rooms: wtStore.size, fullGame: true } }
           : {}),
@@ -176,11 +174,6 @@ const dpStore = attachDrawingParty(io, resolve(process.env.DP_DATA_DIR ?? join(D
 const dmStore = attachDyingMessage(
   io,
   resolve(process.env.DM_DATA_DIR ?? join(DATA, "../dm-rooms")),
-  { maxRooms: MAX_ROOMS, idleMs: ROOM_IDLE_MS },
-);
-const myStore = attachMist(
-  io,
-  resolve(process.env.MY_DATA_DIR ?? join(DATA, "../my-rooms")),
   { maxRooms: MAX_ROOMS, idleMs: ROOM_IDLE_MS },
 );
 const kbStore = attachKariba(
