@@ -147,6 +147,16 @@ function fade(el: HTMLAudioElement, to: number, ms: number, done?: () => void) {
   };
   requestAnimationFrame(step);
 }
+// 整首下载一次再从内存循环播放（不持续占用网络；切回同一首不再下载）
+const blobs = new Map<string, Promise<string>>();
+function trackUrl(name: string) {
+  let u = blobs.get(name);
+  if (!u) {
+    u = fetch(MUSIC + name + ".mp3").then((r) => r.blob()).then((b) => URL.createObjectURL(b)).catch(() => MUSIC + name + ".mp3");
+    blobs.set(name, u);
+  }
+  return u;
+}
 function apply() {
   const name = musicOn ? wanted.name : null;
   if (current?.name !== name) {
@@ -154,19 +164,28 @@ function apply() {
     if (old) fade(old.el, 0, 1200, () => old.el.pause());
     current = null;
     if (name) {
-      const el = new Audio(MUSIC + name + ".mp3");
+      const el = new Audio();
       el.loop = true;
       el.volume = 0;
       current = { name, el };
-      void el.play().then(() => fade(el, VOL, 1500)).catch(() => {});
+      void trackUrl(name).then((u) => {
+        if (current?.el !== el) return;
+        el.src = u;
+        void el.play().then(() => fade(el, VOL, 1500)).catch(() => {});
+      });
     }
   }
   const amb = musicOn && wanted.amb;
   if (amb && !ambience) {
-    ambience = new Audio(MUSIC + "amb_hallway.mp3");
-    ambience.loop = true;
-    ambience.volume = 0;
-    void ambience.play().then(() => ambience && fade(ambience, 0.12, 2000)).catch(() => {});
+    const a = new Audio();
+    a.loop = true;
+    a.volume = 0;
+    ambience = a;
+    void trackUrl("amb_hallway").then((u) => {
+      if (ambience !== a) return;
+      a.src = u;
+      void a.play().then(() => fade(a, 0.12, 2000)).catch(() => {});
+    });
   } else if (!amb && ambience) {
     const a = ambience;
     ambience = null;
@@ -184,6 +203,6 @@ export function setMusicEnabled(on: boolean) {
 }
 if (typeof window !== "undefined")
   window.addEventListener("pointerup", () => {
-    if (current && current.el.paused) void current.el.play().then(() => current && fade(current.el, VOL, 1500)).catch(() => {});
-    if (ambience && ambience.paused) void ambience.play().catch(() => {});
+    if (current && current.el.paused && current.el.src) void current.el.play().then(() => current && fade(current.el, VOL, 1500)).catch(() => {});
+    if (ambience && ambience.paused && ambience.src) void ambience.play().catch(() => {});
   });
