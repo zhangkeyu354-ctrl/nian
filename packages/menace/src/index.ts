@@ -169,7 +169,7 @@ function answer(s:State,seat:number,v:any){const t=s.stack[s.stack.length-1];if(
  case "austere":s.stack.pop();if(v!==null){s.discard.push(takeCard(p,v));p.revealed=true;addO(s,1);addE(s,1,true)}break;
  case "severed":{if(!a.data.options.includes(v))fail("BAD");p.severed=v;s.stack.pop();break}
  case "bloodwork":{const c=takeCard(p,v);p.hand.push(c);say(s,`座位${seat+1} 公开手牌：${c.type}`);s.stack.pop();break}
- case "veto":{if(v===false&&a.data.forced)fail("VETO_FORCED");s.stack.pop();if(v){delete s.flags.veto;(s as any).vetoNow=true}break}
+ case "veto":{if(typeof v!=="boolean")fail("BAD");if(!v&&a.data.forced)fail("VETO_FORCED");s.stack.pop();if(v){delete s.flags.veto;(s as any).vetoNow=true}break}
  case "brawl":{s.stack.pop();wound(s,pick(v).seat);break}
  case "restructure":{s.stack.pop();if(v){const i=s.queue.findIndex(q=>q.card.id===v.out);if(i<0)fail("BAD");const c=takeCard(p,v.in);p.hand.push(s.queue[i].card);s.queue[i].card=c}break}
  case "salvage":{const ids:number[]=v??[];if(ids.length>2)fail("BAD");s.stack.pop();for(const id of ids){const i=s.discard.findIndex(c=>c.id===id);if(i<0)fail("BAD");p.hand.push(s.discard.splice(i,1)[0])}if(p.hand.length>limit(p))ask(s,seat,"discard_down");break}

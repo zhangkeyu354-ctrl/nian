@@ -11,6 +11,11 @@ describe("角色能力",()=>{
  it("急救",()=>{let s=g("rotti");s.players[1].wounds=["flesh"];s=use(s,"first_aid",{target:1});expect(s.oxygen).toBe(13);expect(s.players[1].wounds).toEqual([])});
  it("否决取消费用效果",()=>{let s=g("malumil");s=use(s,"veto",{discard:s.players[0].hand[0].id});s=q(s,["airlock","basic_repair"]);const o=s.oxygen;s=rv(s);s=ans(s,0,true);expect(s.oxygen).toBe(o);s=rv(s);expect(s.oxygen).toBe(o-1)});
  it("否决最后一张必须用",()=>{let s=g("malumil");s=use(s,"veto",{discard:s.players[0].hand[0].id});s=q(s,["airlock"]);s=rv(s);expect(()=>ans(s,0,false)).toThrow()});
+ it("伪造否决回答不能绕过最后一张的强制取消",()=>{
+   let s=g("malumil");s=use(s,"veto",{discard:s.players[0].hand[0].id});s=rv(q(s,["airlock"]));
+   for(const value of [null,0,"false",[]]) expect(()=>ans(s,0,value)).toThrow("BAD");
+   expect(ans(s,0,true).oxygen).toBe(s.oxygen);
+ });
  it("激光手枪",()=>{let s=use(g("gurg"),"laser_pistol",{target:1});expect(s.energy).toBe(3);expect(s.players[1].wounds.length).toBe(1)});
  it("激光手枪不能打自己",()=>{expect(()=>use(g("gurg"),"laser_pistol",{target:0})).toThrow()});
  it("委派",()=>{let s=use(g("andrew"),"delegate",{target:2});expect(s.sub).toEqual([2]);s=reduce(s,{seat:2,t:"play",card:s.players[2].hand[0].id});expect(s.sub).toEqual([]);expect(s.turn).toBe(1)});
