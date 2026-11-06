@@ -54,7 +54,7 @@ export class TARoom {
     const c = { ...cmd, seat } as Command; this.state = reduce(s as State, c); if (this.file.snapshot) this.file.snapshot = this.state; else this.file.commands.push(c);
   }
   botStep() { const s = this.state; if (!s || s.phase === "over") return false; for (const seat of waitingFor(s)) { const p = this.file.players.find((x) => x.playerId === this.file.lineup[seat]); if (p?.bot) { this.state = botMove(s, seat); this.autos(s, this.state); return true; } } return false; }
-  botDelay() { return this.state?.phase === "accuse" ? 5000 : this.state?.phase === "resolve" ? 2400 : 900; }
+  botDelay() { return this.state?.phase === "accuse" ? 14000 : this.state?.phase === "resolve" ? 4800 : 1100; }
   /** 代操作不进命令重放：存档改存整局快照 */
   private autos(_a: State, b: State) { this.file.snapshot = b; }
   snapshot(me: string | null): TARoomSnapshot {

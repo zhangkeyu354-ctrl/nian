@@ -411,3 +411,13 @@
 }
 .ta-cine{position:fixed;inset:0;z-index:21;width:100%;height:100%;object-fit:cover;background:#000;cursor:pointer}
 .ta-clip{position:fixed;inset:0;z-index:15;background:#000;display:flex;align-items:flex-end;justify-content:center;padding-bottom:18dvh;cursor:pointer}.ta-clip video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}.ta-clip b{position:relative;font:700 38px TATitle,sans-serif;color:#ffd976;text-shadow:0 3px 0 #000,0 0 22px #000;animation:ta-pop .5s 3.4s both}.ta-clip b.r{color:#ff5a4a}
+
+/* 会议阶段一屏操作、节奏与衔接 */
+.ta-stage{animation-duration:3.2s}.ta-veil{position:fixed;inset:0;z-index:12;background:#000;pointer-events:none;animation:ta-veil .55s ease-out both}@keyframes ta-veil{from{opacity:.85}to{opacity:0}}
+.ph-accuse .ta-table{width:min(100%,calc(100dvh - 330px))}
+.ph-accuse .ta-main{max-height:none;overflow:visible}.ph-accuse .ta-panel{padding:10px 12px!important;gap:8px}.ph-accuse .ta-panel::before{display:none}
+.ta-sum{display:flex;align-items:center;justify-content:space-between;gap:8px;font-size:14px;font-weight:700;color:#ffd976}.ta-world .ta-sum button{min-height:40px;padding:0 10px;font-size:13px}
+.ta-revall{position:fixed;inset:0;z-index:14;background:#050809f2;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:12px;padding:16px;overflow-y:auto;color:#ece9e1}.ta-revall h3{margin:0;font:700 24px TATitle,sans-serif;color:#ffd976}.ta-revall>div{display:flex;flex-wrap:wrap;gap:10px;justify-content:center}.ta-revall .one{font-size:calc(min(43vw,170px)/34)}.ta-revall p{margin:0;color:#aab}
+
+@media (prefers-reduced-motion:reduce){.ta-veil{display:none}}
+.ph-accuse .ta-fly,.ph-vote .ta-fly{display:none}
