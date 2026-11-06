@@ -3,6 +3,7 @@ import { createTARoom, savedName, useTARoom } from "./ta-net.ts";
 import { ABILITIES, AGENDA_TEXT, CARD_TEXT, CHAR_NAME, QUESTION, WOUND_TEXT, RULES, zh, type Step } from "./text.ts";
 import { CHARACTERS, ENERGY_GOAL, ENERGY_SAFE, OXYGEN_MAX } from "../../../../packages/menace/src/data.ts";
 import "./ta.css";
+import type { Contribution } from "../../../../packages/menace/src/index.ts";
 import type { Scene } from "./scenes.ts";
 import vfxMeta from "../vfx-meta.json" with { type: "json" };
 import { music, sfx, setMute, muted } from "./sound.ts";
@@ -69,6 +70,22 @@ function Bar({ label, v, max, mark, cls, delay }: { label: string; v: number; ma
     </em>
   </div>;
 }
+const signed = (value: number) => value > 0 ? `+${value}` : value < 0 ? `−${-value}` : "0";
+function ContributionLine({ entry }: { entry: Contribution }) {
+  return <div className="ta-contributions">
+    <div><small>造成伤害</small><strong>{entry.damage}</strong><small>受到 {entry.damageTaken ?? 0}</small></div>
+    {(["oxygen", "energy"] as const).map(resource => {
+      const { gained, spent } = entry[resource];
+      const net = gained - spent;
+      return <div key={resource}>
+        <small>{resource === "oxygen" ? "氧气净值" : "能量净值"}</small>
+        <strong className={net > 0 ? "gain" : net < 0 ? "loss" : ""}>{signed(net)}</strong>
+        <small>补充 {gained} · 消耗 {spent}</small>
+      </div>;
+    })}
+  </div>;
+}
+
 function SceneOverlay({ scene, name, finish }: { scene: Scene; name: (seat: number) => string; finish: () => void }) {
   const video = useRef<HTMLVideoElement>(null);
   const close = useRef(finish);
@@ -279,7 +296,8 @@ function Game({ snap: incoming, send, seen, takeScenes, msg, clear, restart, hos
     {v.phase === "over" && !scene ? <div className={"ta-end " + (v.winner === "crew" ? "win" : "lose")}><div className="fx">{Array.from({ length: 28 }, (_, i) => <i key={i} style={{ left: `${(i * 37) % 100}%`, animationDelay: `${(i % 9) * .35}s` }} />)}</div>
       <small>{v.winner === "crew" ? "警戒号 · 引擎重启" : "警戒号 · 生命维持终止"}</small><h1>{v.winner === "crew" ? "劫后余生" : "全员窒息"}</h1><p className="why">{v.winner === "crew" ? (v.energy >= ENERGY_GOAL ? `能量充满，氧气仅剩 ${v.oxygen} 格。你们活下来了。` : "内鬼全部伏诛，飞船脱离危险。") : (v.oxygen === 0 ? "最后一口氧气耗尽，内鬼的计划得逞。" : "船员无一生还，飞船落入内鬼之手。")}</p>
       <p className={"mine " + (v.winners.includes(v.you) ? "yes" : "no")}>{v.winners.includes(v.you) ? "你赢了" : "你输了"}</p>
-      <ul>{v.players.map((p: any, i: number) => <li key={p.seat} style={{ animationDelay: `${.25 + i * .12}s` }} className={v.winners.includes(p.seat) ? "w" : ""}>{p.character ? <img src={img("p_" + p.character)} alt="" /> : null}<span><b>{name(p.seat)}</b><small>{AGENDA_TEXT[p.agenda][0]}{p.killed ? " · 阵亡" : p.exiled ? " · 被放逐" : ""}</small></span><em>{v.winners.includes(p.seat) ? "胜" : "败"}</em></li>)}</ul>
+      {v.contributions ? <p className="ta-contribution-note">{v.contributions.partial ? "本局为旧存档，仅统计更新后发生的变化。" : "个人贡献 · 按实际生效值统计"}</p> : <p className="ta-contribution-note">本局没有个人贡献记录。</p>}
+      <ul>{v.players.map((p: any, i: number) => <li key={p.seat} style={{ animationDelay: `${.25 + i * .12}s` }} className={v.winners.includes(p.seat) ? "w" : ""}>{p.character ? <img src={img("p_" + p.character)} alt="" /> : null}<span><b>{name(p.seat)}</b><small>{AGENDA_TEXT[p.agenda][0]}{p.killed ? " · 阵亡" : p.exiled ? " · 被放逐" : ""}</small></span><em>{v.winners.includes(p.seat) ? "胜" : "败"}</em>{v.contributions?.seats[p.seat] ? <ContributionLine entry={v.contributions.seats[p.seat]} /> : null}</li>)}</ul>
       {host ? <button className="ta-primary" onClick={restart}>再来一局</button> : <p className="why">等待房主开始下一局</p>}</div> : null}
     {rev ? <div className="ta-revall" onClick={() => setRev(false)}><h3>本轮揭示的牌</h3><div>{v.revealed.map((t: string, i: number) => <div key={i} className="one"><GameCard type={t} /></div>)}</div><p>点任意处返回</p></div> : null}
     <div key={"veil" + v.phase} className="ta-veil" />

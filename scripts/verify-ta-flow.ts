@@ -63,6 +63,11 @@ botReveal.queue.push({ seat: 0, card: { id: 903, type: "basic_repair" } });
 save("GATE", botReveal, seat => seat === 1);
 const ending = setup();
 ending.phase = "over"; ending.winner = "crew"; ending.winners = [0, 1, 2];
+ending.contributions!.seats[0] = {
+  oxygen: { gained: 4, spent: 6 },
+  energy: { gained: 5, spent: 2 },
+  damage: 3, damageTaken: 1,
+};
 save("ENDS", ending);
 save("LOSS", { ...ending, winner: "menace", winners: [3], oxygen: 0 });
 let exile = setup();
@@ -211,6 +216,11 @@ try {
     const end = await open("ENDS");
     await playVideo(end, "ending", "08-结局", "船员胜利");
     await button(end, "再来一局").waitFor();
+    const stats = end.locator(".ta-end li").first().locator(".ta-contributions");
+    for (const value of ["造成伤害", "受到 1", "−2", "补充 4 · 消耗 6", "+3", "补充 5 · 消耗 2"]) {
+      await stats.getByText(value, { exact: true }).waitFor();
+    }
+    assert.equal(await stats.evaluate(el => el.getBoundingClientRect().right <= innerWidth), true);
     await shot(end, "09-结算页");
     await end.close();
     const loss = await open("LOSS");

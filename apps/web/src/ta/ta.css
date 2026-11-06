@@ -460,3 +460,16 @@
   100% { opacity: 0; transform: translateY(-10px); }
 }
 @media (prefers-reduced-motion: reduce) { .ta-resource-float strong { animation: none; } }
+
+.ta-end li { flex-wrap: wrap; }
+.ta-end li > span { min-width: 0; overflow-wrap: anywhere; }
+.ta-contribution-note { margin: 2px 0 0; color: #d7d8cb; font-size: 13px; }
+.ta-contributions {
+  display: grid; flex: 0 0 100%; grid-template-columns: repeat(3, minmax(0, 1fr));
+  padding: 6px 0 4px; border-top: 1px solid #ffffff25;
+}
+.ta-contributions > div { display: grid; justify-items: center; gap: 2px; text-align: center; }
+.ta-contributions small { font-size: 12px; }
+.ta-contributions strong { font-size: 21px; font-variant-numeric: tabular-nums; }
+.ta-contributions .gain { color: #caff80; }
+.ta-contributions .loss { color: #ff9b89; }

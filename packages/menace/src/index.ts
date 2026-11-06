@@ -1,10 +1,18 @@
 import {AGENDAS,CHARACTERS,COST,EMMA,ENERGY_GOAL,ENERGY_SAFE,OXYGEN_MAX,SETUP,WOUNDS,type Ability,type CardType,type WoundType} from "./data.ts";
 export * from "./data.ts";
 export interface Card{id:number;type:CardType}
-interface Played{seat:number;card:Card} // seat=-1 表示 EmMA
+interface Played{seat:number;card:Card;source?:number}
+export interface Contribution {
+ oxygen: { gained: number; spent: number };
+ energy: { gained: number; spent: number };
+ damage: number;
+ damageTaken?: number;
+}
+const emptyContribution = (): Contribution => ({ oxygen: { gained: 0, spent: 0 }, energy: { gained: 0, spent: 0 }, damage: 0, damageTaken: 0 });
+const newLedger = (n: number, partial: boolean) => ({ partial, seats: Array.from({ length: n }, emptyContribution) }); // seat=-1 表示 EmMA
 export interface Player{seat:number;agenda:string;character:string|null;choices:string[];hand:Card[];deck:Card[];aside:Card[];wounds:WoundType[];exiled:boolean;killed:boolean;revealed:boolean;used:Ability[];severed:Ability|null;resoluteUsed:boolean;austereUsed:boolean;}
-type Task={k:"ask";seat:number;q:string;data?:any}|{k:"wound";seat:number;st:number}|{k:"ability";seat:number;ab:Ability;args:any;free:boolean;copy?:boolean}|{k:"effect";type:CardType;paid?:boolean}|{k:"copy";type:CardType}|{k:"death";seat:number}|{k:"reveal"}|{k:"finish"};
-export interface State{n:number;mode:"basic"|"advanced";rng:number;nextId:number;phase:"setup"|"action"|"resolve"|"accuse"|"vote"|"over";round:number;leader:number;oxygen:number;energy:number;resStart:number;players:Player[];emma:Card[];emmaUsed:Card[];woundDeck:WoundType[];discard:Card[];played:Played[];queue:Played[];revealed:Played[];stack:Task[];turn:number;sub:number[];lastType:string|null;playedSeats:number[];armed:boolean;
+type Task={k:"ask";seat:number;q:string;data?:any;source?:number}|{k:"wound";seat:number;st:number;source?:number}|{k:"ability";seat:number;ab:Ability;args:any;free:boolean;copy?:boolean}|{k:"effect";type:CardType;paid?:boolean;source?:number}|{k:"copy";type:CardType;source?:number}|{k:"death";seat:number}|{k:"reveal"}|{k:"finish"};
+export interface State{n:number;mode:"basic"|"advanced";rng:number;nextId:number;phase:"setup"|"action"|"resolve"|"accuse"|"vote"|"over";round:number;leader:number;oxygen:number;energy:number;resStart:number;players:Player[];emma:Card[];emmaUsed:Card[];woundDeck:WoundType[];discard:Card[];played:Played[];queue:Played[];revealed:Played[];stack:Task[];turn:number;sub:number[];lastType:string|null;playedSeats:number[];armed:boolean;armedSeat?:number;contributions?:ReturnType<typeof newLedger>;
  flags:{veto?:number;deflect?:number;helping?:number;moxie?:number;damage?:number;rewind?:number;restructure?:number;guard?:number;lockdown?:boolean;brawl?:boolean;backstab?:boolean;bad?:boolean;woundedRound?:boolean;};
  roundAbilities:Ability[];abilityActors?:{ab:Ability;seat:number}[];stage:string;votes:Record<number,number|null>;log:string[];notes:string[][];winner:"crew"|"menace"|null;winners:number[];}
 export type Command={seat:number}&({t:"choose";name:string}|{t:"draw"}|{t:"play";card:number}|{t:"ability";ab:Ability;args?:any}|{t:"pass"}|{t:"answer";value:any}|{t:"reveal"}|{t:"call_vote"}|{t:"end_accuse"}|{t:"vote";target:number|null});
@@ -18,10 +26,10 @@ const side=(p:Player)=>AGENDAS[p.agenda].side;
 const hasAgenda=(s:State,a:string)=>s.players.find(p=>p.agenda===a&&!p.killed);
 const limit=(p:Player)=>has(p,"concussion")?2:4;
 const say=(s:State,m:string)=>{s.log.push(m)};
-const ask=(s:State,seat:number,q:string,data?:any)=>{s.stack.push({k:"ask",seat,q,data})};
+const ask=(s:State,seat:number,q:string,data?:any,source?:number)=>{s.stack.push({k:"ask",seat,q,data,...(source === undefined ? {} : {source})})};
 export function createGame(n:number,seed:number,mode:"basic"|"advanced"="basic"):State{
  const c=SETUP[n]??fail("BAD_PLAYERS");
- const s:State={n,mode,rng:seed|0,nextId:1,phase:"setup",round:0,leader:0,oxygen:c.oxygen,energy:0,resStart:0,players:[],emma:[],emmaUsed:[],woundDeck:[],discard:[],played:[],queue:[],revealed:[],stack:[],turn:0,sub:[],lastType:null,playedSeats:[],armed:false,flags:{},roundAbilities:[],stage:"",votes:{},log:[],notes:Array.from({length:n},()=>[]),winner:null,winners:[]};
+ const s:State={n,mode,rng:seed|0,nextId:1,phase:"setup",round:0,leader:0,oxygen:c.oxygen,energy:0,resStart:0,players:[],emma:[],emmaUsed:[],woundDeck:[],discard:[],played:[],queue:[],revealed:[],stack:[],turn:0,sub:[],lastType:null,playedSeats:[],armed:false,contributions:newLedger(n,false),flags:{},roundAbilities:[],stage:"",votes:{},log:[],notes:Array.from({length:n},()=>[]),winner:null,winners:[]};
  s.emma=shuffle(s,build(s,EMMA));s.woundDeck=shuffle(s,[...WOUNDS]);
  const crew=["austere","loyal","paragon","reckless","resolute","vengeant"];
  const ag=[...shuffle(s,["contagion","butcher"]).slice(0,c.menace),...shuffle(s,crew).slice(0,c.crew),...(c.saint?["saint"]:[]),...(c.coward?["coward"]:[])];
@@ -38,9 +46,26 @@ function afterChoice(s:State){
 }
 const merge=(a:any,b:any)=>{const o={...a};for(const k in b)o[k]=(o[k]||0)+b[k];return o};
 function beginRound(s:State){(s as any).endPaid=false;(s as any).shown=[];s.phase="action";s.round++;s.turn=0;s.sub=[];s.lastType=null;s.playedSeats=[];s.flags={};s.roundAbilities=[];s.abilityActors=[];s.played=[];for(const p of s.players)p.used=[];say(s,`第 ${s.round} 回合开始`)}
-function addO(s:State,n:number){s.oxygen=Math.max(0,Math.min(OXYGEN_MAX,s.oxygen+n));if(s.oxygen===0)zeroO(s)}
+function recordResource(s:State,source:number|undefined,resource:"oxygen"|"energy",change:number){
+ const entry=source===undefined?undefined:s.contributions?.seats[source]?.[resource];
+ if(!entry)return;
+ if(change>0)entry.gained+=change;
+ else entry.spent-=change;
+}
+function addO(s:State,n:number,source?:number){
+ const before=s.oxygen;
+ s.oxygen=Math.max(0,Math.min(OXYGEN_MAX,s.oxygen+n));
+ recordResource(s,source,"oxygen",s.oxygen-before);
+ if(s.oxygen===0)zeroO(s)
+}
 function zeroO(s:State){const a=hasAgenda(s,"austere");if(a&&!a.austereUsed&&a.hand.length&&!a.exiled){a.austereUsed=true;ask(s,a.seat,"austere")}}
-function addE(s:State,n:number,free=false){if(n>0&&!free&&s.phase==="resolve")s.energy=Math.max(s.energy,Math.min(s.energy+n,s.resStart+5));else s.energy+=n;s.energy=Math.max(0,Math.min(ENERGY_GOAL,s.energy))}
+function addE(s:State,n:number,free=false,source?:number){
+ const before=s.energy;
+ if(n>0&&!free&&s.phase==="resolve")s.energy=Math.max(s.energy,Math.min(s.energy+n,s.resStart+5));
+ else s.energy+=n;
+ s.energy=Math.max(0,Math.min(ENERGY_GOAL,s.energy));
+ recordResource(s,source,"energy",s.energy-before);
+}
 function draw(s:State,seat:number,n:number,source=s.players[seat].deck,options:{play?:boolean;deferLimit?:boolean}={}){
  const p=s.players[seat], direct=options.play||has(p,"frenzied");
  for(let i=0;i<n;i++){
@@ -81,13 +106,13 @@ function canAbility(s:State,p:Player,ab:Ability,args:any){
 export function actor(s:State){if(s.phase!=="action"||s.stack.length)return null;if(s.sub.length)return s.sub[s.sub.length-1];const seat=(s.leader+s.turn)%s.n;return seat}
 function legalKinds(s:State,p:Player){const k:string[]=[];if(p.deck.length&&(!has(p,"frenzied")||canPlay(s,p)))k.push("draw");if(p.hand.length&&canPlay(s,p))k.push("play");if(!p.exiled&&abilityList(p).some(a=>canAbility(s,p,a,{})))k.push("ability");return k}
 function endAction(s:State,type:string){s.lastType=type;if(s.sub.length)s.sub.pop();else s.turn++}
-function wound(s:State,seat:number){s.stack.push({k:"wound",seat,st:0})}
+function wound(s:State,seat:number,source?:number){s.stack.push({k:"wound",seat,st:0,source})}
 function doWound(s:State,t:Extract<Task,{k:"wound"}>){const p=s.players[t.seat];if(p.killed)return;
  if(t.st===0){if(s.flags.lockdown&&p.wounds.length)return;t.st=1;s.stack.push(t);if(s.flags.deflect!==undefined){const h=s.flags.deflect;delete s.flags.deflect;ask(s,h,"deflect",{victim:t.seat})}return}
  if(t.st===1){t.st=2;s.stack.push(t);if(p.wounds.length===1){const pg=hasAgenda(s,"paragon");if(pg&&!pg.revealed&&pg.seat!==p.seat&&!pg.exiled)ask(s,pg.seat,"paragon",{victim:p.seat});}return}
  if(t.st===2){t.st=3;s.stack.push(t);if(p.wounds.length===1&&p.agenda==="resolute"&&!p.resoluteUsed)ask(s,p.seat,"resolute");return}
  if(s.flags.lockdown&&p.wounds.length)return;
- const w=s.woundDeck.shift()??"flesh";p.wounds.push(w);s.flags.woundedRound=true;say(s,`座位${p.seat+1} 受伤：${w}`);
+ const w=s.woundDeck.shift()??"flesh";p.wounds.push(w);const entry=t.source===undefined?undefined:s.contributions?.seats[t.source];if(entry)entry.damage++;const target=s.contributions?.seats[t.seat];if(target)target.damageTaken=(target.damageTaken??0)+1;s.flags.woundedRound=true;say(s,`座位${p.seat+1} 受伤：${w}`);
  if(p.agenda==="saint"){p.revealed=true;say(s,`座位${p.seat+1} 是圣人，氧气 -2`);addO(s,-2)}
  if(w==="concussion"){while(p.hand.length>limit(p))discardRandom(s,p)}
  if(w==="frenzied"){p.deck=[...shuffle(s,p.hand.splice(0)),...p.deck]}
@@ -95,34 +120,34 @@ function doWound(s:State,t:Extract<Task,{k:"wound"}>){const p=s.players[t.seat];
  if(w==="severed"){const l=abilityList(p);ask(s,p.seat,"severed",{options:l})}
  if(w==="mental_breakdown"){for(const o of s.players)if(o!==p&&o.deck.length)p.deck.push(o.deck.shift()!);shuffle(s,p.deck)}
 }
-function effect(s:State,type:CardType,copy:boolean){
- if(type==="raise_morale")addO(s,1);if(type==="basic_repair")addE(s,1);if(type==="advanced_repair")addE(s,2);
+function effect(s:State,type:CardType,copy:boolean,source?:number){
+ if(type==="raise_morale")addO(s,1,source);if(type==="basic_repair")addE(s,1,false,source);if(type==="advanced_repair")addE(s,2,false,source);
  if(type==="command")for(const p of alive(s).reverse())draw(s,p.seat,1);
  if(type==="panic")for(const p of alive(s))discardRandom(s,p);
- if(type==="airlock")addO(s,-1);if(type==="explosion")addE(s,-2);
- if(type==="reactor")for(const seat of [...s.playedSeats].reverse()){const p=s.players[seat];if(!p.killed&&!p.wounds.length)wound(s,seat)}
- if(!copy&&type==="backstab"&&!s.flags.backstab){s.flags.backstab=true;if(s.flags.guard!==undefined){delete s.flags.guard;say(s,"守卫取消了背刺")}else wound(s,s.leader)}
- if(!copy&&type==="brawl"&&!s.flags.brawl){s.flags.brawl=true;ask(s,s.leader,"brawl")}
+ if(type==="airlock")addO(s,-1,source);if(type==="explosion")addE(s,-2,false,source);
+ if(type==="reactor")for(const seat of [...s.playedSeats].reverse()){const p=s.players[seat];if(!p.killed&&!p.wounds.length)wound(s,seat,source)}
+ if(!copy&&type==="backstab"&&!s.flags.backstab){s.flags.backstab=true;if(s.flags.guard!==undefined){delete s.flags.guard;say(s,"守卫取消了背刺")}else wound(s,s.leader,source)}
+ if(!copy&&type==="brawl"&&!s.flags.brawl){s.flags.brawl=true;ask(s,s.leader,"brawl",undefined,source)}
 }
 const COSTO:Partial<Record<CardType,number>>={basic_repair:1,advanced_repair:1,command:1,panic:1};
 function reveal(s:State){const it=s.queue.shift()!;s.revealed.push(it);const type=it.card.type;say(s,`揭示：${type}`);if(["airlock","explosion","panic","reactor"].includes(type))s.flags.bad=true;
- s.stack.push({k:"effect",type});
+ s.stack.push({k:"effect",type,source:it.source??it.seat});
  if(s.flags.veto!==undefined)ask(s,s.flags.veto,"veto",{type,forced:s.queue.length===0})}
-function resolveCard(s:State,type:CardType,vetoed:boolean,paid=false){if(vetoed){say(s,"否决：取消费用和效果");return}
+function resolveCard(s:State,type:CardType,vetoed:boolean,paid=false,source?:number){if(vetoed){say(s,"否决：取消费用和效果");return}
  const c=COSTO[type];
  if(c&&!paid){
-  s.stack.push({k:"effect",type,paid:true});
-  addO(s,-c);return
+  s.stack.push({k:"effect",type,paid:true,source});
+  addO(s,-c,source);return
  }
- const copy=s.armed&&type!=="replicate";if(type==="replicate"){s.armed=true;return}
- if(copy){s.armed=false;if(type!=="brawl"&&type!=="backstab")s.stack.push({k:"copy",type})}
- effect(s,type,false)}
+ const copy=s.armed&&type!=="replicate";if(type==="replicate"){s.armed=true;s.armedSeat=source;return}
+ if(copy){s.armed=false;if(type!=="brawl"&&type!=="backstab")s.stack.push({k:"copy",type,source:s.armedSeat});delete s.armedSeat}
+ effect(s,type,false,source)}
 function heal(p:Player,index:number){const [removed]=p.wounds.splice(Math.max(0,index),1);if(removed==="severed"&&!p.wounds.includes("severed"))p.severed=null}
 function ability(s:State,t:Extract<Task,{k:"ability"}>,validating=false){const p=s.players[t.seat],a=t.args??{},c=COST[t.ab];
  if(!t.free){
   if((c.e??0)>s.energy)fail("BAD_ABILITY");
-  if(c.e)addE(s,-c.e);
-  if(c.o){addO(s,-c.o);if(!validating&&s.oxygen===0){
+  if(c.e)addE(s,-c.e,false,p.seat);
+  if(c.o){addO(s,-c.o,p.seat);if(!validating&&s.oxygen===0){
    s.stack.push({...t,free:true});return
   }}
  }
@@ -140,11 +165,11 @@ function ability(s:State,t:Extract<Task,{k:"ability"}>,validating=false){const p
    break
  }
  case "veto":s.flags.veto=p.seat;break;
- case "laser_pistol":{const o=tgt(a.target);if(o===p)fail("BAD_TARGET");wound(s,o.seat);break}
+ case "laser_pistol":{const o=tgt(a.target);if(o===p)fail("BAD_TARGET");wound(s,o.seat,p.seat);break}
  case "delegate":{const o=tgt(a.target);if(o===p)fail("BAD_TARGET");s.sub.push(o.seat);(s as any).delegated=true;break}
  case "commandeer":{const o=tgt(a.target);if(!o.deck.length)fail("EMPTY");draw(s,p.seat,1,o.deck);break}
  case "salvage":if(s.discard.length)ask(s,p.seat,"salvage",{cards:s.discard});break;
- case "crunch":{const o=tgt(a.target);if(o.wounds.length)fail("BAD_TARGET");wound(s,o.seat);draw(s,o.seat,3);break}
+ case "crunch":{const o=tgt(a.target);if(o.wounds.length)fail("BAD_TARGET");wound(s,o.seat,p.seat);draw(s,o.seat,3);break}
  case "strategize":{
    p.aside.push(takeCard(p,a.aside));
    const ids:number[]=a.play??[];
@@ -152,7 +177,7 @@ function ability(s:State,t:Extract<Task,{k:"ability"}>,validating=false){const p
    if(!ids.length)break;
    if(ids.length!==p.aside.length||new Set(ids).size!==ids.length||p.aside.some(card=>!ids.includes(card.id)))fail("NOT_ASIDE");
    for(const card of p.aside.splice(0))playCard(s,p,card);
-   if(ids.length>=4)addO(s,2);
+   if(ids.length>=4)addO(s,2,p.seat);
    break
  }
  case "moxie":s.flags.moxie=p.seat;break;
@@ -202,8 +227,8 @@ function death(s:State,seat:number){const p=s.players[seat];if(p.killed)return;p
  s.discard.push(...p.hand.splice(0));
  if(!p.exiled&&(p.agenda==="contagion"||p.agenda==="butcher"))ask(s,seat,p.agenda);
  if(p.agenda==="vengeant")ask(s,seat,"vengeant");
- if(p.agenda==="reckless"&&!p.exiled)addE(s,2,true);}
-function endRound(s:State){if(!(s as any).endPaid){(s as any).endPaid=true;if(s.flags.moxie!==undefined&&s.flags.woundedRound)addO(s,3);if(s.flags.damage!==undefined&&s.flags.bad)addE(s,3,true);}
+ if(p.agenda==="reckless"&&!p.exiled)addE(s,2,true,p.seat);}
+function endRound(s:State){if(!(s as any).endPaid){(s as any).endPaid=true;if(s.flags.moxie!==undefined&&s.flags.woundedRound)addO(s,3,s.flags.moxie);if(s.flags.damage!==undefined&&s.flags.bad)addE(s,3,true,s.flags.damage);}
  const d=Array.from({length:s.n},(_,i)=>s.players[(s.leader+i)%s.n]).find(p=>!p.killed&&p.wounds.length>=2);if(d){s.stack.push({k:"death",seat:d.seat});return}
  if(check(s))return;if(s.energy>=ENERGY_GOAL&&s.oxygen>0){over(s,"crew");return}
  do{s.leader=(s.leader+1)%s.n}while(s.players[s.leader].killed);s.stage="";beginRound(s)}
@@ -222,7 +247,7 @@ function run(s:State){for(let g=0;g<5000;g++){
  }
  const top=s.stack[s.stack.length-1];
  if(top){if(top.k==="ask")return;s.stack.pop();
-  if(top.k==="wound")doWound(s,top);else if(top.k==="ability")ability(s,top);else if(top.k==="effect")resolveCard(s,top.type,!!(s as any).vetoNow,top.paid),(s as any).vetoNow=false;else if(top.k==="copy")effect(s,top.type,true);else if(top.k==="death")death(s,top.seat);continue}
+  if(top.k==="wound")doWound(s,top);else if(top.k==="ability")ability(s,top);else if(top.k==="effect")resolveCard(s,top.type,!!(s as any).vetoNow,top.paid,top.source),(s as any).vetoNow=false;else if(top.k==="copy")effect(s,top.type,true,top.source);else if(top.k==="death")death(s,top.seat);continue}
  if(s.stage!=="end"&&check(s))continue;
  if(s.phase==="action"){if(s.sub.length){const p=s.players[s.sub[s.sub.length-1]];if(p.killed||!legalKinds(s,p).some(k=>k!=="draw")){s.sub.pop();continue}return}
   if(s.turn>=s.n){startResolve(s);continue}
@@ -244,20 +269,20 @@ function answer(s:State,seat:number,v:any){const t=s.stack[s.stack.length-1];if(
  case "deflect":s.stack.pop();if(v!==null){const o=pick(v);if(o.seat===a.data.victim)fail("BAD_TARGET");const w=s.stack[s.stack.length-1] as any;w.seat=o.seat}break;
  case "paragon":s.stack.pop();if(v){p.revealed=true;const w=s.stack[s.stack.length-1] as any;w.seat=seat}break;
  case "resolute":s.stack.pop();if(v){p.revealed=true;p.resoluteUsed=true;s.stack.pop()}break;
- case "austere":s.stack.pop();if(v!==null){s.discard.push(takeCard(p,v));p.revealed=true;addO(s,1);addE(s,1,true)}break;
+ case "austere":s.stack.pop();if(v!==null){s.discard.push(takeCard(p,v));p.revealed=true;addO(s,1,seat);addE(s,1,true,seat)}break;
  case "severed":{if(!a.data.options.includes(v))fail("BAD");p.severed=v;s.stack.pop();break}
  case "bloodwork":{const c=takeCard(p,v);p.hand.push(c);say(s,`座位${seat+1} 公开手牌：${c.type}`);s.stack.pop();break}
  case "veto":{if(typeof v!=="boolean")fail("BAD");if(!v&&a.data.forced)fail("VETO_FORCED");s.stack.pop();if(v){delete s.flags.veto;(s as any).vetoNow=true}break}
- case "brawl":{s.stack.pop();wound(s,pick(v).seat);break}
- case "restructure":{s.stack.pop();if(v){const i=s.queue.findIndex(q=>q.card.id===v.out);if(i<0)fail("BAD");const c=takeCard(p,v.in);p.hand.push(s.queue[i].card);s.queue[i].card=c}break}
+ case "brawl":{s.stack.pop();wound(s,pick(v).seat,a.source);break}
+ case "restructure":{s.stack.pop();if(v){const i=s.queue.findIndex(q=>q.card.id===v.out);if(i<0)fail("BAD");const c=takeCard(p,v.in);p.hand.push(s.queue[i].card);s.queue[i].card=c;s.queue[i].source=seat}break}
  case "salvage":{const ids:number[]=v??[];if(ids.length>2)fail("BAD");s.stack.pop();for(const id of ids){const i=s.discard.findIndex(c=>c.id===id);if(i<0)fail("BAD");p.hand.push(s.discard.splice(i,1)[0])}if(p.hand.length>limit(p))ask(s,seat,"discard_down");break}
  case "formulate":{p.deck.push(takeCard(p,v));s.stack.pop();if(p.hand.length>limit(p))ask(s,seat,"discard_down");break}
  case "assist":{s.stack.pop();if(v){delete s.flags.helping;(s.stack[s.stack.length-1] as any).free=true}break}
  case "rewind":{const i=s.revealed.findIndex(r=>r.card.id===v);if(i<0)fail("BAD");s.stack.pop();p.hand.push(s.revealed.splice(i,1)[0].card);if(p.hand.length>limit(p))ask(s,seat,"discard_down");break}
  case "contagion":{s.stack.pop();if(v!==null){const o=pick(v);s.discard.push(...o.hand.splice(0))}break}
- case "butcher":case "vengeant":{s.stack.pop();if(v!==null)wound(s,pick(v).seat);break}
+ case "butcher":case "vengeant":{s.stack.pop();if(v!==null)wound(s,pick(v).seat,seat);break}
  default:fail("BAD_QUESTION")}}
-export function reduce(prev:State,c:Command):State{const s=structuredClone(prev);const p=s.players[c.seat]??fail("BAD_SEAT");if(s.phase==="over")fail("OVER");
+export function reduce(prev:State,c:Command):State{const s=structuredClone(prev);s.contributions??=newLedger(s.n,true);const p=s.players[c.seat]??fail("BAD_SEAT");if(s.phase==="over")fail("OVER");
  if(c.t==="answer"){answer(s,c.seat,c.value);run(s);return s}
  if(s.stack.length)fail("WAITING");
  if(c.t==="choose"){if(s.phase!=="setup"||!p.choices.includes(c.name))fail("BAD_CHOICE");p.character=c.name;const rest=p.choices.filter(x=>x!==c.name);p.choices=[];(s as any).pool.push(...rest);afterChoice(s);run(s);return s}
@@ -288,7 +313,7 @@ export function waitingFor(s:State):number[]{if(s.phase==="over")return[];const 
 export function viewFor(s:State,seat:number){const over=s.phase==="over";const t=s.stack[s.stack.length-1];
  return{phase:s.phase,mode:s.mode,round:s.round,leader:s.leader,oxygen:s.oxygen,energy:s.energy,armed:undefined,you:seat,hand:s.players[seat]?.hand,aside:s.players[seat]?.aside,choices:s.players[seat]?.choices,agenda:s.players[seat]?.agenda,notes:s.notes[seat],deckCount:s.players[seat]?.deck.length,
  players:s.players.map(p=>({seat:p.seat,character:p.character,wounds:p.wounds,exiled:p.exiled,killed:p.killed,hand:p.hand.length,deck:p.deck.length,used:p.used,played:s.played.filter(x=>x.seat===p.seat).length,agenda:over||p.revealed||p.seat===seat?p.agenda:null})),
- revealed:s.revealed.length?s.revealed.map(r=>r.card.type):((s as any).shown??[]),remaining:s.queue.length,waiting:waitingFor(s),question:t&&t.k==="ask"&&t.seat===seat?{q:t.q,data:t.data}:null,log:s.log.slice(-30),logCount:s.log.length,winner:s.winner,winners:s.winners,voted:Object.keys(s.votes).length,roundAbilities:mimicOptions(s,seat),legalAbilities:s.players[seat]?abilityList(s.players[seat]).filter(ab=>canAbility(s,s.players[seat],ab,{})):[],lastType:s.lastType}}
+ revealed:s.revealed.length?s.revealed.map(r=>r.card.type):((s as any).shown??[]),remaining:s.queue.length,waiting:waitingFor(s),question:t&&t.k==="ask"&&t.seat===seat?{q:t.q,data:t.data}:null,log:s.log.slice(-30),logCount:s.log.length,contributions:over?s.contributions:undefined,winner:s.winner,winners:s.winners,voted:Object.keys(s.votes).length,roundAbilities:mimicOptions(s,seat),legalAbilities:s.players[seat]?abilityList(s.players[seat]).filter(ab=>canAbility(s,s.players[seat],ab,{})):[],lastType:s.lastType}}
 
 /** 掉线代操作：对指定座位执行一个安全的默认动作（不做主动选择） */
 export function autoMove(s:State,seat:number):State{const p=s.players[seat];const t:any=s.stack[s.stack.length-1];const alive2=s.players.filter(x=>!x.killed&&x.seat!==seat).map(x=>x.seat);
