@@ -161,8 +161,10 @@ function Game({ snap, send, msg, clear, restart, host, online }: { snap: any; se
   const [mute, setM] = useState(muted());
   const exiled = v.players.filter((p: any) => p.exiled).length; const [door, setDoor] = useState(false); const prevEx = useRef(exiled);
   useEffect(() => { if (exiled > prevEx.current) { setDoor(true); sfx("sabotage"); setTimeout(() => setDoor(false), 2600); } prevEx.current = exiled; }, [exiled]);
+  const [cine, setCine] = useState(false);
+  useEffect(() => { if (v.phase !== "over") { setCine(false); return; } const t = setTimeout(() => setCine(true), 6500); return () => clearTimeout(t); }, [v.phase]);
   const [banner, setBanner] = useState("");
-  useEffect(() => { if (v.phase === "setup") return; setBanner(v.phase === "over" ? (v.winner === "crew" ? "飞船得救" : "内鬼胜利") : PHASE[v.phase]); const t = setTimeout(() => setBanner(""), v.phase === "over" ? 2200 : 1100); return () => clearTimeout(t); }, [v.phase]);
+  useEffect(() => { if (v.phase === "setup") return; if (v.phase === "over") { setBanner(""); return; } setBanner(PHASE[v.phase]); const t = setTimeout(() => setBanner(""), 1100); return () => clearTimeout(t); }, [v.phase]);
   const [gun, setGun] = useState(false); const [fly, setFly] = useState<{ id: number; t: string; c: string }[]>([]); const [hurt, setHurt] = useState(0); const [help, setHelp] = useState(false);
   const prevR = useRef({ o: v.oxygen, e: v.energy, w: v.players.reduce((n: number, p: any) => n + p.wounds.length, 0) });
   useEffect(() => { const w = v.players.reduce((n: number, p: any) => n + p.wounds.length, 0), r = prevR.current, add: { id: number; t: string; c: string }[] = []; const id = Date.now();
@@ -242,7 +244,8 @@ function Game({ snap, send, msg, clear, restart, host, online }: { snap: any; se
     {hurt ? <div key={hurt} className="ta-hurt" /> : null}
     <div className="ta-fly">{show ? null : fly.map((x) => <b key={x.id} style={{ color: x.c }}>{x.t}</b>)}</div>
     {help ? <div className="ta-zoom" onClick={() => setHelp(false)}><Rules /></div> : null}
-    {v.phase === "over" ? <div className={"ta-end " + (v.winner === "crew" ? "win" : "lose")}><div className="fx">{Array.from({ length: 28 }, (_, i) => <i key={i} style={{ left: `${(i * 37) % 100}%`, animationDelay: `${(i % 9) * .35}s` }} />)}</div>
+    {v.phase === "over" && !cine ? <video key="end" className="ta-cine" src={`/assets/menace/end_${v.winner === "crew" ? "win" : "lose"}.mp4`} autoPlay muted playsInline preload="auto" onEnded={() => setCine(true)} onError={() => setCine(true)} onClick={() => setCine(true)} /> : null}
+    {v.phase === "over" && cine ? <div className={"ta-end " + (v.winner === "crew" ? "win" : "lose")}><div className="fx">{Array.from({ length: 28 }, (_, i) => <i key={i} style={{ left: `${(i * 37) % 100}%`, animationDelay: `${(i % 9) * .35}s` }} />)}</div>
       <small>{v.winner === "crew" ? "警戒号 · 引擎重启" : "警戒号 · 生命维持终止"}</small><h1>{v.winner === "crew" ? "劫后余生" : "全员窒息"}</h1><p className="why">{v.winner === "crew" ? (v.energy >= ENERGY_GOAL ? `能量充满，氧气仅剩 ${v.oxygen} 格。你们活下来了。` : "内鬼全部伏诛，飞船脱离危险。") : (v.oxygen === 0 ? "最后一口氧气耗尽，内鬼的计划得逞。" : "船员无一生还，飞船落入内鬼之手。")}</p>
       <p className={"mine " + (v.winners.includes(v.you) ? "yes" : "no")}>{v.winners.includes(v.you) ? "你赢了" : "你输了"}</p>
       <ul>{v.players.map((p: any, i: number) => <li key={p.seat} style={{ animationDelay: `${.25 + i * .12}s` }} className={v.winners.includes(p.seat) ? "w" : ""}>{p.character ? <img src={img("p_" + p.character)} alt="" /> : null}<span><b>{name(p.seat)}</b><small>{AGENDA_TEXT[p.agenda][0]}{p.killed ? " · 阵亡" : p.exiled ? " · 被放逐" : ""}</small></span><em>{v.winners.includes(p.seat) ? "胜" : "败"}</em></li>)}</ul>

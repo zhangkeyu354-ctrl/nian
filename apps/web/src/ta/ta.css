@@ -409,3 +409,4 @@
   .ta-meter-numbers { transform: translateY(-50%); }
   .ta-meter-light { display: none; }
 }
+.ta-cine{position:fixed;inset:0;z-index:21;width:100%;height:100%;object-fit:cover;background:#000;cursor:pointer}
