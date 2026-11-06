@@ -117,6 +117,9 @@ function Game({ snap, send, msg, clear, restart, host, online }: { snap: any; se
     const skip = (t: string) => <button onClick={() => a(null)}>{t}</button>;
     let body: any = yes;
     if (["discard_down", "bloodwork", "formulate"].includes(q.q)) body = cardChoice(v.hand, a);
+    if (q.q === "heal") body = <div className="ta-grid">{q.data.wounds.map((w: string, i: number) => <button key={i} onClick={() => a(i)}>{WOUND_TEXT[w].split("：")[0]}</button>)}</div>;
+    if (q.q === "surveillance") body = <div className="ta-grid">{Array.from({ length: q.data.count }, (_, i) => <button key={i} onClick={() => a(i)}>查看第 {i + 1} 张</button>)}</div>;
+    if (q.q === "rush") body = <><p>只有你能看到：{CARD_TEXT[q.data.type][0]}</p><button className="ta-primary" onClick={() => a(true)}>暗置打出</button></>;
     if (q.q === "austere") body = <>{cardChoice(v.hand, a)}{skip("不使用")}</>;
     if (q.q === "severed") body = <div className="ta-grid">{q.data.options.map((x: string) => <button key={x} onClick={() => a(x)}>{ABILITIES[x].name}</button>)}</div>;
     if (q.q === "veto") body = <><p>揭示：{CARD_TEXT[q.data.type][0]}</p><div className="ta-grid"><button className="ta-primary" onClick={() => a(true)}>否决这张</button>{q.data.forced ? null : <button onClick={() => a(false)}>留到后面</button>}</div></>;
@@ -129,7 +132,13 @@ function Game({ snap, send, msg, clear, restart, host, online }: { snap: any; se
     return <section className="ta-panel alert"><h3>{QUESTION[q.q] ?? "请选择"}</h3>{body}</section>; }
   function flowPanel() { if (!flow || !step) return null; const ab = ABILITIES[flow.ab];
     return <section className="ta-panel"><h3>{ab.name}</h3><p>{step.label}</p>
-      {step.kind === "seat" ? seatChoice(targets(!!step.other), (s) => put(step.key, s)) : null}
+      {step.kind === "seat" ? seatChoice(targets(!!step.other).filter((p: any) => {
+        const ab = flow.args.ab ?? flow.ab;
+        if (ab === "first_aid") return p.wounds.length > 0;
+        if (ab === "commandeer") return p.deck > 0;
+        if (ab === "surveillance") return p.played > 0;
+        return true;
+      }), (s) => put(step.key, s)) : null}
       {step.kind === "card" ? cardChoice(v.hand, (id) => put(step.key, id)) : null}
       {step.kind === "two" ? <>{cardChoice(v.hand, (id) => setPick(pick.includes(id) ? pick.filter((x) => x !== id) : [...pick, id].slice(-2)))}<button className="ta-primary" onClick={() => put(step.key, pick)}>确定 {pick.length} 张</button></> : null}
       {step.kind === "aside" ? <><button className="ta-primary" onClick={() => put(step.key, [...v.aside.map((card: { id: number }) => card.id), flow.args.aside])}>打出全部盖放牌</button><button onClick={() => put(step.key, [])}>保留盖放牌</button></> : null}
@@ -149,7 +158,7 @@ function Game({ snap, send, msg, clear, restart, host, online }: { snap: any; se
       {v.phase === "resolve" || (v.phase === "accuse" && v.revealed.length) ? <section className="ta-panel"><h3>已揭示 · 还剩 {v.remaining} 张</h3><div className="ta-hand inline">{v.revealed.map((t: string, i: number) => <button key={i} className="ta-card flip" onClick={() => setZoom({ src: img(t), text: CARD_TEXT[t].join("：") })}><GameCard type={t} /></button>)}</div></section> : null}
       {v.phase === "resolve" && !q && v.leader === v.you ? <button className="ta-primary" onClick={() => send({ t: "reveal" })}>揭示下一张（还剩 {v.remaining}）</button> : null}
       {acting && !flow ? <section className="ta-panel ta-dock"><h3>选择一项行动</h3><div className="ta-grid"><button onClick={() => send({ t: "draw" })}>抽一张牌</button><button onClick={() => send({ t: "pass" })}>跳过</button></div>
-        {me.exiled ? null : <div className="ta-abs">{abilities.map((a) => { const m = ABILITIES[a]; const used = me.used.includes(a); return <button key={a} disabled={used} onClick={() => m.steps.length ? setFlow({ ab: a, steps: m.steps, args: {} }) : send({ t: "ability", ab: a, args: {} })}><b>{m.name}{m.cost ? ` · ${m.cost}` : ""}</b><small>{m.text}</small></button>; })}</div>}</section> : null}
+        {me.exiled ? null : <div className="ta-abs">{abilities.map((a) => { const m = ABILITIES[a]; const used = !v.legalAbilities.includes(a); return <button key={a} disabled={used} onClick={() => m.steps.length ? setFlow({ ab: a, steps: m.steps, args: {} }) : send({ t: "ability", ab: a, args: {} })}><b>{m.name}{m.cost ? ` · ${m.cost}` : ""}</b><small>{m.text}</small></button>; })}</div>}</section> : null}
       {v.phase === "accuse" && !q ? <section className="ta-panel"><h3>语音讨论</h3><p>可以开枪发起放逐投票，发起后不能撤回。</p><div className="ta-grid">{!me.killed && !me.exiled ? <button className="ta-danger" onClick={() => send({ t: "call_vote" })}>拿起手枪</button> : null}{v.leader === v.you ? <button className="ta-primary" onClick={() => send({ t: "end_accuse" })}>结束本回合</button> : null}</div></section> : null}
       {v.phase === "vote" ? <section className="ta-panel alert"><h3>放逐投票 · 已投 {v.voted}</h3>{myTurn ? <>{seatChoice(v.players.filter((p: any) => !p.killed && !p.exiled && p.seat !== v.you), (s) => send({ t: "vote", target: s }))}<button onClick={() => send({ t: "vote", target: null })}>弃权</button></> : <p>等待其他人投票…</p>}</section> : null}
       

@@ -21,7 +21,33 @@ describe("伤害牌",()=>{
  it("皮肉伤无效果",()=>{const s=hit(g(),1,"flesh");expect(s.players[1].wounds).toEqual(["flesh"])});
  it("脑损伤必须重复",()=>{let s=g();s.players[1].wounds=["brain_damage"];s=reduce(s,{seat:s.leader,t:"draw"});expect(()=>reduce(s,{seat:1,t:"play",card:s.players[1].hand[0].id})).toThrow();s=reduce(s,{seat:1,t:"draw"});expect(s.turn).toBe(2)});
  it("骨折要等别人先出",()=>{let s=g();s.players[0].wounds=["broken_limbs"];expect(()=>reduce(s,{seat:0,t:"play",card:s.players[0].hand[0].id})).toThrow()});
- it("脑震荡手牌上限2",()=>{const s=hit(g(),1,"concussion");expect(s.players[1].hand.length).toBe(2)});
+ it("脑震荡由持有者选择弃到两张",()=>{let s=hit(g(),1,"concussion");const id=s.players[1].hand[1].id;expect(s.stack.at(-1)).toMatchObject({q:"discard_down",seat:1});s=ans(s,1,id);expect(s.players[1].hand.length).toBe(2);expect(s.discard.some(c=>c.id===id)).toBe(true)});
+ it("轮末从任务领袖开始处理死亡技能",()=>{
+   let s=g(["butcher","loyal","vengeant","loyal"]);s.leader=2;
+   s.players[0].wounds=["flesh","flesh"];s.players[2].wounds=["flesh","flesh"];
+   s=end(s);expect(s.stack.at(-1)).toMatchObject({q:"vengeant",seat:2});
+   s=ans(s,2,null);expect(s.stack.at(-1)).toMatchObject({q:"butcher",seat:0});
+ });
+ it("第三处伤不再次询问坚定者，死亡仍到轮末",()=>{
+   let s=g(["contagion","resolute","loyal","loyal"]);s.players[1].wounds=["flesh","flesh"];
+   s=hit(s,1,"flesh");expect(s.players[1].killed).toBe(false);expect(s.stack).toHaveLength(0);
+   expect(end(s).players[1].killed).toBe(true);
+ });
+ it("满能量仍让氧气归零优先，且归零打断死亡技能",()=>{
+   let s=g(["contagion","vengeant","loyal","loyal"]);s.energy=20;s.oxygen=2;
+   s.players[1].wounds=["flesh","flesh"];s=end(s);
+   expect(s.winner).toBe("menace");expect(s.stack).toHaveLength(0);
+ });
+ it("克难者没有其他存活邻座时达成个人目标",()=>{
+   let s=g(["contagion","austere","loyal","loyal"]);s.mode="advanced";s.energy=14;
+   for(const seat of [0,2,3])s.players[seat].killed=true;
+   s=end(s);expect(s.winner).toBe("crew");expect(s.winners).toContain(1);
+ });
+ it("非领袖持辐射灼伤不丢牌",()=>{
+   let s=g();s.players[1].wounds=["radiation_burns"];
+   for(const seat of [0,1,2,3])s=reduce(s,{seat,t:"play",card:s.players[seat].hand[0].id});
+   expect(s.queue).toHaveLength(4);
+ });
  it("狂乱直接打出牌，持有者也不能查看牌种",()=>{let s=hit(g(),1,"frenzied");expect(s.players[1].hand.length).toBe(0);expect(s.players[1].deck.length).toBe(20);s=structuredClone(s);s.phase="action";s.queue=[];s.turn=0;s.leader=1;const notes=[...s.notes[1]];s=reduce(s,{seat:1,t:"draw"});expect(s.played.length).toBe(1);expect(s.notes[1]).toEqual(notes)});
  it("肺穿孔",()=>{let s=g();s.players[0].wounds=["punctured_lung"];const d=s.players[0].deck.length;s=reduce(s,{seat:0,t:"play",card:s.players[0].hand[0].id});expect(s.players[0].deck.length).toBe(d-2)});
  it("粉碎伤弃五张",()=>{const s=hit(g(),1,"pulverized");expect(s.players[1].deck.length).toBe(12)});
