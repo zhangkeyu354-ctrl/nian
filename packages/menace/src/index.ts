@@ -46,7 +46,10 @@ function draw(s:State,seat:number,n:number,source=s.players[seat].deck,options:{
  for(let i=0;i<n;i++){
   if(direct&&!canPlay(s,p))break;
   const card=source.shift();if(!card)break;
-  if(direct)playCard(s,p,card);else p.hand.push(card);
+  if(direct){
+   playCard(s,p,card);
+   if(has(p,"frenzied")&&!options.play)s.notes[seat].push(`丧心病狂：你暗置打出了 ${card.type}`);
+  }else p.hand.push(card);
  }
  if(!options.deferLimit&&p.hand.length>limit(p))ask(s,seat,"discard_down")
 }
@@ -86,7 +89,7 @@ function doWound(s:State,t:Extract<Task,{k:"wound"}>){const p=s.players[t.seat];
  if(s.flags.lockdown&&p.wounds.length)return;
  const w=s.woundDeck.shift()??"flesh";p.wounds.push(w);s.flags.woundedRound=true;say(s,`座位${p.seat+1} 受伤：${w}`);
  if(p.agenda==="saint"){p.revealed=true;say(s,`座位${p.seat+1} 是圣人，氧气 -2`);addO(s,-2)}
- if(w==="concussion"&&p.hand.length>limit(p))ask(s,p.seat,"discard_down");
+ if(w==="concussion"){while(p.hand.length>limit(p))discardRandom(s,p)}
  if(w==="frenzied"){p.deck=[...shuffle(s,p.hand.splice(0)),...p.deck]}
  if(w==="pulverized")s.discard.push(...p.deck.splice(0,5));
  if(w==="severed"){const l=abilityList(p);ask(s,p.seat,"severed",{options:l})}
@@ -173,8 +176,7 @@ function ability(s:State,t:Extract<Task,{k:"ability"}>,validating=false){const p
  case "resupply":{const o=tgt(a.target);if(o===p)fail("BAD_TARGET");draw(s,o.seat,2);break}
  case "rush":{
    if(!p.deck.length||!canPlay(s,p))fail("CANNOT_PLAY");
-   if(has(p,"frenzied"))draw(s,p.seat,1,p.deck,{play:true});
-   else ask(s,p.seat,"rush",{type:p.deck[0].type});
+   ask(s,p.seat,"rush",{type:p.deck[0].type});
    break
  }
  case "restructure":s.flags.restructure=p.seat;break;
@@ -185,7 +187,11 @@ function ability(s:State,t:Extract<Task,{k:"ability"}>,validating=false){const p
 }
 function canAfford(s:State,p:Player,ab:Ability){const c=COST[ab];return (c.e??0)<=s.energy&&(c.d??0)<=p.hand.length}
 function startResolve(s:State){s.phase="resolve";s.resStart=s.energy;
- const l=s.players[s.leader];if(has(l,"radiation_burns")&&s.played.length){const i=Math.floor(rnd(s)*s.played.length);s.discard.push(s.played.splice(i,1)[0].card)}
+ for(const player of alive(s))for(const wound of player.wounds){
+  if(wound!=="radiation_burns"||!s.played.length)continue;
+  const i=Math.floor(rnd(s)*s.played.length);
+  s.discard.push(s.played.splice(i,1)[0].card)
+ }
  const need=Math.ceil(s.n/2);while(s.played.length<need){if(!s.emma.length){s.emma=shuffle(s,s.emmaUsed);s.emmaUsed=[]}const c=s.emma.shift();if(!c)break;s.played.push({seat:-1,card:c})}
  s.queue=shuffle(s,s.played);s.played=[];s.revealed=[];s.stage="reveal";
  if(s.flags.restructure!==undefined)ask(s,s.flags.restructure,"restructure",{cards:s.queue.map(q=>q.card)})}

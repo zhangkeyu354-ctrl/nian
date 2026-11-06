@@ -1,5 +1,5 @@
 import {describe,expect,it} from "vitest";
-import {createGame,reduce,type State,type WoundType} from "../src/index.ts";
+import {createGame,reduce,viewFor,type State,type WoundType} from "../src/index.ts";
 function g(a:string[]=["contagion","loyal","loyal","loyal"]):State{let s=createGame(4,11);for(let i=0;i<9&&s.phase==="setup";i++)for(const p of s.players)if(p.choices.length&&!p.character)s=reduce(s,{seat:p.seat,t:"choose",name:p.choices[0]});s=structuredClone(s);s.players.forEach((p,i)=>p.agenda=a[i]);s.oxygen=15;return s}
 const ans=(s:State,seat:number,value:any)=>reduce(s,{seat,t:"answer",value});
 const res=(s:State,t:any[])=>{s.phase="resolve";s.resStart=s.energy;s.stage="reveal";s.queue=t.map((type,i)=>({seat:-1,card:{id:9000+i,type}}));return s};
@@ -21,7 +21,13 @@ describe("伤害牌",()=>{
  it("皮肉伤无效果",()=>{const s=hit(g(),1,"flesh");expect(s.players[1].wounds).toEqual(["flesh"])});
  it("脑损伤必须重复",()=>{let s=g();s.players[1].wounds=["brain_damage"];s=reduce(s,{seat:s.leader,t:"draw"});expect(()=>reduce(s,{seat:1,t:"play",card:s.players[1].hand[0].id})).toThrow();s=reduce(s,{seat:1,t:"draw"});expect(s.turn).toBe(2)});
  it("骨折要等别人先出",()=>{let s=g();s.players[0].wounds=["broken_limbs"];expect(()=>reduce(s,{seat:0,t:"play",card:s.players[0].hand[0].id})).toThrow()});
- it("脑震荡由持有者选择弃到两张",()=>{let s=hit(g(),1,"concussion");const id=s.players[1].hand[1].id;expect(s.stack.at(-1)).toMatchObject({q:"discard_down",seat:1});s=ans(s,1,id);expect(s.players[1].hand.length).toBe(2);expect(s.discard.some(c=>c.id===id)).toBe(true)});
+ it("脑震荡取得时随机弃牌，之后超限自行选择",()=>{
+   let s=hit(g(),1,"concussion");expect(s.players[1].hand).toHaveLength(2);expect(s.stack).toHaveLength(0);
+   s.phase="action";s.leader=1;s.turn=0;
+   s=reduce(s,{seat:1,t:"draw"});const id=s.players[1].hand[1].id;
+   expect(s.stack.at(-1)).toMatchObject({q:"discard_down",seat:1});
+   s=ans(s,1,id);expect(s.players[1].hand).toHaveLength(2);expect(s.discard.some(c=>c.id===id)).toBe(true);
+ });
  it("轮末从任务领袖开始处理死亡技能",()=>{
    let s=g(["butcher","loyal","vengeant","loyal"]);s.leader=2;
    s.players[0].wounds=["flesh","flesh"];s.players[2].wounds=["flesh","flesh"];
@@ -43,12 +49,12 @@ describe("伤害牌",()=>{
    for(const seat of [0,2,3])s.players[seat].killed=true;
    s=end(s);expect(s.winner).toBe("crew");expect(s.winners).toContain(1);
  });
- it("非领袖持辐射灼伤不丢牌",()=>{
-   let s=g();s.players[1].wounds=["radiation_burns"];
+ it("非领袖的两张辐射各弃一张，再由艾玛补足",()=>{
+   let s=g();s.players[1].wounds=["radiation_burns"];s.players[2].wounds=["radiation_burns","radiation_burns"];
    for(const seat of [0,1,2,3])s=reduce(s,{seat,t:"play",card:s.players[seat].hand[0].id});
-   expect(s.queue).toHaveLength(4);
+   expect(s.discard).toHaveLength(3);expect(s.queue).toHaveLength(2);expect(s.queue.filter(c=>c.seat===-1)).toHaveLength(1);
  });
- it("狂乱直接打出牌，持有者也不能查看牌种",()=>{let s=hit(g(),1,"frenzied");expect(s.players[1].hand.length).toBe(0);expect(s.players[1].deck.length).toBe(20);s=structuredClone(s);s.phase="action";s.queue=[];s.turn=0;s.leader=1;const notes=[...s.notes[1]];s=reduce(s,{seat:1,t:"draw"});expect(s.played.length).toBe(1);expect(s.notes[1]).toEqual(notes)});
+ it("丧心病狂强制暗置，只有本人能查看牌种",()=>{let s=hit(g(),1,"frenzied");expect(s.players[1].hand).toHaveLength(0);expect(s.players[1].deck).toHaveLength(20);s.phase="action";s.queue=[];s.turn=0;s.leader=1;const top=s.players[1].deck[0];s=reduce(s,{seat:1,t:"draw"});expect(s.played[0].card).toEqual(top);expect(viewFor(s,1).notes.at(-1)).toContain(top.type);expect(viewFor(s,2).notes).toEqual([]);expect(viewFor(s,2).log.join()).not.toContain(top.type)});
  it("肺穿孔",()=>{let s=g();s.players[0].wounds=["punctured_lung"];const d=s.players[0].deck.length;s=reduce(s,{seat:0,t:"play",card:s.players[0].hand[0].id});expect(s.players[0].deck.length).toBe(d-2)});
  it("粉碎伤弃五张",()=>{const s=hit(g(),1,"pulverized");expect(s.players[1].deck.length).toBe(12)});
  it("辐射灼伤减一张已出牌",()=>{let s=g();s.players[0].wounds=["radiation_burns"];for(const i of [0,1,2,3])s=reduce(s,{seat:i,t:"play",card:s.players[i].hand[0].id});expect(s.queue.length).toBe(3)});
