@@ -58,10 +58,24 @@ function Game({ snap, send, msg, clear, restart, host, online }: { snap: any; se
   useEffect(() => { if (msg) { const t = setTimeout(clear, 3000); return () => clearTimeout(t); } }, [msg]);
   useEffect(() => { music(v.phase === "over" ? null : v.oxygen <= 6 ? "urgent" : v.phase === "vote" ? "pulse" : "transmission"); if (v.phase === "over") sfx(v.winner === "crew" ? "victory" : "sabotage"); }, [v.phase, v.oxygen <= 6]);
   const lastT = v.revealed[v.revealed.length - 1]; const count = v.revealed.length;
-  useEffect(() => { if (count) sfx(["airlock", "explosion", "panic", "reactor", "backstab", "brawl"].includes(lastT) ? "sabotage" : lastT?.includes("repair") ? "repair" : "reveal"); }, [count]);
   useEffect(() => { if (myTurn) sfx("commit"); }, [myTurn]);
   const [show, setShow] = useState<{ id: number; type: string } | null>(null);
-  useEffect(() => { if (!count || v.phase !== "resolve") return; const id = Date.now(); setShow({ id, type: lastT }); const t = setTimeout(() => setShow((x) => (x?.id === id ? null : x)), 2000); return () => clearTimeout(t); }, [count]);
+  const previousReveal = useRef({ round: v.round, count });
+  useEffect(() => {
+    const previous = previousReveal.current;
+    previousReveal.current = { round: v.round, count };
+    if (previous.round !== v.round || count <= previous.count || v.phase !== "resolve") {
+      if (v.phase !== "resolve") setShow(null);
+      return;
+    }
+    setShow({ id: count, type: lastT });
+    const sound = setTimeout(() => sfx(
+      ["airlock", "explosion", "panic", "reactor", "backstab", "brawl"].includes(lastT)
+        ? "sabotage" : lastT?.includes("repair") ? "repair" : "reveal"
+    ), matchMedia("(prefers-reduced-motion: reduce)").matches ? 0 : 340);
+    const hide = setTimeout(() => setShow(null), 1100);
+    return () => { clearTimeout(sound); clearTimeout(hide); };
+  }, [count, lastT, v.phase, v.round]);
   const [hit, setHit] = useState<{ id: number; who: string; w: string } | null>(null);
   const seen = useRef<string[]>(v.players.map((p: any) => p.wounds.join()));
   const hitTimers = useRef(new Set<ReturnType<typeof setTimeout>>());
@@ -94,6 +108,33 @@ function Game({ snap, send, msg, clear, restart, host, online }: { snap: any; se
       seen.current[i] = p.wounds.join();
     });
   }, [v.players]);
+  const board = useRef<HTMLDivElement>(null);
+  const previousCards = useRef({ round: v.round, hand: me.hand, deck: me.deck, played: me.played });
+  useEffect(() => {
+    const previous = previousCards.current;
+    previousCards.current = { round: v.round, hand: me.hand, deck: me.deck, played: me.played };
+    if (previous.round !== v.round || matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+    const root = board.current;
+    const hand = root?.querySelector("nav.ta-hand");
+    const seat = root?.querySelector(".ta-seat.me .face");
+    const core = root?.querySelector(".core");
+    const played = me.played > previous.played;
+    const drew = me.deck < previous.deck && me.hand > previous.hand;
+    if ((!played && !drew) || !seat || !core) return;
+    const positions = played ? [hand ?? seat, seat, core] : [core, hand ?? seat];
+    const points = positions.map((element) => {
+      const rect = element.getBoundingClientRect();
+      return { transform: `translate(${rect.left + rect.width / 2 - 13}px, ${rect.top + rect.height / 2 - 18}px)`, opacity: 1 };
+    });
+    points[points.length - 1].opacity = 0;
+    const card = document.createElement("span");
+    card.className = "ta-flight";
+    card.setAttribute("aria-hidden", "true");
+    root?.append(card);
+    const motion = card.animate(points, { duration: 380, easing: "ease-in-out" });
+    motion.onfinish = () => card.remove();
+    return () => { motion.cancel(); card.remove(); };
+  }, [v.round, me.hand, me.deck, me.played]);
   const [mute, setM] = useState(muted());
   const exiled = v.players.filter((p: any) => p.exiled).length; const [door, setDoor] = useState(false); const prevEx = useRef(exiled);
   useEffect(() => { if (exiled > prevEx.current) { setDoor(true); sfx("sabotage"); setTimeout(() => setDoor(false), 2600); } prevEx.current = exiled; }, [exiled]);
@@ -144,12 +185,12 @@ function Game({ snap, send, msg, clear, restart, host, online }: { snap: any; se
       {step.kind === "aside" ? <><button className="ta-primary" onClick={() => put(step.key, [...v.aside.map((card: { id: number }) => card.id), flow.args.aside])}>打出全部盖放牌</button><button onClick={() => put(step.key, [])}>保留盖放牌</button></> : null}
       {step.kind === "used" ? <div className="ta-grid">{v.roundAbilities.filter((x: string) => x !== "mimic").map((x: string) => <button key={x} onClick={() => put(step.key, x)}>{ABILITIES[x].name}</button>)}</div> : null}
       <button onClick={() => setFlow(null)}>取消</button></section>; }
-  return <div className={"ta-world ta-game ph-" + (v.phase === "over" ? (v.winner === "crew" ? "win" : "lose") : v.phase) + (v.oxygen <= 6 ? " danger" : "")}>
+  return <div ref={board} className={"ta-world ta-game ph-" + (v.phase === "over" ? (v.winner === "crew" ? "win" : "lose") : v.phase) + (v.oxygen <= 6 ? " danger" : "")}>
     <header className="ta-hud"><div className="ta-top"><b>{PHASE[v.phase]}{v.round ? ` · 第 ${v.round} 回合` : ""}</b><button className="ta-mute" onClick={() => setHelp(true)}>规则</button><button className="ta-mute" onClick={() => { setMute(!mute); setM(!mute); }}>{mute ? "开声音" : "静音"}</button><span className={online ? "" : "off"}>{online ? hint : "连接中断，正在重连…"}</span></div>
       <Bar label="氧气" v={v.oxygen} max={OXYGEN_MAX} cls="o" /><Bar label="能量" v={v.energy} max={ENERGY_GOAL} mark={ENERGY_SAFE} cls="e" /></header>
-    <div className="ta-table"><div className="core" style={{ "--o": `${(v.oxygen / OXYGEN_MAX) * 100}%`, "--e": `${(v.energy / ENERGY_GOAL) * 100}%` } as any}><b>{v.phase === "action" ? v.players.reduce((n: number, p: any) => n + p.played, 0) : v.remaining}</b><small>{v.phase === "action" ? "已暗置" : v.phase === "resolve" ? "待揭示" : PHASE[v.phase]}</small></div>
+    <div key={v.phase} className="ta-table"><div className="core" style={{ "--o": `${(v.oxygen / OXYGEN_MAX) * 100}%`, "--e": `${(v.energy / ENERGY_GOAL) * 100}%` } as any}><b>{v.phase === "action" ? v.players.reduce((n: number, p: any) => n + p.played, 0) : v.phase === "vote" ? v.voted : v.remaining}</b><small>{v.phase === "action" ? "已暗置" : v.phase === "resolve" ? "待揭示" : v.phase === "vote" ? "已投票" : PHASE[v.phase]}</small></div>
       {v.players.map((p: any) => { const n = v.players.length, a = ((p.seat - v.you + n) % n) / n * Math.PI * 2 + Math.PI / 2, x = 50 + 38 * Math.cos(a), y = 50 + 38 * Math.sin(a); return <button type="button" key={p.seat} style={{ left: `${x}%`, top: `${y}%` }} className={["ta-seat", v.waiting.includes(p.seat) ? "turn" : "", p.killed ? "dead" : "", p.exiled ? "exiled" : "", p.seat === v.you ? "me" : ""].join(" ")} onClick={() => setZoom({ src: "", text: "", node: <div className="ta-detail"><h3>{name(p.seat)}{p.seat === v.leader ? " · 任务领袖" : ""}</h3><p>手牌 {p.hand}　牌库 {p.deck}　本轮已出 {p.played}{p.killed ? "　已阵亡" : p.exiled ? "　已放逐" : ""}{snap.players.find((x: any) => x.playerId === snap.seats[p.seat])?.connected ? "" : "　离线"}</p>{p.agenda && p.seat !== v.you ? <p className="rev">身份：{AGENDA_TEXT[p.agenda][0]}</p> : null}{p.wounds.map((w: string, i: number) => <p key={i} className="wd">{WOUND_TEXT[w]}</p>)}{p.character ? zoomOf.char(p.character) : null}</div> })}>
-        <i className="face">{p.character ? <img src={img("p_" + p.character)} alt="" /> : null}{p.seat === v.leader ? <u>★</u> : null}{p.played ? <s>{p.played}</s> : null}</i><b>{name(p.seat)}</b><small>手{p.hand} 库{p.deck}{p.wounds.length ? <em> 伤{p.wounds.length}</em> : null}</small>{p.agenda && p.seat !== v.you ? <small className="rev">{AGENDA_TEXT[p.agenda][0].split("（")[0]}</small> : null}{p.exiled ? <small className="rev">放逐</small> : p.killed ? <small className="rev">阵亡</small> : null}</button>; })}</div>
+        <i className="face">{p.character ? <img src={img("p_" + p.character)} alt="" /> : null}{p.seat === v.leader ? <u>★</u> : null}{p.played ? <s aria-label={`已暗置 ${p.played} 张`}>{p.played}</s> : null}</i><b>{name(p.seat)}</b><small>手{p.hand} 库{p.deck}{p.wounds.length ? <em> 伤{p.wounds.length}</em> : null}</small>{p.agenda && p.seat !== v.you ? <small className="rev">{AGENDA_TEXT[p.agenda][0].split("（")[0]}</small> : null}{p.exiled ? <small className="rev">放逐</small> : p.killed ? <small className="rev">阵亡</small> : null}</button>; })}</div>
     <main className="ta-main">
       {host ? v.waiting.map((w: number) => { const pl = snap.players.find((p: any) => p.playerId === snap.seats[w]); return pl && !pl.connected ? <button key={w} className="ta-danger" onClick={() => send({ t: "auto", player: pl.playerId })}>{pl.name} 已离线，代为操作</button> : null; }) : null}
       {msg ? <p className="ta-err">{msg}</p> : null}

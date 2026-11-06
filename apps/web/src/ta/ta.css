@@ -307,3 +307,28 @@
  .ta-game .ta-zoom .ta-big,.ta-flip,.ta-stage .ta-vfx,.ta-stage > b,.ta-game .ta-bar em,.ta-end li{animation:none!important}
  .ta-game .ta-bar i b,.ta-game nav.ta-hand .ta-card,.ta-game button{transition:none!important}
 }
+
+/* Cosmetic motion follows acknowledged state, and never captures pointer input. */
+.ta-flight {
+  position: fixed;
+  inset: 0 auto auto 0;
+  width: 26px;
+  height: 36px;
+  border-radius: 4px;
+  background: #484936;
+  box-shadow: inset 0 0 0 2px #ba9558, 0 3px 8px #0008;
+  z-index: 30;
+  pointer-events: none;
+}
+.ta-game .ta-table { animation: ta-table-enter 240ms ease-out both; }
+@keyframes ta-table-enter {
+  from { opacity: .75; }
+  to { opacity: 1; }
+}
+.ta-seat .face s {
+  text-decoration: none;
+  border-radius: 3px;
+}
+@media (prefers-reduced-motion: reduce) {
+  .ta-game .ta-table { animation: none; }
+}
