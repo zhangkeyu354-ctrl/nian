@@ -6,7 +6,7 @@ import "./ta.css";
 import type { Contribution } from "../../../../packages/menace/src/index.ts";
 import type { Scene } from "./scenes.ts";
 import vfxMeta from "../vfx-meta.json" with { type: "json" };
-import { music, sfx, setMute, muted } from "./sound.ts";
+import { music, sfx, setMute, muted, playEnding, stopEnding } from "./sound.ts";
 const img = (n: string) => `/assets/menace/${n}.webp`;
 const PHASE: Record<string, string> = { setup: "选择角色", action: "行动阶段", resolve: "匿名结算", accuse: "讨论与指控", vote: "放逐投票", over: "对局结束" };
 export function Menace() {
@@ -86,8 +86,20 @@ function ContributionLine({ entry }: { entry: Contribution }) {
   </div>;
 }
 
-function SceneOverlay({ scene, name, finish, onEndingPlaying }: { scene: Scene; name: (seat: number) => string; finish: () => void; onEndingPlaying: (sceneId: number) => void }) {
+function SceneOverlay({ scene, name, finish }: { scene: Scene; name: (seat: number) => string; finish: () => void }) {
   const video = useRef<HTMLVideoElement>(null);
+  const audio = useRef<HTMLAudioElement>(null);
+  const [started, setStarted] = useState(false);
+  const ending = scene.kind === "ending";
+  const endingAsset = scene.kind === "ending" ? scene.win ? "end_win" : "end_lose" : null;
+  useEffect(() => {
+    if (!endingAsset) return;
+    // 音频独立于过场节点，过场退出后仍由音频模块持有。
+    const track = new Audio(`/assets/menace/audio/${endingAsset}.mp3`);
+    track.preload = "auto";
+    audio.current = track;
+    return () => { audio.current = null; };
+  }, [endingAsset]);
   const close = useRef(finish);
   close.current = finish;
   const [unavailable, setUnavailable] = useState(false);
@@ -103,7 +115,7 @@ function SceneOverlay({ scene, name, finish, onEndingPlaying }: { scene: Scene; 
   }, [scene, videoKind]);
   useEffect(() => {
     const element = video.current;
-    if (!videoKind || !element) return;
+    if (!videoKind || !element || (ending && !started)) return;
     let active = true;
     let bridgeRetry = false;
     const play = () => {
@@ -113,7 +125,7 @@ function SceneOverlay({ scene, name, finish, onEndingPlaying }: { scene: Scene; 
     const retry = () => {
       if (!bridgeRetry && element.paused) { bridgeRetry = true; play(); }
     };
-    play();
+    if (!ending) play();
     document.addEventListener("WeixinJSBridgeReady", retry);
     const startup = setTimeout(() => {
       if (element.currentTime <= 0) setUnavailable(true);
@@ -125,15 +137,14 @@ function SceneOverlay({ scene, name, finish, onEndingPlaying }: { scene: Scene; 
       clearTimeout(startup);
       clearTimeout(watchdog);
     };
-  }, [videoKind]);
+  }, [videoKind, ending, started]);
   useEffect(() => {
-    if (!unavailable) return;
+    if (!unavailable || (ending && !started)) return;
     const timer = setTimeout(() => close.current(), 1500);
     return () => clearTimeout(timer);
-  }, [unavailable]);
+  }, [unavailable, ending, started]);
   if (scene.kind === "death" || scene.kind === "exile" || scene.kind === "ending") {
-    const ending = scene.kind === "ending";
-    const asset = ending ? scene.win ? "end_win" : "end_lose" : scene.kind === "death" ? "fx_death" : "fx_exile";
+    const asset = endingAsset ?? (scene.kind === "death" ? "fx_death" : "fx_exile");
     const label = ending ? scene.win ? "船员胜利" : "内鬼胜利" : `${name(scene.seat)} ${scene.kind === "death" ? "阵亡" : "被放逐"}`;
     return <div className="ta-sequence ta-sequence-video" role="dialog" aria-modal="true" data-scene={scene.kind}>
       <video ref={element => {
@@ -142,13 +153,14 @@ function SceneOverlay({ scene, name, finish, onEndingPlaying }: { scene: Scene; 
         element.muted = true;
         element.setAttribute("muted", "");
         element.setAttribute("webkit-playsinline", "");
-      }} autoPlay muted playsInline poster={img(asset + "_poster")} preload="auto" src={`/assets/menace/${asset}.mp4`}
-        onPlaying={() => {
-          setUnavailable(false);
-          if (ending) onEndingPlaying(scene.id);
-        }} onEnded={finish} onError={() => setUnavailable(true)} />
+      }} autoPlay={!ending} muted playsInline poster={img(asset + "_poster")} preload="auto" src={`/assets/menace/${asset}.mp4`}
+        onPlaying={() => setUnavailable(false)} onEnded={finish} onError={() => setUnavailable(true)} />
       <h2 className="ta-cinematic-caption">{label}</h2>
-      <button className="ta-sequence-skip" onClick={finish}>跳过演出</button>
+      {ending && !started ? <button className="ta-primary ta-sequence-skip" onClick={() => {
+        setStarted(true);
+        if (endingAsset) playEnding(audio.current ?? new Audio(`/assets/menace/audio/${endingAsset}.mp3`));
+        void video.current?.play().catch(() => setUnavailable(true));
+      }}>查看结局</button> : <button className="ta-sequence-skip" onClick={finish}>跳过演出</button>}
     </div>;
   }
   if (scene.kind === "resource") {
@@ -189,18 +201,14 @@ function Game({ snap: incoming, send, seen, takeScenes, msg, clear, restart, hos
   useEffect(() => { setFlow(null); setPick([]); }, [v.phase, v.round, q?.q]);
   useEffect(() => { if (msg) { const t = setTimeout(clear, 3000); return () => clearTimeout(t); } }, [msg]);
   const ending = v.phase === "over";
-  const [playingEnding, setPlayingEnding] = useState<number | null>(null);
-  const resultMusic = scene?.kind === "ending" && scene.id === playingEnding
-    ? (scene.win ? "result-crew" : "result-menace")
-    : ending && !scene && v.winner ? `result-${v.winner}` : null;
   const urgent = v.oxygen <= 6;
+  const finalizing = incoming.view.phase === "over";
   useEffect(() => {
-    if (resultMusic) music(resultMusic, false);
-    else if (ending || scene?.kind === "ending") music(null);
+    if (finalizing) music(null, 1200);
     else music(urgent ? "urgent" : v.phase === "vote" ? "pulse" : "transmission");
-  }, [resultMusic, ending, urgent, v.phase, scene?.kind]);
-  useEffect(() => () => music(null), []);
-  useEffect(() => { if (myTurn && !scene) sfx("commit"); }, [myTurn, scene]);
+  }, [finalizing, urgent, v.phase]);
+  useEffect(() => () => { music(null); stopEnding(); }, []);
+  useEffect(() => { if (myTurn && !scene && !finalizing) sfx("commit"); }, [myTurn, scene, finalizing]);
   const board = useRef<HTMLDivElement>(null);
   const previousCards = useRef({ round: v.round, hand: me.hand, deck: me.deck, played: me.played });
   useEffect(() => {
@@ -312,10 +320,10 @@ function Game({ snap: incoming, send, seen, takeScenes, msg, clear, restart, hos
       <p className={"mine " + (v.winners.includes(v.you) ? "yes" : "no")}>{v.winners.includes(v.you) ? "你赢了" : "你输了"}</p>
       {v.contributions ? <p className="ta-contribution-note">{v.contributions.partial ? "本局为旧存档，仅统计更新后发生的变化。" : "个人贡献 · 按实际生效值统计"}</p> : <p className="ta-contribution-note">本局没有个人贡献记录。</p>}
       <ul>{v.players.map((p: any, i: number) => <li key={p.seat} style={{ animationDelay: `${.25 + i * .12}s` }} className={v.winners.includes(p.seat) ? "w" : ""}>{p.character ? <img src={img("p_" + p.character)} alt="" /> : null}<span><b>{name(p.seat)}</b><small>{AGENDA_TEXT[p.agenda][0]}{p.killed ? " · 阵亡" : p.exiled ? " · 被放逐" : ""}</small></span><em>{v.winners.includes(p.seat) ? "胜" : "败"}</em>{v.contributions?.seats[p.seat] ? <ContributionLine entry={v.contributions.seats[p.seat]} /> : null}</li>)}</ul>
-      {host ? <button className="ta-primary" onClick={restart}>再来一局</button> : <p className="why">等待房主开始下一局</p>}</div> : null}
+      {host ? <button className="ta-primary" onClick={() => { stopEnding(); restart(); }}>再来一局</button> : <p className="why">等待房主开始下一局</p>}</div> : null}
     {rev ? <div className="ta-revall" onClick={() => setRev(false)}><h3>本轮揭示的牌</h3><div>{v.revealed.map((t: string, i: number) => <div key={i} className="one"><GameCard type={t} /></div>)}</div><p>点任意处返回</p></div> : null}
     <div key={"veil" + v.phase} className="ta-veil" />
-    {scene ? <SceneOverlay key={`${incoming.round}-${scene.id}`} scene={scene} name={name} finish={finish} onEndingPlaying={setPlayingEnding} /> : null}
+    {scene ? <SceneOverlay key={`${incoming.round}-${scene.id}`} scene={scene} name={name} finish={finish} /> : null}
     {banner && !q ? <div key={banner} className={"ta-banner b-" + v.phase}><b>{banner}</b></div> : null}
     {zoom ? <div className="ta-zoom" onClick={() => setZoom(null)}>{zoom.node ? <div className="ta-big">{zoom.node}</div> : CARD_TEXT[zoom.src.split("/").pop()!.replace(".webp", "")] ? <div className="ta-big"><GameCard type={zoom.src.split("/").pop()!.replace(".webp", "")} /></div> : <img src={zoom.src} alt="" />}{zoom.node ? null : <p>{zoom.text}</p>}{zoom.play !== undefined ? <button className="ta-primary" onClick={() => send({ t: "play", card: zoom.play })}>暗置打出</button> : null}</div> : null}
   </div>;

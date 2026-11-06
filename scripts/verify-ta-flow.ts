@@ -35,6 +35,7 @@ const reveal = setup();
 reveal.phase = "resolve"; reveal.stage = "reveal"; reveal.resStart = reveal.energy;
 reveal.queue = [{ seat: 1, card: { id: 901, type: "basic_repair" } }];
 save("LAST", reveal);
+save("FADE", { ...reveal, oxygen: 1 });
 const deaths = setup();
 deaths.phase = "accuse";
 deaths.players[1].wounds = ["flesh", "flesh"];
@@ -96,9 +97,19 @@ try {
   async function open(code: string, seat = 0, blockVideo = false) {
     const page = await browser.newPage({ viewport: { width: 390, height: 640 } });
     await page.addInitScript(({ code, token }) => localStorage.setItem("ta-seat-" + code, token), { code, token: token(seat) });
+    await page.addInitScript(() => {
+      const play = HTMLMediaElement.prototype.play;
+      const tracks: HTMLAudioElement[] = [];
+      Object.assign(window, { taAudioTracks: tracks });
+      HTMLMediaElement.prototype.play = function () {
+        if (this instanceof HTMLAudioElement && !tracks.includes(this)) tracks.push(this);
+        return play.call(this);
+      };
+    });
     if (blockVideo) await page.addInitScript(() => {
       Object.defineProperty(HTMLVideoElement.prototype, "currentTime", { get: () => 0 });
       HTMLVideoElement.prototype.play = () => Promise.reject(new DOMException("拒绝播放", "NotAllowedError"));
+      HTMLAudioElement.prototype.play = () => Promise.reject(new DOMException("拒绝播放", "NotAllowedError"));
     });
     await page.goto(base + "&room=" + code);
     await page.locator(".ta-game").waitFor();
@@ -106,17 +117,36 @@ try {
   }
   const shot = (page: Page, label: string) => page.screenshot({ path: join(evidence, label + ".png"), animations: "disabled" });
   const button = (page: Page, text: string) => page.getByRole("button", { name: text, exact: true });
+  const endingTime = (page: Page) => page.evaluate(() => {
+    const tracks = (window as Window & { taAudioTracks?: HTMLAudioElement[] }).taAudioTracks;
+    return tracks?.find(track => /end_(win|lose)[.]mp3$/.test(track.src))?.currentTime ?? 0;
+  });
   async function playVideo(page: Page, kind: string, label: string, name: string) {
     const overlay = page.locator(`[data-scene="${kind}"]`);
     const video = overlay.locator("video");
     await overlay.getByRole("heading", { name, exact: true }).waitFor();
-    assert.equal(await video.evaluate((v: HTMLVideoElement) => v.autoplay && v.muted && v.playsInline && v.hasAttribute("muted") && v.hasAttribute("webkit-playsinline")), true);
+    if (kind === "ending") {
+      assert.equal(await endingTime(page), 0);
+      await button(page, "查看结局").click();
+      await page.waitForFunction(() => {
+        const audio = (window as Window & { taAudioTracks?: HTMLAudioElement[] }).taAudioTracks?.find(track => /end_(win|lose)[.]mp3$/.test(track.src));
+        return audio && audio.currentTime > .1 && !audio.loop;
+      });
+    }
+    assert.equal(await video.evaluate((v: HTMLVideoElement) => v.muted && v.playsInline && v.hasAttribute("muted") && v.hasAttribute("webkit-playsinline")), true);
     await page.waitForFunction(kind => {
       const v = document.querySelector<HTMLVideoElement>(`[data-scene="${kind}"] video`);
       return v && v.currentTime > 0.1;
     }, kind, { timeout: 5000 });
     await shot(page, label + "-播放中");
+    const timestamp = kind === "ending"
+      ? await endingTime(page)
+      : 0;
     await overlay.getByRole("button", { name: "跳过演出", exact: true }).click();
+    if (kind === "ending") await page.waitForFunction(time => {
+      const tracks = (window as Window & { taAudioTracks?: HTMLAudioElement[] }).taAudioTracks;
+      return tracks?.some(track => /end_(win|lose)\.mp3$/.test(track.src) && track.currentTime > time + .15 && !track.paused);
+    }, timestamp);
   }
   async function focused() {
     const last = await open("LAST");
@@ -227,8 +257,23 @@ try {
     await playVideo(loss, "ending", "09a-失败结局", "内鬼胜利");
     await button(loss, "再来一局").waitFor();
     await loss.close();
+    const fade = await open("FADE");
+    await button(fade, "规则").click();
+    await fade.locator(".ta-zoom").click({ position: { x: 1, y: 1 } });
+    await fade.waitForFunction(() => (window as Window & { taAudioTracks?: HTMLAudioElement[] }).taAudioTracks?.some(track => track.loop && track.currentTime > 0));
+    await fade.getByRole("button", { name: /揭示下一张/ }).click();
+    await fade.waitForFunction(() => {
+      const bgm = (window as Window & { taAudioTracks?: HTMLAudioElement[] }).taAudioTracks?.find(track => track.loop);
+      return bgm && bgm.volume > 0 && bgm.volume < .1;
+    });
+    await playVideo(fade, "ending", "09b-背景音乐淡出", "内鬼胜利");
+    await fade.waitForFunction(() => {
+      const bgm = (window as Window & { taAudioTracks?: HTMLAudioElement[] }).taAudioTracks?.find(track => track.loop);
+      return bgm?.paused && bgm.volume === 0;
+    });
+    await fade.close();
     const blocked = await open("ENDS", 0, true);
-    await blocked.getByRole("heading", { name: "船员胜利", exact: true }).waitFor();
+    await button(blocked, "查看结局").click();
     await button(blocked, "再来一局").waitFor();
     await shot(blocked, "10-拒绝播放仍显示结算");
     await blocked.close();

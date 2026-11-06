@@ -148,6 +148,7 @@ try {
           results[`${width}x${height}-${label}`]={overflow};
         };
         if (phase === "over") {
+          await page.getByRole("button", { name: "查看结局", exact: true }).click();
           await page.locator(".ta-end").waitFor();
         }
         await screenshot(phase);
