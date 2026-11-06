@@ -5,6 +5,7 @@ import { CHARACTERS, ENERGY_GOAL, ENERGY_SAFE, OXYGEN_MAX } from "../../../../pa
 import "./ta.css";
 import vfxMeta from "../vfx-meta.json" with { type: "json" };
 import { music, sfx, setMute, muted } from "./sound.ts";
+const img0 = (n: string) => `/assets/menace/${n}.mp4`;
 const img = (n: string) => `/assets/menace/${n}.webp`;
 const PHASE: Record<string, string> = { setup: "选择角色", action: "行动阶段", resolve: "匿名结算", accuse: "讨论与指控", vote: "放逐投票", over: "对局结束" };
 export function Menace() {
@@ -160,9 +161,11 @@ function Game({ snap, send, msg, clear, restart, host, online }: { snap: any; se
   const offlineActions = offline.map((player: any) => <button key={player.playerId} onClick={() => send({ t: "auto", player: player.playerId })}>{player.name} 已离线，代为操作</button>);
   const [mute, setM] = useState(muted());
   const exiled = v.players.filter((p: any) => p.exiled).length; const [door, setDoor] = useState(false); const prevEx = useRef(exiled);
-  useEffect(() => { if (exiled > prevEx.current) { setDoor(true); sfx("sabotage"); setTimeout(() => setDoor(false), 2600); } prevEx.current = exiled; }, [exiled]);
+  useEffect(() => { if (exiled > prevEx.current) { setDoorName(name(v.players.filter((p: any) => p.exiled).pop().seat)); setDoor(true); sfx("sabotage"); setTimeout(() => setDoor(false), 5600); } prevEx.current = exiled; }, [exiled]);
   const [cine, setCine] = useState(false);
   useEffect(() => { if (v.phase !== "over") { setCine(false); return; } const t = setTimeout(() => setCine(true), 6500); return () => clearTimeout(t); }, [v.phase]);
+  const [doorName, setDoorName] = useState(""); const [dead, setDead] = useState(""); const prevDead = useRef<number[]>(v.players.filter((p: any) => p.killed).map((p: any) => p.seat));
+  useEffect(() => { const k = v.players.filter((p: any) => p.killed).map((p: any) => p.seat); const n = k.filter((x: number) => !prevDead.current.includes(x)); prevDead.current = k; if (n.length) { setDead(n.map(name).join("、")); setTimeout(() => setDead(""), 5600); } }, [v.players]);
   const [banner, setBanner] = useState("");
   useEffect(() => { if (v.phase === "setup") return; if (v.phase === "over") { setBanner(""); return; } setBanner(PHASE[v.phase]); const t = setTimeout(() => setBanner(""), 1100); return () => clearTimeout(t); }, [v.phase]);
   const [gun, setGun] = useState(false); const [fly, setFly] = useState<{ id: number; t: string; c: string }[]>([]); const [hurt, setHurt] = useState(0); const [help, setHelp] = useState(false);
@@ -250,7 +253,8 @@ function Game({ snap, send, msg, clear, restart, host, online }: { snap: any; se
       <p className={"mine " + (v.winners.includes(v.you) ? "yes" : "no")}>{v.winners.includes(v.you) ? "你赢了" : "你输了"}</p>
       <ul>{v.players.map((p: any, i: number) => <li key={p.seat} style={{ animationDelay: `${.25 + i * .12}s` }} className={v.winners.includes(p.seat) ? "w" : ""}>{p.character ? <img src={img("p_" + p.character)} alt="" /> : null}<span><b>{name(p.seat)}</b><small>{AGENDA_TEXT[p.agenda][0]}{p.killed ? " · 阵亡" : p.exiled ? " · 被放逐" : ""}</small></span><em>{v.winners.includes(p.seat) ? "胜" : "败"}</em></li>)}</ul>
       {host ? <button className="ta-primary" onClick={restart}>再来一局</button> : <p className="why">等待房主开始下一局</p>}</div> : null}
-    {door ? <div className="ta-door"><i /><i /><b>舱门关闭</b></div> : null}
+    {door && v.phase !== "over" ? <div className="ta-clip" onClick={() => setDoor(false)}><video src={img0("fx_exile")} autoPlay muted playsInline onEnded={() => setDoor(false)} onError={() => setDoor(false)} /><b>{doorName} 被放逐</b></div> : null}
+    {dead && !door && v.phase !== "over" ? <div className="ta-clip" onClick={() => setDead("")}><video src={img0("fx_death")} autoPlay muted playsInline onEnded={() => setDead("")} onError={() => setDead("")} /><b className="r">{dead} 阵亡</b></div> : null}
     {banner && !q ? <div key={banner} className={"ta-banner b-" + v.phase}><b>{banner}</b></div> : null}
     {zoom ? <div className="ta-zoom" onClick={() => setZoom(null)}>{zoom.node ? <div className="ta-big">{zoom.node}</div> : CARD_TEXT[zoom.src.split("/").pop()!.replace(".webp", "")] ? <div className="ta-big"><GameCard type={zoom.src.split("/").pop()!.replace(".webp", "")} /></div> : <img src={zoom.src} alt="" />}{zoom.node ? null : <p>{zoom.text}</p>}{zoom.play !== undefined ? <button className="ta-primary" onClick={() => send({ t: "play", card: zoom.play })}>暗置打出</button> : null}</div> : null}
   </div>;

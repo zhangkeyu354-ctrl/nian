@@ -410,3 +410,4 @@
   .ta-meter-light { display: none; }
 }
 .ta-cine{position:fixed;inset:0;z-index:21;width:100%;height:100%;object-fit:cover;background:#000;cursor:pointer}
+.ta-clip{position:fixed;inset:0;z-index:15;background:#000;display:flex;align-items:flex-end;justify-content:center;padding-bottom:18dvh;cursor:pointer}.ta-clip video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}.ta-clip b{position:relative;font:700 38px TATitle,sans-serif;color:#ffd976;text-shadow:0 3px 0 #000,0 0 22px #000;animation:ta-pop .5s 3.4s both}.ta-clip b.r{color:#ff5a4a}
