@@ -1,0 +1,266 @@
+{
+  "rotti:bloodwork": {
+    "status": "发动、即时问答及提示通过",
+    "clicks": [
+      ".ta-abs button:has-text(\"抽血检验\")",
+      ".ta-panel:not(.ta-dock) button:text-is(\"甲号船员\")",
+      ".ta-panel.alert .ta-card"
+    ]
+  },
+  "rotti:first_aid": {
+    "status": "发动、即时问答及提示通过",
+    "clicks": [
+      ".ta-abs button:has-text(\"应急治疗\")",
+      ".ta-panel:not(.ta-dock) button:text-is(\"乙号船员\")",
+      "button:text-is(\"皮肉伤\")"
+    ]
+  },
+  "malumil:veto": {
+    "status": "发动、即时问答及提示通过",
+    "clicks": [
+      ".ta-abs button:has-text(\"否决权\")",
+      ".ta-panel:not(.ta-dock) .ta-card"
+    ]
+  },
+  "malumil:laser_pistol": {
+    "status": "发动、即时问答及提示通过",
+    "clicks": [
+      ".ta-abs button:has-text(\"雷射枪\")",
+      ".ta-panel:not(.ta-dock) button:text-is(\"乙号船员\")"
+    ]
+  },
+  "andrew:delegate": {
+    "status": "发动、即时问答及提示通过",
+    "clicks": [
+      ".ta-abs button:has-text(\"委任工作\")",
+      ".ta-panel:not(.ta-dock) button:text-is(\"乙号船员\")",
+      "button:has-text(\"已离线，代为操作\")"
+    ]
+  },
+  "andrew:commandeer": {
+    "status": "发动、即时问答及提示通过",
+    "clicks": [
+      ".ta-abs button:has-text(\"强制征收\")",
+      ".ta-panel:not(.ta-dock) button:text-is(\"乙号船员\")"
+    ]
+  },
+  "shnn:delegate": {
+    "status": "发动、即时问答及提示通过",
+    "clicks": [
+      ".ta-abs button:has-text(\"委任工作\")",
+      ".ta-panel:not(.ta-dock) button:text-is(\"乙号船员\")",
+      "button:has-text(\"已离线，代为操作\")"
+    ]
+  },
+  "shnn:salvage": {
+    "status": "发动、即时问答及提示通过",
+    "clicks": [
+      ".ta-abs button:has-text(\"打捞作业\")",
+      ".ta-panel:not(.ta-dock) .ta-card",
+      "button:text-is(\"取走 0 张\")"
+    ]
+  },
+  "dekka:crunch": {
+    "status": "发动、即时问答及提示通过",
+    "clicks": [
+      ".ta-abs button:has-text(\"强势命令\")",
+      ".ta-panel:not(.ta-dock) button:text-is(\"乙号船员\")"
+    ]
+  },
+  "dekka:strategize": {
+    "status": "发动、即时问答及提示通过",
+    "clicks": [
+      ".ta-abs button:has-text(\"运筹帷幄\")",
+      ".ta-panel:not(.ta-dock) .ta-card",
+      "button:text-is(\"保留盖放牌\")"
+    ]
+  },
+  "martella:crunch": {
+    "status": "发动、即时问答及提示通过",
+    "clicks": [
+      ".ta-abs button:has-text(\"强势命令\")",
+      ".ta-panel:not(.ta-dock) button:text-is(\"乙号船员\")"
+    ]
+  },
+  "martella:moxie": {
+    "status": "发动、即时问答及提示通过",
+    "clicks": [
+      ".ta-abs button:has-text(\"胆大作风\")"
+    ]
+  },
+  "tove:todays_special": {
+    "status": "发动、即时问答及提示通过",
+    "clicks": [
+      ".ta-abs button:has-text(\"今日特餐\")",
+      ".ta-panel:not(.ta-dock) button:text-is(\"乙号船员\")",
+      ".ta-panel:not(.ta-dock) .ta-card"
+    ]
+  },
+  "tove:first_aid": {
+    "status": "发动、即时问答及提示通过",
+    "clicks": [
+      ".ta-abs button:has-text(\"应急治疗\")",
+      ".ta-panel:not(.ta-dock) button:text-is(\"乙号船员\")",
+      "button:text-is(\"皮肉伤\")"
+    ]
+  },
+  "aerril:helping_hand": {
+    "status": "发动、即时问答及提示通过",
+    "clicks": [
+      ".ta-abs button:has-text(\"热情帮手\")"
+    ]
+  },
+  "aerril:mimic": {
+    "status": "发动、即时问答及提示通过",
+    "clicks": [
+      ".ta-abs button:has-text(\"有样学样\")",
+      "button:text-is(\"雷射枪\")",
+      ".ta-panel:not(.ta-dock) button:text-is(\"乙号船员\")"
+    ]
+  },
+  "moe:deflect": {
+    "status": "发动、即时问答及提示通过",
+    "clicks": [
+      ".ta-abs button:has-text(\"弹射伤害\")"
+    ]
+  },
+  "moe:regenerate": {
+    "status": "发动、即时问答及提示通过",
+    "clicks": [
+      ".ta-abs button:has-text(\"自我修复\")"
+    ]
+  },
+  "beepo:rewind": {
+    "status": "发动、即时问答及提示通过",
+    "clicks": [
+      ".ta-abs button:has-text(\"倒带\")"
+    ]
+  },
+  "beepo:mimic": {
+    "status": "发动、即时问答及提示通过",
+    "clicks": [
+      ".ta-abs button:has-text(\"有样学样\")",
+      "button:text-is(\"雷射枪\")",
+      ".ta-panel:not(.ta-dock) button:text-is(\"乙号船员\")"
+    ]
+  },
+  "sigmund:efficiency": {
+    "status": "发动、即时问答及提示通过",
+    "clicks": [
+      ".ta-abs button:has-text(\"请求效率\")",
+      ".ta-panel:not(.ta-dock) .ta-card",
+      ".ta-panel:not(.ta-dock) .ta-card",
+      "button:text-is(\"确定 2 张\")"
+    ]
+  },
+  "sigmund:formulate": {
+    "status": "发动、即时问答及提示通过",
+    "clicks": [
+      ".ta-abs button:has-text(\"拟定计划\")",
+      ".ta-panel.alert .ta-card"
+    ]
+  },
+  "rhea:efficiency": {
+    "status": "发动、即时问答及提示通过",
+    "clicks": [
+      ".ta-abs button:has-text(\"请求效率\")",
+      ".ta-panel:not(.ta-dock) .ta-card",
+      ".ta-panel:not(.ta-dock) .ta-card",
+      "button:text-is(\"确定 2 张\")"
+    ]
+  },
+  "rhea:system_refresh": {
+    "status": "发动、即时问答及提示通过",
+    "clicks": [
+      ".ta-abs button:has-text(\"系统重整\")",
+      ".ta-panel:not(.ta-dock) button:text-is(\"乙号船员\")"
+    ]
+  },
+  "cecilia:synchronize": {
+    "status": "发动、即时问答及提示通过",
+    "clicks": [
+      ".ta-abs button:has-text(\"同步化\")",
+      ".ta-panel:not(.ta-dock) button:text-is(\"乙号船员\")",
+      ".ta-panel:not(.ta-dock) button:text-is(\"丙号船员\")"
+    ]
+  },
+  "cecilia:surveillance": {
+    "status": "发动、即时问答及提示通过",
+    "clicks": [
+      ".ta-abs button:has-text(\"安全检查\")",
+      ".ta-panel:not(.ta-dock) button:text-is(\"乙号船员\")",
+      "button:text-is(\"查看第 2 张\")",
+      "button:text-is(\"关闭牌面\")"
+    ]
+  },
+  "prillig:lockdown": {
+    "status": "发动、即时问答及提示通过",
+    "clicks": [
+      ".ta-abs button:has-text(\"状态锁定\")"
+    ]
+  },
+  "prillig:surveillance": {
+    "status": "发动、即时问答及提示通过",
+    "clicks": [
+      ".ta-abs button:has-text(\"安全检查\")",
+      ".ta-panel:not(.ta-dock) button:text-is(\"乙号船员\")",
+      "button:text-is(\"查看第 2 张\")",
+      "button:text-is(\"关闭牌面\")"
+    ]
+  },
+  "azi:equip": {
+    "status": "发动、即时问答及提示通过",
+    "clicks": [
+      ".ta-abs button:has-text(\"整装备战\")",
+      ".ta-panel:not(.ta-dock) .ta-card"
+    ]
+  },
+  "azi:resupply": {
+    "status": "发动、即时问答及提示通过",
+    "clicks": [
+      ".ta-abs button:has-text(\"额外补给\")",
+      ".ta-panel:not(.ta-dock) button:text-is(\"乙号船员\")"
+    ]
+  },
+  "iza:rush": {
+    "status": "发动、即时问答及提示通过",
+    "clicks": [
+      ".ta-abs button:has-text(\"矫健身手\")",
+      "button:text-is(\"关闭牌面\")",
+      "button:text-is(\"暗置打出\")"
+    ]
+  },
+  "iza:restructure": {
+    "status": "发动、即时问答及提示通过",
+    "clicks": [
+      ".ta-abs button:has-text(\"重新构筑\")"
+    ]
+  },
+  "ruggine:rush": {
+    "status": "发动、即时问答及提示通过",
+    "clicks": [
+      ".ta-abs button:has-text(\"矫健身手\")",
+      "button:text-is(\"关闭牌面\")",
+      "button:text-is(\"暗置打出\")"
+    ]
+  },
+  "ruggine:damage_control": {
+    "status": "发动、即时问答及提示通过",
+    "clicks": [
+      ".ta-abs button:has-text(\"损害控管\")"
+    ]
+  },
+  "gurg:guard": {
+    "status": "发动、即时问答及提示通过",
+    "clicks": [
+      ".ta-abs button:has-text(\"安全卫士\")"
+    ]
+  },
+  "gurg:laser_pistol": {
+    "status": "发动、即时问答及提示通过",
+    "clicks": [
+      ".ta-abs button:has-text(\"雷射枪\")",
+      ".ta-panel:not(.ta-dock) button:text-is(\"乙号船员\")"
+    ]
+  }
+}

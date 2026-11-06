@@ -9,9 +9,10 @@ import { ABILITIES } from "../apps/web/src/ta/text.ts";
 import type { TARoomFile } from "../apps/server/src/ta-rooms.ts";
 
 const directory = mkdtempSync(join(tmpdir(), "menace-browser-"));
-const screens = "docs/menace/screens";
+const abilitiesOnly = process.argv.includes("--abilities");
+const screens = process.env.TA_AUDIT_EVIDENCE ?? "docs/menace/screens";
 mkdirSync(screens, { recursive: true });
-const port = "3192";
+const port = process.env.TA_AUDIT_PORT ?? "3192";
 const base = `http://127.0.0.1:${port}/?game=ta`;
 const names = ["甲号船员", "乙号船员", "丙号船员", "丁号船员"];
 const players = names.map((name, i) => ({ name, playerId: `p${i}`, token: `audit-${i}` }));
@@ -33,10 +34,13 @@ function save(code: string, state: State, bots = false) {
   writeFileSync(file(code), JSON.stringify(room));
 }
 const abilities = [...new Set(Object.values(CHARACTERS).flatMap(c => c.ab))];
-const cases = abilities.map((ab, i) => {
+const abilityCases = abilitiesOnly
+  ? Object.entries(CHARACTERS).flatMap(([character, data]) => data.ab.map(ab => ({ character, ab, key: `${character}:${ab}` })))
+  : abilities.map(ab => ({ character: Object.keys(CHARACTERS).find(c => CHARACTERS[c].ab.includes(ab))!, ab, key: ab }));
+const cases = abilityCases.map(({ character, ab, key }, i) => {
   const code = "A" + String(i).padStart(3, "0");
   const state = game();
-  state.players[0].character = Object.keys(CHARACTERS).find(c => CHARACTERS[c].ab.includes(ab))!;
+  state.players[0].character = character;
   if (ab === "regenerate") state.players[0].wounds = ["flesh"];
   if (ab === "first_aid") state.players[1].wounds = ["flesh", "severed"];
   if (ab === "mimic") state.abilityActors = [{seat:1,ab:"laser_pistol"}];
@@ -45,7 +49,7 @@ const cases = abilities.map((ab, i) => {
   if (ab === "bloodwork") state.players[0].hand = state.players[0].hand.slice(0,2);
   if (ab === "commandeer" || ab === "formulate" || ab === "equip") state.players[0].hand = state.players[0].hand.slice(0,1);
   save(code,state);
-  return {code,ab};
+  return {code,ab,key};
 });
 const phases = ["action","resolve","accuse","vote","question","over"] as const;
 const sizes = [[390,640],[320,568],[360,780],[430,932]];
@@ -72,7 +76,8 @@ async function ready() {
 const results: Record<string,unknown> = {};
 const clicks: string[] = [];
 async function click(page: Page, selector: string, index = 0) {
-  await page.locator(selector).nth(index).click({timeout:2500});
+  await page.locator('.ta-sequence:not([data-scene="private"])').waitFor({state:"hidden",timeout:10000});
+  await page.locator(selector).nth(index).click({timeout:5000});
   clicks.push(selector);
 }
 await ready();
@@ -80,10 +85,18 @@ const browser = await chromium.launch({executablePath:process.env.CH || undefine
 try {
   async function open(page:Page, code:string, seat=0) {
     await page.addInitScript(({code,token})=>localStorage.setItem("ta-seat-"+code,token),{code,token:players[seat].token});
-    await page.goto(base+"&room="+code);
-    await page.locator(".ta-game").waitFor({timeout:5000});
+    await page.goto(base+"&room="+code, {waitUntil:"domcontentloaded"});
+    await page.locator(".ta-game").waitFor({timeout:15000});
   }
   async function runAbility(page:Page, ab:Ability) {
+    await page.evaluate(() => {
+      const notices = new Set<string>();
+      (window as Window & { abilityNotices?: Set<string> }).abilityNotices = notices;
+      new MutationObserver(() => {
+        const label = document.querySelector('[data-scene="notice"] h2')?.textContent;
+        if (label) notices.add(label);
+      }).observe(document.body, { childList: true, subtree: true });
+    });
     await click(page,`.ta-abs button:has-text("${ABILITIES[ab].name}")`);
     let chosenAbility = ab;
     let seat = 1;
@@ -94,25 +107,34 @@ try {
       if(step.kind==="aside")await click(page,'button:text-is("保留盖放牌")');
       if(step.kind==="used"){chosenAbility="laser_pistol";await click(page,'button:text-is("雷射枪")');await click(page,`.ta-panel:not(.ta-dock) button:text-is("${names[1]}")`);}
     }
-    if(ab==="rush")await click(page,'button:text-is("暗置打出")');
+    if(ab==="rush"){await click(page,'button:text-is("关闭牌面")');await click(page,'button:text-is("暗置打出")');}
     if(ab==="formulate"||ab==="bloodwork")await click(page,".ta-panel.alert .ta-card");
     if(ab==="first_aid")await click(page,'button:text-is("皮肉伤")');
     if(ab==="surveillance")await click(page,'button:text-is("查看第 2 张")');
     if(ab==="salvage")await click(page,'button:text-is("取走 0 张")');
     if(ab==="delegate")await click(page,'button:has-text("已离线，代为操作")');
+    if (ab === "surveillance") await click(page,'button:text-is("关闭牌面")');
+    await wait(350);
     for(let i=0;i<80;i++){
       const s=read(new URL(page.url()).searchParams.get("room")!).snapshot!;
-      if(s.abilityActors?.some(x=>x.ab===chosenAbility&&x.seat===0)&&!s.stack.some(t=>t.k==="ask"&&t.seat===0))return;
+      if(s.abilityActors?.some(x=>x.ab===chosenAbility&&x.seat===0)&&!s.stack.some(t=>t.k==="ask"&&t.seat===0)) {
+        await page.waitForFunction(name => [...((window as Window & { abilityNotices?: Set<string> }).abilityNotices ?? [])]
+          .some(label => label.includes(name)), ABILITIES[ab].name, { timeout: 7000 });
+        return;
+      }
       await wait(100);
     }
     throw new Error("存档未确认能力或本座仍有待回答问题：" + (await page.locator(".ta-err").allTextContents()).join("；"));
   }
   const mobile = await browser.newPage({viewport:{width:390,height:640},reducedMotion:"reduce"});
-  for(const {code,ab} of cases){
+  for(const {code,ab,key} of cases){
     clicks.length=0;
-    try {await open(mobile,code);await runAbility(mobile,ab);results[ab]={status:"发动与即时问答通过",clicks:[...clicks]};}
-    catch(e){results[ab]={status:"失败",clicks:[...clicks],error:String(e).split("\n").slice(0,9).join("\n")};}
+    const page = abilitiesOnly ? await browser.newPage({viewport:{width:390,height:640},reducedMotion:"reduce"}) : mobile;
+    try {await open(page,code);await runAbility(page,ab);results[key]={status:"发动、即时问答及提示通过",clicks:[...clicks]};}
+    catch(e){results[key]={status:"失败",clicks:[...clicks],error:String(e).split("\n").slice(0,9).join("\n")};}
+    finally { if (abilitiesOnly) await page.close(); }
   }
+  if (!abilitiesOnly) {
   for(const [size,[width,height]] of sizes.entries()){
     const page=await browser.newPage({viewport:{width,height},reducedMotion:"reduce"});
     for(const [i,phase] of phases.entries()){
@@ -125,6 +147,10 @@ try {
           await page.screenshot({path:`${screens}/${width}x${height}-${label}.png`,timeout:5000});
           results[`${width}x${height}-${label}`]={overflow};
         };
+        if (phase === "over") {
+          await page.getByRole("button", { name: "点击查看结局", exact: true }).click();
+          await page.locator(".ta-end").waitFor();
+        }
         await screenshot(phase);
         if(phase==="action"){
           await click(page,'button:text-is("规则")');
@@ -169,6 +195,11 @@ try {
   server.kill();await exited;
   server=child();await ready();await open(network,"BOTS");
   results["重启恢复"]=read("BOTS").round===beforeRestart.round&&read("BOTS").version!>beforeRestart.version!;
+  } else {
+    const passed = cases.filter(({ key }) => (results[key] as {status?:string})?.status === "发动、即时问答及提示通过");
+    console.log(`角色能力发动与即时问答：${passed.length}/${cases.length}，共 ${abilities.length} 种能力`);
+    if (passed.length !== cases.length) process.exitCode = 1;
+  }
 } finally {
   writeFileSync(join(screens,"audit-results.json"),JSON.stringify(results,null,2));
   await browser.close();
