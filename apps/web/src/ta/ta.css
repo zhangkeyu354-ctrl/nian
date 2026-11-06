@@ -258,3 +258,4 @@
 .ta-world .ta-id{top:auto;bottom:calc(10px + env(safe-area-inset-bottom));right:8px}.ph-action .ta-id{bottom:166px}
 .ta-game .ta-main{z-index:6}
 .ph-accuse .ta-main,.ph-vote .ta-main{position:fixed;left:8px;right:8px;bottom:calc(8px + env(safe-area-inset-bottom));max-height:56dvh;overflow-y:auto;display:flex;flex-direction:column;gap:8px;padding:0}.ph-accuse .ta-panel:not(.ph),.ph-vote .ta-panel:not(.ph){position:static!important;max-height:none}.ph-accuse .ta-id,.ph-vote .ta-id{top:92px;bottom:auto}
+.ta-world .ta-id{z-index:8}
