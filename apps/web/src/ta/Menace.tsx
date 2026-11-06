@@ -48,10 +48,10 @@ function Vfx({ id }: { id: string }) {
   return <div className="ta-vfx" style={{ width: m.w, height: m.h, zoom: undefined, transform: `translate(-50%,-50%) scale(${k})` }}><i style={{ width: m.w * m.n, height: m.h, backgroundImage: `url(/assets/cc0/vfx/${id}.png)`, animation: `ta-vfx ${m.n * m.ms}ms steps(${m.n}) forwards`, "--x": `-${m.w * m.n}px` } as any} /></div>;
 }
 function Bar({ label, v, max, mark, cls }: { label: string; v: number; max: number; mark?: number; cls: string }) {
-  return <div className={"ta-bar " + cls}><span>{label}</span><i><b style={{ width: `${(v / max) * 100}%` }} />{mark ? <u style={{ left: `${(mark / max) * 100}%` }} /> : null}</i><em>{v}/{max}</em></div>;
+  return <div className={"ta-bar " + cls}><span>{label}</span><i><b style={{ transform: `scaleX(${v / max})` }} />{mark ? <u style={{ left: `${(mark / max) * 100}%` }} /> : null}</i><em key={v}>{v}/{max}</em></div>;
 }
 function Game({ snap, send, msg, clear, restart, host, online }: { snap: any; send: (c: any) => void; msg: string; clear: () => void; restart: () => void; host: boolean; online: boolean }) {
-  const v = snap.view; const [zoom, setZoom] = useState<{ src: string; text: string; play?: number; node?: any } | null>(null); const [flow, setFlow] = useState<{ ab: string; steps: Step[]; args: any } | null>(null); const [pick, setPick] = useState<number[]>([]);
+  const v = snap.view; const [zoom, setZoom] = useState<{ src: string; text: string; play?: number; selected?: number; node?: any } | null>(null); const [flow, setFlow] = useState<{ ab: string; steps: Step[]; args: any } | null>(null); const [pick, setPick] = useState<number[]>([]);
   const name = (seat: number) => snap.players.find((p: any) => p.playerId === snap.seats[seat])?.name ?? `座位${seat + 1}`;
   const me = v.players[v.you]; const myTurn = v.waiting.includes(v.you); const q = v.question;
   useEffect(() => { setFlow(null); setPick([]); }, [v.phase, v.round, q?.q]);
@@ -166,9 +166,9 @@ function Game({ snap, send, msg, clear, restart, host, online }: { snap: any; se
       <details className="ta-log"><summary>航行日志</summary>{[...v.log].reverse().map((l: string, i: number) => <p key={i}>{zh(l)}</p>)}</details>
     </main>
     {v.agenda && v.phase !== "setup" ? <button className="ta-id" onClick={() => setZoom({ src: "", text: "", node: zoomOf.agenda(v.agenda) })}>身份</button> : null}
-    {v.hand?.length && v.phase !== "setup" ? <nav className="ta-hand">{v.hand.map((c: any) => <button key={c.id} className="ta-card" onClick={() => setZoom({ src: img(c.type), text: CARD_TEXT[c.type].join("：\n"), play: acting ? c.id : undefined })}><GameCard type={c.type} /></button>)}</nav> : null}
+    {v.hand?.length && v.phase !== "setup" ? <nav className={"ta-hand" + (zoom?.selected !== undefined ? " has-selection" : "")}>{v.hand.map((c: any) => <button key={c.id} className="ta-card" aria-pressed={zoom?.selected === c.id} onClick={() => setZoom({ src: img(c.type), text: CARD_TEXT[c.type].join("：\n"), selected: c.id, play: acting ? c.id : undefined })}><GameCard type={c.type} /></button>)}</nav> : null}
     {gun ? <div className="ta-gun"><svg viewBox="0 0 200 120"><path d="M8 28h150l14 12v16H92l-10 12-8 44H34l10-52H8z" fill="#2c332c" stroke="#000" strokeWidth="5"/><path d="M8 28h150v10H8z" fill="#6f8350"/><rect x="150" y="44" width="46" height="9" fill="#e0a92a" stroke="#000" strokeWidth="3"/></svg></div> : null}
-    {show ? <div key={show.id} className="ta-stage" onClick={() => setShow(null)}><div className="card"><GameCard type={show.type} /></div><Vfx id={CARD_FX[show.type]} />{fly.map((x) => <b key={x.id} style={{ color: x.c }}>{x.t}</b>)}</div> : null}
+    {show ? <div key={show.id} className="ta-stage"><div className="card"><div className="ta-flip"><div className="ta-flip-back">暗置行动</div><div className="ta-flip-front"><GameCard type={show.type} /></div></div></div><Vfx id={CARD_FX[show.type]} />{fly.map((x) => <b key={x.id} style={{ color: x.c }}>{x.t}</b>)}</div> : null}
     {hit ? <div key={hit.id} className="ta-hit"><Vfx id="blood" /><small>{hit.who} 受伤，抽取伤害牌…</small><div className="wc"><i className="back">伤害报告</i><div className="face">{zoomOf.wound(hit.w)}</div></div></div> : null}
     {hurt ? <div key={hurt} className="ta-hurt" /> : null}
     <div className="ta-fly">{show ? null : fly.map((x) => <b key={x.id} style={{ color: x.c }}>{x.t}</b>)}</div>
