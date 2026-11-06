@@ -47,8 +47,26 @@ function Vfx({ id }: { id: string }) {
   const m = (vfxMeta as any)[id]; if (!m) return null; const k = Math.min(5, 300 / m.w);
   return <div className="ta-vfx" style={{ width: m.w, height: m.h, zoom: undefined, transform: `translate(-50%,-50%) scale(${k})` }}><i style={{ width: m.w * m.n, height: m.h, backgroundImage: `url(/assets/cc0/vfx/${id}.png)`, animation: `ta-vfx ${m.n * m.ms}ms steps(${m.n}) forwards`, "--x": `-${m.w * m.n}px` } as any} /></div>;
 }
-function Bar({ label, v, max, mark, cls }: { label: string; v: number; max: number; mark?: number; cls: string }) {
-  return <div className={"ta-bar " + cls}><span>{label}</span><i><b style={{ transform: `scaleX(${v / max})` }} />{mark ? <u style={{ left: `${(mark / max) * 100}%` }} /> : null}</i><em key={v}>{v}/{max}</em></div>;
+function Bar({ label, v, max, mark, cls, delay }: { label: string; v: number; max: number; mark?: number; cls: string; delay: number }) {
+  const [display, setDisplay] = useState({ value: v, previous: v });
+  useEffect(() => {
+    const update = () => setDisplay(current => current.value === v ? current : { value: v, previous: current.value });
+    if (delay === 0 || matchMedia("(prefers-reduced-motion: reduce)").matches) {
+      update();
+      return;
+    }
+    const timer = setTimeout(update, delay);
+    return () => clearTimeout(timer);
+  }, [v, delay]);
+  return <div className={"ta-bar " + cls}><span>{label}</span>
+    <i><b style={{ transform: `scaleX(${display.value / max})` }} />
+      {display.previous !== display.value ? <span key={display.value} className="ta-meter-light" /> : null}
+      {mark ? <u style={{ left: `${(mark / max) * 100}%` }} /> : null}
+    </i>
+    <em aria-label={`${v}/${max}`}>
+      {display.previous !== display.value ? <span key={display.value} className="ta-meter-numbers" aria-hidden="true"><span>{display.previous}/{max}</span><span>{display.value}/{max}</span></span> : <span aria-hidden="true">{display.value}/{max}</span>}
+    </em>
+  </div>;
 }
 function Game({ snap, send, msg, clear, restart, host, online }: { snap: any; send: (c: any) => void; msg: string; clear: () => void; restart: () => void; host: boolean; online: boolean }) {
   const v = snap.view; const [zoom, setZoom] = useState<{ src: string; text: string; play?: number; selected?: number; node?: any } | null>(null); const [flow, setFlow] = useState<{ ab: string; steps: Step[]; args: any } | null>(null); const [pick, setPick] = useState<number[]>([]);
@@ -193,8 +211,9 @@ function Game({ snap, send, msg, clear, restart, host, online }: { snap: any; se
   const roundTable = v.phase === "accuse" || v.phase === "vote";
   const hand = v.hand?.length && v.phase !== "setup" ? <nav className={"ta-hand" + (zoom?.selected !== undefined ? " has-selection" : "")}>{v.hand.map((c: any) => <button key={c.id} className="ta-card" aria-pressed={zoom?.selected === c.id} onClick={() => setZoom({ src: img(c.type), text: CARD_TEXT[c.type].join("：\n"), selected: c.id, play: acting ? c.id : undefined })}><GameCard type={c.type} /></button>)}</nav> : null;
   return <div ref={board} className={"ta-world ta-game ph-" + (v.phase === "over" ? (v.winner === "crew" ? "win" : "lose") : v.phase) + (v.oxygen <= 6 ? " danger" : "")}>
+    {v.phase !== "setup" ? <div key={v.phase} className="ta-scene" aria-hidden="true" /> : null}
     <header className="ta-hud"><div className="ta-top"><b>{PHASE[v.phase]}{v.round ? ` · 第 ${v.round} 回合` : ""}</b><button className="ta-mute" onClick={() => setHelp(true)}>规则</button><button className="ta-mute" onClick={() => { setMute(!mute); setM(!mute); }}>{mute ? "开声音" : "静音"}</button>{v.agenda && v.phase !== "setup" ? <button className="ta-mute" onClick={() => setZoom({ src: "", text: "", node: zoomOf.agenda(v.agenda) })}>身份</button> : null}<span className={online ? "" : "off"}>{online ? hint : "连接中断，正在重连…"}</span></div>
-      <Bar label="氧气" v={v.oxygen} max={OXYGEN_MAX} cls="o" /><Bar label="能量" v={v.energy} max={ENERGY_GOAL} mark={ENERGY_SAFE} cls="e" /></header>
+      <Bar label="氧气" v={v.oxygen} max={OXYGEN_MAX} cls="o" delay={v.phase === "resolve" ? 560 : 0} /><Bar label="能量" v={v.energy} max={ENERGY_GOAL} mark={ENERGY_SAFE} cls="e" delay={v.phase === "resolve" ? 560 : 0} /></header>
     <div key={v.phase} className="ta-table"><div className="core" style={{ "--o": `${(v.oxygen / OXYGEN_MAX) * 100}%`, "--e": `${(v.energy / ENERGY_GOAL) * 100}%` } as any}><b>{v.phase === "action" ? v.players.reduce((n: number, p: any) => n + p.played, 0) : v.phase === "vote" ? v.voted : v.remaining}</b><small>{v.phase === "action" ? "已暗置" : v.phase === "resolve" ? "待揭示" : v.phase === "vote" ? "已投票" : PHASE[v.phase]}</small></div>
       {v.players.map((p: any) => { const n = v.players.length, a = ((p.seat - v.you + n) % n) / n * Math.PI * 2 + Math.PI / 2, x = 50 + 38 * Math.cos(a), y = 50 + 38 * Math.sin(a); return <button type="button" key={p.seat} style={{ left: `${x}%`, top: `${y}%` }} className={["ta-seat", v.waiting.includes(p.seat) ? "turn" : "", p.killed ? "dead" : "", p.exiled ? "exiled" : "", p.seat === v.you ? "me" : ""].join(" ")} onClick={() => setZoom({ src: "", text: "", node: <div className="ta-detail"><h3>{name(p.seat)}{p.seat === v.leader ? " · 任务领袖" : ""}</h3><p>手牌 {p.hand}　牌库 {p.deck}　本轮已出 {p.played}{p.killed ? "　已阵亡" : p.exiled ? "　已放逐" : ""}{snap.players.find((x: any) => x.playerId === snap.seats[p.seat])?.connected ? "" : "　离线"}</p>{p.agenda && p.seat !== v.you ? <p className="rev">身份：{AGENDA_TEXT[p.agenda][0]}</p> : null}{p.wounds.map((w: string, i: number) => <p key={i} className="wd">{WOUND_TEXT[w]}</p>)}{p.character ? zoomOf.char(p.character) : null}</div> })}>
         <i className="face">{p.character ? <img src={img("p_" + p.character)} alt="" /> : null}{p.seat === v.leader ? <u>★</u> : null}{p.played ? <s aria-label={`已暗置 ${p.played} 张`}>{p.played}</s> : null}</i><b>{name(p.seat)}</b><small>手{p.hand} 库{p.deck}{p.wounds.length ? <em> 伤{p.wounds.length}</em> : null}</small>{p.agenda && p.seat !== v.you ? <small className="rev">{AGENDA_TEXT[p.agenda][0].split("（")[0]}</small> : null}{p.exiled ? <small className="rev">放逐</small> : p.killed ? <small className="rev">阵亡</small> : null}</button>; })}</div>
@@ -224,9 +243,9 @@ function Game({ snap, send, msg, clear, restart, host, online }: { snap: any; se
     <div className="ta-fly">{show ? null : fly.map((x) => <b key={x.id} style={{ color: x.c }}>{x.t}</b>)}</div>
     {help ? <div className="ta-zoom" onClick={() => setHelp(false)}><Rules /></div> : null}
     {v.phase === "over" ? <div className={"ta-end " + (v.winner === "crew" ? "win" : "lose")}><div className="fx">{Array.from({ length: 28 }, (_, i) => <i key={i} style={{ left: `${(i * 37) % 100}%`, animationDelay: `${(i % 9) * .35}s` }} />)}</div>
-      <small>{v.winner === "crew" ? "ISV-警戒号 · 引擎重启" : "ISV-警戒号 · 生命维持终止"}</small><h1>{v.winner === "crew" ? "劫后余生" : "全员窒息"}</h1><p className="why">{v.winner === "crew" ? (v.energy >= ENERGY_GOAL ? `能量充满，氧气仅剩 ${v.oxygen} 格。你们活下来了。` : "内鬼全部伏诛，飞船脱离危险。") : (v.oxygen === 0 ? "最后一口氧气耗尽，内鬼的计划得逞。" : "船员无一生还，飞船落入内鬼之手。")}</p>
+      <small>{v.winner === "crew" ? "警戒号 · 引擎重启" : "警戒号 · 生命维持终止"}</small><h1>{v.winner === "crew" ? "劫后余生" : "全员窒息"}</h1><p className="why">{v.winner === "crew" ? (v.energy >= ENERGY_GOAL ? `能量充满，氧气仅剩 ${v.oxygen} 格。你们活下来了。` : "内鬼全部伏诛，飞船脱离危险。") : (v.oxygen === 0 ? "最后一口氧气耗尽，内鬼的计划得逞。" : "船员无一生还，飞船落入内鬼之手。")}</p>
       <p className={"mine " + (v.winners.includes(v.you) ? "yes" : "no")}>{v.winners.includes(v.you) ? "你赢了" : "你输了"}</p>
-      <ul>{v.players.map((p: any, i: number) => <li key={p.seat} style={{ animationDelay: `${1.2 + i * .35}s` }} className={v.winners.includes(p.seat) ? "w" : ""}>{p.character ? <img src={img("p_" + p.character)} alt="" /> : null}<span><b>{name(p.seat)}</b><small>{AGENDA_TEXT[p.agenda][0]}{p.killed ? " · 阵亡" : p.exiled ? " · 被放逐" : ""}</small></span><em>{v.winners.includes(p.seat) ? "胜" : "败"}</em></li>)}</ul>
+      <ul>{v.players.map((p: any, i: number) => <li key={p.seat} style={{ animationDelay: `${.25 + i * .12}s` }} className={v.winners.includes(p.seat) ? "w" : ""}>{p.character ? <img src={img("p_" + p.character)} alt="" /> : null}<span><b>{name(p.seat)}</b><small>{AGENDA_TEXT[p.agenda][0]}{p.killed ? " · 阵亡" : p.exiled ? " · 被放逐" : ""}</small></span><em>{v.winners.includes(p.seat) ? "胜" : "败"}</em></li>)}</ul>
       {host ? <button className="ta-primary" onClick={restart}>再来一局</button> : <p className="why">等待房主开始下一局</p>}</div> : null}
     {door ? <div className="ta-door"><i /><i /><b>舱门关闭</b></div> : null}
     {banner && !q ? <div key={banner} className={"ta-banner b-" + v.phase}><b>{banner}</b></div> : null}

@@ -372,3 +372,40 @@
 .ta-offline button { display: block; width: 100%; margin-top: 4px; }
 .ta-game:is(.ph-vote,.ph-accuse) nav.ta-hand { margin-top: 4px; }
 .ta-game .ta-top .ta-mute { margin-left: 0; }
+
+.ta-scene {
+  position: absolute;
+  inset: 0;
+  z-index: -2;
+  pointer-events: none;
+  background: inherit;
+  animation: ta-scene-in 280ms ease-out both;
+}
+@keyframes ta-scene-in {
+  from { opacity: 0; transform: scale(1.025); }
+  to { opacity: 1; transform: none; }
+}
+.ta-game .ta-bar em {
+  display: block;
+  height: 1.25em;
+  line-height: 1.25;
+  overflow: hidden;
+  animation: none;
+}
+.ta-meter-numbers { display: grid; animation: ta-meter-roll 260ms ease-out both; }
+.ta-meter-light {
+  position: absolute;
+  inset: 0;
+  background: #fff2bf;
+  animation: ta-meter-pulse 320ms ease-out both;
+  pointer-events: none;
+}
+@keyframes ta-meter-roll { to { transform: translateY(-50%); } }
+@keyframes ta-meter-pulse { from { opacity: .45; } to { opacity: 0; } }
+.ta-end { animation: ta-polish-enter 320ms ease-out both; }
+.ta-end h1 { animation: ta-polish-enter 360ms ease-out both; }
+@media (prefers-reduced-motion: reduce) {
+  .ta-scene, .ta-meter-numbers { animation: none; }
+  .ta-meter-numbers { transform: translateY(-50%); }
+  .ta-meter-light { display: none; }
+}
