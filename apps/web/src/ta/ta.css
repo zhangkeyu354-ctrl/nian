@@ -332,3 +332,16 @@
 @media (prefers-reduced-motion: reduce) {
   .ta-game .ta-table { animation: none; }
 }
+
+.ta-game, .ta-game::after, .ta-game .ta-seat .face::before { animation: none; }
+.ta-game .ta-top { flex-wrap: wrap; justify-content: flex-start; gap: 4px; }
+.ta-game .ta-top > span { flex: 1 1 65px; text-align: right; font-size: 12px; }
+.ta-game nav.ta-hand { flex: 0 0 auto; max-height: none; }
+@media (max-height: 640px) {
+  .ta-game.ph-action nav.ta-hand .ta-card {
+    width: 88px;
+    flex-basis: 88px;
+    height: 126px;
+    font-size: calc(88px / 34);
+  }
+}
