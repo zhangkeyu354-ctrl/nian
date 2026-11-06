@@ -89,7 +89,6 @@ function ContributionLine({ entry }: { entry: Contribution }) {
 function SceneOverlay({ scene, name, finish }: { scene: Scene; name: (seat: number) => string; finish: () => void }) {
   const video = useRef<HTMLVideoElement>(null);
   const audio = useRef<HTMLAudioElement>(null);
-  const [started, setStarted] = useState(false);
   const ending = scene.kind === "ending";
   const endingAsset = scene.kind === "ending" ? scene.win ? "end_win" : "end_lose" : null;
   useEffect(() => {
@@ -115,7 +114,7 @@ function SceneOverlay({ scene, name, finish }: { scene: Scene; name: (seat: numb
   }, [scene, videoKind]);
   useEffect(() => {
     const element = video.current;
-    if (!videoKind || !element || (ending && !started)) return;
+    if (!videoKind || !element) return;
     let active = true;
     let bridgeRetry = false;
     const play = () => {
@@ -125,7 +124,7 @@ function SceneOverlay({ scene, name, finish }: { scene: Scene; name: (seat: numb
     const retry = () => {
       if (!bridgeRetry && element.paused) { bridgeRetry = true; play(); }
     };
-    if (!ending) play();
+    play();
     document.addEventListener("WeixinJSBridgeReady", retry);
     const startup = setTimeout(() => {
       if (element.currentTime <= 0) setUnavailable(true);
@@ -137,12 +136,12 @@ function SceneOverlay({ scene, name, finish }: { scene: Scene; name: (seat: numb
       clearTimeout(startup);
       clearTimeout(watchdog);
     };
-  }, [videoKind, ending, started]);
+  }, [videoKind]);
   useEffect(() => {
-    if (!unavailable || (ending && !started)) return;
-    const timer = setTimeout(() => close.current(), 1500);
+    if (!unavailable) return;
+    const timer = setTimeout(() => close.current(), ending ? 4000 : 1500);
     return () => clearTimeout(timer);
-  }, [unavailable, ending, started]);
+  }, [unavailable, ending]);
   if (scene.kind === "death" || scene.kind === "exile" || scene.kind === "ending") {
     const asset = endingAsset ?? (scene.kind === "death" ? "fx_death" : "fx_exile");
     const label = ending ? scene.win ? "船员胜利" : "内鬼胜利" : `${name(scene.seat)} ${scene.kind === "death" ? "阵亡" : "被放逐"}`;
@@ -153,14 +152,17 @@ function SceneOverlay({ scene, name, finish }: { scene: Scene; name: (seat: numb
         element.muted = true;
         element.setAttribute("muted", "");
         element.setAttribute("webkit-playsinline", "");
-      }} autoPlay={!ending} muted playsInline poster={img(asset + "_poster")} preload="auto" src={`/assets/menace/${asset}.mp4`}
-        onPlaying={() => setUnavailable(false)} onEnded={finish} onError={() => setUnavailable(true)} />
+      }} autoPlay muted playsInline poster={img(asset + "_poster")} preload="auto" src={`/assets/menace/${asset}.mp4`}
+        onPlaying={() => {
+          setUnavailable(false);
+          if (audio.current) playEnding(audio.current);
+        }} onEnded={finish} onError={() => setUnavailable(true)} />
       <h2 className="ta-cinematic-caption">{label}</h2>
-      {ending && !started ? <button className="ta-primary ta-sequence-skip" onClick={() => {
-        setStarted(true);
-        if (endingAsset) playEnding(audio.current ?? new Audio(`/assets/menace/audio/${endingAsset}.mp3`));
-        void video.current?.play().catch(() => setUnavailable(true));
-      }}>查看结局</button> : <button className="ta-sequence-skip" onClick={finish}>跳过演出</button>}
+      {ending && unavailable ? <button className="ta-primary ta-sequence-skip" onClick={() => {
+        if (audio.current) playEnding(audio.current);
+        void video.current?.play().catch(finish);
+      }}>播放结局</button> : null}
+      <button className="ta-sequence-skip" style={ending && unavailable ? { bottom: 76 } : undefined} onClick={finish}>跳过演出</button>
     </div>;
   }
   if (scene.kind === "resource") {

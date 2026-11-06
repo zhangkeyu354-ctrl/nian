@@ -39,6 +39,7 @@ export function music(name: string | null, fadeOut = 0) {
 let fadingBgm: HTMLAudioElement | null = null;
 let endingAudio: HTMLAudioElement | null = null;
 let endingFrame = 0;
+let retryEnding: (() => void) | null = null;
 let stoppingEnding: HTMLAudioElement | null = null;
 
 function fadeToSilence(track: HTMLAudioElement, duration: number, done: () => void) {
@@ -68,15 +69,25 @@ export function playEnding(track: HTMLAudioElement) {
     track.volume = .55 * Math.min(fadeIn, fadeOut);
     if (!track.ended) endingFrame = requestAnimationFrame(update);
   };
-  void track.play().then(() => {
-    if (endingAudio === track && stoppingEnding !== track) endingFrame = requestAnimationFrame(update);
-  }).catch(() => {});
+  const play = () => {
+    void track.play().then(() => {
+      if (endingAudio === track && stoppingEnding !== track) endingFrame = requestAnimationFrame(update);
+    }).catch(() => {
+      if (endingAudio === track && stoppingEnding !== track) {
+        retryEnding = play;
+        addEventListener("pointerdown", play, { once: true });
+      }
+    });
+  };
+  play();
 }
 
 export function stopEnding() {
   const track = endingAudio;
   if (!track || stoppingEnding === track) return;
   stoppingEnding = track;
+  if (retryEnding) removeEventListener("pointerdown", retryEnding);
+  retryEnding = null;
   cancelAnimationFrame(endingFrame);
   fadeToSilence(track, 1000, () => {
     if (endingAudio === track) endingAudio = null;

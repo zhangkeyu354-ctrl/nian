@@ -87,7 +87,7 @@ for (const count of [4, 8]) save(`FULL${count}`, createGame(count, 11), seat => 
 const server = spawn(process.execPath, ["--import", "tsx", "apps/server/src/main.ts"], {
   env: { ...process.env, PORT: port, TA_DATA_DIR: data }, stdio: "inherit",
 });
-const browser = await chromium.launch({ executablePath: process.env.CH || undefined });
+const browser = await chromium.launch({ args: ["--autoplay-policy=no-user-gesture-required"], executablePath: process.env.CH || undefined });
 try {
   for (let attempt = 0; ; attempt++) {
     if (await fetch(base).then(r => r.ok).catch(() => false)) break;
@@ -106,6 +106,7 @@ try {
         return play.call(this);
       };
     });
+    if (blockVideo) await page.route("**/menace/end_*.mp4", route => route.abort());
     if (blockVideo) await page.addInitScript(() => {
       Object.defineProperty(HTMLVideoElement.prototype, "currentTime", { get: () => 0 });
       HTMLVideoElement.prototype.play = () => Promise.reject(new DOMException("拒绝播放", "NotAllowedError"));
@@ -126,8 +127,7 @@ try {
     const video = overlay.locator("video");
     await overlay.getByRole("heading", { name, exact: true }).waitFor();
     if (kind === "ending") {
-      assert.equal(await endingTime(page), 0);
-      await button(page, "查看结局").click();
+      assert.equal(await button(page, "查看结局").count(), 0);
       await page.waitForFunction(() => {
         const audio = (window as Window & { taAudioTracks?: HTMLAudioElement[] }).taAudioTracks?.find(track => /end_(win|lose)[.]mp3$/.test(track.src));
         return audio && audio.currentTime > .1 && !audio.loop;
@@ -273,7 +273,7 @@ try {
     });
     await fade.close();
     const blocked = await open("ENDS", 0, true);
-    await button(blocked, "查看结局").click();
+    await button(blocked, "播放结局").waitFor();
     await button(blocked, "再来一局").waitFor();
     await shot(blocked, "10-拒绝播放仍显示结算");
     await blocked.close();
