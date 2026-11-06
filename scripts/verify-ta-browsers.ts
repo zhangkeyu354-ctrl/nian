@@ -1,5 +1,6 @@
 import {chromium} from "playwright";import {spawn} from "node:child_process";
-const sv=spawn("npx",["tsx","apps/server/src/main.ts"],{env:{...process.env,PORT:"3191",TA_DATA_DIR:"/tmp/ta-v"},stdio:"ignore"});
+const sv=spawn(process.execPath,["--import","tsx","apps/server/src/main.ts"],{env:{...process.env,PORT:"3191",TA_DATA_DIR:"/tmp/ta-v"},stdio:"ignore"});
+process.on("exit",()=>sv.kill());
 const wait=(ms:number)=>new Promise(r=>setTimeout(r,ms));await wait(14000);
 const b=await chromium.launch({executablePath:process.env.CH||undefined});const url="http://localhost:3191/?game=ta";const ps=[];const errs:string[]=[];
 const N=8;for(let i=0;i<N;i++){const c=await b.newContext({viewport:{width:+(process.env.VW??390),height:+(process.env.VH??844)}});const p=await c.newPage();p.setDefaultTimeout(9000);p.on("pageerror",e=>errs.push(e.message));ps.push(p)}

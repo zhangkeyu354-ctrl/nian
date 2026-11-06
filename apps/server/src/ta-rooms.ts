@@ -14,7 +14,7 @@ const TEXT: Record<string, string> = {
   NOT_YOUR_TURN: "还没轮到你。", MUST_ACT: "你还有可执行的行动，不能跳过。", BRAIN_DAMAGE: "脑损伤：你必须重复上一名船员的行动类型。", CANNOT_PLAY: "你现在不能打出行动牌。", BAD_TARGET: "这个目标不合法。", BAD_ABILITY: "现在不能使用这个能力。", NEED_DISCARD: "需要先选一张要弃的牌。", VETO_FORCED: "这是最后一张牌，否决必须在此使用。", WAITING: "请等待其他玩家完成选择。", BAD: "操作无效。",
 };
 interface PlayerFile { playerId: string; token: string; name: string; bot?: boolean }
-export interface TARoomFile { game: "menace"; code: string; createdAt: string; stage: "lobby" | "game"; hostId: string | null; players: PlayerFile[]; mode: "basic" | "advanced"; round: number; seed: number; lineup: string[]; commands: Command[]; snapshot?: State }
+export interface TARoomFile { game: "menace"; code: string; createdAt: string; stage: "lobby" | "game"; hostId: string | null; players: PlayerFile[]; mode: "basic" | "advanced"; round: number; seed: number; lineup: string[]; commands: Command[]; snapshot?: State; version?: number }
 
 export class TARoom {
   state: State | null = null;
@@ -59,7 +59,7 @@ export class TARoom {
   private autos(_a: State, b: State) { this.file.snapshot = b; }
   snapshot(me: string | null): TARoomSnapshot {
     const seat = me ? this.file.lineup.indexOf(me) : -1;
-    return { code: this.code, stage: this.file.stage, hostId: this.file.hostId, mySeat: me, mode: this.file.mode, round: this.file.round, version: Date.now(),
+    return { code: this.code, stage: this.file.stage, hostId: this.file.hostId, mySeat: me, mode: this.file.mode, round: this.file.round, version: this.file.version ?? 0,
       players: this.file.players.map((p) => ({ playerId: p.playerId, name: p.name, connected: !!p.bot || (this.connections.get(p.playerId) ?? 0) > 0, host: p.playerId === this.file.hostId })),
       seats: this.file.lineup, view: this.state && seat >= 0 ? viewFor(this.state, seat) : null };
   }
@@ -129,9 +129,10 @@ export function attachMenace(io: Server, dataDir: string, opts: { maxRooms: numb
   }, 30 * 60_000).unref();
 
   const pending = new Set<string>();
-  const drive = (room: TARoom) => { if (pending.has(room.code)) return; pending.add(room.code); setTimeout(() => { pending.delete(room.code); try { if (room.botStep()) { store.save(room); broadcast(room); drive(room); } } catch (e) { console.warn("人机出错", room.code, e instanceof Error ? e.message : e); } }, room.botDelay()); };
+  const drive = (room: TARoom) => { if (pending.has(room.code)) return; pending.add(room.code); setTimeout(() => { pending.delete(room.code); try { if (room.botStep()) { broadcast(room); drive(room); } } catch (e) { console.warn("人机出错", room.code, e instanceof Error ? e.message : e); } }, room.botDelay()); };
   const broadcast = (room: TARoom) => {
-    const now = Date.now();
+    room.file.version = (room.file.version ?? 0) + 1;
+    store.save(room);
     for (const id of io.sockets.adapter.rooms.get(sockRoom(room.code)) ?? []) {
       const sock = io.sockets.sockets.get(id);
       if (sock) sock.emit(TA_EVENTS.update, room.snapshot(sock.data.taSeat ?? null));
@@ -181,12 +182,12 @@ export function attachMenace(io: Server, dataDir: string, opts: { maxRooms: numb
       const me = room.idByToken(req.token);
       attach(room, me);
       broadcast(room);
+      drive(room);
       return { snapshot: room.snapshot(me) };
     }));
     socket.on(TA_EVENTS.claim, guarded((req: { code: string; name: string }) => {
       const room = find(req?.code) ?? fail("NO_ROOM");
       const token = room.claim(String(req.name ?? ""));
-      store.save(room);
       attach(room, room.idByToken(token));
       broadcast(room);
       return { token };
@@ -194,7 +195,6 @@ export function attachMenace(io: Server, dataDir: string, opts: { maxRooms: numb
     socket.on(TA_EVENTS.lobby, guarded((req: { code: string; token: string; action: TALobbyAction }) => {
       const room = find(req?.code) ?? fail("NO_ROOM");
       room.lobby(req.token, req.action);
-      store.save(room);
       drive(room);
       broadcast(room);
       return {};
@@ -202,7 +202,6 @@ export function attachMenace(io: Server, dataDir: string, opts: { maxRooms: numb
     socket.on(TA_EVENTS.command, guarded((req: { code: string; token: string; command: TAClientCommand }) => {
       const room = find(req?.code) ?? fail("NO_ROOM");
       room.apply(req.token, req.command);
-      store.save(room);
       drive(room);
       broadcast(room);
       return {};

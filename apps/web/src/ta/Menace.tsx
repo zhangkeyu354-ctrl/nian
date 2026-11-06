@@ -64,7 +64,36 @@ function Game({ snap, send, msg, clear, restart, host, online }: { snap: any; se
   useEffect(() => { if (!count || v.phase !== "resolve") return; const id = Date.now(); setShow({ id, type: lastT }); const t = setTimeout(() => setShow((x) => (x?.id === id ? null : x)), 2000); return () => clearTimeout(t); }, [count]);
   const [hit, setHit] = useState<{ id: number; who: string; w: string } | null>(null);
   const seen = useRef<string[]>(v.players.map((p: any) => p.wounds.join()));
-  useEffect(() => { v.players.forEach((p: any, i: number) => { const w = p.wounds.join(); if (w !== seen.current[i] && p.wounds.length > seen.current[i].split(",").filter(Boolean).length) { const id = Date.now() + i; const w2 = p.wounds[p.wounds.length - 1], who = name(p.seat), d = v.phase === "resolve" ? 1500 : 0; setTimeout(() => { setShow(null); setHit({ id, who, w: w2 }); sfx("sabotage"); setTimeout(() => setHit((x) => (x?.id === id ? null : x)), 3200); }, d); } seen.current[i] = w; }); }, [v.players]);
+  const hitTimers = useRef(new Set<ReturnType<typeof setTimeout>>());
+  const hitSequence = useRef(0);
+  useEffect(() => () => {
+    for (const timer of hitTimers.current) clearTimeout(timer);
+    hitTimers.current.clear();
+  }, [snap.code, snap.round]);
+  useEffect(() => {
+    const schedule = (callback: () => void, delay: number) => {
+      const timer = setTimeout(() => {
+        hitTimers.current.delete(timer);
+        callback();
+      }, delay);
+      hitTimers.current.add(timer);
+    };
+    v.players.forEach((p: any, i: number) => {
+      const previous = seen.current[i]?.split(",").filter(Boolean).length ?? 0;
+      if (p.wounds.length > previous) {
+        const id = ++hitSequence.current;
+        const w = p.wounds.at(-1);
+        const who = name(p.seat);
+        schedule(() => {
+          setShow(null);
+          setHit({ id, who, w });
+          sfx("sabotage");
+          schedule(() => setHit((current) => current?.id === id ? null : current), 3200);
+        }, v.phase === "resolve" ? 1500 : 0);
+      }
+      seen.current[i] = p.wounds.join();
+    });
+  }, [v.players]);
   const [mute, setM] = useState(muted());
   const exiled = v.players.filter((p: any) => p.exiled).length; const [door, setDoor] = useState(false); const prevEx = useRef(exiled);
   useEffect(() => { if (exiled > prevEx.current) { setDoor(true); sfx("sabotage"); setTimeout(() => setDoor(false), 2600); } prevEx.current = exiled; }, [exiled]);
