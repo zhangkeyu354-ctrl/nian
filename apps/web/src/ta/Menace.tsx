@@ -132,7 +132,7 @@ function Game({ snap, send, msg, clear, restart, host, online }: { snap: any; se
       {step.kind === "seat" ? seatChoice(targets(!!step.other), (s) => put(step.key, s)) : null}
       {step.kind === "card" ? cardChoice(v.hand, (id) => put(step.key, id)) : null}
       {step.kind === "two" ? <>{cardChoice(v.hand, (id) => setPick(pick.includes(id) ? pick.filter((x) => x !== id) : [...pick, id].slice(-2)))}<button className="ta-primary" onClick={() => put(step.key, pick)}>确定 {pick.length} 张</button></> : null}
-      {step.kind === "aside" ? <>{cardChoice(v.aside, (id) => setPick(pick.includes(id) ? pick.filter((x) => x !== id) : [...pick, id]))}<button className="ta-primary" onClick={() => put(step.key, pick)}>打出 {pick.length} 张</button></> : null}
+      {step.kind === "aside" ? <><button className="ta-primary" onClick={() => put(step.key, [...v.aside.map((card: { id: number }) => card.id), flow.args.aside])}>打出全部盖放牌</button><button onClick={() => put(step.key, [])}>保留盖放牌</button></> : null}
       {step.kind === "used" ? <div className="ta-grid">{v.roundAbilities.filter((x: string) => x !== "mimic").map((x: string) => <button key={x} onClick={() => put(step.key, x)}>{ABILITIES[x].name}</button>)}</div> : null}
       <button onClick={() => setFlow(null)}>取消</button></section>; }
   return <div className={"ta-world ta-game ph-" + (v.phase === "over" ? (v.winner === "crew" ? "win" : "lose") : v.phase) + (v.oxygen <= 6 ? " danger" : "")}>

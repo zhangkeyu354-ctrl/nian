@@ -41,7 +41,7 @@ function beginRound(s:State){(s as any).endPaid=false;(s as any).shown=[];s.phas
 function addO(s:State,n:number){s.oxygen=Math.max(0,Math.min(OXYGEN_MAX,s.oxygen+n));if(s.oxygen===0)zeroO(s)}
 function zeroO(s:State){const a=hasAgenda(s,"austere");if(a&&!a.austereUsed&&a.hand.length&&!a.exiled){a.austereUsed=true;ask(s,a.seat,"austere")}}
 function addE(s:State,n:number,free=false){if(n>0&&!free&&s.phase==="resolve")s.energy=Math.max(s.energy,Math.min(s.energy+n,s.resStart+5));else s.energy+=n;s.energy=Math.max(0,Math.min(ENERGY_GOAL,s.energy))}
-function draw(s:State,seat:number,n:number){const p=s.players[seat];for(let i=0;i<n;i++){const c=p.deck.shift();if(!c)break;if(has(p,"frenzied")){s.played.push({seat,card:c});mark(s,seat);s.notes[seat].push("狂乱：抽到的牌被直接打出 "+c.type)}else p.hand.push(c)}if(p.hand.length>limit(p))ask(s,seat,"discard_down")}
+function draw(s:State,seat:number,n:number){const p=s.players[seat];for(let i=0;i<n;i++){const c=p.deck.shift();if(!c)break;if(has(p,"frenzied")){s.played.push({seat,card:c});mark(s,seat)}else p.hand.push(c)}if(p.hand.length>limit(p))ask(s,seat,"discard_down")}
 const mark=(s:State,seat:number)=>{if(!s.playedSeats.includes(seat))s.playedSeats.push(seat)};
 function discardRandom(s:State,p:Player){if(p.hand.length)s.discard.push(p.hand.splice(Math.floor(rnd(s)*p.hand.length),1)[0])}
 function takeCard(p:Player,id:number){const i=p.hand.findIndex(c=>c.id===id);if(i<0)fail("NOT_IN_HAND");return p.hand.splice(i,1)[0]}
@@ -75,7 +75,7 @@ function effect(s:State,type:CardType,copy:boolean){
  if(!copy&&type==="brawl"&&!s.flags.brawl){s.flags.brawl=true;ask(s,s.leader,"brawl")}
 }
 const COSTO:Partial<Record<CardType,number>>={basic_repair:1,advanced_repair:1,command:1,panic:1};
-function reveal(s:State){const it=s.queue.shift()!;s.revealed.push(it);const type=it.card.type;say(s,`揭示：${type}`);if(["airlock","explosion","panic"].includes(type))s.flags.bad=true;
+function reveal(s:State){const it=s.queue.shift()!;s.revealed.push(it);const type=it.card.type;say(s,`揭示：${type}`);if(["airlock","explosion","panic","reactor"].includes(type))s.flags.bad=true;
  s.stack.push({k:"effect",type});
  if(s.flags.veto!==undefined)ask(s,s.flags.veto,"veto",{type,forced:s.queue.length===0})}
 function resolveCard(s:State,type:CardType,vetoed:boolean){if(vetoed){say(s,"否决：取消费用和效果");return}
@@ -83,6 +83,7 @@ function resolveCard(s:State,type:CardType,vetoed:boolean){if(vetoed){say(s,"否
  const copy=s.armed&&type!=="replicate";if(type==="replicate"){s.armed=true;return}
  if(copy){s.armed=false;if(type!=="brawl"&&type!=="backstab")s.stack.push({k:"copy",type})}
  effect(s,type,false)}
+function heal(p:Player,index:number){const [removed]=p.wounds.splice(Math.max(0,index),1);if(removed==="severed"&&!p.wounds.includes("severed"))p.severed=null}
 function ability(s:State,t:Extract<Task,{k:"ability"}>){const p=s.players[t.seat],a=t.args??{},c=COST[t.ab];
  if(!t.free){if(c.e)addE(s,-c.e);if(c.o)addO(s,-c.o)}
  if(c.d&&!t.copy){const id=a.discard;s.discard.push(takeCard(p,id))}else if(c.d)s.discard.push(takeCard(p,a.discard));
@@ -90,22 +91,31 @@ function ability(s:State,t:Extract<Task,{k:"ability"}>){const p=s.players[t.seat
  const tgt=(x:any)=>{const o=s.players[x];if(!o||o.killed)fail("BAD_TARGET");return o};
  switch(t.ab){
  case "bloodwork":{const o=tgt(a.target);if(o.hand.length)ask(s,o.seat,"bloodwork");break}
- case "first_aid":{const o=tgt(a.target);o.wounds.splice(Math.max(0,a.wound??o.wounds.length-1),1);break}
- case "regenerate":p.wounds.splice(Math.max(0,a.wound??p.wounds.length-1),1);break;
+ case "first_aid":{const o=tgt(a.target);heal(o,a.wound??o.wounds.length-1);break}
+ case "regenerate":heal(p,a.wound??p.wounds.length-1);break;
  case "veto":s.flags.veto=p.seat;break;
  case "laser_pistol":{const o=tgt(a.target);if(o===p)fail("BAD_TARGET");wound(s,o.seat);break}
  case "delegate":{const o=tgt(a.target);if(o===p)fail("BAD_TARGET");s.sub.push(o.seat);(s as any).delegated=true;break}
  case "commandeer":{const o=tgt(a.target);const x=o.deck.shift();if(x){p.hand.push(x);if(p.hand.length>limit(p))ask(s,p.seat,"discard_down")}break}
  case "salvage":if(s.discard.length)ask(s,p.seat,"salvage",{cards:s.discard});break;
  case "crunch":{const o=tgt(a.target);if(o.wounds.length)fail("BAD_TARGET");wound(s,o.seat);draw(s,o.seat,3);break}
- case "strategize":{if(a.aside!==undefined)p.aside.push(takeCard(p,a.aside));const ids:number[]=a.play??[];for(const id of ids){const i=p.aside.findIndex(x=>x.id===id);if(i<0)fail("NOT_ASIDE");playCard(s,p,p.aside.splice(i,1)[0])}if(ids.length>=4)addO(s,2);break}
+ case "strategize":{
+   p.aside.push(takeCard(p,a.aside));
+   const ids:number[]=a.play??[];
+   if(!Array.isArray(ids))fail("NOT_ASIDE");
+   if(!ids.length)break;
+   if(ids.length!==p.aside.length||new Set(ids).size!==ids.length||p.aside.some(card=>!ids.includes(card.id)))fail("NOT_ASIDE");
+   for(const card of p.aside.splice(0))playCard(s,p,card);
+   if(ids.length>=4)addO(s,2);
+   break
+ }
  case "moxie":s.flags.moxie=p.seat;break;
  case "todays_special":{const o=tgt(a.target);if(o===p)fail("BAD_TARGET");o.hand.push(takeCard(p,a.card));if(o.hand.length>limit(o))ask(s,o.seat,"discard_down");draw(s,p.seat,2);break}
  case "helping_hand":s.flags.helping=p.seat;break;
  case "mimic":{const ab=a.ab as Ability;if(!s.roundAbilities.slice(0,-1).includes(ab)||ab==="mimic"||!canAfford(s,p,ab))fail("BAD_MIMIC");s.stack.push({k:"ability",seat:p.seat,ab,args:a,free:false,copy:true});break}
  case "deflect":s.flags.deflect=p.seat;break;
  case "rewind":s.flags.rewind=p.seat;break;
- case "efficiency":{const ids:number[]=(a.cards??[]).slice(0,2);if(!ids.length)break;for(const id of ids)playCard(s,p,takeCard(p,id));break}
+ case "efficiency":{const ids=a.cards;if(!Array.isArray(ids)||ids.length!==2||ids[0]===ids[1])fail("BAD");for(const id of ids)playCard(s,p,takeCard(p,id));break}
  case "formulate":{const n=p.deck.splice(0,3);p.hand.push(...n);if(p.hand.length)ask(s,p.seat,"formulate");break}
  case "system_refresh":{const o=tgt(a.target);const n=o.hand.length;o.deck.push(...o.hand.splice(0));shuffle(s,o.deck);draw(s,o.seat,n+1);break}
  case "synchronize":{const x=tgt(a.a),y=tgt(a.b);if(x===y)fail("BAD_TARGET");draw(s,x.seat,1);draw(s,y.seat,1);break}

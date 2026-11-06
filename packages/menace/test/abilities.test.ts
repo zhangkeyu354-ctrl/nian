@@ -9,6 +9,15 @@ const rv=(s:State)=>reduce(s,{seat:s.leader,t:"reveal"});
 describe("角色能力",()=>{
  it("血检",()=>{let s=use(g("rotti"),"bloodwork",{target:1});expect(s.oxygen).toBe(14);s=ans(s,1,s.players[1].hand[0].id);expect(s.log.at(-1)).toMatch(/公开手牌/)});
  it("急救",()=>{let s=g("rotti");s.players[1].wounds=["flesh"];s=use(s,"first_aid",{target:1});expect(s.oxygen).toBe(13);expect(s.players[1].wounds).toEqual([])});
+ it("移除骨折后恢复被封锁的能力",()=>{
+   const s=g("rotti");s.players[1].wounds=["severed"];s.players[1].severed="veto";
+   expect(use(s,"first_aid",{target:1}).players[1].severed).toBeNull();
+ });
+ it("反应炉外泄触发损害控管",()=>{
+   let s=use(g("ruggine"),"damage_control");s=rv(q(s,["reactor"]));
+   s=reduce(s,{seat:s.leader,t:"end_accuse"});
+   expect(s.energy).toBe(7);
+ });
  it("否决取消费用效果",()=>{let s=g("malumil");s=use(s,"veto",{discard:s.players[0].hand[0].id});s=q(s,["airlock","basic_repair"]);const o=s.oxygen;s=rv(s);s=ans(s,0,true);expect(s.oxygen).toBe(o);s=rv(s);expect(s.oxygen).toBe(o-1)});
  it("否决最后一张必须用",()=>{let s=g("malumil");s=use(s,"veto",{discard:s.players[0].hand[0].id});s=q(s,["airlock"]);s=rv(s);expect(()=>ans(s,0,false)).toThrow()});
  it("伪造否决回答不能绕过最后一张的强制取消",()=>{
@@ -25,6 +34,13 @@ describe("角色能力",()=>{
  it("压榨",()=>{let s=use(g("dekka"),"crunch",{target:1});while(s.stack.length)s=ans(s,1,s.players[1].hand[0].id);expect(s.players[1].wounds.length).toBe(1);expect(s.players[1].hand.length).toBe(4)});
  it("压榨不能选受伤者",()=>{let s=g("dekka");s.players[1].wounds=["flesh"];expect(()=>use(s,"crunch",{target:1})).toThrow()});
  it("谋划打出四张得2氧",()=>{let s=g("dekka");s.players[0].aside=s.players[0].deck.splice(0,3);const ids=s.players[0].aside.map(c=>c.id);const a=s.players[0].hand[0].id;s=use(s,"strategize",{aside:a,play:[...ids,a]});expect(s.oxygen).toBe(17);expect(s.played.length).toBe(4)});
+ it("运筹帷幄必须先盖一张，并只能全部打出或全部保留",()=>{
+   const s=g("dekka");s.players[0].aside=s.players[0].deck.splice(0,1);
+   const aside=s.players[0].hand[0].id;
+   expect(()=>use(s,"strategize",{})).toThrow();
+   expect(()=>use(s,"strategize",{aside,play:[aside]})).toThrow("NOT_ASIDE");
+   expect(use(s,"strategize",{aside,play:[]}).players[0].aside).toHaveLength(2);
+ });
  it("今日特餐",()=>{let s=g("tove");const c=s.players[0].hand[0].id;s=use(s,"todays_special",{target:1,card:c});expect(s.players[1].hand.some(x=>x.id===c)).toBe(true);expect(s.players[0].hand.length).toBe(4)});
  it("援手免费用",()=>{let s=g("aerril");s=use(s,"helping_hand");s.players[1].character="gurg";s=reduce(s,{seat:1,t:"ability",ab:"laser_pistol",args:{target:2}});s=ans(s,0,true);expect(s.energy).toBe(5);expect(s.players[2].wounds.length).toBe(1)});
  it("模仿付费复制",()=>{let s=g("beepo");s.players[3].character="gurg";s.roundAbilities=["laser_pistol"];s=use(s,"mimic",{ab:"laser_pistol",target:1});expect(s.energy).toBe(3);expect(s.players[1].wounds.length).toBe(1)});
@@ -33,6 +49,10 @@ describe("角色能力",()=>{
  it("再生",()=>{let s=g("moe");s.players[0].wounds=["flesh"];s=use(s,"regenerate");expect(s.players[0].wounds).toEqual([])});
  it("回放",()=>{let s=g("beepo");s=use(s,"rewind");s=q(s,["basic_repair"]);s=rv(s);const n=s.players[0].hand.length;s=ans(s,0,9000);expect(s.players[0].hand.length).toBe(n+1)});
  it("高效",()=>{let s=g("sigmund");s=use(s,"efficiency",{cards:s.players[0].hand.slice(0,2).map(c=>c.id)});expect(s.played.length).toBe(2)});
+ it("请求效率拒绝零张、一张和重复牌号",()=>{
+   const s=g("sigmund"), id=s.players[0].hand[0].id;
+   for(const cards of [[],[id],[id,id]])expect(()=>use(s,"efficiency",{cards})).toThrow();
+ });
  it("推演",()=>{let s=g("sigmund");s=use(s,"formulate");const c=s.players[0].hand[0];s=ans(s,0,c.id);expect(s.players[0].deck.at(-1)!.id).toBe(c.id)});
  it("系统刷新",()=>{let s=use(g("rhea"),"system_refresh",{target:1});expect(s.players[1].hand.length).toBe(4)});
  it("同步",()=>{let s=use(g("cecilia"),"synchronize",{a:1,b:2});expect(s.players[1].hand.length).toBe(4);expect(s.players[2].hand.length).toBe(4)});
