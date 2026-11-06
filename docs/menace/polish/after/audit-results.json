@@ -1,0 +1,135 @@
+{
+  "390x640-action": {
+    "overflow": false,
+    "commandAccepted": true
+  },
+  "390x640-rules": {
+    "overflow": false
+  },
+  "390x640-player": {
+    "overflow": false
+  },
+  "390x640-identity": {
+    "overflow": false
+  },
+  "390x640-resolve": {
+    "overflow": false,
+    "commandAccepted": true
+  },
+  "390x640-accuse": {
+    "overflow": false,
+    "commandAccepted": true
+  },
+  "390x640-vote": {
+    "overflow": false,
+    "commandAccepted": true
+  },
+  "390x640-question": {
+    "overflow": false,
+    "commandAccepted": true
+  },
+  "390x640-over": {
+    "overflow": false
+  },
+  "320x568-action": {
+    "overflow": false,
+    "commandAccepted": true
+  },
+  "320x568-rules": {
+    "overflow": false
+  },
+  "320x568-player": {
+    "overflow": false
+  },
+  "320x568-identity": {
+    "overflow": false
+  },
+  "320x568-resolve": {
+    "overflow": false,
+    "commandAccepted": true
+  },
+  "320x568-accuse": {
+    "overflow": false,
+    "commandAccepted": true
+  },
+  "320x568-vote": {
+    "overflow": false,
+    "commandAccepted": true
+  },
+  "320x568-question": {
+    "overflow": false,
+    "commandAccepted": true
+  },
+  "320x568-over": {
+    "overflow": false
+  },
+  "360x780-action": {
+    "overflow": false,
+    "commandAccepted": true
+  },
+  "360x780-rules": {
+    "overflow": false
+  },
+  "360x780-player": {
+    "overflow": false
+  },
+  "360x780-identity": {
+    "overflow": false
+  },
+  "360x780-resolve": {
+    "overflow": false,
+    "commandAccepted": true
+  },
+  "360x780-accuse": {
+    "overflow": false,
+    "commandAccepted": true
+  },
+  "360x780-vote": {
+    "overflow": false,
+    "commandAccepted": true
+  },
+  "360x780-question": {
+    "overflow": false,
+    "commandAccepted": true
+  },
+  "360x780-over": {
+    "overflow": false
+  },
+  "430x932-action": {
+    "overflow": false,
+    "commandAccepted": true
+  },
+  "430x932-rules": {
+    "overflow": false
+  },
+  "430x932-player": {
+    "overflow": false
+  },
+  "430x932-identity": {
+    "overflow": false
+  },
+  "430x932-resolve": {
+    "overflow": false,
+    "commandAccepted": true
+  },
+  "430x932-accuse": {
+    "overflow": false,
+    "commandAccepted": true
+  },
+  "430x932-vote": {
+    "overflow": false,
+    "commandAccepted": true
+  },
+  "430x932-question": {
+    "overflow": false,
+    "commandAccepted": true
+  },
+  "430x932-over": {
+    "overflow": false
+  },
+  "人机推进": true,
+  "刷新重连": "★\n甲号船员\n手3 库17",
+  "断线重连": true,
+  "再来一局": true,
+  "重启恢复": true
+}
