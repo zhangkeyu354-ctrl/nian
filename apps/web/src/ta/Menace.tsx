@@ -117,11 +117,11 @@ function Game({ snap, send, msg, clear, restart, host, online }: { snap: any; se
     const root = board.current;
     const hand = root?.querySelector("nav.ta-hand");
     const seat = root?.querySelector(".ta-seat.me .face");
-    const core = root?.querySelector(".core");
+    const field = root?.querySelector(".ta-main");
     const played = me.played > previous.played;
     const drew = me.deck < previous.deck && me.hand > previous.hand;
-    if ((!played && !drew) || !seat || !core) return;
-    const positions = played ? [hand ?? seat, seat, core] : [core, hand ?? seat];
+    if ((!played && !drew) || !seat || !field) return;
+    const positions = played ? [hand ?? seat, seat, field] : [seat, hand ?? seat];
     const points = positions.map((element) => {
       const rect = element.getBoundingClientRect();
       return { transform: `translate(${rect.left + rect.width / 2 - 13}px, ${rect.top + rect.height / 2 - 18}px)`, opacity: 1 };
@@ -135,6 +135,11 @@ function Game({ snap, send, msg, clear, restart, host, online }: { snap: any; se
     motion.onfinish = () => card.remove();
     return () => { motion.cancel(); card.remove(); };
   }, [v.round, me.hand, me.deck, me.played]);
+  const offline = host ? v.waiting.flatMap((seat: number) => {
+    const player = snap.players.find((p: any) => p.playerId === snap.seats[seat]);
+    return player && !player.connected ? [player] : [];
+  }) : [];
+  const offlineActions = offline.map((player: any) => <button key={player.playerId} onClick={() => send({ t: "auto", player: player.playerId })}>{player.name} 已离线，代为操作</button>);
   const [mute, setM] = useState(muted());
   const exiled = v.players.filter((p: any) => p.exiled).length; const [door, setDoor] = useState(false); const prevEx = useRef(exiled);
   useEffect(() => { if (exiled > prevEx.current) { setDoor(true); sfx("sabotage"); setTimeout(() => setDoor(false), 2600); } prevEx.current = exiled; }, [exiled]);
@@ -185,6 +190,8 @@ function Game({ snap, send, msg, clear, restart, host, online }: { snap: any; se
       {step.kind === "aside" ? <><button className="ta-primary" onClick={() => put(step.key, [...v.aside.map((card: { id: number }) => card.id), flow.args.aside])}>打出全部盖放牌</button><button onClick={() => put(step.key, [])}>保留盖放牌</button></> : null}
       {step.kind === "used" ? <div className="ta-grid">{v.roundAbilities.filter((x: string) => x !== "mimic").map((x: string) => <button key={x} onClick={() => put(step.key, x)}>{ABILITIES[x].name}</button>)}</div> : null}
       <button onClick={() => setFlow(null)}>取消</button></section>; }
+  const roundTable = v.phase === "accuse" || v.phase === "vote";
+  const hand = v.hand?.length && v.phase !== "setup" ? <nav className={"ta-hand" + (zoom?.selected !== undefined ? " has-selection" : "")}>{v.hand.map((c: any) => <button key={c.id} className="ta-card" aria-pressed={zoom?.selected === c.id} onClick={() => setZoom({ src: img(c.type), text: CARD_TEXT[c.type].join("：\n"), selected: c.id, play: acting ? c.id : undefined })}><GameCard type={c.type} /></button>)}</nav> : null;
   return <div ref={board} className={"ta-world ta-game ph-" + (v.phase === "over" ? (v.winner === "crew" ? "win" : "lose") : v.phase) + (v.oxygen <= 6 ? " danger" : "")}>
     <header className="ta-hud"><div className="ta-top"><b>{PHASE[v.phase]}{v.round ? ` · 第 ${v.round} 回合` : ""}</b><button className="ta-mute" onClick={() => setHelp(true)}>规则</button><button className="ta-mute" onClick={() => { setMute(!mute); setM(!mute); }}>{mute ? "开声音" : "静音"}</button>{v.agenda && v.phase !== "setup" ? <button className="ta-mute" onClick={() => setZoom({ src: "", text: "", node: zoomOf.agenda(v.agenda) })}>身份</button> : null}<span className={online ? "" : "off"}>{online ? hint : "连接中断，正在重连…"}</span></div>
       <Bar label="氧气" v={v.oxygen} max={OXYGEN_MAX} cls="o" /><Bar label="能量" v={v.energy} max={ENERGY_GOAL} mark={ENERGY_SAFE} cls="e" /></header>
@@ -192,7 +199,9 @@ function Game({ snap, send, msg, clear, restart, host, online }: { snap: any; se
       {v.players.map((p: any) => { const n = v.players.length, a = ((p.seat - v.you + n) % n) / n * Math.PI * 2 + Math.PI / 2, x = 50 + 38 * Math.cos(a), y = 50 + 38 * Math.sin(a); return <button type="button" key={p.seat} style={{ left: `${x}%`, top: `${y}%` }} className={["ta-seat", v.waiting.includes(p.seat) ? "turn" : "", p.killed ? "dead" : "", p.exiled ? "exiled" : "", p.seat === v.you ? "me" : ""].join(" ")} onClick={() => setZoom({ src: "", text: "", node: <div className="ta-detail"><h3>{name(p.seat)}{p.seat === v.leader ? " · 任务领袖" : ""}</h3><p>手牌 {p.hand}　牌库 {p.deck}　本轮已出 {p.played}{p.killed ? "　已阵亡" : p.exiled ? "　已放逐" : ""}{snap.players.find((x: any) => x.playerId === snap.seats[p.seat])?.connected ? "" : "　离线"}</p>{p.agenda && p.seat !== v.you ? <p className="rev">身份：{AGENDA_TEXT[p.agenda][0]}</p> : null}{p.wounds.map((w: string, i: number) => <p key={i} className="wd">{WOUND_TEXT[w]}</p>)}{p.character ? zoomOf.char(p.character) : null}</div> })}>
         <i className="face">{p.character ? <img src={img("p_" + p.character)} alt="" /> : null}{p.seat === v.leader ? <u>★</u> : null}{p.played ? <s aria-label={`已暗置 ${p.played} 张`}>{p.played}</s> : null}</i><b>{name(p.seat)}</b><small>手{p.hand} 库{p.deck}{p.wounds.length ? <em> 伤{p.wounds.length}</em> : null}</small>{p.agenda && p.seat !== v.you ? <small className="rev">{AGENDA_TEXT[p.agenda][0].split("（")[0]}</small> : null}{p.exiled ? <small className="rev">放逐</small> : p.killed ? <small className="rev">阵亡</small> : null}</button>; })}</div>
     <main className="ta-main">
-      {host ? v.waiting.map((w: number) => { const pl = snap.players.find((p: any) => p.playerId === snap.seats[w]); return pl && !pl.connected ? <button key={w} className="ta-danger" onClick={() => send({ t: "auto", player: pl.playerId })}>{pl.name} 已离线，代为操作</button> : null; }) : null}
+      {offline.length > 0 ? (v.phase === "vote"
+        ? <details className="ta-offline"><summary>离线代操作 · {offline.length} 人</summary>{offlineActions}</details>
+        : offlineActions) : null}
       {msg ? <p className="ta-err">{msg}</p> : null}
       {v.phase === "setup" ? <section className="ta-panel"><h3>滑动选择角色 · 你的身份：<a onClick={() => setZoom({ src: "", text: "", node: zoomOf.agenda(v.agenda) })}>{AGENDA_TEXT[v.agenda][0]}</a></h3>{v.choices.length ? <div className="ta-chars">{v.choices.map((c: string) => <figure key={c}><div className="ta-pick" onClick={() => setZoom({ src: "", text: "", node: zoomOf.char(c) })}>{zoomOf.char(c)}</div><button className="ta-primary" onClick={() => send({ t: "choose", name: c })}>选 {CHAR_NAME[c]}</button></figure>)}</div> : <p>等待其他玩家选角色…</p>}</section> : null}
       {question()}{flowPanel()}
@@ -205,8 +214,9 @@ function Game({ snap, send, msg, clear, restart, host, online }: { snap: any; se
       
       {v.notes?.length ? <details className="ta-log"><summary>私密记录</summary>{v.notes.map((n: string, i: number) => <p key={i}>{zh(n)}</p>)}</details> : null}
       <details className="ta-log"><summary>航行日志</summary>{[...v.log].reverse().map((l: string, i: number) => <p key={i}>{zh(l)}</p>)}</details>
+      {roundTable ? hand : null}
     </main>
-    {v.hand?.length && v.phase !== "setup" ? <nav className={"ta-hand" + (zoom?.selected !== undefined ? " has-selection" : "")}>{v.hand.map((c: any) => <button key={c.id} className="ta-card" aria-pressed={zoom?.selected === c.id} onClick={() => setZoom({ src: img(c.type), text: CARD_TEXT[c.type].join("：\n"), selected: c.id, play: acting ? c.id : undefined })}><GameCard type={c.type} /></button>)}</nav> : null}
+    {!roundTable ? hand : null}
     {gun ? <div className="ta-gun"><svg viewBox="0 0 200 120"><path d="M8 28h150l14 12v16H92l-10 12-8 44H34l10-52H8z" fill="#2c332c" stroke="#000" strokeWidth="5"/><path d="M8 28h150v10H8z" fill="#6f8350"/><rect x="150" y="44" width="46" height="9" fill="#e0a92a" stroke="#000" strokeWidth="3"/></svg></div> : null}
     {show ? <div key={show.id} className="ta-stage"><div className="card"><div className="ta-flip"><div className="ta-flip-back">暗置行动</div><div className="ta-flip-front"><GameCard type={show.type} /></div></div></div><Vfx id={CARD_FX[show.type]} />{fly.map((x) => <b key={x.id} style={{ color: x.c }}>{x.t}</b>)}</div> : null}
     {hit ? <div key={hit.id} className="ta-hit"><Vfx id="blood" /><small>{hit.who} 受伤，抽取伤害牌…</small><div className="wc"><i className="back">伤害报告</i><div className="face">{zoomOf.wound(hit.w)}</div></div></div> : null}

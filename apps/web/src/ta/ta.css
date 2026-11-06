@@ -345,3 +345,30 @@
     font-size: calc(88px / 34);
   }
 }
+
+/* Round-table controls remain below the seats at short heights. */
+.ta-game.ph-vote .ta-main, .ta-game.ph-accuse .ta-main {
+  position: relative;
+  inset: auto;
+  flex: 1 1 0;
+  padding: 8px;
+  max-height: none;
+}
+.ta-game:is(.ph-vote,.ph-accuse) .ta-table {
+  flex: none;
+  width: min(94vw, max(220px, calc(100dvh - 345px)), 460px);
+  min-width: 0;
+}
+.ta-game .ta-main > .ta-offline { display: block; }
+.ta-offline summary {
+  min-height: 44px;
+  align-content: center;
+  cursor: pointer;
+  padding: 0 12px;
+  border-radius: 10px;
+  background: #171d1f;
+  color: #e4b75c;
+}
+.ta-offline button { display: block; width: 100%; margin-top: 4px; }
+.ta-game:is(.ph-vote,.ph-accuse) nav.ta-hand { margin-top: 4px; }
+.ta-game .ta-top .ta-mute { margin-left: 0; }
