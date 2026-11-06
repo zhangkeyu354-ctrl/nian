@@ -73,7 +73,7 @@ function SceneOverlay({ scene, name, finish }: { scene: Scene; name: (seat: numb
   const video = useRef<HTMLVideoElement>(null);
   const close = useRef(finish);
   close.current = finish;
-  const [started, setStarted] = useState(false);
+  const [unavailable, setUnavailable] = useState(false);
   const videoKind = scene.kind === "death" || scene.kind === "exile" || scene.kind === "ending";
   useEffect(() => {
     if (videoKind || scene.kind === "private") return;
@@ -85,31 +85,55 @@ function SceneOverlay({ scene, name, finish }: { scene: Scene; name: (seat: numb
     return () => { clearTimeout(sound); clearTimeout(timer); };
   }, [scene, videoKind]);
   useEffect(() => {
-    if (!started) return;
-    const timer = setTimeout(() => close.current(), 12000);
+    const element = video.current;
+    if (!videoKind || !element) return;
+    let active = true;
+    let bridgeRetry = false;
+    const play = () => {
+      if (!active || element.error) return;
+      try { void element.play()?.catch(() => {}); } catch { /* 等待启动检查 */ }
+    };
+    const retry = () => {
+      if (!bridgeRetry && element.paused) { bridgeRetry = true; play(); }
+    };
+    play();
+    document.addEventListener("WeixinJSBridgeReady", retry);
+    const startup = setTimeout(() => {
+      if (element.currentTime <= 0) setUnavailable(true);
+    }, 2400);
+    const watchdog = setTimeout(() => close.current(), 12000);
+    return () => {
+      active = false;
+      document.removeEventListener("WeixinJSBridgeReady", retry);
+      clearTimeout(startup);
+      clearTimeout(watchdog);
+    };
+  }, [videoKind]);
+  useEffect(() => {
+    if (!unavailable) return;
+    const timer = setTimeout(() => close.current(), 1500);
     return () => clearTimeout(timer);
-  }, [started]);
+  }, [unavailable]);
   if (scene.kind === "death" || scene.kind === "exile" || scene.kind === "ending") {
     const ending = scene.kind === "ending";
     const asset = ending ? scene.win ? "end_win" : "end_lose" : scene.kind === "death" ? "fx_death" : "fx_exile";
-    const label = ending ? "点击查看结局" : `点击查看：${name(scene.seat)} ${scene.kind === "death" ? "阵亡" : "被放逐"}`;
+    const label = ending ? scene.win ? "船员胜利" : "内鬼胜利" : `${name(scene.seat)} ${scene.kind === "death" ? "阵亡" : "被放逐"}`;
     return <div className="ta-sequence ta-sequence-video" role="dialog" aria-modal="true" data-scene={scene.kind}>
       <video ref={element => {
         video.current = element;
         if (!element) return;
         element.muted = true;
         element.setAttribute("muted", "");
-        element.setAttribute("playsinline", "");
         element.setAttribute("webkit-playsinline", "");
-      }} muted playsInline poster={img(asset + "_poster")} preload="metadata" src={`/assets/menace/${asset}.mp4`}
-        onEnded={finish} onError={() => { if (started) finish(); }} />
-      {!started ? <button className="ta-sequence-start" onClick={() => {
-        const element = video.current;
-        if (!element) { finish(); return; }
-        setStarted(true);
-        try { void element.play()?.catch(finish); } catch { finish(); }
-      }}>{label}</button> : null}
-      {started || !ending ? <button className="ta-sequence-skip" onClick={finish}>跳过演出</button> : null}
+      }} autoPlay muted playsInline poster={img(asset + "_poster")} preload="auto" src={`/assets/menace/${asset}.mp4`}
+        onPlaying={() => setUnavailable(false)} onEnded={finish} onError={() => setUnavailable(true)} />
+      <h2 className="ta-cinematic-caption">{label}</h2>
+      <button className="ta-sequence-skip" onClick={finish}>跳过演出</button>
+    </div>;
+  }
+  if (scene.kind === "resource") {
+    return <div className="ta-resource-float" data-scene="resource" role="status">
+      {scene.label.split("　").map(label => <strong key={label} className={label.includes("-") ? "loss" : "gain"}>{label}</strong>)}
     </div>;
   }
   return <div className="ta-sequence" role="dialog" aria-modal="true" data-scene={scene.kind}>
@@ -118,7 +142,6 @@ function SceneOverlay({ scene, name, finish }: { scene: Scene; name: (seat: numb
     {scene.kind === "vote" ? <><h2>发起放逐投票</h2><div className="ta-gun ta-sequence-gun"><svg viewBox="0 0 200 120" aria-hidden="true"><path d="M8 28h150l14 12v16H92l-10 12-8 44H34l10-52H8z" fill="#2c332c" stroke="#000" strokeWidth="5"/><path d="M8 28h150v10H8z" fill="#6f8350"/><rect x="150" y="44" width="46" height="9" fill="#e0a92a" stroke="#000" strokeWidth="3"/></svg></div></> : null}
     {scene.kind === "private" ? <><h2>{scene.label}</h2><div className="ta-sequence-card"><GameCard type={scene.card} /></div></> : null}
     {scene.kind === "notice" ? <h2>{scene.seat === undefined ? "" : name(scene.seat) + " · "}{scene.label}</h2> : null}
-    {scene.kind === "resource" ? <h2>{scene.label}</h2> : null}
     <button className="ta-sequence-skip" onClick={finish}>{scene.kind === "private" ? "关闭牌面" : "跳过演出"}</button>
   </div>;
 }

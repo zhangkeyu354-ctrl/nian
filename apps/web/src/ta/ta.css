@@ -431,10 +431,6 @@
 .ta-sequence-card { position: relative; font-size: calc(min(68vw, 240px, 47dvh) / 34); }
 .ta-sequence-video { background: #080a0b; }
 .ta-sequence-video video { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
-.ta-sequence .ta-sequence-start {
-  position: absolute; inset: 0; width: 100%; height: 100%; border: 0; border-radius: 0;
-  display: grid; place-items: center; background: #0005; color: #ffdf99; font-size: 24px;
-}
 .ta-sequence .ta-sequence-skip {
   position: relative; z-index: 1; min-width: 120px; min-height: 44px;
 }
@@ -443,3 +439,24 @@
 
 .ta-sequence-gun { position: relative; inset: auto; background: none; z-index: auto; }
 .ta-game.ph-win, .ta-game.ph-lose { animation: none; }
+
+.ta-sequence .ta-cinematic-caption {
+  position: absolute; z-index: 1; top: 17%; inset-inline: 12px; margin: 0 auto;
+  padding: 10px; color: #fff1ca; font-size: clamp(23px, 7vw, 36px);
+  overflow-wrap: anywhere; text-shadow: 0 2px 4px #000, 0 0 12px #000;
+  background: linear-gradient(90deg, transparent, #000c 22% 78%, transparent);
+}
+.ta-resource-float {
+  position: fixed; z-index: 49; top: 27%; inset-inline: 8px;
+  display: flex; flex-wrap: wrap; justify-content: center; gap: 6px 18px;
+  pointer-events: none; text-shadow: 0 2px 4px #000, 0 0 12px #000, 0 0 5px #000;
+}
+.ta-resource-float strong { font-size: clamp(25px, 8vw, 42px); animation: ta-resource-rise 850ms ease-out both; }
+.ta-resource-float .gain { color: #caff80; }
+.ta-resource-float .loss { color: #ff9b89; }
+@keyframes ta-resource-rise {
+  0% { opacity: 0; transform: translateY(9px); }
+  20%, 75% { opacity: 1; transform: none; }
+  100% { opacity: 0; transform: translateY(-10px); }
+}
+@media (prefers-reduced-motion: reduce) { .ta-resource-float strong { animation: none; } }

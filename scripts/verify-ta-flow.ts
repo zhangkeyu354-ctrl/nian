@@ -64,6 +64,7 @@ save("GATE", botReveal, seat => seat === 1);
 const ending = setup();
 ending.phase = "over"; ending.winner = "crew"; ending.winners = [0, 1, 2];
 save("ENDS", ending);
+save("LOSS", { ...ending, winner: "menace", winners: [3], oxygen: 0 });
 let exile = setup();
 exile.phase = "vote";
 exile.players[3].revealed = true;
@@ -91,6 +92,7 @@ try {
     const page = await browser.newPage({ viewport: { width: 390, height: 640 } });
     await page.addInitScript(({ code, token }) => localStorage.setItem("ta-seat-" + code, token), { code, token: token(seat) });
     if (blockVideo) await page.addInitScript(() => {
+      Object.defineProperty(HTMLVideoElement.prototype, "currentTime", { get: () => 0 });
       HTMLVideoElement.prototype.play = () => Promise.reject(new DOMException("拒绝播放", "NotAllowedError"));
     });
     await page.goto(base + "&room=" + code);
@@ -102,11 +104,8 @@ try {
   async function playVideo(page: Page, kind: string, label: string, name: string) {
     const overlay = page.locator(`[data-scene="${kind}"]`);
     const video = overlay.locator("video");
-    await overlay.getByRole("button", { name, exact: true }).waitFor();
-    await shot(page, label + "-点击前");
-    assert.equal(await video.evaluate((v: HTMLVideoElement) => v.currentTime), 0);
-    assert.equal(await video.evaluate((v: HTMLVideoElement) => v.muted && v.playsInline && v.hasAttribute("muted") && v.hasAttribute("webkit-playsinline")), true);
-    await overlay.getByRole("button", { name, exact: true }).click();
+    await overlay.getByRole("heading", { name, exact: true }).waitFor();
+    assert.equal(await video.evaluate((v: HTMLVideoElement) => v.autoplay && v.muted && v.playsInline && v.hasAttribute("muted") && v.hasAttribute("webkit-playsinline")), true);
     await page.waitForFunction(kind => {
       const v = document.querySelector<HTMLVideoElement>(`[data-scene="${kind}"] video`);
       return v && v.currentTime > 0.1;
@@ -121,24 +120,26 @@ try {
     assert.match(await last.locator(".ta-top b").innerText(), /匿名结算/);
     await shot(last, "01-最后一张牌");
     await button(last, "跳过演出").click();
-    await last.locator('[data-scene="resource"]').getByText("氧气 -1　能量 +1", { exact: true }).waitFor();
-    await shot(last, "02-资源结算");
-    await button(last, "跳过演出").click();
+    const floating = last.getByRole("status").filter({ hasText: "氧气 -1" });
+    await floating.getByText("能量 +1", { exact: true }).waitFor();
+    assert.equal(await floating.evaluate(element => getComputedStyle(element).pointerEvents), "none");
+    await wait(200);
+    await last.screenshot({ path: join(evidence, "02-资源结算.png") });
     await button(last, "结束本回合").waitFor();
     await last.close();
 
     const dead = await open("DEAD");
     await button(dead, "结束本回合").click();
     const resource = dead.locator('[data-scene="resource"]');
-    await resource.getByRole("button", { name: "跳过演出" }).click();
-    await playVideo(dead, "death", "03-第一次阵亡", "点击查看：船员2 阵亡");
-    await playVideo(dead, "death", "04-第二次阵亡", "点击查看：船员3 阵亡");
+    await resource.waitFor();
+    await playVideo(dead, "death", "03-第一次阵亡", "船员2 阵亡");
+    await playVideo(dead, "death", "04-第二次阵亡", "船员3 阵亡");
     await dead.close();
 
     const injured = await open("HURT");
     await injured.getByRole("button", { name: /雷射枪/ }).click();
     await button(injured, "船员2").click();
-    await injured.locator('[data-scene="resource"]').getByRole("button", { name: "跳过演出" }).click();
+    await injured.locator('[data-scene="resource"]').waitFor();
     await injured.locator('[data-scene="wound"]').getByText("皮肉伤", { exact: true }).waitFor();
     await shot(injured, "04a-受伤抽牌");
     await injured.close();
@@ -154,7 +155,7 @@ try {
     assert.match(await gated.locator(".ta-top b").innerText(), /匿名结算/);
     await shot(gated, "04b-人机等待揭示");
     await first.getByRole("button", { name: "跳过演出" }).click();
-    await gated.locator('[data-scene="resource"]').getByRole("button", { name: "跳过演出" }).click();
+    await gated.locator('[data-scene="resource"]').waitFor();
     await first.waitFor();
     assert.equal(await firstElement?.evaluate(element => element.isConnected), false);
     await gated.close();
@@ -203,17 +204,21 @@ try {
     await patient.close();
 
     const vote = await open("VOTE");
-    await vote.locator('[data-scene="resource"]').getByRole("button", { name: "跳过演出" }).click();
-    await playVideo(vote, "exile", "07-全人机投票放逐", "点击查看：船员4 被放逐");
+    await vote.locator('[data-scene="resource"]').waitFor();
+    await playVideo(vote, "exile", "07-全人机投票放逐", "船员4 被放逐");
     await vote.close();
 
     const end = await open("ENDS");
-    await playVideo(end, "ending", "08-结局", "点击查看结局");
+    await playVideo(end, "ending", "08-结局", "船员胜利");
     await button(end, "再来一局").waitFor();
     await shot(end, "09-结算页");
     await end.close();
+    const loss = await open("LOSS");
+    await playVideo(loss, "ending", "09a-失败结局", "内鬼胜利");
+    await button(loss, "再来一局").waitFor();
+    await loss.close();
     const blocked = await open("ENDS", 0, true);
-    await button(blocked, "点击查看结局").click();
+    await blocked.getByRole("heading", { name: "船员胜利", exact: true }).waitFor();
     await button(blocked, "再来一局").waitFor();
     await shot(blocked, "10-拒绝播放仍显示结算");
     await blocked.close();
@@ -231,7 +236,7 @@ try {
           return;
         }
         const candidates = [
-          page.locator(".ta-sequence-start"), page.locator(".ta-sequence-skip"), page.locator(".ta-chars .ta-primary"),
+          page.locator(".ta-sequence-skip"), page.locator(".ta-chars .ta-primary"),
           page.getByRole("button", { name: /揭示下一张/ }), button(page, "结束本回合"), button(page, "弃权"),
           page.locator(".ta-zoom .ta-primary"), page.locator("nav.ta-hand .ta-card"),
           button(page, "抽一张牌"), button(page, "跳过"), page.locator(".ta-panel.alert button"),
@@ -239,7 +244,7 @@ try {
         for (const locator of candidates) {
           const target = locator.first();
           if (!await target.isVisible() || !await target.isEnabled()) continue;
-          if (locator === candidates[7] && !await page.getByText("选择一项行动", { exact: true }).isVisible()) continue;
+          if (locator === candidates[6] && !await page.getByText("选择一项行动", { exact: true }).isVisible()) continue;
           try { await target.click({ timeout: 800 }); actions++; } catch { /* 人机更新后重新定位 */ }
           break;
         }
