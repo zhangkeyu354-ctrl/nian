@@ -53,8 +53,24 @@ export class TARoom {
     if (cmd?.t === "auto") { if (me !== this.file.hostId) fail("HOST_ONLY"); const target = this.file.lineup.indexOf(String(cmd.player)); const st = s as State; if (target < 0 || (this.connections.get(String(cmd.player)) ?? 0) > 0 || !waitingFor(st).includes(target)) fail("BAD"); const before = st; const next = autoMove(before, target); this.state = next; this.file.commands = this.file.commands; this.autos(before, next); return; }
     const c = { ...cmd, seat } as Command; this.state = reduce(s as State, c); if (this.file.snapshot) this.file.snapshot = this.state; else this.file.commands.push(c);
   }
-  botStep() { const s = this.state; if (!s || s.phase === "over") return false; for (const seat of waitingFor(s)) { const p = this.file.players.find((x) => x.playerId === this.file.lineup[seat]); if (p?.bot) { this.state = botMove(s, seat); this.autos(s, this.state); return true; } } return false; }
-  botDelay() { return this.state?.phase === "accuse" ? 14000 : this.state?.phase === "resolve" ? 4800 : 1100; }
+  private discussionTried: State | undefined;
+  botStep() {
+    const state = this.state;
+    if (!state || state.phase === "over") return false;
+    const isBot = (seat: number) => this.file.players.find(p => p.playerId === this.file.lineup[seat])?.bot;
+    let seat = waitingFor(state).find(isBot);
+    if (seat === undefined && state.phase === "accuse" && !state.stack.length && this.discussionTried !== state) {
+      this.discussionTried = state;
+      seat = state.players.find(player => !player.killed && !player.exiled && isBot(player.seat))?.seat;
+    }
+    if (seat === undefined) return false;
+    const next = botMove(state, seat);
+    if (next === state) return false;
+    this.state = next;
+    this.autos(state, next);
+    return true;
+  }
+  botDelay() { return this.state?.phase === "accuse" ? 5000 : this.state?.phase === "resolve" ? 150 : 600; }
   /** 代操作不进命令重放：存档改存整局快照 */
   private autos(_a: State, b: State) { this.file.snapshot = b; }
   snapshot(me: string | null): TARoomSnapshot {
@@ -129,7 +145,39 @@ export function attachMenace(io: Server, dataDir: string, opts: { maxRooms: numb
   }, 30 * 60_000).unref();
 
   const pending = new Set<string>();
-  const drive = (room: TARoom) => { if (pending.has(room.code)) return; pending.add(room.code); setTimeout(() => { pending.delete(room.code); try { if (room.botStep()) { broadcast(room); drive(room); } } catch (e) { console.warn("人机出错", room.code, e instanceof Error ? e.message : e); } }, room.botDelay()); };
+  const sceneVersions = new Map<string, number>();
+  const drive = (room: TARoom) => {
+    if (pending.has(room.code)) return;
+    pending.add(room.code);
+    const delay = room.botDelay();
+    const deadline = Date.now() + 6000;
+    const advance = () => {
+      if (room.botDelay() !== delay) {
+        pending.delete(room.code);
+        drive(room);
+        return;
+      }
+      const version = room.file.version ?? 0;
+      const waiting = [...(io.sockets.adapter.rooms.get(sockRoom(room.code)) ?? [])].some(id => {
+        const client = io.sockets.sockets.get(id);
+        return client?.data.taSeat && (sceneVersions.get(id) ?? -1) < version;
+      });
+      if (waiting && Date.now() < deadline) {
+        setTimeout(advance, 100);
+        return;
+      }
+      pending.delete(room.code);
+      try {
+        if (room.botStep()) {
+          broadcast(room);
+          drive(room);
+        }
+      } catch (e) {
+        console.warn("人机出错", room.code, e instanceof Error ? e.message : e);
+      }
+    };
+    setTimeout(advance, delay);
+  };
   const broadcast = (room: TARoom) => {
     room.file.version = (room.file.version ?? 0) + 1;
     store.save(room);
@@ -152,6 +200,7 @@ export function attachMenace(io: Server, dataDir: string, opts: { maxRooms: numb
     const attach = (room: TARoom, seat: string | null) => {
       if (socket.data.taRoom && socket.data.taRoom !== room) {
         leave();
+        sceneVersions.delete(socket.id);
         socket.leave(sockRoom(socket.data.taRoom.code));
         socket.data.taSeat = null;
       }
@@ -206,7 +255,15 @@ export function attachMenace(io: Server, dataDir: string, opts: { maxRooms: numb
       broadcast(room);
       return {};
     }));
-    socket.on("disconnect", leave);
+    socket.on(TA_EVENTS.sceneDone, (req: { code?: string; version?: number }) => {
+      const room: TARoom | undefined = socket.data.taRoom;
+      if (!room || !socket.data.taSeat || req?.code !== room.code || req.version !== room.file.version) return;
+      sceneVersions.set(socket.id, req.version!);
+    });
+    socket.on("disconnect", () => {
+      sceneVersions.delete(socket.id);
+      leave();
+    });
   });
   return store;
 }

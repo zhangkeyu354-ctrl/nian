@@ -288,7 +288,7 @@ export function waitingFor(s:State):number[]{if(s.phase==="over")return[];const 
 export function viewFor(s:State,seat:number){const over=s.phase==="over";const t=s.stack[s.stack.length-1];
  return{phase:s.phase,mode:s.mode,round:s.round,leader:s.leader,oxygen:s.oxygen,energy:s.energy,armed:undefined,you:seat,hand:s.players[seat]?.hand,aside:s.players[seat]?.aside,choices:s.players[seat]?.choices,agenda:s.players[seat]?.agenda,notes:s.notes[seat],deckCount:s.players[seat]?.deck.length,
  players:s.players.map(p=>({seat:p.seat,character:p.character,wounds:p.wounds,exiled:p.exiled,killed:p.killed,hand:p.hand.length,deck:p.deck.length,used:p.used,played:s.played.filter(x=>x.seat===p.seat).length,agenda:over||p.revealed||p.seat===seat?p.agenda:null})),
- revealed:s.revealed.length?s.revealed.map(r=>r.card.type):((s as any).shown??[]),remaining:s.queue.length,waiting:waitingFor(s),question:t&&t.k==="ask"&&t.seat===seat?{q:t.q,data:t.data}:null,log:s.log.slice(-30),winner:s.winner,winners:s.winners,voted:Object.keys(s.votes).length,roundAbilities:mimicOptions(s,seat),legalAbilities:s.players[seat]?abilityList(s.players[seat]).filter(ab=>canAbility(s,s.players[seat],ab,{})):[],lastType:s.lastType}}
+ revealed:s.revealed.length?s.revealed.map(r=>r.card.type):((s as any).shown??[]),remaining:s.queue.length,waiting:waitingFor(s),question:t&&t.k==="ask"&&t.seat===seat?{q:t.q,data:t.data}:null,log:s.log.slice(-30),logCount:s.log.length,winner:s.winner,winners:s.winners,voted:Object.keys(s.votes).length,roundAbilities:mimicOptions(s,seat),legalAbilities:s.players[seat]?abilityList(s.players[seat]).filter(ab=>canAbility(s,s.players[seat],ab,{})):[],lastType:s.lastType}}
 
 /** 掉线代操作：对指定座位执行一个安全的默认动作（不做主动选择） */
 export function autoMove(s:State,seat:number):State{const p=s.players[seat];const t:any=s.stack[s.stack.length-1];const alive2=s.players.filter(x=>!x.killed&&x.seat!==seat).map(x=>x.seat);
@@ -302,4 +302,18 @@ export function autoMove(s:State,seat:number):State{const p=s.players[seat];cons
 /** 人机：好人出好牌，内鬼出坏牌；其余走默认动作 */
 export function botMove(s:State,seat:number):State{const p=s.players[seat];
  if(s.phase==="action"&&!s.stack.length){const bad=["airlock","explosion","panic","reactor","backstab","brawl"];const m=side(p)==="menace";const c=p.hand.find(x=>bad.includes(x.type)===m);if(c){try{return reduce(s,{seat,t:"play",card:c.id})}catch{}}}
+ if(!s.stack.length&&s.phase==="vote"){
+  const next={...s};
+  const menace=side(p)==="menace";
+  const candidates=alive(s).filter(target=>!target.exiled&&target.seat!==seat&&(!menace||side(target)!=="menace"));
+  const known=candidates.filter(target=>target.revealed&&side(target)==="menace");
+  const pool=known.length?known:candidates;
+  const target=rnd(next)<0.4||!pool.length?null:pool[Math.floor(rnd(next)*pool.length)].seat;
+  return reduce(next,{seat,t:"vote",target})
+ }
+ if(!s.stack.length&&s.phase==="accuse"&&!p.exiled){
+  const next={...s};
+  if(rnd(next)<0.25)return reduce(next,{seat,t:"call_vote"});
+  return seat===s.leader?reduce(next,{seat,t:"end_accuse"}):s;
+ }
  return autoMove(s,seat)}

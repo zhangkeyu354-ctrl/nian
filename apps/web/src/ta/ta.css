@@ -421,3 +421,25 @@
 
 @media (prefers-reduced-motion:reduce){.ta-veil{display:none}}
 .ph-accuse .ta-fly,.ph-vote .ta-fly{display:none}
+
+.ta-sequence {
+  position: fixed; inset: 0; z-index: 50; display: flex; flex-direction: column;
+  justify-content: center; align-items: center; gap: 16px; padding: 20px;
+  text-align: center; background: #0b1114f5; color: #ffdf99;
+}
+.ta-sequence h2 { max-width: 28em; font-size: 20px; }
+.ta-sequence-card { position: relative; font-size: calc(min(68vw, 240px, 47dvh) / 34); }
+.ta-sequence-video { background: #080a0b; }
+.ta-sequence-video video { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+.ta-sequence .ta-sequence-start {
+  position: absolute; inset: 0; width: 100%; height: 100%; border: 0; border-radius: 0;
+  display: grid; place-items: center; background: #0005; color: #ffdf99; font-size: 24px;
+}
+.ta-sequence .ta-sequence-skip {
+  position: relative; z-index: 1; min-width: 120px; min-height: 44px;
+}
+.ta-sequence-video .ta-sequence-skip { position: absolute; bottom: max(20px, env(safe-area-inset-bottom)); }
+.ta-detail .ta-gc.tall .m img { object-fit: contain; object-position: center; }
+
+.ta-sequence-gun { position: relative; inset: auto; background: none; z-index: auto; }
+.ta-game.ph-win, .ta-game.ph-lose { animation: none; }

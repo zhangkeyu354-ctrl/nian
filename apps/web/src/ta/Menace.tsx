@@ -1,11 +1,11 @@
-import { useEffect, useMemo, useRef, useState } from "react";
+import { useEffect, useLayoutEffect, useMemo, useRef, useState } from "react";
 import { createTARoom, savedName, useTARoom } from "./ta-net.ts";
 import { ABILITIES, AGENDA_TEXT, CARD_TEXT, CHAR_NAME, QUESTION, WOUND_TEXT, RULES, zh, type Step } from "./text.ts";
 import { CHARACTERS, ENERGY_GOAL, ENERGY_SAFE, OXYGEN_MAX } from "../../../../packages/menace/src/data.ts";
 import "./ta.css";
+import type { Scene } from "./scenes.ts";
 import vfxMeta from "../vfx-meta.json" with { type: "json" };
 import { music, sfx, setMute, muted } from "./sound.ts";
-const img0 = (n: string) => `/assets/menace/${n}.mp4`;
 const img = (n: string) => `/assets/menace/${n}.webp`;
 const PHASE: Record<string, string> = { setup: "选择角色", action: "行动阶段", resolve: "匿名结算", accuse: "讨论与指控", vote: "放逐投票", over: "对局结束" };
 export function Menace() {
@@ -31,7 +31,7 @@ function Room({ code }: { code: string }) {
   const host = s.hostId === s.mySeat;
   if (s.stage === "lobby") return <div className="ta-world ta-entry"><h2>房间 {code}</h2><p>把房间号发给朋友，需要 4–8 人。</p><details className="ta-rules"><summary>查看游戏规则</summary><Rules /></details><ul className="ta-list">{s.players.map((p: any) => <li key={p.playerId}>{p.name}{p.host ? "（房主）" : ""}{p.connected ? "" : " · 离线"}</li>)}</ul>
     {host ? <><div className="ta-row"><button className={s.mode === "basic" ? "on" : ""} onClick={() => r.lobby({ type: "SET_MODE", mode: "basic" })}>基础模式</button><button className={s.mode === "advanced" ? "on" : ""} onClick={() => r.lobby({ type: "SET_MODE", mode: "advanced" })}>进阶模式</button></div><button onClick={async () => setMsg((await r.lobby({ type: "ADD_BOT" })) ?? "")}>添加人机</button><button className="ta-primary" onClick={async () => setMsg((await r.lobby({ type: "START" })) ?? "")}>开始（{s.players.length} 人）</button></> : <p>{s.mode === "basic" ? "基础模式" : "进阶模式"}，等待房主开始。</p>}<p className="ta-err">{msg}</p></div>;
-  return <Game snap={s} send={async (c) => setMsg((await r.command(c)) ?? "")} msg={msg} clear={() => setMsg("")} restart={() => r.lobby({ type: "START" })} host={host} online={r.connected} />;
+  return <Game key={`${s.code}-${s.round}`} snap={s} seen={r.sceneDone} takeScenes={r.takeScenes} send={async (c) => setMsg((await r.command(c)) ?? "")} msg={msg} clear={() => setMsg("")} restart={() => r.lobby({ type: "START" })} host={host} online={r.connected} />;
 }
 const TONE: Record<string, string> = { advanced_repair: "#f0a020", airlock: "#2f8fe0", backstab: "#d9352c", basic_repair: "#f0b81e", brawl: "#f07020", command: "#8a55c8", explosion: "#f05a20", panic: "#ee3f92", raise_morale: "#2f9fe0", reactor: "#74c52c", replicate: "#2fc0a0" };
 function GameCard({ type }: { type: string }) {
@@ -42,7 +42,7 @@ function InfoCard({ tone, kind, name, pic, text, round }: { tone: string; kind: 
   return <div className={"ta-gc" + (round ? "" : " tall")} style={{ "--k": tone } as any}><div className="h"><small>{kind}</small><b>{name}</b></div><div className="m">{pic ? <img src={pic} alt={name} /> : null}</div><div className="t"><span>{text}</span></div><div className="s" /></div>;
 }
 const AGENDA_TONE = (a: string) => (["contagion", "butcher"].includes(a) ? "#d9352c" : a === "coward" ? "#e0a92a" : "#74a83c");
-const zoomOf = { agenda: (a: string) => <InfoCard round tone={AGENDA_TONE(a)} kind="身份" name={AGENDA_TEXT[a][0].split("（")[0]} pic={img("a_" + a)} text={AGENDA_TEXT[a][1]} />, wound: (w: string) => <InfoCard round tone="#b3201a" kind="伤害报告" name={WOUND_TEXT[w].split("：")[0]} pic="" text={WOUND_TEXT[w].split("：")[1]} />, char: (c: string) => { const [x, y] = CHARACTERS[c].ab; return <InfoCard tone="#3fb0a0" kind="角色" name={CHAR_NAME[c]} pic={img("p_" + c)} text={`${ABILITIES[x].name}${ABILITIES[x].cost ? "（" + ABILITIES[x].cost + "）" : ""}：${ABILITIES[x].text}\n${ABILITIES[y].name}${ABILITIES[y].cost ? "（" + ABILITIES[y].cost + "）" : ""}：${ABILITIES[y].text}`} />; } };
+const zoomOf = { agenda: (a: string) => <InfoCard round tone={AGENDA_TONE(a)} kind="身份" name={AGENDA_TEXT[a][0].split("（")[0]} pic={img("a_" + a)} text={AGENDA_TEXT[a][1]} />, wound: (w: string) => <InfoCard round tone="#b3201a" kind="伤害报告" name={WOUND_TEXT[w].split("：")[0]} pic={w === "frenzied" ? "" : img("w_" + w)} text={WOUND_TEXT[w].split("：")[1]} />, char: (c: string) => { const [x, y] = CHARACTERS[c].ab; return <InfoCard tone="#3fb0a0" kind="角色" name={CHAR_NAME[c]} pic={img("p_" + c)} text={`${ABILITIES[x].name}${ABILITIES[x].cost ? "（" + ABILITIES[x].cost + "）" : ""}：${ABILITIES[x].text}\n${ABILITIES[y].name}${ABILITIES[y].cost ? "（" + ABILITIES[y].cost + "）" : ""}：${ABILITIES[y].text}`} />; } };
 const CARD_FX: Record<string, string> = { basic_repair: "repair", advanced_repair: "repair", raise_morale: "heal", command: "complete", replicate: "teleport", brawl: "hook", backstab: "slash", panic: "shock", airlock: "crow", explosion: "pallet", reactor: "power" };
 function Vfx({ id }: { id: string }) {
   const m = (vfxMeta as any)[id]; if (!m) return null; const k = Math.min(5, 300 / m.w);
@@ -69,64 +69,84 @@ function Bar({ label, v, max, mark, cls, delay }: { label: string; v: number; ma
     </em>
   </div>;
 }
-function Game({ snap, send, msg, clear, restart, host, online }: { snap: any; send: (c: any) => void; msg: string; clear: () => void; restart: () => void; host: boolean; online: boolean }) {
+function SceneOverlay({ scene, name, finish }: { scene: Scene; name: (seat: number) => string; finish: () => void }) {
+  const video = useRef<HTMLVideoElement>(null);
+  const close = useRef(finish);
+  close.current = finish;
+  const [started, setStarted] = useState(false);
+  const videoKind = scene.kind === "death" || scene.kind === "exile" || scene.kind === "ending";
+  useEffect(() => {
+    if (videoKind || scene.kind === "private") return;
+    const sound = setTimeout(() => {
+      if (scene.kind === "reveal") sfx(scene.card.includes("repair") ? "repair" : "reveal");
+      if (scene.kind === "wound") sfx("sabotage");
+    }, scene.kind === "reveal" ? 340 : 0);
+    const timer = setTimeout(() => close.current(), scene.kind === "reveal" ? 1400 : scene.kind === "wound" ? 1900 : scene.kind === "vote" ? 1300 : 850);
+    return () => { clearTimeout(sound); clearTimeout(timer); };
+  }, [scene, videoKind]);
+  useEffect(() => {
+    if (!started) return;
+    const timer = setTimeout(() => close.current(), 12000);
+    return () => clearTimeout(timer);
+  }, [started]);
+  if (scene.kind === "death" || scene.kind === "exile" || scene.kind === "ending") {
+    const ending = scene.kind === "ending";
+    const asset = ending ? scene.win ? "end_win" : "end_lose" : scene.kind === "death" ? "fx_death" : "fx_exile";
+    const label = ending ? "点击查看结局" : `点击查看：${name(scene.seat)} ${scene.kind === "death" ? "阵亡" : "被放逐"}`;
+    return <div className="ta-sequence ta-sequence-video" role="dialog" aria-modal="true" data-scene={scene.kind}>
+      <video ref={element => {
+        video.current = element;
+        if (!element) return;
+        element.muted = true;
+        element.setAttribute("muted", "");
+        element.setAttribute("playsinline", "");
+        element.setAttribute("webkit-playsinline", "");
+      }} muted playsInline poster={img(asset + "_poster")} preload="metadata" src={`/assets/menace/${asset}.mp4`}
+        onEnded={finish} onError={() => { if (started) finish(); }} />
+      {!started ? <button className="ta-sequence-start" onClick={() => {
+        const element = video.current;
+        if (!element) { finish(); return; }
+        setStarted(true);
+        try { void element.play()?.catch(finish); } catch { finish(); }
+      }}>{label}</button> : null}
+      {started || !ending ? <button className="ta-sequence-skip" onClick={finish}>跳过演出</button> : null}
+    </div>;
+  }
+  return <div className="ta-sequence" role="dialog" aria-modal="true" data-scene={scene.kind}>
+    {scene.kind === "reveal" ? <div className="ta-sequence-card"><div className="ta-flip"><div className="ta-flip-back">暗置行动</div><div className="ta-flip-front"><GameCard type={scene.card} /></div></div><Vfx id={CARD_FX[scene.card]} /></div> : null}
+    {scene.kind === "wound" ? <><h2>{name(scene.seat)} 受伤</h2><div className="ta-sequence-card"><div className="ta-flip"><div className="ta-flip-back">伤害报告</div><div className="ta-flip-front">{zoomOf.wound(scene.wound)}</div></div></div></> : null}
+    {scene.kind === "vote" ? <><h2>发起放逐投票</h2><div className="ta-gun ta-sequence-gun"><svg viewBox="0 0 200 120" aria-hidden="true"><path d="M8 28h150l14 12v16H92l-10 12-8 44H34l10-52H8z" fill="#2c332c" stroke="#000" strokeWidth="5"/><path d="M8 28h150v10H8z" fill="#6f8350"/><rect x="150" y="44" width="46" height="9" fill="#e0a92a" stroke="#000" strokeWidth="3"/></svg></div></> : null}
+    {scene.kind === "private" ? <><h2>{scene.label}</h2><div className="ta-sequence-card"><GameCard type={scene.card} /></div></> : null}
+    {scene.kind === "notice" ? <h2>{scene.seat === undefined ? "" : name(scene.seat) + " · "}{scene.label}</h2> : null}
+    {scene.kind === "resource" ? <h2>{scene.label}</h2> : null}
+    <button className="ta-sequence-skip" onClick={finish}>{scene.kind === "private" ? "关闭牌面" : "跳过演出"}</button>
+  </div>;
+}
+
+function Game({ snap: incoming, send, seen, takeScenes, msg, clear, restart, host, online }: { snap: any; send: (c: any) => void; seen: (version: number) => void; takeScenes: () => Scene[]; msg: string; clear: () => void; restart: () => void; host: boolean; online: boolean }) {
+  const [snap, setFrame] = useState(incoming);
+  const [scenes, setScenes] = useState<Scene[]>([]);
+  const last = useRef(incoming);
+  const scene = scenes[0];
+  const busy = useRef(false);
+  useLayoutEffect(() => {
+    last.current = incoming;
+    const added = takeScenes();
+    busy.current = Boolean(scene || added.length);
+    if (added.length) setScenes(queue => [...queue, ...added]);
+    else if (!scene) setFrame(last.current);
+  }, [incoming, scene, takeScenes]);
+  useEffect(() => {
+    if (!busy.current && !scene && snap === incoming && online) seen(snap.version);
+  }, [scene, snap, incoming, online, seen]);
+  const finish = () => setScenes(queue => queue[0] === scene ? queue.slice(1) : queue);
   const v = snap.view; const [zoom, setZoom] = useState<{ src: string; text: string; play?: number; selected?: number; node?: any } | null>(null); const [flow, setFlow] = useState<{ ab: string; steps: Step[]; args: any } | null>(null); const [pick, setPick] = useState<number[]>([]);
   const name = (seat: number) => snap.players.find((p: any) => p.playerId === snap.seats[seat])?.name ?? `座位${seat + 1}`;
   const me = v.players[v.you]; const myTurn = v.waiting.includes(v.you); const q = v.question;
   useEffect(() => { setFlow(null); setPick([]); }, [v.phase, v.round, q?.q]);
   useEffect(() => { if (msg) { const t = setTimeout(clear, 3000); return () => clearTimeout(t); } }, [msg]);
-  useEffect(() => { music(v.phase === "over" ? null : v.oxygen <= 6 ? "urgent" : v.phase === "vote" ? "pulse" : "transmission"); if (v.phase === "over") sfx(v.winner === "crew" ? "victory" : "sabotage"); }, [v.phase, v.oxygen <= 6]);
-  const lastT = v.revealed[v.revealed.length - 1]; const count = v.revealed.length;
-  useEffect(() => { if (myTurn) sfx("commit"); }, [myTurn]);
-  const [show, setShow] = useState<{ id: number; type: string } | null>(null);
-  const previousReveal = useRef({ round: v.round, count });
-  useEffect(() => {
-    const previous = previousReveal.current;
-    previousReveal.current = { round: v.round, count };
-    if (previous.round !== v.round || count <= previous.count || v.phase !== "resolve") {
-      if (v.phase !== "resolve") setShow(null);
-      return;
-    }
-    setShow({ id: count, type: lastT });
-    const sound = setTimeout(() => sfx(
-      ["airlock", "explosion", "panic", "reactor", "backstab", "brawl"].includes(lastT)
-        ? "sabotage" : lastT?.includes("repair") ? "repair" : "reveal"
-    ), matchMedia("(prefers-reduced-motion: reduce)").matches ? 0 : 340);
-    const hide = setTimeout(() => setShow(null), 1100);
-    return () => { clearTimeout(sound); clearTimeout(hide); };
-  }, [count, lastT, v.phase, v.round]);
-  const [hit, setHit] = useState<{ id: number; who: string; w: string } | null>(null);
-  const seen = useRef<string[]>(v.players.map((p: any) => p.wounds.join()));
-  const hitTimers = useRef(new Set<ReturnType<typeof setTimeout>>());
-  const hitSequence = useRef(0);
-  useEffect(() => () => {
-    for (const timer of hitTimers.current) clearTimeout(timer);
-    hitTimers.current.clear();
-  }, [snap.code, snap.round]);
-  useEffect(() => {
-    const schedule = (callback: () => void, delay: number) => {
-      const timer = setTimeout(() => {
-        hitTimers.current.delete(timer);
-        callback();
-      }, delay);
-      hitTimers.current.add(timer);
-    };
-    v.players.forEach((p: any, i: number) => {
-      const previous = seen.current[i]?.split(",").filter(Boolean).length ?? 0;
-      if (p.wounds.length > previous) {
-        const id = ++hitSequence.current;
-        const w = p.wounds.at(-1);
-        const who = name(p.seat);
-        schedule(() => {
-          setShow(null);
-          setHit({ id, who, w });
-          sfx("sabotage");
-          schedule(() => setHit((current) => current?.id === id ? null : current), 3200);
-        }, v.phase === "resolve" ? 1500 : 0);
-      }
-      seen.current[i] = p.wounds.join();
-    });
-  }, [v.players]);
+  useEffect(() => { music(v.phase === "over" || scene?.kind === "ending" ? null : v.oxygen <= 6 ? "urgent" : v.phase === "vote" ? "pulse" : "transmission"); }, [v.phase, v.oxygen <= 6, scene?.kind]);
+  useEffect(() => { if (myTurn && !scene) sfx("commit"); }, [myTurn, scene]);
   const board = useRef<HTMLDivElement>(null);
   const previousCards = useRef({ round: v.round, hand: me.hand, deck: me.deck, played: me.played });
   useEffect(() => {
@@ -160,24 +180,11 @@ function Game({ snap, send, msg, clear, restart, host, online }: { snap: any; se
   }) : [];
   const offlineActions = offline.map((player: any) => <button key={player.playerId} onClick={() => send({ t: "auto", player: player.playerId })}>{player.name} 已离线，代为操作</button>);
   const [mute, setM] = useState(muted());
-  const exiled = v.players.filter((p: any) => p.exiled).length; const [door, setDoor] = useState(false); const prevEx = useRef(exiled);
-  useEffect(() => { if (exiled > prevEx.current) { setDoorName(name(v.players.filter((p: any) => p.exiled).pop().seat)); setDoor(true); sfx("sabotage"); setTimeout(() => setDoor(false), 5600); } prevEx.current = exiled; }, [exiled]);
-  const [cine, setCine] = useState(false);
-  useEffect(() => { if (v.phase !== "over") { setCine(false); return; } const t = setTimeout(() => setCine(true), 6500); return () => clearTimeout(t); }, [v.phase]);
-  const [doorName, setDoorName] = useState(""); const [dead, setDead] = useState(""); const prevDead = useRef<number[]>(v.players.filter((p: any) => p.killed).map((p: any) => p.seat));
-  useEffect(() => { const k = v.players.filter((p: any) => p.killed).map((p: any) => p.seat); const n = k.filter((x: number) => !prevDead.current.includes(x)); prevDead.current = k; if (n.length) { setDead(n.map(name).join("、")); setTimeout(() => setDead(""), 5600); } }, [v.players]);
   const [rev, setRev] = useState(false); const start = useRef({ o: v.oxygen, e: v.energy });
   useEffect(() => { if (v.phase === "action") start.current = { o: v.oxygen, e: v.energy }; setRev(false); }, [v.phase, v.round]);
-  const endV = useRef<HTMLVideoElement | null>(null);
-  useEffect(() => { if (v.phase !== "over" || cine) return; const e = endV.current; e?.play().catch(() => setCine(true)); const t = setTimeout(() => { if (!e || e.currentTime < .05) setCine(true); }, 1500); return () => clearTimeout(t); }, [v.phase, cine]);
   const [banner, setBanner] = useState("");
   useEffect(() => { if (v.phase === "setup") return; if (v.phase === "over") { setBanner(""); return; } setBanner(PHASE[v.phase]); const t = setTimeout(() => setBanner(""), 1100); return () => clearTimeout(t); }, [v.phase]);
-  const [gun, setGun] = useState(false); const [fly, setFly] = useState<{ id: number; t: string; c: string }[]>([]); const [hurt, setHurt] = useState(0); const [help, setHelp] = useState(false);
-  const prevR = useRef({ o: v.oxygen, e: v.energy, w: v.players.reduce((n: number, p: any) => n + p.wounds.length, 0) });
-  useEffect(() => { const w = v.players.reduce((n: number, p: any) => n + p.wounds.length, 0), r = prevR.current, add: { id: number; t: string; c: string }[] = []; const id = Date.now();
-    if (v.oxygen !== r.o) add.push({ id, t: `氧气 ${v.oxygen > r.o ? "+" : ""}${v.oxygen - r.o}`, c: "#7fdcf2" }); if (v.energy !== r.e) add.push({ id: id + 1, t: `能量 ${v.energy > r.e ? "+" : ""}${v.energy - r.e}`, c: "#c6e860" });
-    if (w > r.w) setHurt(id); prevR.current = { o: v.oxygen, e: v.energy, w }; if (add.length) { setFly((f) => [...f, ...add]); setTimeout(() => setFly((f) => f.filter((x) => !add.includes(x))), 1500); } }, [v.oxygen, v.energy, v.players]);
-  useEffect(() => { if (v.phase === "vote") { setGun(true); const t = setTimeout(() => setGun(false), 1300); return () => clearTimeout(t); } }, [v.phase]);
+  const [help, setHelp] = useState(false);
   const acting = v.phase === "action" && myTurn && !q;
   const abilities: string[] = me.character ? CHARACTERS[me.character].ab : [];
   const step = flow?.steps[Object.keys(flow.args).filter((k) => k !== "_").length];
@@ -245,22 +252,15 @@ function Game({ snap, send, msg, clear, restart, host, online }: { snap: any; se
       {roundTable ? hand : null}
     </main>
     {!roundTable ? hand : null}
-    {gun ? <div className="ta-gun"><svg viewBox="0 0 200 120"><path d="M8 28h150l14 12v16H92l-10 12-8 44H34l10-52H8z" fill="#2c332c" stroke="#000" strokeWidth="5"/><path d="M8 28h150v10H8z" fill="#6f8350"/><rect x="150" y="44" width="46" height="9" fill="#e0a92a" stroke="#000" strokeWidth="3"/></svg></div> : null}
-    {show ? <div key={show.id} className="ta-stage"><div className="card"><div className="ta-flip"><div className="ta-flip-back">暗置行动</div><div className="ta-flip-front"><GameCard type={show.type} /></div></div></div><Vfx id={CARD_FX[show.type]} />{fly.map((x) => <b key={x.id} style={{ color: x.c }}>{x.t}</b>)}</div> : null}
-    {hit ? <div key={hit.id} className="ta-hit"><Vfx id="blood" /><small>{hit.who} 受伤，抽取伤害牌…</small><div className="wc"><i className="back">伤害报告</i><div className="face">{zoomOf.wound(hit.w)}</div></div></div> : null}
-    {hurt ? <div key={hurt} className="ta-hurt" /> : null}
-    <div className="ta-fly">{show ? null : fly.map((x) => <b key={x.id} style={{ color: x.c }}>{x.t}</b>)}</div>
     {help ? <div className="ta-zoom" onClick={() => setHelp(false)}><Rules /></div> : null}
-    {v.phase === "over" && !cine ? <video key="end" className="ta-cine" src={`/assets/menace/end_${v.winner === "crew" ? "win" : "lose"}.mp4`} ref={endV} poster={img(v.winner === "crew" ? "bg_lose" : "bg_action")} autoPlay muted playsInline {...({ "webkit-playsinline": "true", "x5-playsinline": "true" } as any)} preload="auto" onEnded={() => setCine(true)} onError={() => setCine(true)} onClick={() => setCine(true)} /> : null}
-    {v.phase === "over" && cine ? <div className={"ta-end " + (v.winner === "crew" ? "win" : "lose")}><div className="fx">{Array.from({ length: 28 }, (_, i) => <i key={i} style={{ left: `${(i * 37) % 100}%`, animationDelay: `${(i % 9) * .35}s` }} />)}</div>
+    {v.phase === "over" && !scene ? <div className={"ta-end " + (v.winner === "crew" ? "win" : "lose")}><div className="fx">{Array.from({ length: 28 }, (_, i) => <i key={i} style={{ left: `${(i * 37) % 100}%`, animationDelay: `${(i % 9) * .35}s` }} />)}</div>
       <small>{v.winner === "crew" ? "警戒号 · 引擎重启" : "警戒号 · 生命维持终止"}</small><h1>{v.winner === "crew" ? "劫后余生" : "全员窒息"}</h1><p className="why">{v.winner === "crew" ? (v.energy >= ENERGY_GOAL ? `能量充满，氧气仅剩 ${v.oxygen} 格。你们活下来了。` : "内鬼全部伏诛，飞船脱离危险。") : (v.oxygen === 0 ? "最后一口氧气耗尽，内鬼的计划得逞。" : "船员无一生还，飞船落入内鬼之手。")}</p>
       <p className={"mine " + (v.winners.includes(v.you) ? "yes" : "no")}>{v.winners.includes(v.you) ? "你赢了" : "你输了"}</p>
       <ul>{v.players.map((p: any, i: number) => <li key={p.seat} style={{ animationDelay: `${.25 + i * .12}s` }} className={v.winners.includes(p.seat) ? "w" : ""}>{p.character ? <img src={img("p_" + p.character)} alt="" /> : null}<span><b>{name(p.seat)}</b><small>{AGENDA_TEXT[p.agenda][0]}{p.killed ? " · 阵亡" : p.exiled ? " · 被放逐" : ""}</small></span><em>{v.winners.includes(p.seat) ? "胜" : "败"}</em></li>)}</ul>
       {host ? <button className="ta-primary" onClick={restart}>再来一局</button> : <p className="why">等待房主开始下一局</p>}</div> : null}
     {rev ? <div className="ta-revall" onClick={() => setRev(false)}><h3>本轮揭示的牌</h3><div>{v.revealed.map((t: string, i: number) => <div key={i} className="one"><GameCard type={t} /></div>)}</div><p>点任意处返回</p></div> : null}
     <div key={"veil" + v.phase} className="ta-veil" />
-    {door && v.phase !== "over" ? <div className="ta-clip" onClick={() => setDoor(false)}><video src={img0("fx_exile")} autoPlay muted playsInline onEnded={() => setDoor(false)} onError={() => setDoor(false)} /><b>{doorName} 被放逐</b></div> : null}
-    {dead && !door && v.phase !== "over" ? <div className="ta-clip" onClick={() => setDead("")}><video src={img0("fx_death")} autoPlay muted playsInline onEnded={() => setDead("")} onError={() => setDead("")} /><b className="r">{dead} 阵亡</b></div> : null}
+    {scene ? <SceneOverlay key={`${incoming.round}-${scene.id}`} scene={scene} name={name} finish={finish} /> : null}
     {banner && !q ? <div key={banner} className={"ta-banner b-" + v.phase}><b>{banner}</b></div> : null}
     {zoom ? <div className="ta-zoom" onClick={() => setZoom(null)}>{zoom.node ? <div className="ta-big">{zoom.node}</div> : CARD_TEXT[zoom.src.split("/").pop()!.replace(".webp", "")] ? <div className="ta-big"><GameCard type={zoom.src.split("/").pop()!.replace(".webp", "")} /></div> : <img src={zoom.src} alt="" />}{zoom.node ? null : <p>{zoom.text}</p>}{zoom.play !== undefined ? <button className="ta-primary" onClick={() => send({ t: "play", card: zoom.play })}>暗置打出</button> : null}</div> : null}
   </div>;
