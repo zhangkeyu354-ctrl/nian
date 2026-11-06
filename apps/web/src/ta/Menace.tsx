@@ -185,7 +185,15 @@ function Game({ snap: incoming, send, seen, takeScenes, msg, clear, restart, hos
   const me = v.players[v.you]; const myTurn = v.waiting.includes(v.you); const q = v.question;
   useEffect(() => { setFlow(null); setPick([]); }, [v.phase, v.round, q?.q]);
   useEffect(() => { if (msg) { const t = setTimeout(clear, 3000); return () => clearTimeout(t); } }, [msg]);
-  useEffect(() => { music(v.phase === "over" || scene?.kind === "ending" ? null : v.oxygen <= 6 ? "urgent" : v.phase === "vote" ? "pulse" : "transmission"); }, [v.phase, v.oxygen <= 6, scene?.kind]);
+  const ending = v.phase === "over";
+  const resultsVisible = ending && !scene;
+  const urgent = v.oxygen <= 6;
+  useEffect(() => {
+    if (resultsVisible && v.winner) music(`result-${v.winner}`, false);
+    else if (ending || scene?.kind === "ending") music(null);
+    else music(urgent ? "urgent" : v.phase === "vote" ? "pulse" : "transmission");
+  }, [resultsVisible, ending, v.winner, urgent, v.phase, scene?.kind]);
+  useEffect(() => () => music(null), []);
   useEffect(() => { if (myTurn && !scene) sfx("commit"); }, [myTurn, scene]);
   const board = useRef<HTMLDivElement>(null);
   const previousCards = useRef({ round: v.round, hand: me.hand, deck: me.deck, played: me.played });

@@ -4,4 +4,26 @@ const url=(n:string)=>`/assets/menace/audio/${n}.mp3`;
 export const muted=()=>isMuted;
 export function setMute(m:boolean){isMuted=m;try{localStorage.setItem(key,m?"1":"0")}catch{}if(bgm)bgm.muted=m}
 export function sfx(n:string){if(isMuted)return;const a=new Audio(url(n));a.volume=.4;void a.play().catch(()=>{})}
-export function music(n:string|null){if(n===cur)return;cur=n;bgm?.pause();bgm=null;if(!n)return;bgm=new Audio(url(n));bgm.loop=true;bgm.volume=.1;bgm.muted=isMuted;const go=()=>void bgm?.play().catch(()=>{});go();addEventListener("pointerdown",go,{once:true})}
+let retry: (() => void) | null = null;
+
+export function music(name: string | null, loop = true) {
+  if (name === cur) return;
+  cur = name;
+  if (retry) removeEventListener("pointerdown", retry);
+  retry = null;
+  bgm?.pause();
+  bgm = null;
+  if (!name) return;
+  const track = new Audio(url(name));
+  bgm = track;
+  track.loop = loop;
+  track.volume = loop ? .1 : .3;
+  track.muted = isMuted;
+  const play = () => {
+    void track.play().catch(() => {
+      if (bgm === track) addEventListener("pointerdown", play, { once: true });
+    });
+  };
+  retry = play;
+  play();
+}

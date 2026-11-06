@@ -1,0 +1,6 @@
+Kenney Music Jingles by Kenney Vleugels (Kenney.nl)
+Source: https://kenney.nl/assets/music-jingles
+License: CC0 1.0 https://creativecommons.org/publicdomain/zero/1.0/
+result-crew.mp3: jingles_STEEL10.ogg
+result-menace.mp3: jingles_STEEL07.ogg
+The original Ogg tracks were converted to MP3.
