@@ -146,12 +146,36 @@ export function attachMenace(io: Server, dataDir: string, opts: { maxRooms: numb
 
   const pending = new Set<string>();
   const sceneVersions = new Map<string, number>();
+  const gates = new WeakMap<TARoom, number>();
+  const viewers = (room: TARoom) => [...(io.sockets.adapter.rooms.get(sockRoom(room.code)) ?? [])]
+    .filter(id => {
+      const seat = io.sockets.sockets.get(id)?.data.taSeat;
+      return room.file.lineup.includes(seat) && room.file.players.some(player => player.playerId === seat && !player.bot);
+    });
+  const gateTransition = (room: TARoom, previous: State | null) => {
+    const next = room.state;
+    if (previous && next &&
+        (previous.phase !== next.phase || previous.round !== next.round)) {
+      gates.set(room, (room.file.version ?? 0) + 1);
+    }
+  };
+  const snapshot = (room: TARoom, seat: string | null): TARoomSnapshot => {
+    const version = gates.get(room);
+    if (version === undefined) return room.snapshot(seat);
+    const clients = viewers(room);
+    const ready = clients.filter(id => (sceneVersions.get(id) ?? -1) >= version).length;
+    return { ...room.snapshot(seat), sceneGate: { version, ready, total: clients.length } };
+  };
   const drive = (room: TARoom) => {
-    if (pending.has(room.code)) return;
+    if (gates.has(room) || pending.has(room.code)) return;
     pending.add(room.code);
     const delay = room.botDelay();
     const deadline = Date.now() + 6000;
     const advance = () => {
+      if (gates.has(room)) {
+        pending.delete(room.code);
+        return;
+      }
       if (room.botDelay() !== delay) {
         pending.delete(room.code);
         drive(room);
@@ -168,7 +192,9 @@ export function attachMenace(io: Server, dataDir: string, opts: { maxRooms: numb
       }
       pending.delete(room.code);
       try {
+        const previous = room.state;
         if (room.botStep()) {
+          gateTransition(room, previous);
           broadcast(room);
           drive(room);
         }
@@ -181,9 +207,14 @@ export function attachMenace(io: Server, dataDir: string, opts: { maxRooms: numb
   const broadcast = (room: TARoom) => {
     room.file.version = (room.file.version ?? 0) + 1;
     store.save(room);
+    const gate = snapshot(room, null).sceneGate;
+    if (gate && gate.ready === gate.total) {
+      gates.delete(room);
+      drive(room);
+    }
     for (const id of io.sockets.adapter.rooms.get(sockRoom(room.code)) ?? []) {
       const sock = io.sockets.sockets.get(id);
-      if (sock) sock.emit(TA_EVENTS.update, room.snapshot(sock.data.taSeat ?? null));
+      if (sock) sock.emit(TA_EVENTS.update, snapshot(room, sock.data.taSeat ?? null));
     }
   };
   const find = (code: unknown) => store.rooms.get(String(code ?? "").toUpperCase());
@@ -193,6 +224,7 @@ export function attachMenace(io: Server, dataDir: string, opts: { maxRooms: numb
       const room: TARoom | undefined = socket.data.taRoom;
       const seat: string | null = socket.data.taSeat ?? null;
       if (room && seat) {
+        socket.leave(sockRoom(room.code));
         room.connections.set(seat, Math.max(0, (room.connections.get(seat) ?? 1) - 1));
         broadcast(room);
       }
@@ -232,7 +264,7 @@ export function attachMenace(io: Server, dataDir: string, opts: { maxRooms: numb
       attach(room, me);
       broadcast(room);
       drive(room);
-      return { snapshot: room.snapshot(me) };
+      return { snapshot: snapshot(room, me) };
     }));
     socket.on(TA_EVENTS.claim, guarded((req: { code: string; name: string }) => {
       const room = find(req?.code) ?? fail("NO_ROOM");
@@ -243,6 +275,7 @@ export function attachMenace(io: Server, dataDir: string, opts: { maxRooms: numb
     }));
     socket.on(TA_EVENTS.lobby, guarded((req: { code: string; token: string; action: TALobbyAction }) => {
       const room = find(req?.code) ?? fail("NO_ROOM");
+      if (gates.has(room)) fail("WAITING");
       room.lobby(req.token, req.action);
       drive(room);
       broadcast(room);
@@ -250,15 +283,23 @@ export function attachMenace(io: Server, dataDir: string, opts: { maxRooms: numb
     }));
     socket.on(TA_EVENTS.command, guarded((req: { code: string; token: string; command: TAClientCommand }) => {
       const room = find(req?.code) ?? fail("NO_ROOM");
+      if (gates.has(room)) fail("WAITING");
+      const previous = room.state;
       room.apply(req.token, req.command);
+      gateTransition(room, previous);
       drive(room);
       broadcast(room);
       return {};
     }));
     socket.on(TA_EVENTS.sceneDone, (req: { code?: string; version?: number }) => {
       const room: TARoom | undefined = socket.data.taRoom;
-      if (!room || !socket.data.taSeat || req?.code !== room.code || req.version !== room.file.version) return;
-      sceneVersions.set(socket.id, req.version!);
+      if (!room || !room.file.lineup.includes(socket.data.taSeat) || req?.code !== room.code) return;
+      const version = req.version;
+      const gate = gates.get(room);
+      if (version === undefined || (version !== room.file.version && version !== gate) ||
+          (sceneVersions.get(socket.id) ?? -1) >= version) return;
+      sceneVersions.set(socket.id, version);
+      if (gate !== undefined && version >= gate) broadcast(room);
     });
     socket.on("disconnect", () => {
       sceneVersions.delete(socket.id);

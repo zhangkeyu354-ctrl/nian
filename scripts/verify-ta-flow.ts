@@ -150,6 +150,8 @@ try {
   }
   async function focused() {
     const last = await open("LAST");
+    const lastOther = await open("LAST", 1);
+    await lastOther.evaluate("window.setTimeout = new Proxy(window.setTimeout, { apply: (target, self, args) => Reflect.apply(target, self, args[1] === 1400 ? [args[0], 8000, ...args.slice(2)] : args) })");
     await last.getByRole("button", { name: /揭示下一张/ }).click();
     await last.locator('[data-scene="reveal"]').getByText("基础维修", { exact: true }).waitFor();
     assert.match(await last.locator(".ta-top b").innerText(), /匿名结算/);
@@ -160,16 +162,34 @@ try {
     assert.equal(await floating.evaluate(element => getComputedStyle(element).pointerEvents), "none");
     await wait(200);
     await last.screenshot({ path: join(evidence, "02-资源结算.png") });
-    await button(last, "结束本回合").waitFor();
+
+    const lastWaiting = last.getByRole("status").filter({ hasText: "等待其他玩家查看完毕" });
+    await lastWaiting.waitFor();
+    assert.match(await last.locator(".ta-top b").innerText(), /匿名结算/);
+    await shot(last, "02a-等待其他玩家结算");
+    await lastOther.locator('[data-scene="reveal"]').getByRole("button", { name: "跳过演出" }).click();
+    await lastWaiting.waitFor({ state: "hidden" });
+    await lastOther.getByRole("button", { name: "拿起手枪" }).waitFor();
+    await lastOther.close();
     await last.close();
 
     const dead = await open("DEAD");
+    const otherDead = await open("DEAD", 1);
     await button(dead, "结束本回合").click();
     const resource = dead.locator('[data-scene="resource"]');
     await resource.waitFor();
     await playVideo(dead, "death", "03-第一次阵亡", "船员2 阵亡");
     await playVideo(dead, "death", "04-第二次阵亡", "船员3 阵亡");
+    const otherDeath = otherDead.locator('[data-scene="death"]');
+    await otherDeath.getByRole("heading", { name: "船员2 阵亡", exact: true }).waitFor();
+    await dead.getByRole("status").filter({ hasText: "等待其他玩家查看完毕" }).waitFor();
+    assert.match(await dead.locator(".ta-top b").innerText(), /讨论/);
+    await otherDeath.getByRole("button", { name: "跳过演出" }).click();
+    await otherDeath.getByRole("heading", { name: "船员3 阵亡", exact: true }).waitFor();
+    await otherDeath.getByRole("button", { name: "跳过演出" }).click();
+    await dead.getByRole("status").filter({ hasText: "等待其他玩家查看完毕" }).waitFor({ state: "hidden" });
     await dead.close();
+    await otherDead.close();
 
     const injured = await open("HURT");
     await injured.getByRole("button", { name: /雷射枪/ }).click();

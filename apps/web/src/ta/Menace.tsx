@@ -180,7 +180,7 @@ function SceneOverlay({ scene, name, finish }: { scene: Scene; name: (seat: numb
   </div>;
 }
 
-function Game({ snap: incoming, send, seen, takeScenes, msg, clear, restart, host, online }: { snap: any; send: (c: any) => void; seen: (version: number) => void; takeScenes: () => Scene[]; msg: string; clear: () => void; restart: () => void; host: boolean; online: boolean }) {
+function Game({ snap: incoming, send: command, seen, takeScenes, msg, clear, restart, host, online }: { snap: any; send: (c: any) => void; seen: (version: number) => void; takeScenes: () => Scene[]; msg: string; clear: () => void; restart: () => void; host: boolean; online: boolean }) {
   const [snap, setFrame] = useState(incoming);
   const [scenes, setScenes] = useState<Scene[]>([]);
   const last = useRef(incoming);
@@ -191,11 +191,16 @@ function Game({ snap: incoming, send, seen, takeScenes, msg, clear, restart, hos
     const added = takeScenes();
     busy.current = Boolean(scene || added.length);
     if (added.length) setScenes(queue => [...queue, ...added]);
-    else if (!scene) setFrame(last.current);
+    else if (!scene && !incoming.sceneGate) setFrame(last.current);
   }, [incoming, scene, takeScenes]);
   useEffect(() => {
-    if (!busy.current && !scene && snap === incoming && online) seen(snap.version);
+    if (!busy.current && !scene && online && (incoming.sceneGate || snap === incoming)) {
+      seen(incoming.sceneGate?.version ?? snap.version);
+    }
   }, [scene, snap, incoming, online, seen]);
+  const send = (c: any) => {
+    if (!scene && !busy.current && !incoming.sceneGate) command(c);
+  };
   const finish = () => setScenes(queue => queue[0] === scene ? queue.slice(1) : queue);
   const v = snap.view; const [zoom, setZoom] = useState<{ src: string; text: string; play?: number; selected?: number; node?: any } | null>(null); const [flow, setFlow] = useState<{ ab: string; steps: Step[]; args: any } | null>(null); const [pick, setPick] = useState<number[]>([]);
   const name = (seat: number) => snap.players.find((p: any) => p.playerId === snap.seats[seat])?.name ?? `座位${seat + 1}`;
@@ -290,14 +295,21 @@ function Game({ snap: incoming, send, seen, takeScenes, msg, clear, restart, hos
       <button onClick={() => setFlow(null)}>取消</button></section>; }
   const roundTable = v.phase === "accuse" || v.phase === "vote";
   const hand = v.hand?.length && v.phase !== "setup" ? <nav className={"ta-hand" + (zoom?.selected !== undefined ? " has-selection" : "")}>{v.hand.map((c: any) => <button key={c.id} className="ta-card" aria-pressed={zoom?.selected === c.id} onClick={() => setZoom({ src: img(c.type), text: CARD_TEXT[c.type].join("：\n"), selected: c.id, play: acting ? c.id : undefined })}><GameCard type={c.type} /></button>)}</nav> : null;
+  const waitingForScenes = incoming.sceneGate && !scene
+    ? <p className="ta-scene-wait" role="status">等待其他玩家查看完毕（{incoming.sceneGate.ready}/{incoming.sceneGate.total}）</p>
+    : null;
+  if (incoming.sceneGate && snap.sceneGate) {
+    return <div className="ta-world ta-game">{scene ? <SceneOverlay key={scene.id} scene={scene} name={name} finish={finish} /> : waitingForScenes}</div>;
+  }
   return <div ref={board} className={"ta-world ta-game ph-" + (v.phase === "over" ? (v.winner === "crew" ? "win" : "lose") : v.phase) + (v.oxygen <= 6 ? " danger" : "")}>
     {v.phase !== "setup" ? <div key={v.phase} className="ta-scene" aria-hidden="true" /> : null}
-    <header className="ta-hud"><div className="ta-top"><b>{PHASE[v.phase]}{v.round ? ` · 第 ${v.round} 回合` : ""}</b><button className="ta-mute" onClick={() => setHelp(true)}>规则</button><button className="ta-mute" onClick={() => { setMute(!mute); setM(!mute); }}>{mute ? "开声音" : "静音"}</button>{v.agenda && v.phase !== "setup" ? <button className="ta-mute" onClick={() => setZoom({ src: "", text: "", node: zoomOf.agenda(v.agenda) })}>身份</button> : null}<span className={online ? "" : "off"}>{online ? hint : "连接中断，正在重连…"}</span></div>
+    <header className="ta-hud"><div className="ta-top"><b>{PHASE[v.phase]}{v.round ? ` · 第 ${v.round} 回合` : ""}</b><button className="ta-mute" onClick={() => setHelp(true)}>规则</button><button className="ta-mute" onClick={() => { setMute(!mute); setM(!mute); }}>{mute ? "开声音" : "静音"}</button>{v.agenda && v.phase !== "setup" ? <button className="ta-mute" onClick={() => setZoom({ src: "", text: "", node: zoomOf.agenda(v.agenda) })}>身份</button> : null}<span className={online ? "" : "off"}>{online ? incoming.sceneGate ? "" : hint : "连接中断，正在重连…"}</span></div>
       <Bar label="氧气" v={v.oxygen} max={OXYGEN_MAX} cls="o" delay={v.phase === "resolve" ? 560 : 0} /><Bar label="能量" v={v.energy} max={ENERGY_GOAL} mark={ENERGY_SAFE} cls="e" delay={v.phase === "resolve" ? 560 : 0} /></header>
     <div key={v.phase} className="ta-table"><div className="core" style={{ "--o": `${(v.oxygen / OXYGEN_MAX) * 100}%`, "--e": `${(v.energy / ENERGY_GOAL) * 100}%` } as any}><b>{v.phase === "action" ? v.players.reduce((n: number, p: any) => n + p.played, 0) : v.phase === "vote" ? v.voted : v.remaining}</b><small>{v.phase === "action" ? "已暗置" : v.phase === "resolve" ? "待揭示" : v.phase === "vote" ? "已投票" : PHASE[v.phase]}</small></div>
       {v.players.map((p: any) => { const n = v.players.length, a = ((p.seat - v.you + n) % n) / n * Math.PI * 2 + Math.PI / 2, x = 50 + 38 * Math.cos(a), y = 50 + 38 * Math.sin(a); return <button type="button" key={p.seat} style={{ left: `${x}%`, top: `${y}%` }} className={["ta-seat", v.waiting.includes(p.seat) ? "turn" : "", p.killed ? "dead" : "", p.exiled ? "exiled" : "", p.seat === v.you ? "me" : ""].join(" ")} onClick={() => setZoom({ src: "", text: "", node: <div className="ta-detail"><h3>{name(p.seat)}{p.seat === v.leader ? " · 任务领袖" : ""}</h3><p>手牌 {p.hand}　牌库 {p.deck}　本轮已出 {p.played}{p.killed ? "　已阵亡" : p.exiled ? "　已放逐" : ""}{snap.players.find((x: any) => x.playerId === snap.seats[p.seat])?.connected ? "" : "　离线"}</p>{p.agenda && p.seat !== v.you ? <p className="rev">身份：{AGENDA_TEXT[p.agenda][0]}</p> : null}{p.wounds.map((w: string, i: number) => <p key={i} className="wd">{WOUND_TEXT[w]}</p>)}{p.character ? zoomOf.char(p.character) : null}</div> })}>
         <i className="face">{p.character ? <img src={img("p_" + p.character)} alt="" /> : null}{p.seat === v.leader ? <u>★</u> : null}{p.played ? <s aria-label={`已暗置 ${p.played} 张`}>{p.played}</s> : null}</i><b>{name(p.seat)}</b><small>手{p.hand} 库{p.deck}{p.wounds.length ? <em> 伤{p.wounds.length}</em> : null}</small>{p.agenda && p.seat !== v.you ? <small className="rev">{AGENDA_TEXT[p.agenda][0].split("（")[0]}</small> : null}{p.exiled ? <small className="rev">放逐</small> : p.killed ? <small className="rev">阵亡</small> : null}</button>; })}</div>
-    <main className="ta-main">
+    {waitingForScenes}
+    <main className="ta-main" inert={Boolean(incoming.sceneGate || (scene && scene.kind !== "resource"))}>
       {offline.length > 0 ? (v.phase === "vote"
         ? <details className="ta-offline"><summary>离线代操作 · {offline.length} 人</summary>{offlineActions}</details>
         : offlineActions) : null}
@@ -305,10 +317,10 @@ function Game({ snap: incoming, send, seen, takeScenes, msg, clear, restart, hos
       {v.phase === "setup" ? <section className="ta-panel"><h3>滑动选择角色 · 你的身份：<a onClick={() => setZoom({ src: "", text: "", node: zoomOf.agenda(v.agenda) })}>{AGENDA_TEXT[v.agenda][0]}</a></h3>{v.choices.length ? <div className="ta-chars">{v.choices.map((c: string) => <figure key={c}><div className="ta-pick" onClick={() => setZoom({ src: "", text: "", node: zoomOf.char(c) })}>{zoomOf.char(c)}</div><button className="ta-primary" onClick={() => send({ t: "choose", name: c })}>选 {CHAR_NAME[c]}</button></figure>)}</div> : <p>等待其他玩家选角色…</p>}</section> : null}
       {question()}{flowPanel()}
       {v.phase === "resolve" ? <section className="ta-panel"><h3>已揭示 · 还剩 {v.remaining} 张</h3><div className="ta-hand inline">{v.revealed.map((t: string, i: number) => <button key={i} className="ta-card flip" onClick={() => setZoom({ src: img(t), text: CARD_TEXT[t].join("：") })}><GameCard type={t} /></button>)}</div></section> : null}
-      {v.phase === "resolve" && !q && v.leader === v.you ? <button className="ta-primary" onClick={() => send({ t: "reveal" })}>揭示下一张（还剩 {v.remaining}）</button> : null}
+      {v.phase === "resolve" && !incoming.sceneGate && !q && v.leader === v.you ? <button className="ta-primary" onClick={() => send({ t: "reveal" })}>揭示下一张（还剩 {v.remaining}）</button> : null}
       {acting && !flow ? <section className="ta-panel ta-dock"><h3>选择一项行动</h3><div className="ta-grid"><button onClick={() => send({ t: "draw" })}>抽一张牌</button><button onClick={() => send({ t: "pass" })}>跳过</button></div>
         {me.exiled ? null : <div className="ta-abs">{abilities.map((a) => { const m = ABILITIES[a]; const used = !v.legalAbilities.includes(a); return <button key={a} disabled={used} onClick={() => m.steps.length ? setFlow({ ab: a, steps: m.steps, args: {} }) : send({ t: "ability", ab: a, args: {} })}><b>{m.name}{m.cost ? ` · ${m.cost}` : ""}</b><small>{m.text}</small></button>; })}</div>}</section> : null}
-      {v.phase === "accuse" && !q ? <section className="ta-panel"><div className="ta-sum"><span>本轮 氧气 {v.oxygen - start.current.o >= 0 ? "+" : ""}{v.oxygen - start.current.o}　能量 {v.energy - start.current.e >= 0 ? "+" : ""}{v.energy - start.current.e}</span>{v.revealed.length ? <button onClick={() => setRev(true)}>查看揭示的 {v.revealed.length} 张牌</button> : null}</div><div className="ta-grid">{!me.killed && !me.exiled ? <button className="ta-danger" onClick={() => send({ t: "call_vote" })}>拿起手枪</button> : null}{v.leader === v.you ? <button className="ta-primary" onClick={() => send({ t: "end_accuse" })}>结束本回合</button> : null}</div></section> : null}
+      {v.phase === "accuse" && !incoming.sceneGate && !q ? <section className="ta-panel"><div className="ta-sum"><span>本轮 氧气 {v.oxygen - start.current.o >= 0 ? "+" : ""}{v.oxygen - start.current.o}　能量 {v.energy - start.current.e >= 0 ? "+" : ""}{v.energy - start.current.e}</span>{v.revealed.length ? <button onClick={() => setRev(true)}>查看揭示的 {v.revealed.length} 张牌</button> : null}</div><div className="ta-grid">{!me.killed && !me.exiled ? <button className="ta-danger" onClick={() => send({ t: "call_vote" })}>拿起手枪</button> : null}{v.leader === v.you ? <button className="ta-primary" onClick={() => send({ t: "end_accuse" })}>结束本回合</button> : null}</div></section> : null}
       {v.phase === "vote" ? <section className="ta-panel alert"><h3>放逐投票 · 已投 {v.voted}</h3>{myTurn ? <>{seatChoice(v.players.filter((p: any) => !p.killed && !p.exiled && p.seat !== v.you), (s) => send({ t: "vote", target: s }))}<button onClick={() => send({ t: "vote", target: null })}>弃权</button></> : <p>等待其他人投票…</p>}</section> : null}
       
       {v.notes?.length ? <details className="ta-log"><summary>私密记录</summary>{v.notes.map((n: string, i: number) => <p key={i}>{zh(n)}</p>)}</details> : null}
