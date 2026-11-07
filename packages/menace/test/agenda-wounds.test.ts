@@ -9,6 +9,32 @@ function hit(s:State,seat:number,w:WoundType){s.woundDeck=[w,...s.woundDeck];s.l
 describe("Agenda",()=>{
  it("典范代受致命伤",()=>{let s=g(["contagion","paragon","loyal","loyal"]);s.players[2].wounds=["flesh"];s.leader=2;s=res(s,["backstab"]);s=rv(s);s=ans(s,1,true);expect(s.players[1].wounds.length).toBe(1);expect(s.players[2].wounds.length).toBe(1);expect(s.players[1].revealed).toBe(true)});
  it("苦行者救氧",()=>{let s=g(["contagion","austere","loyal","loyal"]);s.oxygen=1;s=res(s,["airlock"]);s=rv(s);expect(s.winner).toBe(null);s=ans(s,1,s.players[1].hand[0].id);expect(s.oxygen).toBe(1);expect(s.energy).toBe(1);expect(s.players[1].revealed).toBe(true)});
+ it("克难者救氧前身份保密，接受后公开播报且只能触发一次",()=>{
+   let s=g(["contagion","austere","loyal","loyal"]);s.oxygen=1;s=res(s,["airlock"]);s=rv(s);
+   expect(viewFor(s,0).players[1].agenda).toBeNull();
+   expect(viewFor(s,1).question?.q).toBe("austere");
+   expect(viewFor(s,0).log.join(" ")).not.toContain("克难者");
+   s=ans(s,1,s.players[1].hand[0].id);
+   expect(viewFor(s,0).players[1].agenda).toBe("austere");
+   expect(viewFor(s,0).log.join(" ")).toContain("克难者弃牌救氧");
+   s=res(s,["airlock"]);s=rv(s);
+   expect(s.winner).toBe("menace");
+ });
+ it("圣人每次受伤都公开播报，氧气实际减少",()=>{
+   let s=g(["contagion","saint","loyal","loyal"]);s=hit(s,1,"flesh");
+   expect(s.oxygen).toBe(13);
+   expect(viewFor(s,0).log.join(" ")).toContain("圣人受伤");
+   s.flags.backstab=false;s=hit(s,1,"flesh");
+   expect(s.oxygen).toBe(11);
+   expect(s.log.filter(x=>x.includes("圣人受伤"))).toHaveLength(2);
+ });
+ it("克难者无手牌或已放逐时不会出现救氧选择",()=>{
+   for(const reason of ["hand","exile"]){
+     let s=g(["contagion","austere","loyal","loyal"]);s.oxygen=1;
+     if(reason==="hand")s.players[1].hand=[];else s.players[1].exiled=true;
+     s=rv(res(s,["airlock"]));expect(s.winner,reason).toBe("menace");
+   }
+ });
  it("苦行者放弃则内鬼胜",()=>{let s=g(["contagion","austere","loyal","loyal"]);s.oxygen=1;s=res(s,["airlock"]);s=rv(s);s=ans(s,1,null);expect(s.winner).toBe("menace")});
  it("传染者死前弃光一人手牌",()=>{let s=g();s.players[0].wounds=["flesh","flesh"];s=end(s);s=ans(s,0,1);expect(s.players[1].hand.length).toBe(0)});
  it("被放逐的传染者死亡不触发",()=>{let s=g();s.players[0].exiled=true;s.players[0].wounds=["flesh","flesh"];s=end(s);expect(s.stack.length).toBe(0)});

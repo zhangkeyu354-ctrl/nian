@@ -35,6 +35,15 @@ const reveal = setup();
 reveal.phase = "resolve"; reveal.stage = "reveal"; reveal.resStart = reveal.energy;
 reveal.queue = [{ seat: 1, card: { id: 901, type: "basic_repair" } }];
 save("LAST", reveal);
+const rescue = structuredClone(reveal);
+rescue.oxygen = 1; rescue.queue = [{ seat: 2, card: { id: 904, type: "airlock" } }];
+rescue.players[1].agenda = "austere";
+save("RESC", rescue);
+const saint = structuredClone(reveal);
+saint.players[1].agenda = "saint"; saint.leader = 1;
+saint.queue = [{ seat: 2, card: { id: 905, type: "backstab" } }];
+saint.woundDeck.unshift("flesh");
+save("SAIN", saint);
 save("FADE", { ...reveal, oxygen: 1 });
 const deaths = setup();
 deaths.phase = "accuse";
@@ -172,6 +181,23 @@ try {
     await lastOther.getByRole("button", { name: "拿起手枪" }).waitFor();
     await lastOther.close();
     await last.close();
+
+    const rescuer = await open("RESC", 1);
+    const witness = await open("RESC", 0);
+    await witness.getByRole("button", { name: /揭示下一张/ }).click();
+    await rescuer.locator(".ta-panel.alert").getByText(/氧气将归零/).waitFor();
+    await rescuer.locator(".ta-panel.alert .ta-card").first().click();
+    await witness.locator('[data-scene="agenda"]').getByText(/克难者弃牌救氧/).waitFor();
+    await rescuer.locator('[data-scene="agenda"]').getByText(/克难者弃牌救氧/).waitFor();
+    await shot(witness, "02b-克难者身份播报");
+    await rescuer.close(); await witness.close();
+
+    const saintPlayer = await open("SAIN", 1);
+    const saintWitness = await open("SAIN", 0);
+    await saintPlayer.getByRole("button", { name: /揭示下一张/ }).click();
+    await saintWitness.locator('[data-scene="agenda"]').getByText(/圣人受伤/).waitFor();
+    await shot(saintWitness, "02c-圣人身份播报");
+    await saintPlayer.close(); await saintWitness.close();
 
     const dead = await open("DEAD");
     const otherDead = await open("DEAD", 1);

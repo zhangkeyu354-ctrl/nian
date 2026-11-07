@@ -114,7 +114,7 @@ function SceneOverlay({ scene, name, finish }: { scene: Scene; name: (seat: numb
       if (scene.kind === "reveal") sfx(scene.card.includes("repair") ? "repair" : "reveal");
       if (scene.kind === "wound") sfx("sabotage");
     }, scene.kind === "reveal" ? 340 : 0);
-    const timer = setTimeout(() => close.current(), scene.kind === "reveal" ? 1400 : scene.kind === "wound" ? 1900 : scene.kind === "vote" ? 1300 : scene.kind === "notice" ? 3000 : 850);
+    const timer = setTimeout(() => close.current(), scene.kind === "reveal" ? 1400 : scene.kind === "wound" ? 1900 : scene.kind === "vote" ? 1300 : scene.kind === "notice" || scene.kind === "agenda" ? 3000 : 850);
     return () => { clearTimeout(sound); clearTimeout(timer); };
   }, [scene, videoKind]);
   useEffect(() => {
@@ -178,6 +178,7 @@ function SceneOverlay({ scene, name, finish }: { scene: Scene; name: (seat: numb
     {scene.kind === "wound" ? <><h2>{name(scene.seat)} 受伤</h2><div className="ta-sequence-card"><div className="ta-flip"><div className="ta-flip-back">伤害报告</div><div className="ta-flip-front">{zoomOf.wound(scene.wound)}</div></div></div></> : null}
     {scene.kind === "vote" ? <><h2>发起放逐投票</h2><div className="ta-gun ta-sequence-gun"><svg viewBox="0 0 200 120" aria-hidden="true"><path d="M8 28h150l14 12v16H92l-10 12-8 44H34l10-52H8z" fill="#2c332c" stroke="#000" strokeWidth="5"/><path d="M8 28h150v10H8z" fill="#6f8350"/><rect x="150" y="44" width="46" height="9" fill="#e0a92a" stroke="#000" strokeWidth="3"/></svg></div></> : null}
     {scene.kind === "private" ? <><h2>{scene.label}</h2><div className="ta-sequence-card"><GameCard type={scene.card} /></div></> : null}
+    {scene.kind === "agenda" ? <div className="ta-skill-notice"><strong>身份能力发动</strong><h2>{scene.label.replace(/座位(\d+)/g, (_, seat) => name(Number(seat) - 1))}</h2></div> : null}
     {scene.kind === "notice" ? <div className="ta-skill-notice"><strong>技能发动</strong><h2>{scene.seat === undefined ? "" : name(scene.seat) + " · "}{scene.label}</h2></div> : null}
     <button className="ta-sequence-skip" onClick={finish}>{scene.kind === "private" ? "关闭牌面" : "跳过演出"}</button>
   </div>;

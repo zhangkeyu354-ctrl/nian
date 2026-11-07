@@ -8,6 +8,7 @@ type Event =
   | { kind: "vote" }
   | { kind: "private"; label: string; card: string }
   | { kind: "notice"; label: string; seat?: number }
+  | { kind: "agenda"; label: string }
   | { kind: "resource"; label: string };
 export type Scene = Event & { id: number };
 type View = {
@@ -35,6 +36,8 @@ export function collectScenes(previous: View | null, next: View): Scene[] {
     if (resources.length) events.push({ kind: "resource", label: resources.join("　") });
     let ownCommandeered = false;
     for (const entry of entries) {
+      const agenda = /^身份发动：(.*)$/.exec(entry);
+      if (agenda) events.push({ kind: "agenda", label: agenda[1] });
       const wound = /^座位(\d+) 受伤：([a-z_]+)$/.exec(entry);
       if (wound) events.push({ kind: "wound", seat: Number(wound[1]) - 1, wound: wound[2] });
       const removed = /^座位(\d+) (死亡|被放逐)，/.exec(entry);

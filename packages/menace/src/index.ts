@@ -115,7 +115,7 @@ function doWound(s:State,t:Extract<Task,{k:"wound"}>){const p=s.players[t.seat];
  if(t.st===2){t.st=3;s.stack.push(t);if(p.wounds.length===1&&p.agenda==="resolute"&&!p.resoluteUsed)ask(s,p.seat,"resolute");return}
  if(s.flags.lockdown&&p.wounds.length)return;
  const w=s.woundDeck.shift()??"flesh";p.wounds.push(w);const entry=t.source===undefined?undefined:s.contributions?.seats[t.source];if(entry)entry.damage++;const target=s.contributions?.seats[t.seat];if(target)target.damageTaken=(target.damageTaken??0)+1;s.flags.woundedRound=true;say(s,`座位${p.seat+1} 受伤：${w}`);
- if(p.agenda==="saint"){p.revealed=true;say(s,`座位${p.seat+1} 是圣人，氧气 -2`);addO(s,-2)}
+ if(p.agenda==="saint"){p.revealed=true;say(s,`身份发动：座位${p.seat+1} 圣人受伤，氧气减少 2`);addO(s,-2)}
  if(w==="concussion"){while(p.hand.length>limit(p))discardRandom(s,p)}
  if(w==="frenzied"){p.deck=[...shuffle(s,p.hand.splice(0)),...p.deck]}
  if(w==="pulverized")s.discard.push(...p.deck.splice(0,5));
@@ -229,7 +229,7 @@ function death(s:State,seat:number){const p=s.players[seat];if(p.killed)return;p
  s.discard.push(...p.hand.splice(0));
  if(!p.exiled&&(p.agenda==="contagion"||p.agenda==="butcher"))ask(s,seat,p.agenda);
  if(p.agenda==="vengeant")ask(s,seat,"vengeant");
- if(p.agenda==="reckless"&&!p.exiled)addE(s,2,true,p.seat);}
+ if(p.agenda==="reckless"&&!p.exiled){say(s,`身份发动：座位${seat+1} 鲁莽者死亡，能量增加 2`);addE(s,2,true,p.seat);}}
 function endRound(s:State){if(!(s as any).endPaid){(s as any).endPaid=true;if(s.flags.moxie!==undefined&&s.flags.woundedRound)addO(s,3,s.flags.moxie);if(s.flags.damage!==undefined&&s.flags.bad)addE(s,3,true,s.flags.damage);}
  const d=Array.from({length:s.n},(_,i)=>s.players[(s.leader+i)%s.n]).find(p=>!p.killed&&p.wounds.length>=2);if(d){s.stack.push({k:"death",seat:d.seat});return}
  if(check(s))return;if(s.energy>=ENERGY_GOAL&&s.oxygen>0){over(s,"crew");return}
@@ -269,9 +269,9 @@ function answer(s:State,seat:number,v:any){const t=s.stack[s.stack.length-1];if(
  case "rush":if(v!==true)fail("BAD");s.stack.pop();draw(s,seat,1,p.deck,{play:true});break;
  case "discard_down":{s.discard.push(takeCard(p,v));if(p.hand.length<=limit(p))s.stack.pop();break}
  case "deflect":s.stack.pop();if(v!==null){const o=pick(v);if(o.seat===a.data.victim)fail("BAD_TARGET");const w=s.stack[s.stack.length-1] as any;w.seat=o.seat}break;
- case "paragon":s.stack.pop();if(v){p.revealed=true;const w=s.stack[s.stack.length-1] as any;w.seat=seat}break;
- case "resolute":s.stack.pop();if(v){p.revealed=true;p.resoluteUsed=true;s.stack.pop()}break;
- case "austere":s.stack.pop();if(v!==null){s.discard.push(takeCard(p,v));p.revealed=true;addO(s,1,seat);addE(s,1,true,seat)}break;
+ case "paragon":s.stack.pop();if(v){p.revealed=true;say(s,`身份发动：座位${seat+1} 模范生代受致命伤`);const w=s.stack[s.stack.length-1] as any;w.seat=seat}break;
+ case "resolute":s.stack.pop();if(v){p.revealed=true;p.resoluteUsed=true;say(s,`身份发动：座位${seat+1} 坚定者取消致命伤`);s.stack.pop()}break;
+ case "austere":s.stack.pop();if(v!==null){s.discard.push(takeCard(p,v));p.revealed=true;say(s,`身份发动：座位${seat+1} 克难者弃牌救氧，氧气和能量各增加 1`);addO(s,1,seat);addE(s,1,true,seat)}break;
  case "severed":{if(!a.data.options.includes(v))fail("BAD");p.severed=v;s.stack.pop();break}
  case "bloodwork":{const c=takeCard(p,v);p.hand.push(c);say(s,`座位${seat+1} 公开手牌：${c.type}`);s.stack.pop();break}
  case "veto":{if(typeof v!=="boolean")fail("BAD");if(!v&&a.data.forced)fail("VETO_FORCED");s.stack.pop();if(v){delete s.flags.veto;(s as any).vetoNow=true}break}
@@ -281,8 +281,8 @@ function answer(s:State,seat:number,v:any){const t=s.stack[s.stack.length-1];if(
  case "formulate":{p.deck.push(takeCard(p,v));s.stack.pop();if(p.hand.length>limit(p))ask(s,seat,"discard_down");break}
  case "assist":{s.stack.pop();if(v){delete s.flags.helping;(s.stack[s.stack.length-1] as any).free=true}break}
  case "rewind":{const i=s.revealed.findIndex(r=>r.card.id===v);if(i<0)fail("BAD");s.stack.pop();p.hand.push(s.revealed.splice(i,1)[0].card);if(p.hand.length>limit(p))ask(s,seat,"discard_down");break}
- case "contagion":{s.stack.pop();if(v!==null){const o=pick(v);s.discard.push(...o.hand.splice(0))}break}
- case "butcher":case "vengeant":{s.stack.pop();if(v!==null)wound(s,pick(v).seat,seat);break}
+ case "contagion":{s.stack.pop();if(v!==null){const o=pick(v);say(s,`身份发动：座位${seat+1} 腐化者令座位${o.seat+1} 弃光手牌`);s.discard.push(...o.hand.splice(0))}break}
+ case "butcher":case "vengeant":{s.stack.pop();if(v!==null){const o=pick(v);say(s,`身份发动：座位${seat+1} ${a.q==="butcher"?"屠夫":"复仇者"}令座位${o.seat+1} 受伤`);wound(s,o.seat,seat)}break}
  default:fail("BAD_QUESTION")}}
 export function reduce(prev:State,c:Command):State{const s=structuredClone(prev);s.contributions??=newLedger(s.n,true);const p=s.players[c.seat]??fail("BAD_SEAT");if(s.phase==="over")fail("OVER");
  if(c.t==="answer"){answer(s,c.seat,c.value);run(s);return s}
