@@ -131,13 +131,15 @@ function SceneOverlay({ scene, name, finish }: { scene: Scene; name: (seat: numb
     };
     play();
     document.addEventListener("WeixinJSBridgeReady", retry);
+    element.addEventListener("canplay", play, { once: true });
     const startup = setTimeout(() => {
       if (element.currentTime <= 0) setUnavailable(true);
-    }, 2400);
-    const watchdog = setTimeout(() => close.current(), 12000);
+    }, 6000);
+    const watchdog = setTimeout(() => close.current(), 16000);
     return () => {
       active = false;
       document.removeEventListener("WeixinJSBridgeReady", retry);
+      element.removeEventListener("canplay", play);
       clearTimeout(startup);
       clearTimeout(watchdog);
     };
@@ -163,11 +165,7 @@ function SceneOverlay({ scene, name, finish }: { scene: Scene; name: (seat: numb
           if (audio.current) playEnding(audio.current);
         }} onEnded={finish} onError={() => setUnavailable(true)} />
       <h2 className="ta-cinematic-caption">{label}</h2>
-      {ending && unavailable ? <button className="ta-primary ta-sequence-skip" onClick={() => {
-        if (audio.current) playEnding(audio.current);
-        void video.current?.play().catch(finish);
-      }}>播放结局</button> : null}
-      <button className="ta-sequence-skip" style={ending && unavailable ? { bottom: 76 } : undefined} onClick={finish}>跳过演出</button>
+      <button className="ta-sequence-skip" onClick={finish}>跳过演出</button>
     </div>;
   }
   if (scene.kind === "resource") {

@@ -293,7 +293,7 @@ try {
     });
     await fade.close();
     const blocked = await open("ENDS", 0, true);
-    await button(blocked, "播放结局").waitFor();
+    assert.equal(await button(blocked, "播放结局").count(), 0);
     await button(blocked, "再来一局").waitFor();
     await shot(blocked, "10-拒绝播放仍显示结算");
     await blocked.close();
