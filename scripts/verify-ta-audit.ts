@@ -77,7 +77,18 @@ const results: Record<string,unknown> = {};
 const clicks: string[] = [];
 async function click(page: Page, selector: string, index = 0) {
   await page.locator('.ta-sequence:not([data-scene="private"])').waitFor({state:"hidden",timeout:10000});
-  await page.locator(selector).nth(index).click({timeout:5000});
+  const target = page.locator(selector).nth(index);
+  await target.scrollIntoViewIfNeeded();
+  if (selector.includes(".ta-card")) {
+    const visible = await target.evaluate(element => {
+      const rect = element.getBoundingClientRect();
+      const container = element.closest(".ta-main")?.getBoundingClientRect();
+      return rect.width > 0 && rect.height > 0 && rect.top >= 0 && rect.bottom <= innerHeight &&
+        (!container || (rect.top >= container.top - 1 && rect.bottom <= container.bottom + 1));
+    });
+    if (!visible) throw new Error("选牌图片被面板或屏幕裁切");
+  }
+  await target.click({timeout:5000});
   clicks.push(selector);
 }
 await ready();

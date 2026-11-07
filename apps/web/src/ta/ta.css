@@ -480,3 +480,12 @@
   font-size: 13px;
   text-align: center;
 }
+.ta-skill-flow .ta-hand.inline { overflow-x: auto; overflow-y: hidden; }
+.ta-skill-notice { text-align: center; padding: 18px; color: #ffd36a; }
+.ta-skill-notice strong { display: block; font-size: 24px; letter-spacing: .12em; }
+.ta-skill-notice h2 { color: #fff; line-height: 1.5; }
+.ta-game .ta-card:active,
+.ta-game nav.ta-hand .ta-card:active,
+.ph-setup .ta-chars button:active { transform: none; }
+.ph-setup .ta-chars { scroll-snap-type: none; }
+.ta-game .ta-panel .ta-hand.inline { flex: none; min-height: max-content; align-items: flex-start; }
