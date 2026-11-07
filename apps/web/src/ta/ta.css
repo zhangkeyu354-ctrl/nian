@@ -489,3 +489,13 @@
 .ph-setup .ta-chars button:active { transform: none; }
 .ph-setup .ta-chars { scroll-snap-type: none; }
 .ta-game .ta-panel .ta-hand.inline { flex: none; min-height: max-content; align-items: flex-start; }
+.ta-factions { color: #ffd976; font-weight: 700; }
+.ta-picked { position: absolute; z-index: 4; inset: auto 2px 4px; background: #244b2e; color: #fff; font-size: 12px; text-align: center; border-radius: 4px; }
+.ta-panel .ta-card[aria-pressed="true"] { outline: 3px solid #ffd36a; outline-offset: -3px; border-radius: 8px; }
+.ta-round-log { position: fixed; inset: 0; z-index: 60; background: #000c; display: grid; place-items: center; padding: 16px; }
+.ta-round-log section { width: min(100%, 420px); max-height: 80dvh; display: flex; flex-direction: column; gap: 10px; padding: 16px; border-radius: 12px; background: #192321; }
+.ta-round-log section div { overflow-y: auto; min-height: 0; }
+.ta-round-log section p { margin: 0; padding: 8px 0; border-bottom: 1px solid #ffffff22; }
+.ta-round-log button { flex: none; }
+.ta-game .ta-top { flex-wrap: wrap; align-items: center; }
+.ta-game .ta-top > span { margin-left: auto; }

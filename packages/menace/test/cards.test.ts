@@ -1,5 +1,5 @@
 import {describe,expect,it} from "vitest";
-import {createGame,reduce,type State,type CardType,type Command} from "../src/index.ts";
+import {createGame,reduce,viewFor,type State,type CardType,type Command} from "../src/index.ts";
 function g(n=4):State{let s=createGame(n,11);for(let i=0;i<9&&s.phase==="setup";i++)for(const p of s.players)if(p.choices.length&&!p.character)s=reduce(s,{seat:p.seat,t:"choose",name:p.choices[0]});return structuredClone(s)}
 /** 让队列只含指定牌，任务领袖逐张揭示 */
 function res(s:State,types:CardType[]){s.phase="resolve";s.resStart=s.energy;s.queue=types.map((type,i)=>({seat:-1,card:{id:9000+i,type}}));s.stage="reveal";return s}
@@ -32,3 +32,23 @@ describe("胜负与身份",()=>{
 });
 describe("手牌上限",()=>{it("超过四张要弃",()=>{let s=neutral(g());const l=s.leader;const p=s.players[l];p.hand=p.deck.splice(0,4);s=reduce(s,{seat:l,t:"draw"});expect(s.stack.at(-1)).toMatchObject({q:"discard_down"});s=reduce(s,{seat:l,t:"answer",value:s.players[l].hand[0].id});expect(s.players[l].hand.length).toBe(4)})});
 describe("回合末能力",()=>{it("胆气与损管",()=>{let s=neutral(g());s.oxygen=10;s.flags.moxie=1;s.flags.woundedRound=true;s.flags.damage=2;s.flags.bad=true;s.phase="accuse";s=reduce(s,{seat:s.leader,t:"end_accuse"});expect(s.oxygen).toBe(13);expect(s.energy).toBe(3)})});
+
+describe("公开记录",()=>{
+ it("匿名揭牌记录生效的资源变化，不记录出牌座位或私密内容",()=>{
+  let s=neutral(g()); s.notes[1].push("仅本人可见的秘密");
+  s=res(s,["basic_repair"]); s.queue[0].seat=1; s=rv(s);
+  const log=viewFor(s,0).roundLog;
+  expect(log).toContain("揭示：basic_repair");
+  expect(log).toContain("氧气 -1");
+  expect(log).toContain("能量 +1");
+  expect(log.join(" ")).not.toContain("仅本人可见的秘密");
+  expect(log.join(" ")).not.toMatch(/座位2.*basic_repair/);
+ });
+ it("所有玩家投完以前不公开投票统计",()=>{
+  let s=neutral(g()); s.phase="vote";
+  s=reduce(s,{seat:0,t:"vote",target:1});
+  expect(viewFor(s,2).roundLog.join(" ")).not.toContain("投票结果");
+  for(const seat of [1,2,3])s=reduce(s,{seat,t:"vote",target:null});
+  expect(viewFor(s,2).roundLog.join(" ")).toContain("投票结果");
+ });
+});

@@ -114,7 +114,7 @@ try {
     for(const step of ABILITIES[ab].steps){
       if(step.kind==="seat")await click(page,`.ta-panel:not(.ta-dock) button:text-is("${names[ab==="bloodwork"?0:seat++]}")`);
       if(step.kind==="card")await click(page,".ta-panel:not(.ta-dock) .ta-card");
-      if(step.kind==="two"){await click(page,".ta-panel:not(.ta-dock) .ta-card");await click(page,".ta-panel:not(.ta-dock) .ta-card",1);await click(page,'button:text-is("确定 2 张")');}
+      if(step.kind==="two"){await click(page,".ta-panel:not(.ta-dock) .ta-card");await click(page,".ta-panel:not(.ta-dock) .ta-card",1);await click(page,'button:text-is("确定 2/2 张")');}
       if(step.kind==="aside")await click(page,'button:text-is("保留盖放牌")');
       if(step.kind==="used"){chosenAbility="laser_pistol";await click(page,'button:text-is("雷射枪")');await click(page,`.ta-panel:not(.ta-dock) button:text-is("${names[1]}")`);}
     }

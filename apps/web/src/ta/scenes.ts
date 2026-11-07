@@ -47,7 +47,7 @@ export function collectScenes(previous: View | null, next: View): Scene[] {
         const details = ABILITIES[ability[2]];
         if (ability[2] === "commandeer" && seat === next.you) ownCommandeered = true;
         if (details && (ability[2] !== "rush" || seat !== next.you)) {
-          events.push({ kind: "notice", seat, label: `${details.name}已发动 · ${details.text}` });
+          events.push({ kind: "notice", seat, label: `${details.name}已发动 · ${details.text}${resources.length ? " · " + resources.join("　") : ""}` });
         }
       }
     }
