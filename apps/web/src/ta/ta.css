@@ -512,3 +512,7 @@
 .ta-speak{padding:10px 12px!important}.ta-speak p{margin:0;font-size:14px}.ta-speak b{color:#ffd976}
 .ta-seat .ord{position:absolute;left:50%;bottom:-6px;translate:-50% 0;z-index:3;min-width:18px;height:18px;border-radius:9px;background:#1a1408;color:#ffd976;font:700 11px/18px sans-serif;font-style:normal;box-shadow:0 0 0 1px #ffd976}.ta-seat.speaking .ord{background:#ffd976;color:#1a1408}
 .ta-pick-hint{margin:0;font-size:13px;color:#cfd3c4}.ta-world .ta-card[aria-pressed="true"]{transform:translateY(-8px);filter:drop-shadow(0 0 10px #ffd976)}
+/* 圆桌头像按下时不能丢掉居中位移，否则抬手落在桌面上，点击失效 */
+.ta-world .ta-table .ta-seat:active{transform:translate(-50%,-50%) scale(.96)}
+.ta-game:not(.ph-accuse):not(.ph-vote) .ta-table .ta-seat:active,.ph-review .ta-table .ta-seat:active{transform:scale(.96)}
+.ta-world .ta-table .ta-seat.turn{animation:none}
