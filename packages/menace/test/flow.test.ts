@@ -56,7 +56,7 @@ describe("人机投票", () => {
       exiled ||= state.players.some(player => player.exiled);
       const discussion = voting(seed);
       discussion.phase = "accuse";
-      initiated ||= botMove(discussion, 0).phase === "vote";
+      initiated ||= botMove(botMove(discussion, 0), 0).phase === "vote";
     }
     expect(exiled).toBe(true);
     expect(initiated).toBe(true);

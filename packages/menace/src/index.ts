@@ -12,10 +12,10 @@ const emptyContribution = (): Contribution => ({ oxygen: { gained: 0, spent: 0 }
 const newLedger = (n: number, partial: boolean) => ({ partial, seats: Array.from({ length: n }, emptyContribution) }); // seat=-1 表示 EmMA
 export interface Player{seat:number;agenda:string;character:string|null;choices:string[];hand:Card[];deck:Card[];aside:Card[];wounds:WoundType[];exiled:boolean;killed:boolean;revealed:boolean;used:Ability[];severed:Ability|null;resoluteUsed:boolean;austereUsed:boolean;}
 type Task={k:"ask";seat:number;q:string;data?:any;source?:number}|{k:"wound";seat:number;st:number;source?:number}|{k:"ability";seat:number;ab:Ability;args:any;free:boolean;copy?:boolean}|{k:"effect";type:CardType;paid?:boolean;source?:number}|{k:"copy";type:CardType;source?:number}|{k:"death";seat:number}|{k:"reveal"}|{k:"finish"};
-export interface State{n:number;mode:"basic"|"advanced";rng:number;nextId:number;phase:"setup"|"action"|"resolve"|"accuse"|"vote"|"over";round:number;leader:number;oxygen:number;energy:number;resStart:number;players:Player[];emma:Card[];emmaUsed:Card[];woundDeck:WoundType[];discard:Card[];played:Played[];queue:Played[];revealed:Played[];stack:Task[];turn:number;sub:number[];lastType:string|null;playedSeats:number[];armed:boolean;armedSeat?:number;contributions?:ReturnType<typeof newLedger>;
+export interface State{n:number;mode:"basic"|"advanced";rng:number;nextId:number;phase:"setup"|"action"|"resolve"|"review"|"accuse"|"vote"|"over";round:number;leader:number;oxygen:number;energy:number;resStart:number;players:Player[];emma:Card[];emmaUsed:Card[];woundDeck:WoundType[];discard:Card[];played:Played[];queue:Played[];revealed:Played[];stack:Task[];turn:number;sub:number[];lastType:string|null;playedSeats:number[];armed:boolean;armedSeat?:number;contributions?:ReturnType<typeof newLedger>;
  flags:{veto?:number;deflect?:number;helping?:number;moxie?:number;damage?:number;rewind?:number;restructure?:number;guard?:number;lockdown?:boolean;brawl?:boolean;backstab?:boolean;bad?:boolean;woundedRound?:boolean;};
  roundAbilities:Ability[];abilityActors?:{ab:Ability;seat:number}[];stage:string;votes:Record<number,number|null>;log:string[];notes:string[][];winner:"crew"|"menace"|null;winners:number[];}
-export type Command={seat:number}&({t:"choose";name:string}|{t:"draw"}|{t:"play";card:number}|{t:"ability";ab:Ability;args?:any}|{t:"pass"}|{t:"answer";value:any}|{t:"reveal"}|{t:"call_vote"}|{t:"end_accuse"}|{t:"vote";target:number|null});
+export type Command={seat:number}&({t:"choose";name:string}|{t:"draw"}|{t:"play";card:number}|{t:"ability";ab:Ability;args?:any}|{t:"pass"}|{t:"answer";value:any}|{t:"reveal"}|{t:"confirm"}|{t:"force"}|{t:"speak";dir:1|-1}|{t:"next_speaker"}|{t:"call_vote"}|{t:"end_accuse"}|{t:"vote";target:number|null});
 const fail=(c:string):never=>{throw new Error(c)};
 const rnd=(s:State)=>{s.rng=(s.rng+0x6D2B79F5)|0;let t=Math.imul(s.rng^(s.rng>>>15),1|s.rng);t=(t+Math.imul(t^(t>>>7),61|t))^t;return((t^(t>>>14))>>>0)/4294967296};
 function shuffle<T>(s:State,a:T[]){for(let i=a.length-1;i>0;i--){const j=Math.floor(rnd(s)*(i+1));[a[i],a[j]]=[a[j],a[i]]}return a}
@@ -223,7 +223,7 @@ function startResolve(s:State){s.phase="resolve";s.resStart=s.energy;
  s.queue=shuffle(s,s.played);s.played=[];s.revealed=[];s.stage="reveal";
  if(s.flags.restructure!==undefined)ask(s,s.flags.restructure,"restructure",{cards:s.queue.map(q=>q.card)})}
 function finishResolve(s:State){if(s.flags.rewind!==undefined&&s.revealed.length){ask(s,s.flags.rewind,"rewind",{cards:s.revealed.map(r=>r.card)});delete s.flags.rewind;return}
- (s as any).shown=s.revealed.map(r=>r.card.type);for(const r of s.revealed)(r.seat<0?s.emmaUsed:s.discard).push(r.card);s.revealed=[];s.phase="accuse";s.stage=""}
+ (s as any).shown=s.revealed.map(r=>r.card.type);for(const r of s.revealed)(r.seat<0?s.emmaUsed:s.discard).push(r.card);s.revealed=[];s.phase="review";(s as any).confirms=[];(s as any).speak=null;s.stage=""}
 function death(s:State,seat:number){const p=s.players[seat];if(p.killed)return;p.killed=true;p.revealed=true;say(s,`座位${seat+1} 死亡，身份 ${p.agenda}`);
  const sd=side(p);if(sd==="crew")addO(s,-2);if(sd==="neutral")addO(s,-1);
  s.discard.push(...p.hand.splice(0));
@@ -303,6 +303,10 @@ export function reduce(prev:State,c:Command):State{const s=structuredClone(prev)
    if(assist)ask(s,h,"assist",{ab:c.ab})}
   run(s);return s}
  if(c.t==="reveal"){if(s.phase!=="resolve"||c.seat!==s.leader||!s.queue.length)fail("BAD");reveal(s);run(s);return s}
+ if(c.t==="confirm"){if(s.phase!=="review"||p.killed)fail("BAD");const cf:number[]=((s as any).confirms??=[]);if(!cf.includes(c.seat))cf.push(c.seat);if(alive(s).every(x=>cf.includes(x.seat)))s.phase="accuse";return s}
+ if(c.t==="force"){if(s.phase!=="review")fail("BAD");s.phase="accuse";return s}
+ if(c.t==="speak"){if(s.phase!=="accuse"||c.seat!==s.leader||(c.dir!==1&&c.dir!==-1))fail("BAD");(s as any).speak={dir:c.dir,idx:0};return s}
+ if(c.t==="next_speaker"){const sp=(s as any).speak;if(s.phase!=="accuse"||c.seat!==s.leader||!sp)fail("BAD");sp.idx=(sp.idx+1)%speakOrder(s).length;return s}
  if(c.t==="call_vote"){if(s.phase!=="accuse"||p.killed||p.exiled)fail("BAD");s.phase="vote";s.votes={};return s}
  if(c.t==="end_accuse"){if(s.phase!=="accuse"||c.seat!==s.leader)fail("BAD");s.stage="end";run(s);return s}
  if(c.t==="vote"){if(s.phase!=="vote"||p.killed||p.exiled||s.votes[c.seat]!==undefined)fail("BAD");if(c.target!==null){const o=s.players[c.target];if(!o||o.killed||o.exiled||o===p)fail("BAD_TARGET")}s.votes[c.seat]=c.target;
@@ -311,11 +315,12 @@ export function reduce(prev:State,c:Command):State{const s=structuredClone(prev)
   run(s);return s}
  return fail("BAD_COMMAND")}
 /** 当前必须操作的座位（用于界面提示与模拟） */
-export function waitingFor(s:State):number[]{if(s.phase==="over")return[];const t=s.stack[s.stack.length-1];if(t&&t.k==="ask")return[t.seat];if(s.phase==="setup")return s.players.filter(p=>p.choices.length&&!p.character).map(p=>p.seat);if(s.phase==="resolve")return[s.leader];const a=actor(s);if(a!==null)return[a];if(s.phase==="accuse")return s.players.filter(p=>p.seat===s.leader).map(p=>p.seat);if(s.phase==="vote")return s.players.filter(p=>!p.killed&&!p.exiled&&s.votes[p.seat]===undefined).map(p=>p.seat);return[]}
+export function waitingFor(s:State):number[]{if(s.phase==="over")return[];const t=s.stack[s.stack.length-1];if(t&&t.k==="ask")return[t.seat];if(s.phase==="setup")return s.players.filter(p=>p.choices.length&&!p.character).map(p=>p.seat);if(s.phase==="resolve")return[s.leader];if(s.phase==="review"){const cf:number[]=(s as any).confirms??[];return alive(s).filter(p=>!cf.includes(p.seat)).map(p=>p.seat)}const a=actor(s);if(a!==null)return[a];if(s.phase==="accuse")return s.players.filter(p=>p.seat===s.leader).map(p=>p.seat);if(s.phase==="vote")return s.players.filter(p=>!p.killed&&!p.exiled&&s.votes[p.seat]===undefined).map(p=>p.seat);return[]}
 export function viewFor(s:State,seat:number){const over=s.phase==="over";const t=s.stack[s.stack.length-1];
  return{phase:s.phase,mode:s.mode,round:s.round,leader:s.leader,oxygen:s.oxygen,energy:s.energy,armed:undefined,you:seat,hand:s.players[seat]?.hand,aside:s.players[seat]?.aside,choices:s.players[seat]?.choices,agenda:s.players[seat]?.agenda,notes:s.notes[seat],deckCount:s.players[seat]?.deck.length,
  players:s.players.map(p=>({seat:p.seat,character:p.character,wounds:p.wounds,exiled:p.exiled,killed:p.killed,hand:p.hand.length,deck:p.deck.length,used:p.used,played:s.played.filter(x=>x.seat===p.seat).length,agenda:over||p.revealed||p.seat===seat?p.agenda:null})),
- revealed:s.revealed.length?s.revealed.map(r=>r.card.type):((s as any).shown??[]),remaining:s.queue.length,waiting:waitingFor(s),question:t&&t.k==="ask"&&t.seat===seat?{q:t.q,data:t.data}:null,log:s.log.slice(-30),roundLog:s.log.slice(Math.max(0,s.log.findLastIndex(entry=>entry===`第 ${Math.max(1,s.round-1)} 回合开始`))),logCount:s.log.length,contributions:over?s.contributions:undefined,winner:s.winner,winners:s.winners,voted:Object.keys(s.votes).length,roundAbilities:mimicOptions(s,seat),legalAbilities:s.players[seat]?abilityList(s.players[seat]).filter(ab=>canAbility(s,s.players[seat],ab,{})):[],lastType:s.lastType}}
+ revealed:s.revealed.length?s.revealed.map(r=>r.card.type):((s as any).shown??[]),remaining:s.queue.length,waiting:waitingFor(s),question:t&&t.k==="ask"&&t.seat===seat?{q:t.q,data:t.data}:null,log:s.log.slice(-30),roundLog:s.log.slice(Math.max(0,s.log.findLastIndex(entry=>entry===`第 ${Math.max(1,s.round-1)} 回合开始`))),logCount:s.log.length,contributions:over?s.contributions:undefined,winner:s.winner,winners:s.winners,voted:Object.keys(s.votes).length,roundAbilities:mimicOptions(s,seat),legalAbilities:s.players[seat]?abilityList(s.players[seat]).filter(ab=>canAbility(s,s.players[seat],ab,{})):[],lastType:s.lastType,confirms:(s as any).confirms??[],speakOrder:(s as any).speak?speakOrder(s):[],speakIdx:(s as any).speak?.idx??0,speakDir:(s as any).speak?.dir??0}}
+function speakOrder(s:State){const d=(s as any).speak?.dir??1,out:number[]=[];for(let i=0;i<s.n;i++){const q=s.players[((s.leader+d*i)%s.n+s.n)%s.n];if(!q.killed)out.push(q.seat)}return out}
 
 /** 掉线代操作：对指定座位执行一个安全的默认动作（不做主动选择） */
 export function autoMove(s:State,seat:number):State{const p=s.players[seat];const t:any=s.stack[s.stack.length-1];const alive2=s.players.filter(x=>!x.killed&&x.seat!==seat).map(x=>x.seat);
@@ -323,7 +328,7 @@ export function autoMove(s:State,seat:number):State{const p=s.players[seat];cons
  if(t?.k==="ask"){for(const v of [null,false,[],p.hand[0]?.id,t.data?.options?.[0],t.data?.cards?.[0]?.id,true,0,...alive2])tries.push({seat,t:"answer",value:v})}
  else if(s.phase==="setup")tries.push({seat,t:"choose",name:p.choices[0]});
  else if(s.phase==="action"){tries.push({seat,t:"draw"});if(p.hand[0])tries.push({seat,t:"play",card:p.hand[0].id});tries.push({seat,t:"pass"})}
- else if(s.phase==="resolve")tries.push({seat,t:"reveal"});else if(s.phase==="accuse")tries.push({seat,t:"end_accuse"});else if(s.phase==="vote")tries.push({seat,t:"vote",target:null});
+ else if(s.phase==="resolve")tries.push({seat,t:"reveal"});else if(s.phase==="review")tries.push({seat,t:"confirm"});else if(s.phase==="accuse")tries.push({seat,t:"end_accuse"});else if(s.phase==="vote")tries.push({seat,t:"vote",target:null});
  for(const c of tries){try{return reduce(s,c)}catch{}}return fail("NO_AUTO")}
 
 /** 人机：好人出好牌，内鬼出坏牌；其余走默认动作 */
@@ -340,6 +345,7 @@ export function botMove(s:State,seat:number):State{const p=s.players[seat];
  }
  if(!s.stack.length&&s.phase==="accuse"&&!p.exiled){
   const next={...s};
+  if(seat===s.leader&&!(s as any).speak)return reduce(next,{seat,t:"speak",dir:rnd(next)<.5?1:-1});
   if(rnd(next)<0.25)return reduce(next,{seat,t:"call_vote"});
   return seat===s.leader?reduce(next,{seat,t:"end_accuse"}):s;
  }

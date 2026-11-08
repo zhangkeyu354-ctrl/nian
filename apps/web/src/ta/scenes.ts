@@ -7,14 +7,15 @@ type Event =
   | { kind: "ending"; win: boolean }
   | { kind: "vote" }
   | { kind: "private"; label: string; card: string }
-  | { kind: "notice"; label: string; seat?: number }
-  | { kind: "agenda"; label: string }
+  | { kind: "notice"; label: string; seat?: number; ab?: string; effects?: string[] }
+  | { kind: "agenda"; label: string; effects?: string[] }
   | { kind: "resource"; label: string };
 export type Scene = Event & { id: number };
 type View = {
   phase: string; winner: string | null; you: number; oxygen: number; energy: number;
   log: string[]; logCount?: number; notes?: string[]; hand?: { id: number; type: string }[];
   question?: { q: string; data: { type?: string } } | null;
+  players?: { seat: number; hand: number; wounds: string[]; killed: boolean; exiled: boolean }[];
 };
 let sequence = 0;
 
@@ -34,10 +35,20 @@ export function collectScenes(previous: View | null, next: View): Scene[] {
     const delta = (label: string, difference: number) => difference ? `${label} ${difference > 0 ? "+" : ""}${difference}` : "";
     const resources = [delta("氧气", next.oxygen - previous.oxygen), delta("能量", next.energy - previous.energy)].filter(Boolean);
     if (resources.length) events.push({ kind: "resource", label: resources.join("　") });
+    const effects: string[] = [];
+    for (const p of next.players ?? []) {
+      const o = previous.players?.find(x => x.seat === p.seat); if (!o) continue;
+      const who = `座位${p.seat + 1}`;
+      if (p.hand !== o.hand) effects.push(`${who} 手牌 ${p.hand > o.hand ? "+" : ""}${p.hand - o.hand}`);
+      if (p.wounds.length > o.wounds.length) effects.push(`${who} 受到 ${p.wounds.length - o.wounds.length} 处伤`);
+      if (p.wounds.length < o.wounds.length) effects.push(`${who} 治愈 ${o.wounds.length - p.wounds.length} 处伤`);
+      if (p.killed && !o.killed) effects.push(`${who} 阵亡`);
+    }
+    effects.push(...resources);
     let ownCommandeered = false;
     for (const entry of entries) {
       const agenda = /^身份发动：(.*)$/.exec(entry);
-      if (agenda) events.push({ kind: "agenda", label: agenda[1] });
+      if (agenda) events.push({ kind: "agenda", label: agenda[1], effects });
       const wound = /^座位(\d+) 受伤：([a-z_]+)$/.exec(entry);
       if (wound) events.push({ kind: "wound", seat: Number(wound[1]) - 1, wound: wound[2] });
       const removed = /^座位(\d+) (死亡|被放逐)，/.exec(entry);
@@ -50,7 +61,7 @@ export function collectScenes(previous: View | null, next: View): Scene[] {
         const details = ABILITIES[ability[2]];
         if (ability[2] === "commandeer" && seat === next.you) ownCommandeered = true;
         if (details && (ability[2] !== "rush" || seat !== next.you)) {
-          events.push({ kind: "notice", seat, label: `${details.name}已发动 · ${details.text}${resources.length ? " · " + resources.join("　") : ""}` });
+          events.push({ kind: "notice", seat, ab: ability[2], label: details.name, effects: effects.length ? effects : [details.text] });
         }
       }
     }

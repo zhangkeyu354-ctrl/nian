@@ -499,3 +499,15 @@
 .ta-round-log button { flex: none; }
 .ta-game .ta-top { flex-wrap: wrap; align-items: center; }
 .ta-game .ta-top > span { margin-left: auto; }
+
+/* 技能演出、结算回顾、发言顺序 */
+.ta-skill-notice{position:relative;display:flex;flex-direction:column;align-items:center;gap:6px;max-width:340px}.ta-skill-notice .ta-vfx{top:30%}
+.ta-skill-notice strong{font-size:15px;letter-spacing:.3em;color:#ffd36a}.ta-skill-notice .who{margin:0;font-size:16px;color:#cfd3c4}.ta-skill-notice h2{margin:0;font:700 40px TATitle,sans-serif;color:#fff;text-shadow:0 3px 0 #000,0 0 22px #ffd36a88;animation:ta-pop .45s both}
+.ta-skill-notice .desc{margin:0;font-size:14px;color:#d8d4c6}.ta-skill-notice ul{list-style:none;margin:6px 0 0;padding:0;display:grid;gap:6px}.ta-skill-notice li{font:700 22px TATitle,sans-serif;text-shadow:0 2px 0 #000;animation:ta-pop .4s both}.ta-skill-notice li:nth-child(2){animation-delay:.25s}.ta-skill-notice li:nth-child(3){animation-delay:.5s}.ta-skill-notice li:nth-child(n+4){animation-delay:.7s}
+.ta-skill-notice li.gain{color:#9fe46a}.ta-skill-notice li.loss{color:#ff7a6a}.ta-skill-notice.agenda strong{color:#ff9a5a}
+.ph-review .ta-table{width:100%;min-width:0;aspect-ratio:auto;display:grid;grid-template-columns:repeat(4,1fr);gap:4px;padding:4px 8px;margin:0}.ph-review .ta-table::before,.ph-review .ta-table::after,.ph-review .ta-table .core{display:none}
+.ph-review .ta-seat{position:relative;left:auto!important;top:auto!important;transform:none;width:auto;min-height:0;padding:4px 2px;border-radius:10px;background:#0d1214b8}.ph-review .ta-seat .face{width:34px;height:34px}.ph-review .ta-seat .face img{width:26px;height:26px}
+.ph-review .ta-main{flex:1 1 0;min-height:0;overflow-y:auto;padding:8px 12px}.ph-review nav.ta-hand{display:none}
+.ta-review-cards{display:flex;flex-wrap:wrap;gap:8px;justify-content:center}.ta-world .ta-review-cards .ta-card{font-size:calc(70px/34);flex:0 0 70px;width:70px}.ta-review-ev{margin:0;font-size:13px;color:#ffb3a8}.ta-wait{margin:0;text-align:center;color:#cfd3c4}
+.ta-speak{padding:10px 12px!important}.ta-speak p{margin:0;font-size:14px}.ta-speak b{color:#ffd976}
+.ta-seat .ord{position:absolute;left:50%;bottom:-6px;translate:-50% 0;z-index:3;min-width:18px;height:18px;border-radius:9px;background:#1a1408;color:#ffd976;font:700 11px/18px sans-serif;font-style:normal;box-shadow:0 0 0 1px #ffd976}.ta-seat.speaking .ord{background:#ffd976;color:#1a1408}

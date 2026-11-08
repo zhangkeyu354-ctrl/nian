@@ -5,6 +5,7 @@ function opts(s:State,seat:number,r:(n:number)=>number):Command[]{const p=s.play
  if(s.phase==="setup")return[{seat,t:"choose",name:p.choices[0]}];
  if(s.phase==="action"){const bad=["airlock","explosion","panic","reactor","backstab","brawl"];const m=p.agenda==="contagion"||p.agenda==="butcher";const pick=p.hand.filter(c=>bad.includes(c.type)===m);if(pick.length&&process.env.SMART)out.push({seat,t:"play",card:pick[0].id});for(let i=0;i<3;i++)if(p.hand.length)out.push({seat,t:"play",card:p.hand[r(p.hand.length)].id});out.push({seat,t:"draw"});for(const ab of CHARACTERS[p.character!].ab)out.push({seat,t:"ability",ab,args:{target:any(),a:any(),b:any(),discard:p.hand[0]?.id,card:p.hand[0]?.id,cards:p.hand.slice(0,2).map(c=>c.id),index:0,ab:s.roundAbilities[0],aside:p.hand[0]?.id}});out.push({seat,t:"pass"});return out}
  if(s.phase==="resolve")return[{seat,t:"reveal"}];
+ if(s.phase==="review")return[{seat,t:"confirm"}];
  if(s.phase==="accuse")return r(5)===0?[{seat,t:"call_vote"},{seat,t:"end_accuse"}]:[{seat,t:"end_accuse"}];
  if(s.phase==="vote")return[{seat,t:"vote",target:any()},{seat,t:"vote",target:null}];
  return[]}

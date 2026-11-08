@@ -50,6 +50,7 @@ export class TARoom {
   apply(token: string, cmd: TAClientCommand) {
     const me = this.me(token).playerId; const s = this.state ?? fail("NOT_STARTED");
     const seat = this.file.lineup.indexOf(me); if (seat < 0) fail("NOT_SEATED");
+    if (cmd?.t === "force" && me !== this.file.hostId) fail("HOST_ONLY");
     if (cmd?.t === "auto") { if (me !== this.file.hostId) fail("HOST_ONLY"); const target = this.file.lineup.indexOf(String(cmd.player)); const st = s as State; if (target < 0 || (this.connections.get(String(cmd.player)) ?? 0) > 0 || !waitingFor(st).includes(target)) fail("BAD"); const before = st; const next = autoMove(before, target); this.state = next; this.file.commands = this.file.commands; this.autos(before, next); return; }
     const c = { ...cmd, seat } as Command; this.state = reduce(s as State, c); if (this.file.snapshot) this.file.snapshot = this.state; else this.file.commands.push(c);
   }
@@ -70,7 +71,7 @@ export class TARoom {
     this.autos(state, next);
     return true;
   }
-  botDelay() { return this.state?.phase === "accuse" ? 5000 : this.state?.phase === "resolve" ? 150 : 600; }
+  botDelay() { return this.state?.phase === "review" ? 2000 : this.state?.phase === "accuse" ? 5000 : this.state?.phase === "resolve" ? 150 : 600; }
   /** 代操作不进命令重放：存档改存整局快照 */
   private autos(_a: State, b: State) { this.file.snapshot = b; }
   snapshot(me: string | null): TARoomSnapshot {

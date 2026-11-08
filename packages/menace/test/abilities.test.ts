@@ -30,7 +30,7 @@ describe("角色能力",()=>{
    expect(use(s,"first_aid",{target:1}).players[1].severed).toBeNull();
  });
  it("反应炉外泄触发损害控管",()=>{
-   let s=use(g("ruggine"),"damage_control");s=rv(q(s,["reactor"]));
+   let s=use(g("ruggine"),"damage_control");s=rv(q(s,["reactor"]));s=reduce(s,{seat:0,t:"force"});
    s=reduce(s,{seat:s.leader,t:"end_accuse"});
    expect(s.energy).toBe(7);
  });

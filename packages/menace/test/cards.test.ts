@@ -21,7 +21,7 @@ describe("行动牌",()=>{
 });
 describe("胜负与身份",()=>{
  it("氧气归零内鬼胜",()=>{let s=neutral(g());s.oxygen=1;s=res(s,["airlock"]);s=rv(s);expect(s.winner).toBe("menace")});
- it("能量满要到回合末才胜",()=>{let s=neutral(g());s.energy=19;s=res(s,["basic_repair"]);s=rv(s);expect(s.phase).toBe("accuse");s=reduce(s,{seat:s.leader,t:"end_accuse"});expect(s.winner).toBe("crew")});
+ it("能量满要到回合末才胜",()=>{let s=neutral(g());s.energy=19;s=res(s,["basic_repair"]);s=rv(s);expect(s.phase).toBe("review");s=reduce(s,{seat:0,t:"force"});s=reduce(s,{seat:s.leader,t:"end_accuse"});expect(s.winner).toBe("crew")});
  it("内鬼全死且越过安全线立即胜",()=>{let s=neutral(g());s.energy=14;s.phase="accuse";s.players[0].wounds=["flesh","flesh"];s=reduce(s,{seat:s.leader,t:"end_accuse"});expect(s.players[0].killed).toBe(true);s=reduce(s,{seat:0,t:"answer",value:null});expect(s.winner).toBe("crew")});
  it("放逐好人-3 内鬼+2 懦夫-2",()=>{for(const [a,d] of [["loyal",-3],["contagion",2],["coward",-2]] as const){let s=neutral(g());ag(s,1,a);s.phase="vote";const o=s.oxygen;for(const q of [0,2,3,1])s=reduce(s,{seat:q,t:"vote",target:q===1?null:1});expect(s.players[1].exiled).toBe(true);expect(s.oxygen).toBe(o+d)}});
  it("平票和弃权多数不放逐",()=>{let s=neutral(g());s.phase="vote";for(const q of [0,1,2,3])s=reduce(s,{seat:q,t:"vote",target:null});expect(s.players.some(p=>p.exiled)).toBe(false)});
@@ -51,4 +51,11 @@ describe("公开记录",()=>{
   for(const seat of [1,2,3])s=reduce(s,{seat,t:"vote",target:null});
   expect(viewFor(s,2).roundLog.join(" ")).toContain("投票结果");
  });
+});
+
+import {waitingFor} from "../src/index.ts";
+describe("结算回顾与发言",()=>{
+ it("全员确认后才进入讨论",()=>{let s=neutral(g());s=res(s,["raise_morale"]);s=rv(s);expect(s.phase).toBe("review");const w=waitingFor(s);expect(w.length).toBe(4);for(const x of w.slice(0,3))s=reduce(s,{seat:x,t:"confirm"});expect(s.phase).toBe("review");s=reduce(s,{seat:w[3],t:"confirm"});expect(s.phase).toBe("accuse")});
+ it("阵亡者不需确认",()=>{let s=neutral(g());s.players[2].killed=true;s=res(s,["raise_morale"]);s=rv(s);expect(waitingFor(s)).not.toContain(2)});
+ it("领袖选发言方向并推进",()=>{let s=neutral(g());s.phase="accuse";s.leader=1;s=reduce(s,{seat:1,t:"speak",dir:-1});expect(viewFor(s,0).speakOrder).toEqual([1,0,3,2]);s=reduce(s,{seat:1,t:"next_speaker"});expect(viewFor(s,0).speakIdx).toBe(1);expect(()=>reduce(s,{seat:0,t:"speak",dir:1})).toThrow()});
 });
