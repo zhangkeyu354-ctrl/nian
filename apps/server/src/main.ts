@@ -134,12 +134,15 @@ const http = createServer((req, res) => {
   }
   // 静态文件：只允许读取前端构建目录，原版资料目录不会被提供
   let file = normalize(join(WEB, decodeURIComponent(url.pathname)));
-  if (
-    !file.startsWith(WEB) ||
-    !existsSync(file) ||
-    statSync(file).isDirectory()
-  )
-    file = join(WEB, "index.html");
+  const missing = !file.startsWith(WEB) || !existsSync(file) || statSync(file).isDirectory();
+  // 带扩展名的资源找不到时返回 404，绝不能用页面顶替（旧页面请求已不存在的脚本会变成白屏）
+  if (missing && extname(url.pathname)) {
+    res.statusCode = 404;
+    res.setHeader("cache-control", "no-store");
+    res.end("not found");
+    return;
+  }
+  if (missing) file = join(WEB, "index.html");
   if (!existsSync(file)) {
     res.statusCode = 503;
     res.end("前端尚未构建，请先运行 npm run build");
@@ -150,7 +153,7 @@ const http = createServer((req, res) => {
     MIME[extname(file)] ?? "application/octet-stream",
   );
   // 构建产物文件名带哈希，可长期缓存；美术等不带哈希的资源缓存 1 小时；页面本身每次都检查新版
-  if (file.endsWith(".html")) res.setHeader("cache-control", "no-cache");
+  if (file.endsWith(".html")) res.setHeader("cache-control", "no-store, no-cache, must-revalidate, max-age=0");
   else if (/-[A-Za-z0-9_-]{8}\.(js|css)$/.test(file))
     res.setHeader("cache-control", "public, max-age=31536000, immutable");
   else res.setHeader("cache-control", "public, max-age=3600");
