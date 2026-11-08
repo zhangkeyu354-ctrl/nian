@@ -161,7 +161,7 @@ function SceneOverlay({ scene, name, finish }: { scene: Scene; name: (seat: numb
         if (!element) return;
         element.muted = true;
         element.setAttribute("muted", "");
-        element.setAttribute("webkit-playsinline", "");
+        element.setAttribute("webkit-playsinline", ""); element.setAttribute("x5-playsinline", ""); element.setAttribute("x5-video-player-type", "h5-page"); element.setAttribute("x-webkit-airplay", "allow");
       }} autoPlay muted playsInline poster={img(asset + "_poster")} preload="auto" src={`/assets/menace/${asset}.mp4`}
         onPlaying={() => {
           setUnavailable(false);
