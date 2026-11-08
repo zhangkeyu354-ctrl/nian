@@ -116,7 +116,8 @@ function SceneOverlay({ scene, name, finish }: { scene: Scene; name: (seat: numb
       if (scene.kind === "reveal") sfx(scene.card.includes("repair") ? "repair" : "reveal");
       if (scene.kind === "wound") sfx("sabotage");
     }, scene.kind === "reveal" ? 340 : 0);
-    const timer = setTimeout(() => close.current(), scene.kind === "reveal" ? 1400 : scene.kind === "wound" ? 1900 : scene.kind === "vote" ? 1300 : scene.kind === "notice" || scene.kind === "agenda" ? 3000 : 850);
+    const manual = scene.kind === "notice" || scene.kind === "agenda";
+    const timer = manual ? undefined : setTimeout(() => close.current(), scene.kind === "reveal" ? 1400 : scene.kind === "wound" ? 1900 : scene.kind === "vote" ? 1300 : 850);
     return () => { clearTimeout(sound); clearTimeout(timer); };
   }, [scene, videoKind]);
   useEffect(() => {
@@ -182,7 +183,7 @@ function SceneOverlay({ scene, name, finish }: { scene: Scene; name: (seat: numb
     {scene.kind === "private" ? <><h2>{scene.label}</h2><div className="ta-sequence-card"><GameCard type={scene.card} /></div></> : null}
     {scene.kind === "agenda" ? <div className="ta-skill-notice agenda"><Vfx id="power" /><strong>身份能力发动</strong><h2>{fixName(scene.label)}</h2>{scene.effects?.length ? <ul>{scene.effects.map((e) => <li key={e} className={/-|受到|阵亡/.test(e) ? "loss" : "gain"}>{fixName(e)}</li>)}</ul> : null}</div> : null}
     {scene.kind === "notice" ? <div className="ta-skill-notice">{scene.ab ? <Vfx id={SKILL_FX[scene.ab] ?? "power"} /> : null}<strong>技能发动</strong>{scene.seat !== undefined ? <p className="who">{name(scene.seat)}</p> : null}<h2>{scene.label}</h2>{scene.ab ? <p className="desc">{ABILITIES[scene.ab]?.text}</p> : null}{scene.effects?.length ? <ul>{scene.effects.map((e) => <li key={e} className={/-|受到|阵亡/.test(e) ? "loss" : "gain"}>{fixName(e)}</li>)}</ul> : null}</div> : null}
-    <button className="ta-sequence-skip" onClick={finish}>{scene.kind === "private" ? "关闭牌面" : "跳过演出"}</button>
+    <button className="ta-sequence-skip" onClick={finish}>{scene.kind === "private" ? "关闭牌面" : scene.kind === "notice" || scene.kind === "agenda" ? "知道了" : "跳过演出"}</button>
   </div>;
 }
 
@@ -268,16 +269,20 @@ function Game({ snap: incoming, send: command, seen, takeScenes, msg, clear, res
   const put = (key: string, val: any) => { const args = { ...flow!.args, [key]: val }; const steps = key === "ab" ? [flow!.steps[0], ...ABILITIES[val].steps] : flow!.steps; flow!.steps = steps; const left = steps.slice(Object.keys(args).length); if (!left.length) { send({ t: "ability", ab: flow!.ab, args }); setFlow(null); setPick([]); } else setFlow({ ...flow!, args }); };
   const hint = useMemo(() => { if (v.phase === "over") return v.winner === "crew" ? "船员修复了飞船" : "内鬼得逞了"; if (q) return "需要你决定"; if (myTurn) return v.phase === "accuse" ? "讨论结束后由你结束回合" : "轮到你了"; if (v.waiting.length) return "等待 " + v.waiting.map(name).join("、"); return ""; }, [v]);
   const targets = (other: boolean) => v.players.filter((p: any) => !p.killed && (!other || p.seat !== v.you));
+  const confirmChoice = (cards: any[], verb: string, onPick: (id: number) => void, danger = true) => { const sel = cards.find((c) => pick[0] === c.id); return <>
+    <p className="ta-pick-hint">先点一张牌选中，再点下方按钮{verb}</p>
+    <div className="ta-hand inline">{cards.map((c) => <button key={c.id} className="ta-card" aria-pressed={pick[0] === c.id} onClick={() => setPick(pick[0] === c.id ? [] : [c.id])}><GameCard type={c.type} />{pick[0] === c.id ? <span className="ta-picked">已选择</span> : null}</button>)}</div>
+    <button className={danger ? "ta-danger" : "ta-primary"} disabled={!sel} onClick={() => { if (sel) { setPick([]); onPick(sel.id); } }}>{sel ? `确认${verb}「${CARD_TEXT[sel.type][0]}」` : `请选择要${verb}的牌`}</button></>; };
   const cardChoice = (cards: any[], onPick: (id: number) => void) => <div className="ta-hand inline">{cards.map((c) => <button key={c.id} className="ta-card" aria-pressed={pick.includes(c.id)} onClick={() => onPick(c.id)}><GameCard type={c.type} />{pick.includes(c.id) ? <span className="ta-picked">已选择</span> : null}</button>)}</div>;
   const seatChoice = (list: any[], onPick: (s: number) => void) => <div className="ta-grid">{list.map((p: any) => <button key={p.seat} onClick={() => onPick(p.seat)}>{name(p.seat)}</button>)}</div>;
   function question() { if (!q) return null; const a = (value: any) => send({ t: "answer", value }); const yes = <div className="ta-grid"><button className="ta-primary" onClick={() => a(true)}>是</button><button onClick={() => a(false)}>否</button></div>;
     const skip = (t: string) => <button onClick={() => a(null)}>{t}</button>;
     let body: any = yes;
-    if (["discard_down", "bloodwork", "formulate"].includes(q.q)) body = cardChoice(v.hand, a);
+    if (q.q === "discard_down") body = confirmChoice(v.hand, "弃掉", a); if (q.q === "bloodwork") body = confirmChoice(v.hand, "公开", a, false); if (q.q === "formulate") body = confirmChoice(v.hand, "放到牌库底", a, false);
     if (q.q === "heal") body = <div className="ta-grid">{q.data.wounds.map((w: string, i: number) => <button key={i} onClick={() => a(i)}>{WOUND_TEXT[w].split("：")[0]}</button>)}</div>;
     if (q.q === "surveillance") body = <div className="ta-grid">{Array.from({ length: q.data.count }, (_, i) => <button key={i} onClick={() => a(i)}>查看第 {i + 1} 张</button>)}</div>;
     if (q.q === "rush") body = <><p>只有你能看到：{CARD_TEXT[q.data.type][0]}</p><button className="ta-primary" onClick={() => a(true)}>暗置打出</button></>;
-    if (q.q === "austere") body = <>{cardChoice(v.hand, a)}{skip("不使用")}</>;
+    if (q.q === "austere") body = <>{confirmChoice(v.hand, "弃掉", a)}{skip("不使用")}</>;
     if (q.q === "severed") body = <div className="ta-grid">{q.data.options.map((x: string) => <button key={x} onClick={() => a(x)}>{ABILITIES[x].name}</button>)}</div>;
     if (q.q === "veto") body = <><p>揭示：{CARD_TEXT[q.data.type][0]}</p><div className="ta-grid"><button className="ta-primary" onClick={() => a(true)}>否决这张</button>{q.data.forced ? null : <button onClick={() => a(false)}>留到后面</button>}</div></>;
     if (q.q === "brawl") body = seatChoice(targets(false), a);
@@ -296,7 +301,7 @@ function Game({ snap: incoming, send: command, seen, takeScenes, msg, clear, res
         if (ab === "surveillance") return p.played > 0;
         return true;
       }), (s) => put(step.key, s)) : null}
-      {step.kind === "card" ? cardChoice(v.hand, (id) => put(step.key, id)) : null}
+      {step.kind === "card" ? confirmChoice(v.hand, step.key === "discard" ? "弃掉" : step.key === "aside" ? "盖放" : "交出", (id) => put(step.key, id), step.key === "discard") : null}
       {step.kind === "two" ? <><p>已选择 {pick.length}/2 张</p>{cardChoice(v.hand, (id) => setPick(pick.includes(id) ? pick.filter((x) => x !== id) : [...pick, id].slice(-2)))}<button className="ta-primary" disabled={pick.length !== 2} onClick={() => put(step.key, pick)}>确定 {pick.length}/2 张</button></> : null}
       {step.kind === "aside" ? <><button className="ta-primary" onClick={() => put(step.key, [...v.aside.map((card: { id: number }) => card.id), flow.args.aside])}>打出全部盖放牌</button><button onClick={() => put(step.key, [])}>保留盖放牌</button></> : null}
       {step.kind === "used" ? <div className="ta-grid">{v.roundAbilities.filter((x: string) => x !== "mimic").map((x: string) => <button key={x} onClick={() => put(step.key, x)}>{ABILITIES[x].name}</button>)}</div> : null}

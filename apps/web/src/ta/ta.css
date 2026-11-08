@@ -511,3 +511,4 @@
 .ta-review-cards{display:flex;flex-wrap:wrap;gap:8px;justify-content:center}.ta-world .ta-review-cards .ta-card{font-size:calc(70px/34);flex:0 0 70px;width:70px}.ta-review-ev{margin:0;font-size:13px;color:#ffb3a8}.ta-wait{margin:0;text-align:center;color:#cfd3c4}
 .ta-speak{padding:10px 12px!important}.ta-speak p{margin:0;font-size:14px}.ta-speak b{color:#ffd976}
 .ta-seat .ord{position:absolute;left:50%;bottom:-6px;translate:-50% 0;z-index:3;min-width:18px;height:18px;border-radius:9px;background:#1a1408;color:#ffd976;font:700 11px/18px sans-serif;font-style:normal;box-shadow:0 0 0 1px #ffd976}.ta-seat.speaking .ord{background:#ffd976;color:#1a1408}
+.ta-pick-hint{margin:0;font-size:13px;color:#cfd3c4}.ta-world .ta-card[aria-pressed="true"]{transform:translateY(-8px);filter:drop-shadow(0 0 10px #ffd976)}
