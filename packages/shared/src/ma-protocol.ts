@@ -19,7 +19,7 @@ export interface MAPointsSetting {
 export interface MARoomSnapshot {
   code: string;
   stage: "lobby" | "game";
-  players: Array<{ playerId: string; name: string; connected: boolean; host: boolean }>;
+  players: Array<{ playerId: string; name: string; connected: boolean; host: boolean; bot?: boolean }>;
   mySeat: string | null;
   points: MAPointsSetting[];
   /** 3 人房可选双选手变体；2 人房固定双选手 */
@@ -38,7 +38,8 @@ export type MALobbyAction =
   | { type: "SET_POINTS"; points: MAPointsSetting[] }
   | { type: "SET_DEAL"; deal: "draft" | "random" }
   | { type: "SET_SECOND_WIND"; enabled: boolean }
-  | { type: "KICK"; playerId: string };
+  | { type: "KICK"; playerId: string }
+  | { type: "ADD_BOT" };
 
 /** 浏览器提交的命令：player 由服务器按凭证填写 */
 export type MAClientCommand =

@@ -28,6 +28,8 @@ interface MAPlayerFile {
   playerId: string;
   token: string;
   name: string;
+  /** 人机（测试用）：服务器替它随机做决定 */
+  bot?: boolean;
 }
 /** 存档：创建参数 + 命令列表，重启后确定性重放恢复 */
 export interface MARoomFile {
@@ -90,6 +92,7 @@ export class MARoom {
     const clean = name.trim().slice(0, 12);
     if (!clean) throw new Error("NAME_REQUIRED");
     const same = this.file.players.find((p) => p.name === clean);
+    if (same?.bot) throw new Error("NAME_TAKEN");
     if (same) {
       // 原来那个还连着（比如旧浮窗没关）：要本人确认「我就是 TA」才接回，免得两个人撞名
       if ((this.connections.get(same.playerId) ?? 0) > 0 && !takeover) throw new Error("NAME_TAKEN");
@@ -122,6 +125,16 @@ export class MARoom {
       const before = this.file.players.length;
       this.file.players = this.file.players.filter((p) => p.playerId !== id);
       if (this.file.players.length === before) throw new Error("BAD_ACTION");
+    } else if (action?.type === "ADD_BOT") {
+      if (this.file.players.length >= MAX_PLAYERS) throw new Error("ROOM_FULL");
+      let n = 1;
+      while (this.file.players.some((p) => p.name === "人机" + n)) n++;
+      this.file.players.push({
+        playerId: "bot" + randomBytes(3).toString("hex"),
+        token: randomBytes(18).toString("base64url"),
+        name: "人机" + n,
+        bot: true,
+      });
     } else if (action?.type === "SET_SECOND_WIND") {
       if (typeof action.enabled !== "boolean") throw new Error("BAD_ACTION");
       this.file.secondWind = action.enabled;
@@ -154,6 +167,30 @@ export class MARoom {
     this.state = reduceMA(this.state, full);
     this.file.commands.push(full);
   }
+  private isBot(id: string | null | undefined) {
+    return !!id && this.file.players.some((p) => p.playerId === id && p.bot);
+  }
+  /** 人机走一步：轮到任何一个人机做决定时，随机选一个合法选项。没有可做的返回 false */
+  botStep(): boolean {
+    const s = this.state;
+    if (!s || s.phase === "over") return false;
+    const pick = <T>(xs: T[]) => xs[Math.floor(Math.random() * xs.length)];
+    let cmd: MACommand | null = null;
+    if (s.phase === "draft" && s.draft) {
+      const who = s.draft.order[s.draft.step];
+      if (this.isBot(who) && s.draft.pool.length) cmd = { type: "DRAFT", player: who, racer: pick(s.draft.pool) };
+    } else if (s.phase === "choose") {
+      const bot = s.players.find((p) => this.isBot(p.id) && p.choices.length === 0);
+      const free = bot?.hand.filter((r) => !bot.used.includes(r)) ?? [];
+      if (bot && free.length) cmd = { type: "CHOOSE", player: bot.id, racer: pick(free) };
+    } else if (s.pending && this.isBot(s.pending.player) && s.pending.options.length) {
+      cmd = { type: "ANSWER", player: s.pending.player, value: pick(s.pending.options).value };
+    }
+    if (!cmd) return false;
+    this.state = reduceMA(s, cmd);
+    this.file.commands.push(cmd);
+    return true;
+  }
   snapshot(me: string | null): MARoomSnapshot {
     return {
       code: this.code,
@@ -161,7 +198,8 @@ export class MARoom {
       players: this.file.players.map((p) => ({
         playerId: p.playerId,
         name: p.name,
-        connected: (this.connections.get(p.playerId) ?? 0) > 0,
+        connected: !!p.bot || (this.connections.get(p.playerId) ?? 0) > 0,
+        ...(p.bot ? { bot: true } : {}),
         host: p.playerId === this.file.hostId,
       })),
       mySeat: me,
@@ -269,6 +307,26 @@ export function attachMagicalAthlete(
       const sock = io.sockets.sockets.get(id);
       if (sock) sock.emit(MA_EVENTS.update, room.snapshot(sock.data.maSeat ?? null));
     }
+    kickBots(room);
+  };
+  // 人机：每次局面变化后，隔一小会儿替人机做下一个决定（要快，主要用来测试）
+  const botTimers = new Map<string, ReturnType<typeof setTimeout>>();
+  const kickBots = (room: MARoom) => {
+    if (botTimers.has(room.code) || !room.file.players.some((p) => p.bot)) return;
+    botTimers.set(
+      room.code,
+      setTimeout(() => {
+        botTimers.delete(room.code);
+        try {
+          if (room.botStep()) {
+            store.save(room);
+            broadcast(room);
+          }
+        } catch (e) {
+          console.warn("魔法运动员人机出错", room.code, e instanceof Error ? e.message : e);
+        }
+      }, 250),
+    );
   };
   const find = (code: unknown) => store.rooms.get(String(code ?? "").toUpperCase());
 

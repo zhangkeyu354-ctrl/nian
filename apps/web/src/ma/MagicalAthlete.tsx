@@ -265,6 +265,7 @@ function Lobby({ snap, lobby }: { snap: MARoomSnapshot; lobby: (a: Parameters<Re
               <span className="ma-dot" style={{ background: PLAYER_COLORS[i] }} />
               {p.name}
               {p.host && <em>房主</em>}
+              {p.bot && <em>人机</em>}
               {p.playerId === snap.mySeat && <em>你</em>}
               {!p.connected && <em className="off">离线</em>}
               {host && p.playerId !== snap.mySeat && (
@@ -281,6 +282,12 @@ function Lobby({ snap, lobby }: { snap: MARoomSnapshot; lobby: (a: Parameters<Re
             </li>
           ))}
         </ul>
+        {host && snap.players.length < 8 && (
+          <button type="button" className="ma-add-bot" data-testid="ma-add-bot" onClick={() => void run({ type: "ADD_BOT" })}>
+            ＋ 添加人机
+          </button>
+        )}
+        {host && <p className="ma-muted">人机会很快地随机做选择，主要用来测试。</p>}
       </section>
       <section className="ma-panel">
         <h2>每场奖牌分值</h2>
