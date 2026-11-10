@@ -37,6 +37,7 @@ export function GameLobby() {
         </div>
       </dialog>
       <div className="hall-boxes">
+        <GameBox id="bf" title="魔王试炼：码上开战" sub="Boss Fighters QR · 合作卡牌" meta="2–4 人 · 可加机器人队友" blurb="组队讨伐魔王！每回合先看清魔王要打谁，再出牌打破护盾、保护队友。逐关解锁新魔王和战利品。" art={<div style={{width:"100%",height:"100%",display:"grid",placeItems:"center",background:"radial-gradient(circle at 50% 40%,#6a3d72,#1c1228 75%)",color:"#d8b25a",fontSize:"64px",fontFamily:"serif",letterSpacing:".1em"}}>魔王</div>} online="/?game=bf" join={code=>"/?game=bf&room="+code.toUpperCase()}/>
         <GameBox id="ta" title="我们之中的威胁" sub="隐藏身份 · 太空求生" meta="4–8 人 · 隐藏身份" blurb="飞船失去动力，氧气一格格流失。大家暗中出牌修船，内鬼却在其中破坏。" art={<img src="/assets/menace/box.webp" alt="我们之中的威胁 封面" style={{width:"100%",height:"100%",objectFit:"cover"}}/>} online="/?game=ta" join={code=>"/?game=ta&room="+code.toUpperCase()}/>
         <GameBox id="kb" title="卡里巴湖 Kariba" sub="Reiner Knizia" meta="2–5 人 · 组队最多 8 人" blurb="凑满三只同种动物，就能把水塘边较小的动物赶跑收走。只有老鼠吓得跑大象。" art={<img src="/assets/kariba/box.webp" alt="卡里巴湖 原创封面" style={{width:"100%",height:"100%",objectFit:"contain"}}/>} online="/?game=kb" join={code=>"/?game=kb&room="+code.toUpperCase()}/>
         <GameBox id="nd" title="脑洞量表 Top Ten" sub="Cocktail Games · Aurélien Picolet" meta="4–9 人 · 合作" blurb="一个数字，一张答题卡。队长看卡把大家从小到大排好，一起闯过五轮。" art={<img src="/assets/naodong-scale/box.webp" alt="脑洞量表 Top Ten 官方包装" style={{height:"130px",maxWidth:"100%",objectFit:"contain"}}/>} online="/?game=nd" join={code=>"/?game=nd&room="+code.toUpperCase()}/>

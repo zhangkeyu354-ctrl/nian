@@ -17,6 +17,7 @@ import { attachXiabaiwang } from "./xb-rooms.ts";
 import { attachWitchTown } from "./wt-rooms.ts";
 import { attachNaodongScale } from "./nd-rooms.ts";
 import { attachKariba } from "./kb-rooms.ts";
+import { attachBossFighters } from "./bf-rooms.ts";
 import { attachMenace } from "./ta-rooms.ts";
 import {
   EVENTS,
@@ -94,6 +95,7 @@ const http = createServer((req, res) => {
         dpRooms: dpStore.rooms.size,
         ndRooms: ndStore.rooms.size,
         kbRooms: kbStore.rooms.size,
+        bfRooms: bfStore.rooms.size,
         taRooms: taStore.rooms.size,
         ...(wtStore
           ? { witchTown: { milestone: "M5_PHONE_UI", rooms: wtStore.size, fullGame: true } }
@@ -189,6 +191,11 @@ const taStore = attachMenace(
 const kbStore = attachKariba(
   io,
   resolve(process.env.KB_DATA_DIR ?? join(DATA, "../kb-rooms")),
+  { maxRooms: MAX_ROOMS, idleMs: ROOM_IDLE_MS },
+);
+const bfStore = attachBossFighters(
+  io,
+  resolve(process.env.BF_DATA_DIR ?? join(DATA, "../bf-rooms")),
   { maxRooms: MAX_ROOMS, idleMs: ROOM_IDLE_MS },
 );
 const ndStore = attachNaodongScale(

@@ -18,6 +18,7 @@ const WitchTownMock = lazy(() => import("./wt/Mock.tsx").then(m => ({ default: m
 const Rummikub = lazy(() => import('./rk/Rummikub.tsx').then(m => ({ default: m.Rummikub })));
 const SodaSmugglers = lazy(() => import("./ss/SodaSmugglers.tsx").then(m => ({default:m.SodaSmugglers})));
 const Menace = lazy(() => import("./ta/Menace.tsx").then(m => ({default:m.Menace})));
+const BossFighters = lazy(() => import("./bf/BossFighters.tsx").then(m => ({default:m.BossFighters})));
 const Kariba = lazy(() => import("./kb/Kariba.tsx").then(m => ({default:m.Kariba})));
 const NaodongScale = lazy(() => import("./nd/NaodongScale.tsx").then(m => ({default:m.NaodongScale})));
 const q = new URLSearchParams(location.search);
@@ -63,6 +64,8 @@ createRoot(document.getElementById("root")!).render(
       <Suspense fallback={<p>正在打开瞎掰王…</p>}><Xiabaiwang /></Suspense>
     ) : q.get("game") === "ta" ? (
       <Suspense fallback={<p>正在登舰…</p>}><Menace /></Suspense>
+    ) : q.get("game") === "bf" ? (
+      <Suspense fallback={<p>正在打开魔王试炼…</p>}><BossFighters /></Suspense>
     ) : q.get("game") === "kb" ? (
       <Suspense fallback={<p>正在打开卡里巴湖…</p>}><Kariba /></Suspense>
     ) : q.get("game") === "nd" ? (
