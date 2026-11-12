@@ -63,6 +63,8 @@ export type BFClientCommand =
   | { type: "END_ACTIONS"; version: number }
   | { type: "DISCARD"; cards: string[]; version: number }
   | { type: "DECIDE"; choice: "exile" | "burn"; version: number }
-  | { type: "GIVE_UP"; version: number };
+  | { type: "GIVE_UP"; version: number }
+  | { type: "PICK"; card: string; version: number }
+  | { type: "RETARGET"; attack: string; target: number; version: number };
 
 export type { Command };

@@ -7,7 +7,7 @@ import { CURSES, CURSE_BY_ID } from '../data/curses.ts';
 import { IDENTITIES } from '../data/heroes.ts';
 import type { CardDef, Command, DamageType, Effect, GameState, Hero, ItemId, SetupOptions } from '../types.ts';
 import {
-  addStatus, curseHero, damageHero, damagePart, drawCards, drawOne, giveSlime, handLimit, healHero, hero, isOver, log,
+  addStatus, curseHero, damageHero, fx, damagePart, drawCards, drawOne, giveSlime, handLimit, healHero, hero, isOver, log,
   loseBossHp, loseCards, lowestHealth, removeStatuses, TYPE_NAME,
 } from './core.ts';
 import { int, shuffle } from './rng.ts';
@@ -30,7 +30,7 @@ export function createGame(opt: SetupOptions): GameState {
     planned: [], attackedTypes: { melee: false, ranged: false, magic: false },
     starter: null, current: null, interrupts: [], pendingLightning: 0,
     curseDeck: [], curseDiscard: [], slimePile: 20, preventNextRound: false, lastAttackCard: null, bossAttackMinus: 0,
-    decisions: [], time: null, log: [], events: [],
+    decisions: [], pick: null, fx: [], fxSeq: 0, time: null, log: [], events: [],
   };
   const items = new Set<ItemId>(['backpack', 'potion', ...(opt.items ?? [])]);
   s.heroes = opt.heroes.map((p, seat) => {
@@ -82,7 +82,13 @@ export function startRound(s: GameState) {
     h.turn = { attackedTypes: [], firstHitDone: false, firstShieldHit: false, firstProtect: false };
   }
   s.attackedTypes = { melee: false, ranged: false, magic: false };
+  s.ties = [];
   s.planned = boss.plan(s); // ① 计划
+  for (const t of s.ties) {
+    const a = s.planned.find((x) => x.target === t.chosen && !x.tieOptions);
+    if (a) a.tieOptions = t.seats;
+  }
+  s.ties = undefined;
   if (s.bossAttackMinus) {
     for (const a of s.planned) a.value = Math.max(0, a.value - s.bossAttackMinus);
     log(s, `魔法喷发：本回合魔王所有攻击 -${s.bossAttackMinus}`, 'hero');
@@ -101,6 +107,7 @@ export function startRound(s: GameState) {
 /** 当前应该行动的座位：闪电额外行动 > 插队行动 > 正常轮转 */
 export function actor(s: GameState): number | null {
   if (s.phase !== 'action') return null;
+  if (s.pick) return s.pick.seat;
   if (s.pendingLightning > 0) return s.current;
   if (s.interrupts.length) return s.interrupts[s.interrupts.length - 1];
   return s.current;
@@ -110,6 +117,9 @@ export function reduce(prev: GameState, cmd: Command): GameState {
   if (isOver(prev)) throw new RuleError('战斗已经结束');
   const s: GameState = structuredClone(prev);
   s.events = s.events.filter((e) => e.round === s.round);
+  s.fx ??= [];
+  s.pick ??= null;
+  if (s.pick && cmd.type !== 'PICK' && cmd.type !== 'GIVE_UP') throw new RuleError('请先完成挑牌');
   switch (cmd.type) {
     case 'CHOOSE_STARTER': {
       if (s.phase !== 'chooseStarter') throw new RuleError('现在不是选择起始玩家的时候');
@@ -144,6 +154,18 @@ export function reduce(prev: GameState, cmd: Command): GameState {
     case 'DISCARD':
       discard(s, cmd.seat, cmd.cards);
       break;
+    case 'PICK':
+      resolvePick(s, cmd.seat, cmd.card);
+      break;
+    case 'RETARGET': {
+      if (s.phase !== 'chooseStarter') throw new RuleError('只能在回合开始、选起始玩家前改目标');
+      hero(s, cmd.seat);
+      const a = s.planned.find((x) => x.id === cmd.attack);
+      if (!a?.tieOptions?.includes(cmd.target)) throw new RuleError('这次攻击不能改到这名英雄');
+      a.target = cmd.target;
+      log(s, `【${a.name}】的目标并列，改由 ${hero(s, cmd.target).name} 承受`);
+      break;
+    }
     case 'GIVE_UP':
       s.phase = 'lost';
       s.current = null;
@@ -406,13 +428,10 @@ function resolveCard(s: GameState, h: Hero, card: CardDef, t: Hero, kind: Consum
           break;
         case 'replayDiscard': {
           // 自动选弃牌堆里数值最高的牌；没有就打牌库顶（官方）。打出后本战移除（卡面翻译）
-          const best = h.discard.slice().sort((a, b) => scoreCard(b) - scoreCard(a))[0];
-          if (best) {
-            h.discard.splice(h.discard.indexOf(best), 1);
-            h.exiled.push(best);
-            log(s, `既视感：重打【${CARDS[best].name}】`, 'hero');
-            resolveCard(s, h, CARDS[best], t, kind, depth + 1);
-          } else playFromTop(s, h, depth);
+          const opts = [...new Set(h.discard.filter((c) => c !== 'slime'))];
+          if (opts.length > 1) s.pick = { seat: h.seat, kind: 'replay', prompt: '既视感：从弃牌堆选一张打出（打出后本战移除）', options: opts, picked: [], target: t.seat, depth, after: null };
+          else if (opts.length === 1) replayFromDiscard(s, h, opts[0], t, kind, depth);
+          else playFromTop(s, h, depth);
           break;
         }
         case 'peekTop3': {
@@ -421,14 +440,8 @@ function resolveCard(s: GameState, h: Hero, card: CardDef, t: Hero, kind: Consum
             const c = drawOne(s, h);
             if (c) top.push(c);
           }
-          top.sort((a, b) => scoreCard(b) - scoreCard(a));
-          const [pick, ...rest] = top;
-          h.deck.unshift(...rest);
-          if (pick) {
-            h.play.push(pick);
-            log(s, `透视面具：打出【${CARDS[pick].name}】，其余放牌库底`, 'hero');
-            resolveCard(s, h, CARDS[pick], t, kind, depth + 1);
-          }
+          if (top.length > 1) s.pick = { seat: h.seat, kind: 'mask', prompt: '透视面具：选一张打出，其余放到牌库底', options: top, picked: [], target: t.seat, depth, after: null };
+          else if (top.length === 1) maskPlay(s, h, top[0], [], t, kind, depth);
           break;
         }
         case 'redirect': {
@@ -566,6 +579,7 @@ export function applyDamage(s: GameState, h: Hero, type: DamageType, value: numb
   if (route.part) {
     const p = route.part;
     const dealt = damagePart(s, p, Math.max(1, Math.floor(value * (route.partMult ?? 1))), h.name);
+    fx(s, { kind: 'part', type, value: dealt });
     boss.onPartHit?.(s, h, p, dealt, type);
     if (!p.alive) boss.onPartDefeated?.(s, h, p);
     bossChanged(s, h);
@@ -586,10 +600,14 @@ export function applyDamage(s: GameState, h: Hero, type: DamageType, value: numb
       if (warrior && !noShieldEffect) log(s, `${h.name}（战士能力）这次攻击不触发护盾效果`, 'hero');
     } else boss.onShieldHit?.(s, h, type);
     log(s, `${TYPE_NAME[type]}护盾 -${absorbed}${b.shields[type] === 0 ? '（破碎）' : ''}`, 'hero');
-    if (b.shields[type] === 0) shieldBroken(s, h, type);
+    if (b.shields[type] === 0) {
+      fx(s, { kind: 'shield', type });
+      shieldBroken(s, h, type);
+    }
   }
   if (isOver(s)) return 0;
   const rest = Math.floor((value - absorbed) * (route.mult ?? 1));
+  if (rest > 0 || absorbed > 0) fx(s, { kind: 'hit', type, value: rest });
   if (rest > 0) {
     loseBossHp(s, rest, `${h.name} 的${TYPE_NAME[type]}${kind === 'attack' ? '攻击' : '助攻'}`);
     if (h.race === 'troll' && h.raceLevel >= 2 && kind === 'attack' && !h.turn.firstHitDone && actor(s) === h.seat) {
@@ -633,6 +651,7 @@ function protect(s: GameState, h: Hero, t: Hero, v: number, cancelEffects: boole
     return;
   }
   atk.reducedBy = Math.min(atk.value, atk.reducedBy + v);
+  fx(s, { kind: 'protect', seat: t.seat, value: v });
   if (cancelEffects) atk.cancelExtra = true;
   log(s, `保护 ${v}：${t.name} 将受到的【${atk.name}】降为 ${atk.value - atk.reducedBy}${cancelEffects ? '，附加效果取消' : ''}`, 'hero');
   if (atk.value - atk.reducedBy === 0 && h.race === 'dwarf' && h.raceLevel >= 2) {
@@ -673,9 +692,9 @@ function useItem(s: GameState, seat: number, item: ItemId, target?: number) {
         const c = drawOne(s, h);
         if (c) top.push(c);
       }
-      top.sort((a, b) => scoreCard(a) - scoreCard(b));
-      h.deck.push(...top);
-      log(s, `${h.name} 使用祖传玻璃眼，重排牌库顶 3 张`, 'hero');
+      if (top.length > 1) s.pick = { seat: h.seat, kind: 'eye', prompt: '祖传玻璃眼：依次选出放在牌库最上面的牌', options: top, picked: [], target: h.seat, depth: 0, after: null };
+      else h.deck.push(...top);
+      log(s, `${h.name} 使用祖传玻璃眼，查看牌库顶 ${top.length} 张`, 'hero');
       break;
     }
     case 'luckyCharm':
@@ -690,6 +709,10 @@ function useItem(s: GameState, seat: number, item: ItemId, target?: number) {
 // ———————————————————— 轮转与回合结束 ————————————————————
 function afterAction(s: GameState, ended = false, h?: Hero, kind?: Consumed) {
   if (isOver(s)) return;
+  if (s.pick) {
+    s.pick.after ??= { ended, seat: h?.seat ?? null, kind: kind ?? null };
+    return;
+  }
   const boss = bossOf(s);
   if (boss.timeMode && h && kind && !ended) boss.afterAnyAction?.(s, h, kind);
   if (isOver(s) || s.phase !== 'action') return;
@@ -725,8 +748,10 @@ export function endActionPhase(s: GameState) {
     const dmg = a.value - a.reducedBy;
     if (dmg <= 0) {
       log(s, `【${a.name}】被完全挡下（${h.name}）`, 'hero');
+      fx(s, { kind: 'blocked', seat: h.seat });
       continue;
     }
+    fx(s, { kind: 'bossAttack', seat: h.seat, value: dmg });
     const dealt = damageHero(s, h, dmg, a.name);
     if (isOver(s)) return;
     if (dealt > 0) {
@@ -794,7 +819,65 @@ function decide(s: GameState, seat: number, choice: 'exile' | 'burn') {
     h.discard.push(d.card!);
     damageHero(s, h, 2, '着火');
   }
-  if (!isOver(s) && s.decisions.length === 0) startDiscard(s);
+  if (!isOver(s) && s.decisions.length === 0) {
+    if (s.resumeAction) {
+      s.resumeAction = false;
+      s.phase = 'action';
+      afterAction(s, true);
+    } else startDiscard(s);
+  }
+}
+
+function replayFromDiscard(s: GameState, h: Hero, card: string, t: Hero, kind: Consumed, depth: number) {
+  h.discard.splice(h.discard.indexOf(card), 1);
+  h.exiled.push(card);
+  log(s, `既视感：重打【${CARDS[card].name}】`, 'hero');
+  resolveCard(s, h, CARDS[card], t, kind, depth + 1);
+}
+
+function maskPlay(s: GameState, h: Hero, card: string, rest: string[], t: Hero, kind: Consumed, depth: number) {
+  h.deck.unshift(...rest);
+  h.play.push(card);
+  log(s, `透视面具：打出【${CARDS[card].name}】${rest.length ? '，其余放牌库底' : ''}`, 'hero');
+  resolveCard(s, h, CARDS[card], t, kind, depth + 1);
+}
+
+/** 玩家挑完牌：结算被挑中的牌，然后补做被挂起的收尾 */
+function resolvePick(s: GameState, seat: number, card: string) {
+  const p = s.pick;
+  if (!p || p.seat !== seat) throw new RuleError('现在没有需要你挑的牌');
+  if (!p.options.includes(card) || (p.kind === 'eye' && p.picked.length >= p.options.length)) throw new RuleError('不能选这张牌');
+  const h = hero(s, seat);
+  const t = hero(s, p.target);
+  const kind = (p.after?.kind ?? 'normal') as Consumed;
+  if (p.kind === 'eye') {
+    const left = p.options.slice();
+    for (const x of [...p.picked, card]) left.splice(left.indexOf(x), 1);
+    p.picked.push(card);
+    if (left.length > 1) return; // 继续挑下一张
+    // 第一张挑的放最上面（牌库从末尾抽）
+    h.deck.push(...left, ...p.picked.slice().reverse());
+    log(s, `${h.name} 用祖传玻璃眼排好了牌库顶`, 'hero');
+    s.pick = null;
+  } else {
+    s.pick = null;
+    if (p.kind === 'replay') replayFromDiscard(s, h, card, t, kind, p.depth);
+    else {
+      const rest = p.options.slice();
+      rest.splice(rest.indexOf(card), 1);
+      maskPlay(s, h, card, rest, t, kind, p.depth);
+    }
+  }
+  const again = s.pick as GameState['pick'];
+  if (isOver(s) || again) {
+    // 挑出的牌又需要挑牌：把收尾转交给新的挑牌
+    if (again && p.after) again.after = p.after;
+    return;
+  }
+  bossChanged(s, h);
+  if (isOver(s)) return;
+  const a = p.after;
+  if (a) afterAction(s, a.ended, a.seat === null ? undefined : hero(s, a.seat), (a.kind ?? undefined) as Consumed | undefined);
 }
 
 function startDiscard(s: GameState) {

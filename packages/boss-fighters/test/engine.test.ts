@@ -154,3 +154,61 @@ test('随机乱打的机器人也不会让引擎报错或卡死', () => {
     assert.ok(s.phase === 'won' || s.phase === 'lost');
   }
 });
+
+test('既视感：弃牌堆有多张时由玩家挑，挑完才轮到下一位', () => {
+  let s = two('puppet');
+  s = reduce(s, { type: 'CHOOSE_STARTER', seat: 0, by: 0 });
+  s.heroes[0].hand.push('adv_dejavu');
+  s.heroes[0].discard = ['elf_sunfire', 'elf_flurry'];
+  s = reduce(s, { type: 'PLAY_CARD', seat: 0, card: 'adv_dejavu' });
+  assert.equal(s.pick?.kind, 'replay');
+  assert.deepEqual([...s.pick!.options].sort(), ['elf_flurry', 'elf_sunfire']);
+  assert.equal(actor(s), 0);
+  assert.throws(() => reduce(s, { type: 'END_ACTIONS', seat: 0 }));
+  const hp = s.boss.hp;
+  s = reduce(s, { type: 'PICK', seat: 0, card: 'elf_sunfire' });
+  assert.equal(s.pick, null);
+  assert.ok(s.boss.hp < hp);
+  assert.ok(s.heroes[0].exiled.includes('elf_sunfire'));
+});
+
+test('透视面具：三选一打出，其余放牌库底；玻璃眼：依次排好牌库顶', () => {
+  let s = two('puppet');
+  s = reduce(s, { type: 'CHOOSE_STARTER', seat: 0, by: 0 });
+  s.heroes[0].hand.push('adv_mask');
+  s.heroes[0].deck.push('elf_flurry', 'elf_volley', 'elf_sunfire');
+  s = reduce(s, { type: 'PLAY_CARD', seat: 0, card: 'adv_mask' });
+  assert.equal(s.pick?.kind, 'mask');
+  s = reduce(s, { type: 'PICK', seat: 0, card: 'elf_volley' });
+  assert.ok(s.heroes[0].play.includes('elf_volley'));
+  assert.deepEqual(s.heroes[0].deck.slice(0, 2).sort(), ['elf_flurry', 'elf_sunfire']);
+
+  let e = two('puppet');
+  e = reduce(e, { type: 'CHOOSE_STARTER', seat: 0, by: 0 });
+  e.heroes[0].items.glassEye = 1;
+  e.heroes[0].deck.push('a1', 'a2', 'a3');
+  e = reduce(e, { type: 'USE_ITEM', seat: 0, item: 'glassEye' });
+  assert.equal(e.pick?.kind, 'eye');
+  e = reduce(e, { type: 'PICK', seat: 0, card: 'a1' });
+  assert.equal(e.pick?.kind, 'eye');
+  e = reduce(e, { type: 'PICK', seat: 0, card: 'a3' });
+  assert.equal(e.pick, null);
+  assert.deepEqual(e.heroes[0].deck.slice(-3), ['a2', 'a3', 'a1']); // 末尾 = 最上面
+});
+
+test('并列目标：回合开始前可以把攻击改给并列的另一名英雄', () => {
+  const s = two('prince');
+  const tied = s.planned.find((a) => a.tieOptions);
+  if (!tied) return; // 这个种子没有并列目标
+  const other = tied.tieOptions!.find((x) => x !== tied.target)!;
+  const n = reduce(s, { type: 'RETARGET', seat: 0, attack: tied.id, target: other });
+  assert.equal(n.planned.find((a) => a.id === tied.id)!.target, other);
+  assert.throws(() => reduce(n, { type: 'RETARGET', seat: 0, attack: tied.id, target: 9 }));
+});
+
+test('机器人能打完需要挑牌和着火决定的整局（炸弹克精、带进阶牌）', () => {
+  for (let seed = 1; seed <= 20; seed++) {
+    const g = runBotGame(two('bombossa', seed), 'coop', seed);
+    assert.ok(g.phase === 'won' || g.phase === 'lost');
+  }
+});

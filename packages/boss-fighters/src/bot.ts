@@ -12,6 +12,7 @@ const isProt = (id: string) => effs(id).some((e) => e.kind === 'protect');
 const atkOf = (id: string) => effs(id).find((e) => e.kind === 'attack') as { type: DamageType; value: unknown } | undefined;
 
 export function botCommand(s: GameState, strategy: Strategy, rand: () => number): Command | null {
+  if (s.pick) return botPick(s);
   if (s.phase === 'chooseStarter') return { type: 'CHOOSE_STARTER', seat: s.heroes[0].seat, by: 0 };
   if (s.phase === 'decision') {
     const d = s.decisions[0];
@@ -94,6 +95,7 @@ export function runBotGame(s0: GameState, strategy: Strategy, seed = 1, maxSteps
 
 /** 联机托管：只替某个座位出手（机器人队友 / 掉线托管）。轮不到这个座位时返回 null。 */
 export function botFor(s: GameState, seat: number): Command | null {
+  if (s.pick) return s.pick.seat === seat ? botPick(s) : null;
   if (s.phase === 'discard') {
     const h = s.heroes.find((x) => x.seat === seat);
     if (!h || h.discardDone) return null;
@@ -108,4 +110,12 @@ export function botFor(s: GameState, seat: number): Command | null {
   }
   if (s.phase === 'action' && actor(s) === seat) return botCommand(s, 'coop', Math.random);
   return null;
+}
+
+/** 挑牌：选分数最高、还没挑过的牌 */
+function botPick(s: GameState): Command {
+  const p = s.pick!;
+  const left = p.options.filter((c, i) => p.options.indexOf(c) === i && !p.picked.includes(c));
+  const best = left.slice().sort((a, b) => scoreCard(b) - scoreCard(a))[0] ?? p.options[0];
+  return { type: 'PICK', seat: p.seat, card: best };
 }

@@ -1,6 +1,7 @@
 // 第 6–10 关：巨触手、熔岩王、炸弹克精、果冻怪、巫毒天后
 // 能力名/说明为官方中文（boss_bible）；数值见 data/balance.ts（多为暂定）
 import { BOMBOSSA as BB, JELLY as JL, MAGMAROS as MG, TENTACOLOSSUS as TC, VOODOO as VD } from '../data/balance.ts';
+import { CARDS } from '../data/cards.ts';
 import {
   addStatus, atLeast, banner, curseHero, damageHero, distributeShields, drawCards, giveSlime, handLimit, healBoss, highestHealth, hero, log,
   loseBossHp, loseCards, removeStatuses, roundAbility, scaleAttack, scaleHp, scaleShield, trapHits,
@@ -279,11 +280,11 @@ function segmentEnd(s: GameState) {
   log(s, `—— 第 ${s.round} 时间段 ——`);
   for (const h of s.heroes) {
     if (h.status.poison) damageHero(s, h, h.status.poison, '中毒');
-    // 着火：网页版时间制下自动处理（生命 >10 弃牌掉血，否则移除这张牌）
+    // 着火：每个标记抽 1 张，由玩家选择本战移除或弃掉并失去 2 生命（官方；时间段结束后回到行动）
     for (let i = 0; i < h.status.fire; i++) {
       const c = h.deck.pop();
       if (!c) continue;
-      if (h.health > 10) { h.discard.push(c); damageHero(s, h, 2, '着火'); } else h.exiled.push(c);
+      s.decisions.push({ seat: h.seat, kind: 'fire', card: c, prompt: `着火：【${CARDS[c]?.name ?? c}】本战移除，或弃掉并失去 2 生命？` });
     }
     h.discard.push(...h.play);
     h.play = [];
@@ -319,6 +320,10 @@ function segmentEnd(s: GameState) {
         h.carriesBomb = false;
       }
     }
+  }
+  if (s.decisions.length && s.phase === 'action') {
+    s.resumeAction = true;
+    s.phase = 'decision';
   }
 }
 

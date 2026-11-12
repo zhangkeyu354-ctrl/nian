@@ -106,6 +106,8 @@ export interface PlannedAttack {
   reducedBy: number;
   hidden?: boolean; // 被墨汁遮盖
   cancelExtra?: boolean;
+  /** 目标是"生命最高/最低"且并列：官方由玩家从这些座位中自选 */
+  tieOptions?: number[];
 }
 
 export interface CurseInPlay {
@@ -186,6 +188,28 @@ export interface Decision {
   prompt: string;
 }
 
+/** 行动中途需要玩家挑牌（既视感 / 透视面具 / 祖传玻璃眼） */
+export interface Pick {
+  seat: number;
+  kind: 'replay' | 'mask' | 'eye';
+  prompt: string;
+  options: string[];
+  picked: string[];
+  target: number;
+  depth: number;
+  /** 挑完后要接着做的收尾（afterAction 的参数） */
+  after: { ended: boolean; seat: number | null; kind: string | null } | null;
+}
+
+/** 视觉/音效事件：界面据此播放特效，不参与规则 */
+export interface FxEvent {
+  n: number;
+  kind: 'hit' | 'shield' | 'bossAttack' | 'blocked' | 'heal' | 'protect' | 'status' | 'curse' | 'part';
+  type?: DamageType;
+  seat?: number;
+  value?: number;
+}
+
 export interface GameEvent {
   round: number;
   kind: string;
@@ -216,6 +240,12 @@ export interface GameState {
   lastAttackCard: string | null;
   bossAttackMinus: number;
   decisions: Decision[];
+  pick: Pick | null;
+  /** 时间制魔王中途的着火决定结束后回到行动阶段 */
+  resumeAction?: boolean;
+  ties?: { seats: number[]; chosen: number }[];
+  fx: FxEvent[];
+  fxSeq: number;
   /** 炸弹克精的时间（其他魔王为 null） */
   time: number | null;
   log: LogEntry[];
@@ -229,7 +259,9 @@ export type Command =
   | { type: 'END_ACTIONS'; seat: number }
   | { type: 'DISCARD'; seat: number; cards: string[] }
   | { type: 'DECIDE'; seat: number; choice: 'exile' | 'burn' }
-  | { type: 'GIVE_UP'; seat: number };
+  | { type: 'GIVE_UP'; seat: number }
+  | { type: 'PICK'; seat: number; card: string }
+  | { type: 'RETARGET'; seat: number; attack: string; target: number };
 
 export interface SetupHero {
   name: string;

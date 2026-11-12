@@ -233,6 +233,8 @@ export class BFRoom {
       case "DISCARD": c = { type: "DISCARD", seat, cards: (cmd.cards ?? []).map(String) }; break;
       case "DECIDE": c = { type: "DECIDE", seat, choice: cmd.choice === "burn" ? "burn" : "exile" }; break;
       case "GIVE_UP": c = { type: "GIVE_UP", seat }; break;
+      case "PICK": c = { type: "PICK", seat, card: String(cmd.card) }; break;
+      case "RETARGET": c = { type: "RETARGET", seat, attack: String(cmd.attack), target: Number(cmd.target) }; break;
       default: return fail("BAD_ACTION");
     }
     this.commit(c);

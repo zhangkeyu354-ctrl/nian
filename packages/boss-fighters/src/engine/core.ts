@@ -11,6 +11,13 @@ export function log(s: GameState, text: string, kind: GameState['log'][number]['
   s.log.push({ round: s.round, text, kind });
 }
 
+/** 视觉事件（只给界面播特效用），保留最近 30 条 */
+export function fx(s: GameState, e: Omit<GameState['fx'][number], 'n'>) {
+  s.fxSeq = (s.fxSeq ?? 0) + 1;
+  (s.fx ??= []).push({ n: s.fxSeq, ...e });
+  if (s.fx.length > 30) s.fx.splice(0, s.fx.length - 30);
+}
+
 export function banner(s: GameState, kind: string, title: string, text: string) {
   s.events.push({ round: s.round, kind, title, text });
   log(s, `【${title}】${text}`, 'ability');
@@ -84,12 +91,16 @@ export function damageHero(s: GameState, h: Hero, n: number, why: string) {
 export function healHero(s: GameState, h: Hero, n: number) {
   const before = h.health;
   h.health = Math.min(h.maxHealth, h.health + n);
-  if (h.health > before) log(s, `${h.name} 回复 ${h.health - before} 点生命，现为 ${h.health}`, 'hero');
+  if (h.health > before) {
+    log(s, `${h.name} 回复 ${h.health - before} 点生命，现为 ${h.health}`, 'hero');
+    fx(s, { kind: 'heal', seat: h.seat, value: h.health - before });
+  }
 }
 
 export function addStatus(s: GameState, h: Hero, kind: StatusKind, n: number, why: string) {
   if (n <= 0 || isOver(s)) return;
   h.status[kind] = Math.min(10, h.status[kind] + n);
+  fx(s, { kind: 'status', seat: h.seat });
   log(s, `${h.name} 获得 ${n} 个${STATUS_NAME[kind]}标记（${why}）`, 'boss');
 }
 
@@ -111,6 +122,7 @@ export function curseHero(s: GameState, h: Hero, n: number, why: string, immedia
     }
     // immediate：魔王能力写明"立即执行"的官方例外（三头食人妖·咒骂等）——直接翻开
     h.curses.push({ id: s.curseDeck.pop()!, state: immediate ? 'active' : 'down' });
+    fx(s, { kind: 'curse', seat: h.seat });
     log(s, `${h.name} 抽到 1 张诅咒（${why}）${immediate ? '，立即生效' : '，背面朝上放在英雄旁'}`, 'boss');
   }
 }
@@ -203,8 +215,14 @@ export function distributeShields(s: GameState, total: number, min = 1, types: D
 
 /** 目标"生命最高/最低"并列时官方由玩家自选；第一阶段按座位顺序取第一位 */
 export function highestHealth(s: GameState): Hero {
-  return s.heroes.reduce((a, b) => (b.health > a.health ? b : a));
+  return noteTie(s, s.heroes.reduce((a, b) => (b.health > a.health ? b : a)));
 }
 export function lowestHealth(s: GameState): Hero {
-  return s.heroes.reduce((a, b) => (b.health < a.health ? b : a));
+  return noteTie(s, s.heroes.reduce((a, b) => (b.health < a.health ? b : a)));
+}
+/** 记下并列：计划阶段结束后，指向这名英雄的攻击可由玩家改给并列的其他人（官方） */
+function noteTie(s: GameState, h: Hero): Hero {
+  const seats = s.heroes.filter((x) => x.health === h.health).map((x) => x.seat);
+  if (seats.length > 1 && s.ties) s.ties.push({ seats, chosen: h.seat });
+  return h;
 }

@@ -24,7 +24,21 @@ import { feel } from "../drawing/feel.ts";
 import { createBFRoom, savedName, useBFRoom } from "./bf-net.ts";
 import { ICON_PATHS } from "./icon-paths.ts";
 import "./bf.css";
-import { HIT_FX, SHIELD_FX, StatusLoop, avatarUrl, bgUrl, bossUrl, cardArtUrl, frameUrl, heroUrl, partUrl, useFx } from "./art.tsx";
+import { isMuted, preloadSfx, setMusic, sfx, toggleMute, trackFor, type Sfx } from "./sound.ts";
+
+/** 引擎视觉事件 → 各组件（魔王面板、英雄卡）播放特效 */
+const fxBus = new EventTarget();
+const emit = (to: string, name: string) => fxBus.dispatchEvent(new CustomEvent(to, { detail: name }));
+function useBus(to: string, fn: (name: string) => void) {
+  const ref = useRef(fn);
+  ref.current = fn;
+  useEffect(() => {
+    const h = (e: Event) => ref.current((e as CustomEvent<string>).detail);
+    fxBus.addEventListener(to, h);
+    return () => fxBus.removeEventListener(to, h);
+  }, [to]);
+}
+import { HIT_FX, SHIELD_FX, type FxName, StatusLoop, avatarUrl, bgUrl, bossUrl, cardArtUrl, frameUrl, heroUrl, partUrl, useFx } from "./art.tsx";
 
 type Net = ReturnType<typeof useBFRoom>;
 type ViewHero = BFView["heroes"][number];
@@ -83,6 +97,11 @@ export function BossFighters() {
 function RoomView({ code }: { code: string }) {
   const net = useBFRoom(code);
   const { snap } = net;
+  const bossNow = snap?.stage === "game" && snap.view ? snap.view.bossId : null;
+  useEffect(() => {
+    setMusic(trackFor(bossNow));
+    return () => setMusic(null);
+  }, [bossNow]);
   if (net.error && !snap) return <div className="bf-world bf-center">{net.error}<a className="bf-btn" href="/">回大厅</a></div>;
   if (!snap) return <div className="bf-world bf-center">正在进入房间…</div>;
   const seated = snap.seats.some((s) => s.id === snap.me);
@@ -137,7 +156,8 @@ function Lobby({ net, snap, seated }: { net: Net; snap: BFRoomSnapshot; seated: 
   const [msg, setMsg] = useState("");
   const [copied, setCopied] = useState(false);
   const act = async (a: Parameters<Net["lobby"]>[0]) => {
-    feel("tap");
+    feel("tap", { sound: false });
+    sfx("tap");
     setMsg((await net.lobby(a)) ?? "");
   };
   const camp = snap.campaign;
@@ -298,7 +318,7 @@ function LootPanel({ net, snap }: { net: Net; snap: BFRoomSnapshot }) {
             <CardFace key={c} id={c} selected={mine === c} dim={owner !== undefined && Number(owner) !== mySeat}
               onClick={async () => {
                 if (mySeat < 0) return;
-                feel("select");
+                feel("select", { sound: false });
                 setMsg((await net.lobby({ type: "PICK_LOOT", card: c })) ?? "");
               }}
               badge={owner !== undefined ? snap.seats[Number(owner)]?.name : undefined}
@@ -351,17 +371,63 @@ function Battle({ net, snap }: { net: Net; snap: BFRoomSnapshot }) {
     setSel(null);
     setDiscards([]);
   }, [v.phase, v.round]);
+  // 引擎视觉事件：只处理新增的（进入画面时不重放旧事件）
+  const seen = useRef(v.fx?.length ? v.fx[v.fx.length - 1].n : 0);
   useEffect(() => {
-    if (myTurn) feel("turn");
+    preloadSfx(["hit-melee", "hit-ranged", "hit-magic", "shield-break", "boss-attack", "hurt", "heal", "protect", "play"]);
+  }, []);
+  useEffect(() => {
+    const fresh = (v.fx ?? []).filter((e) => e.n > seen.current);
+    if (!fresh.length) return;
+    seen.current = fresh[fresh.length - 1].n;
+    let roared = false;
+    fresh.forEach((e, i) => {
+      const at = () => {
+        const t = e.type ?? "melee";
+        if (e.kind === "hit" || e.kind === "part") {
+          emit("boss", HIT_FX[t]);
+          sfx(("hit-" + t) as Sfx);
+        } else if (e.kind === "shield") {
+          emit("boss", SHIELD_FX[t]);
+          sfx("shield-break");
+        } else if (e.kind === "bossAttack") {
+          if (!roared) sfx("boss-attack");
+          roared = true;
+          emit("hero:" + e.seat, "boss-claw");
+          sfx("hurt");
+        } else if (e.kind === "blocked" || e.kind === "protect") {
+          emit("hero:" + e.seat, "protect");
+          sfx("protect");
+        } else if (e.kind === "heal") {
+          emit("hero:" + e.seat, "heal");
+          sfx("heal");
+        } else if (e.kind === "curse") sfx("curse");
+        else if (e.kind === "status") sfx("status");
+      };
+      // 同一批事件依次播放，攻击阶段一下一下打出来
+      if (i === 0) at();
+      else setTimeout(at, Math.min(i, 8) * 260);
+    });
+  }, [v.fx?.length ? v.fx[v.fx.length - 1].n : 0]);
+  useEffect(() => {
+    if (v.phase === "won") sfx("boss-down");
+  }, [v.phase]);
+  useEffect(() => {
+    if (myTurn) sfx("turn");
+    if (myTurn) feel("turn", { sound: false });
   }, [myTurn]);
   useEffect(() => {
-    if (over) feel(v.phase === "won" ? "win" : "lose");
+    if (over) {
+      feel(v.phase === "won" ? "win" : "lose", { sound: false });
+      setTimeout(() => sfx(v.phase === "won" ? "win" : "lose"), 700);
+    }
   }, [over, v.phase]);
 
   const send = async (intent: Parameters<Net["send"]>[0]) => {
     if (busy.current) return;
     busy.current = true;
-    feel("submit");
+    feel("submit", { sound: false });
+    if (intent.type === "PLAY_CARD") sfx("play");
     const e = await net.send(intent);
     busy.current = false;
     setMsg(e ?? "");
@@ -378,7 +444,7 @@ function Battle({ net, snap }: { net: Net; snap: BFRoomSnapshot }) {
       <TopBar snap={snap} onLog={() => setShowLog(true)} />
       <BossPanel v={v} />
       <EventBanner ev={latestEvent} count={v.events.length} round={v.round} />
-      <Attacks v={v} />
+      <Attacks v={v} canRetarget={v.phase === "chooseStarter" && snap.mySeat >= 0} onRetarget={(attack, target) => send({ type: "RETARGET", attack, target })} />
       <Heroes v={v} mySeat={snap.mySeat} />
 
       <div className="bf-dock">
@@ -390,6 +456,19 @@ function Battle({ net, snap }: { net: Net; snap: BFRoomSnapshot }) {
                 <button key={h.seat} className="bf-btn" data-testid={"bf-starter-" + h.seat} onClick={() => send({ type: "CHOOSE_STARTER", starter: h.seat })}>{h.name}</button>
               ))}
             </div>
+          </div>
+        )}
+        {v.pick && (
+          <div className="bf-prompt bf-pick-panel">
+            <p>{v.pick.seat === snap.mySeat ? v.pick.prompt + (v.pick.kind === "eye" && v.pick.picked.length ? `（已放 ${v.pick.picked.length} 张）` : "") : `等待 ${v.heroes.find((h) => h.seat === v.pick!.seat)?.name} 挑牌…`}</p>
+            {v.pick.seat === snap.mySeat && (
+              <div className="bf-hand bf-hand-wrap">
+                {v.pick.options.map((c, i) => {
+                  const used = v.pick!.kind === "eye" && v.pick!.picked.includes(c) && v.pick!.picked.filter((x) => x === c).length >= v.pick!.options.slice(0, i + 1).filter((x) => x === c).length;
+                  return <CardFace key={c + i} id={c} dim={used} onClick={() => !used && send({ type: "PICK", card: c })} />;
+                })}
+              </div>
+            )}
           </div>
         )}
         {decision && (
@@ -421,7 +500,7 @@ function Battle({ net, snap }: { net: Net; snap: BFRoomSnapshot }) {
                   id={c}
                   selected={v.phase === "discard" ? discards.includes(i) : sel === c + "#" + i}
                   onClick={() => {
-                    feel("select");
+                    feel("select", { sound: false });
                     if (v.phase === "discard") {
                       if (me.discardDone || c === "slime") return;
                       setDiscards((d) => (d.includes(i) ? d.filter((x) => x !== i) : [...d, i]));
@@ -464,6 +543,7 @@ function TopBar({ snap, onLog }: { snap: BFRoomSnapshot; onLog: () => void }) {
       {v.time !== null && (
         <span className="bf-time"><Icon name="hourglass" /> {v.time}</span>
       )}
+      <MuteButton />
       <button className="bf-btn bf-mini" onClick={onLog}>记录</button>
     </div>
   );
@@ -480,22 +560,12 @@ function Bar({ hp, max, cls = "" }: { hp: number; max: number; cls?: string }) {
 
 function BossPanel({ v }: { v: BFView }) {
   const b = v.boss;
-  const prev = useRef({ hp: b.hp, sh: { ...b.shields }, parts: b.parts.map((p) => p.hp).join(), log: v.log.length });
   const [hit, setHit] = useState(0);
   const fx = useFx();
-  useEffect(() => {
-    const p = prev.current;
-    const recent = v.log.slice(p.log).map((l) => l.text).join("");
-    const t = /魔法/.test(recent) ? "magic" : /远程/.test(recent) ? "ranged" : "melee";
-    for (const k of TYPES) if (p.sh[k] > 0 && b.shields[k] === 0) fx.play(SHIELD_FX[k]);
-    const partsNow = b.parts.map((x) => x.hp).join();
-    if (b.hp < p.hp || partsNow !== p.parts) {
-      setHit((x) => x + 1);
-      fx.play(HIT_FX[t]);
-      feel("stamp");
-    }
-    prev.current = { hp: b.hp, sh: { ...b.shields }, parts: partsNow, log: v.log.length };
-  }, [b.hp, b.shields.melee, b.shields.ranged, b.shields.magic, v.log.length]);
+  useBus("boss", (name) => {
+    fx.play(name as FxName);
+    if (name.startsWith("hit-")) setHit((x) => x + 1);
+  });
   const over = v.phase === "won";
   const [pose, setPose] = useState<"idle" | "hit">("idle");
   useEffect(() => {
@@ -561,7 +631,7 @@ function EventBanner({ ev, count, round }: { ev?: BFView["events"][number]; coun
   );
 }
 
-function Attacks({ v }: { v: BFView }) {
+function Attacks({ v, canRetarget, onRetarget }: { v: BFView; canRetarget: boolean; onRetarget: (attack: string, target: number) => void }) {
   if (!v.planned.length) return null;
   return (
     <section className="bf-attacks">
@@ -575,6 +645,16 @@ function Attacks({ v }: { v: BFView }) {
             <li key={a.id}>
               <span className="bf-atk-name">{a.name}</span>
               <span className="bf-atk-target">→ {t?.name}</span>
+              {canRetarget && a.tieOptions && (
+                <span className="bf-tie">
+                  生命并列，可改给：
+                  {a.tieOptions.filter((x) => x !== a.target).map((x) => (
+                    <button key={x} className="bf-btn bf-mini" data-testid={`bf-retarget-${a.id}-${x}`} onClick={() => onRetarget(a.id, x)}>
+                      {v.heroes.find((h) => h.seat === x)?.name}
+                    </button>
+                  ))}
+                </span>
+              )}
               <span className="bf-atk-val">
                 <Icon name="swords" />
                 {a.reducedBy > 0 && a.value >= 0 ? <s>{a.value}</s> : null}
@@ -610,26 +690,12 @@ function Heroes({ v, mySeat }: { v: BFView; mySeat: number }) {
 
 function HeroCard({ h, active, me, incoming }: { h: ViewHero; active: boolean; me: boolean; incoming: number }) {
   const [open, setOpen] = useState(false);
-  const prev = useRef(h.health);
   const [hurt, setHurt] = useState(0);
   const fx = useFx();
-  const prevWards = useRef(h.wards.length);
-  useEffect(() => {
-    if (h.health < prev.current) {
-      setHurt((x) => x + 1);
-      fx.play("boss-claw");
-    } else if (h.health > prev.current) fx.play("heal");
-    prev.current = h.health;
-  }, [h.health]);
-  const prevIn = useRef(incoming);
-  useEffect(() => {
-    if (incoming < prevIn.current && h.health === prev.current) fx.play("protect");
-    prevIn.current = incoming;
-  }, [incoming]);
-  useEffect(() => {
-    if (h.wards.length > prevWards.current) fx.play("protect");
-    prevWards.current = h.wards.length;
-  }, [h.wards.length]);
+  useBus("hero:" + h.seat, (name) => {
+    fx.play(name as FxName);
+    if (name === "boss-claw") setHurt((x) => x + 1);
+  });
   return (
     <div className={`bf-hero${active ? " active" : ""}${me ? " me" : ""}${hurt ? " hurt" : ""}`} key={hurt} onClick={() => setOpen(!open)}>
       <div className="bf-hero-head">
@@ -760,5 +826,14 @@ function Verdict({ net, snap, host }: { net: Net; snap: BFRoomSnapshot; host: bo
         {msg && <p className="bf-error">{msg}</p>}
       </div>
     </div>
+  );
+}
+
+function MuteButton() {
+  const [m, setM] = useState(isMuted());
+  return (
+    <button className="bf-btn bf-mini" aria-pressed={m} data-testid="bf-mute" onClick={() => setM(toggleMute())}>
+      {m ? "🔇 静音" : "🔊 声音"}
+    </button>
   );
 }

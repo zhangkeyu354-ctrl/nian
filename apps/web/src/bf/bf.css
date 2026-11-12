@@ -258,3 +258,7 @@
 .bf-boss-desc span { display: flex; flex-direction: column; gap: 3px; }
 .bf-boss-desc small { color: var(--bf-dim); font-size: 12.5px; line-height: 1.5; }
 @media (max-width: 380px) { .bf-node { width: 46px; height: 46px; } .bf-cardface { width: 116px; } }
+.bf-tie { width: 100%; display: flex; flex-wrap: wrap; gap: 4px; align-items: center; font-size: 12px; color: var(--bf-gold); }
+.bf-pick-panel { background: #241a33; border: 1px solid var(--bf-gold); border-radius: 12px; padding: 8px; }
+.bf-top > .bf-btn:first-of-type { margin-left: auto; }
+.bf-top > :last-child { margin-left: 0; }
