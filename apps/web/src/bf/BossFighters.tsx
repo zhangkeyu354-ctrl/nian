@@ -24,6 +24,7 @@ import { feel } from "../drawing/feel.ts";
 import { createBFRoom, savedName, useBFRoom } from "./bf-net.ts";
 import { ICON_PATHS } from "./icon-paths.ts";
 import "./bf.css";
+import { HIT_FX, SHIELD_FX, StatusLoop, avatarUrl, bgUrl, bossUrl, cardArtUrl, frameUrl, heroUrl, partUrl, useFx } from "./art.tsx";
 
 type Net = ReturnType<typeof useBFRoom>;
 type ViewHero = BFView["heroes"][number];
@@ -85,7 +86,7 @@ function RoomView({ code }: { code: string }) {
   const seated = snap.seats.some((s) => s.id === snap.me);
   const known = !!snap.me;
   return (
-    <div className="bf-world" data-testid="bf-root">
+    <div className="bf-world" data-testid="bf-root" style={{ ["--bf-bgimg" as string]: `url(${bgUrl(snap.stage === "game" && snap.view ? snap.view.bossId : null)})` }}>
       {!net.connected && <div className="bf-reconnect" role="status">重连中…</div>}
       {!known ? (
         <Join net={net} snap={snap} />
@@ -150,8 +151,7 @@ function Lobby({ net, snap, seated }: { net: Net; snap: BFRoomSnapshot; seated: 
           {snap.seats.map((s) => (
             <li key={s.id} className={s.id === snap.me ? "me" : ""}>
               <span className="bf-seat-art">
-                <Icon name={s.race ?? "skull"} />
-                {s.cls && <Icon name={s.cls} cls="bf-seat-cls" />}
+                {s.race && s.cls ? <img src={avatarUrl(s.race, s.cls)} alt="" /> : <Icon name={s.race ?? "skull"} />}
               </span>
               <span className="bf-seat-name">
                 <b>{s.name}{s.host && " · 房主"}{!s.connected && " · 离线"}</b>
@@ -199,6 +199,9 @@ function Lobby({ net, snap, seated }: { net: Net; snap: BFRoomSnapshot; seated: 
             })}
           </div>
           {me.race && me.cls && (
+            <img className="bf-hero-preview" src={heroUrl(me.race, me.cls)} alt={`${IDENTITIES[me.race].name}${IDENTITIES[me.cls].name}`} />
+          )}
+          {me.race && me.cls && (
             <p className="bf-ability">
               <b>{IDENTITIES[me.race].name}能力（2 级起）：</b>{IDENTITIES[me.race].ability}
               <br />
@@ -225,7 +228,7 @@ function Lobby({ net, snap, seated }: { net: Net; snap: BFRoomSnapshot; seated: 
             )}
           </p>
         )}
-        <ol className="bf-bosses">
+        <ol className="bf-bosses" style={{ backgroundImage: "url(/assets/bf/bg/map.webp)" }}>
           {BOSS_ORDER.map((id) => {
             const b = BOSSES[id];
             const open = snap.mode === "single" || b.order <= progress + 1;
@@ -233,7 +236,7 @@ function Lobby({ net, snap, seated }: { net: Net; snap: BFRoomSnapshot; seated: 
             return (
               <li key={id}>
                 <button className={"bf-boss-pick" + (snap.bossId === id ? " on" : "")} disabled={!host || !open} data-testid={"bf-boss-" + id} onClick={() => act({ type: "SET_BOSS", bossId: id })}>
-                  <Icon name={open ? id : "skull"} />
+                  {open ? <img className="bf-boss-thumb" src={bossUrl(id, "idle")} alt="" /> : <Icon name="skull" />}
                   <span>
                     <b>{b.order === 0 ? "教学" : `第 ${b.order} 关`} · {open ? b.name : "未解锁"}</b>
                     {snap.bossId === id && <small>{BOSS_BLURB[id]}</small>}
@@ -308,11 +311,10 @@ function CardFace({ id, selected, dim, onClick, badge }: { id: string; selected?
   const lines = cardText(id);
   return (
     <button className={`bf-cardface k-${kind}${selected ? " sel" : ""}${dim ? " dim" : ""}`} onClick={onClick} data-card={id}>
-      <span className="bf-cf-top">
-        <Icon name={kind === "protect" ? "shield" : kind === "heal" ? "heal" : kind === "slime" ? "slime" : TYPES.includes(kind as DamageType) ? kind : "lightning"} />
-        {c?.stars ? <i className="bf-stars">{"★".repeat(c.stars)}</i> : null}
-      </span>
+      <img className="bf-cf-art" src={cardArtUrl(id)} alt="" loading="lazy" />
+      <img className="bf-cf-frame" src={frameUrl(id)} alt="" />
       <b className="bf-cf-name">{c?.name ?? id}</b>
+      {c?.stars ? <i className="bf-stars">{"★".repeat(c.stars)}</i> : null}
       <span className="bf-cf-text">
         {lines.map((l, i) => (
           <span key={i}>{l}</span>
@@ -470,26 +472,43 @@ function Bar({ hp, max, cls = "" }: { hp: number; max: number; cls?: string }) {
 
 function BossPanel({ v }: { v: BFView }) {
   const b = v.boss;
-  const prev = useRef(b.hp);
+  const prev = useRef({ hp: b.hp, sh: { ...b.shields }, parts: b.parts.map((p) => p.hp).join(), log: v.log.length });
   const [hit, setHit] = useState(0);
+  const fx = useFx();
   useEffect(() => {
-    if (b.hp < prev.current) {
+    const p = prev.current;
+    const recent = v.log.slice(p.log).map((l) => l.text).join("");
+    const t = /魔法/.test(recent) ? "magic" : /远程/.test(recent) ? "ranged" : "melee";
+    for (const k of TYPES) if (p.sh[k] > 0 && b.shields[k] === 0) fx.play(SHIELD_FX[k]);
+    const partsNow = b.parts.map((x) => x.hp).join();
+    if (b.hp < p.hp || partsNow !== p.parts) {
       setHit((x) => x + 1);
+      fx.play(HIT_FX[t]);
       feel("stamp");
     }
-    prev.current = b.hp;
-  }, [b.hp]);
+    prev.current = { hp: b.hp, sh: { ...b.shields }, parts: partsNow, log: v.log.length };
+  }, [b.hp, b.shields.melee, b.shields.ranged, b.shields.magic, v.log.length]);
+  const over = v.phase === "won";
+  const [pose, setPose] = useState<"idle" | "hit">("idle");
+  useEffect(() => {
+    if (!hit) return;
+    setPose("hit");
+    const t = setTimeout(() => setPose("idle"), 450);
+    return () => clearTimeout(t);
+  }, [hit]);
+  const alt = b.phase2 ? "phase2" : (b as { flags?: Record<string, unknown> }).flags?.rage ? "rage" : undefined;
   return (
     <section className="bf-boss">
-      <div className={"bf-boss-art" + (hit ? " hit" : "")} key={hit}>
-        <Icon name={v.bossId} />
+      <div className={"bf-boss-art" + (pose === "hit" ? " hit" : "")}>
+        <img src={bossUrl(v.bossId, over ? "defeated" : pose, alt)} alt={b.name} />
+        {fx.layer}
       </div>
       <div className="bf-boss-info">
         <h2>{b.name}{b.phase2 && " · 第二形态"}</h2>
         <Bar hp={b.hp} max={b.maxHp} cls="boss" />
         <div className="bf-shields">
           {TYPES.map((t) => (
-            <span key={t} className={`bf-shield t-${t}${b.spikedShields.includes(t) ? " spiked" : ""}${b.immune.includes(t) ? " immune" : ""}`} title={TYPE_ZH[t] + "护盾"}>
+            <span key={t} className={`bf-shield t-${t}${b.spikedShields.includes(t) ? " spiked" : ""}${b.immune.includes(t) ? " immune" : ""}${b.shields[t] === 0 ? " broken" : ""}`} title={TYPE_ZH[t] + "护盾"}>
               <Icon name={t} />
               <b>{b.immune.includes(t) ? "免疫" : b.shields[t]}</b>
               {b.spikedShields.includes(t) && <Icon name="spiked" cls="bf-spike" />}
@@ -501,12 +520,15 @@ function BossPanel({ v }: { v: BFView }) {
         </div>
         {b.parts.length > 0 && (
           <ul className="bf-parts">
-            {b.parts.map((p) => (
-              <li key={p.id} className={p.alive ? "" : "down"}>
-                <span>{p.slot && <Icon name={p.slot} />}{p.name}</span>
-                <Bar hp={p.hp} max={p.maxHp} />
-              </li>
-            ))}
+            {b.parts.map((p) => {
+              const art = partUrl(v.bossId, p.id);
+              return (
+                <li key={p.id} className={p.alive ? "" : "down"}>
+                  <span>{art ? <img className="bf-part-art" src={art} alt="" /> : p.slot && <Icon name={p.slot} />}{p.name}</span>
+                  <Bar hp={p.hp} max={p.maxHp} />
+                </li>
+              );
+            })}
           </ul>
         )}
       </div>
@@ -582,14 +604,32 @@ function HeroCard({ h, active, me, incoming }: { h: ViewHero; active: boolean; m
   const [open, setOpen] = useState(false);
   const prev = useRef(h.health);
   const [hurt, setHurt] = useState(0);
+  const fx = useFx();
+  const prevWards = useRef(h.wards.length);
   useEffect(() => {
-    if (h.health < prev.current) setHurt((x) => x + 1);
+    if (h.health < prev.current) {
+      setHurt((x) => x + 1);
+      fx.play("boss-claw");
+    } else if (h.health > prev.current) fx.play("heal");
     prev.current = h.health;
   }, [h.health]);
+  const prevIn = useRef(incoming);
+  useEffect(() => {
+    if (incoming < prevIn.current && h.health === prev.current) fx.play("protect");
+    prevIn.current = incoming;
+  }, [incoming]);
+  useEffect(() => {
+    if (h.wards.length > prevWards.current) fx.play("protect");
+    prevWards.current = h.wards.length;
+  }, [h.wards.length]);
   return (
     <div className={`bf-hero${active ? " active" : ""}${me ? " me" : ""}${hurt ? " hurt" : ""}`} key={hurt} onClick={() => setOpen(!open)}>
       <div className="bf-hero-head">
-        <span className="bf-hero-art"><Icon name={h.race} /><Icon name={h.cls} cls="bf-seat-cls" /></span>
+        <span className="bf-hero-art">
+          <img src={avatarUrl(h.race, h.cls)} alt="" />
+          {STATUSES.filter((k) => h.status[k] > 0).slice(0, 1).map((k) => <StatusLoop key={k} kind={k} />)}
+          {fx.layer}
+        </span>
         <b>{h.name}</b>
         {active && <em className="bf-turn">行动中</em>}
       </div>
@@ -697,7 +737,7 @@ function Verdict({ net, snap, host }: { net: Net; snap: BFRoomSnapshot; host: bo
   return (
     <div className="bf-overlay">
       <div className={"bf-verdict " + (won ? "won" : "lost")}>
-        <Icon name={won ? "crown" : "skull"} cls="bf-verdict-icon" />
+        {won ? <img className="bf-verdict-art" src={bossUrl(v.bossId, "defeated")} alt="" /> : <Icon name="skull" cls="bf-verdict-icon" />}
         <h2>{won ? "讨伐成功！" : "讨伐失败"}</h2>
         <p>{won ? `${v.boss.name} 被打倒了（第 ${v.round} 回合）` : `${v.boss.name} 还站着。调整策略再来一次！`}</p>
         {snap.campaign?.pendingLoot && <LootPanel net={net} snap={snap} />}
