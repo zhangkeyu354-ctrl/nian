@@ -33,6 +33,8 @@ const DIFF_ZH: Record<Difficulty, string> = { beginner: "新手", advanced: "进
 const DIFFS: Difficulty[] = ["beginner", "advanced", "pro", "insane"];
 const STATUSES: StatusKind[] = ["poison", "fire", "panic", "paralysis"];
 const TYPES: DamageType[] = ["melee", "ranged", "magic"];
+/** 战役地图上 11 个关卡的位置（百分比，沿地图小路从下到上） */
+const MAP_POS: [number, number][] = [[44, 91], [70, 80], [58, 69], [32, 59], [48, 52], [70, 45], [50, 37], [30, 29], [62, 23], [28, 14], [74, 6]];
 
 /** 每关一句话介绍（按官方魔王说明概括） */
 const BOSS_BLURB: Record<string, string> = {
@@ -228,25 +230,31 @@ function Lobby({ net, snap, seated }: { net: Net; snap: BFRoomSnapshot; seated: 
             )}
           </p>
         )}
-        <ol className="bf-bosses" style={{ backgroundImage: "url(/assets/bf/bg/map.webp)" }}>
-          {BOSS_ORDER.map((id) => {
+        <div className="bf-map" style={{ backgroundImage: "url(/assets/bf/bg/map.webp)" }}>
+          {BOSS_ORDER.map((id, n) => {
             const b = BOSSES[id];
             const open = snap.mode === "single" || b.order <= progress + 1;
             const best = camp?.results[id]?.best;
+            const [x, y] = MAP_POS[n] ?? [50, 50];
+            const cur = snap.mode === "campaign" && b.order === progress + 1;
             return (
-              <li key={id}>
-                <button className={"bf-boss-pick" + (snap.bossId === id ? " on" : "")} disabled={!host || !open} data-testid={"bf-boss-" + id} onClick={() => act({ type: "SET_BOSS", bossId: id })}>
-                  {open ? <img className="bf-boss-thumb" src={bossUrl(id, "idle")} alt="" /> : <Icon name="skull" />}
-                  <span>
-                    <b>{b.order === 0 ? "教学" : `第 ${b.order} 关`} · {open ? b.name : "未解锁"}</b>
-                    {snap.bossId === id && <small>{BOSS_BLURB[id]}</small>}
-                  </span>
-                  {best && <em>✓ {DIFF_ZH[best]}</em>}
-                </button>
-              </li>
+              <button key={id} className={`bf-node${snap.bossId === id ? " on" : ""}${open ? "" : " locked"}${cur ? " cur" : ""}${best ? " done" : ""}`}
+                style={{ left: x + "%", top: y + "%" }} disabled={!host || !open} data-testid={"bf-boss-" + id}
+                aria-label={open ? b.name : "未解锁"} onClick={() => act({ type: "SET_BOSS", bossId: id })}>
+                {open ? <img src={bossUrl(id, "idle")} alt="" /> : <Icon name="skull" />}
+                <i>{b.order === 0 ? "教" : b.order}</i>
+                {best && <em>✓</em>}
+              </button>
             );
           })}
-        </ol>
+        </div>
+        <div className="bf-boss-desc">
+          <img src={bossUrl(snap.bossId, "idle")} alt="" />
+          <span>
+            <b>{BOSSES[snap.bossId].order === 0 ? "教学" : `第 ${BOSSES[snap.bossId].order} 关`} · {BOSSES[snap.bossId].name}</b>
+            <small>{BOSS_BLURB[snap.bossId]}</small>
+          </span>
+        </div>
         <div className="bf-seg">
           {DIFFS.map((d) => (
             <button key={d} className={"bf-btn" + (snap.difficulty === d ? " on" : "")} disabled={!host} aria-pressed={snap.difficulty === d} onClick={() => act({ type: "SET_DIFFICULTY", difficulty: d })}>
@@ -541,7 +549,7 @@ function EventBanner({ ev, count, round }: { ev?: BFView["events"][number]; coun
   useEffect(() => {
     if (!ev) return;
     setShow(true);
-    const t = setTimeout(() => setShow(false), 3200);
+    const t = setTimeout(() => setShow(false), 2200);
     return () => clearTimeout(t);
   }, [count, round]);
   if (!ev || !show) return null;
