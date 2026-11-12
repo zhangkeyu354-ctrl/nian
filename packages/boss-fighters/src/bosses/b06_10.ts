@@ -36,8 +36,8 @@ const deadTentacles = (s: GameState) => s.boss.parts.filter((p) => !p.alive).len
 export const tentacolossus: BossModule = {
   id: 'tentacolossus', name: '巨触手', order: 6,
   setup(s) {
-    s.boss.maxHp = s.boss.hp = scaleHp(s, TC.bodyHpPerHero * N(s));
-    const hp = scaleHp(s, TC.tentacleHpPerHero * N(s));
+    s.boss.maxHp = s.boss.hp = scaleHp(s, TC.bodyHpBase + TC.bodyHpPerHero * N(s));
+    const hp = scaleHp(s, TC.tentacleHpBase + TC.tentacleHpPerHero * N(s));
     s.boss.parts = TENTACLES.map((t) => ({ id: t.id, name: t.name, hp, maxHp: hp, alive: true, slot: t.type, tag: t.kind }));
   },
   shields: () => null,
