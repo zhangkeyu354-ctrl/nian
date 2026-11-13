@@ -119,7 +119,7 @@ export const OGRE = {
 
 // ———— 第 6–10 关（实测极少，主要按官方能力文字设计的【暂定】数值）————
 export const TENTACOLOSSUS = {
-  bodyHpBase: -12, bodyHpPerHero: 20, tentacleHpBase: -3, tentacleHpPerHero: 7, // 平衡模拟：原 18N 时 4 人过易、2 人过难
+  bodyHpBase: -14, bodyHpPerHero: 20, tentacleHpBase: -3, tentacleHpPerHero: 7, // 平衡模拟：原 18N 时 4 人过易、2 人过难
   bodyShare: 1, // 有触手存活时本体受到的"极少伤害"
   replacementMult: 0.5,
   attack: 5,
@@ -150,7 +150,7 @@ export const BOMBOSSA_ATTACKS = [
 
 export const BOMBOSSA = {
   hpPerHero: 20, shieldPerHero: 1, shieldExtra: 3,
-  timeBase: -2, timePerHero: 12, segment: 6, // 每人约 11–12 次行动的时间
+  timeBase: -5, timePerHero: 12, segment: 6, // 每人约 11–12 次行动的时间
   attackEvery: 0.2, attackValue: 7, fuseDamage: 3,
   bombHpPerHero: 2, bombFuse: 2,
   tickingDiscard: 3,

@@ -9,3 +9,4 @@ export { botCommand, botFor, runBotGame } from './bot.ts';
 export * from './campaign.ts';
 export * from './describe.ts';
 export { handLimit } from './engine/core.ts';
+export { TAUNTS } from './defs/taunts.ts';

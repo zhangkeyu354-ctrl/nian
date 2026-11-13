@@ -134,7 +134,7 @@ export const aetherDragon: BossModule = {
     if (!s.boss.flags.rage && s.boss.hp > 0 && s.boss.hp <= s.boss.maxHp * AD.rageAt) {
       s.boss.flags.rage = true;
       s.boss.attackBonus += AD.rageBonus;
-      banner(s, 'healthloss', '以太龙暴怒', '以太龙的攻击变得极其猛烈。');
+      banner(s, 'healthloss', '放手一搏', flying(s) ? '恶龙受伤太重，不能飞起和着陆。它正垂死挣扎。' : '恶龙受伤太重，不能再飞起。它正垂死挣扎。');
     }
   },
   afterAnyAction() {},
@@ -157,10 +157,10 @@ export const aetherDragon: BossModule = {
     if (flying(s) && (s.boss.counters.dmgThisRound >= landAt || s.round + 1 >= AD.forceLandRound)) {
       s.boss.flags.ground = true;
       s.boss.counters.groundActions = 0;
-      banner(s, 'healthloss', '以太龙降落地面', '在地面，以太龙的护盾强，但攻击力弱。你可以用所有属性攻击他。');
-    } else if (!flying(s) && s.round + 1 < AD.forceLandRound && s.boss.counters.groundActions >= AD.takeOffActions) {
+      banner(s, 'healthloss', '着陆', '以太龙着陆。魔王的攻击变弱了。你可以用所有属性攻击它。');
+    } else if (!flying(s) && !s.boss.flags.rage && s.round + 1 < AD.forceLandRound && s.boss.counters.groundActions >= AD.takeOffActions) {
       s.boss.flags.ground = false;
-      banner(s, 'healthloss', '以太龙再次起飞', '你只能用远程及魔法攻击他。');
+      banner(s, 'healthloss', '猛龙之怒', '以太龙已经给你足够时间了，它攻击你！恶龙飞起来了。试着把它拉下来吧！');
     }
   },
   onCardResolved(s) {
@@ -181,7 +181,12 @@ export const stoneGolem: BossModule = {
   shields(s) {
     // 每回合一个护盾带"危险护盾碎片"标记（实拍：只有一个护盾带标记）
     s.boss.spikedShields = [pick(s, ['melee', 'ranged', 'magic'] as DamageType[])];
-    return distributeShields(s, scaleShield(s, SG.shieldPerHero * N(s) + SG.shieldExtra));
+    // [round] 石甲：魔王的护盾值增加（官方；每 3 回合 +1、每次完全充能 +1 为暂定）
+    if (s.round > 1 && s.round % 3 === 1) {
+      s.boss.counters.armor = (s.boss.counters.armor ?? 0) + 1;
+      banner(s, 'round', '石甲', '魔王的护盾值增加。');
+    }
+    return distributeShields(s, scaleShield(s, SG.shieldPerHero * N(s) + SG.shieldExtra) + (s.boss.counters.armor ?? 0));
   },
   hint: (s) => ({ avoid: s.boss.spikedShields.filter((t) => s.boss.shields[t] > 0) }),
   plan(s) {
@@ -204,8 +209,9 @@ export const stoneGolem: BossModule = {
     const b = s.boss.counters;
     if (b.level >= 1) {
       const d = b.level + 1; // 实测：充能等级 2 时提示每次 3 伤害
-      if (trapHits(s, h, '石精攻击')) {
-        banner(s, 'trap', '石精攻击', `${h.name}，你失去 ${d} 点生命值。`);
+      const tier = b.level >= 3 ? '惊人石精攻击' : b.level === 2 ? '强化石精攻击' : '石精攻击';
+      if (trapHits(s, h, tier)) {
+        banner(s, 'trap', tier, `${h.name}，你失去 ${d} 点生命值。`);
         damageHero(s, h, d, '石精攻击');
       }
     }
@@ -214,6 +220,8 @@ export const stoneGolem: BossModule = {
       b.charge = 0;
       b.level += 1;
       banner(s, 'trap', '充能', `石魔像完全充能（等级 ${b.level}）。之后每打出 1 张有闪电的卡，石精便会对你造成伤害。`);
+      b.armor = (b.armor ?? 0) + 1;
+      banner(s, 'trap', '护盾增强', '石魔像的皮肤变坚硬。');
     }
   },
   afterAttack(s) {
@@ -299,7 +307,7 @@ export const ogre: BossModule = {
       const need = OGRE.stunBase + N(s) + s.boss.counters.stunExtra;
       if (!s.boss.flags.stunned && s.boss.counters.dmgToDominant >= need) {
         s.boss.flags.stunned = true;
-        banner(s, 'trap', `${part.name}被击晕`, '它的强化能力会大幅弱化。');
+        banner(s, 'trap', `你击晕了${part.name}`, '希望时候刚刚好吧……他的强化能力会大幅弱化。');
       }
     }
     s.boss.hp = s.boss.parts.reduce((t, p) => t + Math.max(0, p.hp), 0);

@@ -20,6 +20,7 @@ export const puppet: BossModule = {
   },
   plan(s) {
     const tired = s.round >= PUPPET.tiredFrom ? s.round - PUPPET.tiredFrom + 1 : 0;
+    if (s.round === PUPPET.tiredFrom) banner(s, 'round', '虚耗', '木偶先生虚耗了。趁机打倒他！');
     return s.heroes.map((h) =>
       s.round === 1
         ? attack(s, h.seat, 'Attack_MrPuppet_Rundumschlag', '横扫千军', scaleAttack(s, PUPPET.sweep))

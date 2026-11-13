@@ -49,11 +49,11 @@ export const tentacolossus: BossModule = {
     const minus = deadTentacles(s) >= 1 ? 1 : 0; // 打残 1 只：攻击力永久减少
     // 官方攻击就是各条触手（腐烂/剧毒/厄运/诅咒/吸星/重生触手），由存活的触手出手；附加效果【暂定】
     const KEY: Record<string, string> = { rot: 'Tentakelgift', toxic: 'Tentakelstachel', doom: 'Verdammnistentakel', curse: 'Fluchtentakel', drain: 'Erholungstentakel', regen: 'Regenerationstentakel' };
-    const EXTRA: Record<string, AttackExtra> = { rot: { lost: 1 }, toxic: { poison: 1 }, curse: { curse: 1 } };
+    const EXTRA: Record<string, AttackExtra> = { toxic: { poison: 1 } }; // 其余触手的附加效果未知，不加
     const liveT = TENTACLES.filter((t) => s.boss.parts.some((x) => x.id === t.id && x.alive));
     const p = s.heroes.map((h) => {
       const t = liveT.length ? pick(s, liveT) : TENTACLES[int(s, TENTACLES.length)];
-      const v = Math.max(1, scaleAttack(s, TC.attack) - minus + (t.id === 'doom' ? 1 : 0));
+      const v = Math.max(1, scaleAttack(s, TC.attack) - minus);
       return attack(s, h.seat, `Attack_Tentacolossus_${KEY[t.id]}`, t.name, v, EXTRA[t.id] ?? {});
     });
     if (deadTentacles(s) >= 2 && !s.boss.flags.inked) {
@@ -96,7 +96,7 @@ export const tentacolossus: BossModule = {
   },
   onPartDefeated(s, _h, p) {
     const d = deadTentacles(s);
-    banner(s, 'healthloss', `打残${p.name}`, d === 1 ? '魔王在余下战斗的攻击力会减少。' : d === 4 ? '弱点：你对巨触手造成的伤害会更大。' : d === 6 ? '恼人墨汁：全部触手都被打残了，直接攻击本体！' : `已打残 ${d} 只触手。`);
+    banner(s, 'healthloss', `打残${p.name}`, d === 1 ? '魔王在余下战斗的攻击力会减少。' : d === 4 ? '弱点：你对巨触手造成的伤害会更大。' : d === 6 ? '巨触手无手了：巨触手用头上尖刺作最后防御。直接攻击本体！' : `已打残 ${d} 只触手。`);
   },
   onBossDamaged(s, h) {
     if (h) s.boss.counters.attackedMask |= 1 << h.seat;
@@ -143,6 +143,13 @@ export const tentacolossus: BossModule = {
     } else if (which === 1) roundAbility(s, '停滞时间', '每位英雄获得 1 个麻痹标记。', () => s.heroes.forEach((h) => addStatus(s, h, 'paralysis', 1, '停滞时间')));
     else if (which === 2) roundAbility(s, '腐烂时间', '每位英雄获得 1 个中毒标记。', () => s.heroes.forEach((h) => addStatus(s, h, 'poison', 1, '腐烂时间')));
     else roundAbility(s, '黑暗时间', '每位英雄获得 1 个惊恐标记。', () => s.heroes.forEach((h) => addStatus(s, h, 'panic', 1, '黑暗时间')));
+  },
+  onHeroHit(s, h, _dmg, a) {
+    // [attack] 烧成灰烬（官方）：被魔王攻击打中时，每持有 1 个着火标记，移除 1 张牌库顶牌
+    if (!a.nameKey.startsWith('Attack_Magmaros') || !h.status.fire) return;
+    let n = 0;
+    for (let i = 0; i < h.status.fire && h.deck.length; i++) { h.exiled.push(h.deck.pop()!); n++; }
+    if (n) banner(s, 'attack', '烧成灰烬', `${h.name}，你每持有 1 个着火标记，将 1 张牌库顶牌移除到场外（共 ${n} 张）。`);
   },
   poisonMult: () => 0.5, // 巨触手对中毒更有抵抗力
   hint(s) {
@@ -206,6 +213,10 @@ export const magmaros: BossModule = {
       banner(s, 'shield', '愤怒熔岩王', `魔王对 ${h.name} 的攻击更猛烈。`);
       for (const a of s.planned) if (a.target === h.seat) {
         a.value += MG.rangedRage;
+        if (a.reducedBy > 0) {
+          a.value += 1;
+          banner(s, 'shield', '更愤怒的熔岩王', '熔岩王不爽你攻击他的灰烬手下，更加不爽你抵挡了他的攻击。');
+        }
         // 官方有 4 个"愤怒"版攻击（*2），对应关系为推断
         const RAGE: Record<string, [string, string]> = {
           Attack_Magmaros_Glutfaust: ['Attack_Magmaros_Flammengriff2', '毁灭烈火爪'],
@@ -284,6 +295,7 @@ const BOMBS = [
   { id: 'fire', name: '燃烧弹', text: '每位英雄获得 1 个着火标记。' },
   { id: 'card', name: '卡牌炸弹', text: '每人弃置 1 张手牌。' },
   { id: 'time', name: '时间炸弹', text: '剩余时间减 2。' },
+  { id: 'heal', name: '治疗炸弹', text: '这个炸弹治疗炸弹克精！' },
 ];
 function bombExplode(s: GameState, id: string) {
   const b = BOMBS.find((x) => x.id === id)!;
@@ -296,6 +308,7 @@ function bombExplode(s: GameState, id: string) {
     if (id === 'card' && h.hand.length) h.discard.push(h.hand.splice(int(s, h.hand.length), 1)[0]);
   }
   if (id === 'time' && s.time !== null) s.time = Math.max(0, s.time - 2);
+  if (id === 'heal') healBoss(s, 2 * N(s), '治疗炸弹');
 }
 
 /** 时间段结束：状态、弃抽、护盾、炸弹倒数（05 C5：致死先于时间耗尽判定） */
@@ -318,6 +331,8 @@ function segmentEnd(s: GameState) {
   }
   if (s.boss.poison) loseBossHp(s, Math.floor(s.boss.poison * 0.5), '中毒');
   s.attackedTypes = { melee: false, ranged: false, magic: false };
+  for (const h of s.heroes) h.turn = { attackedTypes: [], firstHitDone: false, firstShieldHit: false, firstProtect: false };
+  banner(s, 'round', '喘息', '精灵与德鲁伊的能力重置。');
   s.boss.shields = distributeShields(s, scaleShield(s, BB.shieldPerHero * N(s) + BB.shieldExtra));
   // 炸弹倒数
   for (const p of s.boss.parts.filter((x) => x.alive)) {
@@ -363,7 +378,14 @@ export const bombossa: BossModule = {
     s.boss.counters.ticking = 0;
   },
   shields: (s) => distributeShields(s, scaleShield(s, BB.shieldPerHero * N(s) + BB.shieldExtra)),
-  plan: () => [], // 炸弹克精只会在承受一定伤害后才会攻击你（官方）
+  plan(s) {
+    // 炸弹克精只会在承受一定伤害后才会攻击你（官方）。开场先说明特别规则（官方提示原文）
+    if (s.round === 1) {
+      banner(s, 'round', '时间无多', '要打败炸弹克精，你只得有限的时间。每次你进行1个行动，你的剩余时间会减1。额外行动则不会扣减时间。');
+      banner(s, 'round', '重要∶特别规则', '在今场讨伐战中，你结算打出的行动牌后，立刻将它们放到你的弃牌堆。');
+    }
+    return [];
+  },
   routeDamage(s, _h, type) {
     const bomb = s.boss.parts.find((p) => p.alive && p.slot === type);
     return bomb ? { part: bomb } : {};
@@ -387,13 +409,17 @@ export const bombossa: BossModule = {
       if (s.boss.counters.attacks % 2 === 0) {
         banner(s, 'healthloss', '引线轰击', `炸弹克精用引线攻击你。每位英雄失去 ${BB.fuseDamage} 点生命值及获得 1 个着火标记。`);
         for (const h of s.heroes) { damageHero(s, h, scaleAttack(s, BB.fuseDamage), '引线轰击'); addStatus(s, h, 'fire', 1, '引线轰击'); }
+        if (!isOver(s)) {
+          s.boss.counters.shortFuse = (s.boss.counters.shortFuse ?? 0) + 1;
+          banner(s, 'healthloss', '短引线', '炸弹克精的引线变短，其攻击会变弱！');
+        }
       } else {
         const a = BOMBOSSA_ATTACKS[Math.floor(s.boss.counters.attacks / 2) % BOMBOSSA_ATTACKS.length];
         const targets = a.all ? s.heroes : [highestHealth(s)];
         banner(s, 'healthloss', a.name, a.all ? `炸弹克精攻击所有英雄。` : `炸弹克精攻击 ${targets[0].name}。`);
         for (const h of targets) {
           fx(s, { kind: 'bossAttack', seat: h.seat, value: a.value });
-          damageHero(s, h, scaleAttack(s, a.value), a.name);
+          damageHero(s, h, Math.max(1, scaleAttack(s, a.value) - (s.boss.counters.shortFuse ?? 0)), a.name);
           if (a.extra.fire && !isOver(s)) addStatus(s, h, 'fire', a.extra.fire, a.name);
         }
       }
@@ -422,7 +448,7 @@ export const bombossa: BossModule = {
     if (s.phase === 'action' && s.time <= 0) {
       s.phase = 'lost';
       s.current = null;
-      banner(s, 'trap', '易爆', '时间到 0，炸弹克精爆炸了。');
+      banner(s, 'trap', '炸弹克精爆炸', '时间到。你输了！');
     }
   },
   poisonMult: () => 0.5,
@@ -548,6 +574,7 @@ export const madameVoodoo: BossModule = {
     return sh;
   },
   plan(s) {
+    if (s.round === VD.soulCutRounds + 1) banner(s, 'round', '割魂结束', '巫毒天后太虚弱了，不能再偷你的灵魂。现在起，你再次有3个行动。');
     s.boss.counters.typeHits_melee = s.boss.counters.typeHits_ranged = s.boss.counters.typeHits_magic = 0;
     s.boss.immune = s.boss.phase2 ? s.boss.immune : [];
     s.boss.flags.decayed = false;
@@ -642,7 +669,7 @@ export const madameVoodoo: BossModule = {
     if (TYPES.indexOf(type) === s.boss.counters.boneShield) { banner(s, 'shield', '骸骨护盾', '巫毒天后治疗自己。'); healBoss(s, 2, '骸骨护盾'); }
     if (TYPES.indexOf(type) === s.boss.counters.voodooShield) {
       const d = s.heroes.find((x) => x.carriesDoll) ?? h;
-      banner(s, 'shield', '巫毒护盾', `持有巫毒人偶的 ${d.name} 失去 2 点生命值。`);
+      banner(s, 'trap', '针螫痛楚', `持有巫毒人偶的 ${d.name} 失去 2 点生命值。`);
       damageHero(s, d, 2, '巫毒护盾');
     }
   },
@@ -707,7 +734,7 @@ export const madameVoodoo: BossModule = {
     s.boss.maxHp = s.boss.hp = scaleHp(s, VD.phase2HpPerHero * N(s));
     s.heroes.forEach((h) => (h.carriesDoll = false));
     pick(s, s.heroes).carriesDoll = true;
-    banner(s, 'healthloss', '复生', '巫毒天后复生了，并且受骸骨与巫毒护盾保护。一位英雄必须将巫毒人偶放在自己面前。');
+    banner(s, 'healthloss', '复活', '魔王从地狱归来，起舞着。并且受骸骨与巫毒护盾保护。一位英雄必须将巫毒人偶放在自己面前。');
     return true;
   },
   poisonMult: (s) => (undead(s, 'rot') ? 0 : 1),

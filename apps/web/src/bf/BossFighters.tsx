@@ -9,6 +9,7 @@ import {
   ITEM_ZH,
   RACES,
   STATUS_ZH,
+  TAUNTS,
   TYPE_ZH,
   cardKind,
   cardNeedsTarget,
@@ -264,6 +265,7 @@ function Lobby({ net, snap, seated }: { net: Net; snap: BFRoomSnapshot; seated: 
                 {open ? <img src={bossUrl(id, "idle")} alt="" /> : <Icon name="skull" />}
                 <i>{b.order === 0 ? "教" : b.order}</i>
                 {best && <em>✓</em>}
+                {!!camp?.results[id]?.losses && <u>☠{camp.results[id].losses}</u>}
               </button>
             );
           })}
@@ -437,13 +439,13 @@ function Battle({ net, snap }: { net: Net; snap: BFRoomSnapshot }) {
   const limit = me ? Math.max(0, me.handLimit - me.status.paralysis - me.curses.filter((c) => c.state === "active").reduce((t, c) => t + (CURSE_BY_ID[c.id]?.handMinus ?? 0), 0)) : 0;
   const mustDiscard = me && v.phase === "discard" && !me.discardDone ? Math.max(0, me.hand.length - limit) : 0;
   const decision = v.phase === "decision" ? v.decisions[0] : null;
-  const latestEvent = v.events[v.events.length - 1];
 
   return (
     <div className={"bf-battle" + (myTurn ? " my-turn" : "")}>
       <TopBar snap={snap} onLog={() => setShowLog(true)} />
       <BossPanel v={v} />
-      <EventBanner ev={latestEvent} count={v.events.length} round={v.round} />
+      <Taunt v={v} />
+      <EventBanner v={v} />
       <Attacks v={v} canRetarget={v.phase === "chooseStarter" && snap.mySeat >= 0} onRetarget={(attack, target) => send({ type: "RETARGET", attack, target })} />
       <Heroes v={v} mySeat={snap.mySeat} />
 
@@ -614,19 +616,50 @@ function BossPanel({ v }: { v: BFView }) {
   );
 }
 
-function EventBanner({ ev, count, round }: { ev?: BFView["events"][number]; count: number; round: number }) {
-  const [show, setShow] = useState(false);
+/** 魔王能力横幅：同时触发多个时排队依次显示 */
+function EventBanner({ v }: { v: BFView }) {
+  const [queue, setQueue] = useState<BFView["events"]>([]);
+  const seen = useRef({ round: v.round, n: v.events.length });
   useEffect(() => {
-    if (!ev) return;
-    setShow(true);
-    const t = setTimeout(() => setShow(false), 2200);
+    const from = seen.current.round === v.round ? seen.current.n : 0;
+    const fresh = v.events.slice(from).filter((e) => e.kind !== "exileForever");
+    seen.current = { round: v.round, n: v.events.length };
+    if (fresh.length) setQueue((q) => [...q, ...fresh].slice(-6));
+  }, [v.events.length, v.round]);
+  const head = queue[0];
+  useEffect(() => {
+    if (!head) return;
+    const t = setTimeout(() => setQueue((q) => q.slice(1)), queue.length > 2 ? 1300 : 2000);
     return () => clearTimeout(t);
-  }, [count, round]);
-  if (!ev || !show) return null;
+  }, [head, queue.length]);
+  if (!head) return null;
   return (
-    <div className="bf-event" role="status" key={count}>
-      <b>{ev.title}</b>
-      <span>{ev.text}</span>
+    <div className={"bf-event k-" + head.kind} role="status" key={head.title + head.text}>
+      <b>{head.title}</b>
+      <span>{head.text}</span>
+      {queue.length > 1 && <i className="bf-event-more">+{queue.length - 1}</i>}
+    </div>
+  );
+}
+
+/** 魔王台词气泡（官方原文） */
+function Taunt({ v }: { v: BFView }) {
+  const t = v.taunt;
+  const [show, setShow] = useState(false);
+  const first = useRef(true);
+  useEffect(() => {
+    if (!t) return;
+    setShow(true);
+    const ms = first.current ? 4500 : 3800;
+    first.current = false;
+    const timer = setTimeout(() => setShow(false), ms);
+    return () => clearTimeout(timer);
+  }, [t?.n]);
+  if (!t || !show || t.key === "Win" || t.key === "Lose") return null;
+  return (
+    <div className="bf-taunt" role="status" key={t.n} onClick={() => setShow(false)}>
+      <b>{v.boss.name}</b>
+      <span>「{t.text}」</span>
     </div>
   );
 }
@@ -813,7 +846,9 @@ function Verdict({ net, snap, host }: { net: Net; snap: BFRoomSnapshot; host: bo
       <div className={"bf-verdict " + (won ? "won" : "lost")}>
         {won ? <img className="bf-verdict-art" src={bossUrl(v.bossId, "defeated")} alt="" /> : <Icon name="skull" cls="bf-verdict-icon" />}
         <h2>{won ? "讨伐成功！" : "讨伐失败"}</h2>
-        <p>{won ? `${v.boss.name} 被打倒了（第 ${v.round} 回合）` : `${v.boss.name} 还站着。调整策略再来一次！`}</p>
+        {v.taunt && (v.taunt.key === "Win" || v.taunt.key === "Lose") && <p className="bf-verdict-taunt">{v.boss.name}：「{v.taunt.text}」</p>}
+        <p>{won ? `恭喜，你打败了魔王！${v.boss.name} 被打倒了（第 ${v.round} 回合 · ${DIFF_ZH[v.difficulty]}）` : `${v.boss.name} 还站着。调整策略再来一次！`}</p>
+        {won && TAUNTS[v.bossId]?.First && <p className="bf-note">{TAUNTS[v.bossId].First}</p>}
         {snap.campaign?.pendingLoot && <LootPanel net={net} snap={snap} />}
         {host ? (
           <button className="bf-btn bf-primary" data-testid="bf-back" disabled={!!snap.campaign?.pendingLoot}

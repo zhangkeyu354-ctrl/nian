@@ -262,3 +262,21 @@
 .bf-pick-panel { background: #241a33; border: 1px solid var(--bf-gold); border-radius: 12px; padding: 8px; }
 .bf-top > .bf-btn:first-of-type { margin-left: auto; }
 .bf-top > :last-child { margin-left: 0; }
+
+/* ———— 台词气泡、横幅排队、失败次数 ———— */
+.bf-taunt { position: relative; margin: -2px 6px 0; padding: 8px 12px; border-radius: 14px; background: #f3e9d2; color: #2a1d10; font-size: 14px; line-height: 1.45; box-shadow: 0 6px 16px #000a; animation: bf-taunt-in .3s cubic-bezier(.2,1.4,.4,1); }
+.bf-taunt::before { content: ""; position: absolute; top: -8px; left: 56px; border: 8px solid transparent; border-top: 0; border-bottom-color: #f3e9d2; }
+.bf-taunt b { display: block; font-size: 11px; color: #8a4a2a; letter-spacing: .1em; }
+@keyframes bf-taunt-in { from { transform: translateY(-6px) scale(.9); opacity: 0; } to { transform: none; opacity: 1; } }
+.bf-event-more { position: absolute; right: 8px; top: 6px; font-style: normal; font-size: 11px; color: var(--bf-gold); }
+.bf-event.k-trap, .bf-event.k-shield { border-color: #e5786a; }
+.bf-event.k-healthloss { border-color: #b07ae0; }
+.bf-verdict-taunt { font-size: 15px; color: #ffe7b0; font-style: italic; margin: 0; }
+.bf-node u { position: absolute; top: -6px; left: -8px; padding: 0 4px; height: 18px; border-radius: 9px; background: #5a2030; color: #ffc9c9; font: 700 10px/18px system-ui; text-decoration: none; box-shadow: 0 0 0 2px #1b1427; }
+@media (max-height: 720px) {
+  .bf-boss { padding: 6px 8px; }
+  .bf-boss-art { width: 92px; height: 92px; }
+  .bf-battle { gap: 6px; }
+  .bf-cardface { width: 104px; }
+  .bf-cardface .bf-cf-text { font-size: 10.5px; }
+}
