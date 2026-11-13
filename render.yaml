@@ -23,3 +23,4 @@ services:
       - key: DBD_ROOM_IDLE_HOURS
         value: "24"
 # Release trigger: Soda Smugglers, 2026-10-27.
+# Release trigger: Boss Fighters QR (魔王试炼), 2026-11-13.
