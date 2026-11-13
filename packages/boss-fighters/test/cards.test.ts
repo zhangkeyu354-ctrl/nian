@@ -1,7 +1,7 @@
 import { test } from 'vitest';
 import assert from 'node:assert/strict';
 import { createGame, reduce, CARDS, ADVANCED, LOOT, INITIAL, CURSES, IDENTITIES } from '../src/index.ts';
-import { newCampaign, setupFor, recordResult, pickLoot, setRemoved, unlocks } from '../src/campaign.ts';
+import { newCampaign, setupFor, recordResult, pickLoot, setRemoved, unlocks, completePendingLoot } from '../src/campaign.ts';
 import type { GameState } from '../src/types.ts';
 
 const base = (opts: Partial<Parameters<typeof createGame>[0]> = {}) =>
@@ -14,15 +14,15 @@ function ready(s: GameState, hand: string[], seat = 0) {
   return reduce(s, { type: 'CHOOSE_STARTER', seat, by: seat });
 }
 
-test('卡牌数据：48 初始 + 32 进阶 + 41 战利品 + 27 诅咒，每个种族/职业 6 初始 + 4 进阶', () => {
+test('卡牌数据：48 初始 + 32 进阶 + 50 战利品 + 27 诅咒，每个种族/职业 6 初始 + 4 进阶', () => {
   assert.equal(INITIAL.length, 48);
   assert.equal(ADVANCED.length, 32);
-  assert.equal(LOOT.length, 41);
+  assert.equal(LOOT.length, 50);
   assert.equal(CURSES.length, 27);
   for (const id of Object.values(IDENTITIES)) {
     assert.equal(id.cards.length, 6);
-    // 半身人、战士各有 1 张纯数值进阶卡资料未收录，暂缺
-    assert.equal(id.advanced.length, id.id === 'halfling' || id.id === 'warrior' ? 3 : 4);
+    // 两张资料缺失的进阶卡由原创替代。
+    assert.equal(id.advanced.length, 4);
     for (const c of [...id.cards, ...id.advanced]) assert.ok(CARDS[c], `${id.id} 缺卡 ${c}`);
   }
 });
@@ -198,11 +198,11 @@ test('战役：解锁顺序、发战利品、选战利品、牌组至少 20 张'
   c = recordResult(c, g);
   assert.equal(c.progress, 0);
   const setup = setupFor(c, 'prince', 'advanced', 1);
-  assert.equal(setup.heroes[0].extraCards!.length, 7); // 巨魔 4 + 战士 3（缺 1 张未收录）
+  assert.equal(setup.heroes[0].extraCards!.length, 8); // 巨魔 4 + 战士 4
   const pg = { ...createGame(setup), phase: 'won' } as GameState;
   c = recordResult(c, pg);
   assert.equal(c.progress, 1);
-  assert.equal(c.pendingLoot!.offer.length, 4);
+  assert.equal(c.pendingLoot!.offer.length, 5);
   c = pickLoot(c, 0, c.pendingLoot!.offer[0]);
   assert.throws(() => pickLoot(c, 1, c.pendingLoot!.offer[0]));
   c = pickLoot(c, 1, c.pendingLoot!.offer[1]);
@@ -212,4 +212,59 @@ test('战役：解锁顺序、发战利品、选战利品、牌组至少 20 张'
   assert.throws(() => setRemoved(c, 0, ['troll_belt', 'troll_axe']));
   assert.deepEqual(unlocks(3).curseBatches, [1, 2, 3]);
   assert.equal(unlocks(3).raceLevel, 2);
+});
+
+ test('每星五张奖励，四名英雄各获得一张', () => {
+  for (let stars = 1; stars <= 10; stars++) assert.equal(LOOT.filter(c => c.stars === stars).length, 5);
+  let c = newCampaign('队伍', [
+    {name:'甲',race:'troll',cls:'warrior'}, {name:'乙',race:'elf',cls:'mage'},
+    {name:'丙',race:'dwarf',cls:'rogue'}, {name:'丁',race:'halfling',cls:'druid'},
+  ]);
+  c.pendingLoot = { stars: 2, offer: LOOT.filter(x => x.stars === 2).map(x => x.id), picked: {} };
+  const offer = [...c.pendingLoot.offer];
+  for (let seat = 0; seat < 4; seat++) c = pickLoot(c, seat, offer[seat]);
+  assert.equal(c.pendingLoot, null);
+  assert.deepEqual(c.heroes.map(h => h.loot.length), [1,1,1,1]);
+  assert.equal(c.lootStorage.length, 1);
+ });
+
+test('旧存档未完成奖励补充候选，保留已选并可重复加载', () => {
+ let c = newCampaign('旧队伍', [
+   {name:'甲',race:'troll',cls:'warrior'}, {name:'乙',race:'elf',cls:'mage'},
+   {name:'丙',race:'dwarf',cls:'rogue'}, {name:'丁',race:'halfling',cls:'druid'},
+ ]);
+ c.pendingLoot = {stars:2,offer:['loot_inspire','loot_celestial_rune','loot_poison_weapon'],picked:{0:'loot_inspire'}};
+ const n=completePendingLoot(c);
+ assert.equal(n.pendingLoot!.offer.length,5);
+ assert.equal(n.pendingLoot!.picked[0],'loot_inspire');
+ assert.deepEqual(completePendingLoot(n),n);
+ assert.equal(c.pendingLoot.offer.length,3);
+ assert.throws(() => pickLoot(n, 4, n.pendingLoot!.offer[1]));
+ for(let seat=1;seat<4;seat++) c = pickLoot(seat===1?n:c,seat,n.pendingLoot!.offer[seat]);
+ assert.equal(c.pendingLoot,null);
+ assert.deepEqual(c.heroes.map(h=>h.loot.length),[1,1,1,1]);
+});
+
+test('二至四人首次通关二星，各得一张且未选入库', () => {
+ const heroes=[{name:'甲',race:'troll',cls:'warrior'}, {name:'乙',race:'elf',cls:'mage'}, {name:'丙',race:'dwarf',cls:'rogue'}, {name:'丁',race:'halfling',cls:'druid'}];
+ for (const count of [2,3,4]) {
+  let c=newCampaign('测试',heroes.slice(0,count)); c.progress=1;
+  const game={...base(),bossId:'soulHuntress',phase:'won'} as GameState;
+  c=recordResult(c,game);
+  assert.equal(c.pendingLoot?.offer.length,5);
+  const offer=[...c.pendingLoot!.offer];
+  for(let i=0;i<count;i++) c=pickLoot(c,i,offer[i]);
+  assert.equal(c.pendingLoot,null);
+  assert.deepEqual(c.heroes.map(h=>h.loot),offer.slice(0,count).map(x=>[x]));
+  assert.equal(c.lootStorage.length,5-count);
+  const after=recordResult(c,game);
+  assert.equal(after.pendingLoot,null);
+ }
+});
+
+test('原创补充均标明来源且进阶卡进入正确英雄牌组', () => {
+ assert.equal(LOOT.filter(c=>c.source==='original').length,9);
+ assert.equal(ADVANCED.filter(c=>c.source==='original').length,2);
+ assert.ok(IDENTITIES.warrior.advanced.includes('adv_war_unknown'));
+ assert.ok(IDENTITIES.halfling.advanced.includes('adv_hal_unknown'));
 });

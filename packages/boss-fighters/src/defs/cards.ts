@@ -96,15 +96,24 @@ export const ADVANCED: CardDef[] = [
   A('adv_feint', '佯攻', 'warrior', 'official', [sup('melee', 2), L]),
   A('adv_vengeance', '复仇符文', 'warrior', 'official', [atk('ranged', 'vengeance')]),
   A('adv_chivalrous', '义气相挺', 'warrior', 'official', [{ kind: 'redirect' }]),
-  A('adv_war_unknown', '（未收录进阶卡·战士）', 'warrior', 'tentative', [atk('melee', 5)]),
+  A('adv_war_unknown', '守卫重击', 'warrior', 'original', [atk('melee', 5)]),
   A('adv_improvise', '随机应变', 'halfling', 'official', [{ kind: 'playTop', n: 2 }]),
   A('adv_lucky_brooch', '幸运胸针', 'halfling', 'official', [prot(2), L]),
   A('adv_snarlroot', '咆根', 'halfling', 'official', [heal(3, 'self'), { kind: 'lightning', n: 2 }]),
-  A('adv_hal_unknown', '（未收录进阶卡·半身人）', 'halfling', 'tentative', [atk('ranged', 4)]),
+  A('adv_hal_unknown', '疾行投石', 'halfling', 'original', [atk('ranged', 4)]),
 ];
 
 // ———— 战利品（左下星级；道具类战利品见 ITEMS_BY_STAR）————
 export const LOOT: CardDef[] = [
+  Lt(1, 'loot_original_1', '冒险短剑', [atk('melee', 4)], 'original'),
+  Lt(2, 'loot_original_2a', '远行长弓', [atk('ranged', 5)], 'original'),
+  Lt(2, 'loot_original_2b', '守护披风', [prot(4)], 'original'),
+  Lt(3, 'loot_original_3', '秘法光束', [atk('magic', 5)], 'original'),
+  Lt(4, 'loot_original_4', '破阵战斧', [atk('melee', 5)], 'original'),
+  Lt(7, 'loot_original_7', '裂空之矢', [atk('ranged', 6)], 'original'),
+  Lt(8, 'loot_original_8', '星辉壁垒', [prot(6)], 'original'),
+  Lt(9, 'loot_original_9', '苍穹雷击', [atk('magic', 7)], 'original'),
+  Lt(10, 'loot_original_10', '终焉巨刃', [atk('melee', 8)], 'original'),
   Lt(1, 'loot_blade_wind', '风刃', [atk('melee', 3), L]),
   Lt(1, 'loot_banner', '勇气旌旗', [{ kind: 'immediateAction', target: 'chosen' }, L]),
   Lt(1, 'loot_cursebreaker', '破咒吊坠', [{ kind: 'discardCurse' }]),

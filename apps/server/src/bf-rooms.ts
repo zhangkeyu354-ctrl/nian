@@ -11,6 +11,7 @@ import {
   canFight,
   createGame,
   newCampaign,
+  completePendingLoot,
   pickLoot,
   recordResult,
   reduce,
@@ -78,6 +79,7 @@ export class BFRoom {
   connections = new Map<string, number>();
   botTimer: NodeJS.Timeout | null = null;
   constructor(public file: BFRoomFile) {
+    if (file.campaign?.pendingLoot) file.campaign = completePendingLoot(file.campaign);
     if (file.setup) {
       let s = createGame(file.setup);
       for (const c of file.commands) s = reduce(s, c);

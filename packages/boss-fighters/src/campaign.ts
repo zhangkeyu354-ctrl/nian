@@ -24,6 +24,16 @@ export interface Campaign {
 
 export class CampaignError extends Error {}
 
+/** Preserve existing picks while adding newly available cards to an unfinished offer. */
+export function completePendingLoot(c: Campaign): Campaign {
+  const n = structuredClone(c);
+  const p = n.pendingLoot;
+  if (p) for (const card of LOOT) {
+    if (card.stars === p.stars && !p.offer.includes(card.id) && !n.gone.includes(card.id)) p.offer.push(card.id);
+  }
+  return n;
+}
+
 const DIFF_ORDER: Difficulty[] = ['beginner', 'advanced', 'pro', 'insane'];
 
 export function newCampaign(name: string, heroes: { name: string; race: string; cls: string }[]): Campaign {
@@ -101,13 +111,15 @@ export function recordResult(c: Campaign, g: GameState): Campaign {
 
 /** 战利品选择：每人从这批里选 1 张（不能两人选同一张），没选走的进收纳盒 */
 export function pickLoot(c: Campaign, seat: number, card: string): Campaign {
-  const n: Campaign = structuredClone(c);
+  const n = completePendingLoot(c);
   const p = n.pendingLoot;
   if (!p) throw new CampaignError('现在没有可选的战利品');
+  if (!Number.isInteger(seat) || seat < 0 || seat >= n.heroes.length) throw new CampaignError('无效的英雄座位');
+  if (p.offer.length < n.heroes.length) throw new CampaignError('战利品不足，暂时无法领取');
   if (!p.offer.includes(card)) throw new CampaignError('这张卡不在这批战利品里');
   if (Object.entries(p.picked).some(([s, x]) => x === card && Number(s) !== seat)) throw new CampaignError('这张已经被队友选走了');
   p.picked[seat] = card;
-  if (Object.keys(p.picked).length === Math.min(n.heroes.length, p.offer.length)) {
+  if (Object.keys(p.picked).length === n.heroes.length) {
     for (const [s, x] of Object.entries(p.picked)) {
       const h = n.heroes[Number(s)];
       const stars = CARDS[x].stars;

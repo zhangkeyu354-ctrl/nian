@@ -51,7 +51,7 @@ export interface CardDef {
   category: CardCategory;
   stars?: number; // 战利品星级
   effects: Effect[];
-  source: 'official' | 'observed' | 'tentative';
+  source: 'official' | 'observed' | 'tentative' | 'original';
 }
 
 export type CurseTrigger = 'playAny' | 'playAttack' | 'playSupport' | 'playProtect' | 'bossHit';

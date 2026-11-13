@@ -13,7 +13,7 @@ export const IDENTITIES: Record<string, IdentityDef> = {
     id: 'halfling', name: '丘陵半身人', kind: 'race', levels: [[6, 11], [6, 11], [6, 15]], levelNames: ['丘陵半身人', '老练半身人', '半身人运势大师'],
     ability: '你破坏魔王护盾时，魔王立即失去 4 生命。',
     cards: ['hal_blinky', 'hal_stone', 'hal_dent', 'hal_dagger', 'hal_cloak', 'hal_pebbles'],
-    advanced: ['adv_improvise', 'adv_lucky_brooch', 'adv_snarlroot'], // 第 4 张为纯数值卡，资料未收录，暂不放入
+    advanced: ['adv_improvise', 'adv_lucky_brooch', 'adv_snarlroot', 'adv_hal_unknown'],
   },
   dwarf: {
     id: 'dwarf', name: '铜矮人', kind: 'race', levels: [[5, 14], [5, 14], [5, 19]], levelNames: ['铜矮人', '老练矮人', '矮人宝物守护者'],
@@ -31,7 +31,7 @@ export const IDENTITIES: Record<string, IdentityDef> = {
     id: 'warrior', name: '战士', kind: 'class', levels: [[1, 10], [1, 10], [1, 15]], levelNames: ['战士', '资深战士', '精英战士'],
     ability: '每回合你第一次攻击打中魔王护盾时，护盾效果无效。',
     cards: ['war_amulet', 'war_crossbow', 'war_daggers', 'war_blade', 'war_mail', 'war_sword'],
-    advanced: ['adv_feint', 'adv_vengeance', 'adv_chivalrous'], // 第 4 张为纯数值卡，资料未收录，暂不放入
+    advanced: ['adv_feint', 'adv_vengeance', 'adv_chivalrous', 'adv_war_unknown'],
   },
   mage: {
     id: 'mage', name: '法师', kind: 'class', levels: [[2, 7], [2, 7], [2, 11]], levelNames: ['法师', '资深法师', '大法师'],
