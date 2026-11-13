@@ -1,4 +1,4 @@
-import { PRINCE, PUPPET } from '../data/balance.ts';
+import { PRINCE, PUPPET } from '../defs/balance.ts';
 import {
   addStatus, banner, damageHero, distributeShields, highestHealth, log, roundAbility, scaleAttack, scaleHp, scaleShield, trapHits,
 } from '../engine/core.ts';
@@ -22,7 +22,7 @@ export const puppet: BossModule = {
     const tired = s.round >= PUPPET.tiredFrom ? s.round - PUPPET.tiredFrom + 1 : 0;
     return s.heroes.map((h) =>
       s.round === 1
-        ? attack(s, h.seat, 'Attack_MrPuppet_Rundumschlag', '横扫', scaleAttack(s, PUPPET.sweep))
+        ? attack(s, h.seat, 'Attack_MrPuppet_Rundumschlag', '横扫千军', scaleAttack(s, PUPPET.sweep))
         : attack(s, h.seat, 'Attack_MrPuppet_GiftigerWirbel', '毒螺旋', Math.max(1, scaleAttack(s, PUPPET.spin) - tired), { poison: PUPPET.spinPoison }),
     );
   },

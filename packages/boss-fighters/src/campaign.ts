@@ -1,7 +1,7 @@
 // 战役：冒险团存档、解锁、战利品、牌组整理、升级（05 J/O 节：官方内容清单 + 卡面星级）
 import { BOSSES, BOSS_ORDER } from './bosses/index.ts';
-import { ITEMS_BY_STAR, LOOT, CARDS } from './data/cards.ts';
-import { IDENTITIES } from './data/heroes.ts';
+import { ITEMS_BY_STAR, LOOT, CARDS } from './defs/cards.ts';
+import { IDENTITIES } from './defs/heroes.ts';
 import type { Difficulty, GameState, ItemId, SetupOptions } from './types.ts';
 
 export interface CampaignHero {

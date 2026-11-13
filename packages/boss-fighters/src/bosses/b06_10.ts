@@ -1,9 +1,9 @@
 // 第 6–10 关：巨触手、熔岩王、炸弹克精、果冻怪、巫毒天后
-// 能力名/说明为官方中文（boss_bible）；数值见 data/balance.ts（多为暂定）
-import { BOMBOSSA as BB, JELLY as JL, MAGMAROS as MG, TENTACOLOSSUS as TC, VOODOO as VD } from '../data/balance.ts';
-import { CARDS } from '../data/cards.ts';
+// 能力名/说明为官方中文（boss_bible）；数值见 defs/balance.ts（多为暂定）
+import { BOMBOSSA as BB, BOMBOSSA_ATTACKS, JELLY as JL, MAGMAROS as MG, TENTACOLOSSUS as TC, VOODOO as VD } from '../defs/balance.ts';
+import { CARDS } from '../defs/cards.ts';
 import {
-  addStatus, atLeast, banner, curseHero, damageHero, distributeShields, drawCards, giveSlime, handLimit, healBoss, highestHealth, hero, log,
+  addStatus, atLeast, fx, isOver, banner, curseHero, damageHero, distributeShields, drawCards, giveSlime, handLimit, healBoss, highestHealth, hero, log,
   loseBossHp, loseCards, removeStatuses, roundAbility, scaleAttack, scaleHp, scaleShield, trapHits,
 } from '../engine/core.ts';
 import { int, pick, shuffle, weighted } from '../engine/rng.ts';
@@ -47,7 +47,15 @@ export const tentacolossus: BossModule = {
     s.boss.flags.firstHit_rot = s.boss.flags.firstHit_toxic = s.boss.flags.firstHit_doom = false;
     s.boss.flags.firstHit_curse = s.boss.flags.firstHit_drain = s.boss.flags.firstHit_regen = false;
     const minus = deadTentacles(s) >= 1 ? 1 : 0; // 打残 1 只：攻击力永久减少
-    const p = s.heroes.map((h) => attack(s, h.seat, 'Attack_Tentacolossus', '触手拍击', Math.max(1, scaleAttack(s, TC.attack) - minus)));
+    // 官方攻击就是各条触手（腐烂/剧毒/厄运/诅咒/吸星/重生触手），由存活的触手出手；附加效果【暂定】
+    const KEY: Record<string, string> = { rot: 'Tentakelgift', toxic: 'Tentakelstachel', doom: 'Verdammnistentakel', curse: 'Fluchtentakel', drain: 'Erholungstentakel', regen: 'Regenerationstentakel' };
+    const EXTRA: Record<string, AttackExtra> = { rot: { lost: 1 }, toxic: { poison: 1 }, curse: { curse: 1 } };
+    const liveT = TENTACLES.filter((t) => s.boss.parts.some((x) => x.id === t.id && x.alive));
+    const p = s.heroes.map((h) => {
+      const t = liveT.length ? pick(s, liveT) : TENTACLES[int(s, TENTACLES.length)];
+      const v = Math.max(1, scaleAttack(s, TC.attack) - minus + (t.id === 'doom' ? 1 : 0));
+      return attack(s, h.seat, `Attack_Tentacolossus_${KEY[t.id]}`, t.name, v, EXTRA[t.id] ?? {});
+    });
     if (deadTentacles(s) >= 2 && !s.boss.flags.inked) {
       // 打残 2 只：本回合攻击值被墨汁遮盖
       s.boss.flags.inked = true;
@@ -59,6 +67,10 @@ export const tentacolossus: BossModule = {
   routeDamage(s, _h, type, kind) {
     const all = s.boss.parts;
     const bonus = deadTentacles(s) >= 4 ? 1 : 0; // 打残 4 只：弱点，伤害更大（暂定 +1）
+    if (all.some((p) => p.alive) && !s.boss.flags.tentacleDefense) {
+      s.boss.flags.tentacleDefense = true;
+      banner(s, 'attack', '触手防御', '巨触手使用其触手防御。你的攻击伤害不了它。它的触手完全承受了伤害！');
+    }
     const own = all.find((p) => p.slot === type && p.tag === kind && p.alive);
     if (own) return { part: own, bodyShare: TC.bodyShare + bonus };
     const others = all.filter((p) => p.alive);
@@ -101,6 +113,7 @@ export const tentacolossus: BossModule = {
     const before = s.planned.length;
     s.planned = s.planned.filter((a) => mask & (1 << a.target));
     if (s.planned.length < before) log(s, '没有攻击巨触手的英雄这回合不会受到魔王攻击。', 'boss');
+    if (s.planned.some((a) => a.hidden)) banner(s, 'healthloss', '视野清晰', '你再一次可以看清魔王的攻击了。');
     for (const a of s.planned) a.hidden = false;
     if (atLeast(s, 'pro')) {
       for (const a of s.planned) {
@@ -191,7 +204,18 @@ export const magmaros: BossModule = {
       if (i >= 0) h.discard.push(h.hand.splice(i, 1)[0]);
     } else if (p.id === 'ash') {
       banner(s, 'shield', '愤怒熔岩王', `魔王对 ${h.name} 的攻击更猛烈。`);
-      for (const a of s.planned) if (a.target === h.seat) a.value += MG.rangedRage;
+      for (const a of s.planned) if (a.target === h.seat) {
+        a.value += MG.rangedRage;
+        // 官方有 4 个"愤怒"版攻击（*2），对应关系为推断
+        const RAGE: Record<string, [string, string]> = {
+          Attack_Magmaros_Glutfaust: ['Attack_Magmaros_Flammengriff2', '毁灭烈火爪'],
+          Attack_Magmaros_Funkenregen: ['Attack_Magmaros_Feuersäule2', '怒火风暴'],
+          Attack_Magmaros_Magmaschauer: ['Attack_Magmaros_Lavastrahl2', '恐怖炎浪'],
+          Attack_Magmaros_Flammenfluch: ['Attack_Magmaros_Höllenfeuer2', '致盲火柱'],
+        };
+        const r = RAGE[a.nameKey];
+        if (r) [a.nameKey, a.name] = r;
+      }
     } else {
       banner(s, 'shield', '火焰手下掷火球', `${h.name}，拿取 1 个着火标记。`);
       addStatus(s, h, 'fire', 1, '火焰手下');
@@ -222,7 +246,7 @@ export const magmaros: BossModule = {
         const h = highestHealth(s);
         roundAbility(s, '岩浆手下攻击', `最高生命值的英雄（${h.name}）失去生命值。`, () => damageHero(s, h, scaleAttack(s, MG.meleeMinionDamage), '岩浆手下'));
       } else if (p.id === 'ash') roundAbility(s, '灰烬手下治疗', `灰烬手下为魔王治疗 ${p.hp} 点。`, () => healBoss(s, p.hp, '灰烬手下'));
-      else roundAbility(s, '火焰手下燃烧', '每位英雄获得 1 个着火标记。', () => s.heroes.forEach((h) => addStatus(s, h, 'fire', 1, '火焰手下')));
+      else roundAbility(s, '火焰手下爆发', '每位英雄获得 1 个着火标记。', () => s.heroes.forEach((h) => addStatus(s, h, 'fire', 1, '火焰手下')));
     }
   },
   afterAttack(s) {
@@ -278,6 +302,7 @@ function bombExplode(s: GameState, id: string) {
 function segmentEnd(s: GameState) {
   s.round += 1;
   log(s, `—— 第 ${s.round} 时间段 ——`);
+  if (s.heroes.some((h) => h.status.poison)) banner(s, 'round', '毒素发作', '每位英雄每有1个中毒标记便失去1点生命值。');
   for (const h of s.heroes) {
     if (h.status.poison) damageHero(s, h, h.status.poison, '中毒');
     // 着火：每个标记抽 1 张，由玩家选择本战移除或弃掉并失去 2 生命（官方；时间段结束后回到行动）
@@ -363,9 +388,14 @@ export const bombossa: BossModule = {
         banner(s, 'healthloss', '引线轰击', `炸弹克精用引线攻击你。每位英雄失去 ${BB.fuseDamage} 点生命值及获得 1 个着火标记。`);
         for (const h of s.heroes) { damageHero(s, h, scaleAttack(s, BB.fuseDamage), '引线轰击'); addStatus(s, h, 'fire', 1, '引线轰击'); }
       } else {
-        const h = highestHealth(s);
-        banner(s, 'healthloss', '魔王攻击', `炸弹克精攻击 ${h.name}。`);
-        damageHero(s, h, scaleAttack(s, BB.attackValue), '火焰轰击');
+        const a = BOMBOSSA_ATTACKS[Math.floor(s.boss.counters.attacks / 2) % BOMBOSSA_ATTACKS.length];
+        const targets = a.all ? s.heroes : [highestHealth(s)];
+        banner(s, 'healthloss', a.name, a.all ? `炸弹克精攻击所有英雄。` : `炸弹克精攻击 ${targets[0].name}。`);
+        for (const h of targets) {
+          fx(s, { kind: 'bossAttack', seat: h.seat, value: a.value });
+          damageHero(s, h, scaleAttack(s, a.value), a.name);
+          if (a.extra.fire && !isOver(s)) addStatus(s, h, 'fire', a.extra.fire, a.name);
+        }
       }
     }
   },

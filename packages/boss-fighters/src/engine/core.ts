@@ -1,6 +1,7 @@
 // 引擎内部共用结算函数。所有魔王插件都通过这些函数改血量/状态，不直接改字段。
-import { DIFFICULTY } from '../data/balance.ts';
-import { CURSE_BY_ID } from '../data/curses.ts';
+import { DIFFICULTY } from '../defs/balance.ts';
+import { CURSE_BY_ID } from '../defs/curses.ts';
+import { TAUNTS } from '../defs/taunts.ts';
 import type { BossPart, DamageType, GameState, Hero, StatusKind } from '../types.ts';
 import { int, shuffle } from './rng.ts';
 
@@ -16,6 +17,14 @@ export function fx(s: GameState, e: Omit<GameState['fx'][number], 'n'>) {
   s.fxSeq = (s.fxSeq ?? 0) + 1;
   (s.fx ??= []).push({ n: s.fxSeq, ...e });
   if (s.fx.length > 30) s.fx.splice(0, s.fx.length - 30);
+}
+
+/** 魔王说一句官方台词（没有这句就什么都不做） */
+export function taunt(s: GameState, key: string) {
+  const text = TAUNTS[s.bossId]?.[key];
+  if (!text) return;
+  s.taunt = { key, text, n: (s.taunt?.n ?? 0) + 1 };
+  log(s, `${s.boss.name}：「${text}」`, 'boss');
 }
 
 export function banner(s: GameState, kind: string, title: string, text: string) {

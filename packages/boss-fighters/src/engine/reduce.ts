@@ -1,13 +1,13 @@
 // 规则引擎：纯函数 reduce(state, command) → 新状态（服务器权威，前端只发命令）
 import { BOSSES } from '../bosses/index.ts';
 import type { BossModule, CardInfo } from '../bosses/module.ts';
-import { DIFFICULTY, ITEMS } from '../data/balance.ts';
-import { CARDS } from '../data/cards.ts';
-import { CURSES, CURSE_BY_ID } from '../data/curses.ts';
-import { IDENTITIES } from '../data/heroes.ts';
+import { DIFFICULTY, ITEMS } from '../defs/balance.ts';
+import { CARDS } from '../defs/cards.ts';
+import { CURSES, CURSE_BY_ID } from '../defs/curses.ts';
+import { IDENTITIES } from '../defs/heroes.ts';
 import type { CardDef, Command, DamageType, Effect, GameState, Hero, ItemId, SetupOptions } from '../types.ts';
 import {
-  addStatus, curseHero, damageHero, fx, damagePart, drawCards, drawOne, giveSlime, handLimit, healHero, hero, isOver, log,
+  addStatus, curseHero, damageHero, fx, taunt, damagePart, drawCards, drawOne, giveSlime, handLimit, healHero, hero, isOver, log,
   loseBossHp, loseCards, lowestHealth, removeStatuses, TYPE_NAME,
 } from './core.ts';
 import { int, shuffle } from './rng.ts';
@@ -68,6 +68,7 @@ export function createGame(opt: SetupOptions): GameState {
   for (const h of s.heroes) drawCards(s, h, handLimit(h));
   boss.setup(s);
   log(s, `讨伐开始：${boss.name}（${DIFFICULTY[s.difficulty].name}），生命 ${s.boss.hp}。`);
+  taunt(s, 'Intro');
   startRound(s);
   return s;
 }
@@ -83,6 +84,7 @@ export function startRound(s: GameState) {
   }
   s.attackedTypes = { melee: false, ranged: false, magic: false };
   s.ties = [];
+  taunt(s, `Rd${s.round}`);
   s.planned = boss.plan(s); // ① 计划
   for (const t of s.ties) {
     const a = s.planned.find((x) => x.target === t.chosen && !x.tieOptions);
@@ -171,6 +173,13 @@ export function reduce(prev: GameState, cmd: Command): GameState {
       s.current = null;
       log(s, '队伍放弃了这场讨伐。');
       break;
+  }
+  // 台词：胜负、按剩余生命（炸弹克精）
+  if (isOver(s) && !isOver(prev)) taunt(s, s.phase === 'won' ? 'Win' : 'Lose');
+  else if (s.boss.maxHp > 0) {
+    const was = (prev.boss.hp / prev.boss.maxHp) * 100;
+    const now = (s.boss.hp / s.boss.maxHp) * 100;
+    for (const k of [80, 60, 40, 20]) if (was > k && now <= k) taunt(s, `${k}_Health`);
   }
   s.version += 1;
   return s;

@@ -1,10 +1,10 @@
 export * from './types.ts';
 export { createGame, reduce, viewFor, actor, RuleError, scoreCard } from './engine/reduce.ts';
 export { BOSSES, BOSS_ORDER } from './bosses/index.ts';
-export { CARDS, INITIAL, ADVANCED, LOOT, ITEMS_BY_STAR } from './data/cards.ts';
-export { CURSES, CURSE_BY_ID } from './data/curses.ts';
-export { IDENTITIES, RACES, CLASSES } from './data/heroes.ts';
-export { DIFFICULTY } from './data/balance.ts';
+export { CARDS, INITIAL, ADVANCED, LOOT, ITEMS_BY_STAR } from './defs/cards.ts';
+export { CURSES, CURSE_BY_ID } from './defs/curses.ts';
+export { IDENTITIES, RACES, CLASSES } from './defs/heroes.ts';
+export { DIFFICULTY } from './defs/balance.ts';
 export { botCommand, botFor, runBotGame } from './bot.ts';
 export * from './campaign.ts';
 export * from './describe.ts';

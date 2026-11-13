@@ -1,6 +1,6 @@
 // 第 2–5 关：灵魂女猎手、以太龙、石魔像、三头食人妖
-// 能力名/说明为官方中文（boss_bible）；数值见 data/balance.ts（实测或暂定）
-import { AETHER_DRAGON as AD, OGRE, SOUL_HUNTRESS as SH, STONE_GOLEM as SG } from '../data/balance.ts';
+// 能力名/说明为官方中文（boss_bible）；数值见 defs/balance.ts（实测或暂定）
+import { AETHER_DRAGON as AD, OGRE, SOUL_HUNTRESS as SH, STONE_GOLEM as SG } from '../defs/balance.ts';
 import {
   addStatus, atLeast, banner, curseHero, damageHero, distributeShields, healBoss, highestHealth, log, roundAbility,
   scaleAttack, scaleHp, scaleShield, trapHits,
@@ -267,7 +267,13 @@ export const ogre: BossModule = {
     banner(s, 'round', `${head.name}正在主导`, `${head.name}只能被${{ magic: '魔法', ranged: '远程', melee: '近战' }[head.slot]}攻击击晕。`);
     const bonus = s.boss.attackBonus + (d === 'hairy' ? OGRE.hairyBuff : 0);
     if (d === 'hairy') banner(s, 'round', '激励', '魔王在本轮的攻击更强。');
-    return planFrom(s, head.attacks, bonus);
+    const planned = planFrom(s, head.attacks, bonus);
+    // 攻击被增强时 App 显示"强化"版名称（官方 Attack_ThreeHeadedOgre_Buffed_*）
+    if (bonus > 0) for (const a of planned) if (!a.nameKey.includes('Buffed_')) {
+      a.nameKey = a.nameKey.replace('Attack_ThreeHeadedOgre_', 'Attack_ThreeHeadedOgre_Buffed_');
+      a.name = '强化' + a.name;
+    }
+    return planned;
   },
   actionPhaseStart(s) {
     const d = dominant(s);

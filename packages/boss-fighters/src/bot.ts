@@ -1,5 +1,5 @@
 // 机器人：用于平衡模拟和以后的掉线托管（05 B1）
-import { CARDS } from './data/cards.ts';
+import { CARDS } from './defs/cards.ts';
 import { BOSSES } from './bosses/index.ts';
 import { actor, reduce, scoreCard } from './engine/reduce.ts';
 import { handLimit } from './engine/core.ts';

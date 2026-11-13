@@ -246,6 +246,8 @@ export interface GameState {
   ties?: { seats: number[]; chosen: number }[];
   fx: FxEvent[];
   fxSeq: number;
+  /** 魔王台词（官方原文），界面显示为对话气泡 */
+  taunt?: { key: string; text: string; n: number } | null;
   /** 炸弹克精的时间（其他魔王为 null） */
   time: number | null;
   log: LogEntry[];

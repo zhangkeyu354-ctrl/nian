@@ -1,5 +1,5 @@
 // 卡面文字：由效果原语生成，界面显示与引擎结算同源
-import { CARDS } from './data/cards.ts';
+import { CARDS } from './defs/cards.ts';
 import type { DamageType, Effect, ItemId, StatusKind } from './types.ts';
 
 export const TYPE_ZH: Record<DamageType, string> = { melee: '近战', ranged: '远程', magic: '魔法' };
