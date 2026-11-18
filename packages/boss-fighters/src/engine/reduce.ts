@@ -14,6 +14,24 @@ import { int, shuffle } from './rng.ts';
 
 export class RuleError extends Error {}
 
+/** 魔王行动播报：每条都会弹给所有玩家，各自点“知道了”才消失 */
+function report(s: GameState, title: string, text: string) {
+  s.events.push({ round: s.round, kind: 'report', title, text });
+}
+function extraText(x: GameState['planned'][number]['extra']) {
+  const p: string[] = [];
+  if (x.poison) p.push(`获得 ${x.poison} 个中毒`);
+  if (x.panic) p.push(`获得 ${x.panic} 个惊恐`);
+  if (x.paralysis) p.push(`获得 ${x.paralysis} 个麻痹`);
+  if (x.fire) p.push(`获得 ${x.fire} 个着火`);
+  if (x.curse) p.push(`抽 ${x.curse} 张诅咒`);
+  if (x.slime) p.push(`拿到 ${x.slime} 张黏液牌`);
+  if (x.lost) p.push(`${x.lost} 张牌库顶牌进失物堆`);
+  if (x.discard) p.push(`随机弃 ${x.discard} 张手牌`);
+  if (x.drain) p.push('魔王按伤害回血');
+  return p.join('、');
+}
+
 const ACTIONS_PER_ROUND = 3; // 官方
 const bossOf = (s: GameState): BossModule => BOSSES[s.bossId];
 
@@ -751,17 +769,29 @@ export function endActionPhase(s: GameState) {
   if (isOver(s)) return;
   endPhaseCurses(s);
   // ④ 攻击阶段：附加效果只在攻击未被减到 0 时生效（官方）
+  if (s.planned.length) report(s, '魔王出手', `魔王这回合有 ${s.planned.length} 次攻击，按顺序结算：`);
+  else report(s, '魔王出手', '这回合没有人受到魔王攻击。');
   for (const a of s.planned) {
     if (isOver(s)) return;
     const h = hero(s, a.target);
     const dmg = a.value - a.reducedBy;
+    const ex = extraText(a.extra);
     if (dmg <= 0) {
       log(s, `【${a.name}】被完全挡下（${h.name}）`, 'hero');
       fx(s, { kind: 'blocked', seat: h.seat });
+      report(s, `${a.name} → ${h.name}`, `被保护完全挡下（原本 ${a.value} 伤害）。${ex ? `附加效果（${ex}）也一起取消。` : ''}`);
       continue;
     }
     fx(s, { kind: 'bossAttack', seat: h.seat, value: dmg });
+    const hpBefore = h.health;
     const dealt = damageHero(s, h, dmg, a.name);
+    report(
+      s,
+      `${a.name} → ${h.name}`,
+      `${h.name} 失去 ${hpBefore - h.health} 生命${a.reducedBy > 0 ? `（原本 ${a.value}，保护挡掉 ${a.reducedBy}）` : ''}，剩 ${h.health}。` +
+        (ex && !a.cancelExtra ? `并且${ex}。` : ex ? `附加效果（${ex}）被取消。` : '') +
+        (h.health <= 0 ? `${h.name} 倒下了！` : ''),
+    );
     if (isOver(s)) return;
     if (dealt > 0) {
       boss.onHeroHit?.(s, h, dealt, a);
@@ -773,17 +803,25 @@ export function endActionPhase(s: GameState) {
   boss.afterAttack?.(s);
   if (isOver(s)) return;
   // ⑤ 状态阶段
+  const poisoned: string[] = [];
   for (const h of s.heroes) {
     // 三头食人妖"强化剧毒喷发"：本战每个中毒标记额外 +1 伤害
-    if (h.status.poison > 0) damageHero(s, h, h.status.poison * (1 + (s.boss.counters.poisonPlus ?? 0)), '中毒');
+    if (h.status.poison > 0) {
+      const before = h.health;
+      damageHero(s, h, h.status.poison * (1 + (s.boss.counters.poisonPlus ?? 0)), '中毒');
+      poisoned.push(`${h.name} -${before - h.health}`);
+    }
     if (isOver(s)) return;
   }
   if (s.boss.poison > 0) {
     const mult = boss.poisonMult?.(s) ?? 1;
-    loseBossHp(s, Math.floor(s.boss.poison * mult), '中毒');
+    const lose = Math.floor(s.boss.poison * mult);
+    if (lose > 0) poisoned.push(`魔王 -${lose}`);
+    loseBossHp(s, lose, '中毒');
     bossChanged(s, null);
     if (isOver(s)) return;
   }
+  if (poisoned.length) report(s, '中毒结算', `每个中毒标记扣血：${poisoned.join('，')}。`);
   boss.statusPhase?.(s);
   if (isOver(s)) return;
   // 着火：每个标记抽 1 张，玩家选择本战移除或弃掉并失去 2 生命（官方）

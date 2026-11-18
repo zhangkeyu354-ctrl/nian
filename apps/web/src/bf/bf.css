@@ -401,3 +401,38 @@
 @media (max-width: 360px) { .bf-strip { gap: 4px; } .bf-strip-top, .bf-strip-top b { font-size: 17px; } .bf-strip-sh small { font-size: 10px; } }
 /* 魔王旁边的护盾也加大、填色 */
 .bf-shield { font-size: 17px; padding: 4px 10px; border-width: 2px; background: color-mix(in srgb, currentColor 18%, #120c18); }
+/* 魔王能力档案 */
+.bf-guide-btn { margin-left: 8px; vertical-align: middle; font-size: 12px; }
+.bf-guide-core { margin: 4px 0; padding: 8px 10px; border-left: 3px solid var(--bf-gold2, #d6b160); background: #120c18aa; line-height: 1.6; font-size: 14px; }
+.bf-guide dt { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
+.bf-guide dt em { font-style: normal; font-size: 11px; padding: 1px 6px; border-radius: 6px; background: #3a2a4d; color: #e8d6ff; }
+.bf-guide dt em.now { background: #a3342b; color: #fff; }
+.bf-guide dd small { display: block; color: #f1c96b; font-size: 12px; margin-bottom: 2px; }
+/* 攻击附加效果说明、魔王动向 */
+.bf-atk-legend { margin: 6px 0 0; padding: 6px 10px; list-style: none; border-radius: 8px; background: #120c18aa; font-size: 12.5px; line-height: 1.55; color: #e9dcc4; }
+.bf-atk-note { margin: 6px 0 0; font-size: 12px; opacity: .8; }
+.bf-recap { margin-top: 8px; border-top: 1px solid #b9935033; }
+.bf-recap > summary { display: flex; justify-content: space-between; align-items: center; gap: 8px; min-height: 40px; cursor: pointer; list-style: none; }
+.bf-recap > summary::-webkit-details-marker { display: none; }
+.bf-recap > summary span { font-size: 12px; opacity: .75; }
+.bf-recap ul { margin: 0; padding: 0; list-style: none; }
+.bf-recap li { display: grid; grid-template-columns: auto 1fr; column-gap: 8px; padding: 5px 0; border-top: 1px solid #b9935022; font-size: 13px; line-height: 1.5; }
+.bf-recap li small { grid-row: span 2; opacity: .6; font-size: 11px; padding-top: 2px; }
+.bf-recap li span { opacity: .9; overflow-wrap: anywhere; }
+.bf-event { cursor: pointer; }
+.bf-guide-overlay { z-index: 80; }
+/* 魔王播报：每人自己确认 */
+.bf-cast-overlay { z-index: 70; align-items: end; }
+.bf-cast { width: min(520px, 100%); max-height: 80vh; overflow: auto; display: flex; flex-direction: column; gap: 8px; padding: 14px; border-radius: 14px; border: 1px solid #d6b160; background: #1d1427f5; color: #f7edda; box-shadow: 0 10px 40px #000a; }
+.bf-cast h3 { margin: 0; text-align: center; color: #f1c96b; letter-spacing: .08em; font-size: 18px; }
+.bf-cast ol { margin: 0; padding: 0; list-style: none; display: flex; flex-direction: column; gap: 6px; }
+.bf-cast li { display: flex; flex-direction: column; gap: 2px; padding: 8px 10px; border-radius: 10px; background: #120c18; border-left: 4px solid #8a6db0; line-height: 1.55; }
+.bf-cast li b { font-size: 15px; overflow-wrap: anywhere; }
+.bf-cast li span { font-size: 13.5px; opacity: .92; overflow-wrap: anywhere; }
+.bf-cast li.k-report { border-left-color: #e5484d; }
+.bf-cast li.k-healthloss { border-left-color: #f1c96b; background: #2a1b12; }
+.bf-cast li.k-trap, .bf-cast li.k-shield { border-left-color: #d0553d; }
+.bf-cast li.k-round { border-left-color: #4f86e0; }
+.bf-cast .bf-btn { min-height: 46px; font-size: 16px; }
+.bf-cast small { text-align: center; opacity: .6; font-size: 11.5px; }
+.bf-cast li em { font-style: normal; font-size: 12.5px; color: #f1c96b; opacity: .9; }

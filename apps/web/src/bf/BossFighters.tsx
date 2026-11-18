@@ -1,4 +1,5 @@
 import { useEffect, useMemo, useRef, useState } from "react";
+import { createPortal } from "react-dom";
 import {
   BOSSES,
   BOSS_ORDER,
@@ -26,6 +27,7 @@ import { createBFRoom, savedName, useBFRoom } from "./bf-net.ts";
 import { ICON_PATHS } from "./icon-paths.ts";
 import "./bf.css";
 import { getStory, type StoryMoment } from "./story.ts";
+import { abilityHelp, STATUS_HELP } from "./boss-guide.ts";
 import { isMuted, preloadSfx, setMusic, sfx, toggleMute, trackFor, type Sfx } from "./sound.ts";
 
 /** 引擎视觉事件 → 各组件（魔王面板、英雄卡）播放特效 */
@@ -527,6 +529,39 @@ const RULES: [string, string][] = [
   ["战役", "从教学关打起，每通关一关解锁下一关、升级英雄并挑选战利品。记下冒险团存档码，随时能继续。"],
 ];
 
+/** 魔王动向：最近发生的魔王能力，错过弹窗也能回看 */
+function BossRecap({ v }: { v: BFView }) {
+  // 引擎每回合开始会清空事件，这里在界面上攒起来，保留上一回合的能力可以回看
+  const [kept, setKept] = useState<BFView["events"]>([]);
+  useEffect(() => {
+    setKept((old) => {
+      const key = (e: BFView["events"][number]) => e.round + "|" + e.title + "|" + e.text;
+      const have = new Set(old.map(key));
+      const add = v.events.filter((e) => e.kind !== "exileForever" && !have.has(key(e)));
+      return add.length ? [...old, ...add].slice(-20) : old;
+    });
+  }, [v.events.length, v.round]);
+  const list = kept.filter((e) => e.round >= v.round - 1).slice(-8).reverse();
+  if (!list.length) return null;
+  return (
+    <details className="bf-recap" data-testid="bf-recap">
+      <summary>
+        <b>魔王动向</b>
+        <span>最近 {list.length} 条</span>
+      </summary>
+      <ul>
+        {list.map((e, i) => (
+          <li key={i} className={"k-" + e.kind}>
+            <small>第 {e.round} 回合</small>
+            <b>{e.title}</b>
+            <span>{e.text}</span>
+          </li>
+        ))}
+      </ul>
+    </details>
+  );
+}
+
 function RulesSheet({ onClose }: { onClose: () => void }) {
   return (
     <div className="bf-overlay" onClick={onClose}>
@@ -875,27 +910,37 @@ function BossPanel({ v }: { v: BFView }) {
 
 /** 魔王能力横幅：同时触发多个时排队依次显示 */
 function EventBanner({ v }: { v: BFView }) {
+  // 魔王播报：攻击结算、能力发动、形态变化……每个人自己点“知道了”才消失，别人点了不影响你
   const [queue, setQueue] = useState<BFView["events"]>([]);
-  const seen = useRef({ round: v.round, n: v.events.length });
+  const seen = useRef({ round: v.round, n: 0 });
   useEffect(() => {
     const from = seen.current.round === v.round ? seen.current.n : 0;
     const fresh = v.events.slice(from).filter((e) => e.kind !== "exileForever");
     seen.current = { round: v.round, n: v.events.length };
-    if (fresh.length) setQueue((q) => [...q, ...fresh].slice(-6));
+    if (fresh.length) setQueue((q) => [...q, ...fresh].slice(-30));
   }, [v.events.length, v.round]);
-  const head = queue[0];
-  useEffect(() => {
-    if (!head) return;
-    const t = setTimeout(() => setQueue((q) => q.slice(1)), queue.length > 2 ? 1300 : 2000);
-    return () => clearTimeout(t);
-  }, [head, queue.length]);
-  if (!head) return null;
-  return (
-    <div className={"bf-event k-" + head.kind} role="status" key={head.title + head.text}>
-      <b>{head.title}</b>
-      <span>{head.text}</span>
-      {queue.length > 1 && <i className="bf-event-more">+{queue.length - 1}</i>}
-    </div>
+  if (!queue.length) return null;
+  const isTurn = queue.some((e) => e.kind === "report");
+  return createPortal(
+    <div className="bf-overlay bf-cast-overlay">
+      <div className="bf-cast" role="dialog" aria-label="魔王播报" data-testid="bf-cast">
+        <h3>{isTurn ? "魔王行动播报" : "魔王播报"}</h3>
+        <ol>
+          {queue.map((e, i) => (
+            <li key={i} className={"k-" + e.kind}>
+              <b>{e.title}</b>
+              <span>{e.text}</span>
+              {abilityHelp(v.bossId, e.title) && <em>{abilityHelp(v.bossId, e.title)}</em>}
+            </li>
+          ))}
+        </ol>
+        <button className="bf-btn bf-primary" data-testid="bf-cast-ok" onClick={() => setQueue([])}>
+          知道了
+        </button>
+        <small>只有你自己点了才会关闭，不影响队友。</small>
+      </div>
+    </div>,
+    document.querySelector(".bf-world") ?? document.body,
   );
 }
 
@@ -964,6 +1009,16 @@ function Attacks({ v, canRetarget, onRetarget }: { v: BFView; canRetarget: boole
           );
         })}
       </ul>
+      {(() => {
+        const kinds = [...new Set(v.planned.filter((a) => !a.cancelExtra).flatMap((a) => Object.entries(a.extra).filter(([, n]) => n).map(([k]) => k)))].filter((k) => STATUS_HELP[k]);
+        return kinds.length ? (
+          <ul className="bf-atk-legend" data-testid="bf-atk-legend">
+            {kinds.map((k) => <li key={k}>{STATUS_HELP[k]}</li>)}
+          </ul>
+        ) : null;
+      })()}
+      {v.planned.some((a) => a.reducedBy > 0) && <p className="bf-atk-note">划掉的数字是原本的伤害，后面是被保护挡掉后实际会受的伤害。</p>}
+      <BossRecap v={v} />
     </section>
   );
 }

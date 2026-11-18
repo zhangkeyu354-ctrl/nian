@@ -177,7 +177,15 @@ export function roundAbility(s: GameState, title: string, text: string, fn: () =
     return;
   }
   banner(s, 'round', title, text);
+  const ev = s.events[s.events.length - 1];
+  const before = s.heroes.map((h) => h.health);
+  const bossBefore = s.boss.hp;
   fn();
+  // 播报里补上实际结果：谁掉了多少血、魔王回了多少
+  const lost = s.heroes.map((h, i) => (before[i] - h.health > 0 ? `${h.name} -${before[i] - h.health}` : '')).filter(Boolean);
+  const healed = s.boss.hp - bossBefore;
+  const parts = [...lost, ...(healed > 0 ? [`魔王 +${healed}`] : [])];
+  if (ev && parts.length) ev.text += `（实际：${parts.join('，')}）`;
 }
 
 /** 无视护盾直接扣魔王生命 */
