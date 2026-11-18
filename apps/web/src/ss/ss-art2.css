@@ -536,3 +536,42 @@
 }
 .ss-world .ss-action-tokens { z-index: 12; }
 @media (orientation: portrait) { .ss-world .ss-action-tokens { position: static; box-shadow: none; } }
+/* 5 人以上：座位条可收起成一行横滑 */
+.ss-world .ss2-fold {
+  justify-self: end;
+  min-height: 44px;
+  padding: 0 14px;
+  font-size: 17px;
+  color: #fff;
+}
+.ss-world .ss-seatstrip.is-folded {
+  display: flex !important;
+  overflow-x: auto;
+  max-height: 64px;
+}
+.ss-world .ss-seatstrip.is-folded .ss-seat {
+  flex: 0 0 120px;
+  min-height: 44px;
+}
+.ss-world .ss-seatstrip.is-folded .ss-seat-bottom .ss2-status,
+.ss-world .ss-seatstrip.is-folded .ss2-avatar,
+.ss-world .ss-seatstrip.is-folded .ss2-cap-stack {
+  display: none;
+}
+.ss-world .ss-sheet h3 {
+  margin: 14px 0 6px;
+  font-family: var(--ss2-display);
+  font-weight: 400;
+  color: var(--ss-gold);
+}
+.ss-world .ss-sheet ul { padding-left: 1.2em; }
+.ss-world .ss-sheet li { margin: 4px 0; }
+.ss-world .ss-sheet { max-height: 86vh; overflow: auto; }
+.ss-world .ss2-first-hint {
+  min-height: 48px;
+  width: 100%;
+  margin: 6px 0;
+  font-size: 17px;
+  color: #1a0d05;
+  background: linear-gradient(180deg, #9dffd9, #3ee6a8);
+}

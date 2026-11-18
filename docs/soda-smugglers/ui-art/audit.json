@@ -466,7 +466,7 @@
   "accessibility": [
     {
       "name": "大厅与房主设置 · 竖屏",
-      "textCount": 24,
+      "textCount": 25,
       "below17": [],
       "contrastFailures": [],
       "contrastIncomplete": [
@@ -497,6 +497,12 @@
         {
           "target": [
             ".ss-stage-title > p"
+          ],
+          "summary": "Fix any of the following:\n  Element's background color could not be determined due to a pseudo element"
+        },
+        {
+          "target": [
+            ".ss2-first-hint"
           ],
           "summary": "Fix any of the following:\n  Element's background color could not be determined due to a pseudo element"
         },
@@ -637,7 +643,7 @@
     },
     {
       "name": "大厅与房主设置 · 横屏",
-      "textCount": 23,
+      "textCount": 24,
       "below17": [],
       "contrastFailures": [],
       "contrastIncomplete": [
@@ -668,6 +674,12 @@
         {
           "target": [
             ".ss-stage-title > p"
+          ],
+          "summary": "Fix any of the following:\n  Element's background color could not be determined due to a pseudo element"
+        },
+        {
+          "target": [
+            ".ss2-first-hint"
           ],
           "summary": "Fix any of the following:\n  Element's background color could not be determined due to a pseudo element"
         },
@@ -716,18 +728,6 @@
         {
           "target": [
             "select[data-testid=\"ss-first-guard\"]"
-          ],
-          "summary": "Fix any of the following:\n  Element's background color could not be determined due to a pseudo element"
-        },
-        {
-          "target": [
-            "button[data-testid=\"ss-random-guard\"]"
-          ],
-          "summary": "Fix any of the following:\n  Element's background color could not be determined due to a pseudo element"
-        },
-        {
-          "target": [
-            ".ss-copy"
           ],
           "summary": "Fix any of the following:\n  Element's background color could not be determined due to a pseudo element"
         },
@@ -802,7 +802,7 @@
     },
     {
       "name": "大厅与房主设置 · 电脑",
-      "textCount": 24,
+      "textCount": 25,
       "below17": [],
       "contrastFailures": [],
       "contrastIncomplete": [
@@ -833,6 +833,12 @@
         {
           "target": [
             ".ss-stage-title > p"
+          ],
+          "summary": "Fix any of the following:\n  Element's background color could not be determined due to a pseudo element"
+        },
+        {
+          "target": [
+            ".ss2-first-hint"
           ],
           "summary": "Fix any of the following:\n  Element's background color could not be determined due to a pseudo element"
         },
@@ -5494,7 +5500,7 @@
     },
     {
       "name": "8人长名字 LOBBY · portrait",
-      "textCount": 39,
+      "textCount": 40,
       "below17": [],
       "contrastFailures": [],
       "contrastIncomplete": [
@@ -5525,6 +5531,12 @@
         {
           "target": [
             ".ss-stage-title > p"
+          ],
+          "summary": "Fix any of the following:\n  Element's background color could not be determined due to a pseudo element"
+        },
+        {
+          "target": [
+            ".ss2-first-hint"
           ],
           "summary": "Fix any of the following:\n  Element's background color could not be determined due to a pseudo element"
         },
@@ -5755,7 +5767,7 @@
     },
     {
       "name": "8人长名字 LOBBY · landscape",
-      "textCount": 38,
+      "textCount": 39,
       "below17": [],
       "contrastFailures": [],
       "contrastIncomplete": [
@@ -5786,6 +5798,12 @@
         {
           "target": [
             ".ss-stage-title > p"
+          ],
+          "summary": "Fix any of the following:\n  Element's background color could not be determined due to a pseudo element"
+        },
+        {
+          "target": [
+            ".ss2-first-hint"
           ],
           "summary": "Fix any of the following:\n  Element's background color could not be determined due to a pseudo element"
         },
@@ -5834,18 +5852,6 @@
         {
           "target": [
             "select[data-testid=\"ss-first-guard\"]"
-          ],
-          "summary": "Fix any of the following:\n  Element's background color could not be determined due to a pseudo element"
-        },
-        {
-          "target": [
-            "button[data-testid=\"ss-random-guard\"]"
-          ],
-          "summary": "Fix any of the following:\n  Element's background color could not be determined due to a pseudo element"
-        },
-        {
-          "target": [
-            ".ss-copy"
           ],
           "summary": "Fix any of the following:\n  Element's background color could not be determined due to a pseudo element"
         },
@@ -6010,7 +6016,7 @@
     },
     {
       "name": "8人长名字 LOBBY · desktop",
-      "textCount": 39,
+      "textCount": 40,
       "below17": [],
       "contrastFailures": [],
       "contrastIncomplete": [
@@ -6041,6 +6047,12 @@
         {
           "target": [
             ".ss-stage-title > p"
+          ],
+          "summary": "Fix any of the following:\n  Element's background color could not be determined due to a pseudo element"
+        },
+        {
+          "target": [
+            ".ss2-first-hint"
           ],
           "summary": "Fix any of the following:\n  Element's background color could not be determined due to a pseudo element"
         },
@@ -6271,7 +6283,7 @@
     },
     {
       "name": "8人长名字 IDENTITY · portrait",
-      "textCount": 57,
+      "textCount": 50,
       "below17": [],
       "contrastFailures": [],
       "contrastIncomplete": [
@@ -6367,6 +6379,12 @@
         },
         {
           "target": [
+            ".ss2-fold"
+          ],
+          "summary": "Fix any of the following:\n  Element's background color could not be determined due to a pseudo element"
+        },
+        {
+          "target": [
             ".is-guard > .ss-seat-top > .ss2-seatno.ss-avatar"
           ],
           "summary": "Fix any of the following:\n  Element's background color could not be determined due to a pseudo element"
@@ -6380,12 +6398,6 @@
         {
           "target": [
             ".is-guard > .ss-seat-bottom > .ss2-caps[aria-label=\"10 瓶盖\"] > b"
-          ],
-          "summary": "Fix any of the following:\n  Element's background color could not be determined due to a pseudo element"
-        },
-        {
-          "target": [
-            ".is-guard > .ss-seat-bottom > .ss2-status"
           ],
           "summary": "Fix any of the following:\n  Element's background color could not be determined due to a pseudo element"
         },
@@ -6409,12 +6421,6 @@
         },
         {
           "target": [
-            ".is-selected > .ss-seat-bottom > .ss2-status"
-          ],
-          "summary": "Fix any of the following:\n  Element's background color could not be determined due to a pseudo element"
-        },
-        {
-          "target": [
             "button[data-testid=\"ss-seat-2\"] > .ss-seat-top > .ss2-seatno.ss-avatar"
           ],
           "summary": "Fix any of the following:\n  Element's background color could not be determined due to a pseudo element"
@@ -6428,132 +6434,6 @@
         {
           "target": [
             "button[data-testid=\"ss-seat-2\"] > .ss-seat-bottom > .ss2-caps[aria-label=\"10 瓶盖\"] > b"
-          ],
-          "summary": "Fix any of the following:\n  Element's background color could not be determined due to a pseudo element"
-        },
-        {
-          "target": [
-            "button[data-testid=\"ss-seat-2\"] > .ss-seat-bottom > .ss2-status"
-          ],
-          "summary": "Fix any of the following:\n  Element's background color could not be determined due to a pseudo element"
-        },
-        {
-          "target": [
-            "button[data-testid=\"ss-seat-3\"] > .ss-seat-top > .ss2-seatno.ss-avatar"
-          ],
-          "summary": "Fix any of the following:\n  Element's background color could not be determined due to a pseudo element"
-        },
-        {
-          "target": [
-            "button[data-testid=\"ss-seat-3\"] > .ss-seat-top > strong"
-          ],
-          "summary": "Fix any of the following:\n  Element's background color could not be determined due to a pseudo element"
-        },
-        {
-          "target": [
-            "button[data-testid=\"ss-seat-3\"] > .ss-seat-bottom > .ss2-caps[aria-label=\"10 瓶盖\"] > b"
-          ],
-          "summary": "Fix any of the following:\n  Element's background color could not be determined due to a pseudo element"
-        },
-        {
-          "target": [
-            "button[data-testid=\"ss-seat-3\"] > .ss-seat-bottom > .ss2-status"
-          ],
-          "summary": "Fix any of the following:\n  Element's background color could not be determined due to a pseudo element"
-        },
-        {
-          "target": [
-            "button[data-testid=\"ss-seat-4\"] > .ss-seat-top > .ss2-seatno.ss-avatar"
-          ],
-          "summary": "Fix any of the following:\n  Element's background color could not be determined due to a pseudo element"
-        },
-        {
-          "target": [
-            "button[data-testid=\"ss-seat-4\"] > .ss-seat-top > strong"
-          ],
-          "summary": "Fix any of the following:\n  Element's background color could not be determined due to a pseudo element"
-        },
-        {
-          "target": [
-            "button[data-testid=\"ss-seat-4\"] > .ss-seat-bottom > .ss2-caps[aria-label=\"10 瓶盖\"] > b"
-          ],
-          "summary": "Fix any of the following:\n  Element's background color could not be determined due to a pseudo element"
-        },
-        {
-          "target": [
-            "button[data-testid=\"ss-seat-4\"] > .ss-seat-bottom > .ss2-status"
-          ],
-          "summary": "Fix any of the following:\n  Element's background color could not be determined due to a pseudo element"
-        },
-        {
-          "target": [
-            "button[data-testid=\"ss-seat-5\"] > .ss-seat-top > .ss2-seatno.ss-avatar"
-          ],
-          "summary": "Fix any of the following:\n  Element's background color could not be determined due to a pseudo element"
-        },
-        {
-          "target": [
-            "button[data-testid=\"ss-seat-5\"] > .ss-seat-top > strong"
-          ],
-          "summary": "Fix any of the following:\n  Element's background color could not be determined due to a pseudo element"
-        },
-        {
-          "target": [
-            "button[data-testid=\"ss-seat-5\"] > .ss-seat-bottom > .ss2-caps[aria-label=\"10 瓶盖\"] > b"
-          ],
-          "summary": "Fix any of the following:\n  Element's background color could not be determined due to a pseudo element"
-        },
-        {
-          "target": [
-            "button[data-testid=\"ss-seat-5\"] > .ss-seat-bottom > .ss2-status"
-          ],
-          "summary": "Fix any of the following:\n  Element's background color could not be determined due to a pseudo element"
-        },
-        {
-          "target": [
-            "button[data-testid=\"ss-seat-6\"] > .ss-seat-top > .ss2-seatno.ss-avatar"
-          ],
-          "summary": "Fix any of the following:\n  Element's background color could not be determined due to a pseudo element"
-        },
-        {
-          "target": [
-            "button[data-testid=\"ss-seat-6\"] > .ss-seat-top > strong"
-          ],
-          "summary": "Fix any of the following:\n  Element's background color could not be determined due to a pseudo element"
-        },
-        {
-          "target": [
-            "button[data-testid=\"ss-seat-6\"] > .ss-seat-bottom > .ss2-caps[aria-label=\"10 瓶盖\"] > b"
-          ],
-          "summary": "Fix any of the following:\n  Element's background color could not be determined due to a pseudo element"
-        },
-        {
-          "target": [
-            "button[data-testid=\"ss-seat-6\"] > .ss-seat-bottom > .ss2-status"
-          ],
-          "summary": "Fix any of the following:\n  Element's background color could not be determined due to a pseudo element"
-        },
-        {
-          "target": [
-            "button[data-testid=\"ss-seat-7\"] > .ss-seat-top > .ss2-seatno.ss-avatar"
-          ],
-          "summary": "Fix any of the following:\n  Element's background color could not be determined due to a pseudo element"
-        },
-        {
-          "target": [
-            "button[data-testid=\"ss-seat-7\"] > .ss-seat-top > strong"
-          ],
-          "summary": "Fix any of the following:\n  Element's background color could not be determined due to a pseudo element"
-        },
-        {
-          "target": [
-            "button[data-testid=\"ss-seat-7\"] > .ss-seat-bottom > .ss2-caps[aria-label=\"10 瓶盖\"] > b"
-          ],
-          "summary": "Fix any of the following:\n  Element's background color could not be determined due to a pseudo element"
-        },
-        {
-          "target": [
-            "button[data-testid=\"ss-seat-7\"] > .ss-seat-bottom > .ss2-status"
           ],
           "summary": "Fix any of the following:\n  Element's background color could not be determined due to a pseudo element"
         },
@@ -6592,7 +6472,7 @@
     },
     {
       "name": "8人长名字 IDENTITY · landscape",
-      "textCount": 56,
+      "textCount": 57,
       "below17": [],
       "contrastFailures": [],
       "contrastIncomplete": [
@@ -6677,6 +6557,12 @@
         {
           "target": [
             "button[data-testid=\"ss-card-SS0-10\"] > span"
+          ],
+          "summary": "Fix any of the following:\n  Element's background color could not be determined due to a pseudo element"
+        },
+        {
+          "target": [
+            ".ss2-fold"
           ],
           "summary": "Fix any of the following:\n  Element's background color could not be determined due to a pseudo element"
         },
@@ -6907,7 +6793,7 @@
     },
     {
       "name": "8人长名字 IDENTITY · desktop",
-      "textCount": 61,
+      "textCount": 62,
       "below17": [],
       "contrastFailures": [],
       "contrastIncomplete": [
@@ -6998,6 +6884,12 @@
         {
           "target": [
             ".ss-help"
+          ],
+          "summary": "Fix any of the following:\n  Element's background color could not be determined due to a pseudo element"
+        },
+        {
+          "target": [
+            ".ss2-fold"
           ],
           "summary": "Fix any of the following:\n  Element's background color could not be determined due to a pseudo element"
         },
@@ -7252,7 +7144,7 @@
     },
     {
       "name": "8人长名字 PACK · portrait",
-      "textCount": 52,
+      "textCount": 45,
       "below17": [],
       "contrastFailures": [],
       "contrastIncomplete": [
@@ -7348,6 +7240,12 @@
         },
         {
           "target": [
+            ".ss2-fold"
+          ],
+          "summary": "Fix any of the following:\n  Element's background color could not be determined due to a pseudo element"
+        },
+        {
+          "target": [
             ".is-guard > .ss-seat-top > .ss2-seatno.ss-avatar"
           ],
           "summary": "Fix any of the following:\n  Element's background color could not be determined due to a pseudo element"
@@ -7361,12 +7259,6 @@
         {
           "target": [
             ".is-guard > .ss-seat-bottom > .ss2-caps[aria-label=\"10 瓶盖\"] > b"
-          ],
-          "summary": "Fix any of the following:\n  Element's background color could not be determined due to a pseudo element"
-        },
-        {
-          "target": [
-            ".is-guard > .ss-seat-bottom > .ss2-status"
           ],
           "summary": "Fix any of the following:\n  Element's background color could not be determined due to a pseudo element"
         },
@@ -7390,12 +7282,6 @@
         },
         {
           "target": [
-            ".is-selected > .ss-seat-bottom > .ss2-status"
-          ],
-          "summary": "Fix any of the following:\n  Element's background color could not be determined due to a pseudo element"
-        },
-        {
-          "target": [
             "button[data-testid=\"ss-seat-2\"] > .ss-seat-top > .ss2-seatno.ss-avatar"
           ],
           "summary": "Fix any of the following:\n  Element's background color could not be determined due to a pseudo element"
@@ -7414,132 +7300,6 @@
         },
         {
           "target": [
-            "button[data-testid=\"ss-seat-2\"] > .ss-seat-bottom > .ss2-status"
-          ],
-          "summary": "Fix any of the following:\n  Element's background color could not be determined due to a pseudo element"
-        },
-        {
-          "target": [
-            "button[data-testid=\"ss-seat-3\"] > .ss-seat-top > .ss2-seatno.ss-avatar"
-          ],
-          "summary": "Fix any of the following:\n  Element's background color could not be determined due to a pseudo element"
-        },
-        {
-          "target": [
-            "button[data-testid=\"ss-seat-3\"] > .ss-seat-top > strong"
-          ],
-          "summary": "Fix any of the following:\n  Element's background color could not be determined due to a pseudo element"
-        },
-        {
-          "target": [
-            "button[data-testid=\"ss-seat-3\"] > .ss-seat-bottom > .ss2-caps[aria-label=\"10 瓶盖\"] > b"
-          ],
-          "summary": "Fix any of the following:\n  Element's background color could not be determined due to a pseudo element"
-        },
-        {
-          "target": [
-            "button[data-testid=\"ss-seat-3\"] > .ss-seat-bottom > .ss2-status"
-          ],
-          "summary": "Fix any of the following:\n  Element's background color could not be determined due to a pseudo element"
-        },
-        {
-          "target": [
-            "button[data-testid=\"ss-seat-4\"] > .ss-seat-top > .ss2-seatno.ss-avatar"
-          ],
-          "summary": "Fix any of the following:\n  Element's background color could not be determined due to a pseudo element"
-        },
-        {
-          "target": [
-            "button[data-testid=\"ss-seat-4\"] > .ss-seat-top > strong"
-          ],
-          "summary": "Fix any of the following:\n  Element's background color could not be determined due to a pseudo element"
-        },
-        {
-          "target": [
-            "button[data-testid=\"ss-seat-4\"] > .ss-seat-bottom > .ss2-caps[aria-label=\"10 瓶盖\"] > b"
-          ],
-          "summary": "Fix any of the following:\n  Element's background color could not be determined due to a pseudo element"
-        },
-        {
-          "target": [
-            "button[data-testid=\"ss-seat-4\"] > .ss-seat-bottom > .ss2-status"
-          ],
-          "summary": "Fix any of the following:\n  Element's background color could not be determined due to a pseudo element"
-        },
-        {
-          "target": [
-            "button[data-testid=\"ss-seat-5\"] > .ss-seat-top > .ss2-seatno.ss-avatar"
-          ],
-          "summary": "Fix any of the following:\n  Element's background color could not be determined due to a pseudo element"
-        },
-        {
-          "target": [
-            "button[data-testid=\"ss-seat-5\"] > .ss-seat-top > strong"
-          ],
-          "summary": "Fix any of the following:\n  Element's background color could not be determined due to a pseudo element"
-        },
-        {
-          "target": [
-            "button[data-testid=\"ss-seat-5\"] > .ss-seat-bottom > .ss2-caps[aria-label=\"10 瓶盖\"] > b"
-          ],
-          "summary": "Fix any of the following:\n  Element's background color could not be determined due to a pseudo element"
-        },
-        {
-          "target": [
-            "button[data-testid=\"ss-seat-5\"] > .ss-seat-bottom > .ss2-status"
-          ],
-          "summary": "Fix any of the following:\n  Element's background color could not be determined due to a pseudo element"
-        },
-        {
-          "target": [
-            "button[data-testid=\"ss-seat-6\"] > .ss-seat-top > .ss2-seatno.ss-avatar"
-          ],
-          "summary": "Fix any of the following:\n  Element's background color could not be determined due to a pseudo element"
-        },
-        {
-          "target": [
-            "button[data-testid=\"ss-seat-6\"] > .ss-seat-top > strong"
-          ],
-          "summary": "Fix any of the following:\n  Element's background color could not be determined due to a pseudo element"
-        },
-        {
-          "target": [
-            "button[data-testid=\"ss-seat-6\"] > .ss-seat-bottom > .ss2-caps[aria-label=\"10 瓶盖\"] > b"
-          ],
-          "summary": "Fix any of the following:\n  Element's background color could not be determined due to a pseudo element"
-        },
-        {
-          "target": [
-            "button[data-testid=\"ss-seat-6\"] > .ss-seat-bottom > .ss2-status"
-          ],
-          "summary": "Fix any of the following:\n  Element's background color could not be determined due to a pseudo element"
-        },
-        {
-          "target": [
-            "button[data-testid=\"ss-seat-7\"] > .ss-seat-top > .ss2-seatno.ss-avatar"
-          ],
-          "summary": "Fix any of the following:\n  Element's background color could not be determined due to a pseudo element"
-        },
-        {
-          "target": [
-            "button[data-testid=\"ss-seat-7\"] > .ss-seat-top > strong"
-          ],
-          "summary": "Fix any of the following:\n  Element's background color could not be determined due to a pseudo element"
-        },
-        {
-          "target": [
-            "button[data-testid=\"ss-seat-7\"] > .ss-seat-bottom > .ss2-caps[aria-label=\"10 瓶盖\"] > b"
-          ],
-          "summary": "Fix any of the following:\n  Element's background color could not be determined due to a pseudo element"
-        },
-        {
-          "target": [
-            "button[data-testid=\"ss-seat-7\"] > .ss-seat-bottom > .ss2-status"
-          ],
-          "summary": "Fix any of the following:\n  Element's background color could not be determined due to a pseudo element"
-        },
-        {
-          "target": [
             ".dm-dock-hint"
           ],
           "summary": "Fix any of the following:\n  Element's background color could not be determined due to a pseudo element"
@@ -7549,7 +7309,7 @@
     },
     {
       "name": "8人长名字 PACK · landscape",
-      "textCount": 51,
+      "textCount": 52,
       "below17": [],
       "contrastFailures": [],
       "contrastIncomplete": [
@@ -7634,6 +7394,12 @@
         {
           "target": [
             "button[data-testid=\"ss-card-SS0-10\"] > span"
+          ],
+          "summary": "Fix any of the following:\n  Element's background color could not be determined due to a pseudo element"
+        },
+        {
+          "target": [
+            ".ss2-fold"
           ],
           "summary": "Fix any of the following:\n  Element's background color could not be determined due to a pseudo element"
         },
@@ -7840,7 +7606,7 @@
     },
     {
       "name": "8人长名字 PACK · desktop",
-      "textCount": 56,
+      "textCount": 57,
       "below17": [],
       "contrastFailures": [],
       "contrastIncomplete": [
@@ -7931,6 +7697,12 @@
         {
           "target": [
             ".ss-help"
+          ],
+          "summary": "Fix any of the following:\n  Element's background color could not be determined due to a pseudo element"
+        },
+        {
+          "target": [
+            ".ss2-fold"
           ],
           "summary": "Fix any of the following:\n  Element's background color could not be determined due to a pseudo element"
         },
@@ -8161,6 +7933,243 @@
     },
     {
       "name": "8人长名字 BRIBE · portrait",
+      "textCount": 53,
+      "below17": [],
+      "contrastFailures": [],
+      "contrastIncomplete": [
+        {
+          "target": [
+            ".ss-roomno"
+          ],
+          "summary": "Fix any of the following:\n  Element's background color could not be determined due to a pseudo element"
+        },
+        {
+          "target": [
+            ".ss-round"
+          ],
+          "summary": "Fix any of the following:\n  Element's background color could not be determined due to a pseudo element"
+        },
+        {
+          "target": [
+            ".ss-menu-button"
+          ],
+          "summary": "Fix any of the following:\n  Element content contains only non-text characters"
+        },
+        {
+          "target": [
+            ".ss-kicker"
+          ],
+          "summary": "Fix any of the following:\n  Element's background color could not be determined due to a pseudo element"
+        },
+        {
+          "target": [
+            "h1"
+          ],
+          "summary": "Fix any of the following:\n  Element's background color could not be determined due to a pseudo element"
+        },
+        {
+          "target": [
+            ".ss-stage-title > p"
+          ],
+          "summary": "Fix any of the following:\n  Element's background color could not be determined due to a pseudo element"
+        },
+        {
+          "target": [
+            ".ss-budget > span:nth-child(1)"
+          ],
+          "summary": "Fix any of the following:\n  Element's background color could not be determined due to a pseudo element"
+        },
+        {
+          "target": [
+            ".ss-budget > span:nth-child(2)"
+          ],
+          "summary": "Fix any of the following:\n  Element's background color could not be determined due to a pseudo element"
+        },
+        {
+          "target": [
+            ".ss-budget > span:nth-child(3)"
+          ],
+          "summary": "Fix any of the following:\n  Element's background color could not be determined due to a pseudo element"
+        },
+        {
+          "target": [
+            "button[data-testid=\"ss-mode-normal\"]"
+          ],
+          "summary": "Fix any of the following:\n  Element's background color could not be determined due to a pseudo element"
+        },
+        {
+          "target": [
+            "strong[title=\"长名字旅客张三李赵2\"]"
+          ],
+          "summary": "Fix any of the following:\n  Element's background color could not be determined due to a pseudo element"
+        },
+        {
+          "target": [
+            "button[data-testid=\"ss-public-bribe-1\"] > span:nth-child(5)"
+          ],
+          "summary": "Fix any of the following:\n  Element's background color could not be determined due to a pseudo element"
+        },
+        {
+          "target": [
+            "strong[title=\"长名字旅客张三李赵3\"]"
+          ],
+          "summary": "Fix any of the following:\n  Element's background color could not be determined due to a pseudo element"
+        },
+        {
+          "target": [
+            "button[data-testid=\"ss-public-bribe-2\"] > span:nth-child(5)"
+          ],
+          "summary": "Fix any of the following:\n  Element's background color could not be determined due to a pseudo element"
+        },
+        {
+          "target": [
+            "strong[title=\"长名字旅客张三李赵4\"]"
+          ],
+          "summary": "Fix any of the following:\n  Element's background color could not be determined due to a pseudo element"
+        },
+        {
+          "target": [
+            "button[data-testid=\"ss-public-bribe-3\"] > span:nth-child(5)"
+          ],
+          "summary": "Fix any of the following:\n  Element's background color could not be determined due to a pseudo element"
+        },
+        {
+          "target": [
+            "strong[title=\"长名字旅客张三李赵5\"]"
+          ],
+          "summary": "Fix any of the following:\n  Element's background color could not be determined due to a pseudo element"
+        },
+        {
+          "target": [
+            "button[data-testid=\"ss-public-bribe-4\"] > span:nth-child(5)"
+          ],
+          "summary": "Fix any of the following:\n  Element's background color could not be determined due to a pseudo element"
+        },
+        {
+          "target": [
+            "strong[title=\"长名字旅客张三李赵6\"]"
+          ],
+          "summary": "Fix any of the following:\n  Element's background color could not be determined due to a pseudo element"
+        },
+        {
+          "target": [
+            "button[data-testid=\"ss-public-bribe-5\"] > span:nth-child(5)"
+          ],
+          "summary": "Fix any of the following:\n  Element's background color could not be determined due to a pseudo element"
+        },
+        {
+          "target": [
+            "strong[title=\"长名字旅客张三李赵7\"]"
+          ],
+          "summary": "Fix any of the following:\n  Element's background color could not be determined due to a pseudo element"
+        },
+        {
+          "target": [
+            "button[data-testid=\"ss-public-bribe-6\"] > span:nth-child(5)"
+          ],
+          "summary": "Fix any of the following:\n  Element's background color could not be determined due to a pseudo element"
+        },
+        {
+          "target": [
+            "strong[title=\"长名字旅客张三李赵8\"]"
+          ],
+          "summary": "Fix any of the following:\n  Element's background color could not be determined due to a pseudo element"
+        },
+        {
+          "target": [
+            "button[data-testid=\"ss-public-bribe-7\"] > span:nth-child(5)"
+          ],
+          "summary": "Fix any of the following:\n  Element's background color could not be determined due to a pseudo element"
+        },
+        {
+          "target": [
+            ".ss-help"
+          ],
+          "summary": "Fix any of the following:\n  Element's background color could not be determined due to a pseudo element"
+        },
+        {
+          "target": [
+            ".ss2-fold"
+          ],
+          "summary": "Fix any of the following:\n  Element's background color could not be determined due to a pseudo element"
+        },
+        {
+          "target": [
+            ".is-guard > .ss-seat-top > .ss2-seatno.ss-avatar"
+          ],
+          "summary": "Fix any of the following:\n  Element's background color could not be determined due to a pseudo element"
+        },
+        {
+          "target": [
+            ".is-guard > .ss-seat-top > strong"
+          ],
+          "summary": "Fix any of the following:\n  Element's background color could not be determined due to a pseudo element"
+        },
+        {
+          "target": [
+            ".is-guard > .ss-seat-bottom > .ss2-caps[aria-label=\"10 瓶盖\"] > b"
+          ],
+          "summary": "Fix any of the following:\n  Element's background color could not be determined due to a pseudo element"
+        },
+        {
+          "target": [
+            "button[data-testid=\"ss-seat-1\"] > .ss-seat-top > .ss2-seatno.ss-avatar"
+          ],
+          "summary": "Fix any of the following:\n  Element's background color could not be determined due to a pseudo element"
+        },
+        {
+          "target": [
+            "button[data-testid=\"ss-seat-1\"] > .ss-seat-top > strong"
+          ],
+          "summary": "Fix any of the following:\n  Element's background color could not be determined due to a pseudo element"
+        },
+        {
+          "target": [
+            "button[data-testid=\"ss-seat-1\"] > .ss-seat-bottom > .ss2-caps[aria-label=\"10 瓶盖\"] > b"
+          ],
+          "summary": "Fix any of the following:\n  Element's background color could not be determined due to a pseudo element"
+        },
+        {
+          "target": [
+            "button[data-testid=\"ss-seat-2\"] > .ss-seat-top > .ss2-seatno.ss-avatar"
+          ],
+          "summary": "Fix any of the following:\n  Element's background color could not be determined due to a pseudo element"
+        },
+        {
+          "target": [
+            "button[data-testid=\"ss-seat-2\"] > .ss-seat-top > strong"
+          ],
+          "summary": "Fix any of the following:\n  Element's background color could not be determined due to a pseudo element"
+        },
+        {
+          "target": [
+            "button[data-testid=\"ss-seat-2\"] > .ss-seat-bottom > .ss2-caps[aria-label=\"10 瓶盖\"] > b"
+          ],
+          "summary": "Fix any of the following:\n  Element's background color could not be determined due to a pseudo element"
+        },
+        {
+          "target": [
+            ".dm-dock-hint"
+          ],
+          "summary": "Fix any of the following:\n  Element's background color could not be determined due to a pseudo element"
+        },
+        {
+          "target": [
+            ".ss-primary"
+          ],
+          "summary": "Fix any of the following:\n  Element's background color could not be determined due to a pseudo element"
+        },
+        {
+          "target": [
+            ".ss-secondary"
+          ],
+          "summary": "Fix any of the following:\n  Element's background color could not be determined due to a pseudo element"
+        }
+      ],
+      "contrastPassed": 0
+    },
+    {
+      "name": "8人长名字 BRIBE · landscape",
       "textCount": 60,
       "below17": [],
       "contrastFailures": [],
@@ -8233,19 +8242,7 @@
         },
         {
           "target": [
-            "button[data-testid=\"ss-public-bribe-1\"] > span:nth-child(5)"
-          ],
-          "summary": "Fix any of the following:\n  Element's background color could not be determined due to a pseudo element"
-        },
-        {
-          "target": [
             "strong[title=\"长名字旅客张三李赵3\"]"
-          ],
-          "summary": "Fix any of the following:\n  Element's background color could not be determined due to a pseudo element"
-        },
-        {
-          "target": [
-            "button[data-testid=\"ss-public-bribe-2\"] > span:nth-child(5)"
           ],
           "summary": "Fix any of the following:\n  Element's background color could not be determined due to a pseudo element"
         },
@@ -8257,19 +8254,7 @@
         },
         {
           "target": [
-            "button[data-testid=\"ss-public-bribe-3\"] > span:nth-child(5)"
-          ],
-          "summary": "Fix any of the following:\n  Element's background color could not be determined due to a pseudo element"
-        },
-        {
-          "target": [
             "strong[title=\"长名字旅客张三李赵5\"]"
-          ],
-          "summary": "Fix any of the following:\n  Element's background color could not be determined due to a pseudo element"
-        },
-        {
-          "target": [
-            "button[data-testid=\"ss-public-bribe-4\"] > span:nth-child(5)"
           ],
           "summary": "Fix any of the following:\n  Element's background color could not be determined due to a pseudo element"
         },
@@ -8281,19 +8266,7 @@
         },
         {
           "target": [
-            "button[data-testid=\"ss-public-bribe-5\"] > span:nth-child(5)"
-          ],
-          "summary": "Fix any of the following:\n  Element's background color could not be determined due to a pseudo element"
-        },
-        {
-          "target": [
             "strong[title=\"长名字旅客张三李赵7\"]"
-          ],
-          "summary": "Fix any of the following:\n  Element's background color could not be determined due to a pseudo element"
-        },
-        {
-          "target": [
-            "button[data-testid=\"ss-public-bribe-6\"] > span:nth-child(5)"
           ],
           "summary": "Fix any of the following:\n  Element's background color could not be determined due to a pseudo element"
         },
@@ -8305,13 +8278,7 @@
         },
         {
           "target": [
-            "button[data-testid=\"ss-public-bribe-7\"] > span:nth-child(5)"
-          ],
-          "summary": "Fix any of the following:\n  Element's background color could not be determined due to a pseudo element"
-        },
-        {
-          "target": [
-            ".ss-help"
+            ".ss2-fold"
           ],
           "summary": "Fix any of the following:\n  Element's background color could not be determined due to a pseudo element"
         },
@@ -8516,333 +8483,6 @@
         {
           "target": [
             ".ss-primary"
-          ],
-          "summary": "Fix any of the following:\n  Element's background color could not be determined due to a pseudo element"
-        },
-        {
-          "target": [
-            ".ss-secondary"
-          ],
-          "summary": "Fix any of the following:\n  Element's background color could not be determined due to a pseudo element"
-        }
-      ],
-      "contrastPassed": 0
-    },
-    {
-      "name": "8人长名字 BRIBE · landscape",
-      "textCount": 59,
-      "below17": [],
-      "contrastFailures": [],
-      "contrastIncomplete": [
-        {
-          "target": [
-            ".ss-roomno"
-          ],
-          "summary": "Fix any of the following:\n  Element's background color could not be determined due to a pseudo element"
-        },
-        {
-          "target": [
-            ".ss-round"
-          ],
-          "summary": "Fix any of the following:\n  Element's background color could not be determined due to a pseudo element"
-        },
-        {
-          "target": [
-            ".ss-menu-button"
-          ],
-          "summary": "Fix any of the following:\n  Element content contains only non-text characters"
-        },
-        {
-          "target": [
-            ".ss-kicker"
-          ],
-          "summary": "Fix any of the following:\n  Element's background color could not be determined due to a pseudo element"
-        },
-        {
-          "target": [
-            "h1"
-          ],
-          "summary": "Fix any of the following:\n  Element's background color could not be determined due to a pseudo element"
-        },
-        {
-          "target": [
-            ".ss-stage-title > p"
-          ],
-          "summary": "Fix any of the following:\n  Element's background color could not be determined due to a pseudo element"
-        },
-        {
-          "target": [
-            ".ss-budget > span:nth-child(1)"
-          ],
-          "summary": "Fix any of the following:\n  Element's background color could not be determined due to a pseudo element"
-        },
-        {
-          "target": [
-            ".ss-budget > span:nth-child(2)"
-          ],
-          "summary": "Fix any of the following:\n  Element's background color could not be determined due to a pseudo element"
-        },
-        {
-          "target": [
-            ".ss-budget > span:nth-child(3)"
-          ],
-          "summary": "Fix any of the following:\n  Element's background color could not be determined due to a pseudo element"
-        },
-        {
-          "target": [
-            "button[data-testid=\"ss-mode-normal\"]"
-          ],
-          "summary": "Fix any of the following:\n  Element's background color could not be determined due to a pseudo element"
-        },
-        {
-          "target": [
-            "strong[title=\"长名字旅客张三李赵2\"]"
-          ],
-          "summary": "Fix any of the following:\n  Element's background color could not be determined due to a pseudo element"
-        },
-        {
-          "target": [
-            "strong[title=\"长名字旅客张三李赵3\"]"
-          ],
-          "summary": "Fix any of the following:\n  Element's background color could not be determined due to a pseudo element"
-        },
-        {
-          "target": [
-            "strong[title=\"长名字旅客张三李赵4\"]"
-          ],
-          "summary": "Fix any of the following:\n  Element's background color could not be determined due to a pseudo element"
-        },
-        {
-          "target": [
-            "strong[title=\"长名字旅客张三李赵5\"]"
-          ],
-          "summary": "Fix any of the following:\n  Element's background color could not be determined due to a pseudo element"
-        },
-        {
-          "target": [
-            "strong[title=\"长名字旅客张三李赵6\"]"
-          ],
-          "summary": "Fix any of the following:\n  Element's background color could not be determined due to a pseudo element"
-        },
-        {
-          "target": [
-            "strong[title=\"长名字旅客张三李赵7\"]"
-          ],
-          "summary": "Fix any of the following:\n  Element's background color could not be determined due to a pseudo element"
-        },
-        {
-          "target": [
-            "strong[title=\"长名字旅客张三李赵8\"]"
-          ],
-          "summary": "Fix any of the following:\n  Element's background color could not be determined due to a pseudo element"
-        },
-        {
-          "target": [
-            ".is-guard > .ss-seat-top > .ss2-seatno.ss-avatar"
-          ],
-          "summary": "Fix any of the following:\n  Element's background color could not be determined due to a pseudo element"
-        },
-        {
-          "target": [
-            ".is-guard > .ss-seat-top > strong"
-          ],
-          "summary": "Fix any of the following:\n  Element's background color could not be determined due to a pseudo element"
-        },
-        {
-          "target": [
-            ".is-guard > .ss-seat-bottom > .ss2-caps[aria-label=\"10 瓶盖\"] > b"
-          ],
-          "summary": "Fix any of the following:\n  Element's background color could not be determined due to a pseudo element"
-        },
-        {
-          "target": [
-            ".is-guard > .ss-seat-bottom > .ss2-status"
-          ],
-          "summary": "Fix any of the following:\n  Element's background color could not be determined due to a pseudo element"
-        },
-        {
-          "target": [
-            "button[data-testid=\"ss-seat-1\"] > .ss-seat-top > .ss2-seatno.ss-avatar"
-          ],
-          "summary": "Fix any of the following:\n  Element's background color could not be determined due to a pseudo element"
-        },
-        {
-          "target": [
-            "button[data-testid=\"ss-seat-1\"] > .ss-seat-top > strong"
-          ],
-          "summary": "Fix any of the following:\n  Element's background color could not be determined due to a pseudo element"
-        },
-        {
-          "target": [
-            "button[data-testid=\"ss-seat-1\"] > .ss-seat-bottom > .ss2-caps[aria-label=\"10 瓶盖\"] > b"
-          ],
-          "summary": "Fix any of the following:\n  Element's background color could not be determined due to a pseudo element"
-        },
-        {
-          "target": [
-            "button[data-testid=\"ss-seat-1\"] > .ss-seat-bottom > .ss2-status"
-          ],
-          "summary": "Fix any of the following:\n  Element's background color could not be determined due to a pseudo element"
-        },
-        {
-          "target": [
-            "button[data-testid=\"ss-seat-2\"] > .ss-seat-top > .ss2-seatno.ss-avatar"
-          ],
-          "summary": "Fix any of the following:\n  Element's background color could not be determined due to a pseudo element"
-        },
-        {
-          "target": [
-            "button[data-testid=\"ss-seat-2\"] > .ss-seat-top > strong"
-          ],
-          "summary": "Fix any of the following:\n  Element's background color could not be determined due to a pseudo element"
-        },
-        {
-          "target": [
-            "button[data-testid=\"ss-seat-2\"] > .ss-seat-bottom > .ss2-caps[aria-label=\"10 瓶盖\"] > b"
-          ],
-          "summary": "Fix any of the following:\n  Element's background color could not be determined due to a pseudo element"
-        },
-        {
-          "target": [
-            "button[data-testid=\"ss-seat-2\"] > .ss-seat-bottom > .ss2-status"
-          ],
-          "summary": "Fix any of the following:\n  Element's background color could not be determined due to a pseudo element"
-        },
-        {
-          "target": [
-            "button[data-testid=\"ss-seat-3\"] > .ss-seat-top > .ss2-seatno.ss-avatar"
-          ],
-          "summary": "Fix any of the following:\n  Element's background color could not be determined due to a pseudo element"
-        },
-        {
-          "target": [
-            "button[data-testid=\"ss-seat-3\"] > .ss-seat-top > strong"
-          ],
-          "summary": "Fix any of the following:\n  Element's background color could not be determined due to a pseudo element"
-        },
-        {
-          "target": [
-            "button[data-testid=\"ss-seat-3\"] > .ss-seat-bottom > .ss2-caps[aria-label=\"10 瓶盖\"] > b"
-          ],
-          "summary": "Fix any of the following:\n  Element's background color could not be determined due to a pseudo element"
-        },
-        {
-          "target": [
-            "button[data-testid=\"ss-seat-3\"] > .ss-seat-bottom > .ss2-status"
-          ],
-          "summary": "Fix any of the following:\n  Element's background color could not be determined due to a pseudo element"
-        },
-        {
-          "target": [
-            "button[data-testid=\"ss-seat-4\"] > .ss-seat-top > .ss2-seatno.ss-avatar"
-          ],
-          "summary": "Fix any of the following:\n  Element's background color could not be determined due to a pseudo element"
-        },
-        {
-          "target": [
-            "button[data-testid=\"ss-seat-4\"] > .ss-seat-top > strong"
-          ],
-          "summary": "Fix any of the following:\n  Element's background color could not be determined due to a pseudo element"
-        },
-        {
-          "target": [
-            "button[data-testid=\"ss-seat-4\"] > .ss-seat-bottom > .ss2-caps[aria-label=\"10 瓶盖\"] > b"
-          ],
-          "summary": "Fix any of the following:\n  Element's background color could not be determined due to a pseudo element"
-        },
-        {
-          "target": [
-            "button[data-testid=\"ss-seat-4\"] > .ss-seat-bottom > .ss2-status"
-          ],
-          "summary": "Fix any of the following:\n  Element's background color could not be determined due to a pseudo element"
-        },
-        {
-          "target": [
-            "button[data-testid=\"ss-seat-5\"] > .ss-seat-top > .ss2-seatno.ss-avatar"
-          ],
-          "summary": "Fix any of the following:\n  Element's background color could not be determined due to a pseudo element"
-        },
-        {
-          "target": [
-            "button[data-testid=\"ss-seat-5\"] > .ss-seat-top > strong"
-          ],
-          "summary": "Fix any of the following:\n  Element's background color could not be determined due to a pseudo element"
-        },
-        {
-          "target": [
-            "button[data-testid=\"ss-seat-5\"] > .ss-seat-bottom > .ss2-caps[aria-label=\"10 瓶盖\"] > b"
-          ],
-          "summary": "Fix any of the following:\n  Element's background color could not be determined due to a pseudo element"
-        },
-        {
-          "target": [
-            "button[data-testid=\"ss-seat-5\"] > .ss-seat-bottom > .ss2-status"
-          ],
-          "summary": "Fix any of the following:\n  Element's background color could not be determined due to a pseudo element"
-        },
-        {
-          "target": [
-            "button[data-testid=\"ss-seat-6\"] > .ss-seat-top > .ss2-seatno.ss-avatar"
-          ],
-          "summary": "Fix any of the following:\n  Element's background color could not be determined due to a pseudo element"
-        },
-        {
-          "target": [
-            "button[data-testid=\"ss-seat-6\"] > .ss-seat-top > strong"
-          ],
-          "summary": "Fix any of the following:\n  Element's background color could not be determined due to a pseudo element"
-        },
-        {
-          "target": [
-            "button[data-testid=\"ss-seat-6\"] > .ss-seat-bottom > .ss2-caps[aria-label=\"10 瓶盖\"] > b"
-          ],
-          "summary": "Fix any of the following:\n  Element's background color could not be determined due to a pseudo element"
-        },
-        {
-          "target": [
-            "button[data-testid=\"ss-seat-6\"] > .ss-seat-bottom > .ss2-status"
-          ],
-          "summary": "Fix any of the following:\n  Element's background color could not be determined due to a pseudo element"
-        },
-        {
-          "target": [
-            "button[data-testid=\"ss-seat-7\"] > .ss-seat-top > .ss2-seatno.ss-avatar"
-          ],
-          "summary": "Fix any of the following:\n  Element's background color could not be determined due to a pseudo element"
-        },
-        {
-          "target": [
-            "button[data-testid=\"ss-seat-7\"] > .ss-seat-top > strong"
-          ],
-          "summary": "Fix any of the following:\n  Element's background color could not be determined due to a pseudo element"
-        },
-        {
-          "target": [
-            "button[data-testid=\"ss-seat-7\"] > .ss-seat-bottom > .ss2-caps[aria-label=\"10 瓶盖\"] > b"
-          ],
-          "summary": "Fix any of the following:\n  Element's background color could not be determined due to a pseudo element"
-        },
-        {
-          "target": [
-            "button[data-testid=\"ss-seat-7\"] > .ss-seat-bottom > .ss2-status"
-          ],
-          "summary": "Fix any of the following:\n  Element's background color could not be determined due to a pseudo element"
-        },
-        {
-          "target": [
-            ".dm-dock-hint"
-          ],
-          "summary": "Fix any of the following:\n  Element's background color could not be determined due to a pseudo element"
-        },
-        {
-          "target": [
-            ".ss-primary"
-          ],
-          "summary": "Fix any of the following:\n  Element's background color could not be determined due to a pseudo element"
-        },
-        {
-          "target": [
-            ".ss-secondary"
           ],
           "summary": "Fix any of the following:\n  Element's background color could not be determined due to a pseudo element"
         }
@@ -8851,7 +8491,7 @@
     },
     {
       "name": "8人长名字 BRIBE · desktop",
-      "textCount": 64,
+      "textCount": 65,
       "below17": [],
       "contrastFailures": [],
       "contrastIncomplete": [
@@ -9002,6 +8642,12 @@
         {
           "target": [
             ".ss-help"
+          ],
+          "summary": "Fix any of the following:\n  Element's background color could not be determined due to a pseudo element"
+        },
+        {
+          "target": [
+            ".ss2-fold"
           ],
           "summary": "Fix any of the following:\n  Element's background color could not be determined due to a pseudo element"
         },
@@ -9244,7 +8890,7 @@
     },
     {
       "name": "8人长名字 INSPECT · portrait",
-      "textCount": 68,
+      "textCount": 61,
       "below17": [],
       "contrastFailures": [],
       "contrastIncomplete": [
@@ -9442,6 +9088,12 @@
         },
         {
           "target": [
+            ".ss2-fold"
+          ],
+          "summary": "Fix any of the following:\n  Element's background color could not be determined due to a pseudo element"
+        },
+        {
+          "target": [
             ".is-guard > .ss-seat-top > .ss2-seatno.ss-avatar"
           ],
           "summary": "Fix any of the following:\n  Element's background color could not be determined due to a pseudo element"
@@ -9455,12 +9107,6 @@
         {
           "target": [
             ".is-guard > .ss-seat-bottom > .ss2-caps[aria-label=\"10 瓶盖\"] > b"
-          ],
-          "summary": "Fix any of the following:\n  Element's background color could not be determined due to a pseudo element"
-        },
-        {
-          "target": [
-            ".is-guard > .ss-seat-bottom > .ss2-status"
           ],
           "summary": "Fix any of the following:\n  Element's background color could not be determined due to a pseudo element"
         },
@@ -9484,12 +9130,6 @@
         },
         {
           "target": [
-            "button[data-testid=\"ss-seat-1\"] > .ss-seat-bottom > .ss2-status"
-          ],
-          "summary": "Fix any of the following:\n  Element's background color could not be determined due to a pseudo element"
-        },
-        {
-          "target": [
             "button[data-testid=\"ss-seat-2\"] > .ss-seat-top > .ss2-seatno.ss-avatar"
           ],
           "summary": "Fix any of the following:\n  Element's background color could not be determined due to a pseudo element"
@@ -9503,132 +9143,6 @@
         {
           "target": [
             "button[data-testid=\"ss-seat-2\"] > .ss-seat-bottom > .ss2-caps[aria-label=\"10 瓶盖\"] > b"
-          ],
-          "summary": "Fix any of the following:\n  Element's background color could not be determined due to a pseudo element"
-        },
-        {
-          "target": [
-            "button[data-testid=\"ss-seat-2\"] > .ss-seat-bottom > .ss2-status"
-          ],
-          "summary": "Fix any of the following:\n  Element's background color could not be determined due to a pseudo element"
-        },
-        {
-          "target": [
-            "button[data-testid=\"ss-seat-3\"] > .ss-seat-top > .ss2-seatno.ss-avatar"
-          ],
-          "summary": "Fix any of the following:\n  Element's background color could not be determined due to a pseudo element"
-        },
-        {
-          "target": [
-            "button[data-testid=\"ss-seat-3\"] > .ss-seat-top > strong"
-          ],
-          "summary": "Fix any of the following:\n  Element's background color could not be determined due to a pseudo element"
-        },
-        {
-          "target": [
-            "button[data-testid=\"ss-seat-3\"] > .ss-seat-bottom > .ss2-caps[aria-label=\"10 瓶盖\"] > b"
-          ],
-          "summary": "Fix any of the following:\n  Element's background color could not be determined due to a pseudo element"
-        },
-        {
-          "target": [
-            "button[data-testid=\"ss-seat-3\"] > .ss-seat-bottom > .ss2-status"
-          ],
-          "summary": "Fix any of the following:\n  Element's background color could not be determined due to a pseudo element"
-        },
-        {
-          "target": [
-            "button[data-testid=\"ss-seat-4\"] > .ss-seat-top > .ss2-seatno.ss-avatar"
-          ],
-          "summary": "Fix any of the following:\n  Element's background color could not be determined due to a pseudo element"
-        },
-        {
-          "target": [
-            "button[data-testid=\"ss-seat-4\"] > .ss-seat-top > strong"
-          ],
-          "summary": "Fix any of the following:\n  Element's background color could not be determined due to a pseudo element"
-        },
-        {
-          "target": [
-            "button[data-testid=\"ss-seat-4\"] > .ss-seat-bottom > .ss2-caps[aria-label=\"10 瓶盖\"] > b"
-          ],
-          "summary": "Fix any of the following:\n  Element's background color could not be determined due to a pseudo element"
-        },
-        {
-          "target": [
-            "button[data-testid=\"ss-seat-4\"] > .ss-seat-bottom > .ss2-status"
-          ],
-          "summary": "Fix any of the following:\n  Element's background color could not be determined due to a pseudo element"
-        },
-        {
-          "target": [
-            "button[data-testid=\"ss-seat-5\"] > .ss-seat-top > .ss2-seatno.ss-avatar"
-          ],
-          "summary": "Fix any of the following:\n  Element's background color could not be determined due to a pseudo element"
-        },
-        {
-          "target": [
-            "button[data-testid=\"ss-seat-5\"] > .ss-seat-top > strong"
-          ],
-          "summary": "Fix any of the following:\n  Element's background color could not be determined due to a pseudo element"
-        },
-        {
-          "target": [
-            "button[data-testid=\"ss-seat-5\"] > .ss-seat-bottom > .ss2-caps[aria-label=\"10 瓶盖\"] > b"
-          ],
-          "summary": "Fix any of the following:\n  Element's background color could not be determined due to a pseudo element"
-        },
-        {
-          "target": [
-            "button[data-testid=\"ss-seat-5\"] > .ss-seat-bottom > .ss2-status"
-          ],
-          "summary": "Fix any of the following:\n  Element's background color could not be determined due to a pseudo element"
-        },
-        {
-          "target": [
-            "button[data-testid=\"ss-seat-6\"] > .ss-seat-top > .ss2-seatno.ss-avatar"
-          ],
-          "summary": "Fix any of the following:\n  Element's background color could not be determined due to a pseudo element"
-        },
-        {
-          "target": [
-            "button[data-testid=\"ss-seat-6\"] > .ss-seat-top > strong"
-          ],
-          "summary": "Fix any of the following:\n  Element's background color could not be determined due to a pseudo element"
-        },
-        {
-          "target": [
-            "button[data-testid=\"ss-seat-6\"] > .ss-seat-bottom > .ss2-caps[aria-label=\"10 瓶盖\"] > b"
-          ],
-          "summary": "Fix any of the following:\n  Element's background color could not be determined due to a pseudo element"
-        },
-        {
-          "target": [
-            "button[data-testid=\"ss-seat-6\"] > .ss-seat-bottom > .ss2-status"
-          ],
-          "summary": "Fix any of the following:\n  Element's background color could not be determined due to a pseudo element"
-        },
-        {
-          "target": [
-            "button[data-testid=\"ss-seat-7\"] > .ss-seat-top > .ss2-seatno.ss-avatar"
-          ],
-          "summary": "Fix any of the following:\n  Element's background color could not be determined due to a pseudo element"
-        },
-        {
-          "target": [
-            "button[data-testid=\"ss-seat-7\"] > .ss-seat-top > strong"
-          ],
-          "summary": "Fix any of the following:\n  Element's background color could not be determined due to a pseudo element"
-        },
-        {
-          "target": [
-            "button[data-testid=\"ss-seat-7\"] > .ss-seat-bottom > .ss2-caps[aria-label=\"10 瓶盖\"] > b"
-          ],
-          "summary": "Fix any of the following:\n  Element's background color could not be determined due to a pseudo element"
-        },
-        {
-          "target": [
-            "button[data-testid=\"ss-seat-7\"] > .ss-seat-bottom > .ss2-status"
           ],
           "summary": "Fix any of the following:\n  Element's background color could not be determined due to a pseudo element"
         },
@@ -9655,7 +9169,7 @@
     },
     {
       "name": "8人长名字 INSPECT · landscape",
-      "textCount": 66,
+      "textCount": 67,
       "below17": [],
       "contrastFailures": [],
       "contrastIncomplete": [
@@ -9763,6 +9277,12 @@
         },
         {
           "target": [
+            ".ss2-fold"
+          ],
+          "summary": "Fix any of the following:\n  Element's background color could not be determined due to a pseudo element"
+        },
+        {
+          "target": [
             ".is-guard > .ss-seat-top > .ss2-seatno.ss-avatar"
           ],
           "summary": "Fix any of the following:\n  Element's background color could not be determined due to a pseudo element"
@@ -9964,19 +9484,13 @@
             ".ss-primary"
           ],
           "summary": "Fix any of the following:\n  Element's background color could not be determined due to a pseudo element"
-        },
-        {
-          "target": [
-            ".ss-secondary"
-          ],
-          "summary": "Fix any of the following:\n  Element's background color could not be determined due to a pseudo element"
         }
       ],
       "contrastPassed": 0
     },
     {
       "name": "8人长名字 INSPECT · desktop",
-      "textCount": 72,
+      "textCount": 73,
       "below17": [],
       "contrastFailures": [],
       "contrastIncomplete": [
@@ -10175,6 +9689,12 @@
         {
           "target": [
             ".ss-traveler > .ss-help"
+          ],
+          "summary": "Fix any of the following:\n  Element's background color could not be determined due to a pseudo element"
+        },
+        {
+          "target": [
+            ".ss2-fold"
           ],
           "summary": "Fix any of the following:\n  Element's background color could not be determined due to a pseudo element"
         },
@@ -10417,7 +9937,7 @@
     },
     {
       "name": "8人长名字 ARREST · portrait",
-      "textCount": 68,
+      "textCount": 61,
       "below17": [],
       "contrastFailures": [],
       "contrastIncomplete": [
@@ -10615,6 +10135,12 @@
         },
         {
           "target": [
+            ".ss2-fold"
+          ],
+          "summary": "Fix any of the following:\n  Element's background color could not be determined due to a pseudo element"
+        },
+        {
+          "target": [
             ".is-guard > .ss-seat-top > .ss2-seatno.ss-avatar"
           ],
           "summary": "Fix any of the following:\n  Element's background color could not be determined due to a pseudo element"
@@ -10628,12 +10154,6 @@
         {
           "target": [
             ".is-guard > .ss-seat-bottom > .ss2-caps[aria-label=\"10 瓶盖\"] > b"
-          ],
-          "summary": "Fix any of the following:\n  Element's background color could not be determined due to a pseudo element"
-        },
-        {
-          "target": [
-            ".is-guard > .ss-seat-bottom > .ss2-status"
           ],
           "summary": "Fix any of the following:\n  Element's background color could not be determined due to a pseudo element"
         },
@@ -10657,12 +10177,6 @@
         },
         {
           "target": [
-            "button[data-testid=\"ss-seat-1\"] > .ss-seat-bottom > .ss2-status"
-          ],
-          "summary": "Fix any of the following:\n  Element's background color could not be determined due to a pseudo element"
-        },
-        {
-          "target": [
             "button[data-testid=\"ss-seat-2\"] > .ss-seat-top > .ss2-seatno.ss-avatar"
           ],
           "summary": "Fix any of the following:\n  Element's background color could not be determined due to a pseudo element"
@@ -10676,132 +10190,6 @@
         {
           "target": [
             "button[data-testid=\"ss-seat-2\"] > .ss-seat-bottom > .ss2-caps[aria-label=\"10 瓶盖\"] > b"
-          ],
-          "summary": "Fix any of the following:\n  Element's background color could not be determined due to a pseudo element"
-        },
-        {
-          "target": [
-            "button[data-testid=\"ss-seat-2\"] > .ss-seat-bottom > .ss2-status"
-          ],
-          "summary": "Fix any of the following:\n  Element's background color could not be determined due to a pseudo element"
-        },
-        {
-          "target": [
-            "button[data-testid=\"ss-seat-3\"] > .ss-seat-top > .ss2-seatno.ss-avatar"
-          ],
-          "summary": "Fix any of the following:\n  Element's background color could not be determined due to a pseudo element"
-        },
-        {
-          "target": [
-            "button[data-testid=\"ss-seat-3\"] > .ss-seat-top > strong"
-          ],
-          "summary": "Fix any of the following:\n  Element's background color could not be determined due to a pseudo element"
-        },
-        {
-          "target": [
-            "button[data-testid=\"ss-seat-3\"] > .ss-seat-bottom > .ss2-caps[aria-label=\"10 瓶盖\"] > b"
-          ],
-          "summary": "Fix any of the following:\n  Element's background color could not be determined due to a pseudo element"
-        },
-        {
-          "target": [
-            "button[data-testid=\"ss-seat-3\"] > .ss-seat-bottom > .ss2-status"
-          ],
-          "summary": "Fix any of the following:\n  Element's background color could not be determined due to a pseudo element"
-        },
-        {
-          "target": [
-            "button[data-testid=\"ss-seat-4\"] > .ss-seat-top > .ss2-seatno.ss-avatar"
-          ],
-          "summary": "Fix any of the following:\n  Element's background color could not be determined due to a pseudo element"
-        },
-        {
-          "target": [
-            "button[data-testid=\"ss-seat-4\"] > .ss-seat-top > strong"
-          ],
-          "summary": "Fix any of the following:\n  Element's background color could not be determined due to a pseudo element"
-        },
-        {
-          "target": [
-            "button[data-testid=\"ss-seat-4\"] > .ss-seat-bottom > .ss2-caps[aria-label=\"10 瓶盖\"] > b"
-          ],
-          "summary": "Fix any of the following:\n  Element's background color could not be determined due to a pseudo element"
-        },
-        {
-          "target": [
-            "button[data-testid=\"ss-seat-4\"] > .ss-seat-bottom > .ss2-status"
-          ],
-          "summary": "Fix any of the following:\n  Element's background color could not be determined due to a pseudo element"
-        },
-        {
-          "target": [
-            "button[data-testid=\"ss-seat-5\"] > .ss-seat-top > .ss2-seatno.ss-avatar"
-          ],
-          "summary": "Fix any of the following:\n  Element's background color could not be determined due to a pseudo element"
-        },
-        {
-          "target": [
-            "button[data-testid=\"ss-seat-5\"] > .ss-seat-top > strong"
-          ],
-          "summary": "Fix any of the following:\n  Element's background color could not be determined due to a pseudo element"
-        },
-        {
-          "target": [
-            "button[data-testid=\"ss-seat-5\"] > .ss-seat-bottom > .ss2-caps[aria-label=\"10 瓶盖\"] > b"
-          ],
-          "summary": "Fix any of the following:\n  Element's background color could not be determined due to a pseudo element"
-        },
-        {
-          "target": [
-            "button[data-testid=\"ss-seat-5\"] > .ss-seat-bottom > .ss2-status"
-          ],
-          "summary": "Fix any of the following:\n  Element's background color could not be determined due to a pseudo element"
-        },
-        {
-          "target": [
-            "button[data-testid=\"ss-seat-6\"] > .ss-seat-top > .ss2-seatno.ss-avatar"
-          ],
-          "summary": "Fix any of the following:\n  Element's background color could not be determined due to a pseudo element"
-        },
-        {
-          "target": [
-            "button[data-testid=\"ss-seat-6\"] > .ss-seat-top > strong"
-          ],
-          "summary": "Fix any of the following:\n  Element's background color could not be determined due to a pseudo element"
-        },
-        {
-          "target": [
-            "button[data-testid=\"ss-seat-6\"] > .ss-seat-bottom > .ss2-caps[aria-label=\"10 瓶盖\"] > b"
-          ],
-          "summary": "Fix any of the following:\n  Element's background color could not be determined due to a pseudo element"
-        },
-        {
-          "target": [
-            "button[data-testid=\"ss-seat-6\"] > .ss-seat-bottom > .ss2-status"
-          ],
-          "summary": "Fix any of the following:\n  Element's background color could not be determined due to a pseudo element"
-        },
-        {
-          "target": [
-            "button[data-testid=\"ss-seat-7\"] > .ss-seat-top > .ss2-seatno.ss-avatar"
-          ],
-          "summary": "Fix any of the following:\n  Element's background color could not be determined due to a pseudo element"
-        },
-        {
-          "target": [
-            "button[data-testid=\"ss-seat-7\"] > .ss-seat-top > strong"
-          ],
-          "summary": "Fix any of the following:\n  Element's background color could not be determined due to a pseudo element"
-        },
-        {
-          "target": [
-            "button[data-testid=\"ss-seat-7\"] > .ss-seat-bottom > .ss2-caps[aria-label=\"10 瓶盖\"] > b"
-          ],
-          "summary": "Fix any of the following:\n  Element's background color could not be determined due to a pseudo element"
-        },
-        {
-          "target": [
-            "button[data-testid=\"ss-seat-7\"] > .ss-seat-bottom > .ss2-status"
           ],
           "summary": "Fix any of the following:\n  Element's background color could not be determined due to a pseudo element"
         },
@@ -10828,7 +10216,7 @@
     },
     {
       "name": "8人长名字 ARREST · landscape",
-      "textCount": 66,
+      "textCount": 67,
       "below17": [],
       "contrastFailures": [],
       "contrastIncomplete": [
@@ -10936,6 +10324,12 @@
         },
         {
           "target": [
+            ".ss2-fold"
+          ],
+          "summary": "Fix any of the following:\n  Element's background color could not be determined due to a pseudo element"
+        },
+        {
+          "target": [
             ".is-guard > .ss-seat-top > .ss2-seatno.ss-avatar"
           ],
           "summary": "Fix any of the following:\n  Element's background color could not be determined due to a pseudo element"
@@ -11137,19 +10531,13 @@
             ".ss-primary"
           ],
           "summary": "Fix any of the following:\n  Element's background color could not be determined due to a pseudo element"
-        },
-        {
-          "target": [
-            ".ss-secondary"
-          ],
-          "summary": "Fix any of the following:\n  Element's background color could not be determined due to a pseudo element"
         }
       ],
       "contrastPassed": 0
     },
     {
       "name": "8人长名字 ARREST · desktop",
-      "textCount": 72,
+      "textCount": 73,
       "below17": [],
       "contrastFailures": [],
       "contrastIncomplete": [
@@ -11348,6 +10736,12 @@
         {
           "target": [
             ".ss-traveler > .ss-help"
+          ],
+          "summary": "Fix any of the following:\n  Element's background color could not be determined due to a pseudo element"
+        },
+        {
+          "target": [
+            ".ss2-fold"
           ],
           "summary": "Fix any of the following:\n  Element's background color could not be determined due to a pseudo element"
         },
@@ -11590,7 +10984,7 @@
     },
     {
       "name": "8人长名字 ROUND_END · portrait",
-      "textCount": 60,
+      "textCount": 53,
       "below17": [],
       "contrastFailures": [],
       "contrastIncomplete": [
@@ -11746,6 +11140,12 @@
         },
         {
           "target": [
+            ".ss2-fold"
+          ],
+          "summary": "Fix any of the following:\n  Element's background color could not be determined due to a pseudo element"
+        },
+        {
+          "target": [
             ".is-guard > .ss-seat-top > .ss2-seatno.ss-avatar"
           ],
           "summary": "Fix any of the following:\n  Element's background color could not be determined due to a pseudo element"
@@ -11759,12 +11159,6 @@
         {
           "target": [
             ".is-guard > .ss-seat-bottom > .ss2-caps[aria-label=\"10 瓶盖\"] > b"
-          ],
-          "summary": "Fix any of the following:\n  Element's background color could not be determined due to a pseudo element"
-        },
-        {
-          "target": [
-            ".is-guard > .ss-seat-bottom > .ss2-status"
           ],
           "summary": "Fix any of the following:\n  Element's background color could not be determined due to a pseudo element"
         },
@@ -11788,12 +11182,6 @@
         },
         {
           "target": [
-            "button[data-testid=\"ss-seat-1\"] > .ss-seat-bottom > .ss2-status"
-          ],
-          "summary": "Fix any of the following:\n  Element's background color could not be determined due to a pseudo element"
-        },
-        {
-          "target": [
             "button[data-testid=\"ss-seat-2\"] > .ss-seat-top > .ss2-seatno.ss-avatar"
           ],
           "summary": "Fix any of the following:\n  Element's background color could not be determined due to a pseudo element"
@@ -11807,132 +11195,6 @@
         {
           "target": [
             "button[data-testid=\"ss-seat-2\"] > .ss-seat-bottom > .ss2-caps[aria-label=\"13 瓶盖\"] > b"
-          ],
-          "summary": "Fix any of the following:\n  Element's background color could not be determined due to a pseudo element"
-        },
-        {
-          "target": [
-            "button[data-testid=\"ss-seat-2\"] > .ss-seat-bottom > .ss2-status"
-          ],
-          "summary": "Fix any of the following:\n  Element's background color could not be determined due to a pseudo element"
-        },
-        {
-          "target": [
-            "button[data-testid=\"ss-seat-3\"] > .ss-seat-top > .ss2-seatno.ss-avatar"
-          ],
-          "summary": "Fix any of the following:\n  Element's background color could not be determined due to a pseudo element"
-        },
-        {
-          "target": [
-            "button[data-testid=\"ss-seat-3\"] > .ss-seat-top > strong"
-          ],
-          "summary": "Fix any of the following:\n  Element's background color could not be determined due to a pseudo element"
-        },
-        {
-          "target": [
-            "span[aria-label=\"14 瓶盖\"] > b"
-          ],
-          "summary": "Fix any of the following:\n  Element's background color could not be determined due to a pseudo element"
-        },
-        {
-          "target": [
-            "button[data-testid=\"ss-seat-3\"] > .ss-seat-bottom > .ss2-status"
-          ],
-          "summary": "Fix any of the following:\n  Element's background color could not be determined due to a pseudo element"
-        },
-        {
-          "target": [
-            "button[data-testid=\"ss-seat-4\"] > .ss-seat-top > .ss2-seatno.ss-avatar"
-          ],
-          "summary": "Fix any of the following:\n  Element's background color could not be determined due to a pseudo element"
-        },
-        {
-          "target": [
-            "button[data-testid=\"ss-seat-4\"] > .ss-seat-top > strong"
-          ],
-          "summary": "Fix any of the following:\n  Element's background color could not be determined due to a pseudo element"
-        },
-        {
-          "target": [
-            "span[aria-label=\"15 瓶盖\"] > b"
-          ],
-          "summary": "Fix any of the following:\n  Element's background color could not be determined due to a pseudo element"
-        },
-        {
-          "target": [
-            "button[data-testid=\"ss-seat-4\"] > .ss-seat-bottom > .ss2-status"
-          ],
-          "summary": "Fix any of the following:\n  Element's background color could not be determined due to a pseudo element"
-        },
-        {
-          "target": [
-            "button[data-testid=\"ss-seat-5\"] > .ss-seat-top > .ss2-seatno.ss-avatar"
-          ],
-          "summary": "Fix any of the following:\n  Element's background color could not be determined due to a pseudo element"
-        },
-        {
-          "target": [
-            "button[data-testid=\"ss-seat-5\"] > .ss-seat-top > strong"
-          ],
-          "summary": "Fix any of the following:\n  Element's background color could not be determined due to a pseudo element"
-        },
-        {
-          "target": [
-            "button[data-testid=\"ss-seat-5\"] > .ss-seat-bottom > .ss2-caps[aria-label=\"10 瓶盖\"] > b"
-          ],
-          "summary": "Fix any of the following:\n  Element's background color could not be determined due to a pseudo element"
-        },
-        {
-          "target": [
-            "button[data-testid=\"ss-seat-5\"] > .ss-seat-bottom > .ss2-status"
-          ],
-          "summary": "Fix any of the following:\n  Element's background color could not be determined due to a pseudo element"
-        },
-        {
-          "target": [
-            "button[data-testid=\"ss-seat-6\"] > .ss-seat-top > .ss2-seatno.ss-avatar"
-          ],
-          "summary": "Fix any of the following:\n  Element's background color could not be determined due to a pseudo element"
-        },
-        {
-          "target": [
-            "button[data-testid=\"ss-seat-6\"] > .ss-seat-top > strong"
-          ],
-          "summary": "Fix any of the following:\n  Element's background color could not be determined due to a pseudo element"
-        },
-        {
-          "target": [
-            "button[data-testid=\"ss-seat-6\"] > .ss-seat-bottom > .ss2-caps[aria-label=\"13 瓶盖\"] > b"
-          ],
-          "summary": "Fix any of the following:\n  Element's background color could not be determined due to a pseudo element"
-        },
-        {
-          "target": [
-            "button[data-testid=\"ss-seat-6\"] > .ss-seat-bottom > .ss2-status"
-          ],
-          "summary": "Fix any of the following:\n  Element's background color could not be determined due to a pseudo element"
-        },
-        {
-          "target": [
-            "button[data-testid=\"ss-seat-7\"] > .ss-seat-top > .ss2-seatno.ss-avatar"
-          ],
-          "summary": "Fix any of the following:\n  Element's background color could not be determined due to a pseudo element"
-        },
-        {
-          "target": [
-            "button[data-testid=\"ss-seat-7\"] > .ss-seat-top > strong"
-          ],
-          "summary": "Fix any of the following:\n  Element's background color could not be determined due to a pseudo element"
-        },
-        {
-          "target": [
-            "button[data-testid=\"ss-seat-7\"] > .ss-seat-bottom > .ss2-caps[aria-label=\"12 瓶盖\"] > b"
-          ],
-          "summary": "Fix any of the following:\n  Element's background color could not be determined due to a pseudo element"
-        },
-        {
-          "target": [
-            "button[data-testid=\"ss-seat-7\"] > .ss-seat-bottom > .ss2-status"
           ],
           "summary": "Fix any of the following:\n  Element's background color could not be determined due to a pseudo element"
         },
@@ -11953,7 +11215,7 @@
     },
     {
       "name": "8人轮末滚动查看本轮回顾",
-      "textCount": 60,
+      "textCount": 53,
       "below17": [],
       "contrastFailures": [],
       "contrastIncomplete": [
@@ -12049,6 +11311,12 @@
         },
         {
           "target": [
+            ".ss2-fold"
+          ],
+          "summary": "Fix any of the following:\n  Element's background color could not be determined due to a pseudo element"
+        },
+        {
+          "target": [
             ".is-guard > .ss-seat-top > .ss2-seatno.ss-avatar"
           ],
           "summary": "Fix any of the following:\n  Element's background color could not be determined due to a pseudo element"
@@ -12062,12 +11330,6 @@
         {
           "target": [
             ".is-guard > .ss-seat-bottom > .ss2-caps[aria-label=\"10 瓶盖\"] > b"
-          ],
-          "summary": "Fix any of the following:\n  Element's background color could not be determined due to a pseudo element"
-        },
-        {
-          "target": [
-            ".is-guard > .ss-seat-bottom > .ss2-status"
           ],
           "summary": "Fix any of the following:\n  Element's background color could not be determined due to a pseudo element"
         },
@@ -12091,12 +11353,6 @@
         },
         {
           "target": [
-            "button[data-testid=\"ss-seat-1\"] > .ss-seat-bottom > .ss2-status"
-          ],
-          "summary": "Fix any of the following:\n  Element's background color could not be determined due to a pseudo element"
-        },
-        {
-          "target": [
             "button[data-testid=\"ss-seat-2\"] > .ss-seat-top > .ss2-seatno.ss-avatar"
           ],
           "summary": "Fix any of the following:\n  Element's background color could not be determined due to a pseudo element"
@@ -12110,132 +11366,6 @@
         {
           "target": [
             "button[data-testid=\"ss-seat-2\"] > .ss-seat-bottom > .ss2-caps[aria-label=\"13 瓶盖\"] > b"
-          ],
-          "summary": "Fix any of the following:\n  Element's background color could not be determined due to a pseudo element"
-        },
-        {
-          "target": [
-            "button[data-testid=\"ss-seat-2\"] > .ss-seat-bottom > .ss2-status"
-          ],
-          "summary": "Fix any of the following:\n  Element's background color could not be determined due to a pseudo element"
-        },
-        {
-          "target": [
-            "button[data-testid=\"ss-seat-3\"] > .ss-seat-top > .ss2-seatno.ss-avatar"
-          ],
-          "summary": "Fix any of the following:\n  Element's background color could not be determined due to a pseudo element"
-        },
-        {
-          "target": [
-            "button[data-testid=\"ss-seat-3\"] > .ss-seat-top > strong"
-          ],
-          "summary": "Fix any of the following:\n  Element's background color could not be determined due to a pseudo element"
-        },
-        {
-          "target": [
-            "span[aria-label=\"14 瓶盖\"] > b"
-          ],
-          "summary": "Fix any of the following:\n  Element's background color could not be determined due to a pseudo element"
-        },
-        {
-          "target": [
-            "button[data-testid=\"ss-seat-3\"] > .ss-seat-bottom > .ss2-status"
-          ],
-          "summary": "Fix any of the following:\n  Element's background color could not be determined due to a pseudo element"
-        },
-        {
-          "target": [
-            "button[data-testid=\"ss-seat-4\"] > .ss-seat-top > .ss2-seatno.ss-avatar"
-          ],
-          "summary": "Fix any of the following:\n  Element's background color could not be determined due to a pseudo element"
-        },
-        {
-          "target": [
-            "button[data-testid=\"ss-seat-4\"] > .ss-seat-top > strong"
-          ],
-          "summary": "Fix any of the following:\n  Element's background color could not be determined due to a pseudo element"
-        },
-        {
-          "target": [
-            "span[aria-label=\"15 瓶盖\"] > b"
-          ],
-          "summary": "Fix any of the following:\n  Element's background color could not be determined due to a pseudo element"
-        },
-        {
-          "target": [
-            "button[data-testid=\"ss-seat-4\"] > .ss-seat-bottom > .ss2-status"
-          ],
-          "summary": "Fix any of the following:\n  Element's background color could not be determined due to a pseudo element"
-        },
-        {
-          "target": [
-            "button[data-testid=\"ss-seat-5\"] > .ss-seat-top > .ss2-seatno.ss-avatar"
-          ],
-          "summary": "Fix any of the following:\n  Element's background color could not be determined due to a pseudo element"
-        },
-        {
-          "target": [
-            "button[data-testid=\"ss-seat-5\"] > .ss-seat-top > strong"
-          ],
-          "summary": "Fix any of the following:\n  Element's background color could not be determined due to a pseudo element"
-        },
-        {
-          "target": [
-            "button[data-testid=\"ss-seat-5\"] > .ss-seat-bottom > .ss2-caps[aria-label=\"10 瓶盖\"] > b"
-          ],
-          "summary": "Fix any of the following:\n  Element's background color could not be determined due to a pseudo element"
-        },
-        {
-          "target": [
-            "button[data-testid=\"ss-seat-5\"] > .ss-seat-bottom > .ss2-status"
-          ],
-          "summary": "Fix any of the following:\n  Element's background color could not be determined due to a pseudo element"
-        },
-        {
-          "target": [
-            "button[data-testid=\"ss-seat-6\"] > .ss-seat-top > .ss2-seatno.ss-avatar"
-          ],
-          "summary": "Fix any of the following:\n  Element's background color could not be determined due to a pseudo element"
-        },
-        {
-          "target": [
-            "button[data-testid=\"ss-seat-6\"] > .ss-seat-top > strong"
-          ],
-          "summary": "Fix any of the following:\n  Element's background color could not be determined due to a pseudo element"
-        },
-        {
-          "target": [
-            "button[data-testid=\"ss-seat-6\"] > .ss-seat-bottom > .ss2-caps[aria-label=\"13 瓶盖\"] > b"
-          ],
-          "summary": "Fix any of the following:\n  Element's background color could not be determined due to a pseudo element"
-        },
-        {
-          "target": [
-            "button[data-testid=\"ss-seat-6\"] > .ss-seat-bottom > .ss2-status"
-          ],
-          "summary": "Fix any of the following:\n  Element's background color could not be determined due to a pseudo element"
-        },
-        {
-          "target": [
-            "button[data-testid=\"ss-seat-7\"] > .ss-seat-top > .ss2-seatno.ss-avatar"
-          ],
-          "summary": "Fix any of the following:\n  Element's background color could not be determined due to a pseudo element"
-        },
-        {
-          "target": [
-            "button[data-testid=\"ss-seat-7\"] > .ss-seat-top > strong"
-          ],
-          "summary": "Fix any of the following:\n  Element's background color could not be determined due to a pseudo element"
-        },
-        {
-          "target": [
-            "button[data-testid=\"ss-seat-7\"] > .ss-seat-bottom > .ss2-caps[aria-label=\"12 瓶盖\"] > b"
-          ],
-          "summary": "Fix any of the following:\n  Element's background color could not be determined due to a pseudo element"
-        },
-        {
-          "target": [
-            "button[data-testid=\"ss-seat-7\"] > .ss-seat-bottom > .ss2-status"
           ],
           "summary": "Fix any of the following:\n  Element's background color could not be determined due to a pseudo element"
         },
@@ -12256,7 +11386,7 @@
     },
     {
       "name": "8人长名字 ROUND_END · landscape",
-      "textCount": 59,
+      "textCount": 60,
       "below17": [],
       "contrastFailures": [],
       "contrastIncomplete": [
@@ -12359,6 +11489,12 @@
         {
           "target": [
             "button[data-testid=\"ss-box-1\"] > span"
+          ],
+          "summary": "Fix any of the following:\n  Element's background color could not be determined due to a pseudo element"
+        },
+        {
+          "target": [
+            ".ss2-fold"
           ],
           "summary": "Fix any of the following:\n  Element's background color could not be determined due to a pseudo element"
         },
@@ -12571,7 +11707,7 @@
     },
     {
       "name": "8人长名字 ROUND_END · desktop",
-      "textCount": 70,
+      "textCount": 71,
       "below17": [],
       "contrastFailures": [],
       "contrastIncomplete": [
@@ -12728,6 +11864,12 @@
         {
           "target": [
             ".ss-round-summary > p:nth-child(8)"
+          ],
+          "summary": "Fix any of the following:\n  Element's background color could not be determined due to a pseudo element"
+        },
+        {
+          "target": [
+            ".ss2-fold"
           ],
           "summary": "Fix any of the following:\n  Element's background color could not be determined due to a pseudo element"
         },
@@ -12982,19 +12124,13 @@
             ".ss2-side-panel > p:nth-child(8)"
           ],
           "summary": "Fix any of the following:\n  Element's background color could not be determined due to a pseudo element"
-        },
-        {
-          "target": [
-            "p:nth-child(9)"
-          ],
-          "summary": "Fix any of the following:\n  Element's background color could not be determined due to a pseudo element"
         }
       ],
       "contrastPassed": 0
     },
     {
       "name": "8人长名字 FINISHED · portrait",
-      "textCount": 125,
+      "textCount": 118,
       "below17": [],
       "contrastFailures": [],
       "contrastIncomplete": [
@@ -13162,6 +12298,12 @@
         },
         {
           "target": [
+            ".ss2-fold"
+          ],
+          "summary": "Fix any of the following:\n  Element's background color could not be determined due to a pseudo element"
+        },
+        {
+          "target": [
             "button[data-testid=\"ss-seat-0\"] > .ss-seat-top > .ss2-seatno.ss-avatar"
           ],
           "summary": "Fix any of the following:\n  Element's background color could not be determined due to a pseudo element"
@@ -13175,12 +12317,6 @@
         {
           "target": [
             "button[data-testid=\"ss-seat-0\"] > .ss-seat-bottom > .ss2-caps[aria-label=\"23 瓶盖\"] > b"
-          ],
-          "summary": "Fix any of the following:\n  Element's background color could not be determined due to a pseudo element"
-        },
-        {
-          "target": [
-            "button[data-testid=\"ss-seat-0\"] > .ss-seat-bottom > .ss2-status"
           ],
           "summary": "Fix any of the following:\n  Element's background color could not be determined due to a pseudo element"
         },
@@ -13204,12 +12340,6 @@
         },
         {
           "target": [
-            "button[data-testid=\"ss-seat-1\"] > .ss-seat-bottom > .ss2-status"
-          ],
-          "summary": "Fix any of the following:\n  Element's background color could not be determined due to a pseudo element"
-        },
-        {
-          "target": [
             "button[data-testid=\"ss-seat-2\"] > .ss-seat-top > .ss2-seatno.ss-avatar"
           ],
           "summary": "Fix any of the following:\n  Element's background color could not be determined due to a pseudo element"
@@ -13223,132 +12353,6 @@
         {
           "target": [
             "button[data-testid=\"ss-seat-2\"] > .ss-seat-bottom > .ss2-caps[aria-label=\"29 瓶盖\"] > b"
-          ],
-          "summary": "Fix any of the following:\n  Element's background color could not be determined due to a pseudo element"
-        },
-        {
-          "target": [
-            "button[data-testid=\"ss-seat-2\"] > .ss-seat-bottom > .ss2-status"
-          ],
-          "summary": "Fix any of the following:\n  Element's background color could not be determined due to a pseudo element"
-        },
-        {
-          "target": [
-            "button[data-testid=\"ss-seat-3\"] > .ss-seat-top > .ss2-seatno.ss-avatar"
-          ],
-          "summary": "Fix any of the following:\n  Element's background color could not be determined due to a pseudo element"
-        },
-        {
-          "target": [
-            "button[data-testid=\"ss-seat-3\"] > .ss-seat-top > strong"
-          ],
-          "summary": "Fix any of the following:\n  Element's background color could not be determined due to a pseudo element"
-        },
-        {
-          "target": [
-            "button[data-testid=\"ss-seat-3\"] > .ss-seat-bottom > .ss2-caps[aria-label=\"23 瓶盖\"] > b"
-          ],
-          "summary": "Fix any of the following:\n  Element's background color could not be determined due to a pseudo element"
-        },
-        {
-          "target": [
-            "button[data-testid=\"ss-seat-3\"] > .ss-seat-bottom > .ss2-status"
-          ],
-          "summary": "Fix any of the following:\n  Element's background color could not be determined due to a pseudo element"
-        },
-        {
-          "target": [
-            "button[data-testid=\"ss-seat-4\"] > .ss-seat-top > .ss2-seatno.ss-avatar"
-          ],
-          "summary": "Fix any of the following:\n  Element's background color could not be determined due to a pseudo element"
-        },
-        {
-          "target": [
-            "button[data-testid=\"ss-seat-4\"] > .ss-seat-top > strong"
-          ],
-          "summary": "Fix any of the following:\n  Element's background color could not be determined due to a pseudo element"
-        },
-        {
-          "target": [
-            "span[aria-label=\"25 瓶盖\"] > b"
-          ],
-          "summary": "Fix any of the following:\n  Element's background color could not be determined due to a pseudo element"
-        },
-        {
-          "target": [
-            "button[data-testid=\"ss-seat-4\"] > .ss-seat-bottom > .ss2-status"
-          ],
-          "summary": "Fix any of the following:\n  Element's background color could not be determined due to a pseudo element"
-        },
-        {
-          "target": [
-            "button[data-testid=\"ss-seat-5\"] > .ss-seat-top > .ss2-seatno.ss-avatar"
-          ],
-          "summary": "Fix any of the following:\n  Element's background color could not be determined due to a pseudo element"
-        },
-        {
-          "target": [
-            "button[data-testid=\"ss-seat-5\"] > .ss-seat-top > strong"
-          ],
-          "summary": "Fix any of the following:\n  Element's background color could not be determined due to a pseudo element"
-        },
-        {
-          "target": [
-            "button[data-testid=\"ss-seat-5\"] > .ss-seat-bottom > .ss2-caps[aria-label=\"23 瓶盖\"] > b"
-          ],
-          "summary": "Fix any of the following:\n  Element's background color could not be determined due to a pseudo element"
-        },
-        {
-          "target": [
-            "button[data-testid=\"ss-seat-5\"] > .ss-seat-bottom > .ss2-status"
-          ],
-          "summary": "Fix any of the following:\n  Element's background color could not be determined due to a pseudo element"
-        },
-        {
-          "target": [
-            "button[data-testid=\"ss-seat-6\"] > .ss-seat-top > .ss2-seatno.ss-avatar"
-          ],
-          "summary": "Fix any of the following:\n  Element's background color could not be determined due to a pseudo element"
-        },
-        {
-          "target": [
-            "button[data-testid=\"ss-seat-6\"] > .ss-seat-top > strong"
-          ],
-          "summary": "Fix any of the following:\n  Element's background color could not be determined due to a pseudo element"
-        },
-        {
-          "target": [
-            "button[data-testid=\"ss-seat-6\"] > .ss-seat-bottom > .ss2-caps[aria-label=\"29 瓶盖\"] > b"
-          ],
-          "summary": "Fix any of the following:\n  Element's background color could not be determined due to a pseudo element"
-        },
-        {
-          "target": [
-            "button[data-testid=\"ss-seat-6\"] > .ss-seat-bottom > .ss2-status"
-          ],
-          "summary": "Fix any of the following:\n  Element's background color could not be determined due to a pseudo element"
-        },
-        {
-          "target": [
-            ".is-guard > .ss-seat-top > .ss2-seatno.ss-avatar"
-          ],
-          "summary": "Fix any of the following:\n  Element's background color could not be determined due to a pseudo element"
-        },
-        {
-          "target": [
-            ".is-guard > .ss-seat-top > strong"
-          ],
-          "summary": "Fix any of the following:\n  Element's background color could not be determined due to a pseudo element"
-        },
-        {
-          "target": [
-            "span[aria-label=\"27 瓶盖\"] > b"
-          ],
-          "summary": "Fix any of the following:\n  Element's background color could not be determined due to a pseudo element"
-        },
-        {
-          "target": [
-            ".is-guard > .ss-seat-bottom > .ss2-status"
           ],
           "summary": "Fix any of the following:\n  Element's background color could not be determined due to a pseudo element"
         },
@@ -13369,7 +12373,7 @@
     },
     {
       "name": "8人长名字 FINISHED · landscape",
-      "textCount": 125,
+      "textCount": 126,
       "below17": [],
       "contrastFailures": [],
       "contrastIncomplete": [
@@ -13442,6 +12446,12 @@
         {
           "target": [
             ".ss2-place-3 > .ss2-block"
+          ],
+          "summary": "Fix any of the following:\n  Element's background color could not be determined due to a pseudo element"
+        },
+        {
+          "target": [
+            ".ss2-fold"
           ],
           "summary": "Fix any of the following:\n  Element's background color could not be determined due to a pseudo element"
         },
@@ -13654,7 +12664,7 @@
     },
     {
       "name": "8人长名字 FINISHED · desktop",
-      "textCount": 135,
+      "textCount": 136,
       "below17": [],
       "contrastFailures": [],
       "contrastIncomplete": [
@@ -13817,6 +12827,12 @@
         {
           "target": [
             "summary"
+          ],
+          "summary": "Fix any of the following:\n  Element's background color could not be determined due to a pseudo element"
+        },
+        {
+          "target": [
+            ".ss2-fold"
           ],
           "summary": "Fix any of the following:\n  Element's background color could not be determined due to a pseudo element"
         },
@@ -14069,12 +13085,6 @@
         {
           "target": [
             ".ss2-side-panel > p:nth-child(8)"
-          ],
-          "summary": "Fix any of the following:\n  Element's background color could not be determined due to a pseudo element"
-        },
-        {
-          "target": [
-            "p:nth-child(9)"
           ],
           "summary": "Fix any of the following:\n  Element's background color could not be determined due to a pseudo element"
         }
@@ -16153,7 +15163,7 @@
     },
     {
       "name": "铁面无私误捕",
-      "textCount": 46,
+      "textCount": 47,
       "below17": [],
       "contrastFailures": [],
       "contrastIncomplete": [
@@ -16375,6 +15385,12 @@
         },
         {
           "target": [
+            ".dm-banner > div > strong"
+          ],
+          "summary": "Fix any of the following:\n  Element's background color could not be determined due to a pseudo element"
+        },
+        {
+          "target": [
             ".ss-reveal-card > small"
           ],
           "summary": "Fix any of the following:\n  Element's background color could not be determined due to a pseudo element"
@@ -16408,6 +15424,312 @@
     },
     {
       "name": "最大人数与长名字",
+      "textCount": 45,
+      "below17": [],
+      "contrastFailures": [],
+      "contrastIncomplete": [
+        {
+          "target": [
+            ".ss-roomno"
+          ],
+          "summary": "Fix any of the following:\n  Element's background color could not be determined due to a pseudo element"
+        },
+        {
+          "target": [
+            ".ss-round"
+          ],
+          "summary": "Fix any of the following:\n  Element's background color could not be determined due to a pseudo element"
+        },
+        {
+          "target": [
+            ".ss-menu-button"
+          ],
+          "summary": "Fix any of the following:\n  Element content contains only non-text characters"
+        },
+        {
+          "target": [
+            ".ss-kicker"
+          ],
+          "summary": "Fix any of the following:\n  Element's background color could not be determined due to a pseudo element"
+        },
+        {
+          "target": [
+            "h1"
+          ],
+          "summary": "Fix any of the following:\n  Element's background color could not be determined due to a pseudo element"
+        },
+        {
+          "target": [
+            ".ss-stage-title > p"
+          ],
+          "summary": "Fix any of the following:\n  Element's background color could not be determined due to a pseudo element"
+        },
+        {
+          "target": [
+            "div[data-ss-drop=\"luggage\"] > strong"
+          ],
+          "summary": "Fix any of the following:\n  Element's background color could not be determined due to a pseudo element"
+        },
+        {
+          "target": [
+            "small"
+          ],
+          "summary": "Fix any of the following:\n  Element's background color could not be determined due to a pseudo element"
+        },
+        {
+          "target": [
+            ".ss-bribe-zone > strong"
+          ],
+          "summary": "Fix any of the following:\n  Element's background color could not be determined due to a pseudo element"
+        },
+        {
+          "target": [
+            "button[data-testid=\"ss-card-SS1-9\"] > span"
+          ],
+          "summary": "Fix any of the following:\n  Element's background color could not be determined due to a pseudo element"
+        },
+        {
+          "target": [
+            "button[data-testid=\"ss-card-SS1-11\"] > span"
+          ],
+          "summary": "Fix any of the following:\n  Element's background color could not be determined due to a pseudo element"
+        },
+        {
+          "target": [
+            "button[data-testid=\"ss-card-SS1-10\"] > span"
+          ],
+          "summary": "Fix any of the following:\n  Element's background color could not be determined due to a pseudo element"
+        },
+        {
+          "target": [
+            "button[data-testid=\"ss-card-SS1-3\"] > span"
+          ],
+          "summary": "Fix any of the following:\n  Element's background color could not be determined due to a pseudo element"
+        },
+        {
+          "target": [
+            "button[data-testid=\"ss-card-SS0-10\"] > span"
+          ],
+          "summary": "Fix any of the following:\n  Element's background color could not be determined due to a pseudo element"
+        },
+        {
+          "target": [
+            ".ss-help"
+          ],
+          "summary": "Fix any of the following:\n  Element's background color could not be determined due to a pseudo element"
+        },
+        {
+          "target": [
+            ".ss2-fold"
+          ],
+          "summary": "Fix any of the following:\n  Element's background color could not be determined due to a pseudo element"
+        },
+        {
+          "target": [
+            ".is-guard > .ss-seat-top > .ss2-seatno.ss-avatar"
+          ],
+          "summary": "Fix any of the following:\n  Element's background color could not be determined due to a pseudo element"
+        },
+        {
+          "target": [
+            ".is-guard > .ss-seat-top > strong"
+          ],
+          "summary": "Fix any of the following:\n  Element's background color could not be determined due to a pseudo element"
+        },
+        {
+          "target": [
+            ".is-guard > .ss-seat-bottom > .ss2-caps[aria-label=\"10 瓶盖\"] > b"
+          ],
+          "summary": "Fix any of the following:\n  Element's background color could not be determined due to a pseudo element"
+        },
+        {
+          "target": [
+            ".is-selected > .ss-seat-top > .ss2-seatno.ss-avatar"
+          ],
+          "summary": "Fix any of the following:\n  Element's background color could not be determined due to a pseudo element"
+        },
+        {
+          "target": [
+            ".is-selected > .ss-seat-top > strong"
+          ],
+          "summary": "Fix any of the following:\n  Element's background color could not be determined due to a pseudo element"
+        },
+        {
+          "target": [
+            ".is-selected > .ss-seat-bottom > .ss2-caps[aria-label=\"10 瓶盖\"] > b"
+          ],
+          "summary": "Fix any of the following:\n  Element's background color could not be determined due to a pseudo element"
+        },
+        {
+          "target": [
+            "button[data-testid=\"ss-seat-2\"] > .ss-seat-top > .ss2-seatno.ss-avatar"
+          ],
+          "summary": "Fix any of the following:\n  Element's background color could not be determined due to a pseudo element"
+        },
+        {
+          "target": [
+            "button[data-testid=\"ss-seat-2\"] > .ss-seat-top > strong"
+          ],
+          "summary": "Fix any of the following:\n  Element's background color could not be determined due to a pseudo element"
+        },
+        {
+          "target": [
+            "button[data-testid=\"ss-seat-2\"] > .ss-seat-bottom > .ss2-caps[aria-label=\"10 瓶盖\"] > b"
+          ],
+          "summary": "Fix any of the following:\n  Element's background color could not be determined due to a pseudo element"
+        },
+        {
+          "target": [
+            ".dm-dock-hint"
+          ],
+          "summary": "Fix any of the following:\n  Element's background color could not be determined due to a pseudo element"
+        }
+      ],
+      "contrastPassed": 0
+    },
+    {
+      "name": "断线重连提示",
+      "textCount": 46,
+      "below17": [],
+      "contrastFailures": [],
+      "contrastIncomplete": [
+        {
+          "target": [
+            ".ss-roomno"
+          ],
+          "summary": "Fix any of the following:\n  Element's background color could not be determined due to a pseudo element"
+        },
+        {
+          "target": [
+            ".ss-round"
+          ],
+          "summary": "Fix any of the following:\n  Element's background color could not be determined due to a pseudo element"
+        },
+        {
+          "target": [
+            ".ss-menu-button"
+          ],
+          "summary": "Fix any of the following:\n  Element content contains only non-text characters"
+        },
+        {
+          "target": [
+            ".ss-disconnect"
+          ],
+          "summary": "Fix any of the following:\n  Element's background color could not be determined due to a pseudo element"
+        },
+        {
+          "target": [
+            ".ss-kicker"
+          ],
+          "summary": "Fix any of the following:\n  Element's background color could not be determined due to a pseudo element"
+        },
+        {
+          "target": [
+            "h1"
+          ],
+          "summary": "Fix any of the following:\n  Element's background color could not be determined due to a pseudo element"
+        },
+        {
+          "target": [
+            ".ss-stage-title > p"
+          ],
+          "summary": "Fix any of the following:\n  Element's background color could not be determined due to a pseudo element"
+        },
+        {
+          "target": [
+            "div[data-ss-drop=\"luggage\"] > strong"
+          ],
+          "summary": "Fix any of the following:\n  Element's background color could not be determined due to a pseudo element"
+        },
+        {
+          "target": [
+            "small"
+          ],
+          "summary": "Fix any of the following:\n  Element's background color could not be determined due to a pseudo element"
+        },
+        {
+          "target": [
+            ".ss-bribe-zone > strong"
+          ],
+          "summary": "Fix any of the following:\n  Element's background color could not be determined due to a pseudo element"
+        },
+        {
+          "target": [
+            ".ss-help"
+          ],
+          "summary": "Fix any of the following:\n  Element's background color could not be determined due to a pseudo element"
+        },
+        {
+          "target": [
+            ".ss2-fold"
+          ],
+          "summary": "Fix any of the following:\n  Element's background color could not be determined due to a pseudo element"
+        },
+        {
+          "target": [
+            ".is-guard > .ss-seat-top > .ss2-seatno.ss-avatar"
+          ],
+          "summary": "Fix any of the following:\n  Element's background color could not be determined due to a pseudo element"
+        },
+        {
+          "target": [
+            ".is-guard > .ss-seat-top > strong"
+          ],
+          "summary": "Fix any of the following:\n  Element's background color could not be determined due to a pseudo element"
+        },
+        {
+          "target": [
+            ".is-guard > .ss-seat-bottom > .ss2-caps[aria-label=\"10 瓶盖\"] > b"
+          ],
+          "summary": "Fix any of the following:\n  Element's background color could not be determined due to a pseudo element"
+        },
+        {
+          "target": [
+            ".is-selected > .ss-seat-top > .ss2-seatno.ss-avatar"
+          ],
+          "summary": "Fix any of the following:\n  Element's background color could not be determined due to a pseudo element"
+        },
+        {
+          "target": [
+            ".is-selected > .ss-seat-top > strong"
+          ],
+          "summary": "Fix any of the following:\n  Element's background color could not be determined due to a pseudo element"
+        },
+        {
+          "target": [
+            ".is-selected > .ss-seat-bottom > .ss2-caps[aria-label=\"10 瓶盖\"] > b"
+          ],
+          "summary": "Fix any of the following:\n  Element's background color could not be determined due to a pseudo element"
+        },
+        {
+          "target": [
+            "button[data-testid=\"ss-seat-2\"] > .ss-seat-top > .ss2-seatno.ss-avatar"
+          ],
+          "summary": "Fix any of the following:\n  Element's background color could not be determined due to a pseudo element"
+        },
+        {
+          "target": [
+            "button[data-testid=\"ss-seat-2\"] > .ss-seat-top > strong"
+          ],
+          "summary": "Fix any of the following:\n  Element's background color could not be determined due to a pseudo element"
+        },
+        {
+          "target": [
+            "button[data-testid=\"ss-seat-2\"] > .ss-seat-bottom > .ss2-caps[aria-label=\"10 瓶盖\"] > b"
+          ],
+          "summary": "Fix any of the following:\n  Element's background color could not be determined due to a pseudo element"
+        },
+        {
+          "target": [
+            ".dm-dock-hint"
+          ],
+          "summary": "Fix any of the following:\n  Element's background color could not be determined due to a pseudo element"
+        }
+      ],
+      "contrastPassed": 0
+    },
+    {
+      "name": "横屏最大人数与长名字",
       "textCount": 52,
       "below17": [],
       "contrastFailures": [],
@@ -16498,571 +15820,7 @@
         },
         {
           "target": [
-            ".ss-help"
-          ],
-          "summary": "Fix any of the following:\n  Element's background color could not be determined due to a pseudo element"
-        },
-        {
-          "target": [
-            ".is-guard > .ss-seat-top > .ss2-seatno.ss-avatar"
-          ],
-          "summary": "Fix any of the following:\n  Element's background color could not be determined due to a pseudo element"
-        },
-        {
-          "target": [
-            ".is-guard > .ss-seat-top > strong"
-          ],
-          "summary": "Fix any of the following:\n  Element's background color could not be determined due to a pseudo element"
-        },
-        {
-          "target": [
-            ".is-guard > .ss-seat-bottom > .ss2-caps[aria-label=\"10 瓶盖\"] > b"
-          ],
-          "summary": "Fix any of the following:\n  Element's background color could not be determined due to a pseudo element"
-        },
-        {
-          "target": [
-            ".is-guard > .ss-seat-bottom > .ss2-status"
-          ],
-          "summary": "Fix any of the following:\n  Element's background color could not be determined due to a pseudo element"
-        },
-        {
-          "target": [
-            ".is-selected > .ss-seat-top > .ss2-seatno.ss-avatar"
-          ],
-          "summary": "Fix any of the following:\n  Element's background color could not be determined due to a pseudo element"
-        },
-        {
-          "target": [
-            ".is-selected > .ss-seat-top > strong"
-          ],
-          "summary": "Fix any of the following:\n  Element's background color could not be determined due to a pseudo element"
-        },
-        {
-          "target": [
-            ".is-selected > .ss-seat-bottom > .ss2-caps[aria-label=\"10 瓶盖\"] > b"
-          ],
-          "summary": "Fix any of the following:\n  Element's background color could not be determined due to a pseudo element"
-        },
-        {
-          "target": [
-            ".is-selected > .ss-seat-bottom > .ss2-status"
-          ],
-          "summary": "Fix any of the following:\n  Element's background color could not be determined due to a pseudo element"
-        },
-        {
-          "target": [
-            "button[data-testid=\"ss-seat-2\"] > .ss-seat-top > .ss2-seatno.ss-avatar"
-          ],
-          "summary": "Fix any of the following:\n  Element's background color could not be determined due to a pseudo element"
-        },
-        {
-          "target": [
-            "button[data-testid=\"ss-seat-2\"] > .ss-seat-top > strong"
-          ],
-          "summary": "Fix any of the following:\n  Element's background color could not be determined due to a pseudo element"
-        },
-        {
-          "target": [
-            "button[data-testid=\"ss-seat-2\"] > .ss-seat-bottom > .ss2-caps[aria-label=\"10 瓶盖\"] > b"
-          ],
-          "summary": "Fix any of the following:\n  Element's background color could not be determined due to a pseudo element"
-        },
-        {
-          "target": [
-            "button[data-testid=\"ss-seat-2\"] > .ss-seat-bottom > .ss2-status"
-          ],
-          "summary": "Fix any of the following:\n  Element's background color could not be determined due to a pseudo element"
-        },
-        {
-          "target": [
-            "button[data-testid=\"ss-seat-3\"] > .ss-seat-top > .ss2-seatno.ss-avatar"
-          ],
-          "summary": "Fix any of the following:\n  Element's background color could not be determined due to a pseudo element"
-        },
-        {
-          "target": [
-            "button[data-testid=\"ss-seat-3\"] > .ss-seat-top > strong"
-          ],
-          "summary": "Fix any of the following:\n  Element's background color could not be determined due to a pseudo element"
-        },
-        {
-          "target": [
-            "button[data-testid=\"ss-seat-3\"] > .ss-seat-bottom > .ss2-caps[aria-label=\"10 瓶盖\"] > b"
-          ],
-          "summary": "Fix any of the following:\n  Element's background color could not be determined due to a pseudo element"
-        },
-        {
-          "target": [
-            "button[data-testid=\"ss-seat-3\"] > .ss-seat-bottom > .ss2-status"
-          ],
-          "summary": "Fix any of the following:\n  Element's background color could not be determined due to a pseudo element"
-        },
-        {
-          "target": [
-            "button[data-testid=\"ss-seat-4\"] > .ss-seat-top > .ss2-seatno.ss-avatar"
-          ],
-          "summary": "Fix any of the following:\n  Element's background color could not be determined due to a pseudo element"
-        },
-        {
-          "target": [
-            "button[data-testid=\"ss-seat-4\"] > .ss-seat-top > strong"
-          ],
-          "summary": "Fix any of the following:\n  Element's background color could not be determined due to a pseudo element"
-        },
-        {
-          "target": [
-            "button[data-testid=\"ss-seat-4\"] > .ss-seat-bottom > .ss2-caps[aria-label=\"10 瓶盖\"] > b"
-          ],
-          "summary": "Fix any of the following:\n  Element's background color could not be determined due to a pseudo element"
-        },
-        {
-          "target": [
-            "button[data-testid=\"ss-seat-4\"] > .ss-seat-bottom > .ss2-status"
-          ],
-          "summary": "Fix any of the following:\n  Element's background color could not be determined due to a pseudo element"
-        },
-        {
-          "target": [
-            "button[data-testid=\"ss-seat-5\"] > .ss-seat-top > .ss2-seatno.ss-avatar"
-          ],
-          "summary": "Fix any of the following:\n  Element's background color could not be determined due to a pseudo element"
-        },
-        {
-          "target": [
-            "button[data-testid=\"ss-seat-5\"] > .ss-seat-top > strong"
-          ],
-          "summary": "Fix any of the following:\n  Element's background color could not be determined due to a pseudo element"
-        },
-        {
-          "target": [
-            "button[data-testid=\"ss-seat-5\"] > .ss-seat-bottom > .ss2-caps[aria-label=\"10 瓶盖\"] > b"
-          ],
-          "summary": "Fix any of the following:\n  Element's background color could not be determined due to a pseudo element"
-        },
-        {
-          "target": [
-            "button[data-testid=\"ss-seat-5\"] > .ss-seat-bottom > .ss2-status"
-          ],
-          "summary": "Fix any of the following:\n  Element's background color could not be determined due to a pseudo element"
-        },
-        {
-          "target": [
-            "button[data-testid=\"ss-seat-6\"] > .ss-seat-top > .ss2-seatno.ss-avatar"
-          ],
-          "summary": "Fix any of the following:\n  Element's background color could not be determined due to a pseudo element"
-        },
-        {
-          "target": [
-            "button[data-testid=\"ss-seat-6\"] > .ss-seat-top > strong"
-          ],
-          "summary": "Fix any of the following:\n  Element's background color could not be determined due to a pseudo element"
-        },
-        {
-          "target": [
-            "button[data-testid=\"ss-seat-6\"] > .ss-seat-bottom > .ss2-caps[aria-label=\"10 瓶盖\"] > b"
-          ],
-          "summary": "Fix any of the following:\n  Element's background color could not be determined due to a pseudo element"
-        },
-        {
-          "target": [
-            "button[data-testid=\"ss-seat-6\"] > .ss-seat-bottom > .ss2-status"
-          ],
-          "summary": "Fix any of the following:\n  Element's background color could not be determined due to a pseudo element"
-        },
-        {
-          "target": [
-            "button[data-testid=\"ss-seat-7\"] > .ss-seat-top > .ss2-seatno.ss-avatar"
-          ],
-          "summary": "Fix any of the following:\n  Element's background color could not be determined due to a pseudo element"
-        },
-        {
-          "target": [
-            "button[data-testid=\"ss-seat-7\"] > .ss-seat-top > strong"
-          ],
-          "summary": "Fix any of the following:\n  Element's background color could not be determined due to a pseudo element"
-        },
-        {
-          "target": [
-            "button[data-testid=\"ss-seat-7\"] > .ss-seat-bottom > .ss2-caps[aria-label=\"10 瓶盖\"] > b"
-          ],
-          "summary": "Fix any of the following:\n  Element's background color could not be determined due to a pseudo element"
-        },
-        {
-          "target": [
-            "button[data-testid=\"ss-seat-7\"] > .ss-seat-bottom > .ss2-status"
-          ],
-          "summary": "Fix any of the following:\n  Element's background color could not be determined due to a pseudo element"
-        },
-        {
-          "target": [
-            ".dm-dock-hint"
-          ],
-          "summary": "Fix any of the following:\n  Element's background color could not be determined due to a pseudo element"
-        }
-      ],
-      "contrastPassed": 0
-    },
-    {
-      "name": "断线重连提示",
-      "textCount": 53,
-      "below17": [],
-      "contrastFailures": [],
-      "contrastIncomplete": [
-        {
-          "target": [
-            ".ss-roomno"
-          ],
-          "summary": "Fix any of the following:\n  Element's background color could not be determined due to a pseudo element"
-        },
-        {
-          "target": [
-            ".ss-round"
-          ],
-          "summary": "Fix any of the following:\n  Element's background color could not be determined due to a pseudo element"
-        },
-        {
-          "target": [
-            ".ss-menu-button"
-          ],
-          "summary": "Fix any of the following:\n  Element content contains only non-text characters"
-        },
-        {
-          "target": [
-            ".ss-disconnect"
-          ],
-          "summary": "Fix any of the following:\n  Element's background color could not be determined due to a pseudo element"
-        },
-        {
-          "target": [
-            ".ss-kicker"
-          ],
-          "summary": "Fix any of the following:\n  Element's background color could not be determined due to a pseudo element"
-        },
-        {
-          "target": [
-            "h1"
-          ],
-          "summary": "Fix any of the following:\n  Element's background color could not be determined due to a pseudo element"
-        },
-        {
-          "target": [
-            ".ss-stage-title > p"
-          ],
-          "summary": "Fix any of the following:\n  Element's background color could not be determined due to a pseudo element"
-        },
-        {
-          "target": [
-            "div[data-ss-drop=\"luggage\"] > strong"
-          ],
-          "summary": "Fix any of the following:\n  Element's background color could not be determined due to a pseudo element"
-        },
-        {
-          "target": [
-            "small"
-          ],
-          "summary": "Fix any of the following:\n  Element's background color could not be determined due to a pseudo element"
-        },
-        {
-          "target": [
-            ".ss-bribe-zone > strong"
-          ],
-          "summary": "Fix any of the following:\n  Element's background color could not be determined due to a pseudo element"
-        },
-        {
-          "target": [
-            ".ss-help"
-          ],
-          "summary": "Fix any of the following:\n  Element's background color could not be determined due to a pseudo element"
-        },
-        {
-          "target": [
-            ".is-guard > .ss-seat-top > .ss2-seatno.ss-avatar"
-          ],
-          "summary": "Fix any of the following:\n  Element's background color could not be determined due to a pseudo element"
-        },
-        {
-          "target": [
-            ".is-guard > .ss-seat-top > strong"
-          ],
-          "summary": "Fix any of the following:\n  Element's background color could not be determined due to a pseudo element"
-        },
-        {
-          "target": [
-            ".is-guard > .ss-seat-bottom > .ss2-caps[aria-label=\"10 瓶盖\"] > b"
-          ],
-          "summary": "Fix any of the following:\n  Element's background color could not be determined due to a pseudo element"
-        },
-        {
-          "target": [
-            ".is-guard > .ss-seat-bottom > .ss2-status"
-          ],
-          "summary": "Fix any of the following:\n  Element's background color could not be determined due to a pseudo element"
-        },
-        {
-          "target": [
-            ".is-selected > .ss-seat-top > .ss2-seatno.ss-avatar"
-          ],
-          "summary": "Fix any of the following:\n  Element's background color could not be determined due to a pseudo element"
-        },
-        {
-          "target": [
-            ".is-selected > .ss-seat-top > strong"
-          ],
-          "summary": "Fix any of the following:\n  Element's background color could not be determined due to a pseudo element"
-        },
-        {
-          "target": [
-            ".is-selected > .ss-seat-bottom > .ss2-caps[aria-label=\"10 瓶盖\"] > b"
-          ],
-          "summary": "Fix any of the following:\n  Element's background color could not be determined due to a pseudo element"
-        },
-        {
-          "target": [
-            ".is-selected > .ss-seat-bottom > .ss2-status"
-          ],
-          "summary": "Fix any of the following:\n  Element's background color could not be determined due to a pseudo element"
-        },
-        {
-          "target": [
-            "button[data-testid=\"ss-seat-2\"] > .ss-seat-top > .ss2-seatno.ss-avatar"
-          ],
-          "summary": "Fix any of the following:\n  Element's background color could not be determined due to a pseudo element"
-        },
-        {
-          "target": [
-            "button[data-testid=\"ss-seat-2\"] > .ss-seat-top > strong"
-          ],
-          "summary": "Fix any of the following:\n  Element's background color could not be determined due to a pseudo element"
-        },
-        {
-          "target": [
-            "button[data-testid=\"ss-seat-2\"] > .ss-seat-bottom > .ss2-caps[aria-label=\"10 瓶盖\"] > b"
-          ],
-          "summary": "Fix any of the following:\n  Element's background color could not be determined due to a pseudo element"
-        },
-        {
-          "target": [
-            "button[data-testid=\"ss-seat-2\"] > .ss-seat-bottom > .ss2-status"
-          ],
-          "summary": "Fix any of the following:\n  Element's background color could not be determined due to a pseudo element"
-        },
-        {
-          "target": [
-            "button[data-testid=\"ss-seat-3\"] > .ss-seat-top > .ss2-seatno.ss-avatar"
-          ],
-          "summary": "Fix any of the following:\n  Element's background color could not be determined due to a pseudo element"
-        },
-        {
-          "target": [
-            "button[data-testid=\"ss-seat-3\"] > .ss-seat-top > strong"
-          ],
-          "summary": "Fix any of the following:\n  Element's background color could not be determined due to a pseudo element"
-        },
-        {
-          "target": [
-            "button[data-testid=\"ss-seat-3\"] > .ss-seat-bottom > .ss2-caps[aria-label=\"10 瓶盖\"] > b"
-          ],
-          "summary": "Fix any of the following:\n  Element's background color could not be determined due to a pseudo element"
-        },
-        {
-          "target": [
-            "button[data-testid=\"ss-seat-3\"] > .ss-seat-bottom > .ss2-status"
-          ],
-          "summary": "Fix any of the following:\n  Element's background color could not be determined due to a pseudo element"
-        },
-        {
-          "target": [
-            "button[data-testid=\"ss-seat-4\"] > .ss-seat-top > .ss2-seatno.ss-avatar"
-          ],
-          "summary": "Fix any of the following:\n  Element's background color could not be determined due to a pseudo element"
-        },
-        {
-          "target": [
-            "button[data-testid=\"ss-seat-4\"] > .ss-seat-top > strong"
-          ],
-          "summary": "Fix any of the following:\n  Element's background color could not be determined due to a pseudo element"
-        },
-        {
-          "target": [
-            "button[data-testid=\"ss-seat-4\"] > .ss-seat-bottom > .ss2-caps[aria-label=\"10 瓶盖\"] > b"
-          ],
-          "summary": "Fix any of the following:\n  Element's background color could not be determined due to a pseudo element"
-        },
-        {
-          "target": [
-            "button[data-testid=\"ss-seat-4\"] > .ss-seat-bottom > .ss2-status"
-          ],
-          "summary": "Fix any of the following:\n  Element's background color could not be determined due to a pseudo element"
-        },
-        {
-          "target": [
-            "button[data-testid=\"ss-seat-5\"] > .ss-seat-top > .ss2-seatno.ss-avatar"
-          ],
-          "summary": "Fix any of the following:\n  Element's background color could not be determined due to a pseudo element"
-        },
-        {
-          "target": [
-            "button[data-testid=\"ss-seat-5\"] > .ss-seat-top > strong"
-          ],
-          "summary": "Fix any of the following:\n  Element's background color could not be determined due to a pseudo element"
-        },
-        {
-          "target": [
-            "button[data-testid=\"ss-seat-5\"] > .ss-seat-bottom > .ss2-caps[aria-label=\"10 瓶盖\"] > b"
-          ],
-          "summary": "Fix any of the following:\n  Element's background color could not be determined due to a pseudo element"
-        },
-        {
-          "target": [
-            "button[data-testid=\"ss-seat-5\"] > .ss-seat-bottom > .ss2-status"
-          ],
-          "summary": "Fix any of the following:\n  Element's background color could not be determined due to a pseudo element"
-        },
-        {
-          "target": [
-            "button[data-testid=\"ss-seat-6\"] > .ss-seat-top > .ss2-seatno.ss-avatar"
-          ],
-          "summary": "Fix any of the following:\n  Element's background color could not be determined due to a pseudo element"
-        },
-        {
-          "target": [
-            "button[data-testid=\"ss-seat-6\"] > .ss-seat-top > strong"
-          ],
-          "summary": "Fix any of the following:\n  Element's background color could not be determined due to a pseudo element"
-        },
-        {
-          "target": [
-            "button[data-testid=\"ss-seat-6\"] > .ss-seat-bottom > .ss2-caps[aria-label=\"10 瓶盖\"] > b"
-          ],
-          "summary": "Fix any of the following:\n  Element's background color could not be determined due to a pseudo element"
-        },
-        {
-          "target": [
-            "button[data-testid=\"ss-seat-6\"] > .ss-seat-bottom > .ss2-status"
-          ],
-          "summary": "Fix any of the following:\n  Element's background color could not be determined due to a pseudo element"
-        },
-        {
-          "target": [
-            "button[data-testid=\"ss-seat-7\"] > .ss-seat-top > .ss2-seatno.ss-avatar"
-          ],
-          "summary": "Fix any of the following:\n  Element's background color could not be determined due to a pseudo element"
-        },
-        {
-          "target": [
-            "button[data-testid=\"ss-seat-7\"] > .ss-seat-top > strong"
-          ],
-          "summary": "Fix any of the following:\n  Element's background color could not be determined due to a pseudo element"
-        },
-        {
-          "target": [
-            "button[data-testid=\"ss-seat-7\"] > .ss-seat-bottom > .ss2-caps[aria-label=\"10 瓶盖\"] > b"
-          ],
-          "summary": "Fix any of the following:\n  Element's background color could not be determined due to a pseudo element"
-        },
-        {
-          "target": [
-            "button[data-testid=\"ss-seat-7\"] > .ss-seat-bottom > .ss2-status"
-          ],
-          "summary": "Fix any of the following:\n  Element's background color could not be determined due to a pseudo element"
-        },
-        {
-          "target": [
-            ".dm-dock-hint"
-          ],
-          "summary": "Fix any of the following:\n  Element's background color could not be determined due to a pseudo element"
-        }
-      ],
-      "contrastPassed": 0
-    },
-    {
-      "name": "横屏最大人数与长名字",
-      "textCount": 51,
-      "below17": [],
-      "contrastFailures": [],
-      "contrastIncomplete": [
-        {
-          "target": [
-            ".ss-roomno"
-          ],
-          "summary": "Fix any of the following:\n  Element's background color could not be determined due to a pseudo element"
-        },
-        {
-          "target": [
-            ".ss-round"
-          ],
-          "summary": "Fix any of the following:\n  Element's background color could not be determined due to a pseudo element"
-        },
-        {
-          "target": [
-            ".ss-menu-button"
-          ],
-          "summary": "Fix any of the following:\n  Element content contains only non-text characters"
-        },
-        {
-          "target": [
-            ".ss-kicker"
-          ],
-          "summary": "Fix any of the following:\n  Element's background color could not be determined due to a pseudo element"
-        },
-        {
-          "target": [
-            "h1"
-          ],
-          "summary": "Fix any of the following:\n  Element's background color could not be determined due to a pseudo element"
-        },
-        {
-          "target": [
-            ".ss-stage-title > p"
-          ],
-          "summary": "Fix any of the following:\n  Element's background color could not be determined due to a pseudo element"
-        },
-        {
-          "target": [
-            "div[data-ss-drop=\"luggage\"] > strong"
-          ],
-          "summary": "Fix any of the following:\n  Element's background color could not be determined due to a pseudo element"
-        },
-        {
-          "target": [
-            "small"
-          ],
-          "summary": "Fix any of the following:\n  Element's background color could not be determined due to a pseudo element"
-        },
-        {
-          "target": [
-            ".ss-bribe-zone > strong"
-          ],
-          "summary": "Fix any of the following:\n  Element's background color could not be determined due to a pseudo element"
-        },
-        {
-          "target": [
-            "button[data-testid=\"ss-card-SS1-9\"] > span"
-          ],
-          "summary": "Fix any of the following:\n  Element's background color could not be determined due to a pseudo element"
-        },
-        {
-          "target": [
-            "button[data-testid=\"ss-card-SS1-11\"] > span"
-          ],
-          "summary": "Fix any of the following:\n  Element's background color could not be determined due to a pseudo element"
-        },
-        {
-          "target": [
-            "button[data-testid=\"ss-card-SS1-10\"] > span"
-          ],
-          "summary": "Fix any of the following:\n  Element's background color could not be determined due to a pseudo element"
-        },
-        {
-          "target": [
-            "button[data-testid=\"ss-card-SS1-3\"] > span"
-          ],
-          "summary": "Fix any of the following:\n  Element's background color could not be determined due to a pseudo element"
-        },
-        {
-          "target": [
-            "button[data-testid=\"ss-card-SS0-10\"] > span"
+            ".ss2-fold"
           ],
           "summary": "Fix any of the following:\n  Element's background color could not be determined due to a pseudo element"
         },
@@ -17484,8 +16242,15 @@
   "pixelContrast": [
     {
       "name": "大厅与房主设置 · 竖屏",
-      "tested": 33,
-      "passed": 33,
+      "tested": 34,
+      "passed": 34,
+      "failures": [],
+      "untested": []
+    },
+    {
+      "name": "大厅与房主设置 · 竖屏 · 舞台滚动到底",
+      "tested": 34,
+      "passed": 34,
       "failures": [],
       "untested": []
     },
@@ -17498,15 +16263,15 @@
     },
     {
       "name": "大厅与房主设置 · 横屏 · 舞台滚动到底",
-      "tested": 28,
-      "passed": 28,
+      "tested": 23,
+      "passed": 23,
       "failures": [],
       "untested": []
     },
     {
       "name": "大厅与房主设置 · 电脑",
-      "tested": 33,
-      "passed": 33,
+      "tested": 34,
+      "passed": 34,
       "failures": [],
       "untested": []
     },
@@ -17792,8 +16557,8 @@
     },
     {
       "name": "8人长名字 LOBBY · portrait · 舞台滚动到底",
-      "tested": 55,
-      "passed": 55,
+      "tested": 53,
+      "passed": 53,
       "failures": [],
       "untested": []
     },
@@ -17806,27 +16571,20 @@
     },
     {
       "name": "8人长名字 LOBBY · landscape · 舞台滚动到底",
-      "tested": 50,
-      "passed": 50,
+      "tested": 45,
+      "passed": 45,
       "failures": [],
       "untested": []
     },
     {
       "name": "8人长名字 LOBBY · desktop",
-      "tested": 55,
-      "passed": 55,
+      "tested": 56,
+      "passed": 56,
       "failures": [],
       "untested": []
     },
     {
       "name": "8人长名字 IDENTITY · portrait",
-      "tested": 6,
-      "passed": 6,
-      "failures": [],
-      "untested": []
-    },
-    {
-      "name": "8人长名字 IDENTITY · portrait · 舞台滚动到底",
       "tested": 6,
       "passed": 6,
       "failures": [],
@@ -17848,43 +16606,36 @@
     },
     {
       "name": "8人长名字 PACK · portrait",
-      "tested": 60,
-      "passed": 60,
-      "failures": [],
-      "untested": []
-    },
-    {
-      "name": "8人长名字 PACK · portrait · 舞台滚动到底",
-      "tested": 60,
-      "passed": 60,
+      "tested": 34,
+      "passed": 34,
       "failures": [],
       "untested": []
     },
     {
       "name": "8人长名字 PACK · landscape",
-      "tested": 59,
-      "passed": 59,
+      "tested": 60,
+      "passed": 60,
       "failures": [],
       "untested": []
     },
     {
       "name": "8人长名字 PACK · desktop",
-      "tested": 64,
-      "passed": 64,
+      "tested": 65,
+      "passed": 65,
       "failures": [],
       "untested": []
     },
     {
       "name": "8人长名字 BRIBE · portrait",
-      "tested": 90,
-      "passed": 90,
+      "tested": 66,
+      "passed": 66,
       "failures": [],
       "untested": []
     },
     {
       "name": "8人长名字 BRIBE · portrait · 舞台滚动到底",
-      "tested": 86,
-      "passed": 86,
+      "tested": 66,
+      "passed": 66,
       "failures": [],
       "untested": []
     },
@@ -17904,22 +16655,22 @@
     },
     {
       "name": "8人长名字 BRIBE · desktop",
-      "tested": 98,
-      "passed": 98,
+      "tested": 99,
+      "passed": 99,
       "failures": [],
       "untested": []
     },
     {
       "name": "8人长名字 INSPECT · portrait",
-      "tested": 90,
-      "passed": 90,
+      "tested": 66,
+      "passed": 66,
       "failures": [],
       "untested": []
     },
     {
       "name": "8人长名字 INSPECT · portrait · 舞台滚动到底",
-      "tested": 69,
-      "passed": 69,
+      "tested": 54,
+      "passed": 54,
       "failures": [],
       "untested": []
     },
@@ -17939,29 +16690,29 @@
     },
     {
       "name": "8人长名字 INSPECT · desktop",
+      "tested": 113,
+      "passed": 113,
+      "failures": [],
+      "untested": []
+    },
+    {
+      "name": "8人长名字 INSPECT · desktop · 舞台滚动到底",
       "tested": 112,
       "passed": 112,
       "failures": [],
       "untested": []
     },
     {
-      "name": "8人长名字 INSPECT · desktop · 舞台滚动到底",
-      "tested": 111,
-      "passed": 111,
-      "failures": [],
-      "untested": []
-    },
-    {
       "name": "8人长名字 ARREST · portrait",
-      "tested": 90,
-      "passed": 90,
+      "tested": 66,
+      "passed": 66,
       "failures": [],
       "untested": []
     },
     {
       "name": "8人长名字 ARREST · portrait · 舞台滚动到底",
-      "tested": 69,
-      "passed": 69,
+      "tested": 54,
+      "passed": 54,
       "failures": [],
       "untested": []
     },
@@ -17981,106 +16732,106 @@
     },
     {
       "name": "8人长名字 ARREST · desktop",
+      "tested": 113,
+      "passed": 113,
+      "failures": [],
+      "untested": []
+    },
+    {
+      "name": "8人长名字 ARREST · desktop · 舞台滚动到底",
       "tested": 112,
       "passed": 112,
       "failures": [],
       "untested": []
     },
     {
-      "name": "8人长名字 ARREST · desktop · 舞台滚动到底",
-      "tested": 111,
-      "passed": 111,
-      "failures": [],
-      "untested": []
-    },
-    {
       "name": "8人长名字 ROUND_END · portrait",
-      "tested": 73,
-      "passed": 73,
+      "tested": 51,
+      "passed": 51,
       "failures": [],
       "untested": []
     },
     {
       "name": "8人长名字 ROUND_END · portrait · 舞台滚动到底",
-      "tested": 78,
-      "passed": 78,
-      "failures": [],
-      "untested": []
-    },
-    {
-      "name": "8人轮末滚动查看本轮回顾",
-      "tested": 78,
-      "passed": 78,
-      "failures": [],
-      "untested": []
-    },
-    {
-      "name": "8人长名字 ROUND_END · landscape",
-      "tested": 73,
-      "passed": 73,
-      "failures": [],
-      "untested": []
-    },
-    {
-      "name": "8人长名字 ROUND_END · landscape · 舞台滚动到底",
-      "tested": 70,
-      "passed": 70,
-      "failures": [],
-      "untested": []
-    },
-    {
-      "name": "8人长名字 ROUND_END · desktop",
-      "tested": 107,
-      "passed": 107,
-      "failures": [],
-      "untested": []
-    },
-    {
-      "name": "8人长名字 ROUND_END · desktop · 舞台滚动到底",
-      "tested": 109,
-      "passed": 109,
-      "failures": [],
-      "untested": []
-    },
-    {
-      "name": "8人长名字 FINISHED · portrait",
-      "tested": 63,
-      "passed": 63,
-      "failures": [],
-      "untested": []
-    },
-    {
-      "name": "8人长名字 FINISHED · portrait · 舞台滚动到底",
-      "tested": 81,
-      "passed": 81,
-      "failures": [],
-      "untested": []
-    },
-    {
-      "name": "8人长名字 FINISHED · landscape",
       "tested": 59,
       "passed": 59,
       "failures": [],
       "untested": []
     },
     {
+      "name": "8人轮末滚动查看本轮回顾",
+      "tested": 59,
+      "passed": 59,
+      "failures": [],
+      "untested": []
+    },
+    {
+      "name": "8人长名字 ROUND_END · landscape",
+      "tested": 74,
+      "passed": 74,
+      "failures": [],
+      "untested": []
+    },
+    {
+      "name": "8人长名字 ROUND_END · landscape · 舞台滚动到底",
+      "tested": 71,
+      "passed": 71,
+      "failures": [],
+      "untested": []
+    },
+    {
+      "name": "8人长名字 ROUND_END · desktop",
+      "tested": 104,
+      "passed": 104,
+      "failures": [],
+      "untested": []
+    },
+    {
+      "name": "8人长名字 ROUND_END · desktop · 舞台滚动到底",
+      "tested": 106,
+      "passed": 106,
+      "failures": [],
+      "untested": []
+    },
+    {
+      "name": "8人长名字 FINISHED · portrait",
+      "tested": 48,
+      "passed": 48,
+      "failures": [],
+      "untested": []
+    },
+    {
+      "name": "8人长名字 FINISHED · portrait · 舞台滚动到底",
+      "tested": 63,
+      "passed": 63,
+      "failures": [],
+      "untested": []
+    },
+    {
+      "name": "8人长名字 FINISHED · landscape",
+      "tested": 60,
+      "passed": 60,
+      "failures": [],
+      "untested": []
+    },
+    {
       "name": "8人长名字 FINISHED · landscape · 舞台滚动到底",
-      "tested": 78,
-      "passed": 78,
+      "tested": 79,
+      "passed": 79,
       "failures": [],
       "untested": []
     },
     {
       "name": "8人长名字 FINISHED · desktop",
-      "tested": 105,
-      "passed": 105,
+      "tested": 102,
+      "passed": 102,
       "failures": [],
       "untested": []
     },
     {
       "name": "8人长名字 FINISHED · desktop · 舞台滚动到底",
-      "tested": 105,
-      "passed": 105,
+      "tested": 102,
+      "passed": 102,
       "failures": [],
       "untested": []
     },
@@ -18240,36 +16991,22 @@
     },
     {
       "name": "最大人数与长名字",
-      "tested": 60,
-      "passed": 60,
-      "failures": [],
-      "untested": []
-    },
-    {
-      "name": "最大人数与长名字 · 舞台滚动到底",
-      "tested": 60,
-      "passed": 60,
+      "tested": 34,
+      "passed": 34,
       "failures": [],
       "untested": []
     },
     {
       "name": "断线重连提示",
-      "tested": 60,
-      "passed": 60,
-      "failures": [],
-      "untested": []
-    },
-    {
-      "name": "断线重连提示 · 舞台滚动到底",
-      "tested": 60,
-      "passed": 60,
+      "tested": 35,
+      "passed": 35,
       "failures": [],
       "untested": []
     },
     {
       "name": "横屏最大人数与长名字",
-      "tested": 59,
-      "passed": 59,
+      "tested": 60,
+      "passed": 60,
       "failures": [],
       "untested": []
     },
@@ -18282,22 +17019,22 @@
     },
     {
       "name": "首页官方游戏盒",
-      "tested": 12,
-      "passed": 12,
+      "tested": 9,
+      "passed": 9,
       "failures": [],
       "untested": []
     }
   ],
   "pixelContrastSummary": {
-    "tested": 5664,
-    "passed": 5664,
+    "tested": 5208,
+    "passed": 5208,
     "failed": 0,
     "untested": 0
   },
   "accessibilitySummary": {
     "below17": 0,
     "contrastFailures": 0,
-    "contrastIncomplete": 2740
+    "contrastIncomplete": 2533
   },
   "accessibilityStatus": "unresolved",
   "checks": [

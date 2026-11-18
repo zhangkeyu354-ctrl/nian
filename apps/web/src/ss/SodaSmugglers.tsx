@@ -91,9 +91,25 @@ function SeatStrip({
   selected: number | null;
   onSelect: (i: number) => void;
 }) {
+  const many = v.players.length >= 5;
+  const [folded, setFolded] = useState(
+    () => v.players.length >= 6 && typeof matchMedia !== "undefined" && matchMedia("(orientation: portrait)").matches,
+  );
   return (
+    <>
+    {many && (
+      <button
+        type="button"
+        className="ss2-fold"
+        data-testid="ss-seat-fold"
+        aria-expanded={!folded}
+        onClick={() => setFolded((f) => !f)}
+      >
+        {folded ? "展开座位" : "收起座位"}
+      </button>
+    )}
     <div
-      className="ss-seatstrip"
+      className={`ss-seatstrip ${folded ? "is-folded" : ""}`}
       data-testid="ss-seatstrip"
       aria-label="玩家座位"
       style={{
@@ -134,6 +150,7 @@ function SeatStrip({
         </button>
       ))}
     </div>
+    </>
   );
 }
 function HistoryText({ a, v }: { a: PublicAction; v: View }) {
@@ -361,17 +378,33 @@ function Rules({ onClose }: { onClose: () => void }) {
         </button>
         <h2 id="ss-rules-title">怎么玩</h2>
         <ol>
-          <li>每轮一位缉私警长，其余玩家是旅客。</li>
+          <li>每轮一位缉私警长，其余玩家是旅客。警长按座位顺序轮换。</li>
           <li>
-            旅客从五张手提箱牌中选两张行李、一张受贿牌；全员提交后公开受贿。
+            旅客从手牌中秘密选两张做行李、一张做受贿牌，其余弃掉。全员提交后同时公开受贿牌。
           </li>
-          <li>警长依次选择受贿、检查一只箱子、逮捕，最后放行剩余旅客。</li>
           <li>
-            行李共两瓶或以上算走私；误捕时警长赔两瓶盖。余额不足时付出现有瓶盖。
+            警长依次用三种筹码：<b>受贿</b>（收下受贿牌上的瓶盖，直接放行）、<b>检查</b>（打开一名旅客的一个箱子，所有人都看到）、<b>逮捕</b>（打开两个箱子）。没有筹码可用的阶段会自动跳过。
           </li>
-          <li>每个人当过规定次数的警长后，瓶盖最多的人获胜；同分共同获胜。</li>
+          <li>两个箱子合计 2 瓶或以上算走私。</li>
         </ol>
-        <p>事件牌会改变本轮规则。语音自由讨论，无需输入聊天。</p>
+        <h3>怎么算瓶盖</h3>
+        <ul>
+          <li>放行：旅客按行李瓶数从公共区拿瓶盖。</li>
+          <li>受贿放行：旅客付给警长受贿瓶数，再按行李瓶数从公共区拿瓶盖。</li>
+          <li>逮捕抓到走私：警长从公共区拿瓶盖。</li>
+          <li>误捕：警长赔旅客 2 瓶盖，旅客照常按行李拿瓶盖。</li>
+          <li>本站房规：瓶盖不够时有多少付多少，最低到 0，不欠账。</li>
+          <li>每人都当过警长后，瓶盖最多的人获胜；同分共同获胜。</li>
+        </ul>
+        <h3>随机事件牌（房主可开启）</h3>
+        <ul>
+          {(Object.keys(eventCopy) as EventId[]).map((id) => (
+            <li key={id}>
+              <b>{eventCopy[id].title}</b>：{eventCopy[id].text}
+            </li>
+          ))}
+        </ul>
+        <p>语音自由讨论，不需要打字。</p>
         <button onClick={onClose}>知道了</button>
       </div>
     </div>
@@ -391,6 +424,13 @@ export function SodaSmugglers() {
     [mode, setMode] = useState<"normal" | "event">("normal"),
     [menu, setMenu] = useState(false),
     [rules, setRules] = useState(false),
+    [rulesSeen, setRulesSeen] = useState(() => {
+      try {
+        return !!localStorage.getItem("ss-rules-seen");
+      } catch {
+        return true;
+      }
+    }),
     [eventOpen, setEventOpen] = useState(false),
     [sound, setSound] = useState(soundOn),
     [vibration, setVibration] = useState(() => loadBool("ss-vibration", true)),
@@ -1082,6 +1122,16 @@ export function SodaSmugglers() {
                     {s.count} 已入座
                   </p>
                 </div>
+                {!rulesSeen && (
+                  <button
+                    type="button"
+                    className="ss2-first-hint"
+                    data-testid="ss-first-rules"
+                    onClick={() => setRules(true)}
+                  >
+                    第一次玩？点这里 1 分钟看懂规则
+                  </button>
+                )}
                 <div className="ss-lobby-art">
                   <img src={`${A}suitcase-closed.webp`} alt="官方手提箱" />
                   <p>把房间号发给朋友，一起准备过关。</p>
@@ -1779,7 +1829,17 @@ export function SodaSmugglers() {
           </div>
         </div>
       )}
-      {rules && <Rules onClose={() => setRules(false)} />}
+      {rules && (
+        <Rules
+          onClose={() => {
+            setRules(false);
+            setRulesSeen(true);
+            try {
+              localStorage.setItem("ss-rules-seen", "1");
+            } catch {}
+          }}
+        />
+      )}
       {eventOpen && v?.event && (
         <div
           className="ss-modal"
