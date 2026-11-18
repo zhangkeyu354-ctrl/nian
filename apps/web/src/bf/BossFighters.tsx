@@ -39,7 +39,7 @@ function useBus(to: string, fn: (name: string) => void) {
     return () => fxBus.removeEventListener(to, h);
   }, [to]);
 }
-import { HIT_FX, SHIELD_FX, type FxName, StatusLoop, avatarUrl, bgUrl, bossUrl, cardArtUrl, frameUrl, heroUrl, partUrl, useFx } from "./art.tsx";
+import { HIT_FX, SHIELD_FX, itemUrl, medalUrl, type FxName, StatusLoop, avatarUrl, bgUrl, bossUrl, cardArtUrl, frameUrl, heroUrl, partUrl, useFx } from "./art.tsx";
 
 type Net = ReturnType<typeof useBFRoom>;
 type ViewHero = BFView["heroes"][number];
@@ -281,7 +281,7 @@ function Lobby({ net, snap, seated }: { net: Net; snap: BFRoomSnapshot; seated: 
                 aria-label={open ? b.name : "未解锁"} onClick={() => act({ type: "SET_BOSS", bossId: id })}>
                 {open ? <img src={bossUrl(id, "idle")} alt="" /> : <Icon name="skull" />}
                 <i>{b.order === 0 ? "教" : b.order}</i>
-                {best && <em>✓</em>}
+                {best && <img className="bf-node-medal" src={medalUrl(best)} alt={DIFF_ZH[best] + "通关"} />}
                 {!!camp?.results[id]?.losses && <u>☠{camp.results[id].losses}</u>}
               </button>
             );
@@ -569,7 +569,10 @@ function Battle({ net, snap }: { net: Net; snap: BFRoomSnapshot }) {
         } else if (e.kind === "heal") {
           emit("hero:" + e.seat, "heal");
           sfx("heal");
-        } else if (e.kind === "curse") sfx("curse");
+        } else if (e.kind === "curse") {
+          emit("hero:" + e.seat, "curse");
+          sfx("curse");
+        }
         else if (e.kind === "status") sfx("status");
       };
       // 同一批事件依次播放，攻击阶段一下一下打出来
@@ -978,7 +981,7 @@ function Items({ me, v, onUse }: { me: ViewHero; v: BFView; onUse: (item: ItemId
       {items.map(([it, n]) => (
         <button key={it} className="bf-item" title={ITEM_ZH[it].text} data-testid={"bf-item-" + it}
           onClick={() => (ITEM_ZH[it].target ? setPick(pick === it ? null : it) : onUse(it))}>
-          <Icon name={it} />
+          <img className="bf-item-img" src={itemUrl(it)} alt="" />
           <small>{ITEM_ZH[it].name}{Number.isFinite(n) && n > 1 ? `×${n}` : ""}</small>
         </button>
       ))}
@@ -1016,13 +1019,26 @@ function Verdict({ net, snap, host }: { net: Net; snap: BFRoomSnapshot; host: bo
   const v = snap.view!;
   const won = v.phase === "won";
   const [msg, setMsg] = useState("");
+  const fx = useFx();
+  const prog = snap.campaign?.progress ?? -1;
+  const before = unlocks(prog - 1), after = unlocks(prog);
+  const leveled = won && snap.campaign && (after.raceLevel > before.raceLevel || after.clsLevel > before.clsLevel);
+  useEffect(() => {
+    fx.play(won ? "victory" : "defeat");
+    if (leveled) setTimeout(() => fx.play("levelup"), 900);
+  }, []);
   return (
     <div className="bf-overlay">
       <div className={"bf-verdict " + (won ? "won" : "lost")}>
-        {won ? <img className="bf-verdict-art" src={bossUrl(v.bossId, "defeated")} alt="" /> : <Icon name="skull" cls="bf-verdict-icon" />}
+        <div className="bf-verdict-stage">
+          {won ? <img className="bf-verdict-art" src={bossUrl(v.bossId, "defeated")} alt="" /> : <Icon name="skull" cls="bf-verdict-icon" />}
+          {fx.layer}
+        </div>
         <h2>{won ? "讨伐成功！" : "讨伐失败"}</h2>
+        {won && <img className="bf-verdict-medal" src={medalUrl(v.difficulty)} alt={DIFF_ZH[v.difficulty] + "星章"} />}
         {v.taunt && (v.taunt.key === "Win" || v.taunt.key === "Lose") && <p className="bf-verdict-taunt">{v.boss.name}：「{v.taunt.text}」</p>}
         <p>{won ? `恭喜，你打败了魔王！${v.boss.name} 被打倒了（第 ${v.round} 回合 · ${DIFF_ZH[v.difficulty]}）` : `${v.boss.name} 还站着。调整策略再来一次！`}</p>
+        {leveled && <p className="bf-levelup">英雄升级！种族 {after.raceLevel} 级 · 职业 {after.clsLevel} 级</p>}
         {won && TAUNTS[v.bossId]?.First && <p className="bf-note">{TAUNTS[v.bossId].First}</p>}
         {snap.campaign?.pendingLoot && <LootPanel net={net} snap={snap} />}
         {host ? (
