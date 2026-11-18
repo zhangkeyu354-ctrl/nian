@@ -359,3 +359,5 @@
 .bf-story-art { display: block; width: 100%; height: 150px; object-fit: cover; border-radius: 8px; margin: 0 0 8px; }
 .bf-story-body p { margin: 0 0 6px; }
 @media (max-width: 400px) { .bf-story-art { height: 112px; } .bf-story-body { font-size: 13.5px; } }
+/* 主体偏上的剧情插画：裁切时往上对齐，别切掉脸 */
+.bf-story-art[src$="magma-before.webp"], .bf-story-art[src$="ogre-before.webp"] { object-position: 50% 18%; }
