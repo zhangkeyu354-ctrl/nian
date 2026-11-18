@@ -78,11 +78,30 @@ export function Icon({ name, cls = "" }: { name: string; cls?: string }) {
 }
 
 /** 原创剧情面板（只在战役模式出现；可各自收起，不影响规则与存档） */
-export function Story({ mode, bossId, moment, open = true }: { mode: string; bossId: string; moment: StoryMoment; open?: boolean }) {
+/** 营地里的故事书：按章节重看已经打过的剧情 */
+function StoryBook({ progress }: { progress: number }) {
+  const done = BOSS_ORDER.slice(0, progress + 1);
+  return (
+    <details className="bf-storybook" data-testid="bf-storybook">
+      <summary>
+        <b>故事书</b>
+        <span>已解锁 {done.length} / {BOSS_ORDER.length} 章</span>
+      </summary>
+      {done.map((id) => (
+        <div key={id} className="bf-storybook-ch">
+          <Story mode="campaign" bossId={id} moment="before" open={false} inBook />
+          <Story mode="campaign" bossId={id} moment="victory" open={false} inBook />
+        </div>
+      ))}
+    </details>
+  );
+}
+
+export function Story({ mode, bossId, moment, open = true, inBook = false }: { mode: string; bossId: string; moment: StoryMoment; open?: boolean; inBook?: boolean }) {
   const chapter = getStory(mode, bossId, moment);
   // 战前剧情：这台设备第一次看到时展开，以后默认收起（重打、换房间都不再挡路）
   const [firstTime] = useState(() => {
-    if (moment !== 'before' || !chapter) return true;
+    if (moment !== 'before' || !chapter || inBook) return true;
     const key = 'bf-story-seen:' + bossId;
     try {
       if (localStorage.getItem(key)) return false;
@@ -92,7 +111,7 @@ export function Story({ mode, bossId, moment, open = true }: { mode: string; bos
   });
   if (!chapter) return null;
   return (
-    <details className="bf-story" open={open && firstTime} data-testid={"bf-story-" + moment}>
+    <details className="bf-story" open={open && firstTime} data-testid={inBook ? undefined : "bf-story-" + moment}>
       <summary>
         <b>{chapter.title}</b>
         <span>展开 / 收起</span>
@@ -114,6 +133,21 @@ export function Story({ mode, bossId, moment, open = true }: { mode: string; bos
         {chapter.lines.map((line, i) => (
           <p key={i}>{line}</p>
         ))}
+        {moment === "before" && !inBook && (
+          <button
+            type="button"
+            className="bf-btn bf-mini bf-story-skip"
+            data-testid="bf-story-skip"
+            onClick={(e) => {
+              const d = e.currentTarget.closest("details");
+              if (!d) return;
+              d.open = false;
+              (d.nextElementSibling ?? d).scrollIntoView({ behavior: "smooth", block: "start" });
+            }}
+          >
+            收起，去准备战斗
+          </button>
+        )}
       </div>
     </details>
   );
@@ -312,6 +346,7 @@ function Lobby({ net, snap, seated }: { net: Net; snap: BFRoomSnapshot; seated: 
             )}
           </p>
         )}
+        {snap.mode === "campaign" && camp && progress >= 0 && <StoryBook progress={progress} />}
         <div className="bf-map" style={{ backgroundImage: "url(/assets/bf/bg/map.webp)" }}>
           {BOSS_ORDER.map((id, n) => {
             const b = BOSSES[id];
@@ -1059,6 +1094,40 @@ function LogSheet({ v, onClose }: { v: BFView; onClose: () => void }) {
   );
 }
 
+/** 战役通关画面：冒险团合影 + 每关战绩，方便截图分享 */
+function Finale({ camp }: { camp: NonNullable<BFRoomSnapshot["campaign"]> }) {
+  const losses = Object.values(camp.results).reduce((n, r) => n + (r.losses ?? 0), 0);
+  return (
+    <section className="bf-finale" data-testid="bf-finale">
+      <img
+        className="bf-finale-art"
+        src="/assets/bf/story/finale.webp"
+        alt="冒险团与获救的木偶骑士、青蛙王子在城堡前合影"
+        width="1672"
+        height="941"
+        onError={(e) => {
+          const img = e.currentTarget;
+          if (!img.src.endsWith("/assets/bf/bg/castle.webp")) img.src = "/assets/bf/bg/castle.webp";
+        }}
+      />
+      <h3>战役通关！</h3>
+      <p className="bf-finale-team">{camp.name ? `「${camp.name}」` : "冒险团"}：{camp.heroes.map((h) => `${h.name}（${raceName(h.race)}${clsName(h.cls)}）`).join("、")}</p>
+      <p className="bf-finale-sum">11 关全部通过 · 一共倒下 {losses} 次</p>
+      <ol className="bf-finale-list">
+        {BOSS_ORDER.map((id) => {
+          const r = camp.results[id];
+          return (
+            <li key={id}>
+              <span>{BOSSES[id].name}</span>
+              <span>{r?.best ? DIFF_ZH[r.best] : "—"}{r?.losses ? ` · 失败 ${r.losses} 次` : " · 一次过"}</span>
+            </li>
+          );
+        })}
+      </ol>
+    </section>
+  );
+}
+
 function Verdict({ net, snap, host }: { net: Net; snap: BFRoomSnapshot; host: boolean }) {
   const v = snap.view!;
   const won = v.phase === "won";
@@ -1087,6 +1156,7 @@ function Verdict({ net, snap, host }: { net: Net; snap: BFRoomSnapshot; host: bo
         {snap.campaign?.pendingLoot && <LootPanel net={net} snap={snap} />}
         {/* 还有人没选战利品时剧情先收起，不挡住领奖；选完自动展开 */}
         {won && <Story mode={snap.mode} bossId={v.bossId} moment="victory" open={!snap.campaign?.pendingLoot} />}
+        {won && snap.campaign && !snap.campaign.pendingLoot && v.bossId === BOSS_ORDER[BOSS_ORDER.length - 1] && <Finale camp={snap.campaign} />}
         {host ? (
           <button className="bf-btn bf-primary" data-testid="bf-back" disabled={!!snap.campaign?.pendingLoot}
             onClick={async () => setMsg((await net.lobby({ type: "BACK_TO_LOBBY" })) ?? "")}>

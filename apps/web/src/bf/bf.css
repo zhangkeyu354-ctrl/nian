@@ -361,3 +361,20 @@
 @media (max-width: 400px) { .bf-story-art { height: 112px; } .bf-story-body { font-size: 13.5px; } }
 /* 主体偏上的剧情插画：裁切时往上对齐，别切掉脸 */
 .bf-story-art[src$="magma-before.webp"], .bf-story-art[src$="ogre-before.webp"] { object-position: 50% 18%; }
+.bf-story-skip { display: block; margin: 4px 0 2px auto; }
+.bf-storybook { margin: 8px 0; border: 1px solid rgba(214, 177, 96, .35); border-radius: 10px; background: rgba(20, 12, 30, .55); }
+.bf-storybook > summary { display: flex; align-items: center; justify-content: space-between; gap: 8px; padding: 10px 12px; min-height: 44px; cursor: pointer; list-style: none; }
+.bf-storybook > summary::-webkit-details-marker { display: none; }
+.bf-storybook > summary span { font-size: 12px; opacity: .75; }
+.bf-storybook-ch { padding: 0 8px 4px; }
+.bf-storybook-ch .bf-story { margin: 6px 0; }
+.bf-finale { margin: 10px 0 4px; padding: 10px; border: 1px solid #d6b160; border-radius: 12px; background: #24182eee; color: #f7edda; text-align: center; }
+.bf-finale-art { display: block; width: 100%; height: 150px; object-fit: cover; border-radius: 8px; }
+.bf-finale h3 { margin: 10px 0 4px; color: #f1c96b; font-size: 20px; letter-spacing: .1em; }
+.bf-finale-team { margin: 4px 0; line-height: 1.6; overflow-wrap: anywhere; }
+.bf-finale-sum { margin: 2px 0 8px; font-size: 13px; opacity: .85; }
+.bf-finale-list { margin: 0; padding: 0; list-style: none; text-align: left; font-size: 13px; }
+.bf-finale-list li { display: flex; justify-content: space-between; gap: 8px; padding: 4px 2px; border-top: 1px solid #b9935033; }
+.bf-finale-list li span:first-child { min-width: 0; overflow-wrap: anywhere; }
+.bf-finale-list li span:last-child { flex: none; opacity: .85; }
+@media (max-width: 400px) { .bf-finale-art { height: 112px; } }
