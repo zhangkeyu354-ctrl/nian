@@ -88,7 +88,19 @@ export function Story({ mode, bossId, moment, open = true }: { mode: string; bos
         <span>展开 / 收起</span>
       </summary>
       <div className="bf-story-body">
-        <img className="bf-story-art" src={chapter.image} alt={chapter.imageAlt} width="1672" height="941" loading="lazy" />
+        <img
+          className="bf-story-art"
+          src={chapter.image}
+          alt={chapter.imageAlt}
+          width="1672"
+          height="941"
+          loading="lazy"
+          onError={(e) => {
+            // 正式插画还没放进来时，先用这一关的场景背景
+            const img = e.currentTarget;
+            if (chapter.fallback && !img.src.endsWith(chapter.fallback)) img.src = chapter.fallback;
+          }}
+        />
         {chapter.lines.map((line, i) => (
           <p key={i}>{line}</p>
         ))}
