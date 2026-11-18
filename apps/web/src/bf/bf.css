@@ -378,3 +378,26 @@
 .bf-finale-list li span:first-child { min-width: 0; overflow-wrap: anywhere; }
 .bf-finale-list li span:last-child { flex: none; opacity: .85; }
 @media (max-width: 400px) { .bf-finale-art { height: 112px; } }
+/* 常驻战况条：选牌时也能看到三种护盾和本回合已经打开的攻击类型 */
+.bf-strip { display: grid; grid-template-columns: minmax(0, 1.1fr) repeat(3, minmax(0, 1fr)); gap: 6px; margin: 0 0 8px; }
+.bf-strip-boss { display: flex; flex-direction: column; justify-content: center; min-width: 0; padding: 2px 4px; line-height: 1.25; }
+.bf-strip-boss b { font-size: 13px; color: var(--bf-ink); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.bf-strip-boss span { font-size: 12px; color: #e5a0a0; }
+.bf-strip-sh { --c: #888; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 1px; min-width: 0; padding: 5px 2px 4px; border-radius: 10px; border: 2px solid var(--c); background: color-mix(in srgb, var(--c) 22%, #120c18); color: #fff; transition: opacity .2s, filter .2s; }
+.bf-strip-sh.t-melee { --c: var(--bf-melee); }
+.bf-strip-sh.t-ranged { --c: var(--bf-ranged); }
+.bf-strip-sh.t-magic { --c: var(--bf-magic); }
+.bf-strip-top { display: inline-flex; align-items: center; gap: 4px; font-size: 20px; line-height: 1; }
+.bf-strip-top b { font-size: 20px; }
+.bf-strip-sh small { font-size: 11px; opacity: .9; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 100%; }
+.bf-strip-sh.zero { border-style: dashed; background: #120c18; opacity: .7; }
+.bf-strip-sh.zero .bf-strip-top b { opacity: .6; }
+.bf-strip-sh.immune { opacity: .45; filter: grayscale(.7); }
+.bf-strip-sh.spiked { box-shadow: 0 0 0 2px #e5484d, 0 0 10px #e5484d88; }
+.bf-strip-sh.open { box-shadow: 0 0 0 2px #f1c96b, 0 0 12px color-mix(in srgb, var(--c) 70%, transparent); }
+.bf-strip-sh.open small { color: #f1c96b; font-weight: 700; opacity: 1; }
+.bf-pop { display: inline-block; animation: bf-pop .35s ease-out; }
+@keyframes bf-pop { 0% { transform: scale(1.7); } 100% { transform: scale(1); } }
+@media (max-width: 360px) { .bf-strip { gap: 4px; } .bf-strip-top, .bf-strip-top b { font-size: 17px; } .bf-strip-sh small { font-size: 10px; } }
+/* 魔王旁边的护盾也加大、填色 */
+.bf-shield { font-size: 17px; padding: 4px 10px; border-width: 2px; background: color-mix(in srgb, currentColor 18%, #120c18); }

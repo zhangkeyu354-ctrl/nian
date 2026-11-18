@@ -703,6 +703,7 @@ function Battle({ net, snap }: { net: Net; snap: BFRoomSnapshot }) {
       <Coach v={v} mySeat={snap.mySeat} myTurn={myTurn} />
 
       <div className="bf-dock">
+        {v.phase !== "chooseStarter" && <ShieldStrip v={v} />}
         {v.phase === "chooseStarter" && snap.mySeat >= 0 && (
           <div className="bf-prompt">
             <p>这一回合谁先行动？（任何人都可以决定）</p>
@@ -1125,6 +1126,31 @@ function Finale({ camp }: { camp: NonNullable<BFRoomSnapshot["campaign"]> }) {
         })}
       </ol>
     </section>
+  );
+}
+
+/** 出牌区上方常驻的战况条：三种护盾 + 本回合已打出的攻击类型（决定谁能接助攻） */
+function ShieldStrip({ v }: { v: BFView }) {
+  const b = v.boss;
+  const parts = b.parts.length > 0;
+  return (
+    <div className="bf-strip" data-testid="bf-strip">
+      <div className="bf-strip-boss">
+        <b>{b.name}</b>
+        <span>{parts ? `${b.parts.filter((p) => p.alive).length} 个部位` : `${b.hp}/${b.maxHp}`}</span>
+      </div>
+      {TYPES.map((t) => {
+        const n = b.shields[t];
+        const immune = b.immune.includes(t);
+        const open = v.attackedTypes?.[t];
+        return (
+          <div key={t} className={`bf-strip-sh t-${t}${n === 0 ? " zero" : ""}${immune ? " immune" : ""}${open ? " open" : ""}${b.spikedShields.includes(t) ? " spiked" : ""}`}>
+            <span className="bf-strip-top"><Icon name={t} /><b key={n} className="bf-pop">{immune ? "免疫" : n}</b></span>
+            <small>{open ? "已出 · 可助攻" : n === 0 ? "无" + TYPE_ZH[t] + "盾" : TYPE_ZH[t] + "盾"}</small>
+          </div>
+        );
+      })}
+    </div>
   );
 }
 
