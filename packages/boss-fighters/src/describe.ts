@@ -19,7 +19,7 @@ const who = (t: string) => (t === 'self' ? '你' : t === 'all' ? '所有英雄' 
 export function effectText(e: Effect): string {
   switch (e.kind) {
     case 'attack': return `${TYPE_ZH[e.type]}攻击 ${v(e.value)}`;
-    case 'support': return `${TYPE_ZH[e.type]}助攻 ${e.value}（本回合已有${TYPE_ZH[e.type]}攻击才生效）`;
+    case 'support': return `${TYPE_ZH[e.type]}助攻 ${e.value}（需先打${TYPE_ZH[e.type]}攻击）`;
     case 'protect': return `保护 ${v(e.value)}${e.cancelEffects ? '，并取消附加效果' : ''}`;
     case 'heal': return `${who(e.target)}回复 ${e.value} 生命`;
     case 'draw': return `${e.target === 'self' ? '你' : e.target === 'all' ? '所有英雄' : '一名英雄'}抽 ${e.n} 张`;

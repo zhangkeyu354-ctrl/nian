@@ -140,8 +140,8 @@
 .bf-hero.active { border-color: var(--bf-gold); box-shadow: 0 0 0 1px var(--bf-gold), 0 0 16px #d8b25a55; }
 .bf-hero.hurt { animation: bf-hurt .5s; }
 @keyframes bf-hurt { 0%, 100% { background: #221a30; } 30% { background: #6a1f2c; } }
-.bf-hero-head { display: flex; align-items: center; gap: 6px; font-size: 14px; }
-.bf-hero-head b { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.bf-hero-head { display: flex; align-items: center; flex-wrap: wrap; row-gap: 2px; gap: 6px; font-size: 14px; }
+.bf-hero-head b { min-width: 0; overflow-wrap: anywhere; line-height: 1.2; }
 .bf-hero-art { position: relative; font-size: 24px; width: 28px; height: 28px; color: #e9dcc0; }
 .bf-hero-art .bf-seat-cls { font-size: 13px; background: #221a30; }
 .bf-turn { margin-left: auto; font-style: normal; font-size: 11px; color: #22160a; background: var(--bf-gold); border-radius: 99px; padding: 1px 6px; }
@@ -238,7 +238,7 @@
 /* ———— 优化：事件横幅、卡牌文字、战役地图 ———— */
 .bf-event { top: calc(8px + env(safe-area-inset-top)); width: min(88vw, 420px); padding: 7px 12px; border-width: 1px; border-radius: 12px; background: linear-gradient(#4a1d2ef2, #2a1020f2); }
 .bf-event b { font-size: 15px; margin-bottom: 1px; }
-.bf-event span { font-size: 12.5px; line-height: 1.4; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
+.bf-event span { font-size: 12.5px; line-height: 1.4; display: block; }
 .bf-cardface { width: 124px; }
 .bf-cf-name { font-size: 12.5px; }
 .bf-cardface .bf-cf-text { font-size: 11.5px; line-height: 1.3; font-family: system-ui, "PingFang SC", "Microsoft YaHei", sans-serif; font-weight: 600; }
@@ -308,3 +308,32 @@
 .bf-loading p { color: var(--bf-gold); letter-spacing: .15em; }
 .bf-hero-head b { min-width: 2.5em; flex: 1 1 auto; }
 .bf-auto, .bf-turn { white-space: nowrap; flex: none; }
+
+/* ———— 长昵称：任何地方都不出框 ———— */
+.bf-world b, .bf-world small, .bf-world span, .bf-world p { overflow-wrap: anywhere; }
+.bf-seat-name { min-width: 0; }
+.bf-seg { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 120px), 1fr)); }
+.bf-seg > .bf-btn { min-width: 0; white-space: normal; overflow-wrap: anywhere; word-break: break-word; line-height: 1.25; padding: 8px 6px; flex-direction: column; text-align: center; }
+.bf-seg > .bf-btn small { display: block; opacity: .8; }
+.bf-btn { max-width: 100%; }
+.bf-atk-target, .bf-atk-name { overflow-wrap: anywhere; min-width: 0; }
+
+.bf-btn { overflow-wrap: anywhere; }
+.bf-top { flex-wrap: nowrap; white-space: nowrap; min-width: 0; }
+.bf-parts li { grid-template-columns: minmax(0, 1fr) minmax(60px, .9fr); }
+.bf-parts li > span { display: flex; align-items: center; gap: 2px; min-width: 0; line-height: 1.2; }
+@media (max-width: 360px) {
+  .bf-top { gap: 6px; font-size: 12px; }
+  .bf-top .bf-mini { padding: 4px 7px; }
+  .bf-mute-txt { display: none; }
+  .bf-parts li { font-size: 11px; }
+  .bf-part-art { width: 20px; height: 20px; }
+}
+.bf-pick b, .bf-pick small { word-break: keep-all; overflow-wrap: normal; text-align: center; line-height: 1.25; }
+@media (max-width: 360px) {
+  .bf-picker { gap: 4px; }
+  .bf-pick { padding: 6px 1px; }
+  .bf-pick b { font-size: 12px; letter-spacing: -.02em; }
+  .bf-pick small { font-size: 9.5px; }
+}
+.bf-pick .nb { white-space: nowrap; }

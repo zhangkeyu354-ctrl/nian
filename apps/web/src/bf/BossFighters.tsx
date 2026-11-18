@@ -214,7 +214,7 @@ function Lobby({ net, snap, seated }: { net: Net; snap: BFRoomSnapshot; seated: 
                 <button key={r} className={"bf-pick" + (me.race === r ? " on" : "")} disabled={taken} data-testid={"bf-race-" + r} onClick={() => act({ type: "PICK", race: r, cls: me.cls })}>
                   <Icon name={r} />
                   <b>{id.name}</b>
-                  <small>手牌 {id.levels[0][0]} · 生命 {id.levels[0][1]}</small>
+                  <small><span className="nb">手牌 {id.levels[0][0]}</span> · <span className="nb">生命 {id.levels[0][1]}</span></small>
                 </button>
               );
             })}
@@ -226,7 +226,7 @@ function Lobby({ net, snap, seated }: { net: Net; snap: BFRoomSnapshot; seated: 
                 <button key={c} className={"bf-pick" + (me.cls === c ? " on" : "")} data-testid={"bf-cls-" + c} onClick={() => act({ type: "PICK", race: me.race, cls: c })}>
                   <Icon name={c} />
                   <b>{id.name}</b>
-                  <small>手牌 +{id.levels[0][0]} · 生命 +{id.levels[0][1]}</small>
+                  <small><span className="nb">手牌 +{id.levels[0][0]}</span> · <span className="nb">生命 +{id.levels[0][1]}</span></small>
                 </button>
               );
             })}
@@ -352,7 +352,7 @@ function LootPanel({ net, snap }: { net: Net; snap: BFRoomSnapshot }) {
 
 // ———————————————————— 卡牌 ————————————————————
 
-function CardFace({ id, selected, dim, onClick, badge, big }: { id: string; selected?: boolean; dim?: boolean; onClick?: () => void; badge?: string; big?: boolean }) {
+export function CardFace({ id, selected, dim, onClick, badge, big }: { id: string; selected?: boolean; dim?: boolean; onClick?: () => void; badge?: string; big?: boolean }) {
   const c = CARDS[id];
   const kind = cardKind(id);
   const lines = cardText(id);
@@ -1043,7 +1043,7 @@ function MuteButton() {
   const [m, setM] = useState(isMuted());
   return (
     <button className="bf-btn bf-mini" aria-pressed={m} data-testid="bf-mute" onClick={() => setM(toggleMute())}>
-      {m ? "🔇 静音" : "🔊 声音"}
+      <span className="bf-mute-ico">{m ? "🔇" : "🔊"}</span><span className="bf-mute-txt">{m ? "静音" : "声音"}</span>
     </button>
   );
 }
