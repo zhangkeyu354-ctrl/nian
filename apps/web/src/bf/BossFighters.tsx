@@ -80,9 +80,19 @@ export function Icon({ name, cls = "" }: { name: string; cls?: string }) {
 /** 原创剧情面板（只在战役模式出现；可各自收起，不影响规则与存档） */
 export function Story({ mode, bossId, moment, open = true }: { mode: string; bossId: string; moment: StoryMoment; open?: boolean }) {
   const chapter = getStory(mode, bossId, moment);
+  // 战前剧情：这台设备第一次看到时展开，以后默认收起（重打、换房间都不再挡路）
+  const [firstTime] = useState(() => {
+    if (moment !== 'before' || !chapter) return true;
+    const key = 'bf-story-seen:' + bossId;
+    try {
+      if (localStorage.getItem(key)) return false;
+      localStorage.setItem(key, '1');
+    } catch {}
+    return true;
+  });
   if (!chapter) return null;
   return (
-    <details className="bf-story" open={open} data-testid={"bf-story-" + moment}>
+    <details className="bf-story" open={open && firstTime} data-testid={"bf-story-" + moment}>
       <summary>
         <b>{chapter.title}</b>
         <span>展开 / 收起</span>
