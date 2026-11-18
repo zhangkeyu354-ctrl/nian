@@ -280,3 +280,31 @@
   .bf-cardface { width: 104px; }
   .bf-cardface .bf-cf-text { font-size: 10.5px; }
 }
+
+/* ———— 存档码、托管、教学、规则、放大、加载 ———— */
+.bf-savecode { margin: 6px 0; padding: 8px 10px; border-radius: 10px; background: #1b1427; border: 1px dashed var(--bf-gold2); font-size: 13px; display: flex; flex-wrap: wrap; align-items: baseline; gap: 6px; }
+.bf-savecode b { font: 700 18px/1 ui-monospace, Menlo, monospace; letter-spacing: .18em; color: #ffe08a; }
+.bf-savecode small { width: 100%; color: var(--bf-dim); }
+.bf-loadcamp { display: flex; gap: 6px; margin: 6px 0; }
+.bf-loadcamp input { flex: 1; min-width: 0; font: 600 15px ui-monospace, Menlo, monospace; letter-spacing: .15em; text-transform: uppercase; padding: 8px 10px; border-radius: 10px; border: 1px solid var(--bf-line); background: #120d1a; color: var(--bf-ink); }
+.bf-auto { font-style: normal; font-size: 11px; color: #ffd9b0; background: #5a3a20; border-radius: 99px; padding: 1px 6px; margin-left: auto; }
+.bf-auto + .bf-turn { margin-left: 4px; }
+.bf-coach { display: flex; flex-wrap: wrap; align-items: baseline; gap: 6px; padding: 8px 10px; border-radius: 12px; background: linear-gradient(#2c3a24, #1e2a1a); border: 1px solid #6b9a4a; font-size: 13.5px; line-height: 1.5; }
+.bf-coach b { color: #b7e08a; font-size: 12px; letter-spacing: .15em; }
+.bf-coach span { flex: 1 1 200px; }
+.bf-coach .bf-link { margin-left: auto; font-size: 12px; color: #b7e08a; }
+.bf-howto { align-self: center; margin-top: -6px; }
+.bf-rules dl { margin: 8px 0 0; display: grid; gap: 8px; }
+.bf-rules dt { color: var(--bf-gold); font-weight: 700; font-size: 14px; }
+.bf-rules dd { margin: 2px 0 0; font-size: 13.5px; line-height: 1.6; color: #e9dcc0; }
+.bf-zoom { flex-direction: column; display: flex; align-items: center; justify-content: center; gap: 10px; }
+.bf-cardface.big { width: min(78vw, 320px); cursor: default; }
+.bf-cardface.big .bf-cf-name { font-size: 22px; top: 2.8%; }
+.bf-cardface.big .bf-cf-text { font-size: 17px; line-height: 1.45; gap: 6px; }
+.bf-cardface.big .bf-stars { font-size: 16px; }
+.bf-cardface { -webkit-touch-callout: none; user-select: none; touch-action: manipulation; }
+.bf-loading { flex-direction: column; display: flex; align-items: center; justify-content: center; gap: 10px; background: #0c0812f2; }
+.bf-loading img { width: 160px; height: 160px; object-fit: contain; animation: bf-breathe 1.6s ease-in-out infinite; filter: drop-shadow(0 8px 20px #000); }
+.bf-loading p { color: var(--bf-gold); letter-spacing: .15em; }
+.bf-hero-head b { min-width: 2.5em; flex: 1 1 auto; }
+.bf-auto, .bf-turn { white-space: nowrap; flex: none; }

@@ -73,3 +73,48 @@ describe("魔王试炼房间", () => {
     expect(room.snapshot(room.idByToken(watcher)).view!.heroes.every((h) => h.hand.length === 0)).toBe(true);
   });
 });
+
+describe("魔王试炼：掉线托管与冒险团存档", () => {
+  it("真人掉线超过时限后由机器人代打，回来即停止代打", () => {
+    const room = new BFRoomStore(mkdtempSync(join(tmpdir(), "bf-"))).create();
+    const a = room.claim("甲");
+    const b = room.claim("乙");
+    room.lobby(a, { type: "PICK", race: "elf", cls: "mage" });
+    room.lobby(b, { type: "PICK", race: "troll", cls: "rogue" });
+    room.lobby(a, { type: "START" });
+    room.apply(a, { type: "CHOOSE_STARTER", starter: 1, version: 0 }); // 乙先手
+    const idB = room.idByToken(b)!;
+    expect(room.botMove()).toBeNull();
+    let t = 1_000_000;
+    room.now = () => t;
+    room.awaySince.set(idB, t);
+    expect(room.botMove()).toBeNull(); // 刚掉线，还没到时限
+    t += 26_000;
+    expect(room.botMove()?.seat).toBe(1);
+    expect(room.snapshot(null).seats[1].auto).toBe(true);
+    room.awaySince.delete(idB); // 重新连上
+    expect(room.botMove()).toBeNull();
+  });
+
+  it("冒险团用存档码在新房间继续", () => {
+    const dir = mkdtempSync(join(tmpdir(), "bf-"));
+    const st = new BFRoomStore(dir);
+    const r1 = st.create();
+    const a = r1.claim("甲");
+    r1.lobby(a, { type: "PICK", race: "dwarf", cls: "warrior" });
+    r1.lobby(a, { type: "ADD_BOT" });
+    r1.lobby(a, { type: "START" });
+    const code = r1.file.campaignCode!;
+    expect(code).toMatch(/^[A-Z0-9]{6}$/);
+    r1.file.campaign!.progress = 3;
+    st.save(r1);
+    const st2 = new BFRoomStore(dir); // 模拟服务器重启后、旧房间已清理
+    const r2 = st2.create();
+    const x = r2.claim("丙");
+    expect(() => r2.lobby(x, { type: "LOAD_CAMPAIGN", code: "ZZZZZZ" })).toThrow("BF_NO_CAMPAIGN");
+    r2.lobby(x, { type: "LOAD_CAMPAIGN", code: code.toLowerCase() });
+    expect(r2.file.campaign!.progress).toBe(3);
+    expect(r2.file.seats.map((s) => [s.name, s.race, s.bot])).toEqual([["丙", "dwarf", false], [r1.file.seats[1].name, "troll", true]]);
+    expect(r2.file.bossId).toBe("stoneGolem"); // 已通关到第 3 关，下一关是第 4 关
+  });
+});

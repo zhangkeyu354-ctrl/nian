@@ -109,6 +109,7 @@ function RoomView({ code }: { code: string }) {
   const known = !!snap.me;
   return (
     <div className="bf-world" data-testid="bf-root" style={{ ["--bf-bgimg" as string]: `url(${bgUrl(snap.stage === "game" && snap.view ? snap.view.bossId : null)})` }}>
+      <CardZoom />
       {!net.connected && <div className="bf-reconnect" role="status">重连中…</div>}
       {!known ? (
         <Join net={net} snap={snap} />
@@ -165,9 +166,12 @@ function Lobby({ net, snap, seated }: { net: Net; snap: BFRoomSnapshot; seated: 
   const locked = !!camp;
   const progress = camp?.progress ?? -1;
   const ready = snap.seats.length >= 2 && snap.seats.every((s) => s.race && s.cls);
+  const [rules, setRules] = useState(false);
   return (
     <div className="bf-panel bf-lobby">
       <Title />
+      <button className="bf-btn bf-mini bf-howto" onClick={() => setRules(true)}>怎么玩？</button>
+      {rules && <RulesSheet onClose={() => setRules(false)} />}
       <section className="bf-card">
         <h2>冒险团</h2>
         <ul className="bf-seats">
@@ -177,7 +181,7 @@ function Lobby({ net, snap, seated }: { net: Net; snap: BFRoomSnapshot; seated: 
                 {s.race && s.cls ? <img src={avatarUrl(s.race, s.cls)} alt="" /> : <Icon name={s.race ?? "skull"} />}
               </span>
               <span className="bf-seat-name">
-                <b>{s.name}{s.host && " · 房主"}{!s.connected && " · 离线"}</b>
+                <b>{s.name}{s.host && " · 房主"}{s.auto ? " · 托管中" : !s.connected ? " · 离线" : ""}</b>
                 <small>{s.race && s.cls ? `${raceName(s.race)} · ${clsName(s.cls)}` : "还没选英雄"}</small>
               </span>
               {host && !locked && s.id !== snap.me && (
@@ -243,6 +247,13 @@ function Lobby({ net, snap, seated }: { net: Net; snap: BFRoomSnapshot; seated: 
             </button>
           ))}
         </div>
+        {snap.mode === "campaign" && snap.campaignCode && (
+          <p className="bf-savecode" data-testid="bf-savecode">
+            冒险团存档码 <b>{snap.campaignCode}</b>
+            <small>记下这 6 个字母，换房间或隔天也能用它继续战役。</small>
+          </p>
+        )}
+        {snap.mode === "campaign" && !camp && host && <LoadCampaign onLoad={(code) => act({ type: "LOAD_CAMPAIGN", code })} />}
         {snap.mode === "campaign" && camp && (
           <p className="bf-note">
             已通关 {progress + 1} 关 · 英雄 {unlocks(progress).raceLevel} 级 · 职业 {unlocks(progress).clsLevel} 级
@@ -335,12 +346,41 @@ function LootPanel({ net, snap }: { net: Net; snap: BFRoomSnapshot }) {
 
 // ———————————————————— 卡牌 ————————————————————
 
-function CardFace({ id, selected, dim, onClick, badge }: { id: string; selected?: boolean; dim?: boolean; onClick?: () => void; badge?: string }) {
+function CardFace({ id, selected, dim, onClick, badge, big }: { id: string; selected?: boolean; dim?: boolean; onClick?: () => void; badge?: string; big?: boolean }) {
   const c = CARDS[id];
   const kind = cardKind(id);
   const lines = cardText(id);
+  const hold = useRef<number | null>(null);
+  const held = useRef(false);
+  const startHold = () => {
+    held.current = false;
+    if (big) return;
+    hold.current = window.setTimeout(() => {
+      held.current = true;
+      zoomCard(id);
+    }, 420);
+  };
+  const endHold = () => {
+    if (hold.current) clearTimeout(hold.current);
+    hold.current = null;
+  };
   return (
-    <button className={`bf-cardface k-${kind}${selected ? " sel" : ""}${dim ? " dim" : ""}`} onClick={onClick} data-card={id}>
+    <button
+      className={`bf-cardface k-${kind}${selected ? " sel" : ""}${dim ? " dim" : ""}${big ? " big" : ""}`}
+      onClick={() => {
+        if (held.current) return; // 长按看大图，不当作点击
+        onClick?.();
+      }}
+      onPointerDown={startHold}
+      onPointerUp={endHold}
+      onPointerLeave={endHold}
+      onPointerCancel={endHold}
+      onContextMenu={(e) => {
+        e.preventDefault();
+        if (!big) zoomCard(id);
+      }}
+      data-card={id}
+    >
       <img className="bf-cf-art" src={cardArtUrl(id)} alt="" loading="lazy" />
       <img className="bf-cf-frame" src={frameUrl(id)} alt="" />
       <b className="bf-cf-name">{c?.name ?? id}</b>
@@ -354,6 +394,125 @@ function CardFace({ id, selected, dim, onClick, badge }: { id: string; selected?
       {badge && <em className="bf-cf-badge">{badge}</em>}
     </button>
   );
+}
+
+/** 长按卡牌：全屏放大查看 */
+const zoomBus = new EventTarget();
+const zoomCard = (id: string) => {
+  feel("select", { sound: false });
+  zoomBus.dispatchEvent(new CustomEvent("zoom", { detail: id }));
+};
+function CardZoom() {
+  const [id, setId] = useState<string | null>(null);
+  useEffect(() => {
+    const h = (e: Event) => setId((e as CustomEvent<string>).detail);
+    zoomBus.addEventListener("zoom", h);
+    return () => zoomBus.removeEventListener("zoom", h);
+  }, []);
+  if (!id) return null;
+  return (
+    <div className="bf-overlay bf-zoom" onClick={() => setId(null)} data-testid="bf-zoom">
+      <CardFace id={id} big />
+      <p className="bf-note">点任意处关闭</p>
+    </div>
+  );
+}
+
+function LoadCampaign({ onLoad }: { onLoad: (code: string) => void }) {
+  const [code, setCode] = useState("");
+  return (
+    <div className="bf-loadcamp">
+      <input value={code} maxLength={6} placeholder="已有存档码？" onChange={(e) => setCode(e.target.value.toUpperCase())} data-testid="bf-loadcode" />
+      <button className="bf-btn bf-mini" disabled={code.length !== 6} onClick={() => onLoad(code)} data-testid="bf-loadcamp">继续冒险</button>
+    </div>
+  );
+}
+
+// ———————————————————— 规则与教学 ————————————————————
+
+const RULES: [string, string][] = [
+  ["目标", "大家合作，把魔王的生命打到 0。任何一名英雄生命归零，全队失败。"],
+  ["每回合流程", "① 魔王公布这回合要打谁（攻击列表）→ ② 魔王立起护盾 → ③ 英雄们轮流行动（选谁先手）→ ④ 魔王按列表攻击 → ⑤ 中毒等状态结算 → ⑥ 弃牌到手牌上限 → ⑦ 抽牌补满。"],
+  ["行动", "每人每回合有 3 次行动机会，每次打 1 张牌或用 1 个道具。卡上有 ⚡ 闪电的，打出后马上再得 1 次行动。"],
+  ["护盾", "魔王有近战、远程、魔法三面护盾。你的攻击先打掉同类型的护盾，剩下的才会扣魔王生命。"],
+  ["助攻", "助攻牌只有在本回合已经打过同类型攻击时才生效，适合接在攻击后面打。"],
+  ["保护", "保护牌可以减少魔王对某位英雄的一次攻击。看清攻击列表，优先保护快要倒下的队友。"],
+  ["状态", "中毒：每回合掉血。惊恐：只能随机出牌。麻痹：手牌上限变少。着火：每回合烧掉一张牌或掉 2 血。"],
+  ["诅咒", "被诅咒时会拿到一张背面朝上的诅咒牌，下个行动阶段翻开生效。"],
+  ["战役", "从教学关打起，每通关一关解锁下一关、升级英雄并挑选战利品。记下冒险团存档码，随时能继续。"],
+];
+
+function RulesSheet({ onClose }: { onClose: () => void }) {
+  return (
+    <div className="bf-overlay" onClick={onClose}>
+      <div className="bf-logsheet bf-rules" onClick={(e) => e.stopPropagation()}>
+        <div className="bf-sheet-row">
+          <b>怎么玩</b>
+          <button className="bf-btn bf-mini" onClick={onClose}>关闭</button>
+        </div>
+        <dl>
+          {RULES.map(([k, t]) => (
+            <div key={k}>
+              <dt>{k}</dt>
+              <dd>{t}</dd>
+            </div>
+          ))}
+        </dl>
+        <p className="bf-note">长按任意卡牌可以放大看完整效果。</p>
+      </div>
+    </div>
+  );
+}
+
+/** 教学关的分步提示：按当前阶段给一句话指引 */
+function Coach({ v, mySeat, myTurn }: { v: BFView; mySeat: number; myTurn: boolean }) {
+  const [off, setOff] = useState(false);
+  if (off || v.bossId !== "puppet" || mySeat < 0 || v.phase === "won" || v.phase === "lost") return null;
+  const me = v.heroes.find((h) => h.seat === mySeat);
+  const sh = v.boss.shields;
+  const shields = sh.melee + sh.ranged + sh.magic;
+  let tip = "";
+  if (v.phase === "chooseStarter") tip = v.round === 1 ? "先看上方「魔王本回合的攻击」：木偶要打谁、打多少。然后选一个人先行动。" : "新的一回合：再看看攻击列表，决定谁先手。";
+  else if (v.phase === "action" && myTurn) {
+    if (v.round === 1) tip = "轮到你了！点一张攻击牌打木偶。卡上有 ⚡ 的打完还能再行动一次。";
+    else if (shields > 0) tip = "魔王身上的护盾会先挡住同类型的攻击。用对应类型的攻击把护盾打碎，伤害才能落到魔王身上。";
+    else if (me && v.planned.some((a) => a.target === mySeat && a.value - a.reducedBy >= me.health)) tip = "危险！这回合的攻击会让你倒下。打一张保护牌给自己挡一下。";
+    else tip = "护盾已碎，放心输出！行动用完或不想再出牌，就点「结束行动」。";
+  } else if (v.phase === "action") tip = "队友正在行动。可以长按自己的手牌看看效果，想想下一步。";
+  else if (v.phase === "discard") tip = "手牌超过上限要弃掉几张。留下攻击和保护，弃掉暂时用不上的。";
+  if (!tip) return null;
+  return (
+    <div className="bf-coach" role="note">
+      <b>教学</b>
+      <span>{tip}</span>
+      <button className="bf-link" onClick={() => setOff(true)}>不再提示</button>
+    </div>
+  );
+}
+
+/** 出牌动画：所选卡牌飞向魔王 */
+function flyCard() {
+  const card = document.querySelector<HTMLElement>(".bf-hand .bf-cardface.sel");
+  const boss = document.querySelector<HTMLElement>(".bf-boss-art");
+  if (!card || !boss || !card.animate) return;
+  if (window.matchMedia?.("(prefers-reduced-motion: reduce)").matches) return;
+  const a = card.getBoundingClientRect();
+  const b = boss.getBoundingClientRect();
+  const ghost = card.cloneNode(true) as HTMLElement;
+  Object.assign(ghost.style, { position: "fixed", left: a.left + "px", top: a.top + "px", width: a.width + "px", height: a.height + "px", margin: "0", zIndex: "60", pointerEvents: "none" });
+  document.body.appendChild(ghost);
+  const dx = b.left + b.width / 2 - (a.left + a.width / 2);
+  const dy = b.top + b.height / 2 - (a.top + a.height / 2);
+  ghost
+    .animate(
+      [
+        { transform: "translate(0,0) scale(1) rotate(0)", opacity: 1 },
+        { transform: `translate(${dx * 0.6}px, ${dy * 0.6 - 40}px) scale(.8) rotate(-8deg)`, opacity: 1, offset: 0.6 },
+        { transform: `translate(${dx}px, ${dy}px) scale(.35) rotate(6deg)`, opacity: 0 },
+      ],
+      { duration: 380, easing: "cubic-bezier(.3,.7,.4,1)" },
+    )
+    .finished.finally(() => ghost.remove());
 }
 
 // ———————————————————— 战斗 ————————————————————
@@ -426,11 +585,15 @@ function Battle({ net, snap }: { net: Net; snap: BFRoomSnapshot }) {
     }
   }, [over, v.phase]);
 
+  const [showRules, setShowRules] = useState(false);
   const send = async (intent: Parameters<Net["send"]>[0]) => {
     if (busy.current) return;
     busy.current = true;
     feel("submit", { sound: false });
-    if (intent.type === "PLAY_CARD") sfx("play");
+    if (intent.type === "PLAY_CARD") {
+      sfx("play");
+      flyCard();
+    }
     const e = await net.send(intent);
     busy.current = false;
     setMsg(e ?? "");
@@ -443,12 +606,13 @@ function Battle({ net, snap }: { net: Net; snap: BFRoomSnapshot }) {
 
   return (
     <div className={"bf-battle" + (myTurn ? " my-turn" : "")}>
-      <TopBar snap={snap} onLog={() => setShowLog(true)} />
+      <TopBar snap={snap} onLog={() => setShowLog(true)} onRules={() => setShowRules(true)} />
       <BossPanel v={v} />
       <Taunt v={v} />
       <EventBanner v={v} />
       <Attacks v={v} canRetarget={v.phase === "chooseStarter" && snap.mySeat >= 0} onRetarget={(attack, target) => send({ type: "RETARGET", attack, target })} />
-      <Heroes v={v} mySeat={snap.mySeat} />
+      <Heroes v={v} mySeat={snap.mySeat} autos={snap.seats.map((x) => !!x.auto)} />
+      <Coach v={v} mySeat={snap.mySeat} myTurn={myTurn} />
 
       <div className="bf-dock">
         {v.phase === "chooseStarter" && snap.mySeat >= 0 && (
@@ -532,12 +696,14 @@ function Battle({ net, snap }: { net: Net; snap: BFRoomSnapshot }) {
       </div>
 
       {showLog && <LogSheet v={v} onClose={() => setShowLog(false)} />}
+      {showRules && <RulesSheet onClose={() => setShowRules(false)} />}
+      <Preload v={v} />
       {over && <Verdict net={net} snap={snap} host={host} />}
     </div>
   );
 }
 
-function TopBar({ snap, onLog }: { snap: BFRoomSnapshot; onLog: () => void }) {
+function TopBar({ snap, onLog, onRules }: { snap: BFRoomSnapshot; onLog: () => void; onRules: () => void }) {
   const v = snap.view!;
   return (
     <div className="bf-top">
@@ -547,6 +713,7 @@ function TopBar({ snap, onLog }: { snap: BFRoomSnapshot; onLog: () => void }) {
         <span className="bf-time"><Icon name="hourglass" /> {v.time}</span>
       )}
       <MuteButton />
+      <button className="bf-btn bf-mini" onClick={onRules} data-testid="bf-rules">规则</button>
       <button className="bf-btn bf-mini" onClick={onLog}>记录</button>
     </div>
   );
@@ -712,17 +879,17 @@ function Attacks({ v, canRetarget, onRetarget }: { v: BFView; canRetarget: boole
   );
 }
 
-function Heroes({ v, mySeat }: { v: BFView; mySeat: number }) {
+function Heroes({ v, mySeat, autos }: { v: BFView; mySeat: number; autos: boolean[] }) {
   return (
     <section className="bf-heroes">
       {v.heroes.map((h) => (
-        <HeroCard key={h.seat} h={h} active={v.actor === h.seat} me={h.seat === mySeat} incoming={v.planned.filter((a) => a.target === h.seat && a.value > 0).reduce((t, a) => t + Math.max(0, a.value - a.reducedBy), 0)} />
+        <HeroCard key={h.seat} h={h} auto={autos[h.seat]} active={v.actor === h.seat} me={h.seat === mySeat} incoming={v.planned.filter((a) => a.target === h.seat && a.value > 0).reduce((t, a) => t + Math.max(0, a.value - a.reducedBy), 0)} />
       ))}
     </section>
   );
 }
 
-function HeroCard({ h, active, me, incoming }: { h: ViewHero; active: boolean; me: boolean; incoming: number }) {
+function HeroCard({ h, active, me, incoming, auto }: { h: ViewHero; active: boolean; me: boolean; incoming: number; auto?: boolean }) {
   const [open, setOpen] = useState(false);
   const [hurt, setHurt] = useState(0);
   const fx = useFx();
@@ -739,6 +906,7 @@ function HeroCard({ h, active, me, incoming }: { h: ViewHero; active: boolean; m
           {fx.layer}
         </span>
         <b>{h.name}</b>
+        {auto && <em className="bf-auto">托管</em>}
         {active && <em className="bf-turn">行动中</em>}
       </div>
       <Bar hp={h.health} max={h.maxHealth} cls="hero" />
@@ -871,5 +1039,37 @@ function MuteButton() {
     <button className="bf-btn bf-mini" aria-pressed={m} data-testid="bf-mute" onClick={() => setM(toggleMute())}>
       {m ? "🔇 静音" : "🔊 声音"}
     </button>
+  );
+}
+
+/** 进入战斗时先把这一关的立绘、背景、特效加载好，再显示画面 */
+function Preload({ v }: { v: BFView }) {
+  const [left, setLeft] = useState<number | null>(null);
+  useEffect(() => {
+    const urls = [
+      bgUrl(v.bossId),
+      bossUrl(v.bossId, "idle"),
+      bossUrl(v.bossId, "hit"),
+      bossUrl(v.bossId, "defeated"),
+      ...v.heroes.map((h) => avatarUrl(h.race, h.cls)),
+      ...["hit-melee", "hit-ranged", "hit-magic", "boss-claw"].map((n) => `/assets/bf/fx/${n}.webp`),
+    ];
+    let n = urls.length;
+    setLeft(n);
+    const done = () => setLeft(--n);
+    for (const u of urls) {
+      const img = new Image();
+      img.onload = img.onerror = done;
+      img.src = u;
+    }
+    const t = setTimeout(() => setLeft(0), 6000); // 网太慢也不卡住
+    return () => clearTimeout(t);
+  }, [v.bossId]);
+  if (!left) return null;
+  return (
+    <div className="bf-overlay bf-loading" role="status">
+      <img src={bossUrl(v.bossId, "idle")} alt="" />
+      <p>{v.boss.name} 正在登场…</p>
+    </div>
   );
 }

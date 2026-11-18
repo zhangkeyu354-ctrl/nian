@@ -56,6 +56,8 @@ export interface BFRoomFile {
   bossId: string;
   difficulty: Difficulty;
   campaign: Campaign | null;
+  /** 冒险团存档码：房间被清理后可用它在新房间继续战役 */
+  campaignCode?: string | null;
   round: number;
   setup: SetupOptions | null;
   recorded: boolean;
@@ -74,10 +76,18 @@ function freeSetup(f: BFRoomFile, seed: number): SetupOptions {
   return setupFor(c, f.bossId, f.difficulty, seed);
 }
 
+/** 真人掉线多久后由机器人托管（毫秒） */
+export const AWAY_MS = 25_000;
+
 export class BFRoom {
+  /** 掉线开始时间（playerId → 毫秒），重新连上即清除 */
+  awaySince = new Map<string, number>();
+  now = () => Date.now();
   state: GameState | null = null;
   connections = new Map<string, number>();
   botTimer: NodeJS.Timeout | null = null;
+  /** 由房间仓库注入：按存档码读冒险团 */
+  loadCampaign?: (code: string) => Campaign | null;
   constructor(public file: BFRoomFile) {
     if (file.campaign?.pendingLoot) file.campaign = completePendingLoot(file.campaign);
     if (file.setup) {
@@ -177,7 +187,23 @@ export class BFRoom {
     } else if (t === "SET_DIFFICULTY") {
       if (!DIFFS.includes(action.difficulty)) fail("BAD_ACTION");
       f.difficulty = action.difficulty;
+    } else if (t === "LOAD_CAMPAIGN") {
+      const code = String(action.code ?? "").trim().toUpperCase();
+      const saved = this.loadCampaign?.(code) ?? fail("BF_NO_CAMPAIGN");
+      // 按存档里的英雄重排座位：已在房间的真人依次接手，空位由机器人补上
+      const humans = f.seats.filter((x) => !x.bot);
+      if (humans.length > saved.heroes.length) fail("BF_CAMPAIGN_SIZE");
+      f.seats = saved.heroes.map((h, i) => {
+        const p = humans[i];
+        return p ? { ...p, race: h.race, cls: h.cls } : { id: "bot:" + randomBytes(3).toString("hex"), name: h.name, race: h.race, cls: h.cls, bot: true };
+      });
+      saved.heroes.forEach((h, i) => (h.name = f.seats[i].name));
+      f.campaign = saved;
+      f.campaignCode = code;
+      f.mode = "campaign";
+      f.bossId = this.nextBoss();
     } else if (t === "RESET_CAMPAIGN") {
+      f.campaignCode = null;
       f.campaign = null;
       f.bossId = BOSS_ORDER[0];
     } else if (t === "START") {
@@ -207,7 +233,10 @@ export class BFRoom {
     const seed = randomInt(2 ** 31);
     let setup: SetupOptions;
     if (f.mode === "campaign") {
-      f.campaign ??= newCampaign("冒险团", f.seats.map((s) => ({ name: s.name, race: s.race!, cls: s.cls! })));
+      if (!f.campaign) {
+        f.campaign = newCampaign("冒险团", f.seats.map((s) => ({ name: s.name, race: s.race!, cls: s.cls! })));
+        f.campaignCode = Array.from({ length: 6 }, () => CODE_CHARS[randomInt(CODE_CHARS.length)]).join("");
+      }
       if (f.campaign.pendingLoot) fail("BF_LOOT_PENDING");
       if (!canFight(f.campaign, f.bossId)) f.bossId = this.nextBoss();
       setup = setupFor(f.campaign, f.bossId, f.difficulty, seed);
@@ -256,11 +285,16 @@ export class BFRoom {
     const s = this.state;
     if (!s || this.over || this.file.stage !== "game") return null;
     for (let i = 0; i < this.file.seats.length; i++) {
-      if (!this.file.seats[i].bot) continue;
+      if (!this.file.seats[i].bot && !this.isAway(this.file.seats[i].id)) continue;
       const c = botFor(s, i);
       if (c) return c;
     }
     return null;
+  }
+  /** 真人掉线超过 AWAY_MS：轮到他时由机器人代打，回来自动接管 */
+  isAway(id: string) {
+    const t = this.awaySince.get(id);
+    return t !== undefined && (this.connections.get(id) ?? 0) === 0 && this.now() - t >= AWAY_MS;
   }
   snapshot(me: string | null): BFRoomSnapshot {
     const f = this.file;
@@ -275,6 +309,7 @@ export class BFRoom {
         cls: s.cls,
         bot: s.bot,
         connected: s.bot || (this.connections.get(s.id) ?? 0) > 0,
+        auto: !s.bot && this.isAway(s.id),
         host: s.id === f.hostId,
       })),
       me,
@@ -283,6 +318,7 @@ export class BFRoom {
       bossId: f.bossId,
       difficulty: f.difficulty,
       campaign: f.campaign,
+      campaignCode: f.campaignCode ?? null,
       version: f.commands.length,
       round: f.round,
       view: this.state ? viewFor(this.state, seat >= 0 ? seat : null) : null,
@@ -293,11 +329,16 @@ export class BFRoom {
 export class BFRoomStore {
   rooms = new Map<string, BFRoom>();
   touched = new Map<string, number>();
+  campaignDir: string;
   constructor(private dir: string) {
     mkdirSync(dir, { recursive: true });
+    this.campaignDir = join(dir, "..", "bf-campaigns");
+    mkdirSync(this.campaignDir, { recursive: true });
     for (const f of readdirSync(dir).filter((f) => f.endsWith(".json"))) {
       try {
-        const room = new BFRoom(JSON.parse(readFileSync(join(dir, f), "utf8")));
+        const room = this.wire(new BFRoom(JSON.parse(readFileSync(join(dir, f), "utf8"))));
+        // 服务器重启后大家都算掉线，没人回来的座位到时由机器人托管
+        for (const s of room.file.seats) if (!s.bot) room.awaySince.set(s.id, Date.now());
         this.rooms.set(room.code, room);
         this.touched.set(room.code, statSync(join(dir, f)).mtimeMs);
       } catch (e) {
@@ -314,12 +355,31 @@ export class BFRoomStore {
       players: [], seats: [], mode: "campaign", bossId: BOSS_ORDER[0], difficulty: "advanced",
       campaign: null, round: 0, setup: null, recorded: false, commands: [],
     });
+    this.wire(room);
     this.rooms.set(code, room);
     this.save(room);
     return room;
   }
+  wire(room: BFRoom) {
+    room.loadCampaign = (code) => {
+      if (!/^[A-Z0-9]{6}$/.test(code)) return null;
+      try {
+        return JSON.parse(readFileSync(join(this.campaignDir, code + ".json"), "utf8")) as Campaign;
+      } catch {
+        return null;
+      }
+    };
+    return room;
+  }
   save(room: BFRoom) {
     this.touched.set(room.code, Date.now());
+    const c = room.file.campaign;
+    const code = room.file.campaignCode;
+    if (c && code) {
+      const cp = join(this.campaignDir, code + ".json");
+      writeFileSync(cp + ".tmp", JSON.stringify(c));
+      renameSync(cp + ".tmp", cp);
+    }
     const target = join(this.dir, room.code + ".json");
     writeFileSync(target + ".tmp", JSON.stringify(room.file));
     renameSync(target + ".tmp", target);
@@ -356,6 +416,8 @@ export function bfErrorText(e: unknown): { error: string; code: string } {
     BF_CAMPAIGN_LOCKED: "冒险团已经组建，英雄不能再换（可以让房主重开冒险团）。",
     BF_LOCKED_BOSS: "这一关还没解锁。",
     BF_LOOT_PENDING: "还有人没选战利品。",
+    BF_NO_CAMPAIGN: "找不到这个冒险团存档码。",
+    BF_CAMPAIGN_SIZE: "房间里的真人比存档里的英雄多，请先移出多余的人。",
     BF_NOT_OVER: "战斗还没结束。",
     TOO_MANY_ROOMS: "服务器上的房间太多了，请稍后再试。",
     BAD_ACTION: "操作无效。",
@@ -411,6 +473,16 @@ export function attachBossFighters(io: Server, dataDir: string, opts: { maxRooms
       const seat: string | null = socket.data.bfSeat ?? null;
       if (room && seat) {
         room.connections.set(seat, Math.max(0, (room.connections.get(seat) ?? 1) - 1));
+        if ((room.connections.get(seat) ?? 0) === 0) {
+          room.awaySince.set(seat, Date.now());
+          // 到时间还没回来：广播"托管中"并让机器人接手
+          setTimeout(() => {
+            if (room.isAway(seat)) {
+              broadcast(room);
+              runBots(room);
+            }
+          }, AWAY_MS + 200).unref?.();
+        }
         broadcast(room);
       }
     };
@@ -421,6 +493,7 @@ export function attachBossFighters(io: Server, dataDir: string, opts: { maxRooms
         socket.data.bfSeat = null;
       }
       if (seat && socket.data.bfSeat !== seat) room.connections.set(seat, (room.connections.get(seat) ?? 0) + 1);
+      if (seat) room.awaySince.delete(seat);
       socket.data.bfRoom = room;
       socket.data.bfSeat = seat;
       socket.join(sockRoom(room.code));

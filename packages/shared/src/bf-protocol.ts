@@ -22,6 +22,8 @@ export interface BFSeat {
   bot: boolean;
   connected: boolean;
   host: boolean;
+  /** 真人掉线中，由机器人托管 */
+  auto?: boolean;
 }
 
 export interface BFRoomSnapshot {
@@ -36,6 +38,7 @@ export interface BFRoomSnapshot {
   bossId: string;
   difficulty: Difficulty;
   campaign: Campaign | null;
+  campaignCode: string | null;
   version: number;
   round: number;
   view: BFView | null;
@@ -53,7 +56,8 @@ export type BFLobbyAction =
   | { type: "PICK_LOOT"; card: string }
   | { type: "SWAP_LOOT"; card: string }
   | { type: "SET_REMOVED"; removed: string[] }
-  | { type: "RESET_CAMPAIGN" };
+  | { type: "RESET_CAMPAIGN" }
+  | { type: "LOAD_CAMPAIGN"; code: string };
 
 /** 客户端只发"我想做什么"，座位由服务器填。version 防止旧画面重复点击。 */
 export type BFClientCommand =
