@@ -345,3 +345,19 @@
 .bf-verdict-stage .bf-fx-layer { inset: -40%; }
 .bf-verdict-medal { width: 72px; height: 72px; margin: -4px auto 0; filter: drop-shadow(0 4px 10px #000); animation: bf-pop2 .6s .3s both cubic-bezier(.2,1.4,.4,1); }
 .bf-levelup { margin: 0; color: #ffe08a; font-weight: 700; letter-spacing: .08em; }
+
+/* ———— 原创剧情（战役试玩） ———— */
+.bf-story { margin: 6px 0 2px; border: 1px solid #b9935080; border-radius: 12px; background: #24182edb; color: #f7edda; text-align: left; }
+.bf-story summary { display: flex; align-items: center; gap: 8px; padding: 10px 12px; min-height: 44px; cursor: pointer; list-style: none; }
+.bf-story summary::-webkit-details-marker { display: none; }
+.bf-story summary::before { content: "▸"; color: #f3d594; transition: transform .15s; }
+.bf-story[open] summary::before { transform: rotate(90deg); }
+.bf-story summary b { flex: 1; color: #f3d594; font-size: 15px; }
+.bf-story summary span { flex: none; font-size: 12px; color: #d6c4ab; }
+.bf-story summary:focus-visible { outline: 3px solid #f3d594; outline-offset: 2px; }
+.bf-story-body { padding: 0 12px 10px; line-height: 1.65; font-size: 14px; }
+.bf-story-art { display: block; width: 100%; height: 150px; object-fit: cover; border-radius: 8px; margin: 0 0 8px; }
+.bf-story-body p { margin: 0 0 6px; }
+@media (max-width: 400px) { .bf-story-art { height: 112px; } .bf-story-body { font-size: 13.5px; } }
+/* 主体偏上的剧情插画：裁切时往上对齐，别切掉脸 */
+.bf-story-art[src$="magma-before.webp"], .bf-story-art[src$="ogre-before.webp"] { object-position: 50% 18%; }
