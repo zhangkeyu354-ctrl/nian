@@ -31,8 +31,19 @@ describe('魔王试炼战役剧情', () => {
     // 结尾里点到下一关的关键词，防止改剧情时把线索弄断
     const next: Record<string, RegExp> = {
       puppet: /青蛙王子/, prince: /墓地/, soulHuntress: /水晶/, aetherDragon: /石魔像|熔炉/, stoneGolem: /食人妖/,
-      ogre: /海边洞窟|深海/, tentacolossus: /火山/, magmaros: /滴答/, bombossa: /果冻/, jelly: /木偶|巫毒/,
+      ogre: /海边洞窟/, tentacolossus: /火山/, magmaros: /滴答/, bombossa: /果冻/, jelly: /木偶|巫毒/,
     };
     for (const [id, re] of Object.entries(next)) expect(getStory('campaign', id, 'victory')!.lines.join(''), id).toMatch(re);
+  });
+});
+
+describe('剧情伏笔与动机', () => {
+  it('木偶在序章留下线索，到果冻关回收', () => {
+    expect(getStory('campaign', 'puppet', 'before')!.lines.join('')).toMatch(/丝线/);
+    expect(getStory('campaign', 'puppet', 'victory')!.lines.join('')).toMatch(/木屑/);
+    expect(getStory('campaign', 'jelly', 'victory')!.lines.join('')).toMatch(/木屑/);
+  });
+  it('天后交代了为什么要冒险团拼好封印', () => {
+    expect(getStory('campaign', 'madameVoodoo', 'before')!.lines.join('')).toMatch(/碰不得/);
   });
 });
