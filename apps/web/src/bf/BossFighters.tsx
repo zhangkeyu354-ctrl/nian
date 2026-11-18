@@ -25,6 +25,7 @@ import { feel } from "../drawing/feel.ts";
 import { createBFRoom, savedName, useBFRoom } from "./bf-net.ts";
 import { ICON_PATHS } from "./icon-paths.ts";
 import "./bf.css";
+import { getStory, type StoryMoment } from "./story.ts";
 import { isMuted, preloadSfx, setMusic, sfx, toggleMute, trackFor, type Sfx } from "./sound.ts";
 
 /** 引擎视觉事件 → 各组件（魔王面板、英雄卡）播放特效 */
@@ -73,6 +74,26 @@ export function Icon({ name, cls = "" }: { name: string; cls?: string }) {
     <svg className={"bf-icon " + cls} viewBox="0 0 512 512" aria-hidden="true">
       <path d={d} fill="currentColor" />
     </svg>
+  );
+}
+
+/** 原创剧情面板（只在战役模式出现；可各自收起，不影响规则与存档） */
+export function Story({ mode, bossId, moment, open = true }: { mode: string; bossId: string; moment: StoryMoment; open?: boolean }) {
+  const chapter = getStory(mode, bossId, moment);
+  if (!chapter) return null;
+  return (
+    <details className="bf-story" open={open} data-testid={"bf-story-" + moment}>
+      <summary>
+        <b>{chapter.title}</b>
+        <span>展开 / 收起</span>
+      </summary>
+      <div className="bf-story-body">
+        <img className="bf-story-art" src={chapter.image} alt={chapter.imageAlt} width="1672" height="941" loading="lazy" />
+        {chapter.lines.map((line, i) => (
+          <p key={i}>{line}</p>
+        ))}
+      </div>
+    </details>
   );
 }
 
@@ -172,6 +193,7 @@ function Lobby({ net, snap, seated }: { net: Net; snap: BFRoomSnapshot; seated: 
       <Title />
       <button className="bf-btn bf-mini bf-howto" onClick={() => setRules(true)}>怎么玩？</button>
       {rules && <RulesSheet onClose={() => setRules(false)} />}
+      <Story mode={snap.mode} bossId={snap.bossId} moment="before" />
       <section className="bf-card">
         <h2>冒险团</h2>
         <ul className="bf-seats">
@@ -1039,8 +1061,10 @@ function Verdict({ net, snap, host }: { net: Net; snap: BFRoomSnapshot; host: bo
         {v.taunt && (v.taunt.key === "Win" || v.taunt.key === "Lose") && <p className="bf-verdict-taunt">{v.boss.name}：「{v.taunt.text}」</p>}
         <p>{won ? `恭喜，你打败了魔王！${v.boss.name} 被打倒了（第 ${v.round} 回合 · ${DIFF_ZH[v.difficulty]}）` : `${v.boss.name} 还站着。调整策略再来一次！`}</p>
         {leveled && <p className="bf-levelup">英雄升级！种族 {after.raceLevel} 级 · 职业 {after.clsLevel} 级</p>}
-        {won && TAUNTS[v.bossId]?.First && <p className="bf-note">{TAUNTS[v.bossId].First}</p>}
+        {won && !getStory(snap.mode, v.bossId, "victory") && TAUNTS[v.bossId]?.First && <p className="bf-note">{TAUNTS[v.bossId].First}</p>}
         {snap.campaign?.pendingLoot && <LootPanel net={net} snap={snap} />}
+        {/* 还有人没选战利品时剧情先收起，不挡住领奖；选完自动展开 */}
+        {won && <Story mode={snap.mode} bossId={v.bossId} moment="victory" open={!snap.campaign?.pendingLoot} />}
         {host ? (
           <button className="bf-btn bf-primary" data-testid="bf-back" disabled={!!snap.campaign?.pendingLoot}
             onClick={async () => setMsg((await net.lobby({ type: "BACK_TO_LOBBY" })) ?? "")}>
