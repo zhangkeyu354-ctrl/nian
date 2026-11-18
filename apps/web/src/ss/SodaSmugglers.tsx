@@ -208,6 +208,53 @@ function BatchReveal({
     </div>
   );
 }
+/** 检查/缉私犬长：所有人都看到被翻开的那个箱子。 */
+function InspectReveal({
+  action,
+  v,
+  onClose,
+}: {
+  action: RevealItem;
+  v: View;
+  onClose: () => void;
+}) {
+  const dog = action.type === "DOG_REVEAL";
+  const target = action.target ?? action.seat;
+  const n = action.bottles?.[0] ?? 0;
+  const [open, setOpen] = useState(false);
+  useEffect(() => {
+    const t1 = setTimeout(() => setOpen(true), 450);
+    const t2 = setTimeout(onClose, 3200);
+    return () => {
+      clearTimeout(t1);
+      clearTimeout(t2);
+    };
+  }, [action]);
+  return (
+    <div className="ss-reveal ss-clear" role="dialog" aria-label={dog ? "缉私犬长开箱" : "检查开箱"} data-testid="ss-reveal">
+      <div className="ss-reveal-card">
+        <small>
+          {dog ? "缉私犬长开箱" : action.useEvent ? "领导视察开箱" : "检查开箱"} · {label(v, target)}
+        </small>
+        <div className="ss-reveal-bags">
+          <span className={open ? "is-open" : ""}>
+            <Suitcase back={!open} bottles={n} />
+          </span>
+        </div>
+        {open && (
+          <p data-testid="ss-reveal-title">
+            {dog
+              ? `犬长闻出了汽水最多的箱子：${n} 瓶。`
+              : `打开的箱子里有 ${n} 瓶汽水。`}
+          </p>
+        )}
+        <button data-testid="ss-skip" onClick={onClose}>
+          知道了
+        </button>
+      </div>
+    </div>
+  );
+}
 function Reveal({
   action,
   v,
@@ -435,7 +482,7 @@ export function SodaSmugglers() {
     }
     const fresh = v.history.slice(historySeen.current);
     const items: RevealItem[] = fresh.flatMap((a, k) =>
-      ["CONFISCATE", "WRONGFUL", "RELEASE"].includes(a.type)
+      ["CONFISCATE", "WRONGFUL", "RELEASE", "INSPECT", "DOG_REVEAL"].includes(a.type)
         ? [
             {
               ...a,
@@ -572,6 +619,10 @@ export function SodaSmugglers() {
     v.event === "greedy" &&
     !v.history.some((a) => a.round === v.round && a.type === "ACCEPT");
   const eventMode = mode === "event" && eventAvailable;
+  const dogReady = !!v && guard && v.phase === "INSPECT" && v.event === "dog" && eventAvailable;
+  useEffect(() => {
+    if (dogReady) setMode("event");
+  }, [dogReady]);
   let action: SSAction | null = null,
     actionLabel = "",
     actionTest = "";
@@ -1646,7 +1697,19 @@ export function SodaSmugglers() {
       {revealQueue[0]?.type === "BATCH" && v && (
         <BatchReveal action={revealQueue[0]} v={v} onClose={clearReveal} />
       )}
-      {revealQueue[0] && revealQueue[0].type !== "BATCH" && v && (
+      {revealQueue[0] &&
+        (revealQueue[0].type === "INSPECT" || revealQueue[0].type === "DOG_REVEAL") &&
+        v && (
+          <InspectReveal
+            key={`${revealQueue[0].round}-${revealQueue[0].target}-${revealQueue[0].type}-${revealQueue[0].bottles?.join()}`}
+            action={revealQueue[0]}
+            v={v}
+            onClose={clearReveal}
+          />
+        )}
+      {revealQueue[0] &&
+        !["BATCH", "INSPECT", "DOG_REVEAL"].includes(revealQueue[0].type) &&
+        v && (
         <Reveal
           key={`${revealQueue[0].round}-${revealQueue[0].target}-${revealQueue[0].type}`}
           action={revealQueue[0]}
