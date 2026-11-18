@@ -453,3 +453,28 @@
 .bf-deck h2 small { font-size: 13px; opacity: .7; margin-left: 6px; }
 .bf-deck-tabs .bf-btn { font-size: 13px; padding-left: 6px; padding-right: 6px; }
 .bf-box-intro { padding: 8px 10px; border-left: 3px solid #d6b160; background: #120c18aa; border-radius: 6px; }
+/* 我的牌组：手机紧凑列表 */
+.bf-tabs3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 4px; padding: 3px; margin: 4px 0 8px; border-radius: 12px; background: #120c18; position: sticky; top: 0; z-index: 2; }
+.bf-tabs3 button { min-height: 44px; border: 0; border-radius: 9px; background: transparent; color: #cdbfa6; font-size: 14px; display: flex; align-items: center; justify-content: center; gap: 5px; cursor: pointer; }
+.bf-tabs3 button b { font-size: 12px; padding: 1px 6px; border-radius: 8px; background: #2c2038; color: #f1c96b; }
+.bf-tabs3 button.on { background: #3a2a4d; color: #fff; box-shadow: inset 0 0 0 1px #d6b16088; }
+.bf-dlist { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 6px; }
+.bf-drow { --c: #8a6db0; display: grid; grid-template-columns: 1fr auto; align-items: center; gap: 8px; padding: 6px 6px 6px 10px; border-radius: 10px; background: #120c18; border-left: 4px solid var(--c); }
+.bf-drow.k-melee { --c: var(--bf-melee); } .bf-drow.k-ranged { --c: var(--bf-ranged); } .bf-drow.k-magic { --c: var(--bf-magic); }
+.bf-drow.k-protect { --c: #c9a24a; } .bf-drow.k-heal { --c: #4fae6b; }
+.bf-drow.on { background: #1d1427; }
+.bf-drow.off { opacity: .5; }
+.bf-drow.off .bf-drow-name { text-decoration: line-through; }
+.bf-drow-main { min-width: 0; display: flex; flex-direction: column; gap: 2px; padding: 4px 0; border: 0; background: none; color: inherit; text-align: left; cursor: pointer; }
+.bf-drow-main b { font-size: 15px; display: flex; align-items: center; gap: 6px; flex-wrap: wrap; }
+.bf-drow-main b em { font-style: normal; font-size: 11px; padding: 0 5px; border-radius: 6px; background: #3a2a4d; color: #e8d6ff; }
+.bf-drow-main > span { font-size: 12.5px; line-height: 1.45; opacity: .85; overflow-wrap: anywhere; }
+.bf-drow-star { font-style: normal; color: #f1c96b; font-size: 11px; letter-spacing: -1px; }
+.bf-drow-act { min-width: 64px; min-height: 44px; font-size: 14px; }
+.bf-drow-big { grid-column: 1 / -1; display: flex; justify-content: center; padding: 6px 0 2px; }
+.bf-dgroup { margin-top: 10px; }
+.bf-dgroup h3 { margin: 0 0 6px; font-size: 14px; color: #f1c96b; display: flex; align-items: baseline; gap: 8px; flex-wrap: wrap; }
+.bf-dgroup h3 small { color: #cdbfa6; font-size: 12px; font-weight: normal; }
+.bf-trimbar { display: flex; justify-content: space-between; gap: 8px; flex-wrap: wrap; padding: 8px 10px; border-radius: 10px; background: #2a1f35; font-size: 13px; }
+.bf-trimbar b { color: #f1c96b; font-size: 16px; }
+.bf-toast { position: fixed; left: 50%; bottom: calc(18px + env(safe-area-inset-bottom)); transform: translateX(-50%); z-index: 95; max-width: calc(100vw - 32px); padding: 10px 16px; border-radius: 12px; background: #2a1f35f2; border: 1px solid #d6b160; color: #f7edda; font-size: 14px; box-shadow: 0 6px 24px #000a; animation: bf-line-in .25s ease-out; }

@@ -467,68 +467,134 @@ function Lobby({ net, snap, seated }: { net: Net; snap: BFRoomSnapshot; seated: 
   );
 }
 
-/** 我的牌组：带着的战利品、收纳盒、移除行动卡（官方：每星级 1 张，战斗前可换；每张战利品可移除 1 张行动卡，牌组至少 20 张） */
+/** 牌组里的一行：类型色条 + 星级 + 名字 + 效果，右边一个大按钮；点名字展开看大卡 */
+function DeckRow({ id, action, onAction, off, on, note }: { id: string; action?: string; onAction?: () => void; off?: boolean; on?: boolean; note?: string }) {
+  const [open, setOpen] = useState(false);
+  const c = CARDS[id];
+  return (
+    <li className={`bf-drow k-${cardKind(id)}${off ? " off" : ""}${on ? " on" : ""}`}>
+      <button className="bf-drow-main" onClick={() => setOpen((x) => !x)} aria-expanded={open}>
+        <b>
+          {c.stars ? <i className="bf-drow-star">{"★".repeat(c.stars)}</i> : null}
+          <span className="bf-drow-name">{c.name}</span>
+          {note && <em>{note}</em>}
+        </b>
+        <span>{cardText(id).join("；")}</span>
+      </button>
+      {action && (
+        <button className="bf-btn bf-drow-act" onClick={onAction}>
+          {action}
+        </button>
+      )}
+      {open && (
+        <div className="bf-drow-big" onClick={() => setOpen(false)}>
+          <CardFace id={id} big />
+        </div>
+      )}
+    </li>
+  );
+}
+
+/** 我的牌组：带着的战利品、收纳盒、精简牌组（官方：每星级 1 张，战斗前可换；每张战利品可移除 1 张行动卡，牌组至少 20 张） */
 function DeckPanel({ net, snap, seat }: { net: Net; snap: BFRoomSnapshot; seat: number }) {
   const c = snap.campaign!;
   const h = c.heroes[seat];
   const [msg, setMsg] = useState("");
+  const [toast, setToast] = useState("");
   const [tab, setTab] = useState<"loot" | "box" | "trim">("loot");
-  const send = async (a: Parameters<Net["lobby"]>[0]) => {
+  useEffect(() => {
+    if (!toast) return;
+    const t = setTimeout(() => setToast(""), 2200);
+    return () => clearTimeout(t);
+  }, [toast]);
+  const send = async (a: Parameters<Net["lobby"]>[0], ok: string) => {
     feel("select", { sound: false });
-    setMsg((await net.lobby(a)) ?? "");
+    const err = (await net.lobby(a)) ?? "";
+    setMsg(err);
+    if (!err) setToast(ok);
   };
+  const st = (x: string) => CARDS[x]?.stars ?? 0;
   const size = deckSize(c, seat);
   const own = ownActionCards(c, seat);
-  const st = (x: string) => CARDS[x]?.stars ?? 0;
-  const box = [...c.lootStorage].sort((x, y) => st(x) - st(y));
   const mine = [...h.loot].sort((x, y) => st(x) - st(y));
+  const box = [...c.lootStorage].sort((x, y) => st(x) - st(y));
   if (!mine.length && !box.length) return null;
-  const toggle = (id: string) => {
-    const next = h.removed.includes(id) ? h.removed.filter((x) => x !== id) : [...h.removed, id];
-    send({ type: "SET_REMOVED", removed: next });
-  };
+  const stars = [...new Set(box.map(st))];
+  const canTrim = h.removed.length < h.loot.length && size > 20;
   return (
     <section className="bf-card bf-deck" data-testid="bf-deck">
-      <h2>我的牌组 <small>{size} 张</small></h2>
-      <div className="bf-seg bf-deck-tabs">
-        <button className={"bf-btn" + (tab === "loot" ? " on" : "")} onClick={() => setTab("loot")}>带着的战利品 {mine.length}</button>
-        <button className={"bf-btn" + (tab === "box" ? " on" : "")} data-testid="bf-tab-box" onClick={() => setTab("box")}>收纳盒 {box.length}</button>
-        <button className={"bf-btn" + (tab === "trim" ? " on" : "")} onClick={() => setTab("trim")}>精简牌组</button>
+      <h2>
+        我的牌组 <small>{size} 张 · 战利品 {mine.length}</small>
+      </h2>
+      <div className="bf-tabs3" role="tablist">
+        <button role="tab" aria-selected={tab === "loot"} className={tab === "loot" ? "on" : ""} onClick={() => setTab("loot")}>
+          战利品<b>{mine.length}</b>
+        </button>
+        <button role="tab" aria-selected={tab === "box"} className={tab === "box" ? "on" : ""} data-testid="bf-tab-box" onClick={() => setTab("box")}>
+          收纳盒<b>{box.length}</b>
+        </button>
+        <button role="tab" aria-selected={tab === "trim"} className={tab === "trim" ? "on" : ""} data-testid="bf-tab-trim" onClick={() => setTab("trim")}>
+          精简<b>{h.removed.length}/{h.loot.length}</b>
+        </button>
       </div>
+
       {tab === "loot" && (
         <>
-          <p className="bf-note">每个星级只能带 1 张。想换的话去「收纳盒」挑一张同星级的。重打低关时，只会带上星级不超过那一关的战利品。</p>
-          <div className="bf-hand bf-hand-wrap">{mine.map((id) => <CardFace key={id} id={id} />)}</div>
+          <p className="bf-note">每个星级只能带 1 张。点卡名看大图；想换就去「收纳盒」。</p>
+          <ul className="bf-dlist">{mine.map((id) => <DeckRow key={id} id={id} on />)}</ul>
         </>
       )}
+
       {tab === "box" && (
         <>
-          <p className="bf-note bf-box-intro">
-            收纳盒放着全队没选走、或者被换下来的战利品，大家共用。每场开打前都可以来这里换：点一张卡就带上它，你手上同星级的那张会自动放回收纳盒。
-          </p>
-          {box.length ? (
-            <div className="bf-hand bf-hand-wrap">
-              {box.map((id) => {
-                const old = h.loot.find((x) => st(x) === st(id));
-                return <CardFace key={id} id={id} badge={old ? `换下${CARDS[old]?.name ?? ""}` : "带上"} onClick={() => send({ type: "SWAP_LOOT", card: id })} />;
-              })}
-            </div>
-          ) : (
-            <p className="bf-note">收纳盒现在是空的。</p>
-          )}
+          <p className="bf-note bf-box-intro">全队没选走、或被换下来的战利品都在这里，大家共用。每场开打前都能换，同星级的旧卡会自动放回来。</p>
+          {!box.length && <p className="bf-note">收纳盒现在是空的。</p>}
+          {stars.map((sv) => {
+            const cur = h.loot.find((x) => st(x) === sv);
+            return (
+              <div key={sv} className="bf-dgroup">
+                <h3>
+                  {"★".repeat(sv)} {sv} 星<small>{cur ? `你带着：${CARDS[cur].name}` : "你还没带这个星级"}</small>
+                </h3>
+                <ul className="bf-dlist">
+                  {box.filter((x) => st(x) === sv).map((id) => (
+                    <DeckRow key={id} id={id} action={cur ? "换上" : "带上"} onAction={() => send({ type: "SWAP_LOOT", card: id }, cur ? `已换上 ${CARDS[id].name}，${CARDS[cur].name} 放回收纳盒` : `已带上 ${CARDS[id].name}`)} />
+                  ))}
+                </ul>
+              </div>
+            );
+          })}
         </>
       )}
+
       {tab === "trim" && (
         <>
-          <p className="bf-note">
-            每有 1 张战利品，可以从牌组拿掉 1 张自己的行动卡（已拿掉 {h.removed.length} / {h.loot.length}）。牌组至少 20 张。点卡切换，灰掉的是拿掉的。
-          </p>
-          <div className="bf-hand bf-hand-wrap">
-            {own.map((id) => <CardFace key={id} id={id} dim={h.removed.includes(id)} badge={h.removed.includes(id) ? "已拿掉" : undefined} onClick={() => toggle(id)} />)}
+          <div className="bf-trimbar">
+            <span>已拿掉 <b>{h.removed.length}</b> / {h.loot.length}</span>
+            <span>牌组 <b>{size}</b> 张（至少 20）</span>
           </div>
+          <p className="bf-note">每有 1 张战利品，就能拿掉 1 张自己的行动卡，让好牌更常抽到。{!canTrim && h.removed.length < h.loot.length ? "牌组已经是 20 张，不能再拿了。" : ""}{h.loot.length === 0 ? "先打赢拿到战利品才能精简。" : ""}</p>
+          <ul className="bf-dlist">
+            {own.map((id) => {
+              const out = h.removed.includes(id);
+              return (
+                <DeckRow
+                  key={id}
+                  id={id}
+                  off={out}
+                  note={out ? "已拿掉" : undefined}
+                  action={out ? "放回" : canTrim ? "拿掉" : undefined}
+                  onAction={() =>
+                    send({ type: "SET_REMOVED", removed: out ? h.removed.filter((x) => x !== id) : [...h.removed, id] }, out ? `${CARDS[id].name} 放回牌组` : `已拿掉 ${CARDS[id].name}`)
+                  }
+                />
+              );
+            })}
+          </ul>
         </>
       )}
       {msg && <p className="bf-error">{msg}</p>}
+      {toast && createPortal(<div className="bf-toast" role="status">{toast}</div>, document.querySelector(".bf-world") ?? document.body)}
     </section>
   );
 }
