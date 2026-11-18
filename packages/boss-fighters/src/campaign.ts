@@ -164,4 +164,25 @@ export function setRemoved(c: Campaign, seat: number, removed: string[]): Campai
   return n;
 }
 
+/** 两场战斗之间更换英雄（种族）和职业（官方：“You can change your chosen Hero and Class between any two fights”）。
+ * 战利品跟着玩家走；移除的行动卡属于旧种族/职业，所以清空重选。 */
+export function changeHero(c: Campaign, seat: number, race: string, cls: string): Campaign {
+  if (c.pendingLoot) throw new CampaignError('先选完战利品再换英雄');
+  if (!IDENTITIES[race] || !IDENTITIES[cls]) throw new CampaignError('没有这个英雄或职业');
+  if (c.heroes.some((h, i) => i !== seat && h.race === race)) throw new CampaignError('这个种族已经有人用了');
+  const n: Campaign = structuredClone(c);
+  const h = n.heroes[seat];
+  if (h.race !== race || h.cls !== cls) h.removed = [];
+  h.race = race;
+  h.cls = cls;
+  return n;
+}
+
+/** 某位英雄可以移除的行动卡（自己的种族/职业卡；进阶卡解锁后也算） */
+export function ownActionCards(c: Campaign, seat: number): string[] {
+  const h = c.heroes[seat];
+  const adv = unlocks(c.progress).advancedCards ? [...IDENTITIES[h.race].advanced, ...IDENTITIES[h.cls].advanced] : [];
+  return [...IDENTITIES[h.race].cards, ...IDENTITIES[h.cls].cards, ...adv];
+}
+
 export { BOSS_ORDER };

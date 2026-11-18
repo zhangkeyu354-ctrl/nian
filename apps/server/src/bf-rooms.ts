@@ -9,6 +9,7 @@ import {
   RACES,
   botFor,
   canFight,
+  changeHero,
   createGame,
   newCampaign,
   completePendingLoot,
@@ -137,11 +138,15 @@ export class BFRoom {
     if (t === "PICK") {
       if (!inLobby) fail("ALREADY_STARTED");
       if (mySeat < 0) fail("NOT_SEATED");
-      if (f.campaign) fail("BF_CAMPAIGN_LOCKED");
       const { race, cls } = action;
       if (race !== null && !RACES.includes(race)) fail("BAD_ACTION");
       if (cls !== null && !CLASSES.includes(cls)) fail("BAD_ACTION");
       if (race && f.seats.some((s, i) => i !== mySeat && s.race === race)) fail("BF_RACE_TAKEN");
+      if (f.campaign) {
+        // 战役中：两场战斗之间可以换英雄和职业（官方规则）
+        if (!race || !cls) fail("BAD_ACTION");
+        f.campaign = changeHero(f.campaign, mySeat, race!, cls!);
+      }
       f.seats[mySeat].race = race;
       f.seats[mySeat].cls = cls;
       return;

@@ -4,6 +4,8 @@ import {
   BOSSES,
   BOSS_ORDER,
   CARDS,
+  deckSize,
+  ownActionCards,
   CLASSES,
   CURSE_BY_ID,
   IDENTITIES,
@@ -338,13 +340,16 @@ function Lobby({ net, snap, seated }: { net: Net; snap: BFRoomSnapshot; seated: 
           <button className="bf-btn" data-testid="bf-add-bot" onClick={() => act({ type: "ADD_BOT" })}>＋ 机器人队友</button>
         )}
         {!seated && <p className="bf-note">你在观战。</p>}
-        {locked && seated && <p className="bf-note">冒险团的英雄是固定的。读档后系统会按昵称把你对回上次的英雄；对不上的话，点别人旁边的按钮换过去。</p>}
+        {locked && seated && <p className="bf-note">读档后系统会按昵称把你对回上次的英雄；对不上的话，点别人旁边的按钮换过去。</p>}
       </section>
 
-      {seated && !locked && me && (
-        <section className="bf-card">
-          <h2>选择你的英雄</h2>
-          <p className="bf-note">英雄 = 种族 + 职业。同一队种族不能重复。</p>
+      {seated && me && !camp?.pendingLoot && (
+        <section className="bf-card" data-testid="bf-hero-picker">
+          <h2>{locked ? "更换英雄 / 职业" : "选择你的英雄"}</h2>
+          <p className="bf-note">
+            英雄 = 种族 + 职业。同一队种族不能重复。
+            {locked && " 两场战斗之间可以随时换；战利品跟着你走，换了之后移除的行动卡要重新选。"}
+          </p>
           <div className="bf-picker">
             {RACES.map((r) => {
               const taken = snap.seats.some((s, i) => i !== mySeat && s.race === r);
@@ -383,6 +388,7 @@ function Lobby({ net, snap, seated }: { net: Net; snap: BFRoomSnapshot; seated: 
         </section>
       )}
 
+      {camp && seated && mySeat >= 0 && !camp.pendingLoot && <DeckPanel net={net} snap={snap} seat={mySeat} />}
       <section className="bf-card">
         <h2>挑战</h2>
         <div className="bf-seg">
@@ -461,6 +467,72 @@ function Lobby({ net, snap, seated }: { net: Net; snap: BFRoomSnapshot; seated: 
   );
 }
 
+/** 我的牌组：带着的战利品、收纳盒、移除行动卡（官方：每星级 1 张，战斗前可换；每张战利品可移除 1 张行动卡，牌组至少 20 张） */
+function DeckPanel({ net, snap, seat }: { net: Net; snap: BFRoomSnapshot; seat: number }) {
+  const c = snap.campaign!;
+  const h = c.heroes[seat];
+  const [msg, setMsg] = useState("");
+  const [tab, setTab] = useState<"loot" | "box" | "trim">("loot");
+  const send = async (a: Parameters<Net["lobby"]>[0]) => {
+    feel("select", { sound: false });
+    setMsg((await net.lobby(a)) ?? "");
+  };
+  const size = deckSize(c, seat);
+  const own = ownActionCards(c, seat);
+  const st = (x: string) => CARDS[x]?.stars ?? 0;
+  const box = [...c.lootStorage].sort((x, y) => st(x) - st(y));
+  const mine = [...h.loot].sort((x, y) => st(x) - st(y));
+  if (!mine.length && !box.length) return null;
+  const toggle = (id: string) => {
+    const next = h.removed.includes(id) ? h.removed.filter((x) => x !== id) : [...h.removed, id];
+    send({ type: "SET_REMOVED", removed: next });
+  };
+  return (
+    <section className="bf-card bf-deck" data-testid="bf-deck">
+      <h2>我的牌组 <small>{size} 张</small></h2>
+      <div className="bf-seg bf-deck-tabs">
+        <button className={"bf-btn" + (tab === "loot" ? " on" : "")} onClick={() => setTab("loot")}>带着的战利品 {mine.length}</button>
+        <button className={"bf-btn" + (tab === "box" ? " on" : "")} data-testid="bf-tab-box" onClick={() => setTab("box")}>收纳盒 {box.length}</button>
+        <button className={"bf-btn" + (tab === "trim" ? " on" : "")} onClick={() => setTab("trim")}>精简牌组</button>
+      </div>
+      {tab === "loot" && (
+        <>
+          <p className="bf-note">每个星级只能带 1 张。想换的话去「收纳盒」挑一张同星级的。重打低关时，只会带上星级不超过那一关的战利品。</p>
+          <div className="bf-hand bf-hand-wrap">{mine.map((id) => <CardFace key={id} id={id} />)}</div>
+        </>
+      )}
+      {tab === "box" && (
+        <>
+          <p className="bf-note bf-box-intro">
+            收纳盒放着全队没选走、或者被换下来的战利品，大家共用。每场开打前都可以来这里换：点一张卡就带上它，你手上同星级的那张会自动放回收纳盒。
+          </p>
+          {box.length ? (
+            <div className="bf-hand bf-hand-wrap">
+              {box.map((id) => {
+                const old = h.loot.find((x) => st(x) === st(id));
+                return <CardFace key={id} id={id} badge={old ? `换下${CARDS[old]?.name ?? ""}` : "带上"} onClick={() => send({ type: "SWAP_LOOT", card: id })} />;
+              })}
+            </div>
+          ) : (
+            <p className="bf-note">收纳盒现在是空的。</p>
+          )}
+        </>
+      )}
+      {tab === "trim" && (
+        <>
+          <p className="bf-note">
+            每有 1 张战利品，可以从牌组拿掉 1 张自己的行动卡（已拿掉 {h.removed.length} / {h.loot.length}）。牌组至少 20 张。点卡切换，灰掉的是拿掉的。
+          </p>
+          <div className="bf-hand bf-hand-wrap">
+            {own.map((id) => <CardFace key={id} id={id} dim={h.removed.includes(id)} badge={h.removed.includes(id) ? "已拿掉" : undefined} onClick={() => toggle(id)} />)}
+          </div>
+        </>
+      )}
+      {msg && <p className="bf-error">{msg}</p>}
+    </section>
+  );
+}
+
 function LootPanel({ net, snap }: { net: Net; snap: BFRoomSnapshot }) {
   const p = snap.campaign!.pendingLoot!;
   const mySeat = snap.seats.findIndex((s) => s.id === snap.me);
@@ -469,7 +541,7 @@ function LootPanel({ net, snap }: { net: Net; snap: BFRoomSnapshot }) {
   return (
     <section className="bf-card bf-loot">
       <h2>战利品 · {"★".repeat(p.stars)}</h2>
-      <p className="bf-note">每人选 1 张加入牌组（同星级只能带 1 张，旧的进收纳盒）。</p>
+      <p className="bf-note">每人选 1 张加入牌组。同星级只能带 1 张，换下来的和没人选的都会放进「收纳盒」，回营地后在「我的牌组」里随时可以换。</p>
       <div className="bf-hand bf-hand-wrap">
         {p.offer.map((c) => {
           const owner = Object.entries(p.picked).find(([, x]) => x === c)?.[0];

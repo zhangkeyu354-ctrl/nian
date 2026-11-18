@@ -450,3 +450,6 @@
 @keyframes bf-line-in { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: none; } }
 @keyframes bf-blink { 50% { opacity: .2; } }
 @media (max-width: 380px) { .bf-scene-line { font-size: 15.5px; } .bf-scene-text h2 { font-size: 19px; } }
+.bf-deck h2 small { font-size: 13px; opacity: .7; margin-left: 6px; }
+.bf-deck-tabs .bf-btn { font-size: 13px; padding-left: 6px; padding-right: 6px; }
+.bf-box-intro { padding: 8px 10px; border-left: 3px solid #d6b160; background: #120c18aa; border-radius: 6px; }
