@@ -57,7 +57,8 @@ export type BFLobbyAction =
   | { type: "SWAP_LOOT"; card: string }
   | { type: "SET_REMOVED"; removed: string[] }
   | { type: "RESET_CAMPAIGN" }
-  | { type: "LOAD_CAMPAIGN"; code: string };
+  | { type: "LOAD_CAMPAIGN"; code: string }
+  | { type: "TAKE_HERO"; index: number };
 
 /** 客户端只发"我想做什么"，座位由服务器填。version 防止旧画面重复点击。 */
 export type BFClientCommand =

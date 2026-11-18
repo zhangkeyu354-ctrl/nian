@@ -115,6 +115,18 @@ describe("魔王试炼：掉线托管与冒险团存档", () => {
     r2.lobby(x, { type: "LOAD_CAMPAIGN", code: code.toLowerCase() });
     expect(r2.file.campaign!.progress).toBe(3);
     expect(r2.file.seats.map((s) => [s.name, s.race, s.bot])).toEqual([["丙", "dwarf", false], [r1.file.seats[1].name, "troll", true]]);
-    expect(r2.file.bossId).toBe("stoneGolem"); // 已通关到第 3 关，下一关是第 4 关
+    expect(r2.file.bossId).toBe("stoneGolem");
+    // 按昵称对上：乙的存档英雄是机器人那位，换个房间读档时甲（不叫"丙"）也能对回自己
+    const st3 = new BFRoomStore(dir);
+    const r3 = st3.create();
+    const z = r3.claim("路人");
+    const me = r3.claim("甲");
+    r3.lobby(z, { type: "LOAD_CAMPAIGN", code });
+    expect(r3.file.seats[0].name).toBe("甲");
+    expect(r3.file.seats[0].race).toBe("dwarf");
+    // 对不上昵称的路人补到空着的英雄（原机器人那位）
+    expect(r3.file.seats.map((s) => [s.name, s.bot])).toEqual([["甲", false], ["路人", false]]);
+    r3.lobby(me, { type: "TAKE_HERO", index: 1 }); // 真人之间互换
+    expect(r3.file.seats.map((s) => [s.name, s.race])).toEqual([["路人", "dwarf"], ["甲", "troll"]]); // 已通关到第 3 关，下一关是第 4 关
   });
 });

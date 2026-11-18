@@ -175,7 +175,7 @@ function Lobby({ net, snap, seated }: { net: Net; snap: BFRoomSnapshot; seated: 
       <section className="bf-card">
         <h2>冒险团</h2>
         <ul className="bf-seats">
-          {snap.seats.map((s) => (
+          {snap.seats.map((s, i) => (
             <li key={s.id} className={s.id === snap.me ? "me" : ""}>
               <span className="bf-seat-art">
                 {s.race && s.cls ? <img src={avatarUrl(s.race, s.cls)} alt="" /> : <Icon name={s.race ?? "skull"} />}
@@ -184,6 +184,11 @@ function Lobby({ net, snap, seated }: { net: Net; snap: BFRoomSnapshot; seated: 
                 <b>{s.name}{s.host && " · 房主"}{s.auto ? " · 托管中" : !s.connected ? " · 离线" : ""}</b>
                 <small>{s.race && s.cls ? `${raceName(s.race)} · ${clsName(s.cls)}` : "还没选英雄"}</small>
               </span>
+              {locked && seated && s.id !== snap.me && !camp?.pendingLoot && (
+                <button className="bf-btn bf-mini" data-testid={"bf-take-" + i} onClick={() => act({ type: "TAKE_HERO", index: i })}>
+                  {s.bot ? "我来玩这个" : "和 TA 换"}
+                </button>
+              )}
               {host && !locked && s.id !== snap.me && (
                 <button className="bf-btn bf-mini" onClick={() => act({ type: "REMOVE", id: s.id })}>移出</button>
               )}
@@ -194,6 +199,7 @@ function Lobby({ net, snap, seated }: { net: Net; snap: BFRoomSnapshot; seated: 
           <button className="bf-btn" data-testid="bf-add-bot" onClick={() => act({ type: "ADD_BOT" })}>＋ 机器人队友</button>
         )}
         {!seated && <p className="bf-note">你在观战。</p>}
+        {locked && seated && <p className="bf-note">冒险团的英雄是固定的。读档后系统会按昵称把你对回上次的英雄；对不上的话，点别人旁边的按钮换过去。</p>}
       </section>
 
       {seated && !locked && me && (

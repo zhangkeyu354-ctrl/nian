@@ -146,6 +146,20 @@ export class BFRoom {
       f.seats[mySeat].cls = cls;
       return;
     }
+    if (t === "TAKE_HERO") {
+      // 读档后换角色：自己坐到第 i 位英雄上（那位是机器人就顶替，是真人就互换）
+      if (!inLobby || !f.campaign) fail("BAD_ACTION");
+      if (mySeat < 0) fail("NOT_SEATED");
+      const i = Number(action.index);
+      if (!Number.isInteger(i) || i < 0 || i >= f.seats.length || i === mySeat) fail("BAD_ACTION");
+      const a = f.seats[mySeat], b = f.seats[i];
+      const pa = { id: a.id, name: a.name, bot: a.bot }, pb = { id: b.id, name: b.name, bot: b.bot };
+      Object.assign(a, pb);
+      Object.assign(b, pa);
+      f.campaign!.heroes[mySeat].name = a.name;
+      f.campaign!.heroes[i].name = b.name;
+      return;
+    }
     if (t === "PICK_LOOT" || t === "SWAP_LOOT" || t === "SET_REMOVED") {
       if (!f.campaign) fail("BAD_ACTION");
       if (mySeat < 0) fail("NOT_SEATED");
@@ -193,8 +207,13 @@ export class BFRoom {
       // 按存档里的英雄重排座位：已在房间的真人依次接手，空位由机器人补上
       const humans = f.seats.filter((x) => !x.bot);
       if (humans.length > saved.heroes.length) fail("BF_CAMPAIGN_SIZE");
+      // 先按昵称对上自己上次的英雄，对不上的人再依次补到空着的英雄上
+      const owner: (typeof humans[number] | undefined)[] = saved.heroes.map((h) => humans.find((p) => p.name === h.name));
+      const used = new Set(owner.filter(Boolean));
+      const rest = humans.filter((p) => !used.has(p));
+      for (let i = 0; i < owner.length && rest.length; i++) if (!owner[i]) owner[i] = rest.shift();
       f.seats = saved.heroes.map((h, i) => {
-        const p = humans[i];
+        const p = owner[i];
         return p ? { ...p, race: h.race, cls: h.cls } : { id: "bot:" + randomBytes(3).toString("hex"), name: h.name, race: h.race, cls: h.cls, bot: true };
       });
       saved.heroes.forEach((h, i) => (h.name = f.seats[i].name));
