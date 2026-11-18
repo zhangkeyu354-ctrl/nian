@@ -6,7 +6,7 @@ export const TYPE_ZH: Record<DamageType, string> = { melee: '近战', ranged: '�
 export const STATUS_ZH: Record<StatusKind, string> = { poison: '中毒', panic: '惊恐', paralysis: '麻痹', fire: '着火' };
 export const ITEM_ZH: Record<ItemId, { name: string; text: string; target?: boolean }> = {
   backpack: { name: '背包', text: '抽 3 张牌（每场 1 次）。' },
-  potion: { name: '治疗药水', text: '一名英雄回复 8 生命（每场 1 瓶）。', target: true },
+  potion: { name: '治疗药水', text: '一名英雄回复 8 生命。全队共用，每场药水数 = 英雄人数，谁都可以喝。', target: true },
   medkit: { name: '医药袋', text: '移除你身上 2 个状态标记。' },
   waterskin: { name: '皮水袋', text: '你回复 3 生命。' },
   glassEye: { name: '祖传玻璃眼', text: '查看牌库顶 3 张并重新排序。' },

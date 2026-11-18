@@ -1306,7 +1306,9 @@ function PlaySheet({ card, v, onPlay, onCancel }: { card: string; v: BFView; onP
 
 function Items({ me, v, onUse }: { me: ViewHero; v: BFView; onUse: (item: ItemId, target?: number) => void }) {
   const [pick, setPick] = useState<ItemId | null>(null);
-  const items = (Object.entries(me.items) as [ItemId, number][]).filter(([, n]) => n > 0);
+  // 药水全队共用：显示全队剩余总数
+  const pool = v.heroes.reduce((n, h) => n + (h.items.potion ?? 0), 0);
+  const items = (Object.entries({ ...me.items, potion: pool }) as [ItemId, number][]).filter(([it, n]) => n > 0 && (it !== "potion" || "potion" in me.items || pool > 0));
   if (!items.length) return null;
   return (
     <div className="bf-items">
@@ -1314,7 +1316,7 @@ function Items({ me, v, onUse }: { me: ViewHero; v: BFView; onUse: (item: ItemId
         <button key={it} className="bf-item" title={ITEM_ZH[it].text} data-testid={"bf-item-" + it}
           onClick={() => (ITEM_ZH[it].target ? setPick(pick === it ? null : it) : onUse(it))}>
           <img className="bf-item-img" src={itemUrl(it)} alt="" />
-          <small>{ITEM_ZH[it].name}{Number.isFinite(n) && n > 1 ? `×${n}` : ""}</small>
+          <small>{ITEM_ZH[it].name}{it === "potion" ? ` 全队×${n}` : Number.isFinite(n) && n > 1 ? `×${n}` : ""}</small>
         </button>
       ))}
       {pick && (

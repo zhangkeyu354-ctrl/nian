@@ -692,10 +692,12 @@ function protect(s: GameState, h: Hero, t: Hero, v: number, cancelEffects: boole
 function useItem(s: GameState, seat: number, item: ItemId, target?: number) {
   requireActor(s, seat);
   const h = hero(s, seat);
-  const left = h.items[item];
-  if (!left) throw new RuleError('你没有这个道具，或已经用完');
+  // 治疗药水是全队共用的：每场药水总数 = 英雄人数，同一位英雄可以喝多瓶（官方规则书 p9）
+  const owner = item === 'potion' && !h.items.potion ? s.heroes.find((x) => (x.items.potion ?? 0) > 0) : h;
+  const left = owner?.items[item];
+  if (!owner || !left) throw new RuleError(item === 'potion' ? '全队的药水已经用完' : '你没有这个道具，或已经用完');
   const kind = consumeAction(s, seat);
-  if (left !== Infinity) h.items[item] = left - 1;
+  if (left !== Infinity) owner.items[item] = left - 1;
   const t = target === undefined ? h : hero(s, target);
   switch (item) {
     case 'backpack':

@@ -43,7 +43,7 @@ function coop(s: GameState, h: Hero): Command {
   const incoming = (x: Hero) => s.planned.filter((a) => a.target === x.seat).reduce((t, a) => t + Math.max(0, a.value - a.reducedBy), 0);
   const danger = (x: Hero) => x.health - incoming(x) - x.status.poison;
   const lowest = s.heroes.reduce((a, b) => (danger(b) < danger(a) ? b : a));
-  if ((h.items.potion ?? 0) > 0 && danger(lowest) <= 2) return { type: 'USE_ITEM', seat, item: 'potion', target: lowest.seat };
+  if (s.heroes.some((x) => (x.items.potion ?? 0) > 0) && danger(lowest) <= 2) return { type: 'USE_ITEM', seat, item: 'potion', target: lowest.seat };
   if (h.items.medkit && h.status.poison + h.status.panic + h.status.fire >= 2) return { type: 'USE_ITEM', seat, item: 'medkit' };
   const slime = h.hand.includes('slime') && h.lost.length > 0;
   if (slime) return { type: 'PLAY_CARD', seat, card: 'slime' };

@@ -11,7 +11,7 @@ export const DIFFICULTY: Record<Difficulty, { name: string; hp: number; attack: 
 export const ITEMS = {
   backpackDraw: 3, // 官方
   potionHeal: 8, // 官方
-  potionsPerHero: 1, // 官方：每场每名英雄 1 瓶
+  potionsPerHero: 1, // 官方：每场药水总数 = 英雄人数，全队共用（规则书 p9），引擎里按人分配、用完可借别人的
 };
 
 export const PUPPET = {

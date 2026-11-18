@@ -23,18 +23,18 @@ export const INITIAL: CardDef[] = [
   I('troll_spear', '幽魂长矛', 'troll', 'observed', [atk('magic', 3)]),
   I('troll_horn', '酋长号角', 'troll', 'official', [draw(3, 'choose'), { kind: 'immediateAction', target: 'chosen' }]),
   I('troll_stone', '先祖石', 'troll', 'tentative', [atk('melee', 3)]),
-  I('hal_blinky', '闪石', 'halfling', 'tentative', [sup('magic', 2), L]),
-  I('hal_stone', '先祖石', 'halfling', 'tentative', [atk('magic', 3)]),
-  I('hal_dent', '石弹', 'halfling', 'tentative', [atk('ranged', 3)]),
+  I('hal_blinky', '闪石', 'halfling', 'official', [atk('magic', 3)]), // 英文卡面照片：Magic Attack 3
+  I('hal_stone', '先祖石', 'halfling', 'official', [sup('magic', 4)]), // 匈牙利卡面照片：魔法助攻 4
+  I('hal_dent', '石弹', 'halfling', 'official', [atk('ranged', 3)]),
   I('hal_dagger', '华丽匕首', 'halfling', 'observed', [atk('melee', 2)]),
   I('hal_cloak', '耳语斗篷', 'halfling', 'observed', [prot(3)]), // 视频：防护 3（正文被挡）
-  I('hal_pebbles', '卵石袋', 'halfling', 'tentative', [sup('ranged', 3)]),
+  I('hal_pebbles', '卵石袋', 'halfling', 'official', [sup('ranged', 4)]), // 卡面照片：远程助攻 4
   I('dw_cleaver', '石砍斧', 'dwarf', 'observed', [atk('melee', 4)]), // 视频：近战攻击 4
   I('dw_blaster', '坑道爆弹', 'dwarf', 'observed', [atk('ranged', 2)]),
   I('dw_chest', '胸甲', 'dwarf', 'observed', [prot(4)]),
-  I('dw_knuckles', '铜指虎', 'dwarf', 'tentative', [sup('melee', 3), L]),
+  I('dw_knuckles', '铜指虎', 'dwarf', 'official', [sup('melee', 3)]), // 英/匈卡面：近战助攻 3，无闪电
   I('dw_morningstar', '流星锤', 'dwarf', 'observed', [sup('melee', 5), { kind: 'selfDamage', value: 2 }]), // 视频：近战助攻 5、自损 2
-  I('dw_bracers', '钛腕甲', 'dwarf', 'tentative', [prot(3)]),
+  I('dw_bracers', '钛腕甲', 'dwarf', 'official', [prot(2), prot(2)]), // 卡面：防护 2、防护 2（原版可分别选目标；这里同一目标挡两次）
   I('elf_starblade', '星刃', 'elf', 'official', [atk('melee', 3)]),
   I('elf_volley', '齐射', 'elf', 'official', [sup('ranged', 4)]),
   I('elf_sunfire', '阳火', 'elf', 'official', [atk('magic', 4)]),
@@ -47,17 +47,17 @@ export const INITIAL: CardDef[] = [
   I('war_blade', '闪电刃', 'warrior', 'observed', [atk('magic', 3)]),
   I('war_mail', '锁子甲', 'warrior', 'tentative', [prot(4)]),
   I('war_sword', '红石护卫剑', 'warrior', 'tentative', [atk('melee', 4)]),
-  I('mag_fireball', '火球', 'mage', 'tentative', [atk('magic', 4)]),
+  I('mag_fireball', '火球', 'mage', 'official', [atk('magic', 4)]),
   I('mag_explosion', '魔法爆炸', 'mage', 'observed', [sup('magic', 4)]), // 视频：魔法助攻 4
   I('mag_dagger', '仪式匕首', 'mage', 'observed', [atk('melee', 3)]), // 视频正文：近战攻击 3
   I('mag_flameshield', '炎盾', 'mage', 'observed', [sup('magic', 2), prot(2)]), // 视频：魔法助攻 2、防护 2
   I('mag_obsidian', '黑曜碎石', 'mage', 'observed', [atk('ranged', 3)]),
   I('mag_drain', '吸收能量', 'mage', 'official', [atk('magic', 2), heal(2)]),
   I('rog_shadowblade', '暗影刀', 'rogue', 'tentative', [atk('melee', 3)]),
-  I('rog_trap', '尖刺陷阱', 'rogue', 'tentative', [sup('melee', 3)]),
+  I('rog_trap', '尖刺陷阱', 'rogue', 'official', [sup('melee', 4)]), // 英/匈卡面：近战助攻 4
   I('rog_crossbow', '手弩', 'rogue', 'observed', [atk('ranged', 3)]),
   I('rog_kunai', '苦无', 'rogue', 'tentative', [sup('ranged', 2), L]),
-  I('rog_robe', '幽影斗篷', 'rogue', 'tentative', [prot(3)]),
+  I('rog_robe', '幽影斗篷', 'rogue', 'official', [prot(3)]),
   I('rog_sting', '黄蜂刺', 'rogue', 'official', [atk('ranged', 2), L]),
   I('dru_staff', '蓝刺李手杖', 'druid', 'observed', [atk('magic', 3)]), // 视频正文：魔法攻击 3
   I('dru_explosion', '魔法爆炸', 'druid', 'observed', [sup('magic', 4)]), // 与法师同名卡，视频：魔法助攻 4

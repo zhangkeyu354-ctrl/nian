@@ -187,8 +187,8 @@ test('半身人 2 级：破盾魔王立即失去 4；盗贼 2 级：没有攻击
   s = reduce(s, { type: 'CHOOSE_STARTER', seat: 0, by: 0 });
   s.boss.shields = { melee: 2, ranged: 0, magic: 0 };
   const hp = s.boss.hp;
-  s = reduce(s, { type: 'PLAY_CARD', seat: 0, card: 'rog_trap' }); // 近战助攻 3，无攻击也生效：护盾 2 破 + 1 伤害 + 破盾 4
-  assert.equal(s.boss.hp, hp - 5);
+  s = reduce(s, { type: 'PLAY_CARD', seat: 0, card: 'rog_trap' }); // 近战助攻 4（卡面照片），无攻击也生效：护盾 2 破 + 2 伤害 + 破盾 4
+  assert.equal(s.boss.hp, hp - 6);
 });
 
 test('战役：解锁顺序、发战利品、选战利品、牌组至少 20 张', () => {
@@ -267,4 +267,13 @@ test('原创补充均标明来源且进阶卡进入正确英雄牌组', () => {
  assert.equal(ADVANCED.filter(c=>c.source==='original').length,2);
  assert.ok(IDENTITIES.warrior.advanced.includes('adv_war_unknown'));
  assert.ok(IDENTITIES.halfling.advanced.includes('adv_hal_unknown'));
+});
+
+test('治疗药水全队共用：自己的喝完了还能喝队友的', () => {
+  let s = createGame({ bossId: 'prince', difficulty: 'advanced', seed: 3, heroes: [{ name: '甲', race: 'dwarf', cls: 'warrior' }, { name: '乙', race: 'elf', cls: 'mage' }] });
+  s = reduce(s, { type: 'CHOOSE_STARTER', seat: 0, by: 0 });
+  s.heroes[0].items.potion = 0; // 甲的药水已经用掉
+  const before = s.heroes[1].items.potion;
+  s = reduce(s, { type: 'USE_ITEM', seat: 0, item: 'potion', target: 0 });
+  assert.equal(s.heroes[1].items.potion, (before ?? 0) - 1); // 从队友那瓶里扣
 });
