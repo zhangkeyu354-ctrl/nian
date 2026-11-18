@@ -436,3 +436,17 @@
 .bf-cast .bf-btn { min-height: 46px; font-size: 16px; }
 .bf-cast small { text-align: center; opacity: .6; font-size: 11.5px; }
 .bf-cast li em { font-style: normal; font-size: 12.5px; color: #f1c96b; opacity: .9; }
+/* 整屏剧情 */
+.bf-scene { position: fixed; inset: 0; z-index: 90; display: flex; flex-direction: column; background: #0d0812; color: #f7edda; overflow: hidden; cursor: pointer; animation: bf-scene-in .6s ease-out; }
+.bf-scene-art { flex: 0 0 auto; width: 100%; height: min(56vh, 100vw * .5628); object-fit: cover; mask-image: linear-gradient(#000 75%, transparent); -webkit-mask-image: linear-gradient(#000 75%, transparent); }
+@media (orientation: portrait) { .bf-scene-art { height: 46vh; } }
+.bf-scene-text { flex: 1; display: flex; flex-direction: column; gap: 12px; padding: 4px 22px calc(24px + env(safe-area-inset-bottom)); max-width: 640px; width: 100%; margin: 0 auto; overflow-y: auto; }
+.bf-scene-text h2 { margin: 0 0 4px; color: #f1c96b; font-size: 22px; letter-spacing: .12em; text-align: center; }
+.bf-scene-line { margin: 0; font-size: 17px; line-height: 1.85; animation: bf-line-in .7s ease-out both; }
+.bf-scene-hint { margin-top: auto; text-align: center; font-size: 13px; opacity: .55; animation: bf-blink 1.6s ease-in-out infinite; }
+.bf-scene-go { margin-top: auto; align-self: center; min-width: 200px; min-height: 48px; font-size: 17px; animation: bf-line-in .5s ease-out both; }
+.bf-replay { display: block; margin: 6px auto; }
+@keyframes bf-scene-in { from { opacity: 0; } to { opacity: 1; } }
+@keyframes bf-line-in { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: none; } }
+@keyframes bf-blink { 50% { opacity: .2; } }
+@media (max-width: 380px) { .bf-scene-line { font-size: 15.5px; } .bf-scene-text h2 { font-size: 19px; } }

@@ -80,6 +80,80 @@ export function Icon({ name, cls = "" }: { name: string; cls?: string }) {
 }
 
 /** 原创剧情面板（只在战役模式出现；可各自收起，不影响规则与存档） */
+/** 剧情关卡：第一次到这里时整屏播放剧情，看完才进入营地/结算；之后只留一个“重看剧情”按钮 */
+function StoryGate({ mode, bossId, moment }: { mode: string; bossId: string; moment: StoryMoment }) {
+  const chapter = getStory(mode, bossId, moment);
+  const key = "bf-scene-seen:" + bossId + ":" + moment;
+  const [show, setShow] = useState(() => {
+    try {
+      return !localStorage.getItem(key);
+    } catch {
+      return true;
+    }
+  });
+  if (!chapter) return null;
+  const done = () => {
+    try {
+      localStorage.setItem(key, "1");
+    } catch {}
+    setShow(false);
+  };
+  return show ? (
+    <StoryScene bossId={bossId} moment={moment} onDone={done} />
+  ) : (
+    <button className="bf-btn bf-mini bf-replay" data-testid={"bf-replay-" + moment} onClick={() => setShow(true)}>
+      重看剧情 · {chapter.title}
+    </button>
+  );
+}
+
+/** 整屏剧情：插画铺满，文字一句一句出现，点屏幕看下一句；全部看完才能继续 */
+function StoryScene({ bossId, moment, onDone }: { bossId: string; moment: StoryMoment; onDone: () => void }) {
+  const chapter = getStory("campaign", bossId, moment)!;
+  const [n, setN] = useState(1);
+  const all = n >= chapter.lines.length;
+  const next = () => {
+    if (!all) {
+      feel("tap", { sound: false });
+      setN((x) => x + 1);
+    }
+  };
+  return createPortal(
+    <div className={"bf-scene m-" + moment} data-testid={"bf-scene-" + moment} onClick={next}>
+      <img
+        className="bf-scene-art"
+        src={chapter.image}
+        alt={chapter.imageAlt}
+        onError={(e) => {
+          const img = e.currentTarget;
+          if (chapter.fallback && !img.src.endsWith(chapter.fallback)) img.src = chapter.fallback;
+        }}
+      />
+      <div className="bf-scene-text">
+        <h2>{chapter.title}</h2>
+        {chapter.lines.slice(0, n).map((line, i) => (
+          <p key={i} className="bf-scene-line">{line}</p>
+        ))}
+        {all ? (
+          <button
+            className="bf-btn bf-primary bf-scene-go"
+            data-testid="bf-scene-done"
+            onClick={(e) => {
+              e.stopPropagation();
+              onDone();
+            }}
+          >
+            {moment === "before" ? "前往营地" : "继续"}
+          </button>
+        ) : (
+          <span className="bf-scene-hint">点击屏幕继续</span>
+        )}
+      </div>
+    </div>,
+    document.querySelector(".bf-world") ?? document.body,
+  );
+}
+
 /** 营地里的故事书：按章节重看已经打过的剧情 */
 function StoryBook({ progress }: { progress: number }) {
   const done = BOSS_ORDER.slice(0, progress + 1);
@@ -135,21 +209,6 @@ export function Story({ mode, bossId, moment, open = true, inBook = false }: { m
         {chapter.lines.map((line, i) => (
           <p key={i}>{line}</p>
         ))}
-        {moment === "before" && !inBook && (
-          <button
-            type="button"
-            className="bf-btn bf-mini bf-story-skip"
-            data-testid="bf-story-skip"
-            onClick={(e) => {
-              const d = e.currentTarget.closest("details");
-              if (!d) return;
-              d.open = false;
-              (d.nextElementSibling ?? d).scrollIntoView({ behavior: "smooth", block: "start" });
-            }}
-          >
-            收起，去准备战斗
-          </button>
-        )}
       </div>
     </details>
   );
@@ -251,7 +310,7 @@ function Lobby({ net, snap, seated }: { net: Net; snap: BFRoomSnapshot; seated: 
       <Title />
       <button className="bf-btn bf-mini bf-howto" onClick={() => setRules(true)}>怎么玩？</button>
       {rules && <RulesSheet onClose={() => setRules(false)} />}
-      <Story mode={snap.mode} bossId={snap.bossId} moment="before" />
+      <StoryGate mode={snap.mode} bossId={snap.bossId} moment="before" />
       <section className="bf-card">
         <h2>冒险团</h2>
         <ul className="bf-seats">
@@ -1236,7 +1295,7 @@ function Verdict({ net, snap, host }: { net: Net; snap: BFRoomSnapshot; host: bo
         {won && !getStory(snap.mode, v.bossId, "victory") && TAUNTS[v.bossId]?.First && <p className="bf-note">{TAUNTS[v.bossId].First}</p>}
         {snap.campaign?.pendingLoot && <LootPanel net={net} snap={snap} />}
         {/* 还有人没选战利品时剧情先收起，不挡住领奖；选完自动展开 */}
-        {won && <Story mode={snap.mode} bossId={v.bossId} moment="victory" open={!snap.campaign?.pendingLoot} />}
+        {won && !snap.campaign?.pendingLoot && <StoryGate mode={snap.mode} bossId={v.bossId} moment="victory" />}
         {won && snap.campaign && !snap.campaign.pendingLoot && v.bossId === BOSS_ORDER[BOSS_ORDER.length - 1] && <Finale camp={snap.campaign} />}
         {host ? (
           <button className="bf-btn bf-primary" data-testid="bf-back" disabled={!!snap.campaign?.pendingLoot}
