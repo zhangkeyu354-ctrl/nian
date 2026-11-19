@@ -4,6 +4,7 @@ import { App } from "./App.tsx";
 import "./style.css";
 import "./visuals.css";
 import { SettingsProvider } from "./Settings.tsx";
+import { CrashGuard } from "./CrashGuard.tsx";
 import { Gallery } from "./Gallery.tsx";
 const MobilePreview = lazy(() =>
   import("./MobilePreview.tsx").then((m) => ({ default: m.MobilePreview })),
@@ -51,6 +52,7 @@ const MagicalAthlete = lazy(() =>
  *   /?view=...         样稿与图鉴
  */
 createRoot(document.getElementById("root")!).render(
+  <CrashGuard>
   <SettingsProvider>
     {q.get("view") === "mobile-preview" ? (
       <Suspense fallback={<p>正在打开手机样稿…</p>}>
@@ -109,7 +111,8 @@ createRoot(document.getElementById("root")!).render(
     ) : (
       <GameHall />
     )}
-  </SettingsProvider>,
+  </SettingsProvider>
+  </CrashGuard>,
 );
 import "./board-visuals.css";
 import "./mobile-game.css";
