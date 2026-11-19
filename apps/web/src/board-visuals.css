@@ -505,3 +505,15 @@ svg[data-zoom="far"] .route-badge { opacity: .75; }
 .floor-door-lit { animation: floor-door-pulse 1.1s ease-in-out infinite; }
 @keyframes floor-door-pulse { 0%,100% { opacity: .5; } 50% { opacity: .22; } }
 [data-motion="off"] .floor-door-lit { animation: none; }
+
+/* 手机省内存（2026-11-20）：iPhone/微信内置浏览器上，大量 SVG 噪点滤镜 + 3D 倾斜会占满显存，
+   页面被系统直接杀掉（整屏白屏卡死）。触屏设备上关掉这些滤镜，改用普通描边，外观基本一致。 */
+@media (pointer: coarse) {
+  .floor-under path, .floor-doors path, .floor-doors ellipse, .floor-doors rect { filter: none !important; }
+  .floor-doors ellipse { opacity: .08 !important; }
+  .floor-doors ellipse.floor-door-lit { opacity: .35 !important; }
+  .floor-under [data-corridor] path:first-child { display: none; }
+  .board-fx .fx-p { mix-blend-mode: normal !important; }
+  .scene-bg { filter: brightness(.32) saturate(.8) !important; transform: none !important; }
+  .map-viewport::after { mix-blend-mode: normal !important; opacity: .07 !important; }
+}
