@@ -395,41 +395,64 @@ function Table({ room, v }: { room: ReturnType<typeof useDURoom>; v: DUView }) {
   const addable = tg ? hand.filter((c) => addTargets(v, v.me, c).some((t) => t.seat === target!.seat && t.zone === target!.zone)) : [];
   const zoneName = (z: number) => (two ? `区域${z + 1}` : "");
 
+  const [confirmRotate, setConfirmRotate] = useState(false);
+  const [flash, setFlash] = useState(false);
+  const [logOpen, setLogOpen] = useState(false);
+  useEffect(() => {
+    if (!myTurn) return;
+    setFlash(true);
+    const t = setTimeout(() => setFlash(false), 1100);
+    return () => clearTimeout(t);
+  }, [myTurn, v.zone]);
+  useEffect(() => {
+    if (!confirmRotate) return;
+    const t = setTimeout(() => setConfirmRotate(false), 3000);
+    return () => clearTimeout(t);
+  }, [confirmRotate]);
+  useEffect(() => setConfirmRotate(false), [v.turn, v.zone]);
+  // 出不了时说明原因
+  const blocker = selCards.length && !playOk && myTurn
+    ? ladder.find(([size]) => size === selCards.length)
+    : undefined;
+  const many = order.length >= 3;
+  const lastEntry = v.log[v.log.length - 1];
+  const tap = () => typeof navigator.vibrate === "function" && navigator.vibrate(8);
+
   return (
-    <div className="du-table" data-testid="du-table">
+    <div className={`du-table${many ? " many" : ""}`} data-testid="du-table">
       <header className="du-top">
         <span className="du-mini-logo">dnup</span>
-        <span>
+        <span className="du-top-info">
           第 {v.round} 轮 · {two ? "先赢 2 轮" : `${v.target} 分获胜`}
         </span>
         <span className="du-top-right">
-          <span title="弃牌堆">🗑 {v.discard}</span>
-          <button className="du-btn sm" onClick={() => setRules(true)}>
-            规则
-          </button>
+          <span className="du-discard" title="弃牌堆">弃 {v.discard}</span>
+          <button className="du-btn sm" onClick={() => setLogOpen(true)}>记录</button>
+          <button className="du-btn sm" onClick={() => setRules(true)}>规则</button>
         </span>
       </header>
 
       <section className="du-opps">
         {order.map((seat) => {
           const p = v.players[seat];
+          const active = v.turn === seat && v.phase === "PLAY";
           return (
-            <div key={seat} className={`du-opp${v.turn === seat && v.phase === "PLAY" ? " turn" : ""}${p.place ? " out" : ""}`} data-testid={`du-opp-${seat}`} data-du-seat={seat}>
+            <div key={seat} className={`du-opp${active ? " turn" : ""}${p.place ? " out" : ""}`} data-testid={`du-opp-${seat}`} data-du-seat={seat}>
               <div className="du-opp-head">
                 <b>{p.name}</b>
                 <Score score={p.score} />
               </div>
               <div className="du-opp-meta">
-                {p.place ? <span className={`du-place place-${p.place}`}>第{p.place}名 ✓</span> : <span>🂠 {p.handCount}</span>}
-                {v.turn === seat && v.phase === "PLAY" && <span className="du-thinking">行动中{two ? ` · ${zoneName(v.zone)}` : ""}</span>}
+                {p.place ? <span className={`du-place place-${p.place}`}>第{p.place}名 ✓</span> : <span className="du-count">手牌 {p.handCount}</span>}
+                {active && <span className="du-thinking">行动中{two ? ` · ${zoneName(v.zone)}` : ""}</span>}
               </div>
               <div className="du-zones">
                 {p.zones.map((g, z) =>
                   g ? (
-                    <GroupView key={z} g={g} hot={myTurn} onClick={myTurn ? () => setTarget({ seat, zone: z }) : undefined} />
-                  ) : (
-                    <span key={z} className="du-empty">{two ? zoneName(z) : "空"}</span>
-                  ),
+                    <GroupView key={z} g={g} hot={myTurn} onClick={myTurn ? () => { tap(); setTarget({ seat, zone: z }); } : undefined} />
+                  ) : two ? (
+                    <span key={z} className="du-empty">{zoneName(z)}</span>
+                  ) : null,
                 )}
               </div>
             </div>
@@ -437,23 +460,29 @@ function Table({ room, v }: { room: ReturnType<typeof useDURoom>; v: DUView }) {
         })}
       </section>
 
-      <section className="du-ladder">
-        <span className="du-ladder-title">场上</span>
-        {ladder.length === 0 ? (
-          <span className="du-ladder-empty">桌面是空的，出什么都行</span>
-        ) : (
-          ladder.map(([size, x]) => (
-            <span key={size} className="du-ladder-item" style={{ borderColor: NUM_COLOR[x.value] }}>
-              {size}张 <b style={{ color: NUM_COLOR[x.value] }}>{x.value}</b>
-              <small>{x.seat === v.me ? "我" : names[x.seat]}</small>
-            </span>
-          ))
-        )}
+      <section className="du-info">
+        <div className={`du-feed${room.error ? " err" : ""}`} onClick={() => room.error && room.setError("")} data-testid="du-feed">
+          {room.error ? `⚠ ${room.error}` : toast || (lastEntry ? describe(lastEntry, names) : "拿到 ★1/5 的人先出牌")}
+        </div>
+        <div className="du-ladder">
+          <span className="du-ladder-title">场上</span>
+          {ladder.length === 0 ? (
+            <span className="du-ladder-empty">空桌，出什么都行</span>
+          ) : (
+            ladder.map(([size, x]) => (
+              <span key={size} className="du-ladder-item" style={{ borderColor: NUM_COLOR[x.value] }}>
+                {size}张 <b style={{ color: NUM_COLOR[x.value] }}>{x.value}</b>
+                <small>{x.seat === v.me ? "我" : names[x.seat]}</small>
+              </span>
+            ))
+          )}
+        </div>
       </section>
 
       <section className={`du-mine${myTurn ? " turn" : ""}`} data-du-seat={v.me}>
         <div className="du-mine-head">
-          <b>我</b>{v.players[v.me].place && <span className={`du-place place-${v.players[v.me].place}`}>第{v.players[v.me].place}名 ✓</span>}
+          <b>我</b>
+          {v.players[v.me].place && <span className={`du-place place-${v.players[v.me].place}`}>第{v.players[v.me].place}名 ✓</span>}
           <Score score={v.players[v.me].score} />
           <span className="du-status" data-testid="du-status">
             {v.phase !== "PLAY" ? "本轮结束" : myTurn ? `轮到你了${two ? ` · ${zoneName(v.zone)}` : ""}` : `等待 ${names[v.turn]}…`}
@@ -462,49 +491,81 @@ function Table({ room, v }: { room: ReturnType<typeof useDURoom>; v: DUView }) {
         <div className="du-zones mine">
           {v.players[v.me].zones.map((g, z) =>
             g ? (
-              <GroupView key={z} g={g} size="md" />
+              <GroupView key={z} g={g} size="sm" />
             ) : (
-              <span key={z} className={`du-empty${myTurn && v.zone === z ? " now" : ""}`}>{two ? zoneName(z) : "我的出牌区"}</span>
+              <span key={z} className={`du-empty${myTurn && v.zone === z ? " now" : ""}`}>{two ? zoneName(z) : "我的出牌区（空）"}</span>
             ),
           )}
+          {!two && v.players[v.me].zones[0] && myTurn === false && <span className="du-mine-note">下回合开始时收走</span>}
         </div>
       </section>
 
-      {myTurn && ladder.length > 0 && <p className="du-hint">点对手的组合可以「拿走」或「加一张」</p>}
-      <section className="du-hand" data-testid="du-hand">
+      <section className={`du-hand${hand.length > 10 ? " dense" : ""}`} data-testid="du-hand">
         {hand.length === 0 && <span className="du-ladder-empty">手牌已出完</span>}
         {hand.map((c) => (
-          <DnupCard key={c.id} card={c} size="lg" selected={sel.includes(c.id)} dim={myTurn && selValue !== null && valueOf(c) !== selValue} onClick={myTurn ? () => toggle(c) : undefined} spin={spin} />
+          <DnupCard
+            key={c.id}
+            card={c}
+            size="lg"
+            selected={sel.includes(c.id)}
+            dim={myTurn && selValue !== null && valueOf(c) !== selValue}
+            onClick={() => {
+              if (!myTurn) {
+                setToast(v.phase === "PLAY" ? `还没轮到你，现在是 ${names[v.turn]}` : "本轮已结束");
+                return;
+              }
+              tap();
+              toggle(c);
+            }}
+            spin={spin}
+          />
         ))}
       </section>
 
       <footer className="du-dock">
         {myTurn ? (
           <>
-            <button className="du-btn main grow" disabled={!playOk || room.pending} onClick={() => room.act({ type: "PLAY", cards: sel })} data-testid="du-play">
-              {selCards.length === 0 ? "选择要出的牌" : playOk ? `出 ${selCards.length} 张 ${selValue}` : `不够大，出不了`}
-            </button>
-            <button className="du-btn" disabled={room.pending} onClick={() => room.act({ type: "ROTATE" })} data-testid="du-rotate">
-              ⟳ 翻转整手
-            </button>
+            <div className="du-dock-hint">
+              {blocker
+                ? `桌上已有 ${blocker[0]} 张 ${blocker[1].value}，要出比 ${blocker[1].value} 大的`
+                : selCards.length
+                  ? "再点同数字的牌可以一起出"
+                  : ladder.length
+                    ? "选牌出牌，或点对手的牌组「拿走 / 加一张」"
+                    : "选一张或几张相同数字的牌"}
+            </div>
+            <div className="du-dock-row">
+              <button className="du-btn main grow" disabled={!playOk || room.pending} onClick={() => room.act({ type: "PLAY", cards: sel })} data-testid="du-play">
+                {selCards.length === 0 ? "选择要出的牌" : playOk ? `出 ${selCards.length} 张 ${selValue}` : "不够大，出不了"}
+              </button>
+              <button
+                className={`du-btn rotate${confirmRotate ? " confirm" : ""}`}
+                disabled={room.pending}
+                onClick={() => {
+                  tap();
+                  if (!confirmRotate) return setConfirmRotate(true);
+                  setConfirmRotate(false);
+                  room.act({ type: "ROTATE" });
+                }}
+                data-testid="du-rotate"
+              >
+                {confirmRotate ? "再点确认翻转" : "⟳ 翻转整手"}
+              </button>
+            </div>
           </>
         ) : (
-          <span className="du-dock-wait">{v.phase === "PLAY" ? `${names[v.turn]} 正在行动` : ""}</span>
+          <span className="du-dock-wait">{v.phase === "PLAY" ? `${names[v.turn]} 正在行动${two ? ` · ${zoneName(v.zone)}` : ""}` : ""}</span>
         )}
       </footer>
 
-      {toast && <div className="du-toast">{toast}</div>}
-      {room.error && (
-        <div className="du-toast err" onClick={() => room.setError("")}>
-          {room.error}
-        </div>
-      )}
+      {flash && <div className="du-flash" aria-hidden="true">轮到你了</div>}
 
       {tg && target && (
         <Sheet title={`${names[target.seat]}${two ? " · " + zoneName(target.zone) : ""}：${tg.cards.length} 张 ${tg.value}`} onClose={() => setTarget(null)}>
           <div className="du-sheet-group">
             <GroupView g={tg} size="md" />
           </div>
+          <p className="du-sub small">拿走后这些牌会反转成：{tg.cards.map((c) => otherOf(c)).join("、")}</p>
           <button
             className="du-btn main wide"
             onClick={() => {
@@ -513,16 +574,16 @@ function Table({ room, v }: { room: ReturnType<typeof useDURoom>; v: DUView }) {
             }}
             data-testid="du-take"
           >
-            拿走整组（{tg.cards.length} 张，回手后各自反转）
+            拿走整组（{tg.cards.length} 张）
           </button>
-          <p className="du-sub small">加一张 {tg.value}，让它变成 {tg.cards.length + 1} 张：</p>
+          <div className="du-sheet-sep">或者 · 加一张 {tg.value}，让它变成 {tg.cards.length + 1} 张</div>
           <div className="du-addrow">
             {addable.length === 0 && <span className="du-ladder-empty">你没有能加的牌（需要数字 {tg.value}，且加完后要比同张数的组合大）</span>}
             {addable.map((c) => (
               <DnupCard
                 key={c.id}
                 card={c}
-                size="md"
+                size="lg"
                 onClick={() => {
                   room.act({ type: "ADD", card: c.id, target: target.seat, zone: target.zone });
                   setTarget(null);
@@ -539,12 +600,16 @@ function Table({ room, v }: { room: ReturnType<typeof useDURoom>; v: DUView }) {
           {RULES}
         </Sheet>
       )}
-      <details className="du-log">
-        <summary>记录</summary>
-        {[...v.log].reverse().map((e, i) => (
-          <div key={i}>{describe(e, names)}</div>
-        ))}
-      </details>
+      {logOpen && (
+        <Sheet title="对局记录" onClose={() => setLogOpen(false)}>
+          <div className="du-log">
+            {v.log.length === 0 && <span className="du-ladder-empty">还没有记录</span>}
+            {[...v.log].reverse().map((e, i) => (
+              <div key={i}>{describe(e, names)}</div>
+            ))}
+          </div>
+        </Sheet>
+      )}
       <span hidden>{s.code}</span>
     </div>
   );
