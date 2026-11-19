@@ -358,3 +358,11 @@
 .sk-hall-cover { display:flex; flex-direction:column; align-items:center; justify-content:center; width:100%; height:100%; min-height:110px; border-radius:8px; background: radial-gradient(ellipse at 50% 0%, rgba(232,182,76,.35), transparent 60%), linear-gradient(#13314a,#0d1b2a); color:#e8b64c; }
 .sk-hall-cover span { font-size:48px; }
 .sk-hall-cover b { font-size:22px; letter-spacing:6px; }
+.hall-box.box-sk { background: radial-gradient(circle at 80% 0%, #4a2f17, #1b1209 70%); border: 1px solid #c79a45; color: #f6ead0; box-shadow: 0 10px 30px rgba(0,0,0,.4), inset 0 1px 0 rgba(255,220,160,.15); }
+.hall-box.box-sk .box-art { border-radius: 10px; overflow: hidden; height: auto; aspect-ratio: 3 / 2; box-shadow: 0 6px 18px rgba(0,0,0,.45); }
+.hall-box.box-sk h2 small { color: #d9b46a; }
+.hall-box.box-sk .box-meta { color: #e8c271; }
+.hall-box.box-sk .box-blurb { color: #e6dccb; }
+.hall-box.box-sk .box-open { background: linear-gradient(#d8ad55, #c79a45 55%, #a97c2c); color: #2a1806; border: 1px solid #6e4c17; border-radius: 8px; box-shadow: inset 0 1px 0 rgba(255,245,210,.6), 0 3px 0 #4a3108; font-weight: 800; }
+.hall-box.box-sk .box-join input { background: #120b05; color: #f6ead0; border: 1px solid #6b4a22; }
+.hall-box.box-sk .box-join button { background: #3a2514; color: #f6ead0; border: 1px solid #c79a45; }
