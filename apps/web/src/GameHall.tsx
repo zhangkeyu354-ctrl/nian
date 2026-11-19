@@ -84,11 +84,29 @@ const recentIds = (): string[] => {
 };
 const remember = (id: string) => store.set("hall:recent", JSON.stringify([id, ...recentIds().filter((x) => x !== id)].slice(0, 4)));
 
-function Cart({ g, onOpen, small }: { g: Game; onOpen: () => void; small?: boolean }) {
+/** Codex 统一绘制的大厅封面：/assets/hall/<id>-card.webp（4:3）与 <id>-wide.webp（16:9）。没有时退回原来的图。 */
+function Cover({ g, kind }: { g: Game; kind: "card" | "wide" }) {
+  const [ok, setOk] = useState<boolean | null>(null);
   return (
-    <button type="button" className={`cart${small ? " small" : ""}`} onClick={onOpen} data-testid={"cart-" + g.id}>
+    <>
+      <img
+        className="hall-cover-img"
+        src={`/assets/hall/${g.id}-${kind}.webp`}
+        alt=""
+        style={{ display: ok ? "block" : "none" }}
+        onLoad={() => setOk(true)}
+        onError={() => setOk(false)}
+      />
+      {ok ? null : g.art}
+    </>
+  );
+}
+
+function Cart({ g, onOpen, small, i = 0 }: { g: Game; onOpen: () => void; small?: boolean; i?: number }) {
+  return (
+    <button type="button" className={`cart${small ? " small" : ""}`} style={{ "--i": i } as React.CSSProperties} onClick={onOpen} data-testid={"cart-" + g.id}>
       <span className={`cart-art${g.fill ? " fill" : ""}`} style={{ background: g.bg }}>
-        {g.art}
+        <Cover g={g} kind="card" />
         {g.isNew && <span className="cart-new">新</span>}
       </span>
       <span className="cart-label">
@@ -111,10 +129,10 @@ function Detail({ g, onClose }: { g: Game; onClose: () => void }) {
   };
   return (
     <div className={`hall-sheet-bg${closing ? " out" : ""}`} onClick={close}>
-      <div className="hall-sheet" onClick={(e) => e.stopPropagation()} role="dialog" aria-label={g.title} data-testid="hall-detail">
+      <div className="hall-sheet" style={{ "--tint": g.bg } as React.CSSProperties} onClick={(e) => e.stopPropagation()} role="dialog" aria-label={g.title} data-testid="hall-detail">
         <span className="hall-grab" />
         <div className={`hall-sheet-art${g.fill ? " fill" : ""}`} style={{ background: g.bg }}>
-          {g.art}
+          <Cover g={g} kind="wide" />
         </div>
         <h2>
           {g.title}
@@ -199,6 +217,7 @@ export function GameHall() {
       </header>
 
       <form className="hall2-join" onSubmit={join}>
+        <span className="hall2-key" aria-hidden="true">#</span>
         <input value={code} onChange={(e) => setCode(e.target.value.toUpperCase())} placeholder="有房间号？输入直接加入" maxLength={10} aria-label="房间号" data-testid="hall-code" />
         <button type="submit" disabled={busy || !code.trim()} data-testid="hall-join">
           {busy ? "…" : "加入"}
@@ -232,8 +251,8 @@ export function GameHall() {
           全部游戏 <span>{GAMES.length}</span>
         </h3>
         <div className="hall2-grid">
-          {GAMES.map((g) => (
-            <Cart key={g.id} g={g} onOpen={() => setOpen(g)} />
+          {GAMES.map((g, i) => (
+            <Cart key={g.id} g={g} i={i} onOpen={() => setOpen(g)} />
           ))}
         </div>
       </section>

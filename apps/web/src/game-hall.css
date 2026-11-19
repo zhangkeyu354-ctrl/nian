@@ -83,3 +83,61 @@ body:has(.hall2) {
 .hall-extra { margin: 12px 0 0; text-align: center; font-size: 14px; }
 .hall-extra a { color: #f2b544; }
 .hall-note { margin: 12px 0 0; text-align: center; font-size: 12px; color: #776f64; }
+
+/* ===== 质感精修 ===== */
+/* 纸面颗粒 + 顶部暖光 */
+body:has(.hall2) {
+  background:
+    url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='160' height='160'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 1  0 0 0 0 .95  0 0 0 0 .85  0 0 0 .05 0'/></filter><rect width='160' height='160' filter='url(%23n)'/></svg>"),
+    radial-gradient(ellipse 130% 55% at 50% -8%, #4a3826 0%, rgba(74,56,38,0) 62%),
+    radial-gradient(ellipse 120% 80% at 50% 120%, #1b120c 0%, transparent 60%),
+    linear-gradient(#191512, #0d0b0a);
+  background-attachment: fixed;
+}
+.hall2-top { height: 52px; }
+.hall2-brand { font-size: 19px; letter-spacing: 2px; text-shadow: 0 1px 0 #000; }
+.hall2-mark i { box-shadow: inset 0 1px 0 rgba(255,255,255,.35), 0 1px 2px rgba(0,0,0,.5); }
+.hall2-bell { background: rgba(255,255,255,.06); box-shadow: inset 0 1px 0 rgba(255,255,255,.08), 0 2px 6px rgba(0,0,0,.4); font-weight: 600; }
+
+/* 加入框：嵌进桌面的凹槽 */
+.hall2-join { align-items: center; height: 54px; border-radius: 18px; background: linear-gradient(180deg, #110f0d, #1a1714); box-shadow: inset 0 2px 6px rgba(0,0,0,.7), inset 0 0 0 1px rgba(255,240,220,.06), 0 1px 0 rgba(255,240,220,.07); padding: 5px; }
+.hall2-key { width: 30px; text-align: center; color: #6f655a; font-weight: 800; font-size: 17px; }
+.hall2-join input { padding: 0 8px 0 0; font-weight: 600; }
+.hall2-join button { height: 100%; border-radius: 13px; background: linear-gradient(180deg, #f8c967, #e6a12e); box-shadow: inset 0 1px 0 rgba(255,255,255,.45), 0 2px 0 #9c6a1a; text-shadow: 0 1px 0 rgba(255,255,255,.3); }
+.hall2-join button:disabled { background: #2a2520; box-shadow: inset 0 1px 0 rgba(255,255,255,.04); text-shadow: none; }
+
+/* 分区标题：细线 */
+.hall2-sec h3 { display: flex; align-items: center; gap: 8px; font-size: 13px; letter-spacing: 3px; color: #b9ad9b; }
+.hall2-sec h3::after { content: ""; flex: 1; height: 1px; background: linear-gradient(90deg, rgba(255,240,220,.14), transparent); }
+
+/* 卡带：有厚度的实体卡 */
+.cart { animation: cart-in .45s cubic-bezier(.2,.9,.3,1.1) both; animation-delay: calc(var(--i, 0) * 35ms); }
+@keyframes cart-in { from { opacity: 0; transform: translateY(14px) scale(.97); } }
+.cart-art {
+  border-radius: 14px;
+  box-shadow:
+    inset 0 0 0 1px rgba(255,255,255,.08),
+    inset 0 1px 0 rgba(255,255,255,.18),
+    0 1px 0 #2a241f,
+    0 4px 0 #0b0908,
+    0 10px 22px rgba(0,0,0,.55);
+  transition: transform .18s, box-shadow .18s;
+}
+.cart:active { transform: none; }
+.cart:active .cart-art { transform: translateY(3px); box-shadow: inset 0 0 0 1px rgba(255,255,255,.08), 0 1px 0 #0b0908, 0 4px 10px rgba(0,0,0,.5); }
+.cart-art::after { background: linear-gradient(155deg, rgba(255,255,255,.16) 0%, rgba(255,255,255,0) 32%), linear-gradient(0deg, rgba(0,0,0,.28), transparent 40%); }
+.hall-cover-img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+.cart-new { top: 8px; left: 8px; padding: 3px 9px; background: linear-gradient(180deg, #ff7a5c, #e8442f); box-shadow: inset 0 1px 0 rgba(255,255,255,.35), 0 2px 6px rgba(0,0,0,.45); letter-spacing: 1px; }
+.cart-label { padding: 2px 3px 0; }
+.cart-label b { font-size: 15px; letter-spacing: .5px; color: #f6efe2; }
+.cart-label small { color: #998e7f; }
+.cart.small .cart-art { box-shadow: inset 0 0 0 1px rgba(255,255,255,.08), 0 3px 0 #0b0908, 0 6px 14px rgba(0,0,0,.5); }
+
+/* 详情卡：带一点游戏主色 */
+.hall-sheet { background: linear-gradient(180deg, color-mix(in srgb, var(--tint, #1f1b18) 30%, #1f1b18) 0%, #1f1b18 46%), #1f1b18; box-shadow: 0 -12px 40px rgba(0,0,0,.55), inset 0 1px 0 rgba(255,255,255,.08); }
+.hall-sheet-art { position: relative; box-shadow: inset 0 0 0 1px rgba(255,255,255,.08), 0 12px 28px rgba(0,0,0,.5); }
+.hall-sheet-art::after { content: ""; position: absolute; inset: 0; background: linear-gradient(155deg, rgba(255,255,255,.12), transparent 35%); pointer-events: none; }
+.hall-sheet h2 { font-size: 26px; letter-spacing: 1px; }
+.hall-chips span { background: rgba(0,0,0,.25); box-shadow: inset 0 0 0 1px rgba(255,240,220,.08); }
+.hall-primary { background: linear-gradient(180deg, #f9cd6c, #e9a531 60%, #db9522); box-shadow: inset 0 1px 0 rgba(255,255,255,.5), 0 4px 0 #9c6a1a, 0 12px 24px rgba(233,165,49,.28); letter-spacing: 4px; text-shadow: 0 1px 0 rgba(255,255,255,.35); }
+@media (prefers-reduced-motion: reduce) { .cart { animation: none; } }
