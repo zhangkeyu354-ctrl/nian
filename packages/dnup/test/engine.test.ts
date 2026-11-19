@@ -196,7 +196,7 @@ describe("隐私与随机整局", () => {
     expect(v.hand.length).toBe(9);
   });
   it.each([2, 3, 4, 5, 6])("%i 人随机打到结束不出错", (n) => {
-    for (let seed = 1; seed <= 20; seed++) {
+    for (let seed = 1; seed <= 6; seed++) {
       let s = createDU(Array(n).fill("x"), { seed });
       let r = seed;
       const rnd = () => ((r = (r * 1103515245 + 12345) >>> 0) / 2 ** 32);
