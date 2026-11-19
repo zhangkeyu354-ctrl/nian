@@ -550,6 +550,7 @@ function RoundEnd({ room, v, host }: { room: Room; v: SKView; host: boolean }) {
         </div>
       )}
       {fin && <ScoreTable v={v} />}
+      <div className="sk-sheet-foot">
       {host ? (
         <button className="sk-btn main wide" disabled={room.pending} onClick={() => room.act(fin ? { type: "REMATCH" } : { type: "NEXT_ROUND" })} data-testid="sk-next">
           {fin ? "再来一局" : `开始第 ${v.round + 2} 轮（每人 ${v.counts[v.round + 1]} 张）`}
@@ -557,6 +558,7 @@ function RoundEnd({ room, v, host }: { room: Room; v: SKView; host: boolean }) {
       ) : (
         <p className="sk-sub">等待船长{fin ? "开新局" : "开始下一轮"}…</p>
       )}
+      </div>
     </Sheet>
   );
 }
@@ -694,7 +696,7 @@ function Table({ room, v }: { room: Room; v: SKView }) {
           </button>
         </div>
       </header>
-      <div className={`sk-seatbar n${seats.length}`}>
+      <div className={`sk-seatbar n${seats.length}${seats.length >= 5 ? " compact" : ""}`}>
         {seats.map(({ i, p }) => {
           const turn = v.phase === "PLAY" && v.turn === i;
           const ghost = !p;
@@ -725,7 +727,7 @@ function Table({ room, v }: { room: Room; v: SKView }) {
                   </span>
                 )}
               </div>
-              <div className="sk-pl-slot">{slotFor(i) ? <SKCard id={slotFor(i)!.id} as={slotFor(i)!.as} size="sm" /> : turn ? <span className="sk-wait">⏳</span> : null}</div>
+              {(slotFor(i) || turn) && <div className="sk-pl-slot">{slotFor(i) ? <span className="sk-played">已出</span> : <span className="sk-wait">⏳</span>}</div>}
             </div>
           );
         })}

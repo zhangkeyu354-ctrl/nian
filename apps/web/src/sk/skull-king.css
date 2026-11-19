@@ -265,3 +265,27 @@ button.sk-card { cursor: pointer; }
 .sk-final .sk-victory { position: static !important; transform: none; animation: sk-fade 0.6s; height: 180px; max-height: none; width: 100%; max-width: 420px; object-fit: cover; object-position: center 40%; }
 .sk-sheet > * { flex-shrink: 0; }
 .sk-final .sk-rank { width: 100%; align-self: stretch; }
+
+/* 审计修正：固定一屏布局 */
+.sk-table { height: 100dvh; min-height: 0; overflow: hidden; }
+.sk-felt { min-height: 0; overflow-y: auto; justify-content: flex-start; padding-top: 4px; }
+.sk-trick { min-height: 120px; }
+.sk-hand-wrap { position: relative; flex: none; }
+.sk-hand { min-height: 0; padding-top: 16px; }
+.sk-played { font-size: 11px; color: #8ee69b; }
+.sk-pl-slot { line-height: 1; }
+.sk-seatbar.compact { gap: 4px; padding: 6px 6px 0; }
+.sk-seatbar.compact .sk-pl { padding: 4px 3px; gap: 0; border-radius: 9px; }
+.sk-seatbar.compact .sk-pl-name { font-size: 12px; }
+.sk-seatbar.compact .sk-pl-bid, .sk-seatbar.compact .sk-pl-score { font-size: 11px; }
+.sk-seatbar.compact .sk-backs { display: none; }
+.sk-status { padding: 6px 10px 2px; font-size: 14px; }
+@media (max-height: 700px) {
+  .sk-card.sk-lg { --w: 56px; --h: 82px; }
+  .sk-card.sk-md { --w: 48px; --h: 70px; }
+  .sk-trick { min-height: 100px; padding: 14px 6px 10px; }
+  .sk-top { padding: 6px 10px; }
+}
+.sk-sheet-foot { position: sticky; bottom: calc(-18px - env(safe-area-inset-bottom)); margin: 0 -14px calc(-18px - env(safe-area-inset-bottom)); padding: 10px 14px calc(14px + env(safe-area-inset-bottom)); background: linear-gradient(transparent, #1a120a 30%); }
+.sk-banner { bottom: 150px; border-radius: 0 0 22px 22px; } @media (max-height: 700px) { .sk-banner { bottom: 130px; } }
+.sk-fx { left: 50%; top: 50%; transform: translate(-50%, -50%); }

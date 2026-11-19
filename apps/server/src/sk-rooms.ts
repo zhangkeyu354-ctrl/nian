@@ -117,7 +117,7 @@ export class SKRoom {
           case "ADD_BOT": {
             ensure(this.file.players.length < this.file.count, "房间已满");
             const used = new Set(this.file.players.map((p) => p.name));
-            const name = ["人机·独眼", "人机·木腿", "人机·铁钩", "人机·红胡子", "人机·鹦鹉", "人机·大副", "人机·水手"].find((n) => !used.has(n)) ?? "人机";
+            const name = ["🤖独眼", "🤖木腿", "🤖铁钩", "🤖红胡子", "🤖鹦鹉", "🤖大副", "🤖水手"].find((n) => !used.has(n)) ?? "人机";
             this.file.players.push({ id: randomBytes(12).toString("hex"), token: "bot:" + randomBytes(16).toString("hex"), name, ready: true, bot: true });
             break;
           }
@@ -158,7 +158,7 @@ export class SKRoom {
     else if (st.phase === "ROUND_END") seat = this.file.players[0]?.bot ? 0 : -1;
     if (seat < 0) return false;
     // 一墩刚结束时多等一会，让大家看清结果
-    const wait = st.phase === "PLAY" && st.trick.length === 0 && st.tricks.length ? 3000 : st.phase === "BID" ? 1200 : 1700;
+    const wait = st.phase === "PLAY" && st.trick.length === 0 && st.tricks.length ? 2700 : st.phase === "BID" ? 900 : 1100;
     if (now - this.file.updatedAt < wait) return false;
     return this.transaction(() => {
       this.file.state = reduceSK(st, st.phase === "ROUND_END" ? { type: "NEXT_ROUND", actor: 0 } : botMove(st, seat));
