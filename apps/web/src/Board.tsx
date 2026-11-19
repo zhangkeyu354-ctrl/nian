@@ -57,14 +57,15 @@ export function Board({
     state.turn?.actorId ??
     null;
   const layout = BOARD_LAYOUT[map.id];
-  const height = map.id === "macmillan_estate" ? 1520 : 1320;
+  const layout0 = BOARD_LAYOUT[map.id];
+  const W = layout0.width, height = layout0.height;
   const settings = useSettings();
   const [expanded, setExpanded] = useState(false);
   const [overview, setOverview] = useState(false);
   const [toolsOpen, setToolsOpen] = useState(false);
-  const [size, setSize] = useState({ width: 1540, height });
+  const [size, setSize] = useState({ width: W, height });
   const yScale = 1;
-  const [view, setView] = useState({ x: 0, y: 0, w: 1540, h: height });
+  const [view, setView] = useState({ x: 0, y: 0, w: W, h: height });
   const viewRef = useRef(view);
   const touchHandled = useRef(0);
   viewRef.current = view;
@@ -102,7 +103,7 @@ export function Board({
     };
     anim.current = requestAnimationFrame(step);
   }
-  const reset = () => moveView({ x: 0, y: 0, w: 1540, h: height });
+  const reset = () => moveView({ x: 0, y: 0, w: W, h: height });
   // 定位：让当前房间及其全部相邻房间同时可见（保留四周安全边距）
   function focus(id = focusRoom) {
     if (size.width <= 0 || size.height <= 0) return;
@@ -139,7 +140,7 @@ export function Board({
     const clamp = (v: number, lo: number, hi: number) =>
       hi < lo ? (lo + hi) / 2 : Math.max(lo, Math.min(hi, v));
     moveView({
-      x: clamp(cx - w / 2, -pad, 1540 + pad - w),
+      x: clamp(cx - w / 2, -pad, W + pad - w),
       y: clamp(cy - h / 2, -pad, height + pad - h),
       w,
       h,
@@ -305,7 +306,7 @@ export function Board({
         className="map-viewport"
         style={
           {
-            "--board-ratio": `1540/${height}`,
+            "--board-ratio": `${W}/${height}`,
             "--board-height": height,
           } as React.CSSProperties
         }
@@ -319,7 +320,7 @@ export function Board({
         <svg
           data-testid="board"
           data-zoom={view.w / Math.max(1, size.width) > 2.4 ? "far" : "near"}
-          data-full={view.w >= 1400 || view.h >= height * 0.9 ? "1" : undefined}
+          data-full={view.w >= W * 0.9 || view.h >= height * 0.9 ? "1" : undefined}
           viewBox={`${view.x} ${view.y} ${view.w} ${view.h}`}
           role="img"
           aria-label={`${map.name_zh}数字棋盘，房间和道具可点击`}

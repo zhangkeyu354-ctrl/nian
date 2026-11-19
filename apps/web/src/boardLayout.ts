@@ -16,6 +16,8 @@ export type FloorLayout = {
   markers: Record<string, number[]>;
   scale: Record<string, number>;
   boxes: Record<string, Box>;
+  width: number;
+  height: number;
   doors: Door[];
   corridors: Corridor[];
 };
@@ -25,9 +27,13 @@ type RoomSpec = Record<string, [number, number, number]>; // 左上角 L、T 与
 type DoorSpec = [string, string, string, number?, number?, string?]; // 房间A, 房间B, 路线id, 段起, 段止, 单向起点
 type CorridorFn = (b: (id: string) => Box) => Corridor[];
 
-function build(rooms: RoomSpec, doorSpecs: DoorSpec[], corridors: CorridorFn, width: number, height: number): FloorLayout {
+// 放宽排布（2026-11-20）：按行整体往下错开（竖向间距加大，手机竖屏更舒展），横向整体略拉开
+const ROW_GAP = 70, SPREAD_X = 1.08;
+function build(rooms: RoomSpec, doorSpecs: DoorSpec[], corridors: CorridorFn): FloorLayout {
+  const rowOf = (T: number) => (T < 0 ? 0 : T < 200 ? 1 : 2);
   const raw = (id: string): Box => {
-    const [L, T, s] = rooms[id];
+    const [L0, T0, s] = rooms[id];
+    const L = L0 * SPREAD_X, T = T0 + rowOf(T0) * ROW_GAP;
     return { L, T, R: L + 260 * s, B: T + 200 * s, s };
   };
   const cor = corridors(raw);
@@ -38,9 +44,11 @@ function build(rooms: RoomSpec, doorSpecs: DoorSpec[], corridors: CorridorFn, wi
     x0 = Math.min(x0, b.L); y0 = Math.min(y0, b.T); x1 = Math.max(x1, b.R); y1 = Math.max(y1, b.B + 32 * b.s);
   }
   for (const c of cor) for (const [x, y] of c.pts) { x0 = Math.min(x0, x - 40); y0 = Math.min(y0, y - 40); x1 = Math.max(x1, x + 40); y1 = Math.max(y1, y + 40); }
-  const ox = Math.round((width - (x1 - x0)) / 2 - x0), oy = Math.round((height - (y1 - y0)) / 2 - y0);
+  // 画布 = 内容大小 + 一圈留白：全图时内容尽量占满屏幕
+  const M = 30, width = Math.ceil(x1 - x0 + 2 * M), height = Math.ceil(y1 - y0 + 2 * M);
+  const ox = Math.round(M - x0), oy = Math.round(M - y0);
   const box = (id: string): Box => { const b = raw(id); return { L: b.L + ox, T: b.T + oy, R: b.R + ox, B: b.B + oy, s: b.s }; };
-  const out: FloorLayout = { rooms: {}, paths: {}, markers: {}, scale: {}, boxes: {}, doors: [], corridors: [] };
+  const out: FloorLayout = { rooms: {}, paths: {}, markers: {}, scale: {}, boxes: {}, width, height, doors: [], corridors: [] };
   for (const id of Object.keys(rooms)) {
     const b = box(id);
     out.boxes[id] = b;
@@ -50,6 +58,7 @@ function build(rooms: RoomSpec, doorSpecs: DoorSpec[], corridors: CorridorFn, wi
   for (const [a, bb, pathId, f0 = 0, f1 = 1, from] of doorSpecs) {
     const A = box(a), B = box(bb);
     const ox0 = Math.max(A.L, B.L), ox1 = Math.min(A.R, B.R), oy0 = Math.max(A.T, B.T), oy1 = Math.min(A.B, B.B);
+    if (Math.max(ox1 - ox0, oy1 - oy0) < 50) console.warn("[boardLayout] 门太窄", a, bb, pathId);
     let d: Door;
     if (ox1 - ox0 > oy1 - oy0) {
       const top = A.B <= B.T ? A : B, bot = top === A ? B : A;
@@ -111,13 +120,12 @@ const autohaven = build(
       { pathId: "ah_p14", pts: [[gp.R, gp.T + 70], [bn.L + 25, gp.T + 70], [bn.L + 25, bn.B]], icon: [(gp.R + bn.L + 25) / 2 + 20, gp.T + 70], arrow: [bn.L + 25, bn.B + 34, 0, -1] },
     ];
   },
-  1540, 1320,
 );
 
 const macmillan = build(
   {
     mine_depths: [0, -190, 0.95], mine_entrance: [275, -200, 1.0], foundry_upper_floor: [563, -240, 1.2], coal_tower_upper: [903, -200, 1.0],
-    ancient_tree: [100, G, 1.15], foundry_lower_floor: [427, G, 1.35], coal_tower_ground: [806, G, 1.1],
+    ancient_tree: [100, G, 1.15], foundry_lower_floor: [427, G, 1.35], coal_tower_ground: [786, G, 1.1],
     shack: [0, 286, 1.0], scrapyard: [288, 326, 1.0], foundry_basement: [576, 326, 0.9], backlot: [838, 276, 1.15],
   },
   [
@@ -150,7 +158,6 @@ const macmillan = build(
       { pathId: "mm_p19", pts: [[fl.R, fl.B - 40], [bl.L + 40, fl.B - 40], [bl.L + 40, bl.T]], icon: [(fl.R + bl.L + 40) / 2 + 10, fl.B - 40] },
     ];
   },
-  1540, 1520,
 );
 
 export const BOARD_LAYOUT: Record<string, FloorLayout> = {
