@@ -1,5 +1,6 @@
 import { createServer } from "node:http";
 import { existsSync, readFileSync, statSync } from "node:fs";
+import { gzipSync } from "node:zlib";
 import { extname, join, normalize, resolve } from "node:path";
 import { networkInterfaces } from "node:os";
 import { fileURLToPath } from "node:url";
@@ -177,14 +178,38 @@ const http = createServer((req, res) => {
     "content-type",
     MIME[extname(file)] ?? "application/octet-stream",
   );
-  // 构建产物文件名带哈希，可长期缓存；美术等不带哈希的资源缓存 1 小时；页面本身每次都检查新版
-  if (file.endsWith(".html")) res.setHeader("cache-control", "no-store, no-cache, must-revalidate, max-age=0");
+  // 省流量（Render 免费方案每月 5GB）：
+  // - 构建产物文件名带哈希，长期缓存；美术等资源缓存 7 天；页面本身每次都检查新版
+  // - ETag：文件没变时只回 304，不重传内容
+  // - 文本类文件 gzip 压缩（结果缓存在内存里）
+  const st = statSync(file);
+  const etag = `W/"${st.size.toString(36)}-${Math.floor(st.mtimeMs).toString(36)}"`;
+  res.setHeader("etag", etag);
+  if (file.endsWith(".html")) res.setHeader("cache-control", "no-cache");
   else if (/-[A-Za-z0-9_-]{8}\.(js|css)$/.test(file))
     res.setHeader("cache-control", "public, max-age=31536000, immutable");
-  else res.setHeader("cache-control", "public, max-age=3600");
+  else res.setHeader("cache-control", "public, max-age=604800, stale-while-revalidate=86400");
+  if (req.headers["if-none-match"] === etag) {
+    res.statusCode = 304;
+    res.end();
+    return;
+  }
+  const textLike = /\.(js|mjs|css|html|json|svg|txt|webmanifest|map)$/.test(file);
+  if (textLike && /\bgzip\b/.test(String(req.headers["accept-encoding"] ?? ""))) {
+    let gz = GZIP_CACHE.get(file);
+    if (!gz || gz.etag !== etag) {
+      gz = { etag, body: gzipSync(readFileSync(file), { level: 9 }) };
+      GZIP_CACHE.set(file, gz);
+    }
+    res.setHeader("content-encoding", "gzip");
+    res.setHeader("vary", "accept-encoding");
+    res.end(gz.body);
+    return;
+  }
   res.end(readFileSync(file));
 });
 
+const GZIP_CACHE = new Map<string, { etag: string; body: Buffer }>();
 const io = new Server(http, { cors: { origin: true } });
 // Each enabled game installs one connection/disconnect handler. Keep a finite
 // budget above the current multi-game count instead of disabling leak warnings.
