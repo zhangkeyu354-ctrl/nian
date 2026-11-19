@@ -355,3 +355,6 @@
 .hall-box.box-du .box-open { background: linear-gradient(#6fd06a, #43a047); color: #fff; border: 1px solid #8be186; box-shadow: 0 4px 0 #2e7d32; font-weight: 800; }
 .hall-box.box-du .box-join input { background: #0b140d; color: #fff7ec; border: 1px solid #4c8a43; }
 .hall-box.box-du .box-join button { background: #1d3b22; color: #e8f5e2; border: 1px solid #5fae4d; }
+.sk-hall-cover { display:flex; flex-direction:column; align-items:center; justify-content:center; width:100%; height:100%; min-height:110px; border-radius:8px; background: radial-gradient(ellipse at 50% 0%, rgba(232,182,76,.35), transparent 60%), linear-gradient(#13314a,#0d1b2a); color:#e8b64c; }
+.sk-hall-cover span { font-size:48px; }
+.sk-hall-cover b { font-size:22px; letter-spacing:6px; }

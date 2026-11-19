@@ -10,6 +10,7 @@ import { RoomStore, errorText, type Room } from "./rooms.ts";
 import { attachMagicalAthlete } from "./ma-rooms.ts";
 import { attachSodaSmugglers } from "./ss-rooms.ts";
 import { attachDnup } from "./du-rooms.ts";
+import { attachSkullKing } from "./sk-rooms.ts";
 import { attachRummikub } from "./rk-rooms.ts";
 import { attachDyingMessage } from "./dm-rooms.ts";
 import { attachCodenames } from "./cn-rooms.ts";
@@ -92,6 +93,7 @@ const http = createServer((req, res) => {
         rkRooms: rkStore.rooms.size,
         ssRooms: ssStore.rooms.size,
         duRooms: duStore.rooms.size,
+        skRooms: skStore.rooms.size,
         rrRooms: rrStore.rooms.size,
         xbRooms: xbStore.rooms.size,
         dpRooms: dpStore.rooms.size,
@@ -223,6 +225,11 @@ const duStore = attachDnup(
   io,
   resolve(process.env.DU_DATA_DIR ?? join(DATA, "../du-rooms")),
   { maxRooms: MAX_ROOMS, idleMs: ROOM_IDLE_MS, allowFixedSeed: process.env.DU_ALLOW_FIXED_SEED === "1" },
+);
+const skStore = attachSkullKing(
+  io,
+  resolve(process.env.SK_DATA_DIR ?? join(DATA, "../sk-rooms")),
+  { maxRooms: MAX_ROOMS, idleMs: ROOM_IDLE_MS, allowFixedSeed: process.env.SK_ALLOW_FIXED_SEED === "1" },
 );
 const maStore = attachMagicalAthlete(
   io,
