@@ -412,7 +412,14 @@
   .du-seatpos .du-opp-head b { font-size: 10px; margin-top: 1px; }
   .du-opp-line { font-size: 10px; }
   .du-hand { padding-top: 16px; }
-  .du-hand .du-card.du-lg { --w: 50px; --h: 74px; }
+
   .du-mine { padding-top: 5px; padding-bottom: 3px; }
   .du-feed { min-height: 22px; }
 }
+
+/* 手牌自动缩放，全部一屏可见 */
+.du-hand { overflow: hidden; padding: 18px 0 4px; justify-content: center; }
+.du-hand .du-card.du-lg, .du-hand.dense .du-card.du-lg { --w: var(--hw, 58px); --h: var(--hh, 86px); }
+.du-fan { gap: 6px; }
+.du-fan + .du-fan { margin-top: 8px; }
+.du-hand .du-card.sel { transform: translateY(calc(var(--hw, 58px) * -.28)); }

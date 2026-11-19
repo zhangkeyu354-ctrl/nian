@@ -403,13 +403,16 @@ function Lobby({ room }: { room: ReturnType<typeof useDURoom> }) {
   );
 }
 
-/** 手牌分排：每排放得下几张就放几张，牌与牌之间不重叠，保证每张右下角的小数字都看得见 */
-function fanRows<T>(hand: T[]): T[][] {
-  const w = typeof window === "undefined" ? 390 : Math.min(window.innerWidth, 560);
-  const per = Math.max(4, Math.floor((w - 24) / 63));
-  const rows = Math.max(1, Math.ceil(hand.length / per));
-  const size = Math.ceil(hand.length / rows);
-  return Array.from({ length: rows }, (_, i) => hand.slice(i * size, (i + 1) * size)).filter((r) => r.length);
+/** 手牌排版：在手牌区里找出能把所有牌一屏放下的最大牌宽，牌与牌之间不重叠 */
+function layoutHand(n: number, W: number, H: number) {
+  for (let w = 60; w >= 30; w -= 2) {
+    const h = Math.round(w * 1.48);
+    const per = Math.max(1, Math.floor((W - 40 + 6) / (w + 6)));
+    const rows = Math.ceil(n / per);
+    if (rows * (h + 8) + 18 <= H) return { w, h, per: Math.ceil(n / rows) };
+  }
+  const w = 30;
+  return { w, h: 44, per: Math.max(1, Math.floor((W - 10) / (w + 6))) };
 }
 
 function Score({ score }: { score: number }) {
@@ -431,6 +434,15 @@ function Table({ room, v }: { room: ReturnType<typeof useDURoom>; v: DUView }) {
   const [rules, setRules] = useState(false);
   const [spin, setSpin] = useState(false);
   const [toast, setToast] = useState("");
+  const handRef = useRef<HTMLElement>(null);
+  const [handBox, setHandBox] = useState({ w: 360, h: 260 });
+  useEffect(() => {
+    const el = handRef.current;
+    if (!el || typeof ResizeObserver === "undefined") return;
+    const ro = new ResizeObserver(([e]) => setHandBox({ w: e.contentRect.width, h: e.contentRect.height }));
+    ro.observe(el);
+    return () => ro.disconnect();
+  }, []);
   const [queue, setQueue] = useState<{ k: string; e: LogEntry }[]>([]);
   const [tutorial, setTutorial] = useState(() => storage.get("du:tutorial") !== "1");
   const seenLog = useRef<string[] | null>(null);
@@ -519,6 +531,7 @@ function Table({ room, v }: { room: ReturnType<typeof useDURoom>; v: DUView }) {
 
   // 手牌按数字排序
   const hand = useMemo(() => [...v.hand].sort((a, b) => valueOf(a) - valueOf(b) || a.id - b.id), [v.hand]);
+  const handLayout = layoutHand(Math.max(1, hand.length), handBox.w, handBox.h);
   const selCards = hand.filter((c) => sel.includes(c.id));
   const selValue = selCards.length ? valueOf(selCards[0]) : null;
   const playOk = myTurn && selCards.length > 0 && canPlayView(v, selCards.length, selValue!);
@@ -676,15 +689,15 @@ function Table({ room, v }: { room: ReturnType<typeof useDURoom>; v: DUView }) {
         </div>
       </section>
 
-      <section className={`du-hand${hand.length > 10 ? " dense" : ""}`} data-testid="du-hand">
+      <section ref={handRef} className="du-hand" data-testid="du-hand" style={{ "--hw": `${handLayout.w}px`, "--hh": `${handLayout.h}px` } as React.CSSProperties}>
         {hand.length === 0 && <span className="du-ladder-empty">手牌已出完</span>}
-        {fanRows(hand).map((row, ri) => (
+        {Array.from({ length: Math.ceil(hand.length / handLayout.per) }, (_, i) => hand.slice(i * handLayout.per, (i + 1) * handLayout.per)).map((row, ri) => (
           <div className="du-fan" key={ri} style={{ "--n": row.length } as React.CSSProperties}>
             {row.map((c, i) => {
               const mid = (row.length - 1) / 2;
               const off = row.length > 1 ? (i - mid) / mid : 0;
               return (
-                <span key={c.id} className="du-fan-slot" style={{ "--r": `${off * Math.min(6, row.length * 1.2)}deg`, "--y": `${off * off * Math.min(8, row.length * 1.5)}px`, zIndex: i } as React.CSSProperties}>
+                <span key={c.id} className="du-fan-slot" style={{ "--r": `${off * (row.length > 6 ? 2.5 : 5)}deg`, "--y": `${off * off * (row.length > 6 ? 4 : 7)}px`, zIndex: i } as React.CSSProperties}>
                   <DnupCard
                     card={c}
                     size="lg"
