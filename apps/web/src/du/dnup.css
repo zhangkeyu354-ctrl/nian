@@ -252,3 +252,4 @@
   .du-feed { min-height: 28px; font-size: 12px; }
   .du-dock .du-btn { min-height: 46px; }
 }
+.du-bot-x { margin-left: 6px; padding: 2px 8px; min-height: 0; }

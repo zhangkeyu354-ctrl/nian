@@ -13,6 +13,8 @@ export type DUAction =
   | { type: "ROTATE" }
   | { type: "NEXT_ROUND" }
   | { type: "SET_SETTINGS"; count?: number; target?: 3 | 4 }
+  | { type: "ADD_BOT" }
+  | { type: "REMOVE_BOT"; seat: number }
   | { type: "READY" }
   | { type: "START"; seed?: number }
   | { type: "LEAVE" }
@@ -24,7 +26,7 @@ export interface DUSnapshot {
   hostId: string | null;
   count: number;
   target: 3 | 4;
-  players: { id: string; name: string; seat: number; ready: boolean; connected: boolean }[];
+  players: { id: string; name: string; seat: number; ready: boolean; connected: boolean; bot?: boolean }[];
   view: DUView | null;
   serverNow: number;
   nextSeq?: number;

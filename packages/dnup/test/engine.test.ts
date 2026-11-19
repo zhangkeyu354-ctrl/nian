@@ -228,3 +228,13 @@ describe("隐私与随机整局", () => {
     }
   });
 });
+
+import { botMove } from "../src/bot.ts";
+describe("人机", () => {
+  it.each([2, 3, 6])("%i 个人机能把整局打完", (n) => {
+    let s = createDU(Array(n).fill("机"), { seed: 5 });
+    for (let i = 0; i < 5000 && s.phase !== "FINISHED"; i++)
+      s = s.phase === "ROUND_END" ? reduceDU(s, { type: "NEXT_ROUND", actor: 0 }) : reduceDU(s, botMove(s, s.turn));
+    expect(s.phase).toBe("FINISHED");
+  });
+});

@@ -10,9 +10,10 @@ import {
   type DUState,
   type Command,
 } from "../../../packages/dnup/src/index.ts";
+import { botMove } from "../../../packages/dnup/src/bot.ts";
 import { DU_EVENTS as E, type DUAction, type DUSnapshot } from "../../../packages/shared/src/du-protocol.ts";
 
-interface Seat { id: string; name: string; token: string; ready: boolean }
+interface Seat { id: string; name: string; token: string; ready: boolean; bot?: boolean }
 export interface DUFile {
   schema: 1;
   game: "dnup";
@@ -80,12 +81,12 @@ export class DURoom {
     ensure(seq === previous + 1, "操作序号不连续，请同步状态");
     ensure(version === this.file.version, "状态已更新，请重新同步");
     const seat = this.file.players.findIndex((p) => p.id === me.id);
-    if (["SET_SETTINGS", "START", "REMATCH", "NEXT_ROUND"].includes(c.type)) ensure(seat === 0, "只有房主可以操作");
+    if (["SET_SETTINGS", "START", "REMATCH", "NEXT_ROUND", "ADD_BOT", "REMOVE_BOT"].includes(c.type)) ensure(seat === 0, "只有房主可以操作");
     return this.transaction(() => {
       if (c.type === "REMATCH") {
         ensure(this.file.state?.phase === "FINISHED", "本局尚未结束");
         this.file.state = null;
-        this.file.players.forEach((p) => (p.ready = false));
+        this.file.players.forEach((p) => (p.ready = !!p.bot));
       } else if (this.file.state) {
         ensure(GAME.has(c.type), "对局进行中不能修改大厅设置");
         this.file.state = reduceDU(this.file.state, { ...(c as object), actor: seat } as Command);
@@ -98,7 +99,19 @@ export class DURoom {
             ensure(target === 3 || target === 4, "获胜门槛只能是3或4");
             this.file.count = count;
             this.file.target = target;
-            this.file.players.forEach((p) => (p.ready = false));
+            this.file.players.forEach((p) => (p.ready = !!p.bot));
+            break;
+          }
+          case "ADD_BOT": {
+            ensure(this.file.players.length < this.file.count, "房间已满");
+            const used = new Set(this.file.players.map((p) => p.name));
+            const name = ["人机小绿", "人机小紫", "人机小橙", "人机小蓝", "人机小黄"].find((n) => !used.has(n)) ?? "人机";
+            this.file.players.push({ id: randomBytes(12).toString("hex"), token: "bot:" + randomBytes(16).toString("hex"), name, ready: true, bot: true });
+            break;
+          }
+          case "REMOVE_BOT": {
+            ensure(this.file.players[c.seat]?.bot, "这个座位不是人机");
+            this.file.players.splice(c.seat, 1);
             break;
           }
           case "READY":
@@ -111,7 +124,7 @@ export class DURoom {
             break;
           case "LEAVE":
             this.file.players.splice(seat, 1);
-            this.file.players.forEach((p) => (p.ready = false));
+            this.file.players.forEach((p) => (p.ready = !!p.bot));
             break;
           default:
             throw Error("请先开始对局");
@@ -119,6 +132,18 @@ export class DURoom {
       this.file.seq[me.id] = seq;
       this.file.version++;
       return { changed: true };
+    });
+  }
+  /** 轮到人机时自动行动；返回是否有变化 */
+  botTick(now = Date.now()) {
+    const st = this.file.state;
+    if (!st || st.phase !== "PLAY") return false;
+    const seat = this.file.players[st.turn];
+    if (!seat?.bot || now - this.file.updatedAt < 1100) return false;
+    return this.transaction(() => {
+      this.file.state = reduceDU(st, botMove(st, st.turn));
+      this.file.version++;
+      return true;
     });
   }
   snapshot(token?: string, now = Date.now()): DUSnapshot {
@@ -131,7 +156,7 @@ export class DURoom {
       hostId: this.file.players[0]?.id ?? null,
       count: this.file.count,
       target: this.file.target,
-      players: this.file.players.map((p, seat) => ({ id: p.id, name: p.name, seat, ready: p.ready, connected: (this.connections.get(p.id) ?? 0) > 0 })),
+      players: this.file.players.map((p, seat) => ({ id: p.id, name: p.name, seat, ready: p.ready, bot: !!p.bot, connected: (this.connections.get(p.id) ?? 0) > 0 })),
       view: me && this.file.state ? viewForDU(this.file.state, seat) : null,
       serverNow: now,
       ...(me ? { nextSeq: (this.file.seq[me.id] ?? 0) + 1 } : {}),
@@ -167,6 +192,15 @@ export function attachDnup(io: Server, directory: string, opts: { maxRooms: numb
       if (s) s.emit(E.update, r.snapshot(s.data.duToken));
     }
   };
+  const botTimer = setInterval(() => {
+    for (const r of rooms.values())
+      try {
+        if (r.botTick()) broadcast(r);
+      } catch (e) {
+        console.warn("反转王牌人机出错", r.file.code, e);
+      }
+  }, 300);
+  botTimer.unref();
   const timer = setInterval(() => {
     for (const [code, r] of rooms)
       if (Date.now() - r.file.updatedAt > opts.idleMs && !io.sockets.adapter.rooms.get(channel(code))?.size) {
@@ -250,5 +284,5 @@ export function attachDnup(io: Server, directory: string, opts: { maxRooms: numb
     });
     socket.on("disconnect", leave);
   });
-  return { rooms, close: () => clearInterval(timer) };
+  return { rooms, close: () => (clearInterval(timer), clearInterval(botTimer)) };
 }

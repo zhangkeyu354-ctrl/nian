@@ -229,11 +229,20 @@ function Lobby({ room }: { room: ReturnType<typeof useDURoom> }) {
             <div key={i} className={`du-seat${p ? "" : " empty"}${p?.ready ? " ready" : ""}`}>
               <span className="du-seat-no">{i + 1}</span>
               <span>{p ? p.name : "等待加入…"}</span>
-              {p && <span className="du-seat-state">{i === 0 ? "房主 · " : ""}{p.ready ? "已准备" : "未准备"}{p.connected ? "" : " · 离线"}</span>}
+              {p && (p.bot ? (
+                <span className="du-seat-state">🤖 人机{host && <button className="du-btn sm du-bot-x" onClick={() => room.act({ type: "REMOVE_BOT", seat: i })}>移除</button>}</span>
+              ) : (
+                <span className="du-seat-state">{i === 0 ? "房主 · " : ""}{p.ready ? "已准备" : "未准备"}{p.connected ? "" : " · 离线"}</span>
+              ))}
             </div>
           );
         })}
       </div>
+      {host && !full && (
+        <button className="du-btn" disabled={room.pending} onClick={() => room.act({ type: "ADD_BOT" })} data-testid="du-add-bot">
+          🤖 添加人机（人不够时用来补位或测试）
+        </button>
+      )}
       {host ? (
         <div className="du-settings">
           <div className="du-row">
