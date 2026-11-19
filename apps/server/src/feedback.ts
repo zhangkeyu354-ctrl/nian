@@ -51,11 +51,12 @@ export function createFeedback(file: string) {
     const title = `[${TYPES[f.type]}]${f.game ? `[${f.game}]` : ""} ${f.text.replace(/\s+/g, " ").slice(0, 40)}`;
     const body = `${f.text}\n\n---\n- 类型：${TYPES[f.type]}\n- 游戏：${f.game || "（未选）"}\n- 联系方式：${f.contact || "（未填）"}\n- 页面：${f.page}\n- 时间：${f.at}\n- 设备：${f.ua}`;
     try {
-      await fetch(`https://api.github.com/repos/${repo}/issues`, {
+      const r = await fetch(`https://api.github.com/repos/${repo}/issues`, {
         method: "POST",
         headers: { authorization: `Bearer ${token}`, accept: "application/vnd.github+json", "content-type": "application/json", "user-agent": "zailai-yiju" },
-        body: JSON.stringify({ title, body, labels: [TYPES[f.type]] }),
+        body: JSON.stringify({ title, body }),
       });
+      if (!r.ok) console.warn("反馈转发失败", r.status, (await r.text()).slice(0, 200));
     } catch (e) {
       console.warn("反馈转发失败", e);
     }
