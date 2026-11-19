@@ -133,7 +133,7 @@ async function inView(p: Page, sel: string) {
 
 try {
   const [host, ...guests] = pages;
-  await host.goto(base);
+  await host.goto(base + "/?view=old-hall");
   await shot(host, "00-hall");
   await host.getByTestId("open-rr").click();
   await host.getByTestId("rr-create").waitFor();

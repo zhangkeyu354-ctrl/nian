@@ -81,7 +81,7 @@ const phone = async () => {
 };
 try {
   const host = await phone();
-  await host.goto(BASE + "/");
+  await host.goto(BASE + "/?view=old-hall");
   await host.getByTestId("open-ma").click();
   await host.getByTestId("ma-create").click();
   await host.waitForURL(/room=/);

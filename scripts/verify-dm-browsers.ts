@@ -53,7 +53,7 @@ const extra = async (p: Page, name: string, delay = 450) => {
 const shot = async (p: Page, name: string) =>
   assertUiShot(p, out + "/" + name + ".png");
 try {
-  await pages[0].goto(base);
+  await pages[0].goto(base + "/?view=old-hall");
   await pages[0].getByTestId("open-dm").click();
   await pages[0].getByTestId("dm-create").click();
   await pages[0].getByLabel("你的昵称").fill("朋友1");

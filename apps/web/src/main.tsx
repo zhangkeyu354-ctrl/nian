@@ -101,10 +101,10 @@ createRoot(document.getElementById("root")!).render(
       <App />
     ) : q.has("room") || q.has("online") ? (
       <Online />
-    ) : q.get("view") === "hall2" ? (
-      <GameHall />
-    ) : (
+    ) : q.get("view") === "old-hall" ? (
       <GameLobby />
+    ) : (
+      <GameHall />
     )}
   </SettingsProvider>,
 );

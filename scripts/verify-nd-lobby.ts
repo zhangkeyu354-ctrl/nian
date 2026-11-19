@@ -14,7 +14,7 @@ const checks: string[] = [],
 try {
   const p = await browser.newPage({ viewport: { width: 390, height: 844 } });
   p.on("pageerror", (e) => errors.push(e.message));
-  await p.goto(base);
+  await p.goto(base + "/?view=old-hall");
   const box = p.getByTestId("game-nd");
   await box.scrollIntoViewIfNeeded();
   assert.equal(await box.count(), 1);

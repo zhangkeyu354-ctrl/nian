@@ -249,3 +249,4 @@ body:has(.hall2)::before { content: ""; position: fixed; inset: 0; pointer-event
 .hall2-sec h3 { font-size: 15px; letter-spacing: 3px; }
 .hall-primary { font-family: "Hall Title", "PingFang SC", sans-serif; font-weight: 400; font-size: 21px; }
 .hall2-sec h3 span { font-family: "PingFang SC", system-ui, sans-serif; font-size: 13px; letter-spacing: 0; }
+.cart-art > img.hall-cover-img, .hall-sheet-art > img.hall-cover-img, .cart-art.fill > img.hall-cover-img, .hall-sheet-art.fill > img.hall-cover-img { position: absolute; inset: 0; width: 100% !important; height: 100% !important; max-width: none; max-height: none; object-fit: cover; }

@@ -76,7 +76,7 @@ try {
     const ctx = await browser.newContext({ viewport: i < 2 ? { width: 390, height: 844 } : { width: 1280, height: 900 } });
     const p = await ctx.newPage(); p.on("pageerror", e => errors.push(e.message)); pages.push(p);
   }
-  await pages[0].goto(base + "/"); await click(pages[0], "open-cn"); await click(pages[0], "cn-create");
+  await pages[0].goto(base + "/?view=old-hall"); await click(pages[0], "open-cn"); await click(pages[0], "cn-create");
   await pages[0].waitForURL(/room=/); const url = pages[0].url();
   for (let i = 0; i < 4; i++) {
     const p = pages[i]; if (i) await p.goto(url);
