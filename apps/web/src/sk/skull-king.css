@@ -340,3 +340,53 @@ button.sk-card { cursor: pointer; }
 .sk-card .sk-badge { border-radius: 3px; font-family: "ZCOOL XiaoWei", serif; font-weight: 400; box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.4); }
 .sk-link { text-decoration: none; border-bottom: 1px dotted rgba(199, 154, 69, 0.5); align-self: center; padding: 2px 0; }
 .sk-err { color: #f2b2a0; }
+
+/* ===== 更大的牌、说明与目标提示 ===== */
+.sk-card.sk-lg { --w: 74px; --h: 108px; }
+.sk-card.sk-md { --w: 64px; --h: 93px; }
+.sk-card.sk-sm { --w: 46px; --h: 67px; }
+@media (max-height: 700px) { .sk-card.sk-lg { --w: 66px; --h: 96px; } .sk-card.sk-md { --w: 56px; --h: 81px; } }
+.sk-hand { padding: 18px 8px 0; }
+.sk-hand .sk-card + .sk-card, .sk-hand.n8 .sk-card + .sk-card, .sk-hand.n9 .sk-card + .sk-card, .sk-hand.n10 .sk-card + .sk-card { margin-left: clamp(calc(var(--w) * -0.62), calc((100vw - 16px - var(--n) * var(--w)) / (var(--n) - 1)), 6px); }
+.sk-card .sk-badge { font-size: calc(var(--w) * 0.34); min-width: calc(var(--w) * 0.42); }
+.sk-card .sk-name { position: absolute; left: 0; right: 0; bottom: 0; padding: 2px 0 3px; font-size: calc(var(--w) * 0.17); line-height: 1.1; text-align: center; color: #fff4d8; background: linear-gradient(transparent, rgba(10, 6, 2, 0.88) 40%); font-family: "ZCOOL XiaoWei", serif; white-space: nowrap; }
+.sk-card.sk-sm .sk-name { font-size: 9px; }
+.sk-card.sel { transform: translateY(-14px); }
+.sk-trick-slot { position: relative; cursor: pointer; }
+.sk-trick-slot small { font-size: 12px; color: #ecd9ae; }
+.sk-trick-slot.best .sk-card { box-shadow: 0 0 0 2px var(--sk-brass), 0 6px 14px rgba(0, 0, 0, 0.55); }
+.sk-best { position: absolute; top: -12px; left: 50%; transform: translateX(-50%); z-index: 2; font-size: 11px; padding: 1px 6px; border-radius: 3px; background: var(--sk-brass); color: #2a1806; white-space: nowrap; font-family: "ZCOOL XiaoWei", serif; }
+.sk-goal { margin: 0 auto 6px; width: fit-content; padding: 4px 12px; border-radius: 4px; font-size: 14px; font-family: "ZCOOL XiaoWei", serif; border: 1px solid var(--sk-edge); background: rgba(24, 15, 7, 0.9); color: #ecd9ae; }
+.sk-goal.need { border-color: var(--sk-brass); }
+.sk-goal.ok { border-color: #7c9a52; color: #c9e3a6; }
+.sk-goal.bad { border-color: #a5523f; color: #f2b2a0; }
+.sk-play-bar { display: grid; grid-template-columns: auto 1fr auto; align-items: center; gap: 10px; margin: 0 4px 8px; padding: 8px; border-radius: 8px; border: 1px solid var(--sk-brass); background: rgba(24, 15, 7, 0.95); text-align: left; }
+.sk-play-bar .sk-card { transform: none; }
+.sk-play-info { display: flex; flex-direction: column; gap: 3px; min-width: 0; font-weight: 400; }
+.sk-play-info b { font-family: "ZCOOL XiaoWei", serif; font-size: 17px; color: #f6ead0; font-weight: 400; }
+.sk-play-info span { font-size: 12.5px; color: var(--sk-mute); line-height: 1.4; }
+.sk-play-info em { font-style: normal; font-size: 13px; }
+.sk-play-info em.win { color: #c9e3a6; }
+.sk-play-info em.lose { color: #f2b2a0; }
+.sk-play-bar .sk-btn { padding: 12px 14px; }
+.sk-peek-big { display: flex; flex-direction: column; align-items: center; gap: 12px; }
+.sk-peek-big .sk-card { --w: 150px; --h: 218px; }
+.sk-peek-big p { font-size: 15px; line-height: 1.6; text-align: center; margin: 0; }
+.sk-tut h3 { font-family: "ZCOOL XiaoWei", serif; color: var(--sk-brass); font-weight: 400; font-size: 20px; margin: 4px 0 8px; }
+.sk-tut p { font-size: 15px; line-height: 1.7; margin: 0; }
+.sk-status { font-size: 17px; }
+.sk-felt { flex: 1 1 0; }
+.sk-top { gap: 6px; }
+.sk-round { white-space: nowrap; font-size: 14px; }
+.sk-top-btns { gap: 4px; flex-wrap: nowrap; }
+.sk-icon-btn { white-space: nowrap; padding: 5px 7px; font-size: 13px; }
+.sk-hand.n6 .sk-name, .sk-hand.n7 .sk-name, .sk-hand.n8 .sk-name, .sk-hand.n9 .sk-name, .sk-hand.n10 .sk-name { display: none; }
+.sk-hand .sk-card.sel .sk-name { display: block; }
+.sk-lead { top: 6px; left: 8px; transform: none; }
+.sk-trick { padding-top: 26px; }
+.sk-trick .sk-card.sk-md { --w: 78px; --h: 113px; }
+.sk-seatbar.compact ~ .sk-felt .sk-trick .sk-card.sk-md { --w: 62px; --h: 90px; }
+@media (max-height: 700px) { .sk-trick .sk-card.sk-md { --w: 62px; --h: 90px; } .sk-seatbar.compact ~ .sk-felt .sk-trick .sk-card.sk-md { --w: 52px; --h: 76px; } }
+.sk-suggest { text-align: center; font-size: 13px; color: var(--sk-mute); margin-top: -4px; }
+.sk-banner { pointer-events: none; }
+.sk-reveal { pointer-events: none; }

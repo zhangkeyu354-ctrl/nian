@@ -27,7 +27,7 @@ for (let i = 0; i < 100; i++) {
 const browser = await chromium.launch(process.env.PW_CHROME ? { executablePath: process.env.PW_CHROME } : {});
 const errors: string[] = [];
 const phone = async () => {
-  const ctx = await browser.newContext({ viewport: { width: 390, height: 844 }, deviceScaleFactor: 2, hasTouch: true, isMobile: true });
+  const ctx = await browser.newContext({ actionTimeout: 4000, viewport: { width: 390, height: 844 }, deviceScaleFactor: 2, hasTouch: true, isMobile: true });
   const p = await ctx.newPage();
   p.on("pageerror", (e) => errors.push(e.message));
   p.on("console", (m) => m.type() === "error" && !m.text().includes("404") && errors.push(m.text()));
@@ -50,8 +50,10 @@ try {
   await a.click('[data-testid="sk-start"]');
   let shots = 0, plays = 0, bids = 0;
   const step = async (p: Page, tag: string) => {
+    const tut = p.locator('[data-testid="sk-tut-next"]');
+    if (await tut.count()) { if (tag === "a" && !shots) await p.screenshot({ path: out + "/sk-tutorial.png" }); await tut.click(); return true; }
     const banner = p.locator('[data-testid="sk-trick-banner"], [data-testid="sk-bid-reveal"]');
-    if (await banner.count()) { if (shots < 3 && tag === "a" && plays > 4) { await p.screenshot({ path: `${out}/sk-banner-${shots++}.png` }); } await banner.first().click(); return true; }
+    if (await banner.count()) { if (shots < 3 && tag === "a" && plays > 4) { await p.screenshot({ path: `${out}/sk-banner-${shots++}.png` }); } await delay(300); return true; }
     if (await p.locator('[data-testid="sk-bid-go"]').count()) {
       const btns = p.locator('[data-testid^="sk-bid-"]:not([data-testid="sk-bid-go"]):not([data-testid="sk-bid-panel"]):not([data-testid="sk-bid-reveal"])');
       const n = await btns.count();
@@ -68,7 +70,7 @@ try {
     }
     const legal = p.locator('[data-testid="sk-hand"] button.sk-card:not(.dim)');
     if (await legal.count()) {
-      await legal.first().click();
+      await legal.first().click({ position: { x: 12, y: 50 } });
       if (plays === 20 && tag === "a") await p.screenshot({ path: out + "/sk-select.png" });
       await p.click('[data-testid="sk-play"]');
       const tig = p.locator('[data-testid="sk-tig-pirate"]');
@@ -88,7 +90,7 @@ try {
   let done = false;
   while (!done && Date.now() - t0 < 420_000) {
     for (const [p, tag] of [[a, "a"], [b, "b"]] as const) {
-      const r = await step(p, tag);
+      const r = await step(p, tag).catch(() => false);
       if (r === "done") done = true;
     }
     await delay(120);

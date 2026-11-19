@@ -2,6 +2,7 @@ import { useEffect, useRef, useState } from "react";
 import "@fontsource/zcool-xiaowei/index.css";
 import "./skull-king.css";
 import { useSKRoom } from "./sk-net.ts";
+import { estimateBid } from "../../../../packages/skull-king/src/bot.ts";
 import {
   CARDS,
   SUIT_NAME,
@@ -10,6 +11,7 @@ import {
   SCHEDULES,
   cardName,
   countsFor,
+  resolveTrick,
   sortHand,
   type Played,
   type SKView,
@@ -61,6 +63,70 @@ function Sprite({ list, ms = 50, className, hold = true }: { list: string[]; ms?
 }
 const BONUS_IMG = new Set([10, 20, 30, 40]);
 
+/* ---------------- 牌的说明 ---------------- */
+function shortName(id: number) {
+  const c = CARDS[id];
+  if (c.kind === "suit") return SUIT_NAME[c.suit!] + (c.suit === "black" ? "·王牌" : "");
+  if (c.kind === "pirate") return "海盗";
+  return cardName(id);
+}
+export function explain(id: number): string {
+  const c = CARDS[id];
+  switch (c.kind) {
+    case "suit":
+      return c.suit === "black"
+        ? `黑色是王牌：能压过所有鹦鹉、藏宝图、宝箱。输给海盗、骷髅王、美人鱼。`
+        : `${SUIT_NAME[c.suit!]}${c.n}：这墩要跟${SUIT_NAME[c.suit!]}时，比数字大小。会被黑色王牌和所有角色牌压住。`;
+    case "escape":
+      return "逃跑：一定不赢。不想再吃墩时打它。";
+    case "pirate":
+      return `海盗（${PIRATE_NAME[c.pirate!]}）：压过所有数字牌和美人鱼，但怕骷髅王。`;
+    case "tigress":
+      return "母老虎：打出时自己选，当海盗（想赢）或当逃跑（想输）。";
+    case "king":
+      return "骷髅王：压过所有数字牌和海盗。唯一怕美人鱼。";
+    case "mermaid":
+      return "美人鱼：压过所有数字牌，输给海盗；但能抓骷髅王（+40）。";
+    case "kraken":
+      return "克拉肯：这一墩直接作废，谁也不赢。";
+    case "whale":
+      return "白鲸：特殊牌全部失效，只比数字大小，不看颜色。";
+    case "loot":
+      return "战利品：当逃跑用。谁收走它，就和你结盟，两人都猜中各 +20。";
+  }
+}
+
+const TUTORIAL = [
+  { t: "每轮先猜能吃几墩", d: "看完手牌，猜自己这一轮能赢几墩（一墩 = 每人各出一张，最大的人收走）。所有人同时亮出。" },
+  { t: "正好猜中才得分", d: "猜 2 吃 2：+40。猜 2 吃 3：扣 10。猜 0 一墩不吃：张数 × 10 分。吃多吃少都扣分，所以有时要故意输。" },
+  { t: "牌的大小", d: "要跟第一张数字牌的颜色。黑色是王牌，压过其他颜色。海盗 > 数字；骷髅王 > 海盗；美人鱼 > 骷髅王；海盗 > 美人鱼。逃跑一定输。" },
+  { t: "看提示出牌", d: "点一张牌会放大并告诉你：打出去现在会不会是最大。上方一直显示你还要吃几墩，或者已经够了别再赢。" },
+];
+
+function Tutorial({ onClose }: { onClose: () => void }) {
+  const [i, setI] = useState(0);
+  const step = TUTORIAL[i];
+  return (
+    <Sheet title={`怎么玩（${i + 1}/${TUTORIAL.length}）`} onClose={onClose}>
+      <div className="sk-tut" data-testid="sk-tutorial">
+        <h3>{step.t}</h3>
+        <p>{step.d}</p>
+        {i === 2 && <img className="sk-hier" src="/assets/skullking/ui/hierarchy.webp" alt="" />}
+      </div>
+      <div className="sk-choices">
+        {i > 0 && (
+          <button className="sk-btn" onClick={() => setI(i - 1)}>
+            上一步
+          </button>
+        )}
+        <button className="sk-btn main" onClick={() => (i + 1 < TUTORIAL.length ? setI(i + 1) : onClose())} data-testid="sk-tut-next">
+          {i + 1 < TUTORIAL.length ? "下一步" : "知道了，开打"}
+        </button>
+      </div>
+    </Sheet>
+  );
+}
+
 /* ---------------- 卡牌 ---------------- */
 export function SKCard({ id, as, size = "md", selected, dim, onClick, testid }: { id: number; as?: "pirate" | "escape"; size?: "sm" | "md" | "lg"; selected?: boolean; dim?: boolean; onClick?: () => void; testid?: string }) {
   const c = CARDS[id];
@@ -90,6 +156,7 @@ export function SKCard({ id, as, size = "md", selected, dim, onClick, testid }: 
       )}
       {art && <img className="sk-art" src={`/assets/skullking/cards/${c.key}.webp`} alt="" onError={() => setArt(false)} />}
       {art && c.kind === "suit" && <span className="sk-badge">{c.n}</span>}
+      {art && <span className="sk-name">{shortName(id)}</span>}
       {as && <span className={`sk-as ${as}`}>{as === "pirate" ? "当海盗" : "当逃跑"}</span>}
     </El>
   );
@@ -662,6 +729,18 @@ function Table({ room, v }: { room: Room; v: SKView }) {
   }, [v.tricks.length, v.round, v.phase]);
   const me = v.players[v.me];
   const myTurn = v.phase === "PLAY" && v.turn === v.me;
+  const [peek, setPeek] = useState<number | null>(null);
+  const [tut, setTut] = useState(() => storage.get("sk:tut") !== "1");
+  const best = v.trick.length ? resolveTrick(v.trick).winner : null;
+  const wouldWin = sel !== null && myTurn ? resolveTrick([...v.trick, { seat: v.me, id: sel }]).winner === v.me : false;
+  const goal = (() => {
+    if (v.phase !== "PLAY" && v.phase !== "ABILITY") return null;
+    const need = (me.bid ?? 0) - me.won;
+    const left = v.cards - v.tricks.length;
+    if (need > 0) return { kind: need > left ? "bad" : "need", text: need > left ? `还差 ${need} 墩，但只剩 ${left} 墩了` : `还要再吃 ${need} 墩（剩 ${left} 墩）` };
+    if (need === 0) return { kind: "ok", text: left ? "已经够了，后面别再赢" : "正好猜中" };
+    return { kind: "bad", text: `多吃了 ${-need} 墩，这轮猜错了` };
+  })();
   const hand = sortHand(v.hand);
   useEffect(() => setSel(null), [v.turn, v.phase, v.hand.length]);
   const seats = [...v.players.map((p, i) => ({ i, p })), ...(v.ghost ? [{ i: v.players.length, p: null }] : [])];
@@ -687,10 +766,13 @@ function Table({ room, v }: { room: Room; v: SKView }) {
         </div>
         <div className="sk-top-btns">
           <button className="sk-icon-btn" onClick={() => setSheet("score")} data-testid="sk-open-score">
-            计分表
+            计分
           </button>
           <button className="sk-icon-btn" onClick={() => setSheet("log")}>
-             记录
+            日志
+          </button>
+          <button className="sk-icon-btn" onClick={() => setTut(true)}>
+            教学
           </button>
           <button className="sk-icon-btn" onClick={() => setSheet("rules")}>
             规则
@@ -744,9 +826,10 @@ function Table({ room, v }: { room: Room; v: SKView }) {
               </div>
             ) : (
               v.trick.map((p, k) => (
-                <div key={p.id} className="sk-trick-slot" style={{ ["--k" as string]: k }}>
+                <div key={p.id} className={`sk-trick-slot${best === p.seat ? " best" : ""}`} style={{ ["--k" as string]: k }} onClick={() => setPeek(p.id)}>
+                  {best === p.seat && <span className="sk-best">目前最大</span>}
                   <SKCard id={p.id} as={p.as} size="md" />
-                  <small>{nameOf(v, p.seat)}</small>
+                  <small>{p.seat === v.me ? "你" : nameOf(v, p.seat)}</small>
                 </div>
               ))
             )}
@@ -760,6 +843,7 @@ function Table({ room, v }: { room: Room; v: SKView }) {
         {v.phase === "BID" && !me.bidDone && (
           <div className="sk-panel bid" data-testid="sk-bid-panel">
             <div className="sk-hint">这一轮你能吃几墩？</div>
+            <div className="sk-suggest">按你这手牌，大概能吃 {estimateBid(v.hand, v.players.length)} 墩（仅供参考）</div>
             <div className="sk-bid-grid">
               {Array.from({ length: v.cards + 1 }, (_, k) => (
                 <button key={k} className={`sk-bid-btn${bid === k ? " on" : ""}`} onClick={() => setBid(k)} data-testid={`sk-bid-${k}`} aria-label={`${k} 墩`}>
@@ -797,15 +881,21 @@ function Table({ room, v }: { room: Room; v: SKView }) {
         {v.phase === "ABILITY" && v.ability && <Ability room={room} v={v} />}
       </main>
       <footer className={`sk-hand-wrap${myTurn ? " active" : ""}`}>
+        {goal && <div className={`sk-goal ${goal.kind}`} data-testid="sk-goal">{goal.text}</div>}
         {myTurn && sel !== null && (
           <div className="sk-play-bar">
-            <span>{cardName(sel)}</span>
+            <SKCard id={sel} size="lg" />
+            <div className="sk-play-info">
+              <b>{cardName(sel)}</b>
+              <span>{explain(sel)}</span>
+              <em className={wouldWin ? "win" : "lose"}>{CARDS[sel].kind === "tigress" ? "可以选当海盗或当逃跑" : wouldWin ? "打出去：现在是最大" : "打出去：压不过桌上的牌"}</em>
+            </div>
             <button className="sk-btn main" disabled={room.pending} onClick={() => play()} data-testid="sk-play">
               打出
             </button>
           </div>
         )}
-        <div className={`sk-hand n${Math.min(hand.length, 10)}`} data-testid="sk-hand">
+        <div className={`sk-hand n${Math.min(hand.length, 10)}`} style={{ ["--n" as string]: Math.max(hand.length, 1) }} data-testid="sk-hand">
           {hand.map((id) => {
             const ok = !myTurn || v.legal.includes(id);
             return (
@@ -846,6 +936,22 @@ function Table({ room, v }: { room: Room; v: SKView }) {
                当逃跑
               <small>一定不赢</small>
             </button>
+          </div>
+        </Sheet>
+      )}
+      {tut && (
+        <Tutorial
+          onClose={() => {
+            storage.set("sk:tut", "1");
+            setTut(false);
+          }}
+        />
+      )}
+      {peek !== null && (
+        <Sheet title={cardName(peek)} onClose={() => setPeek(null)}>
+          <div className="sk-peek-big">
+            <SKCard id={peek} size="lg" />
+            <p>{explain(peek)}</p>
           </div>
         </Sheet>
       )}

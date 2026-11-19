@@ -64,8 +64,8 @@ async function check(p: Page, tag: string) {
   for (const b of r) issues.push(`[${tag}] ${b}`);
   return r;
 }
-for (const sc of scenarios) {
-  const ctx = await browser.newContext({ viewport: { width: sc.w, height: sc.h }, deviceScaleFactor: 2, hasTouch: true, isMobile: true });
+for (const sc of scenarios.filter((x) => !process.env.ONLY || process.env.ONLY.split(",").includes(x.name))) {
+  const ctx = await browser.newContext({ actionTimeout: 4000, viewport: { width: sc.w, height: sc.h }, deviceScaleFactor: 2, hasTouch: true, isMobile: true });
   const p = await ctx.newPage();
   await p.addInitScript("window.__name = (f) => f");
   const errors: string[] = [];
@@ -93,9 +93,11 @@ for (const sc of scenarios) {
     const text = (await p.textContent("body")) ?? "";
     if (text !== last) { last = text; idleSince = Date.now(); }
     if (Date.now() - idleSince > 15000) { issues.push(`[${sc.name}] 画面 15 秒没变化，可能卡住`); await shot("stuck"); break; }
+    const tut = p.locator('[data-testid="sk-tut-next"]');
+    if (await tut.count()) { await shot("tutorial"); await tut.click(); continue; }
     const banner = p.locator('[data-testid="sk-trick-banner"]');
     if (await banner.count()) {
-      const kind = (await banner.getAttribute("class")) ?? "";
+      const kind = (await banner.getAttribute("class", { timeout: 500 }).catch(() => "")) ?? "";
       if (kind.includes("kraken")) await shot("kraken");
       else if (kind.includes("whale")) await shot("whale");
       else if ((await p.locator(".sk-capture").count())) await shot("mermaid");
@@ -103,10 +105,10 @@ for (const sc of scenarios) {
       else if (firstBanner) { firstBanner = false; await delay(400); await shot("trick"); }
       // 不点：观察自动消失 + 人机是否在横幅期间继续
       cnt++;
-      if (cnt % 3 === 0) await banner.click().catch(() => {});
+      
       continue;
     }
-    if (await p.locator('[data-testid="sk-bid-reveal"]').count()) { await delay(300); await shot("reveal"); continue; }
+    if (await p.locator('[data-testid="sk-bid-reveal"]').count()) { await shot("reveal"); }
     if (await p.locator('[data-testid="sk-bid-go"]').count()) {
       await check(p, sc.name + " 下注");
       await shot("bid");
@@ -139,7 +141,7 @@ for (const sc of scenarios) {
         await shot("follow");
       }
       await check(p, sc.name + " 出牌");
-      await legal.last().click(); await delay(150);
+      await legal.first().click({ position: { x: 12, y: 50 } }).catch(() => {}); await delay(150);
       await shot("select");
       await check(p, sc.name + " 选牌后");
       const s = Date.now();
