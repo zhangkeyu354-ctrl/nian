@@ -16,6 +16,7 @@ const DrawingParty = lazy(() => import("./drawing/DrawingParty.tsx").then(m => (
 const WitchTown = lazy(() => import("./wt/WitchTown.tsx").then(m => ({ default: m.WitchTown })));
 const WitchTownMock = lazy(() => import("./wt/Mock.tsx").then(m => ({ default: m.WitchTownMock })));
 const Rummikub = lazy(() => import('./rk/Rummikub.tsx').then(m => ({ default: m.Rummikub })));
+const Dnup = lazy(() => import("./du/Dnup.tsx").then(m => ({default:m.Dnup})));
 const SodaSmugglers = lazy(() => import("./ss/SodaSmugglers.tsx").then(m => ({default:m.SodaSmugglers})));
 const Menace = lazy(() => import("./ta/Menace.tsx").then(m => ({default:m.Menace})));
 const BossFighters = lazy(() => import("./bf/BossFighters.tsx").then(m => ({default:m.BossFighters})));
@@ -70,6 +71,8 @@ createRoot(document.getElementById("root")!).render(
       <Suspense fallback={<p>正在打开卡里巴湖…</p>}><Kariba /></Suspense>
     ) : q.get("game") === "nd" ? (
       <Suspense fallback={<p>正在打开脑洞量表…</p>}><NaodongScale /></Suspense>
+    ) : q.get("game") === "du" ? (
+      <Suspense fallback={<p>正在打开反转王牌…</p>}><Dnup /></Suspense>
     ) : q.get("game") === "ss" ? (
       <Suspense fallback={<p>正在打开汽水走私犯…</p>}><SodaSmugglers /></Suspense>
     ) : q.get("game") === "rk" ? (
