@@ -1,34 +1,26 @@
 # 大厅封面交接
 
-这批封面取原版或站内图的主要元素重新构图。横图让画面向两边展开，卡带聚焦主体。延展使用取自游戏色板的渐变和边缘融合。
+本批九款。将原版盒面放到宽画布，再用图像编辑外扩。合成时恢复原版中心像素，接缝处理限于边沿及外围。宽图使用完整画布，卡带去掉两侧各 200 像素的外扩区域。
 
-| 游戏 ID | 美术参考 | 主体和边缘处理 | 卡带字节 | 横图字节 |
+| 游戏 ID | 参考出处 | 文件 | 卡带字节 | 横图字节 |
 |---|---|---|---:|---:|
-| sk | [原版素材](https://cdn11.bigcommerce.com/s-285hkc2e8r/images/stencil/1280x1280/products/29458/260928/gpb3056ww__35827.1761835824.jpg?c=2) | 海盗与船帆。取局部重构，左右融入同色渐变 | 73,242 | 73,528 |
-| du | `apps/web/public/assets/dnup/cover.webp` | 彩色数字与绿色标记。按两种比例重新裁切 | 20,506 | 23,428 |
-| bf | [原版素材](https://cdn.pegasus.de/public/media/40/13/19/1757425275/4250231743856_BossFighterQR_EN_Pac_L_RGB.png?ts=1757425275) | 魔王与队伍。取局部重构，左右融入同色渐变 | 114,494 | 143,632 |
-| ta | [原版素材](https://casualgamerevolution.b-cdn.net/sites/default/files/field/image/The%20Menace%20Among%20Us.jpg) | 飞船船员。取局部重构，左右融入同色渐变 | 116,592 | 116,074 |
-| kb | `apps/web/public/assets/kariba/box.webp` | 大象与水塘。取局部重构，左右融入同色渐变 | 62,658 | 86,642 |
-| nd | `apps/web/public/assets/naodong-scale/box.webp` | 标题与彩色刻度。取局部重构，左右融入同色渐变 | 41,976 | 43,142 |
-| ss | [原版素材](https://www.battlefieldbangkok.com/cdn/shop/files/soda-smugglers-with-deluxe-bottle-cap-tokens-board-games-bitewing-games-912064.webp?v=1751985061&width=1946) | 紫衣走私犯与汽水。取局部重构，左右融入同色渐变 | 79,106 | 89,928 |
-| rk | `apps/web/public/assets/rummikub/box-classic.webp` | 彩色数字牌。取局部重构，左右融入同色渐变 | 51,510 | 61,382 |
-| xb | [原版素材](https://images.vocus.cc/9df26b96-87a0-4e22-a89d-2699e4fa2f1c.png) | 问答桌上的三只猫。取局部重构，左右融入同色渐变 | 92,978 | 124,614 |
-| wt | [原版素材](https://static.wixstatic.com/media/bf497e_cbb756bd16a64c8188e47731cc66f7b9~mv2_d_3024_4032_s_4_2.jpg/v1/fill/w_980%2Ch_1307%2Cal_c%2Cq_85%2Cusm_0.66_1.00_0.01%2Cenc_avif%2Cquality_auto/bf497e_cbb756bd16a64c8188e47731cc66f7b9~mv2_d_3024_4032_s_4_2.jpg) | 深色书封与金色字标。取局部重构，左右融入同色渐变 | 105,130 | 123,338 |
-| tp | `apps/web/src/drawing/Covers.tsx` | 画纸与手绘卡片。按两种比例重新裁切 | 38,730 | 43,304 |
-| fa | [原版素材](https://cdn.shoplightspeed.com/shops/668362/files/71107665/1652x1652x1/oink-games-oink-a-fake-artist-goes-to-new-york.jpg) | 黄色城市剪影。取局部重构，左右融入同色渐变 | 13,858 | 13,582 |
-| rr | `apps/web/src/rr/Objects.tsx` | 散落的站内物品图标。按两种比例重新裁切 | 46,370 | 47,314 |
-| dm | [原版素材](https://assets.brack.ch/images2/5/8/5/406940585/406940585_xxl.jpg) | 手势与红蓝剪影。取局部重构，左右融入同色渐变 | 18,166 | 19,668 |
-| dbd | [原版素材](https://toytooth.com/cdn/shop/files/71zcahZ2xKL.jpg?v=1761742672) | 火光中的杀手。取局部重构，左右融入同色渐变 | 48,016 | 51,428 |
-| ma | `apps/web/public/assets/magical-athlete/lobby/cover.webp` | 赛场怪咖。取局部重构，左右融入同色渐变 | 86,556 | 125,148 |
-| cn | [原版素材](https://imgix.bustle.com/uploads/image/2021/1/11/0a1d246a-f3f7-44a5-a16c-9802b1d50c48-codenames.jpg) | 两位特工。取局部重构，左右融入同色渐变 | 44,840 | 45,434 |
+| sk | [参考出处](https://uploads.comparajogos.com.br/img/7f7be480a7023ddc0b9365ee2fa83a73fa038d33.jpg) | [原图](ref/sk.jpg) · [对照](compare/sk.webp) | 109,740 | 116,924 |
+| du | [参考出处](https://github.com/zhangkeyu354-ctrl/nian/blob/b7380a3/apps/web/public/assets/dnup/cover.webp) | [原图](ref/du.jpg) · [对照](compare/du.webp) | 22,394 | 25,050 |
+| bf | [参考出处](https://cdn.pegasus.de/public/media/40/13/19/1757425275/4250231743856_BossFighterQR_EN_Pac_L_RGB.png?ts=1757425275) | [原图](ref/bf.jpg) · [对照](compare/bf.webp) | 118,828 | 134,280 |
+| ta | [参考出处](https://casualgamerevolution.b-cdn.net/sites/default/files/field/image/The%20Menace%20Among%20Us.jpg) | [原图](ref/ta.jpg) · [对照](compare/ta.webp) | 118,530 | 138,378 |
+| kb | [参考出处](https://store.asmodee.com/cdn/shop/products/HL8923-image0_2000.jpg?v=1691511323) | [原图](ref/kb.jpg) · [对照](compare/kb.webp) | 25,098 | 27,406 |
+| nd | [参考出处](https://media.cdnws.com/_i/184339/1087/490/87/cgtop01-box3d-010420.png) | [原图](ref/nd.jpg) · [对照](compare/nd.webp) | 61,318 | 63,514 |
+| ss | [参考出处](https://www.battlefieldbangkok.com/cdn/shop/files/soda-smugglers-with-deluxe-bottle-cap-tokens-board-games-bitewing-games-912064.webp?v=1751985061&width=1946) | [原图](ref/ss.jpg) · [对照](compare/ss.webp) | 84,924 | 88,278 |
+| rk | [参考出处](https://i.ebayimg.com/00/s/MTQ5OVgxNTAw/z/pEYAAOSwzOleZypW/%24_57.JPG?set_id=8800005007) | [原图](ref/rk.jpg) · [对照](compare/rk.webp) | 76,364 | 77,654 |
+| wt | [参考出处](https://static.wixstatic.com/media/bf497e_cbb756bd16a64c8188e47731cc66f7b9~mv2_d_3024_4032_s_4_2.jpg/v1/fill/w_980%2Ch_1307%2Cal_c%2Cq_85%2Cusm_0.66_1.00_0.01%2Cenc_avif%2Cquality_auto/bf497e_cbb756bd16a64c8188e47731cc66f7b9~mv2_d_3024_4032_s_4_2.jpg) | [原图](ref/wt.jpg) · [对照](compare/wt.webp) | 89,494 | 88,246 |
 
-共 34 张，合计 2,286,314 字节。
+拉密、脑洞量表、魔王试炼、卡里巴湖和女巫镇的参考包含包装透视或盒外背景，取正面后校正。卡里巴湖采用 Helvetiq 大象版；女巫镇采用 Salem 1692 深色书封版。反转王牌使用仓库内的对应封面，该来源的外部出处尚未独立核验。
 
-《卡里巴湖》的水塘画面来自站内素材，外部原版出处未独立核验。Salem 1692 使用深色书封版本。
+剩余八款沿用分支已有资源，待首批方向确认。
 
-## iPhone 13 竖屏验收
+## 验收
 
-`npm run build` 通过。通过 Playwright 使用 iPhone 13 的 390×844 视口打开 `/?view=hall2`。卡带上的游戏名由页面显示，盒面版式中的部分原标题随主体裁切。
+`npm run build` 通过。用 Playwright 的 iPhone 13 竖屏配置打开 `/?view=hall2`，18 张成品均通过浏览器解码、文件尺寸和体积检查。逐款对照原版，并排检查了九张 170×128 缩略图。女巫镇的实体书封保留了原版边沿和材质，其余八款尚未进行本批对照验收。
 
-- 大厅截图：[首屏](cover-screens/01-top.png)、[中间](cover-screens/02-middle.png)、[底部](cover-screens/03-bottom.png)
-- 详情截图：[骷髅王](cover-screens/detail-sk.png)、[瞎掰王](cover-screens/detail-xb.png)、[眼疾手快](cover-screens/detail-rr.png)
+- 大厅：[首屏](cover-screens/01-top.png)、[中段](cover-screens/02-middle.png)、[底部](cover-screens/03-bottom.png)
+- 详情：[骷髅王](cover-screens/detail-sk.png)、[脑洞量表](cover-screens/detail-nd.png)、[拉密](cover-screens/detail-rk.png)
