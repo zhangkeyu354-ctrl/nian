@@ -165,7 +165,7 @@ export function GameHall() {
   const [unread, setUnread] = useState(() => store.get("hall:seen") !== latest);
   const recent = useMemo(() => recentIds().map((id) => GAMES.find((g) => g.id === id)).filter(Boolean) as Game[], []);
   useEffect(() => {
-    document.title = "桌游合集";
+    document.title = "再来一局";
   }, []);
 
   const join = async (e: React.FormEvent) => {
@@ -193,13 +193,8 @@ export function GameHall() {
     <main className="hall2" data-testid="hall2">
       <header className="hall2-top">
         <span className="hall2-brand">
-          <span className="hall2-mark" aria-hidden="true">
-            <i />
-            <i />
-            <i />
-            <i />
-          </span>
-          桌游合集
+          <img className="hall2-logo" src="/assets/brand/logo.svg" alt="" width={34} height={34} />
+          再来一局
         </span>
         <button
           className="hall2-bell"

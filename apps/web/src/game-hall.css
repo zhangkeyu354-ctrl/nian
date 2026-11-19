@@ -236,3 +236,16 @@ body:has(.hall2)::before { content: ""; position: fixed; inset: 0; pointer-event
 @keyframes primary-sheen { 0% { left: -40%; } 35%, 100% { left: 130%; } }
 .hall-primary:active { transform: translateY(4px); box-shadow: inset 0 1px 0 rgba(255,255,255,.5), 0 0 0 1px #6e4710, 0 1px 0 #7d5212, 0 2px 0 #3a2608, 0 6px 12px rgba(233,165,49,.25); }
 @media (prefers-reduced-motion: reduce) { .cart-art::before, .hall-primary::after { animation: none; display: none; } }
+
+/* ===== 品牌：再来一局 ===== */
+@font-face { font-family: "Hall Title"; src: url("/assets/brand/title.woff2") format("woff2"); font-display: swap; }
+.hall2-brand { gap: 8px; font-family: "Hall Title", "PingFang SC", sans-serif; font-weight: 400; font-size: 25px; letter-spacing: 2px; color: #f6e7c9; }
+.hall2-logo { width: 34px; height: 34px; filter: drop-shadow(0 3px 4px rgba(0,0,0,.55)); animation: logo-in .6s cubic-bezier(.2,1.4,.4,1) both; }
+@keyframes logo-in { from { transform: rotate(-30deg) scale(.6); opacity: 0; } }
+.cart-label b, .hall-sheet h2, .hall2-sec h3 { font-family: "Hall Title", "PingFang SC", sans-serif; font-weight: 400; }
+.cart-label b { font-size: 17px; letter-spacing: 1px; }
+.hall-sheet h2 { font-size: 30px; letter-spacing: 2px; }
+.hall-sheet h2 small { font-family: "PingFang SC", system-ui, sans-serif; }
+.hall2-sec h3 { font-size: 15px; letter-spacing: 3px; }
+.hall-primary { font-family: "Hall Title", "PingFang SC", sans-serif; font-weight: 400; font-size: 21px; }
+.hall2-sec h3 span { font-family: "PingFang SC", system-ui, sans-serif; font-size: 13px; letter-spacing: 0; }
