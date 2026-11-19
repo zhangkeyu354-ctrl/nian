@@ -3,7 +3,7 @@
   "name": "再来一局",
   "short_name": "再来一局",
   "lang": "zh-CN",
-  "start_url": "/?online=1",
+  "start_url": "/",
   "scope": "/",
   "display": "standalone",
   "orientation": "any",
