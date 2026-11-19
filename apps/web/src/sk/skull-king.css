@@ -289,3 +289,54 @@ button.sk-card { cursor: pointer; }
 .sk-sheet-foot { position: sticky; bottom: calc(-18px - env(safe-area-inset-bottom)); margin: 0 -14px calc(-18px - env(safe-area-inset-bottom)); padding: 10px 14px calc(14px + env(safe-area-inset-bottom)); background: linear-gradient(transparent, #1a120a 30%); }
 .sk-banner { bottom: 150px; border-radius: 0 0 22px 22px; } @media (max-height: 700px) { .sk-banner { bottom: 130px; } }
 .sk-fx { left: 50%; top: 50%; transform: translate(-50%, -50%); }
+
+/* ===== 去“AI 味”：木头、黄铜、羊皮纸，衬线标题，去掉发光与胶囊 ===== */
+.sk-root { --sk-wood: #2a1a0d; --sk-wood2: #3a2514; --sk-brass: #c79a45; --sk-brass-d: #6e4c17; --sk-edge: #6b4a22; --sk-paper: #e8d5aa; --sk-ink2: #3a2410; }
+.sk-root, .sk-root button { font-family: "PingFang SC", "Noto Sans SC", system-ui, sans-serif; }
+.sk-round, .sk-status, .sk-hint, .sk-btn, .sk-chip, .sk-sheet-head, .sk-banner-text, .sk-reveal-title, .sk-final-name, .sk-pl-name, .sk-code, .sk-rr-total, .sk-rules h3, .sk-icon-btn, .sk-toggle b, .sk-lead, .sk-play-bar span, .sk-waiting { font-family: "ZCOOL XiaoWei", "Songti SC", "Noto Serif SC", serif; letter-spacing: 0.5px; }
+
+.sk-btn { border-radius: 6px; border: 1px solid var(--sk-edge); background: linear-gradient(var(--sk-wood2), var(--sk-wood)); box-shadow: inset 0 1px 0 rgba(255, 220, 160, 0.12), 0 2px 0 #120a04; font-weight: 400; font-size: 16px; }
+.sk-btn.main { background: linear-gradient(#d8ad55, var(--sk-brass) 55%, #a97c2c); border: 1px solid var(--sk-brass-d); color: #2a1806; box-shadow: inset 0 1px 0 rgba(255, 245, 210, 0.6), 0 2px 0 #4a3108; font-size: 17px; }
+.sk-btn.main small { color: #5a3c0c; }
+.sk-btn:active:not(:disabled) { transform: translateY(1px); box-shadow: inset 0 1px 0 rgba(255, 245, 210, 0.3); }
+.sk-chip { border-radius: 4px; border-color: var(--sk-edge); background: rgba(20, 12, 5, 0.6); }
+.sk-chip.on { background: var(--sk-brass); border-color: var(--sk-brass-d); color: #2a1806; font-weight: 400; }
+.sk-field input, .sk-join input { border-radius: 6px; border-color: var(--sk-edge); background: rgba(10, 6, 2, 0.7); }
+.sk-toggle { border-radius: 6px; border-color: var(--sk-edge); background: rgba(20, 12, 5, 0.6); }
+.sk-toggle-dot { border-radius: 3px; width: 16px; height: 16px; border: 1.5px solid #9c8466; }
+.sk-toggle.on { background: rgba(199, 154, 69, 0.12); border-color: var(--sk-brass); }
+.sk-toggle.on .sk-toggle-dot { background: var(--sk-brass); border-color: var(--sk-brass); box-shadow: inset 0 0 0 3px #2a1a0d; }
+.sk-settings, .sk-seat, .sk-panel { border-radius: 8px; border: 1px solid var(--sk-edge); background: rgba(24, 15, 7, 0.88); backdrop-filter: none; }
+.sk-seat.ready { border-color: #7c9a52; }
+.sk-code b { color: var(--sk-brass); font-family: "ZCOOL XiaoWei", serif; }
+
+.sk-top { background: linear-gradient(#4a2f17, #2e1c0c); border-bottom: 1px solid #120a04; box-shadow: 0 2px 0 rgba(199, 154, 69, 0.25); }
+.sk-icon-btn { border-radius: 4px; border-color: var(--sk-edge); background: rgba(0, 0, 0, 0.25); font-size: 14px; padding: 5px 9px; }
+.sk-pl { border-radius: 6px; background: rgba(22, 14, 6, 0.84) !important; border: 1px solid var(--sk-edge); backdrop-filter: none !important; }
+.sk-pl.me { background: rgba(48, 32, 12, 0.9) !important; }
+.sk-pl.turn { animation: none; border: 1.5px solid var(--sk-brass); box-shadow: none; }
+.sk-pl.turn::before { content: ""; position: absolute; top: -1px; left: 10%; right: 10%; height: 3px; background: var(--sk-brass); border-radius: 0 0 3px 3px; }
+.sk-pl-bid .think { animation: none; opacity: 0.6; }
+.sk-dealer { display: inline-block; font-size: 10px; line-height: 14px; padding: 0 3px; margin-right: 3px; border: 1px solid var(--sk-brass); color: var(--sk-brass); border-radius: 3px; vertical-align: 1px; }
+.sk-wait { font-size: 11px; color: var(--sk-brass); }
+.sk-status { color: #ecd9ae; font-weight: 400; font-size: 16px; text-shadow: 0 1px 2px #000; }
+.sk-trick { border-radius: 50% / 40%; border: 1px solid rgba(199, 154, 69, 0.22); background: radial-gradient(ellipse, rgba(0, 0, 0, 0.12), rgba(0, 0, 0, 0.3) 70%); }
+.sk-lead { border-radius: 4px; background: var(--sk-paper); color: var(--sk-ink2); border-color: var(--sk-brass-d); }
+.sk-play-bar span { color: #ecd9ae; }
+
+.sk-sheet { border-radius: 10px 10px 0 0; border-top: 2px solid var(--sk-brass); background: linear-gradient(#2c1d0f, #1b1209); }
+.sk-x { font-size: 13px; color: var(--sk-mute); border: 1px solid var(--sk-edge); border-radius: 4px; padding: 3px 8px; }
+.sk-round-row { border-radius: 6px; background: rgba(255, 240, 210, 0.04); }
+.sk-rank li { border-radius: 6px; }
+.sk-score th, .sk-score td { border-color: rgba(199, 154, 69, 0.2); }
+
+.sk-banner, .sk-reveal { background: rgba(8, 5, 2, 0.78); backdrop-filter: none; }
+.sk-banner-slot.win .sk-card { box-shadow: 0 0 0 2px var(--sk-brass), 0 6px 14px rgba(0, 0, 0, 0.6); }
+.sk-banner-text { font-weight: 400; font-size: 21px; }
+.sk-reveal-title { animation: none; text-shadow: 0 2px 0 #3a2508; font-weight: 400; }
+.sk-reveal-item { border-radius: 6px; border-color: var(--sk-edge); background: rgba(24, 15, 7, 0.9); }
+.sk-reveal-item b { font-family: "ZCOOL XiaoWei", serif; font-weight: 400; }
+.sk-card.sel { box-shadow: 0 0 0 2px var(--sk-brass), 0 10px 18px rgba(0, 0, 0, 0.55); }
+.sk-card .sk-badge { border-radius: 3px; font-family: "ZCOOL XiaoWei", serif; font-weight: 400; box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.4); }
+.sk-link { text-decoration: none; border-bottom: 1px dotted rgba(199, 154, 69, 0.5); align-self: center; padding: 2px 0; }
+.sk-err { color: #f2b2a0; }

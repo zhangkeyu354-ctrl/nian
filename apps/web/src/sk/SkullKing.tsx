@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from "react";
+import "@fontsource/zcool-xiaowei/index.css";
 import "./skull-king.css";
 import { useSKRoom } from "./sk-net.ts";
 import {
@@ -111,13 +112,13 @@ const RULES = (
     <h3>牌的大小</h3>
     <img className="sk-hier" src="/assets/skullking/ui/hierarchy.webp" alt="克制关系：海盗克美人鱼，美人鱼克骷髅王，骷髅王克海盗" />
     <ul>
-      <li>数字牌：鹦鹉🦜、藏宝图🗺️、宝箱💰 三色，各 1–14。跟出的颜色里数字大的赢；别的颜色不能赢。</li>
-      <li>骷髅旗☠️（黑色）是王牌，比其他三色都大。</li>
-      <li>🏳️ 逃跑：永远输。全是逃跑时第一张赢。</li>
-      <li>🏴‍☠️ 海盗：大过所有数字牌。几个海盗同墩，先出的赢。</li>
-      <li>🐯 母老虎：打出时自选当海盗或当逃跑。</li>
-      <li>👑 骷髅王：大过所有海盗和数字牌，只怕美人鱼。</li>
-      <li>🧜‍♀️ 美人鱼：大过数字牌，输给海盗；但能诱捕骷髅王。两条同墩先出的赢。</li>
+      <li>数字牌：鹦鹉、藏宝图、宝箱 三色，各 1–14。跟出的颜色里数字大的赢；别的颜色不能赢。</li>
+      <li>骷髅旗（黑色）是王牌，比其他三色都大。</li>
+      <li>逃跑：永远输。全是逃跑时第一张赢。</li>
+      <li>海盗：大过所有数字牌。几个海盗同墩，先出的赢。</li>
+      <li>母老虎：打出时自选当海盗或当逃跑。</li>
+      <li>骷髅王：大过所有海盗和数字牌，只怕美人鱼。</li>
+      <li>美人鱼：大过数字牌，输给海盗；但能诱捕骷髅王。两条同墩先出的赢。</li>
       <li>海盗、骷髅王、美人鱼三者同墩：美人鱼赢。</li>
     </ul>
     <h3>特殊引牌</h3>
@@ -138,10 +139,10 @@ const RULES = (
     <p>加炮弹规则时，下注后再同时选：霰弹＝按上面算；炮弹＝猜中得 15 × 张数（加全部奖励），差 1 也是 0。</p>
     <h3>进阶牌（可选）</h3>
     <ul>
-      <li>🐙 克拉肯：这墩直接作废谁也不赢；本来会赢的人带下一墩。</li>
-      <li>🐋 白鲸：所有特殊牌失效，数字牌不分颜色比大小（相同先出赢）；只有特殊牌就作废，白鲸主人带下一墩。</li>
+      <li>克拉肯：这墩直接作废谁也不赢；本来会赢的人带下一墩。</li>
+      <li>白鲸：所有特殊牌失效，数字牌不分颜色比大小（相同先出赢）；只有特殊牌就作废，白鲸主人带下一墩。</li>
       <li>克拉肯和白鲸同墩：后出的那只生效，先出的当逃跑。</li>
-      <li>🪙 战利品（2 张）：当逃跑打出；收走它的人和你结盟，本轮两人都猜中各 +20。</li>
+      <li>战利品（2 张）：当逃跑打出；收走它的人和你结盟，本轮两人都猜中各 +20。</li>
     </ul>
     <h3>海盗技能（可选）</h3>
     <p>用海盗<b>赢下</b>一墩才能立刻发动（只被收走不算），不能留到下一轮。最后一墩只有哈利能用。</p>
@@ -165,7 +166,7 @@ function Sheet({ title, onClose, children }: { title: string; onClose?: () => vo
           <b>{title}</b>
           {onClose && (
             <button type="button" className="sk-x" onClick={onClose}>
-              ✕
+              关闭
             </button>
           )}
         </div>
@@ -183,7 +184,7 @@ function Logo() {
         <img className="sk-logo-img" src="/assets/skullking/logo.webp" alt="骷髅王" onError={() => setImg(false)} />
       ) : (
         <>
-          <span className="sk-logo-skull">💀</span>
+          <span className="sk-logo-skull"></span>
           <span className="sk-logo-cn">骷髅王</span>
           <span className="sk-logo-en">海盗猜墩</span>
         </>
@@ -246,7 +247,7 @@ function Lobby({ room }: { room: Room }) {
           </>
         )}
         <button className="sk-link" onClick={() => setRules(true)}>
-          📖 规则说明
+           规则说明
         </button>
         <a className="sk-link" href="/">
           ← 返回游戏大厅
@@ -283,7 +284,7 @@ function Lobby({ room }: { room: Room }) {
               {p &&
                 (p.bot ? (
                   <span className="sk-seat-state">
-                    🤖 人机
+                     人机
                     {host && (
                       <button className="sk-btn sm" onClick={() => room.act({ type: "REMOVE_BOT", seat: i })}>
                         移除
@@ -303,7 +304,7 @@ function Lobby({ room }: { room: Room }) {
       </div>
       {host && !full && (
         <button className="sk-btn" disabled={room.pending} onClick={() => room.act({ type: "ADD_BOT" })} data-testid="sk-add-bot">
-          🤖 添加人机（补位或测试）
+           添加人机
         </button>
       )}
       <div className="sk-settings">
@@ -337,10 +338,10 @@ function Lobby({ room }: { room: Room }) {
         </p>
         <div className="sk-toggles">
           {st.scoring === "rascal" && <Toggle on={st.cannon} label="炮弹规则" desc="下注后选霰弹或炮弹" disabled={!host} onClick={() => set({ cannon: !st.cannon })} />}
-          <Toggle on={st.kraken} label="🐙 克拉肯" desc="整墩作废" disabled={!host} onClick={() => set({ kraken: !st.kraken })} />
-          <Toggle on={st.whale} label="🐋 白鲸" desc="特殊牌失效，只比数字" disabled={!host} onClick={() => set({ whale: !st.whale })} />
-          <Toggle on={st.loot} label="🪙 战利品" desc="结盟各 +20" disabled={!host} onClick={() => set({ loot: !st.loot })} />
-          <Toggle on={st.abilities} label="🏴‍☠️ 海盗技能" desc="海盗赢墩发动技能" disabled={!host} onClick={() => set({ abilities: !st.abilities })} />
+          <Toggle on={st.kraken} label="克拉肯" desc="整墩作废" disabled={!host} onClick={() => set({ kraken: !st.kraken })} />
+          <Toggle on={st.whale} label="白鲸" desc="特殊牌失效，只比数字" disabled={!host} onClick={() => set({ whale: !st.whale })} />
+          <Toggle on={st.loot} label="战利品" desc="结盟各 +20" disabled={!host} onClick={() => set({ loot: !st.loot })} />
+          <Toggle on={st.abilities} label="海盗技能" desc="海盗赢墩发动技能" disabled={!host} onClick={() => set({ abilities: !st.abilities })} />
         </div>
         {s.count === 2 && <p className="sk-sub small">双人局会加入「灰胡子幽灵」一起出牌（官方双人规则）</p>}
         {!host && <p className="sk-sub small">只有船长（房主）能改设置</p>}
@@ -350,11 +351,11 @@ function Lobby({ room }: { room: Room }) {
       </button>
       {host && (
         <button className="sk-btn main" disabled={!allReady || room.pending} onClick={() => room.act({ type: "START" })} data-testid="sk-start">
-          {allReady ? "起航！开始游戏" : full ? "等待所有人准备" : "等待玩家加入"}
+          {allReady ? "开船" : full ? "等待所有人准备" : "等待玩家加入"}
         </button>
       )}
       <button className="sk-link" onClick={() => setRules(true)}>
-        📖 规则说明
+         规则说明
       </button>
       <button className="sk-link" onClick={() => room.act({ type: "LEAVE" })}>
         离开房间
@@ -395,9 +396,9 @@ function TrickBanner({ r, v, onDone }: { r: TrickResult; v: SKView; onDone: () =
       </div>
       <div className="sk-banner-text">
         {r.destroyed === "kraken" ? (
-          <>🐙 克拉肯吞掉了这一墩！{nameOf(v, r.next)} 带下一墩</>
+          <>克拉肯把这一墩卷进了海底，{nameOf(v, r.next)} 带下一墩</>
         ) : r.winner === null ? (
-          <>🐋 白鲸冲散了这一墩！{nameOf(v, r.next)} 带下一墩</>
+          <>白鲸把这一墩撞散了，{nameOf(v, r.next)} 带下一墩</>
         ) : (
           <>
             <b>{r.winner === v.me ? "你" : nameOf(v, r.winner)}</b> 赢下第 {r.no} 墩{r.destroyed === "whale" ? "（白鲸：只比数字）" : ""}
@@ -414,7 +415,7 @@ function TrickBanner({ r, v, onDone }: { r: TrickResult; v: SKView; onDone: () =
           ))}
         </div>
       )}
-      {total > 0 && <div className="sk-banner-notes">奖励共 +{total}，本轮猜中才算</div>}
+      {total > 0 && <div className="sk-banner-notes">这些奖励要本轮猜中才拿得到</div>}
     </div>
   );
 }
@@ -427,11 +428,11 @@ function BidReveal({ v, onDone }: { v: SKView; onDone: () => void }) {
   return (
     <div className="sk-reveal" onClick={onDone} data-testid="sk-bid-reveal">
       <Sprite className="sk-reveal-fx" list={FX.reveal} ms={65} />
-      <div className="sk-reveal-title">哟—嗬—嗬！</div>
+      <div className="sk-reveal-title">哟——嗬——嗬！</div>
       <div className="sk-reveal-list">
         {v.players.map((p, i) => (
           <div key={i} className={`sk-reveal-item${i === v.me ? " me" : ""}`} style={{ animationDelay: i * 0.08 + "s" }}>
-            <span className="sk-fist">{p.bid === 0 ? "✊" : "🖐️"}</span>
+            
             <b>{p.bid}</b>
             <small>{p.name}</small>
           </div>
@@ -470,7 +471,7 @@ function ScoreTable({ v }: { v: SKView }) {
                       <>
                         <span className="sk-bw">
                           {row.bid}/{row.won}
-                          {row.shot === "cannon" ? "💣" : ""}
+                          {row.shot === "cannon" ? "炮" : ""}
                         </span>
                         <b>{row.total > 0 ? "+" + row.total : row.total}</b>
                       </>
@@ -492,7 +493,7 @@ function ScoreTable({ v }: { v: SKView }) {
           </tr>
         </tbody>
       </table>
-      <p className="sk-sub small">格子里：下注/实际墩数，下面是本轮得分</p>
+      <p className="sk-sub small">每格上面是“猜/吃”，下面是这轮得分</p>
     </div>
   );
 }
@@ -501,12 +502,12 @@ function RoundEnd({ room, v, host }: { room: Room; v: SKView; host: boolean }) {
   const fin = v.phase === "FINISHED";
   const rank = v.players.map((p, i) => ({ ...p, i })).sort((a, b) => b.score - a.score);
   return (
-    <Sheet title={fin ? "🏆 航行结束" : `第 ${v.round + 1} 轮结算`}>
+    <Sheet title={fin ? "航行结束" : `第 ${v.round + 1} 轮结算`}>
       {fin && (
         <div className="sk-final">
           <img className="sk-victory" src="/assets/skullking/fx/victory.webp" alt="" />
           <div className="sk-final-name">{v.winners.map((i) => v.players[i].name).join("、")}</div>
-          <div className="sk-sub">成为七海船长！</div>
+          <div className="sk-sub">当上了七海船长</div>
           <ol className="sk-rank">
             {rank.map((p, n) => (
               <li key={p.i} className={p.i === v.me ? "me" : ""}>
@@ -527,8 +528,8 @@ function RoundEnd({ room, v, host }: { room: Room; v: SKView; host: boolean }) {
                 <div className="sk-rr-head">
                   <b>{p.name}</b>
                   <span>
-                    猜 {r.bid} · 赢 {r.won} {r.hit === "exact" ? "🎯 猜中" : r.hit === "glance" ? "差 1" : `差 ${Math.abs(r.bid - r.won)}`}
-                    {r.shot ? (r.shot === "cannon" ? " · 💣炮弹" : " · 霰弹") : ""}
+                    猜 {r.bid} · 赢 {r.won} {r.hit === "exact" ? "猜中" : r.hit === "glance" ? "差 1" : `差 ${Math.abs(r.bid - r.won)}`}
+                    {r.shot ? (r.shot === "cannon" ? " · 炮弹" : " · 霰弹") : ""}
                   </span>
                   <b className="sk-rr-total">{r.total > 0 ? "+" + r.total : r.total}</b>
                 </div>
@@ -571,14 +572,14 @@ function Ability({ room, v }: { room: Room; v: SKView }) {
     return (
       <div className="sk-panel">
         <div className="sk-hint">
-          🏴‍☠️ {nameOf(v, a.seat)} 正在发动 <b>{PIRATE_NAME[a.pirate]}</b> 的技能：{PIRATE_SKILL[a.pirate]}
+           {nameOf(v, a.seat)} 正在发动 <b>{PIRATE_NAME[a.pirate]}</b> 的技能：{PIRATE_SKILL[a.pirate]}
         </div>
       </div>
     );
   return (
     <div className="sk-panel ability" data-testid="sk-ability">
       <div className="sk-hint">
-        🏴‍☠️ 你的 <b>{PIRATE_NAME[a.pirate]}</b> 赢下了这墩！{PIRATE_SKILL[a.pirate]}
+         你的 <b>{PIRATE_NAME[a.pirate]}</b> 赢下这墩，可以：{PIRATE_SKILL[a.pirate]}
       </div>
       {a.pirate === "rosie" && (
         <div className="sk-choices">
@@ -672,10 +673,10 @@ function Table({ room, v }: { room: Room; v: SKView }) {
   };
   const slotFor = (seat: number): Played | undefined => v.trick.find((p) => p.seat === seat);
   const status = (() => {
-    if (v.phase === "BID") return me.bidDone ? `等待其他人下注（${v.players.filter((p) => p.bidDone).length}/${v.players.length}）` : "看牌，猜猜这一轮你能赢几墩";
+    if (v.phase === "BID") return me.bidDone ? `等待其他人下注（${v.players.filter((p) => p.bidDone).length}/${v.players.length}）` : "看看手牌，猜这轮能吃几墩";
     if (v.phase === "SHOT") return me.shotDone ? "等待其他人选择炮弹…" : "选择霰弹或炮弹";
     if (v.phase === "ABILITY") return "海盗技能发动中";
-    if (v.phase === "PLAY") return myTurn ? (v.lead ? `轮到你出牌 · 本墩跟${SUIT_NAME[v.lead]}${SUIT_ICON[v.lead]}` : "轮到你出牌") : `等待 ${nameOf(v, v.turn)} 出牌…`;
+    if (v.phase === "PLAY") return myTurn ? (v.lead ? `该你出牌了 · 这墩要跟${SUIT_NAME[v.lead]}` : "该你出牌了") : `等待 ${nameOf(v, v.turn)} 出牌…`;
     return "";
   })();
   return (
@@ -686,13 +687,13 @@ function Table({ room, v }: { room: Room; v: SKView }) {
         </div>
         <div className="sk-top-btns">
           <button className="sk-icon-btn" onClick={() => setSheet("score")} data-testid="sk-open-score">
-            📜 计分
+            计分表
           </button>
           <button className="sk-icon-btn" onClick={() => setSheet("log")}>
-            🧭 记录
+             记录
           </button>
           <button className="sk-icon-btn" onClick={() => setSheet("rules")}>
-            ❓
+            规则
           </button>
         </div>
       </header>
@@ -703,19 +704,18 @@ function Table({ room, v }: { room: Room; v: SKView }) {
           return (
             <div key={i} className={`sk-pl${turn ? " turn" : ""}${i === v.me ? " me" : ""}${ghost ? " ghost" : ""}`} data-testid={`sk-seat-${i}`}>
               <div className="sk-pl-name">
-                {i === v.dealer && !ghost && <span className="sk-dealer" title="发牌人">🂠</span>}
-                {ghost ? "👻 灰胡子" : i === v.me ? "你" : p!.name}
+                {i === v.dealer && !ghost && <span className="sk-dealer" title="发牌人">庄</span>}
+                {ghost ? "灰胡子" : i === v.me ? "你" : p!.name}
               </div>
               <div className="sk-pl-bid">
                 {ghost ? (
                   <span>不下注</span>
                 ) : v.phase === "BID" ? (
-                  <span className={p!.bidDone ? "done" : "think"}>{p!.bidDone ? (i === v.me ? `猜 ${p!.bid}` : "✓ 已下注") : "思考中…"}</span>
+                  <span className={p!.bidDone ? "done" : "think"}>{p!.bidDone ? (i === v.me ? `猜 ${p!.bid}`: "已下注") : "思考中…"}</span>
                 ) : (
                   <span className={p!.won === p!.bid ? "ok" : p!.won > (p!.bid ?? 0) ? "over" : ""}>
-                    🎯{p!.bid} · <img className="sk-coin" src="/assets/skullking/ui/tricks-coin.webp" alt="赢" />
-                    {p!.won}
-                    {p!.shot === "cannon" ? "💣" : ""}
+                    猜{p!.bid} · 吃{p!.won}
+                    {p!.shot === "cannon" ? " 炮" : ""}
                   </span>
                 )}
               </div>
@@ -727,7 +727,7 @@ function Table({ room, v }: { room: Room; v: SKView }) {
                   </span>
                 )}
               </div>
-              {(slotFor(i) || turn) && <div className="sk-pl-slot">{slotFor(i) ? <span className="sk-played">已出</span> : <span className="sk-wait">⏳</span>}</div>}
+              {(slotFor(i) || turn) && <div className="sk-pl-slot">{slotFor(i) ? <span className="sk-played">已出</span> : <span className="sk-wait">出牌中</span>}</div>}
             </div>
           );
         })}
@@ -752,14 +752,14 @@ function Table({ room, v }: { room: Room; v: SKView }) {
             )}
             {v.lead && v.trick.length > 0 && (
               <div className={`sk-lead suit-${v.lead}`}>
-                跟 {SUIT_ICON[v.lead]} {SUIT_NAME[v.lead]}
+                须跟{SUIT_NAME[v.lead]}
               </div>
             )}
           </div>
         ) : null}
         {v.phase === "BID" && !me.bidDone && (
           <div className="sk-panel bid" data-testid="sk-bid-panel">
-            <div className="sk-hint">你觉得这一轮能赢几墩？</div>
+            <div className="sk-hint">这一轮你能吃几墩？</div>
             <div className="sk-bid-grid">
               {Array.from({ length: v.cards + 1 }, (_, k) => (
                 <button key={k} className={`sk-bid-btn${bid === k ? " on" : ""}`} onClick={() => setBid(k)} data-testid={`sk-bid-${k}`} aria-label={`${k} 墩`}>
@@ -768,7 +768,7 @@ function Table({ room, v }: { room: Room; v: SKView }) {
               ))}
             </div>
             <button className="sk-btn main wide" disabled={bid === null || room.pending} onClick={() => bid !== null && room.act({ type: "BID", bid })} data-testid="sk-bid-go">
-              {bid === null ? "选一个数字" : bid === 0 ? `✊ 猜 0 墩（猜中 +${(v.settings.scoring === "skull" ? 10 : 10) * v.cards}）` : `🖐️ 猜 ${bid} 墩，亮出！`}
+              {bid === null ? "先选个数" : `就猜 ${bid} 墩`}
             </button>
           </div>
         )}
@@ -781,14 +781,14 @@ function Table({ room, v }: { room: Room; v: SKView }) {
         )}
         {v.phase === "SHOT" && !me.shotDone && (
           <div className="sk-panel" data-testid="sk-shot-panel">
-            <div className="sk-hint">装填哪种炮弹？</div>
+            <div className="sk-hint">这一轮装什么弹？</div>
             <div className="sk-choices">
               <button className="sk-btn" onClick={() => room.act({ type: "SHOT", shot: "grape" })}>
-                🖐️ 霰弹
+                 霰弹
                 <small>猜中 {10 * v.cards}，差 1 得一半</small>
               </button>
               <button className="sk-btn" onClick={() => room.act({ type: "SHOT", shot: "cannon" })}>
-                💣 炮弹
+                 炮弹
                 <small>猜中 {15 * v.cards}，差 1 就 0</small>
               </button>
             </div>
@@ -801,7 +801,7 @@ function Table({ room, v }: { room: Room; v: SKView }) {
           <div className="sk-play-bar">
             <span>{cardName(sel)}</span>
             <button className="sk-btn main" disabled={room.pending} onClick={() => play()} data-testid="sk-play">
-              出这张
+              打出
             </button>
           </div>
         )}
@@ -836,14 +836,14 @@ function Table({ room, v }: { room: Room; v: SKView }) {
         )}
       </footer>
       {tig && (
-        <Sheet title="🐯 母老虎当什么？" onClose={() => setTig(false)}>
+        <Sheet title="母老虎当什么？" onClose={() => setTig(false)}>
           <div className="sk-choices">
             <button className="sk-btn main" onClick={() => play("pirate")} data-testid="sk-tig-pirate">
-              🏴‍☠️ 当海盗
+               当海盗
               <small>大过数字牌，同墩先出赢</small>
             </button>
             <button className="sk-btn" onClick={() => play("escape")} data-testid="sk-tig-escape">
-              🏳️ 当逃跑
+               当逃跑
               <small>一定不赢</small>
             </button>
           </div>
@@ -853,7 +853,7 @@ function Table({ room, v }: { room: Room; v: SKView }) {
       {reveal && !banner && <BidReveal v={v} onDone={() => setReveal(false)} />}
       {(v.phase === "ROUND_END" || v.phase === "FINISHED") && !banner && <RoundEnd room={room} v={v} host={host} />}
       {sheet === "score" && (
-        <Sheet title="📜 计分表" onClose={() => setSheet("")}>
+        <Sheet title="计分表" onClose={() => setSheet("")}>
           <ScoreTable v={v} />
         </Sheet>
       )}
@@ -863,7 +863,7 @@ function Table({ room, v }: { room: Room; v: SKView }) {
         </Sheet>
       )}
       {sheet === "log" && (
-        <Sheet title="🧭 航海日志" onClose={() => setSheet("")}>
+        <Sheet title="航海日志" onClose={() => setSheet("")}>
           <ol className="sk-log">
             {[...v.log].reverse().map((e, k) => (
               <li key={k}>{e.t}</li>
