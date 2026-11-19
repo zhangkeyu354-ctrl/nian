@@ -86,19 +86,19 @@ const remember = (id: string) => store.set("hall:recent", JSON.stringify([id, ..
 
 /** Codex 统一绘制的大厅封面：/assets/hall/<id>-card.webp（4:3）与 <id>-wide.webp（16:9）。没有时退回原来的图。 */
 function Cover({ g, kind }: { g: Game; kind: "card" | "wide" }) {
-  const [ok, setOk] = useState<boolean | null>(null);
+  // 只在新封面加载失败时才退回旧图；加载中只显示底色，避免旧图闪现、也不额外下载旧图
+  const [failed, setFailed] = useState(false);
+  if (failed) return <>{g.art}</>;
   return (
-    <>
-      <img
-        className="hall-cover-img"
-        src={`/assets/hall/${g.id}-${kind}.webp`}
-        alt=""
-        style={{ display: ok ? "block" : "none" }}
-        onLoad={() => setOk(true)}
-        onError={() => setOk(false)}
-      />
-      {ok ? null : g.art}
-    </>
+    <img
+      className="hall-cover-img"
+      src={`/assets/hall/${g.id}-${kind}.webp`}
+      alt=""
+      decoding="async"
+      loading={kind === "card" ? "lazy" : "eager"}
+      onLoad={(e) => e.currentTarget.classList.add("ready")}
+      onError={() => setFailed(true)}
+    />
   );
 }
 
