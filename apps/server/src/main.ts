@@ -1,6 +1,7 @@
 import { createServer } from "node:http";
 import { existsSync, readFileSync, statSync } from "node:fs";
 import { gzipSync } from "node:zlib";
+import { createFeedback } from "./feedback.ts";
 import { extname, join, normalize, resolve } from "node:path";
 import { networkInterfaces } from "node:os";
 import { fileURLToPath } from "node:url";
@@ -45,6 +46,7 @@ const PUBLIC_URL = (
 ).replace(/\/+$/, "");
 /** 长时间无人操作的房间自动清理（默认 24 小时）；同时存在的房间上限 */
 const ROOM_IDLE_MS = Number(process.env.DBD_ROOM_IDLE_HOURS ?? 24) * 3600_000;
+const feedback = createFeedback(resolve(process.env.FEEDBACK_FILE ?? join(DATA, "../feedback.jsonl")));
 const MAX_ROOMS = Number(process.env.DBD_MAX_ROOMS ?? 200);
 const VERSION = (process.env.RENDER_GIT_COMMIT ?? "").slice(0, 7) || "local";
 
@@ -107,6 +109,10 @@ const http = createServer((req, res) => {
           : {}),
       }),
     );
+    return;
+  }
+  if (url.pathname === "/api/feedback") {
+    void feedback.handle(req, res, url);
     return;
   }
   if (url.pathname === "/api/find-room") {

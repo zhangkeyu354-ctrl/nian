@@ -4,6 +4,7 @@ import "./game-hall.css";
 import { ObjectArt } from "./rr/Objects.tsx";
 import { FakeArtistCover, TelephoneCover } from "./drawing/Covers.tsx";
 import { UPDATE_NOTICES } from "./update-notices.ts";
+import { FeedbackSheet } from "./SiteFeedback.tsx";
 
 /** 新大厅（方案 A：游戏机桌面）。每个游戏一张「卡带」，点开从底部升起详情。 */
 
@@ -156,6 +157,7 @@ function Detail({ g, onClose }: { g: Game; onClose: () => void }) {
 
 export function GameHall() {
   const [open, setOpen] = useState<Game | null>(null);
+  const [fb, setFb] = useState(false);
   const [code, setCode] = useState("");
   const [joinMsg, setJoinMsg] = useState("");
   const [choices, setChoices] = useState<Game[]>([]);
@@ -196,6 +198,10 @@ export function GameHall() {
           <img className="hall2-logo" src="/assets/brand/logo.svg" alt="" width={34} height={34} />
           再来一局
         </span>
+        <span className="hall2-actions">
+        <button className="hall2-bell" onClick={() => setFb(true)} aria-label="建议反馈" data-testid="hall-feedback">
+          反馈
+        </button>
         <button
           className="hall2-bell"
           onClick={() => {
@@ -209,6 +215,7 @@ export function GameHall() {
           公告
           {unread && <span className="hall2-dot" />}
         </button>
+        </span>
       </header>
 
       <form className="hall2-join" onSubmit={join}>
@@ -253,6 +260,8 @@ export function GameHall() {
       </section>
 
       {open && <Detail g={open} onClose={() => setOpen(null)} />}
+      {fb && <FeedbackSheet games={GAMES.map((g) => g.title)} onClose={() => setFb(false)} />}
+      <button className="hall2-fbfoot" onClick={() => setFb(true)}>遇到问题或者有想法？点这里告诉我们</button>
 
       <dialog className="hall-updates" ref={notices} aria-labelledby="hall2-updates-title">
         <header className="hall-updates-head">

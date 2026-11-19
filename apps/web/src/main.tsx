@@ -27,6 +27,7 @@ const q = new URLSearchParams(location.search);
 const Xiabaiwang = lazy(() => import('./xb/Xiabaiwang.tsx').then(m => ({default:m.Xiabaiwang})));
 import { GameLobby } from "./GameLobby.tsx";
 import { GameHall } from "./GameHall.tsx";
+import { FeedbackAdmin } from "./SiteFeedback.tsx";
 import { FxPreview } from "./BoardFx.tsx";
 const Codenames = lazy(() =>
   import("./cn/Codenames.tsx").then((m) => ({ default: m.Codenames })),
@@ -101,6 +102,8 @@ createRoot(document.getElementById("root")!).render(
       <App />
     ) : q.has("room") || q.has("online") ? (
       <Online />
+    ) : q.get("view") === "feedback" ? (
+      <FeedbackAdmin />
     ) : q.get("view") === "old-hall" ? (
       <GameLobby />
     ) : (

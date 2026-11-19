@@ -252,3 +252,29 @@ body:has(.hall2)::before { content: ""; position: fixed; inset: 0; pointer-event
 .cart-art > img.hall-cover-img, .hall-sheet-art > img.hall-cover-img, .cart-art.fill > img.hall-cover-img, .hall-sheet-art.fill > img.hall-cover-img { position: absolute; inset: 0; width: 100% !important; height: 100% !important; max-width: none; max-height: none; object-fit: cover; }
 .hall-cover-img { opacity: 0; transition: opacity .25s ease; }
 .hall-cover-img.ready { opacity: 1; }
+
+/* ===== 反馈 ===== */
+.hall2-actions { display: flex; gap: 8px; }
+.hall2-fbfoot { display: block; margin: 28px auto 4px; padding: 10px 16px; border: 0; background: none; color: #8f8373; font: inherit; font-size: 13px; text-decoration: underline; text-underline-offset: 3px; cursor: pointer; }
+.fb-sheet h2 { margin: 6px 0 14px; font-family: "Hall Title", "PingFang SC", sans-serif; font-weight: 400; font-size: 26px; letter-spacing: 2px; }
+.fb-types { display: flex; gap: 6px; flex-wrap: wrap; margin-bottom: 14px; }
+.fb-types button { flex: 1 1 auto; min-height: 42px; padding: 0 12px; border: 0; border-radius: 12px; font: inherit; font-size: 14px; color: #d9cfbf; background: linear-gradient(180deg, #2f2823, #221d19); box-shadow: inset 0 1px 0 rgba(255,240,220,.1), 0 0 0 1px #0d0b09, 0 2px 0 #0d0b09; cursor: pointer; }
+.fb-types button.on { color: #2a1d05; font-weight: 700; background: linear-gradient(180deg, #ffd77a, #e6a12e); box-shadow: inset 0 1px 0 rgba(255,255,255,.5), 0 0 0 1px #6e4710, 0 2px 0 #7d5212; }
+.fb-field { display: grid; gap: 6px; margin-bottom: 12px; font-size: 13px; color: #a99f90; position: relative; }
+.fb-field select, .fb-field textarea, .fb-field input { width: 100%; box-sizing: border-box; padding: 12px 14px; border: 0; border-radius: 14px; font: inherit; font-size: 16px; color: #f4ede0; background: #110f0d; box-shadow: inset 0 2px 6px rgba(0,0,0,.7), 0 0 0 1px #3b3129; outline: none; }
+.fb-field textarea { resize: vertical; min-height: 110px; line-height: 1.6; }
+.fb-field small { position: absolute; right: 10px; bottom: 8px; font-size: 11px; color: #6f655a; }
+.fb-err { color: #ff9d8a; font-size: 13px; margin: 0 0 10px; }
+.fb-btn { width: 100%; border: 0; cursor: pointer; }
+.fb-btn:disabled { filter: grayscale(.8) brightness(.6); cursor: default; }
+.fb-done { text-align: center; padding: 20px 0 4px; }
+.fb-done-icon { font-size: 52px; }
+.fb-done p { color: #a99f90; margin: 4px 0 22px; }
+.fb-admin h1 { font-size: 22px; }
+.fb-admin article { margin: 10px 0; padding: 12px 14px; border-radius: 14px; background: #1d1a17; box-shadow: inset 0 0 0 1px rgba(255,240,220,.07); }
+.fb-admin header { display: flex; gap: 8px; align-items: center; font-size: 13px; color: #a99f90; }
+.fb-admin header time { margin-left: auto; font-size: 12px; }
+.fb-admin article p { margin: 8px 0 4px; white-space: pre-wrap; line-height: 1.6; }
+.fb-admin small { color: #8f8373; }
+button.hall-primary.fb-btn { display: flex; align-items: center; justify-content: center; color: #2a1d05; background: linear-gradient(180deg, #ffdb84 0%, #f4b847 42%, #df9a26 100%); }
+button.hall-primary.fb-btn:disabled { filter: none; opacity: .45; }
