@@ -345,3 +345,4 @@
 .dnup-hall-art strong { position:relative; z-index:1; padding:0 17px 5px; background:#70c72d; border-radius:10px; color:white; font:1000 46px/.95 ui-rounded,system-ui,sans-serif; letter-spacing:-4px; transform:rotate(-5deg); box-shadow:0 5px 0 #397c20,0 9px 18px #0009; text-align:center; }
 .dnup-hall-art strong small { display:block; font:800 10px/1.4 system-ui; letter-spacing:3px; }
 .dnup-hall-number { position:absolute; font:1000 130px/.8 ui-rounded,system-ui; opacity:.9; }.dnup-hall-number.one { color:#dc5277; left:-8px; top:-35px; transform:rotate(-25deg); }.dnup-hall-number.two { color:#29a4ad; right:-5px; top:-20px; transform:rotate(25deg); }.dnup-hall-number.three { color:#efae34; bottom:-65px; left:35%; transform:rotate(80deg); }
+.dnup-hall-cover { width:100%; height:100%; object-fit:cover; display:block; }

@@ -58,12 +58,12 @@ export function DnupCard({
 }) {
   const v = valueOf(card),
     o = otherOf(card);
+  const CardElement = onClick ? "button" : "span";
   return (
-    <button
-      type="button"
+    <CardElement
+      {...(onClick ? { type: "button" as const } : {})}
       className={`du-card du-${size}${selected ? " sel" : ""}${dim ? " dim" : ""}${spin ? " spin" : ""}`}
       onClick={onClick}
-      disabled={!onClick}
       aria-label={`${v}（另一端 ${o}）`}
       data-testid={`du-card-${card.id}`}
     >
@@ -73,7 +73,7 @@ export function DnupCard({
         <span className="du-other" style={{ color: NUM_COLOR[o] }}>{o}</span>
         {card.id === 1 && <span className="du-star">★</span>}
       </span>
-    </button>
+    </CardElement>
   );
 }
 
@@ -295,8 +295,7 @@ function Score({ score }: { score: number }) {
 function Logo() {
   return (
     <div className="du-logo">
-      <span className="du-logo-up">dnup</span>
-      <span className="du-logo-cn">反转王牌</span>
+      <img className="du-logo-image" src="/assets/dnup/logo.webp" alt="dnup 反转王牌" />
     </div>
   );
 }
@@ -314,6 +313,44 @@ function Table({ room, v }: { room: ReturnType<typeof useDURoom>; v: DUView }) {
   const lastLog = useRef(v.log.length);
   const lastKey = v.log.length ? JSON.stringify(v.log[v.log.length - 1]) : "";
 
+  // Decorative motion uses only the public action log; it never changes game state.
+  const previousLog = useRef(v.log.map((entry) => JSON.stringify(entry)));
+  useEffect(() => {
+    const current = v.log.map((entry) => JSON.stringify(entry));
+    const previous = previousLog.current;
+    let overlap = Math.min(previous.length, current.length);
+    while (overlap > 0 && previous.slice(-overlap).some((item, i) => item !== current[i])) overlap--;
+    const added = v.log.slice(overlap);
+    previousLog.current = current;
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+    const action = added.find((entry) => entry.type === "TAKE" || entry.bounced);
+    if (!action) return;
+    const sourceSeat = action.type === "TAKE" ? action.target : action.bounced?.seat;
+    const destinationSeat = action.type === "TAKE" ? action.seat : action.bounced?.seat;
+    if (sourceSeat === undefined || destinationSeat === undefined || action.bounced?.discarded) return;
+    const seatNode = (seat: number) => document.querySelector<HTMLElement>(`[data-du-seat="${seat}"]`);
+    const source = seatNode(sourceSeat)?.querySelector<HTMLElement>(".du-zones")?.getBoundingClientRect();
+    const destination = destinationSeat === v.me
+      ? document.querySelector<HTMLElement>(".du-hand")?.getBoundingClientRect()
+      : seatNode(destinationSeat)?.querySelector<HTMLElement>(".du-opp-head")?.getBoundingClientRect();
+    if (!source || !destination) return;
+    const piece = document.createElement("span");
+    piece.className = "du-flying-card";
+    piece.setAttribute("aria-hidden", "true");
+    piece.textContent = action.value ? String(action.value) : "";
+    piece.style.left = `${source.left + source.width / 2}px`;
+    piece.style.top = `${source.top + source.height / 2}px`;
+    document.body.appendChild(piece);
+    const dx = destination.left + destination.width / 2 - source.left - source.width / 2;
+    const dy = destination.top + destination.height / 2 - source.top - source.height / 2;
+    const animation = piece.animate([
+      { transform: "translate(-50%, -50%) rotate(0deg) scale(1)", opacity: 1 },
+      { transform: `translate(calc(-50% + ${dx}px), calc(-50% + ${dy}px)) rotate(180deg) scale(.65)`, opacity: .4 },
+    ], { duration: 600, easing: "cubic-bezier(.22,.7,.3,1)" });
+    animation.onfinish = () => piece.remove();
+    return () => { animation.cancel(); piece.remove(); };
+  }, [lastKey]);
+
   // 新动作提示
   useEffect(() => {
     const e = v.log[v.log.length - 1];
@@ -321,7 +358,7 @@ function Table({ room, v }: { room: ReturnType<typeof useDURoom>; v: DUView }) {
     setToast(describe(e, names));
     if (e.type === "ROTATE" && e.seat === v.me) {
       setSpin(true);
-      setTimeout(() => setSpin(false), 600);
+      setTimeout(() => setSpin(false), 750);
     }
     const t = setTimeout(() => setToast(""), 2600);
     return () => clearTimeout(t);
@@ -377,7 +414,7 @@ function Table({ room, v }: { room: ReturnType<typeof useDURoom>; v: DUView }) {
         {order.map((seat) => {
           const p = v.players[seat];
           return (
-            <div key={seat} className={`du-opp${v.turn === seat && v.phase === "PLAY" ? " turn" : ""}${p.place ? " out" : ""}`} data-testid={`du-opp-${seat}`}>
+            <div key={seat} className={`du-opp${v.turn === seat && v.phase === "PLAY" ? " turn" : ""}${p.place ? " out" : ""}`} data-testid={`du-opp-${seat}`} data-du-seat={seat}>
               <div className="du-opp-head">
                 <b>{p.name}</b>
                 <Score score={p.score} />
@@ -414,9 +451,9 @@ function Table({ room, v }: { room: ReturnType<typeof useDURoom>; v: DUView }) {
         )}
       </section>
 
-      <section className={`du-mine${myTurn ? " turn" : ""}`}>
+      <section className={`du-mine${myTurn ? " turn" : ""}`} data-du-seat={v.me}>
         <div className="du-mine-head">
-          <b>我{v.players[v.me].place ? `（第${v.players[v.me].place}名 ✓）` : ""}</b>
+          <b>我</b>{v.players[v.me].place && <span className={`du-place place-${v.players[v.me].place}`}>第{v.players[v.me].place}名 ✓</span>}
           <Score score={v.players[v.me].score} />
           <span className="du-status" data-testid="du-status">
             {v.phase !== "PLAY" ? "本轮结束" : myTurn ? `轮到你了${two ? ` · ${zoneName(v.zone)}` : ""}` : `等待 ${names[v.turn]}…`}
