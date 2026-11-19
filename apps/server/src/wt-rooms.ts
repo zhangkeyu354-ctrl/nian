@@ -96,6 +96,9 @@ export class WTRoomStore {
       }
     }
   }
+  hasRoom(code: string) {
+    return this.rooms.has(code) || this.rooms.has(code.toUpperCase());
+  }
   get size() {
     return this.rooms.size;
   }

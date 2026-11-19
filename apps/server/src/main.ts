@@ -108,6 +108,25 @@ const http = createServer((req, res) => {
     );
     return;
   }
+  if (url.pathname === "/api/find-room") {
+    // 大厅统一的「输入房间号加入」：告诉前端这个房间号属于哪个游戏
+    res.setHeader("content-type", "application/json; charset=utf-8");
+    const code = (url.searchParams.get("code") ?? "").trim();
+    const up = code.toUpperCase();
+    const games: string[] = [];
+    const has = (m: { has?: (k: string) => boolean } | null | undefined) => !!m?.has && (m.has(code) || m.has(up));
+    if (has(store.rooms)) games.push("dbd");
+    const pairs: [string, { rooms: Map<string, unknown> }][] = [
+      ["ma", maStore], ["cn", cnStore], ["dm", dmStore], ["rk", rkStore], ["ss", ssStore], ["du", duStore], ["sk", skStore],
+      ["rr", rrStore], ["xb", xbStore], ["nd", ndStore], ["kb", kbStore], ["bf", bfStore], ["ta", taStore],
+    ];
+    for (const [g, st] of pairs) if (has(st.rooms)) games.push(g);
+    const dp = (dpStore.rooms as Map<string, { file?: { mode?: string } }>).get(code) ?? (dpStore.rooms as Map<string, { file?: { mode?: string } }>).get(up);
+    if (dp) games.push(dp.file?.mode === "fa" ? "fa" : "tp");
+    if (wtStore?.hasRoom(code)) games.push("wt");
+    res.end(JSON.stringify({ code: up, games }));
+    return;
+  }
   if (url.pathname === "/robots.txt") {
     res.setHeader("content-type", "text/plain; charset=utf-8");
     res.end("User-agent: *\nDisallow: /\n");

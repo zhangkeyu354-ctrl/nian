@@ -26,6 +26,7 @@ const NaodongScale = lazy(() => import("./nd/NaodongScale.tsx").then(m => ({defa
 const q = new URLSearchParams(location.search);
 const Xiabaiwang = lazy(() => import('./xb/Xiabaiwang.tsx').then(m => ({default:m.Xiabaiwang})));
 import { GameLobby } from "./GameLobby.tsx";
+import { GameHall } from "./GameHall.tsx";
 import { FxPreview } from "./BoardFx.tsx";
 const Codenames = lazy(() =>
   import("./cn/Codenames.tsx").then((m) => ({ default: m.Codenames })),
@@ -100,6 +101,8 @@ createRoot(document.getElementById("root")!).render(
       <App />
     ) : q.has("room") || q.has("online") ? (
       <Online />
+    ) : q.get("view") === "hall2" ? (
+      <GameHall />
     ) : (
       <GameLobby />
     )}
