@@ -288,6 +288,10 @@ function Lobby({ room }: { room: ReturnType<typeof useDURoom> }) {
   );
 }
 
+function Score({ score }: { score: number }) {
+  return <span className="du-score" aria-label={`${score} 分`}>{score ? Array.from({ length: score }, (_, i) => <span className="du-token" key={i} aria-hidden="true">{"dnup"[i % 4]}</span>) : "·"}</span>;
+}
+
 function Logo() {
   return (
     <div className="du-logo">
@@ -327,6 +331,10 @@ function Table({ room, v }: { room: ReturnType<typeof useDURoom>; v: DUView }) {
     setSel([]);
     setTarget(null);
   }, [v.turn, v.zone, v.round, v.hand.length]);
+
+  useEffect(() => {
+    if (myTurn && typeof navigator.vibrate === "function") navigator.vibrate(20);
+  }, [myTurn]);
 
   // 手牌按数字排序
   const hand = useMemo(() => [...v.hand].sort((a, b) => valueOf(a) - valueOf(b) || a.id - b.id), [v.hand]);
@@ -372,10 +380,10 @@ function Table({ room, v }: { room: ReturnType<typeof useDURoom>; v: DUView }) {
             <div key={seat} className={`du-opp${v.turn === seat && v.phase === "PLAY" ? " turn" : ""}${p.place ? " out" : ""}`} data-testid={`du-opp-${seat}`}>
               <div className="du-opp-head">
                 <b>{p.name}</b>
-                <span className="du-score">{"●".repeat(p.score) || "·"}</span>
+                <Score score={p.score} />
               </div>
               <div className="du-opp-meta">
-                {p.place ? <span className="du-place">第{p.place}名 ✓</span> : <span>🂠 {p.handCount}</span>}
+                {p.place ? <span className={`du-place place-${p.place}`}>第{p.place}名 ✓</span> : <span>🂠 {p.handCount}</span>}
                 {v.turn === seat && v.phase === "PLAY" && <span className="du-thinking">行动中{two ? ` · ${zoneName(v.zone)}` : ""}</span>}
               </div>
               <div className="du-zones">
@@ -409,7 +417,7 @@ function Table({ room, v }: { room: ReturnType<typeof useDURoom>; v: DUView }) {
       <section className={`du-mine${myTurn ? " turn" : ""}`}>
         <div className="du-mine-head">
           <b>我{v.players[v.me].place ? `（第${v.players[v.me].place}名 ✓）` : ""}</b>
-          <span className="du-score">{"●".repeat(v.players[v.me].score) || "·"}</span>
+          <Score score={v.players[v.me].score} />
           <span className="du-status" data-testid="du-status">
             {v.phase !== "PLAY" ? "本轮结束" : myTurn ? `轮到你了${two ? ` · ${zoneName(v.zone)}` : ""}` : `等待 ${names[v.turn]}…`}
           </span>
@@ -514,6 +522,7 @@ function RoundEnd({ room, v }: { room: ReturnType<typeof useDURoom>; v: DUView }
   return (
     <div className="du-over" data-testid={done ? "du-finished" : "du-round-end"}>
       <div className={`du-over-card${done ? " final" : ""}`}>
+        {done && <div className="du-confetti" aria-hidden="true">{Array.from({ length: 12 }, (_, i) => <i key={i}>{(i % 9) + 1}</i>)}</div>}
         {done ? (
           <>
             <div className="du-crown">👑</div>
@@ -533,7 +542,7 @@ function RoundEnd({ room, v }: { room: ReturnType<typeof useDURoom>; v: DUView }
           {rank.map((p) => (
             <div key={p.i} className={p.i === v.winner ? "win" : ""}>
               <span>{p.name}</span>
-              <span className="du-score">{"●".repeat(p.score) || "·"}</span>
+              <Score score={p.score} />
               <b>{p.score}</b>
             </div>
           ))}
