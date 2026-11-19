@@ -36,6 +36,30 @@ const storage = {
 const SUIT_ICON: Record<Suit, string> = { green: "🦜", purple: "🗺️", yellow: "💰", black: "☠️" };
 const KIND_ICON: Record<string, string> = { escape: "🏳️", pirate: "🏴‍☠️", tigress: "🐯", king: "👑", mermaid: "🧜‍♀️", kraken: "🐙", whale: "🐋", loot: "🪙" };
 
+/* ---------------- 动画帧 ---------------- */
+const ASSET = "/assets/skullking/";
+const frames = (name: string, n: number) => Array.from({ length: n }, (_, i) => `${ASSET}${name}-${String(i).padStart(2, "0")}.webp`);
+const FX = { kraken: frames("fx/kraken", 16), whale: frames("fx/whale", 16), coins: frames("fx/win-coins", 16), reveal: frames("ui/bid-reveal", 12) };
+const preloaded = new Set<string>();
+function preload(list: string[]) {
+  for (const src of list)
+    if (!preloaded.has(src)) {
+      preloaded.add(src);
+      const im = new Image();
+      im.src = src;
+    }
+}
+function Sprite({ list, ms = 50, className, hold = true }: { list: string[]; ms?: number; className?: string; hold?: boolean }) {
+  const [i, setI] = useState(0);
+  useEffect(() => {
+    setI(0);
+    const t = setInterval(() => setI((k) => (k + 1 < list.length ? k + 1 : hold ? k : (clearInterval(t), k))), ms);
+    return () => clearInterval(t);
+  }, [list]);
+  return <img className={className} src={list[i]} alt="" draggable={false} />;
+}
+const BONUS_IMG = new Set([10, 20, 30, 40]);
+
 /* ---------------- 卡牌 ---------------- */
 export function SKCard({ id, as, size = "md", selected, dim, onClick, testid }: { id: number; as?: "pirate" | "escape"; size?: "sm" | "md" | "lg"; selected?: boolean; dim?: boolean; onClick?: () => void; testid?: string }) {
   const c = CARDS[id];
@@ -85,6 +109,7 @@ const RULES = (
       <b>跟色：</b>第一张数字牌决定花色，有这个颜色的数字牌就必须出这个颜色；没有才能出别的颜色。<b>特殊牌随时都能出</b>，不受跟色限制。
     </p>
     <h3>牌的大小</h3>
+    <img className="sk-hier" src="/assets/skullking/ui/hierarchy.webp" alt="克制关系：海盗克美人鱼，美人鱼克骷髅王，骷髅王克海盗" />
     <ul>
       <li>数字牌：鹦鹉🦜、藏宝图🗺️、宝箱💰 三色，各 1–14。跟出的颜色里数字大的赢；别的颜色不能赢。</li>
       <li>骷髅旗☠️（黑色）是王牌，比其他三色都大。</li>
@@ -351,15 +376,22 @@ function TrickBanner({ r, v, onDone }: { r: TrickResult; v: SKView; onDone: () =
     return () => clearTimeout(t);
   }, [r.no]);
   const total = r.bonus.reduce((a, b) => a + b.pts, 0);
+  const mermaidKing = r.bonus.some((b) => b.label.includes("诱捕"));
   return (
     <div className={`sk-banner${r.destroyed ? " " + r.destroyed : ""}`} onClick={onDone} data-testid="sk-trick-banner">
-      <div className="sk-banner-cards">
-        {r.cards.map((p) => (
-          <div key={p.id} className={`sk-banner-slot${p.seat === r.winner ? " win" : ""}`}>
-            <SKCard id={p.id} as={p.as} size="sm" />
-            <small>{nameOf(v, p.seat)}</small>
-          </div>
-        ))}
+      {mermaidKing && <img className="sk-capture" src="/assets/skullking/fx/mermaid-capture.webp" alt="美人鱼诱捕骷髅王" />}
+      <div className="sk-banner-stage">
+        <div className="sk-banner-cards">
+          {r.cards.map((p) => (
+            <div key={p.id} className={`sk-banner-slot${p.seat === r.winner ? " win" : ""}`}>
+              <SKCard id={p.id} as={p.as} size="sm" />
+              <small>{nameOf(v, p.seat)}</small>
+            </div>
+          ))}
+        </div>
+        {r.destroyed === "kraken" && <Sprite className="sk-fx" list={FX.kraken} />}
+        {r.destroyed === "whale" && <Sprite className="sk-fx" list={FX.whale} />}
+        {!r.destroyed && r.winner !== null && <Sprite className="sk-fx coins" list={FX.coins} hold={false} />}
       </div>
       <div className="sk-banner-text">
         {r.destroyed === "kraken" ? (
@@ -369,11 +401,20 @@ function TrickBanner({ r, v, onDone }: { r: TrickResult; v: SKView; onDone: () =
         ) : (
           <>
             <b>{r.winner === v.me ? "你" : nameOf(v, r.winner)}</b> 赢下第 {r.no} 墩{r.destroyed === "whale" ? "（白鲸：只比数字）" : ""}
-            {total > 0 && <span className="sk-bonus-pop">奖励 +{total}</span>}
           </>
         )}
       </div>
-      {r.bonus.length > 0 && <div className="sk-banner-notes">{r.bonus.map((b) => `${b.label} +${b.pts}`).join(" · ")}（猜中才算）</div>}
+      {r.bonus.length > 0 && (
+        <div className="sk-badges">
+          {r.bonus.map((b, k) => (
+            <span key={k} className="sk-badge-item" style={{ animationDelay: 0.3 + k * 0.15 + "s" }}>
+              {BONUS_IMG.has(b.pts) ? <img src={`/assets/skullking/ui/bonus-${b.pts}.webp`} alt={"+" + b.pts} /> : <i>+{b.pts}</i>}
+              <small>{b.label}</small>
+            </span>
+          ))}
+        </div>
+      )}
+      {total > 0 && <div className="sk-banner-notes">奖励共 +{total}，本轮猜中才算</div>}
     </div>
   );
 }
@@ -385,6 +426,7 @@ function BidReveal({ v, onDone }: { v: SKView; onDone: () => void }) {
   }, []);
   return (
     <div className="sk-reveal" onClick={onDone} data-testid="sk-bid-reveal">
+      <Sprite className="sk-reveal-fx" list={FX.reveal} ms={65} />
       <div className="sk-reveal-title">哟—嗬—嗬！</div>
       <div className="sk-reveal-list">
         {v.players.map((p, i) => (
@@ -462,7 +504,7 @@ function RoundEnd({ room, v, host }: { room: Room; v: SKView; host: boolean }) {
     <Sheet title={fin ? "🏆 航行结束" : `第 ${v.round + 1} 轮结算`}>
       {fin && (
         <div className="sk-final">
-          <div className="sk-crown">👑</div>
+          <img className="sk-victory" src="/assets/skullking/fx/victory.webp" alt="" />
           <div className="sk-final-name">{v.winners.map((i) => v.players[i].name).join("、")}</div>
           <div className="sk-sub">成为七海船长！</div>
           <ol className="sk-rank">
@@ -604,6 +646,9 @@ function Table({ room, v }: { room: Room; v: SKView }) {
   const [bid, setBid] = useState<number | null>(null);
   const seen = useRef({ tricks: v.tricks.length, round: v.round, phase: v.phase });
   useEffect(() => {
+    preload([...FX.coins, ...FX.reveal, ...(v.settings.kraken ? FX.kraken : []), ...(v.settings.whale ? FX.whale : []), ...v.hand.map((id) => `${ASSET}cards/${CARDS[id].key}.webp`)]);
+  }, []);
+  useEffect(() => {
     const p = seen.current;
     if (v.round === p.round && v.tricks.length > p.tricks) setBanner(v.tricks[v.tricks.length - 1]);
     if (v.round !== p.round) setBanner(null);
@@ -666,12 +711,20 @@ function Table({ room, v }: { room: Room; v: SKView }) {
                   <span className={p!.bidDone ? "done" : "think"}>{p!.bidDone ? (i === v.me ? `猜 ${p!.bid}` : "✓ 已下注") : "思考中…"}</span>
                 ) : (
                   <span className={p!.won === p!.bid ? "ok" : p!.won > (p!.bid ?? 0) ? "over" : ""}>
-                    🎯{p!.bid} · 🏴{p!.won}
+                    🎯{p!.bid} · <img className="sk-coin" src="/assets/skullking/ui/tricks-coin.webp" alt="赢" />
+                    {p!.won}
                     {p!.shot === "cannon" ? "💣" : ""}
                   </span>
                 )}
               </div>
-              <div className="sk-pl-score">{ghost ? `赢 ${v.ghost!.won} 墩` : `${p!.score} 分`}</div>
+              <div className="sk-pl-score">
+                {ghost ? `赢 ${v.ghost!.won} 墩` : `${p!.score} 分`}
+                {i !== v.me && (ghost ? v.ghost!.handCount : p!.handCount) > 0 && (
+                  <span className="sk-backs">
+                    <img src="/assets/skullking/cards/back.webp" alt="" />×{ghost ? v.ghost!.handCount : p!.handCount}
+                  </span>
+                )}
+              </div>
               <div className="sk-pl-slot">{slotFor(i) ? <SKCard id={slotFor(i)!.id} as={slotFor(i)!.as} size="sm" /> : turn ? <span className="sk-wait">⏳</span> : null}</div>
             </div>
           );
@@ -707,8 +760,8 @@ function Table({ room, v }: { room: Room; v: SKView }) {
             <div className="sk-hint">你觉得这一轮能赢几墩？</div>
             <div className="sk-bid-grid">
               {Array.from({ length: v.cards + 1 }, (_, k) => (
-                <button key={k} className={`sk-bid-btn${bid === k ? " on" : ""}`} onClick={() => setBid(k)} data-testid={`sk-bid-${k}`}>
-                  {k}
+                <button key={k} className={`sk-bid-btn${bid === k ? " on" : ""}`} onClick={() => setBid(k)} data-testid={`sk-bid-${k}`} aria-label={`${k} 墩`}>
+                  <img src={`/assets/skullking/ui/bid-${k}.webp`} alt="" />
                 </button>
               ))}
             </div>

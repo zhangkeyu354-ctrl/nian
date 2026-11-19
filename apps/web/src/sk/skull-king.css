@@ -234,3 +234,34 @@ button.sk-card { cursor: pointer; }
 .sk-card.suit-purple .sk-badge { background: #55308a; }
 .sk-card.suit-yellow .sk-badge { background: #9a6a00; }
 .sk-card.suit-black .sk-badge { background: #111; color: #f3d27a; }
+
+/* 美术接入 */
+.sk-table { background: url(/assets/skullking/board/deck.webp) center top / cover no-repeat fixed, var(--sk-sea); }
+.sk-bid-btn { padding: 0; border: 0; background: none; box-shadow: none; border-radius: 50%; }
+.sk-bid-btn img { width: 100%; height: 100%; display: block; filter: drop-shadow(0 3px 2px rgba(0, 0, 0, 0.5)); }
+.sk-bid-btn.on { box-shadow: 0 0 0 3px #fff, 0 0 18px rgba(232, 182, 76, 0.9); }
+.sk-coin { width: 15px; height: 15px; vertical-align: -3px; margin-right: 1px; }
+.sk-backs { display: inline-flex; align-items: center; gap: 1px; margin-left: 5px; }
+.sk-backs img { width: 10px; height: 14px; border-radius: 2px; }
+.sk-hier { display: block; width: 100%; max-width: 360px; margin: 6px auto; border-radius: 12px; }
+.sk-banner-stage { position: relative; display: grid; place-items: center; min-height: 150px; width: 100%; }
+.sk-fx { position: absolute; width: min(92vw, 420px); pointer-events: none; }
+.sk-fx.coins { mix-blend-mode: screen; }
+.sk-capture { width: min(94vw, 520px); border-radius: 14px; box-shadow: 0 0 0 2px var(--sk-gold), 0 10px 30px rgba(0, 0, 0, 0.6); animation: sk-win 0.7s ease-out; }
+.sk-badges { display: flex; flex-wrap: wrap; justify-content: center; gap: 10px; }
+.sk-badge-item { display: flex; flex-direction: column; align-items: center; gap: 2px; animation: sk-win 0.6s ease-out backwards; }
+.sk-badge-item img { width: 64px; height: 64px; }
+.sk-badge-item i { font-style: normal; font-size: 22px; font-weight: 900; color: #3b2304; background: radial-gradient(#ffe9a8, #c99329); width: 64px; height: 64px; border-radius: 50%; display: grid; place-items: center; }
+.sk-badge-item small { font-size: 11px; color: var(--sk-mute); max-width: 96px; text-align: center; }
+.sk-reveal-fx { width: min(80vw, 320px); }
+.sk-victory { width: min(70vw, 300px); border-radius: 16px; box-shadow: 0 0 0 2px var(--sk-gold), 0 12px 30px rgba(0, 0, 0, 0.6); animation: sk-win 0.9s ease-out; }
+.sk-pl-bid > span { display: inline-flex; align-items: center; gap: 2px; white-space: nowrap; }
+.sk-victory { width: auto; max-width: 70vw; max-height: 32vh; display: block; margin: 0 auto 6px; }
+.sk-pl { background: rgba(10, 6, 2, 0.62); backdrop-filter: blur(2px); }
+.sk-pl-bid { display: flex; justify-content: center; }
+.sk-pl-bid > span { flex-direction: row !important; }
+.sk-pl-bid img.sk-coin { display: inline-block !important; flex: none; }
+.sk-final { display: flex; flex-direction: column; align-items: center; }
+.sk-final .sk-victory { position: static !important; transform: none; animation: sk-fade 0.6s; height: 180px; max-height: none; width: 100%; max-width: 420px; object-fit: cover; object-position: center 40%; }
+.sk-sheet > * { flex-shrink: 0; }
+.sk-final .sk-rank { width: 100%; align-self: stretch; }

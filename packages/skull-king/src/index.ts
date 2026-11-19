@@ -55,7 +55,7 @@ defs.push({ id: defs.length, kind: "mermaid", key: "mermaid-2" });
 defs.push({ id: defs.length, kind: "kraken", key: "kraken" });
 defs.push({ id: defs.length, kind: "whale", key: "whale" });
 defs.push({ id: defs.length, kind: "loot", key: "loot" });
-defs.push({ id: defs.length, kind: "loot", key: "loot" });
+defs.push({ id: defs.length, kind: "loot", key: "loot-2" });
 export const CARDS: readonly CardDef[] = defs;
 
 export function cardName(id: number) {
