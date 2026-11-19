@@ -153,6 +153,109 @@ function describe(e: LogEntry, names: string[]) {
   }
 }
 
+
+function ValueCard({ value, small }: { value: number; small?: boolean }) {
+  return (
+    <span className={`du-card ${small ? "du-md" : "du-lg"}`}>
+      <span className="du-face">
+        <span className="du-corner" style={{ color: NUM_COLOR[value] }}>{value}</span>
+        <span className="du-big" style={{ color: NUM_COLOR[value] }}>{value}</span>
+      </span>
+    </span>
+  );
+}
+
+function ActionShow({ e, names, me }: { e: LogEntry; names: string[]; me: number }) {
+  const who = e.seat === me ? "你" : names[e.seat];
+  const tgt = e.target === undefined ? "" : e.target === me ? "你" : names[e.target];
+  let title = "", sub = "", cards: number[] = [];
+  switch (e.type) {
+    case "PLAY":
+      title = `${who} 出了 ${e.values!.length} 张 ${e.value}`;
+      cards = e.values!;
+      break;
+    case "ADD":
+      title = `${who} 往 ${tgt} 的牌组里加了一张 ${e.value}`;
+      cards = [e.value!];
+      sub = "那组牌变多了一张";
+      break;
+    case "TAKE":
+      title = `${who} 拿走了 ${tgt} 的 ${e.values!.length} 张 ${e.value}`;
+      cards = e.values!;
+      sub = e.target === me ? "你放在桌上的牌被拿走了" : "拿回手里的牌会反转成另一个数字";
+      break;
+    case "ROTATE":
+      title = `${who} 把整手牌翻转了`;
+      sub = "手里每张牌都换成了另一端的数字";
+      break;
+    case "OUT":
+      title = `🎉 ${who} 第 ${e.place} 个出完手牌！`;
+      sub = `得 ${e.points} 分`;
+      break;
+    case "WIN_ROUND":
+      title = `🏆 ${who} 赢下这一轮`;
+      break;
+  }
+  const b = e.bounced;
+  const bounceText = b
+    ? b.discarded
+      ? `${b.seat === me ? "你" : names[b.seat]} 的 ${b.count} 张被压过，直接弃掉`
+      : b.seat === me
+        ? `⚠ 你的 ${b.count} 张被压过了！它们回到你手里，并且反转成另一个数字`
+        : `把 ${names[b.seat]} 的 ${b.count} 张压了回去（回到 ${names[b.seat]} 手里并反转）`
+    : "";
+  return (
+    <div className={`du-show${b && b.seat === me ? " hurt" : ""}${e.type === "OUT" || e.type === "WIN_ROUND" ? " gold" : ""}`} aria-live="polite" data-testid="du-show">
+      <div className="du-show-title">{title}</div>
+      {cards.length > 0 && (
+        <div className="du-show-cards">
+          {cards.map((v, i) => (
+            <ValueCard key={i} value={v} />
+          ))}
+        </div>
+      )}
+      {e.type === "ROTATE" && <div className="du-show-rot">⟳</div>}
+      {sub && <div className="du-show-sub">{sub}</div>}
+      {bounceText && <div className="du-show-bounce">{bounceText}</div>}
+    </div>
+  );
+}
+
+const TUTORIAL = [
+  { t: "目标：最先把手牌出完", d: "第 1 个出完得 2 分，第 2 个出完得 1 分，然后开下一轮。先攒够分数的人赢。" },
+  { t: "每张牌有两个数字", d: "大的是现在能用的数字，右下角小的倒着的是「另一面」。牌从桌上回到手里时，会变成另一面的数字。" },
+  { t: "轮到你：四件事选一件", d: "① 出牌：一张或几张相同数字。桌上如果有同样张数的牌，你的数字必须更大，会把它压回主人手里。\n② 加牌：往对手桌上那组里塞一张同数字的牌。\n③ 拿牌：把对手桌上那一整组拿进自己手里。\n④ 翻转：整手牌全部换成另一面的数字。" },
+  { t: "你出的牌会在桌上留一圈", d: "等你下一回合开始时才收走。在这期间，别人可能把它压回你手里（要再出一次），或者拿走、往里加牌。所以出的牌越大越安全。" },
+];
+
+function Tutorial({ onClose }: { onClose: () => void }) {
+  const [i, setI] = useState(0);
+  const last = i === TUTORIAL.length - 1;
+  return (
+    <div className="du-over" data-testid="du-tutorial">
+      <div className="du-over-card du-tut">
+        <div className="du-tut-step">{i + 1} / {TUTORIAL.length}</div>
+        <h2>{TUTORIAL[i].t}</h2>
+        {i === 1 && (
+          <div className="du-tut-demo">
+            <DnupCard card={{ id: 23, flip: false }} size="lg" />
+            <span>回到手里 →</span>
+            <DnupCard card={{ id: 23, flip: true }} size="lg" />
+          </div>
+        )}
+        <p>{TUTORIAL[i].d.split("\n").map((l, k) => <span key={k}>{l}<br /></span>)}</p>
+        <div className="du-tut-nav">
+          {i > 0 && <button className="du-btn" onClick={() => setI(i - 1)}>上一步</button>}
+          <button className="du-btn main grow" onClick={() => (last ? onClose() : setI(i + 1))} data-testid="du-tut-next">
+            {last ? "开始玩！" : "下一步"}
+          </button>
+        </div>
+        {!last && <button className="du-link" onClick={onClose}>跳过</button>}
+      </div>
+    </div>
+  );
+}
+
 function Lobby({ room }: { room: ReturnType<typeof useDURoom> }) {
   const [name, setName] = useState(storage.get("du:name") ?? "");
   const [code, setCode] = useState(new URLSearchParams(location.search).get("room") ?? "");
@@ -316,6 +419,9 @@ function Table({ room, v }: { room: ReturnType<typeof useDURoom>; v: DUView }) {
   const [rules, setRules] = useState(false);
   const [spin, setSpin] = useState(false);
   const [toast, setToast] = useState("");
+  const [queue, setQueue] = useState<{ k: string; e: LogEntry }[]>([]);
+  const [tutorial, setTutorial] = useState(() => storage.get("du:tutorial") !== "1");
+  const seenLog = useRef<string[] | null>(null);
   const names = v.players.map((p) => p.name);
   const myTurn = v.phase === "PLAY" && v.turn === v.me;
   const two = v.players.length === 2;
@@ -359,6 +465,23 @@ function Table({ room, v }: { room: ReturnType<typeof useDURoom>; v: DUView }) {
     animation.onfinish = () => piece.remove();
     return () => { animation.cancel(); piece.remove(); };
   }, [lastKey]);
+
+  // 动作播报队列：每个动作在屏幕中间展示一会儿，依次播放
+  useEffect(() => {
+    const cur = v.log.map((x) => JSON.stringify(x));
+    const prev = seenLog.current;
+    seenLog.current = cur;
+    if (!prev) return;
+    let overlap = Math.min(prev.length, cur.length);
+    while (overlap > 0 && prev.slice(-overlap).some((x, i) => x !== cur[i])) overlap--;
+    const added = v.log.slice(overlap).filter((x) => !(x.seat === v.me && (x.type === "PLAY" || x.type === "ROTATE") && !x.bounced));
+    if (added.length) setQueue((q) => [...q, ...added.map((e, i) => ({ k: Date.now() + "-" + i, e }))].slice(-6));
+  }, [lastKey]);
+  useEffect(() => {
+    if (!queue.length) return;
+    const t = setTimeout(() => setQueue((q) => q.slice(1)), queue.length > 2 ? 1100 : 1800);
+    return () => clearTimeout(t);
+  }, [queue]);
 
   // 新动作提示
   useEffect(() => {
@@ -436,6 +559,7 @@ function Table({ room, v }: { room: ReturnType<typeof useDURoom>; v: DUView }) {
         </span>
         <span className="du-top-right">
           <span className="du-discard" title="弃牌堆">弃 {v.discard}</span>
+          <button className="du-btn sm" onClick={() => setTutorial(true)}>教学</button>
           <button className="du-btn sm" onClick={() => setLogOpen(true)}>记录</button>
           <button className="du-btn sm" onClick={() => setRules(true)}>规则</button>
         </span>
@@ -505,7 +629,7 @@ function Table({ room, v }: { room: ReturnType<typeof useDURoom>; v: DUView }) {
               <span key={z} className={`du-empty${myTurn && v.zone === z ? " now" : ""}`}>{two ? zoneName(z) : "我的出牌区（空）"}</span>
             ),
           )}
-          {!two && v.players[v.me].zones[0] && myTurn === false && <span className="du-mine-note">下回合开始时收走</span>}
+          {!two && v.players[v.me].zones[0] && !myTurn && <span className="du-mine-note">这组会留到你下回合才收走；在这之前别人可能把它压回你手里</span>}
         </div>
       </section>
 
@@ -567,7 +691,21 @@ function Table({ room, v }: { room: ReturnType<typeof useDURoom>; v: DUView }) {
         )}
       </footer>
 
-      {flash && <div className="du-flash" aria-hidden="true">轮到你了</div>}
+      {queue[0] ? (
+        <div className="du-show-wrap" key={queue[0].k} onClick={() => setQueue((q) => q.slice(1))}>
+          <ActionShow e={queue[0].e} names={names} me={v.me} />
+        </div>
+      ) : (
+        flash && <div className="du-flash" aria-hidden="true">轮到你了</div>
+      )}
+      {tutorial && (
+        <Tutorial
+          onClose={() => {
+            storage.set("du:tutorial", "1");
+            setTutorial(false);
+          }}
+        />
+      )}
 
       {tg && target && (
         <Sheet title={`${names[target.seat]}${two ? " · " + zoneName(target.zone) : ""}：${tg.cards.length} 张 ${tg.value}`} onClose={() => setTarget(null)}>

@@ -139,7 +139,7 @@ export class DURoom {
     const st = this.file.state;
     if (!st || st.phase !== "PLAY") return false;
     const seat = this.file.players[st.turn];
-    if (!seat?.bot || now - this.file.updatedAt < 1100) return false;
+    if (!seat?.bot || now - this.file.updatedAt < 2600) return false;
     return this.transaction(() => {
       this.file.state = reduceDU(st, botMove(st, st.turn));
       this.file.version++;

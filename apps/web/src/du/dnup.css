@@ -253,3 +253,25 @@
   .du-dock .du-btn { min-height: 46px; }
 }
 .du-bot-x { margin-left: 6px; padding: 2px 8px; min-height: 0; }
+/* 动作播报 */
+.du-show-wrap { position: fixed; inset: 0; z-index: 48; display: grid; place-items: center; padding: 16px; background: rgba(0,0,0,.35); animation: du-fade .2s; }
+.du-show { width: min(340px, 92vw); padding: 16px 14px; border-radius: 18px; background: linear-gradient(#1d3322, #101a12); border: 2px solid #c6f36b; box-shadow: 0 16px 40px rgba(0,0,0,.6); text-align: center; display: grid; gap: 10px; animation: du-up .25s; }
+.du-show.hurt { border-color: #ff8a80; }
+.du-show.gold { border-color: #ffd54f; }
+.du-show-title { font-size: 18px; font-weight: 800; line-height: 1.35; }
+.du-show-cards { display: flex; justify-content: center; gap: 6px; }
+.du-show-cards .du-card { animation: du-deal .35s cubic-bezier(.3,1.4,.5,1) both; }
+.du-show-cards .du-card:nth-child(2) { animation-delay: .06s; } .du-show-cards .du-card:nth-child(3) { animation-delay: .12s; } .du-show-cards .du-card:nth-child(4) { animation-delay: .18s; }
+@keyframes du-deal { from { transform: translateY(-30px) scale(.7); opacity: 0; } }
+.du-show-rot { font-size: 44px; color: #c6f36b; animation: du-spin .8s ease; }
+.du-show-sub { font-size: 13px; color: #d9cbb8; }
+.du-show-bounce { font-size: 14px; font-weight: 700; color: #ffd58a; background: rgba(0,0,0,.3); border-radius: 10px; padding: 6px 8px; }
+.du-show.hurt .du-show-bounce { color: #ffb4ab; }
+/* 教学 */
+.du-tut { text-align: left; }
+.du-tut h2 { font-size: 20px; }
+.du-tut p { margin: 0; font-size: 15px; line-height: 1.7; color: #eadccb; }
+.du-tut-step { font-size: 12px; color: #a5d6a7; }
+.du-tut-demo { display: flex; align-items: center; justify-content: center; gap: 10px; color: #c6f36b; font-size: 13px; }
+.du-tut-nav { display: flex; gap: 8px; }
+.du-tut-nav .du-btn { min-height: 48px; }
