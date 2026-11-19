@@ -10,6 +10,7 @@
     "verify:xb-feel": "tsx scripts/verify-xb-feel-v2.ts",
     "verify:xb-browsers": "tsx scripts/verify-xb-browsers.ts",
     "verify:xb-layout": "tsx scripts/verify-xb-layout.ts",
+    "verify:sk-browsers": "tsx scripts/verify-sk-browsers.ts",
     "test": "vitest run",
     "typecheck": "tsc --noEmit",
     "simulate": "tsx scripts/simulate.ts",
@@ -74,6 +75,7 @@
   },
   "dependencies": {
     "@fontsource/zcool-kuaile": "^5.3.0",
+    "@fontsource/zcool-xiaowei": "^5.3.0",
     "@types/three": "^0.170.0",
     "cannon-es": "0.20.0",
     "qrcode": "1.5.4",

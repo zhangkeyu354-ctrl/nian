@@ -1,0 +1,53 @@
+{
+ "stats": {
+  "2p-360": {
+   "done": true,
+   "rounds": 4,
+   "actions": 31,
+   "avgLatencyMs": 63,
+   "maxLatencyMs": 79,
+   "seconds": 86,
+   "errors": []
+  },
+  "4p-390": {
+   "done": true,
+   "rounds": 4,
+   "actions": 37,
+   "avgLatencyMs": 65,
+   "maxLatencyMs": 132,
+   "seconds": 182,
+   "errors": []
+  },
+  "6p-360": {
+   "done": true,
+   "rounds": 4,
+   "actions": 31,
+   "avgLatencyMs": 77,
+   "maxLatencyMs": 553,
+   "seconds": 228,
+   "errors": []
+  },
+  "8p-360": {
+   "done": true,
+   "rounds": 4,
+   "actions": 30,
+   "avgLatencyMs": 64,
+   "maxLatencyMs": 91,
+   "seconds": 304,
+   "errors": []
+  },
+  "8p-414": {
+   "done": true,
+   "rounds": 4,
+   "actions": 30,
+   "avgLatencyMs": 88,
+   "maxLatencyMs": 747,
+   "seconds": 291,
+   "errors": []
+  }
+ },
+ "issues": [
+  "[4p-390 出牌] 手牌点不到：sk-banner kraken",
+  "[8p-360 出牌] 手牌点不到：sk-banner"
+ ]
+}
