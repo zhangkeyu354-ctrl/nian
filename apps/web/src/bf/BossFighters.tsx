@@ -670,7 +670,6 @@ export function CardFace({ id, selected, dim, onClick, badge, big }: { id: strin
       <b className="bf-cf-name">{c?.name ?? id}</b>
       {c?.stars ? <i className="bf-stars">{"★".repeat(c.stars)}</i> : null}
       <span className="bf-cf-text">
-        {c?.source === 'original' && <span>原创补充</span>}
         {lines.map((l, i) => (
           <span key={i}>{l}</span>
         ))}
