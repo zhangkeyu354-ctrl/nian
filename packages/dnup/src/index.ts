@@ -57,7 +57,22 @@ export interface Group {
   fresh?: boolean;
 }
 
+export interface RoundStats {
+  plays: number;
+  adds: number;
+  takes: number;
+  rotates: number;
+  /** 自己桌上的组合被压回/弃掉的次数 */
+  bounced: number;
+  /** 自己桌上的组合被别人拿走的次数 */
+  robbed: number;
+  /** 本轮最大一手 */
+  best: { size: number; value: number } | null;
+}
+export const emptyStats = (): RoundStats => ({ plays: 0, adds: 0, takes: 0, rotates: 0, bounced: 0, robbed: 0, best: null });
+
 export interface Player {
+  stats?: RoundStats;
   name: string;
   hand: HeldCard[];
   zones: (Group | null)[];
@@ -175,6 +190,7 @@ function deal(s: DUState) {
       .map((id) => ({ id, flip: nextRand(s) < 0.5 }));
     p.zones = p.zones.map(() => null);
     p.place = null;
+    p.stats = emptyStats();
   });
   s.discard = 0;
   s.round++;
@@ -213,6 +229,7 @@ function beatCheck(
 
 function bounce(s: DUState, seat: number, zone: number) {
   const p = s.players[seat];
+  if (p.stats) p.stats.bounced++;
   const g = p.zones[zone]!;
   p.zones[zone] = null;
   if (p.place !== null) {
@@ -329,12 +346,15 @@ export function reduceDU(state: DUState, c: Command): DUState {
   const me = s.players[seat];
   const myZone = s.zone;
   const entry: LogEntry = { round: s.round, seat, type: c.type, zone: myZone };
+  const st = (me.stats ??= emptyStats());
   switch (c.type) {
     case "PLAY": {
       const { cards, value, beaten } = checkPlay(s, seat, c.cards);
       me.hand = me.hand.filter((h) => !c.cards.includes(h.id));
       for (const b of beaten) entry.bounced = bounce(s, b.seat, b.zone);
       me.zones[myZone] = { cards, value, by: seat };
+      st.plays++;
+      if (!st.best || cards.length > st.best.size || (cards.length === st.best.size && value > st.best.value)) st.best = { size: cards.length, value };
       entry.values = cards.map(valueOf);
       entry.value = value;
       break;
@@ -348,6 +368,7 @@ export function reduceDU(state: DUState, c: Command): DUState {
       entry.value = g.value;
       entry.target = c.target;
       entry.zone = zone;
+      st.adds++;
       break;
     }
     case "TAKE": {
@@ -358,6 +379,8 @@ export function reduceDU(state: DUState, c: Command): DUState {
       const g = tp.zones[zone]!;
       tp.zones[zone] = null;
       me.hand.push(...g.cards.map(rotate));
+      st.takes++;
+      if (tp.stats) tp.stats.robbed++;
       entry.values = g.cards.map(valueOf);
       entry.value = g.value;
       entry.target = c.target;
@@ -366,6 +389,7 @@ export function reduceDU(state: DUState, c: Command): DUState {
     }
     case "ROTATE":
       me.hand = me.hand.map(rotate);
+      st.rotates++;
       break;
     default:
       throw Error("未知操作");
@@ -409,6 +433,7 @@ export function viewForDU(s: DUState, seat: number) {
       score: p.score,
       place: p.place,
       zones: p.zones,
+      stats: p.stats ?? emptyStats(),
     })),
   };
 }

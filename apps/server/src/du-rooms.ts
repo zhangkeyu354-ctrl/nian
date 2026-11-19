@@ -11,7 +11,7 @@ import {
   type Command,
 } from "../../../packages/dnup/src/index.ts";
 import { botMove } from "../../../packages/dnup/src/bot.ts";
-import { DU_EVENTS as E, type DUAction, type DUSnapshot } from "../../../packages/shared/src/du-protocol.ts";
+import { DU_EVENTS as E, DU_EMOTES, type DUAction, type DUSnapshot } from "../../../packages/shared/src/du-protocol.ts";
 
 interface Seat { id: string; name: string; token: string; ready: boolean; bot?: boolean }
 export interface DUFile {
@@ -281,6 +281,19 @@ export function attachDnup(io: Server, directory: string, opts: { maxRooms: numb
       } catch (e) {
         return { ok: false, error: e instanceof Error ? e.message : "操作失败", consumed: false, snapshot: r.snapshot(req.token) };
       }
+    });
+    let lastEmote = 0;
+    handle(E.emote, (req) => {
+      const r = socket.data.duRoom as DURoom | undefined;
+      const me = r?.me(socket.data.duToken);
+      ensure(r && me, "请先入座");
+      ensure((DU_EMOTES as readonly string[]).includes(req.emoji), "表情无效");
+      const now = Date.now();
+      ensure(now - lastEmote > 1200, "发太快了");
+      lastEmote = now;
+      const seat = r.file.players.findIndex((p) => p.id === me.id);
+      io.to(channel(r.file.code)).emit(E.emoted, { seat, emoji: req.emoji, at: now });
+      return {};
     });
     socket.on("disconnect", leave);
   });

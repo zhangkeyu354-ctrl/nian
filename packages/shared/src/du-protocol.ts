@@ -5,6 +5,8 @@ export const DU_EVENTS = {
   claim: "du:claim",
   action: "du:action",
   update: "du:update",
+  emote: "du:emote",
+  emoted: "du:emoted",
 } as const;
 export type DUAction =
   | { type: "PLAY"; cards: number[] }
@@ -40,3 +42,5 @@ export interface DUAck {
   token?: string;
   playerId?: string;
 }
+
+export const DU_EMOTES = ["👍", "😂", "😱", "😭", "😤", "🙏"] as const;

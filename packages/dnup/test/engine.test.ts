@@ -238,3 +238,16 @@ describe("人机", () => {
     expect(s.phase).toBe("FINISHED");
   });
 });
+
+describe("每轮统计", () => {
+  it("记录出牌、被压、被拿、翻转和最大一手", () => {
+    const s = setup(3, [[h(card(3, 4)), h(card(3, 5)), h(card(2, 9))], [h(card(5, 7)), h(card(5, 8)), h(card(1, 9))], [h(card(2, 10))]]);
+    let t = reduceDU(s, { type: "PLAY", actor: 0, cards: [card(3, 4), card(3, 5)] });
+    t = reduceDU(t, { type: "PLAY", actor: 1, cards: [card(5, 7), card(5, 8)] });
+    t = reduceDU(t, { type: "TAKE", actor: 2, target: 1 });
+    t = reduceDU(t, { type: "ROTATE", actor: 0 });
+    expect(t.players[0].stats).toMatchObject({ plays: 1, bounced: 1, rotates: 1, best: { size: 2, value: 3 } });
+    expect(t.players[1].stats).toMatchObject({ plays: 1, robbed: 1, best: { size: 2, value: 5 } });
+    expect(t.players[2].stats!.takes).toBe(1);
+  });
+});

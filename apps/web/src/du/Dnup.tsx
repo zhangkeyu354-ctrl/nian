@@ -1,6 +1,7 @@
 import { useEffect, useMemo, useRef, useState } from "react";
 import "./dnup.css";
 import { useDURoom } from "./du-net.ts";
+import { DU_EMOTES } from "../../../../packages/shared/src/du-protocol.ts";
 import {
   valueOf,
   otherOf,
@@ -28,6 +29,8 @@ const storage = {
 };
 
 /** 数字的颜色，参照原版每个数字一种颜色 */
+const avatarChar = (n: string) => (n.startsWith("人机") && n.length > 2 ? n.slice(-1) : n.slice(0, 1));
+export const SEAT_COLORS = ["#4caf50", "#e2397d", "#2bb3c0", "#f08a24", "#8e44ad", "#2f6fd6"];
 export const NUM_COLOR: Record<number, string> = {
   1: "#c6d63b",
   2: "#e2397d",
@@ -530,6 +533,7 @@ function Table({ room, v }: { room: ReturnType<typeof useDURoom>; v: DUView }) {
   const [confirmRotate, setConfirmRotate] = useState(false);
   const [flash, setFlash] = useState(false);
   const [logOpen, setLogOpen] = useState(false);
+  const [emoteOpen, setEmoteOpen] = useState(false);
   useEffect(() => {
     if (!myTurn) return;
     setFlash(true);
@@ -551,33 +555,52 @@ function Table({ room, v }: { room: ReturnType<typeof useDURoom>; v: DUView }) {
   const tap = () => typeof navigator.vibrate === "function" && navigator.vibrate(8);
 
   return (
-    <div className={`du-table${many ? " many" : ""}`} data-testid="du-table">
+    <div className="du-table" data-testid="du-table">
       <header className="du-top">
         <span className="du-mini-logo">dnup</span>
         <span className="du-top-info">
           第 {v.round} 轮 · {two ? "先赢 2 轮" : `${v.target} 分获胜`}
         </span>
         <span className="du-top-right">
-          <span className="du-discard" title="弃牌堆">弃 {v.discard}</span>
+          
+          <button className="du-btn sm" onClick={() => setEmoteOpen((o) => !o)} aria-label="发表情" data-testid="du-emote-open">😀</button>
           <button className="du-btn sm" onClick={() => setTutorial(true)}>教学</button>
           <button className="du-btn sm" onClick={() => setLogOpen(true)}>记录</button>
           <button className="du-btn sm" onClick={() => setRules(true)}>规则</button>
         </span>
       </header>
 
-      <section className="du-opps">
-        {order.map((seat) => {
+      <section className={`du-ring n${order.length}`} data-testid="du-ring">
+        <div className="du-oval" aria-hidden="true" />
+        {order.map((seat, i) => {
           const p = v.players[seat];
           const active = v.turn === seat && v.phase === "PLAY";
+          const n = order.length;
+          const span = n <= 2 ? 120 : n === 3 ? 160 : 210;
+          const theta = ((90 + span / 2 - (span * (i + 1)) / (n + 1)) * Math.PI) / 180;
+          const x = Math.min(89, Math.max(11, 50 + 46 * Math.cos(theta)));
+          const y = 6 + (1 - Math.sin(theta)) * (n <= 2 ? 40 : 70);
+          const emo = room.emotes.filter((e) => e.seat === seat).slice(-1)[0];
           return (
-            <div key={seat} className={`du-opp${active ? " turn" : ""}${p.place ? " out" : ""}`} data-testid={`du-opp-${seat}`} data-du-seat={seat}>
+            <div
+              key={seat}
+              className={`du-opp du-seatpos${active ? " turn" : ""}${p.place ? " out" : ""}`}
+              style={{ left: x + "%", top: y + "%" }}
+              data-testid={`du-opp-${seat}`}
+              data-du-seat={seat}
+            >
               <div className="du-opp-head">
+                <span className="du-avatar" style={{ background: SEAT_COLORS[seat % SEAT_COLORS.length] }}>
+                  {avatarChar(p.name)}
+                  {active && <span className="du-avatar-ring" />}
+                  {p.place && <span className={`du-avatar-badge place-${p.place}`}>{p.place}</span>}
+                </span>
+                {emo && <span className="du-emote-bubble" key={emo.at}>{emo.emoji}</span>}
                 <b>{p.name}</b>
-                <Score score={p.score} />
-              </div>
-              <div className="du-opp-meta">
-                {p.place ? <span className={`du-place place-${p.place}`}>第{p.place}名 ✓</span> : <span className="du-count">手牌 {p.handCount}</span>}
-                {active && <span className="du-thinking">行动中{two ? ` · ${zoneName(v.zone)}` : ""}</span>}
+                <span className="du-opp-line">
+                  {p.place ? <span className={`du-place place-${p.place}`}>第{p.place}名</span> : <span className="du-count">🂠{p.handCount}</span>}
+                  <Score score={p.score} />
+                </span>
               </div>
               <div className="du-zones">
                 {p.zones.map((g, z) =>
@@ -593,6 +616,13 @@ function Table({ room, v }: { room: ReturnType<typeof useDURoom>; v: DUView }) {
         })}
       </section>
 
+      {emoteOpen && (
+        <div className="du-emote-bar">
+          {DU_EMOTES.map((e) => (
+            <button key={e} onClick={() => { room.emote(e); setEmoteOpen(false); tap(); }} data-testid={`du-emote-${e}`}>{e}</button>
+          ))}
+        </div>
+      )}
       <section className="du-info">
         <div className={`du-feed${room.error ? " err" : ""}`} onClick={() => room.error && room.setError("")} data-testid="du-feed">
           {room.error ? `⚠ ${room.error}` : toast || (lastEntry ? describe(lastEntry, names) : "拿到 ★1/5 的人先出牌")}
@@ -614,6 +644,10 @@ function Table({ room, v }: { room: ReturnType<typeof useDURoom>; v: DUView }) {
 
       <section className={`du-mine${myTurn ? " turn" : ""}`} data-du-seat={v.me}>
         <div className="du-mine-head">
+          <span className="du-avatar me" style={{ background: SEAT_COLORS[v.me % SEAT_COLORS.length] }}>
+            {avatarChar(names[v.me])}
+            {room.emotes.filter((e) => e.seat === v.me).slice(-1).map((e) => <span className="du-emote-bubble" key={e.at}>{e.emoji}</span>)}
+          </span>
           <b>我</b>
           {v.players[v.me].place && <span className={`du-place place-${v.players[v.me].place}`}>第{v.players[v.me].place}名 ✓</span>}
           <Score score={v.players[v.me].score} />
@@ -762,6 +796,53 @@ function Table({ room, v }: { room: ReturnType<typeof useDURoom>; v: DUView }) {
   );
 }
 
+function Recap({ v }: { v: DUView }) {
+  const ps = v.players.map((p, i) => ({ ...p, i }));
+  const pick = (f: (x: (typeof ps)[number]) => number) => {
+    const best = Math.max(...ps.map(f));
+    return best > 0 ? ps.filter((x) => f(x) === best) : [];
+  };
+  const big = pick((x) => (x.stats.best ? x.stats.best.size * 100 + x.stats.best.value : 0));
+  const titles = [
+    { icon: "🏅", name: "最大一手", who: big, note: big[0]?.stats.best ? `${big[0].stats.best.size} 张 ${big[0].stats.best.value}` : "" },
+    { icon: "💥", name: "最惨", who: pick((x) => x.stats.bounced + x.stats.robbed), note: "牌被压回/拿走最多" },
+    { icon: "😈", name: "搅局王", who: pick((x) => x.stats.adds + x.stats.takes), note: "加牌、拿牌最多" },
+    { icon: "🌀", name: "翻转达人", who: pick((x) => x.stats.rotates), note: "翻转最多" },
+  ].filter((t) => t.who.length);
+  return (
+    <div className="du-recap" data-testid="du-recap">
+      <div className="du-titles">
+        {titles.map((t) => (
+          <div key={t.name} className="du-title">
+            <span className="du-title-icon">{t.icon}</span>
+            <span>
+              <b>{t.name}</b>
+              <small>{t.who.map((w) => (w.i === v.me ? "我" : w.name)).join("、")} · {t.note}</small>
+            </span>
+          </div>
+        ))}
+      </div>
+      <table className="du-stats">
+        <thead>
+          <tr><th></th><th>出牌</th><th>加/拿</th><th>翻转</th><th>被压</th><th>被拿</th></tr>
+        </thead>
+        <tbody>
+          {ps.map((p) => (
+            <tr key={p.i}>
+              <td>{p.i === v.me ? "我" : p.name}</td>
+              <td>{p.stats.plays}</td>
+              <td>{p.stats.adds}/{p.stats.takes}</td>
+              <td>{p.stats.rotates}</td>
+              <td>{p.stats.bounced}</td>
+              <td>{p.stats.robbed}</td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </div>
+  );
+}
+
 function RoundEnd({ room, v }: { room: ReturnType<typeof useDURoom>; v: DUView }) {
   const s = room.snapshot!;
   const host = s.hostId === s.mySeat;
@@ -787,6 +868,7 @@ function RoundEnd({ room, v }: { room: ReturnType<typeof useDURoom>; v: DUView }
             </div>
           ))}
         </div>
+        <Recap v={v} />
         <div className="du-standings">
           {rank.map((p) => (
             <div key={p.i} className={p.i === v.winner ? "win" : ""}>

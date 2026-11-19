@@ -24,7 +24,8 @@ export function useDURoom() {
   const [snapshot, setSnapshot] = useState<DUSnapshot | null>(null),
     [online, setOnline] = useState(false),
     [pending, setPending] = useState(false),
-    [error, setError] = useState("");
+    [error, setError] = useState(""),
+    [emotes, setEmotes] = useState<{ seat: number; emoji: string; at: number }[]>([]);
   const socket = useRef<Socket | null>(null),
     latest = useRef<DUSnapshot | null>(null),
     busy = useRef(false),
@@ -67,6 +68,10 @@ export function useDURoom() {
     s.on("disconnect", () => setOnline(false));
     s.on("connect_error", () => setOnline(false));
     s.on(E.update, apply);
+    s.on(E.emoted, (m: { seat: number; emoji: string; at: number }) => {
+      setEmotes((list) => [...list.filter((x) => Date.now() - x.at < 3000), { ...m, at: Date.now() }]);
+      setTimeout(() => setEmotes((list) => list.filter((x) => Date.now() - x.at < 2900)), 3000);
+    });
     window.render_game_to_text = () => JSON.stringify(latest.current);
     return () => {
       s.disconnect();
@@ -134,6 +139,10 @@ export function useDURoom() {
         return a.snapshot?.mySeat ? true : claim(name);
       }),
     claim: (name: string) => lock(() => claim(name)),
+    emotes,
+    emote: (emoji: string) => {
+      socket.current?.emit(E.emote, { emoji }, () => {});
+    },
     act: (action: DUAction) =>
       lock(async () => {
         const s = latest.current;
