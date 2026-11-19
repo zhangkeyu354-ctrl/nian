@@ -361,3 +361,58 @@
 .du-btn.rotate:not(.confirm) { background: rgba(255,255,255,.06); border-color: rgba(255,255,255,.12); }
 /* 顶部按钮去描边 */
 .du-top-right .du-btn.sm { border: 0; background: rgba(0,0,0,.25); }
+
+/* ===== 美感提升 ===== */
+/* 桌面灯光：顶部暖光 + 四周暗角 */
+.du-table { position: relative; }
+.du-table::before { content: ""; position: fixed; inset: 0; pointer-events: none; z-index: 0; background: radial-gradient(ellipse 90% 55% at 50% 28%, rgba(255,236,190,.10), transparent 70%), radial-gradient(ellipse 120% 90% at 50% 45%, transparent 55%, rgba(0,0,0,.55)); }
+.du-table > header, .du-table > section, .du-table > .du-emote-bar { position: relative; z-index: 1; }
+.du-table > .du-dock { position: relative; z-index: 2; }
+/* 顶部：轮次做成小铭牌 */
+.du-top-info { padding: 3px 10px; border-radius: 99px; background: rgba(0,0,0,.28); color: #e8dcc4; font-weight: 600; letter-spacing: .5px; box-shadow: inset 0 1px 0 rgba(255,255,255,.06); }
+/* 扇形手牌 */
+.du-hand { display: flex; flex-direction: column; align-items: center; justify-content: flex-start; gap: 0; padding: 22px 0 6px; overflow-x: hidden; }
+.du-fan { display: flex; justify-content: center; width: 100%; padding: 0 10px; }
+.du-fan + .du-fan { margin-top: -18px; }
+.du-fan-slot { display: block; flex: 0 1 auto; min-width: 0; transform: translateY(var(--y)) rotate(var(--r)); transform-origin: 50% 160%; margin-left: calc(min(-4px, (100vw - 76px - var(--n) * 58px) / max(var(--n) - 1, 1))); transition: transform .2s; }
+.du-fan-slot:first-child { margin-left: 0; }
+@media (min-width: 560px) { .du-fan-slot { margin-left: calc(min(-4px, (490px - var(--n) * 58px) / max(var(--n) - 1, 1))); } }
+.du-fan-slot:has(.du-card.sel) { z-index: 50 !important; }
+.du-hand .du-card.du-lg { --w: 58px; --h: 86px; }
+.du-hand .du-face { box-shadow: 0 1px 0 #cdbf9f, 0 2px 0 #a99a7a, -2px 4px 10px rgba(0,0,0,.4); }
+.du-hand .du-card.sel { transform: translateY(-20px); }
+.du-hand .du-card.sel .du-face { box-shadow: 0 0 0 2.5px #d8f58f, 0 0 18px rgba(198,243,107,.55), 0 12px 18px rgba(0,0,0,.45); }
+.du-hand .du-card.dim .du-face { filter: brightness(.55) saturate(.5); }
+.du-hand .du-card:not(:disabled):active { transform: translateY(-6px); }
+/* 头像：立体感 */
+.du-avatar { border: 0; box-shadow: inset 0 -3px 6px rgba(0,0,0,.25), inset 0 2px 3px rgba(255,255,255,.35), 0 0 0 2px rgba(255,248,230,.9), 0 4px 10px rgba(0,0,0,.55); text-shadow: 0 1px 2px rgba(0,0,0,.35); }
+.du-seatpos .du-opp-head b { margin-top: 3px; padding: 1px 7px; border-radius: 99px; background: rgba(0,0,0,.35); font-weight: 600; color: #f3ead8; }
+.du-opp-line { color: rgba(239,230,210,.7); }
+/* 计分标记 */
+.du-score:empty { display: none; }
+/* 按钮 */
+.du-btn.main:disabled { opacity: 1; background: rgba(255,255,255,.07); border-color: rgba(255,255,255,.1); box-shadow: none; color: rgba(239,230,210,.55); }
+.du-btn.main:not(:disabled) { background: linear-gradient(180deg, #7ed957, #4caf50 55%, #3d9a41); border-color: #a4e78a; box-shadow: 0 4px 0 #2b6f2e, 0 8px 16px rgba(76,175,80,.35); text-shadow: 0 1px 1px rgba(0,0,0,.25); }
+.du-dock-hint { font-size: 12px; letter-spacing: .3px; }
+/* 场上筹码 */
+.du-ladder-item { border-radius: 99px; background: linear-gradient(180deg, rgba(0,0,0,.25), rgba(0,0,0,.4)); }
+.du-ladder-item b { font-family: "Dnup Rounded", ui-rounded, system-ui, sans-serif; font-size: 18px; }
+/* 桌面牌组：落在毡布上的投影 */
+.du-group-cards { filter: drop-shadow(0 4px 4px rgba(0,0,0,.45)); }
+
+/* 手牌不重叠（每张右下角的另一端数字必须完整可见） */
+.du-fan-slot, .du-fan-slot:first-child, .du-fan-slot { margin-left: 0 !important; margin-right: 0; }
+.du-fan { gap: 5px; }
+.du-fan + .du-fan { margin-top: 8px; }
+.du-fan-slot { transform-origin: 50% 300%; }
+.du-hand { padding-top: 24px; overflow-y: auto; }
+@media (max-height: 700px) {
+  .du-ring { height: 118px; } .du-ring.n3 { height: 140px; } .du-ring.n4, .du-ring.n5 { height: 158px; }
+  .du-avatar { width: 28px; height: 28px; font-size: 13px; }
+  .du-seatpos .du-opp-head b { font-size: 10px; margin-top: 1px; }
+  .du-opp-line { font-size: 10px; }
+  .du-hand { padding-top: 16px; }
+  .du-hand .du-card.du-lg { --w: 50px; --h: 74px; }
+  .du-mine { padding-top: 5px; padding-bottom: 3px; }
+  .du-feed { min-height: 22px; }
+}

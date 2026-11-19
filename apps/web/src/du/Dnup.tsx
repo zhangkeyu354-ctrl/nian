@@ -403,8 +403,17 @@ function Lobby({ room }: { room: ReturnType<typeof useDURoom> }) {
   );
 }
 
+/** 手牌分排：每排放得下几张就放几张，牌与牌之间不重叠，保证每张右下角的小数字都看得见 */
+function fanRows<T>(hand: T[]): T[][] {
+  const w = typeof window === "undefined" ? 390 : Math.min(window.innerWidth, 560);
+  const per = Math.max(4, Math.floor((w - 24) / 63));
+  const rows = Math.max(1, Math.ceil(hand.length / per));
+  const size = Math.ceil(hand.length / rows);
+  return Array.from({ length: rows }, (_, i) => hand.slice(i * size, (i + 1) * size)).filter((r) => r.length);
+}
+
 function Score({ score }: { score: number }) {
-  return <span className="du-score" aria-label={`${score} 分`}>{score ? Array.from({ length: score }, (_, i) => <span className="du-token" key={i} aria-hidden="true">{"dnup"[i % 4]}</span>) : "·"}</span>;
+  return <span className="du-score" aria-label={`${score} 分`}>{score ? Array.from({ length: score }, (_, i) => <span className="du-token" key={i} aria-hidden="true">{"dnup"[i % 4]}</span>) : null}</span>;
 }
 
 function Logo() {
@@ -669,23 +678,32 @@ function Table({ room, v }: { room: ReturnType<typeof useDURoom>; v: DUView }) {
 
       <section className={`du-hand${hand.length > 10 ? " dense" : ""}`} data-testid="du-hand">
         {hand.length === 0 && <span className="du-ladder-empty">手牌已出完</span>}
-        {hand.map((c) => (
-          <DnupCard
-            key={c.id}
-            card={c}
-            size="lg"
-            selected={sel.includes(c.id)}
-            dim={myTurn && selValue !== null && valueOf(c) !== selValue}
-            onClick={() => {
-              if (!myTurn) {
-                setToast(v.phase === "PLAY" ? `还没轮到你，现在是 ${names[v.turn]}` : "本轮已结束");
-                return;
-              }
-              tap();
-              toggle(c);
-            }}
-            spin={spin}
-          />
+        {fanRows(hand).map((row, ri) => (
+          <div className="du-fan" key={ri} style={{ "--n": row.length } as React.CSSProperties}>
+            {row.map((c, i) => {
+              const mid = (row.length - 1) / 2;
+              const off = row.length > 1 ? (i - mid) / mid : 0;
+              return (
+                <span key={c.id} className="du-fan-slot" style={{ "--r": `${off * Math.min(6, row.length * 1.2)}deg`, "--y": `${off * off * Math.min(8, row.length * 1.5)}px`, zIndex: i } as React.CSSProperties}>
+                  <DnupCard
+                    card={c}
+                    size="lg"
+                    selected={sel.includes(c.id)}
+                    dim={myTurn && selValue !== null && valueOf(c) !== selValue}
+                    onClick={() => {
+                      if (!myTurn) {
+                        setToast(v.phase === "PLAY" ? `还没轮到你，现在是 ${names[v.turn]}` : "本轮已结束");
+                        return;
+                      }
+                      tap();
+                      toggle(c);
+                    }}
+                    spin={spin}
+                  />
+                </span>
+              );
+            })}
+          </div>
         ))}
       </section>
 
