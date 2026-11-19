@@ -64,6 +64,7 @@ export function SKCard({ id, as, size = "md", selected, dim, onClick, testid }: 
         </>
       )}
       {art && <img className="sk-art" src={`/assets/skullking/cards/${c.key}.webp`} alt="" onError={() => setArt(false)} />}
+      {art && c.kind === "suit" && <span className="sk-badge">{c.n}</span>}
       {as && <span className={`sk-as ${as}`}>{as === "pirate" ? "当海盗" : "当逃跑"}</span>}
     </El>
   );
