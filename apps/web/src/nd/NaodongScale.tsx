@@ -196,7 +196,7 @@ export function NaodongScale() {
   }, []);
   useEffect(() => {
     if (menu) {
-      dialog.current?.showModal();
+      if (dialog.current && !dialog.current.open) dialog.current.showModal();
     } else dialog.current?.close();
   }, [menu]);
   useEffect(() => {

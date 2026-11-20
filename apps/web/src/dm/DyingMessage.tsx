@@ -1319,7 +1319,7 @@ function Cards({
 function EvidenceZoom({ id, onClose }: { id: string; onClose: () => void }) {
   const ref = useRef<HTMLDialogElement>(null);
   useEffect(() => {
-    ref.current?.showModal();
+    if (ref.current && !ref.current.open) ref.current.showModal();
   }, []);
   return (
     <dialog ref={ref} className="dm-zoom" onClose={onClose}>

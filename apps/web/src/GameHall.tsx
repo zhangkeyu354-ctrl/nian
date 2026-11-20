@@ -205,7 +205,7 @@ export function GameHall() {
         <button
           className="hall2-bell"
           onClick={() => {
-            notices.current?.showModal();
+            if (notices.current && !notices.current.open) notices.current.showModal();
             store.set("hall:seen", latest);
             setUnread(false);
           }}

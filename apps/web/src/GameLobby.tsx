@@ -20,7 +20,7 @@ export function GameLobby() {
           Wi-Fi 或外网都行。
         </p>
       </header>
-      <button className="hall-updates-button" onClick={() => updatesDialog.current?.showModal()}>更新公告</button>
+      <button className="hall-updates-button" onClick={() => { const d = updatesDialog.current; if (d && !d.open) d.showModal(); }}>更新公告</button>
       <dialog className="hall-updates" ref={updatesDialog} aria-labelledby="hall-updates-title">
         <header className="hall-updates-head">
           <h2 id="hall-updates-title">更新公告</h2>
