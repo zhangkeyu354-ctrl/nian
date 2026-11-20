@@ -31,6 +31,7 @@ export interface GameState {
   lastFailed: number | null;
   countdownActive: boolean;
   bonusSeat: number | null;
+  resultReason: "all_good_badges" | "three_rounds" | "countdown" | null;
 }
 
 export type GameCommand =
@@ -55,7 +56,7 @@ export type GameCommand =
 
 export function createGame(playerCount: number, forensicSeat: number, cardsPerKind: 3 | 4 | 5, eventsEnabled: boolean, now: number, random: () => number = Math.random): GameState {
   const dealt = dealGame(playerCount, forensicSeat, cardsPerKind, random);
-  return { ...dealt, eventsEnabled, bonusAttempts: Array(playerCount).fill(0), night: null, board: null, hunt: null, winner: null, log: [{ type: "setup", at: now, detail: "开局发牌" }], records: [], pendingEvent: null, lastFailed: null, countdownActive: false, bonusSeat: null };
+  return { ...dealt, eventsEnabled, bonusAttempts: Array(playerCount).fill(0), night: null, board: null, hunt: null, winner: null, log: [{ type: "setup", at: now, detail: "开局发牌" }], records: [], pendingEvent: null, lastFailed: null, countdownActive: false, bonusSeat: null, resultReason: null };
 }
 
 const logged = (state: GameState, type: string, at: number, detail: string): GameState => ({ ...state, log: [...state.log, { type, at, detail }] });
@@ -119,7 +120,7 @@ export function reduceGame(state: GameState, command: GameCommand, now: number, 
     const hunt = result.phase === "witness_hunt" ? beginHunt(state.roles, now) : null;
     const correct = command.guess.owner === state.answer.owner && command.guess.clue === state.answer.clue && command.guess.means === state.answer.means;
     const detail = !correct ? "错！" : result.winner ? "破案" : "破案成功，进入反杀";
-    return logged({ ...state, phase: result.phase, badges: result.badges, bonusAttempts: result.bonusAttempts ?? state.bonusAttempts, winner: result.winner, hunt, bonusSeat: null, lastFailed: correct ? state.lastFailed : command.seat, records: result.phase !== state.phase && result.phase !== state.board?.phase ? recordBoard(state, now) : state.records }, result.phase === "result" ? "result" : "solve", now, detail);
+    return logged({ ...state, phase: result.phase, badges: result.badges, bonusAttempts: result.bonusAttempts ?? state.bonusAttempts, winner: result.winner, hunt, bonusSeat: null, resultReason: result.phase === "result" && result.winner === "evil" ? "all_good_badges" : null, lastFailed: correct ? state.lastFailed : command.seat, records: result.phase !== state.phase && result.phase !== state.board?.phase ? recordBoard(state, now) : state.records }, result.phase === "result" ? "result" : "solve", now, detail);
   }
   if (command.type === "skip_bonus") {
     if (state.phase !== "event_bonus" || command.seat !== state.bonusSeat || !state.board) throw new Error("现在不能放弃额外破案机会");
@@ -205,7 +206,7 @@ export function reduceGame(state: GameState, command: GameCommand, now: number, 
   }
   if (command.type === "next_speaker" && state.countdownActive && board.phase !== state.board.phase) board = { ...board, phase: "result", winner: "evil" };
   const records = command.type === "next_speaker" && board.phase !== state.board.phase ? recordBoard(state, now) : state.records;
-  return logged({ ...state, phase: board.phase, board, orangeDeck, winner: board.winner, records }, command.type, now, command.type);
+  return logged({ ...state, phase: board.phase, board, orangeDeck, winner: board.winner, resultReason: board.phase === "result" ? (state.countdownActive ? "countdown" : "three_rounds") : state.resultReason, records }, command.type, now, command.type);
 }
 
 export function gameView(state: GameState, seat: number) {
@@ -216,7 +217,7 @@ export function gameView(state: GameState, seat: number) {
     ...(state.phase === "setup" ? { locationOptions: [...state.locationOptions] } : {}),
     ...(state.phase === "night_killer" && state.roles[seat] === "killer" && state.night ? { nightDeadline: state.night.choiceDeadline } : {}),
     board: state.board ? { phase: state.board.phase, round: state.board.round, tiles: [...state.board.tiles], markers: { ...state.board.markers }, replaced: state.board.replaced, speaker: state.board.speaker, speechStartedAt: state.board.speechStartedAt, speechDurationMs: state.board.speechDurationMs } : null,
-    badges: [...state.badges], bonusAttempts: state.bonusAttempts[seat], bonusSeat: state.phase === "event_bonus" ? state.bonusSeat : undefined, winner: state.winner,
+    badges: [...state.badges], bonusAttempts: state.bonusAttempts[seat], bonusSeat: state.phase === "event_bonus" ? state.bonusSeat : undefined, winner: state.winner, resultReason: state.phase === "result" ? state.resultReason : undefined,
     ...(state.pendingEvent ? { event: { id: state.pendingEvent.id, exclusionNext: state.pendingEvent.exclusionNext, ...(seat === state.forensicSeat && state.pendingEvent.drawn ? { drawn: [...state.pendingEvent.drawn] } : {}) } } : {}),
     ...(state.phase === "witness_hunt" && state.hunt && ["killer", "accomplice"].includes(state.roles[seat]) ? { hunt: { deadline: state.hunt.deadline, suggestions: { ...state.hunt.suggestions }, candidates: state.roles.flatMap((role, index) => role === "investigator" || role === "witness" ? [index] : []) } } : {}),
   };

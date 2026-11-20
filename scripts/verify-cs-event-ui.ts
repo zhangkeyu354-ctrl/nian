@@ -62,7 +62,7 @@ try {
   await page.locator(".cs-event-panel .cs-event-choices").nth(1).getByRole("button", { name: "重伤" }).click();
   await page.getByRole("button", { name: "移动标记" }).click();
   await page.getByRole("heading", { name: "案件板" }).waitFor();
-  if (room.file.state?.phase !== "round2_search" || room.file.state.board?.markers.death !== 1) throw new Error("事件操作没有回到搜证");
+  if (String(room.file.state?.phase) !== "round2_search" || room.file.state?.board?.markers.death !== 1) throw new Error("事件操作没有回到搜证");
   if (errors.length) throw new Error(errors.join("; "));
   console.log(JSON.stringify({ ok: true, event: "错误信息", marker: room.file.state.board.markers.death }));
   await context.close();

@@ -2,7 +2,11 @@ import { useCallback, useEffect, useRef, useState } from "react";
 import { io, type Socket } from "socket.io-client";
 import { CS_EVENTS } from "../../../../packages/shared/src/cs-protocol.ts";
 import tiles from "../../../../data/crime-scene/tiles.json" with { type: "json" };
+import clues from "../../../../data/crime-scene/clues.json" with { type: "json" };
+import means from "../../../../data/crime-scene/means.json" with { type: "json" };
+import cardArt from "./card-art.json" with { type: "json" };
 import CrimeEventPanel from "./CrimeEventPanel.tsx";
+import CrimeRules from "./CrimeRules.tsx";
 import "./crime-scene.css";
 
 type Role = "forensic" | "investigator" | "killer" | "accomplice" | "witness";
@@ -13,6 +17,7 @@ type View = {
   answer?: Pair; roles?: Role[]; evilPartnerSeat?: number; witnessCandidates?: number[];
   nightDeadline?: number; locationOptions?: string[]; badges: boolean[]; bonusAttempts: number; bonusSeat?: number | null; winner: "good" | "evil" | null;
   event?: { id: string; drawn?: string[]; exclusionNext?: number | null };
+  resultReason?: "all_good_badges" | "three_rounds" | "countdown" | null;
   board: { phase: string; round: number; tiles: string[]; markers: Record<string, number>; replaced: boolean; speaker: number; speechStartedAt: number | null; speechDurationMs: number } | null;
   hunt?: { deadline: number; suggestions: Record<number, number>; candidates: number[] };
   log: { type: string; at: number; detail: string }[];
@@ -26,6 +31,9 @@ type Snapshot = {
 };
 type Ack = { ok: boolean; error?: string; code?: string; token?: string; snapshot?: Snapshot; privateMessage?: string };
 const byId = new Map(tiles.map((tile) => [tile.id, tile]));
+const clueIds = new Map(clues.map((card) => [card.name, card.id]));
+const meansIds = new Map(means.map((card) => [card.name, card.id]));
+const availableArt = new Set<string>(cardArt);
 const roleName: Record<Role, string> = { forensic: "鉴证专家", investigator: "调查员", killer: "凶手", accomplice: "帮凶", witness: "目击者" };
 const roleTone: Record<Role, string> = { forensic: "teal", investigator: "blue", killer: "red", accomplice: "red", witness: "green" };
 const nameOf = (snapshot: Snapshot, seat: number) => snapshot.players[seat]?.name ?? `玩家 ${seat + 1}`;
@@ -33,7 +41,8 @@ const storageKey = (code: string) => `crime-scene:${code.toUpperCase()}`;
 
 function EvidenceCard({ name, kind, selected, important, excluded, onClick }: { name: string; kind: "clue" | "means"; selected?: boolean; important?: boolean; excluded?: boolean; onClick?: () => void }) {
   const className = `cs-evidence ${kind} ${selected ? "selected" : ""} ${important ? "important" : ""} ${excluded ? "excluded" : ""}`;
-  const image = kind === "clue" && name === "手套" ? "/assets/crime-scene/cards/clue-009-512.webp" : null;
+  const id = (kind === "clue" ? clueIds : meansIds).get(name);
+  const image = id && availableArt.has(id) ? `/assets/crime-scene/cards/${id}-512.webp` : null;
   const content = <><span className="cs-evidence-name">{name}</span>{image ? <img src={image} alt="" loading="lazy" /> : <span className="cs-evidence-glyph" aria-hidden="true">{name.slice(0, 1)}</span>}</>;
   return onClick ? <button type="button" className={className} disabled={excluded} onClick={onClick} aria-pressed={!!selected}>{content}</button> : <div className={className}>{content}</div>;
 }
@@ -69,6 +78,7 @@ export default function CrimeScene() {
   const [nightMeans, setNightMeans] = useState("");
   const [replaceTile, setReplaceTile] = useState("");
   const [chatText, setChatText] = useState("");
+  const [rulesOpen, setRulesOpen] = useState(false);
   const socketRef = useRef<Socket | null>(null);
   const codeRef = useRef(code);
   useEffect(() => { codeRef.current = code; }, [code]);
@@ -130,7 +140,7 @@ export default function CrimeScene() {
   const lastLog = view?.log.at(-1);
 
   return <main className="cs-app">
-    <header className="cs-topbar"><a href="/" aria-label="返回桌游大厅">← 大厅</a><strong>犯罪现场</strong><span>{snapshot ? `房间 ${snapshot.code}` : ""}</span></header>
+    <header className="cs-topbar"><a href="/" aria-label="返回桌游大厅">← 大厅</a><strong>犯罪现场</strong><div className="cs-top-actions"><button onClick={() => setRulesOpen(true)}>规则</button>{snapshot && <span>房间 {snapshot.code}</span>}</div></header>
     {!snapshot ? <section className="cs-entry">
       <div className="cs-entry-art" role="img" aria-label="雨夜街巷中的调查者" />
       <div className="cs-entry-form"><h1>犯罪现场</h1><p>4–12 人 · 推理派对游戏</p>
@@ -154,7 +164,7 @@ export default function CrimeScene() {
         </div>}
       </section> : view && <>
         <button className={`cs-role ${roleTone[view.myRole]} ${roleOpen || view.myRole === "forensic" || phase === "result" ? "open" : ""}`} onPointerDown={() => setRoleOpen(true)} onPointerUp={() => setRoleOpen(false)} onPointerCancel={() => setRoleOpen(false)} onPointerLeave={() => setRoleOpen(false)} onKeyDown={(event) => { if (event.key === " " || event.key === "Enter") setRoleOpen(true); }} onKeyUp={() => setRoleOpen(false)}>
-          <span>{roleOpen || view.myRole === "forensic" || phase === "result" ? roleName[view.myRole] : "长按查看身份"}</span><small>{phase === "result" ? "身份已公开" : view.myRole === "forensic" ? "公开身份" : "松手盖回"}</small>
+          <span className="cs-role-art" style={{ backgroundImage: `url(/assets/crime-scene/roles/${view.myRole}.webp)` }} aria-hidden="true" /><span className="cs-role-title">{roleOpen || view.myRole === "forensic" || phase === "result" ? roleName[view.myRole] : "长按查看身份"}</span><small>{phase === "result" ? "身份已公开" : view.myRole === "forensic" ? "公开身份" : "松手盖回"}</small>
         </button>
         {view.evilPartnerSeat !== undefined && <p className="cs-private">同伴：{nameOf(snapshot, view.evilPartnerSeat)}</p>}
         {view.witnessCandidates && <p className="cs-private">你目击到两人：{view.witnessCandidates.map((seat) => nameOf(snapshot, seat)).join("、")}；不知道谁是凶手。</p>}
@@ -175,12 +185,13 @@ export default function CrimeScene() {
           {canSolve && <button className="cs-solve-trigger" onClick={() => { setSolveOpen(true); setGuessOwner(null); setGuessClue(""); setGuessMeans(""); }}>我要破案</button>}
         </>}
         {phase === "witness_hunt" && <section className="cs-section cs-hunt"><h2>目击者反杀</h2>{view.hunt ? <><p>与同伴讨论，选出你认为的目击者。凶手负责提交最终指认。</p><strong>{seconds(view.hunt.deadline)} 秒</strong><div className="cs-hunt-targets">{view.hunt.candidates.map((seat) => <button key={seat} className={view.hunt!.suggestions[snapshot.mySeat] === seat ? "active" : ""} onClick={() => command({ type: "suggest", target: seat })}>{nameOf(snapshot, seat)}</button>)}</div>{view.myRole === "killer" && <button className="cs-primary" disabled={view.hunt.suggestions[snapshot.mySeat] === undefined} onClick={() => command({ type: "submit_hunt" })}>提交最终指认</button>}</> : <p>凶手与帮凶正在讨论，请等待结果。</p>}</section>}
-        {phase === "result" && <section className="cs-result"><h2>{view.winner === "good" ? "案件侦破" : "凶手逍遥法外"}</h2><p>关键证物：{view.answer?.clue}　行凶手法：{view.answer?.means}</p><ul>{view.roles?.map((role, seat) => <li key={seat}><span>{nameOf(snapshot, seat)}</span><strong>{roleName[role]}</strong></li>)}</ul><h3>逐轮提示</h3>{view.records?.map((record) => <details key={record.round} className="cs-record"><summary>第 {record.round} 轮</summary><ul>{record.tiles.map((id) => { const tile = byId.get(id); return <li key={id}><span>{tile?.title}</span><strong>{tile?.options?.[record.markers[id]] ?? "未标记"}</strong></li>; })}</ul></details>)}<a href="/">返回大厅</a></section>}
+        {phase === "result" && <section className="cs-result"><h2>{view.winner === "good" ? "案件侦破" : "凶手逍遥法外"}</h2>{view.resultReason === "all_good_badges" && <p>所有调查员都已失去破案机会，凶手逍遥法外。</p>}{view.resultReason === "countdown" && <p>倒数计时结束，本轮无人正确破案。</p>}<p>关键证物：{view.answer?.clue}　行凶手法：{view.answer?.means}</p><ul>{view.roles?.map((role, seat) => <li key={seat}><span>{nameOf(snapshot, seat)}</span><strong>{roleName[role]}</strong></li>)}</ul><h3>逐轮提示</h3>{view.records?.map((record) => <details key={record.round} className="cs-record"><summary>第 {record.round} 轮</summary><ul>{record.tiles.map((id) => { const tile = byId.get(id); return <li key={id}><span>{tile?.title}</span><strong>{tile?.options?.[record.markers[id]] ?? "未标记"}</strong></li>; })}</ul></details>)}<a href="/">返回大厅</a></section>}
         {lastLog?.detail === "错！" && <div className="cs-stamp" role="status">错！</div>}
       </>}
     </>}
     {pendingMarker && <div className="cs-dialog-backdrop"><div className="cs-dialog" role="dialog" aria-modal="true"><h2>放下提示标记？</h2><p>{byId.get(pendingMarker.tile)?.title} · {byId.get(pendingMarker.tile)?.options?.[pendingMarker.option]}</p><small>确认后不能移动。</small><div><button onClick={() => setPendingMarker(null)}>取消</button><button className="cs-primary" onClick={() => { command({ type: "mark", tile: pendingMarker.tile, option: pendingMarker.option }); setPendingMarker(null); }}>确认放下</button></div></div></div>}
     {solveOpen && view && snapshot && <div className="cs-dialog-backdrop"><div className="cs-dialog cs-solve-dialog" role="dialog" aria-modal="true"><button className="cs-close" onClick={() => setSolveOpen(false)} aria-label="关闭">×</button><h2>我要破案</h2><p>选择另一名玩家面前的一张线索和一张手段。</p><div className="cs-targets">{view.players.filter((player) => player.seat !== snapshot.mySeat && player.seat !== view.forensicSeat).map((player) => <button key={player.seat} className={guessOwner === player.seat ? "active" : ""} onClick={() => { setGuessOwner(player.seat); setGuessClue(""); setGuessMeans(""); }}>{nameOf(snapshot, player.seat)}</button>)}</div>{guessOwner !== null && <><h3>关键证物</h3><div className="cs-card-row">{view.players[guessOwner].clues.map((card) => <EvidenceCard key={card} name={card} kind="clue" excluded={view.players[guessOwner].excludedClues.includes(card)} selected={guessClue === card} onClick={() => setGuessClue(card)} />)}</div><h3>行凶手法</h3><div className="cs-card-row">{view.players[guessOwner].means.map((card) => <EvidenceCard key={card} name={card} kind="means" selected={guessMeans === card} onClick={() => setGuessMeans(card)} />)}</div></>}{blockedTruePair && <p className="cs-private">不能指认真实证据，请重新选择</p>}<button className="cs-primary" disabled={!guessClue || !guessMeans || blockedTruePair} onClick={() => { if (chosenPair) command({ type: "solve", guess: chosenPair }); setSolveOpen(false); }}>提交指认</button></div></div>}
     {error && <div className="cs-error" role="alert" onClick={() => setError("")}>{error}</div>}
+    {rulesOpen && <CrimeRules close={() => setRulesOpen(false)} />}
   </main>;
 }

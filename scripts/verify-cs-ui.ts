@@ -13,7 +13,13 @@ try {
   contexts.push(context);
   const page = await context.newPage();
   page.on("pageerror", (error) => errors.push(error.message));
-  await page.goto(`${base}/?game=crime-scene`, { waitUntil: "networkidle" });
+  await page.goto(`${base}/`, { waitUntil: "networkidle" });
+  await page.getByTestId("cart-crime-scene").click();
+  await page.getByTestId("open-crime-scene").click();
+  await page.getByPlaceholder("输入昵称").waitFor();
+  await page.getByRole("button", { name: "规则" }).click();
+  await page.getByRole("heading", { name: "案件手册" }).waitFor();
+  await page.getByRole("button", { name: "关闭规则" }).click();
   await page.getByPlaceholder("输入昵称").fill("房主");
   await page.screenshot({ path: join(out, "entry-mobile.png"), fullPage: true });
   await page.getByRole("button", { name: "创建房间" }).click();

@@ -177,6 +177,20 @@ describe("完整基础局状态流", () => {
     expect(wrong.badges[accomplice]).toBe(false);
   });
 
+  it("好人最后一枚徽章用完，结算说明凶手逍遥法外", () => {
+    let s = createGame(4, 0, 3, false, 1000, () => 0.25);
+    s = reduceGame(s, { type: "start", seat: 0, location: "location-1" }, 1000, () => 0);
+    s = reduceGame(s, { type: "tick" }, 61000, () => 0);
+    const solver = s.roles.indexOf("investigator");
+    const other = s.roles.lastIndexOf("investigator");
+    s = { ...s, badges: s.badges.map((badge, seat) => seat === other ? false : badge) };
+    const killer = s.roles.indexOf("killer");
+    const guess = { owner: killer, clue: s.players[killer].clues[1], means: s.players[killer].means[0] };
+    s = reduceGame(s, { type: "solve", seat: solver, guess }, 62000);
+    expect(s.phase).toBe("result");
+    expect(gameView(s, solver).resultReason).toBe("all_good_badges");
+  });
+
   it("第二轮替补板由服务端牌堆抽取，客户端不能指定", () => {
     let s = createGame(4, 0, 3, false, 1000, () => 0.25);
     s = reduceGame(s, { type: "start", seat: 0, location: "location-1" }, 1000, () => 0);

@@ -7,6 +7,8 @@
 .cs-topbar a { color:var(--cs-muted); text-decoration:none; }
 .cs-topbar strong { font-family:"ZCOOL XiaoWei",serif; font-size:21px; letter-spacing:.12em; color:#eee0cb; }
 .cs-topbar span { color:var(--cs-muted); white-space:nowrap; }
+.cs-top-actions { display:flex; align-items:center; gap:9px; }
+.cs-top-actions button { min-height:34px; padding:0 7px; border:1px solid #756350; border-radius:4px; background:#29211d; color:#ead9bd; font-size:12px; }
 .cs-entry { min-height:calc(100dvh - 54px); display:grid; grid-template-rows:minmax(250px,42dvh) auto; }
 .cs-entry-art { background:linear-gradient(0deg,#171313 0%,transparent 38%),url('/assets/hall/crime-scene-wide.webp') 39% center/cover; }
 .cs-entry-form { width:min(100%,480px); margin:-22px auto 0; padding:10px 22px 32px; position:relative; }
@@ -37,12 +39,15 @@
 .cs-event-setting input { flex:none; width:22px; height:22px; min-height:22px; accent-color:#ca9751; }
 .cs-event-setting small { display:block; margin-top:2px; color:var(--cs-muted); font-size:11px; }
 .cs-muted { color:var(--cs-muted); font-size:13px; }
-.cs-role { display:flex; width:calc(100% - 32px); max-width:868px; min-height:78px; align-items:center; justify-content:space-between; margin:16px auto 0; padding:14px 20px; color:#eee; text-align:left; border:2px solid #362d2b; border-radius:9px; box-shadow:inset 0 0 0 1px #ffffff14,0 8px 18px #0007; background:linear-gradient(125deg,#262327,#131416); touch-action:none; user-select:none; }
+.cs-role { position:relative; display:flex; width:calc(100% - 32px); max-width:868px; min-height:112px; align-items:end; justify-content:space-between; margin:16px auto 0; padding:14px 20px; overflow:hidden; color:#eee; text-align:left; border:2px solid #534b42; border-radius:9px; box-shadow:inset 0 0 0 1px #ffffff14,0 8px 18px #0007; background:linear-gradient(125deg,#262327,#131416); touch-action:none; user-select:none; }
+.cs-role::after { content:""; position:absolute; inset:0; background:linear-gradient(0deg,#080b0ce6,#111b1c33 70%); pointer-events:none; }
+.cs-role-art { position:absolute; inset:0; opacity:0; background-size:cover; background-position:center 45%; transition:opacity .22s ease; }
+.cs-role.open .cs-role-art { opacity:1; }
 .cs-role.red { background:linear-gradient(125deg,#68291f,#20191b 70%); }
 .cs-role.blue { background:linear-gradient(125deg,#1f4d61,#171a21 70%); }
 .cs-role.teal,.cs-role.green { background:linear-gradient(125deg,#25585a,#171c20 70%); }
-.cs-role span { font-family:"ZCOOL XiaoWei",serif; font-size:23px; letter-spacing:.12em; }
-.cs-role small { color:#d0c5b5; }
+.cs-role .cs-role-title { position:relative; z-index:1; font-family:"ZCOOL XiaoWei",serif; font-size:25px; letter-spacing:.12em; }
+.cs-role small { position:relative; z-index:1; color:#ead9c4; }
 .cs-private { max-width:868px; margin:8px auto; padding:9px 16px; color:#e6c7ac; font-size:13px; border-left:3px solid #bb6b48; background:#271d1b; }
 .cs-section > p { color:var(--cs-muted); line-height:1.6; }
 .cs-locations { display:grid; gap:8px; }
@@ -141,6 +146,11 @@
 .cs-dialog > .cs-primary { width:100%; margin-top:16px; }
 .cs-close { position:absolute; right:14px; top:10px; width:36px; height:36px; border:0; color:#fff; background:none; font-size:27px!important; }
 .cs-solve-dialog h3 { font-size:14px; color:#d6b4a0; }
+.cs-rules { border-radius:16px 16px 0 0; }
+.cs-rules section { padding:6px 0 10px; border-top:1px solid #ffffff24; }
+.cs-rules h3 { margin:12px 0 5px; color:#f0cb85; font:20px "ZCOOL XiaoWei",serif; }
+.cs-rules p { margin:4px 0; line-height:1.75; font-size:14px; color:#e2d3c1; }
+.cs-rules-lead { font-size:15px!important; color:#f4ddb5!important; }
 .cs-error { position:fixed; z-index:60; bottom:calc(75px + env(safe-area-inset-bottom)); left:12px; right:12px; max-width:600px; margin:auto; padding:12px 16px; color:#fff; border:1px solid #f5b4ac; border-radius:8px; background:#7a2927; box-shadow:0 8px 24px #0009; }
 @media (min-width:700px) { .cs-entry { grid-template-columns:minmax(0,1.2fr) minmax(350px,.8fr); grid-template-rows:minmax(650px,calc(100dvh - 54px)); } .cs-entry-art { background-position:35% center; } .cs-entry-form { align-self:center; margin:auto; } .cs-board-row { justify-content:center; } .cs-player-strip { grid-template-columns:repeat(2,minmax(0,1fr)); } }
 @media (prefers-reduced-motion:reduce) { .cs-app *, .cs-app *::before, .cs-app *::after { animation-duration:.01ms!important; transition-duration:.01ms!important; } }
