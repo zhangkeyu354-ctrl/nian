@@ -5,7 +5,7 @@ export interface SecretState {
   forensicSeat: number;
   roles: CrimeSceneRole[];
   answer?: { owner: number; clue: string; means: string };
-  players: { seat: number; clues: string[]; means: string[] }[];
+  players: { seat: number; clues: string[]; means: string[]; excludedClues?: string[] }[];
 }
 
 /** Never spread the server state into a client response: additions must be opted in. */
@@ -17,7 +17,7 @@ export function viewFor(state: SecretState, seat: number) {
     phase: myRole === "witness" && state.phase === "night_killer" && state.answer ? "night_witness" : state.phase,
     forensicSeat: state.forensicSeat,
     myRole,
-    players: state.players.map(({ seat, clues, means }) => ({ seat, clues: [...clues], means: [...means] })),
+    players: state.players.map(({ seat, clues, means, excludedClues }) => ({ seat, clues: [...clues], means: [...means], excludedClues: [...(excludedClues ?? [])] })),
     ...((canSeeAnswer || state.phase === "result") && state.answer ? { answer: { ...state.answer } } : {}),
     ...(state.phase === "result" ? { roles: [...state.roles] } : {}),
     ...((myRole === "killer" || myRole === "accomplice") && state.roles.includes(myRole === "killer" ? "accomplice" : "killer")

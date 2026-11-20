@@ -56,8 +56,8 @@ export class CrimeSceneRoom {
       this.file.cardsPerKind = options.cardsPerKind;
     }
     if (options.eventsEnabled !== undefined) {
-      if (options.eventsEnabled) throw new Error("特殊事件流程尚未接入完整对局");
-      this.file.eventsEnabled = false;
+      if (typeof options.eventsEnabled !== "boolean") throw new Error("特殊事件设置无效");
+      this.file.eventsEnabled = options.eventsEnabled;
     }
     if (options.mode !== undefined) {
       if (options.mode !== "local" && options.mode !== "online") throw new Error("房间模式无效");

@@ -17,11 +17,14 @@ describe("犯罪现场房间凭证与暂停", () => {
     expect(r.snapshot(tokens[2]).view?.myRole).toBe(r.file.state?.roles[2]);
   });
 
-  it("尚未接入完整流程的事件选项不能伪装可玩", () => {
+  it("房主可开启特殊事件并传入对局状态", () => {
     const r = room();
     const token = r.claim("房主");
-    expect(() => r.configure(token, { eventsEnabled: true })).toThrow("尚未接入");
-    expect(r.file.eventsEnabled).toBe(false);
+    for (const name of ["乙", "丙", "丁"]) r.claim(name);
+    r.configure(token, { eventsEnabled: true });
+    expect(r.file.eventsEnabled).toBe(true);
+    r.start(token, 1000, () => 0.25);
+    expect(r.file.state?.eventsEnabled).toBe(true);
   });
 
   it("专家掉线暂停计时，重连后将截止时间整体顺延", () => {

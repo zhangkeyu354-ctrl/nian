@@ -2,16 +2,18 @@ import { useCallback, useEffect, useRef, useState } from "react";
 import { io, type Socket } from "socket.io-client";
 import { CS_EVENTS } from "../../../../packages/shared/src/cs-protocol.ts";
 import tiles from "../../../../data/crime-scene/tiles.json" with { type: "json" };
+import CrimeEventPanel from "./CrimeEventPanel.tsx";
 import "./crime-scene.css";
 
 type Role = "forensic" | "investigator" | "killer" | "accomplice" | "witness";
 type Pair = { owner: number; clue: string; means: string };
-type PlayerCards = { seat: number; clues: string[]; means: string[] };
+type PlayerCards = { seat: number; clues: string[]; means: string[]; excludedClues: string[] };
 type View = {
   phase: string; myRole: Role; forensicSeat: number; players: PlayerCards[];
   answer?: Pair; roles?: Role[]; evilPartnerSeat?: number; witnessCandidates?: number[];
-  nightDeadline?: number; locationOptions?: string[]; badges: boolean[]; winner: "good" | "evil" | null;
-  board: { phase: string; round: number; tiles: string[]; markers: Record<string, number>; speaker: number; speechStartedAt: number | null; speechDurationMs: number } | null;
+  nightDeadline?: number; locationOptions?: string[]; badges: boolean[]; bonusAttempts: number; bonusSeat?: number | null; winner: "good" | "evil" | null;
+  event?: { id: string; drawn?: string[]; exclusionNext?: number | null };
+  board: { phase: string; round: number; tiles: string[]; markers: Record<string, number>; replaced: boolean; speaker: number; speechStartedAt: number | null; speechDurationMs: number } | null;
   hunt?: { deadline: number; suggestions: Record<number, number>; candidates: number[] };
   log: { type: string; at: number; detail: string }[];
   records?: { round: number; tiles: string[]; markers: Record<string, number>; at: number }[];
@@ -29,11 +31,11 @@ const roleTone: Record<Role, string> = { forensic: "teal", investigator: "blue",
 const nameOf = (snapshot: Snapshot, seat: number) => snapshot.players[seat]?.name ?? `玩家 ${seat + 1}`;
 const storageKey = (code: string) => `crime-scene:${code.toUpperCase()}`;
 
-function EvidenceCard({ name, kind, selected, important, onClick }: { name: string; kind: "clue" | "means"; selected?: boolean; important?: boolean; onClick?: () => void }) {
-  const className = `cs-evidence ${kind} ${selected ? "selected" : ""} ${important ? "important" : ""}`;
+function EvidenceCard({ name, kind, selected, important, excluded, onClick }: { name: string; kind: "clue" | "means"; selected?: boolean; important?: boolean; excluded?: boolean; onClick?: () => void }) {
+  const className = `cs-evidence ${kind} ${selected ? "selected" : ""} ${important ? "important" : ""} ${excluded ? "excluded" : ""}`;
   const image = kind === "clue" && name === "手套" ? "/assets/crime-scene/cards/clue-009-512.webp" : null;
   const content = <><span className="cs-evidence-name">{name}</span>{image ? <img src={image} alt="" loading="lazy" /> : <span className="cs-evidence-glyph" aria-hidden="true">{name.slice(0, 1)}</span>}</>;
-  return onClick ? <button type="button" className={className} onClick={onClick} aria-pressed={!!selected}>{content}</button> : <div className={className}>{content}</div>;
+  return onClick ? <button type="button" className={className} disabled={excluded} onClick={onClick} aria-pressed={!!selected}>{content}</button> : <div className={className}>{content}</div>;
 }
 
 function SceneTile({ id, marker, canMark, onMark }: { id: string; marker?: number; canMark: boolean; onMark: (option: number) => void }) {
@@ -65,6 +67,7 @@ export default function CrimeScene() {
   const [guessMeans, setGuessMeans] = useState("");
   const [nightClue, setNightClue] = useState("");
   const [nightMeans, setNightMeans] = useState("");
+  const [replaceTile, setReplaceTile] = useState("");
   const [chatText, setChatText] = useState("");
   const socketRef = useRef<Socket | null>(null);
   const codeRef = useRef(code);
@@ -119,7 +122,7 @@ export default function CrimeScene() {
   const view = snapshot?.view;
   const own = view?.players[snapshot!.mySeat];
   const phase = view?.phase ?? "";
-  const canSolve = !!view?.badges[snapshot!.mySeat] && /^round[123]_(search|brief)$/.test(phase) && view?.myRole !== "forensic";
+  const canSolve = (phase === "event_bonus" ? view?.bonusSeat === snapshot?.mySeat : (!!view?.badges[snapshot!.mySeat] || !!view?.bonusAttempts) && /^round[123]_(search|brief)$/.test(phase)) && view?.myRole !== "forensic";
   const chosenPair = guessOwner === null ? null : { owner: guessOwner, clue: guessClue, means: guessMeans };
   const realPair = view?.answer;
   const blockedTruePair = !!chosenPair && !!realPair && chosenPair.owner === realPair.owner && chosenPair.clue === realPair.clue && chosenPair.means === realPair.means && (view?.myRole === "killer" || view?.myRole === "accomplice");
@@ -146,7 +149,7 @@ export default function CrimeScene() {
           <label>发牌数量 <select value={snapshot.cardsPerKind} onChange={(event) => lobby({ type: "configure", cardsPerKind: Number(event.target.value) })}><option value={3}>简单 · 3+3</option><option value={4}>标准 · 4+4</option><option value={5}>困难 · 5+5</option></select></label>
           <label>游玩方式 <select value={snapshot.mode} onChange={(event) => lobby({ type: "configure", mode: event.target.value })}><option value="local">同桌聚会</option><option value="online">线上文字讨论</option></select></label>
           <label>鉴证专家 <select value={snapshot.view?.forensicSeat ?? 0} onChange={(event) => lobby({ type: "configure", forensicSeat: Number(event.target.value) })}>{snapshot.players.map((player) => <option value={player.seat} key={player.seat}>{player.name}</option>)}</select></label>
-          <p className="cs-muted">特殊事件尚未开放；当前为完整基础规则。</p>
+          <label className="cs-event-setting"><input type="checkbox" checked={snapshot.eventsEnabled} onChange={(event) => lobby({ type: "configure", eventsEnabled: event.target.checked })} /><span>启用特殊事件 <small>第 2 轮起，六种事件洗入橙色牌堆</small></span></label>
           <button className="cs-primary" disabled={snapshot.players.length < 4} onClick={() => lobby({ type: "start" })}>开始游戏</button>
         </div>}
       </section> : view && <>
@@ -159,13 +162,15 @@ export default function CrimeScene() {
         {phase.includes("night") && <section className="cs-night"><div className="cs-night-rain" /><h2>夜幕降临…</h2>
           {view.myRole === "killer" && !view.answer ? <><p>从自己面前各选一张牌。</p><strong className={`cs-countdown ${seconds(view.nightDeadline) <= 15 ? "urgent" : ""}`} aria-live={seconds(view.nightDeadline) <= 15 ? "assertive" : "off"}>{seconds(view.nightDeadline)} 秒</strong><h3>关键证物</h3><div className="cs-card-row">{own?.clues.map((card) => <EvidenceCard key={card} name={card} kind="clue" selected={nightClue === card} onClick={() => setNightClue(card)} />)}</div><h3>行凶手法</h3><div className="cs-card-row">{own?.means.map((card) => <EvidenceCard key={card} name={card} kind="means" selected={nightMeans === card} onClick={() => setNightMeans(card)} />)}</div><button className="cs-primary" disabled={!nightClue || !nightMeans} onClick={() => command({ type: "choose", clue: nightClue, means: nightMeans })}>确认作案证据</button></> : view.myRole === "killer" ? <p>证据已选定。所有人将在同一时间进入调查。</p> : <p>请等待调查开始。</p>}
         </section>}
-        {/round[123]_(search|brief)/.test(phase) && view.board && <>
+        {(phase === "event" || phase === "event_bonus_scene") && view.board && view.event && <CrimeEventPanel key={view.event.id} event={view.event} board={view.board} players={view.players} mySeat={snapshot.mySeat} forensicSeat={view.forensicSeat} myRole={view.myRole} names={snapshot.players.map((player) => player.name)} send={command} />}
+        {phase === "event_bonus" && <section className="cs-event-panel"><div className="cs-event-kicker">扭转局势</div><h2>额外破案机会</h2><p>{view.bonusSeat === snapshot.mySeat ? "现在可以再指认一次；这次机会不会消耗原有徽章。" : `等待 ${nameOf(snapshot, view.bonusSeat ?? -1)} 决定是否再次破案。`}</p>{view.bonusSeat === snapshot.mySeat && <button onClick={() => command({ type: "skip_bonus" })}>放弃这次机会</button>}</section>}
+        {(/round[123]_(search|brief)/.test(phase) || phase === "event_bonus" || phase === "event" || phase === "event_bonus_scene") && view.board && <>
           <section className="cs-section"><div className="cs-heading"><h2>案件板</h2><span>{view.board.round}/3 轮</span></div><div className="cs-board-row">{view.board.tiles.map((tile) => <SceneTile key={tile} id={tile} marker={view.board!.markers[tile]} canMark={view.myRole === "forensic" && phase.endsWith("_search") && !snapshot.paused} onMark={(option) => setPendingMarker({ tile, option })} />)}</div>
             {view.myRole === "forensic" && view.answer && <p className="cs-answer">关键证物：{view.answer.clue}　行凶手法：{view.answer.means}</p>}
-            {phase.endsWith("_search") && view.myRole === "forensic" && <div className="cs-actions">{view.board.round > 1 && <button onClick={() => { const oldTile = view.board!.tiles.find((tile) => tile.startsWith("scene-")); if (oldTile) command({ type: "replace", oldTile }); }}>换一块线索板</button>}<button className="cs-primary" onClick={() => command({ type: "brief" })}>开始简报</button></div>}
+            {phase.endsWith("_search") && view.myRole === "forensic" && <div className="cs-actions">{view.board.round > 1 && !view.board.replaced && <div className="cs-replace"><label>选择要换掉的橙色板<select value={replaceTile} onChange={(event) => setReplaceTile(event.target.value)}><option value="">请选择</option>{view.board.tiles.filter((tile) => tile.startsWith("scene-")).map((tile) => <option key={tile} value={tile}>{byId.get(tile)?.title}</option>)}</select></label><button disabled={!replaceTile} onClick={() => { command({ type: "replace", oldTile: replaceTile }); setReplaceTile(""); }}>换一块线索板</button></div>}<button className="cs-primary" onClick={() => command({ type: "brief" })}>开始简报</button></div>}
           </section>
           {phase.endsWith("_brief") && <section className="cs-speaker"><div className="cs-ring" style={{ background: `conic-gradient(#d7c5a1 ${Math.min(100, Math.max(0, 100 - seconds((view.board.speechStartedAt ?? now) + view.board.speechDurationMs, view.board.speechDurationMs / 1000) / (view.board.speechDurationMs / 1000) * 100))}%, #423934 0)` }}><span>{seconds((view.board.speechStartedAt ?? now) + view.board.speechDurationMs, view.board.speechDurationMs / 1000)}</span></div><div><small>当前发言</small><strong>{nameOf(snapshot, view.board.speaker)}</strong><p>可跳过或延长；计时只作提醒。</p></div>{(view.board.speaker === snapshot.mySeat || view.myRole === "forensic") && <div className="cs-speaker-actions"><button onClick={() => command({ type: "extend_speaker" })}>延长 30 秒</button><button onClick={() => command({ type: "next_speaker" })}>下一位</button></div>}</section>}
-          <section className="cs-section"><h2>公开证物</h2><div className="cs-player-strip">{view.players.filter((player) => player.seat !== view.forensicSeat).map((player) => <article key={player.seat} className="cs-player"><h3>{nameOf(snapshot, player.seat)} <small>{view.badges[player.seat] ? "● 有徽章" : "○ 已用"}</small></h3><div className="cs-card-row">{player.clues.map((card) => <EvidenceCard key={card} name={card} kind="clue" important={view.myRole === "forensic" && view.answer?.owner === player.seat && view.answer.clue === card} />)}</div><div className="cs-card-row">{player.means.map((card) => <EvidenceCard key={card} name={card} kind="means" important={view.myRole === "forensic" && view.answer?.owner === player.seat && view.answer.means === card} />)}</div></article>)}</div></section>
+          <section className="cs-section"><h2>公开证物</h2><div className="cs-player-strip">{view.players.filter((player) => player.seat !== view.forensicSeat).map((player) => <article key={player.seat} className="cs-player"><h3>{nameOf(snapshot, player.seat)} <small>{view.badges[player.seat] ? "● 有徽章" : "○ 已用"}</small></h3><div className="cs-card-row">{player.clues.map((card) => <EvidenceCard key={card} name={card} kind="clue" excluded={player.excludedClues.includes(card)} important={view.myRole === "forensic" && view.answer?.owner === player.seat && view.answer.clue === card} />)}</div><div className="cs-card-row">{player.means.map((card) => <EvidenceCard key={card} name={card} kind="means" important={view.myRole === "forensic" && view.answer?.owner === player.seat && view.answer.means === card} />)}</div></article>)}</div></section>
           {snapshot.mode === "online" && phase.endsWith("_brief") && <section className="cs-section cs-chat"><h2>文字讨论</h2><div className="cs-chat-log">{snapshot.chat.map((line, index) => <p key={index}><b>{nameOf(snapshot, line.seat)}</b> {line.text}</p>)}</div><div className="cs-chat-send"><input maxLength={280} value={chatText} onChange={(event) => setChatText(event.target.value)} placeholder="输入发言" /><button disabled={!chatText.trim()} onClick={chat}>发送</button></div></section>}
           {canSolve && <button className="cs-solve-trigger" onClick={() => { setSolveOpen(true); setGuessOwner(null); setGuessClue(""); setGuessMeans(""); }}>我要破案</button>}
         </>}
@@ -175,7 +180,7 @@ export default function CrimeScene() {
       </>}
     </>}
     {pendingMarker && <div className="cs-dialog-backdrop"><div className="cs-dialog" role="dialog" aria-modal="true"><h2>放下提示标记？</h2><p>{byId.get(pendingMarker.tile)?.title} · {byId.get(pendingMarker.tile)?.options?.[pendingMarker.option]}</p><small>确认后不能移动。</small><div><button onClick={() => setPendingMarker(null)}>取消</button><button className="cs-primary" onClick={() => { command({ type: "mark", tile: pendingMarker.tile, option: pendingMarker.option }); setPendingMarker(null); }}>确认放下</button></div></div></div>}
-    {solveOpen && view && snapshot && <div className="cs-dialog-backdrop"><div className="cs-dialog cs-solve-dialog" role="dialog" aria-modal="true"><button className="cs-close" onClick={() => setSolveOpen(false)} aria-label="关闭">×</button><h2>我要破案</h2><p>选择另一名玩家面前的一张线索和一张手段。</p><div className="cs-targets">{view.players.filter((player) => player.seat !== snapshot.mySeat && player.seat !== view.forensicSeat).map((player) => <button key={player.seat} className={guessOwner === player.seat ? "active" : ""} onClick={() => { setGuessOwner(player.seat); setGuessClue(""); setGuessMeans(""); }}>{nameOf(snapshot, player.seat)}</button>)}</div>{guessOwner !== null && <><h3>关键证物</h3><div className="cs-card-row">{view.players[guessOwner].clues.map((card) => <EvidenceCard key={card} name={card} kind="clue" selected={guessClue === card} onClick={() => setGuessClue(card)} />)}</div><h3>行凶手法</h3><div className="cs-card-row">{view.players[guessOwner].means.map((card) => <EvidenceCard key={card} name={card} kind="means" selected={guessMeans === card} onClick={() => setGuessMeans(card)} />)}</div></>}{blockedTruePair && <p className="cs-private">不能指认真实证据，请重新选择</p>}<button className="cs-primary" disabled={!guessClue || !guessMeans || blockedTruePair} onClick={() => { if (chosenPair) command({ type: "solve", guess: chosenPair }); setSolveOpen(false); }}>提交指认</button></div></div>}
+    {solveOpen && view && snapshot && <div className="cs-dialog-backdrop"><div className="cs-dialog cs-solve-dialog" role="dialog" aria-modal="true"><button className="cs-close" onClick={() => setSolveOpen(false)} aria-label="关闭">×</button><h2>我要破案</h2><p>选择另一名玩家面前的一张线索和一张手段。</p><div className="cs-targets">{view.players.filter((player) => player.seat !== snapshot.mySeat && player.seat !== view.forensicSeat).map((player) => <button key={player.seat} className={guessOwner === player.seat ? "active" : ""} onClick={() => { setGuessOwner(player.seat); setGuessClue(""); setGuessMeans(""); }}>{nameOf(snapshot, player.seat)}</button>)}</div>{guessOwner !== null && <><h3>关键证物</h3><div className="cs-card-row">{view.players[guessOwner].clues.map((card) => <EvidenceCard key={card} name={card} kind="clue" excluded={view.players[guessOwner].excludedClues.includes(card)} selected={guessClue === card} onClick={() => setGuessClue(card)} />)}</div><h3>行凶手法</h3><div className="cs-card-row">{view.players[guessOwner].means.map((card) => <EvidenceCard key={card} name={card} kind="means" selected={guessMeans === card} onClick={() => setGuessMeans(card)} />)}</div></>}{blockedTruePair && <p className="cs-private">不能指认真实证据，请重新选择</p>}<button className="cs-primary" disabled={!guessClue || !guessMeans || blockedTruePair} onClick={() => { if (chosenPair) command({ type: "solve", guess: chosenPair }); setSolveOpen(false); }}>提交指认</button></div></div>}
     {error && <div className="cs-error" role="alert" onClick={() => setError("")}>{error}</div>}
   </main>;
 }

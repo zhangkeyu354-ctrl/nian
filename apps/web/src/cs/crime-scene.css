@@ -33,6 +33,9 @@
 .cs-lobby li small { color:#9cbda9; }
 .cs-settings { margin-top:22px; padding-top:8px; border-top:1px solid #ffffff30; }
 .cs-settings .cs-primary { width:100%; margin-top:15px; }
+.cs-settings .cs-event-setting { display:flex; align-items:center; gap:12px; padding:10px 0; color:var(--cs-ink); }
+.cs-event-setting input { flex:none; width:22px; height:22px; min-height:22px; accent-color:#ca9751; }
+.cs-event-setting small { display:block; margin-top:2px; color:var(--cs-muted); font-size:11px; }
 .cs-muted { color:var(--cs-muted); font-size:13px; }
 .cs-role { display:flex; width:calc(100% - 32px); max-width:868px; min-height:78px; align-items:center; justify-content:space-between; margin:16px auto 0; padding:14px 20px; color:#eee; text-align:left; border:2px solid #362d2b; border-radius:9px; box-shadow:inset 0 0 0 1px #ffffff14,0 8px 18px #0007; background:linear-gradient(125deg,#262327,#131416); touch-action:none; user-select:none; }
 .cs-role.red { background:linear-gradient(125deg,#68291f,#20191b 70%); }
@@ -57,6 +60,8 @@
 .cs-evidence.means { background:radial-gradient(circle at 50% 44%,#577877,#284848 74%,#19272a); }
 .cs-evidence.selected { outline:3px solid #f0c779; outline-offset:1px; transform:translateY(-2px); }
 .cs-evidence.important { outline:3px solid #c73e37; outline-offset:1px; }
+.cs-evidence.excluded { filter:grayscale(1) brightness(.55); transform:rotateY(18deg); }
+.cs-evidence.excluded::after { content:"已排除"; position:absolute; z-index:4; inset:auto 0 16px; padding:4px; background:#171717de; color:#eee; text-align:center; font-size:12px; }
 .cs-evidence-name { position:absolute; z-index:2; top:5px; left:6px; right:4px; font-family:"ZCOOL XiaoWei",serif; font-size:15px; font-weight:800; line-height:1.1; text-shadow:0 1px 2px #000; }
 .cs-evidence img { width:100%; height:100%; object-fit:cover; }
 .cs-evidence-glyph { position:absolute; inset:24px 0 0; display:grid; place-items:center; font-family:"ZCOOL XiaoWei",serif; font-size:35px; color:#ffffff26; text-shadow:0 2px 7px #0008; }
@@ -78,6 +83,9 @@
 .cs-answer { color:#e9bcb4!important; border-left:3px solid #a22e2d; padding:8px 10px; background:#341b1b; }
 .cs-actions { display:flex; gap:8px; margin-top:12px; }
 .cs-actions button { min-height:46px; flex:1; }
+.cs-replace { flex:1; display:flex; gap:7px; align-items:end; }
+.cs-replace label { flex:1; min-width:0; color:var(--cs-muted); font-size:12px; }
+.cs-replace select { margin-top:4px; }
 .cs-speaker { display:flex; align-items:center; gap:14px; max-width:868px; margin:12px auto; padding:18px 16px; border-top:1px solid #b4936855; border-bottom:1px solid #b4936855; }
 .cs-ring { flex:none; width:70px; height:70px; display:grid; place-items:center; border-radius:50%; }
 .cs-ring span { width:56px; height:56px; display:grid; place-items:center; border-radius:50%; background:#211b1a; font:24px Georgia,serif; }
@@ -101,6 +109,15 @@
 .cs-hunt-targets button,.cs-targets button { min-height:42px; padding:6px 12px; color:var(--cs-ink); border:1px solid #6f6055; border-radius:6px; background:#302724; }
 .cs-hunt-targets button.active,.cs-targets button.active { border-color:#e2be6f; background:#67402d; }
 .cs-hunt > strong { font:26px Georgia,serif; color:#f5c979; }
+.cs-event-panel { max-width:868px; margin:24px auto; padding:24px 16px; border:1px solid #a98561; border-radius:7px; background:linear-gradient(140deg,#3a2921,#1a191a 65%); box-shadow:0 14px 40px #0008; }
+.cs-event-kicker { color:#e9b76e; font-size:12px; font-weight:800; letter-spacing:.24em; }
+.cs-event-panel h2 { margin:6px 0 12px; color:#f5dec0; font:32px "ZCOOL XiaoWei",serif; }
+.cs-event-panel h3 { margin:20px 0 8px; font-size:14px; color:#e8cdaa; }
+.cs-event-panel p { color:#d0bcaa; line-height:1.7; }
+.cs-event-choices { display:flex; flex-wrap:wrap; gap:8px; }
+.cs-event-choices button { min-height:44px; padding:7px 12px; border:1px solid #846c5d; border-radius:5px; background:#2a2422; color:#eee3d2; }
+.cs-event-choices button.active { border-color:#f4ca78; background:#684634; }
+.cs-event-panel > .cs-primary { width:100%; margin-top:20px; }
 .cs-result { padding-top:32px; }
 .cs-result h2 { font-family:"ZCOOL XiaoWei",serif; font-size:35px; }
 .cs-result p { color:#e4c48d; }
