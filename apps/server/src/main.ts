@@ -536,4 +536,13 @@ http.listen(PORT, HOST, async () => {
   }
   if (allowFixedSeed) console.log("  [测试模式] 允许固定种子");
   console.log("  关闭此窗口即停止服务器。\n");
+  // 自己叫醒自己：Render 免费版 15 分钟没有外部访问就休眠。
+  // GitHub 定时任务经常不准时，所以服务器每 9 分钟从外网地址访问自己一次（只在 Render 上开启）。
+  if (process.env.RENDER_EXTERNAL_URL && process.env.SELF_PING !== "0") {
+    const ping = () =>
+      fetch(process.env.RENDER_EXTERNAL_URL!.replace(/\/+$/, "") + "/api/health", { signal: AbortSignal.timeout(20_000) })
+        .then((r) => r.status !== 200 && console.warn("self-ping HTTP " + r.status))
+        .catch((e) => console.warn("self-ping 失败", String(e)));
+    setInterval(ping, 9 * 60_000).unref();
+  }
 });
