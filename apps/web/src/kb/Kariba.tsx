@@ -92,6 +92,7 @@ function Lobby({ net, snap }: { net: Net; snap: KBRoomSnapshot }) {
   const n = snap.players.length;
   const [msg, setMsg] = useState("");
   const [copied, setCopied] = useState(false);
+  const [botLevel, setBotLevel] = useState<"easy" | "normal">("normal");
   const ok = snap.mode === "solo" ? n >= 2 && n <= 5 : [4, 6, 8].includes(n);
   const need =
     snap.mode === "solo"
@@ -131,6 +132,20 @@ function Lobby({ net, snap }: { net: Net; snap: KBRoomSnapshot }) {
       </div>
       {snap.mode === "team" && <p className="kb-note">两人一队，队友隔开坐（不会连着出牌）。下面选座位就是选队伍；队友手牌互相看不到，可以开麦商量。</p>}
       <SeatTable snap={snap} host={host} act={act} />
+      {(host && snap.mode === "solo") && (
+        <div className="kb-row" style={{ flexWrap: "wrap" }}>
+          <label>人机难度 <select value={botLevel} onChange={(e) => setBotLevel(e.target.value === "easy" ? "easy" : "normal")}>
+            <option value="easy">简单</option><option value="normal">普通</option>
+          </select></label>
+          <button type="button" className="kb-btn" data-testid="kb-add-bot" disabled={n >= 5} onClick={() => act({ type: "ADD_BOT", level: botLevel })}>＋ 人机</button>
+        </div>
+      )}
+      {snap.players.filter((p) => p.bot).map((p) => (
+        <div className="kb-row" key={p.playerId} style={{ flexWrap: "wrap" }}>
+          <span>{p.name} · {p.bot === "easy" ? "简单" : "普通"}</span>
+          {host && <button className="kb-btn kb-mini" onClick={() => act({ type: "REMOVE_BOT", playerId: p.playerId })}>移除人机</button>}
+        </div>
+      ))}
       <button
         className="kb-btn"
         onClick={() => {
@@ -470,7 +485,9 @@ function Game({ net, snap }: { net: Net; snap: KBRoomSnapshot }) {
               ))}
             </span>
             {i === seat && <em>我</em>}
-            {!snap.players.find((x) => x.playerId === snap.seats[i])?.connected && <em>🔌</em>}
+            {snap.players.find((x) => x.playerId === snap.seats[i])?.bot && <em>人机</em>}
+            {snap.players.find((x) => x.playerId === snap.seats[i])?.auto ? <em>托管中</em> :
+              !snap.players.find((x) => x.playerId === snap.seats[i])?.connected && <em>🔌</em>}
           </li>
         ))}
       </ol>

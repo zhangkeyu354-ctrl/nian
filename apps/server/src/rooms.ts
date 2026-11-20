@@ -11,10 +11,12 @@ import {
 import { join } from "node:path";
 import {
   createGame,
+  currentActor,
   reduce,
   RuleError,
   viewFor,
 } from "../../../packages/game-engine/src/index.ts";
+import { chooseDbdMove, dbdBotView } from "../../../packages/game-engine/src/bot.ts";
 import { maps, chars } from "../../../packages/game-engine/src/data.ts";
 import type {
   Command,
@@ -36,7 +38,8 @@ const cryptoRand: Rand = (n) => randomInt(n);
 
 interface Player {
   playerId: string;
-  token: string;
+  token: string | null;
+  bot?: "easy" | "normal";
   name: string | null;
   side: Side | null;
   volunteer: boolean;
@@ -127,9 +130,10 @@ export class Room {
       seatId: s.seatId,
       actors: s.actors,
       side: s.side,
-      claimed: !!s.token,
+      claimed: !!s.token || this.file.players.some(p => p.playerId === s.seatId && p.bot),
+      bot: this.file.players.find(p => p.playerId === s.seatId)?.bot,
       name: s.name,
-      connected: (this.connections.get(s.seatId) ?? 0) > 0,
+      connected: this.file.players.some(p => p.playerId === s.seatId && p.bot) || (this.connections.get(s.seatId) ?? 0) > 0,
     }));
   }
   lobbyInfo(me: string | null): LobbyInfo {
@@ -143,7 +147,8 @@ export class Room {
         name: p.name,
         side: p.side,
         volunteer: p.volunteer,
-        connected: (this.connections.get(p.playerId) ?? 0) > 0,
+        bot: p.bot,
+        connected: !!p.bot || (this.connections.get(p.playerId) ?? 0) > 0,
         host: p.playerId === f.hostId,
       })),
       draft: f.draft && {
@@ -218,6 +223,23 @@ export class Room {
         if (![3, 4, 5].includes(n)) throw new Error("BAD_ACTION");
         if (n < f.players.length) throw new Error("COUNT_BELOW_PLAYERS");
         f.playerCount = n;
+        return;
+      }
+      case "START_PRACTICE": {
+        if (!host) throw new Error("HOST_ONLY");
+        if (f.stage !== "lobby") throw new Error("ALREADY_STARTED");
+        if (f.players.length !== 1 || !me.side) throw new Error("PRACTICE_ONE_PLAYER");
+        if (action.level !== "easy" && action.level !== "normal") throw new Error("BAD_ACTION");
+        f.playerCount = 5;
+        f.players.push(...Array.from({ length: 4 }, (_, i): Player => ({
+          playerId: "bot:" + (i + 1),
+          name: "人机" + (i + 1),
+          token: null,
+          bot: action.level,
+          side: me.side === "survivor" && i === 0 ? "killer" : "survivor",
+          volunteer: false,
+        })));
+        this.startDraft();
         return;
       }
       case "START":
@@ -328,6 +350,47 @@ export class Room {
     f.stage = "game";
   }
 
+  botActor(): string | null {
+    const s = this.state;
+    if (!s || s.winner || !this.file.players.some(p => p.bot)) return null;
+    const isBot = (id: string) => this.file.players.some(p => p.playerId === s.actors[id]?.ownerId && p.bot);
+    const current = currentActor(s);
+    if (current && isBot(current)) return current;
+    if (s.phase === "PLANNING" && !s.window && !s.choice && s.publicPlans.every(id => s.plans[id])) {
+      return [...s.survivors, s.killerId].find(id => isBot(id) && !s.plans[id] && !s.actors[id].hookId) ?? null;
+    }
+    return null;
+  }
+  hasBotWork(): boolean {
+    if (this.file.stage === "draft") return !!this.file.draft?.slots.some(s =>
+      !s.pick && this.file.players.some(p => p.playerId === s.playerId && p.bot));
+    return !!this.botActor();
+  }
+  botStep(random = Math.random): boolean {
+    if (this.file.stage === "draft") {
+      const slot = this.file.draft?.slots.find(s =>
+        !s.pick && this.file.players.some(p => p.playerId === s.playerId && p.bot));
+      if (!slot) return false;
+      this.pick(slot.playerId, slot.slotId, slot.options[Math.floor(random() * slot.options.length)]);
+      return true;
+    }
+    const actorId = this.botActor();
+    const s = this.state;
+    if (!s || !actorId) return false;
+    const owner = s.actors[actorId].ownerId;
+    const level = this.file.players.find(p => p.playerId === owner)?.bot;
+    if (!level) return false;
+    const command = chooseDbdMove(dbdBotView(s, owner), actorId, level, random);
+    this.commit(command);
+    return true;
+  }
+
+  private commit(command: Command) {
+    const next = reduce(this.state!, command);
+    this.state = next;
+    this.file.commands.push(command);
+  }
+
   /** 校验身份、版本号和规则后执行命令；任何一步失败都不改变状态 */
   apply(token: string, version: number, command: Command) {
     if (!this.state) throw new Error("NOT_STARTED");
@@ -337,9 +400,7 @@ export class Room {
     const actorId = command.actorId;
     if (typeof actorId !== "string" || this.state.actors[actorId]?.ownerId !== seat.seatId)
       throw new Error("NOT_YOUR_ACTOR");
-    const next = reduce(this.state, command);
-    this.state = next;
-    this.file.commands.push(command);
+    this.commit(command);
   }
 }
 
@@ -450,6 +511,7 @@ export function errorText(e: unknown): { error: string; code: string } {
     CHECK_REQUIRED: "该功能尚未实现。",
     ROOM_FULL: "房间人数已满。房主可以调大人数。",
     ALREADY_STARTED: "游戏已经开始了。",
+    PRACTICE_ONE_PLAYER: "单人练习需要房间里只有你，并先选择阵营。",
     HOST_ONLY: "只有房主可以这样做。",
     COUNT_BELOW_PLAYERS: "人数不能少于已经在房间里的人数。",
     NOT_FULL: "人还没到齐。",

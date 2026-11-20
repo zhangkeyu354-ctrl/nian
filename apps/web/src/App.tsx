@@ -273,7 +273,8 @@ function WaitingPanel({
             {s.actors.map(actorName).join(" · ")}
             <small>
               {s.name ? ` · ${s.name}` : ""}
-              {s.claimed ? (s.connected ? " · 在线" : " · 离线") : " · 空位"}
+              {s.bot ? ` · 人机 · ${s.bot === "easy" ? "简单" : "普通"}` :
+                s.claimed ? (s.connected ? " · 在线" : " · 离线") : " · 空位"}
             </small>
           </li>
         ))}

@@ -65,7 +65,8 @@ async function check(p: Page, tag: string) {
   return r;
 }
 for (const sc of scenarios.filter((x) => !process.env.ONLY || process.env.ONLY.split(",").includes(x.name))) {
-  const ctx = await browser.newContext({ actionTimeout: 4000, viewport: { width: sc.w, height: sc.h }, deviceScaleFactor: 2, hasTouch: true, isMobile: true });
+  const ctx = await browser.newContext({ viewport: { width: sc.w, height: sc.h }, deviceScaleFactor: 2, hasTouch: true, isMobile: true });
+  ctx.setDefaultTimeout(4000);
   const p = await ctx.newPage();
   await p.addInitScript("window.__name = (f) => f");
   const errors: string[] = [];
