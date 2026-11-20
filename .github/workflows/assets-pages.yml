@@ -1,0 +1,37 @@
+# 把网站的图片、音效等静态素材发布到 GitHub Pages（免费、流量额度大），减轻 Render 免费版每月 5GB 的流量压力。
+# 服务器会比对 fingerprint.txt，只有 Pages 上的素材和网站当前版本完全一致时才转发过去，否则继续自己提供。
+name: assets-pages
+on:
+  push:
+    branches: [main]
+    paths: ["apps/web/public/**", "scripts/asset-fingerprint.mjs", ".github/workflows/assets-pages.yml"]
+  workflow_dispatch: {}
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+concurrency:
+  group: assets-pages
+  cancel-in-progress: true
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+      - name: Build site
+        run: |
+          mkdir -p _site
+          cp -r apps/web/public/assets _site/assets
+          node scripts/asset-fingerprint.mjs apps/web/public > _site/fingerprint.txt
+          touch _site/.nojekyll
+          echo "fingerprint: $(cat _site/fingerprint.txt)"; du -sh _site
+      - uses: actions/configure-pages@v5
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: _site
+      - uses: actions/deploy-pages@v4

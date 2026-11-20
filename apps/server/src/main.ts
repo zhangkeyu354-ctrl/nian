@@ -174,6 +174,14 @@ const http = createServer((req, res) => {
     res.end("not found");
     return;
   }
+  // 图片、音效等素材：GitHub Pages 上的版本和本机完全一致时，转发过去（省 Render 流量）
+  if (!missing && ASSET_CDN.ok && /^\/assets\/[^/]+\/./.test(url.pathname)) {
+    res.statusCode = 302;
+    res.setHeader("location", ASSET_CDN.base + url.pathname);
+    res.setHeader("cache-control", "public, max-age=3600");
+    res.end();
+    return;
+  }
   if (missing) file = join(WEB, "index.html");
   if (!existsSync(file)) {
     res.statusCode = 503;
@@ -215,6 +223,36 @@ const http = createServer((req, res) => {
   res.end(readFileSync(file));
 });
 
+/**
+ * 素材 CDN（GitHub Pages）：.github/workflows/assets-pages.yml 把 apps/web/public/assets 发布到 Pages，
+ * 并写 fingerprint.txt。这里算出本机素材的指纹，每 5 分钟比对一次；一致才转发，否则自己提供。
+ * ASSET_CDN_BASE=off 可关闭。
+ */
+const ASSET_CDN = { base: (process.env.ASSET_CDN_BASE ?? "https://zhangkeyu354-ctrl.github.io/nian").replace(/\/$/, ""), ok: false, local: "" };
+if (ASSET_CDN.base !== "off") {
+  setTimeout(async () => {
+    try {
+      const { assetFingerprint } = await import("../../../scripts/asset-fingerprint.mjs");
+      ASSET_CDN.local = assetFingerprint(resolve(root, "apps/web/public"));
+    } catch (e) {
+      console.warn("素材指纹计算失败，不使用 CDN", e);
+      return;
+    }
+    const check = async () => {
+      try {
+        const r = await fetch(ASSET_CDN.base + "/fingerprint.txt?t=" + Date.now(), { signal: AbortSignal.timeout(10_000) });
+        const remote = r.ok ? (await r.text()).trim() : "";
+        const ok = remote === ASSET_CDN.local;
+        if (ok !== ASSET_CDN.ok) console.log(ok ? "素材 CDN 已启用" : "素材 CDN 版本不一致，暂由本机提供", ASSET_CDN.base);
+        ASSET_CDN.ok = ok;
+      } catch {
+        ASSET_CDN.ok = false;
+      }
+    };
+    await check();
+    setInterval(check, 5 * 60_000).unref();
+  }, 2000).unref();
+}
 const GZIP_CACHE = new Map<string, { etag: string; body: Buffer }>();
 const io = new Server(http, { cors: { origin: true } });
 // Each enabled game installs one connection/disconnect handler. Keep a finite
