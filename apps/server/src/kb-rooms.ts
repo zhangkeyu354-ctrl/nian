@@ -16,12 +16,13 @@ import {
   type KBLobbyAction,
   type KBRoomSnapshot,
 } from "../../../packages/shared/src/kb-protocol.ts";
+import { chooseKaribaPlay, karibaBotView, type BotLevel } from "../../../packages/kariba/src/bot.ts";
 import type { Ack } from "../../../packages/shared/src/protocol.ts";
 
 const CODE_CHARS = "ABCDEFGHJKLMNPQRSTUVWXYZ23456789";
 const MAX_PLAYERS = 8;
 
-interface KBPlayerFile { playerId: string; token: string; name: string }
+interface KBPlayerFile { playerId: string; token?: string; name: string; bot?: BotLevel }
 /** 存档：创建参数 + 命令列表，重启后确定性重放恢复（不写日志） */
 export interface KBRoomFile {
   game: "kariba";
@@ -72,6 +73,7 @@ export function seatLineup(ids: string[], chosen: Record<string, number>): strin
 export class KBRoom {
   state: KBState | null = null;
   connections = new Map<string, number>();
+  awaySince = new Map<string, number>();
   timer: NodeJS.Timeout | null = null;
   constructor(public file: KBRoomFile) {
     if (file.stage === "game") {
@@ -102,7 +104,8 @@ export class KBRoom {
     const clean = name.trim().slice(0, 12);
     if (!clean) fail("NAME_REQUIRED");
     if (this.file.stage === "game") fail("ALREADY_STARTED");
-    if (this.file.players.length >= MAX_PLAYERS) fail("ROOM_FULL");
+    if (this.file.players.length >= MAX_PLAYERS ||
+      (this.file.players.some(p => p.bot) && this.file.players.length >= 5)) fail("ROOM_FULL");
     const playerId = "p" + (this.file.players.length + 1) + randomBytes(2).toString("hex");
     const token = randomBytes(18).toString("base64url");
     this.file.players.push({ playerId, token, name: clean });
@@ -131,6 +134,7 @@ export class KBRoom {
     if (t !== "START" && this.file.stage === "game" && !over) fail("ALREADY_STARTED");
     if (t === "SET_MODE") {
       if (action.mode !== "solo" && action.mode !== "team") fail("BAD_ACTION");
+      if (action.mode === "team" && this.file.players.some(p => p.bot)) fail("KB_BOTS_SOLO");
       this.file.mode = action.mode;
     } else if (t === "SET_SECONDS") {
       if (![0, 30, 60].includes(action.seconds)) fail("BAD_ACTION");
@@ -143,7 +147,15 @@ export class KBRoom {
         [ids[i], ids[j]] = [ids[j], ids[i]];
       }
       this.file.chosen = Object.fromEntries(ids.map((id, i) => [id, i]));
-    } else if (t === "KICK") {
+    } else if (t === "ADD_BOT") {
+      if (this.file.mode !== "solo") fail("KB_BOTS_SOLO");
+      if (this.file.players.length >= 5) fail("KB_SOLO_COUNT");
+      if (action.level !== "easy" && action.level !== "normal") fail("BAD_ACTION");
+      let n = 1;
+      while (this.file.players.some(p => p.name === "人机" + n)) n++;
+      this.file.players.push({ playerId: "bot:" + randomBytes(8).toString("hex"), name: "人机" + n, bot: action.level });
+    } else if (t === "KICK" || t === "REMOVE_BOT") {
+      if (t === "REMOVE_BOT" && !this.file.players.some(p => p.playerId === action.playerId && p.bot)) fail("BAD_ACTION");
       if (action.playerId === me.playerId) fail("BAD_ACTION");
       this.file.players = this.file.players.filter((p) => p.playerId !== action.playerId);
       delete chosen[action.playerId];
@@ -176,6 +188,30 @@ export class KBRoom {
     this.commit({ type: "PLAY", actor: seat, seq: this.nextSeq(seat), now: at, cardIds: cmd.cardIds.map(String) });
     void s;
   }
+  botDelay(at = Date.now()) {
+    const s = this.state;
+    if (!s || s.phase !== "PLAY" || !this.file.players.some(p => p.bot) || !this.connections.size) return null;
+    const id = this.file.lineup[s.turn];
+    const player = this.file.players.find(p => p.playerId === id);
+    if (!player) return null;
+    if (player.bot) return 800 + randomInt(801);
+    if (!this.awaySince.has(id) || ![...this.connections.values()].some(n => n > 0)) return null;
+    return Math.max(0, this.awaySince.get(id)! + 25_000 - at) + 800 + randomInt(801);
+  }
+  botTick(at = Date.now()) {
+    const s = this.state;
+    if (!s || s.phase !== "PLAY" || (s.deadline !== null && at >= s.deadline)) return false;
+    const id = this.file.lineup[s.turn];
+    const player = this.file.players.find(p => p.playerId === id);
+    if (!player) return false;
+    const away = this.awaySince.get(id);
+    const auto = this.file.players.some(p => p.bot) && away !== undefined &&
+      (this.connections.get(id) ?? 0) === 0 && at >= away + 25_000;
+    if (!player.bot && !auto) return false;
+    const cardIds = chooseKaribaPlay(karibaBotView(s, s.turn), player.bot ?? "normal", Math.random);
+    this.commit({ type: "PLAY", actor: s.turn, seq: this.nextSeq(s.turn), now: at, cardIds });
+    return true;
+  }
   tick(at = Date.now()) {
     const s = this.state;
     if (!s || s.phase === "FINISHED" || s.deadline === null || at < s.deadline) return false;
@@ -194,7 +230,10 @@ export class KBRoom {
       players: this.file.players.map((p) => ({
         playerId: p.playerId,
         name: p.name,
-        connected: (this.connections.get(p.playerId) ?? 0) > 0,
+        connected: !!p.bot || (this.connections.get(p.playerId) ?? 0) > 0,
+        ...(p.bot ? { bot: p.bot } : {}),
+        ...(this.file.players.some(q => q.bot) &&
+          now >= (this.awaySince.get(p.playerId) ?? Infinity) + 25_000 ? { auto: true } : {}),
         host: p.playerId === this.file.hostId,
       })),
       mySeat: me,
@@ -270,6 +309,7 @@ export function kbErrorText(e: unknown): { error: string; code: string } {
     HOST_ONLY: "只有房主可以这样做。",
     NOT_STARTED: "游戏还没开始。",
     NAME_REQUIRED: "请填写昵称。",
+    KB_BOTS_SOLO: "人机目前仅支持个人战，请先移除人机。",
     KB_SOLO_COUNT: "个人战需要 2–5 人。",
     KB_TEAM_COUNT: "组队需要 4、6 或 8 人（两人一队）。",
     KB_STALE: "画面已更新，请再选一次。",
@@ -303,19 +343,26 @@ export function attachKariba(io: Server, dataDir: string, opts: { maxRooms: numb
     if (room.timer) clearTimeout(room.timer);
     room.timer = null;
     const s = room.state;
-    if (!s || s.phase === "FINISHED" || s.deadline === null) return;
+    if (!s || s.phase === "FINISHED") return;
+    const now = Date.now();
+    const timeout = s.deadline === null ? Infinity : Math.max(0, s.deadline - now) + 50;
+    const delay = Math.min(timeout, room.botDelay(now) ?? Infinity);
+    if (!Number.isFinite(delay)) return;
+    const version = room.file.commands.length;
+    const round = room.file.round;
     room.timer = setTimeout(() => {
       room.timer = null;
       try {
-        if (room.tick()) {
+        if (room.file.round === round && room.file.commands.length === version && (room.tick() || room.botTick())) {
           store.save(room);
           broadcast(room);
         }
       } catch (e) {
         console.warn("卡里巴湖计时出错", room.code, e instanceof Error ? e.message : e);
+        return;
       }
       schedule(room);
-    }, Math.max(0, s.deadline - Date.now()) + 50);
+    }, delay);
     room.timer.unref?.();
   };
   for (const room of store.rooms.values()) schedule(room);
@@ -327,6 +374,8 @@ export function attachKariba(io: Server, dataDir: string, opts: { maxRooms: numb
       const seat: string | null = socket.data.kbSeat ?? null;
       if (room && seat) {
         room.connections.set(seat, Math.max(0, (room.connections.get(seat) ?? 1) - 1));
+        if (!room.connections.get(seat)) room.awaySince.set(seat, Date.now());
+        schedule(room);
         broadcast(room);
       }
     };
@@ -337,6 +386,8 @@ export function attachKariba(io: Server, dataDir: string, opts: { maxRooms: numb
         socket.data.kbSeat = null;
       }
       if (seat && socket.data.kbSeat !== seat) room.connections.set(seat, (room.connections.get(seat) ?? 0) + 1);
+      if (seat) room.awaySince.delete(seat);
+      schedule(room);
       socket.data.kbRoom = room;
       socket.data.kbSeat = seat;
       socket.join(sockRoom(room.code));

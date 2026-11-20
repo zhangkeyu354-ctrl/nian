@@ -429,6 +429,7 @@ export function MobileDock({
   const pagedActs = acts.filter((a) => !terminal.includes(a));
   // 等待别人时说清楚在等谁、等什么，避免以为卡住了
   const who = id ? actorName(id) : "其他玩家";
+  const botThinking = !!current && net?.seats.some(seat => seat.seatId === current.ownerId && seat.bot);
   const waitingReason = state.window
     ? `${who}正在决定是否使用技能或物品（${triggerNames[state.window.event] ?? "响应"}）`
     : state.choice
@@ -585,7 +586,7 @@ export function MobileDock({
               {state.winner
                 ? "对局结束"
                 : waiting
-                  ? `等待${id ? actorName(id) : "其他玩家"}`
+                  ? `等待${id ? actorName(id) : "其他玩家"}${botThinking ? " · 人机" : ""}`
                   : id
                     ? actorName(id)
                     : "请稍候"}
