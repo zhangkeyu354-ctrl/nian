@@ -89,6 +89,8 @@ const http = createServer((req, res) => {
       JSON.stringify({
         ok: true,
         version: VERSION,
+        // 当前连着游戏的人数（大厅不连）：自动部署只在 0 时进行，避免打断正在玩的人
+        online: io.engine.clientsCount,
         assetCdn: { ok: ASSET_CDN.ok, local: ASSET_CDN.local.slice(0, 12), remote: ASSET_CDN.remote.slice(0, 12), error: ASSET_CDN.error },
         rooms: store.rooms.size,
         maRooms: maStore.rooms.size,

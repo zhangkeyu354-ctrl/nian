@@ -1,0 +1,31 @@
+# 没人在玩时自动部署（用户 2026-11-20 同意）：每 10 分钟看一次网站的 /api/health。
+# 线上版本落后于 main，而且 online（连着游戏的人数）为 0，就调用 Render 的 Deploy Hook。
+# 需要在仓库 Settings → Secrets and variables → Actions 添加 RENDER_DEPLOY_HOOK（Render 服务 Settings → Deploy Hook 的网址）。
+# 规矩：没准备好上线的东西不要推到 main，放在单独分支。
+name: deploy-when-idle
+on:
+  schedule:
+    - cron: "3-59/10 * * * *"
+  workflow_dispatch: {}
+concurrency:
+  group: deploy-when-idle
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - name: Check and deploy
+        env:
+          HOOK: ${{ secrets.RENDER_DEPLOY_HOOK }}
+          LATEST: ${{ github.sha }}
+        run: |
+          if [ -z "$HOOK" ]; then echo "RENDER_DEPLOY_HOOK 未设置，跳过"; exit 0; fi
+          H=$(curl -s -m 90 https://dbd-boardgame-8qky.onrender.com/api/health || true)
+          V=$(echo "$H" | sed -n 's/.*"version":"\([^"]*\)".*/\1/p')
+          ON=$(echo "$H" | sed -n 's/.*"online":\([0-9]*\).*/\1/p')
+          echo "live=$V latest=${LATEST:0:7} online=${ON:-unknown}"
+          if [ "$V" = "${LATEST:0:7}" ]; then echo "已是最新版本"; exit 0; fi
+          if [ -n "$ON" ] && [ "$ON" != "0" ]; then echo "有 $ON 人在玩，等下次再部署"; exit 0; fi
+          if [ -z "$ON" ] && echo "$H" | grep -qE '"[a-zA-Z]*[Rr]ooms":[1-9]'; then echo "旧版本没有 online 字段且有房间，等下次"; exit 0; fi
+          echo "没人在玩，开始部署"
+          curl -s -m 30 -X POST "$HOOK" -o /dev/null -w "deploy hook HTTP %{http_code}\n"
