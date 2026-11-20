@@ -2,6 +2,13 @@
 
 > **多个 AI 共用本仓库：开工前先读 `docs/handoff/协作规则_多个AI共用仓库.md`。**
 
+> **⚠️ 上线规则（2026-11-20 起，所有 AI 必读）：推到 `main` = 自动上线。**
+> GitHub Actions（`.github/workflows/deploy-when-idle.yml`）每 10 分钟检查一次：`main` 比线上新、且没有人在玩（`/api/health` 的 `online` 为 0）时，自动让 Render 部署。
+> - 没做完、没测完、用户没确认的东西，**只能推到自己的分支**（如 `codex/xxx`），**不要推到 `main`**。
+> - 推 `main` 前必须跑完测试。推之后不需要、也不要去 Render 手动部署。
+> - 图片/音效（`apps/web/public/assets`）会自动发布到 GitHub Pages，由网站转发；Render 只负责网页程序和联机。
+> - 叫醒服务（`keepalive.yml`）每 10 分钟访问网站，防止 Render 免费版休眠。
+
 ## 1. 项目定义
 
 - 游戏：Dead by Daylight: The Board Game（Level 99 Games 出品的实体桌游，基础版）
