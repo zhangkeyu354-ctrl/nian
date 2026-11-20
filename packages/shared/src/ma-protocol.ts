@@ -28,6 +28,7 @@ export interface MARoomSnapshot {
   deal: "draft" | "random";
   /** Optional for old snapshots; missing means base36 only. */
   secondWind?: boolean;
+  secondWindOnly?: boolean;
   /** 已执行命令数，提交时带上防止重复/过期 */
   version: number;
   view: MAView | null;
@@ -37,7 +38,7 @@ export type MALobbyAction =
   | { type: "START" }
   | { type: "SET_POINTS"; points: MAPointsSetting[] }
   | { type: "SET_DEAL"; deal: "draft" | "random" }
-  | { type: "SET_SECOND_WIND"; enabled: boolean }
+  | { type: "SET_SECOND_WIND"; enabled: boolean; only?: boolean }
   | { type: "KICK"; playerId: string }
   | { type: "ADD_BOT" };
 

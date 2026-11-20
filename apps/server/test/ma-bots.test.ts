@@ -55,3 +55,30 @@ describe("魔法运动员人机", () => {
     });
   }
 });
+
+describe("只用新角色", () => {
+  for (const deal of ["draft", "random"] as const) {
+    it(`勾选后选秀池/手牌全是新角色，并能打完整局（${deal}）`, () => {
+      const room = new MARoomStore(mkdtempSync(join(tmpdir(), "ma-swonly-"))).create();
+      const host = room.claim("甲");
+      for (let i = 0; i < 3; i++) room.lobby(host, { type: "ADD_BOT" });
+      room.lobby(host, { type: "SET_DEAL", deal });
+      room.lobby(host, { type: "SET_SECOND_WIND", enabled: true, only: true });
+      expect(room.snapshot(null)).toMatchObject({ secondWind: true, secondWindOnly: true });
+      room.lobby(host, { type: "START" });
+      const s = room.state!;
+      const seen = [...(s.draft?.pool ?? []), ...s.players.flatMap((p) => p.hand), ...s.deck];
+      expect(seen.length).toBeGreaterThan(0);
+      expect(seen.every((r) => r.startsWith("sw_"))).toBe(true);
+      playOut(room, host, room.idByToken(host)!);
+      expect(room.state!.phase).toBe("over");
+    });
+  }
+  it("关闭新角色时「只用新角色」也一起关掉", () => {
+    const room = new MARoomStore(mkdtempSync(join(tmpdir(), "ma-swonly-"))).create();
+    const host = room.claim("甲");
+    room.lobby(host, { type: "SET_SECOND_WIND", enabled: true, only: true });
+    room.lobby(host, { type: "SET_SECOND_WIND", enabled: false });
+    expect(room.snapshot(null).secondWindOnly).toBe(false);
+  });
+});

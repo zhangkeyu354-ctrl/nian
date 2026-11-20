@@ -150,6 +150,8 @@ export interface Settings {
   independentMasterminds?: boolean;
   /** Server/development opt-in only. Existing rooms omit this and keep base36. */
   secondWindPreview?: boolean;
+  /** 只用新角色（二代），不混入原版 36 名（用户反馈 2026-11-20） */
+  secondWindOnly?: boolean;
   races: number;
   /** standard：每人每场 1 名；double：2 人局 / 3 人双选手变体，每人每场 2 名 */
   variant: "standard" | "double";

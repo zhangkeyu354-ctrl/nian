@@ -85,6 +85,7 @@ export function createMAGame(opts: CreateMAOptions): MAState {
     ...(opts.settings?.bananaBackwardPass === false ? {} : { bananaBackwardPass: true }),
     ...(opts.settings?.independentMasterminds === false ? {} : { independentMasterminds: true }),
     ...(opts.settings?.secondWindPreview === true ? { secondWindPreview: true } : {}),
+    ...(opts.settings?.secondWindPreview === true && opts.settings?.secondWindOnly === true ? { secondWindOnly: true } : {}),
     races,
     variant,
     deal,
@@ -115,7 +116,14 @@ export function createMAGame(opts: CreateMAOptions): MAState {
     log: [],
     version: 0,
   };
-  s.deck = shuffle(s, settings.secondWindPreview ? [...DRAFTABLE, ...SECOND_WIND_PREVIEW_IDS] : DRAFTABLE);
+  s.deck = shuffle(
+    s,
+    settings.secondWindPreview
+      ? settings.secondWindOnly
+        ? [...SECOND_WIND_PREVIEW_IDS]
+        : [...DRAFTABLE, ...SECOND_WIND_PREVIEW_IDS]
+      : DRAFTABLE,
+  );
   if (deal === "random") {
     // 随机模式（用户 2026-10-20）：不选秀，从洗好的牌堆里给每人发 4 名。
     // 牌堆里每名选手只有一张，所以全场不会有两人拿到同一名选手。

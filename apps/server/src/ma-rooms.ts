@@ -45,6 +45,8 @@ export interface MARoomFile {
   /** 随机模式：每人随机发 4 名（旧存档没有这个字段 = 选秀） */
   deal?: "draft" | "random";
   secondWind?: boolean;
+  /** 只用新角色（需同时开启 secondWind） */
+  secondWindOnly?: boolean;
   /** Absent on old saves: replay with the old forward-only Banana rule. */
   bananaBackwardPass?: boolean;
   independentMasterminds?: boolean;
@@ -78,6 +80,7 @@ export class MARoom {
         bananaBackwardPass: this.file.bananaBackwardPass === true,
         independentMasterminds: this.file.independentMasterminds === true,
         ...(this.file.secondWind === true ? { secondWindPreview: true } : {}),
+        ...(this.file.secondWind === true && this.file.secondWindOnly === true ? { secondWindOnly: true } : {}),
       },
     });
   }
@@ -138,6 +141,8 @@ export class MARoom {
     } else if (action?.type === "SET_SECOND_WIND") {
       if (typeof action.enabled !== "boolean") throw new Error("BAD_ACTION");
       this.file.secondWind = action.enabled;
+      if (action.only !== undefined && typeof action.only !== "boolean") throw new Error("BAD_ACTION");
+      this.file.secondWindOnly = action.enabled && action.only === true;
     } else if (action?.type === "SET_DEAL") {
       if (action.deal !== "draft" && action.deal !== "random") throw new Error("BAD_ACTION");
       this.file.deal = action.deal;
@@ -207,6 +212,7 @@ export class MARoom {
       variant: "standard",
       deal: this.file.deal ?? "draft",
       secondWind: this.file.secondWind === true,
+      secondWindOnly: this.file.secondWind === true && this.file.secondWindOnly === true,
       version: this.file.commands.length,
       view: this.state ? viewForMA(this.state, me) : null,
     };

@@ -343,7 +343,7 @@ function Lobby({ snap, lobby }: { snap: MARoomSnapshot; lobby: (a: Parameters<Re
             data-testid="ma-second-wind"
             checked={snap.secondWind === true}
             disabled={!host}
-            onChange={(e) => void run({ type: "SET_SECOND_WIND", enabled: e.target.checked })}
+            onChange={(e) => void run({ type: "SET_SECOND_WIND", enabled: e.target.checked, only: false })}
           />
           <span>
             <b>开启新角色</b>
@@ -353,6 +353,21 @@ function Lobby({ snap, lobby }: { snap: MARoomSnapshot; lobby: (a: Parameters<Re
             </small>
           </span>
         </label>
+        {snap.secondWind === true && (
+          <label className="ma-expansion-toggle">
+            <input
+              type="checkbox"
+              data-testid="ma-second-wind-only"
+              checked={snap.secondWindOnly === true}
+              disabled={!host}
+              onChange={(e) => void run({ type: "SET_SECOND_WIND", enabled: true, only: e.target.checked })}
+            />
+            <span>
+              <b>只用新角色</b>
+              <small>勾选后不混入原版 36 名，只从 {expansionRacers.length} 名新角色里招募。</small>
+            </span>
+          </label>
+        )}
         <div className="ma-variant" role="radiogroup" aria-label="怎么拿选手">
           {(
             [
