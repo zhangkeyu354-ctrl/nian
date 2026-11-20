@@ -160,7 +160,7 @@ function CreateOrJoin() {
         <h2>创建房间</h2>
         <CountPicker value={playerCount} onChange={setPlayerCount} />
         <p className="small muted">
-          进房后每人自己选阵营；地图每局随机。人数之后还能改。
+          进房后选择阵营。一个人也可以在房间里开单人练习。
         </p>
         {error && (
           <div role="alert" className="error">
@@ -284,6 +284,7 @@ function LobbyRoom({
 }) {
   const [error, setError] = useState("");
   const [invite, setInvite] = useState(false);
+  const [botLevel, setBotLevel] = useState<"easy" | "normal">("normal");
   const snap = room.snap!;
   const l = snap.lobby;
   const me = l.players.find((p) => p.playerId === snap.mySeat)!;
@@ -352,6 +353,7 @@ function LobbyRoom({
                 {p.playerId === snap.mySeat && "（你）"}
               </strong>
               {p.host && <span className="tag">房主</span>}
+              {p.bot && <span className="tag">人机 · {p.bot === "easy" ? "简单" : "普通"}</span>}
               <span className={"tag " + (p.side ?? "none")}>
                 {p.side ? sideName[p.side] : "未选阵营"}
               </span>
@@ -367,6 +369,21 @@ function LobbyRoom({
             </li>
           ))}
         </ul>
+        {me.host && l.players.length === 1 && (
+          <section aria-label="单人练习">
+            <h2>单人练习</h2>
+            <p className="small muted">
+              先选择阵营，另外四个座位由人机补齐。
+            </p>
+            <label>人机难度 <select value={botLevel} onChange={(e) => setBotLevel(e.target.value === "easy" ? "easy" : "normal")}>
+              <option value="easy">简单</option><option value="normal">普通</option>
+            </select></label>
+            <TapButton className="primary start-button" data-testid="dbd-start-practice"
+              disabled={!me.side} onClick={() => act({ type: "START_PRACTICE", level: botLevel })}>
+              开始单人练习
+            </TapButton>
+          </section>
+        )}
         {me.host ? (
           <>
             <h2>人数（房主可改）</h2>

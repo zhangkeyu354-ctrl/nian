@@ -347,11 +347,36 @@ const rrStore = attachReflexRace(
 
 const xbStore = attachXiabaiwang(io, resolve(process.env.XB_DATA_DIR ?? join(DATA, '../xb-rooms')), {maxRooms:MAX_ROOMS,idleMs:ROOM_IDLE_MS});
 
+const dbdBotTimers = new Map<string, ReturnType<typeof setTimeout>>();
+function scheduleDbdBot(room: Room) {
+  const previous = dbdBotTimers.get(room.code);
+  if (previous) clearTimeout(previous);
+  dbdBotTimers.delete(room.code);
+  if (![...room.connections.values()].some(count => count > 0) || !room.hasBotWork()) return;
+  const version = room.file.commands.length;
+  const stage = room.file.stage;
+  const timer = setTimeout(() => {
+    dbdBotTimers.delete(room.code);
+    if (store.rooms.get(room.code) !== room || room.file.stage !== stage ||
+        room.file.commands.length !== version || ![...room.connections.values()].some(count => count > 0)) return;
+    try {
+      if (!room.botStep()) return;
+      store.save(room);
+      broadcast(room);
+    } catch (e) {
+      console.warn("黎明杀机人机未能行动", room.code, e instanceof Error ? e.message : e);
+    }
+  }, 1000 + Math.floor(Math.random() * 1001));
+  timer.unref();
+  dbdBotTimers.set(room.code, timer);
+}
+
 function broadcast(room: Room) {
   for (const s of io.sockets.adapter.rooms.get(room.code) ?? []) {
     const sock = io.sockets.sockets.get(s);
     if (sock) sock.emit(EVENTS.update, room.snapshot(sock.data.seatId ?? null));
   }
+  scheduleDbdBot(room);
 }
 
 /** 房间里还有人连着就不清理 */

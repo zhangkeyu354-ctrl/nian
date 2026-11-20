@@ -24,6 +24,7 @@ export interface SeatInfo {
   actors: string[];
   side: "survivor" | "killer";
   claimed: boolean;
+  bot?: "easy" | "normal";
   name: string | null;
   connected: boolean;
 }
@@ -42,6 +43,7 @@ export interface LobbyInfo {
     side: Side | null;
     /** 3–4 人时愿意一人操控两名逃生者 */
     volunteer: boolean;
+    bot?: "easy" | "normal";
     connected: boolean;
     host: boolean;
   }>;
@@ -85,6 +87,7 @@ export type LobbyAction =
   | { type: "SET_SIDE"; side: Side }
   | { type: "SET_VOLUNTEER"; volunteer: boolean }
   | { type: "SET_PLAYER_COUNT"; playerCount: 3 | 4 | 5 }
+  | { type: "START_PRACTICE"; level: "easy" | "normal" }
   | { type: "START" }
   | { type: "PICK"; slotId: string; characterId: string };
 
