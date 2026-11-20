@@ -1,12 +1,17 @@
-# 没人在玩时自动部署（用户 2026-11-20 同意）：每 10 分钟看一次网站的 /api/health。
-# 线上版本落后于 main，而且 online（连着游戏的人数）为 0，就调用 Render 的 Deploy Hook。
-# 需要在仓库 Settings → Secrets and variables → Actions 添加 RENDER_DEPLOY_HOOK（Render 服务 Settings → Deploy Hook 的网址）。
+# 没人在玩时自动部署（用户 2026-11-20 同意）。每 10 分钟：
+# 1. 找出 main 上「ci 通过」的最新提交（合在一起后测试 + 构建都成功的版本）；
+# 2. 它比线上新，而且 /api/health 的 online（连着游戏的人数）为 0，就用 Render Deploy Hook 部署这个提交。
+# 最新提交没通过 ci 时，不会上线它，而是上线它之前最近一个通过的版本。
+# 需要仓库 Secret：RENDER_DEPLOY_HOOK（Render 服务 Settings → Deploy Hook 的网址）。
 # 规矩：没准备好上线的东西不要推到 main，放在单独分支。
 name: deploy-when-idle
 on:
   schedule:
     - cron: "3-59/10 * * * *"
   workflow_dispatch: {}
+permissions:
+  contents: read
+  actions: read
 concurrency:
   group: deploy-when-idle
 jobs:
@@ -14,18 +19,27 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 5
     steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 200
       - name: Check and deploy
         env:
           HOOK: ${{ secrets.RENDER_DEPLOY_HOOK }}
-          LATEST: ${{ github.sha }}
+          GH_TOKEN: ${{ github.token }}
         run: |
           if [ -z "$HOOK" ]; then echo "RENDER_DEPLOY_HOOK 未设置，跳过"; exit 0; fi
+          GREEN=$(gh run list --workflow ci.yml --branch main --status success -L 1 --json headSha -q '.[0].headSha')
+          LATEST=$(git rev-parse HEAD)
+          [ "$GREEN" != "$LATEST" ] && echo "提醒：main 最新提交 ${LATEST:0:7} 还没通过测试（或测试还在跑），只考虑已通过的 ${GREEN:0:7}"
+          if [ -z "$GREEN" ]; then echo "还没有通过测试的版本"; exit 0; fi
           H=$(curl -s -m 90 https://dbd-boardgame-8qky.onrender.com/api/health || true)
           V=$(echo "$H" | sed -n 's/.*"version":"\([^"]*\)".*/\1/p')
           ON=$(echo "$H" | sed -n 's/.*"online":\([0-9]*\).*/\1/p')
-          echo "live=$V latest=${LATEST:0:7} online=${ON:-unknown}"
-          if [ "$V" = "${LATEST:0:7}" ]; then echo "已是最新版本"; exit 0; fi
-          if [ -n "$ON" ] && [ "$ON" != "0" ]; then echo "有 $ON 人在玩，等下次再部署"; exit 0; fi
-          if [ -z "$ON" ] && echo "$H" | grep -qE '"[a-zA-Z]*[Rr]ooms":[1-9]'; then echo "旧版本没有 online 字段且有房间，等下次"; exit 0; fi
-          echo "没人在玩，开始部署"
-          curl -s -m 30 -X POST "$HOOK" -o /dev/null -w "deploy hook HTTP %{http_code}\n"
+          echo "live=$V green=${GREEN:0:7} online=${ON:-unknown}"
+          if [ -z "$V" ]; then echo "网站没响应，等下次"; exit 0; fi
+          if [ "$V" = "${GREEN:0:7}" ]; then echo "已是最新的通过版本"; exit 0; fi
+          if git cat-file -e "$V^{commit}" 2>/dev/null && ! git merge-base --is-ancestor "$V" "$GREEN"; then echo "线上版本比通过版本还新（或不在同一条线上），不动"; exit 0; fi
+          if [ -z "$ON" ] || [ "$ON" != "0" ]; then echo "有 ${ON:-?} 人在玩，等下次再部署"; exit 0; fi
+          echo "没人在玩，部署 ${GREEN:0:7}"
+          SEP="?"; case "$HOOK" in *\?*) SEP="&";; esac
+          curl -s -m 30 -X POST "${HOOK}${SEP}ref=${GREEN}" -o /dev/null -w "deploy hook HTTP %{http_code}\n"
