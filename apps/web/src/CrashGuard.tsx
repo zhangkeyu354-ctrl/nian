@@ -44,7 +44,12 @@ if (typeof Node !== "undefined") {
 }
 
 if (typeof window !== "undefined") {
-  window.addEventListener("error", (e) => reportCrash(e.error ?? e.message, "window"));
+  window.addEventListener("error", (e) => {
+    // 「Script error.」= 别的网站/浏览器扩展注入的脚本出错，浏览器不给任何细节，也不影响我们的页面：不上报
+    if (!e.error && /^Script error\.?$/i.test(String(e.message ?? ""))) return;
+    if (e.filename && !e.filename.startsWith(location.origin)) return;
+    reportCrash(e.error ?? e.message, "window");
+  });
   window.addEventListener("unhandledrejection", (e) => reportCrash(e.reason, "promise"));
 }
 
