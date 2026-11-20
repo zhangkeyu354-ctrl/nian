@@ -115,6 +115,7 @@
 .cs-hunt-targets button.active,.cs-targets button.active { border-color:#e2be6f; background:#67402d; }
 .cs-hunt > strong { font:26px Georgia,serif; color:#f5c979; }
 .cs-event-panel { max-width:868px; margin:24px auto; padding:24px 16px; border:1px solid #a98561; border-radius:7px; background:linear-gradient(140deg,#3a2921,#1a191a 65%); box-shadow:0 14px 40px #0008; }
+.cs-event-art { float:right; width:90px; height:135px; margin:0 0 12px 14px; object-fit:cover; border:1px solid #ad895a; box-shadow:0 4px 10px #000a; }
 .cs-event-kicker { color:#e9b76e; font-size:12px; font-weight:800; letter-spacing:.24em; }
 .cs-event-panel h2 { margin:6px 0 12px; color:#f5dec0; font:32px "ZCOOL XiaoWei",serif; }
 .cs-event-panel h3 { margin:20px 0 8px; font-size:14px; color:#e8cdaa; }
