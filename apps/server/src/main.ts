@@ -89,6 +89,7 @@ const http = createServer((req, res) => {
       JSON.stringify({
         ok: true,
         version: VERSION,
+        assetCdn: { ok: ASSET_CDN.ok, local: ASSET_CDN.local.slice(0, 12), remote: ASSET_CDN.remote.slice(0, 12), error: ASSET_CDN.error },
         rooms: store.rooms.size,
         maRooms: maStore.rooms.size,
         cnRooms: cnStore.rooms.size,
@@ -228,7 +229,7 @@ const http = createServer((req, res) => {
  * 并写 fingerprint.txt。这里算出本机素材的指纹，每 5 分钟比对一次；一致才转发，否则自己提供。
  * ASSET_CDN_BASE=off 可关闭。
  */
-const ASSET_CDN = { base: (process.env.ASSET_CDN_BASE ?? "https://zhangkeyu354-ctrl.github.io/nian").replace(/\/$/, ""), ok: false, local: "" };
+const ASSET_CDN = { base: (process.env.ASSET_CDN_BASE ?? "https://zhangkeyu354-ctrl.github.io/nian").replace(/\/$/, ""), ok: false, local: "", remote: "", error: "" };
 if (ASSET_CDN.base !== "off") {
   setTimeout(async () => {
     try {
@@ -236,17 +237,21 @@ if (ASSET_CDN.base !== "off") {
       ASSET_CDN.local = assetFingerprint(resolve(root, "apps/web/public"));
     } catch (e) {
       console.warn("素材指纹计算失败，不使用 CDN", e);
+      ASSET_CDN.error = "fingerprint: " + String(e).slice(0, 120);
       return;
     }
     const check = async () => {
       try {
         const r = await fetch(ASSET_CDN.base + "/fingerprint.txt?t=" + Date.now(), { signal: AbortSignal.timeout(10_000) });
         const remote = r.ok ? (await r.text()).trim() : "";
+        ASSET_CDN.remote = remote || "HTTP " + r.status;
+        ASSET_CDN.error = "";
         const ok = remote === ASSET_CDN.local;
         if (ok !== ASSET_CDN.ok) console.log(ok ? "素材 CDN 已启用" : "素材 CDN 版本不一致，暂由本机提供", ASSET_CDN.base);
         ASSET_CDN.ok = ok;
-      } catch {
+      } catch (e) {
         ASSET_CDN.ok = false;
+        ASSET_CDN.error = "fetch: " + String(e).slice(0, 120);
       }
     };
     await check();
