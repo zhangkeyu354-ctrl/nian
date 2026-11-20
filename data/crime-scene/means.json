@@ -1,0 +1,362 @@
+[
+  {
+    "id": "means-001",
+    "name": "钢管"
+  },
+  {
+    "id": "means-002",
+    "name": "折叠凳"
+  },
+  {
+    "id": "means-003",
+    "name": "石头"
+  },
+  {
+    "id": "means-004",
+    "name": "硫酸"
+  },
+  {
+    "id": "means-005",
+    "name": "手枪"
+  },
+  {
+    "id": "means-006",
+    "name": "奖杯"
+  },
+  {
+    "id": "means-007",
+    "name": "放血"
+  },
+  {
+    "id": "means-008",
+    "name": "围巾"
+  },
+  {
+    "id": "means-009",
+    "name": "哑铃"
+  },
+  {
+    "id": "means-010",
+    "name": "中毒"
+  },
+  {
+    "id": "means-011",
+    "name": "雕塑"
+  },
+  {
+    "id": "means-012",
+    "name": "疯狗"
+  },
+  {
+    "id": "means-013",
+    "name": "皮鞭"
+  },
+  {
+    "id": "means-014",
+    "name": "溜冰鞋"
+  },
+  {
+    "id": "means-015",
+    "name": "毛巾"
+  },
+  {
+    "id": "means-016",
+    "name": "辐射"
+  },
+  {
+    "id": "means-017",
+    "name": "拐杖"
+  },
+  {
+    "id": "means-018",
+    "name": "割喉"
+  },
+  {
+    "id": "means-019",
+    "name": "火药"
+  },
+  {
+    "id": "means-020",
+    "name": "匕首"
+  },
+  {
+    "id": "means-021",
+    "name": "烛台"
+  },
+  {
+    "id": "means-022",
+    "name": "摩托车"
+  },
+  {
+    "id": "means-023",
+    "name": "竹尖"
+  },
+  {
+    "id": "means-024",
+    "name": "污水"
+  },
+  {
+    "id": "means-025",
+    "name": "水银"
+  },
+  {
+    "id": "means-026",
+    "name": "撕咬"
+  },
+  {
+    "id": "means-027",
+    "name": "扳手"
+  },
+  {
+    "id": "means-028",
+    "name": "变形虫"
+  },
+  {
+    "id": "means-029",
+    "name": "火柴"
+  },
+  {
+    "id": "means-030",
+    "name": "刀片"
+  },
+  {
+    "id": "means-031",
+    "name": "砖头"
+  },
+  {
+    "id": "means-032",
+    "name": "注射"
+  },
+  {
+    "id": "means-033",
+    "name": "皮带"
+  },
+  {
+    "id": "means-034",
+    "name": "推撞"
+  },
+  {
+    "id": "means-035",
+    "name": "手术"
+  },
+  {
+    "id": "means-036",
+    "name": "瘟疫"
+  },
+  {
+    "id": "means-037",
+    "name": "斧头"
+  },
+  {
+    "id": "means-038",
+    "name": "棍棒"
+  },
+  {
+    "id": "means-039",
+    "name": "活埋"
+  },
+  {
+    "id": "means-040",
+    "name": "过劳"
+  },
+  {
+    "id": "means-041",
+    "name": "机械"
+  },
+  {
+    "id": "means-042",
+    "name": "胶带"
+  },
+  {
+    "id": "means-043",
+    "name": "打火机"
+  },
+  {
+    "id": "means-044",
+    "name": "徒手"
+  },
+  {
+    "id": "means-045",
+    "name": "化学品"
+  },
+  {
+    "id": "means-046",
+    "name": "踢打"
+  },
+  {
+    "id": "means-047",
+    "name": "枕头"
+  },
+  {
+    "id": "means-048",
+    "name": "菜刀"
+  },
+  {
+    "id": "means-049",
+    "name": "密室"
+  },
+  {
+    "id": "means-050",
+    "name": "切割"
+  },
+  {
+    "id": "means-051",
+    "name": "砒霜"
+  },
+  {
+    "id": "means-052",
+    "name": "烟雾"
+  },
+  {
+    "id": "means-053",
+    "name": "砍刀"
+  },
+  {
+    "id": "means-054",
+    "name": "盆栽"
+  },
+  {
+    "id": "means-055",
+    "name": "炸药"
+  },
+  {
+    "id": "means-056",
+    "name": "溺水"
+  },
+  {
+    "id": "means-057",
+    "name": "美工刀"
+  },
+  {
+    "id": "means-058",
+    "name": "铁钩"
+  },
+  {
+    "id": "means-059",
+    "name": "铁链"
+  },
+  {
+    "id": "means-060",
+    "name": "狙击"
+  },
+  {
+    "id": "means-061",
+    "name": "铁锹"
+  },
+  {
+    "id": "means-062",
+    "name": "铁锤"
+  },
+  {
+    "id": "means-063",
+    "name": "铁丝"
+  },
+  {
+    "id": "means-064",
+    "name": "饥荒"
+  },
+  {
+    "id": "means-065",
+    "name": "药粉"
+  },
+  {
+    "id": "means-066",
+    "name": "药水"
+  },
+  {
+    "id": "means-067",
+    "name": "药丸"
+  },
+  {
+    "id": "means-068",
+    "name": "绳索"
+  },
+  {
+    "id": "means-069",
+    "name": "纵火"
+  },
+  {
+    "id": "means-070",
+    "name": "剪刀"
+  },
+  {
+    "id": "means-071",
+    "name": "刀叉"
+  },
+  {
+    "id": "means-072",
+    "name": "毒针"
+  },
+  {
+    "id": "means-073",
+    "name": "毒气"
+  },
+  {
+    "id": "means-074",
+    "name": "毒品"
+  },
+  {
+    "id": "means-075",
+    "name": "封箱胶带"
+  },
+  {
+    "id": "means-076",
+    "name": "酒精"
+  },
+  {
+    "id": "means-077",
+    "name": "酒"
+  },
+  {
+    "id": "means-078",
+    "name": "病毒"
+  },
+  {
+    "id": "means-079",
+    "name": "拳击"
+  },
+  {
+    "id": "means-080",
+    "name": "搅拌机"
+  },
+  {
+    "id": "means-081",
+    "name": "毒蝎"
+  },
+  {
+    "id": "means-082",
+    "name": "毒蛇"
+  },
+  {
+    "id": "means-083",
+    "name": "电钻"
+  },
+  {
+    "id": "means-084",
+    "name": "电锯"
+  },
+  {
+    "id": "means-085",
+    "name": "电线"
+  },
+  {
+    "id": "means-086",
+    "name": "电棍"
+  },
+  {
+    "id": "means-087",
+    "name": "电流"
+  },
+  {
+    "id": "means-088",
+    "name": "游戏机"
+  },
+  {
+    "id": "means-089",
+    "name": "农药"
+  },
+  {
+    "id": "means-090",
+    "name": "煤油"
+  }
+]

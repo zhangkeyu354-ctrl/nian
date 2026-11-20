@@ -1,0 +1,27 @@
+[
+  {
+    "id": "forensic",
+    "name": "鉴证专家",
+    "side": "good"
+  },
+  {
+    "id": "investigator",
+    "name": "调查员",
+    "side": "good"
+  },
+  {
+    "id": "killer",
+    "name": "凶手",
+    "side": "evil"
+  },
+  {
+    "id": "accomplice",
+    "name": "帮凶",
+    "side": "evil"
+  },
+  {
+    "id": "witness",
+    "name": "目击者",
+    "side": "good"
+  }
+]

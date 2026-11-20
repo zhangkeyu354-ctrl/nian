@@ -23,6 +23,7 @@ import { attachNaodongScale } from "./nd-rooms.ts";
 import { attachKariba } from "./kb-rooms.ts";
 import { attachBossFighters } from "./bf-rooms.ts";
 import { attachMenace } from "./ta-rooms.ts";
+import { attachCrimeScene } from "./cs-sockets.ts";
 import {
   EVENTS,
   type Ack,
@@ -107,6 +108,7 @@ const http = createServer((req, res) => {
         kbRooms: kbStore.rooms.size,
         bfRooms: bfStore.rooms.size,
         taRooms: taStore.rooms.size,
+        csRooms: csStore.rooms.size,
         ...(wtStore
           ? { witchTown: { milestone: "M5_PHONE_UI", rooms: wtStore.size, fullGame: true } }
           : {}),
@@ -128,7 +130,7 @@ const http = createServer((req, res) => {
     if (has(store.rooms)) games.push("dbd");
     const pairs: [string, { rooms: Map<string, unknown> }][] = [
       ["ma", maStore], ["cn", cnStore], ["dm", dmStore], ["rk", rkStore], ["ss", ssStore], ["du", duStore], ["sk", skStore],
-      ["rr", rrStore], ["xb", xbStore], ["nd", ndStore], ["kb", kbStore], ["bf", bfStore], ["ta", taStore],
+      ["rr", rrStore], ["xb", xbStore], ["nd", ndStore], ["kb", kbStore], ["bf", bfStore], ["ta", taStore], ["crime-scene", csStore],
     ];
     for (const [g, st] of pairs) if (has(st.rooms)) games.push(g);
     const dp = (dpStore.rooms as Map<string, { file?: { mode?: string } }>).get(code) ?? (dpStore.rooms as Map<string, { file?: { mode?: string } }>).get(up);
@@ -264,7 +266,7 @@ const GZIP_CACHE = new Map<string, { etag: string; body: Buffer }>();
 const io = new Server(http, { cors: { origin: true } });
 // Each enabled game installs one connection/disconnect handler. Keep a finite
 // budget above the current multi-game count instead of disabling leak warnings.
-const GAME_LISTENER_LIMIT = 16;
+const GAME_LISTENER_LIMIT = 18;
 io.of("/").setMaxListeners(GAME_LISTENER_LIMIT);
 io.on("connection", (socket) => socket.setMaxListeners(GAME_LISTENER_LIMIT));
 /** 女巫镇：M5 手机界面完成，默认开启（WT_DISABLE=1 可关闭）。张数为候选59，房间内已提示待核实。 */
@@ -285,6 +287,11 @@ const dmStore = attachDyingMessage(
 const taStore = attachMenace(
   io,
   resolve(process.env.TA_DATA_DIR ?? join(DATA, "../ta-rooms")),
+  { maxRooms: MAX_ROOMS, idleMs: ROOM_IDLE_MS },
+);
+const csStore = attachCrimeScene(
+  io,
+  resolve(process.env.CS_DATA_DIR ?? join(DATA, "../cs-rooms")),
   { maxRooms: MAX_ROOMS, idleMs: ROOM_IDLE_MS },
 );
 const kbStore = attachKariba(

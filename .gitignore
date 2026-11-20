@@ -24,6 +24,11 @@ work/
 output/
 __pycache__/
 data/
+!data/
+data/*
+!data/crime-scene/
+data/crime-scene/*
+!data/crime-scene/*.json
 tools/
 apps/web/test/scenarios.generated.json
 
