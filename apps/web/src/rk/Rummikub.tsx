@@ -84,6 +84,7 @@ export function Rummikub() {
     [menu, setMenu] = useState(false),
     [rules, setRules] = useState(false),
     [copied, setCopied] = useState(false),
+    [botLevel, setBotLevel] = useState<"easy" | "normal">("normal"),
     [sound, setSound] = useState(soundOn),
     [haptics, setHaptics] = useState(() => preference("rk-vibrate", true)),
     [drawVisible, setDrawVisible] = useState(false),
@@ -487,7 +488,7 @@ export function Rummikub() {
                 {i + 1}号 {p?.name ?? "等待朋友"}
               </strong>
               <small>
-                {lobby ? (
+                {p?.bot ? `人机 · ${p.bot === "easy" ? "简单" : "普通"}` : lobby ? (
                   p ? (
                     p.ready ? (
                       "已准备"
@@ -506,6 +507,7 @@ export function Rummikub() {
                 )}
               </small>
             </div>
+            {lobby && host && p?.bot && <button type="button" className="rk-offline" onClick={() => void send({ type: "REMOVE_BOT", playerId: p.id })} aria-label={`移除${p.name}`}>移除</button>}
             {p && !p.connected && (
               <span className="rk-offline" title="暂时离线">
                 ·
@@ -721,6 +723,15 @@ export function Rummikub() {
                   >
                     {copied ? "✓ 邀请链接已复制" : "复制邀请链接 ↗"}
                   </button>
+                  {host && s.variant === "classic" && (
+                    <div className="rk-lobby-actions" style={{ flexWrap: "wrap" }}>
+                      <label>人机难度 <select value={botLevel} onChange={(e) => setBotLevel(e.target.value === "easy" ? "easy" : "normal")}>
+                        <option value="easy">简单</option><option value="normal">普通</option>
+                      </select></label>
+                      <button type="button" data-testid="rk-add-bot" disabled={net.pending || !net.online || s.players.length >= s.count}
+                        onClick={() => void send({ type: "ADD_BOT", level: botLevel })}>＋ 人机</button>
+                    </div>
+                  )}
                   <div className="rk-lobby-actions">
                     <button
                       onClick={() => void send({ type: "READY" })}

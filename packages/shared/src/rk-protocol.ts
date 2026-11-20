@@ -24,6 +24,8 @@ export type RKAction =
       minutes?: 0 | 1 | 2;
       games?: number;
     }
+  | { type: "ADD_BOT"; level: "easy" | "normal" }
+  | { type: "REMOVE_BOT"; playerId: string }
   | { type: "READY" }
   | { type: "START"; seed?: number }
   | { type: "LEAVE" };
@@ -41,6 +43,7 @@ export interface RKSnapshot {
     name: string;
     seat: number;
     ready: boolean;
+    bot?: "easy" | "normal";
     connected: boolean;
   }[];
   view: ReturnType<typeof viewForRK> | null;

@@ -18,6 +18,7 @@ import {
   type Command,
   type RKVariant,
 } from "../../../packages/rummikub/src/index.ts";
+import { runRummikubBotTurn } from "../../../packages/rummikub/src/bot.ts";
 import {
   RK_EVENTS as E,
   type RKAction,
@@ -26,8 +27,9 @@ import {
 interface Seat {
   id: string;
   name: string;
-  token: string;
+  token: string | null;
   ready: boolean;
+  bot?: "easy" | "normal";
 }
 export interface RKFile {
   variant: RKVariant;
@@ -59,6 +61,7 @@ function ensure(ok: unknown, msg: string): asserts ok {
 }
 export class RKRoom {
   connections = new Map<string, number>();
+  private botDue?: { version: number; time: number };
   constructor(
     public file: RKFile,
     public directory: string,
@@ -142,7 +145,7 @@ export class RKRoom {
     ensure(version === this.file.version, "状态已更新，请重新同步");
     const seat = this.file.players.findIndex((p) => p.id === me.id);
     const host = seat === 0;
-    if (["SET_SETTINGS", "START", "NEXT_GAME"].includes(c.type))
+    if (["SET_SETTINGS", "START", "NEXT_GAME", "ADD_BOT", "REMOVE_BOT"].includes(c.type))
       ensure(host, "只有房主可以操作");
     return this.transaction(() => {
       let scope: Change["scope"] = "public";
@@ -182,6 +185,7 @@ export class RKRoom {
             const previousVariant = this.file.variant ?? "classic";
             const variant = c.variant ?? previousVariant;
             ensure(variant === "classic" || variant === "xp", "未知拉密玩法");
+            ensure(variant === "classic" || !this.file.players.some(p => p.bot), "XP 暂不支持人机，请先移除人机");
             const count =
                 c.count ??
                 (variant === previousVariant
@@ -214,7 +218,21 @@ export class RKRoom {
             this.file.variant = variant;
             this.file.minutes = minutes;
             this.file.games = games;
-            this.file.players.forEach((p) => (p.ready = false));
+            this.file.players.forEach((p) => (p.ready = !!p.bot));
+            break;
+          }
+          case "ADD_BOT": {
+            ensure((this.file.variant ?? "classic") === "classic", "只有经典版可以添加人机");
+            ensure(this.file.players.length < this.file.count, "房间已满");
+            ensure(c.level === "easy" || c.level === "normal", "无效的人机难度");
+            let n = 1;
+            while (this.file.players.some(p => p.name === "人机" + n)) n++;
+            this.file.players.push({ id: "bot:" + randomBytes(8).toString("hex"), token: null, name: "人机" + n, ready: true, bot: c.level });
+            break;
+          }
+          case "REMOVE_BOT": {
+            ensure(this.file.players.some(p => p.bot && p.id === c.playerId), "这个座位不是人机");
+            this.file.players = this.file.players.filter(p => p.id !== c.playerId);
             break;
           }
           case "READY":
@@ -244,6 +262,12 @@ export class RKRoom {
           }
           case "LEAVE":
             this.file.players.splice(seat, 1);
+            if (seat === 0) {
+              // A bot cannot become host when the original host leaves.
+              const nextHost = this.file.players.findIndex(p => !p.bot);
+              if (nextHost < 0) this.file.players = [];
+              else if (nextHost > 0) this.file.players.unshift(...this.file.players.splice(nextHost, 1));
+            }
             delete this.file.revisions[me.id];
             break;
           default:
@@ -254,6 +278,26 @@ export class RKRoom {
       if (scope === "public") this.file.version++;
       else this.file.revisions[me.id] = (this.file.revisions[me.id] ?? 0) + 1;
       return { scope, ...(error ? { error } : {}) };
+    });
+  }
+  botTick(now = Date.now()) {
+    const s = this.file.state;
+    const level = s?.phase === "PLAYING" ? this.file.players[s.current]?.bot : undefined;
+    if (!s || !level || ![...this.connections.values()].some(n => n > 0) ||
+      (s.deadline !== null && now >= s.deadline)) {
+      this.botDue = undefined;
+      return false;
+    }
+    if (this.botDue?.version !== this.file.version) {
+      this.botDue = { version: this.file.version, time: now + 1200 + randomInt(1101) };
+      return false;
+    }
+    if (now < this.botDue.time) return false;
+    this.botDue = undefined;
+    return this.transaction(() => {
+      this.file.state = runRummikubBotTurn(s, level, now);
+      this.file.version++;
+      return true;
     });
   }
   tick(now = Date.now()) {
@@ -288,7 +332,8 @@ export class RKRoom {
         name: p.name,
         seat: i,
         ready: p.ready,
-        connected: (this.connections.get(p.id) ?? 0) > 0,
+        connected: !!p.bot || (this.connections.get(p.id) ?? 0) > 0,
+        ...(p.bot ? { bot: p.bot } : {}),
       })),
       view: me && this.file.state ? viewForRK(this.file.state, seat) : null,
       serverNow: now,
@@ -335,7 +380,8 @@ export function attachRummikub(
           f.code + ".json" === name &&
           Array.isArray(f.players) &&
           f.players.every(
-            (p) => typeof p.token === "string" && typeof p.id === "string",
+            (p) => typeof p.id === "string" &&
+              (p.bot === "easy" || p.bot === "normal" ? p.token === null : typeof p.token === "string"),
           ),
         "存档结构无效",
       );
@@ -370,7 +416,8 @@ export function attachRummikub(
   const timer = setInterval(() => {
     for (const [code, r] of rooms) {
       try {
-        if (r.tick(clock())) broadcast(r);
+        const now = clock();
+        if (r.tick(now) || r.botTick(now)) broadcast(r);
       } catch {
         console.warn("拉密房间计时保存失败", code);
       }
