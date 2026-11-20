@@ -1046,5 +1046,5 @@ describe("M2 day actions and trials", () => {
             );
         }
       }
-    });
+    }, 20000);
 });

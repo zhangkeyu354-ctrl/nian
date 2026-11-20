@@ -27,7 +27,8 @@ for (let i = 0; i < 100; i++) {
 const browser = await chromium.launch(process.env.PW_CHROME ? { executablePath: process.env.PW_CHROME } : {});
 const errors: string[] = [];
 const phone = async () => {
-  const ctx = await browser.newContext({ actionTimeout: 4000, viewport: { width: 390, height: 844 }, deviceScaleFactor: 2, hasTouch: true, isMobile: true });
+  const ctx = await browser.newContext({ viewport: { width: 390, height: 844 }, deviceScaleFactor: 2, hasTouch: true, isMobile: true });
+  ctx.setDefaultTimeout(4000);
   const p = await ctx.newPage();
   p.on("pageerror", (e) => errors.push(e.message));
   p.on("console", (m) => m.type() === "error" && !m.text().includes("404") && errors.push(m.text()));

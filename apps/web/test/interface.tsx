@@ -5,16 +5,23 @@ import { App } from "../src/App.tsx";
 import { SettingsProvider } from "../src/Settings.tsx";
 import { reduce, viewFor } from "../../../packages/game-engine/src/index.ts";
 import type { GameState, Command } from "../../../packages/shared/src/types.ts";
-import samples from "./scenarios.generated.json" with { type: "json" };
 import "../src/style.css";
 import "../src/visuals.css";
 import "../src/board-visuals.css";
 import "../src/mobile-game.css";
+// The mobile verification script generates this fixture before opening the harness.
+const fixturePath = "./scenarios.generated.json";
+const fixtures = import.meta.glob<{ id: string; before: GameState; command: Command }[]>(
+  "./scenarios.generated.json",
+  { eager: true, import: "default" },
+);
+const samples = fixtures[fixturePath];
+if (!samples) throw new Error("请先生成手机界面验收数据");
 const sample = samples.find(
   (x) => x.id === new URLSearchParams(location.search).get("case"),
 )!;
 function Harness() {
-  const [state, setState] = useState(sample.before as unknown as GameState),
+  const [state, setState] = useState(sample.before),
     [version, setVersion] = useState(0);
   const seat = state.actors[sample.command.actorId!].ownerId;
   return (

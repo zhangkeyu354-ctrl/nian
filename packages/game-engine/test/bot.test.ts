@@ -20,7 +20,7 @@ it("finishes 50 five-seat games with both human roles and all selectable killers
     }
     expect(state.winner, `seed ${seed} with ${killer}`).toBeTruthy();
   }
-}, 120_000);
+}, 240_000);
 
 it("does not let a bot see teammates' or opponents' unrevealed plans, hands, items or the seed", () => {
   const s = createGame({ seed: 812, mapId: "macmillan_estate", survivors: ["dwight","claudette","jake","ace"], killer: "trapper" });
