@@ -1,0 +1,20 @@
+# 叫醒服务：Render 免费版 15 分钟没有访问会休眠（下次打开要等约 1 分钟，房间也会消失）。
+# 每 10 分钟访问一次健康检查接口，让网站一直醒着。公开仓库的 Actions 免费。
+name: keepalive
+on:
+  schedule:
+    - cron: "*/10 * * * *"
+  workflow_dispatch: {}
+jobs:
+  ping:
+    runs-on: ubuntu-latest
+    timeout-minutes: 3
+    steps:
+      - name: Ping site
+        run: |
+          for i in 1 2 3; do
+            code=$(curl -s -o /dev/null -w "%{http_code}" -m 90 https://dbd-boardgame-8qky.onrender.com/api/health) && echo "HTTP $code"
+            [ "$code" = "200" ] && exit 0
+            sleep 20
+          done
+          echo "site did not answer 200"
