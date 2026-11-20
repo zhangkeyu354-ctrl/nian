@@ -15,6 +15,8 @@ export interface KBRoomPlayer {
   name: string;
   connected: boolean;
   host: boolean;
+  bot?: "easy" | "normal";
+  auto?: boolean;
 }
 
 export interface KBRoomSnapshot {
@@ -37,6 +39,8 @@ export interface KBRoomSnapshot {
 export type KBLobbyAction =
   | { type: "SET_MODE"; mode: Mode }
   | { type: "SET_SECONDS"; seconds: 0 | 30 | 60 }
+  | { type: "ADD_BOT"; level: "easy" | "normal" }
+  | { type: "REMOVE_BOT"; playerId: string }
   | { type: "KICK"; playerId: string }
   | { type: "SIT"; seat: number }
   | { type: "STAND" }
