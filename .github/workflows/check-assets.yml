@@ -1,0 +1,13 @@
+# 手动运行：检查 GitHub Pages 素材和网站转发是否正常
+name: check-assets
+on:
+  workflow_dispatch: {}
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - run: |
+          echo "Pages fingerprint: $(curl -s -m 30 https://zhangkeyu354-ctrl.github.io/nian/fingerprint.txt)"
+          curl -s -o /dev/null -m 30 -w "Pages image: %{http_code} %{size_download} bytes %{content_type}\n" https://zhangkeyu354-ctrl.github.io/nian/assets/hall/sk-card.webp
+          curl -s -o /dev/null -m 90 -w "Site image: %{http_code} -> %{redirect_url}\n" https://dbd-boardgame-8qky.onrender.com/assets/hall/sk-card.webp
+          curl -sI -m 30 https://zhangkeyu354-ctrl.github.io/nian/assets/brand/title.woff2 | grep -i "access-control-allow-origin" || echo "no CORS header"
