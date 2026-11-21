@@ -75,6 +75,7 @@ try {
       for (let seat = 5; seat >= 1; seat--) {
         const opened = await openSeat(current.file.code, seatTokens[seat]);
         await opened.page.getByRole("heading", { name: title }).waitFor();
+        if (seat === 5) await opened.page.screenshot({ path: "output/cs-ui/polish/event-05-after.png", fullPage: true });
         const player = current.file.state!.players[seat];
         const clue = player.clues.find((card) => current.file.state!.roles[seat] !== "killer" || card !== current.file.state!.answer?.clue)!;
         await opened.page.locator(".cs-event-panel").getByRole("button", { name: clue, exact: true }).click();

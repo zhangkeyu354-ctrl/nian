@@ -71,7 +71,12 @@ try {
   await page.getByText("案件板").waitFor({ timeout: 75_000 });
   await page.screenshot({ path: join(out, "search-mobile.png"), fullPage: true });
   for (let i = 0; i < 6; i++) {
-    await page.locator(".cs-tile").nth(i).locator("button").first().click();
+    if (i === 0) {
+      await page.locator(".cs-tile").nth(i).locator(".cs-tile-expand").click();
+      await page.waitForTimeout(350);
+      await page.screenshot({ path: join(out, "board-zoom-mobile.png") });
+      await page.locator(".cs-board-dialog-options button").first().click();
+    } else await page.locator(".cs-tile").nth(i).locator(".cs-tile-options button").first().click();
     await page.getByRole("button", { name: "确认放下" }).click();
   }
   await page.getByRole("button", { name: "开始简报" }).click();
@@ -102,7 +107,7 @@ try {
   const stageOverflow = await page.evaluate(() => document.documentElement.scrollWidth > window.innerWidth + 1);
   if (stageOverflow) throw new Error("调查或简报页面横向溢出");
   if (errors.length) throw new Error(`页面异常：${errors.join("; ")}`);
-  console.log(JSON.stringify({ ok: true, code, playerCount, killer, witness, solver, screenshots: ["entry-mobile.png", "lobby-mobile.png", "setup-mobile.png", "identity-mobile.png", "night-mobile.png", "search-mobile.png", "brief-mobile.png", "solve-mobile.png", ...(playerCount > 5 ? ["hunt-mobile.png"] : []), "result-mobile.png"], overflow: false }));
+  console.log(JSON.stringify({ ok: true, code, playerCount, killer, witness, solver, screenshots: ["entry-mobile.png", "lobby-mobile.png", "setup-mobile.png", "identity-mobile.png", "night-mobile.png", "search-mobile.png", "board-zoom-mobile.png", "brief-mobile.png", "solve-mobile.png", ...(playerCount > 5 ? ["hunt-mobile.png"] : []), "result-mobile.png"], overflow: false }));
 } finally {
   await Promise.all(contexts.map((context) => context.close()));
   await browser.close();

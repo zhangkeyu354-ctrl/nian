@@ -52,10 +52,13 @@
   background:linear-gradient(115deg,#ffffff09,transparent 35%),linear-gradient(#383936,#292c2a);
   border:2px solid #151919;
   box-shadow:inset 0 1px #ffffff32,inset 0 0 0 1px #ffffff0c,0 3px 0 #141715,0 8px 15px #0009;
+  animation:cs-board-in .26s var(--cs-ease) both;
 }
+@keyframes cs-board-in { from { opacity:.5; transform:rotateX(-9deg) translateY(7px); box-shadow:0 1px 3px #0008; } }
 .cs-board-row { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:7px; overflow:visible; padding:4px 0 12px; scroll-snap-type:none; }
 .cs-tile { width:auto; min-width:0; min-height:0; height:181px; padding:6px 5px; }
 .cs-tile h3 { height:27px; margin:0 -1px 2px; font-size:14px; }
+.cs-tile-expand { position:absolute; inset:0; width:100%; height:100%; min-height:0; padding:0; color:inherit; border:0; background:transparent; font:inherit; line-height:1; text-shadow:inherit; }
 .cs-tile-options button { min-height:24px; padding:1px 3px; font-size:12px; line-height:1.1; }
 .cs-bullet { width:11px; height:17px; border-radius:5px 5px 2px 2px; }
 .cs-app:has(.cs-board-row) .cs-role { min-height:86px; margin-top:8px; }
@@ -76,7 +79,18 @@
   border-color:#ad90725c;
   box-shadow:inset 0 1px #ffffff1c,0 2px 0 #121211,0 5px 10px #0007;
 }
+.cs-speaker,.cs-hunt { border:1px solid #bda58145; border-radius:8px; background:linear-gradient(135deg,#ffffff0c,transparent 33%),linear-gradient(#2e2925,#1a1d1b); box-shadow:inset 0 1px #ffffff1b,0 8px 18px #0008; }
+.cs-speaker { padding:14px 16px; }
+.cs-hunt { margin-top:18px; padding:16px; }
+.cs-ring span { box-shadow:inset 0 3px 7px #000a,0 1px #ffffff18; }
+.cs-event-panel { animation:cs-board-in .32s var(--cs-ease) both; }
+.cs-hunt-targets button.active,.cs-targets button.active,.cs-event-choices button.active { transform:translateY(-2px); box-shadow:inset 0 1px #fff3,0 4px 0 #1b1713,0 9px 12px #0008; }
 .cs-dialog { backdrop-filter:blur(10px); }
+.cs-board-dialog { padding-top:10px; padding-bottom:calc(44px + env(safe-area-inset-bottom)); }
+.cs-board-dialog h2 { margin-bottom:4px; }
+.cs-dialog > div.cs-board-dialog-options:last-child { display:grid; gap:4px; margin-top:0; }
+.cs-dialog.cs-board-dialog > div.cs-board-dialog-options > button { display:flex; align-items:center; gap:10px; min-height:44px; padding:5px 12px; text-align:left; color:var(--cs-ink); border:1px solid #ad90725c; border-radius:6px; background:linear-gradient(#3a3732,#262b29); box-shadow:inset 0 1px #ffffff18,0 2px 0 #121514; }
+.cs-board-dialog-options .cs-bullet.visible { opacity:1; transform:none; }
 .cs-night { background:radial-gradient(circle at 72% 15%,#3656515c,transparent 32%),radial-gradient(circle at 17% 53%,#8b3c3640,transparent 25%),linear-gradient(#101a1c,#0c1112); }
 .cs-night-rain { opacity:.2; background:repeating-linear-gradient(96deg,transparent 0 43px,#d7e8e018 44px 45px,transparent 46px 91px); mask-image:linear-gradient(transparent,#000 30%,#000 76%,transparent); animation:cs-fine-rain 4s linear infinite; }
 @keyframes cs-fine-rain { to { transform:translate3d(-20px,45px,0); } }
@@ -87,6 +101,6 @@
 .cs-result-role { animation:cs-record-open .28s var(--cs-ease) both; }
 @keyframes cs-record-open { from { opacity:0; transform:rotateX(-50deg) translateY(-8px); } }
 @media (prefers-reduced-motion:reduce) {
-  .cs-app button,.cs-evidence img,.cs-role-inner,.cs-result-role,.cs-verdict-stamp { animation:none!important; transition:none!important; }
+  .cs-app button,.cs-evidence img,.cs-role-inner,.cs-result-role,.cs-verdict-stamp,.cs-tile,.cs-event-panel { animation:none!important; transition:none!important; }
   .cs-result-role { opacity:1; transform:none; }
 }
