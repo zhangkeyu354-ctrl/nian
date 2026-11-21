@@ -29,7 +29,7 @@ interface Game {
 }
 
 const img = (src: string, fit: "cover" | "contain" = "cover") => <img src={src} alt="" style={{ width: "100%", height: "100%", objectFit: fit }} />;
-const CrimeSceneCover = ({ kind }: { kind: "card" | "wide" }) => <div className={`cs-hall-cover ${kind}`} aria-hidden="true"><span className="cs-hall-board"><i /><i /><i /><i /><i /><i /></span><span className="cs-hall-card clue" /><span className="cs-hall-card means" /></div>;
+const CrimeSceneCover = ({ kind }: { kind: "card" | "wide" }) => <div className={`cs-hall-cover ${kind}`} aria-hidden="true"><span className="cs-hall-board"><i /><i /><i /><i /><i /><i /></span><span className="cs-hall-card clue" /><span className="cs-hall-card means" /><img className="cs-hall-art" src="/assets/hall/crime-scene-cover.webp" alt="" onError={(event) => { event.currentTarget.style.display = "none"; }} /><span className="cs-hall-title"><b>犯罪现场</b><small>DECEPTION</small></span></div>;
 
 export const GAMES: Game[] = [
   { id: "sk", title: "骷髅王", en: "Skull King", min: 2, max: 8, tag: "猜墩 · 卡牌", time: "30 分钟", isNew: true, blurb: "每轮先猜自己能赢几墩，正好猜中才得分。海盗压数字、骷髅王压海盗、美人鱼诱捕骷髅王。", art: img("/assets/skullking/board/cover.webp"), bg: "#2a1a10", fill: true, online: "/?game=sk", join: (c) => "/?game=sk&room=" + c.toUpperCase() },

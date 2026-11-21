@@ -297,3 +297,13 @@ button.hall-primary.fb-btn:disabled { filter: none; opacity: .45; }
 .status-card p { margin: 4px 0; font-size: 15px; }
 .status-card small { display: block; margin-top: 8px; font-size: 12px; color: #776f64; }
 .status-at { margin-top: 14px; font-size: 12px; color: #776f64; text-align: center; }
+.cs-hall-cover { background:radial-gradient(ellipse at 50% 60%,#7a2a22,#2a1210 78%); }
+.cs-hall-cover::before { content:""; position:absolute; inset:0; z-index:1; background:repeating-linear-gradient(-38deg,transparent 0 22px,#f2c84b12 22px 34px); }
+.cs-hall-board,.cs-hall-card { z-index:2; top:30%; }
+.cs-hall-board { height:66%; }
+.cs-hall-card { height:60%; }
+.cs-hall-art { position:absolute; inset:0; z-index:3; width:100%; height:100%; object-fit:cover; }
+.cs-hall-title { position:absolute; z-index:4; left:0; right:0; top:7%; display:grid; justify-items:center; gap:2px; pointer-events:none; }
+.cs-hall-title b { padding:2px 12px 4px; font:900 clamp(22px,8.5cqw,44px)/1.05 "ZCOOL XiaoWei",serif; letter-spacing:.14em; color:#fff3dc; background:#0b0807d9; box-shadow:0 0 0 2px #e9c46a,0 0 0 5px #0b0807d9,0 6px 14px #000a; transform:rotate(-2deg); }
+.cs-hall-title small { margin-top:6px; padding:1px 8px; font:800 clamp(8px,2.6cqw,13px)/1.4 system-ui,sans-serif; letter-spacing:.32em; color:#1b0f0c; background:#f2c84b; transform:rotate(-2deg); }
+.cs-hall-cover { container-type:inline-size; }
