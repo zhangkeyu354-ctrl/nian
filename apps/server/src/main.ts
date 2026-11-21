@@ -361,11 +361,36 @@ const rrStore = attachReflexRace(
 
 const xbStore = attachXiabaiwang(io, resolve(process.env.XB_DATA_DIR ?? join(DATA, '../xb-rooms')), {maxRooms:MAX_ROOMS,idleMs:ROOM_IDLE_MS});
 
+const dbdBotTimers = new Map<string, ReturnType<typeof setTimeout>>();
+function scheduleDbdBot(room: Room) {
+  const previous = dbdBotTimers.get(room.code);
+  if (previous) clearTimeout(previous);
+  dbdBotTimers.delete(room.code);
+  if (![...room.connections.values()].some(count => count > 0) || !room.hasBotWork()) return;
+  const version = room.file.commands.length;
+  const stage = room.file.stage;
+  const timer = setTimeout(() => {
+    dbdBotTimers.delete(room.code);
+    if (store.rooms.get(room.code) !== room || room.file.stage !== stage ||
+        room.file.commands.length !== version || ![...room.connections.values()].some(count => count > 0)) return;
+    try {
+      if (!room.botStep()) return;
+      store.save(room);
+      broadcast(room);
+    } catch (e) {
+      console.warn("黎明杀机人机未能行动", room.code, e instanceof Error ? e.message : e);
+    }
+  }, 1000 + Math.floor(Math.random() * 1001));
+  timer.unref();
+  dbdBotTimers.set(room.code, timer);
+}
+
 function broadcast(room: Room) {
   for (const s of io.sockets.adapter.rooms.get(room.code) ?? []) {
     const sock = io.sockets.sockets.get(s);
     if (sock) sock.emit(EVENTS.update, room.snapshot(sock.data.seatId ?? null));
   }
+  scheduleDbdBot(room);
 }
 
 /** 房间里还有人连着就不清理 */
@@ -518,4 +543,13 @@ http.listen(PORT, HOST, async () => {
   }
   if (allowFixedSeed) console.log("  [测试模式] 允许固定种子");
   console.log("  关闭此窗口即停止服务器。\n");
+  // 自己叫醒自己：Render 免费版 15 分钟没有外部访问就休眠。
+  // GitHub 定时任务经常不准时，所以服务器每 9 分钟从外网地址访问自己一次（只在 Render 上开启）。
+  if (process.env.RENDER_EXTERNAL_URL && process.env.SELF_PING !== "0") {
+    const ping = () =>
+      fetch(process.env.RENDER_EXTERNAL_URL!.replace(/\/+$/, "") + "/api/health", { signal: AbortSignal.timeout(20_000) })
+        .then((r) => r.status !== 200 && console.warn("self-ping HTTP " + r.status))
+        .catch((e) => console.warn("self-ping 失败", String(e)));
+    setInterval(ping, 9 * 60_000).unref();
+  }
 });

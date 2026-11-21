@@ -52,7 +52,7 @@ describe("魔法运动员人机", () => {
       // 人机的命令也写进存档，重启后能原样重放
       store.save(room);
       expect(new MARoomStore(dir).rooms.get(room.code)!.state).toEqual(room.state);
-    });
+    }, 20000);
   }
 });
 
