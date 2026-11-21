@@ -3,7 +3,9 @@ import { join } from "node:path";
 import { chromium } from "playwright";
 
 const base = process.env.CS_TEST_BASE_URL ?? "http://127.0.0.1:3407";
-const out = join(process.cwd(), "output", "cs-ui");
+const playerCount = Number(process.env.CS_TEST_PLAYERS ?? 4);
+if (![4, 8, 12].includes(playerCount)) throw new Error("CS_TEST_PLAYERS 必须为 4、8 或 12");
+const out = join(process.cwd(), "output", "cs-ui", `${playerCount}-players`);
 mkdirSync(out, { recursive: true });
 const browser = await chromium.launch({ headless: true });
 const errors: string[] = [];
@@ -29,7 +31,7 @@ try {
   const overflow = await page.evaluate(() => document.documentElement.scrollWidth > window.innerWidth + 1);
   if (overflow) throw new Error("手机大厅横向溢出");
   const playerPages = [page];
-  for (let i = 1; i < 4; i++) {
+  for (let i = 1; i < playerCount; i++) {
     const participant = await browser.newContext({ viewport: { width: 390, height: 844 }, isMobile: true, hasTouch: true, deviceScaleFactor: 1 });
     contexts.push(participant);
     const guest = await participant.newPage();
@@ -40,7 +42,7 @@ try {
     await guest.getByText("玩家席位").waitFor();
     playerPages.push(guest);
   }
-  await page.getByText("4/12").waitFor();
+  await page.getByText(`${playerCount}/12`).waitFor();
   await page.getByRole("button", { name: "开始游戏" }).click();
   await page.getByText("案发地点", { exact: true }).waitFor();
   await page.screenshot({ path: join(out, "setup-mobile.png"), fullPage: true });
@@ -48,12 +50,16 @@ try {
   await page.getByText("夜幕降临…").waitFor();
   await page.screenshot({ path: join(out, "night-mobile.png"), fullPage: true });
   let killer = -1;
+  let witness = -1;
+  let solver = -1;
   for (let i = 1; i < playerPages.length; i++) {
     const role = playerPages[i].locator(".cs-role");
     await role.dispatchEvent("pointerdown");
     const label = await role.innerText();
     await role.dispatchEvent("pointerup");
     if (label.includes("凶手")) killer = i;
+    if (label.includes("目击者")) witness = i;
+    if (solver < 0 && label.includes("调查员")) solver = i;
   }
   if (killer < 0) throw new Error("未找到凶手视角");
   const killerPage = playerPages[killer];
@@ -70,20 +76,27 @@ try {
   await page.getByRole("button", { name: "开始简报" }).click();
   await page.getByText("当前发言").waitFor();
   await page.screenshot({ path: join(out, "brief-mobile.png"), fullPage: true });
-  const solver = [1, 2, 3].find((seat) => seat !== killer)!;
+  if (solver < 0) throw new Error("未找到调查员视角");
   const solverPage = playerPages[solver];
   await solverPage.getByRole("button", { name: "我要破案" }).click();
   await solverPage.locator(".cs-targets button").filter({ hasText: `玩家${killer + 1}` }).click();
   await solverPage.locator(".cs-solve-dialog .cs-card-row").first().locator("button").first().click();
   await solverPage.locator(".cs-solve-dialog .cs-card-row").nth(1).locator("button").first().click();
   await solverPage.getByRole("button", { name: "提交指认" }).click();
-  await solverPage.getByText("案件侦破").waitFor();
+  if (playerCount > 5) {
+    if (witness < 0) throw new Error("多人局缺少目击者");
+    await killerPage.getByRole("heading", { name: "目击者反杀" }).waitFor();
+    await killerPage.locator(".cs-hunt-targets button").filter({ hasText: `玩家${witness + 1}` }).click();
+    await killerPage.getByRole("button", { name: "提交最终指认" }).click();
+    await killerPage.getByRole("heading", { name: "凶手逍遥法外" }).waitFor();
+  }
+  await solverPage.getByRole("heading", { name: playerCount > 5 ? "凶手逍遥法外" : "案件侦破" }).waitFor();
   await solverPage.screenshot({ path: join(out, "result-mobile.png"), fullPage: true });
-  await page.getByText("案件侦破").waitFor();
+  await page.getByRole("heading", { name: playerCount > 5 ? "凶手逍遥法外" : "案件侦破" }).waitFor();
   const stageOverflow = await page.evaluate(() => document.documentElement.scrollWidth > window.innerWidth + 1);
   if (stageOverflow) throw new Error("调查或简报页面横向溢出");
   if (errors.length) throw new Error(`页面异常：${errors.join("; ")}`);
-  console.log(JSON.stringify({ ok: true, code, killer, solver, screenshots: ["entry-mobile.png", "lobby-mobile.png", "setup-mobile.png", "night-mobile.png", "search-mobile.png", "brief-mobile.png", "result-mobile.png"], overflow: false }));
+  console.log(JSON.stringify({ ok: true, code, playerCount, killer, witness, solver, screenshots: ["entry-mobile.png", "lobby-mobile.png", "setup-mobile.png", "night-mobile.png", "search-mobile.png", "brief-mobile.png", "result-mobile.png"], overflow: false }));
 } finally {
   await Promise.all(contexts.map((context) => context.close()));
   await browser.close();
