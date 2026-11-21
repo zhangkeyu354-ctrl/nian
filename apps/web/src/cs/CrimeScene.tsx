@@ -9,6 +9,7 @@ import CrimeEventPanel from "./CrimeEventPanel.tsx";
 import CrimeRules from "./CrimeRules.tsx";
 import MeansIcon from "./MeansIcon.tsx";
 import "./crime-scene.css";
+import "./crime-scene-materials.css";
 
 type Role = "forensic" | "investigator" | "killer" | "accomplice" | "witness";
 type Pair = { owner: number; clue: string; means: string };
@@ -41,10 +42,11 @@ const nameOf = (snapshot: Snapshot, seat: number) => snapshot.players[seat]?.nam
 const storageKey = (code: string) => `crime-scene:${code.toUpperCase()}`;
 
 function EvidenceCard({ name, kind, selected, important, excluded, onClick }: { name: string; kind: "clue" | "means"; selected?: boolean; important?: boolean; excluded?: boolean; onClick?: () => void }) {
+  const [loaded, setLoaded] = useState(false);
   const className = `cs-evidence ${kind} ${selected ? "selected" : ""} ${important ? "important" : ""} ${excluded ? "excluded" : ""}`;
   const id = (kind === "clue" ? clueIds : meansIds).get(name);
   const image = id && availableArt.has(id) ? `/assets/crime-scene/cards/${id}-512.webp` : null;
-  const content = <><span className="cs-evidence-name">{name}</span>{image ? <img src={image} alt="" loading="lazy" /> : id?.startsWith("means-") ? <MeansIcon id={id} /> : <span className="cs-evidence-glyph" aria-hidden="true">{name.slice(0, 1)}</span>}</>;
+  const content = <><span className="cs-evidence-name">{name}</span>{image ? <><span className={`cs-evidence-placeholder ${loaded ? "loaded" : ""}`} aria-hidden="true" /><img className={loaded ? "loaded" : ""} src={image} alt="" loading="eager" onLoad={() => setLoaded(true)} /></> : id?.startsWith("means-") ? <MeansIcon id={id} /> : <span className="cs-evidence-glyph" aria-hidden="true">{name.slice(0, 1)}</span>}</>;
   return onClick ? <button type="button" className={className} disabled={excluded} onClick={onClick} aria-pressed={!!selected}>{content}</button> : <div className={className}>{content}</div>;
 }
 

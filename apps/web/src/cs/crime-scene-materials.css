@@ -1,0 +1,66 @@
+.cs-app {
+  --cs-gold: #f2b544;
+  --cs-ink: #f4ede0;
+  --cs-muted: #b5a998;
+  --cs-panel: #1f1b18;
+  --cs-line: #fff0dc18;
+  --cs-ease: cubic-bezier(.2,.9,.3,1.1);
+  --cs-press: 120ms ease;
+  background:
+    radial-gradient(ellipse 105% 68% at 50% 30%, transparent 42%, #070907bb 100%),
+    linear-gradient(#07100b99,#0a0d0bc4),
+    url('/assets/crime-scene/felt-512.webp') center / 512px repeat;
+  -webkit-tap-highlight-color: transparent;
+}
+.cs-app button:not(:disabled) { transition: transform var(--cs-press), box-shadow var(--cs-press), filter var(--cs-press); }
+.cs-app button:not(:disabled):active { transform: translateY(2px); filter: brightness(.94); }
+.cs-primary {
+  border-radius: 14px;
+  background: linear-gradient(180deg,#ffd77a 0%,#f2b544 45%,#d8921f 100%);
+  box-shadow: inset 0 1px 0 #ffffff99,inset 0 -2px 0 #78460a73,0 4px 0 #8a5a14,0 10px 20px #0007;
+  text-shadow: 0 1px 0 #ffffff52;
+}
+.cs-primary:not(:disabled):active { transform:translateY(3px); box-shadow:inset 0 1px 0 #ffffff80,0 1px 0 #8a5a14,0 4px 8px #0007; }
+.cs-app button:disabled { opacity:.54; filter:saturate(.3); box-shadow:inset 0 1px #ffffff0d; }
+.cs-entry-card,.cs-evidence,.cs-role,.cs-event-number {
+  box-shadow:inset 0 1px 0 #ffffff30,0 2px 0 #0b0b0c,0 7px 0 #101112,0 13px 22px #0009;
+}
+.cs-evidence { border-radius:6px; box-shadow:inset 0 1px #ffffff24,0 2px 0 #0b0b0c,0 4px 0 #101112,0 8px 14px #0009; }
+.cs-evidence:not(.excluded):is(button):active { transform:translateY(2px); box-shadow:inset 0 1px #ffffff1d,0 1px 0 #0b0b0c,0 3px 6px #0009; }
+.cs-evidence.selected { transform:translateY(-3px); box-shadow:inset 0 1px #ffffff30,0 2px 0 #0b0b0c,0 9px 0 #101112,0 17px 22px #000b; }
+.cs-evidence-placeholder { position:absolute; inset:0; background:radial-gradient(circle at 55% 40%,#ffffff18,transparent 55%); transition:opacity .2s ease; }
+.cs-evidence-placeholder.loaded { opacity:0; }
+.cs-evidence img { position:relative; opacity:0; transition:opacity .22s ease; }
+.cs-evidence img.loaded { opacity:1; }
+.cs-tile {
+  background:linear-gradient(115deg,#ffffff09,transparent 35%),linear-gradient(#383936,#292c2a);
+  border:2px solid #151919;
+  box-shadow:inset 0 1px #ffffff32,inset 0 0 0 1px #ffffff0c,0 3px 0 #141715,0 8px 15px #0009;
+}
+.cs-board-row { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:7px; overflow:visible; padding:4px 0 12px; scroll-snap-type:none; }
+.cs-tile { width:auto; min-width:0; min-height:0; height:181px; padding:6px 5px; }
+.cs-tile h3 { height:27px; margin:0 -1px 2px; font-size:14px; }
+.cs-tile-options button { min-height:24px; padding:1px 3px; font-size:12px; line-height:1.1; }
+.cs-bullet { width:11px; height:17px; border-radius:5px 5px 2px 2px; }
+.cs-app:has(.cs-board-row) .cs-role { min-height:86px; margin-top:8px; }
+.cs-app:has(.cs-board-row) .cs-section:has(.cs-board-row) { padding-top:4px; }
+.cs-app:has(.cs-board-row) .cs-heading h2 { margin:10px 0 7px; }
+@media (min-width:700px) { .cs-board-row { grid-template-columns:repeat(3,minmax(0,1fr)); } .cs-tile { height:200px; } .cs-tile-options button { min-height:27px; } }
+@media (min-width:1000px) { .cs-board-row { grid-template-columns:repeat(6,minmax(0,1fr)); } }
+.cs-tile h3 { background:linear-gradient(90deg,color-mix(in srgb,var(--tile-accent) 55%,#262929),color-mix(in srgb,var(--tile-accent) 35%,#262929)); border-top:0; border-bottom:1px solid #0d1111; text-shadow:0 1px #0008; }
+.cs-tile-options button { border-top-color:#ffffff20; }
+.cs-bullet { box-shadow:inset -2px 0 2px #171a1b8c,inset 2px 0 2px #fff9,1px 2px 3px #000d; }
+.cs-lobby-code,.cs-event-panel,.cs-dialog,.cs-result {
+  background:linear-gradient(145deg,#ffffff0c,transparent 35%),linear-gradient(150deg,#322a25,#191b1a 72%);
+  border:1px solid #bda58145;
+  box-shadow:inset 0 1px #ffffff18,0 12px 30px #0009;
+}
+.cs-event-choices button,.cs-hunt-targets button,.cs-targets button,.cs-locations button,.cs-join button,.cs-speaker button {
+  background:linear-gradient(#3a312a,#252421);
+  border-color:#ad90725c;
+  box-shadow:inset 0 1px #ffffff1c,0 2px 0 #121211,0 5px 10px #0007;
+}
+.cs-dialog { backdrop-filter:blur(10px); }
+@media (prefers-reduced-motion:reduce) {
+  .cs-app button,.cs-evidence img { animation:none!important; transition:none!important; }
+}
