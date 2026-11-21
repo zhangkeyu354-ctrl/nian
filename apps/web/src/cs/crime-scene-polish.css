@@ -125,3 +125,47 @@
 .cs-entry-art::after { content:""; position:absolute; inset:auto 0 0; height:40%; background:linear-gradient(transparent,#0b100d); pointer-events:none; }
 .cs-night { background:linear-gradient(#0f17198c,#0a0e0fd9),url('/assets/crime-scene/scene/night.webp') center/cover no-repeat,radial-gradient(ellipse 80% 55% at 50% 0%,#2a3e3d73,transparent 70%),linear-gradient(#0f1719,#0a0e0f); }
 .cs-lobby-code { background:linear-gradient(#1d1714b8,#1d1714b8),url('/assets/crime-scene/scene/case-folder.webp') center/cover no-repeat,linear-gradient(145deg,#ffffff0c,transparent 35%),linear-gradient(150deg,#322a25,#191b1a 72%); }
+
+/* 操作：点桌上的牌直接指认 */
+.cs-tap-hint { margin:-4px 0 10px; font-size:12px; color:#c9b392!important; }
+.cs-player { position:relative; transition:background .2s ease,box-shadow .2s ease; border-radius:10px; }
+.cs-player h3 { align-items:center; }
+.cs-player h3 > span { display:flex; align-items:center; gap:6px; }
+.cs-me,.cs-speaking-tag { padding:1px 6px; border-radius:10px; font-style:normal; font-size:11px; font-weight:700; }
+.cs-me { color:#2d1b12; background:#e9cf9f; }
+.cs-speaking-tag { color:#1b2a1f; background:#9fd6b0; animation:cs-pulse 1.4s ease-in-out infinite; }
+@keyframes cs-pulse { 50% { opacity:.55; } }
+.cs-player h3 small.has-badge { color:#e9c46a; }
+.cs-player h3 small.has-badge::before { content:""; display:inline-block; width:9px; height:9px; margin-right:5px; border-radius:50%; background:radial-gradient(circle at 35% 30%,#fff2b8,#d39a2c 70%); box-shadow:0 0 4px #e9c46a88; vertical-align:-1px; }
+.cs-player h3 small.used { color:#857868; text-decoration:line-through; }
+.cs-player.speaking { padding-left:8px; padding-right:8px; margin:0 -8px; background:linear-gradient(90deg,#9fd6b014,transparent 60%); box-shadow:inset 3px 0 0 #9fd6b0; }
+.cs-player.targeted { padding-left:8px; padding-right:8px; margin:0 -8px; background:linear-gradient(90deg,#c6413722,transparent 70%); box-shadow:inset 3px 0 0 #e0574c; }
+button.cs-evidence { cursor:pointer; }
+.cs-wrong-list { display:flex; flex-wrap:wrap; gap:6px; align-items:center; margin-top:2px; }
+.cs-wrong-list small { width:100%; font-size:11px; color:#a8957c; }
+.cs-wrong-list span { display:inline-flex; gap:6px; align-items:center; padding:3px 8px; border-radius:12px; font-size:12px; color:#e7c9c0; background:#5a1f1c66; border:1px solid #d4594a44; text-decoration:line-through; text-decoration-color:#e0574c; }
+.cs-wrong-list i { font-style:normal; font-size:10px; color:#a8957c; text-decoration:none; }
+.cs-accuse-bar { position:fixed; z-index:16; left:12px; right:12px; bottom:calc(12px + env(safe-area-inset-bottom)); max-width:868px; margin:auto; display:flex; align-items:center; gap:8px; padding:10px 10px 10px 14px; border:1px solid #e0574c88; border-radius:14px; background:linear-gradient(#3a1d1af2,#1f1312f2); box-shadow:inset 0 1px #ffffff1c,0 10px 28px #000c; backdrop-filter:blur(8px); animation:cs-rise .2s var(--cs-ease); }
+.cs-accuse-bar > div { flex:1; min-width:0; display:grid; gap:1px; }
+.cs-accuse-bar small { font-size:11px; color:#d9b3a8; }
+.cs-accuse-bar strong { font-size:15px; color:#fff0e0; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+.cs-accuse-bar strong .empty { color:#b08a80; font-weight:500; }
+.cs-accuse-bar em { font-style:normal; font-size:11px; color:#ffb3a8; }
+.cs-accuse-bar button { flex:none; height:44px; padding:0 12px; border:1px solid #8a735a7a; border-radius:10px; color:#ecdcc0; background:linear-gradient(#3a302a,#241f1c); }
+.cs-accuse-bar .cs-accuse-go { color:#fff; font-weight:800; border-color:#f0a39d; background:linear-gradient(#c64137,#8f2524); box-shadow:0 3px 0 #551717; }
+/* 指认播报：所有人同时看到谁指认了哪一组 */
+.cs-accusation { position:fixed; z-index:30; left:50%; top:78px; width:min(92vw,420px); transform:translateX(-50%); display:grid; justify-items:center; gap:2px; padding:12px 16px 14px; border-radius:14px; border:1px solid #ffffff22; background:linear-gradient(#2a2220f2,#171312f2); box-shadow:0 14px 36px #000d; pointer-events:none; animation:cs-accuse 4s ease both; }
+.cs-accusation small { font-size:12px; color:#cdbba0; }
+.cs-accusation strong { font:22px "ZCOOL XiaoWei",serif; color:#fff2dc; }
+.cs-accusation b { position:absolute; right:12px; top:-14px; padding:2px 12px; border:3px double currentColor; border-radius:4px; font:24px "ZCOOL XiaoWei",serif; transform:rotate(-10deg); background:#170f0e; animation:cs-stamp .35s .35s ease-out both; }
+.cs-accusation.wrong b { color:#e0574c; }
+.cs-accusation.right b { color:#9fd6b0; }
+@keyframes cs-accuse { 0% { opacity:0; transform:translate(-50%,-12px); } 8%,85% { opacity:1; transform:translate(-50%,0); } 100% { opacity:0; transform:translate(-50%,-6px); } }
+.cs-marker-count { margin-right:10px; padding:2px 8px; border-radius:10px; font:600 12px system-ui; font-style:normal; color:#2d1b12; background:#e9cf9f; }
+.cs-marker-count.done { background:#9fd6b0; }
+@media (prefers-reduced-motion:reduce) { .cs-accusation,.cs-accuse-bar,.cs-speaking-tag { animation:none!important; } }
+
+/* 证物行：手机上 4 张正好一排，不再把页面撑宽（5 张时横向滑动） */
+.cs-player-strip > *,.cs-player { min-width:0; }
+.cs-player .cs-card-row { gap:7px; }
+.cs-player .cs-evidence { flex:0 0 calc((100% - 21px) / 4); width:auto; height:auto; aspect-ratio:92 / 140; max-width:120px; }

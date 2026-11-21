@@ -25,7 +25,7 @@ export interface GameState {
   hunt: HuntState | null;
   answer?: EvidencePair;
   winner: "good" | "evil" | null;
-  log: { type: string; at: number; detail: string }[];
+  log: { type: string; at: number; detail: string; seat?: number; guess?: { owner: number; clue: string; means: string } }[];
   records: { round: number; tiles: string[]; markers: Record<string, number>; at: number }[];
   pendingEvent: PendingEvent | null;
   lastFailed: number | null;
@@ -120,7 +120,10 @@ export function reduceGame(state: GameState, command: GameCommand, now: number, 
     const hunt = result.phase === "witness_hunt" ? beginHunt(state.roles, now) : null;
     const correct = command.guess.owner === state.answer.owner && command.guess.clue === state.answer.clue && command.guess.means === state.answer.means;
     const detail = !correct ? "错！" : result.winner ? "破案" : "破案成功，进入反杀";
-    return logged({ ...state, phase: result.phase, badges: result.badges, bonusAttempts: result.bonusAttempts ?? state.bonusAttempts, winner: result.winner, hunt, bonusSeat: null, resultReason: result.phase === "result" && result.winner === "evil" ? "all_good_badges" : null, lastFailed: correct ? state.lastFailed : command.seat, records: result.phase !== state.phase && result.phase !== state.board?.phase ? recordBoard(state, now) : state.records }, result.phase === "result" ? "result" : "solve", now, detail);
+    const next = logged({ ...state, phase: result.phase, badges: result.badges, bonusAttempts: result.bonusAttempts ?? state.bonusAttempts, winner: result.winner, hunt, bonusSeat: null, resultReason: result.phase === "result" && result.winner === "evil" ? "all_good_badges" : null, lastFailed: correct ? state.lastFailed : command.seat, records: result.phase !== state.phase && result.phase !== state.board?.phase ? recordBoard(state, now) : state.records }, result.phase === "result" ? "result" : "solve", now, detail);
+    // 指认在桌上是公开的：记录谁指认了哪一组，界面据此播报与标记。
+    next.log[next.log.length - 1] = { ...next.log[next.log.length - 1], seat: command.seat, guess: { ...command.guess } };
+    return next;
   }
   if (command.type === "skip_bonus") {
     if (state.phase !== "event_bonus" || command.seat !== state.bonusSeat || !state.board) throw new Error("现在不能放弃额外破案机会");

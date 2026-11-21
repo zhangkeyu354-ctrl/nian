@@ -84,6 +84,19 @@ try {
   await page.screenshot({ path: join(out, "brief-mobile.png"), fullPage: true });
   if (solver < 0) throw new Error("未找到调查员视角");
   const solverPage = playerPages[solver];
+  // 点桌上的牌直接指认一组错误组合：全员看到播报，对应玩家下出现“已被否定的组合”。
+  const tapperIndex = playerPages.findIndex((_, i) => i > 0 && i !== solver && i !== killer);
+  const tapper = playerPages[tapperIndex];
+  const killerRow = tapper.locator(".cs-player").filter({ hasText: `玩家${killer + 1}` });
+  await killerRow.locator(".cs-card-row").first().locator("button").nth(1).click();
+  await killerRow.locator(".cs-card-row").nth(1).locator("button").first().click();
+  await tapper.locator(".cs-accuse-bar").getByRole("button", { name: "我要破案" }).click();
+  await page.locator(".cs-accusation.wrong").waitFor();
+  await page.waitForTimeout(500);
+  await page.screenshot({ path: join(out, "accusation-mobile.png") });
+  for (const p of playerPages) { if (await p.evaluate(() => document.documentElement.scrollWidth > innerWidth + 1)) throw new Error("对局页横向溢出"); }
+  await page.locator(".cs-wrong-list span").first().waitFor();
+  await page.locator(".cs-accusation").waitFor({ state: "detached", timeout: 8000 });
   await solverPage.getByRole("button", { name: "我要破案" }).click();
   await solverPage.waitForTimeout(300);
   await solverPage.screenshot({ path: join(out, "solve-mobile.png") });

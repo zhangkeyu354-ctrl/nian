@@ -235,3 +235,27 @@ describe("完整基础局状态流", () => {
     });
   }
 });
+
+describe("指认在桌上公开", () => {
+  it("错误指认记录指认者与组合；坏人选中真证据被私下拦截时不留记录", () => {
+    let s = createGame(6, 0, 3, false, 1000, () => 0.25);
+    s = reduceGame(s, { type: "start", seat: 0, location: "location-1" }, 1000, () => 0);
+    s = reduceGame(s, { type: "tick" }, 61000, () => 0);
+    const answer = s.answer!;
+    const owner = s.players[answer.owner];
+    const wrongClue = owner.clues.find((card) => card !== answer.clue)!;
+    const accuser = s.roles.findIndex((role, seat) => role === "investigator" && seat !== answer.owner);
+    s = reduceGame(s, { type: "solve", seat: accuser, guess: { owner: answer.owner, clue: wrongClue, means: answer.means } }, 62000);
+    const entry = s.log.at(-1)!;
+    expect(entry.detail).toBe("错！");
+    expect(entry.seat).toBe(accuser);
+    expect(entry.guess).toEqual({ owner: answer.owner, clue: wrongClue, means: answer.means });
+    const evil = s.roles.findIndex((role, seat) => role === "accomplice" && seat !== answer.owner);
+    if (evil >= 0) {
+      const before = s.log.length;
+      s = reduceGame(s, { type: "solve", seat: evil, guess: { ...answer } }, 63000);
+      expect(s.log.length).toBe(before);
+    }
+    for (let seat = 1; seat < 6; seat++) expect(gameView(s, seat).log.at(-1)?.guess).toEqual({ owner: answer.owner, clue: wrongClue, means: answer.means });
+  });
+});
