@@ -1,0 +1,110 @@
+/* 最后一轮质感打磨（Claude，2026-11-21）。只做呈现，不改规则与协议。 */
+
+/* 顶栏：图标按钮统一 34px，房间号做成小牌 */
+.cs-topbar { gap:8px; padding:0 12px; }
+.cs-top-actions { gap:6px; }
+.cs-top-actions button { height:34px; min-height:34px; padding:0 10px; border:1px solid #8a735a7a; border-radius:8px; background:linear-gradient(#3a302a,#241f1c); box-shadow:inset 0 1px #ffffff1f,0 2px 0 #100d0c,0 4px 8px #0006; color:#ecdcc0; font-size:13px; font-weight:600; }
+.cs-top-actions .cs-sound-toggle { width:34px; min-width:34px; padding:0; display:grid; place-items:center; }
+.cs-sound-toggle svg { width:18px; height:18px; }
+.cs-sound-toggle[aria-pressed="false"] { color:#9d8f7d; }
+.cs-room-pill { padding:4px 8px; border:1px dashed #b8996b66; border-radius:6px; font:600 12px/1 Georgia,serif; letter-spacing:.12em; color:#e9cf9f!important; background:#1d1816; }
+
+/* 案件板：高度跟内容走，六行完整显示，不再被裁切 */
+.cs-tile { height:auto; padding:6px 5px 5px; }
+.cs-tile-options button { min-height:25px; }
+.cs-tile-options button:last-child { border-bottom:0; }
+.cs-tile h3 { cursor:zoom-in; }
+.cs-tile h3::after { content:""; position:absolute; right:7px; top:50%; width:7px; height:7px; margin-top:-5px; border-right:1.5px solid #ffffff7a; border-bottom:1.5px solid #ffffff7a; transform:rotate(45deg); pointer-events:none; }
+
+/* 身份牌：卡面有纹样、徽记和阵营说明 */
+.cs-role { min-height:104px; border:0; border-radius:12px; background:#151515; }
+.cs-app:has(.cs-board-row) .cs-role { min-height:96px; }
+.cs-role-back,.cs-role-front { align-items:center; gap:14px; padding:12px 16px; border-radius:12px; }
+.cs-role-back { justify-content:center; flex-direction:column; gap:2px; background:
+  radial-gradient(circle at 50% 50%,#e2c58d1c,transparent 46%),
+  repeating-linear-gradient(45deg,transparent 0 9px,#e9cf9f0d 9px 10px),
+  repeating-linear-gradient(-45deg,transparent 0 9px,#e9cf9f0d 9px 10px),
+  linear-gradient(135deg,#2c2520,#141413); }
+.cs-role-back::before { inset:6px; border:1px solid #cfb07a55; border-radius:8px; box-shadow:inset 0 0 0 3px #00000040,inset 0 0 0 4px #cfb07a24; }
+.cs-role-back-mark { position:static; color:#d9b97c99; font-size:22px; line-height:1; }
+.cs-role-back .cs-role-title { font-size:19px; color:#efdcb8; }
+.cs-role-back small { color:#b9a68a; font-size:11px; }
+.cs-role-front { justify-content:flex-start; --role-c:#79b6ad; background:
+  radial-gradient(circle at 18% 50%,color-mix(in srgb,var(--role-c) 30%,transparent),transparent 42%),
+  linear-gradient(115deg,#ffffff10,transparent 40%),
+  linear-gradient(120deg,color-mix(in srgb,var(--role-c) 34%,#1b1c1d),#121416 78%); }
+.cs-role-front::before { content:""; position:absolute; inset:6px; border:1px solid color-mix(in srgb,var(--role-c) 45%,transparent); border-radius:8px; pointer-events:none; }
+.cs-role.red .cs-role-front { --role-c:#d4594a; background:radial-gradient(circle at 18% 50%,#d4594a4d,transparent 42%),linear-gradient(115deg,#ffffff10,transparent 40%),linear-gradient(120deg,#4c201c,#141213 78%); }
+.cs-role.blue .cs-role-front { --role-c:#6fa8c9; background:radial-gradient(circle at 18% 50%,#6fa8c94d,transparent 42%),linear-gradient(115deg,#ffffff10,transparent 40%),linear-gradient(120deg,#1e3845,#121416 78%); }
+.cs-role.teal .cs-role-front,.cs-role.green .cs-role-front { --role-c:#79b6ad; background:radial-gradient(circle at 18% 50%,#79b6ad4a,transparent 42%),linear-gradient(115deg,#ffffff10,transparent 40%),linear-gradient(120deg,#203d3a,#121416 78%); }
+.cs-role-front .cs-emblem { position:relative; z-index:2; flex:none; width:58px; height:58px; padding:9px; color:color-mix(in srgb,var(--role-c) 70%,#fff); border-radius:50%; background:radial-gradient(circle at 35% 30%,#ffffff22,#00000055 70%); box-shadow:inset 0 0 0 1.5px color-mix(in srgb,var(--role-c) 70%,transparent),inset 0 2px 6px #0008,0 2px 6px #0007; }
+.cs-role-text { position:relative; z-index:2; display:grid; gap:1px; min-width:0; }
+.cs-role-camp { font-size:11px; letter-spacing:.14em; color:color-mix(in srgb,var(--role-c) 60%,#f2e6d2); }
+.cs-role-front .cs-role-title { font-size:26px; line-height:1.15; color:#f6ecdb; text-shadow:0 2px 6px #000a; }
+.cs-role-duty { font-size:12px; color:#d6c8b4; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+.cs-role-front > small { position:absolute; right:14px; top:11px; z-index:2; padding:2px 7px; border-radius:20px; font-size:10px; color:#e8dcc8; background:#0006; }
+
+/* 房间：席位做成带号码的座位条，设置改成统一控件 */
+.cs-seats { display:grid; gap:7px; }
+.cs-lobby .cs-seats li { display:flex; align-items:center; gap:10px; padding:9px 12px; border:1px solid #ffffff14; border-radius:10px; background:linear-gradient(#2a2420,#1d1a18); box-shadow:inset 0 1px #ffffff12,0 2px 0 #0e0c0b; animation:cs-seat-in .24s var(--cs-ease) both; }
+@keyframes cs-seat-in { from { opacity:0; transform:translateY(6px); } }
+.cs-seat-no { flex:none; width:28px; height:28px; display:grid; place-items:center; border-radius:50%; font:700 13px Georgia,serif; color:#2d1b12; background:linear-gradient(#ffd77a,#d8921f); box-shadow:inset 0 1px #fff8,0 1px 2px #0008; }
+.cs-seat-name { flex:1; min-width:0; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; color:var(--cs-ink); font-weight:600; }
+.cs-seat-name em { margin-left:6px; padding:1px 6px; border-radius:10px; font-style:normal; font-size:11px; color:#2d1b12; background:#e9cf9f; }
+.cs-seat-tag { font-size:11px; color:#e9b76e; border:1px solid #e9b76e66; border-radius:10px; padding:1px 7px; }
+.cs-lobby .cs-seats li small { color:#8fc3a2; font-size:11px; }
+.cs-lobby .cs-seats li small::before { content:""; display:inline-block; width:6px; height:6px; margin-right:5px; border-radius:50%; background:currentColor; box-shadow:0 0 6px currentColor; vertical-align:1px; }
+.cs-lobby .cs-seats li.offline small { color:#a08a7a; }
+.cs-lobby .cs-seats li.cs-seat-empty { border-style:dashed; border-color:#ffffff1f; background:transparent; box-shadow:none; }
+.cs-seat-empty .cs-seat-no { color:#8a7c6c; background:#2a2522; box-shadow:inset 0 1px 2px #0008; }
+.cs-seat-empty .cs-seat-name { color:#7d7064; font-weight:400; }
+.cs-settings { margin-top:18px; padding:14px; border:1px solid #bda58133; border-top:1px solid #bda58133; border-radius:12px; background:linear-gradient(#ffffff08,transparent 40%),#1a1716cc; box-shadow:inset 0 1px #ffffff12; }
+.cs-settings label { margin:0 0 12px; }
+.cs-app select { appearance:none; -webkit-appearance:none; padding-right:36px; border-radius:10px; background:
+  url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1.5l5 5 5-5' fill='none' stroke='%23e9cf9f' stroke-width='1.8' stroke-linecap='round'/%3E%3C/svg%3E") right 14px center/12px 8px no-repeat,
+  linear-gradient(#2c2622,#211d1b); box-shadow:inset 0 1px #ffffff14,0 2px 0 #0e0c0b; }
+.cs-app input:not([type="checkbox"]) { border-radius:10px; background:#1d1918; box-shadow:inset 0 2px 4px #0007,0 1px #ffffff10; }
+.cs-settings .cs-event-setting { padding:4px 0 2px; margin:0; }
+.cs-event-setting input[type="checkbox"] { appearance:none; -webkit-appearance:none; position:relative; width:46px!important; height:26px!important; min-height:26px; padding:0; border:1px solid #00000080; border-radius:20px; background:#2b2521; box-shadow:inset 0 2px 4px #000a; cursor:pointer; transition:background .18s ease; }
+.cs-event-setting input[type="checkbox"]::after { content:""; position:absolute; top:2px; left:2px; width:20px; height:20px; border-radius:50%; background:linear-gradient(#f4eadb,#bcae99); box-shadow:0 2px 3px #0009; transition:transform .2s var(--cs-ease); }
+.cs-event-setting input[type="checkbox"]:checked { background:linear-gradient(#e4ab3f,#b7791c); }
+.cs-event-setting input[type="checkbox"]:checked::after { transform:translateX(20px); }
+.cs-settings .cs-primary { margin-top:16px; }
+
+/* 夜晚：画面居中，月光与等待指示，去掉突兀的红色光斑 */
+.cs-night { min-height:calc(100dvh - 260px); display:flex; flex-direction:column; align-items:center; justify-content:center; text-align:center; padding:40px 16px 56px; background:radial-gradient(ellipse 80% 55% at 50% 0%,#2a3e3d73,transparent 70%),linear-gradient(#0f1719,#0a0e0f); }
+.cs-night:has(.cs-card-row) { justify-content:flex-start; text-align:left; align-items:stretch; }
+.cs-night-moon { position:absolute; top:28px; right:15%; width:54px; height:54px; border-radius:50%; background:radial-gradient(circle at 38% 36%,#f3ecd6,#c9c0a4 60%,#9e967f); box-shadow:0 0 40px 10px #d9e2d322,0 0 120px 40px #8fa8a514; opacity:.82; }
+.cs-night-moon::after { content:""; position:absolute; inset:-1px -1px -1px 14px; border-radius:50%; background:#0d1416; opacity:.9; }
+.cs-night h2 { margin:0 0 8px; font-size:36px; letter-spacing:.14em; text-shadow:0 4px 20px #000; }
+.cs-night > p { color:#b8c4c0; font-size:14px; }
+.cs-night-wait { position:relative; display:flex; gap:9px; margin-top:22px; }
+.cs-night-wait i { width:7px; height:7px; border-radius:50%; background:#c9d6d0; opacity:.25; animation:cs-wait 1.5s ease-in-out infinite; }
+.cs-night-wait i:nth-child(2) { animation-delay:.2s; }
+.cs-night-wait i:nth-child(3) { animation-delay:.4s; }
+@keyframes cs-wait { 40% { opacity:.9; transform:translateY(-3px); } }
+
+/* 结算：证据亮出来，身份逐行揭晓并按阵营着色 */
+.cs-result h2 { margin:0 0 6px; }
+.cs-result-evidence { display:grid; grid-template-columns:auto auto 1fr; align-items:end; gap:12px; margin:16px 0 8px; padding:14px; border-radius:10px; background:#0000003b; box-shadow:inset 0 2px 8px #0008; }
+.cs-result-evidence figure { margin:0; display:grid; gap:6px; justify-items:center; }
+.cs-result-evidence .cs-evidence { width:84px; height:128px; }
+.cs-result-evidence figcaption { font-size:11px; letter-spacing:.1em; color:#c9b392; }
+.cs-result-evidence p { margin:0 0 22px; font-size:13px; line-height:1.6; color:#d8c6a8!important; }
+.cs-result-evidence b { color:#f3dfb8; }
+.cs-result-roles { display:grid; gap:6px; }
+.cs-result .cs-result-roles li { align-items:center; justify-content:flex-start; gap:10px; padding:8px 10px; border:1px solid #ffffff12; border-radius:9px; background:#00000030; }
+.cs-result-roles li > span { flex:1; color:var(--cs-ink); }
+.cs-result-roles .cs-emblem { flex:none; width:30px; height:30px; padding:5px; border-radius:50%; color:#8fc6bb; background:#ffffff0d; box-shadow:inset 0 0 0 1px #8fc6bb55; }
+.cs-result-roles li.evil { border-color:#d4594a55; background:linear-gradient(90deg,#d4594a22,#00000030 70%); }
+.cs-result-roles li.evil .cs-emblem { color:#ef8a79; box-shadow:inset 0 0 0 1px #ef8a7966; }
+.cs-result-roles li.evil strong { color:#f3a495; }
+.cs-record { margin-top:4px; padding:0 10px; border:1px solid #ffffff14; border-radius:9px; background:#00000026; }
+.cs-record summary { font-weight:600; }
+.cs-record li { padding:7px 2px; }
+.cs-result > a { display:block; margin-top:22px; padding:13px; text-align:center; text-decoration:none; font-weight:700; border-radius:12px; color:#2d1b12; background:linear-gradient(180deg,#ffd77a 0%,#f2b544 45%,#d8921f 100%); box-shadow:inset 0 1px 0 #ffffff99,0 4px 0 #8a5a14,0 10px 20px #0007; }
+.cs-result > a:active { transform:translateY(3px); box-shadow:inset 0 1px 0 #ffffff80,0 1px 0 #8a5a14; }
+
+@media (prefers-reduced-motion:reduce) {
+  .cs-night-wait i,.cs-lobby .cs-seats li { animation:none!important; }
+}
