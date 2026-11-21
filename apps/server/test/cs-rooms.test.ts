@@ -70,11 +70,17 @@ describe("犯罪现场房间凭证与暂停", () => {
     } finally { rmSync(dir, { recursive: true, force: true }); }
   });
 
-  it("线上模式仅简报阶段可发文字，线下模式不开放聊天", () => {
+  it("线上模式在搜证和简报阶段可发文字，夜晚和线下模式不开放聊天", () => {
     const r = room();
     const tokens = Array.from({ length: 4 }, (_, i) => r.claim(`玩家${i + 1}`));
     r.start(tokens[0], 1000, () => 0.25);
     expect(() => r.chat(tokens[1], "现在讨论", 2000)).toThrow();
+    r.file.mode = "online";
+    r.file.state!.phase = "night_killer";
+    expect(() => r.chat(tokens[1], "夜里说话", 2000)).toThrow();
+    r.file.state!.phase = "round2_search";
+    r.chat(tokens[1], "专家在放标记", 2500);
+    r.file.mode = "local";
     r.file.state!.phase = "round1_brief";
     expect(() => r.chat(tokens[1], "现在讨论", 2000)).toThrow();
     r.file.mode = "online";
@@ -98,5 +104,25 @@ describe("犯罪现场房间凭证与暂停", () => {
     const result = r.command(tokens[helper], { type: "solve", seat: 0, guess: { owner: killer, clue, means } }, 62000);
     expect(result).toEqual({ privateMessage: "不能指认真实证据，请重新选择" });
     expect(r.file.version).toBe(version);
+  });
+
+  it("结案后只有房主能再来一局：回到房间、保留座位与设置、清空聊天", () => {
+    const r = room();
+    const tokens = Array.from({ length: 4 }, (_, i) => r.claim(`玩家${i + 1}`));
+    r.configure(tokens[0], { cardsPerKind: 5, mode: "online" });
+    r.start(tokens[0], 1000, () => 0.25);
+    expect(() => r.rematch(tokens[0])).toThrow();
+    r.file.state!.phase = "result";
+    r.file.chatLog = [{ seat: 1, text: "好险", at: 1 }];
+    expect(() => r.rematch(tokens[1])).toThrow();
+    r.rematch(tokens[0]);
+    const snap = r.snapshot(tokens[2]);
+    expect(snap.stage).toBe("lobby");
+    expect(snap.view).toBeNull();
+    expect(snap.players.map((p) => p.name)).toEqual(["玩家1", "玩家2", "玩家3", "玩家4"]);
+    expect(snap.cardsPerKind).toBe(5);
+    expect(snap.chat).toEqual([]);
+    r.start(tokens[0], 5000, () => 0.25);
+    expect(r.snapshot(tokens[1]).stage).toBe("game");
   });
 });

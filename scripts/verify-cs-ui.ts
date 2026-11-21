@@ -43,8 +43,20 @@ try {
     playerPages.push(guest);
   }
   await page.getByText(`${playerCount}/12`).waitFor();
+  const online = process.env.CS_TEST_ONLINE === "1";
+  if (online) { await page.locator("select").nth(1).selectOption("online"); await page.waitForTimeout(300); }
   await page.getByRole("button", { name: "开始游戏" }).click();
   await page.getByText("案发地点", { exact: true }).waitFor();
+  // 第一次进对局会弹出新手教学：房主完整走一遍，其他人点跳过。
+  await page.getByRole("dialog", { name: "新手教学" }).waitFor();
+  await page.screenshot({ path: join(out, "tutorial-mobile.png") });
+  await page.getByRole("button", { name: "下一步" }).click();
+  await page.getByRole("button", { name: "下一步" }).click();
+  await page.getByRole("button", { name: "开始" }).click();
+  for (const guest of playerPages.slice(1)) {
+    await guest.getByRole("dialog", { name: "新手教学" }).waitFor();
+    await guest.getByRole("button", { name: "跳过教学" }).click();
+  }
   await page.screenshot({ path: join(out, "setup-mobile.png"), fullPage: true });
   await page.locator(".cs-locations button").first().click();
   await page.getByText("夜幕降临…").waitFor();
@@ -82,6 +94,15 @@ try {
   await page.getByRole("button", { name: "开始简报" }).click();
   await page.getByText("当前发言").waitFor();
   await page.screenshot({ path: join(out, "brief-mobile.png"), fullPage: true });
+  if (online) {
+    const talker = playerPages[1];
+    await talker.locator(".cs-quick-row.suspect button").first().click();
+    await talker.locator(".cs-quick-row button.emoji").first().click();
+    await page.locator(".cs-chat-log p").filter({ hasText: "我怀疑" }).waitFor();
+    await page.locator(".cs-chat-log p").filter({ hasText: "👍" }).waitFor();
+    await talker.locator(".cs-chat").scrollIntoViewIfNeeded();
+    await talker.screenshot({ path: join(out, "chat-mobile.png") });
+  }
   if (solver < 0) throw new Error("未找到调查员视角");
   const solverPage = playerPages[solver];
   // 点桌上的牌直接指认一组错误组合：全员看到播报，对应玩家下出现“已被否定的组合”。
@@ -119,6 +140,10 @@ try {
   await page.getByRole("heading", { name: playerCount > 5 ? "凶手逍遥法外" : "案件侦破" }).waitFor();
   const stageOverflow = await page.evaluate(() => document.documentElement.scrollWidth > window.innerWidth + 1);
   if (stageOverflow) throw new Error("调查或简报页面横向溢出");
+  // 结案后房主「再来一局」，所有人回到同一房间，座位保留。
+  await page.getByRole("button", { name: "再来一局（保留座位）" }).click();
+  await page.waitForTimeout(1500); await page.screenshot({ path: join(out, "rematch-mobile.png"), fullPage: true });
+  for (const p of playerPages) await p.getByText(`${playerCount}/12`).waitFor();
   if (errors.length) throw new Error(`页面异常：${errors.join("; ")}`);
   console.log(JSON.stringify({ ok: true, code, playerCount, killer, witness, solver, screenshots: ["entry-mobile.png", "lobby-mobile.png", "setup-mobile.png", "identity-mobile.png", "night-mobile.png", "search-mobile.png", "board-zoom-mobile.png", "brief-mobile.png", "solve-mobile.png", ...(playerCount > 5 ? ["hunt-mobile.png"] : []), "result-mobile.png"], overflow: false }));
 } finally {

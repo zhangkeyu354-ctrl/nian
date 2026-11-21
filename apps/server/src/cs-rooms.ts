@@ -79,6 +79,16 @@ export class CrimeSceneRoom {
     this.file.version++;
   }
 
+  /** 结案后房主可让全员回到房间，保留座位与设置，直接开下一局。 */
+  rematch(token: string) {
+    if (this.player(token).id !== this.file.hostId || this.file.stage !== "game" || this.file.state?.phase !== "result") throw new Error("只有房主能在结案后再来一局");
+    this.file.stage = "lobby";
+    this.file.state = null;
+    this.file.pausedAt = null;
+    this.file.chatLog = [];
+    this.file.version++;
+  }
+
   command(token: string, command: GameCommand, now: number, random: () => number = Math.random) {
     const player = this.player(token);
     const state = this.file.state;
@@ -103,7 +113,7 @@ export class CrimeSceneRoom {
 
   chat(token: string, message: string, now: number) {
     const player = this.player(token);
-    if (this.file.mode !== "online" || !/^round[123]_brief$/.test(this.file.state?.phase ?? "") || this.file.pausedAt !== null) throw new Error("只有线上简报阶段可以发言");
+    if (this.file.mode !== "online" || !/^round[123]_(search|brief)$/.test(this.file.state?.phase ?? "") || this.file.pausedAt !== null) throw new Error("只有线上调查阶段可以发言");
     const text = String(message ?? "").trim().slice(0, 280);
     if (!text) throw new Error("不能发送空消息");
     const seat = this.file.players.findIndex((p) => p.id === player.id);
