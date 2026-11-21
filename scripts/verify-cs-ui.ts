@@ -55,6 +55,7 @@ try {
   for (let i = 1; i < playerPages.length; i++) {
     const role = playerPages[i].locator(".cs-role");
     await role.dispatchEvent("pointerdown");
+    if (i === 1) { await playerPages[i].waitForTimeout(400); await playerPages[i].screenshot({ path: join(out, "identity-mobile.png") }); }
     const label = await role.innerText();
     await role.dispatchEvent("pointerup");
     if (label.includes("凶手")) killer = i;
@@ -79,6 +80,8 @@ try {
   if (solver < 0) throw new Error("未找到调查员视角");
   const solverPage = playerPages[solver];
   await solverPage.getByRole("button", { name: "我要破案" }).click();
+  await solverPage.waitForTimeout(300);
+  await solverPage.screenshot({ path: join(out, "solve-mobile.png") });
   await solverPage.locator(".cs-targets button").filter({ hasText: `玩家${killer + 1}` }).click();
   await solverPage.locator(".cs-solve-dialog .cs-card-row").first().locator("button").first().click();
   await solverPage.locator(".cs-solve-dialog .cs-card-row").nth(1).locator("button").first().click();
@@ -86,17 +89,20 @@ try {
   if (playerCount > 5) {
     if (witness < 0) throw new Error("多人局缺少目击者");
     await killerPage.getByRole("heading", { name: "目击者反杀" }).waitFor();
+    await killerPage.waitForTimeout(300);
+    await killerPage.screenshot({ path: join(out, "hunt-mobile.png") });
     await killerPage.locator(".cs-hunt-targets button").filter({ hasText: `玩家${witness + 1}` }).click();
     await killerPage.getByRole("button", { name: "提交最终指认" }).click();
     await killerPage.getByRole("heading", { name: "凶手逍遥法外" }).waitFor();
   }
   await solverPage.getByRole("heading", { name: playerCount > 5 ? "凶手逍遥法外" : "案件侦破" }).waitFor();
+  await solverPage.waitForTimeout(850);
   await solverPage.screenshot({ path: join(out, "result-mobile.png"), fullPage: true });
   await page.getByRole("heading", { name: playerCount > 5 ? "凶手逍遥法外" : "案件侦破" }).waitFor();
   const stageOverflow = await page.evaluate(() => document.documentElement.scrollWidth > window.innerWidth + 1);
   if (stageOverflow) throw new Error("调查或简报页面横向溢出");
   if (errors.length) throw new Error(`页面异常：${errors.join("; ")}`);
-  console.log(JSON.stringify({ ok: true, code, playerCount, killer, witness, solver, screenshots: ["entry-mobile.png", "lobby-mobile.png", "setup-mobile.png", "night-mobile.png", "search-mobile.png", "brief-mobile.png", "result-mobile.png"], overflow: false }));
+  console.log(JSON.stringify({ ok: true, code, playerCount, killer, witness, solver, screenshots: ["entry-mobile.png", "lobby-mobile.png", "setup-mobile.png", "identity-mobile.png", "night-mobile.png", "search-mobile.png", "brief-mobile.png", "solve-mobile.png", ...(playerCount > 5 ? ["hunt-mobile.png"] : []), "result-mobile.png"], overflow: false }));
 } finally {
   await Promise.all(contexts.map((context) => context.close()));
   await browser.close();

@@ -13,6 +13,8 @@
   -webkit-tap-highlight-color: transparent;
 }
 .cs-app button:not(:disabled) { transition: transform var(--cs-press), box-shadow var(--cs-press), filter var(--cs-press); }
+.cs-top-actions { gap:5px; }
+.cs-top-actions .cs-sound-toggle { width:32px; min-width:32px; padding:0; font-size:18px; line-height:1; }
 .cs-app button:not(:disabled):active { transform: translateY(2px); filter: brightness(.94); }
 .cs-primary {
   border-radius: 14px;
@@ -25,6 +27,20 @@
 .cs-entry-card,.cs-evidence,.cs-role,.cs-event-number {
   box-shadow:inset 0 1px 0 #ffffff30,0 2px 0 #0b0b0c,0 7px 0 #101112,0 13px 22px #0009;
 }
+.cs-role { padding:0; perspective:900px; background:#171d1d; }
+.cs-role::after { display:none; }
+.cs-role-inner { position:absolute; inset:0; transform-style:preserve-3d; transition:transform .36s var(--cs-ease); }
+.cs-role.open .cs-role-inner { transform:rotateY(180deg); }
+.cs-role-back,.cs-role-front { position:absolute; inset:0; display:flex; align-items:flex-end; justify-content:space-between; padding:14px 18px; overflow:hidden; backface-visibility:hidden; }
+.cs-role-back { background:radial-gradient(circle at 75% 45%,#ffffff0c,transparent 37%),repeating-linear-gradient(45deg,transparent 0 16px,#ffffff08 17px 18px),linear-gradient(120deg,#282621,#131819); }
+.cs-role-back::before { content:""; position:absolute; inset:5px; border:1px solid #bba48246; border-radius:4px; }
+.cs-role-back-mark { position:absolute; right:16%; top:15%; color:#d5b98443; font:40px Georgia,serif; }
+.cs-role-front { transform:rotateY(180deg); background:linear-gradient(120deg,#243332,#111719); }
+.cs-role.red .cs-role-front { background:linear-gradient(120deg,#5b2823,#17191b); }
+.cs-role.blue .cs-role-front { background:linear-gradient(120deg,#254855,#171b21); }
+.cs-role.teal .cs-role-front,.cs-role.green .cs-role-front { background:linear-gradient(120deg,#2b5553,#171c20); }
+.cs-role-front .cs-role-art { opacity:.72; }
+.cs-role .cs-role-title,.cs-role small { z-index:2; }
 .cs-evidence { border-radius:6px; box-shadow:inset 0 1px #ffffff24,0 2px 0 #0b0b0c,0 4px 0 #101112,0 8px 14px #0009; }
 .cs-evidence:not(.excluded):is(button):active { transform:translateY(2px); box-shadow:inset 0 1px #ffffff1d,0 1px 0 #0b0b0c,0 3px 6px #0009; }
 .cs-evidence.selected { transform:translateY(-3px); box-shadow:inset 0 1px #ffffff30,0 2px 0 #0b0b0c,0 9px 0 #101112,0 17px 22px #000b; }
@@ -61,6 +77,16 @@
   box-shadow:inset 0 1px #ffffff1c,0 2px 0 #121211,0 5px 10px #0007;
 }
 .cs-dialog { backdrop-filter:blur(10px); }
+.cs-night { background:radial-gradient(circle at 72% 15%,#3656515c,transparent 32%),radial-gradient(circle at 17% 53%,#8b3c3640,transparent 25%),linear-gradient(#101a1c,#0c1112); }
+.cs-night-rain { opacity:.2; background:repeating-linear-gradient(96deg,transparent 0 43px,#d7e8e018 44px 45px,transparent 46px 91px); mask-image:linear-gradient(transparent,#000 30%,#000 76%,transparent); animation:cs-fine-rain 4s linear infinite; }
+@keyframes cs-fine-rain { to { transform:translate3d(-20px,45px,0); } }
+.cs-result { position:relative; margin-top:24px; padding:25px 18px; border-radius:8px; }
+.cs-verdict-stamp { float:right; position:relative; margin:0 5px 10px 12px; padding:5px 12px; border:3px double #ba5a47; color:#d37a65; font:19px "ZCOOL XiaoWei",serif; transform:rotate(-9deg); text-shadow:0 1px #0008; animation:cs-verdict .36s var(--cs-ease) both; }
+.cs-verdict-stamp::after { content:""; position:absolute; inset:-5px; border-radius:50%; background:radial-gradient(circle,#bb49351c,transparent 70%); pointer-events:none; }
+@keyframes cs-verdict { from { opacity:0; transform:scale(1.5) rotate(-9deg); filter:blur(2px); } 75% { transform:scale(.96) rotate(-9deg); } }
+.cs-result-role { animation:cs-record-open .28s var(--cs-ease) both; }
+@keyframes cs-record-open { from { opacity:0; transform:rotateX(-50deg) translateY(-8px); } }
 @media (prefers-reduced-motion:reduce) {
-  .cs-app button,.cs-evidence img { animation:none!important; transition:none!important; }
+  .cs-app button,.cs-evidence img,.cs-role-inner,.cs-result-role,.cs-verdict-stamp { animation:none!important; transition:none!important; }
+  .cs-result-role { opacity:1; transform:none; }
 }

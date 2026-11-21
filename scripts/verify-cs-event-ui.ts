@@ -57,7 +57,9 @@ try {
   page.on("pageerror", (error) => errors.push(error.message));
   await page.getByRole("heading", { name: "错误信息" }).waitFor();
   mkdirSync("output/cs-ui", { recursive: true });
+  mkdirSync("output/cs-ui/polish", { recursive: true });
   await page.screenshot({ path: "output/cs-ui/event-04-mobile.png", fullPage: true });
+  await page.screenshot({ path: "output/cs-ui/polish/event-04-after.png", fullPage: true });
   await page.locator(".cs-event-panel .cs-event-choices").first().getByRole("button", { name: "死因" }).click();
   await page.locator(".cs-event-panel .cs-event-choices").nth(1).getByRole("button", { name: "重伤" }).click();
   await page.getByRole("button", { name: "移动标记" }).click();
@@ -82,6 +84,7 @@ try {
       const seat = id === "event-01" ? current.file.state!.roles.indexOf("witness") : 0;
       const opened = await openSeat(current.file.code, seatTokens[seat]);
       await opened.page.getByRole("heading", { name: title }).waitFor();
+      await opened.page.screenshot({ path: `output/cs-ui/polish/${id}-after.png`, fullPage: true });
       const choices = opened.page.locator(".cs-event-panel .cs-event-choices");
       if (id === "event-01") {
         await choices.first().locator("button").first().click();

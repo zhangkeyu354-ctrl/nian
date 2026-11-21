@@ -116,7 +116,7 @@ export class CrimeSceneRoom {
     const old = this.connections.get(player.id) ?? 0;
     this.connections.set(player.id, Math.max(0, old + (connected ? 1 : -1)));
     const seat = this.file.players.findIndex((p) => p.id === player.id);
-    if (seat !== this.file.forensicSeat || this.file.stage !== "game") return;
+    if (seat !== this.file.forensicSeat || this.file.stage !== "game" || this.file.state?.phase === "result") return;
     if (!connected && this.connections.get(player.id) === 0 && this.file.pausedAt === null) this.file.pausedAt = now;
     if (connected && this.file.pausedAt !== null) {
       this.file.state = shiftDeadlines(this.file.state!, now - this.file.pausedAt);

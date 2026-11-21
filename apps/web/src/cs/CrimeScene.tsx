@@ -8,6 +8,7 @@ import cardArt from "./card-art.json" with { type: "json" };
 import CrimeEventPanel from "./CrimeEventPanel.tsx";
 import CrimeRules from "./CrimeRules.tsx";
 import MeansIcon from "./MeansIcon.tsx";
+import { tabletopFeedback } from "./feedback.ts";
 import "./crime-scene.css";
 import "./crime-scene-materials.css";
 
@@ -82,6 +83,7 @@ export default function CrimeScene() {
   const [replaceTile, setReplaceTile] = useState("");
   const [chatText, setChatText] = useState("");
   const [rulesOpen, setRulesOpen] = useState(false);
+  const [soundOn, setSoundOn] = useState(() => localStorage.getItem("crime-scene:sound") !== "off");
   const socketRef = useRef<Socket | null>(null);
   const codeRef = useRef(code);
   useEffect(() => { codeRef.current = code; }, [code]);
@@ -129,7 +131,7 @@ export default function CrimeScene() {
   const join = () => run(async () => { if (!code.trim()) throw new Error("请输入房间号"); await claim(code.toUpperCase()); });
   const token = code ? localStorage.getItem(storageKey(code)) : null;
   const lobby = (action: object) => run(async () => { await send(CS_EVENTS.lobby, { code, token, action }); });
-  const command = (command: object) => run(async () => { await send(CS_EVENTS.command, { code, token, command }); });
+  const command = (action: object) => run(async () => { await send(CS_EVENTS.command, { code, token, command: action }); tabletopFeedback((action as { type?: string }).type ?? "", soundOn); });
   const chat = () => run(async () => { await send(CS_EVENTS.chat, { code, token, text: chatText }); setChatText(""); });
 
   const view = snapshot?.view;
@@ -143,7 +145,7 @@ export default function CrimeScene() {
   const lastLog = view?.log.at(-1);
 
   return <main className="cs-app">
-    <header className="cs-topbar"><a href="/" aria-label="返回桌游大厅">← 大厅</a><strong>犯罪现场</strong><div className="cs-top-actions"><button onClick={() => setRulesOpen(true)}>规则</button>{snapshot && <span>房间 {snapshot.code}</span>}</div></header>
+    <header className="cs-topbar"><a href="/" aria-label="返回桌游大厅">← 大厅</a><strong>犯罪现场</strong><div className="cs-top-actions"><button className="cs-sound-toggle" aria-label={soundOn ? "关闭音效" : "开启音效"} aria-pressed={soundOn} onClick={() => setSoundOn((current) => { localStorage.setItem("crime-scene:sound", current ? "off" : "on"); return !current; })}>{soundOn ? "♪" : "♩"}</button><button onClick={() => setRulesOpen(true)}>规则</button>{snapshot && <span>房间 {snapshot.code}</span>}</div></header>
     {!snapshot ? <section className="cs-entry">
       <div className="cs-entry-art" role="img" aria-label="线索牌、手段牌与场景板"><span className="cs-entry-board"><i /><i /><i /><i /><i /><i /></span><span className="cs-entry-card clue" /><span className="cs-entry-card means" /></div>
       <div className="cs-entry-form"><h1>犯罪现场</h1><p>4–12 人 · 推理派对游戏</p>
@@ -167,13 +169,13 @@ export default function CrimeScene() {
         </div>}
       </section> : view && <>
         <button className={`cs-role ${roleTone[view.myRole]} ${roleOpen || view.myRole === "forensic" || phase === "result" ? "open" : ""}`} onPointerDown={() => setRoleOpen(true)} onPointerUp={() => setRoleOpen(false)} onPointerCancel={() => setRoleOpen(false)} onPointerLeave={() => setRoleOpen(false)} onKeyDown={(event) => { if (event.key === " " || event.key === "Enter") setRoleOpen(true); }} onKeyUp={() => setRoleOpen(false)}>
-          <span className="cs-role-art" aria-hidden="true" /><span className="cs-role-title">{roleOpen || view.myRole === "forensic" || phase === "result" ? roleName[view.myRole] : "长按查看身份"}</span><small>{phase === "result" ? "身份已公开" : view.myRole === "forensic" ? "公开身份" : "松手盖回"}</small>
+          <span className="cs-role-inner"><span className="cs-role-back"><span className="cs-role-back-mark" aria-hidden="true">◆</span><span className="cs-role-title">长按查看身份</span><small>松手盖回</small></span><span className="cs-role-front"><span className="cs-role-art" aria-hidden="true" /><span className="cs-role-title">{roleOpen || view.myRole === "forensic" || phase === "result" ? roleName[view.myRole] : ""}</span><small>{phase === "result" ? "身份已公开" : view.myRole === "forensic" ? "公开身份" : "松手盖回"}</small></span></span>
         </button>
         {view.evilPartnerSeat !== undefined && <p className="cs-private">同伴：{nameOf(snapshot, view.evilPartnerSeat)}</p>}
         {view.witnessCandidates && <p className="cs-private">你目击到两人：{view.witnessCandidates.map((seat) => nameOf(snapshot, seat)).join("、")}；不知道谁是凶手。</p>}
         {phase === "setup" && <section className="cs-section"><h2>案发地点</h2>{view.myRole === "forensic" ? <><p>从四块地点板中选一块，随后进入夜晚。</p><div className="cs-locations">{view.locationOptions?.map((id) => <button key={id} onClick={() => command({ type: "start", location: id })}>{byId.get(id)?.options?.join(" · ")}</button>)}</div></> : <p>等待鉴证专家选择案发地点…</p>}</section>}
         {phase.includes("night") && <section className="cs-night"><div className="cs-night-rain" /><h2>夜幕降临…</h2>
-          {view.myRole === "killer" && !view.answer ? <><p>从自己面前各选一张牌。</p><strong className={`cs-countdown ${seconds(view.nightDeadline) <= 15 ? "urgent" : ""}`} aria-live={seconds(view.nightDeadline) <= 15 ? "assertive" : "off"}>{seconds(view.nightDeadline)} 秒</strong><h3>关键证物</h3><div className="cs-card-row">{own?.clues.map((card) => <EvidenceCard key={card} name={card} kind="clue" selected={nightClue === card} onClick={() => setNightClue(card)} />)}</div><h3>行凶手法</h3><div className="cs-card-row">{own?.means.map((card) => <EvidenceCard key={card} name={card} kind="means" selected={nightMeans === card} onClick={() => setNightMeans(card)} />)}</div><button className="cs-primary" disabled={!nightClue || !nightMeans} onClick={() => command({ type: "choose", clue: nightClue, means: nightMeans })}>确认作案证据</button></> : view.myRole === "killer" ? <p>证据已选定。所有人将在同一时间进入调查。</p> : <p>请等待调查开始。</p>}
+          {view.myRole === "killer" && !view.answer ? <><p>从自己面前各选一张牌。</p><strong className={`cs-countdown ${seconds(view.nightDeadline, 60) <= 15 ? "urgent" : ""}`} aria-live={seconds(view.nightDeadline, 60) <= 15 ? "assertive" : "off"}>{seconds(view.nightDeadline, 60)} 秒</strong><h3>关键证物</h3><div className="cs-card-row">{own?.clues.map((card) => <EvidenceCard key={card} name={card} kind="clue" selected={nightClue === card} onClick={() => setNightClue(card)} />)}</div><h3>行凶手法</h3><div className="cs-card-row">{own?.means.map((card) => <EvidenceCard key={card} name={card} kind="means" selected={nightMeans === card} onClick={() => setNightMeans(card)} />)}</div><button className="cs-primary" disabled={!nightClue || !nightMeans} onClick={() => command({ type: "choose", clue: nightClue, means: nightMeans })}>确认作案证据</button></> : view.myRole === "killer" ? <p>证据已选定。所有人将在同一时间进入调查。</p> : <p>请等待调查开始。</p>}
         </section>}
         {(phase === "event" || phase === "event_bonus_scene") && view.board && view.event && <CrimeEventPanel key={view.event.id} event={view.event} board={view.board} players={view.players} mySeat={snapshot.mySeat} forensicSeat={view.forensicSeat} myRole={view.myRole} names={snapshot.players.map((player) => player.name)} send={command} />}
         {phase === "event_bonus" && <section className="cs-event-panel"><div className="cs-event-kicker">扭转局势</div><h2>额外破案机会</h2><p>{view.bonusSeat === snapshot.mySeat ? "现在可以再指认一次；这次机会不会消耗原有徽章。" : `等待 ${nameOf(snapshot, view.bonusSeat ?? -1)} 决定是否再次破案。`}</p>{view.bonusSeat === snapshot.mySeat && <button onClick={() => command({ type: "skip_bonus" })}>放弃这次机会</button>}</section>}
@@ -187,8 +189,8 @@ export default function CrimeScene() {
           {snapshot.mode === "online" && phase.endsWith("_brief") && <section className="cs-section cs-chat"><h2>文字讨论</h2><div className="cs-chat-log">{snapshot.chat.map((line, index) => <p key={index}><b>{nameOf(snapshot, line.seat)}</b> {line.text}</p>)}</div><div className="cs-chat-send"><input maxLength={280} value={chatText} onChange={(event) => setChatText(event.target.value)} placeholder="输入发言" /><button disabled={!chatText.trim()} onClick={chat}>发送</button></div></section>}
           {canSolve && <button className="cs-solve-trigger" onClick={() => { setSolveOpen(true); setGuessOwner(null); setGuessClue(""); setGuessMeans(""); }}>我要破案</button>}
         </>}
-        {phase === "witness_hunt" && <section className="cs-section cs-hunt"><h2>目击者反杀</h2>{view.hunt ? <><p>与同伴讨论，选出你认为的目击者。凶手负责提交最终指认。</p><strong>{seconds(view.hunt.deadline)} 秒</strong><div className="cs-hunt-targets">{view.hunt.candidates.map((seat) => <button key={seat} className={view.hunt!.suggestions[snapshot.mySeat] === seat ? "active" : ""} onClick={() => command({ type: "suggest", target: seat })}>{nameOf(snapshot, seat)}</button>)}</div>{view.myRole === "killer" && <button className="cs-primary" disabled={view.hunt.suggestions[snapshot.mySeat] === undefined} onClick={() => command({ type: "submit_hunt" })}>提交最终指认</button>}</> : <p>凶手与帮凶正在讨论，请等待结果。</p>}</section>}
-        {phase === "result" && <section className="cs-result"><h2>{view.winner === "good" ? "案件侦破" : "凶手逍遥法外"}</h2>{view.resultReason === "all_good_badges" && <p>所有调查员都已失去破案机会，凶手逍遥法外。</p>}{view.resultReason === "countdown" && <p>倒数计时结束，本轮无人正确破案。</p>}<p>关键证物：{view.answer?.clue}　行凶手法：{view.answer?.means}</p><ul>{view.roles?.map((role, seat) => <li key={seat}><span>{nameOf(snapshot, seat)}</span><strong>{roleName[role]}</strong></li>)}</ul><h3>逐轮提示</h3>{view.records?.map((record) => <details key={record.round} className="cs-record"><summary>第 {record.round} 轮</summary><ul>{record.tiles.map((id) => { const tile = byId.get(id); return <li key={id}><span>{tile?.title}</span><strong>{tile?.options?.[record.markers[id]] ?? "未标记"}</strong></li>; })}</ul></details>)}<a href="/">返回大厅</a></section>}
+        {phase === "witness_hunt" && <section className="cs-section cs-hunt"><h2>目击者反杀</h2>{view.hunt ? <><p>与同伴讨论，选出你认为的目击者。凶手负责提交最终指认。</p><strong>{seconds(view.hunt.deadline, 60)} 秒</strong><div className="cs-hunt-targets">{view.hunt.candidates.map((seat) => <button key={seat} className={view.hunt!.suggestions[snapshot.mySeat] === seat ? "active" : ""} onClick={() => command({ type: "suggest", target: seat })}>{nameOf(snapshot, seat)}</button>)}</div>{view.myRole === "killer" && <button className="cs-primary" disabled={view.hunt.suggestions[snapshot.mySeat] === undefined} onClick={() => command({ type: "submit_hunt" })}>提交最终指认</button>}</> : <p>凶手与帮凶正在讨论，请等待结果。</p>}</section>}
+        {phase === "result" && <section className="cs-result"><div className="cs-verdict-stamp" aria-hidden="true">{view.winner === "good" ? "已侦破" : "未侦破"}</div><h2>{view.winner === "good" ? "案件侦破" : "凶手逍遥法外"}</h2>{view.resultReason === "all_good_badges" && <p>所有调查员都已失去破案机会，凶手逍遥法外。</p>}{view.resultReason === "countdown" && <p>倒数计时结束，本轮无人正确破案。</p>}<p>关键证物：{view.answer?.clue}　行凶手法：{view.answer?.means}</p><ul>{view.roles?.map((role, seat) => <li key={seat} className="cs-result-role" style={{ animationDelay: `${seat * 65}ms` }}><span>{nameOf(snapshot, seat)}</span><strong>{roleName[role]}</strong></li>)}</ul><h3>逐轮提示</h3>{view.records?.map((record) => <details key={record.round} className="cs-record"><summary>第 {record.round} 轮</summary><ul>{record.tiles.map((id) => { const tile = byId.get(id); return <li key={id}><span>{tile?.title}</span><strong>{tile?.options?.[record.markers[id]] ?? "未标记"}</strong></li>; })}</ul></details>)}<a href="/">返回大厅</a></section>}
         {lastLog?.detail === "错！" && <div className="cs-stamp" role="status">错！</div>}
       </>}
     </>}

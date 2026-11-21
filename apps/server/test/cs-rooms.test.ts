@@ -41,6 +41,16 @@ describe("犯罪现场房间凭证与暂停", () => {
     expect(r.file.state!.night!.choiceDeadline).toBe(oldDeadline + 10000);
   });
 
+  it("结案后专家离线不显示对局暂停", () => {
+    const r = room();
+    const tokens = Array.from({ length: 4 }, (_, i) => r.claim(`玩家${i + 1}`));
+    r.start(tokens[0], 1000, () => 0.25);
+    r.file.state!.phase = "result";
+    r.setConnected(tokens[0], true, 2000);
+    r.setConnected(tokens[0], false, 3000);
+    expect(r.snapshot(tokens[1]).paused).toBe(false);
+  });
+
   it("房间和私密状态可从磁盘恢复，重连仍使用原凭证", () => {
     const dir = mkdtempSync(join(tmpdir(), "crime-scene-"));
     try {
