@@ -1,12 +1,20 @@
 let audio: AudioContext | null = null;
 
+export function prepareTabletopAudio(soundOn: boolean) {
+  if (!soundOn) return;
+  try {
+    audio ??= new AudioContext();
+    if (audio.state === "suspended") void audio.resume();
+  } catch { /* Audio is optional when a device blocks playback. */ }
+}
+
 export function tabletopFeedback(type: string, soundOn: boolean) {
   if (!/^(choose|mark|solve|submit_hunt|event_)/.test(type)) return;
   try { navigator.vibrate?.(type === "solve" || type === "submit_hunt" ? 18 : 9); } catch { /* Browser may block haptics. */ }
   if (!soundOn || document.visibilityState !== "visible") return;
   try {
-    audio ??= new AudioContext();
-    if (audio.state === "suspended") void audio.resume();
+    prepareTabletopAudio(soundOn);
+    if (!audio) return;
     const start = audio.currentTime;
     const oscillator = audio.createOscillator();
     const gain = audio.createGain();
