@@ -40,6 +40,8 @@ export function beginBrief(state: RoundState, now: number): RoundState {
 
 export function extendSpeaker(state: RoundState): RoundState {
   if (state.phase !== `round${state.round}_brief`) throw new Error("当前不是简报阶段");
+  // 用户裁定 2026-11-21：每人每轮发言只能延长一次。
+  if (state.speechDurationMs > 30000) throw new Error("这位玩家本轮已经延长过一次");
   return { ...state, speechDurationMs: state.speechDurationMs + 30000 };
 }
 

@@ -36,3 +36,17 @@ describe("搜证与简报", () => {
     expect(() => replaceScene(s, 2, "scene-02", "scene-06")).toThrow();
   });
 });
+
+import { beginRoundOne as _b1, placeMarker as _pm, beginBrief as _bb, extendSpeaker as _ex, nextSpeaker as _ns } from "../src/rounds.ts";
+describe("发言延长（用户裁定：每人每轮一次）", () => {
+  it("同一位发言人第二次延长被拒绝，换下一位后可以再延长", () => {
+    let s = _b1(5, 0, "location-1", ["scene-01", "scene-02", "scene-03", "scene-04"]);
+    for (const tile of s.tiles) s = _pm(s, 0, tile, 0);
+    s = _bb(s, 1000);
+    s = _ex(s);
+    expect(s.speechDurationMs).toBe(60000);
+    expect(() => _ex(s)).toThrow();
+    s = _ns(s, 2000);
+    expect(_ex(s).speechDurationMs).toBe(60000);
+  });
+});
