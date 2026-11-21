@@ -204,11 +204,17 @@ const http = createServer((req, res) => {
   const st = statSync(file);
   const etag = `W/"${st.size.toString(36)}-${Math.floor(st.mtimeMs).toString(36)}"`;
   res.setHeader("etag", etag);
-  if (file.endsWith(".html")) res.setHeader("cache-control", "no-cache");
+  // 页面本身不让任何浏览器留副本：微信内置浏览器会无视 no-cache，一直显示旧页面（2026-11-21 用户遇到）。
+  // index.html 只有几 KB，脚本和样式文件名带哈希，仍然长期缓存，不影响流量。
+  if (file.endsWith(".html")) {
+    res.setHeader("cache-control", "no-store, no-cache, must-revalidate, max-age=0");
+    res.setHeader("pragma", "no-cache");
+    res.setHeader("expires", "0");
+  }
   else if (/-[A-Za-z0-9_-]{8}\.(js|css)$/.test(file))
     res.setHeader("cache-control", "public, max-age=31536000, immutable");
   else res.setHeader("cache-control", "public, max-age=604800, stale-while-revalidate=86400");
-  if (req.headers["if-none-match"] === etag) {
+  if (req.headers["if-none-match"] === etag && !file.endsWith(".html")) {
     res.statusCode = 304;
     res.end();
     return;
