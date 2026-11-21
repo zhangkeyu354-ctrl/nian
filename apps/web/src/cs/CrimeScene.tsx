@@ -7,6 +7,7 @@ import means from "../../../../data/crime-scene/means.json" with { type: "json" 
 import cardArt from "./card-art.json" with { type: "json" };
 import CrimeEventPanel from "./CrimeEventPanel.tsx";
 import CrimeRules from "./CrimeRules.tsx";
+import MeansIcon from "./MeansIcon.tsx";
 import "./crime-scene.css";
 
 type Role = "forensic" | "investigator" | "killer" | "accomplice" | "witness";
@@ -43,7 +44,7 @@ function EvidenceCard({ name, kind, selected, important, excluded, onClick }: { 
   const className = `cs-evidence ${kind} ${selected ? "selected" : ""} ${important ? "important" : ""} ${excluded ? "excluded" : ""}`;
   const id = (kind === "clue" ? clueIds : meansIds).get(name);
   const image = id && availableArt.has(id) ? `/assets/crime-scene/cards/${id}-512.webp` : null;
-  const content = <><span className="cs-evidence-name">{name}</span>{image ? <img src={image} alt="" loading="lazy" /> : <span className="cs-evidence-glyph" aria-hidden="true">{name.slice(0, 1)}</span>}</>;
+  const content = <><span className="cs-evidence-name">{name}</span>{image ? <img src={image} alt="" loading="lazy" /> : id?.startsWith("means-") ? <MeansIcon id={id} /> : <span className="cs-evidence-glyph" aria-hidden="true">{name.slice(0, 1)}</span>}</>;
   return onClick ? <button type="button" className={className} disabled={excluded} onClick={onClick} aria-pressed={!!selected}>{content}</button> : <div className={className}>{content}</div>;
 }
 
@@ -142,7 +143,7 @@ export default function CrimeScene() {
   return <main className="cs-app">
     <header className="cs-topbar"><a href="/" aria-label="返回桌游大厅">← 大厅</a><strong>犯罪现场</strong><div className="cs-top-actions"><button onClick={() => setRulesOpen(true)}>规则</button>{snapshot && <span>房间 {snapshot.code}</span>}</div></header>
     {!snapshot ? <section className="cs-entry">
-      <div className="cs-entry-art" role="img" aria-label="雨夜街巷中的调查者" />
+      <div className="cs-entry-art" role="img" aria-label="线索牌、手段牌与场景板"><span className="cs-entry-board"><i /><i /><i /><i /><i /><i /></span><span className="cs-entry-card clue" /><span className="cs-entry-card means" /></div>
       <div className="cs-entry-form"><h1>犯罪现场</h1><p>4–12 人 · 推理派对游戏</p>
         <label>你的昵称<input maxLength={12} value={name} onChange={(event) => setName(event.target.value)} placeholder="输入昵称" /></label>
         <button className="cs-primary" onClick={create}>创建房间</button>
@@ -164,7 +165,7 @@ export default function CrimeScene() {
         </div>}
       </section> : view && <>
         <button className={`cs-role ${roleTone[view.myRole]} ${roleOpen || view.myRole === "forensic" || phase === "result" ? "open" : ""}`} onPointerDown={() => setRoleOpen(true)} onPointerUp={() => setRoleOpen(false)} onPointerCancel={() => setRoleOpen(false)} onPointerLeave={() => setRoleOpen(false)} onKeyDown={(event) => { if (event.key === " " || event.key === "Enter") setRoleOpen(true); }} onKeyUp={() => setRoleOpen(false)}>
-          <span className="cs-role-art" style={{ backgroundImage: `url(/assets/crime-scene/roles/${view.myRole}.webp)` }} aria-hidden="true" /><span className="cs-role-title">{roleOpen || view.myRole === "forensic" || phase === "result" ? roleName[view.myRole] : "长按查看身份"}</span><small>{phase === "result" ? "身份已公开" : view.myRole === "forensic" ? "公开身份" : "松手盖回"}</small>
+          <span className="cs-role-art" aria-hidden="true" /><span className="cs-role-title">{roleOpen || view.myRole === "forensic" || phase === "result" ? roleName[view.myRole] : "长按查看身份"}</span><small>{phase === "result" ? "身份已公开" : view.myRole === "forensic" ? "公开身份" : "松手盖回"}</small>
         </button>
         {view.evilPartnerSeat !== undefined && <p className="cs-private">同伴：{nameOf(snapshot, view.evilPartnerSeat)}</p>}
         {view.witnessCandidates && <p className="cs-private">你目击到两人：{view.witnessCandidates.map((seat) => nameOf(snapshot, seat)).join("、")}；不知道谁是凶手。</p>}

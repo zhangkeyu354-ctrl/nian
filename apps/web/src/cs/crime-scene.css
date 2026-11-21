@@ -10,7 +10,12 @@
 .cs-top-actions { display:flex; align-items:center; gap:9px; }
 .cs-top-actions button { min-height:34px; padding:0 7px; border:1px solid #756350; border-radius:4px; background:#29211d; color:#ead9bd; font-size:12px; }
 .cs-entry { min-height:calc(100dvh - 54px); display:grid; grid-template-rows:minmax(250px,42dvh) auto; }
-.cs-entry-art { background:linear-gradient(0deg,#171313 0%,transparent 38%),url('/assets/hall/crime-scene-wide.webp') 39% center/cover; }
+.cs-entry-art { position:relative; overflow:hidden; background:radial-gradient(ellipse at 50% 65%,#3b312b,#161d1d 72%); }
+.cs-entry-board { position:absolute; top:10%; left:42%; width:20%; height:79%; display:grid; grid-template-rows:repeat(6,1fr); padding:4% 2%; transform:rotate(6deg); border:5px solid #101516; border-radius:5px; background:linear-gradient(120deg,#413d39,#242726); box-shadow:0 14px 20px #0009; }
+.cs-entry-board i { border-bottom:1px solid #d7d0c050; }
+.cs-entry-card { position:absolute; top:21%; width:24%; height:66%; border:6px solid #171819; border-radius:10px; background-position:center; background-size:cover; box-shadow:0 16px 24px #000b; }
+.cs-entry-card.clue { left:18%; transform:rotate(-12deg); background-image:url('/assets/crime-scene/cards/clue-009-512.webp'); }
+.cs-entry-card.means { right:17%; transform:rotate(13deg); background-image:url('/assets/crime-scene/cards/means-001-512.webp'); }
 .cs-entry-form { width:min(100%,480px); margin:-22px auto 0; padding:10px 22px 32px; position:relative; }
 .cs-entry-form h1 { margin:0; font-family:"ZCOOL XiaoWei",serif; font-size:42px; letter-spacing:.12em; }
 .cs-entry-form p { margin:4px 0 24px; color:var(--cs-muted); }
@@ -41,7 +46,7 @@
 .cs-muted { color:var(--cs-muted); font-size:13px; }
 .cs-role { position:relative; display:flex; width:calc(100% - 32px); max-width:868px; min-height:112px; align-items:end; justify-content:space-between; margin:16px auto 0; padding:14px 20px; overflow:hidden; color:#eee; text-align:left; border:2px solid #534b42; border-radius:9px; box-shadow:inset 0 0 0 1px #ffffff14,0 8px 18px #0007; background:linear-gradient(125deg,#262327,#131416); touch-action:none; user-select:none; }
 .cs-role::after { content:""; position:absolute; inset:0; background:linear-gradient(0deg,#080b0ce6,#111b1c33 70%); pointer-events:none; }
-.cs-role-art { position:absolute; inset:0; opacity:0; background-size:cover; background-position:center 45%; transition:opacity .22s ease; }
+.cs-role-art { position:absolute; inset:0; opacity:0; background:radial-gradient(circle at 72% 33%,#0b1112 0 13px,transparent 14px),radial-gradient(ellipse at 72% 108%,#0b1112 0 53px,transparent 54px),radial-gradient(circle at 70% 50%,#778b8866,transparent 33%),linear-gradient(110deg,#172126,#131517); transition:opacity .22s ease; }
 .cs-role.open .cs-role-art { opacity:1; }
 .cs-role.red { background:linear-gradient(125deg,#68291f,#20191b 70%); }
 .cs-role.blue { background:linear-gradient(125deg,#1f4d61,#171a21 70%); }
@@ -52,10 +57,10 @@
 .cs-section > p { color:var(--cs-muted); line-height:1.6; }
 .cs-locations { display:grid; gap:8px; }
 .cs-locations button { padding:15px 12px; color:var(--cs-ink); background:#322a25; border:1px solid #7a6455; border-radius:6px; text-align:left; line-height:1.5; }
-.cs-night { position:relative; max-width:900px; min-height:45dvh; margin:auto; padding:32px 16px; overflow:hidden; background:linear-gradient(#071017db,#151016f0),url('/assets/hall/crime-scene-wide.webp') center/cover; }
+.cs-night { position:relative; max-width:900px; min-height:45dvh; margin:auto; padding:32px 16px; overflow:hidden; background:radial-gradient(ellipse at 50% 15%,#253535,#131819 62%,#111314); }
 .cs-night h2 { position:relative; font-family:"ZCOOL XiaoWei",serif; font-size:32px; }
 .cs-night > p,.cs-night > h3,.cs-night > button,.cs-night > strong,.cs-night > .cs-card-row { position:relative; }
-.cs-night-rain { position:absolute; inset:-30%; opacity:.16; background:repeating-linear-gradient(110deg,transparent 0 9px,#b4ced5 10px 11px,transparent 12px 25px); animation:cs-rain 1.4s linear infinite; }
+.cs-night-rain { position:absolute; inset:0; opacity:.12; background:radial-gradient(ellipse at 50% 22%,#7b9995,transparent 45%); }
 @keyframes cs-rain { to { transform:translate3d(-35px,70px,0); } }
 .cs-countdown { display:inline-block; font-size:27px; color:#ffd39c; }
 .cs-countdown.urgent { padding:3px 12px; border:2px solid #ff7970; border-radius:5px; color:#fff; background:#ae2928; box-shadow:0 0 20px #d5393988; animation:cs-urgent 1s ease-in-out infinite; }
@@ -70,10 +75,11 @@
 .cs-evidence-name { position:absolute; z-index:2; top:5px; left:6px; right:4px; font-family:"ZCOOL XiaoWei",serif; font-size:15px; font-weight:800; line-height:1.1; text-shadow:0 1px 2px #000; }
 .cs-evidence img { width:100%; height:100%; object-fit:cover; }
 .cs-evidence-glyph { position:absolute; inset:24px 0 0; display:grid; place-items:center; font-family:"ZCOOL XiaoWei",serif; font-size:35px; color:#ffffff26; text-shadow:0 2px 7px #0008; }
+.cs-means-icon { position:absolute; inset:18px 4px 0; width:calc(100% - 8px); height:calc(100% - 20px); filter:drop-shadow(1px 3px 3px #0009); }
 .cs-heading { display:flex; align-items:center; justify-content:space-between; }
 .cs-heading span { font-family:Georgia,serif; font-size:17px; color:var(--cs-gold); }
 .cs-board-row { display:flex; gap:8px; overflow-x:auto; padding:5px 0 14px; scroll-snap-type:x mandatory; scrollbar-width:thin; }
-.cs-tile { --tile-accent:#aa6547; position:relative; flex:none; width:145px; min-height:300px; padding:11px 7px 10px; color:#ede9df; border:2px solid #5d5850; border-radius:3px; background:radial-gradient(circle at 22% 14%,#ffffff0c,transparent 37%),repeating-linear-gradient(174deg,transparent 0 3px,#fff1 4px 5px),linear-gradient(110deg,#1a1a1b,#302d2c 45%,#17191b); box-shadow:inset 0 0 0 1px #ffffff14,inset 4px 0 12px #0006,0 5px 10px #0007; scroll-snap-align:start; }
+.cs-tile { --tile-accent:#aa6547; position:relative; flex:none; width:145px; min-height:300px; padding:11px 7px 10px; color:#ede9df; border:2px solid #5d5850; border-radius:3px; background:linear-gradient(110deg,#242525,#353331 45%,#252727); box-shadow:inset 0 0 0 1px #ffffff14,inset 4px 0 12px #0006,0 5px 10px #0007; scroll-snap-align:start; }
 .cs-tile::before { content:""; position:absolute; inset:3px; border:1px solid #a59a7d32; pointer-events:none; }
 .cs-tile.death { --tile-accent:#8b6994; }
 .cs-tile.location { --tile-accent:#648674; }
@@ -116,7 +122,7 @@
 .cs-hunt-targets button.active,.cs-targets button.active { border-color:#e2be6f; background:#67402d; }
 .cs-hunt > strong { font:26px Georgia,serif; color:#f5c979; }
 .cs-event-panel { max-width:868px; margin:24px auto; padding:24px 16px; border:1px solid #a98561; border-radius:7px; background:linear-gradient(140deg,#3a2921,#1a191a 65%); box-shadow:0 14px 40px #0008; }
-.cs-event-art { float:right; width:90px; height:135px; margin:0 0 12px 14px; object-fit:cover; border:1px solid #ad895a; box-shadow:0 4px 10px #000a; }
+.cs-event-number { float:right; width:70px; height:98px; display:grid; place-items:center; margin:0 0 12px 14px; border:4px solid #171919; border-radius:3px; background:linear-gradient(135deg,#3b3a35,#232a29); color:#c6b89c; font:36px Georgia,serif; box-shadow:0 4px 10px #0009; }
 .cs-event-kicker { color:#e9b76e; font-size:12px; font-weight:800; letter-spacing:.24em; }
 .cs-event-panel h2 { margin:6px 0 12px; color:#f5dec0; font:32px "ZCOOL XiaoWei",serif; }
 .cs-event-panel h3 { margin:20px 0 8px; font-size:14px; color:#e8cdaa; }

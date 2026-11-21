@@ -34,7 +34,7 @@ export default function CrimeEventPanel({ event, board, players, mySeat, forensi
   const choices = (items: string[], selected: string[], select: (tile: string) => void) => <div className="cs-event-choices">{items.map((tile) => <button key={tile} className={selected.includes(tile) ? "active" : ""} onClick={() => select(tile)}>{tileById.get(tile)?.title ?? tile}</button>)}</div>;
 
   return <section className="cs-event-panel" aria-live="polite">
-    <img className="cs-event-art" src={`/assets/crime-scene/events/${event.id}.webp`} alt="" />
+    <div className="cs-event-number" aria-hidden="true">{event.id.slice(-2)}</div>
     <div className="cs-event-kicker">特殊事件</div><h2>{title}</h2><p>{instructions[event.id]}</p>
     {event.id === "event-01" && (myRole === "witness" ? <><h3>选择要弃掉的橙色板</h3>{choices(orange, oldTiles, (tile) => setOldTiles([tile]))}<button className="cs-primary" disabled={!oldTiles[0]} onClick={() => send({ type: "event_secret", oldTile: oldTiles[0] })}>秘密提交</button></> : <p>等待目击者秘密指定场景板…</p>)}
     {event.id === "event-02" && (expert ? <><h3>抽出的五块板</h3>{choices(event.drawn ?? [], [newTile], setNewTile)}<h3>选择场上要换掉的橙色板</h3>{choices(orange, oldTiles, (tile) => setOldTiles([tile]))}<button className="cs-primary" disabled={!newTile || !oldTiles[0]} onClick={() => send({ type: "event_traceable", oldTile: oldTiles[0], newTile })}>确认替换</button></> : <p>鉴证专家正在选择场景板…</p>)}
