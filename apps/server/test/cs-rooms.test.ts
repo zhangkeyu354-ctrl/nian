@@ -88,7 +88,7 @@ describe("犯罪现场房间凭证与暂停", () => {
     expect(r.snapshot(tokens[2]).chat.at(-1)).toEqual({ seat: 1, text: "我觉得是钥匙", at: 3000 });
   });
 
-  it("帮凶指认真证据只得到私下提示，房间版本不变", () => {
+  it("帮凶正确指认按原版算破案，进入目击者反杀并广播", () => {
     const r = room();
     const tokens = Array.from({ length: 6 }, (_, i) => r.claim(`玩家${i + 1}`));
     r.start(tokens[0], 1000, () => 0.25);
@@ -102,8 +102,9 @@ describe("犯罪现场房间凭证与暂停", () => {
     r.tick(61000);
     const version = r.file.version;
     const result = r.command(tokens[helper], { type: "solve", seat: 0, guess: { owner: killer, clue, means } }, 62000);
-    expect(result).toEqual({ privateMessage: "不能指认真实证据，请重新选择" });
-    expect(r.file.version).toBe(version);
+    expect(result).toEqual({});
+    expect(r.file.version).toBe(version + 1);
+    expect(r.file.state!.phase).toBe("witness_hunt");
   });
 
   it("结案后只有房主能再来一局：回到房间、保留座位与设置、清空聊天", () => {

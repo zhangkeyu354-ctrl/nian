@@ -11,7 +11,8 @@ describe("用户提供的犯罪现场数据", () => {
     expect(new Set(clues.map((card) => card.name)).size).toBe(200);
     expect(new Set(means.map((card) => card.name)).size).toBe(90);
     expect(clues.some((card) => card.name === "麻将")).toBe(true);
-    expect(means.some((card) => card.name === "过劳")).toBe(true);
+    expect(means.some((card) => card.name === "工作")).toBe(true);
+    expect(means.some((card) => card.name === "过劳")).toBe(false);
     expect(means.some((card) => card.name === "烟雾")).toBe(true);
   });
 
@@ -20,7 +21,7 @@ describe("用户提供的犯罪现场数据", () => {
     expect(tiles.filter((tile) => tile.kind === "location")).toHaveLength(4);
     expect(tiles.filter((tile) => tile.kind === "scene")).toHaveLength(21);
     expect(tiles.filter((tile) => tile.kind === "event")).toHaveLength(6);
-    expect(tiles.filter((tile) => "needsVerify" in tile).map((tile) => tile.title)).toEqual(["案发日子", "作案时长"]);
+    expect(tiles.filter((tile) => "needsVerify" in tile)).toEqual([]);
     expect(roles).toHaveLength(5);
   });
 });

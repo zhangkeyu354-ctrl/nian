@@ -37,9 +37,10 @@ try {
     for (const tile of state.board!.tiles) state = reduceGame(state, { type: "mark", seat: 0, tile, option: 0 }, 62000);
     state = reduceGame(state, { type: "brief", seat: 0 }, 63000);
     for (let i = 0; i < 5; i++) state = reduceGame(state, { type: "next_speaker", seat: 0 }, 64000, () => 0.25);
-    state = { ...state, orangeDeck: [id, ...state.orangeDeck.filter((tile) => tile !== id)] };
+    // 事件放在牌堆顶，紧接着放线索板，便于验证“扭转局势无人适用时再抽一块”的流程。
+    state = { ...state, orangeDeck: [id, ...state.orangeDeck.filter((tile) => tile !== id && !tile.startsWith("event-")), ...state.orangeDeck.filter((tile) => tile !== id && tile.startsWith("event-"))] };
     room.file.state = state;
-    room.command(tokens[0], { type: "replace", seat: 0, oldTile: state.board!.tiles[2] }, 65000);
+    room.command(tokens[0], { type: "draw", seat: 0 }, 65000);
     return { room, tokens };
   };
   const openSeat = async (code: string, token: string) => {
@@ -84,6 +85,19 @@ try {
     } else {
       const seat = id === "event-01" ? current.file.state!.roles.indexOf("witness") : 0;
       const opened = await openSeat(current.file.code, seatTokens[seat]);
+      if (id === "event-03") {
+        // 第一局没有“上一局破案者”：扭转局势作废，专家直接看到再抽的一块线索板，再选旧板替换。
+        await opened.page.getByText("新抽到的板（只有你看得到）").waitFor();
+        await opened.page.screenshot({ path: "output/cs-ui/polish/event-03-after.png", fullPage: true });
+        const select = opened.page.locator(".cs-drawn select");
+        await select.selectOption({ index: 1 });
+        await opened.page.getByRole("button", { name: "放到这里" }).click();
+        await opened.page.locator(".cs-drawn").waitFor({ state: "detached" });
+        await opened.context.close();
+        if (current.file.state!.phase !== "round2_search" || !current.file.state!.board!.replaced) throw new Error("扭转局势再抽板未完成替换");
+        console.log(JSON.stringify({ ok: true, event: title }));
+        continue;
+      }
       await opened.page.getByRole("heading", { name: title }).waitFor();
       await opened.page.screenshot({ path: `output/cs-ui/polish/${id}-after.png`, fullPage: true });
       const choices = opened.page.locator(".cs-event-panel .cs-event-choices");
@@ -91,12 +105,9 @@ try {
         await choices.first().locator("button").first().click();
         await opened.page.getByRole("button", { name: "秘密提交" }).click();
       } else if (id === "event-02") {
-        await choices.first().locator("button").first().click();
+        await choices.first().locator("button:not([disabled])").first().click();
         await choices.nth(1).locator("button").first().click();
         await opened.page.getByRole("button", { name: "确认替换" }).click();
-      } else if (id === "event-03") {
-        await choices.first().locator("button").first().click();
-        await opened.page.getByRole("button", { name: "放下额外场景板" }).click();
       } else {
         await choices.first().locator("button").first().click();
         await choices.first().locator("button").nth(1).click();

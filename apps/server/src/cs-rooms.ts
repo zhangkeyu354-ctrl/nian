@@ -100,7 +100,7 @@ export class CrimeSceneRoom {
     if (command.type === "tick") throw new Error("客户端不能推进服务器计时");
     const seat = this.file.players.findIndex((p) => p.id === player.id);
     const next = reduceGame(state, { ...command, seat }, now, random);
-    if (next === state) return command.type === "solve" ? { privateMessage: "不能指认真实证据，请重新选择" } : {};
+    if (next === state) return {};
     this.file.state = next;
     // 凶手夜里选牌不能让任何人察觉：版本号不变、不广播，只回给凶手本人；统一揭晓时由计时推进一起更新。
     if (command.type === "choose") return { quiet: true };

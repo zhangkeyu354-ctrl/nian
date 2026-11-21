@@ -47,10 +47,17 @@ export function secretTestimony(state: EventState, witnessSeat: number | null, o
   return swap(state, oldTile, newTile, takeOrange(state, newTile));
 }
 
+/**
+ * 有据可寻：五块候选已从牌堆抽出（drawn 不在 orangeDeck 里）。专家选一块线索板（不能选事件板），
+ * 按卡面“any existing tile”可替换场上任意一块板（含死因、地点）。没选中的候选回到牌堆（由调用方洗混）。
+ */
 export function traceable(state: EventState, seat: number, drawn: string[], chosen: string, oldTile: string): EventState {
   search(state); forensic(state, seat);
-  if (drawn.length !== 5 || new Set(drawn).size !== 5 || drawn.some((tile) => !state.orangeDeck.includes(tile)) || !drawn.includes(chosen)) throw new Error("必须从橙色牌堆抽五块并选一块");
-  return swap(state, oldTile, chosen, takeOrange(state, chosen));
+  if (drawn.length !== 5 || new Set(drawn).size !== 5 || !drawn.includes(chosen) || !isOrange(chosen)) throw new Error("必须从抽出的五块中选一块线索板");
+  if (!state.tiles.includes(oldTile) || state.tiles.includes(chosen)) throw new Error("只能替换场上现有的一块板");
+  const markers = { ...state.markers };
+  delete markers[oldTile];
+  return { ...state, tiles: state.tiles.map((tile) => tile === oldTile ? chosen : tile), markers, orangeDeck: [...state.orangeDeck, ...drawn.filter((tile) => tile !== chosen)] };
 }
 
 export function reversal(state: EventState, fallbackTile: string): EventState {

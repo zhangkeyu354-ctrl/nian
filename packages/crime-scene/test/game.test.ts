@@ -1,5 +1,12 @@
 import { describe, expect, it } from "vitest";
-import { createGame, reduceGame, gameView } from "../src/game.ts";
+import { createGame, reduceGame, gameView, type GameState } from "../src/game.ts";
+
+/** 原版第 2、3 轮：先抽新板；抽到线索板再选旧板替换，抽到事件板就进入事件。 */
+function drawReplace(s: GameState, oldTile: string, now: number): GameState {
+  const drawn = reduceGame(s, { type: "draw", seat: 0 }, now, () => 0.25);
+  return drawn.pendingDraw ? reduceGame(drawn, { type: "replace", seat: 0, oldTile }, now) : drawn;
+}
+
 
 function secondRound(count = 6) {
   let s = createGame(count, 0, 3, true, 1000, () => 0.25);
@@ -14,7 +21,7 @@ function secondRound(count = 6) {
 function forceEvent(id: string, count = 6) {
   let s = secondRound(count);
   s = { ...s, orangeDeck: [id, ...s.orangeDeck.filter((tile) => tile !== id)] };
-  return reduceGame(s, { type: "replace", seat: 0, oldTile: s.board!.tiles[2] }, 65000);
+  return drawReplace(s, s.board!.tiles[2], 65000);
 }
 
 describe("完整基础局状态流", () => {
@@ -27,7 +34,7 @@ describe("完整基础局状态流", () => {
     for (let i = 0; i < 5; i++) s = reduceGame(s, { type: "next_speaker", seat: 0 }, 64000);
     s = { ...s, orangeDeck: ["event-04", "scene-21", ...s.orangeDeck.filter((tile) => tile !== "scene-21")] };
     const tilesBefore = [...s.board!.tiles];
-    s = reduceGame(s, { type: "replace", seat: 0, oldTile: s.board!.tiles[2] }, 65000);
+    s = drawReplace(s, s.board!.tiles[2], 65000);
     expect(s.phase).toBe("event");
     // 出版方裁定：事件替代本轮抽板，不补普通板；本站房规：原板与标记保留。
     expect(s.board!.tiles).toEqual(tilesBefore);
@@ -50,25 +57,31 @@ describe("完整基础局状态流", () => {
     expect(forceEvent("event-01", 4).phase).toBe("round2_search");
   });
 
-  it("有据可寻只能从服务端抽出的五块板中选一块替换橙板", () => {
+  it("有据可寻：专家从抽出的五块中选一块线索板，可换掉任意一块（含死因），没选中的洗回牌堆", () => {
     let s = forceEvent("event-02");
     const drawn = s.pendingEvent!.drawn!;
     expect(drawn).toHaveLength(5);
     expect(gameView(s, 0).event?.drawn).toEqual(drawn);
     expect(gameView(s, 1).event?.drawn).toBeUndefined();
-    expect(() => reduceGame(s, { type: "event_traceable", seat: 0, oldTile: "death", newTile: drawn[0] }, 66000)).toThrow();
+    const deckBefore = [...s.orangeDeck];
+    const pick = drawn.find((tile) => tile.startsWith("scene-"))!;
     expect(() => reduceGame(s, { type: "event_traceable", seat: 0, oldTile: s.board!.tiles[3], newTile: "scene-99" }, 66000)).toThrow();
-    s = reduceGame(s, { type: "event_traceable", seat: 0, oldTile: s.board!.tiles[3], newTile: drawn[0] }, 66000);
+    const eventCandidate = drawn.find((tile) => tile.startsWith("event-"));
+    if (eventCandidate) expect(() => reduceGame(s, { type: "event_traceable", seat: 0, oldTile: "death", newTile: eventCandidate }, 66000)).toThrow();
+    s = reduceGame(s, { type: "event_traceable", seat: 0, oldTile: "death", newTile: pick }, 66000);
     expect(s.phase).toBe("round2_search");
-    expect(s.board!.tiles).toContain(drawn[0]);
-    expect(s.orangeDeck).toContain(drawn[1]);
+    expect(s.board!.tiles).toContain(pick);
+    expect(s.board!.tiles).not.toContain("death");
+    expect(s.board!.tiles).toHaveLength(6);
+    expect(s.board!.markers[pick]).toBeUndefined();
+    expect([...s.orangeDeck].sort()).toEqual([...deckBefore, ...drawn.filter((tile) => tile !== pick)].sort());
   });
 
   it("扭转局势自动给上一局破案成功者一次额外机会", () => {
     let s = secondRound();
     const seat = s.roles.indexOf("investigator");
     s = { ...s, previousSolver: seat, orangeDeck: ["event-03", ...s.orangeDeck.filter((tile) => tile !== "event-03")] };
-    s = reduceGame(s, { type: "replace", seat: 0, oldTile: s.board!.tiles[2] }, 65000);
+    s = drawReplace(s, s.board!.tiles[2], 65000);
     expect(s.phase).toBe("event_bonus");
     expect(s.bonusAttempts[seat]).toBe(1);
     expect(s.bonusSeat).toBe(seat);
@@ -78,17 +91,41 @@ describe("完整基础局状态流", () => {
     expect(s.bonusAttempts[seat]).toBe(0);
   });
 
-  it("扭转局势无人适用时，专家再抽一块橙板并实际替换", () => {
-    let s = forceEvent("event-03");
-    expect(s.phase).toBe("event_bonus_scene");
-    const drawn = gameView(s, 0).event?.drawn?.[0];
-    expect(drawn).toMatch(/^scene-/);
-    expect(gameView(s, 1).event?.drawn).toBeUndefined();
-    const oldTile = s.board!.tiles[3];
-    s = reduceGame(s, { type: "event_bonus_scene", seat: 0, oldTile }, 66000);
+  it("扭转局势无人适用时，弃掉再抽下一块：线索板就正常换一次，不额外撤板", () => {
+    let s = secondRound();
+    s = { ...s, previousSolver: null, orangeDeck: ["event-03", "scene-21", ...s.orangeDeck.filter((tile) => tile !== "event-03" && tile !== "scene-21")] };
+    const tilesBefore = [...s.board!.tiles];
+    s = reduceGame(s, { type: "draw", seat: 0 }, 65000, () => 0.25);
     expect(s.phase).toBe("round2_search");
-    expect(s.board!.tiles).toContain(drawn);
+    expect(s.board!.tiles).toEqual(tilesBefore);
+    expect(s.pendingDraw).toBe("scene-21");
+    expect(gameView(s, 0).pendingDraw).toBe("scene-21");
+    expect(gameView(s, 1).pendingDraw).toBeUndefined();
+    const oldTile = s.board!.tiles[3];
+    s = reduceGame(s, { type: "replace", seat: 0, oldTile }, 66000);
+    expect(s.board!.tiles).toContain("scene-21");
     expect(s.board!.tiles).not.toContain(oldTile);
+    expect(s.board!.tiles).toHaveLength(6);
+  });
+
+  it("扭转局势无人适用时，再抽到的若是事件就接着执行该事件", () => {
+    let s = secondRound();
+    s = { ...s, previousSolver: null, orangeDeck: ["event-03", "event-04", ...s.orangeDeck.filter((tile) => !tile.startsWith("event-"))] };
+    const tilesBefore = [...s.board!.tiles];
+    s = reduceGame(s, { type: "draw", seat: 0 }, 65000, () => 0.25);
+    expect(s.phase).toBe("event");
+    expect(s.pendingEvent?.id).toBe("event-04");
+    expect(s.board!.tiles).toEqual(tilesBefore);
+    expect(s.orangeDeck.some((tile) => tile === "event-03" || tile === "event-04")).toBe(false);
+  });
+
+  it("抽新板前不能直接替换；同一轮不能抽两次", () => {
+    let s = secondRound();
+    s = { ...s, orangeDeck: ["scene-21", ...s.orangeDeck.filter((tile) => tile !== "scene-21" && !tile.startsWith("event-"))] };
+    expect(() => reduceGame(s, { type: "replace", seat: 0, oldTile: s.board!.tiles[3] }, 65000)).toThrow();
+    s = reduceGame(s, { type: "draw", seat: 0 }, 65000);
+    expect(() => reduceGame(s, { type: "draw", seat: 0 }, 65001)).toThrow();
+    expect(() => reduceGame(s, { type: "replace", seat: 0, oldTile: "death" }, 65001)).toThrow();
   });
 
   it("证据排除按逆时针逐人翻牌，不能翻关键证物", () => {
@@ -166,7 +203,7 @@ describe("完整基础局状态流", () => {
     expect(s.winner).toBe("evil");
   });
 
-  it("坏人真证据只私下拒绝，错误证据才进入公共日志", () => {
+  it("帮凶正确指认按原版算破案（6 人局进入反杀）；错误指认进入公共日志", () => {
     let s = createGame(6, 0, 3, false, 1000, () => 0.25);
     s = reduceGame(s, { type: "start", seat: 0, location: "location-1" }, 1000, () => 0);
     const killer = s.roles.indexOf("killer");
@@ -174,8 +211,9 @@ describe("完整基础局状态流", () => {
     const answer = { owner: killer, clue: s.players[killer].clues[0], means: s.players[killer].means[0] };
     s = reduceGame(s, { type: "choose", seat: killer, clue: answer.clue, means: answer.means }, 2000);
     s = reduceGame(s, { type: "tick" }, 61000, () => 0);
-    const unchanged = reduceGame(s, { type: "solve", seat: accomplice, guess: answer }, 62000);
-    expect(unchanged).toBe(s);
+    const solved = reduceGame(s, { type: "solve", seat: accomplice, guess: answer }, 62000);
+    expect(solved.phase).toBe("witness_hunt");
+    expect(() => reduceGame(s, { type: "solve", seat: killer, guess: answer }, 62000)).toThrow();
     const wrong = reduceGame(s, { type: "solve", seat: accomplice, guess: { ...answer, clue: s.players[killer].clues[1] } }, 62000);
     expect(wrong.log.at(-1)?.detail).toBe("错！");
     expect(wrong.badges[accomplice]).toBe(false);
@@ -204,7 +242,7 @@ describe("完整基础局状态流", () => {
     for (let i = 0; i < 3; i++) s = reduceGame(s, { type: "next_speaker", seat: 0 }, 63000);
     expect(s.phase).toBe("round2_search");
     const drawn = s.orangeDeck[0];
-    s = reduceGame(s, { type: "replace", seat: 0, oldTile: s.board!.tiles[2] }, 64000);
+    s = drawReplace(s, s.board!.tiles[2], 64000);
     expect(s.board!.tiles).toContain(drawn);
     expect(s.orangeDeck).not.toContain(drawn);
   });
@@ -228,7 +266,7 @@ describe("完整基础局状态流", () => {
       s = reduceGame(s, { type: "start", seat: 0, location: "location-1" }, 1000, () => 0);
       s = reduceGame(s, { type: "tick" }, 61000, () => 0);
       for (let round = 1; round <= 3; round++) {
-        if (round > 1) s = reduceGame(s, { type: "replace", seat: 0, oldTile: s.board!.tiles[2] }, 62000 + round);
+        if (round > 1) s = drawReplace(s, s.board!.tiles[2], 62000 + round);
         for (const tile of s.board!.tiles) if (!(tile in s.board!.markers)) s = reduceGame(s, { type: "mark", seat: 0, tile, option: 0 }, 62000 + round);
         s = reduceGame(s, { type: "brief", seat: 0 }, 63000 + round);
         for (let speaker = 0; speaker < count - 1; speaker++) s = reduceGame(s, { type: "next_speaker", seat: 0 }, 64000 + round);
@@ -241,7 +279,7 @@ describe("完整基础局状态流", () => {
 });
 
 describe("指认在桌上公开", () => {
-  it("错误指认记录指认者与组合；坏人选中真证据被私下拦截时不留记录", () => {
+  it("错误指认记录指认者与组合，全员可见", () => {
     let s = createGame(6, 0, 3, false, 1000, () => 0.25);
     s = reduceGame(s, { type: "start", seat: 0, location: "location-1" }, 1000, () => 0);
     s = reduceGame(s, { type: "tick" }, 61000, () => 0);
@@ -254,12 +292,6 @@ describe("指认在桌上公开", () => {
     expect(entry.detail).toBe("错！");
     expect(entry.seat).toBe(accuser);
     expect(entry.guess).toEqual({ owner: answer.owner, clue: wrongClue, means: answer.means });
-    const evil = s.roles.findIndex((role, seat) => role === "accomplice" && seat !== answer.owner);
-    if (evil >= 0) {
-      const before = s.log.length;
-      s = reduceGame(s, { type: "solve", seat: evil, guess: { ...answer } }, 63000);
-      expect(s.log.length).toBe(before);
-    }
     for (let seat = 1; seat < 6; seat++) expect(gameView(s, seat).log.at(-1)?.guess).toEqual({ owner: answer.owner, clue: wrongClue, means: answer.means });
   });
 });

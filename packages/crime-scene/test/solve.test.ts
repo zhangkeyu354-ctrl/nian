@@ -4,9 +4,9 @@ import { judgeSolve } from "../src/solve.ts";
 const answer = { owner: 2, clue: "手套", means: "钢管" };
 
 describe("破案判定", () => {
-  it("坏人选中真证据时仅私下拦截，不扣徽章也不广播", () => {
-    expect(judgeSolve("killer", answer, answer)).toEqual({ kind: "private_reject", message: "不能指认真实证据，请重新选择" });
-    expect(judgeSolve("accomplice", answer, answer).kind).toBe("private_reject");
+  it("原版：任何非专家（含帮凶）正确指认都算破案", () => {
+    expect(judgeSolve("accomplice", answer, answer).kind).toBe("correct");
+    expect(judgeSolve("investigator", answer, answer).kind).toBe("correct");
   });
 
   it("坏人选错才公开错误并消耗徽章", () => {

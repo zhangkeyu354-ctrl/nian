@@ -18,7 +18,6 @@ export function accuse(state: OutcomeState, seat: number, guess: EvidencePair): 
   const owner = state.players[guess.owner];
   if (!owner || owner.seat !== guess.owner || !owner.clues.includes(guess.clue) || !owner.means.includes(guess.means) || owner.excludedClues.includes(guess.clue)) throw new Error("证据组合无效");
   const verdict = judgeSolve(state.roles[seat], guess, state.answer);
-  if (verdict.kind === "private_reject") return state;
   if (verdict.kind === "correct") {
     const hasWitness = state.roles.includes("witness");
     return { ...state, phase: hasWitness ? "witness_hunt" : "result", winner: hasWitness ? null : "good", hunt: hasWitness ? { solver: seat } : null };

@@ -28,12 +28,15 @@ describe("六个特殊事件", () => {
     expect(secretTestimony(noWitness, null, null, null)).toEqual(noWitness);
   });
 
-  it("有据可寻抽五块只可用其中一块替换橙板", () => {
-    const s = traceable(base(), 0, ["scene-05", "scene-06", "scene-07", "scene-08", "scene-09"], "scene-07", "scene-03");
-    expect(s.tiles).toContain("scene-07");
-    expect(s.orangeDeck).toContain("scene-05");
-    expect(s.orangeDeck).not.toContain("scene-07");
-    expect(() => traceable(base(), 0, ["scene-05", "scene-06", "scene-07", "scene-08", "scene-09"], "scene-07", "death")).toThrow();
+  it("有据可寻从抽出的五块选一块线索板，可替换任意现有板，没选中的回到牌堆，事件板不能选", () => {
+    const drawn = ["scene-15", "scene-16", "scene-17", "scene-18", "event-02"];
+    const start = { ...base(), orangeDeck: base().orangeDeck.filter((tile) => !drawn.includes(tile)) };
+    const s = traceable(start, 0, drawn, "scene-17", "scene-03");
+    expect(s.tiles).toContain("scene-17");
+    expect(s.orangeDeck).toEqual(expect.arrayContaining(["scene-15", "scene-16", "scene-18", "event-02"]));
+    expect(s.orangeDeck).not.toContain("scene-17");
+    expect(traceable(start, 0, drawn, "scene-17", "death").tiles).not.toContain("death");
+    expect(() => traceable(start, 0, drawn, "event-02", "scene-03")).toThrow();
   });
 
   it("扭转局势按原版给上一局破案成功者一次额外机会；本局失败者不算；无人适用则补抽橙板", () => {

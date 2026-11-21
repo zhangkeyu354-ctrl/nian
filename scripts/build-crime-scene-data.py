@@ -25,6 +25,8 @@ def terms(text):
 
 clues = terms(section("### 2.1 线索牌（200）", "> 注：原资料“麻雀”").strip())
 means = terms(section("### 2.2 手段牌（90）", "> 注：原资料“工作”").strip())
+# 2026-11-21：原版英文为 Work，按原词译“工作”，不缩窄为“过劳”。
+means = ["工作" if card == "过劳" else card for card in means]
 assert len(clues) == 200, ("clues", len(clues))
 assert len(means) == 90, ("means", len(means))
 assert len(set(clues)) == len(clues) and len(set(means)) == len(means)
@@ -40,8 +42,8 @@ for index, choices in re.findall(r"^  ([1-4])\. ([^\n]+)", tile_body, re.M):
 orange = tile_body.split("**线索板（橙，21）**", 1)[1].split("- **事件板", 1)[0]
 for i, (title, choices) in enumerate(re.findall(r"^  - ([^：\n]+)：([^\n]+)", orange, re.M), 1):
     entry = {"id": f"scene-{i:02}", "kind": "scene", "title": title, "options": terms(choices)}
-    if title in ("案发日子", "作案时长"):
-        entry["needsVerify"] = True
+    # 2026-11-21 按英文原版核对（Weekday / Instantaneous 已确认）；Unclear 译为“不明确”。
+    entry["options"] = ["不明确" if option == "不明" else option for option in entry["options"]]
     tiles.append(entry)
 events = ["秘密证供", "有据可寻", "扭转局势", "错误信息", "证据排除", "倒数计时"]
 tiles.extend({"id": f"event-{i:02}", "kind": "event", "title": title} for i, title in enumerate(events, 1))

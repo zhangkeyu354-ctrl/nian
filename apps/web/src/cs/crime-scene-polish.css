@@ -213,3 +213,13 @@ button.cs-evidence { cursor:pointer; }
 .cs-tut-dots i { width:7px; height:7px; border-radius:50%; background:#ffffff33; }
 .cs-tut-dots i.on { width:20px; border-radius:4px; background:#e9c46a; }
 @media (prefers-reduced-motion:reduce) { .cs-tut-press { animation:none!important; } }
+
+/* 第 2、3 轮：专家先抽新板，再选要换掉的板 */
+.cs-actions { flex-wrap:wrap; }
+.cs-draw { flex:1 1 100%; min-height:46px; border:1px dashed #e9cf9f88; border-radius:12px; color:#f1dfb9; font-weight:700; background:linear-gradient(#3a302a,#241f1c); box-shadow:inset 0 1px #ffffff1a,0 3px 0 #0f0d0c; }
+.cs-drawn { flex:1 1 100%; display:grid; gap:6px; padding:12px; border:1px solid #bc765488; border-radius:12px; background:linear-gradient(120deg,#5a2f2244,#1c1917); box-shadow:inset 0 1px #ffffff14,0 6px 14px #0008; animation:cs-board-in .26s var(--cs-ease) both; }
+.cs-drawn small { font-size:11px; color:#d9b3a8; }
+.cs-drawn strong { font:20px "ZCOOL XiaoWei",serif; color:#fff0dc; }
+.cs-drawn > span { font-size:12px; color:#cdbba0; line-height:1.6; }
+.cs-drawn label { display:grid; gap:5px; font-size:12px; color:var(--cs-muted); }
+.cs-drawn .cs-primary { margin-top:4px; }
