@@ -44,9 +44,9 @@ describe("发言延长（用户裁定：每人每轮一次）", () => {
     for (const tile of s.tiles) s = _pm(s, 0, tile, 0);
     s = _bb(s, 1000);
     s = _ex(s);
-    expect(s.speechDurationMs).toBe(60000);
+    expect(s.speechDurationMs).toBe(150000);
     expect(() => _ex(s)).toThrow();
     s = _ns(s, 2000);
-    expect(_ex(s).speechDurationMs).toBe(60000);
+    expect(_ex(s).speechDurationMs).toBe(150000);
   });
 });

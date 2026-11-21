@@ -255,9 +255,9 @@ describe("完整基础局状态流", () => {
     s = reduceGame(s, { type: "brief", seat: 0 }, 63000);
     expect(() => reduceGame(s, { type: "extend_speaker", seat: 2 }, 64000)).toThrow();
     s = reduceGame(s, { type: "extend_speaker", seat: 1 }, 64000);
-    expect(s.board!.speechDurationMs).toBe(60000);
+    expect(s.board!.speechDurationMs).toBe(150000);
     s = reduceGame(s, { type: "next_speaker", seat: 0 }, 65000);
-    expect(s.board!.speechDurationMs).toBe(30000);
+    expect(s.board!.speechDurationMs).toBe(120000);
   });
 
   for (const count of [4, 8, 12]) {
