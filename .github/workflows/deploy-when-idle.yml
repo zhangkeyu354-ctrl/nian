@@ -5,7 +5,13 @@
 # 需要仓库 Secret：RENDER_DEPLOY_HOOK（Render 服务 Settings → Deploy Hook 的网址）。
 # 规矩：没准备好上线的东西不要推到 main，放在单独分支。
 name: deploy-when-idle
+# GitHub 的定时任务在本仓库实际经常几小时才跑一次（2026-11-21 观察到约每 5 小时），
+# 所以 ci 一通过就立刻检查一次；有人在玩时，再靠定时任务稍后重试。
 on:
+  workflow_run:
+    workflows: [ci]
+    types: [completed]
+    branches: [main]
   schedule:
     - cron: "3-59/10 * * * *"
   workflow_dispatch: {}
@@ -16,6 +22,7 @@ concurrency:
   group: deploy-when-idle
 jobs:
   deploy:
+    if: github.event_name != 'workflow_run' || github.event.workflow_run.conclusion == 'success'
     runs-on: ubuntu-latest
     timeout-minutes: 5
     steps:
