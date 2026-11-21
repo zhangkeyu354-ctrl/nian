@@ -82,7 +82,9 @@ export function attachCrimeScene(io: Server, dataDir: string, options: { maxRoom
       const before = room.file.version;
       const result = room.command(request.token, request.command, Date.now());
       if (room.file.version !== before) broadcast(room);
-      return { ...result, snapshot: room.snapshot(request.token) };
+      else if ("quiet" in result && result.quiet) store.save(room);
+      const { quiet: _quiet, ...reply } = result as { quiet?: boolean; privateMessage?: string };
+      return { ...reply, snapshot: room.snapshot(request.token) };
     }));
     socket.on(CS_EVENTS.chat, guarded((request: { code: string; token: string; text: string }) => {
       const room = find(request?.code);
