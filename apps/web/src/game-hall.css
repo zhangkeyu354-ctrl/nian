@@ -307,3 +307,4 @@ button.hall-primary.fb-btn:disabled { filter: none; opacity: .45; }
 .cs-hall-title b { padding:2px 12px 4px; font:900 clamp(22px,8.5cqw,44px)/1.05 "ZCOOL XiaoWei",serif; letter-spacing:.14em; color:#fff3dc; background:#0b0807d9; box-shadow:0 0 0 2px #e9c46a,0 0 0 5px #0b0807d9,0 6px 14px #000a; transform:rotate(-2deg); }
 .cs-hall-title small { margin-top:6px; padding:1px 8px; font:800 clamp(8px,2.6cqw,13px)/1.4 system-ui,sans-serif; letter-spacing:.32em; color:#1b0f0c; background:#f2c84b; transform:rotate(-2deg); }
 .cs-hall-cover { container-type:inline-size; }
+.cart-new { z-index:6; }
