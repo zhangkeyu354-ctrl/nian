@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState, type CSSProperties } from "react";
 import { io, type Socket } from "socket.io-client";
 import { CS_EVENTS } from "../../../../packages/shared/src/cs-protocol.ts";
 import tiles from "../../../../data/crime-scene/tiles.json" with { type: "json" };
@@ -86,6 +86,7 @@ export default function CrimeScene() {
   const [replaceTile, setReplaceTile] = useState("");
   const [chatText, setChatText] = useState("");
   const [rulesOpen, setRulesOpen] = useState(false);
+  const [heroReady, setHeroReady] = useState(false);
   const [soundOn, setSoundOn] = useState(() => localStorage.getItem("crime-scene:sound") !== "off");
   const socketRef = useRef<Socket | null>(null);
   const codeRef = useRef(code);
@@ -151,7 +152,7 @@ export default function CrimeScene() {
   return <main className="cs-app">
     <header className="cs-topbar"><a href="/" aria-label="返回桌游大厅">← 大厅</a><strong>犯罪现场</strong><div className="cs-top-actions"><button className="cs-sound-toggle" aria-label={soundOn ? "关闭音效" : "开启音效"} aria-pressed={soundOn} onClick={() => setSoundOn((current) => { localStorage.setItem("crime-scene:sound", current ? "off" : "on"); return !current; })}><svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"><path d="M4 9.5h3.5L12 6v12l-4.5-3.5H4z" fill="currentColor" stroke="none" />{soundOn ? <><path d="M15.5 9a4 4 0 010 6" /><path d="M18 6.5a7.5 7.5 0 010 11" /></> : <path d="M16 9.5l5 5M21 9.5l-5 5" />}</svg></button><button onClick={() => setRulesOpen(true)}>规则</button>{snapshot && <span className="cs-room-pill">{snapshot.code}</span>}</div></header>
     {!snapshot ? <section className="cs-entry">
-      <div className="cs-entry-art" role="img" aria-label="线索牌、手段牌与场景板"><span className="cs-entry-board"><i /><i /><i /><i /><i /><i /></span><span className="cs-entry-card clue" /><span className="cs-entry-card means" /></div>
+      <div className={`cs-entry-art ${heroReady ? "has-hero" : ""}`} role="img" aria-label="线索牌、手段牌与场景板"><img className="cs-entry-hero" src="/assets/crime-scene/scene/entry-hero.webp" alt="" onLoad={() => setHeroReady(true)} onError={() => setHeroReady(false)} /><span className="cs-entry-board"><i /><i /><i /><i /><i /><i /></span><span className="cs-entry-card clue" /><span className="cs-entry-card means" /></div>
       <div className="cs-entry-form"><h1>犯罪现场</h1><p>4–12 人 · 推理派对游戏</p>
         <label>你的昵称<input maxLength={12} value={name} onChange={(event) => setName(event.target.value)} placeholder="输入昵称" /></label>
         <button className="cs-primary" onClick={create}>创建房间</button>
@@ -173,11 +174,11 @@ export default function CrimeScene() {
         </div>}
       </section> : view && <>
         <button className={`cs-role ${roleTone[view.myRole]} ${roleVisible ? "open" : ""}`} aria-label={roleVisible ? roleName[view.myRole] : "长按查看身份"} onPointerDown={() => setRoleOpen(true)} onPointerUp={() => setRoleOpen(false)} onPointerCancel={() => setRoleOpen(false)} onPointerLeave={() => setRoleOpen(false)} onKeyDown={(event) => { if (event.key === " " || event.key === "Enter") setRoleOpen(true); }} onKeyUp={() => setRoleOpen(false)}>
-          <span className="cs-role-inner"><span className="cs-role-back" aria-hidden={roleVisible}><span className="cs-role-back-mark" aria-hidden="true">◆</span><span className="cs-role-title">长按查看身份</span><small>松手盖回</small></span><span className="cs-role-front" aria-hidden={!roleVisible}>{roleVisible && <RoleEmblem role={view.myRole} />}<span className="cs-role-text"><span className="cs-role-camp">{roleVisible ? roleCamp[view.myRole] : ""}</span><span className="cs-role-title">{roleVisible ? roleName[view.myRole] : ""}</span><span className="cs-role-duty">{roleVisible ? roleDuty[view.myRole] : ""}</span></span><small>{phase === "result" ? "身份已公开" : view.myRole === "forensic" ? "公开身份" : "松手盖回"}</small></span></span>
+          <span className="cs-role-inner"><span className="cs-role-back" aria-hidden={roleVisible}><span className="cs-role-back-mark" aria-hidden="true">◆</span><span className="cs-role-title">长按查看身份</span><small>松手盖回</small></span><span className="cs-role-front" aria-hidden={!roleVisible} style={roleVisible ? { "--role-art": `url(/assets/crime-scene/roles/role-${view.myRole}.webp)` } as CSSProperties : undefined}>{roleVisible && <RoleEmblem role={view.myRole} />}<span className="cs-role-text"><span className="cs-role-camp">{roleVisible ? roleCamp[view.myRole] : ""}</span><span className="cs-role-title">{roleVisible ? roleName[view.myRole] : ""}</span><span className="cs-role-duty">{roleVisible ? roleDuty[view.myRole] : ""}</span></span><small>{phase === "result" ? "身份已公开" : view.myRole === "forensic" ? "公开身份" : "松手盖回"}</small></span></span>
         </button>
         {view.evilPartnerSeat !== undefined && <p className="cs-private">同伴：{nameOf(snapshot, view.evilPartnerSeat)}</p>}
         {view.witnessCandidates && <p className="cs-private">你目击到两人：{view.witnessCandidates.map((seat) => nameOf(snapshot, seat)).join("、")}；不知道谁是凶手。</p>}
-        {phase === "setup" && <section className="cs-section"><h2>案发地点</h2>{view.myRole === "forensic" ? <><p>从四块地点板中选一块，随后进入夜晚。</p><div className="cs-locations">{view.locationOptions?.map((id) => <button key={id} onClick={() => command({ type: "start", location: id })}>{byId.get(id)?.options?.join(" · ")}</button>)}</div></> : <p>等待鉴证专家选择案发地点…</p>}</section>}
+        {phase === "setup" && <section className="cs-section"><h2>案发地点</h2>{view.myRole === "forensic" ? <><p>从四块地点板中选一块，随后进入夜晚。</p><div className="cs-locations">{view.locationOptions?.map((id) => <button key={id} style={{ "--loc-art": `url(/assets/crime-scene/locations/${id}.webp)` } as CSSProperties} onClick={() => command({ type: "start", location: id })}><span>{byId.get(id)?.options?.join(" · ")}</span></button>)}</div></> : <p>等待鉴证专家选择案发地点…</p>}</section>}
         {phase.includes("night") && <section className="cs-night"><div className="cs-night-rain" /><div className="cs-night-moon" aria-hidden="true" /><h2>夜幕降临…</h2>
           {view.myRole === "killer" && !view.answer ? <><p>从自己面前各选一张牌。</p><strong className={`cs-countdown ${seconds(view.nightDeadline, 60) <= 15 ? "urgent" : ""}`} aria-live={seconds(view.nightDeadline, 60) <= 15 ? "assertive" : "off"}>{seconds(view.nightDeadline, 60)} 秒</strong><h3>关键证物</h3><div className="cs-card-row">{own?.clues.map((card) => <EvidenceCard key={card} name={card} kind="clue" selected={nightClue === card} onClick={() => setNightClue(card)} />)}</div><h3>行凶手法</h3><div className="cs-card-row">{own?.means.map((card) => <EvidenceCard key={card} name={card} kind="means" selected={nightMeans === card} onClick={() => setNightMeans(card)} />)}</div><button className="cs-primary" disabled={!nightClue || !nightMeans} onClick={() => command({ type: "choose", clue: nightClue, means: nightMeans })}>确认作案证据</button></> : view.myRole === "killer" ? <p>证据已选定。所有人将在同一时间进入调查。</p> : <><p>请闭上眼睛，等待调查开始。</p><div className="cs-night-wait" aria-hidden="true"><i /><i /><i /></div></>}
         </section>}

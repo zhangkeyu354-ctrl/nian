@@ -108,3 +108,20 @@
 @media (prefers-reduced-motion:reduce) {
   .cs-night-wait i,.cs-lobby .cs-seats li { animation:none!important; }
 }
+
+/* 美术位：图片到位后自动显示，缺图时退回材质底色 */
+.cs-role-front { background-blend-mode:normal; }
+.cs-role-front::after { content:""; position:absolute; inset:0; z-index:1; border-radius:12px; background:linear-gradient(90deg,#0e0f1099 0%,#0e0f1073 34%,#0e0f1000 70%),var(--role-art,none) right center/auto 100% no-repeat; pointer-events:none; }
+.cs-role-back { background-image:url('/assets/crime-scene/roles/role-back.webp'),radial-gradient(circle at 50% 50%,#e2c58d1c,transparent 46%),repeating-linear-gradient(45deg,transparent 0 9px,#e9cf9f0d 9px 10px),repeating-linear-gradient(-45deg,transparent 0 9px,#e9cf9f0d 9px 10px),linear-gradient(135deg,#2c2520,#141413); background-size:cover,auto,auto,auto,auto; background-position:center; }
+.cs-role-back .cs-role-title,.cs-role-back small,.cs-role-back-mark { position:relative; z-index:2; text-shadow:0 2px 6px #000; }
+.cs-locations { gap:10px; }
+.cs-locations button { position:relative; min-height:82px; padding:14px 14px; overflow:hidden; border:1px solid #bda58155; border-radius:12px; background:linear-gradient(90deg,#1a1614 0%,#1a1614e8 42%,#1a161400 78%),var(--loc-art,none) right center/auto 100% no-repeat,linear-gradient(120deg,#3a2e27,#1c1917); box-shadow:inset 0 1px #ffffff1a,0 3px 0 #0f0d0c,0 8px 16px #0008; font-size:14px; }
+.cs-locations button span { position:relative; display:block; max-width:62%; line-height:1.7; color:#f1e4cc; text-shadow:0 1px 4px #000; }
+.cs-event-number { width:92px; height:129px; background:linear-gradient(135deg,#3b3a35,#232a29); background-size:cover; background-position:center; border-radius:6px; overflow:hidden; position:relative; }
+.cs-event-number span { position:absolute; left:6px; bottom:4px; font-size:20px; color:#f4e7cc; text-shadow:0 2px 4px #000; }
+.cs-entry-hero { position:absolute; inset:0; width:100%; height:100%; object-fit:cover; opacity:0; transition:opacity .4s ease; }
+.cs-entry-art.has-hero .cs-entry-hero { opacity:1; }
+.cs-entry-art.has-hero > span { display:none; }
+.cs-entry-art::after { content:""; position:absolute; inset:auto 0 0; height:40%; background:linear-gradient(transparent,#0b100d); pointer-events:none; }
+.cs-night { background:linear-gradient(#0f17198c,#0a0e0fd9),url('/assets/crime-scene/scene/night.webp') center/cover no-repeat,radial-gradient(ellipse 80% 55% at 50% 0%,#2a3e3d73,transparent 70%),linear-gradient(#0f1719,#0a0e0f); }
+.cs-lobby-code { background:linear-gradient(#1d1714b8,#1d1714b8),url('/assets/crime-scene/scene/case-folder.webp') center/cover no-repeat,linear-gradient(145deg,#ffffff0c,transparent 35%),linear-gradient(150deg,#322a25,#191b1a 72%); }
