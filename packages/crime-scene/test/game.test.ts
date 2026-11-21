@@ -26,9 +26,13 @@ describe("完整基础局状态流", () => {
     s = reduceGame(s, { type: "brief", seat: 0 }, 63000);
     for (let i = 0; i < 5; i++) s = reduceGame(s, { type: "next_speaker", seat: 0 }, 64000);
     s = { ...s, orangeDeck: ["event-04", "scene-21", ...s.orangeDeck.filter((tile) => tile !== "scene-21")] };
+    const tilesBefore = [...s.board!.tiles];
     s = reduceGame(s, { type: "replace", seat: 0, oldTile: s.board!.tiles[2] }, 65000);
     expect(s.phase).toBe("event");
-    expect(s.board!.tiles).toContain("scene-21");
+    // 出版方裁定：事件替代本轮抽板，不补普通板；本站房规：原板与标记保留。
+    expect(s.board!.tiles).toEqual(tilesBefore);
+    expect(s.board!.replaced).toBe(true);
+    expect(s.orangeDeck[0]).toBe("scene-21");
     s = reduceGame(s, { type: "event_misinformation", seat: 0, tile: "death", option: 1 }, 66000);
     expect(s.phase).toBe("round2_search");
     expect(s.board!.markers.death).toBe(1);
@@ -60,10 +64,10 @@ describe("完整基础局状态流", () => {
     expect(s.orangeDeck).toContain(drawn[1]);
   });
 
-  it("扭转局势自动补给上一名破案失败者", () => {
+  it("扭转局势自动给上一局破案成功者一次额外机会", () => {
     let s = secondRound();
     const seat = s.roles.indexOf("investigator");
-    s = { ...s, lastFailed: seat, orangeDeck: ["event-03", ...s.orangeDeck.filter((tile) => tile !== "event-03")] };
+    s = { ...s, previousSolver: seat, orangeDeck: ["event-03", ...s.orangeDeck.filter((tile) => tile !== "event-03")] };
     s = reduceGame(s, { type: "replace", seat: 0, oldTile: s.board!.tiles[2] }, 65000);
     expect(s.phase).toBe("event_bonus");
     expect(s.bonusAttempts[seat]).toBe(1);

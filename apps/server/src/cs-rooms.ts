@@ -17,6 +17,8 @@ export interface CrimeSceneRoomFile {
   version: number;
   mode?: "local" | "online";
   chatLog?: { seat: number; text: string; at: number }[];
+  /** 上一局正确破案的座位，供「扭转局势」使用；第一局为空。 */
+  lastSolver?: number | null;
 }
 
 function shiftDeadlines(state: GameState, delta: number): GameState {
@@ -74,7 +76,7 @@ export class CrimeSceneRoom {
     if (this.player(token).id !== this.file.hostId || this.file.stage !== "lobby") throw new Error("只有房主可以开局");
     const count = this.file.players.length;
     if (count < 4 || count > 12) throw new Error("需要 4–12 名玩家");
-    this.file.state = createGame(count, this.file.forensicSeat, this.file.cardsPerKind, this.file.eventsEnabled, now, random);
+    this.file.state = createGame(count, this.file.forensicSeat, this.file.cardsPerKind, this.file.eventsEnabled, now, random, this.file.lastSolver ?? null);
     this.file.stage = "game";
     this.file.version++;
   }
@@ -82,6 +84,8 @@ export class CrimeSceneRoom {
   /** 结案后房主可让全员回到房间，保留座位与设置，直接开下一局。 */
   rematch(token: string) {
     if (this.player(token).id !== this.file.hostId || this.file.stage !== "game" || this.file.state?.phase !== "result") throw new Error("只有房主能在结案后再来一局");
+    const solved = this.file.state.log.findLast((entry) => entry.guess && entry.detail !== "错！");
+    this.file.lastSolver = solved?.seat ?? null;
     this.file.stage = "lobby";
     this.file.state = null;
     this.file.pausedAt = null;

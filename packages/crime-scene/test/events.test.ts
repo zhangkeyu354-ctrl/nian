@@ -36,9 +36,12 @@ describe("六个特殊事件", () => {
     expect(() => traceable(base(), 0, ["scene-05", "scene-06", "scene-07", "scene-08", "scene-09"], "scene-07", "death")).toThrow();
   });
 
-  it("扭转局势给上一位失败者一次额外机会；无人适用则补抽橙板", () => {
-    expect(reversal(base(), "scene-05").bonusAttempts[4]).toBe(1);
-    const s = base(); s.lastFailed = null;
+  it("扭转局势按原版给上一局破案成功者一次额外机会；本局失败者不算；无人适用则补抽橙板", () => {
+    const prev = { ...base(), previousSolver: 4 };
+    expect(reversal(prev, "scene-05").bonusAttempts[4]).toBe(1);
+    expect(reversal({ ...base(), lastFailed: 4, previousSolver: null }, "scene-05").bonusAttempts[4]).toBe(0);
+    expect(reversal({ ...base(), previousSolver: 0 }, "scene-05").bonusAttempts[0]).toBe(0);
+    const s = base(); s.previousSolver = null;
     expect(reversal(s, "scene-05").orangeDeck).not.toContain("scene-05");
   });
 

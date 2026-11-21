@@ -125,4 +125,19 @@ describe("犯罪现场房间凭证与暂停", () => {
     r.start(tokens[0], 5000, () => 0.25);
     expect(r.snapshot(tokens[1]).stage).toBe("game");
   });
+
+  it("再来一局时记住上一局破案成功者，交给下一局的「扭转局势」；无人破案则为空", () => {
+    const r = room();
+    const tokens = Array.from({ length: 4 }, (_, i) => r.claim(`玩家${i + 1}`));
+    r.start(tokens[0], 1000, () => 0.25);
+    r.file.state!.phase = "result";
+    r.file.state!.log.push({ type: "result", at: 2000, detail: "破案", seat: 2, guess: { owner: 1, clue: "a", means: "b" } });
+    r.rematch(tokens[0]);
+    expect(r.file.lastSolver).toBe(2);
+    r.start(tokens[0], 3000, () => 0.25);
+    expect(r.file.state!.previousSolver).toBe(2);
+    r.file.state!.phase = "result";
+    r.rematch(tokens[0]);
+    expect(r.file.lastSolver).toBeNull();
+  });
 });

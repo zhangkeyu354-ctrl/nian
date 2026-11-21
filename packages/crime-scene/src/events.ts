@@ -12,6 +12,7 @@ export interface EventState {
   badges: boolean[];
   bonusAttempts: number[];
   lastFailed: number | null;
+  previousSolver?: number | null;
   players: { seat: number; clues: string[]; excludedClues: string[] }[];
   answer: EvidencePair;
   countdownActive: boolean;
@@ -54,8 +55,9 @@ export function traceable(state: EventState, seat: number, drawn: string[], chos
 
 export function reversal(state: EventState, fallbackTile: string): EventState {
   search(state);
-  const target = state.lastFailed;
-  if (target !== null && Number.isInteger(target) && target >= 0 && target < state.roles.length) {
+  // 原版卡面：上一局破案成功的玩家立即获得一次额外破案机会（不占用本局机会）；第一局或上局无人破案则改抽另一块板。
+  const target = state.previousSolver ?? null;
+  if (target !== null && Number.isInteger(target) && target >= 0 && target < state.roles.length && target !== state.forensicSeat) {
     const bonusAttempts = [...state.bonusAttempts];
     bonusAttempts[target]++;
     return { ...state, bonusAttempts };

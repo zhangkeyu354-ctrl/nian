@@ -42,7 +42,7 @@ describe("上线审核：事件边界", () => {
     state = {
       ...state,
       badges: state.badges.map((badge, index) => ["investigator", "witness"].includes(state.roles[index]) ? false : badge),
-      lastFailed: seat,
+      previousSolver: seat,
       orangeDeck: ["event-03", ...state.orangeDeck.filter((tile) => tile !== "event-03")],
     };
     state = reduceGame(state, { type: "replace", seat: 0, oldTile: state.board!.tiles[2] }, 61_000);

@@ -29,6 +29,8 @@ export interface GameState {
   records: { round: number; tiles: string[]; markers: Record<string, number>; at: number }[];
   pendingEvent: PendingEvent | null;
   lastFailed: number | null;
+  /** 上一局正确破案的座位（「扭转局势」按原版卡面给他一次额外机会）；第一局或上局无人破案为 null。 */
+  previousSolver: number | null;
   countdownActive: boolean;
   bonusSeat: number | null;
   resultReason: "all_good_badges" | "three_rounds" | "countdown" | null;
@@ -54,9 +56,9 @@ export type GameCommand =
   | { type: "suggest"; seat: number; target: number }
   | { type: "submit_hunt"; seat: number };
 
-export function createGame(playerCount: number, forensicSeat: number, cardsPerKind: 3 | 4 | 5, eventsEnabled: boolean, now: number, random: () => number = Math.random): GameState {
+export function createGame(playerCount: number, forensicSeat: number, cardsPerKind: 3 | 4 | 5, eventsEnabled: boolean, now: number, random: () => number = Math.random, previousSolver: number | null = null): GameState {
   const dealt = dealGame(playerCount, forensicSeat, cardsPerKind, random);
-  return { ...dealt, eventsEnabled, bonusAttempts: Array(playerCount).fill(0), night: null, board: null, hunt: null, winner: null, log: [{ type: "setup", at: now, detail: "开局发牌" }], records: [], pendingEvent: null, lastFailed: null, countdownActive: false, bonusSeat: null, resultReason: null };
+  return { ...dealt, eventsEnabled, bonusAttempts: Array(playerCount).fill(0), night: null, board: null, hunt: null, winner: null, log: [{ type: "setup", at: now, detail: "开局发牌" }], records: [], pendingEvent: null, lastFailed: null, previousSolver: previousSolver !== null && Number.isInteger(previousSolver) && previousSolver >= 0 && previousSolver < playerCount ? previousSolver : null, countdownActive: false, bonusSeat: null, resultReason: null };
 }
 
 const logged = (state: GameState, type: string, at: number, detail: string): GameState => ({ ...state, log: [...state.log, { type, at, detail }] });
@@ -77,7 +79,13 @@ function shuffle<T>(items: T[], random: () => number): T[] {
 
 function eventState(state: GameState): EventState {
   if (!state.board || !state.answer) throw new Error("事件状态不完整");
-  return { phase: state.board.phase, round: state.board.round as 2 | 3, forensicSeat: state.forensicSeat, roles: state.roles, tiles: state.board.tiles, orangeDeck: state.orangeDeck, markers: state.board.markers, badges: state.badges, bonusAttempts: state.bonusAttempts, lastFailed: state.lastFailed, players: state.players, answer: state.answer, countdownActive: state.countdownActive, winner: state.winner, exclusionNext: state.pendingEvent?.exclusionNext };
+  return { phase: state.board.phase, round: state.board.round as 2 | 3, forensicSeat: state.forensicSeat, roles: state.roles, tiles: state.board.tiles, orangeDeck: state.orangeDeck, markers: state.board.markers, badges: state.badges, bonusAttempts: state.bonusAttempts, lastFailed: state.lastFailed, previousSolver: state.previousSolver, players: state.players, answer: state.answer, countdownActive: state.countdownActive, winner: state.winner, exclusionNext: state.pendingEvent?.exclusionNext };
+}
+
+/** 「扭转局势」的受益者：上一局正确破案、且本局不是鉴证专家的玩家。 */
+function twistSeat(state: GameState): number | null {
+  const seat = state.previousSolver;
+  return seat !== null && seat >= 0 && seat < state.roles.length && seat !== state.forensicSeat ? seat : null;
 }
 
 function finishEvent(state: GameState, result: EventState, now: number, done = true): GameState {
@@ -186,12 +194,15 @@ export function reduceGame(state: GameState, command: GameCommand, now: number, 
     board = extendSpeaker(state.board);
   } else if (command.type === "replace") {
     const drawn = state.orangeDeck[0];
-    const newTile = drawn?.startsWith("event-") ? state.orangeDeck.find((tile) => tile.startsWith("scene-")) : drawn;
-    if (!newTile) throw new Error("橙色牌堆已空");
-    board = replaceScene(state.board, command.seat, command.oldTile, newTile);
+    if (!drawn) throw new Error("橙色牌堆已空");
+    if (drawn.startsWith("event-")) {
+      // 出版方裁定：事件板替代本轮这次抽板，不再补普通板。本站房规：抽到事件时不撤板，原板与标记保留，场上始终 6 块。
+      const b = state.board;
+      if (b.phase !== `round${b.round}_search` || b.round === 1 || command.seat !== state.forensicSeat || b.replaced) throw new Error("现在不能替换该场景板");
+      board = { ...b, replaced: true };
+    } else board = replaceScene(state.board, command.seat, command.oldTile, drawn);
   } else throw new Error("未知操作");
-  let orangeDeck = command.type === "replace" ? state.orangeDeck.filter((tile) => tile !== state.orangeDeck[0] && tile !== board.tiles.find((tile) => !state.board!.tiles.includes(tile))) : state.orangeDeck;
-  if (command.type === "replace" && !state.orangeDeck[0].startsWith("event-")) orangeDeck = state.orangeDeck.slice(1);
+  let orangeDeck = command.type === "replace" ? state.orangeDeck.slice(1) : state.orangeDeck;
   if (command.type === "next_speaker" && board.round === 2 && state.board.round === 1 && state.eventsEnabled) orangeDeck = shuffle([...state.orangeDeck, ...Array.from({ length: 6 }, (_, index) => `event-0${index + 1}`)], random);
   if (command.type === "replace" && state.orangeDeck[0].startsWith("event-")) {
     const id = state.orangeDeck[0];
@@ -201,9 +212,10 @@ export function reduceGame(state: GameState, command: GameCommand, now: number, 
     if (id === "event-03") {
       const fallbackTile = orangeDeck.find((tile) => tile.startsWith("scene-")) ?? "";
       const resolved = finishEvent(next, reversal(eventState(next), fallbackTile), now);
-      return state.lastFailed === null
+      const twist = twistSeat(state);
+      return twist === null
         ? { ...resolved, phase: "event_bonus_scene", pendingEvent: { id, drawn: [fallbackTile] } }
-        : { ...resolved, phase: "event_bonus", bonusSeat: state.lastFailed };
+        : { ...resolved, phase: "event_bonus", bonusSeat: twist };
     }
     return logged(next, "event", now, id);
   }
