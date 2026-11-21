@@ -114,6 +114,7 @@ export class CrimeSceneRoom {
   chat(token: string, message: string, now: number) {
     const player = this.player(token);
     if (this.file.mode !== "online" || !/^round[123]_(search|brief)$/.test(this.file.state?.phase ?? "") || this.file.pausedAt !== null) throw new Error("只有线上调查阶段可以发言");
+    if (this.file.players.findIndex((p) => p.id === player.id) === this.file.forensicSeat) throw new Error("鉴证专家不能发言，只能用标记提示");
     const text = String(message ?? "").trim().slice(0, 280);
     if (!text) throw new Error("不能发送空消息");
     const seat = this.file.players.findIndex((p) => p.id === player.id);
