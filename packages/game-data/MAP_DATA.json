@@ -4,6 +4,480 @@
   "edition_scope": "BASE_STANDARD",
   "note": "CONFIRMED只表示所标注的事实范围有依据；不等于全字段齐全、日文版一致、译文批准或已实现。null/空数组表示未确认。",
   "expected_total": 2,
+  "candidate_maps": [
+  {
+    "id": "crotus_prenn_asylum",
+    "name_ja": null,
+    "name_en": "Crotus Prenn Asylum",
+    "name_zh": "克洛普瑞恩疯人院",
+    "translation_status": "DRAFT",
+    "japanese_text_status": "CHECK_REQUIRED",
+    "source_level": "D",
+    "source_ref": [
+      "crotus.jpg / CrotusRecreated.png：地图标题及全图"
+    ],
+    "status": "CHECK_REQUIRED",
+    "identity_status": "CHECK_REQUIRED",
+    "nodes": [
+      {
+        "id": "shack",
+        "name_ja": null,
+        "name_en": "Shack",
+        "name_zh": "小屋",
+        "translation_status": "DRAFT",
+        "source_level": "D",
+        "source_ref": [
+          "crotus.jpg / CrotusRecreated.png：房间 Shack 顶栏"
+        ],
+        "status": "CHECK_REQUIRED",
+        "initial_prop_counts": {
+          "objective": 1,
+          "boldness": 2,
+          "survival": 1,
+          "altruism": 1
+        },
+        "spawn_faces": [
+          5
+        ],
+        "coordinates": null
+      },
+      {
+        "id": "dark_wood",
+        "name_ja": null,
+        "name_en": "Dark Wood",
+        "name_zh": "黑暗树林",
+        "translation_status": "DRAFT",
+        "source_level": "D",
+        "source_ref": [
+          "crotus.jpg / CrotusRecreated.png：房间 Dark Wood 顶栏"
+        ],
+        "status": "CHECK_REQUIRED",
+        "initial_prop_counts": {
+          "objective": 1,
+          "boldness": 1,
+          "survival": 1,
+          "altruism": 1
+        },
+        "spawn_faces": [
+          0
+        ],
+        "coordinates": null
+      },
+      {
+        "id": "courtyard",
+        "name_ja": null,
+        "name_en": "Courtyard",
+        "name_zh": "庭院",
+        "translation_status": "DRAFT",
+        "source_level": "D",
+        "source_ref": [
+          "crotus.jpg / CrotusRecreated.png：房间 Courtyard 顶栏"
+        ],
+        "status": "CHECK_REQUIRED",
+        "initial_prop_counts": {
+          "objective": 1,
+          "boldness": 1,
+          "survival": 1,
+          "altruism": 2
+        },
+        "spawn_faces": [
+          1
+        ],
+        "coordinates": null
+      },
+      {
+        "id": "treatment_hall",
+        "name_ja": null,
+        "name_en": "Treatment Hall",
+        "name_zh": "治疗大厅",
+        "translation_status": "DRAFT",
+        "source_level": "D",
+        "source_ref": [
+          "crotus.jpg / CrotusRecreated.png：房间 Treatment Hall 顶栏"
+        ],
+        "status": "CHECK_REQUIRED",
+        "initial_prop_counts": {
+          "objective": 1,
+          "boldness": 1,
+          "survival": 1,
+          "altruism": 1
+        },
+        "spawn_faces": [],
+        "coordinates": null
+      },
+      {
+        "id": "hallway",
+        "name_ja": null,
+        "name_en": "Hallway",
+        "name_zh": "走廊",
+        "translation_status": "DRAFT",
+        "source_level": "D",
+        "source_ref": [
+          "crotus.jpg / CrotusRecreated.png：房间 Hallway 顶栏"
+        ],
+        "status": "CHECK_REQUIRED",
+        "initial_prop_counts": {
+          "objective": 0,
+          "boldness": 0,
+          "survival": 2,
+          "altruism": 2
+        },
+        "spawn_faces": [],
+        "coordinates": null
+      },
+      {
+        "id": "carnival_entrance",
+        "name_ja": null,
+        "name_en": "Carnival Entrance",
+        "name_zh": "嘉年华入口",
+        "translation_status": "DRAFT",
+        "source_level": "D",
+        "source_ref": [
+          "crotus.jpg / CrotusRecreated.png：房间 Carnival Entrance 顶栏"
+        ],
+        "status": "CHECK_REQUIRED",
+        "initial_prop_counts": {
+          "objective": 2,
+          "boldness": 1,
+          "survival": 1,
+          "altruism": 1
+        },
+        "spawn_faces": [
+          2
+        ],
+        "coordinates": null
+      },
+      {
+        "id": "greenhouse",
+        "name_ja": null,
+        "name_en": "Greenhouse",
+        "name_zh": "温室",
+        "translation_status": "DRAFT",
+        "source_level": "D",
+        "source_ref": [
+          "crotus.jpg / CrotusRecreated.png：房间 Greenhouse 顶栏"
+        ],
+        "status": "CHECK_REQUIRED",
+        "initial_prop_counts": {
+          "objective": 1,
+          "boldness": 1,
+          "survival": 1,
+          "altruism": 1
+        },
+        "spawn_faces": [],
+        "coordinates": null
+      },
+      {
+        "id": "receiving_desk",
+        "name_ja": null,
+        "name_en": "Receiving Desk",
+        "name_zh": "接待处",
+        "translation_status": "DRAFT",
+        "source_level": "D",
+        "source_ref": [
+          "crotus.jpg / CrotusRecreated.png：房间 Receiving Desk 顶栏"
+        ],
+        "status": "CHECK_REQUIRED",
+        "initial_prop_counts": {
+          "objective": 1,
+          "boldness": 1,
+          "survival": 2,
+          "altruism": 0
+        },
+        "spawn_faces": [],
+        "coordinates": null
+      },
+      {
+        "id": "ruins",
+        "name_ja": null,
+        "name_en": "Ruins",
+        "name_zh": "废墟",
+        "translation_status": "DRAFT",
+        "source_level": "D",
+        "source_ref": [
+          "crotus.jpg / CrotusRecreated.png：房间 Ruins 顶栏"
+        ],
+        "status": "CHECK_REQUIRED",
+        "initial_prop_counts": {
+          "objective": 1,
+          "boldness": 1,
+          "survival": 2,
+          "altruism": 1
+        },
+        "spawn_faces": [
+          4
+        ],
+        "coordinates": null
+      },
+      {
+        "id": "outer_garden",
+        "name_ja": null,
+        "name_en": "Outer Garden",
+        "name_zh": "外庭院",
+        "translation_status": "DRAFT",
+        "source_level": "D",
+        "source_ref": [
+          "crotus.jpg / CrotusRecreated.png：房间 Outer Garden 顶栏"
+        ],
+        "status": "CHECK_REQUIRED",
+        "initial_prop_counts": {
+          "objective": 1,
+          "boldness": 1,
+          "survival": 1,
+          "altruism": 1
+        },
+        "spawn_faces": [
+          3
+        ],
+        "coordinates": null
+      }
+    ],
+    "edges": [],
+    "expected_node_count": 10,
+    "expected_edge_count": null,
+    "topology_status": "CHECK_REQUIRED",
+    "missing_fields": [
+      "所有路线的端点、颜色、单向箭头、开局墙和多房间路口待逐条转录核对"
+    ],
+    "runtime_enabled": false
+  },
+  {
+    "id": "ormond",
+    "name_ja": null,
+    "name_en": "Ormond",
+    "name_zh": "奥蒙德",
+    "translation_status": "DRAFT",
+    "japanese_text_status": "CHECK_REQUIRED",
+    "source_level": "D",
+    "source_ref": [
+      "ormond.jpg / OrmondRecreated.png：地图标题及全图"
+    ],
+    "status": "CHECK_REQUIRED",
+    "identity_status": "CHECK_REQUIRED",
+    "nodes": [
+      {
+        "id": "picnic_area",
+        "name_ja": null,
+        "name_en": "Picnic Area",
+        "name_zh": "野餐区",
+        "translation_status": "DRAFT",
+        "source_level": "D",
+        "source_ref": [
+          "ormond.jpg / OrmondRecreated.png：房间 Picnic Area 顶栏"
+        ],
+        "status": "CHECK_REQUIRED",
+        "initial_prop_counts": {
+          "objective": 1,
+          "boldness": 1,
+          "survival": 1,
+          "altruism": 0
+        },
+        "spawn_faces": [
+          1
+        ],
+        "coordinates": null
+      },
+      {
+        "id": "guest_rooms",
+        "name_ja": null,
+        "name_en": "Guest Rooms",
+        "name_zh": "客房",
+        "translation_status": "DRAFT",
+        "source_level": "D",
+        "source_ref": [
+          "ormond.jpg / OrmondRecreated.png：房间 Guest Rooms 顶栏"
+        ],
+        "status": "CHECK_REQUIRED",
+        "initial_prop_counts": {
+          "objective": 1,
+          "boldness": 1,
+          "survival": 1,
+          "altruism": 1
+        },
+        "spawn_faces": [
+          0
+        ],
+        "coordinates": null
+      },
+      {
+        "id": "balcony",
+        "name_ja": null,
+        "name_en": "Balcony",
+        "name_zh": "阳台",
+        "translation_status": "DRAFT",
+        "source_level": "D",
+        "source_ref": [
+          "ormond.jpg / OrmondRecreated.png：房间 Balcony 顶栏"
+        ],
+        "status": "CHECK_REQUIRED",
+        "initial_prop_counts": {
+          "objective": 1,
+          "boldness": 1,
+          "survival": 0,
+          "altruism": 2
+        },
+        "spawn_faces": [],
+        "coordinates": null
+      },
+      {
+        "id": "storage",
+        "name_ja": null,
+        "name_en": "Storage",
+        "name_zh": "储藏室",
+        "translation_status": "DRAFT",
+        "source_level": "D",
+        "source_ref": [
+          "ormond.jpg / OrmondRecreated.png：房间 Storage 顶栏"
+        ],
+        "status": "CHECK_REQUIRED",
+        "initial_prop_counts": {
+          "objective": 1,
+          "boldness": 1,
+          "survival": 2,
+          "altruism": 0
+        },
+        "spawn_faces": [
+          5
+        ],
+        "coordinates": null
+      },
+      {
+        "id": "chalet",
+        "name_ja": null,
+        "name_en": "Chalet",
+        "name_zh": "山间旅馆",
+        "translation_status": "DRAFT",
+        "source_level": "D",
+        "source_ref": [
+          "ormond.jpg / OrmondRecreated.png：房间 Chalet 顶栏"
+        ],
+        "status": "CHECK_REQUIRED",
+        "initial_prop_counts": {
+          "objective": 1,
+          "boldness": 1,
+          "survival": 2,
+          "altruism": 2
+        },
+        "spawn_faces": [],
+        "coordinates": null
+      },
+      {
+        "id": "rentals",
+        "name_ja": null,
+        "name_en": "Rentals",
+        "name_zh": "租赁处",
+        "translation_status": "DRAFT",
+        "source_level": "D",
+        "source_ref": [
+          "ormond.jpg / OrmondRecreated.png：房间 Rentals 顶栏"
+        ],
+        "status": "CHECK_REQUIRED",
+        "initial_prop_counts": {
+          "objective": 1,
+          "boldness": 1,
+          "survival": 1,
+          "altruism": 2
+        },
+        "spawn_faces": [],
+        "coordinates": null
+      },
+      {
+        "id": "wooded_area",
+        "name_ja": null,
+        "name_en": "Wooded Area",
+        "name_zh": "林地区",
+        "translation_status": "DRAFT",
+        "source_level": "D",
+        "source_ref": [
+          "ormond.jpg / OrmondRecreated.png：房间 Wooded Area 顶栏"
+        ],
+        "status": "CHECK_REQUIRED",
+        "initial_prop_counts": {
+          "objective": 1,
+          "boldness": 1,
+          "survival": 1,
+          "altruism": 1
+        },
+        "spawn_faces": [
+          4
+        ],
+        "coordinates": null
+      },
+      {
+        "id": "ski_shack",
+        "name_ja": null,
+        "name_en": "Ski Shack",
+        "name_zh": "滑雪小屋",
+        "translation_status": "DRAFT",
+        "source_level": "D",
+        "source_ref": [
+          "ormond.jpg / OrmondRecreated.png：房间 Ski Shack 顶栏"
+        ],
+        "status": "CHECK_REQUIRED",
+        "initial_prop_counts": {
+          "objective": 1,
+          "boldness": 1,
+          "survival": 1,
+          "altruism": 1
+        },
+        "spawn_faces": [
+          2
+        ],
+        "coordinates": null
+      },
+      {
+        "id": "basement",
+        "name_ja": null,
+        "name_en": "Basement",
+        "name_zh": "地下室",
+        "translation_status": "DRAFT",
+        "source_level": "D",
+        "source_ref": [
+          "ormond.jpg / OrmondRecreated.png：房间 Basement 顶栏"
+        ],
+        "status": "CHECK_REQUIRED",
+        "initial_prop_counts": {
+          "objective": 1,
+          "boldness": 1,
+          "survival": 1,
+          "altruism": 1
+        },
+        "spawn_faces": [],
+        "coordinates": null
+      },
+      {
+        "id": "entryway",
+        "name_ja": null,
+        "name_en": "Entryway",
+        "name_zh": "入口通道",
+        "translation_status": "DRAFT",
+        "source_level": "D",
+        "source_ref": [
+          "ormond.jpg / OrmondRecreated.png：房间 Entryway 顶栏"
+        ],
+        "status": "CHECK_REQUIRED",
+        "initial_prop_counts": {
+          "objective": 1,
+          "boldness": 1,
+          "survival": 2,
+          "altruism": 2
+        },
+        "spawn_faces": [
+          3
+        ],
+        "coordinates": null
+      }
+    ],
+    "edges": [],
+    "expected_node_count": 10,
+    "expected_edge_count": null,
+    "topology_status": "CHECK_REQUIRED",
+    "missing_fields": [
+      "所有路线的端点、颜色、单向箭头、开局墙和多房间路口待逐条转录核对"
+    ],
+    "runtime_enabled": false
+  }
+],
   "maps": [
     {
       "id": "macmillan_estate",

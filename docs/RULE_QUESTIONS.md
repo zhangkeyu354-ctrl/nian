@@ -57,3 +57,10 @@
 
 ## DM-01 《请留遗言》配置范围（2026-10-21）
 4–10人按用户既有人数比例可用；11–15人原版帮助卡未取得，CHECK_REQUIRED，界面禁用。15角色核心效果由中文照片与发行方同版说明书交叉核对；完整实现/测试范围见docs/dying-message/ACCEPTANCE_2026-10-21.md。极端连锁组合未穷举；原版全员同意跳过投票入口和单设备热座尚未实现。
+
+## DBD 新地图素材核对（2026-11-23）
+
+| ID | 状态 | 核对事项 | 处理边界 |
+| --- | --- | --- | --- |
+| DBD-MAP-01 | CHECK_REQUIRED | `CrotusRecreated.png` 顶栏误写 ORMOND；对应原始照片 `crotus.jpg` 顶栏为 CROTUS PRENN ASYLUM。用户要求以图内顶栏为准，地图身份采用原始照片标题。 | 不以重制图的错误标题命名地图；逐条路线仍须与原始照片核对。 |
+| DBD-MAP-02 | CHECK_REQUIRED | Crotus 与 Ormond 的路线端点、颜色、箭头、开局墙和多房间路口尚未完成逐项转录；原始宣传照片分辨率较低。 | 两张地图只存入 `candidate_maps`，`runtime_enabled: false`，不开放建房选择，不进行虚假的整局验收。 |
