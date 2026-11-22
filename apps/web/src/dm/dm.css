@@ -1147,3 +1147,25 @@
     animation: none;
   }
 }
+
+/* Functional labels and the hall link remain legible and easy to tap. */
+.dm-header a {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+  padding: 0 8px;
+  white-space: nowrap;
+}
+@media (max-width: 650px) {
+  .dm-header a,
+  .dm-header small,
+  .dm-header > span,
+  .dm-stage .dm-eyebrow,
+  .dm-tabletop > small,
+  .dm-seat > span:not(.dm-seat-portrait),
+  .dm-seat > small,
+  .dm-table-dense .dm-seat > span:not(.dm-seat-portrait),
+  .dm-table-dense .dm-seat > small {
+    font-size: 12px;
+  }
+}

@@ -3249,6 +3249,27 @@
 .nd-world .nd-seat-grid button:disabled:not(.empty):not(.mine) { opacity: 0.6; }
 .nd-world .nd-seat-grid button.mine:disabled { opacity: 1; cursor: default; }
 .nd-world .nd-seat-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+
+/* Show enough of each name on the compact result rail; tapping opens the full list. */
+@media (max-width: 520px) {
+  .nd-world .nd-seats .nd-seat {
+    height: 72px;
+    min-height: 72px;
+  }
+  .nd-world .nd-seats .nd-seat-name {
+    display: -webkit-box;
+    width: 100%;
+    max-width: 64px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
+    white-space: normal;
+    overflow-wrap: anywhere;
+    line-height: 16px;
+    min-height: 32px;
+  }
+}
 @media (min-width: 700px) {
   .nd-world .nd-seat-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
 }

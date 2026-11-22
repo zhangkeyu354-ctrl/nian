@@ -877,6 +877,12 @@ export function NaodongScale() {
                         >
                           查看本局回顾
                         </button>
+                        <button
+                          className="nd-secondary"
+                          onClick={() => setMenu("players")}
+                        >
+                          查看完整名单
+                        </button>
                       </div>
                     ) : (
                       <>

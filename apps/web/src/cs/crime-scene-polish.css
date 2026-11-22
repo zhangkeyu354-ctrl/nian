@@ -223,3 +223,48 @@ button.cs-evidence { cursor:pointer; }
 .cs-drawn > span { font-size:12px; color:#cdbba0; line-height:1.6; }
 .cs-drawn label { display:grid; gap:5px; font-size:12px; color:var(--cs-muted); }
 .cs-drawn .cs-primary { margin-top:4px; }
+
+/* Keep the mobile controls on one line and give the hall link its own row. */
+@media (max-width: 480px) {
+  .cs-topbar {
+    height: auto;
+    min-height: 88px;
+    display: grid;
+    grid-template-columns: auto minmax(0, 1fr);
+    grid-template-rows: 44px 44px;
+    column-gap: 8px;
+    padding: 0 10px;
+  }
+  .cs-topbar > a {
+    grid-column: 1 / -1;
+    display: inline-flex;
+    align-items: center;
+    width: max-content;
+    min-width: 44px;
+    min-height: 44px;
+    white-space: nowrap;
+  }
+  .cs-topbar > strong {
+    grid-row: 2;
+    font-size: 18px;
+    letter-spacing: .04em;
+    white-space: nowrap;
+  }
+  .cs-top-actions {
+    grid-row: 2;
+    grid-column: 2;
+    justify-self: end;
+    gap: 4px;
+    min-width: 0;
+  }
+  .cs-top-actions button,
+  .cs-top-actions .cs-sound-toggle {
+    width: 44px;
+    min-width: 44px;
+    height: 44px;
+    min-height: 44px;
+    padding: 0;
+    white-space: nowrap;
+  }
+  .cs-room-pill { padding: 4px 5px; letter-spacing: .02em; }
+}

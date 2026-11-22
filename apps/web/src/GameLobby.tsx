@@ -88,7 +88,7 @@ export function GameLobby() {
           blurb="逃生者修好发电机逃出大门，杀手要把他们挂上钩子。每个人只看得到自己的秘密移动牌。"
           art={
             <img
-              src="/assets/brand_lantern.png"
+              src="/assets/brand_lantern-252.webp"
               alt=""
               width={84}
               height={84}

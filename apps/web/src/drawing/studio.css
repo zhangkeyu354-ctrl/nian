@@ -4591,6 +4591,17 @@
 .lb-seg button {
   min-width: 0;
 }
+@media (max-width: 520px) {
+  .lb-seg {
+    grid-auto-flow: row;
+    grid-template-columns: repeat(4, minmax(44px, 1fr));
+  }
+  .lb-seg button,
+  .lb-seg.is-small button {
+    min-width: 44px;
+    min-height: 44px;
+  }
+}
 .lb-room-head > div {
   min-width: 0;
 }

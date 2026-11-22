@@ -1217,3 +1217,18 @@ html.cn-shake body {
   transform: translateX(-50%);
   animation: cn-fadein 0.25s ease-out;
 }
+
+.cn-back {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+  min-width: 44px;
+  padding: 0 8px;
+  width: max-content;
+  white-space: nowrap;
+}
+.cn-status .cn-back {
+  min-height: 44px;
+  min-width: 44px;
+  top: 4px;
+}

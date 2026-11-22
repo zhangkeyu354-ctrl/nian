@@ -864,6 +864,16 @@ try {
       checks.push(`${n}: celebration can be skipped`);
     }
     await screenPhase(n, "finished");
+    if (n === 9) {
+      await pages[0].getByRole("button", { name: "查看完整名单", exact: true }).click();
+      assert.equal(await pages[0].locator(".nd-full-players li").count(), n);
+      assert.deepEqual(
+        await pages[0].locator(".nd-full-players strong").allTextContents(),
+        snaps[0]!.players.map((player) => player.name),
+      );
+      await screenPhase(n, "finished-players");
+      await closeMenu(pages[0]);
+    }
     games.push({ players: n, rounds: snaps[0]!.view!.round, success: true });
     if (n === 9) {
       await pages[0].setViewportSize({ width: 1280, height: 800 });
@@ -974,8 +984,8 @@ try {
   await errorContext.close();
   const p = await browser.newPage({ viewport: { width: 390, height: 844 } });
   await p.goto(url);
-  await p.locator(".box-nd").scrollIntoViewIfNeeded();
-  await capture(p, "homepage-box-390x844");
+  await p.getByTestId("cart-nd").scrollIntoViewIfNeeded();
+  await p.screenshot({ path: join(out, "homepage-box-390x844.png") });
   await p.close();
   assert.equal(errors.length, 0, JSON.stringify(errors));
   writeFileSync(

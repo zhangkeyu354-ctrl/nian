@@ -968,6 +968,11 @@
   font-size: 11px;
   color: #d0dbc7;
 }
+/* The lobby subtitle and explanation carry useful information on phones. */
+.rk-lobby-brand > span,
+.rk-lobby-brand p {
+  font-size: 12px;
+}
 .rk-lobby-main {
   max-width: 450px;
   width: 100%;
