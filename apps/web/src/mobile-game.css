@@ -1621,7 +1621,6 @@ body.phone-inmatch {
 .room-sheet .muted { color: #9aa79f; font-size: 13px; margin: 0; }
 
 /* 把行动顺序和进度条让出给地图，关键胜负数字保留为左上角浮签。 */
-.phone-game .phone-orderbar { display: none; }
 .phone-game .phone-progress-pill {
   position: fixed;
   z-index: 13;
@@ -1638,9 +1637,6 @@ body.phone-inmatch {
   font-size: 13px;
   font-weight: 800;
   pointer-events: none;
-}
-@media (orientation: portrait) {
-  .phone-game .workspace { inset: calc(52px + env(safe-area-inset-top, 0px)) 0 var(--dock-height); }
 }
 
 /* 降噪（2026-10-22）：地图按钮半透明、播报出现时收起底部日志条 */
@@ -1681,3 +1677,11 @@ body:has(.major-notice) .phone-game .phone-latest { opacity: 0; transition: opac
 .track-mini .track-steps > span, .track-mini .track-steps svg { width: 13px !important; height: 13px !important; }
 .track-mini .track-steps { gap: 1px; }
 .track:first-child.track-mini .track-steps > span:last-child { margin-left: 3px; }
+/* 行动顺序条加回（2026-11-23）：分数改由下方图标浮签显示，浮签下移让开顺序条 */
+.phone-game .ob-score { display: none; }
+.phone-game .phone-progress-pill { top: calc(94px + env(safe-area-inset-top, 0px)); }
+@media (max-height: 600px) and (orientation: landscape) {
+  .phone-game .phone-progress-pill { top: 102px; }
+}
+/* 「杀手正在附近」放到进度浮签下面，不再压住进度 */
+body:has(.phone-game) .danger-edge span { top: calc(150px + env(safe-area-inset-top, 0px)); }
