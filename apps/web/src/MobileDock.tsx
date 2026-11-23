@@ -704,6 +704,21 @@ export function MobileDock({
                       : "点击发光的下一房间"}{" "}
                     · {route.length}步
                   </p>
+                  {(() => {
+                    const end = route.length ? route[route.length - 1].to : state.actors[state.killerId].room;
+                    const free = state.props.some(
+                      (p) => p.room === end && p.kind === "hook" && p.revealed && !p.removed &&
+                        !Object.values(state.actors).some((a) => a.hookId === p.id),
+                    );
+                    return free ? (
+                      <p className="carry-hook ok">终点「{roomName(state, end ?? "")}」有空钩子：没掷出大成功就能挂上</p>
+                    ) : (
+                      <p className="carry-hook warn">⚠ 终点「{roomName(state, end ?? "")}」没有空钩子：确认后逃生者会在这里直接挣脱。请点亮着的房间把路线走到有钩子的房间</p>
+                    );
+                  })()}
+                  {diceCount < route.length && (
+                    <p className="carry-hook warn">挣脱骰至少要选 {route.length} 颗（每颗骰子最多走 1 个房间）</p>
+                  )}
                   <div className="carry-options">
                     <TapButton onClick={clearRoute}>重选</TapButton>
                     <label>挣脱骰</label>

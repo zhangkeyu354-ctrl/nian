@@ -1685,3 +1685,6 @@ body:has(.major-notice) .phone-game .phone-latest { opacity: 0; transition: opac
 }
 /* 「杀手正在附近」放到进度浮签下面，不再压住进度 */
 body:has(.phone-game) .danger-edge span { top: calc(150px + env(safe-area-inset-top, 0px)); }
+.carry-hook { margin: 4px 0; font-size: 13px; line-height: 1.4; }
+.carry-hook.ok { color: #9fe0a8; }
+.carry-hook.warn { color: #ffb4a3; font-weight: 700; }
