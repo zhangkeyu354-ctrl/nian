@@ -9,7 +9,8 @@ services:
     buildCommand: npm ci --ignore-scripts --no-audit --no-fund && npm run build
     startCommand: npm run server
     healthCheckPath: /api/health
-    autoDeploy: true
+    # 关掉 Render 的「推送即部署」：改由 GitHub Actions deploy-when-idle 在没人玩时触发（2026-11-23）
+    autoDeploy: false
     # 只改文档时不重新部署（避免打断正在玩的房间）
     buildFilter:
       ignoredPaths:
