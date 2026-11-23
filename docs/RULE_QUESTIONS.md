@@ -63,4 +63,4 @@
 | ID | 状态 | 核对事项 | 处理边界 |
 | --- | --- | --- | --- |
 | DBD-MAP-01 | CLOSED_USER_RULING | `CrotusRecreated.png` 顶栏印 ORMOND，`crotus.jpg` 顶栏印 CROTUS PRENN ASYLUM，图内内容相近。用户于 2026-11-23 明确裁定：以低清照片确认克洛普瑞恩。 | 候选地图身份采用 CROTUS PRENN ASYLUM；高清图只作场景参考，记录其顶栏冲突。路线仍需核对，地图继续不可选。 |
-| DBD-MAP-02 | CHECK_REQUIRED | Crotus 与 Ormond 的路线端点、颜色、箭头、开局墙和多房间路口尚未完成逐项转录；原始宣传照片分辨率较低。 | 两张地图只存入 `candidate_maps`，`runtime_enabled: false`，不开放建房选择，不进行虚假的整局验收。 |
+| DBD-MAP-02 | RESOLVED（Claude 2026-11-23） | Crotus 与 Ormond 路线原先未转录。 | 用 Drive 上清晰的 CrotusRecreated.png / OrmondRecreated.png 逐条转录：疯人院 18 条、奥蒙德 22 条（锯齿边框=开局可破坏墙，黄色翻越带箭头=单向）。房间 id 加地图前缀避免和麦克米伦「小屋」重名。`npm run verify:new-maps` 校验连线并跑整局，两张图逃生者、杀手都能赢；已开放选择。注意：这两张图是爱好者复刻图，不是官方印刷，若以后拿到实物照片可再核对。 |

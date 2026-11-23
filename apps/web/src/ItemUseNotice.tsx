@@ -5,13 +5,17 @@ import { itemInfo } from "./labels.ts";
 import { Illustration } from "./Illustration.tsx";
 export function ItemUseNotice({ events }: { events: Event[] }) {
   const seen = useRef(events.length),
-    [notice, setNotice] = useState<Event | null>(null);
+    [notice, setNotice] = useState<Event | null>(null),
+    [cardFailed, setCardFailed] = useState(false);
   useEffect(() => {
     const fresh = events
       .slice(seen.current)
       .filter((e) => e.type === "ITEM_USED");
     seen.current = events.length;
-    if (fresh.length) setNotice(fresh.at(-1)!);
+    if (fresh.length) {
+      setCardFailed(false);
+      setNotice(fresh.at(-1)!);
+    }
   }, [events]);
   useEffect(() => {
     if (!notice) return;
@@ -26,7 +30,16 @@ export function ItemUseNotice({ events }: { events: Event[] }) {
       role="status"
       data-testid="item-used-feedback"
     >
-      <Illustration id={item} />
+      {cardFailed ? (
+        <Illustration id={item} />
+      ) : (
+        <img
+          className="item-card-front"
+          src={`/assets/cards/items/${itemInfo(item)?.id ?? item}.webp`}
+          alt=""
+          onError={() => setCardFailed(true)}
+        />
+      )}
       <div>
         <small>{actorName(String(notice.data.actorId))}打出物品</small>
         <strong>{itemInfo(item)?.name_zh ?? "物品"}</strong>

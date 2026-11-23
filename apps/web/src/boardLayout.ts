@@ -160,7 +160,87 @@ const macmillan = build(
   },
 );
 
+// 克洛普瑞恩疯人院（2026-11-23）：按复刻图的连线转录，三行拼合
+const crotus = build(
+  {
+    crotus_shack: [0, -200, 1.0], crotus_dark_wood: [288, -220, 1.1], crotus_courtyard: [580, -220, 1.1],
+    crotus_treatment_hall: [100, G, 1.0], crotus_hallway: [388, G, 1.05], crotus_receiving_desk: [689, G, 1.0],
+    crotus_ruins: [0, 266, 0.9], crotus_greenhouse: [262, 266, 1.0], crotus_outer_garden: [550, 266, 1.0], crotus_carnival_entrance: [838, 266, 1.0],
+  },
+  [
+    ["crotus_shack", "crotus_dark_wood", "cp_p01"],
+    ["crotus_dark_wood", "crotus_courtyard", "cp_p03"],
+    ["crotus_shack", "crotus_treatment_hall", "cp_p05"],
+    ["crotus_dark_wood", "crotus_treatment_hall", "cp_p02"],
+    ["crotus_dark_wood", "crotus_hallway", "cp_p04"],
+    ["crotus_treatment_hall", "crotus_hallway", "cp_p06"],
+    ["crotus_hallway", "crotus_courtyard", "cp_p07", 0, 1, "crotus_hallway"],
+    ["crotus_receiving_desk", "crotus_courtyard", "cp_p12", 0, 1, "crotus_receiving_desk"],
+    ["crotus_treatment_hall", "crotus_greenhouse", "cp_p10"],
+    ["crotus_hallway", "crotus_receiving_desk", "cp_p11"],
+    ["crotus_greenhouse", "crotus_ruins", "cp_p13"],
+    ["crotus_greenhouse", "crotus_outer_garden", "cp_p17"],
+    ["crotus_receiving_desk", "crotus_carnival_entrance", "cp_p15", 0, 0.45],
+    ["crotus_receiving_desk", "crotus_carnival_entrance", "cp_p16", 0.55, 1],
+    ["crotus_receiving_desk", "crotus_outer_garden", "cp_p16", 0.4, 1],
+    ["crotus_outer_garden", "crotus_carnival_entrance", "cp_p16"],
+  ],
+  (box) => {
+    const sh = box("crotus_shack"), ru = box("crotus_ruins"), gr = box("crotus_greenhouse"), rd = box("crotus_receiving_desk"),
+      og = box("crotus_outer_garden"), ct = box("crotus_courtyard"), ce = box("crotus_carnival_entrance");
+    const y1 = Math.max(ru.B, og.B, ce.B) + 56, gy = (rd.B + gr.T) / 2, X = Math.max(ct.R, rd.R) + 50;
+    return [
+      { pathId: "cp_p09", pts: [[sh.L, sh.T + 60], [-56, sh.T + 60], [-56, ru.T + 60], [ru.L, ru.T + 60]], icon: [-56, (sh.B + ru.T) / 2] },
+      { pathId: "cp_p14", pts: [[gr.R - 30, gr.T], [gr.R - 30, gy], [rd.L + 20, gy], [rd.L + 20, rd.B]], icon: [(gr.R + rd.L) / 2 - 5, gy] },
+      { pathId: "cp_p18", pts: [[ru.L + 110, ru.B], [ru.L + 110, y1], [og.L + 130, y1], [og.L + 130, og.B]], icon: [(ru.L + og.L + 240) / 2, y1] },
+      { pathId: "cp_p08", pts: [[ct.R, ct.T + 100], [X, ct.T + 100], [X, ce.T]], icon: [X, (ct.T + ce.T) / 2 + 80] },
+    ];
+  },
+);
+
+// 奥蒙德（2026-11-23）：按复刻图的连线转录，三行拼合
+const ormond = build(
+  {
+    ormond_picnic_area: [0, -200, 1.0], ormond_guest_rooms: [288, -200, 1.0], ormond_balcony: [560, -210, 1.05], ormond_storage: [877, -200, 1.0],
+    ormond_ski_shack: [0, G, 0.9], ormond_chalet: [262, G, 1.5], ormond_rentals: [654, G, 1.2], ormond_wooded_area: [968, G, 0.9],
+    ormond_basement: [300, 336, 1.6], ormond_entryway: [708, 336, 1.4],
+  },
+  [
+    ["ormond_picnic_area", "ormond_guest_rooms", "or_p02"],
+    ["ormond_guest_rooms", "ormond_balcony", "or_p03"],
+    ["ormond_balcony", "ormond_storage", "or_p04", 0, 1, "ormond_balcony"],
+    ["ormond_picnic_area", "ormond_ski_shack", "or_p10"],
+    ["ormond_guest_rooms", "ormond_chalet", "or_p07"],
+    ["ormond_balcony", "ormond_chalet", "or_p08"],
+    ["ormond_balcony", "ormond_rentals", "or_p05", 0, 1, "ormond_balcony"],
+    ["ormond_storage", "ormond_rentals", "or_p06"],
+    ["ormond_storage", "ormond_wooded_area", "or_p13"],
+    ["ormond_ski_shack", "ormond_chalet", "or_p14"],
+    ["ormond_chalet", "ormond_rentals", "or_p11", 0, 0.45],
+    ["ormond_chalet", "ormond_rentals", "or_p15", 0.55, 1],
+    ["ormond_rentals", "ormond_wooded_area", "or_p12"],
+    ["ormond_chalet", "ormond_basement", "or_p17"],
+    ["ormond_basement", "ormond_entryway", "or_p21"],
+    ["ormond_rentals", "ormond_entryway", "or_p18"],
+    ["ormond_wooded_area", "ormond_entryway", "or_p20"],
+  ],
+  (box) => {
+    const pa = box("ormond_picnic_area"), ch = box("ormond_chalet"), st = box("ormond_storage"), wa = box("ormond_wooded_area"),
+      en = box("ormond_entryway"), sk = box("ormond_ski_shack"), bs = box("ormond_basement"), ba = box("ormond_balcony");
+    const gy = (pa.B + ch.T) / 2, X = Math.max(st.R, wa.R) + 50, y1 = Math.max(bs.B, en.B) + 56;
+    return [
+      { pathId: "or_p01", pts: [[pa.L + 60, pa.T], [pa.L + 60, pa.T - 60], [ba.L + 60, pa.T - 60], [ba.L + 60, ba.T]], icon: [(pa.L + ba.L) / 2 + 60, pa.T - 60] },
+      { pathId: "or_p09", pts: [[ch.L + 30, ch.T], [ch.L + 30, gy], [pa.R - 40, gy], [pa.R - 40, pa.B]], icon: [(ch.L + pa.R) / 2, gy], arrow: [pa.R - 40, pa.B + 34, 0, -1] },
+      { pathId: "or_p16", pts: [[st.R, st.T + 100], [X, st.T + 100], [X, en.T + 100], [en.R, en.T + 100]], icon: [X, (wa.T + wa.B) / 2] },
+      { pathId: "or_p19", pts: [[sk.L + 170, sk.B], [sk.L + 170, bs.T + 90], [bs.L, bs.T + 90]], icon: [sk.L + 170, (sk.B + bs.T + 90) / 2 + 10] },
+      { pathId: "or_p22", pts: [[sk.L + 60, sk.B], [sk.L + 60, y1], [en.L + 120, y1], [en.L + 120, en.B]], icon: [(sk.L + en.L) / 2 + 90, y1] },
+    ];
+  },
+);
+
 export const BOARD_LAYOUT: Record<string, FloorLayout> = {
   autohaven_wreckers: autohaven,
   macmillan_estate: macmillan,
+  crotus_prenn_asylum: crotus,
+  ormond: ormond,
 };

@@ -1624,3 +1624,10 @@ body.phone-inmatch {
 .phone-game .zoom-controls button { background: rgba(8, 14, 16, .5) !important; border-color: rgba(255, 255, 255, .16) !important; color: #e9ecdf; font-size: 16px; min-width: 56px; backdrop-filter: blur(6px); box-shadow: none; }
 body:has(.action-callout) .phone-game .phone-latest,
 body:has(.major-notice) .phone-game .phone-latest { opacity: 0; transition: opacity .2s; }
+.item-use-notice img.item-card-front {
+  width: 58px;
+  height: 81px;
+  border-radius: 5px;
+  object-fit: cover;
+  box-shadow: 0 3px 8px #0009;
+}

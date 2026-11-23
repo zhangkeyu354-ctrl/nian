@@ -23,6 +23,7 @@
     "verify:actions": "tsx scripts/verify-hotseat-actions.ts",
     "verify:visuals": "tsx scripts/verify-visual-feedback.ts",
     "verify:board": "tsx scripts/verify-board-visuals.ts",
+    "verify:new-maps": "tsx scripts/verify-new-maps.ts",
     "server": "tsx apps/server/src/main.ts",
     "verify:lan-protocol": "tsx scripts/verify-lan-protocol.ts",
     "verify:lan-browsers": "tsx scripts/verify-lan-browsers.ts",

@@ -517,3 +517,11 @@ svg[data-zoom="far"] .route-badge { opacity: .75; }
   .scene-bg { filter: brightness(.32) saturate(.8) !important; transform: none !important; }
   .map-viewport::after { mix-blend-mode: normal !important; opacity: .07 !important; }
 }
+.cube-die .die-art {
+  width: 74px;
+  height: 74px;
+  border-radius: 11px;
+  object-fit: cover;
+  margin-top: 4px;
+  box-shadow: inset 0 0 0 1px #0006;
+}

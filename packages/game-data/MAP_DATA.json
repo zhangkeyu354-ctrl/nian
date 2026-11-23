@@ -4,480 +4,7 @@
   "edition_scope": "BASE_STANDARD",
   "note": "CONFIRMED只表示所标注的事实范围有依据；不等于全字段齐全、日文版一致、译文批准或已实现。null/空数组表示未确认。",
   "expected_total": 2,
-  "candidate_maps": [
-  {
-    "id": "crotus_prenn_asylum",
-    "name_ja": null,
-    "name_en": "Crotus Prenn Asylum",
-    "name_zh": "克洛普瑞恩疯人院",
-    "translation_status": "DRAFT",
-    "japanese_text_status": "CHECK_REQUIRED",
-    "source_level": "D",
-    "source_ref": [
-      "crotus.jpg / CrotusRecreated.png：地图标题及全图"
-    ],
-    "status": "CHECK_REQUIRED",
-    "identity_status": "CONFIRMED",
-    "nodes": [
-      {
-        "id": "shack",
-        "name_ja": null,
-        "name_en": "Shack",
-        "name_zh": "小屋",
-        "translation_status": "DRAFT",
-        "source_level": "D",
-        "source_ref": [
-          "crotus.jpg / CrotusRecreated.png：房间 Shack 顶栏"
-        ],
-        "status": "CHECK_REQUIRED",
-        "initial_prop_counts": {
-          "objective": 1,
-          "boldness": 2,
-          "survival": 1,
-          "altruism": 1
-        },
-        "spawn_faces": [
-          5
-        ],
-        "coordinates": null
-      },
-      {
-        "id": "dark_wood",
-        "name_ja": null,
-        "name_en": "Dark Wood",
-        "name_zh": "黑暗树林",
-        "translation_status": "DRAFT",
-        "source_level": "D",
-        "source_ref": [
-          "crotus.jpg / CrotusRecreated.png：房间 Dark Wood 顶栏"
-        ],
-        "status": "CHECK_REQUIRED",
-        "initial_prop_counts": {
-          "objective": 1,
-          "boldness": 1,
-          "survival": 1,
-          "altruism": 1
-        },
-        "spawn_faces": [
-          0
-        ],
-        "coordinates": null
-      },
-      {
-        "id": "courtyard",
-        "name_ja": null,
-        "name_en": "Courtyard",
-        "name_zh": "庭院",
-        "translation_status": "DRAFT",
-        "source_level": "D",
-        "source_ref": [
-          "crotus.jpg / CrotusRecreated.png：房间 Courtyard 顶栏"
-        ],
-        "status": "CHECK_REQUIRED",
-        "initial_prop_counts": {
-          "objective": 1,
-          "boldness": 1,
-          "survival": 1,
-          "altruism": 2
-        },
-        "spawn_faces": [
-          1
-        ],
-        "coordinates": null
-      },
-      {
-        "id": "treatment_hall",
-        "name_ja": null,
-        "name_en": "Treatment Hall",
-        "name_zh": "治疗大厅",
-        "translation_status": "DRAFT",
-        "source_level": "D",
-        "source_ref": [
-          "crotus.jpg / CrotusRecreated.png：房间 Treatment Hall 顶栏"
-        ],
-        "status": "CHECK_REQUIRED",
-        "initial_prop_counts": {
-          "objective": 1,
-          "boldness": 1,
-          "survival": 1,
-          "altruism": 1
-        },
-        "spawn_faces": [],
-        "coordinates": null
-      },
-      {
-        "id": "hallway",
-        "name_ja": null,
-        "name_en": "Hallway",
-        "name_zh": "走廊",
-        "translation_status": "DRAFT",
-        "source_level": "D",
-        "source_ref": [
-          "crotus.jpg / CrotusRecreated.png：房间 Hallway 顶栏"
-        ],
-        "status": "CHECK_REQUIRED",
-        "initial_prop_counts": {
-          "objective": 0,
-          "boldness": 0,
-          "survival": 2,
-          "altruism": 2
-        },
-        "spawn_faces": [],
-        "coordinates": null
-      },
-      {
-        "id": "carnival_entrance",
-        "name_ja": null,
-        "name_en": "Carnival Entrance",
-        "name_zh": "嘉年华入口",
-        "translation_status": "DRAFT",
-        "source_level": "D",
-        "source_ref": [
-          "crotus.jpg / CrotusRecreated.png：房间 Carnival Entrance 顶栏"
-        ],
-        "status": "CHECK_REQUIRED",
-        "initial_prop_counts": {
-          "objective": 2,
-          "boldness": 1,
-          "survival": 1,
-          "altruism": 1
-        },
-        "spawn_faces": [
-          2
-        ],
-        "coordinates": null
-      },
-      {
-        "id": "greenhouse",
-        "name_ja": null,
-        "name_en": "Greenhouse",
-        "name_zh": "温室",
-        "translation_status": "DRAFT",
-        "source_level": "D",
-        "source_ref": [
-          "crotus.jpg / CrotusRecreated.png：房间 Greenhouse 顶栏"
-        ],
-        "status": "CHECK_REQUIRED",
-        "initial_prop_counts": {
-          "objective": 1,
-          "boldness": 1,
-          "survival": 1,
-          "altruism": 1
-        },
-        "spawn_faces": [],
-        "coordinates": null
-      },
-      {
-        "id": "receiving_desk",
-        "name_ja": null,
-        "name_en": "Receiving Desk",
-        "name_zh": "接待处",
-        "translation_status": "DRAFT",
-        "source_level": "D",
-        "source_ref": [
-          "crotus.jpg / CrotusRecreated.png：房间 Receiving Desk 顶栏"
-        ],
-        "status": "CHECK_REQUIRED",
-        "initial_prop_counts": {
-          "objective": 1,
-          "boldness": 1,
-          "survival": 2,
-          "altruism": 0
-        },
-        "spawn_faces": [],
-        "coordinates": null
-      },
-      {
-        "id": "ruins",
-        "name_ja": null,
-        "name_en": "Ruins",
-        "name_zh": "废墟",
-        "translation_status": "DRAFT",
-        "source_level": "D",
-        "source_ref": [
-          "crotus.jpg / CrotusRecreated.png：房间 Ruins 顶栏"
-        ],
-        "status": "CHECK_REQUIRED",
-        "initial_prop_counts": {
-          "objective": 1,
-          "boldness": 1,
-          "survival": 2,
-          "altruism": 1
-        },
-        "spawn_faces": [
-          4
-        ],
-        "coordinates": null
-      },
-      {
-        "id": "outer_garden",
-        "name_ja": null,
-        "name_en": "Outer Garden",
-        "name_zh": "外庭院",
-        "translation_status": "DRAFT",
-        "source_level": "D",
-        "source_ref": [
-          "crotus.jpg / CrotusRecreated.png：房间 Outer Garden 顶栏"
-        ],
-        "status": "CHECK_REQUIRED",
-        "initial_prop_counts": {
-          "objective": 1,
-          "boldness": 1,
-          "survival": 1,
-          "altruism": 1
-        },
-        "spawn_faces": [
-          3
-        ],
-        "coordinates": null
-      }
-    ],
-    "edges": [],
-    "expected_node_count": 10,
-    "expected_edge_count": null,
-    "topology_status": "CHECK_REQUIRED",
-    "missing_fields": [
-      "所有路线的端点、颜色、单向箭头、开局墙和多房间路口待逐条转录核对"
-    ],
-    "runtime_enabled": false
-  },
-  {
-    "id": "ormond",
-    "name_ja": null,
-    "name_en": "Ormond",
-    "name_zh": "奥蒙德",
-    "translation_status": "DRAFT",
-    "japanese_text_status": "CHECK_REQUIRED",
-    "source_level": "D",
-    "source_ref": [
-      "ormond.jpg / OrmondRecreated.png：地图标题及全图"
-    ],
-    "status": "CHECK_REQUIRED",
-    "identity_status": "CONFIRMED",
-    "nodes": [
-      {
-        "id": "picnic_area",
-        "name_ja": null,
-        "name_en": "Picnic Area",
-        "name_zh": "野餐区",
-        "translation_status": "DRAFT",
-        "source_level": "D",
-        "source_ref": [
-          "ormond.jpg / OrmondRecreated.png：房间 Picnic Area 顶栏"
-        ],
-        "status": "CHECK_REQUIRED",
-        "initial_prop_counts": {
-          "objective": 1,
-          "boldness": 1,
-          "survival": 1,
-          "altruism": 0
-        },
-        "spawn_faces": [
-          1
-        ],
-        "coordinates": null
-      },
-      {
-        "id": "guest_rooms",
-        "name_ja": null,
-        "name_en": "Guest Rooms",
-        "name_zh": "客房",
-        "translation_status": "DRAFT",
-        "source_level": "D",
-        "source_ref": [
-          "ormond.jpg / OrmondRecreated.png：房间 Guest Rooms 顶栏"
-        ],
-        "status": "CHECK_REQUIRED",
-        "initial_prop_counts": {
-          "objective": 1,
-          "boldness": 1,
-          "survival": 1,
-          "altruism": 1
-        },
-        "spawn_faces": [
-          0
-        ],
-        "coordinates": null
-      },
-      {
-        "id": "balcony",
-        "name_ja": null,
-        "name_en": "Balcony",
-        "name_zh": "阳台",
-        "translation_status": "DRAFT",
-        "source_level": "D",
-        "source_ref": [
-          "ormond.jpg / OrmondRecreated.png：房间 Balcony 顶栏"
-        ],
-        "status": "CHECK_REQUIRED",
-        "initial_prop_counts": {
-          "objective": 1,
-          "boldness": 1,
-          "survival": 0,
-          "altruism": 2
-        },
-        "spawn_faces": [],
-        "coordinates": null
-      },
-      {
-        "id": "storage",
-        "name_ja": null,
-        "name_en": "Storage",
-        "name_zh": "储藏室",
-        "translation_status": "DRAFT",
-        "source_level": "D",
-        "source_ref": [
-          "ormond.jpg / OrmondRecreated.png：房间 Storage 顶栏"
-        ],
-        "status": "CHECK_REQUIRED",
-        "initial_prop_counts": {
-          "objective": 1,
-          "boldness": 1,
-          "survival": 2,
-          "altruism": 0
-        },
-        "spawn_faces": [
-          5
-        ],
-        "coordinates": null
-      },
-      {
-        "id": "chalet",
-        "name_ja": null,
-        "name_en": "Chalet",
-        "name_zh": "山间旅馆",
-        "translation_status": "DRAFT",
-        "source_level": "D",
-        "source_ref": [
-          "ormond.jpg / OrmondRecreated.png：房间 Chalet 顶栏"
-        ],
-        "status": "CHECK_REQUIRED",
-        "initial_prop_counts": {
-          "objective": 1,
-          "boldness": 1,
-          "survival": 2,
-          "altruism": 2
-        },
-        "spawn_faces": [],
-        "coordinates": null
-      },
-      {
-        "id": "rentals",
-        "name_ja": null,
-        "name_en": "Rentals",
-        "name_zh": "租赁处",
-        "translation_status": "DRAFT",
-        "source_level": "D",
-        "source_ref": [
-          "ormond.jpg / OrmondRecreated.png：房间 Rentals 顶栏"
-        ],
-        "status": "CHECK_REQUIRED",
-        "initial_prop_counts": {
-          "objective": 1,
-          "boldness": 1,
-          "survival": 1,
-          "altruism": 2
-        },
-        "spawn_faces": [],
-        "coordinates": null
-      },
-      {
-        "id": "wooded_area",
-        "name_ja": null,
-        "name_en": "Wooded Area",
-        "name_zh": "林地区",
-        "translation_status": "DRAFT",
-        "source_level": "D",
-        "source_ref": [
-          "ormond.jpg / OrmondRecreated.png：房间 Wooded Area 顶栏"
-        ],
-        "status": "CHECK_REQUIRED",
-        "initial_prop_counts": {
-          "objective": 1,
-          "boldness": 1,
-          "survival": 1,
-          "altruism": 1
-        },
-        "spawn_faces": [
-          4
-        ],
-        "coordinates": null
-      },
-      {
-        "id": "ski_shack",
-        "name_ja": null,
-        "name_en": "Ski Shack",
-        "name_zh": "滑雪小屋",
-        "translation_status": "DRAFT",
-        "source_level": "D",
-        "source_ref": [
-          "ormond.jpg / OrmondRecreated.png：房间 Ski Shack 顶栏"
-        ],
-        "status": "CHECK_REQUIRED",
-        "initial_prop_counts": {
-          "objective": 1,
-          "boldness": 1,
-          "survival": 1,
-          "altruism": 1
-        },
-        "spawn_faces": [
-          2
-        ],
-        "coordinates": null
-      },
-      {
-        "id": "basement",
-        "name_ja": null,
-        "name_en": "Basement",
-        "name_zh": "地下室",
-        "translation_status": "DRAFT",
-        "source_level": "D",
-        "source_ref": [
-          "ormond.jpg / OrmondRecreated.png：房间 Basement 顶栏"
-        ],
-        "status": "CHECK_REQUIRED",
-        "initial_prop_counts": {
-          "objective": 1,
-          "boldness": 1,
-          "survival": 1,
-          "altruism": 1
-        },
-        "spawn_faces": [],
-        "coordinates": null
-      },
-      {
-        "id": "entryway",
-        "name_ja": null,
-        "name_en": "Entryway",
-        "name_zh": "入口通道",
-        "translation_status": "DRAFT",
-        "source_level": "D",
-        "source_ref": [
-          "ormond.jpg / OrmondRecreated.png：房间 Entryway 顶栏"
-        ],
-        "status": "CHECK_REQUIRED",
-        "initial_prop_counts": {
-          "objective": 1,
-          "boldness": 1,
-          "survival": 2,
-          "altruism": 2
-        },
-        "spawn_faces": [
-          3
-        ],
-        "coordinates": null
-      }
-    ],
-    "edges": [],
-    "expected_node_count": 10,
-    "expected_edge_count": null,
-    "topology_status": "CHECK_REQUIRED",
-    "missing_fields": [
-      "所有路线的端点、颜色、单向箭头、开局墙和多房间路口待逐条转录核对"
-    ],
-    "runtime_enabled": false
-  }
-],
+  "candidate_maps": [],
   "maps": [
     {
       "id": "macmillan_estate",
@@ -3255,6 +2782,2549 @@
       "adoption_ref": "U02:来源优先级与Phase1采用",
       "japanese_missing_blocks_runtime": false,
       "expected_pairwise_edge_count": 23
+    },
+    {
+      "id": "crotus_prenn_asylum",
+      "name_ja": null,
+      "name_en": "Crotus Prenn Asylum",
+      "name_zh": "克洛普瑞恩疯人院",
+      "translation_status": "DRAFT",
+      "japanese_text_status": "CHECK_REQUIRED",
+      "source_level": "D",
+      "source_ref": [
+        "Drive:CrotusRecreated.png / 用户提供的地图复刻图，Claude 2026-11-23 逐条转录"
+      ],
+      "status": "CONFIRMED",
+      "identity_status": "CONFIRMED",
+      "nodes": [
+        {
+          "id": "crotus_shack",
+          "name_ja": null,
+          "name_en": "Shack",
+          "name_zh": "小屋",
+          "translation_status": "DRAFT",
+          "japanese_text_status": "CHECK_REQUIRED",
+          "source_level": "D",
+          "source_ref": [
+            "Drive:CrotusRecreated.png / 用户提供的地图复刻图，Claude 2026-11-23 逐条转录"
+          ],
+          "status": "CONFIRMED",
+          "name_status": "CHECK_REQUIRED",
+          "initial_prop_counts": {
+            "objective": 1,
+            "boldness": 2,
+            "survival": 1,
+            "altruism": 1
+          },
+          "spawn_faces": [
+            5
+          ],
+          "coordinates": null,
+          "field_evidence": {
+            "name_zh": {
+              "source_level": "D",
+              "source_ref": [
+                "Drive:CrotusRecreated.png / 用户提供的地图复刻图，Claude 2026-11-23 逐条转录"
+              ],
+              "status": "CONFIRMED",
+              "previous_research_status": "CHECK_REQUIRED",
+              "adoption_basis": "USER_ACCEPTED_CN_RETAIL",
+              "adoption_ref": "U02:来源优先级与Phase1采用",
+              "japanese_missing_blocks_runtime": false
+            },
+            "initial_prop_counts": {
+              "source_level": "D",
+              "source_ref": [
+                "Drive:CrotusRecreated.png / 用户提供的地图复刻图，Claude 2026-11-23 逐条转录"
+              ],
+              "status": "CONFIRMED",
+              "previous_research_status": "CHECK_REQUIRED",
+              "adoption_basis": "USER_ACCEPTED_CN_RETAIL",
+              "adoption_ref": "U02:来源优先级与Phase1采用",
+              "japanese_missing_blocks_runtime": false
+            },
+            "spawn_faces": {
+              "source_level": "D",
+              "source_ref": [
+                "Drive:CrotusRecreated.png / 用户提供的地图复刻图，Claude 2026-11-23 逐条转录"
+              ],
+              "status": "CONFIRMED",
+              "previous_research_status": "CHECK_REQUIRED",
+              "adoption_basis": "USER_ACCEPTED_CN_RETAIL",
+              "adoption_ref": "U02:来源优先级与Phase1采用",
+              "japanese_missing_blocks_runtime": false
+            }
+          },
+          "id_is_official_english_name": false,
+          "previous_research_status": "CHECK_REQUIRED",
+          "adoption_basis": "USER_ACCEPTED_CN_RETAIL",
+          "adoption_ref": "U02:来源优先级与Phase1采用",
+          "japanese_missing_blocks_runtime": false
+        },
+        {
+          "id": "crotus_dark_wood",
+          "name_ja": null,
+          "name_en": "Dark Wood",
+          "name_zh": "黑暗树林",
+          "translation_status": "DRAFT",
+          "japanese_text_status": "CHECK_REQUIRED",
+          "source_level": "D",
+          "source_ref": [
+            "Drive:CrotusRecreated.png / 用户提供的地图复刻图，Claude 2026-11-23 逐条转录"
+          ],
+          "status": "CONFIRMED",
+          "name_status": "CHECK_REQUIRED",
+          "initial_prop_counts": {
+            "objective": 1,
+            "boldness": 1,
+            "survival": 1,
+            "altruism": 1
+          },
+          "spawn_faces": [
+            0
+          ],
+          "coordinates": null,
+          "field_evidence": {
+            "name_zh": {
+              "source_level": "D",
+              "source_ref": [
+                "Drive:CrotusRecreated.png / 用户提供的地图复刻图，Claude 2026-11-23 逐条转录"
+              ],
+              "status": "CONFIRMED",
+              "previous_research_status": "CHECK_REQUIRED",
+              "adoption_basis": "USER_ACCEPTED_CN_RETAIL",
+              "adoption_ref": "U02:来源优先级与Phase1采用",
+              "japanese_missing_blocks_runtime": false
+            },
+            "initial_prop_counts": {
+              "source_level": "D",
+              "source_ref": [
+                "Drive:CrotusRecreated.png / 用户提供的地图复刻图，Claude 2026-11-23 逐条转录"
+              ],
+              "status": "CONFIRMED",
+              "previous_research_status": "CHECK_REQUIRED",
+              "adoption_basis": "USER_ACCEPTED_CN_RETAIL",
+              "adoption_ref": "U02:来源优先级与Phase1采用",
+              "japanese_missing_blocks_runtime": false
+            },
+            "spawn_faces": {
+              "source_level": "D",
+              "source_ref": [
+                "Drive:CrotusRecreated.png / 用户提供的地图复刻图，Claude 2026-11-23 逐条转录"
+              ],
+              "status": "CONFIRMED",
+              "previous_research_status": "CHECK_REQUIRED",
+              "adoption_basis": "USER_ACCEPTED_CN_RETAIL",
+              "adoption_ref": "U02:来源优先级与Phase1采用",
+              "japanese_missing_blocks_runtime": false
+            }
+          },
+          "id_is_official_english_name": false,
+          "previous_research_status": "CHECK_REQUIRED",
+          "adoption_basis": "USER_ACCEPTED_CN_RETAIL",
+          "adoption_ref": "U02:来源优先级与Phase1采用",
+          "japanese_missing_blocks_runtime": false
+        },
+        {
+          "id": "crotus_courtyard",
+          "name_ja": null,
+          "name_en": "Courtyard",
+          "name_zh": "庭院",
+          "translation_status": "DRAFT",
+          "japanese_text_status": "CHECK_REQUIRED",
+          "source_level": "D",
+          "source_ref": [
+            "Drive:CrotusRecreated.png / 用户提供的地图复刻图，Claude 2026-11-23 逐条转录"
+          ],
+          "status": "CONFIRMED",
+          "name_status": "CHECK_REQUIRED",
+          "initial_prop_counts": {
+            "objective": 1,
+            "boldness": 1,
+            "survival": 1,
+            "altruism": 2
+          },
+          "spawn_faces": [
+            1
+          ],
+          "coordinates": null,
+          "field_evidence": {
+            "name_zh": {
+              "source_level": "D",
+              "source_ref": [
+                "Drive:CrotusRecreated.png / 用户提供的地图复刻图，Claude 2026-11-23 逐条转录"
+              ],
+              "status": "CONFIRMED",
+              "previous_research_status": "CHECK_REQUIRED",
+              "adoption_basis": "USER_ACCEPTED_CN_RETAIL",
+              "adoption_ref": "U02:来源优先级与Phase1采用",
+              "japanese_missing_blocks_runtime": false
+            },
+            "initial_prop_counts": {
+              "source_level": "D",
+              "source_ref": [
+                "Drive:CrotusRecreated.png / 用户提供的地图复刻图，Claude 2026-11-23 逐条转录"
+              ],
+              "status": "CONFIRMED",
+              "previous_research_status": "CHECK_REQUIRED",
+              "adoption_basis": "USER_ACCEPTED_CN_RETAIL",
+              "adoption_ref": "U02:来源优先级与Phase1采用",
+              "japanese_missing_blocks_runtime": false
+            },
+            "spawn_faces": {
+              "source_level": "D",
+              "source_ref": [
+                "Drive:CrotusRecreated.png / 用户提供的地图复刻图，Claude 2026-11-23 逐条转录"
+              ],
+              "status": "CONFIRMED",
+              "previous_research_status": "CHECK_REQUIRED",
+              "adoption_basis": "USER_ACCEPTED_CN_RETAIL",
+              "adoption_ref": "U02:来源优先级与Phase1采用",
+              "japanese_missing_blocks_runtime": false
+            }
+          },
+          "id_is_official_english_name": false,
+          "previous_research_status": "CHECK_REQUIRED",
+          "adoption_basis": "USER_ACCEPTED_CN_RETAIL",
+          "adoption_ref": "U02:来源优先级与Phase1采用",
+          "japanese_missing_blocks_runtime": false
+        },
+        {
+          "id": "crotus_treatment_hall",
+          "name_ja": null,
+          "name_en": "Treatment Hall",
+          "name_zh": "治疗大厅",
+          "translation_status": "DRAFT",
+          "japanese_text_status": "CHECK_REQUIRED",
+          "source_level": "D",
+          "source_ref": [
+            "Drive:CrotusRecreated.png / 用户提供的地图复刻图，Claude 2026-11-23 逐条转录"
+          ],
+          "status": "CONFIRMED",
+          "name_status": "CHECK_REQUIRED",
+          "initial_prop_counts": {
+            "objective": 1,
+            "boldness": 1,
+            "survival": 1,
+            "altruism": 1
+          },
+          "spawn_faces": [],
+          "coordinates": null,
+          "field_evidence": {
+            "name_zh": {
+              "source_level": "D",
+              "source_ref": [
+                "Drive:CrotusRecreated.png / 用户提供的地图复刻图，Claude 2026-11-23 逐条转录"
+              ],
+              "status": "CONFIRMED",
+              "previous_research_status": "CHECK_REQUIRED",
+              "adoption_basis": "USER_ACCEPTED_CN_RETAIL",
+              "adoption_ref": "U02:来源优先级与Phase1采用",
+              "japanese_missing_blocks_runtime": false
+            },
+            "initial_prop_counts": {
+              "source_level": "D",
+              "source_ref": [
+                "Drive:CrotusRecreated.png / 用户提供的地图复刻图，Claude 2026-11-23 逐条转录"
+              ],
+              "status": "CONFIRMED",
+              "previous_research_status": "CHECK_REQUIRED",
+              "adoption_basis": "USER_ACCEPTED_CN_RETAIL",
+              "adoption_ref": "U02:来源优先级与Phase1采用",
+              "japanese_missing_blocks_runtime": false
+            },
+            "spawn_faces": {
+              "source_level": "D",
+              "source_ref": [
+                "Drive:CrotusRecreated.png / 用户提供的地图复刻图，Claude 2026-11-23 逐条转录"
+              ],
+              "status": "CONFIRMED",
+              "previous_research_status": "CHECK_REQUIRED",
+              "adoption_basis": "USER_ACCEPTED_CN_RETAIL",
+              "adoption_ref": "U02:来源优先级与Phase1采用",
+              "japanese_missing_blocks_runtime": false
+            }
+          },
+          "id_is_official_english_name": false,
+          "previous_research_status": "CHECK_REQUIRED",
+          "adoption_basis": "USER_ACCEPTED_CN_RETAIL",
+          "adoption_ref": "U02:来源优先级与Phase1采用",
+          "japanese_missing_blocks_runtime": false
+        },
+        {
+          "id": "crotus_hallway",
+          "name_ja": null,
+          "name_en": "Hallway",
+          "name_zh": "走廊",
+          "translation_status": "DRAFT",
+          "japanese_text_status": "CHECK_REQUIRED",
+          "source_level": "D",
+          "source_ref": [
+            "Drive:CrotusRecreated.png / 用户提供的地图复刻图，Claude 2026-11-23 逐条转录"
+          ],
+          "status": "CONFIRMED",
+          "name_status": "CHECK_REQUIRED",
+          "initial_prop_counts": {
+            "objective": 0,
+            "boldness": 0,
+            "survival": 2,
+            "altruism": 2
+          },
+          "spawn_faces": [],
+          "coordinates": null,
+          "field_evidence": {
+            "name_zh": {
+              "source_level": "D",
+              "source_ref": [
+                "Drive:CrotusRecreated.png / 用户提供的地图复刻图，Claude 2026-11-23 逐条转录"
+              ],
+              "status": "CONFIRMED",
+              "previous_research_status": "CHECK_REQUIRED",
+              "adoption_basis": "USER_ACCEPTED_CN_RETAIL",
+              "adoption_ref": "U02:来源优先级与Phase1采用",
+              "japanese_missing_blocks_runtime": false
+            },
+            "initial_prop_counts": {
+              "source_level": "D",
+              "source_ref": [
+                "Drive:CrotusRecreated.png / 用户提供的地图复刻图，Claude 2026-11-23 逐条转录"
+              ],
+              "status": "CONFIRMED",
+              "previous_research_status": "CHECK_REQUIRED",
+              "adoption_basis": "USER_ACCEPTED_CN_RETAIL",
+              "adoption_ref": "U02:来源优先级与Phase1采用",
+              "japanese_missing_blocks_runtime": false
+            },
+            "spawn_faces": {
+              "source_level": "D",
+              "source_ref": [
+                "Drive:CrotusRecreated.png / 用户提供的地图复刻图，Claude 2026-11-23 逐条转录"
+              ],
+              "status": "CONFIRMED",
+              "previous_research_status": "CHECK_REQUIRED",
+              "adoption_basis": "USER_ACCEPTED_CN_RETAIL",
+              "adoption_ref": "U02:来源优先级与Phase1采用",
+              "japanese_missing_blocks_runtime": false
+            }
+          },
+          "id_is_official_english_name": false,
+          "previous_research_status": "CHECK_REQUIRED",
+          "adoption_basis": "USER_ACCEPTED_CN_RETAIL",
+          "adoption_ref": "U02:来源优先级与Phase1采用",
+          "japanese_missing_blocks_runtime": false
+        },
+        {
+          "id": "crotus_carnival_entrance",
+          "name_ja": null,
+          "name_en": "Carnival Entrance",
+          "name_zh": "嘉年华入口",
+          "translation_status": "DRAFT",
+          "japanese_text_status": "CHECK_REQUIRED",
+          "source_level": "D",
+          "source_ref": [
+            "Drive:CrotusRecreated.png / 用户提供的地图复刻图，Claude 2026-11-23 逐条转录"
+          ],
+          "status": "CONFIRMED",
+          "name_status": "CHECK_REQUIRED",
+          "initial_prop_counts": {
+            "objective": 2,
+            "boldness": 1,
+            "survival": 1,
+            "altruism": 1
+          },
+          "spawn_faces": [
+            2
+          ],
+          "coordinates": null,
+          "field_evidence": {
+            "name_zh": {
+              "source_level": "D",
+              "source_ref": [
+                "Drive:CrotusRecreated.png / 用户提供的地图复刻图，Claude 2026-11-23 逐条转录"
+              ],
+              "status": "CONFIRMED",
+              "previous_research_status": "CHECK_REQUIRED",
+              "adoption_basis": "USER_ACCEPTED_CN_RETAIL",
+              "adoption_ref": "U02:来源优先级与Phase1采用",
+              "japanese_missing_blocks_runtime": false
+            },
+            "initial_prop_counts": {
+              "source_level": "D",
+              "source_ref": [
+                "Drive:CrotusRecreated.png / 用户提供的地图复刻图，Claude 2026-11-23 逐条转录"
+              ],
+              "status": "CONFIRMED",
+              "previous_research_status": "CHECK_REQUIRED",
+              "adoption_basis": "USER_ACCEPTED_CN_RETAIL",
+              "adoption_ref": "U02:来源优先级与Phase1采用",
+              "japanese_missing_blocks_runtime": false
+            },
+            "spawn_faces": {
+              "source_level": "D",
+              "source_ref": [
+                "Drive:CrotusRecreated.png / 用户提供的地图复刻图，Claude 2026-11-23 逐条转录"
+              ],
+              "status": "CONFIRMED",
+              "previous_research_status": "CHECK_REQUIRED",
+              "adoption_basis": "USER_ACCEPTED_CN_RETAIL",
+              "adoption_ref": "U02:来源优先级与Phase1采用",
+              "japanese_missing_blocks_runtime": false
+            }
+          },
+          "id_is_official_english_name": false,
+          "previous_research_status": "CHECK_REQUIRED",
+          "adoption_basis": "USER_ACCEPTED_CN_RETAIL",
+          "adoption_ref": "U02:来源优先级与Phase1采用",
+          "japanese_missing_blocks_runtime": false
+        },
+        {
+          "id": "crotus_greenhouse",
+          "name_ja": null,
+          "name_en": "Greenhouse",
+          "name_zh": "温室",
+          "translation_status": "DRAFT",
+          "japanese_text_status": "CHECK_REQUIRED",
+          "source_level": "D",
+          "source_ref": [
+            "Drive:CrotusRecreated.png / 用户提供的地图复刻图，Claude 2026-11-23 逐条转录"
+          ],
+          "status": "CONFIRMED",
+          "name_status": "CHECK_REQUIRED",
+          "initial_prop_counts": {
+            "objective": 1,
+            "boldness": 1,
+            "survival": 1,
+            "altruism": 1
+          },
+          "spawn_faces": [],
+          "coordinates": null,
+          "field_evidence": {
+            "name_zh": {
+              "source_level": "D",
+              "source_ref": [
+                "Drive:CrotusRecreated.png / 用户提供的地图复刻图，Claude 2026-11-23 逐条转录"
+              ],
+              "status": "CONFIRMED",
+              "previous_research_status": "CHECK_REQUIRED",
+              "adoption_basis": "USER_ACCEPTED_CN_RETAIL",
+              "adoption_ref": "U02:来源优先级与Phase1采用",
+              "japanese_missing_blocks_runtime": false
+            },
+            "initial_prop_counts": {
+              "source_level": "D",
+              "source_ref": [
+                "Drive:CrotusRecreated.png / 用户提供的地图复刻图，Claude 2026-11-23 逐条转录"
+              ],
+              "status": "CONFIRMED",
+              "previous_research_status": "CHECK_REQUIRED",
+              "adoption_basis": "USER_ACCEPTED_CN_RETAIL",
+              "adoption_ref": "U02:来源优先级与Phase1采用",
+              "japanese_missing_blocks_runtime": false
+            },
+            "spawn_faces": {
+              "source_level": "D",
+              "source_ref": [
+                "Drive:CrotusRecreated.png / 用户提供的地图复刻图，Claude 2026-11-23 逐条转录"
+              ],
+              "status": "CONFIRMED",
+              "previous_research_status": "CHECK_REQUIRED",
+              "adoption_basis": "USER_ACCEPTED_CN_RETAIL",
+              "adoption_ref": "U02:来源优先级与Phase1采用",
+              "japanese_missing_blocks_runtime": false
+            }
+          },
+          "id_is_official_english_name": false,
+          "previous_research_status": "CHECK_REQUIRED",
+          "adoption_basis": "USER_ACCEPTED_CN_RETAIL",
+          "adoption_ref": "U02:来源优先级与Phase1采用",
+          "japanese_missing_blocks_runtime": false
+        },
+        {
+          "id": "crotus_receiving_desk",
+          "name_ja": null,
+          "name_en": "Receiving Desk",
+          "name_zh": "接待处",
+          "translation_status": "DRAFT",
+          "japanese_text_status": "CHECK_REQUIRED",
+          "source_level": "D",
+          "source_ref": [
+            "Drive:CrotusRecreated.png / 用户提供的地图复刻图，Claude 2026-11-23 逐条转录"
+          ],
+          "status": "CONFIRMED",
+          "name_status": "CHECK_REQUIRED",
+          "initial_prop_counts": {
+            "objective": 1,
+            "boldness": 1,
+            "survival": 2,
+            "altruism": 0
+          },
+          "spawn_faces": [],
+          "coordinates": null,
+          "field_evidence": {
+            "name_zh": {
+              "source_level": "D",
+              "source_ref": [
+                "Drive:CrotusRecreated.png / 用户提供的地图复刻图，Claude 2026-11-23 逐条转录"
+              ],
+              "status": "CONFIRMED",
+              "previous_research_status": "CHECK_REQUIRED",
+              "adoption_basis": "USER_ACCEPTED_CN_RETAIL",
+              "adoption_ref": "U02:来源优先级与Phase1采用",
+              "japanese_missing_blocks_runtime": false
+            },
+            "initial_prop_counts": {
+              "source_level": "D",
+              "source_ref": [
+                "Drive:CrotusRecreated.png / 用户提供的地图复刻图，Claude 2026-11-23 逐条转录"
+              ],
+              "status": "CONFIRMED",
+              "previous_research_status": "CHECK_REQUIRED",
+              "adoption_basis": "USER_ACCEPTED_CN_RETAIL",
+              "adoption_ref": "U02:来源优先级与Phase1采用",
+              "japanese_missing_blocks_runtime": false
+            },
+            "spawn_faces": {
+              "source_level": "D",
+              "source_ref": [
+                "Drive:CrotusRecreated.png / 用户提供的地图复刻图，Claude 2026-11-23 逐条转录"
+              ],
+              "status": "CONFIRMED",
+              "previous_research_status": "CHECK_REQUIRED",
+              "adoption_basis": "USER_ACCEPTED_CN_RETAIL",
+              "adoption_ref": "U02:来源优先级与Phase1采用",
+              "japanese_missing_blocks_runtime": false
+            }
+          },
+          "id_is_official_english_name": false,
+          "previous_research_status": "CHECK_REQUIRED",
+          "adoption_basis": "USER_ACCEPTED_CN_RETAIL",
+          "adoption_ref": "U02:来源优先级与Phase1采用",
+          "japanese_missing_blocks_runtime": false
+        },
+        {
+          "id": "crotus_ruins",
+          "name_ja": null,
+          "name_en": "Ruins",
+          "name_zh": "废墟",
+          "translation_status": "DRAFT",
+          "japanese_text_status": "CHECK_REQUIRED",
+          "source_level": "D",
+          "source_ref": [
+            "Drive:CrotusRecreated.png / 用户提供的地图复刻图，Claude 2026-11-23 逐条转录"
+          ],
+          "status": "CONFIRMED",
+          "name_status": "CHECK_REQUIRED",
+          "initial_prop_counts": {
+            "objective": 1,
+            "boldness": 1,
+            "survival": 2,
+            "altruism": 1
+          },
+          "spawn_faces": [
+            4
+          ],
+          "coordinates": null,
+          "field_evidence": {
+            "name_zh": {
+              "source_level": "D",
+              "source_ref": [
+                "Drive:CrotusRecreated.png / 用户提供的地图复刻图，Claude 2026-11-23 逐条转录"
+              ],
+              "status": "CONFIRMED",
+              "previous_research_status": "CHECK_REQUIRED",
+              "adoption_basis": "USER_ACCEPTED_CN_RETAIL",
+              "adoption_ref": "U02:来源优先级与Phase1采用",
+              "japanese_missing_blocks_runtime": false
+            },
+            "initial_prop_counts": {
+              "source_level": "D",
+              "source_ref": [
+                "Drive:CrotusRecreated.png / 用户提供的地图复刻图，Claude 2026-11-23 逐条转录"
+              ],
+              "status": "CONFIRMED",
+              "previous_research_status": "CHECK_REQUIRED",
+              "adoption_basis": "USER_ACCEPTED_CN_RETAIL",
+              "adoption_ref": "U02:来源优先级与Phase1采用",
+              "japanese_missing_blocks_runtime": false
+            },
+            "spawn_faces": {
+              "source_level": "D",
+              "source_ref": [
+                "Drive:CrotusRecreated.png / 用户提供的地图复刻图，Claude 2026-11-23 逐条转录"
+              ],
+              "status": "CONFIRMED",
+              "previous_research_status": "CHECK_REQUIRED",
+              "adoption_basis": "USER_ACCEPTED_CN_RETAIL",
+              "adoption_ref": "U02:来源优先级与Phase1采用",
+              "japanese_missing_blocks_runtime": false
+            }
+          },
+          "id_is_official_english_name": false,
+          "previous_research_status": "CHECK_REQUIRED",
+          "adoption_basis": "USER_ACCEPTED_CN_RETAIL",
+          "adoption_ref": "U02:来源优先级与Phase1采用",
+          "japanese_missing_blocks_runtime": false
+        },
+        {
+          "id": "crotus_outer_garden",
+          "name_ja": null,
+          "name_en": "Outer Garden",
+          "name_zh": "外庭院",
+          "translation_status": "DRAFT",
+          "japanese_text_status": "CHECK_REQUIRED",
+          "source_level": "D",
+          "source_ref": [
+            "Drive:CrotusRecreated.png / 用户提供的地图复刻图，Claude 2026-11-23 逐条转录"
+          ],
+          "status": "CONFIRMED",
+          "name_status": "CHECK_REQUIRED",
+          "initial_prop_counts": {
+            "objective": 1,
+            "boldness": 1,
+            "survival": 1,
+            "altruism": 1
+          },
+          "spawn_faces": [
+            3
+          ],
+          "coordinates": null,
+          "field_evidence": {
+            "name_zh": {
+              "source_level": "D",
+              "source_ref": [
+                "Drive:CrotusRecreated.png / 用户提供的地图复刻图，Claude 2026-11-23 逐条转录"
+              ],
+              "status": "CONFIRMED",
+              "previous_research_status": "CHECK_REQUIRED",
+              "adoption_basis": "USER_ACCEPTED_CN_RETAIL",
+              "adoption_ref": "U02:来源优先级与Phase1采用",
+              "japanese_missing_blocks_runtime": false
+            },
+            "initial_prop_counts": {
+              "source_level": "D",
+              "source_ref": [
+                "Drive:CrotusRecreated.png / 用户提供的地图复刻图，Claude 2026-11-23 逐条转录"
+              ],
+              "status": "CONFIRMED",
+              "previous_research_status": "CHECK_REQUIRED",
+              "adoption_basis": "USER_ACCEPTED_CN_RETAIL",
+              "adoption_ref": "U02:来源优先级与Phase1采用",
+              "japanese_missing_blocks_runtime": false
+            },
+            "spawn_faces": {
+              "source_level": "D",
+              "source_ref": [
+                "Drive:CrotusRecreated.png / 用户提供的地图复刻图，Claude 2026-11-23 逐条转录"
+              ],
+              "status": "CONFIRMED",
+              "previous_research_status": "CHECK_REQUIRED",
+              "adoption_basis": "USER_ACCEPTED_CN_RETAIL",
+              "adoption_ref": "U02:来源优先级与Phase1采用",
+              "japanese_missing_blocks_runtime": false
+            }
+          },
+          "id_is_official_english_name": false,
+          "previous_research_status": "CHECK_REQUIRED",
+          "adoption_basis": "USER_ACCEPTED_CN_RETAIL",
+          "adoption_ref": "U02:来源优先级与Phase1采用",
+          "japanese_missing_blocks_runtime": false
+        }
+      ],
+      "edges": [
+        {
+          "id": "cp_p01",
+          "from": "crotus_shack",
+          "to": "crotus_dark_wood",
+          "rooms": [
+            "crotus_shack",
+            "crotus_dark_wood"
+          ],
+          "endpoint_kind": "BINARY_PATH_ICON",
+          "color": "blue",
+          "direction": "both",
+          "jagged": false,
+          "special_state": "NONE_AT_SETUP",
+          "source_level": "D",
+          "source_ref": [
+            "Drive:CrotusRecreated.png / 用户提供的地图复刻图，Claude 2026-11-23 逐条转录"
+          ],
+          "status": "CONFIRMED",
+          "traversal_semantics": "CANDIDATE_BINARY",
+          "pairwise_edges": [],
+          "verification_note": "复刻图清晰可读；锯齿边框=开局可破坏墙；黄色翻越带箭头=单向",
+          "additional_room_candidates": [],
+          "previous_research_status": "CHECK_REQUIRED",
+          "adoption_basis": "USER_ACCEPTED_CN_RETAIL",
+          "adoption_ref": "U02:来源优先级与Phase1采用",
+          "japanese_missing_blocks_runtime": false
+        },
+        {
+          "id": "cp_p02",
+          "from": "crotus_dark_wood",
+          "to": "crotus_treatment_hall",
+          "rooms": [
+            "crotus_dark_wood",
+            "crotus_treatment_hall"
+          ],
+          "endpoint_kind": "BINARY_PATH_ICON",
+          "color": "red",
+          "direction": "both",
+          "jagged": false,
+          "special_state": "NONE_AT_SETUP",
+          "source_level": "D",
+          "source_ref": [
+            "Drive:CrotusRecreated.png / 用户提供的地图复刻图，Claude 2026-11-23 逐条转录"
+          ],
+          "status": "CONFIRMED",
+          "traversal_semantics": "CANDIDATE_BINARY",
+          "pairwise_edges": [],
+          "verification_note": "复刻图清晰可读；锯齿边框=开局可破坏墙；黄色翻越带箭头=单向",
+          "additional_room_candidates": [],
+          "previous_research_status": "CHECK_REQUIRED",
+          "adoption_basis": "USER_ACCEPTED_CN_RETAIL",
+          "adoption_ref": "U02:来源优先级与Phase1采用",
+          "japanese_missing_blocks_runtime": false
+        },
+        {
+          "id": "cp_p03",
+          "from": "crotus_dark_wood",
+          "to": "crotus_courtyard",
+          "rooms": [
+            "crotus_dark_wood",
+            "crotus_courtyard"
+          ],
+          "endpoint_kind": "BINARY_PATH_ICON",
+          "color": "blue",
+          "direction": "both",
+          "jagged": false,
+          "special_state": "NONE_AT_SETUP",
+          "source_level": "D",
+          "source_ref": [
+            "Drive:CrotusRecreated.png / 用户提供的地图复刻图，Claude 2026-11-23 逐条转录"
+          ],
+          "status": "CONFIRMED",
+          "traversal_semantics": "CANDIDATE_BINARY",
+          "pairwise_edges": [],
+          "verification_note": "复刻图清晰可读；锯齿边框=开局可破坏墙；黄色翻越带箭头=单向",
+          "additional_room_candidates": [],
+          "previous_research_status": "CHECK_REQUIRED",
+          "adoption_basis": "USER_ACCEPTED_CN_RETAIL",
+          "adoption_ref": "U02:来源优先级与Phase1采用",
+          "japanese_missing_blocks_runtime": false
+        },
+        {
+          "id": "cp_p04",
+          "from": "crotus_dark_wood",
+          "to": "crotus_hallway",
+          "rooms": [
+            "crotus_dark_wood",
+            "crotus_hallway"
+          ],
+          "endpoint_kind": "BINARY_PATH_ICON",
+          "color": "red",
+          "direction": "both",
+          "jagged": true,
+          "special_state": "BREAKABLE_WALL_AT_SETUP",
+          "source_level": "D",
+          "source_ref": [
+            "Drive:CrotusRecreated.png / 用户提供的地图复刻图，Claude 2026-11-23 逐条转录"
+          ],
+          "status": "CONFIRMED",
+          "traversal_semantics": "CANDIDATE_BINARY",
+          "pairwise_edges": [],
+          "verification_note": "复刻图清晰可读；锯齿边框=开局可破坏墙；黄色翻越带箭头=单向",
+          "additional_room_candidates": [],
+          "previous_research_status": "CHECK_REQUIRED",
+          "adoption_basis": "USER_ACCEPTED_CN_RETAIL",
+          "adoption_ref": "U02:来源优先级与Phase1采用",
+          "japanese_missing_blocks_runtime": false
+        },
+        {
+          "id": "cp_p05",
+          "from": "crotus_shack",
+          "to": "crotus_treatment_hall",
+          "rooms": [
+            "crotus_shack",
+            "crotus_treatment_hall"
+          ],
+          "endpoint_kind": "BINARY_PATH_ICON",
+          "color": "red",
+          "direction": "both",
+          "jagged": true,
+          "special_state": "BREAKABLE_WALL_AT_SETUP",
+          "source_level": "D",
+          "source_ref": [
+            "Drive:CrotusRecreated.png / 用户提供的地图复刻图，Claude 2026-11-23 逐条转录"
+          ],
+          "status": "CONFIRMED",
+          "traversal_semantics": "CANDIDATE_BINARY",
+          "pairwise_edges": [],
+          "verification_note": "复刻图清晰可读；锯齿边框=开局可破坏墙；黄色翻越带箭头=单向",
+          "additional_room_candidates": [],
+          "previous_research_status": "CHECK_REQUIRED",
+          "adoption_basis": "USER_ACCEPTED_CN_RETAIL",
+          "adoption_ref": "U02:来源优先级与Phase1采用",
+          "japanese_missing_blocks_runtime": false
+        },
+        {
+          "id": "cp_p06",
+          "from": "crotus_treatment_hall",
+          "to": "crotus_hallway",
+          "rooms": [
+            "crotus_treatment_hall",
+            "crotus_hallway"
+          ],
+          "endpoint_kind": "BINARY_PATH_ICON",
+          "color": "green",
+          "direction": "both",
+          "jagged": false,
+          "special_state": "NONE_AT_SETUP",
+          "source_level": "D",
+          "source_ref": [
+            "Drive:CrotusRecreated.png / 用户提供的地图复刻图，Claude 2026-11-23 逐条转录"
+          ],
+          "status": "CONFIRMED",
+          "traversal_semantics": "CANDIDATE_BINARY",
+          "pairwise_edges": [],
+          "verification_note": "复刻图清晰可读；锯齿边框=开局可破坏墙；黄色翻越带箭头=单向",
+          "additional_room_candidates": [],
+          "previous_research_status": "CHECK_REQUIRED",
+          "adoption_basis": "USER_ACCEPTED_CN_RETAIL",
+          "adoption_ref": "U02:来源优先级与Phase1采用",
+          "japanese_missing_blocks_runtime": false
+        },
+        {
+          "id": "cp_p07",
+          "from": "crotus_hallway",
+          "to": "crotus_courtyard",
+          "rooms": [
+            "crotus_hallway",
+            "crotus_courtyard"
+          ],
+          "endpoint_kind": "BINARY_PATH_ICON",
+          "color": "yellow",
+          "direction": "a_to_b",
+          "jagged": false,
+          "special_state": "NONE_AT_SETUP",
+          "source_level": "D",
+          "source_ref": [
+            "Drive:CrotusRecreated.png / 用户提供的地图复刻图，Claude 2026-11-23 逐条转录"
+          ],
+          "status": "CONFIRMED",
+          "traversal_semantics": "CANDIDATE_BINARY",
+          "pairwise_edges": [],
+          "verification_note": "复刻图清晰可读；锯齿边框=开局可破坏墙；黄色翻越带箭头=单向",
+          "additional_room_candidates": [],
+          "previous_research_status": "CHECK_REQUIRED",
+          "adoption_basis": "USER_ACCEPTED_CN_RETAIL",
+          "adoption_ref": "U02:来源优先级与Phase1采用",
+          "japanese_missing_blocks_runtime": false
+        },
+        {
+          "id": "cp_p08",
+          "from": "crotus_courtyard",
+          "to": "crotus_carnival_entrance",
+          "rooms": [
+            "crotus_courtyard",
+            "crotus_carnival_entrance"
+          ],
+          "endpoint_kind": "BINARY_PATH_ICON",
+          "color": "red",
+          "direction": "both",
+          "jagged": false,
+          "special_state": "NONE_AT_SETUP",
+          "source_level": "D",
+          "source_ref": [
+            "Drive:CrotusRecreated.png / 用户提供的地图复刻图，Claude 2026-11-23 逐条转录"
+          ],
+          "status": "CONFIRMED",
+          "traversal_semantics": "CANDIDATE_BINARY",
+          "pairwise_edges": [],
+          "verification_note": "复刻图清晰可读；锯齿边框=开局可破坏墙；黄色翻越带箭头=单向",
+          "additional_room_candidates": [],
+          "previous_research_status": "CHECK_REQUIRED",
+          "adoption_basis": "USER_ACCEPTED_CN_RETAIL",
+          "adoption_ref": "U02:来源优先级与Phase1采用",
+          "japanese_missing_blocks_runtime": false
+        },
+        {
+          "id": "cp_p09",
+          "from": "crotus_shack",
+          "to": "crotus_ruins",
+          "rooms": [
+            "crotus_shack",
+            "crotus_ruins"
+          ],
+          "endpoint_kind": "BINARY_PATH_ICON",
+          "color": "red",
+          "direction": "both",
+          "jagged": false,
+          "special_state": "NONE_AT_SETUP",
+          "source_level": "D",
+          "source_ref": [
+            "Drive:CrotusRecreated.png / 用户提供的地图复刻图，Claude 2026-11-23 逐条转录"
+          ],
+          "status": "CONFIRMED",
+          "traversal_semantics": "CANDIDATE_BINARY",
+          "pairwise_edges": [],
+          "verification_note": "复刻图清晰可读；锯齿边框=开局可破坏墙；黄色翻越带箭头=单向",
+          "additional_room_candidates": [],
+          "previous_research_status": "CHECK_REQUIRED",
+          "adoption_basis": "USER_ACCEPTED_CN_RETAIL",
+          "adoption_ref": "U02:来源优先级与Phase1采用",
+          "japanese_missing_blocks_runtime": false
+        },
+        {
+          "id": "cp_p10",
+          "from": "crotus_treatment_hall",
+          "to": "crotus_greenhouse",
+          "rooms": [
+            "crotus_treatment_hall",
+            "crotus_greenhouse"
+          ],
+          "endpoint_kind": "BINARY_PATH_ICON",
+          "color": "green",
+          "direction": "both",
+          "jagged": false,
+          "special_state": "NONE_AT_SETUP",
+          "source_level": "D",
+          "source_ref": [
+            "Drive:CrotusRecreated.png / 用户提供的地图复刻图，Claude 2026-11-23 逐条转录"
+          ],
+          "status": "CONFIRMED",
+          "traversal_semantics": "CANDIDATE_BINARY",
+          "pairwise_edges": [],
+          "verification_note": "复刻图清晰可读；锯齿边框=开局可破坏墙；黄色翻越带箭头=单向",
+          "additional_room_candidates": [],
+          "previous_research_status": "CHECK_REQUIRED",
+          "adoption_basis": "USER_ACCEPTED_CN_RETAIL",
+          "adoption_ref": "U02:来源优先级与Phase1采用",
+          "japanese_missing_blocks_runtime": false
+        },
+        {
+          "id": "cp_p11",
+          "from": "crotus_hallway",
+          "to": "crotus_receiving_desk",
+          "rooms": [
+            "crotus_hallway",
+            "crotus_receiving_desk"
+          ],
+          "endpoint_kind": "BINARY_PATH_ICON",
+          "color": "green",
+          "direction": "both",
+          "jagged": false,
+          "special_state": "NONE_AT_SETUP",
+          "source_level": "D",
+          "source_ref": [
+            "Drive:CrotusRecreated.png / 用户提供的地图复刻图，Claude 2026-11-23 逐条转录"
+          ],
+          "status": "CONFIRMED",
+          "traversal_semantics": "CANDIDATE_BINARY",
+          "pairwise_edges": [],
+          "verification_note": "复刻图清晰可读；锯齿边框=开局可破坏墙；黄色翻越带箭头=单向",
+          "additional_room_candidates": [],
+          "previous_research_status": "CHECK_REQUIRED",
+          "adoption_basis": "USER_ACCEPTED_CN_RETAIL",
+          "adoption_ref": "U02:来源优先级与Phase1采用",
+          "japanese_missing_blocks_runtime": false
+        },
+        {
+          "id": "cp_p12",
+          "from": "crotus_receiving_desk",
+          "to": "crotus_courtyard",
+          "rooms": [
+            "crotus_receiving_desk",
+            "crotus_courtyard"
+          ],
+          "endpoint_kind": "BINARY_PATH_ICON",
+          "color": "yellow",
+          "direction": "a_to_b",
+          "jagged": false,
+          "special_state": "NONE_AT_SETUP",
+          "source_level": "D",
+          "source_ref": [
+            "Drive:CrotusRecreated.png / 用户提供的地图复刻图，Claude 2026-11-23 逐条转录"
+          ],
+          "status": "CONFIRMED",
+          "traversal_semantics": "CANDIDATE_BINARY",
+          "pairwise_edges": [],
+          "verification_note": "复刻图清晰可读；锯齿边框=开局可破坏墙；黄色翻越带箭头=单向",
+          "additional_room_candidates": [],
+          "previous_research_status": "CHECK_REQUIRED",
+          "adoption_basis": "USER_ACCEPTED_CN_RETAIL",
+          "adoption_ref": "U02:来源优先级与Phase1采用",
+          "japanese_missing_blocks_runtime": false
+        },
+        {
+          "id": "cp_p13",
+          "from": "crotus_greenhouse",
+          "to": "crotus_ruins",
+          "rooms": [
+            "crotus_greenhouse",
+            "crotus_ruins"
+          ],
+          "endpoint_kind": "BINARY_PATH_ICON",
+          "color": "blue",
+          "direction": "both",
+          "jagged": true,
+          "special_state": "BREAKABLE_WALL_AT_SETUP",
+          "source_level": "D",
+          "source_ref": [
+            "Drive:CrotusRecreated.png / 用户提供的地图复刻图，Claude 2026-11-23 逐条转录"
+          ],
+          "status": "CONFIRMED",
+          "traversal_semantics": "CANDIDATE_BINARY",
+          "pairwise_edges": [],
+          "verification_note": "复刻图清晰可读；锯齿边框=开局可破坏墙；黄色翻越带箭头=单向",
+          "additional_room_candidates": [],
+          "previous_research_status": "CHECK_REQUIRED",
+          "adoption_basis": "USER_ACCEPTED_CN_RETAIL",
+          "adoption_ref": "U02:来源优先级与Phase1采用",
+          "japanese_missing_blocks_runtime": false
+        },
+        {
+          "id": "cp_p14",
+          "from": "crotus_greenhouse",
+          "to": "crotus_receiving_desk",
+          "rooms": [
+            "crotus_greenhouse",
+            "crotus_receiving_desk"
+          ],
+          "endpoint_kind": "BINARY_PATH_ICON",
+          "color": "green",
+          "direction": "both",
+          "jagged": false,
+          "special_state": "NONE_AT_SETUP",
+          "source_level": "D",
+          "source_ref": [
+            "Drive:CrotusRecreated.png / 用户提供的地图复刻图，Claude 2026-11-23 逐条转录"
+          ],
+          "status": "CONFIRMED",
+          "traversal_semantics": "CANDIDATE_BINARY",
+          "pairwise_edges": [],
+          "verification_note": "复刻图清晰可读；锯齿边框=开局可破坏墙；黄色翻越带箭头=单向",
+          "additional_room_candidates": [],
+          "previous_research_status": "CHECK_REQUIRED",
+          "adoption_basis": "USER_ACCEPTED_CN_RETAIL",
+          "adoption_ref": "U02:来源优先级与Phase1采用",
+          "japanese_missing_blocks_runtime": false
+        },
+        {
+          "id": "cp_p15",
+          "from": "crotus_receiving_desk",
+          "to": "crotus_carnival_entrance",
+          "rooms": [
+            "crotus_receiving_desk",
+            "crotus_carnival_entrance"
+          ],
+          "endpoint_kind": "BINARY_PATH_ICON",
+          "color": "blue",
+          "direction": "both",
+          "jagged": false,
+          "special_state": "NONE_AT_SETUP",
+          "source_level": "D",
+          "source_ref": [
+            "Drive:CrotusRecreated.png / 用户提供的地图复刻图，Claude 2026-11-23 逐条转录"
+          ],
+          "status": "CONFIRMED",
+          "traversal_semantics": "CANDIDATE_BINARY",
+          "pairwise_edges": [],
+          "verification_note": "复刻图清晰可读；锯齿边框=开局可破坏墙；黄色翻越带箭头=单向",
+          "additional_room_candidates": [],
+          "previous_research_status": "CHECK_REQUIRED",
+          "adoption_basis": "USER_ACCEPTED_CN_RETAIL",
+          "adoption_ref": "U02:来源优先级与Phase1采用",
+          "japanese_missing_blocks_runtime": false
+        },
+        {
+          "id": "cp_p16",
+          "from": null,
+          "to": null,
+          "rooms": [
+            "crotus_receiving_desk",
+            "crotus_carnival_entrance",
+            "crotus_outer_garden"
+          ],
+          "endpoint_kind": "MULTI_ROOM_PATH_ICON",
+          "color": "green",
+          "direction": "both",
+          "jagged": true,
+          "special_state": "BREAKABLE_WALL_AT_SETUP",
+          "source_level": "D",
+          "source_ref": [
+            "Drive:CrotusRecreated.png / 用户提供的地图复刻图，Claude 2026-11-23 逐条转录"
+          ],
+          "status": "CONFIRMED",
+          "traversal_semantics": "ALL_PAIRS_ONE_STEP",
+          "pairwise_edges": [],
+          "verification_note": "复刻图清晰可读；锯齿边框=开局可破坏墙；黄色翻越带箭头=单向",
+          "additional_room_candidates": [],
+          "previous_research_status": "CHECK_REQUIRED",
+          "adoption_basis": "USER_ACCEPTED_CN_RETAIL",
+          "adoption_ref": "U02:来源优先级与Phase1采用",
+          "japanese_missing_blocks_runtime": false,
+          "blocker_scope": "ENTIRE_PATH_ICON",
+          "house_rule_ref": "U02:Q09"
+        },
+        {
+          "id": "cp_p17",
+          "from": "crotus_greenhouse",
+          "to": "crotus_outer_garden",
+          "rooms": [
+            "crotus_greenhouse",
+            "crotus_outer_garden"
+          ],
+          "endpoint_kind": "BINARY_PATH_ICON",
+          "color": "red",
+          "direction": "both",
+          "jagged": false,
+          "special_state": "NONE_AT_SETUP",
+          "source_level": "D",
+          "source_ref": [
+            "Drive:CrotusRecreated.png / 用户提供的地图复刻图，Claude 2026-11-23 逐条转录"
+          ],
+          "status": "CONFIRMED",
+          "traversal_semantics": "CANDIDATE_BINARY",
+          "pairwise_edges": [],
+          "verification_note": "复刻图清晰可读；锯齿边框=开局可破坏墙；黄色翻越带箭头=单向",
+          "additional_room_candidates": [],
+          "previous_research_status": "CHECK_REQUIRED",
+          "adoption_basis": "USER_ACCEPTED_CN_RETAIL",
+          "adoption_ref": "U02:来源优先级与Phase1采用",
+          "japanese_missing_blocks_runtime": false
+        },
+        {
+          "id": "cp_p18",
+          "from": "crotus_ruins",
+          "to": "crotus_outer_garden",
+          "rooms": [
+            "crotus_ruins",
+            "crotus_outer_garden"
+          ],
+          "endpoint_kind": "BINARY_PATH_ICON",
+          "color": "blue",
+          "direction": "both",
+          "jagged": false,
+          "special_state": "NONE_AT_SETUP",
+          "source_level": "D",
+          "source_ref": [
+            "Drive:CrotusRecreated.png / 用户提供的地图复刻图，Claude 2026-11-23 逐条转录"
+          ],
+          "status": "CONFIRMED",
+          "traversal_semantics": "CANDIDATE_BINARY",
+          "pairwise_edges": [],
+          "verification_note": "复刻图清晰可读；锯齿边框=开局可破坏墙；黄色翻越带箭头=单向",
+          "additional_room_candidates": [],
+          "previous_research_status": "CHECK_REQUIRED",
+          "adoption_basis": "USER_ACCEPTED_CN_RETAIL",
+          "adoption_ref": "U02:来源优先级与Phase1采用",
+          "japanese_missing_blocks_runtime": false
+        }
+      ],
+      "expected_node_count": 10,
+      "expected_edge_count": 18,
+      "topology_status": "CONFIRMED",
+      "preview_source_ref": [
+        "Drive:CrotusRecreated.png / 用户提供的地图复刻图，Claude 2026-11-23 逐条转录"
+      ],
+      "missing_fields": [
+        "英文/日文房间原名（程序ID不是原文）"
+      ],
+      "edge_schema": {
+        "id": "string",
+        "from": "node ID for BINARY_PATH_ICON; null for MULTI_ROOM_PATH_ICON",
+        "to": "node ID for BINARY_PATH_ICON; null for MULTI_ROOM_PATH_ICON",
+        "color": "CHECK_REQUIRED",
+        "direction": "CHECK_REQUIRED",
+        "special_state": "CHECK_REQUIRED",
+        "source_level": null,
+        "source_ref": [],
+        "status": "CHECK_REQUIRED",
+        "rooms": [
+          "node ID; two or more photo-observed endpoints"
+        ],
+        "endpoint_kind": "BINARY_PATH_ICON | MULTI_ROOM_PATH_ICON",
+        "traversal_semantics": "CANDIDATE_BINARY | CHECK_REQUIRED",
+        "pairwise_edges": []
+      },
+      "review_stage": "ADOPTED_FOR_PHASE_1",
+      "expected_path_icon_count": 18,
+      "name_evidence": {
+        "source_level": "D",
+        "source_ref": [
+          "D36:reference/maps/autohaven_cn_retail_xhs.png / 照片印刷文字"
+        ],
+        "status": "CHECK_REQUIRED",
+        "previous_draft_name": "废旧汽车场"
+      },
+      "official_crosscheck": {
+        "source_ref": [
+          "C02",
+          "B11"
+        ],
+        "source_level": "C",
+        "status": "CHECK_REQUIRED",
+        "result": "NOT_APPLICABLE_OTHER_MAP",
+        "note": "该原图只显示麦克米伦庄园，不含奥托海文；B11例外亦仅限麦克米伦。"
+      },
+      "graph_model": {
+        "version": 2,
+        "description": "edges兼容二端路径和多房间共用图标；rooms为照片端点转录，多端from/to留空；未生成两两通行边。",
+        "multi_room_traversal_status": "CHECK_REQUIRED",
+        "junction_question_ref": "Q09",
+        "path_icon_ids": [
+          "ah_p02",
+          "ah_p04"
+        ],
+        "null_endpoint_note": "多端项from/to空表示该记录不是二端边；端点名单保存在rooms，不表示没有端点。"
+      },
+      "tracks": {
+        "sacrifice_slots": {
+          "value": 8,
+          "source_level": "D",
+          "source_ref": [
+            "D36:reference/maps/autohaven_cn_retail_xhs.png / 照片印刷文字"
+          ],
+          "status": "CHECK_REQUIRED"
+        },
+        "generator_slots": {
+          "value": 5,
+          "source_level": "D",
+          "source_ref": [
+            "D36:reference/maps/autohaven_cn_retail_xhs.png / 照片印刷文字"
+          ],
+          "status": "CHECK_REQUIRED"
+        }
+      },
+      "previous_research_status": "CHECK_REQUIRED",
+      "adoption_basis": "USER_ACCEPTED_CN_RETAIL",
+      "adoption_ref": "U02:来源优先级与Phase1采用",
+      "japanese_missing_blocks_runtime": false,
+      "expected_pairwise_edge_count": null
+    },
+    {
+      "id": "ormond",
+      "name_ja": null,
+      "name_en": "Ormond",
+      "name_zh": "奥蒙德",
+      "translation_status": "DRAFT",
+      "japanese_text_status": "CHECK_REQUIRED",
+      "source_level": "D",
+      "source_ref": [
+        "Drive:OrmondRecreated.png / 用户提供的地图复刻图，Claude 2026-11-23 逐条转录"
+      ],
+      "status": "CONFIRMED",
+      "identity_status": "CONFIRMED",
+      "nodes": [
+        {
+          "id": "ormond_picnic_area",
+          "name_ja": null,
+          "name_en": "Picnic Area",
+          "name_zh": "野餐区",
+          "translation_status": "DRAFT",
+          "japanese_text_status": "CHECK_REQUIRED",
+          "source_level": "D",
+          "source_ref": [
+            "Drive:OrmondRecreated.png / 用户提供的地图复刻图，Claude 2026-11-23 逐条转录"
+          ],
+          "status": "CONFIRMED",
+          "name_status": "CHECK_REQUIRED",
+          "initial_prop_counts": {
+            "objective": 1,
+            "boldness": 1,
+            "survival": 1,
+            "altruism": 0
+          },
+          "spawn_faces": [
+            1
+          ],
+          "coordinates": null,
+          "field_evidence": {
+            "name_zh": {
+              "source_level": "D",
+              "source_ref": [
+                "Drive:OrmondRecreated.png / 用户提供的地图复刻图，Claude 2026-11-23 逐条转录"
+              ],
+              "status": "CONFIRMED",
+              "previous_research_status": "CHECK_REQUIRED",
+              "adoption_basis": "USER_ACCEPTED_CN_RETAIL",
+              "adoption_ref": "U02:来源优先级与Phase1采用",
+              "japanese_missing_blocks_runtime": false
+            },
+            "initial_prop_counts": {
+              "source_level": "D",
+              "source_ref": [
+                "Drive:OrmondRecreated.png / 用户提供的地图复刻图，Claude 2026-11-23 逐条转录"
+              ],
+              "status": "CONFIRMED",
+              "previous_research_status": "CHECK_REQUIRED",
+              "adoption_basis": "USER_ACCEPTED_CN_RETAIL",
+              "adoption_ref": "U02:来源优先级与Phase1采用",
+              "japanese_missing_blocks_runtime": false
+            },
+            "spawn_faces": {
+              "source_level": "D",
+              "source_ref": [
+                "Drive:OrmondRecreated.png / 用户提供的地图复刻图，Claude 2026-11-23 逐条转录"
+              ],
+              "status": "CONFIRMED",
+              "previous_research_status": "CHECK_REQUIRED",
+              "adoption_basis": "USER_ACCEPTED_CN_RETAIL",
+              "adoption_ref": "U02:来源优先级与Phase1采用",
+              "japanese_missing_blocks_runtime": false
+            }
+          },
+          "id_is_official_english_name": false,
+          "previous_research_status": "CHECK_REQUIRED",
+          "adoption_basis": "USER_ACCEPTED_CN_RETAIL",
+          "adoption_ref": "U02:来源优先级与Phase1采用",
+          "japanese_missing_blocks_runtime": false
+        },
+        {
+          "id": "ormond_guest_rooms",
+          "name_ja": null,
+          "name_en": "Guest Rooms",
+          "name_zh": "客房",
+          "translation_status": "DRAFT",
+          "japanese_text_status": "CHECK_REQUIRED",
+          "source_level": "D",
+          "source_ref": [
+            "Drive:OrmondRecreated.png / 用户提供的地图复刻图，Claude 2026-11-23 逐条转录"
+          ],
+          "status": "CONFIRMED",
+          "name_status": "CHECK_REQUIRED",
+          "initial_prop_counts": {
+            "objective": 1,
+            "boldness": 1,
+            "survival": 1,
+            "altruism": 1
+          },
+          "spawn_faces": [
+            0
+          ],
+          "coordinates": null,
+          "field_evidence": {
+            "name_zh": {
+              "source_level": "D",
+              "source_ref": [
+                "Drive:OrmondRecreated.png / 用户提供的地图复刻图，Claude 2026-11-23 逐条转录"
+              ],
+              "status": "CONFIRMED",
+              "previous_research_status": "CHECK_REQUIRED",
+              "adoption_basis": "USER_ACCEPTED_CN_RETAIL",
+              "adoption_ref": "U02:来源优先级与Phase1采用",
+              "japanese_missing_blocks_runtime": false
+            },
+            "initial_prop_counts": {
+              "source_level": "D",
+              "source_ref": [
+                "Drive:OrmondRecreated.png / 用户提供的地图复刻图，Claude 2026-11-23 逐条转录"
+              ],
+              "status": "CONFIRMED",
+              "previous_research_status": "CHECK_REQUIRED",
+              "adoption_basis": "USER_ACCEPTED_CN_RETAIL",
+              "adoption_ref": "U02:来源优先级与Phase1采用",
+              "japanese_missing_blocks_runtime": false
+            },
+            "spawn_faces": {
+              "source_level": "D",
+              "source_ref": [
+                "Drive:OrmondRecreated.png / 用户提供的地图复刻图，Claude 2026-11-23 逐条转录"
+              ],
+              "status": "CONFIRMED",
+              "previous_research_status": "CHECK_REQUIRED",
+              "adoption_basis": "USER_ACCEPTED_CN_RETAIL",
+              "adoption_ref": "U02:来源优先级与Phase1采用",
+              "japanese_missing_blocks_runtime": false
+            }
+          },
+          "id_is_official_english_name": false,
+          "previous_research_status": "CHECK_REQUIRED",
+          "adoption_basis": "USER_ACCEPTED_CN_RETAIL",
+          "adoption_ref": "U02:来源优先级与Phase1采用",
+          "japanese_missing_blocks_runtime": false
+        },
+        {
+          "id": "ormond_balcony",
+          "name_ja": null,
+          "name_en": "Balcony",
+          "name_zh": "阳台",
+          "translation_status": "DRAFT",
+          "japanese_text_status": "CHECK_REQUIRED",
+          "source_level": "D",
+          "source_ref": [
+            "Drive:OrmondRecreated.png / 用户提供的地图复刻图，Claude 2026-11-23 逐条转录"
+          ],
+          "status": "CONFIRMED",
+          "name_status": "CHECK_REQUIRED",
+          "initial_prop_counts": {
+            "objective": 1,
+            "boldness": 1,
+            "survival": 0,
+            "altruism": 2
+          },
+          "spawn_faces": [],
+          "coordinates": null,
+          "field_evidence": {
+            "name_zh": {
+              "source_level": "D",
+              "source_ref": [
+                "Drive:OrmondRecreated.png / 用户提供的地图复刻图，Claude 2026-11-23 逐条转录"
+              ],
+              "status": "CONFIRMED",
+              "previous_research_status": "CHECK_REQUIRED",
+              "adoption_basis": "USER_ACCEPTED_CN_RETAIL",
+              "adoption_ref": "U02:来源优先级与Phase1采用",
+              "japanese_missing_blocks_runtime": false
+            },
+            "initial_prop_counts": {
+              "source_level": "D",
+              "source_ref": [
+                "Drive:OrmondRecreated.png / 用户提供的地图复刻图，Claude 2026-11-23 逐条转录"
+              ],
+              "status": "CONFIRMED",
+              "previous_research_status": "CHECK_REQUIRED",
+              "adoption_basis": "USER_ACCEPTED_CN_RETAIL",
+              "adoption_ref": "U02:来源优先级与Phase1采用",
+              "japanese_missing_blocks_runtime": false
+            },
+            "spawn_faces": {
+              "source_level": "D",
+              "source_ref": [
+                "Drive:OrmondRecreated.png / 用户提供的地图复刻图，Claude 2026-11-23 逐条转录"
+              ],
+              "status": "CONFIRMED",
+              "previous_research_status": "CHECK_REQUIRED",
+              "adoption_basis": "USER_ACCEPTED_CN_RETAIL",
+              "adoption_ref": "U02:来源优先级与Phase1采用",
+              "japanese_missing_blocks_runtime": false
+            }
+          },
+          "id_is_official_english_name": false,
+          "previous_research_status": "CHECK_REQUIRED",
+          "adoption_basis": "USER_ACCEPTED_CN_RETAIL",
+          "adoption_ref": "U02:来源优先级与Phase1采用",
+          "japanese_missing_blocks_runtime": false
+        },
+        {
+          "id": "ormond_storage",
+          "name_ja": null,
+          "name_en": "Storage",
+          "name_zh": "储藏室",
+          "translation_status": "DRAFT",
+          "japanese_text_status": "CHECK_REQUIRED",
+          "source_level": "D",
+          "source_ref": [
+            "Drive:OrmondRecreated.png / 用户提供的地图复刻图，Claude 2026-11-23 逐条转录"
+          ],
+          "status": "CONFIRMED",
+          "name_status": "CHECK_REQUIRED",
+          "initial_prop_counts": {
+            "objective": 1,
+            "boldness": 1,
+            "survival": 2,
+            "altruism": 0
+          },
+          "spawn_faces": [
+            5
+          ],
+          "coordinates": null,
+          "field_evidence": {
+            "name_zh": {
+              "source_level": "D",
+              "source_ref": [
+                "Drive:OrmondRecreated.png / 用户提供的地图复刻图，Claude 2026-11-23 逐条转录"
+              ],
+              "status": "CONFIRMED",
+              "previous_research_status": "CHECK_REQUIRED",
+              "adoption_basis": "USER_ACCEPTED_CN_RETAIL",
+              "adoption_ref": "U02:来源优先级与Phase1采用",
+              "japanese_missing_blocks_runtime": false
+            },
+            "initial_prop_counts": {
+              "source_level": "D",
+              "source_ref": [
+                "Drive:OrmondRecreated.png / 用户提供的地图复刻图，Claude 2026-11-23 逐条转录"
+              ],
+              "status": "CONFIRMED",
+              "previous_research_status": "CHECK_REQUIRED",
+              "adoption_basis": "USER_ACCEPTED_CN_RETAIL",
+              "adoption_ref": "U02:来源优先级与Phase1采用",
+              "japanese_missing_blocks_runtime": false
+            },
+            "spawn_faces": {
+              "source_level": "D",
+              "source_ref": [
+                "Drive:OrmondRecreated.png / 用户提供的地图复刻图，Claude 2026-11-23 逐条转录"
+              ],
+              "status": "CONFIRMED",
+              "previous_research_status": "CHECK_REQUIRED",
+              "adoption_basis": "USER_ACCEPTED_CN_RETAIL",
+              "adoption_ref": "U02:来源优先级与Phase1采用",
+              "japanese_missing_blocks_runtime": false
+            }
+          },
+          "id_is_official_english_name": false,
+          "previous_research_status": "CHECK_REQUIRED",
+          "adoption_basis": "USER_ACCEPTED_CN_RETAIL",
+          "adoption_ref": "U02:来源优先级与Phase1采用",
+          "japanese_missing_blocks_runtime": false
+        },
+        {
+          "id": "ormond_chalet",
+          "name_ja": null,
+          "name_en": "Chalet",
+          "name_zh": "山间旅馆",
+          "translation_status": "DRAFT",
+          "japanese_text_status": "CHECK_REQUIRED",
+          "source_level": "D",
+          "source_ref": [
+            "Drive:OrmondRecreated.png / 用户提供的地图复刻图，Claude 2026-11-23 逐条转录"
+          ],
+          "status": "CONFIRMED",
+          "name_status": "CHECK_REQUIRED",
+          "initial_prop_counts": {
+            "objective": 1,
+            "boldness": 1,
+            "survival": 2,
+            "altruism": 2
+          },
+          "spawn_faces": [],
+          "coordinates": null,
+          "field_evidence": {
+            "name_zh": {
+              "source_level": "D",
+              "source_ref": [
+                "Drive:OrmondRecreated.png / 用户提供的地图复刻图，Claude 2026-11-23 逐条转录"
+              ],
+              "status": "CONFIRMED",
+              "previous_research_status": "CHECK_REQUIRED",
+              "adoption_basis": "USER_ACCEPTED_CN_RETAIL",
+              "adoption_ref": "U02:来源优先级与Phase1采用",
+              "japanese_missing_blocks_runtime": false
+            },
+            "initial_prop_counts": {
+              "source_level": "D",
+              "source_ref": [
+                "Drive:OrmondRecreated.png / 用户提供的地图复刻图，Claude 2026-11-23 逐条转录"
+              ],
+              "status": "CONFIRMED",
+              "previous_research_status": "CHECK_REQUIRED",
+              "adoption_basis": "USER_ACCEPTED_CN_RETAIL",
+              "adoption_ref": "U02:来源优先级与Phase1采用",
+              "japanese_missing_blocks_runtime": false
+            },
+            "spawn_faces": {
+              "source_level": "D",
+              "source_ref": [
+                "Drive:OrmondRecreated.png / 用户提供的地图复刻图，Claude 2026-11-23 逐条转录"
+              ],
+              "status": "CONFIRMED",
+              "previous_research_status": "CHECK_REQUIRED",
+              "adoption_basis": "USER_ACCEPTED_CN_RETAIL",
+              "adoption_ref": "U02:来源优先级与Phase1采用",
+              "japanese_missing_blocks_runtime": false
+            }
+          },
+          "id_is_official_english_name": false,
+          "previous_research_status": "CHECK_REQUIRED",
+          "adoption_basis": "USER_ACCEPTED_CN_RETAIL",
+          "adoption_ref": "U02:来源优先级与Phase1采用",
+          "japanese_missing_blocks_runtime": false
+        },
+        {
+          "id": "ormond_rentals",
+          "name_ja": null,
+          "name_en": "Rentals",
+          "name_zh": "租赁处",
+          "translation_status": "DRAFT",
+          "japanese_text_status": "CHECK_REQUIRED",
+          "source_level": "D",
+          "source_ref": [
+            "Drive:OrmondRecreated.png / 用户提供的地图复刻图，Claude 2026-11-23 逐条转录"
+          ],
+          "status": "CONFIRMED",
+          "name_status": "CHECK_REQUIRED",
+          "initial_prop_counts": {
+            "objective": 1,
+            "boldness": 1,
+            "survival": 1,
+            "altruism": 2
+          },
+          "spawn_faces": [],
+          "coordinates": null,
+          "field_evidence": {
+            "name_zh": {
+              "source_level": "D",
+              "source_ref": [
+                "Drive:OrmondRecreated.png / 用户提供的地图复刻图，Claude 2026-11-23 逐条转录"
+              ],
+              "status": "CONFIRMED",
+              "previous_research_status": "CHECK_REQUIRED",
+              "adoption_basis": "USER_ACCEPTED_CN_RETAIL",
+              "adoption_ref": "U02:来源优先级与Phase1采用",
+              "japanese_missing_blocks_runtime": false
+            },
+            "initial_prop_counts": {
+              "source_level": "D",
+              "source_ref": [
+                "Drive:OrmondRecreated.png / 用户提供的地图复刻图，Claude 2026-11-23 逐条转录"
+              ],
+              "status": "CONFIRMED",
+              "previous_research_status": "CHECK_REQUIRED",
+              "adoption_basis": "USER_ACCEPTED_CN_RETAIL",
+              "adoption_ref": "U02:来源优先级与Phase1采用",
+              "japanese_missing_blocks_runtime": false
+            },
+            "spawn_faces": {
+              "source_level": "D",
+              "source_ref": [
+                "Drive:OrmondRecreated.png / 用户提供的地图复刻图，Claude 2026-11-23 逐条转录"
+              ],
+              "status": "CONFIRMED",
+              "previous_research_status": "CHECK_REQUIRED",
+              "adoption_basis": "USER_ACCEPTED_CN_RETAIL",
+              "adoption_ref": "U02:来源优先级与Phase1采用",
+              "japanese_missing_blocks_runtime": false
+            }
+          },
+          "id_is_official_english_name": false,
+          "previous_research_status": "CHECK_REQUIRED",
+          "adoption_basis": "USER_ACCEPTED_CN_RETAIL",
+          "adoption_ref": "U02:来源优先级与Phase1采用",
+          "japanese_missing_blocks_runtime": false
+        },
+        {
+          "id": "ormond_wooded_area",
+          "name_ja": null,
+          "name_en": "Wooded Area",
+          "name_zh": "林地区",
+          "translation_status": "DRAFT",
+          "japanese_text_status": "CHECK_REQUIRED",
+          "source_level": "D",
+          "source_ref": [
+            "Drive:OrmondRecreated.png / 用户提供的地图复刻图，Claude 2026-11-23 逐条转录"
+          ],
+          "status": "CONFIRMED",
+          "name_status": "CHECK_REQUIRED",
+          "initial_prop_counts": {
+            "objective": 1,
+            "boldness": 1,
+            "survival": 1,
+            "altruism": 1
+          },
+          "spawn_faces": [
+            4
+          ],
+          "coordinates": null,
+          "field_evidence": {
+            "name_zh": {
+              "source_level": "D",
+              "source_ref": [
+                "Drive:OrmondRecreated.png / 用户提供的地图复刻图，Claude 2026-11-23 逐条转录"
+              ],
+              "status": "CONFIRMED",
+              "previous_research_status": "CHECK_REQUIRED",
+              "adoption_basis": "USER_ACCEPTED_CN_RETAIL",
+              "adoption_ref": "U02:来源优先级与Phase1采用",
+              "japanese_missing_blocks_runtime": false
+            },
+            "initial_prop_counts": {
+              "source_level": "D",
+              "source_ref": [
+                "Drive:OrmondRecreated.png / 用户提供的地图复刻图，Claude 2026-11-23 逐条转录"
+              ],
+              "status": "CONFIRMED",
+              "previous_research_status": "CHECK_REQUIRED",
+              "adoption_basis": "USER_ACCEPTED_CN_RETAIL",
+              "adoption_ref": "U02:来源优先级与Phase1采用",
+              "japanese_missing_blocks_runtime": false
+            },
+            "spawn_faces": {
+              "source_level": "D",
+              "source_ref": [
+                "Drive:OrmondRecreated.png / 用户提供的地图复刻图，Claude 2026-11-23 逐条转录"
+              ],
+              "status": "CONFIRMED",
+              "previous_research_status": "CHECK_REQUIRED",
+              "adoption_basis": "USER_ACCEPTED_CN_RETAIL",
+              "adoption_ref": "U02:来源优先级与Phase1采用",
+              "japanese_missing_blocks_runtime": false
+            }
+          },
+          "id_is_official_english_name": false,
+          "previous_research_status": "CHECK_REQUIRED",
+          "adoption_basis": "USER_ACCEPTED_CN_RETAIL",
+          "adoption_ref": "U02:来源优先级与Phase1采用",
+          "japanese_missing_blocks_runtime": false
+        },
+        {
+          "id": "ormond_ski_shack",
+          "name_ja": null,
+          "name_en": "Ski Shack",
+          "name_zh": "滑雪小屋",
+          "translation_status": "DRAFT",
+          "japanese_text_status": "CHECK_REQUIRED",
+          "source_level": "D",
+          "source_ref": [
+            "Drive:OrmondRecreated.png / 用户提供的地图复刻图，Claude 2026-11-23 逐条转录"
+          ],
+          "status": "CONFIRMED",
+          "name_status": "CHECK_REQUIRED",
+          "initial_prop_counts": {
+            "objective": 1,
+            "boldness": 1,
+            "survival": 1,
+            "altruism": 1
+          },
+          "spawn_faces": [
+            2
+          ],
+          "coordinates": null,
+          "field_evidence": {
+            "name_zh": {
+              "source_level": "D",
+              "source_ref": [
+                "Drive:OrmondRecreated.png / 用户提供的地图复刻图，Claude 2026-11-23 逐条转录"
+              ],
+              "status": "CONFIRMED",
+              "previous_research_status": "CHECK_REQUIRED",
+              "adoption_basis": "USER_ACCEPTED_CN_RETAIL",
+              "adoption_ref": "U02:来源优先级与Phase1采用",
+              "japanese_missing_blocks_runtime": false
+            },
+            "initial_prop_counts": {
+              "source_level": "D",
+              "source_ref": [
+                "Drive:OrmondRecreated.png / 用户提供的地图复刻图，Claude 2026-11-23 逐条转录"
+              ],
+              "status": "CONFIRMED",
+              "previous_research_status": "CHECK_REQUIRED",
+              "adoption_basis": "USER_ACCEPTED_CN_RETAIL",
+              "adoption_ref": "U02:来源优先级与Phase1采用",
+              "japanese_missing_blocks_runtime": false
+            },
+            "spawn_faces": {
+              "source_level": "D",
+              "source_ref": [
+                "Drive:OrmondRecreated.png / 用户提供的地图复刻图，Claude 2026-11-23 逐条转录"
+              ],
+              "status": "CONFIRMED",
+              "previous_research_status": "CHECK_REQUIRED",
+              "adoption_basis": "USER_ACCEPTED_CN_RETAIL",
+              "adoption_ref": "U02:来源优先级与Phase1采用",
+              "japanese_missing_blocks_runtime": false
+            }
+          },
+          "id_is_official_english_name": false,
+          "previous_research_status": "CHECK_REQUIRED",
+          "adoption_basis": "USER_ACCEPTED_CN_RETAIL",
+          "adoption_ref": "U02:来源优先级与Phase1采用",
+          "japanese_missing_blocks_runtime": false
+        },
+        {
+          "id": "ormond_basement",
+          "name_ja": null,
+          "name_en": "Basement",
+          "name_zh": "地下室",
+          "translation_status": "DRAFT",
+          "japanese_text_status": "CHECK_REQUIRED",
+          "source_level": "D",
+          "source_ref": [
+            "Drive:OrmondRecreated.png / 用户提供的地图复刻图，Claude 2026-11-23 逐条转录"
+          ],
+          "status": "CONFIRMED",
+          "name_status": "CHECK_REQUIRED",
+          "initial_prop_counts": {
+            "objective": 1,
+            "boldness": 1,
+            "survival": 1,
+            "altruism": 1
+          },
+          "spawn_faces": [],
+          "coordinates": null,
+          "field_evidence": {
+            "name_zh": {
+              "source_level": "D",
+              "source_ref": [
+                "Drive:OrmondRecreated.png / 用户提供的地图复刻图，Claude 2026-11-23 逐条转录"
+              ],
+              "status": "CONFIRMED",
+              "previous_research_status": "CHECK_REQUIRED",
+              "adoption_basis": "USER_ACCEPTED_CN_RETAIL",
+              "adoption_ref": "U02:来源优先级与Phase1采用",
+              "japanese_missing_blocks_runtime": false
+            },
+            "initial_prop_counts": {
+              "source_level": "D",
+              "source_ref": [
+                "Drive:OrmondRecreated.png / 用户提供的地图复刻图，Claude 2026-11-23 逐条转录"
+              ],
+              "status": "CONFIRMED",
+              "previous_research_status": "CHECK_REQUIRED",
+              "adoption_basis": "USER_ACCEPTED_CN_RETAIL",
+              "adoption_ref": "U02:来源优先级与Phase1采用",
+              "japanese_missing_blocks_runtime": false
+            },
+            "spawn_faces": {
+              "source_level": "D",
+              "source_ref": [
+                "Drive:OrmondRecreated.png / 用户提供的地图复刻图，Claude 2026-11-23 逐条转录"
+              ],
+              "status": "CONFIRMED",
+              "previous_research_status": "CHECK_REQUIRED",
+              "adoption_basis": "USER_ACCEPTED_CN_RETAIL",
+              "adoption_ref": "U02:来源优先级与Phase1采用",
+              "japanese_missing_blocks_runtime": false
+            }
+          },
+          "id_is_official_english_name": false,
+          "previous_research_status": "CHECK_REQUIRED",
+          "adoption_basis": "USER_ACCEPTED_CN_RETAIL",
+          "adoption_ref": "U02:来源优先级与Phase1采用",
+          "japanese_missing_blocks_runtime": false
+        },
+        {
+          "id": "ormond_entryway",
+          "name_ja": null,
+          "name_en": "Entryway",
+          "name_zh": "入口通道",
+          "translation_status": "DRAFT",
+          "japanese_text_status": "CHECK_REQUIRED",
+          "source_level": "D",
+          "source_ref": [
+            "Drive:OrmondRecreated.png / 用户提供的地图复刻图，Claude 2026-11-23 逐条转录"
+          ],
+          "status": "CONFIRMED",
+          "name_status": "CHECK_REQUIRED",
+          "initial_prop_counts": {
+            "objective": 1,
+            "boldness": 1,
+            "survival": 2,
+            "altruism": 2
+          },
+          "spawn_faces": [
+            3
+          ],
+          "coordinates": null,
+          "field_evidence": {
+            "name_zh": {
+              "source_level": "D",
+              "source_ref": [
+                "Drive:OrmondRecreated.png / 用户提供的地图复刻图，Claude 2026-11-23 逐条转录"
+              ],
+              "status": "CONFIRMED",
+              "previous_research_status": "CHECK_REQUIRED",
+              "adoption_basis": "USER_ACCEPTED_CN_RETAIL",
+              "adoption_ref": "U02:来源优先级与Phase1采用",
+              "japanese_missing_blocks_runtime": false
+            },
+            "initial_prop_counts": {
+              "source_level": "D",
+              "source_ref": [
+                "Drive:OrmondRecreated.png / 用户提供的地图复刻图，Claude 2026-11-23 逐条转录"
+              ],
+              "status": "CONFIRMED",
+              "previous_research_status": "CHECK_REQUIRED",
+              "adoption_basis": "USER_ACCEPTED_CN_RETAIL",
+              "adoption_ref": "U02:来源优先级与Phase1采用",
+              "japanese_missing_blocks_runtime": false
+            },
+            "spawn_faces": {
+              "source_level": "D",
+              "source_ref": [
+                "Drive:OrmondRecreated.png / 用户提供的地图复刻图，Claude 2026-11-23 逐条转录"
+              ],
+              "status": "CONFIRMED",
+              "previous_research_status": "CHECK_REQUIRED",
+              "adoption_basis": "USER_ACCEPTED_CN_RETAIL",
+              "adoption_ref": "U02:来源优先级与Phase1采用",
+              "japanese_missing_blocks_runtime": false
+            }
+          },
+          "id_is_official_english_name": false,
+          "previous_research_status": "CHECK_REQUIRED",
+          "adoption_basis": "USER_ACCEPTED_CN_RETAIL",
+          "adoption_ref": "U02:来源优先级与Phase1采用",
+          "japanese_missing_blocks_runtime": false
+        }
+      ],
+      "edges": [
+        {
+          "id": "or_p01",
+          "from": "ormond_picnic_area",
+          "to": "ormond_balcony",
+          "rooms": [
+            "ormond_picnic_area",
+            "ormond_balcony"
+          ],
+          "endpoint_kind": "BINARY_PATH_ICON",
+          "color": "red",
+          "direction": "both",
+          "jagged": true,
+          "special_state": "BREAKABLE_WALL_AT_SETUP",
+          "source_level": "D",
+          "source_ref": [
+            "Drive:OrmondRecreated.png / 用户提供的地图复刻图，Claude 2026-11-23 逐条转录"
+          ],
+          "status": "CONFIRMED",
+          "traversal_semantics": "CANDIDATE_BINARY",
+          "pairwise_edges": [],
+          "verification_note": "复刻图清晰可读；锯齿边框=开局可破坏墙；黄色翻越带箭头=单向",
+          "additional_room_candidates": [],
+          "previous_research_status": "CHECK_REQUIRED",
+          "adoption_basis": "USER_ACCEPTED_CN_RETAIL",
+          "adoption_ref": "U02:来源优先级与Phase1采用",
+          "japanese_missing_blocks_runtime": false
+        },
+        {
+          "id": "or_p02",
+          "from": "ormond_picnic_area",
+          "to": "ormond_guest_rooms",
+          "rooms": [
+            "ormond_picnic_area",
+            "ormond_guest_rooms"
+          ],
+          "endpoint_kind": "BINARY_PATH_ICON",
+          "color": "green",
+          "direction": "both",
+          "jagged": false,
+          "special_state": "NONE_AT_SETUP",
+          "source_level": "D",
+          "source_ref": [
+            "Drive:OrmondRecreated.png / 用户提供的地图复刻图，Claude 2026-11-23 逐条转录"
+          ],
+          "status": "CONFIRMED",
+          "traversal_semantics": "CANDIDATE_BINARY",
+          "pairwise_edges": [],
+          "verification_note": "复刻图清晰可读；锯齿边框=开局可破坏墙；黄色翻越带箭头=单向",
+          "additional_room_candidates": [],
+          "previous_research_status": "CHECK_REQUIRED",
+          "adoption_basis": "USER_ACCEPTED_CN_RETAIL",
+          "adoption_ref": "U02:来源优先级与Phase1采用",
+          "japanese_missing_blocks_runtime": false
+        },
+        {
+          "id": "or_p03",
+          "from": "ormond_guest_rooms",
+          "to": "ormond_balcony",
+          "rooms": [
+            "ormond_guest_rooms",
+            "ormond_balcony"
+          ],
+          "endpoint_kind": "BINARY_PATH_ICON",
+          "color": "green",
+          "direction": "both",
+          "jagged": false,
+          "special_state": "NONE_AT_SETUP",
+          "source_level": "D",
+          "source_ref": [
+            "Drive:OrmondRecreated.png / 用户提供的地图复刻图，Claude 2026-11-23 逐条转录"
+          ],
+          "status": "CONFIRMED",
+          "traversal_semantics": "CANDIDATE_BINARY",
+          "pairwise_edges": [],
+          "verification_note": "复刻图清晰可读；锯齿边框=开局可破坏墙；黄色翻越带箭头=单向",
+          "additional_room_candidates": [],
+          "previous_research_status": "CHECK_REQUIRED",
+          "adoption_basis": "USER_ACCEPTED_CN_RETAIL",
+          "adoption_ref": "U02:来源优先级与Phase1采用",
+          "japanese_missing_blocks_runtime": false
+        },
+        {
+          "id": "or_p04",
+          "from": "ormond_balcony",
+          "to": "ormond_storage",
+          "rooms": [
+            "ormond_balcony",
+            "ormond_storage"
+          ],
+          "endpoint_kind": "BINARY_PATH_ICON",
+          "color": "yellow",
+          "direction": "a_to_b",
+          "jagged": false,
+          "special_state": "NONE_AT_SETUP",
+          "source_level": "D",
+          "source_ref": [
+            "Drive:OrmondRecreated.png / 用户提供的地图复刻图，Claude 2026-11-23 逐条转录"
+          ],
+          "status": "CONFIRMED",
+          "traversal_semantics": "CANDIDATE_BINARY",
+          "pairwise_edges": [],
+          "verification_note": "复刻图清晰可读；锯齿边框=开局可破坏墙；黄色翻越带箭头=单向",
+          "additional_room_candidates": [],
+          "previous_research_status": "CHECK_REQUIRED",
+          "adoption_basis": "USER_ACCEPTED_CN_RETAIL",
+          "adoption_ref": "U02:来源优先级与Phase1采用",
+          "japanese_missing_blocks_runtime": false
+        },
+        {
+          "id": "or_p05",
+          "from": "ormond_balcony",
+          "to": "ormond_rentals",
+          "rooms": [
+            "ormond_balcony",
+            "ormond_rentals"
+          ],
+          "endpoint_kind": "BINARY_PATH_ICON",
+          "color": "yellow",
+          "direction": "a_to_b",
+          "jagged": false,
+          "special_state": "NONE_AT_SETUP",
+          "source_level": "D",
+          "source_ref": [
+            "Drive:OrmondRecreated.png / 用户提供的地图复刻图，Claude 2026-11-23 逐条转录"
+          ],
+          "status": "CONFIRMED",
+          "traversal_semantics": "CANDIDATE_BINARY",
+          "pairwise_edges": [],
+          "verification_note": "复刻图清晰可读；锯齿边框=开局可破坏墙；黄色翻越带箭头=单向",
+          "additional_room_candidates": [],
+          "previous_research_status": "CHECK_REQUIRED",
+          "adoption_basis": "USER_ACCEPTED_CN_RETAIL",
+          "adoption_ref": "U02:来源优先级与Phase1采用",
+          "japanese_missing_blocks_runtime": false
+        },
+        {
+          "id": "or_p06",
+          "from": "ormond_storage",
+          "to": "ormond_rentals",
+          "rooms": [
+            "ormond_storage",
+            "ormond_rentals"
+          ],
+          "endpoint_kind": "BINARY_PATH_ICON",
+          "color": "green",
+          "direction": "both",
+          "jagged": false,
+          "special_state": "NONE_AT_SETUP",
+          "source_level": "D",
+          "source_ref": [
+            "Drive:OrmondRecreated.png / 用户提供的地图复刻图，Claude 2026-11-23 逐条转录"
+          ],
+          "status": "CONFIRMED",
+          "traversal_semantics": "CANDIDATE_BINARY",
+          "pairwise_edges": [],
+          "verification_note": "复刻图清晰可读；锯齿边框=开局可破坏墙；黄色翻越带箭头=单向",
+          "additional_room_candidates": [],
+          "previous_research_status": "CHECK_REQUIRED",
+          "adoption_basis": "USER_ACCEPTED_CN_RETAIL",
+          "adoption_ref": "U02:来源优先级与Phase1采用",
+          "japanese_missing_blocks_runtime": false
+        },
+        {
+          "id": "or_p07",
+          "from": "ormond_guest_rooms",
+          "to": "ormond_chalet",
+          "rooms": [
+            "ormond_guest_rooms",
+            "ormond_chalet"
+          ],
+          "endpoint_kind": "BINARY_PATH_ICON",
+          "color": "blue",
+          "direction": "both",
+          "jagged": true,
+          "special_state": "BREAKABLE_WALL_AT_SETUP",
+          "source_level": "D",
+          "source_ref": [
+            "Drive:OrmondRecreated.png / 用户提供的地图复刻图，Claude 2026-11-23 逐条转录"
+          ],
+          "status": "CONFIRMED",
+          "traversal_semantics": "CANDIDATE_BINARY",
+          "pairwise_edges": [],
+          "verification_note": "复刻图清晰可读；锯齿边框=开局可破坏墙；黄色翻越带箭头=单向",
+          "additional_room_candidates": [],
+          "previous_research_status": "CHECK_REQUIRED",
+          "adoption_basis": "USER_ACCEPTED_CN_RETAIL",
+          "adoption_ref": "U02:来源优先级与Phase1采用",
+          "japanese_missing_blocks_runtime": false
+        },
+        {
+          "id": "or_p08",
+          "from": "ormond_chalet",
+          "to": "ormond_balcony",
+          "rooms": [
+            "ormond_chalet",
+            "ormond_balcony"
+          ],
+          "endpoint_kind": "BINARY_PATH_ICON",
+          "color": "blue",
+          "direction": "both",
+          "jagged": false,
+          "special_state": "NONE_AT_SETUP",
+          "source_level": "D",
+          "source_ref": [
+            "Drive:OrmondRecreated.png / 用户提供的地图复刻图，Claude 2026-11-23 逐条转录"
+          ],
+          "status": "CONFIRMED",
+          "traversal_semantics": "CANDIDATE_BINARY",
+          "pairwise_edges": [],
+          "verification_note": "复刻图清晰可读；锯齿边框=开局可破坏墙；黄色翻越带箭头=单向",
+          "additional_room_candidates": [],
+          "previous_research_status": "CHECK_REQUIRED",
+          "adoption_basis": "USER_ACCEPTED_CN_RETAIL",
+          "adoption_ref": "U02:来源优先级与Phase1采用",
+          "japanese_missing_blocks_runtime": false
+        },
+        {
+          "id": "or_p09",
+          "from": "ormond_chalet",
+          "to": "ormond_picnic_area",
+          "rooms": [
+            "ormond_chalet",
+            "ormond_picnic_area"
+          ],
+          "endpoint_kind": "BINARY_PATH_ICON",
+          "color": "yellow",
+          "direction": "a_to_b",
+          "jagged": false,
+          "special_state": "NONE_AT_SETUP",
+          "source_level": "D",
+          "source_ref": [
+            "Drive:OrmondRecreated.png / 用户提供的地图复刻图，Claude 2026-11-23 逐条转录"
+          ],
+          "status": "CONFIRMED",
+          "traversal_semantics": "CANDIDATE_BINARY",
+          "pairwise_edges": [],
+          "verification_note": "复刻图清晰可读；锯齿边框=开局可破坏墙；黄色翻越带箭头=单向",
+          "additional_room_candidates": [],
+          "previous_research_status": "CHECK_REQUIRED",
+          "adoption_basis": "USER_ACCEPTED_CN_RETAIL",
+          "adoption_ref": "U02:来源优先级与Phase1采用",
+          "japanese_missing_blocks_runtime": false
+        },
+        {
+          "id": "or_p10",
+          "from": "ormond_picnic_area",
+          "to": "ormond_ski_shack",
+          "rooms": [
+            "ormond_picnic_area",
+            "ormond_ski_shack"
+          ],
+          "endpoint_kind": "BINARY_PATH_ICON",
+          "color": "blue",
+          "direction": "both",
+          "jagged": false,
+          "special_state": "NONE_AT_SETUP",
+          "source_level": "D",
+          "source_ref": [
+            "Drive:OrmondRecreated.png / 用户提供的地图复刻图，Claude 2026-11-23 逐条转录"
+          ],
+          "status": "CONFIRMED",
+          "traversal_semantics": "CANDIDATE_BINARY",
+          "pairwise_edges": [],
+          "verification_note": "复刻图清晰可读；锯齿边框=开局可破坏墙；黄色翻越带箭头=单向",
+          "additional_room_candidates": [],
+          "previous_research_status": "CHECK_REQUIRED",
+          "adoption_basis": "USER_ACCEPTED_CN_RETAIL",
+          "adoption_ref": "U02:来源优先级与Phase1采用",
+          "japanese_missing_blocks_runtime": false
+        },
+        {
+          "id": "or_p11",
+          "from": "ormond_chalet",
+          "to": "ormond_rentals",
+          "rooms": [
+            "ormond_chalet",
+            "ormond_rentals"
+          ],
+          "endpoint_kind": "BINARY_PATH_ICON",
+          "color": "blue",
+          "direction": "both",
+          "jagged": false,
+          "special_state": "NONE_AT_SETUP",
+          "source_level": "D",
+          "source_ref": [
+            "Drive:OrmondRecreated.png / 用户提供的地图复刻图，Claude 2026-11-23 逐条转录"
+          ],
+          "status": "CONFIRMED",
+          "traversal_semantics": "CANDIDATE_BINARY",
+          "pairwise_edges": [],
+          "verification_note": "复刻图清晰可读；锯齿边框=开局可破坏墙；黄色翻越带箭头=单向",
+          "additional_room_candidates": [],
+          "previous_research_status": "CHECK_REQUIRED",
+          "adoption_basis": "USER_ACCEPTED_CN_RETAIL",
+          "adoption_ref": "U02:来源优先级与Phase1采用",
+          "japanese_missing_blocks_runtime": false
+        },
+        {
+          "id": "or_p12",
+          "from": "ormond_rentals",
+          "to": "ormond_wooded_area",
+          "rooms": [
+            "ormond_rentals",
+            "ormond_wooded_area"
+          ],
+          "endpoint_kind": "BINARY_PATH_ICON",
+          "color": "red",
+          "direction": "both",
+          "jagged": true,
+          "special_state": "BREAKABLE_WALL_AT_SETUP",
+          "source_level": "D",
+          "source_ref": [
+            "Drive:OrmondRecreated.png / 用户提供的地图复刻图，Claude 2026-11-23 逐条转录"
+          ],
+          "status": "CONFIRMED",
+          "traversal_semantics": "CANDIDATE_BINARY",
+          "pairwise_edges": [],
+          "verification_note": "复刻图清晰可读；锯齿边框=开局可破坏墙；黄色翻越带箭头=单向",
+          "additional_room_candidates": [],
+          "previous_research_status": "CHECK_REQUIRED",
+          "adoption_basis": "USER_ACCEPTED_CN_RETAIL",
+          "adoption_ref": "U02:来源优先级与Phase1采用",
+          "japanese_missing_blocks_runtime": false
+        },
+        {
+          "id": "or_p13",
+          "from": "ormond_storage",
+          "to": "ormond_wooded_area",
+          "rooms": [
+            "ormond_storage",
+            "ormond_wooded_area"
+          ],
+          "endpoint_kind": "BINARY_PATH_ICON",
+          "color": "blue",
+          "direction": "both",
+          "jagged": false,
+          "special_state": "NONE_AT_SETUP",
+          "source_level": "D",
+          "source_ref": [
+            "Drive:OrmondRecreated.png / 用户提供的地图复刻图，Claude 2026-11-23 逐条转录"
+          ],
+          "status": "CONFIRMED",
+          "traversal_semantics": "CANDIDATE_BINARY",
+          "pairwise_edges": [],
+          "verification_note": "复刻图清晰可读；锯齿边框=开局可破坏墙；黄色翻越带箭头=单向",
+          "additional_room_candidates": [],
+          "previous_research_status": "CHECK_REQUIRED",
+          "adoption_basis": "USER_ACCEPTED_CN_RETAIL",
+          "adoption_ref": "U02:来源优先级与Phase1采用",
+          "japanese_missing_blocks_runtime": false
+        },
+        {
+          "id": "or_p14",
+          "from": "ormond_chalet",
+          "to": "ormond_ski_shack",
+          "rooms": [
+            "ormond_chalet",
+            "ormond_ski_shack"
+          ],
+          "endpoint_kind": "BINARY_PATH_ICON",
+          "color": "green",
+          "direction": "both",
+          "jagged": false,
+          "special_state": "NONE_AT_SETUP",
+          "source_level": "D",
+          "source_ref": [
+            "Drive:OrmondRecreated.png / 用户提供的地图复刻图，Claude 2026-11-23 逐条转录"
+          ],
+          "status": "CONFIRMED",
+          "traversal_semantics": "CANDIDATE_BINARY",
+          "pairwise_edges": [],
+          "verification_note": "复刻图清晰可读；锯齿边框=开局可破坏墙；黄色翻越带箭头=单向",
+          "additional_room_candidates": [],
+          "previous_research_status": "CHECK_REQUIRED",
+          "adoption_basis": "USER_ACCEPTED_CN_RETAIL",
+          "adoption_ref": "U02:来源优先级与Phase1采用",
+          "japanese_missing_blocks_runtime": false
+        },
+        {
+          "id": "or_p15",
+          "from": "ormond_chalet",
+          "to": "ormond_rentals",
+          "rooms": [
+            "ormond_chalet",
+            "ormond_rentals"
+          ],
+          "endpoint_kind": "BINARY_PATH_ICON",
+          "color": "green",
+          "direction": "both",
+          "jagged": false,
+          "special_state": "NONE_AT_SETUP",
+          "source_level": "D",
+          "source_ref": [
+            "Drive:OrmondRecreated.png / 用户提供的地图复刻图，Claude 2026-11-23 逐条转录"
+          ],
+          "status": "CONFIRMED",
+          "traversal_semantics": "CANDIDATE_BINARY",
+          "pairwise_edges": [],
+          "verification_note": "复刻图清晰可读；锯齿边框=开局可破坏墙；黄色翻越带箭头=单向",
+          "additional_room_candidates": [],
+          "previous_research_status": "CHECK_REQUIRED",
+          "adoption_basis": "USER_ACCEPTED_CN_RETAIL",
+          "adoption_ref": "U02:来源优先级与Phase1采用",
+          "japanese_missing_blocks_runtime": false
+        },
+        {
+          "id": "or_p16",
+          "from": "ormond_storage",
+          "to": "ormond_entryway",
+          "rooms": [
+            "ormond_storage",
+            "ormond_entryway"
+          ],
+          "endpoint_kind": "BINARY_PATH_ICON",
+          "color": "green",
+          "direction": "both",
+          "jagged": false,
+          "special_state": "NONE_AT_SETUP",
+          "source_level": "D",
+          "source_ref": [
+            "Drive:OrmondRecreated.png / 用户提供的地图复刻图，Claude 2026-11-23 逐条转录"
+          ],
+          "status": "CONFIRMED",
+          "traversal_semantics": "CANDIDATE_BINARY",
+          "pairwise_edges": [],
+          "verification_note": "复刻图清晰可读；锯齿边框=开局可破坏墙；黄色翻越带箭头=单向",
+          "additional_room_candidates": [],
+          "previous_research_status": "CHECK_REQUIRED",
+          "adoption_basis": "USER_ACCEPTED_CN_RETAIL",
+          "adoption_ref": "U02:来源优先级与Phase1采用",
+          "japanese_missing_blocks_runtime": false
+        },
+        {
+          "id": "or_p17",
+          "from": "ormond_chalet",
+          "to": "ormond_basement",
+          "rooms": [
+            "ormond_chalet",
+            "ormond_basement"
+          ],
+          "endpoint_kind": "BINARY_PATH_ICON",
+          "color": "red",
+          "direction": "both",
+          "jagged": false,
+          "special_state": "NONE_AT_SETUP",
+          "source_level": "D",
+          "source_ref": [
+            "Drive:OrmondRecreated.png / 用户提供的地图复刻图，Claude 2026-11-23 逐条转录"
+          ],
+          "status": "CONFIRMED",
+          "traversal_semantics": "CANDIDATE_BINARY",
+          "pairwise_edges": [],
+          "verification_note": "复刻图清晰可读；锯齿边框=开局可破坏墙；黄色翻越带箭头=单向",
+          "additional_room_candidates": [],
+          "previous_research_status": "CHECK_REQUIRED",
+          "adoption_basis": "USER_ACCEPTED_CN_RETAIL",
+          "adoption_ref": "U02:来源优先级与Phase1采用",
+          "japanese_missing_blocks_runtime": false
+        },
+        {
+          "id": "or_p18",
+          "from": "ormond_rentals",
+          "to": "ormond_entryway",
+          "rooms": [
+            "ormond_rentals",
+            "ormond_entryway"
+          ],
+          "endpoint_kind": "BINARY_PATH_ICON",
+          "color": "blue",
+          "direction": "both",
+          "jagged": false,
+          "special_state": "NONE_AT_SETUP",
+          "source_level": "D",
+          "source_ref": [
+            "Drive:OrmondRecreated.png / 用户提供的地图复刻图，Claude 2026-11-23 逐条转录"
+          ],
+          "status": "CONFIRMED",
+          "traversal_semantics": "CANDIDATE_BINARY",
+          "pairwise_edges": [],
+          "verification_note": "复刻图清晰可读；锯齿边框=开局可破坏墙；黄色翻越带箭头=单向",
+          "additional_room_candidates": [],
+          "previous_research_status": "CHECK_REQUIRED",
+          "adoption_basis": "USER_ACCEPTED_CN_RETAIL",
+          "adoption_ref": "U02:来源优先级与Phase1采用",
+          "japanese_missing_blocks_runtime": false
+        },
+        {
+          "id": "or_p19",
+          "from": "ormond_ski_shack",
+          "to": "ormond_basement",
+          "rooms": [
+            "ormond_ski_shack",
+            "ormond_basement"
+          ],
+          "endpoint_kind": "BINARY_PATH_ICON",
+          "color": "blue",
+          "direction": "both",
+          "jagged": true,
+          "special_state": "BREAKABLE_WALL_AT_SETUP",
+          "source_level": "D",
+          "source_ref": [
+            "Drive:OrmondRecreated.png / 用户提供的地图复刻图，Claude 2026-11-23 逐条转录"
+          ],
+          "status": "CONFIRMED",
+          "traversal_semantics": "CANDIDATE_BINARY",
+          "pairwise_edges": [],
+          "verification_note": "复刻图清晰可读；锯齿边框=开局可破坏墙；黄色翻越带箭头=单向",
+          "additional_room_candidates": [],
+          "previous_research_status": "CHECK_REQUIRED",
+          "adoption_basis": "USER_ACCEPTED_CN_RETAIL",
+          "adoption_ref": "U02:来源优先级与Phase1采用",
+          "japanese_missing_blocks_runtime": false
+        },
+        {
+          "id": "or_p20",
+          "from": "ormond_wooded_area",
+          "to": "ormond_entryway",
+          "rooms": [
+            "ormond_wooded_area",
+            "ormond_entryway"
+          ],
+          "endpoint_kind": "BINARY_PATH_ICON",
+          "color": "red",
+          "direction": "both",
+          "jagged": false,
+          "special_state": "NONE_AT_SETUP",
+          "source_level": "D",
+          "source_ref": [
+            "Drive:OrmondRecreated.png / 用户提供的地图复刻图，Claude 2026-11-23 逐条转录"
+          ],
+          "status": "CONFIRMED",
+          "traversal_semantics": "CANDIDATE_BINARY",
+          "pairwise_edges": [],
+          "verification_note": "复刻图清晰可读；锯齿边框=开局可破坏墙；黄色翻越带箭头=单向",
+          "additional_room_candidates": [],
+          "previous_research_status": "CHECK_REQUIRED",
+          "adoption_basis": "USER_ACCEPTED_CN_RETAIL",
+          "adoption_ref": "U02:来源优先级与Phase1采用",
+          "japanese_missing_blocks_runtime": false
+        },
+        {
+          "id": "or_p21",
+          "from": "ormond_basement",
+          "to": "ormond_entryway",
+          "rooms": [
+            "ormond_basement",
+            "ormond_entryway"
+          ],
+          "endpoint_kind": "BINARY_PATH_ICON",
+          "color": "red",
+          "direction": "both",
+          "jagged": false,
+          "special_state": "NONE_AT_SETUP",
+          "source_level": "D",
+          "source_ref": [
+            "Drive:OrmondRecreated.png / 用户提供的地图复刻图，Claude 2026-11-23 逐条转录"
+          ],
+          "status": "CONFIRMED",
+          "traversal_semantics": "CANDIDATE_BINARY",
+          "pairwise_edges": [],
+          "verification_note": "复刻图清晰可读；锯齿边框=开局可破坏墙；黄色翻越带箭头=单向",
+          "additional_room_candidates": [],
+          "previous_research_status": "CHECK_REQUIRED",
+          "adoption_basis": "USER_ACCEPTED_CN_RETAIL",
+          "adoption_ref": "U02:来源优先级与Phase1采用",
+          "japanese_missing_blocks_runtime": false
+        },
+        {
+          "id": "or_p22",
+          "from": "ormond_ski_shack",
+          "to": "ormond_entryway",
+          "rooms": [
+            "ormond_ski_shack",
+            "ormond_entryway"
+          ],
+          "endpoint_kind": "BINARY_PATH_ICON",
+          "color": "green",
+          "direction": "both",
+          "jagged": false,
+          "special_state": "NONE_AT_SETUP",
+          "source_level": "D",
+          "source_ref": [
+            "Drive:OrmondRecreated.png / 用户提供的地图复刻图，Claude 2026-11-23 逐条转录"
+          ],
+          "status": "CONFIRMED",
+          "traversal_semantics": "CANDIDATE_BINARY",
+          "pairwise_edges": [],
+          "verification_note": "复刻图清晰可读；锯齿边框=开局可破坏墙；黄色翻越带箭头=单向",
+          "additional_room_candidates": [],
+          "previous_research_status": "CHECK_REQUIRED",
+          "adoption_basis": "USER_ACCEPTED_CN_RETAIL",
+          "adoption_ref": "U02:来源优先级与Phase1采用",
+          "japanese_missing_blocks_runtime": false
+        }
+      ],
+      "expected_node_count": 10,
+      "expected_edge_count": 22,
+      "topology_status": "CONFIRMED",
+      "preview_source_ref": [
+        "Drive:OrmondRecreated.png / 用户提供的地图复刻图，Claude 2026-11-23 逐条转录"
+      ],
+      "missing_fields": [
+        "英文/日文房间原名（程序ID不是原文）"
+      ],
+      "edge_schema": {
+        "id": "string",
+        "from": "node ID for BINARY_PATH_ICON; null for MULTI_ROOM_PATH_ICON",
+        "to": "node ID for BINARY_PATH_ICON; null for MULTI_ROOM_PATH_ICON",
+        "color": "CHECK_REQUIRED",
+        "direction": "CHECK_REQUIRED",
+        "special_state": "CHECK_REQUIRED",
+        "source_level": null,
+        "source_ref": [],
+        "status": "CHECK_REQUIRED",
+        "rooms": [
+          "node ID; two or more photo-observed endpoints"
+        ],
+        "endpoint_kind": "BINARY_PATH_ICON | MULTI_ROOM_PATH_ICON",
+        "traversal_semantics": "CANDIDATE_BINARY | CHECK_REQUIRED",
+        "pairwise_edges": []
+      },
+      "review_stage": "ADOPTED_FOR_PHASE_1",
+      "expected_path_icon_count": 22,
+      "name_evidence": {
+        "source_level": "D",
+        "source_ref": [
+          "D36:reference/maps/autohaven_cn_retail_xhs.png / 照片印刷文字"
+        ],
+        "status": "CHECK_REQUIRED",
+        "previous_draft_name": "废旧汽车场"
+      },
+      "official_crosscheck": {
+        "source_ref": [
+          "C02",
+          "B11"
+        ],
+        "source_level": "C",
+        "status": "CHECK_REQUIRED",
+        "result": "NOT_APPLICABLE_OTHER_MAP",
+        "note": "该原图只显示麦克米伦庄园，不含奥托海文；B11例外亦仅限麦克米伦。"
+      },
+      "graph_model": {
+        "version": 2,
+        "description": "edges兼容二端路径和多房间共用图标；rooms为照片端点转录，多端from/to留空；未生成两两通行边。",
+        "multi_room_traversal_status": "CHECK_REQUIRED",
+        "junction_question_ref": "Q09",
+        "path_icon_ids": [
+          "ah_p02",
+          "ah_p04"
+        ],
+        "null_endpoint_note": "多端项from/to空表示该记录不是二端边；端点名单保存在rooms，不表示没有端点。"
+      },
+      "tracks": {
+        "sacrifice_slots": {
+          "value": 8,
+          "source_level": "D",
+          "source_ref": [
+            "D36:reference/maps/autohaven_cn_retail_xhs.png / 照片印刷文字"
+          ],
+          "status": "CHECK_REQUIRED"
+        },
+        "generator_slots": {
+          "value": 5,
+          "source_level": "D",
+          "source_ref": [
+            "D36:reference/maps/autohaven_cn_retail_xhs.png / 照片印刷文字"
+          ],
+          "status": "CHECK_REQUIRED"
+        }
+      },
+      "previous_research_status": "CHECK_REQUIRED",
+      "adoption_basis": "USER_ACCEPTED_CN_RETAIL",
+      "adoption_ref": "U02:来源优先级与Phase1采用",
+      "japanese_missing_blocks_runtime": false,
+      "expected_pairwise_edge_count": null
     }
   ]
 }
