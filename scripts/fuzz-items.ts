@@ -15,7 +15,7 @@ import type { GameState, Command, Card } from "../packages/shared/src/types.ts";
 const games = Number(process.argv[2] ?? 300);
 const survivorsPool = ["dwight", "meg", "claudette", "jake", "nea", "ace", "feng_min"];
 const killers = ["trapper", "wraith", "hillbilly", "nurse", "hag", "doctor"];
-const maps = ["macmillan_estate", "autohaven_wreckers"];
+const maps = ["macmillan_estate", "autohaven_wreckers", "crotus_prenn_asylum", "ormond"];
 let rng = 12345;
 const rand = (n: number) => {
   rng = (rng * 1103515245 + 12345) >>> 0;

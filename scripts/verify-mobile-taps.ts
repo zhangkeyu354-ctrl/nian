@@ -43,10 +43,12 @@ try {
     assert(i < 200, "server ready");
     await new Promise((r) => setTimeout(r, 50));
   }
-  for (const seed of [4111, 1701]) {
+  // DBD_REPLAYS=crotus_prenn_asylum-5000,ormond-5038 可换成其他地图的回放
+  for (const key of (process.env.DBD_REPLAYS ?? "4111,1701").split(",")) {
     const replay = JSON.parse(
-      readFileSync(`docs/phase1/games/${seed}.replay.json`, "utf8"),
+      readFileSync(`docs/phase1/games/${key}.replay.json`, "utf8"),
     );
+    const seed: number = replay.options.seed;
     let state = createGame(replay.options);
     const contexts = [],
       pages: Page[] = [],

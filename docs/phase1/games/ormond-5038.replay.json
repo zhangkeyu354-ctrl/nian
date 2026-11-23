@@ -1,0 +1,700 @@
+{
+  "options": {
+    "seed": 5038,
+    "mapId": "ormond",
+    "survivors": [
+      "meg",
+      "nea",
+      "feng_min",
+      "ace"
+    ],
+    "killer": "nurse"
+  },
+  "commands": [
+    {
+      "type": "SELECT",
+      "actorId": "meg"
+    },
+    {
+      "type": "SELECT",
+      "actorId": "nea"
+    },
+    {
+      "type": "SELECT",
+      "actorId": "feng_min"
+    },
+    {
+      "type": "SELECT",
+      "actorId": "ace"
+    },
+    {
+      "type": "SELECT",
+      "actorId": "nurse"
+    },
+    {
+      "type": "PASS",
+      "actorId": "nurse"
+    },
+    {
+      "type": "PLAN",
+      "actorId": "meg",
+      "cards": [
+        "blue"
+      ]
+    },
+    {
+      "type": "PLAN",
+      "actorId": "nea",
+      "cards": [
+        "yellow"
+      ]
+    },
+    {
+      "type": "PLAN",
+      "actorId": "feng_min",
+      "cards": [
+        "yellow"
+      ]
+    },
+    {
+      "type": "PLAN",
+      "actorId": "ace",
+      "cards": [
+        "green"
+      ]
+    },
+    {
+      "type": "PLAN",
+      "actorId": "nurse",
+      "cards": [
+        "green",
+        "wait"
+      ]
+    },
+    {
+      "type": "PASS",
+      "actorId": "nea"
+    },
+    {
+      "type": "PASS",
+      "actorId": "ace"
+    },
+    {
+      "type": "MOVE",
+      "actorId": "meg"
+    },
+    {
+      "type": "END_TURN",
+      "actorId": "meg"
+    },
+    {
+      "type": "PASS",
+      "actorId": "nea"
+    },
+    {
+      "type": "PASS",
+      "actorId": "ace"
+    },
+    {
+      "type": "MOVE",
+      "actorId": "nea"
+    },
+    {
+      "type": "END_TURN",
+      "actorId": "nea"
+    },
+    {
+      "type": "PASS",
+      "actorId": "nea"
+    },
+    {
+      "type": "PASS",
+      "actorId": "ace"
+    },
+    {
+      "type": "MOVE",
+      "actorId": "feng_min"
+    },
+    {
+      "type": "END_TURN",
+      "actorId": "feng_min"
+    },
+    {
+      "type": "PASS",
+      "actorId": "nea"
+    },
+    {
+      "type": "PASS",
+      "actorId": "ace"
+    },
+    {
+      "type": "MOVE",
+      "actorId": "ace"
+    },
+    {
+      "type": "END_TURN",
+      "actorId": "ace"
+    },
+    {
+      "type": "PASS",
+      "actorId": "ace"
+    },
+    {
+      "type": "MOVE",
+      "actorId": "nurse",
+      "pathId": "or_p02",
+      "to": "ormond_guest_rooms"
+    },
+    {
+      "type": "SELECT",
+      "actorId": "nurse",
+      "propId": "ormond_guest_rooms:boldness:0"
+    },
+    {
+      "type": "PASS",
+      "actorId": "meg"
+    },
+    {
+      "type": "INTERACT",
+      "actorId": "nurse",
+      "action": "attack",
+      "targetId": "meg"
+    },
+    {
+      "type": "END_TURN",
+      "actorId": "nurse"
+    },
+    {
+      "type": "MOVE",
+      "actorId": "nurse"
+    },
+    {
+      "type": "END_TURN",
+      "actorId": "nurse"
+    },
+    {
+      "type": "KILLER_BONUS",
+      "actorId": "nurse",
+      "accept": false
+    },
+    {
+      "type": "PASS",
+      "actorId": "nurse"
+    },
+    {
+      "type": "PLAN",
+      "actorId": "meg",
+      "cards": [
+        "blue"
+      ]
+    },
+    {
+      "type": "PLAN",
+      "actorId": "nea",
+      "cards": [
+        "yellow"
+      ]
+    },
+    {
+      "type": "PLAN",
+      "actorId": "feng_min",
+      "cards": [
+        "yellow"
+      ]
+    },
+    {
+      "type": "PLAN",
+      "actorId": "ace",
+      "cards": [
+        "green"
+      ]
+    },
+    {
+      "type": "PLAN",
+      "actorId": "nurse",
+      "cards": [
+        "wait",
+        "blue"
+      ]
+    },
+    {
+      "type": "PASS",
+      "actorId": "nea"
+    },
+    {
+      "type": "PASS",
+      "actorId": "ace"
+    },
+    {
+      "type": "MOVE",
+      "actorId": "nea"
+    },
+    {
+      "type": "END_TURN",
+      "actorId": "nea"
+    },
+    {
+      "type": "PASS",
+      "actorId": "nea"
+    },
+    {
+      "type": "PASS",
+      "actorId": "ace"
+    },
+    {
+      "type": "MOVE",
+      "actorId": "feng_min"
+    },
+    {
+      "type": "END_TURN",
+      "actorId": "feng_min"
+    },
+    {
+      "type": "PASS",
+      "actorId": "nea"
+    },
+    {
+      "type": "PASS",
+      "actorId": "ace"
+    },
+    {
+      "type": "MOVE",
+      "actorId": "ace"
+    },
+    {
+      "type": "END_TURN",
+      "actorId": "ace"
+    },
+    {
+      "type": "PASS",
+      "actorId": "ace"
+    },
+    {
+      "type": "PASS",
+      "actorId": "nea"
+    },
+    {
+      "type": "PASS",
+      "actorId": "ace"
+    },
+    {
+      "type": "MOVE",
+      "actorId": "meg"
+    },
+    {
+      "type": "END_TURN",
+      "actorId": "meg"
+    },
+    {
+      "type": "MOVE",
+      "actorId": "nurse"
+    },
+    {
+      "type": "INTERACT",
+      "actorId": "nurse",
+      "action": "pickup",
+      "targetId": "meg"
+    },
+    {
+      "type": "END_TURN",
+      "actorId": "nurse"
+    },
+    {
+      "type": "MOVE",
+      "actorId": "nurse",
+      "pathId": "or_p07",
+      "to": "ormond_chalet"
+    },
+    {
+      "type": "SELECT",
+      "actorId": "nurse",
+      "propId": "ormond_chalet:boldness:0"
+    },
+    {
+      "type": "PASS",
+      "actorId": "feng_min"
+    },
+    {
+      "type": "END_TURN",
+      "actorId": "nurse"
+    },
+    {
+      "type": "KILLER_BONUS",
+      "actorId": "nurse",
+      "accept": false
+    },
+    {
+      "type": "PASS",
+      "actorId": "nurse"
+    },
+    {
+      "type": "PLAN",
+      "actorId": "nea",
+      "cards": [
+        "yellow"
+      ]
+    },
+    {
+      "type": "PLAN",
+      "actorId": "feng_min",
+      "cards": [
+        "yellow"
+      ]
+    },
+    {
+      "type": "PLAN",
+      "actorId": "ace",
+      "cards": [
+        "green"
+      ]
+    },
+    {
+      "type": "PLAN",
+      "actorId": "nurse",
+      "cards": [
+        "blue",
+        "red"
+      ]
+    },
+    {
+      "type": "PASS",
+      "actorId": "ace"
+    },
+    {
+      "type": "PASS",
+      "actorId": "nea"
+    },
+    {
+      "type": "MOVE",
+      "actorId": "feng_min"
+    },
+    {
+      "type": "END_TURN",
+      "actorId": "feng_min"
+    },
+    {
+      "type": "PASS",
+      "actorId": "ace"
+    },
+    {
+      "type": "PASS",
+      "actorId": "nea"
+    },
+    {
+      "type": "MOVE",
+      "actorId": "ace"
+    },
+    {
+      "type": "END_TURN",
+      "actorId": "ace"
+    },
+    {
+      "type": "PASS",
+      "actorId": "ace"
+    },
+    {
+      "type": "PASS",
+      "actorId": "ace"
+    },
+    {
+      "type": "PASS",
+      "actorId": "nea"
+    },
+    {
+      "type": "MOVE",
+      "actorId": "nea"
+    },
+    {
+      "type": "END_TURN",
+      "actorId": "nea"
+    },
+    {
+      "type": "MOVE",
+      "actorId": "nurse",
+      "pathId": "or_p11",
+      "to": "ormond_rentals"
+    },
+    {
+      "type": "SELECT",
+      "actorId": "nurse",
+      "propId": "ormond_rentals:boldness:0"
+    },
+    {
+      "type": "END_TURN",
+      "actorId": "nurse"
+    },
+    {
+      "type": "MOVE",
+      "actorId": "nurse",
+      "pathId": "or_p12",
+      "to": "ormond_wooded_area"
+    },
+    {
+      "type": "SELECT",
+      "actorId": "nurse",
+      "propId": "ormond_wooded_area:boldness:0"
+    },
+    {
+      "type": "PASS",
+      "actorId": "feng_min"
+    },
+    {
+      "type": "INTERACT",
+      "actorId": "nurse",
+      "action": "attack",
+      "targetId": "ace"
+    },
+    {
+      "type": "END_TURN",
+      "actorId": "nurse"
+    },
+    {
+      "type": "KILLER_BONUS",
+      "actorId": "nurse",
+      "accept": false
+    },
+    {
+      "type": "PASS",
+      "actorId": "nurse"
+    },
+    {
+      "type": "PLAN",
+      "actorId": "nea",
+      "cards": [
+        "yellow"
+      ]
+    },
+    {
+      "type": "PLAN",
+      "actorId": "feng_min",
+      "cards": [
+        "yellow"
+      ]
+    },
+    {
+      "type": "PLAN",
+      "actorId": "ace",
+      "cards": [
+        "green"
+      ]
+    },
+    {
+      "type": "PLAN",
+      "actorId": "nurse",
+      "cards": [
+        "wait",
+        "blue"
+      ]
+    },
+    {
+      "type": "PASS",
+      "actorId": "ace"
+    },
+    {
+      "type": "PASS",
+      "actorId": "nea"
+    },
+    {
+      "type": "MOVE",
+      "actorId": "ace"
+    },
+    {
+      "type": "END_TURN",
+      "actorId": "ace"
+    },
+    {
+      "type": "PASS",
+      "actorId": "ace"
+    },
+    {
+      "type": "PASS",
+      "actorId": "ace"
+    },
+    {
+      "type": "PASS",
+      "actorId": "nea"
+    },
+    {
+      "type": "MOVE",
+      "actorId": "nea"
+    },
+    {
+      "type": "END_TURN",
+      "actorId": "nea"
+    },
+    {
+      "type": "PASS",
+      "actorId": "ace"
+    },
+    {
+      "type": "PASS",
+      "actorId": "nea"
+    },
+    {
+      "type": "MOVE",
+      "actorId": "feng_min"
+    },
+    {
+      "type": "END_TURN",
+      "actorId": "feng_min"
+    },
+    {
+      "type": "MOVE",
+      "actorId": "nurse"
+    },
+    {
+      "type": "INTERACT",
+      "actorId": "nurse",
+      "action": "pickup",
+      "targetId": "ace"
+    },
+    {
+      "type": "SELECT",
+      "actorId": "nurse",
+      "dice": 1,
+      "route": [
+        {
+          "pathId": "or_p12",
+          "to": "ormond_rentals"
+        }
+      ]
+    },
+    {
+      "type": "SELECT",
+      "actorId": "ace"
+    },
+    {
+      "type": "END_TURN",
+      "actorId": "nurse"
+    },
+    {
+      "type": "MOVE",
+      "actorId": "nurse",
+      "pathId": "or_p18",
+      "to": "ormond_entryway"
+    },
+    {
+      "type": "SELECT",
+      "actorId": "nurse",
+      "propId": "ormond_entryway:boldness:0"
+    },
+    {
+      "type": "INTERACT",
+      "actorId": "nurse",
+      "action": "attack",
+      "targetId": "nea"
+    },
+    {
+      "type": "END_TURN",
+      "actorId": "nurse"
+    },
+    {
+      "type": "KILLER_BONUS",
+      "actorId": "nurse",
+      "accept": false
+    },
+    {
+      "type": "PASS",
+      "actorId": "nurse"
+    },
+    {
+      "type": "PLAN",
+      "actorId": "nea",
+      "cards": [
+        "yellow"
+      ]
+    },
+    {
+      "type": "PLAN",
+      "actorId": "feng_min",
+      "cards": [
+        "yellow"
+      ]
+    },
+    {
+      "type": "PLAN",
+      "actorId": "nurse",
+      "cards": [
+        "wait",
+        "blue"
+      ]
+    },
+    {
+      "type": "PASS",
+      "actorId": "nea"
+    },
+    {
+      "type": "MOVE",
+      "actorId": "nea"
+    },
+    {
+      "type": "END_TURN",
+      "actorId": "nea"
+    },
+    {
+      "type": "PASS",
+      "actorId": "nea"
+    },
+    {
+      "type": "MOVE",
+      "actorId": "feng_min"
+    },
+    {
+      "type": "END_TURN",
+      "actorId": "feng_min"
+    },
+    {
+      "type": "MOVE",
+      "actorId": "nurse"
+    },
+    {
+      "type": "INTERACT",
+      "actorId": "nurse",
+      "action": "pickup",
+      "targetId": "nea"
+    },
+    {
+      "type": "SELECT",
+      "actorId": "nurse",
+      "dice": 2,
+      "route": [
+        {
+          "pathId": "or_p18",
+          "to": "ormond_rentals"
+        },
+        {
+          "pathId": "or_p11",
+          "to": "ormond_chalet"
+        }
+      ]
+    },
+    {
+      "type": "SELECT",
+      "actorId": "nea"
+    },
+    {
+      "type": "END_TURN",
+      "actorId": "nurse"
+    },
+    {
+      "type": "MOVE",
+      "actorId": "nurse",
+      "pathId": "or_p11",
+      "to": "ormond_rentals"
+    },
+    {
+      "type": "SELECT",
+      "actorId": "nurse",
+      "propId": "ormond_rentals:objective:0"
+    },
+    {
+      "type": "END_TURN",
+      "actorId": "nurse"
+    },
+    {
+      "type": "KILLER_BONUS",
+      "actorId": "nurse",
+      "accept": false
+    }
+  ]
+}

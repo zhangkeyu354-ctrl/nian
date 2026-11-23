@@ -1,0 +1,1075 @@
+{
+  "options": {
+    "seed": 5000,
+    "mapId": "ormond",
+    "survivors": [
+      "dwight",
+      "claudette",
+      "jake",
+      "ace"
+    ],
+    "killer": "trapper"
+  },
+  "commands": [
+    {
+      "type": "SELECT",
+      "actorId": "dwight"
+    },
+    {
+      "type": "SELECT",
+      "actorId": "claudette"
+    },
+    {
+      "type": "SELECT",
+      "actorId": "jake"
+    },
+    {
+      "type": "SELECT",
+      "actorId": "ace"
+    },
+    {
+      "type": "SELECT",
+      "actorId": "trapper"
+    },
+    {
+      "type": "PLAN",
+      "actorId": "dwight",
+      "cards": [
+        "blue"
+      ]
+    },
+    {
+      "type": "PLAN",
+      "actorId": "claudette",
+      "cards": [
+        "green"
+      ]
+    },
+    {
+      "type": "PLAN",
+      "actorId": "jake",
+      "cards": [
+        "green"
+      ]
+    },
+    {
+      "type": "PLAN",
+      "actorId": "ace",
+      "cards": [
+        "blue"
+      ]
+    },
+    {
+      "type": "PLAN",
+      "actorId": "trapper",
+      "cards": [
+        "wait",
+        "blue"
+      ]
+    },
+    {
+      "type": "USE_PERK",
+      "actorId": "ace",
+      "perkId": "board_ace_1",
+      "index": 0
+    },
+    {
+      "type": "MOVE",
+      "actorId": "dwight",
+      "pathId": "or_p13",
+      "to": "ormond_storage"
+    },
+    {
+      "type": "SELECT",
+      "actorId": "dwight",
+      "propId": "ormond_storage:objective:0"
+    },
+    {
+      "type": "PASS",
+      "actorId": "dwight"
+    },
+    {
+      "type": "INTERACT",
+      "actorId": "dwight",
+      "action": "repair",
+      "targetId": "ormond_storage:objective:0"
+    },
+    {
+      "type": "PASS",
+      "actorId": "dwight"
+    },
+    {
+      "type": "PASS",
+      "actorId": "trapper"
+    },
+    {
+      "type": "SELECT",
+      "actorId": "dwight"
+    },
+    {
+      "type": "END_TURN",
+      "actorId": "dwight"
+    },
+    {
+      "type": "PASS",
+      "actorId": "claudette"
+    },
+    {
+      "type": "PASS",
+      "actorId": "claudette"
+    },
+    {
+      "type": "MOVE",
+      "actorId": "claudette",
+      "pathId": "or_p02",
+      "to": "ormond_guest_rooms"
+    },
+    {
+      "type": "SELECT",
+      "actorId": "claudette",
+      "propId": "ormond_guest_rooms:objective:0"
+    },
+    {
+      "type": "PASS",
+      "actorId": "claudette"
+    },
+    {
+      "type": "INTERACT",
+      "actorId": "claudette",
+      "action": "repair",
+      "targetId": "ormond_guest_rooms:objective:0"
+    },
+    {
+      "type": "SELECT",
+      "actorId": "claudette"
+    },
+    {
+      "type": "END_TURN",
+      "actorId": "claudette"
+    },
+    {
+      "type": "MOVE",
+      "actorId": "jake",
+      "pathId": "or_p16",
+      "to": "ormond_storage"
+    },
+    {
+      "type": "SELECT",
+      "actorId": "jake",
+      "propId": "ormond_storage:boldness:0"
+    },
+    {
+      "type": "INTERACT",
+      "actorId": "jake",
+      "action": "repair",
+      "targetId": "ormond_storage:objective:0"
+    },
+    {
+      "type": "PASS",
+      "actorId": "jake"
+    },
+    {
+      "type": "USE_PERK",
+      "actorId": "dwight",
+      "perkId": "board_dwight_3"
+    },
+    {
+      "type": "PASS",
+      "actorId": "trapper"
+    },
+    {
+      "type": "SELECT",
+      "actorId": "jake"
+    },
+    {
+      "type": "SELECT",
+      "actorId": "jake",
+      "index": 0
+    },
+    {
+      "type": "END_TURN",
+      "actorId": "jake"
+    },
+    {
+      "type": "MOVE",
+      "actorId": "ace",
+      "pathId": "or_p10",
+      "to": "ormond_picnic_area"
+    },
+    {
+      "type": "SELECT",
+      "actorId": "ace",
+      "propId": "ormond_picnic_area:objective:0"
+    },
+    {
+      "type": "END_TURN",
+      "actorId": "ace"
+    },
+    {
+      "type": "MOVE",
+      "actorId": "trapper"
+    },
+    {
+      "type": "END_TURN",
+      "actorId": "trapper"
+    },
+    {
+      "type": "MOVE",
+      "actorId": "trapper",
+      "pathId": "or_p18",
+      "to": "ormond_rentals"
+    },
+    {
+      "type": "SELECT",
+      "actorId": "trapper",
+      "propId": "ormond_rentals:objective:0"
+    },
+    {
+      "type": "END_TURN",
+      "actorId": "trapper"
+    },
+    {
+      "type": "KILLER_BONUS",
+      "actorId": "trapper",
+      "accept": false
+    },
+    {
+      "type": "PLAN",
+      "actorId": "dwight",
+      "cards": [
+        "green"
+      ]
+    },
+    {
+      "type": "PLAN",
+      "actorId": "claudette",
+      "cards": [
+        "green"
+      ]
+    },
+    {
+      "type": "PLAN",
+      "actorId": "jake",
+      "cards": [
+        "green"
+      ]
+    },
+    {
+      "type": "PLAN",
+      "actorId": "ace",
+      "cards": [
+        "green"
+      ]
+    },
+    {
+      "type": "PLAN",
+      "actorId": "trapper",
+      "cards": [
+        "wait",
+        "blue"
+      ]
+    },
+    {
+      "type": "PASS",
+      "actorId": "claudette"
+    },
+    {
+      "type": "USE_PERK",
+      "actorId": "ace",
+      "perkId": "board_ace_1",
+      "index": 0
+    },
+    {
+      "type": "PASS",
+      "actorId": "claudette"
+    },
+    {
+      "type": "MOVE",
+      "actorId": "claudette",
+      "pathId": "or_p03",
+      "to": "ormond_balcony"
+    },
+    {
+      "type": "SELECT",
+      "actorId": "claudette",
+      "propId": "ormond_balcony:objective:0"
+    },
+    {
+      "type": "PASS",
+      "actorId": "claudette"
+    },
+    {
+      "type": "INTERACT",
+      "actorId": "claudette",
+      "action": "repair",
+      "targetId": "ormond_balcony:objective:0"
+    },
+    {
+      "type": "USE_PERK",
+      "actorId": "dwight",
+      "perkId": "board_dwight_3"
+    },
+    {
+      "type": "PASS",
+      "actorId": "trapper"
+    },
+    {
+      "type": "SELECT",
+      "actorId": "claudette"
+    },
+    {
+      "type": "SELECT",
+      "actorId": "claudette",
+      "index": 0
+    },
+    {
+      "type": "END_TURN",
+      "actorId": "claudette"
+    },
+    {
+      "type": "MOVE",
+      "actorId": "jake",
+      "pathId": "or_p06",
+      "to": "ormond_rentals"
+    },
+    {
+      "type": "SELECT",
+      "actorId": "jake",
+      "propId": "ormond_rentals:boldness:0"
+    },
+    {
+      "type": "INTERACT",
+      "actorId": "jake",
+      "action": "repair",
+      "targetId": "ormond_rentals:objective:0"
+    },
+    {
+      "type": "PASS",
+      "actorId": "jake"
+    },
+    {
+      "type": "PASS",
+      "actorId": "trapper"
+    },
+    {
+      "type": "SELECT",
+      "actorId": "jake"
+    },
+    {
+      "type": "END_TURN",
+      "actorId": "jake"
+    },
+    {
+      "type": "MOVE",
+      "actorId": "ace",
+      "pathId": "or_p02",
+      "to": "ormond_guest_rooms"
+    },
+    {
+      "type": "SELECT",
+      "actorId": "ace",
+      "propId": "ormond_guest_rooms:boldness:0"
+    },
+    {
+      "type": "INTERACT",
+      "actorId": "ace",
+      "action": "repair",
+      "targetId": "ormond_guest_rooms:objective:0"
+    },
+    {
+      "type": "SELECT",
+      "actorId": "ace"
+    },
+    {
+      "type": "END_TURN",
+      "actorId": "ace"
+    },
+    {
+      "type": "MOVE",
+      "actorId": "dwight",
+      "pathId": "or_p06",
+      "to": "ormond_rentals"
+    },
+    {
+      "type": "SELECT",
+      "actorId": "dwight",
+      "propId": "ormond_rentals:survival:0"
+    },
+    {
+      "type": "INTERACT",
+      "actorId": "dwight",
+      "action": "repair",
+      "targetId": "ormond_rentals:objective:0"
+    },
+    {
+      "type": "PASS",
+      "actorId": "trapper"
+    },
+    {
+      "type": "SELECT",
+      "actorId": "dwight"
+    },
+    {
+      "type": "END_TURN",
+      "actorId": "dwight"
+    },
+    {
+      "type": "MOVE",
+      "actorId": "trapper"
+    },
+    {
+      "type": "END_TURN",
+      "actorId": "trapper"
+    },
+    {
+      "type": "MOVE",
+      "actorId": "trapper",
+      "pathId": "or_p11",
+      "to": "ormond_chalet"
+    },
+    {
+      "type": "SELECT",
+      "actorId": "trapper",
+      "propId": "ormond_chalet:objective:0"
+    },
+    {
+      "type": "END_TURN",
+      "actorId": "trapper"
+    },
+    {
+      "type": "KILLER_BONUS",
+      "actorId": "trapper",
+      "accept": false
+    },
+    {
+      "type": "PLAN",
+      "actorId": "dwight",
+      "cards": [
+        "blue"
+      ]
+    },
+    {
+      "type": "PLAN",
+      "actorId": "claudette",
+      "cards": [
+        "green"
+      ]
+    },
+    {
+      "type": "PLAN",
+      "actorId": "jake",
+      "cards": [
+        "blue"
+      ]
+    },
+    {
+      "type": "PLAN",
+      "actorId": "ace",
+      "cards": [
+        "green"
+      ]
+    },
+    {
+      "type": "PLAN",
+      "actorId": "trapper",
+      "cards": [
+        "wait",
+        "blue"
+      ]
+    },
+    {
+      "type": "MOVE",
+      "actorId": "jake",
+      "pathId": "or_p11",
+      "to": "ormond_chalet"
+    },
+    {
+      "type": "SELECT",
+      "actorId": "jake",
+      "propId": "ormond_chalet:boldness:0"
+    },
+    {
+      "type": "INTERACT",
+      "actorId": "jake",
+      "action": "repair",
+      "targetId": "ormond_chalet:objective:0"
+    },
+    {
+      "type": "PASS",
+      "actorId": "jake"
+    },
+    {
+      "type": "PASS",
+      "actorId": "trapper"
+    },
+    {
+      "type": "SELECT",
+      "actorId": "jake"
+    },
+    {
+      "type": "END_TURN",
+      "actorId": "jake"
+    },
+    {
+      "type": "MOVE",
+      "actorId": "ace",
+      "pathId": "or_p03",
+      "to": "ormond_balcony"
+    },
+    {
+      "type": "SELECT",
+      "actorId": "ace",
+      "propId": "ormond_balcony:boldness:0"
+    },
+    {
+      "type": "INTERACT",
+      "actorId": "ace",
+      "action": "repair",
+      "targetId": "ormond_balcony:objective:0"
+    },
+    {
+      "type": "PASS",
+      "actorId": "trapper"
+    },
+    {
+      "type": "SELECT",
+      "actorId": "ace"
+    },
+    {
+      "type": "END_TURN",
+      "actorId": "ace"
+    },
+    {
+      "type": "MOVE",
+      "actorId": "dwight",
+      "pathId": "or_p11",
+      "to": "ormond_chalet"
+    },
+    {
+      "type": "SELECT",
+      "actorId": "dwight",
+      "propId": "ormond_chalet:survival:0"
+    },
+    {
+      "type": "INTERACT",
+      "actorId": "dwight",
+      "action": "repair",
+      "targetId": "ormond_chalet:objective:0"
+    },
+    {
+      "type": "PASS",
+      "actorId": "trapper"
+    },
+    {
+      "type": "SELECT",
+      "actorId": "dwight"
+    },
+    {
+      "type": "END_TURN",
+      "actorId": "dwight"
+    },
+    {
+      "type": "PASS",
+      "actorId": "claudette"
+    },
+    {
+      "type": "PASS",
+      "actorId": "claudette"
+    },
+    {
+      "type": "MOVE",
+      "actorId": "claudette",
+      "pathId": "or_p03",
+      "to": "ormond_guest_rooms"
+    },
+    {
+      "type": "SELECT",
+      "actorId": "claudette",
+      "propId": "ormond_guest_rooms:survival:0"
+    },
+    {
+      "type": "PASS",
+      "actorId": "claudette"
+    },
+    {
+      "type": "INTERACT",
+      "actorId": "claudette",
+      "action": "repair",
+      "targetId": "ormond_guest_rooms:objective:0"
+    },
+    {
+      "type": "PASS",
+      "actorId": "trapper"
+    },
+    {
+      "type": "SELECT",
+      "actorId": "claudette"
+    },
+    {
+      "type": "END_TURN",
+      "actorId": "claudette"
+    },
+    {
+      "type": "MOVE",
+      "actorId": "trapper"
+    },
+    {
+      "type": "END_TURN",
+      "actorId": "trapper"
+    },
+    {
+      "type": "MOVE",
+      "actorId": "trapper",
+      "pathId": "or_p07",
+      "to": "ormond_guest_rooms"
+    },
+    {
+      "type": "SELECT",
+      "actorId": "trapper",
+      "propId": "ormond_guest_rooms:altruism:0"
+    },
+    {
+      "type": "END_TURN",
+      "actorId": "trapper"
+    },
+    {
+      "type": "KILLER_BONUS",
+      "actorId": "trapper",
+      "accept": false
+    },
+    {
+      "type": "PLAN",
+      "actorId": "dwight",
+      "cards": [
+        "blue"
+      ]
+    },
+    {
+      "type": "PLAN",
+      "actorId": "claudette",
+      "cards": [
+        "green"
+      ]
+    },
+    {
+      "type": "PLAN",
+      "actorId": "jake",
+      "cards": [
+        "blue"
+      ]
+    },
+    {
+      "type": "PLAN",
+      "actorId": "ace",
+      "cards": [
+        "yellow"
+      ]
+    },
+    {
+      "type": "PLAN",
+      "actorId": "trapper",
+      "cards": [
+        "wait",
+        "blue"
+      ]
+    },
+    {
+      "type": "MOVE",
+      "actorId": "ace",
+      "pathId": "or_p05",
+      "to": "ormond_rentals"
+    },
+    {
+      "type": "SELECT",
+      "actorId": "ace",
+      "propId": "ormond_rentals:altruism:0"
+    },
+    {
+      "type": "INTERACT",
+      "actorId": "ace",
+      "action": "repair",
+      "targetId": "ormond_rentals:objective:0"
+    },
+    {
+      "type": "SELECT",
+      "actorId": "ace"
+    },
+    {
+      "type": "END_TURN",
+      "actorId": "ace"
+    },
+    {
+      "type": "MOVE",
+      "actorId": "dwight",
+      "pathId": "or_p08",
+      "to": "ormond_balcony"
+    },
+    {
+      "type": "SELECT",
+      "actorId": "dwight",
+      "propId": "ormond_balcony:altruism:0"
+    },
+    {
+      "type": "INTERACT",
+      "actorId": "dwight",
+      "action": "repair",
+      "targetId": "ormond_balcony:objective:0"
+    },
+    {
+      "type": "PASS",
+      "actorId": "trapper"
+    },
+    {
+      "type": "SELECT",
+      "actorId": "dwight"
+    },
+    {
+      "type": "END_TURN",
+      "actorId": "dwight"
+    },
+    {
+      "type": "PASS",
+      "actorId": "claudette"
+    },
+    {
+      "type": "PASS",
+      "actorId": "claudette"
+    },
+    {
+      "type": "MOVE",
+      "actorId": "claudette",
+      "pathId": "or_p02",
+      "to": "ormond_picnic_area"
+    },
+    {
+      "type": "SELECT",
+      "actorId": "claudette",
+      "propId": "ormond_picnic_area:boldness:0"
+    },
+    {
+      "type": "PASS",
+      "actorId": "claudette"
+    },
+    {
+      "type": "INTERACT",
+      "actorId": "claudette",
+      "action": "exit",
+      "targetId": "ormond_picnic_area:objective:0"
+    },
+    {
+      "type": "PASS",
+      "actorId": "trapper"
+    },
+    {
+      "type": "SELECT",
+      "actorId": "claudette"
+    },
+    {
+      "type": "PASS",
+      "actorId": "jake"
+    },
+    {
+      "type": "END_TURN",
+      "actorId": "claudette"
+    },
+    {
+      "type": "MOVE",
+      "actorId": "jake",
+      "pathId": "or_p07",
+      "to": "ormond_guest_rooms"
+    },
+    {
+      "type": "END_TURN",
+      "actorId": "jake"
+    },
+    {
+      "type": "MOVE",
+      "actorId": "trapper"
+    },
+    {
+      "type": "END_TURN",
+      "actorId": "trapper"
+    },
+    {
+      "type": "MOVE",
+      "actorId": "trapper",
+      "pathId": "or_p07",
+      "to": "ormond_chalet"
+    },
+    {
+      "type": "SELECT",
+      "actorId": "trapper",
+      "propId": "ormond_chalet:survival:1"
+    },
+    {
+      "type": "END_TURN",
+      "actorId": "trapper"
+    },
+    {
+      "type": "KILLER_BONUS",
+      "actorId": "trapper",
+      "accept": false
+    },
+    {
+      "type": "PLAN",
+      "actorId": "dwight",
+      "cards": [
+        "green"
+      ]
+    },
+    {
+      "type": "PLAN",
+      "actorId": "claudette",
+      "cards": [
+        "blue"
+      ]
+    },
+    {
+      "type": "PLAN",
+      "actorId": "jake",
+      "cards": [
+        "green"
+      ]
+    },
+    {
+      "type": "PLAN",
+      "actorId": "ace",
+      "cards": [
+        "blue"
+      ]
+    },
+    {
+      "type": "PLAN",
+      "actorId": "trapper",
+      "cards": [
+        "wait",
+        "blue"
+      ]
+    },
+    {
+      "type": "MOVE",
+      "actorId": "dwight",
+      "pathId": "or_p03",
+      "to": "ormond_guest_rooms"
+    },
+    {
+      "type": "END_TURN",
+      "actorId": "dwight"
+    },
+    {
+      "type": "PASS",
+      "actorId": "claudette"
+    },
+    {
+      "type": "PASS",
+      "actorId": "claudette"
+    },
+    {
+      "type": "MOVE",
+      "actorId": "claudette",
+      "pathId": "or_p10",
+      "to": "ormond_ski_shack"
+    },
+    {
+      "type": "SELECT",
+      "actorId": "claudette",
+      "propId": "ormond_ski_shack:objective:0"
+    },
+    {
+      "type": "PASS",
+      "actorId": "claudette"
+    },
+    {
+      "type": "END_TURN",
+      "actorId": "claudette"
+    },
+    {
+      "type": "MOVE",
+      "actorId": "jake",
+      "pathId": "or_p02",
+      "to": "ormond_picnic_area"
+    },
+    {
+      "type": "SELECT",
+      "actorId": "jake",
+      "propId": "ormond_picnic_area:survival:0"
+    },
+    {
+      "type": "INTERACT",
+      "actorId": "jake",
+      "action": "exit",
+      "targetId": "ormond_picnic_area:objective:0"
+    },
+    {
+      "type": "PASS",
+      "actorId": "jake"
+    },
+    {
+      "type": "PASS",
+      "actorId": "trapper"
+    },
+    {
+      "type": "SELECT",
+      "actorId": "jake"
+    },
+    {
+      "type": "END_TURN",
+      "actorId": "jake"
+    },
+    {
+      "type": "MOVE",
+      "actorId": "ace",
+      "pathId": "or_p18",
+      "to": "ormond_entryway"
+    },
+    {
+      "type": "SELECT",
+      "actorId": "ace",
+      "propId": "ormond_entryway:objective:0"
+    },
+    {
+      "type": "END_TURN",
+      "actorId": "ace"
+    },
+    {
+      "type": "MOVE",
+      "actorId": "trapper"
+    },
+    {
+      "type": "END_TURN",
+      "actorId": "trapper"
+    },
+    {
+      "type": "MOVE",
+      "actorId": "trapper",
+      "pathId": "or_p07",
+      "to": "ormond_guest_rooms"
+    },
+    {
+      "type": "END_TURN",
+      "actorId": "trapper"
+    },
+    {
+      "type": "KILLER_BONUS",
+      "actorId": "trapper",
+      "accept": false
+    },
+    {
+      "type": "PLAN",
+      "actorId": "dwight",
+      "cards": [
+        "green"
+      ]
+    },
+    {
+      "type": "PLAN",
+      "actorId": "claudette",
+      "cards": [
+        "blue"
+      ]
+    },
+    {
+      "type": "PLAN",
+      "actorId": "jake",
+      "cards": [
+        "green"
+      ]
+    },
+    {
+      "type": "PLAN",
+      "actorId": "ace",
+      "cards": [
+        "red"
+      ]
+    },
+    {
+      "type": "PLAN",
+      "actorId": "trapper",
+      "cards": [
+        "wait",
+        "blue"
+      ]
+    },
+    {
+      "type": "PASS",
+      "actorId": "claudette"
+    },
+    {
+      "type": "PASS",
+      "actorId": "claudette"
+    },
+    {
+      "type": "MOVE",
+      "actorId": "claudette",
+      "pathId": "or_p10",
+      "to": "ormond_picnic_area"
+    },
+    {
+      "type": "PASS",
+      "actorId": "claudette"
+    },
+    {
+      "type": "INTERACT",
+      "actorId": "claudette",
+      "action": "exit",
+      "targetId": "ormond_picnic_area:objective:0"
+    },
+    {
+      "type": "PASS",
+      "actorId": "trapper"
+    },
+    {
+      "type": "SELECT",
+      "actorId": "claudette"
+    },
+    {
+      "type": "END_TURN",
+      "actorId": "claudette"
+    },
+    {
+      "type": "MOVE",
+      "actorId": "jake",
+      "pathId": "or_p02",
+      "to": "ormond_guest_rooms"
+    },
+    {
+      "type": "END_TURN",
+      "actorId": "jake"
+    },
+    {
+      "type": "MOVE",
+      "actorId": "ace",
+      "pathId": "or_p20",
+      "to": "ormond_wooded_area"
+    },
+    {
+      "type": "SELECT",
+      "actorId": "ace",
+      "propId": "ormond_wooded_area:objective:0"
+    },
+    {
+      "type": "END_TURN",
+      "actorId": "ace"
+    },
+    {
+      "type": "MOVE",
+      "actorId": "dwight",
+      "pathId": "or_p02",
+      "to": "ormond_picnic_area"
+    },
+    {
+      "type": "INTERACT",
+      "actorId": "dwight",
+      "action": "exit",
+      "targetId": "ormond_picnic_area:objective:0"
+    },
+    {
+      "type": "PASS",
+      "actorId": "trapper"
+    },
+    {
+      "type": "SELECT",
+      "actorId": "dwight"
+    }
+  ]
+}

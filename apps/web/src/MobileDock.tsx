@@ -718,6 +718,9 @@ export function MobileDock({
                       <p className="carry-hook warn">⚠ 终点「{roomName(state, end ?? "")}」没有空钩子：确认后逃生者会在这里直接挣脱。请点亮着的房间把路线走到有钩子的房间</p>
                     );
                   })()}
+                  {diceCount === 0 && (
+                    <p className="carry-hook warn">选 0 颗＝不搬运：确认后逃生者直接挣脱</p>
+                  )}
                   {diceCount < route.length && (
                     <p className="carry-hook warn">挣脱骰至少要选 {route.length} 颗（每颗骰子最多走 1 个房间）</p>
                   )}

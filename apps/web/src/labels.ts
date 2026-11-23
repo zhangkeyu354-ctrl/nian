@@ -107,7 +107,15 @@ export function eventText(s: GameState, e: Event) {
     case "HOOKED":
       return `${a}被挂上钩子。`;
     case "ESCAPED":
-      return `${a}挣脱了搬运。`;
+      return `${a}挣脱了搬运${
+        d.reason === "great_success"
+          ? "（挣脱骰掷出大成功）"
+          : d.reason === "no_distance"
+            ? "（杀手选了 0 颗挣脱骰，没有搬运）"
+            : d.reason === "no_hook"
+              ? "（停下的房间没有空钩子）"
+              : ""
+      }。`;
     case "CARRIED":
       return `${a}被搬运；途中不翻开道具。`;
     case "HIDDEN_IN_LOCKER":

@@ -228,7 +228,7 @@ export function App({ net }: { net?: NetBinding } = {}) {
   const [error, setError] = useState(""),
     [dice, setDice] = useState<GameEvent[]>([]);
   const [route, setRoute] = useState<Array<{ pathId: string; to: string }>>([]),
-    [diceCount, setDiceCount] = useState(0);
+    [diceCount, setDiceCount] = useState(1);
   const control = useMemo(() => {
     if (!state) return null;
     if (!net) return getControls(state);
@@ -382,7 +382,7 @@ export function App({ net }: { net?: NetBinding } = {}) {
             setSelected(null);
             setForm(null);
             setRoute([]);
-            setDiceCount(0);
+            setDiceCount(1);
             setError("");
           }
         })
@@ -409,7 +409,7 @@ export function App({ net }: { net?: NetBinding } = {}) {
       setSelected(null);
       setForm(null);
       setRoute([]);
-      setDiceCount(0);
+      setDiceCount(1);
       setError("");
     } catch (e) {
       setError(
@@ -794,7 +794,7 @@ export function App({ net }: { net?: NetBinding } = {}) {
           setDiceCount={setDiceCount}
           clearRoute={() => {
             setRoute([]);
-            setDiceCount(0);
+            setDiceCount(1);
           }}
           leave={() => {
             if (net) net.leave();
@@ -1107,7 +1107,7 @@ export function App({ net }: { net?: NetBinding } = {}) {
                               <button
                                 onClick={() => {
                                   setRoute([]);
-                                  setDiceCount(0);
+                                  setDiceCount(1);
                                 }}
                               >
                                 清空路线

@@ -1,0 +1,1469 @@
+{
+  "options": {
+    "seed": 5000,
+    "mapId": "crotus_prenn_asylum",
+    "survivors": [
+      "dwight",
+      "claudette",
+      "jake",
+      "ace"
+    ],
+    "killer": "trapper"
+  },
+  "commands": [
+    {
+      "type": "SELECT",
+      "actorId": "dwight"
+    },
+    {
+      "type": "SELECT",
+      "actorId": "claudette"
+    },
+    {
+      "type": "SELECT",
+      "actorId": "jake"
+    },
+    {
+      "type": "SELECT",
+      "actorId": "ace"
+    },
+    {
+      "type": "SELECT",
+      "actorId": "trapper"
+    },
+    {
+      "type": "PLAN",
+      "actorId": "dwight",
+      "cards": [
+        "red"
+      ]
+    },
+    {
+      "type": "PLAN",
+      "actorId": "claudette",
+      "cards": [
+        "blue"
+      ]
+    },
+    {
+      "type": "PLAN",
+      "actorId": "jake",
+      "cards": [
+        "red"
+      ]
+    },
+    {
+      "type": "PLAN",
+      "actorId": "ace",
+      "cards": [
+        "red"
+      ]
+    },
+    {
+      "type": "PLAN",
+      "actorId": "trapper",
+      "cards": [
+        "wait",
+        "blue"
+      ]
+    },
+    {
+      "type": "USE_PERK",
+      "actorId": "ace",
+      "perkId": "board_ace_1",
+      "index": 0
+    },
+    {
+      "type": "MOVE",
+      "actorId": "dwight",
+      "pathId": "cp_p09",
+      "to": "crotus_shack"
+    },
+    {
+      "type": "SELECT",
+      "actorId": "dwight",
+      "propId": "crotus_shack:objective:0"
+    },
+    {
+      "type": "PASS",
+      "actorId": "dwight"
+    },
+    {
+      "type": "END_TURN",
+      "actorId": "dwight"
+    },
+    {
+      "type": "PASS",
+      "actorId": "claudette"
+    },
+    {
+      "type": "PASS",
+      "actorId": "claudette"
+    },
+    {
+      "type": "MOVE",
+      "actorId": "claudette",
+      "pathId": "cp_p03",
+      "to": "crotus_dark_wood"
+    },
+    {
+      "type": "SELECT",
+      "actorId": "claudette",
+      "propId": "crotus_dark_wood:objective:0"
+    },
+    {
+      "type": "PASS",
+      "actorId": "claudette"
+    },
+    {
+      "type": "INTERACT",
+      "actorId": "claudette",
+      "action": "repair",
+      "targetId": "crotus_dark_wood:objective:0"
+    },
+    {
+      "type": "USE_PERK",
+      "actorId": "dwight",
+      "perkId": "board_dwight_3"
+    },
+    {
+      "type": "SELECT",
+      "actorId": "claudette"
+    },
+    {
+      "type": "SELECT",
+      "actorId": "claudette",
+      "index": 0
+    },
+    {
+      "type": "END_TURN",
+      "actorId": "claudette"
+    },
+    {
+      "type": "MOVE",
+      "actorId": "jake",
+      "pathId": "cp_p17",
+      "to": "crotus_greenhouse"
+    },
+    {
+      "type": "SELECT",
+      "actorId": "jake",
+      "propId": "crotus_greenhouse:objective:0"
+    },
+    {
+      "type": "INTERACT",
+      "actorId": "jake",
+      "action": "repair",
+      "targetId": "crotus_greenhouse:objective:0"
+    },
+    {
+      "type": "PASS",
+      "actorId": "jake"
+    },
+    {
+      "type": "PASS",
+      "actorId": "trapper"
+    },
+    {
+      "type": "SELECT",
+      "actorId": "jake"
+    },
+    {
+      "type": "END_TURN",
+      "actorId": "jake"
+    },
+    {
+      "type": "MOVE",
+      "actorId": "ace",
+      "pathId": "cp_p08",
+      "to": "crotus_courtyard"
+    },
+    {
+      "type": "SELECT",
+      "actorId": "ace",
+      "propId": "crotus_courtyard:objective:0"
+    },
+    {
+      "type": "INTERACT",
+      "actorId": "ace",
+      "action": "repair",
+      "targetId": "crotus_courtyard:objective:0"
+    },
+    {
+      "type": "PASS",
+      "actorId": "ace"
+    },
+    {
+      "type": "SELECT",
+      "actorId": "ace"
+    },
+    {
+      "type": "END_TURN",
+      "actorId": "ace"
+    },
+    {
+      "type": "MOVE",
+      "actorId": "trapper"
+    },
+    {
+      "type": "END_TURN",
+      "actorId": "trapper"
+    },
+    {
+      "type": "MOVE",
+      "actorId": "trapper",
+      "pathId": "cp_p18",
+      "to": "crotus_ruins"
+    },
+    {
+      "type": "SELECT",
+      "actorId": "trapper",
+      "propId": "crotus_ruins:objective:0"
+    },
+    {
+      "type": "END_TURN",
+      "actorId": "trapper"
+    },
+    {
+      "type": "KILLER_BONUS",
+      "actorId": "trapper",
+      "accept": false
+    },
+    {
+      "type": "PLAN",
+      "actorId": "dwight",
+      "cards": [
+        "blue"
+      ]
+    },
+    {
+      "type": "PLAN",
+      "actorId": "claudette",
+      "cards": [
+        "red"
+      ]
+    },
+    {
+      "type": "PLAN",
+      "actorId": "jake",
+      "cards": [
+        "green"
+      ]
+    },
+    {
+      "type": "PLAN",
+      "actorId": "ace",
+      "cards": [
+        "blue"
+      ]
+    },
+    {
+      "type": "PLAN",
+      "actorId": "trapper",
+      "cards": [
+        "wait",
+        "blue"
+      ]
+    },
+    {
+      "type": "PASS",
+      "actorId": "claudette"
+    },
+    {
+      "type": "USE_PERK",
+      "actorId": "ace",
+      "perkId": "board_ace_1",
+      "index": 0
+    },
+    {
+      "type": "PASS",
+      "actorId": "claudette"
+    },
+    {
+      "type": "MOVE",
+      "actorId": "claudette",
+      "pathId": "cp_p02",
+      "to": "crotus_treatment_hall"
+    },
+    {
+      "type": "SELECT",
+      "actorId": "claudette",
+      "propId": "crotus_treatment_hall:objective:0"
+    },
+    {
+      "type": "PASS",
+      "actorId": "claudette"
+    },
+    {
+      "type": "INTERACT",
+      "actorId": "claudette",
+      "action": "repair",
+      "targetId": "crotus_treatment_hall:objective:0"
+    },
+    {
+      "type": "USE_PERK",
+      "actorId": "dwight",
+      "perkId": "board_dwight_3"
+    },
+    {
+      "type": "SELECT",
+      "actorId": "claudette"
+    },
+    {
+      "type": "SELECT",
+      "actorId": "claudette",
+      "index": 0
+    },
+    {
+      "type": "END_TURN",
+      "actorId": "claudette"
+    },
+    {
+      "type": "MOVE",
+      "actorId": "jake",
+      "pathId": "cp_p10",
+      "to": "crotus_treatment_hall"
+    },
+    {
+      "type": "SELECT",
+      "actorId": "jake",
+      "propId": "crotus_treatment_hall:boldness:0"
+    },
+    {
+      "type": "INTERACT",
+      "actorId": "jake",
+      "action": "repair",
+      "targetId": "crotus_treatment_hall:objective:0"
+    },
+    {
+      "type": "PASS",
+      "actorId": "jake"
+    },
+    {
+      "type": "SELECT",
+      "actorId": "jake"
+    },
+    {
+      "type": "END_TURN",
+      "actorId": "jake"
+    },
+    {
+      "type": "MOVE",
+      "actorId": "ace",
+      "pathId": "cp_p03",
+      "to": "crotus_dark_wood"
+    },
+    {
+      "type": "SELECT",
+      "actorId": "ace",
+      "propId": "crotus_dark_wood:boldness:0"
+    },
+    {
+      "type": "INTERACT",
+      "actorId": "ace",
+      "action": "repair",
+      "targetId": "crotus_dark_wood:objective:0"
+    },
+    {
+      "type": "SELECT",
+      "actorId": "ace"
+    },
+    {
+      "type": "END_TURN",
+      "actorId": "ace"
+    },
+    {
+      "type": "MOVE",
+      "actorId": "dwight",
+      "pathId": "cp_p01",
+      "to": "crotus_dark_wood"
+    },
+    {
+      "type": "SELECT",
+      "actorId": "dwight",
+      "propId": "crotus_dark_wood:survival:0"
+    },
+    {
+      "type": "END_TURN",
+      "actorId": "dwight"
+    },
+    {
+      "type": "MOVE",
+      "actorId": "trapper"
+    },
+    {
+      "type": "END_TURN",
+      "actorId": "trapper"
+    },
+    {
+      "type": "MOVE",
+      "actorId": "trapper",
+      "pathId": "cp_p13",
+      "to": "crotus_greenhouse"
+    },
+    {
+      "type": "SELECT",
+      "actorId": "trapper",
+      "propId": "crotus_greenhouse:boldness:0"
+    },
+    {
+      "type": "END_TURN",
+      "actorId": "trapper"
+    },
+    {
+      "type": "KILLER_BONUS",
+      "actorId": "trapper",
+      "accept": false
+    },
+    {
+      "type": "PLAN",
+      "actorId": "dwight",
+      "cards": [
+        "red"
+      ]
+    },
+    {
+      "type": "PLAN",
+      "actorId": "claudette",
+      "cards": [
+        "green"
+      ]
+    },
+    {
+      "type": "PLAN",
+      "actorId": "jake",
+      "cards": [
+        "green"
+      ]
+    },
+    {
+      "type": "PLAN",
+      "actorId": "ace",
+      "cards": [
+        "red"
+      ]
+    },
+    {
+      "type": "PLAN",
+      "actorId": "trapper",
+      "cards": [
+        "wait",
+        "blue"
+      ]
+    },
+    {
+      "type": "MOVE",
+      "actorId": "jake",
+      "pathId": "cp_p10",
+      "to": "crotus_greenhouse"
+    },
+    {
+      "type": "SELECT",
+      "actorId": "jake",
+      "propId": "crotus_greenhouse:survival:0"
+    },
+    {
+      "type": "INTERACT",
+      "actorId": "jake",
+      "action": "repair",
+      "targetId": "crotus_greenhouse:objective:0"
+    },
+    {
+      "type": "PASS",
+      "actorId": "jake"
+    },
+    {
+      "type": "PASS",
+      "actorId": "trapper"
+    },
+    {
+      "type": "SELECT",
+      "actorId": "jake"
+    },
+    {
+      "type": "END_TURN",
+      "actorId": "jake"
+    },
+    {
+      "type": "MOVE",
+      "actorId": "ace",
+      "pathId": "cp_p02",
+      "to": "crotus_treatment_hall"
+    },
+    {
+      "type": "SELECT",
+      "actorId": "ace",
+      "propId": "crotus_treatment_hall:survival:0"
+    },
+    {
+      "type": "INTERACT",
+      "actorId": "ace",
+      "action": "repair",
+      "targetId": "crotus_treatment_hall:objective:0"
+    },
+    {
+      "type": "PASS",
+      "actorId": "trapper"
+    },
+    {
+      "type": "SELECT",
+      "actorId": "ace"
+    },
+    {
+      "type": "END_TURN",
+      "actorId": "ace"
+    },
+    {
+      "type": "MOVE",
+      "actorId": "dwight",
+      "pathId": "cp_p02",
+      "to": "crotus_treatment_hall"
+    },
+    {
+      "type": "SELECT",
+      "actorId": "dwight",
+      "propId": "crotus_treatment_hall:altruism:0"
+    },
+    {
+      "type": "END_TURN",
+      "actorId": "dwight"
+    },
+    {
+      "type": "PASS",
+      "actorId": "claudette"
+    },
+    {
+      "type": "PASS",
+      "actorId": "claudette"
+    },
+    {
+      "type": "MOVE",
+      "actorId": "claudette",
+      "pathId": "cp_p10",
+      "to": "crotus_greenhouse"
+    },
+    {
+      "type": "SELECT",
+      "actorId": "claudette",
+      "propId": "crotus_greenhouse:altruism:0"
+    },
+    {
+      "type": "PASS",
+      "actorId": "claudette"
+    },
+    {
+      "type": "INTERACT",
+      "actorId": "claudette",
+      "action": "repair",
+      "targetId": "crotus_greenhouse:objective:0"
+    },
+    {
+      "type": "PASS",
+      "actorId": "trapper"
+    },
+    {
+      "type": "SELECT",
+      "actorId": "claudette"
+    },
+    {
+      "type": "END_TURN",
+      "actorId": "claudette"
+    },
+    {
+      "type": "MOVE",
+      "actorId": "trapper"
+    },
+    {
+      "type": "END_TURN",
+      "actorId": "trapper"
+    },
+    {
+      "type": "MOVE",
+      "actorId": "trapper",
+      "pathId": "cp_p13",
+      "to": "crotus_ruins"
+    },
+    {
+      "type": "SELECT",
+      "actorId": "trapper",
+      "propId": "crotus_ruins:boldness:0"
+    },
+    {
+      "type": "END_TURN",
+      "actorId": "trapper"
+    },
+    {
+      "type": "KILLER_BONUS",
+      "actorId": "trapper",
+      "accept": false
+    },
+    {
+      "type": "PLAN",
+      "actorId": "dwight",
+      "cards": [
+        "red"
+      ]
+    },
+    {
+      "type": "PLAN",
+      "actorId": "claudette",
+      "cards": [
+        "green"
+      ]
+    },
+    {
+      "type": "PLAN",
+      "actorId": "jake",
+      "cards": [
+        "green"
+      ]
+    },
+    {
+      "type": "PLAN",
+      "actorId": "ace",
+      "cards": [
+        "red"
+      ]
+    },
+    {
+      "type": "PLAN",
+      "actorId": "trapper",
+      "cards": [
+        "wait",
+        "blue"
+      ]
+    },
+    {
+      "type": "MOVE",
+      "actorId": "ace",
+      "pathId": "cp_p02",
+      "to": "crotus_dark_wood"
+    },
+    {
+      "type": "SELECT",
+      "actorId": "ace",
+      "propId": "crotus_dark_wood:altruism:0"
+    },
+    {
+      "type": "END_TURN",
+      "actorId": "ace"
+    },
+    {
+      "type": "MOVE",
+      "actorId": "dwight",
+      "pathId": "cp_p02",
+      "to": "crotus_dark_wood"
+    },
+    {
+      "type": "END_TURN",
+      "actorId": "dwight"
+    },
+    {
+      "type": "PASS",
+      "actorId": "claudette"
+    },
+    {
+      "type": "PASS",
+      "actorId": "claudette"
+    },
+    {
+      "type": "MOVE",
+      "actorId": "claudette",
+      "pathId": "cp_p14",
+      "to": "crotus_receiving_desk"
+    },
+    {
+      "type": "SELECT",
+      "actorId": "claudette",
+      "propId": "crotus_receiving_desk:objective:0"
+    },
+    {
+      "type": "PASS",
+      "actorId": "claudette"
+    },
+    {
+      "type": "INTERACT",
+      "actorId": "claudette",
+      "action": "repair",
+      "targetId": "crotus_receiving_desk:objective:0"
+    },
+    {
+      "type": "SELECT",
+      "actorId": "claudette"
+    },
+    {
+      "type": "END_TURN",
+      "actorId": "claudette"
+    },
+    {
+      "type": "MOVE",
+      "actorId": "jake",
+      "pathId": "cp_p14",
+      "to": "crotus_receiving_desk"
+    },
+    {
+      "type": "SELECT",
+      "actorId": "jake",
+      "propId": "crotus_receiving_desk:boldness:0"
+    },
+    {
+      "type": "INTERACT",
+      "actorId": "jake",
+      "action": "repair",
+      "targetId": "crotus_receiving_desk:objective:0"
+    },
+    {
+      "type": "PASS",
+      "actorId": "jake"
+    },
+    {
+      "type": "SELECT",
+      "actorId": "jake"
+    },
+    {
+      "type": "END_TURN",
+      "actorId": "jake"
+    },
+    {
+      "type": "MOVE",
+      "actorId": "trapper"
+    },
+    {
+      "type": "END_TURN",
+      "actorId": "trapper"
+    },
+    {
+      "type": "MOVE",
+      "actorId": "trapper",
+      "pathId": "cp_p13",
+      "to": "crotus_greenhouse"
+    },
+    {
+      "type": "END_TURN",
+      "actorId": "trapper"
+    },
+    {
+      "type": "KILLER_BONUS",
+      "actorId": "trapper",
+      "accept": false
+    },
+    {
+      "type": "PLAN",
+      "actorId": "dwight",
+      "cards": [
+        "blue"
+      ]
+    },
+    {
+      "type": "PLAN",
+      "actorId": "claudette",
+      "cards": [
+        "yellow"
+      ]
+    },
+    {
+      "type": "PLAN",
+      "actorId": "jake",
+      "cards": [
+        "yellow"
+      ]
+    },
+    {
+      "type": "PLAN",
+      "actorId": "ace",
+      "cards": [
+        "blue"
+      ]
+    },
+    {
+      "type": "PLAN",
+      "actorId": "trapper",
+      "cards": [
+        "wait",
+        "blue"
+      ]
+    },
+    {
+      "type": "MOVE",
+      "actorId": "dwight",
+      "pathId": "cp_p03",
+      "to": "crotus_courtyard"
+    },
+    {
+      "type": "SELECT",
+      "actorId": "dwight",
+      "propId": "crotus_courtyard:boldness:0"
+    },
+    {
+      "type": "INTERACT",
+      "actorId": "dwight",
+      "action": "repair",
+      "targetId": "crotus_courtyard:objective:0"
+    },
+    {
+      "type": "SELECT",
+      "actorId": "dwight"
+    },
+    {
+      "type": "END_TURN",
+      "actorId": "dwight"
+    },
+    {
+      "type": "PASS",
+      "actorId": "claudette"
+    },
+    {
+      "type": "PASS",
+      "actorId": "claudette"
+    },
+    {
+      "type": "MOVE",
+      "actorId": "claudette",
+      "pathId": "cp_p12",
+      "to": "crotus_courtyard"
+    },
+    {
+      "type": "SELECT",
+      "actorId": "claudette",
+      "propId": "crotus_courtyard:survival:0"
+    },
+    {
+      "type": "PASS",
+      "actorId": "claudette"
+    },
+    {
+      "type": "INTERACT",
+      "actorId": "claudette",
+      "action": "repair",
+      "targetId": "crotus_courtyard:objective:0"
+    },
+    {
+      "type": "SELECT",
+      "actorId": "claudette"
+    },
+    {
+      "type": "END_TURN",
+      "actorId": "claudette"
+    },
+    {
+      "type": "MOVE",
+      "actorId": "jake",
+      "pathId": "cp_p12",
+      "to": "crotus_courtyard"
+    },
+    {
+      "type": "SELECT",
+      "actorId": "jake",
+      "propId": "crotus_courtyard:altruism:0"
+    },
+    {
+      "type": "END_TURN",
+      "actorId": "jake"
+    },
+    {
+      "type": "MOVE",
+      "actorId": "ace",
+      "pathId": "cp_p01",
+      "to": "crotus_shack"
+    },
+    {
+      "type": "SELECT",
+      "actorId": "ace",
+      "propId": "crotus_shack:boldness:0"
+    },
+    {
+      "type": "INTERACT",
+      "actorId": "ace",
+      "action": "exit",
+      "targetId": "crotus_shack:objective:0"
+    },
+    {
+      "type": "SELECT",
+      "actorId": "ace"
+    },
+    {
+      "type": "END_TURN",
+      "actorId": "ace"
+    },
+    {
+      "type": "MOVE",
+      "actorId": "trapper"
+    },
+    {
+      "type": "END_TURN",
+      "actorId": "trapper"
+    },
+    {
+      "type": "MOVE",
+      "actorId": "trapper",
+      "pathId": "cp_p13",
+      "to": "crotus_ruins"
+    },
+    {
+      "type": "SELECT",
+      "actorId": "trapper",
+      "propId": "crotus_ruins:survival:0"
+    },
+    {
+      "type": "END_TURN",
+      "actorId": "trapper"
+    },
+    {
+      "type": "KILLER_BONUS",
+      "actorId": "trapper",
+      "accept": false
+    },
+    {
+      "type": "PLAN",
+      "actorId": "dwight",
+      "cards": [
+        "red"
+      ]
+    },
+    {
+      "type": "PLAN",
+      "actorId": "claudette",
+      "cards": [
+        "red"
+      ]
+    },
+    {
+      "type": "PLAN",
+      "actorId": "jake",
+      "cards": [
+        "red"
+      ]
+    },
+    {
+      "type": "PLAN",
+      "actorId": "ace",
+      "cards": [
+        "red"
+      ]
+    },
+    {
+      "type": "PLAN",
+      "actorId": "trapper",
+      "cards": [
+        "wait",
+        "blue"
+      ]
+    },
+    {
+      "type": "PASS",
+      "actorId": "claudette"
+    },
+    {
+      "type": "PASS",
+      "actorId": "claudette"
+    },
+    {
+      "type": "MOVE",
+      "actorId": "claudette",
+      "pathId": "cp_p08",
+      "to": "crotus_carnival_entrance"
+    },
+    {
+      "type": "SELECT",
+      "actorId": "claudette",
+      "propId": "crotus_carnival_entrance:objective:0"
+    },
+    {
+      "type": "PASS",
+      "actorId": "claudette"
+    },
+    {
+      "type": "END_TURN",
+      "actorId": "claudette"
+    },
+    {
+      "type": "MOVE",
+      "actorId": "jake",
+      "pathId": "cp_p08",
+      "to": "crotus_carnival_entrance"
+    },
+    {
+      "type": "SELECT",
+      "actorId": "jake",
+      "propId": "crotus_carnival_entrance:objective:1"
+    },
+    {
+      "type": "END_TURN",
+      "actorId": "jake"
+    },
+    {
+      "type": "MOVE",
+      "actorId": "ace",
+      "pathId": "cp_p09",
+      "to": "crotus_ruins"
+    },
+    {
+      "type": "SELECT",
+      "actorId": "ace",
+      "propId": "crotus_ruins:survival:1"
+    },
+    {
+      "type": "INTERACT",
+      "actorId": "ace",
+      "action": "exit",
+      "targetId": "crotus_ruins:objective:0"
+    },
+    {
+      "type": "PASS",
+      "actorId": "trapper"
+    },
+    {
+      "type": "SELECT",
+      "actorId": "ace"
+    },
+    {
+      "type": "END_TURN",
+      "actorId": "ace"
+    },
+    {
+      "type": "MOVE",
+      "actorId": "dwight",
+      "pathId": "cp_p08",
+      "to": "crotus_carnival_entrance"
+    },
+    {
+      "type": "SELECT",
+      "actorId": "dwight",
+      "propId": "crotus_carnival_entrance:boldness:0"
+    },
+    {
+      "type": "END_TURN",
+      "actorId": "dwight"
+    },
+    {
+      "type": "MOVE",
+      "actorId": "trapper"
+    },
+    {
+      "type": "END_TURN",
+      "actorId": "trapper"
+    },
+    {
+      "type": "MOVE",
+      "actorId": "trapper",
+      "pathId": "cp_p13",
+      "to": "crotus_greenhouse"
+    },
+    {
+      "type": "END_TURN",
+      "actorId": "trapper"
+    },
+    {
+      "type": "KILLER_BONUS",
+      "actorId": "trapper",
+      "accept": false
+    },
+    {
+      "type": "PLAN",
+      "actorId": "dwight",
+      "cards": [
+        "red"
+      ]
+    },
+    {
+      "type": "PLAN",
+      "actorId": "claudette",
+      "cards": [
+        "red"
+      ]
+    },
+    {
+      "type": "PLAN",
+      "actorId": "jake",
+      "cards": [
+        "red"
+      ]
+    },
+    {
+      "type": "PLAN",
+      "actorId": "ace",
+      "cards": [
+        "red"
+      ]
+    },
+    {
+      "type": "PLAN",
+      "actorId": "trapper",
+      "cards": [
+        "wait",
+        "blue"
+      ]
+    },
+    {
+      "type": "MOVE",
+      "actorId": "jake",
+      "pathId": "cp_p08",
+      "to": "crotus_courtyard"
+    },
+    {
+      "type": "SELECT",
+      "actorId": "jake",
+      "propId": "crotus_courtyard:altruism:1"
+    },
+    {
+      "type": "END_TURN",
+      "actorId": "jake"
+    },
+    {
+      "type": "MOVE",
+      "actorId": "ace",
+      "pathId": "cp_p09",
+      "to": "crotus_shack"
+    },
+    {
+      "type": "SELECT",
+      "actorId": "ace",
+      "propId": "crotus_shack:boldness:1"
+    },
+    {
+      "type": "INTERACT",
+      "actorId": "ace",
+      "action": "exit",
+      "targetId": "crotus_shack:objective:0"
+    },
+    {
+      "type": "SELECT",
+      "actorId": "ace"
+    },
+    {
+      "type": "END_TURN",
+      "actorId": "ace"
+    },
+    {
+      "type": "MOVE",
+      "actorId": "dwight",
+      "pathId": "cp_p08",
+      "to": "crotus_courtyard"
+    },
+    {
+      "type": "END_TURN",
+      "actorId": "dwight"
+    },
+    {
+      "type": "PASS",
+      "actorId": "claudette"
+    },
+    {
+      "type": "PASS",
+      "actorId": "claudette"
+    },
+    {
+      "type": "MOVE",
+      "actorId": "claudette",
+      "pathId": "cp_p08",
+      "to": "crotus_courtyard"
+    },
+    {
+      "type": "PASS",
+      "actorId": "claudette"
+    },
+    {
+      "type": "END_TURN",
+      "actorId": "claudette"
+    },
+    {
+      "type": "MOVE",
+      "actorId": "trapper"
+    },
+    {
+      "type": "END_TURN",
+      "actorId": "trapper"
+    },
+    {
+      "type": "MOVE",
+      "actorId": "trapper",
+      "pathId": "cp_p13",
+      "to": "crotus_ruins"
+    },
+    {
+      "type": "SELECT",
+      "actorId": "trapper",
+      "propId": "crotus_ruins:altruism:0"
+    },
+    {
+      "type": "END_TURN",
+      "actorId": "trapper"
+    },
+    {
+      "type": "KILLER_BONUS",
+      "actorId": "trapper",
+      "accept": false
+    },
+    {
+      "type": "PLAN",
+      "actorId": "dwight",
+      "cards": [
+        "blue"
+      ]
+    },
+    {
+      "type": "PLAN",
+      "actorId": "claudette",
+      "cards": [
+        "blue"
+      ]
+    },
+    {
+      "type": "PLAN",
+      "actorId": "jake",
+      "cards": [
+        "blue"
+      ]
+    },
+    {
+      "type": "PLAN",
+      "actorId": "ace",
+      "cards": [
+        "red"
+      ]
+    },
+    {
+      "type": "PLAN",
+      "actorId": "trapper",
+      "cards": [
+        "wait",
+        "blue"
+      ]
+    },
+    {
+      "type": "MOVE",
+      "actorId": "ace",
+      "pathId": "cp_p09",
+      "to": "crotus_ruins"
+    },
+    {
+      "type": "INTERACT",
+      "actorId": "ace",
+      "action": "exit",
+      "targetId": "crotus_ruins:objective:0"
+    },
+    {
+      "type": "PASS",
+      "actorId": "trapper"
+    },
+    {
+      "type": "SELECT",
+      "actorId": "ace"
+    },
+    {
+      "type": "END_TURN",
+      "actorId": "ace"
+    },
+    {
+      "type": "MOVE",
+      "actorId": "dwight",
+      "pathId": "cp_p03",
+      "to": "crotus_dark_wood"
+    },
+    {
+      "type": "END_TURN",
+      "actorId": "dwight"
+    },
+    {
+      "type": "PASS",
+      "actorId": "claudette"
+    },
+    {
+      "type": "PASS",
+      "actorId": "claudette"
+    },
+    {
+      "type": "MOVE",
+      "actorId": "claudette",
+      "pathId": "cp_p03",
+      "to": "crotus_dark_wood"
+    },
+    {
+      "type": "PASS",
+      "actorId": "claudette"
+    },
+    {
+      "type": "END_TURN",
+      "actorId": "claudette"
+    },
+    {
+      "type": "MOVE",
+      "actorId": "jake",
+      "pathId": "cp_p03",
+      "to": "crotus_dark_wood"
+    },
+    {
+      "type": "END_TURN",
+      "actorId": "jake"
+    },
+    {
+      "type": "MOVE",
+      "actorId": "trapper"
+    },
+    {
+      "type": "END_TURN",
+      "actorId": "trapper"
+    },
+    {
+      "type": "MOVE",
+      "actorId": "trapper",
+      "pathId": "cp_p13",
+      "to": "crotus_greenhouse"
+    },
+    {
+      "type": "END_TURN",
+      "actorId": "trapper"
+    },
+    {
+      "type": "KILLER_BONUS",
+      "actorId": "trapper",
+      "accept": false
+    },
+    {
+      "type": "PLAN",
+      "actorId": "dwight",
+      "cards": [
+        "blue"
+      ]
+    },
+    {
+      "type": "PLAN",
+      "actorId": "claudette",
+      "cards": [
+        "blue"
+      ]
+    },
+    {
+      "type": "PLAN",
+      "actorId": "jake",
+      "cards": [
+        "blue"
+      ]
+    },
+    {
+      "type": "PLAN",
+      "actorId": "ace",
+      "cards": [
+        "red"
+      ]
+    },
+    {
+      "type": "PLAN",
+      "actorId": "trapper",
+      "cards": [
+        "wait",
+        "blue"
+      ]
+    },
+    {
+      "type": "MOVE",
+      "actorId": "dwight",
+      "pathId": "cp_p01",
+      "to": "crotus_shack"
+    },
+    {
+      "type": "SELECT",
+      "actorId": "dwight",
+      "propId": "crotus_shack:survival:0"
+    },
+    {
+      "type": "INTERACT",
+      "actorId": "dwight",
+      "action": "exit",
+      "targetId": "crotus_shack:objective:0"
+    },
+    {
+      "type": "SELECT",
+      "actorId": "dwight"
+    },
+    {
+      "type": "END_TURN",
+      "actorId": "dwight"
+    },
+    {
+      "type": "PASS",
+      "actorId": "claudette"
+    },
+    {
+      "type": "PASS",
+      "actorId": "claudette"
+    },
+    {
+      "type": "MOVE",
+      "actorId": "claudette",
+      "pathId": "cp_p01",
+      "to": "crotus_shack"
+    },
+    {
+      "type": "SELECT",
+      "actorId": "claudette",
+      "propId": "crotus_shack:altruism:0"
+    },
+    {
+      "type": "PASS",
+      "actorId": "claudette"
+    },
+    {
+      "type": "INTERACT",
+      "actorId": "claudette",
+      "action": "exit",
+      "targetId": "crotus_shack:objective:0"
+    },
+    {
+      "type": "SELECT",
+      "actorId": "claudette"
+    },
+    {
+      "type": "PASS",
+      "actorId": "jake"
+    },
+    {
+      "type": "END_TURN",
+      "actorId": "claudette"
+    },
+    {
+      "type": "MOVE",
+      "actorId": "jake",
+      "pathId": "cp_p01",
+      "to": "crotus_shack"
+    },
+    {
+      "type": "INTERACT",
+      "actorId": "jake",
+      "action": "exit",
+      "targetId": "crotus_shack:objective:0"
+    },
+    {
+      "type": "PASS",
+      "actorId": "jake"
+    },
+    {
+      "type": "SELECT",
+      "actorId": "jake"
+    },
+    {
+      "type": "PASS",
+      "actorId": "jake"
+    },
+    {
+      "type": "END_TURN",
+      "actorId": "jake"
+    },
+    {
+      "type": "MOVE",
+      "actorId": "ace",
+      "pathId": "cp_p09",
+      "to": "crotus_shack"
+    },
+    {
+      "type": "INTERACT",
+      "actorId": "ace",
+      "action": "exit",
+      "targetId": "crotus_shack:objective:0"
+    },
+    {
+      "type": "SELECT",
+      "actorId": "ace"
+    }
+  ]
+}

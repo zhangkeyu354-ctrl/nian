@@ -184,7 +184,7 @@ export function getControls(s: GameState) {
         );
     if (c.kind === "KEEP")
       s.roll?.faces.forEach((_, index) =>
-        add("保留第" + (index + 1) + "颗骰子", {
+        add("保留第" + (index + 1) + "颗骰子：" + (s.roll!.faces[index] === 0 ? "失败" : s.roll!.faces[index] === 5 ? "大成功" : "成功"), {
           type: "SELECT",
           ...base,
           index,
