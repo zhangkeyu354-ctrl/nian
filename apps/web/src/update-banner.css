@@ -10,3 +10,4 @@
 .update-banner span { flex: 1; }
 .update-banner button { flex: none; padding: 6px 12px; border-radius: 8px; border: 0; background: #e0b85a; color: #1d1608; font-weight: 800; font-size: 13px; }
 .update-banner .update-banner-x { background: transparent; color: #fbe9bd; padding: 6px 8px; font-size: 16px; }
+.update-banner.is-restarting { background: #3a1513f2; border-color: #e8705c; color: #ffd9cf; font-weight: 700; }

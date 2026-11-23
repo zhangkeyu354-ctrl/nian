@@ -91,7 +91,7 @@ const http = createServer((req, res) => {
         ok: true,
         version: VERSION,
         // 当前连着游戏的人数（大厅不连）：自动部署只在 0 时进行，避免打断正在玩的人
-        online: io.engine.clientsCount,
+        online: io.of("/").sockets.size,
         // 正在玩什么：每个有人连着的房间一行（只给游戏名和人数，不给房间号和昵称）
         playing: livePlaying(),
         // 30 分钟内有人操作过的房间里连着的人数：自动部署看这个，挂着不动的页面不再挡住更新
@@ -276,6 +276,8 @@ const GZIP_CACHE = new Map<string, { etag: string; body: Buffer }>();
 const io = new Server(http, { cors: { origin: true } });
 // 记录每个房间最后一次有人操作的时间（任何游戏事件都算），给健康检查判断「挂着没人玩」
 const lastActive = new Map<string, number>();
+// /site：每个页面都连的提示频道（网站要重启时推送），不参与游戏
+io.of("/site");
 io.on("connection", (socket) => {
   socket.onAny(() => {
     const now = Date.now();
@@ -591,3 +593,11 @@ function livePlaying() {
   }
   return out.sort((a, b) => b.players - a.players);
 }
+
+// 部署新版本时 Render 会给旧服务器发 SIGTERM，再等约 30 秒才强制关掉：
+// 先通过 /site 频道（每个页面都连着，不算进在线人数）推送「网站正在更新」，15 秒后再退出
+process.on("SIGTERM", () => {
+  io.of("/site").emit("notice", "网站正在更新新版本，马上会断开，当前对局会中断；稍等 1 分钟后刷新页面即可");
+  console.log("收到 SIGTERM：已提示玩家，15 秒后退出");
+  setTimeout(() => process.exit(0), 15000);
+});
