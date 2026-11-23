@@ -279,7 +279,9 @@ const lastActive = new Map<string, number>();
 // /site：每个页面都连的提示频道（网站要重启时推送），不参与游戏
 io.of("/site");
 io.on("connection", (socket) => {
-  socket.onAny(() => {
+  // 只算真正的游戏操作；进房/重连/认领座位/心跳不算（手机切后台再回来会自动重连，不能当成「在玩」）
+  socket.onAny((event: string) => {
+    if (/(^|:)(join|claim|create|ping|update)$/.test(event)) return;
     const now = Date.now();
     for (const r of socket.rooms) if (r !== socket.id) lastActive.set(r, now);
   });
