@@ -92,6 +92,8 @@ const http = createServer((req, res) => {
         version: VERSION,
         // 当前连着游戏的人数（大厅不连）：自动部署只在 0 时进行，避免打断正在玩的人
         online: io.engine.clientsCount,
+        // 正在玩什么：每个有人连着的房间一行（只给游戏名和人数，不给房间号和昵称）
+        playing: livePlaying(),
         assetCdn: { ok: ASSET_CDN.ok, local: ASSET_CDN.local.slice(0, 12), remote: ASSET_CDN.remote.slice(0, 12), error: ASSET_CDN.error },
         rooms: store.rooms.size,
         maRooms: maStore.rooms.size,
@@ -559,3 +561,19 @@ http.listen(PORT, HOST, async () => {
     setInterval(ping, 9 * 60_000).unref();
   }
 });
+
+// 健康检查用：按 Socket.IO 房间统计「哪个游戏的房间里连着几个人」
+const GAME_PREFIX: Record<string, string> = {
+  bf: "魔王试炼", cn: "行动代号", cs: "犯罪现场", dm: "请留遗言", dp: "绘画派对", du: "反转王牌", kb: "卡里巴湖",
+  ma: "魔法运动员", nd: "脑洞量表", rk: "拉密", rr: "眼疾手快", sk: "骷髅王", ss: "汽水走私犯", ta: "我们之中的威胁",
+  xb: "瞎掰王", wt: "女巫镇",
+};
+function livePlaying() {
+  const out: Array<{ game: string; players: number }> = [];
+  for (const [name, members] of io.sockets.adapter.rooms) {
+    if (io.sockets.sockets.has(name)) continue; // 每个连接自带的私有房间
+    const m = /^([a-z]{2}):/.exec(name);
+    out.push({ game: m ? GAME_PREFIX[m[1]] ?? m[1] : "黎明杀机", players: members.size });
+  }
+  return out.sort((a, b) => b.players - a.players);
+}
