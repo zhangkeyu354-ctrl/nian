@@ -67,6 +67,15 @@ export function CharacterDetail({ id }: { id: string }) {
           )}
         </div>
       </header>
+      <img
+        className="character-detail-standee"
+        src={`/assets/mobile/portrait-detail/portrait_${id}.webp`}
+        alt={`${c.name}角色立牌`}
+        loading="lazy"
+        onError={(event) => {
+          event.currentTarget.style.display = "none";
+        }}
+      />
       {c.power && (
         <section className="cd-power">
           <h4>力量 · {c.power.name}</h4>

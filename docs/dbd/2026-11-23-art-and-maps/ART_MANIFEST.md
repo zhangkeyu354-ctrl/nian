@@ -54,3 +54,62 @@
 | 奥托海文 | diner | [图](../../../apps/web/public/assets/mobile/rooms/diner.webp) | 50648 | [原图](https://drive.google.com/file/d/1H9yFZHh82ab7gZ2eOCvrMcIVLyManUJO/view?usp=drivesdk) | [并排图](comparisons/autohaven-diner-compare.png) |
 | 奥托海文 | old_cabin | [图](../../../apps/web/public/assets/mobile/rooms/old_cabin.webp) | 70370 | [原图](https://drive.google.com/file/d/1H9yFZHh82ab7gZ2eOCvrMcIVLyManUJO/view?usp=drivesdk) | [并排图](comparisons/autohaven-old_cabin-compare.png) |
 | 奥托海文 | cottage | [图](../../../apps/web/public/assets/mobile/rooms/cottage.webp) | 66560 | [原图](https://drive.google.com/file/d/1H9yFZHh82ab7gZ2eOCvrMcIVLyManUJO/view?usp=drivesdk) | [并排图](comparisons/autohaven-cottage-compare.png) |
+
+
+## 地图选图封面
+
+封面以完整地图板的场景素材为参考，重新组合为 3:2 场景画，原图并无独立封面。已有两张封面的旧版保存在 `assets/maps/legacy/`。
+
+| 地图 | 新图（768×512） | 字节 | 参考地图板 | 并排图 |
+|---|---|---:|---|---|
+| macmillan_estate | [图](../../../apps/web/public/assets/maps/macmillan_estate_cover.webp) | 99142 | [原图](https://drive.google.com/file/d/1_eOEs2oUQpZRyWv_AwPpjLLr6QqRkd-b/view?usp=drivesdk) | [并排图](comparisons/macmillan_estate-cover-compare.png) |
+| autohaven_wreckers | [图](../../../apps/web/public/assets/maps/autohaven_wreckers_cover.webp) | 112858 | [原图](https://drive.google.com/file/d/1H9yFZHh82ab7gZ2eOCvrMcIVLyManUJO/view?usp=drivesdk) | [并排图](comparisons/autohaven_wreckers-cover-compare.png) |
+| crotus_prenn_asylum | [图](../../../apps/web/public/assets/maps/crotus_prenn_asylum_cover.webp) | 101332 | [原图](https://drive.google.com/file/d/1kl1dSZrdxUKaTeCvqT0nZR9yz245mp_A/view?usp=drivesdk) | [并排图](comparisons/crotus_prenn_asylum-cover-compare.png) |
+| ormond | [图](../../../apps/web/public/assets/maps/ormond_cover.webp) | 118390 | [原图](https://drive.google.com/file/d/1Cdiu6WEMUfeIYV2KqHyCiyf3qxvdsz4-/view?usp=drivesdk) | [并排图](comparisons/ormond-cover-compare.png) |
+
+## 基础版角色立牌与头像
+
+人物板只有半身图。全身立牌延展了腿部并去除印刷底板；头像从重绘立牌上半身构图。旧头像保存在 `assets/mobile/legacy-portraits/`。
+
+| 角色 | 头像（256×256） | 全身立牌（宽 512） | 字节（头像＋立牌） | 人物板原图 | 并排图 |
+|---|---|---|---:|---|---|
+| trapper | [图](../../../apps/web/public/assets/mobile/portrait_trapper.webp) | [图](../../../apps/web/public/assets/mobile/portrait-detail/portrait_trapper.webp) | 230240 | [原图](https://drive.google.com/file/d/1mfpwr5MA9gMzXSQWXozJkGR1DIlXej16/view?usp=drivesdk) | [并排图](comparisons/trapper-portrait-compare.png) |
+| wraith | [图](../../../apps/web/public/assets/mobile/portrait_wraith.webp) | [图](../../../apps/web/public/assets/mobile/portrait-detail/portrait_wraith.webp) | 156684 | [原图](https://drive.google.com/file/d/1olGrxFfb_Xc6SAAV5tzG6b1zGLchFf5K/view?usp=drivesdk) | [并排图](comparisons/wraith-portrait-compare.png) |
+| hillbilly | [图](../../../apps/web/public/assets/mobile/portrait_hillbilly.webp) | [图](../../../apps/web/public/assets/mobile/portrait-detail/portrait_hillbilly.webp) | 162312 | [原图](https://drive.google.com/file/d/19rf82pXnfvUapfcpe_30k621M9ExcOL_/view?usp=drivesdk) | [并排图](comparisons/hillbilly-portrait-compare.png) |
+| nurse | [图](../../../apps/web/public/assets/mobile/portrait_nurse.webp) | [图](../../../apps/web/public/assets/mobile/portrait-detail/portrait_nurse.webp) | 149642 | [原图](https://drive.google.com/file/d/1RUD2jV1n7l1MD4aDC1wjDUDjxxqGGcB-/view?usp=drivesdk) | [并排图](comparisons/nurse-portrait-compare.png) |
+| hag | [图](../../../apps/web/public/assets/mobile/portrait_hag.webp) | [图](../../../apps/web/public/assets/mobile/portrait-detail/portrait_hag.webp) | 161622 | [原图](https://drive.google.com/file/d/1XgXq3iPsoc7eiW1D3Bsn8ZiqMLMHW9G-/view?usp=drivesdk) | [并排图](comparisons/hag-portrait-compare.png) |
+| doctor | [图](../../../apps/web/public/assets/mobile/portrait_doctor.webp) | [图](../../../apps/web/public/assets/mobile/portrait-detail/portrait_doctor.webp) | 135780 | [原图](https://drive.google.com/file/d/1VdpeLLWAB1T4585ylbSStVHkVFmJUath/view?usp=drivesdk) | [并排图](comparisons/doctor-portrait-compare.png) |
+| dwight | [图](../../../apps/web/public/assets/mobile/portrait_dwight.webp) | [图](../../../apps/web/public/assets/mobile/portrait-detail/portrait_dwight.webp) | 180386 | [原图](https://drive.google.com/file/d/1CcS4XHktKA4-smUVBr9eARG7It7nIOfq/view?usp=drivesdk) | [并排图](comparisons/dwight-portrait-compare.png) |
+| meg | [图](../../../apps/web/public/assets/mobile/portrait_meg.webp) | [图](../../../apps/web/public/assets/mobile/portrait-detail/portrait_meg.webp) | 209084 | [原图](https://drive.google.com/file/d/1CqHNQw8oq4KfjrApWUxQgpTZqyojeZxz/view?usp=drivesdk) | [并排图](comparisons/meg-portrait-compare.png) |
+| claudette | [图](../../../apps/web/public/assets/mobile/portrait_claudette.webp) | [图](../../../apps/web/public/assets/mobile/portrait-detail/portrait_claudette.webp) | 140830 | [原图](https://drive.google.com/file/d/17NNKjlPErsEUyiJ_-7hAAWg8lIFfbLjB/view?usp=drivesdk) | [并排图](comparisons/claudette-portrait-compare.png) |
+| jake | [图](../../../apps/web/public/assets/mobile/portrait_jake.webp) | [图](../../../apps/web/public/assets/mobile/portrait-detail/portrait_jake.webp) | 163958 | [原图](https://drive.google.com/file/d/1MdRqMPFm3nCA5dNOPiEfO5hc6zTirTAb/view?usp=drivesdk) | [并排图](comparisons/jake-portrait-compare.png) |
+| nea | [图](../../../apps/web/public/assets/mobile/portrait_nea.webp) | [图](../../../apps/web/public/assets/mobile/portrait-detail/portrait_nea.webp) | 196810 | [原图](https://drive.google.com/file/d/1tK4Yl2BxJxctotFG04bwKHURCh6fr7y0/view?usp=drivesdk) | [并排图](comparisons/nea-portrait-compare.png) |
+| ace | [图](../../../apps/web/public/assets/mobile/portrait_ace.webp) | [图](../../../apps/web/public/assets/mobile/portrait-detail/portrait_ace.webp) | 174498 | [原图](https://drive.google.com/file/d/1y9T2Fkk0OZMFgPIFrxp9wLhse7TohfC0/view?usp=drivesdk) | [并排图](comparisons/ace-portrait-compare.png) |
+| feng_min | [图](../../../apps/web/public/assets/mobile/portrait_feng_min.webp) | [图](../../../apps/web/public/assets/mobile/portrait-detail/portrait_feng_min.webp) | 146800 | [原图](https://drive.google.com/file/d/1pDDGlIOM6PcJdWQcVTLGyVblbYNg5Oo7/view?usp=drivesdk) | [并排图](comparisons/feng_min-portrait-compare.png) |
+
+## 大厅封面
+
+素材库没有独立包装盒高清图；两张大厅画面以夹子鬼、德怀特、梅格的人物板为参考重新构图，未临摹包装盒版面。原图保存在 `assets/hall/legacy/`。
+
+| 用途 | 新图 | 字节 | 参考 | 并排图 |
+|---|---|---:|---|---|
+| 卡带（1200×900） | [图](../../../apps/web/public/assets/hall/dbd-card.webp) | 132298 | [夹子鬼人物板](https://drive.google.com/file/d/1mfpwr5MA9gMzXSQWXozJkGR1DIlXej16/view?usp=drivesdk)及德怀特、梅格人物板 | [并排图](comparisons/dbd-card-compare.png) |
+| 横幅（1600×900） | [图](../../../apps/web/public/assets/hall/dbd-wide.webp) | 143238 | [夹子鬼人物板](https://drive.google.com/file/d/1mfpwr5MA9gMzXSQWXozJkGR1DIlXej16/view?usp=drivesdk)及德怀特、梅格人物板 | [并排图](comparisons/dbd-wide-compare.png) |
+
+
+## 地图道具和标记（第一批）
+
+旧图保存在 `assets/mobile/legacy-tokens/`。原图的黑底已去掉，保留六边形或纸板外轮廓。
+
+| 标记 | 新图（256×256） | 字节 | 官方参考 | 并排图 |
+|---|---|---:|---|---|
+| generator | [图](../../../apps/web/public/assets/mobile/generator.webp) | 17620 | [原图](https://drive.google.com/file/d/1q1NL8L0yVmo0rx1EVKu4sz-Y0RH0_nSB/view?usp=drivesdk) | [并排图](comparisons/generator-token-compare.png) |
+| hook | [图](../../../apps/web/public/assets/mobile/hook.webp) | 11828 | [原图](https://drive.google.com/file/d/1THDzxsDsx0hYOE-YZYFHsBZc8RKBfyWn/view?usp=drivesdk) | [并排图](comparisons/hook-token-compare.png) |
+| crow | [图](../../../apps/web/public/assets/mobile/crow.webp) | 11104 | [原图](https://drive.google.com/file/d/1c1hlqV2QDKMuEUb0Y1vB1JOjA-zRAuyt/view?usp=drivesdk) | [并排图](comparisons/crow-token-compare.png) |
+| pallet | [图](../../../apps/web/public/assets/mobile/pallet.webp) | 14320 | [原图](https://drive.google.com/file/d/1dUl4lLbS-4HrPzDasBiwyT0892e9LCkp/view?usp=drivesdk) | [并排图](comparisons/pallet-token-compare.png) |
+| locker | [图](../../../apps/web/public/assets/mobile/locker.webp) | 14802 | [原图](https://drive.google.com/file/d/1oiSaVvPXUOS0e1kyg4b37cy_Mch7HhIF/view?usp=drivesdk) | [并排图](comparisons/locker-token-compare.png) |
+| chest | [图](../../../apps/web/public/assets/mobile/chest.webp) | 15450 | [原图](https://drive.google.com/file/d/1qUiR14SRGTiLOjuo5EJmmi4i3YHw9ewt/view?usp=drivesdk) | [并排图](comparisons/chest-token-compare.png) |
+| hex_totem | [图](../../../apps/web/public/assets/mobile/hex_totem.webp) | 12638 | [原图](https://drive.google.com/file/d/1Ya0KQH_Ob2z7o6OyGd0VsPNHBBzkbWxB/view?usp=drivesdk) | [并排图](comparisons/hex_totem-token-compare.png) |
+| exit_gate | [图](../../../apps/web/public/assets/mobile/exit_gate.webp) | 14288 | [原图](https://drive.google.com/file/d/1Og_ZptTQ7gZr9KvvYCrLJn_cb8F8q3x3/view?usp=drivesdk) | [并排图](comparisons/exit_gate-token-compare.png) |
+| wall | [图](../../../apps/web/public/assets/mobile/wall.webp) | 16694 | [原图](https://drive.google.com/file/d/1tlWvyi4z82Wb0CNL9hh0FqGvmwXEGtIN/view?usp=drivesdk) | [并排图](comparisons/wall-token-compare.png) |
+| madness | [图](../../../apps/web/public/assets/mobile/madness.webp) | 18330 | [原图](https://drive.google.com/file/d/18jGWf9wRDL6kvGvMxIFIMqtzb7wJh5JK/view?usp=drivesdk) | [并排图](comparisons/madness-token-compare.png) |
