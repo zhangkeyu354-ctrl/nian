@@ -30,7 +30,7 @@ describe("3–10人传话", () => {
       for (const p of ps)
         s = act(s, p.id, { type: "TEXT", text: "初题" + p.id }, 1100);
       expect(s.phase).toBe("TASK");
-      expect(s.steps).toBe(2 * Math.floor((n - 1) / 2));
+      expect(s.steps).toBe(n - 1);
       const seen = new Map<string, Set<string>>();
       for (let r = 1; r <= s.steps; r++) {
         const ids = new Set<string>();

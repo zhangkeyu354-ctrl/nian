@@ -158,7 +158,7 @@ export function TaleVerdict({
           </article>
           <b aria-hidden="true">→</b>
           <article>
-            <small>最后的答案</small>
+            <small>{last?.kind === "drawing" ? "最后一幅画" : "最后的答案"}</small>
             {last?.kind === "drawing" ? (
               <Thumb drawing={last.drawing} />
             ) : (
