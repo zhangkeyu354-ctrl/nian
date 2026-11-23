@@ -113,3 +113,51 @@
 | exit_gate | [图](../../../apps/web/public/assets/mobile/exit_gate.webp) | 14288 | [原图](https://drive.google.com/file/d/1Og_ZptTQ7gZr9KvvYCrLJn_cb8F8q3x3/view?usp=drivesdk) | [并排图](comparisons/exit_gate-token-compare.png) |
 | wall | [图](../../../apps/web/public/assets/mobile/wall.webp) | 16694 | [原图](https://drive.google.com/file/d/1tlWvyi4z82Wb0CNL9hh0FqGvmwXEGtIN/view?usp=drivesdk) | [并排图](comparisons/wall-token-compare.png) |
 | madness | [图](../../../apps/web/public/assets/mobile/madness.webp) | 18330 | [原图](https://drive.google.com/file/d/18jGWf9wRDL6kvGvMxIFIMqtzb7wJh5JK/view?usp=drivesdk) | [并排图](comparisons/madness-token-compare.png) |
+| bear_trap | [图](../../../apps/web/public/assets/mobile/bear_trap.webp) | 22004 | [原图](https://drive.google.com/file/d/1vRTijX58M27ZmYk1vw5nelCGBHUo3CGe/view?usp=drivesdk) | [并排图](comparisons/bear_trap-token-compare.png) |
+| phantasm | [图](../../../apps/web/public/assets/mobile/phantasm.webp) | 23212 | [原图](https://drive.google.com/file/d/1RAO7eqQqjC-eHgAq1RMOXDVNGFV4iFNC/view?usp=drivesdk) | [并排图](comparisons/phantasm-token-compare.png) |
+| entity | [图](../../../apps/web/public/assets/mobile/entity.webp) | 9668 | [原图](https://drive.google.com/file/d/13zQqWV4yFgqMpwxoHV9nuxxI-0mjC6bl/view?usp=drivesdk) | [并排图](comparisons/entity-token-compare.png) |
+| brand_lantern | [图](../../../apps/web/public/assets/mobile/brand_lantern.webp) | 10488 | [原图](https://drive.google.com/file/d/1SSkuES_GtdbWMJAwoqLVW5F0DhcarXVH/view?usp=drivesdk) | [并排图](comparisons/brand_lantern-token-compare.png) |
+| bloodpoint | [图](../../../apps/web/public/assets/mobile/bloodpoint.webp) | 12670 | [原图](https://drive.google.com/file/d/1sY0jOHoBa0Yi6KOJ3D3oMjXnBT3YLUbZ/view?usp=drivesdk) | [并排图](comparisons/bloodpoint-token-compare.png) |
+| generator_progress | [图](../../../apps/web/public/assets/mobile/generator_progress.webp) | 13812 | [原图](https://drive.google.com/file/d/1oIQHriyB7_yND7XNpaZaCeNMmGZ6TfxE/view?usp=drivesdk) | [并排图](comparisons/generator_progress-token-compare.png) |
+
+
+## 基础物品图案
+
+以下替换了游戏使用的十张物品小图，以物品卡上方的白色印刷图案重新画成透明背景图；整张中文卡面尚未完成。旧图保存在 `assets/items/legacy/`。
+
+| 物品 | 新图（256×256） | 字节 | 官方参考 | 并排图 |
+|---|---|---:|---|---|
+| flashlight | [图](../../../apps/web/public/assets/items/flashlight.webp) | 17126 | [原图](https://drive.google.com/file/d/1wQlI9LMAeosk9DVtYOii4cDIUrconjUg/view?usp=drivesdk) | [并排图](comparisons/flashlight-item-compare.png) |
+| first_aid_kit | [图](../../../apps/web/public/assets/items/first_aid_kit.webp) | 19252 | [原图](https://drive.google.com/file/d/1Hwn_e0Ldm9v8AMKm00_DA3cP_cXW2Z-e/view?usp=drivesdk) | [并排图](comparisons/first_aid_kit-item-compare.png) |
+| toolbox | [图](../../../apps/web/public/assets/items/toolbox.webp) | 18440 | [原图](https://drive.google.com/file/d/1hfQaZPjLklFroJ9tsV9YUEzDAhrWvscf/view?usp=drivesdk) | [并排图](comparisons/toolbox-item-compare.png) |
+| commodious_toolbox | [图](../../../apps/web/public/assets/items/commodious_toolbox.webp) | 19570 | [原图](https://drive.google.com/file/d/1gn_smc9H8z58SZbP3FTusifxoCQQULiN/view?usp=drivesdk) | [并排图](comparisons/commodious_toolbox-item-compare.png) |
+| rainbow_map | [图](../../../apps/web/public/assets/items/rainbow_map.webp) | 18134 | [原图](https://drive.google.com/file/d/1jj5x_0nBk7Y7nyt6s_irbF6cQBvQarDa/view?usp=drivesdk) | [并排图](comparisons/rainbow_map-item-compare.png) |
+| map | [图](../../../apps/web/public/assets/items/map.webp) | 17002 | [原图](https://drive.google.com/file/d/19wVINfwLw03L7iLukIufLx3yqDRGVu-t/view?usp=drivesdk) | [并排图](comparisons/map-item-compare.png) |
+| dull_key | [图](../../../apps/web/public/assets/items/dull_key.webp) | 17584 | [原图](https://drive.google.com/file/d/1jQsu54hA5bNHpM7RLGniADdNUMc0IkRo/view?usp=drivesdk) | [并排图](comparisons/dull_key-item-compare.png) |
+| skeleton_key | [图](../../../apps/web/public/assets/items/skeleton_key.webp) | 16758 | [原图](https://drive.google.com/file/d/1Vu26ImjATvmuaQpvsbOf9pmSL2p5BbHj/view?usp=drivesdk) | [并排图](comparisons/skeleton_key-item-compare.png) |
+| broken_key | [图](../../../apps/web/public/assets/items/broken_key.webp) | 22064 | [原图](https://drive.google.com/file/d/1Tltl89fc9Y0kMxzZCO51fl6PHx_3Smdq/view?usp=drivesdk) | [并排图](comparisons/broken_key-item-compare.png) |
+| firecracker | [图](../../../apps/web/public/assets/items/firecracker.webp) | 22132 | [原图](https://drive.google.com/file/d/16I-T17oMBFW8HLlw9IdGjj2x61CdjgNr/view?usp=drivesdk) | [并排图](comparisons/firecracker-item-compare.png) |
+
+
+## 卡背与骰面
+
+这四种卡背与两种骰子图集已重绘；目前为新增资产，尚未接入游戏卡牌组件。完整中文卡面仍待制作。
+
+| 类别 | 新图 | 字节 | 官方参考 | 并排图 |
+|---|---|---:|---|---|
+| movement 卡背（256×337） | [图](../../../apps/web/public/assets/cards/movement_back.webp) | 20402 | [原图](https://drive.google.com/file/d/1qUmqVw6ZjN84S3ccKFDlxlT1gB1-1J8l/view?usp=drivesdk) | [并排图](comparisons/movement-card-back-compare.png) |
+| killer 卡背（256×337） | [图](../../../apps/web/public/assets/cards/killer_back.webp) | 22412 | [原图](https://drive.google.com/file/d/1ZaVnTfUQZvIaiUMohq8-ILK_FnjRUbnB/view?usp=drivesdk) | [并排图](comparisons/killer-card-back-compare.png) |
+| item 卡背（256×337） | [图](../../../apps/web/public/assets/cards/item_back.webp) | 23508 | [原图](https://drive.google.com/file/d/1GynSUeYlwxLRTzggBJ5NqaHeSCAh22Gd/view?usp=drivesdk) | [并排图](comparisons/item-card-back-compare.png) |
+| survivor 卡背（256×337） | [图](../../../apps/web/public/assets/cards/survivor_back.webp) | 23436 | [原图](https://drive.google.com/file/d/14mBBF6cCcIP3G0Og5ECYeZPmjQfUwqXX/view?usp=drivesdk) | [并排图](comparisons/survivor-card-back-compare.png) |
+| skill 骰面 1（128×128） | [图](../../../apps/web/public/assets/dice/skill_1.webp) | 462 | [原图](https://drive.google.com/file/d/1rf6l7o-WqmlhQICCg6YtMMKM1cphrM9f/view?usp=drivesdk) | [并排图](comparisons/skill-1-die-compare.png) |
+| skill 骰面 2（128×128） | [图](../../../apps/web/public/assets/dice/skill_2.webp) | 1096 | [原图](https://drive.google.com/file/d/1rf6l7o-WqmlhQICCg6YtMMKM1cphrM9f/view?usp=drivesdk) | [并排图](comparisons/skill-2-die-compare.png) |
+| skill 骰面 3（128×128） | [图](../../../apps/web/public/assets/dice/skill_3.webp) | 1414 | [原图](https://drive.google.com/file/d/1rf6l7o-WqmlhQICCg6YtMMKM1cphrM9f/view?usp=drivesdk) | [并排图](comparisons/skill-3-die-compare.png) |
+| skill 骰面 4（128×128） | [图](../../../apps/web/public/assets/dice/skill_4.webp) | 4814 | [原图](https://drive.google.com/file/d/1rf6l7o-WqmlhQICCg6YtMMKM1cphrM9f/view?usp=drivesdk) | [并排图](comparisons/skill-4-die-compare.png) |
+| skill 骰面 5（128×128） | [图](../../../apps/web/public/assets/dice/skill_5.webp) | 744 | [原图](https://drive.google.com/file/d/1rf6l7o-WqmlhQICCg6YtMMKM1cphrM9f/view?usp=drivesdk) | [并排图](comparisons/skill-5-die-compare.png) |
+| skill 骰面 6（128×128） | [图](../../../apps/web/public/assets/dice/skill_6.webp) | 1596 | [原图](https://drive.google.com/file/d/1rf6l7o-WqmlhQICCg6YtMMKM1cphrM9f/view?usp=drivesdk) | [并排图](comparisons/skill-6-die-compare.png) |
+| danger 骰面 1（128×128） | [图](../../../apps/web/public/assets/dice/danger_1.webp) | 2608 | [原图](https://drive.google.com/file/d/1ChAYjojQSkgtmG2mjbKGAcRMOcwUJfdX/view?usp=drivesdk) | [并排图](comparisons/danger-1-die-compare.png) |
+| danger 骰面 2（128×128） | [图](../../../apps/web/public/assets/dice/danger_2.webp) | 3016 | [原图](https://drive.google.com/file/d/1ChAYjojQSkgtmG2mjbKGAcRMOcwUJfdX/view?usp=drivesdk) | [并排图](comparisons/danger-2-die-compare.png) |
+| danger 骰面 3（128×128） | [图](../../../apps/web/public/assets/dice/danger_3.webp) | 2628 | [原图](https://drive.google.com/file/d/1ChAYjojQSkgtmG2mjbKGAcRMOcwUJfdX/view?usp=drivesdk) | [并排图](comparisons/danger-3-die-compare.png) |
+| danger 骰面 4（128×128） | [图](../../../apps/web/public/assets/dice/danger_4.webp) | 3160 | [原图](https://drive.google.com/file/d/1ChAYjojQSkgtmG2mjbKGAcRMOcwUJfdX/view?usp=drivesdk) | [并排图](comparisons/danger-4-die-compare.png) |
+| danger 骰面 5（128×128） | [图](../../../apps/web/public/assets/dice/danger_5.webp) | 3006 | [原图](https://drive.google.com/file/d/1ChAYjojQSkgtmG2mjbKGAcRMOcwUJfdX/view?usp=drivesdk) | [并排图](comparisons/danger-5-die-compare.png) |
+| danger 骰面 6（128×128） | [图](../../../apps/web/public/assets/dice/danger_6.webp) | 3236 | [原图](https://drive.google.com/file/d/1ChAYjojQSkgtmG2mjbKGAcRMOcwUJfdX/view?usp=drivesdk) | [并排图](comparisons/danger-6-die-compare.png) |
