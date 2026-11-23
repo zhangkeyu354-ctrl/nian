@@ -1,6 +1,6 @@
-# 黎明杀机新地图房间美术清单
+# 黎明杀机美术清单
 
-当前只生成两张待补地图的 20 张房间图，**尚未接入可选地图**。输入为用户提供的地图参考图中的各房间画面；输出均由图像生成工具重新绘制，再按游戏需要调整为 600×400 WebP。对比图左侧是参考图的内部裁图，右侧是重新绘制的成品；对比证据不作为游戏图片使用。
+下表先列两张待补地图的 20 张房间图，**尚未接入可选地图**；后续章节列现有地图和其他资源。输入为用户提供的地图参考图中的各房间画面；输出均由图像生成工具重新绘制，再按游戏需要调整为 600×400 WebP。对比图左侧是参考图的内部裁图，右侧是重新绘制的成品；对比证据不作为游戏图片使用。克洛普瑞恩的身份按用户裁定由低清 `crotus.jpg` 顶栏确认，`CrotusRecreated.png` 顶栏冲突已记录，高清图仅用于场景画面参考。
 
 | 地图 | 房间 | 成品 | 字节 | 参考素材 | 对比图 |
 | --- | --- | --- | ---: | --- | --- |
@@ -30,6 +30,7 @@
 ## 现有地图重绘（第一批）
 
 旧图保存在 `apps/web/public/assets/mobile/rooms/legacy/`，可回退。
+电脑端同名的 21 张旧房间图也已替换为表中的新版图；旧版保存在 `apps/web/public/assets/desktop/rooms/legacy/`。尺寸检查脚本逐字节核对电脑端与手机端的新图一致。
 
 | 地图 | 房间 | 新图 | 字节 | 参考原图 | 并排图 |
 |---|---|---|---:|---|---|
@@ -161,3 +162,21 @@
 | danger 骰面 4（128×128） | [图](../../../apps/web/public/assets/dice/danger_4.webp) | 3160 | [原图](https://drive.google.com/file/d/1ChAYjojQSkgtmG2mjbKGAcRMOcwUJfdX/view?usp=drivesdk) | [并排图](comparisons/danger-4-die-compare.png) |
 | danger 骰面 5（128×128） | [图](../../../apps/web/public/assets/dice/danger_5.webp) | 3006 | [原图](https://drive.google.com/file/d/1ChAYjojQSkgtmG2mjbKGAcRMOcwUJfdX/view?usp=drivesdk) | [并排图](comparisons/danger-5-die-compare.png) |
 | danger 骰面 6（128×128） | [图](../../../apps/web/public/assets/dice/danger_6.webp) | 3236 | [原图](https://drive.google.com/file/d/1ChAYjojQSkgtmG2mjbKGAcRMOcwUJfdX/view?usp=drivesdk) | [并排图](comparisons/danger-6-die-compare.png) |
+
+
+## 中文物品卡正面
+
+以英文字体卡的版面和游戏中现有 `ITEM_DATA.json` 中文字样重新绘制；未取得中文版实物扫描，因此文字是否逐字等同印刷版仍为 `CHECK_REQUIRED`。当前游戏物品面板仍为组件排版，图片为新增交付资产。
+
+| 物品 | 新图（256×358） | 字节 | 官方英文卡参考 | 并排图 |
+|---|---|---:|---|---|
+| flashlight | [图](../../../apps/web/public/assets/cards/items/flashlight.webp) | 8480 | [原图](https://drive.google.com/file/d/1wQlI9LMAeosk9DVtYOii4cDIUrconjUg/view?usp=drivesdk) | [并排图](comparisons/flashlight-item-card-compare.png) |
+| first_aid_kit | [图](../../../apps/web/public/assets/cards/items/first_aid_kit.webp) | 10232 | [原图](https://drive.google.com/file/d/1Hwn_e0Ldm9v8AMKm00_DA3cP_cXW2Z-e/view?usp=drivesdk) | [并排图](comparisons/first_aid_kit-item-card-compare.png) |
+| toolbox | [图](../../../apps/web/public/assets/cards/items/toolbox.webp) | 8682 | [原图](https://drive.google.com/file/d/1hfQaZPjLklFroJ9tsV9YUEzDAhrWvscf/view?usp=drivesdk) | [并排图](comparisons/toolbox-item-card-compare.png) |
+| commodious_toolbox | [图](../../../apps/web/public/assets/cards/items/commodious_toolbox.webp) | 11148 | [原图](https://drive.google.com/file/d/1gn_smc9H8z58SZbP3FTusifxoCQQULiN/view?usp=drivesdk) | [并排图](comparisons/commodious_toolbox-item-card-compare.png) |
+| rainbow_map | [图](../../../apps/web/public/assets/cards/items/rainbow_map.webp) | 10892 | [原图](https://drive.google.com/file/d/1jj5x_0nBk7Y7nyt6s_irbF6cQBvQarDa/view?usp=drivesdk) | [并排图](comparisons/rainbow_map-item-card-compare.png) |
+| map | [图](../../../apps/web/public/assets/cards/items/map.webp) | 10122 | [原图](https://drive.google.com/file/d/19wVINfwLw03L7iLukIufLx3yqDRGVu-t/view?usp=drivesdk) | [并排图](comparisons/map-item-card-compare.png) |
+| dull_key | [图](../../../apps/web/public/assets/cards/items/dull_key.webp) | 9040 | [原图](https://drive.google.com/file/d/1jQsu54hA5bNHpM7RLGniADdNUMc0IkRo/view?usp=drivesdk) | [并排图](comparisons/dull_key-item-card-compare.png) |
+| skeleton_key | [图](../../../apps/web/public/assets/cards/items/skeleton_key.webp) | 8952 | [原图](https://drive.google.com/file/d/1Vu26ImjATvmuaQpvsbOf9pmSL2p5BbHj/view?usp=drivesdk) | [并排图](comparisons/skeleton_key-item-card-compare.png) |
+| broken_key | [图](../../../apps/web/public/assets/cards/items/broken_key.webp) | 9560 | [原图](https://drive.google.com/file/d/1Tltl89fc9Y0kMxzZCO51fl6PHx_3Smdq/view?usp=drivesdk) | [并排图](comparisons/broken_key-item-card-compare.png) |
+| firecracker | [图](../../../apps/web/public/assets/cards/items/firecracker.webp) | 10696 | [原图](https://drive.google.com/file/d/16I-T17oMBFW8HLlw9IdGjj2x61CdjgNr/view?usp=drivesdk) | [并排图](comparisons/firecracker-item-card-compare.png) |

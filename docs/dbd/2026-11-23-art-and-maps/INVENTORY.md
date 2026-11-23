@@ -4,20 +4,20 @@
 
 ## 地图结论
 
-素材有四张完整地图图像：麦克米伦、奥托海文，以及两张身份仍待核对的新图；当前游戏只有前两张。素材还含四张低分辨率地图 JPG。`CrotusRecreated.png` 顶栏印 **ORMOND**，`crotus.jpg` 顶栏印 **CROTUS PRENN ASYLUM**。按用户“以图内顶栏为准”的裁定，不能擅自把重制图顶栏判为误印；目前两者冲突，`Crotus` 只作为未开放候选 ID，地图身份 `CHECK_REQUIRED`。路线、道具和出生骰面也仍需逐项核对。
+素材有四张完整地图图像：麦克米伦、奥托海文、克洛普瑞恩与奥蒙德；当前游戏只有前两张。素材还含四张低分辨率地图 JPG。`CrotusRecreated.png` 顶栏印 **ORMOND**，`crotus.jpg` 顶栏印 **CROTUS PRENN ASYLUM**。用户于 2026-11-23 明确裁定：以低清照片确认克洛普瑞恩，高清图只作场景参考，其顶栏冲突保留记录。路线、道具和出生骰面仍需逐项核对。
 
 | 地图 | 游戏现状 | 房间标题（按参考图逐一读取） |
 | --- | --- | --- |
 | MacMillan Estate | 已有 | 现有 `MAP_DATA.json` 的 11 个房间，仍需与素材逐项比对 |
 | Autohaven Wreckers | 已有 | 现有 `MAP_DATA.json` 的 10 个房间，仍需与素材逐项比对 |
-| Crotus Prenn Asylum（暂定，身份待核对） | 未接入 | Shack、Dark Wood、Courtyard、Treatment Hall、Hallway、Carnival Entrance、Greenhouse、Receiving Desk、Ruins、Outer Garden（10 个） |
+| Crotus Prenn Asylum | 未接入 | Shack、Dark Wood、Courtyard、Treatment Hall、Hallway、Carnival Entrance、Greenhouse、Receiving Desk、Ruins、Outer Garden（10 个） |
 | Ormond | 未接入 | Picnic Area、Guest Rooms、Balcony、Storage、Chalet、Rentals、Wooded Area、Ski Shack、Basement、Entryway（10 个） |
 
 | 分类 | 文件名 | 对应游戏对象 | 大小（B） | 参考价值／核对状态 | 来源 |
 | --- | --- | --- | ---: | --- | --- |
 | 地图 | crotus.jpg | 克洛普瑞恩疯人院 | 147477 | 只能看大概 | [文件](https://drive.google.com/file/d/1mfAUnbFZoBInUTjdtZxEBA3nIwIjv_EM/view?usp=drivesdk) |
 | 地图 | ormond.jpg | 奥蒙德 | 149208 | 只能看大概 | [文件](https://drive.google.com/file/d/16Vza_XXP0NVjF8xxOaKkYxnH6WUkMsmz/view?usp=drivesdk) |
-| 地图 | CrotusRecreated.png | 顶栏 ORMOND、身份与文件名冲突 | 5574362 | 细节清楚；地图身份 CHECK_REQUIRED | [文件](https://drive.google.com/file/d/1kl1dSZrdxUKaTeCvqT0nZR9yz245mp_A/view?usp=drivesdk) |
+| 地图 | CrotusRecreated.png | 克洛普瑞恩场景参考；顶栏 ORMOND 与低清照片冲突 | 5574362 | 细节清楚；身份按用户裁定采用低清照片标题 | [文件](https://drive.google.com/file/d/1kl1dSZrdxUKaTeCvqT0nZR9yz245mp_A/view?usp=drivesdk) |
 | 地图 | OrmondRecreated.png | 奥蒙德 | 7115450 | 细节清楚；路线仍需转录 | [文件](https://drive.google.com/file/d/1Cdiu6WEMUfeIYV2KqHyCiyf3qxvdsz4-/view?usp=drivesdk) |
 | 地图 | AutohavenMapRecreated.png | 奥托海文废车场 | 5939369 | 细节清楚；路线仍需转录 | [文件](https://drive.google.com/file/d/1H9yFZHh82ab7gZ2eOCvrMcIVLyManUJO/view?usp=drivesdk) |
 | 地图 | MacMillanRecreated.png | 麦克米伦庄园 | 5988314 | 细节清楚；路线仍需转录 | [文件](https://drive.google.com/file/d/1_eOEs2oUQpZRyWv_AwPpjLLr6QqRkd-b/view?usp=drivesdk) |

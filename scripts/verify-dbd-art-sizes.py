@@ -43,6 +43,14 @@ for map_name, rooms in ROOMS.items():
 count = sum(map(len, ROOMS.values()))
 print(f"DBD_ART_SIZES_PASS rooms={count} size=600x400 WebP total={total}B over_300KB=0 comparisons={count}")
 
+desktop_rooms = ROOT / "apps/web/public/assets/desktop/rooms"
+for map_name in ("macmillan", "autohaven"):
+    for room in ROOMS[map_name]:
+        filename = f"{room}.webp"
+        assert (desktop_rooms / filename).read_bytes() == (ASSETS / filename).read_bytes(), f"desktop still uses old art: {filename}"
+        assert (desktop_rooms / "legacy" / filename).is_file(), f"missing desktop backup: {filename}"
+print("DBD_ART_SIZES_PASS desktop_replacements=21 backups=21")
+
 cover_dir = ROOT / "apps/web/public/assets/maps"
 cover_names = ("macmillan_estate", "autohaven_wreckers", "crotus_prenn_asylum", "ormond")
 cover_total = 0
@@ -132,6 +140,16 @@ for name in ("movement", "killer", "item", "survivor"):
         assert image.format == "WEBP" and image.size == (256, 337), f"wrong card back: {asset}"
     assert asset.stat().st_size < 300_000
 print("DBD_ART_SIZES_PASS card_backs=4 size=256x337 WebP over_300KB=0 comparisons=4")
+
+item_card_dir = card_dir / "items"
+for name in items:
+    asset = item_card_dir / f"{name}.webp"
+    evidence = EVIDENCE / f"{name}-item-card-compare.png"
+    assert asset.is_file() and evidence.is_file(), f"missing item card: {name}"
+    with Image.open(asset) as image:
+        assert image.format == "WEBP" and image.size == (256, 358), f"wrong item card: {asset}"
+    assert asset.stat().st_size < 300_000
+print("DBD_ART_SIZES_PASS item_card_fronts=10 size=256x358 WebP over_300KB=0 comparisons=10")
 
 dice_dir = ROOT / "apps/web/public/assets/dice"
 for kind in ("skill", "danger"):

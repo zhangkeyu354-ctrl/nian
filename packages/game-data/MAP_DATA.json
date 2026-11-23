@@ -17,7 +17,7 @@
       "crotus.jpg / CrotusRecreated.png：地图标题及全图"
     ],
     "status": "CHECK_REQUIRED",
-    "identity_status": "CHECK_REQUIRED",
+    "identity_status": "CONFIRMED",
     "nodes": [
       {
         "id": "shack",
@@ -253,7 +253,7 @@
       "ormond.jpg / OrmondRecreated.png：地图标题及全图"
     ],
     "status": "CHECK_REQUIRED",
-    "identity_status": "CHECK_REQUIRED",
+    "identity_status": "CONFIRMED",
     "nodes": [
       {
         "id": "picnic_area",
