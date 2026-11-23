@@ -41,12 +41,13 @@ jobs:
           if [ -z "$GREEN" ]; then echo "还没有通过测试的版本"; exit 0; fi
           H=$(curl -s -m 90 https://dbd-boardgame-8qky.onrender.com/api/health || true)
           V=$(echo "$H" | sed -n 's/.*"version":"\([^"]*\)".*/\1/p')
-          ON=$(echo "$H" | sed -n 's/.*"online":\([0-9]*\).*/\1/p')
+          ON=$(echo "$H" | sed -n 's/.*"active":\([0-9]*\).*/\1/p')
+          [ -z "$ON" ] && ON=$(echo "$H" | sed -n 's/.*"online":\([0-9]*\).*/\1/p')
           echo "live=$V green=${GREEN:0:7} online=${ON:-unknown}"
           if [ -z "$V" ]; then echo "网站没响应，等下次"; exit 0; fi
           if [ "$V" = "${GREEN:0:7}" ]; then echo "已是最新的通过版本"; exit 0; fi
           if git cat-file -e "$V^{commit}" 2>/dev/null && ! git merge-base --is-ancestor "$V" "$GREEN"; then echo "线上版本比通过版本还新（或不在同一条线上），不动"; exit 0; fi
-          if [ -z "$ON" ] || [ "$ON" != "0" ]; then echo "有 ${ON:-?} 人在玩，等下次再部署"; exit 0; fi
+          if [ -z "$ON" ] || [ "$ON" != "0" ]; then echo "有 ${ON:-?} 人在玩（30 分钟内有操作），等下次再部署"; exit 0; fi
           echo "没人在玩，部署 ${GREEN:0:7}"
           SEP="?"; case "$HOOK" in *\?*) SEP="&";; esac
           curl -s -m 30 -X POST "${HOOK}${SEP}ref=${GREEN}" -o /dev/null -w "deploy hook HTTP %{http_code}\n"

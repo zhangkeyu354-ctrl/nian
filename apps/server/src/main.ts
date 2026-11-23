@@ -94,6 +94,8 @@ const http = createServer((req, res) => {
         online: io.engine.clientsCount,
         // 正在玩什么：每个有人连着的房间一行（只给游戏名和人数，不给房间号和昵称）
         playing: livePlaying(),
+        // 30 分钟内有人操作过的房间里连着的人数：自动部署看这个，挂着不动的页面不再挡住更新
+        active: livePlaying().filter((p) => p.idleMinutes < 30).reduce((n, p) => n + p.players, 0),
         assetCdn: { ok: ASSET_CDN.ok, local: ASSET_CDN.local.slice(0, 12), remote: ASSET_CDN.remote.slice(0, 12), error: ASSET_CDN.error },
         rooms: store.rooms.size,
         maRooms: maStore.rooms.size,
@@ -272,6 +274,14 @@ if (ASSET_CDN.base !== "off") {
 }
 const GZIP_CACHE = new Map<string, { etag: string; body: Buffer }>();
 const io = new Server(http, { cors: { origin: true } });
+// 记录每个房间最后一次有人操作的时间（任何游戏事件都算），给健康检查判断「挂着没人玩」
+const lastActive = new Map<string, number>();
+io.on("connection", (socket) => {
+  socket.onAny(() => {
+    const now = Date.now();
+    for (const r of socket.rooms) if (r !== socket.id) lastActive.set(r, now);
+  });
+});
 // Each enabled game installs one connection/disconnect handler. Keep a finite
 // budget above the current multi-game count instead of disabling leak warnings.
 const GAME_LISTENER_LIMIT = 18;
@@ -562,6 +572,7 @@ http.listen(PORT, HOST, async () => {
   }
 });
 
+const STARTED_AT = Date.now();
 // 健康检查用：按 Socket.IO 房间统计「哪个游戏的房间里连着几个人」
 const GAME_PREFIX: Record<string, string> = {
   bf: "魔王试炼", cn: "行动代号", cs: "犯罪现场", dm: "请留遗言", dp: "绘画派对", du: "反转王牌", kb: "卡里巴湖",
@@ -569,11 +580,14 @@ const GAME_PREFIX: Record<string, string> = {
   xb: "瞎掰王", wt: "女巫镇",
 };
 function livePlaying() {
-  const out: Array<{ game: string; players: number }> = [];
+  const out: Array<{ game: string; players: number; idleMinutes: number }> = [];
+  const now = Date.now();
   for (const [name, members] of io.sockets.adapter.rooms) {
     if (io.sockets.sockets.has(name)) continue; // 每个连接自带的私有房间
     const m = /^([a-z]{2}):/.exec(name);
-    out.push({ game: m ? GAME_PREFIX[m[1]] ?? m[1] : "黎明杀机", players: members.size });
+    // 服务器重启后还没人操作过的房间，从重启时刻算起
+    const idleMinutes = Math.floor((now - (lastActive.get(name) ?? STARTED_AT)) / 60000);
+    out.push({ game: m ? GAME_PREFIX[m[1]] ?? m[1] : "黎明杀机", players: members.size, idleMinutes });
   }
   return out.sort((a, b) => b.players - a.players);
 }
