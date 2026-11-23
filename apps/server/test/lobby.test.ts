@@ -145,6 +145,15 @@ describe("房间：地图与选角色", () => {
     }
     expect(mapsSeen.size).toBe(4);
   });
+  it("房主可以指定地图，开局用指定的地图；非房主不能改", () => {
+    const { r } = room(5, 3);
+    const t = fill(r, 5);
+    expect(() => r.lobby(t[1], { type: "SET_MAP", mapId: "ormond" })).toThrow();
+    r.lobby(t[0], { type: "SET_MAP", mapId: "ormond" });
+    t.forEach((x, i) => r.lobby(x, { type: "SET_SIDE", side: i === 0 ? "killer" : "survivor" }));
+    r.lobby(t[0], { type: "START" });
+    expect(r.file.draft!.mapId).toBe("ormond");
+  });
   it("选项只发给本人；被选走的逃生者会从别人的选项里换掉；选完自动开局", () => {
     for (let seed = 1; seed < 50; seed++) {
       const { r } = room(5, seed);

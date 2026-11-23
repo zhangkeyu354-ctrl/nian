@@ -69,6 +69,8 @@ interface RoomFile {
   mode: "lobby" | "preset";
   stage: "lobby" | "draft" | "game";
   playerCount: 3 | 4 | 5;
+  /** 房主选的地图；没有或 "random" 时开局随机 */
+  mapChoice?: string;
   hostId: string | null;
   players: Player[];
   draft: { mapId: string; seed: number; killerPlayer: string; slots: Slot[] } | null;
@@ -142,6 +144,7 @@ export class Room {
       stage: f.stage,
       mode: f.mode,
       playerCount: f.playerCount,
+      mapChoice: f.mapChoice ?? "random",
       players: f.players.map((p) => ({
         playerId: p.playerId,
         name: p.name,
@@ -225,6 +228,13 @@ export class Room {
         f.playerCount = n;
         return;
       }
+      case "SET_MAP": {
+        if (!host) throw new Error("HOST_ONLY");
+        if (f.stage !== "lobby") throw new Error("ALREADY_STARTED");
+        if (action.mapId !== "random" && !MAPS.includes(action.mapId)) throw new Error("BAD_ACTION");
+        f.mapChoice = action.mapId;
+        return;
+      }
       case "START_PRACTICE": {
         if (!host) throw new Error("HOST_ONLY");
         if (f.stage !== "lobby") throw new Error("ALREADY_STARTED");
@@ -297,7 +307,7 @@ export class Room {
     });
     for (const p of f.players) p.side = p === killer ? "killer" : "survivor";
     f.draft = {
-      mapId: pickOne(MAPS, rand),
+      mapId: f.mapChoice && MAPS.includes(f.mapChoice) ? f.mapChoice : pickOne(MAPS, rand),
       seed: rand(2 ** 31 - 2) + 1,
       killerPlayer: killer.playerId,
       slots,

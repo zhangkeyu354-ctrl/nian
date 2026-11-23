@@ -386,6 +386,19 @@ function LobbyRoom({
         )}
         {me.host ? (
           <>
+            <h2>地图（房主可改）</h2>
+            <div className="map-choices online-map-choices" data-testid="online-map-choices">
+              {[{ id: "random", name_zh: "随机" }, ...maps.maps].map((m) => (
+                <TapButton
+                  key={m.id}
+                  data-map-choice={m.id}
+                  aria-pressed={(l.mapChoice ?? "random") === m.id}
+                  onClick={() => act({ type: "SET_MAP", mapId: m.id })}
+                >
+                  <strong>{m.name_zh}</strong>
+                </TapButton>
+              ))}
+            </div>
             <h2>人数（房主可改）</h2>
             <CountPicker
               value={l.playerCount}
@@ -410,6 +423,8 @@ function LobbyRoom({
           </>
         ) : (
           <p className="muted">
+            地图：{(l.mapChoice ?? "random") === "random" ? "随机" : maps.maps.find((m) => m.id === l.mapChoice)?.name_zh}（房主选）
+            <br />
             {ready ? "等房主开始…" : "人到齐、都选好阵营后，由房主开始。"}
           </p>
         )}

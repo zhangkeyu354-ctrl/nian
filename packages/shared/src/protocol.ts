@@ -37,6 +37,8 @@ export interface LobbyInfo {
   /** preset：测试房间，座位预先固定，用旧的选座流程 */
   mode: "lobby" | "preset";
   playerCount: 3 | 4 | 5;
+  /** 房主选的地图，"random" 为随机 */
+  mapChoice: string;
   players: Array<{
     playerId: string;
     name: string | null;
@@ -87,6 +89,8 @@ export type LobbyAction =
   | { type: "SET_SIDE"; side: Side }
   | { type: "SET_VOLUNTEER"; volunteer: boolean }
   | { type: "SET_PLAYER_COUNT"; playerCount: 3 | 4 | 5 }
+  /** 房主选地图；"random" = 开局时随机 */
+  | { type: "SET_MAP"; mapId: string }
   | { type: "START_PRACTICE"; level: "easy" | "normal" }
   | { type: "START" }
   | { type: "PICK"; slotId: string; characterId: string };
