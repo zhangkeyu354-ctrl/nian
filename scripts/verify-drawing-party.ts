@@ -66,7 +66,7 @@ try {
         assert.equal((await snap()).view.theme, n % 2 ? "歌词" : undefined);
         for (let i = 0; i < n; i++)
           await action(i, { type: "TEXT", text: "秘密中文" + i });
-        for (let step = 1; step <= n - 1; step++) {
+        for (let step = 1; step <= 2 * Math.floor((n - 1) / 2); step++) {
           if (step % 2) {
             const inkEvents = clients.map(() => 0);
             clients.forEach((s, i) => s.on("dp:ink", () => inkEvents[i]++));

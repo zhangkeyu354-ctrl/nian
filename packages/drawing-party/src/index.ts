@@ -443,7 +443,7 @@ export function startGame(
     players: structuredClone(players),
     phase: mode === "tp" ? "THEME" : opt.categoryVote ? "CATEGORY" : "DRAW",
     step: 1,
-    steps: players.length - 1,
+    steps: 2 * Math.floor((players.length - 1) / 2),
     turn: 0,
     deadline: now + 30000,
     done: [],
