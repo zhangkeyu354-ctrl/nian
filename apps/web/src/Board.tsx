@@ -62,6 +62,7 @@ export function Board({
   const settings = useSettings();
   const [expanded, setExpanded] = useState(false);
   const [overview, setOverview] = useState(false);
+  const [noStandee, setNoStandee] = useState<Set<string>>(() => new Set());
   const [toolsOpen, setToolsOpen] = useState(false);
   const [size, setSize] = useState({ width: W, height });
   const yScale = 1;
@@ -675,10 +676,10 @@ export function Board({
                       }}
                     >
                       <rect
-                        x={-tokenSize / 2 - 4}
-                        y={-tokenSize / 2 - 4}
-                        width={tokenSize + 8}
-                        height={tokenSize + 24}
+                        x={-tokenSize / 2 + 4}
+                        y={tokenSize / 2 - tokenSize * 2.3 - 6}
+                        width={tokenSize - 8}
+                        height={tokenSize * 2.3 + 30}
                         rx="8"
                         fill="transparent"
                         stroke={actionable.includes(a.id) ? "#e6d294" : "none"}
@@ -701,36 +702,39 @@ export function Board({
                         fill={actorColor(state, a.id)}
                         stroke={actorColor(state, a.id)}
                       />
-                      <circle
-                        className="actor-portrait-disc"
-                        cx="0"
-                        cy="0"
-                        r={tokenSize / 2 + 1}
-                        fill="url(#actor-disc)"
-                        stroke="#e1d6b8"
-                        strokeWidth="2"
-                      />
-                      <circle
-                        cx="0"
-                        cy="0"
-                        r={tokenSize / 2 + (a.id === state.killerId ? 4 : 2)}
-                        fill="none"
-                        stroke={actorColor(state, a.id)}
-                        strokeWidth={a.id === state.killerId ? 5 : 3.5}
-                        className={
-                          a.id === currentId ? "current-ring" : undefined
-                        }
-                      />
-                      <g
-                        transform={`translate(${-tokenSize / 2} ${-tokenSize / 2})`}
-                      >
-                        <Token token={a} size={tokenSize} />
-                      </g>
+                      {noStandee.has(a.asset) ? (
+                        <>
+                          <circle className="actor-portrait-disc" cx="0" cy="0" r={tokenSize / 2 + 1} fill="url(#actor-disc)" stroke="#e1d6b8" strokeWidth="2" />
+                          <circle cx="0" cy="0" r={tokenSize / 2 + (a.id === state.killerId ? 4 : 2)} fill="none" stroke={actorColor(state, a.id)} strokeWidth={a.id === state.killerId ? 5 : 3.5} className={a.id === currentId ? "current-ring" : undefined} />
+                          <g transform={`translate(${-tokenSize / 2} ${-tokenSize / 2})`}>
+                            <Token token={a} size={tokenSize} />
+                          </g>
+                        </>
+                      ) : (
+                        // 立牌（2026-11-23）：全身复刻立绘站在底座上，脚下有接触阴影和玩家颜色的底座边
+                        <g className={"actor-standee" + (a.wounded ? " is-wounded" : "") + (a.state === "hooked" || a.state === "carried" ? " is-down" : "")}>
+                          <ellipse cx="3" cy={tokenSize / 2 + 2} rx={tokenSize * 0.42} ry={tokenSize * 0.12} fill="#000" opacity=".55" />
+                          <ellipse cx="0" cy={tokenSize / 2 - 2} rx={tokenSize * 0.36} ry={tokenSize * 0.1} fill="#1a1f21" stroke={actorColor(state, a.id)} strokeWidth="3" />
+                          <image
+                            className="standee-img"
+                            href={`/assets/mobile/standee/${a.asset}.webp`}
+                            x={-tokenSize * 0.6}
+                            y={tokenSize / 2 - 4 - tokenSize * 2.3}
+                            width={tokenSize * 1.2}
+                            height={tokenSize * 2.3}
+                            preserveAspectRatio="xMidYMax meet"
+                            onError={() => setNoStandee((o) => new Set(o).add(a.asset))}
+                          />
+                          {a.id === currentId && (
+                            <ellipse className="current-ring" cx="0" cy={tokenSize / 2 - 2} rx={tokenSize * 0.44} ry={tokenSize * 0.14} fill="none" stroke={actorColor(state, a.id)} strokeWidth="3" />
+                          )}
+                        </g>
+                      )}
                       <text
-                        y={tokenSize / 2 + 19}
+                        y={tokenSize / 2 + 22}
                         textAnchor="middle"
                         fill={actorColor(state, a.id)}
-                        fontSize="14"
+                        fontSize="19"
                         fontWeight="700"
                         stroke="#071012"
                         strokeWidth="3"
