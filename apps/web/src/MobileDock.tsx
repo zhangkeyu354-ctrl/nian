@@ -442,7 +442,7 @@ export function MobileDock({
             KEEP: `${who}正在选择保留的骰子`,
             DOCTOR_SHOCK: `${who}正在决定：付血点还是承受电火花`,
             CARRY: "杀手正在选择搬运路线",
-            CARRY_REROUTE: "杀手正在改道",
+            CARRY_REROUTE: state.choice?.stepwise ? "杀手正在搬运：选下一步" : "杀手正在改道",
           } as Record<string, string>
         )[state.choice.kind] ?? `${who}正在选择`)
       : state.phase === "PLANNING"
@@ -710,6 +710,8 @@ export function MobileDock({
                       (p) => p.room === end && p.kind === "hook" && p.revealed && !p.removed &&
                         !Object.values(state.actors).some((a) => a.hookId === p.id),
                     );
+                    if (!route.length && diceCount > 0 && !free)
+                      return <p className="carry-hook ok">可以先不选路线：没掷出大成功后，再一步一步点房间走到钩子</p>;
                     return free ? (
                       <p className="carry-hook ok">终点「{roomName(state, end ?? "")}」有空钩子：没掷出大成功就能挂上</p>
                     ) : (

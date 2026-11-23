@@ -39,7 +39,7 @@ export function nowDoing(s: GameState): string {
       BONUS_CARD: `${who}选择奖励行动用的移动牌`,
       OPTIONAL_MOVE: `${who}决定是否移动`,
       CARRY: "杀手扛着逃生者，选择搬运路线",
-      CARRY_REROUTE: "杀手被鞭炮拦下，重新选路线",
+      CARRY_REROUTE: s.choice?.stepwise ? `杀手扛着逃生者，选下一步（还能走 ${s.choice.budget} 步）或停下` : "杀手被鞭炮拦下，重新选路线",
       PHANTASM: "妖巫的幻影被触发",
       PHANTASM_TARGET: "妖巫重新选择目标",
       MAP_REVEAL: `${who}用地图翻开道具`,

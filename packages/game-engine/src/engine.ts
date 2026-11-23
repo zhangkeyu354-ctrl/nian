@@ -680,6 +680,13 @@ function carryMove(s: GameState, j: Payload) {
     if (h) hook(s, v.id, h.id);
     else log(s, "ESCAPED", { actorId: v.id, reason: "no_hook" });
   };
+  // 杀手确认搬运时没有预先画路线：掷完骰（没大成功）后再一步一步选，可随时停下
+  if (!route.length && budget > 0 && j.stepwise) {
+    if (legalRoutes(s, k.room!, "killer", undefined, true).length)
+      s.choice = { kind: "CARRY_REROUTE", actorId: k.id, victimId: v.id, budget, stepwise: true };
+    else finish();
+    return;
+  }
   if (!route.length || budget <= 0) return finish();
   const [step, ...rest] = route;
   requireThat(
@@ -709,6 +716,7 @@ function carryMove(s: GameState, j: Payload) {
         victimId: v.id,
         budget,
         blocked: step.to,
+        ...(j.stepwise ? { stepwise: true } : {}),
       };
     else finish();
     return;
@@ -722,7 +730,7 @@ function carryMove(s: GameState, j: Payload) {
     { actorId: v.id, from, to: step.to, pathId: step.pathId, revealed: false },
     ["U02:Q01/Q08"],
   );
-  enqueue(s, { kind: "CARRY_MOVE", victimId: v.id, route: rest, budget: budget - 1 });
+  enqueue(s, { kind: "CARRY_MOVE", victimId: v.id, route: rest, budget: budget - 1, ...(j.stepwise ? { stepwise: true } : {}) });
 }
 function availableHook(s: GameState, room: string) {
   return s.props.find(
@@ -838,6 +846,7 @@ function resolveRoll(s: GameState) {
       victimId,
       route,
       budget: r.faces.length,
+      ...(route.length ? {} : { stepwise: true }),
     });
   } else throw new RuleError("CHECK_REQUIRED", `check kind ${r.kind}`);
 }
@@ -1458,7 +1467,7 @@ function select(s: GameState, c: Command) {
         ),
         "carry route blocked/reversed",
       );
-      enqueue(s, { kind: "CARRY_MOVE", victimId, route: [step], budget, reroute: true });
+      enqueue(s, { kind: "CARRY_MOVE", victimId, route: [step], budget, reroute: true, ...(choice.stepwise ? { stepwise: true } : {}) });
     }
   } else if (choice.kind === "REPLAN") {
     // 幽灵「穷追不舍」：被选中的逃生者从手牌中背面朝上放一张新牌

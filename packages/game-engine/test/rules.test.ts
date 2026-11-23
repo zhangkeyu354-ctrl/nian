@@ -341,6 +341,28 @@ describe("B01 and U02 state-machine regressions", () => {
         .every((p) => !p.revealed),
     ).toBe(true);
   });
+  it("R051 不预先选路线也能搬运：没掷出大成功后一步一步选，用完步数或停下才结算（不再原地挣脱）", () => {
+    let s = fixture();
+    s.turn!.actorId = "trapper";
+    s.actors.dwight.health = "wounded";
+    s.actors.dwight.woundedRound = 0;
+    for (const p of s.props) if (p.kind === "hook") p.room = "backlot";
+    s = act(s, { type: "INTERACT", actorId: "trapper", action: "pickup", targetId: "dwight" });
+    let mid: GameState | undefined;
+    for (let seed = 1; seed < 100 && !mid; seed++) {
+      const t = structuredClone(s);
+      t.rng = seed;
+      const r = act(t, { type: "SELECT", actorId: "trapper", dice: 2, route: [] });
+      if (r.choice?.kind === "CARRY_REROUTE") mid = r;
+    }
+    expect(mid?.choice).toMatchObject({ kind: "CARRY_REROUTE", stepwise: true, budget: 2 });
+    expect(mid!.events.some((e) => e.type === "ESCAPED")).toBe(false);
+    const one = act(mid!, { type: "SELECT", actorId: "trapper", pathId: "mm_p07", to: "foundry_lower_floor" });
+    expect(one.actors.dwight.room).toBe("foundry_lower_floor");
+    expect(one.choice).toMatchObject({ kind: "CARRY_REROUTE", stepwise: true, budget: 1 });
+    const stop = act(one, { type: "SELECT", actorId: "trapper" });
+    expect(stop.events.at(-1)?.type === "ESCAPED" || stop.events.some((e) => e.type === "ESCAPED")).toBe(true);
+  });
   it("R049 immediate unoccupied hook transfers personal progress; no dice roll or optional carry", () => {
     const s = fixture();
     s.turn!.actorId = "trapper";
