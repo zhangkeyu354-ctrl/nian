@@ -37,11 +37,13 @@ export function verdictsFrom(s: GameState, events: Event[]): VerdictInfo[] {
         details.push(`${actorName(String(x.data.actorId))} +${x.data.delta} 血点`);
       if (x.type === "MADNESS_REMOVED") details.push("疯狂解除");
     }
+    // 挣脱检定：只有大成功才算挣脱，普通成功也是「挣脱失败」
+    const carry = String(d.kind) === "carry";
     out.push({
       seq: e.seq,
       actorId: String(d.actorId),
       kind: String(d.kind),
-      result: String(d.result),
+      result: carry ? (d.result === "great_success" ? "great_success" : "failure") : String(d.result),
       details: [...new Set(details)],
     });
   });
@@ -82,7 +84,7 @@ export function VerdictBanner({
       <small style={{ color: actorColor(state, verdict.actorId) }}>
         {who} · {checkNames[verdict.kind] ?? "检定"}
       </small>
-      <strong>{WORDS[verdict.result] ?? "已结算"}</strong>
+      <strong>{verdict.kind === "carry" ? (verdict.result === "great_success" ? "挣脱成功！" : "挣脱失败") : (WORDS[verdict.result] ?? "已结算")}</strong>
       {!!verdict.details.length && <p>{verdict.details.join("　")}</p>}
     </div>
   );

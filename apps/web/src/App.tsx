@@ -1510,6 +1510,7 @@ export function App({ net }: { net?: NetBinding } = {}) {
                 : null
             }
             animate={settings.effectiveAnimations}
+            carry={dice[0].data.kind === "carry"}
           />
           {!watching && (
             <button
@@ -1532,10 +1533,13 @@ function DiceResult({
   faces,
   spawnRoom,
   animate,
+  carry = false,
 }: {
   faces: number[];
   spawnRoom: string | null;
   animate: boolean;
+  /** 挣脱检定：只有大成功算挣脱 */
+  carry?: boolean;
 }) {
   const [shown, setShown] = useState(!animate);
   useEffect(() => {
@@ -1550,6 +1554,11 @@ function DiceResult({
         <>
           <strong>掷出 {faces[0]}</strong>
           <span>出生在「{spawnRoom}」</span>
+        </>
+      ) : carry ? (
+        <>
+          <strong>{faces.includes(5) ? "★ 挣脱成功" : "✗ 挣脱失败"}</strong>
+          <span>{faces.includes(5) ? "掷出大成功，当场挣脱" : "没有大成功，杀手可以扛着走 " + faces.length + " 个房间以内"}</span>
         </>
       ) : (
         <>

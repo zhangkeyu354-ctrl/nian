@@ -47,7 +47,9 @@ export function GameExperience({
         e.type === "DICE_ROLLED" || e.type === "SPAWNED"
           ? "dice"
           : e.type === "CHECK_RESOLVED"
-            ? String(e.data.result)
+            ? e.data.kind === "carry" && e.data.result !== "great_success"
+              ? "failure"
+              : String(e.data.result)
             : e.type === "WOUNDED"
               ? "injury"
               : null;

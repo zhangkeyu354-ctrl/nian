@@ -88,8 +88,13 @@ export function eventText(s: GameState, e: Event) {
     case "BLOODPOINTS":
       return `${a}${d.delta >= 0 ? "获得" : "失去"}${Math.abs(d.delta)}血点，现有${d.value}。`;
     case "DICE_ROLLED":
-      return `${d.kind === "locker" ? "被占用的储物柜" : a}进行${checkNames[d.kind] ?? "检定"}：${d.faces.map((f: number) => f + "（" + faceName(f) + "）").join("、")}。`;
+      return `${d.kind === "locker" ? "被占用的储物柜" : a}进行${checkNames[d.kind] ?? "检定"}：${d.faces.map((f: number) => f + "（" + (d.kind === "carry" ? (f === 5 ? "大成功" : "不算挣脱") : faceName(f)) + "）").join("、")}。`;
     case "CHECK_RESOLVED":
+      // 挣脱检定只有「大成功」才算挣脱，其余（包括普通成功）一律是挣脱失败
+      if (d.kind === "carry")
+        return d.result === "great_success"
+          ? `${a}挣脱成功（掷出大成功）！`
+          : `${a}挣脱失败（没有大成功），杀手可以扛着走。`;
       return `${d.kind === "locker" ? "被占用的储物柜" : a}检定结算：${({ failure: "失败", success: "成功", great_success: "大成功" } as Record<string, string>)[d.result] ?? "已结算"}。`;
     case "PROP_PROGRESS":
       return `道具进度变为${d.progress}。`;
