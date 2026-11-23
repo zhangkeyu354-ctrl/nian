@@ -1620,7 +1620,68 @@ body.phone-inmatch {
 .room-sheet-exits li b { color: #081012; padding: 2px 8px; border-radius: 4px; font-size: 13px; }
 .room-sheet .muted { color: #9aa79f; font-size: 13px; margin: 0; }
 
+/* 把行动顺序和进度条让出给地图，关键胜负数字保留为左上角浮签。 */
+.phone-game .phone-progress-pill {
+  position: fixed;
+  z-index: 13;
+  top: calc(58px + env(safe-area-inset-top, 0px));
+  left: 6px;
+  display: flex;
+  gap: 8px;
+  padding: 6px 9px;
+  border: 1px solid #718076;
+  border-radius: 7px;
+  background: #152023e6;
+  box-shadow: 0 3px 10px #0009;
+  color: #f1dfae;
+  font-size: 13px;
+  font-weight: 800;
+  pointer-events: none;
+}
+
 /* 降噪（2026-10-22）：地图按钮半透明、播报出现时收起底部日志条 */
 .phone-game .zoom-controls button { background: rgba(8, 14, 16, .5) !important; border-color: rgba(255, 255, 255, .16) !important; color: #e9ecdf; font-size: 16px; min-width: 56px; backdrop-filter: blur(6px); box-shadow: none; }
 body:has(.action-callout) .phone-game .phone-latest,
 body:has(.major-notice) .phone-game .phone-latest { opacity: 0; transition: opacity .2s; }
+.item-use-notice img.item-card-front {
+  width: 58px;
+  height: 81px;
+  border-radius: 5px;
+  object-fit: cover;
+  box-shadow: 0 3px 8px #0009;
+}
+.order-strip .os-card-back {
+  width: 13px;
+  height: 17px;
+  margin-left: 3px;
+  border-radius: 2px;
+  vertical-align: -3px;
+  box-shadow: 0 1px 2px #0008;
+}
+.item-use-notice img.item-card-front[data-flipped="true"] {
+  animation: item-public-flip 0.35s ease-out;
+}
+/* 手机左上角进度浮签：和电脑一样的图标轨，缩小版 */
+.phone-game .phone-progress-pill { flex-direction: column; gap: 3px; padding: 5px 7px; }
+.track-mini { display: flex; align-items: center; gap: 5px; min-width: 0; }
+.track-mini > div:first-child { display: flex; align-items: baseline; gap: 3px; margin: 0; min-width: 44px; }
+.track-mini > div:first-child span { font-size: 10px; color: #c9d3cc; font-weight: 600; }
+.track-mini > div:first-child strong { font-size: 12px; }
+.track-mini > div:first-child small { font-size: 10px; }
+.track-mini .track-steps { display: flex; gap: 2px; }
+.track-mini .track-steps > span { width: 17px; height: 17px; display: block; }
+.track-mini .track-steps svg { width: 17px !important; height: 17px !important; display: block; }
+.track-mini .track-steps > span:not(.filled):not([data-track-icon="exit_gate"]) { opacity: .5; }
+.phone-game .phone-progress-pill { padding: 4px 6px; gap: 2px; background: #152023d0; }
+.track-mini > div:first-child { min-width: 38px; }
+.track-mini .track-steps > span, .track-mini .track-steps svg { width: 13px !important; height: 13px !important; }
+.track-mini .track-steps { gap: 1px; }
+.track:first-child.track-mini .track-steps > span:last-child { margin-left: 3px; }
+/* 行动顺序条加回（2026-11-23）：分数改由下方图标浮签显示，浮签下移让开顺序条 */
+.phone-game .ob-score { display: none; }
+.phone-game .phone-progress-pill { top: calc(94px + env(safe-area-inset-top, 0px)); }
+@media (max-height: 600px) and (orientation: landscape) {
+  .phone-game .phone-progress-pill { top: 102px; }
+}
+/* 「杀手正在附近」放到进度浮签下面，不再压住进度 */
+body:has(.phone-game) .danger-edge span { top: calc(150px + env(safe-area-inset-top, 0px)); }

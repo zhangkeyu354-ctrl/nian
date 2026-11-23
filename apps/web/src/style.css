@@ -1205,6 +1205,7 @@ legend {
 .character-detail header { display: grid; gap: 2px; margin-bottom: 8px; }
 .character-detail header strong { font-size: 17px; }
 .character-detail header small { color: #b9bcae; font-size: 12px; }
+.character-detail-standee { display: block; width: auto; max-width: 100%; height: 240px; object-fit: contain; margin: 2px auto 10px; }
 .character-detail section { padding: 8px 0; border-top: 1px solid #2e3b3b; }
 .character-detail h4 { margin: 0 0 4px; font-size: 14px; color: #e6cf94; display: flex; justify-content: space-between; gap: 8px; }
 .character-detail h4 span { color: #e6b6a6; font-weight: normal; font-size: 12px; white-space: nowrap; }

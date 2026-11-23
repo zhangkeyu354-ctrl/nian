@@ -300,6 +300,56 @@
     "official_reference_input": false
   },
   {
+    "id": "ormond_cover",
+    "category": "maps",
+    "file": "maps/ormond_cover.webp",
+    "svg": "svg/maps/autohaven_wreckers_cover.svg",
+    "source": "AI 生成",
+    "states": [
+      "neutral"
+    ],
+    "transparent": false,
+    "original_size": [
+      1536,
+      1024
+    ],
+    "size": [
+      768,
+      512
+    ],
+    "provider": "built-in image_gen",
+    "generation_prompt": "Use case: stylized-concept. Asset type: original horror tabletop map cover. Original wide cover landscape: a fogbound vehicle scrapyard at dusk, a weathered corrugated salvage shed and a large tilted crane hook, irregular silhouettes of stacked wrecked vintage cars, pooled rain and cold pine trees, one restrained amber workshop light. Entirely invented arrangement and architecture, no recognizable real brands, no characters. Landscape aspect 3:2, fully opaque scene filling edge to edge. Dark foggy charcoal hand-painted cut-paper style, bold bone-white edge highlights, restrained tarnished brass, charcoal black and cold desaturated teal. Atmospheric but legible, no interface or map diagram. No text, letters, numbers, logo, watermark, official game images, tracing or recognizable official compositions.",
+    "original_file": "assets/mobile-originals/maps/autohaven_wreckers_cover.png",
+    "sha256": "cd1736a571ab18cbc42476aab3acf98baa7919a2c4100edda639c51901ac6d4f",
+    "bytes": 89892,
+    "official_reference_input": false
+  },
+  {
+    "id": "crotus_prenn_asylum_cover",
+    "category": "maps",
+    "file": "maps/crotus_prenn_asylum_cover.webp",
+    "svg": "svg/maps/autohaven_wreckers_cover.svg",
+    "source": "AI 生成",
+    "states": [
+      "neutral"
+    ],
+    "transparent": false,
+    "original_size": [
+      1536,
+      1024
+    ],
+    "size": [
+      768,
+      512
+    ],
+    "provider": "built-in image_gen",
+    "generation_prompt": "Use case: stylized-concept. Asset type: original horror tabletop map cover. Original wide cover landscape: a fogbound vehicle scrapyard at dusk, a weathered corrugated salvage shed and a large tilted crane hook, irregular silhouettes of stacked wrecked vintage cars, pooled rain and cold pine trees, one restrained amber workshop light. Entirely invented arrangement and architecture, no recognizable real brands, no characters. Landscape aspect 3:2, fully opaque scene filling edge to edge. Dark foggy charcoal hand-painted cut-paper style, bold bone-white edge highlights, restrained tarnished brass, charcoal black and cold desaturated teal. Atmospheric but legible, no interface or map diagram. No text, letters, numbers, logo, watermark, official game images, tracing or recognizable official compositions.",
+    "original_file": "assets/mobile-originals/maps/autohaven_wreckers_cover.png",
+    "sha256": "cd1736a571ab18cbc42476aab3acf98baa7919a2c4100edda639c51901ac6d4f",
+    "bytes": 89892,
+    "official_reference_input": false
+  },
+  {
     "id": "lobby",
     "category": "modules",
     "file": "modules/lobby.webp",

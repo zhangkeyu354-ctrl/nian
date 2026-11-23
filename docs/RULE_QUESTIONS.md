@@ -57,3 +57,10 @@
 
 ## DM-01 《请留遗言》配置范围（2026-10-21）
 4–10人按用户既有人数比例可用；11–15人原版帮助卡未取得，CHECK_REQUIRED，界面禁用。15角色核心效果由中文照片与发行方同版说明书交叉核对；完整实现/测试范围见docs/dying-message/ACCEPTANCE_2026-10-21.md。极端连锁组合未穷举；原版全员同意跳过投票入口和单设备热座尚未实现。
+
+## DBD 新地图素材核对（2026-11-23）
+
+| ID | 状态 | 核对事项 | 处理边界 |
+| --- | --- | --- | --- |
+| DBD-MAP-01 | CLOSED_USER_RULING | `CrotusRecreated.png` 顶栏印 ORMOND，`crotus.jpg` 顶栏印 CROTUS PRENN ASYLUM，图内内容相近。用户于 2026-11-23 明确裁定：以低清照片确认克洛普瑞恩。 | 候选地图身份采用 CROTUS PRENN ASYLUM；高清图只作场景参考，记录其顶栏冲突。路线仍需核对，地图继续不可选。 |
+| DBD-MAP-02 | RESOLVED（Claude 2026-11-23） | Crotus 与 Ormond 路线原先未转录。 | 用 Drive 上清晰的 CrotusRecreated.png / OrmondRecreated.png 逐条转录：疯人院 18 条、奥蒙德 22 条（锯齿边框=开局可破坏墙，黄色翻越带箭头=单向）。房间 id 加地图前缀避免和麦克米伦「小屋」重名。`npm run verify:new-maps` 校验连线并跑整局，两张图逃生者、杀手都能赢；已开放选择。注意：这两张图是爱好者复刻图，不是官方印刷，若以后拿到实物照片可再核对。 |

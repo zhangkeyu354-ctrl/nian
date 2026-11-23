@@ -128,7 +128,7 @@ describe("房间：一人控两名逃生者", () => {
 });
 
 describe("房间：地图与选角色", () => {
-  it("地图每局随机（两张都会出现）；杀手三选一，逃生者每个名额二选一", () => {
+  it("地图每局随机（四张都会出现）；杀手三选一，逃生者每个名额二选一", () => {
     const mapsSeen = new Set<string>();
     for (let seed = 1; seed < 20; seed++) {
       const { r } = room(5, seed);
@@ -143,7 +143,7 @@ describe("房间：地图与选角色", () => {
         expect(new Set(s.options).size).toBe(2);
       }
     }
-    expect(mapsSeen.size).toBe(2);
+    expect(mapsSeen.size).toBe(4);
   });
   it("选项只发给本人；被选走的逃生者会从别人的选项里换掉；选完自动开局", () => {
     for (let seed = 1; seed < 50; seed++) {

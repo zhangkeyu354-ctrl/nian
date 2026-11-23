@@ -1,0 +1,163 @@
+"""Verify the recreated DBD room images and their comparison evidence."""
+
+from pathlib import Path
+from PIL import Image
+
+ROOT = Path(__file__).resolve().parents[1]
+ASSETS = ROOT / "apps/web/public/assets/mobile/rooms"
+EVIDENCE = ROOT / "docs/dbd/2026-11-23-art-and-maps/comparisons"
+ROOMS = {
+    "crotus": (
+        "shack", "dark_wood", "courtyard", "treatment_hall", "hallway",
+        "carnival_entrance", "greenhouse", "receiving_desk", "ruins", "outer_garden",
+    ),
+    "ormond": (
+        "picnic_area", "guest_rooms", "balcony", "storage", "chalet",
+        "rentals", "wooded_area", "ski_shack", "basement", "entryway",
+    ),
+    "macmillan": (
+        "mine_depths", "mine_entrance", "foundry_upper_floor", "coal_tower_upper",
+        "foundry_lower_floor", "ancient_tree", "coal_tower_ground", "scrapyard",
+        "foundry_basement", "shack", "backlot",
+    ),
+    "autohaven": (
+        "wreckers_garage_north", "maze", "scrap_pile", "main_garage",
+        "wreckers_garage_south", "diner", "barn", "gas_pump", "old_cabin", "cottage",
+    ),
+}
+
+total = 0
+for map_name, rooms in ROOMS.items():
+    for room in rooms:
+        filename = f"{map_name}_{room}" if map_name in ("crotus", "ormond") else room
+        asset = ASSETS / f"{filename}.webp"
+        evidence = EVIDENCE / f"{map_name}-{room}-compare.png"
+        assert asset.is_file(), f"missing image: {asset}"
+        assert evidence.is_file(), f"missing comparison: {evidence}"
+        with Image.open(asset) as image:
+            assert image.format == "WEBP", f"wrong format: {asset}"
+            assert image.size == (600, 400), f"wrong size: {asset}: {image.size}"
+        assert asset.stat().st_size < 300_000, f"over 300 KB: {asset}"
+        total += asset.stat().st_size
+
+count = sum(map(len, ROOMS.values()))
+print(f"DBD_ART_SIZES_PASS rooms={count} size=600x400 WebP total={total}B over_300KB=0 comparisons={count}")
+
+desktop_rooms = ROOT / "apps/web/public/assets/desktop/rooms"
+for map_name in ("macmillan", "autohaven"):
+    for room in ROOMS[map_name]:
+        filename = f"{room}.webp"
+        assert (desktop_rooms / filename).read_bytes() == (ASSETS / filename).read_bytes(), f"desktop still uses old art: {filename}"
+        assert (desktop_rooms / "legacy" / filename).is_file(), f"missing desktop backup: {filename}"
+print("DBD_ART_SIZES_PASS desktop_replacements=21 backups=21")
+
+cover_dir = ROOT / "apps/web/public/assets/maps"
+cover_names = ("macmillan_estate", "autohaven_wreckers", "crotus_prenn_asylum", "ormond")
+cover_total = 0
+for cover_name in cover_names:
+    asset = cover_dir / f"{cover_name}_cover.webp"
+    evidence = EVIDENCE / f"{cover_name}-cover-compare.png"
+    assert asset.is_file() and evidence.is_file(), f"missing cover/evidence: {cover_name}"
+    with Image.open(asset) as image:
+        assert image.format == "WEBP" and image.size == (768, 512), f"wrong cover: {asset}"
+    assert asset.stat().st_size < 300_000, f"over 300 KB: {asset}"
+    cover_total += asset.stat().st_size
+print(f"DBD_ART_SIZES_PASS covers=4 size=768x512 WebP total={cover_total}B over_300KB=0 comparisons=4")
+
+portrait_names = (
+    "trapper", "wraith", "hillbilly", "nurse", "hag", "doctor",
+    "dwight", "meg", "claudette", "jake", "nea", "ace", "feng_min",
+)
+portrait_root = ROOT / "apps/web/public/assets/mobile"
+portrait_total = 0
+for name in portrait_names:
+    thumb = portrait_root / f"portrait_{name}.webp"
+    detail = portrait_root / "portrait-detail" / f"portrait_{name}.webp"
+    evidence = EVIDENCE / f"{name}-portrait-compare.png"
+    assert thumb.is_file() and detail.is_file() and evidence.is_file(), f"missing portrait: {name}"
+    with Image.open(thumb) as image:
+        assert image.format == "WEBP" and image.size == (256, 256), f"wrong thumb: {thumb}"
+        assert image.mode == "RGBA" and image.getchannel("A").getextrema()[0] == 0
+    with Image.open(detail) as image:
+        assert image.format == "WEBP" and image.width == 512, f"wrong detail: {detail}"
+        assert image.mode == "RGBA" and image.getchannel("A").getextrema()[0] == 0
+    assert thumb.stat().st_size < 300_000 and detail.stat().st_size < 300_000
+    portrait_total += thumb.stat().st_size + detail.stat().st_size
+print(f"DBD_ART_SIZES_PASS portraits=13 thumbs=256x256 details_width=512 WebP total={portrait_total}B over_300KB=0 comparisons=13")
+
+hall_dir = ROOT / "apps/web/public/assets/hall"
+hall_total = 0
+for kind, expected in (("card", (1200, 900)), ("wide", (1600, 900))):
+    asset = hall_dir / f"dbd-{kind}.webp"
+    evidence = EVIDENCE / f"dbd-{kind}-compare.png"
+    assert asset.is_file() and evidence.is_file(), f"missing hall art: {kind}"
+    with Image.open(asset) as image:
+        assert image.format == "WEBP" and image.size == expected, f"wrong hall art: {asset}"
+    assert asset.stat().st_size < 300_000, f"over 300 KB: {asset}"
+    hall_total += asset.stat().st_size
+print(f"DBD_ART_SIZES_PASS hall=2 sizes=1200x900,1600x900 WebP total={hall_total}B over_300KB=0 comparisons=2")
+
+tokens = (
+    "generator", "hook", "crow", "pallet", "locker", "chest",
+    "hex_totem", "exit_gate", "wall", "madness", "bear_trap", "phantasm",
+    "entity", "brand_lantern", "bloodpoint", "generator_progress",
+)
+token_total = 0
+for name in tokens:
+    asset = portrait_root / f"{name}.webp"
+    evidence = EVIDENCE / f"{name}-token-compare.png"
+    assert asset.is_file() and evidence.is_file(), f"missing token: {name}"
+    with Image.open(asset) as image:
+        assert image.format == "WEBP" and image.size == (256, 256), f"wrong token: {asset}"
+        assert image.mode == "RGBA" and image.getchannel("A").getextrema()[0] == 0
+    assert asset.stat().st_size < 300_000, f"over 300 KB: {asset}"
+    token_total += asset.stat().st_size
+print(f"DBD_ART_SIZES_PASS tokens=16 size=256x256 transparent WebP total={token_total}B over_300KB=0 comparisons=16")
+
+items = (
+    "flashlight", "toolbox", "first_aid_kit", "commodious_toolbox", "map",
+    "rainbow_map", "dull_key", "skeleton_key", "broken_key", "firecracker",
+)
+item_dir = ROOT / "apps/web/public/assets/items"
+item_total = 0
+for name in items:
+    asset = item_dir / f"{name}.webp"
+    evidence = EVIDENCE / f"{name}-item-compare.png"
+    assert asset.is_file() and evidence.is_file(), f"missing item: {name}"
+    with Image.open(asset) as image:
+        assert image.format == "WEBP" and image.size == (256, 256), f"wrong item: {asset}"
+        assert image.mode == "RGBA" and image.getchannel("A").getextrema()[0] == 0
+    assert asset.stat().st_size < 300_000, f"over 300 KB: {asset}"
+    item_total += asset.stat().st_size
+print(f"DBD_ART_SIZES_PASS items=10 size=256x256 transparent WebP total={item_total}B over_300KB=0 comparisons=10")
+
+card_dir = ROOT / "apps/web/public/assets/cards"
+for name in ("movement", "killer", "item", "survivor"):
+    asset = card_dir / f"{name}_back.webp"
+    evidence = EVIDENCE / f"{name}-card-back-compare.png"
+    assert asset.is_file() and evidence.is_file(), f"missing card back: {name}"
+    with Image.open(asset) as image:
+        assert image.format == "WEBP" and image.size == (256, 337), f"wrong card back: {asset}"
+    assert asset.stat().st_size < 300_000
+print("DBD_ART_SIZES_PASS card_backs=4 size=256x337 WebP over_300KB=0 comparisons=4")
+
+item_card_dir = card_dir / "items"
+for name in items:
+    asset = item_card_dir / f"{name}.webp"
+    evidence = EVIDENCE / f"{name}-item-card-compare.png"
+    assert asset.is_file() and evidence.is_file(), f"missing item card: {name}"
+    with Image.open(asset) as image:
+        assert image.format == "WEBP" and image.size == (256, 358), f"wrong item card: {asset}"
+    assert asset.stat().st_size < 300_000
+print("DBD_ART_SIZES_PASS item_card_fronts=10 size=256x358 WebP over_300KB=0 comparisons=10")
+
+dice_dir = ROOT / "apps/web/public/assets/dice"
+for kind in ("skill", "danger"):
+    for index in range(1, 7):
+        asset = dice_dir / f"{kind}_{index}.webp"
+        evidence = EVIDENCE / f"{kind}-{index}-die-compare.png"
+        assert asset.is_file() and evidence.is_file(), f"missing die face: {kind}_{index}"
+        with Image.open(asset) as image:
+            assert image.format == "WEBP" and image.size == (128, 128), f"wrong die face: {asset}"
+        assert asset.stat().st_size < 300_000
+print("DBD_ART_SIZES_PASS dice_faces=12 size=128x128 WebP over_300KB=0 comparisons=12")

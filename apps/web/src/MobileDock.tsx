@@ -1,3 +1,4 @@
+import { Track } from "./Track.tsx";
 import { EventJournal } from "./EventJournal.tsx";
 import { skillReason } from "./experience-model.ts";
 import { TapButton } from "./TapButton.tsx";
@@ -560,6 +561,10 @@ export function MobileDock({
         <span className="ob-score">
           ⚙{state.completedGenerators}/4　☠{state.sacrifice}/8
         </span>
+      </div>
+      <div className="phone-progress-pill" aria-label={`发电机 ${state.completedGenerators}/4，献祭 ${state.sacrifice}/8`}>
+        <Track name="发电机" value={state.completedGenerators} max={4} mini />
+        <Track name="献祭" value={state.sacrifice} max={8} mini />
       </div>
       <PhaseSplash state={state} myActors={mine.map((a) => a.id)} />
       <TapButton
