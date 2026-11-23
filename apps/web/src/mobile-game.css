@@ -1620,6 +1620,29 @@ body.phone-inmatch {
 .room-sheet-exits li b { color: #081012; padding: 2px 8px; border-radius: 4px; font-size: 13px; }
 .room-sheet .muted { color: #9aa79f; font-size: 13px; margin: 0; }
 
+/* 把行动顺序和进度条让出给地图，关键胜负数字保留为左上角浮签。 */
+.phone-game .phone-orderbar { display: none; }
+.phone-game .phone-progress-pill {
+  position: fixed;
+  z-index: 13;
+  top: calc(58px + env(safe-area-inset-top, 0px));
+  left: 6px;
+  display: flex;
+  gap: 8px;
+  padding: 6px 9px;
+  border: 1px solid #718076;
+  border-radius: 7px;
+  background: #152023e6;
+  box-shadow: 0 3px 10px #0009;
+  color: #f1dfae;
+  font-size: 13px;
+  font-weight: 800;
+  pointer-events: none;
+}
+@media (orientation: portrait) {
+  .phone-game .workspace { inset: calc(52px + env(safe-area-inset-top, 0px)) 0 var(--dock-height); }
+}
+
 /* 降噪（2026-10-22）：地图按钮半透明、播报出现时收起底部日志条 */
 .phone-game .zoom-controls button { background: rgba(8, 14, 16, .5) !important; border-color: rgba(255, 255, 255, .16) !important; color: #e9ecdf; font-size: 16px; min-width: 56px; backdrop-filter: blur(6px); box-shadow: none; }
 body:has(.action-callout) .phone-game .phone-latest,

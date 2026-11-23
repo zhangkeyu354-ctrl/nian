@@ -561,6 +561,10 @@ export function MobileDock({
           ⚙{state.completedGenerators}/4　☠{state.sacrifice}/8
         </span>
       </div>
+      <div className="phone-progress-pill" aria-label={`发电机 ${state.completedGenerators}/4，献祭 ${state.sacrifice}/8`}>
+        <span>⚙ {state.completedGenerators}/4</span>
+        <span>☠ {state.sacrifice}/8</span>
+      </div>
       <PhaseSplash state={state} myActors={mine.map((a) => a.id)} />
       <TapButton
         className="phone-latest"

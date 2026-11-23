@@ -100,6 +100,24 @@
   opacity: 1;
   filter: drop-shadow(0 0 4px #e3bc72);
 }
+/* 进度只保留数字，给棋盘多留一行高度。 */
+.score-strip {
+  gap: 18px;
+  padding: 6px 16px;
+}
+.score-strip .track {
+  min-width: 0;
+  max-width: none;
+  flex: none;
+}
+.score-strip .track-steps,
+.score-strip .objective-text { display: none; }
+.score-strip .track > div:first-child {
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 0;
+}
+.score-strip .track strong { font-size: 15px; }
 .track-steps .visual-token {
   width: 100%;
   height: auto;
@@ -485,7 +503,8 @@ svg[data-zoom="far"] .room-label { font-size: 30px !important; }
 svg[data-zoom="far"] [data-actor] text { font-size: 22px; }
 svg[data-zoom="far"] .prop-node { opacity: .8; }
 /* 2.5D：棋子像立在棋盘上的立牌，有投影 */
-[data-actor] .visual-token { filter: drop-shadow(0 6px 4px rgba(0,0,0,.65)); }
+[data-actor] .visual-token { filter: drop-shadow(0 6px 4px rgba(0,0,0,.8)); }
+[data-actor] .asset-png { filter: brightness(1.18) contrast(1.08); }
 
 /* 2.5D 倾斜视角（2026-10-22）：整张地图像桌面上的棋盘，可在设置里关闭 */
 [data-tilt="on"] .map-viewport > svg {

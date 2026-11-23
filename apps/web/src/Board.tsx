@@ -103,7 +103,10 @@ export function Board({
     };
     anim.current = requestAnimationFrame(step);
   }
-  const reset = () => moveView({ x: 0, y: 0, w: W, h: height });
+  const reset = () => {
+    cancelAnimationFrame(anim.current);
+    setView({ x: 0, y: 0, w: W, h: height });
+  };
   // 定位：让当前房间及其全部相邻房间同时可见（保留四周安全边距）
   function focus(id = focusRoom) {
     if (size.width <= 0 || size.height <= 0) return;
@@ -130,7 +133,7 @@ export function Board({
     const aspect = size.width / Math.max(1, size.height);
     let w = Math.max(x1 - x0, (y1 - y0) * aspect, 420);
     // 手机：邻居房间太分散时不再缩到看不清，最多显示约 2.5 个房间宽，以当前房间为中心
-    const cap = targets.length ? Infinity : phone || size.width < 600 ? 980 : Infinity;
+    const cap = targets.length ? Infinity : phone || size.width < 600 ? 820 : Infinity;
     const capped = w > cap;
     if (capped) w = cap;
     let h = w / aspect;
@@ -409,6 +412,11 @@ export function Board({
               <stop offset="0.6" stopColor="#000" stopOpacity="0" />
               <stop offset="1" stopColor="#000" stopOpacity=".45" />
             </radialGradient>
+            <radialGradient id="actor-disc" cx="32%" cy="22%" r="78%">
+              <stop offset="0" stopColor="#46565a" />
+              <stop offset=".52" stopColor="#253438" />
+              <stop offset="1" stopColor="#10191d" />
+            </radialGradient>
             <linearGradient id="room-shade" x2="0" y2="1">
               <stop offset="0.45" stopColor="#111a1c" stopOpacity="0" />
               <stop offset="1" stopColor="#0e1518" stopOpacity=".72" />
@@ -461,8 +469,8 @@ export function Board({
             const slots = props.filter((p) => p.room === n.id);
             // 棋子行：避开左上角出生标记；人多时缩小，避免与道具行或彼此重叠
             const crowded = occupants.length > 4;
-            const tokenSize = crowded ? 44 : 54;
-            const tokenGap = crowded ? 40 : 48;
+            const tokenSize = crowded ? 58 : 72;
+            const tokenGap = crowded ? 43 : 52;
             const showSpawn = state.phase === "SETUP" && !!n.spawn_faces.length;
             const tokenStart = n.spawn_faces.length ? -62 : -92;
             const slotGap = Math.min(51, 250 / Math.max(1, slots.length));
@@ -667,10 +675,10 @@ export function Board({
                       }}
                     >
                       <rect
-                        x="-31"
-                        y="-31"
-                        width="62"
-                        height="76"
+                        x={-tokenSize / 2 - 4}
+                        y={-tokenSize / 2 - 4}
+                        width={tokenSize + 8}
+                        height={tokenSize + 24}
                         rx="8"
                         fill="transparent"
                         stroke={actionable.includes(a.id) ? "#e6d294" : "none"}
@@ -694,6 +702,15 @@ export function Board({
                         stroke={actorColor(state, a.id)}
                       />
                       <circle
+                        className="actor-portrait-disc"
+                        cx="0"
+                        cy="0"
+                        r={tokenSize / 2 + 1}
+                        fill="url(#actor-disc)"
+                        stroke="#e1d6b8"
+                        strokeWidth="2"
+                      />
+                      <circle
                         cx="0"
                         cy="0"
                         r={tokenSize / 2 + (a.id === state.killerId ? 4 : 2)}
@@ -710,7 +727,7 @@ export function Board({
                         <Token token={a} size={tokenSize} />
                       </g>
                       <text
-                        y="40"
+                        y={tokenSize / 2 + 19}
                         textAnchor="middle"
                         fill={actorColor(state, a.id)}
                         fontSize="14"
@@ -719,7 +736,7 @@ export function Board({
                         strokeWidth="3"
                         paintOrder="stroke"
                       >
-                        {a.label.replace("·", "").slice(0, 3)}
+                        {a.label.replace("·", "").slice(0, occupants.length > 3 ? 1 : 3)}
                       </text>
                       <title>
                         {a.label} ·{" "}
