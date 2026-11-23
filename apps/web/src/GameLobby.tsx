@@ -3,7 +3,7 @@ import "./game-lobby.css";
 import "./nd/nd.css";
 import { ObjectArt } from "./rr/Objects.tsx";
 import { FakeArtistCover, TelephoneCover } from "./drawing/Covers.tsx";
-import { UPDATE_NOTICES } from "./update-notices.ts";
+import { PLAYER_NOTICES as UPDATE_NOTICES } from "./update-notices.ts";
 
 /** 首页：选游戏。每款游戏一个「盒盖」，保持各自的风格 */
 export function GameLobby() {

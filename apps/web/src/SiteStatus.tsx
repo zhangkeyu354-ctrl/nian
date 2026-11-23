@@ -85,7 +85,7 @@ export function SiteStatus() {
             <h2>最近的改动（当前线上版本）</h2>
             {UPDATE_NOTICES.slice(0, 6).map((n) => (
               <p key={n.id}>
-                <b>{n.date.slice(5)} · {n.game}</b>　{n.title}
+                <b>{n.date.slice(5)} · {n.dev ? "开发" : n.game}</b>　{n.title}
               </p>
             ))}
             <small>只列出已经上线的改动；还在等上线的改动要等自动更新后才会出现在这里。完整说明在大厅的更新公告里。</small>

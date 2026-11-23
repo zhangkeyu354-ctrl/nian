@@ -3,7 +3,7 @@ import "./game-lobby.css";
 import "./game-hall.css";
 import { ObjectArt } from "./rr/Objects.tsx";
 import { FakeArtistCover, TelephoneCover } from "./drawing/Covers.tsx";
-import { UPDATE_NOTICES } from "./update-notices.ts";
+import { PLAYER_NOTICES as UPDATE_NOTICES } from "./update-notices.ts";
 import { FeedbackSheet } from "./SiteFeedback.tsx";
 
 /** 新大厅（方案 A：游戏机桌面）。每个游戏一张「卡带」，点开从底部升起详情。 */
