@@ -1690,7 +1690,9 @@ body:has(.phone-game) .danger-edge span { top: calc(150px + env(safe-area-inset-
 .carry-hook.warn { color: #ffb4a3; font-weight: 700; }
 .carry-hook { margin: 2px 0; font-size: 12px; line-height: 1.3; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 /* 黎明杀机房间页：底部留出微信/浏览器工具栏的高度，最下面的按钮也能点到 */
-.dbd-lobby { padding-bottom: calc(110px + env(safe-area-inset-bottom, 0px)) !important; }
+/* 房间页内容多了（地图选择），手机上让中间这块可以上下滑动，最下面留出空白 */
+.room-flow .setup { overflow-y: auto !important; -webkit-overflow-scrolling: touch; overscroll-behavior: contain; }
+.room-flow .setup::after { content: ""; display: block; flex: none; height: calc(40px + env(safe-area-inset-bottom, 0px)); }
 .online-map-choices { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 14px; }
 .online-map-choices button { min-height: 52px; padding: 10px 12px; text-align: left; }
 .online-map-choices button strong { font-size: 15px; }
