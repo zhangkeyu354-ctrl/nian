@@ -1688,3 +1688,4 @@ body:has(.phone-game) .danger-edge span { top: calc(150px + env(safe-area-inset-
 .carry-hook { margin: 4px 0; font-size: 13px; line-height: 1.4; }
 .carry-hook.ok { color: #9fe0a8; }
 .carry-hook.warn { color: #ffb4a3; font-weight: 700; }
+.carry-hook { margin: 2px 0; font-size: 12px; line-height: 1.3; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }

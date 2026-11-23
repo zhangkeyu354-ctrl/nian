@@ -704,26 +704,6 @@ export function MobileDock({
                       : "点击发光的下一房间"}{" "}
                     · {route.length}步
                   </p>
-                  {(() => {
-                    const end = route.length ? route[route.length - 1].to : state.actors[state.killerId].room;
-                    const free = state.props.some(
-                      (p) => p.room === end && p.kind === "hook" && p.revealed && !p.removed &&
-                        !Object.values(state.actors).some((a) => a.hookId === p.id),
-                    );
-                    if (!route.length && diceCount > 0 && !free)
-                      return <p className="carry-hook ok">可以先不选路线：没掷出大成功后，再一步一步点房间走到钩子</p>;
-                    return free ? (
-                      <p className="carry-hook ok">终点「{roomName(state, end ?? "")}」有空钩子：没掷出大成功就能挂上</p>
-                    ) : (
-                      <p className="carry-hook warn">⚠ 终点「{roomName(state, end ?? "")}」没有空钩子：确认后逃生者会在这里直接挣脱。请点亮着的房间把路线走到有钩子的房间</p>
-                    );
-                  })()}
-                  {diceCount === 0 && (
-                    <p className="carry-hook warn">选 0 颗＝不搬运：确认后逃生者直接挣脱</p>
-                  )}
-                  {diceCount < route.length && (
-                    <p className="carry-hook warn">挣脱骰至少要选 {route.length} 颗（每颗骰子最多走 1 个房间）</p>
-                  )}
                   <div className="carry-options">
                     <TapButton onClick={clearRoute}>重选</TapButton>
                     <label>挣脱骰</label>
@@ -738,6 +718,24 @@ export function MobileDock({
                       </TapButton>
                     ))}
                   </div>
+                  {(() => {
+                    const end = route.length ? route[route.length - 1].to : state.actors[state.killerId].room;
+                    const free = state.props.some(
+                      (p) => p.room === end && p.kind === "hook" && p.revealed && !p.removed &&
+                        !Object.values(state.actors).some((a) => a.hookId === p.id),
+                    );
+                    const [cls, msg] =
+                      diceCount === 0
+                        ? ["warn", "选 0 颗＝不搬运，逃生者直接挣脱"]
+                        : diceCount < route.length
+                          ? ["warn", `路线 ${route.length} 步，挣脱骰至少选 ${route.length} 颗`]
+                          : free
+                            ? ["ok", "终点有空钩子：没掷出大成功就挂上"]
+                            : !route.length
+                              ? ["ok", "可先不选路线：掷完骰再一步步走"]
+                              : ["warn", "⚠ 终点没有空钩子，停这里会直接挣脱"];
+                    return <p className={"carry-hook " + cls}>{msg}</p>;
+                  })()}
                   <TapButton
                     className="primary"
                     data-testid="confirm-carry"

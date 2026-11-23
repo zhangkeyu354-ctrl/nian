@@ -1,3 +1,4 @@
+import { maps } from "../packages/game-engine/src/data.ts";
 import { spawn, type ChildProcess } from "node:child_process";
 import { mkdtempSync, mkdirSync, readFileSync, writeFileSync } from "node:fs";
 import { tmpdir } from "node:os";
@@ -292,9 +293,10 @@ try {
             await assertFullBoardShot(
               p,
               `${out}/${seed}_${name}_fullmap.png`,
-              state.mapId === "macmillan_estate"
-                ? { rooms: 11, routes: 22 }
-                : { rooms: 10, routes: 19 },
+              (() => {
+                const m = maps.maps.find((x) => x.id === state.mapId)!;
+                return { rooms: m.nodes.length, routes: m.edges.length };
+              })(),
             ),
           );
           await p.getByLabel("返回行动", { exact: true }).tap();
