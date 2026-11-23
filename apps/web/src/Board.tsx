@@ -677,9 +677,9 @@ export function Board({
                     >
                       <rect
                         x={-tokenSize / 2 + 4}
-                        y={tokenSize / 2 - tokenSize * 2.3 - 6}
+                        y={tokenSize / 2 - (tokenSize / 2 + 82) - 6}
                         width={tokenSize - 8}
-                        height={tokenSize * 2.3 + 30}
+                        height={(tokenSize / 2 + 82) + 30}
                         rx="8"
                         fill="transparent"
                         stroke={actionable.includes(a.id) ? "#e6d294" : "none"}
@@ -719,9 +719,9 @@ export function Board({
                             className="standee-img"
                             href={`/assets/mobile/standee/${a.asset}.webp`}
                             x={-tokenSize * 0.6}
-                            y={tokenSize / 2 - 4 - tokenSize * 2.3}
+                            y={tokenSize / 2 - 4 - (tokenSize / 2 + 82)}
                             width={tokenSize * 1.2}
-                            height={tokenSize * 2.3}
+                            height={(tokenSize / 2 + 82)}
                             preserveAspectRatio="xMidYMax meet"
                             onError={() => setNoStandee((o) => new Set(o).add(a.asset))}
                           />
@@ -740,7 +740,7 @@ export function Board({
                         strokeWidth="3"
                         paintOrder="stroke"
                       >
-                        {a.label.replace("·", "").slice(0, occupants.length > 3 ? 1 : 3)}
+                        {a.label.replace("·", "").slice(0, occupants.length > 2 ? 1 : 3)}
                       </text>
                       <title>
                         {a.label} ·{" "}
