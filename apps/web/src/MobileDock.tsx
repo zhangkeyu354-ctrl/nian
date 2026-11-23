@@ -698,12 +698,29 @@ export function MobileDock({
               )}
               {state.choice?.kind === "CARRY" ? (
                 <>
-                  <p className="carry-route">
-                    {route.length
-                      ? route.map((r) => roomName(state, r.to)).join(" → ")
-                      : "点击发光的下一房间"}{" "}
-                    · {route.length}步
-                  </p>
+                  {(() => {
+                    const end = route.length ? route[route.length - 1].to : state.actors[state.killerId].room;
+                    const free = state.props.some(
+                      (p) => p.room === end && p.kind === "hook" && p.revealed && !p.removed &&
+                        !Object.values(state.actors).some((a) => a.hookId === p.id),
+                    );
+                    const [cls, msg] =
+                      diceCount === 0
+                        ? ["warn", "选 0 颗＝不搬运，直接挣脱"]
+                        : diceCount < route.length
+                          ? ["warn", `至少选 ${route.length} 颗骰`]
+                          : free
+                            ? ["ok", "终点有空钩子"]
+                            : !route.length
+                              ? ["ok", "可掷完骰再一步步走"]
+                              : ["warn", "⚠ 终点没钩子，会挣脱"];
+                    return (
+                      <p className="carry-route">
+                        {route.length ? route.map((r) => roomName(state, r.to)).join("→") : "点发光房间"} · {route.length}步 ·{" "}
+                        <span className={"carry-hook " + cls}>{msg}</span>
+                      </p>
+                    );
+                  })()}
                   <div className="carry-options">
                     <TapButton onClick={clearRoute}>重选</TapButton>
                     <label>挣脱骰</label>
@@ -718,24 +735,6 @@ export function MobileDock({
                       </TapButton>
                     ))}
                   </div>
-                  {(() => {
-                    const end = route.length ? route[route.length - 1].to : state.actors[state.killerId].room;
-                    const free = state.props.some(
-                      (p) => p.room === end && p.kind === "hook" && p.revealed && !p.removed &&
-                        !Object.values(state.actors).some((a) => a.hookId === p.id),
-                    );
-                    const [cls, msg] =
-                      diceCount === 0
-                        ? ["warn", "选 0 颗＝不搬运，逃生者直接挣脱"]
-                        : diceCount < route.length
-                          ? ["warn", `路线 ${route.length} 步，挣脱骰至少选 ${route.length} 颗`]
-                          : free
-                            ? ["ok", "终点有空钩子：没掷出大成功就挂上"]
-                            : !route.length
-                              ? ["ok", "可先不选路线：掷完骰再一步步走"]
-                              : ["warn", "⚠ 终点没有空钩子，停这里会直接挣脱"];
-                    return <p className={"carry-hook " + cls}>{msg}</p>;
-                  })()}
                   <TapButton
                     className="primary"
                     data-testid="confirm-carry"
