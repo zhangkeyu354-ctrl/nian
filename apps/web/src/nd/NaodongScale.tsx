@@ -1,4 +1,5 @@
 import React, { useEffect, useRef, useState } from "react";
+import { HostKickList } from "../KickButton.tsx";
 import type {
   NDAction,
   NDSnapshot,
@@ -702,6 +703,13 @@ export function NaodongScale() {
                         })}
                       </div>
                     </section>
+                    {host && (
+                      <HostKickList
+                        players={s.players.map((p) => ({ id: String(p.seat), name: p.name }))}
+                        me={me === null ? null : String(me)}
+                        onKick={(id) => void send({ type: "KICK", target: Number(id) })}
+                      />
+                    )}
                     {host ? (
                       <fieldset className="nd-settings" disabled={net.pending}>
                         <legend>房主设置</legend>

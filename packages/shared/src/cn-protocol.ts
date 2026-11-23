@@ -45,6 +45,7 @@ export type CNLobbyAction =
   | { type: "SET_MODE"; mode: CaptainMode }
   | { type: "SHUFFLE" }
   | { type: "MOVE"; playerId: string; team: Team | null }
+  | { type: "KICK"; playerId: string }
   | { type: "START" }
   | { type: "NEXT" };
 

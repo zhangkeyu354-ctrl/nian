@@ -1,4 +1,5 @@
 import React, { useCallback, useEffect, useMemo, useRef, useState, type CSSProperties } from "react";
+import { HostKickList } from "../KickButton.tsx";
 import { io, type Socket } from "socket.io-client";
 import { feel, soundOn, setSoundOn } from "../drawing/feel.ts";
 import { Candle, Portrait, RoomArt, Sigil } from "./Art.tsx";
@@ -377,7 +378,7 @@ function Table({ snap, act, busy, conn, toast, say, name, setName, claim }: any)
     const mine = snap.players.find((p: any) => p.id === me);
     const all = snap.players.length >= 4 && snap.players.every((p: any) => p.ready);
     hint = !me ? "房间已开始或你尚未入座" : all ? (host ? "全员已准备，可以开始" : "全员已准备，等待房主开始") : `已入座 ${snap.players.length}/${snap.capacity} · ${snap.players.filter((p: any) => p.ready).length}人已准备`;
-    buttons = me ? <>{B(mine?.ready ? "取消准备" : "准备", () => act({ type: "READY", ready: !mine?.ready }), { testid: "wt-ready" })}{host && B("开始游戏", () => act({ type: "START" }), { primary: true, disabled: !all, testid: "wt-start" })}</> : null;
+    buttons = me ? <>{B(mine?.ready ? "取消准备" : "准备", () => act({ type: "READY", ready: !mine?.ready }), { testid: "wt-ready" })}{host && B("开始游戏", () => act({ type: "START" }), { primary: true, disabled: !all, testid: "wt-start" })}{host && <HostKickList key="kick" players={snap.players} me={me} onKick={(id) => act({ type: "KICK", playerId: id })} />}</> : null;
   } else if (phase === "over") {
     hint = v?.outcome?.team === "witches" ? "女巫阵营获胜" : "平民阵营获胜";
     buttons = <>{B("公开记录", () => setSheet({ kind: "records" }))}{B("返回大厅", () => { location.href = "/"; }, { primary: true })}</>;

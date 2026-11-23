@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import { KickButton } from "./KickButton.tsx";
 import { maps, chars } from "../../../packages/game-engine/src/data.ts";
 import { actorName } from "../../../packages/game-engine/src/index.ts";
 import { App } from "./App.tsx";
@@ -361,6 +362,9 @@ function LobbyRoom({
                 <span className="tag">愿控两名</span>
               )}
               {!p.connected && <small className="muted">离线</small>}
+              {me.host && p.playerId !== snap.mySeat && !p.bot && (
+                <KickButton name={p.name ?? "玩家"} onKick={() => act({ type: "KICK", playerId: p.playerId })} />
+              )}
             </li>
           ))}
           {Array.from({ length: l.playerCount - l.players.length }, (_, i) => (

@@ -221,6 +221,11 @@ export class WTRoomStore {
       if (r.state) fail("ALREADY_STARTED");
       if (typeof req.action.ready !== "boolean") fail("BAD_REQUEST");
       seat.ready = req.action.ready;
+    } else if (req.action.type === "KICK") {
+      if (me.id !== r.hostId) fail("HOST_ONLY");
+      if (r.state) fail("ALREADY_STARTED");
+      if (req.action.playerId === me.id) fail("BAD_REQUEST");
+      r.players = r.players.filter((p) => p.id !== (req.action as { playerId: string }).playerId);
     } else if (req.action.type === "START") {
       if (me.id !== r.hostId) fail("HOST_ONLY");
       if (r.state) fail("ALREADY_STARTED");

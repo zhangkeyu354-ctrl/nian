@@ -1,4 +1,5 @@
 import { useCallback, useEffect, useRef, useState, type CSSProperties } from "react";
+import { HostKickList } from "../KickButton.tsx";
 import { io, type Socket } from "socket.io-client";
 import { CS_EVENTS } from "../../../../packages/shared/src/cs-protocol.ts";
 import tiles from "../../../../data/crime-scene/tiles.json" with { type: "json" };
@@ -195,6 +196,7 @@ export default function CrimeScene() {
           <label>游玩方式 <select value={snapshot.mode} onChange={(event) => lobby({ type: "configure", mode: event.target.value })}><option value="local">同桌聚会</option><option value="online">线上文字讨论</option></select></label>
           <label>鉴证专家 <select value={snapshot.view?.forensicSeat ?? 0} onChange={(event) => lobby({ type: "configure", forensicSeat: Number(event.target.value) })}>{snapshot.players.map((player) => <option value={player.seat} key={player.seat}>{player.name}</option>)}</select></label>
           <label className="cs-event-setting"><input type="checkbox" role="switch" checked={snapshot.eventsEnabled} onChange={(event) => lobby({ type: "configure", eventsEnabled: event.target.checked })} /><span>启用特殊事件 <small>第 2 轮起，六种事件洗入橙色牌堆</small></span></label>
+          <HostKickList players={snapshot.players.map((p: any) => ({ id: String(p.seat), name: p.name }))} me={String(snapshot.mySeat)} onKick={(id) => lobby({ type: "kick", seat: Number(id) })} />
           <button className="cs-primary" disabled={snapshot.players.length < 4} onClick={() => lobby({ type: "start" })}>{snapshot.players.length < 4 ? `还差 ${4 - snapshot.players.length} 人开局` : "开始游戏"}</button>
         </div>}
       </section> : view && <>

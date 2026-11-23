@@ -1,4 +1,5 @@
 import { useEffect, useMemo, useRef, useState } from "react";
+import { HostKickList } from "../KickButton.tsx";
 import { ANIMALS, previewKB, valueOf, type KBEvent } from "../../../../packages/kariba/src/index.ts";
 import type { KBRoomSnapshot } from "../../../../packages/shared/src/kb-protocol.ts";
 import { feel, setSoundOn, soundOn } from "../drawing/feel.ts";
@@ -132,6 +133,13 @@ function Lobby({ net, snap }: { net: Net; snap: KBRoomSnapshot }) {
       </div>
       {snap.mode === "team" && <p className="kb-note">两人一队，队友隔开坐（不会连着出牌）。下面选座位就是选队伍；队友手牌互相看不到，可以开麦商量。</p>}
       <SeatTable snap={snap} host={host} act={act} />
+      {host && snap.stage === "lobby" && (
+        <HostKickList
+          players={snap.players.filter((p) => !p.bot).map((p) => ({ id: p.playerId, name: p.name }))}
+          me={snap.mySeat}
+          onKick={(id) => act({ type: "KICK", playerId: id })}
+        />
+      )}
       {(host && snap.mode === "solo") && (
         <div className="kb-row" style={{ flexWrap: "wrap" }}>
           <label>人机难度 <select value={botLevel} onChange={(e) => setBotLevel(e.target.value === "easy" ? "easy" : "normal")}>

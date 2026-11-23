@@ -252,6 +252,12 @@ export class Room {
         this.startDraft();
         return;
       }
+      case "KICK":
+        if (!host) throw new Error("HOST_ONLY");
+        if (f.stage !== "lobby") throw new Error("ALREADY_STARTED");
+        if (action.playerId === me.playerId) throw new Error("BAD_ACTION");
+        f.players = f.players.filter((p) => p.playerId !== action.playerId);
+        return;
       case "START":
         if (!host) throw new Error("HOST_ONLY");
         if (f.stage !== "lobby") throw new Error("ALREADY_STARTED");

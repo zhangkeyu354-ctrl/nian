@@ -1,4 +1,5 @@
 import React, { useEffect, useRef, useState } from "react";
+import { KickButton } from "../KickButton.tsx";
 import { ActionDock, CountdownRing } from "../dm/Polish.tsx";
 import { feel, soundOn, setSoundOn, type Cue } from "../drawing/feel.ts";
 import {
@@ -507,6 +508,7 @@ export function Rummikub() {
                 )}
               </small>
             </div>
+            {lobby && host && p && !p.bot && i > 0 && <KickButton name={p.name} onKick={() => void send({ type: "KICK", playerId: p.id })} />}
             {lobby && host && p?.bot && <button type="button" className="rk-offline" onClick={() => void send({ type: "REMOVE_BOT", playerId: p.id })} aria-label={`移除${p.name}`}>移除</button>}
             {p && !p.connected && (
               <span className="rk-offline" title="暂时离线">

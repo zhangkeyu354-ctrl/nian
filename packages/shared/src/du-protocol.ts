@@ -20,6 +20,7 @@ export type DUAction =
   | { type: "READY" }
   | { type: "START"; seed?: number }
   | { type: "LEAVE" }
+  | { type: "KICK"; seat: number }
   | { type: "REMATCH" };
 export interface DUSnapshot {
   code: string;

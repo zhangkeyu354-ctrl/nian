@@ -189,6 +189,14 @@ export class DMRoom {
             this.file.state.deadline = now + 300000;
           break;
         }
+        case "KICK": {
+          if (!host) throw Error("只有房主可以操作");
+          const target = (c as { playerId: string }).playerId;
+          if (target === p.id) throw Error("不能移出自己");
+          this.file.players = this.file.players.filter((x) => x.id !== target);
+          this.file.players.forEach((x) => (x.ready = false));
+          break;
+        }
         case "LEAVE":
           this.file.players = this.file.players.filter((x) => x.id !== p.id);
           if (this.file.hostId === p.id)

@@ -1234,3 +1234,60 @@ body:has(.verdict-banner) .toast-feedback { opacity: 0; transition: opacity .15s
 /* 大号播报出现时，淡出同时弹出的小提示，避免两层叠在一起 */
 body:has(.major-notice) .toast-feedback,
 body:has(.major-notice) .verdict-banner { opacity: 0; transition: opacity .15s; }
+
+/* 房主移出玩家按钮（所有游戏共用） */
+.kick-btn {
+  min-height: 30px !important;
+  min-width: 0 !important;
+  padding: 0 10px !important;
+  border-radius: 999px !important;
+  border: 1px solid rgba(200, 40, 70, 0.45) !important;
+  background: rgba(255, 255, 255, 0.85) !important;
+  color: #c4234d !important;
+  font-size: 12px !important;
+  font-weight: 800 !important;
+  line-height: 1 !important;
+  white-space: nowrap;
+  flex: none;
+  box-shadow: none !important;
+  transform: none !important;
+  cursor: pointer;
+}
+.kick-btn.is-armed {
+  background: #c4234d !important;
+  color: #fff !important;
+  border-color: #c4234d !important;
+}
+.host-kick-list {
+  margin: 8px 0;
+  padding: 8px 12px;
+  border-radius: 12px;
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  font-size: 13px;
+  text-align: left;
+}
+.host-kick-list summary {
+  cursor: pointer;
+  font-weight: 800;
+  opacity: 0.9;
+}
+.host-kick-list ul {
+  list-style: none;
+  margin: 8px 0 0;
+  padding: 0;
+  display: grid;
+  gap: 6px;
+}
+.host-kick-list li {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+}
+.host-kick-list li span {
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}

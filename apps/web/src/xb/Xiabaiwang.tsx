@@ -1,4 +1,5 @@
 import React, { useEffect, useRef, useState } from "react";
+import { HostKickList } from "../KickButton.tsx";
 import {
   XB_EVENTS as E,
   type XBCommand,
@@ -965,6 +966,13 @@ export function Xiabaiwang() {
               🪑 想换座位？点下面别人的头像，就和他互换。发言按座位顺序轮流，第一个
               {ROLES.guesser}开局时随机抽。
             </p>
+            {host && (
+              <HostKickList
+                players={snap.players}
+                me={me}
+                onKick={(id) => void command({ type: "KICK", playerId: id })}
+              />
+            )}
             <label className="xb-round-setting">
               本局轮数
               <select

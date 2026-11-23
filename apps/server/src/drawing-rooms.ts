@@ -156,6 +156,7 @@ export class DrawingRoom {
         "NEXT",
         "FINISH_DISCUSSION",
         "ABORT",
+        "KICK",
       ].includes(a.type) &&
       !host
     )
@@ -168,6 +169,14 @@ export class DrawingRoom {
       if (this.file.game?.phase !== "RESULT") throw Error("请先结束本局");
       this.file.game = null;
       this.file.players.forEach((p) => (p.ready = false));
+    } else if (a.type === "KICK") {
+      if (this.file.game) throw Error("对局进行中不能移出玩家");
+      const target = (a as any).playerId;
+      if (!target || target === p.id) throw Error("不能移出自己");
+      if (!this.file.players.some((x) => x.id === target))
+        throw Error("这位玩家已不在房间");
+      this.file.players = this.file.players.filter((x) => x.id !== target);
+      this.file.players.forEach((x) => (x.ready = false));
     } else if (a.type === "TAKE_HOST") {
       if (this.connections.get(this.file.host)?.size) throw Error("房主仍在线");
       this.file.host = p.id;

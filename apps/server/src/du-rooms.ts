@@ -81,7 +81,7 @@ export class DURoom {
     ensure(seq === previous + 1, "操作序号不连续，请同步状态");
     ensure(version === this.file.version, "状态已更新，请重新同步");
     const seat = this.file.players.findIndex((p) => p.id === me.id);
-    if (["SET_SETTINGS", "START", "REMATCH", "NEXT_ROUND", "ADD_BOT", "REMOVE_BOT"].includes(c.type)) ensure(seat === 0, "只有房主可以操作");
+    if (["SET_SETTINGS", "START", "REMATCH", "NEXT_ROUND", "ADD_BOT", "REMOVE_BOT", "KICK"].includes(c.type)) ensure(seat === 0, "只有房主可以操作");
     return this.transaction(() => {
       if (c.type === "REMATCH") {
         ensure(this.file.state?.phase === "FINISHED", "本局尚未结束");
@@ -122,6 +122,13 @@ export class DURoom {
             ensure(c.seed === undefined || this.options.allowFixedSeed, "生产房间不能指定随机种子");
             this.file.state = createDU(this.file.players.map((p) => p.name), { seed: c.seed ?? randomInt(0x100000000), target: this.file.target });
             break;
+          case "KICK": {
+            ensure(Number.isInteger(c.seat) && c.seat > 0 && this.file.players[c.seat], "不能移出这个座位");
+            const gone = this.file.players.splice(c.seat, 1)[0];
+            delete this.file.seq[gone.id];
+            this.file.players.forEach((p) => (p.ready = !!p.bot));
+            break;
+          }
           case "LEAVE":
             this.file.players.splice(seat, 1);
             this.file.players.forEach((p) => (p.ready = !!p.bot));

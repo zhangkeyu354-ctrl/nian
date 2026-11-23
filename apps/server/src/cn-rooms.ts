@@ -152,6 +152,10 @@ export class CNRoom {
       if (action.team !== null && action.team !== "red" && action.team !== "blue") fail("BAD_ACTION");
       if (target.team !== action.team) target.captain = false;
       target.team = action.team;
+    } else if (t === "KICK") {
+      if (!host) fail("HOST_ONLY");
+      if (action.playerId === me.playerId) fail("BAD_ACTION");
+      this.file.players = this.file.players.filter((p) => p.playerId !== action.playerId);
     } else if (t === "START") {
       if (!host) fail("HOST_ONLY");
       const members = (team: Team) => this.file.players.filter((p) => p.team === team);

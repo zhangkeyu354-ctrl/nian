@@ -15,6 +15,7 @@ import { Board } from "./Board.tsx";
 import { drawingId } from "./id.ts";
 import { paint } from "./render.ts";
 import { feel } from "./feel.ts";
+import { KickButton } from "../KickButton.tsx";
 import { Portrait } from "./StudioArt.tsx";
 import { FakeArtistCover, TelephoneCover } from "./Covers.tsx";
 import "./studio.css";
@@ -581,6 +582,14 @@ export function DrawingParty({ mode }: { mode: Mode }) {
                               : "等待准备"
                             : "离线"}
                         </span>
+                        {host && p.id !== snap.me && (
+                          <KickButton
+                            name={p.name}
+                            onKick={() =>
+                              void submit({ type: "KICK", playerId: p.id } as any)
+                            }
+                          />
+                        )}
                       </>
                     ) : (
                       <>

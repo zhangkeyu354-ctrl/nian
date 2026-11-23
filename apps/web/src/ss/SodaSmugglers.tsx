@@ -1,4 +1,5 @@
 import React, { useEffect, useRef, useState } from "react";
+import { KickButton } from "../KickButton.tsx";
 import { ActionDock, CountdownRing, PhaseBanner } from "../dm/Polish.tsx";
 import { feel, soundOn, setSoundOn } from "../drawing/feel.ts";
 import type {
@@ -1672,6 +1673,9 @@ export function SodaSmugglers() {
                       </span>
                       <span className="ss-seat-bottom">
                         {p ? (p.ready ? "✅已准备" : "等待准备") : "空座位"}
+                        {host && p && i > 0 && (
+                          <KickButton name={p.name} onKick={() => send({ type: "KICK", seat: i })} />
+                        )}
                       </span>
                     </div>
                   );

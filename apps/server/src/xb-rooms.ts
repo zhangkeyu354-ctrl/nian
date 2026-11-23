@@ -99,6 +99,12 @@ export class XBRoom {
       const a = this.file.players[seat];
       this.file.players[seat] = this.file.players[t];
       this.file.players[t] = a;
+    } else if (c?.type === "KICK") {
+      if (p.id !== this.hostId()) throw Error("仅房主可以移出玩家");
+      if (this.file.state) throw Error("对局进行中不能移出玩家");
+      if (c.playerId === p.id) throw Error("不能移出自己");
+      this.file.hostId ??= this.file.players[0].id;
+      this.file.players = this.file.players.filter((x) => x.id !== c.playerId);
     } else if (c?.type === "SET_CYCLES") {
       if (p.id !== this.hostId()) throw Error("仅房主可以设置圈数");
       if (this.file.state) throw Error("开局后不能更换圈数");

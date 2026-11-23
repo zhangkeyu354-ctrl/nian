@@ -8,7 +8,7 @@ export const WT_EVENTS = {
   update: "wt:update",
 } as const;
 export type WTLobbyAction =
-  { type: "READY"; ready: boolean } | { type: "START" };
+  { type: "READY"; ready: boolean } | { type: "START" } | { type: "KICK"; playerId: string };
 export interface WTActionRequest {
   requestId: string;
   version: number;

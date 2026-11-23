@@ -21,6 +21,7 @@ export type SSAction =
   | { type: "READY" }
   | { type: "START"; seed?: number }
   | { type: "LEAVE" }
+  | { type: "KICK"; seat: number }
   | { type: "REMATCH" };
 export interface SSSnapshot {
   code: string;

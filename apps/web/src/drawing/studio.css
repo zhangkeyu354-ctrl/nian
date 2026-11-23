@@ -4751,3 +4751,25 @@
     order: 2;
   }
 }
+.lb-seats li:has(.kick-btn) {
+  grid-template-columns: 34px minmax(0, 1fr) auto;
+  grid-template-rows: auto auto;
+  row-gap: 3px;
+}
+.lb-seats li:has(.kick-btn) > .lb-face {
+  grid-row: 1 / 3;
+}
+.lb-seats li:has(.kick-btn) > b {
+  grid-column: 2 / 4;
+}
+.lb-seats li:has(.kick-btn) > .lb-state {
+  grid-column: 2;
+  grid-row: 2;
+}
+.lb-seats li:has(.kick-btn) > .kick-btn {
+  grid-column: 3;
+  grid-row: 2;
+  min-height: 24px !important;
+  padding: 0 8px !important;
+  font-size: 11px !important;
+}

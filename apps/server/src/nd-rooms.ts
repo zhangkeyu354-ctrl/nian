@@ -80,6 +80,7 @@ const fields: Record<string, string[]> = {
   START: ["seed"],
   SWAP_SEAT: ["target"],
   LEAVE: [],
+  KICK: ["target"],
   REMATCH: [],
 };
 function objectKeys(value: unknown, allowed: string[]) {
@@ -362,7 +363,7 @@ export class NDRoom {
     );
     const seat = this.file.players.findIndex((p) => p.id === me.id);
     const hostId = this.file.hostId ?? this.file.players[0]?.id;
-    if (["SET_SETTINGS", "START", "REMATCH"].includes(c.type))
+    if (["SET_SETTINGS", "START", "REMATCH", "KICK"].includes(c.type))
       ensure(me.id === hostId, "只有房主可以操作");
     return this.transaction(now, () => {
       if (c.type === "REMATCH") {
@@ -452,6 +453,17 @@ export class NDRoom {
               this.file.usedTopics =
                 fresh.length < ids.length ? ids : [...used, ...ids];
             }
+            break;
+          }
+          case "KICK": {
+            const t = (c as { target: number }).target;
+            ensure(Number.isInteger(t) && this.file.players[t] && this.file.players[t].id !== me.id, "不能移出这个座位");
+            const gone = this.file.players.splice(t, 1)[0];
+            delete this.file.seq[gone.id];
+            delete this.file.receipts[gone.id];
+            this.file.players.forEach((p) => (p.ready = false));
+            if (this.file.settings.firstCaptain > t) this.file.settings.firstCaptain--;
+            else if (this.file.settings.firstCaptain === t) this.file.settings.firstCaptain = 0;
             break;
           }
           case "LEAVE": {

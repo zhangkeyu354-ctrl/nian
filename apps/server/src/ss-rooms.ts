@@ -159,7 +159,7 @@ export class SSRoom {
       "状态已更新，请重新同步",
     );
     const seat = this.file.players.findIndex((p) => p.id === me.id);
-    if (["SET_SETTINGS", "RANDOM_GUARD", "START", "REMATCH"].includes(c.type))
+    if (["SET_SETTINGS", "RANDOM_GUARD", "START", "REMATCH", "KICK"].includes(c.type))
       ensure(seat === 0, "只有房主可以操作");
     return this.transaction(() => {
       if (c.type === "REMATCH") {
@@ -237,18 +237,23 @@ export class SSRoom {
               },
             );
             break;
-          case "LEAVE":
-            this.file.players.splice(seat, 1);
+          case "KICK":
+          case "LEAVE": {
+            const gone = c.type === "KICK" ? c.seat : seat;
+            if (c.type === "KICK")
+              ensure(Number.isInteger(gone) && gone > 0 && this.file.players[gone], "不能移出这个座位");
+            this.file.players.splice(gone, 1);
             this.file.players.forEach((p) => (p.ready = false));
             if (typeof this.file.firstGuard === "number") {
               this.file.firstGuard =
-                this.file.firstGuard > seat
+                this.file.firstGuard > gone
                   ? this.file.firstGuard - 1
-                  : this.file.firstGuard === seat
+                  : this.file.firstGuard === gone
                     ? 0
                     : this.file.firstGuard;
             }
             break;
+          }
           default:
             throw Error("请先开始对局");
         }

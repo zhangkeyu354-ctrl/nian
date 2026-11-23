@@ -93,6 +93,7 @@ export type LobbyAction =
   | { type: "SET_MAP"; mapId: string }
   | { type: "START_PRACTICE"; level: "easy" | "normal" }
   | { type: "START" }
+  | { type: "KICK"; playerId: string }
   | { type: "PICK"; slotId: string; characterId: string };
 
 export interface LobbyRequest {

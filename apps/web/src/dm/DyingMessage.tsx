@@ -1,4 +1,5 @@
 import React, { useEffect, useMemo, useRef, useState } from "react";
+import { HostKickList } from "../KickButton.tsx";
 import { io, type Socket } from "socket.io-client";
 import {
   DM_EVENTS,
@@ -895,6 +896,11 @@ export function DyingMessage() {
                           >
                             🎲 随机排座
                           </button>
+                          <HostKickList
+                            players={snap.players}
+                            me={snap.mySeat}
+                            onKick={(id) => act({ type: "KICK", playerId: id }, "tap")}
+                          />
                           <label>
                             本局人数
                             <select

@@ -29,6 +29,7 @@ export type NDAction =
   /** 大厅换座：和目标座位的人交换位置（座位顺序决定队长轮换顺序）。 */
   | { type: "SWAP_SEAT"; target: number }
   | { type: "LEAVE" }
+  | { type: "KICK"; target: number }
   | { type: "REMATCH" };
 export interface NDSnapshot {
   code: string;

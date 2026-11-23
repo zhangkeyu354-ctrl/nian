@@ -1,4 +1,5 @@
 import { useEffect, useLayoutEffect, useMemo, useRef, useState } from "react";
+import { KickButton } from "../KickButton.tsx";
 import { createTARoom, savedName, useTARoom } from "./ta-net.ts";
 import { ABILITIES, AGENDA_TEXT, CARD_TEXT, CHAR_NAME, QUESTION, WOUND_TEXT, RULES, zh, type Step } from "./text.ts";
 import { CHARACTERS, ENERGY_GOAL, ENERGY_SAFE, OXYGEN_MAX, SETUP } from "../../../../packages/menace/src/data.ts";
@@ -35,7 +36,7 @@ function Room({ code }: { code: string }) {
   if (!s) return <div className="ta-world ta-entry"><p>正在连接…</p></div>;
   if (!s.mySeat) return <div className="ta-world ta-entry"><h2>房间 {code}</h2>{s.stage === "game" ? <p>游戏已开始。</p> : <><input value={name} placeholder="昵称" maxLength={12} onChange={(e) => setName(e.target.value)} /><button className="ta-primary" onClick={async () => setMsg((await r.claim(name)) ?? "")}>登舰</button></>}<p className="ta-err">{msg}</p></div>;
   const host = s.hostId === s.mySeat;
-  if (s.stage === "lobby") return <div className="ta-world ta-entry"><h2>房间 {code}</h2><p>把房间号发给朋友，需要 4–8 人。</p><p className="ta-factions">{factions(s.players.length)}</p><details className="ta-rules"><summary>查看游戏规则</summary><Rules count={s.players.length} /></details><ul className="ta-list">{s.players.map((p: any) => <li key={p.playerId}>{p.name}{p.host ? "（房主）" : ""}{p.connected ? "" : " · 离线"}</li>)}</ul>
+  if (s.stage === "lobby") return <div className="ta-world ta-entry"><h2>房间 {code}</h2><p>把房间号发给朋友，需要 4–8 人。</p><p className="ta-factions">{factions(s.players.length)}</p><details className="ta-rules"><summary>查看游戏规则</summary><Rules count={s.players.length} /></details><ul className="ta-list">{s.players.map((p: any) => <li key={p.playerId}>{p.name}{p.host ? "（房主）" : ""}{p.connected ? "" : " · 离线"}{host && p.playerId !== s.mySeat && <> <KickButton name={p.name} onKick={async () => setMsg((await r.lobby({ type: "KICK", playerId: p.playerId })) ?? "")} /></>}</li>)}</ul>
     {host ? <><div className="ta-row"><button className={s.mode === "basic" ? "on" : ""} onClick={() => r.lobby({ type: "SET_MODE", mode: "basic" })}>基础模式</button><button className={s.mode === "advanced" ? "on" : ""} onClick={() => r.lobby({ type: "SET_MODE", mode: "advanced" })}>进阶模式</button></div><button onClick={async () => setMsg((await r.lobby({ type: "ADD_BOT" })) ?? "")}>添加人机</button><button className="ta-primary" onClick={async () => setMsg((await r.lobby({ type: "START" })) ?? "")}>开始（{s.players.length} 人）</button></> : <p>{s.mode === "basic" ? "基础模式" : "进阶模式"}，等待房主开始。</p>}<p className="ta-err">{msg}</p></div>;
   return <Game key={`${s.code}-${s.round}`} snap={s} seen={r.sceneDone} takeScenes={r.takeScenes} send={async (c) => setMsg((await r.command(c)) ?? "")} msg={msg} clear={() => setMsg("")} restart={() => r.lobby({ type: "START" })} host={host} online={r.connected} />;
 }

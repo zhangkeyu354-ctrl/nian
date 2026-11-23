@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from "react";
+import { KickButton } from "../KickButton.tsx";
 import "@fontsource/zcool-xiaowei/index.css";
 import "./skull-king.css";
 import { useSKRoom } from "./sk-net.ts";
@@ -363,6 +364,7 @@ function Lobby({ room }: { room: Room }) {
                     {i === 0 ? "船长 · " : ""}
                     {p.ready ? "已准备" : "未准备"}
                     {p.connected ? "" : " · 离线"}
+                    {host && i > 0 && <KickButton name={p.name} onKick={() => room.act({ type: "KICK", seat: i })} />}
                   </span>
                 ))}
             </div>

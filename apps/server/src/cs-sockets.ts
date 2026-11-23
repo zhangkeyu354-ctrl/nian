@@ -68,11 +68,12 @@ export function attachCrimeScene(io: Server, dataDir: string, options: { maxRoom
       attach(room, String(request?.token ?? ""));
       return { snapshot: room.snapshot(request.token) };
     }));
-    socket.on(CS_EVENTS.lobby, guarded((request: { code: string; token: string; action: { type: "start" } | { type: "rematch" } | { type: "configure"; cardsPerKind?: 3 | 4 | 5; eventsEnabled?: boolean; forensicSeat?: number; mode?: "local" | "online" } }) => {
+    socket.on(CS_EVENTS.lobby, guarded((request: { code: string; token: string; action: { type: "start" } | { type: "rematch" } | { type: "kick"; seat: number } | { type: "configure"; cardsPerKind?: 3 | 4 | 5; eventsEnabled?: boolean; forensicSeat?: number; mode?: "local" | "online" } }) => {
       const room = find(request?.code);
       if (request?.action?.type === "start") room.start(request.token, Date.now());
       else if (request?.action?.type === "configure") room.configure(request.token, request.action);
       else if (request?.action?.type === "rematch") room.rematch(request.token);
+      else if (request?.action?.type === "kick") room.kick(request.token, request.action.seat);
       else throw new Error("房间操作无效");
       broadcast(room);
       return { snapshot: room.snapshot(request.token) };

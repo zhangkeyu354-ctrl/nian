@@ -1,4 +1,5 @@
 import { useEffect, useMemo, useRef, useState } from "react";
+import { KickButton } from "../KickButton.tsx";
 import "./dnup.css";
 import { useDURoom } from "./du-net.ts";
 import { DU_EMOTES } from "../../../../packages/shared/src/du-protocol.ts";
@@ -338,7 +339,7 @@ function Lobby({ room }: { room: ReturnType<typeof useDURoom> }) {
               {p && (p.bot ? (
                 <span className="du-seat-state">🤖 人机{host && <button className="du-btn sm du-bot-x" onClick={() => room.act({ type: "REMOVE_BOT", seat: i })}>移除</button>}</span>
               ) : (
-                <span className="du-seat-state">{i === 0 ? "房主 · " : ""}{p.ready ? "已准备" : "未准备"}{p.connected ? "" : " · 离线"}</span>
+                <span className="du-seat-state">{i === 0 ? "房主 · " : ""}{p.ready ? "已准备" : "未准备"}{p.connected ? "" : " · 离线"}{host && i > 0 && <KickButton name={p.name} onKick={() => room.act({ type: "KICK", seat: i })} />}</span>
               ))}
             </div>
           );

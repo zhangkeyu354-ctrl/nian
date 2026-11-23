@@ -1,4 +1,5 @@
 import React, { useEffect, useMemo, useRef, useState } from "react";
+import { KickButton } from "../KickButton.tsx";
 import type { CNView } from "../../../../packages/codenames/src/privacy.ts";
 import type { ClueNumber, Team, CNTurnLog } from "../../../../packages/codenames/src/types.ts";
 import type {
@@ -305,6 +306,9 @@ function Lobby({ snap, net }: { snap: CNRoomSnapshot; net: Net }) {
                           换到{TEAM_NAME[other(t)]}
                         </button>
                       )}
+                      {host && p.playerId !== snap.mySeat && (
+                        <KickButton name={p.name} onKick={() => act.run({ type: "KICK", playerId: p.playerId })} />
+                      )}
                     </li>
                   ))}
                 </ul>
@@ -341,7 +345,19 @@ function Lobby({ snap, net }: { snap: CNRoomSnapshot; net: Net }) {
 
           <section className="cn-panel">
             <h2>观战 / 还没选队</h2>
-            <p className="cn-watchers">{watchers.length ? watchers.map((p) => p.name).join("、") : "没有"}</p>
+            <p className="cn-watchers">
+              {watchers.length
+                ? watchers.map((p, i) => (
+                    <span key={p.playerId} style={{ display: "inline-flex", alignItems: "center", gap: 6, marginRight: 10 }}>
+                      {p.name}
+                      {host && p.playerId !== snap.mySeat && (
+                        <KickButton name={p.name} onKick={() => act.run({ type: "KICK", playerId: p.playerId })} />
+                      )}
+                      {i < watchers.length - 1 && !host ? "、" : ""}
+                    </span>
+                  ))
+                : "没有"}
+            </p>
             {me.team && (
               <button className="cn-mini" disabled={act.busy} onClick={() => act.run({ type: "JOIN_TEAM", team: null })}>
                 我先观战

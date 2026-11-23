@@ -72,6 +72,17 @@ export class CrimeSceneRoom {
     this.file.version++;
   }
 
+  kick(token: string, seat: number) {
+    const me = this.player(token);
+    if (me.id !== this.file.hostId || this.file.stage !== "lobby") throw new Error("只有房主可以在开局前移出玩家");
+    const target = this.file.players[seat];
+    if (!Number.isInteger(seat) || !target || target.id === me.id) throw new Error("不能移出这个座位");
+    this.file.players.splice(seat, 1);
+    if (this.file.forensicSeat >= this.file.players.length) this.file.forensicSeat = 0;
+    else if (this.file.forensicSeat > seat) this.file.forensicSeat--;
+    this.file.version++;
+  }
+
   start(token: string, now: number, random: () => number = Math.random) {
     if (this.player(token).id !== this.file.hostId || this.file.stage !== "lobby") throw new Error("只有房主可以开局");
     const count = this.file.players.length;

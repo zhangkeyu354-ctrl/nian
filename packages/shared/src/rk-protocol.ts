@@ -28,7 +28,8 @@ export type RKAction =
   | { type: "REMOVE_BOT"; playerId: string }
   | { type: "READY" }
   | { type: "START"; seed?: number }
-  | { type: "LEAVE" };
+  | { type: "LEAVE" }
+  | { type: "KICK"; playerId: string };
 export interface RKSnapshot {
   variant: RKVariant;
   code: string;

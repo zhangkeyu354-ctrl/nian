@@ -14,7 +14,8 @@ export type DMLobbyAction =
   | { type: "SHUFFLE_SEATS" }
   | { type: "START" }
   | { type: "RESTART" }
-  | { type: "LEAVE" };
+  | { type: "LEAVE" }
+  | { type: "KICK"; playerId: string };
 export type DMAction = DMLobbyAction | DMCommand;
 export interface DMSnapshot {
   code: string;

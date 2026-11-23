@@ -145,7 +145,7 @@ export class RKRoom {
     ensure(version === this.file.version, "状态已更新，请重新同步");
     const seat = this.file.players.findIndex((p) => p.id === me.id);
     const host = seat === 0;
-    if (["SET_SETTINGS", "START", "NEXT_GAME", "ADD_BOT", "REMOVE_BOT"].includes(c.type))
+    if (["SET_SETTINGS", "START", "NEXT_GAME", "ADD_BOT", "REMOVE_BOT", "KICK"].includes(c.type))
       ensure(host, "只有房主可以操作");
     return this.transaction(() => {
       let scope: Change["scope"] = "public";
@@ -258,6 +258,13 @@ export class RKRoom {
                 variant: this.file.variant ?? "classic",
               },
             );
+            break;
+          }
+          case "KICK": {
+            const at = this.file.players.findIndex((p) => p.id === c.playerId);
+            ensure(at > 0, "不能移出这位玩家");
+            this.file.players.splice(at, 1);
+            delete this.file.revisions[c.playerId];
             break;
           }
           case "LEAVE":
