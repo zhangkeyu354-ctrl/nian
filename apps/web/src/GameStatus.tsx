@@ -108,7 +108,13 @@ export function OrderStrip({ state: s }: { state: GameState }) {
         <li key={i} className={"os-" + x.status} style={{ ["--c" as string]: actorColor(s, x.id) }}>
           <i />
           {x.label}
-          {x.status === "done" ? " ✓" : ""}
+          {s.phase === "PLANNING" && x.status === "done"
+            ? Array.from({ length: s.plans[x.id]?.length ?? 1 }, (_, k) => (
+                <img key={k} className="os-card-back" src="/assets/cards/movement_back.webp" alt="" aria-hidden="true" />
+              ))
+            : x.status === "done"
+              ? " ✓"
+              : ""}
         </li>
       ))}
     </ol>

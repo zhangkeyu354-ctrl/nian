@@ -1631,3 +1631,14 @@ body:has(.major-notice) .phone-game .phone-latest { opacity: 0; transition: opac
   object-fit: cover;
   box-shadow: 0 3px 8px #0009;
 }
+.order-strip .os-card-back {
+  width: 13px;
+  height: 17px;
+  margin-left: 3px;
+  border-radius: 2px;
+  vertical-align: -3px;
+  box-shadow: 0 1px 2px #0008;
+}
+.item-use-notice img.item-card-front[data-flipped="true"] {
+  animation: item-public-flip 0.35s ease-out;
+}
