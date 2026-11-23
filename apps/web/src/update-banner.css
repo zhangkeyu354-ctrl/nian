@@ -1,0 +1,12 @@
+/* 网站更新提示：最上层的细条，不挡操作 */
+.update-banner {
+  position: fixed; z-index: 9999; left: 8px; right: 8px;
+  top: calc(6px + env(safe-area-inset-top, 0px));
+  display: flex; align-items: center; gap: 8px;
+  padding: 8px 10px; border-radius: 10px;
+  background: #2b2414f2; border: 1px solid #e0b85a; color: #fbe9bd;
+  font-size: 13px; line-height: 1.35; box-shadow: 0 6px 20px #000a;
+}
+.update-banner span { flex: 1; }
+.update-banner button { flex: none; padding: 6px 12px; border-radius: 8px; border: 0; background: #e0b85a; color: #1d1608; font-weight: 800; font-size: 13px; }
+.update-banner .update-banner-x { background: transparent; color: #fbe9bd; padding: 6px 8px; font-size: 16px; }

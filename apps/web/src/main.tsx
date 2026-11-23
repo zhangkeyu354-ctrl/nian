@@ -1,5 +1,6 @@
 import React, { lazy, Suspense } from "react";
 import { createRoot } from "react-dom/client";
+import { UpdateBanner } from "./UpdateBanner.tsx";
 import { App } from "./App.tsx";
 import "./style.css";
 import "./visuals.css";
@@ -55,6 +56,7 @@ const MagicalAthlete = lazy(() =>
  */
 createRoot(document.getElementById("root")!).render(
   <CrashGuard>
+  <UpdateBanner />
   <SettingsProvider>
     {q.get("view") === "mobile-preview" ? (
       <Suspense fallback={<p>正在打开手机样稿…</p>}>
