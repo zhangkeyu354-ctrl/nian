@@ -454,17 +454,26 @@ export function App({ net }: { net?: NetBinding } = {}) {
       ) ?? [],
     [state],
   );
+  // 两个房间之间有两条路时（奥蒙德的山间旅馆↔租赁处），同一种移动到同一房间的几条命令只差路线，点房间就走第一条
+  const sameMoveTo = (cs: Command[]) =>
+    cs.length > 0 &&
+    cs.every((c) => {
+      const { pathId: _a, ...rest } = c as Record<string, unknown>;
+      const { pathId: _b, ...first } = cs[0] as Record<string, unknown>;
+      return typeof (c as any).pathId === "string" && JSON.stringify(rest) === JSON.stringify(first);
+    });
   function pick(kind: string, target: string) {
     if (!state || !control) return;
     if (form && perkRoutes.length && kind === "room") {
       const actions = perkRoutes.filter((a) => a.to === target);
-      if (actions.length === 1) send(actions[0].command);
+      if (actions.length >= 1 && sameMoveTo(actions.map((a) => a.command))) send(actions[0].command);
       else setSelected(target);
       return;
     }
     if (state.choice?.kind === "CARRY" && kind === "room") {
+      // 两个房间之间可能有两条路（如奥蒙德的山间旅馆↔租赁处），搬运走哪条都一样，取第一条
       const steps = carrySteps(state, route).filter((r) => r.to === target);
-      if (steps.length === 1) {
+      if (steps.length >= 1) {
         const next = [...route, steps[0]];
         setRoute(next);
         setDiceCount(Math.max(diceCount, next.length));
@@ -474,7 +483,8 @@ export function App({ net }: { net?: NetBinding } = {}) {
     const choices = control.actions.filter((a) =>
       kind === "prop" ? a.targetId === target : a.roomId === target,
     );
-    if (choices.length === 1) send(choices[0].command);
+    if (choices.length === 1 || (kind === "room" && choices.length > 1 && sameMoveTo(choices.map((a) => a.command))))
+      send(choices[0].command);
     // 手机：点一个现在不能操作的房间 → 弹出房间详情，看清里面有谁、有什么
     else if (phone && !choices.length && !form) {
       const room =
