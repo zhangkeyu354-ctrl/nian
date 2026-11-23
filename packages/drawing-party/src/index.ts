@@ -443,7 +443,9 @@ export function startGame(
     players: structuredClone(players),
     phase: mode === "tp" ? "THEME" : opt.categoryVote ? "CATEGORY" : "DRAW",
     step: 1,
-    steps: players.length - 1,
+    // 每本都经过全部玩家，并始终以「猜」结尾：单数人数 n−1 步；双数人数 n 步，
+    // 最后一次猜由这本里第 2 步的猜题人再猜一次（出题人知道答案，不让他猜）。
+    steps: players.length - (players.length % 2),
     turn: 0,
     deadline: now + 30000,
     done: [],
@@ -481,7 +483,8 @@ export function taskFor(s: Game, id: string) {
   const idx = s.players.findIndex((p) => p.id === id);
   if (idx < 0) return null;
   const n = s.players.length,
-    c = (idx - s.step + n * 2) % n;
+    last = n % 2 === 0 && s.step === s.steps && n > 2,
+    c = (idx - (last ? 2 : s.step) + n * 2) % n;
   return {
     id: s.id + "-" + c + "-" + s.step,
     chain: String(c),

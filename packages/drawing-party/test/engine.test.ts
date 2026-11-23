@@ -30,7 +30,7 @@ describe("3–10人传话", () => {
       for (const p of ps)
         s = act(s, p.id, { type: "TEXT", text: "初题" + p.id }, 1100);
       expect(s.phase).toBe("TASK");
-      expect(s.steps).toBe(n - 1);
+      expect(s.steps).toBe(n - (n % 2));
       const seen = new Map<string, Set<string>>();
       for (let r = 1; r <= s.steps; r++) {
         const ids = new Set<string>();
@@ -39,7 +39,12 @@ describe("3–10人传话", () => {
           if (r === 1) expect(task.source.author).not.toBe(p.id);
           ids.add(task.chain);
           const set = seen.get(task.chain) ?? new Set();
-          expect(set.has(p.id)).toBe(false);
+          // 双数人数的最后一步：第 2 步的猜题人再猜一次（不是出题人）
+          if (r === s.steps && n % 2 === 0) {
+            expect(task.kind).toBe("text");
+            expect(s.chains[Number(task.chain)][0].author).not.toBe(p.id);
+            expect(s.chains[Number(task.chain)][2].author).toBe(p.id);
+          } else expect(set.has(p.id)).toBe(false);
           set.add(p.id);
           seen.set(task.chain, set);
           const v = viewFor(s, p.id);
