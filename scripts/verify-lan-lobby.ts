@@ -46,13 +46,17 @@ async function checkPhone(p: Page) {
     clipped: [...document.querySelectorAll("button:not([disabled])")]
       .filter((e) => {
         const b = e.getBoundingClientRect();
+        let scrollable=false;
+        for (let parent=e.parentElement;parent;parent=parent.parentElement) {
+          const style=getComputedStyle(parent);
+          if (/auto|scroll/.test(style.overflowY) && parent.scrollHeight>parent.clientHeight+1) {scrollable=true;break;}
+        }
         return (
           b.width > 0 &&
           b.height > 0 &&
           (b.width < 48 ||
             b.height < 48 ||
-            b.top < 0 ||
-            b.bottom > innerHeight + 1)
+            ((b.top < 0 || b.bottom > innerHeight + 1) && !scrollable))
         );
       })
       .map((e) => e.textContent),

@@ -25,6 +25,7 @@ interface Game {
   join: (code: string) => string;
   extra?: React.ReactNode;
   isNew?: boolean;
+  isBeta?: boolean;
   time?: string;
 }
 
@@ -37,7 +38,7 @@ export const GAMES: Game[] = [
   { id: "du", title: "反转王牌", en: "Dnup", min: 2, max: 6, tag: "爬梯出牌", time: "15 分钟", isNew: true, blurb: "每张牌上下两个数字，牌一回到手里就反转。压过别人、塞牌、拿牌或整手翻转——最先出完的人得分。", art: img("/assets/dnup/cover.webp"), bg: "#111713", fill: true, online: "/?game=du", join: (c) => "/?game=du&room=" + c.toUpperCase() },
   { id: "bf", title: "魔王试炼", en: "Boss Fighters QR", min: 2, max: 4, tag: "合作 · 卡牌", blurb: "组队讨伐魔王！先看清魔王要打谁，再出牌打破护盾、保护队友。可加机器人队友。", art: img("/assets/bf/bg/menu.webp"), bg: "#2b2140", fill: true, online: "/?game=bf", join: (c) => "/?game=bf&room=" + c.toUpperCase() },
   { id: "ta", title: "我们之中的威胁", en: "The Menace Among Us", min: 4, max: 8, tag: "隐藏身份", blurb: "飞船失去动力，氧气一格格流失。大家暗中出牌修船，内鬼却在其中破坏。", art: img("/assets/menace/box.webp"), bg: "#1d1410", fill: true, online: "/?game=ta", join: (c) => "/?game=ta&room=" + c.toUpperCase() },
-  { id: "ba", title: "双黑A五十K", en: "Black A 510K", min: 4, max: 4, tag: "纸牌 · 隐藏阵营", blurb: "四人抢分，边打牌边寻找队友。网站规则 V1.1。", art: <span style={{fontSize:54,color:"#f8edce",letterSpacing:-12}}>A♠ A♣</span>, bg: "#174f3e", online: "/?game=ba", join: (c) => "/?game=ba&room=" + c.toUpperCase() },
+  { id: "ba", title: "双黑A五十K", en: "Black A 510K", min: 4, max: 4, tag: "纸牌 · 隐藏阵营", isBeta: true, blurb: "Beta 测试版，目前只支持 4 人局。四人抢分，边打牌边寻找队友。遇到问题或知道 6 人、8 人两副牌的具体规则，欢迎点首页「反馈」告诉我们。", art: <span style={{fontSize:54,color:"#f8edce",letterSpacing:-12}}>A♠ A♣</span>, bg: "#174f3e", online: "/?game=ba", join: (c) => "/?game=ba&room=" + c.toUpperCase() },
   { id: "kb", title: "卡里巴湖", en: "Kariba", min: 2, max: 8, tag: "卡牌 · 可组队", blurb: "凑满三只同种动物，就能把水塘边较小的动物赶跑收走。只有老鼠吓得跑大象。", art: img("/assets/kariba/box.webp", "contain"), bg: "#1b5b63", online: "/?game=kb", join: (c) => "/?game=kb&room=" + c.toUpperCase() },
   { id: "nd", title: "脑洞量表", en: "Top Ten", min: 4, max: 9, tag: "合作 · 派对", blurb: "一个数字，一张答题卡。队长看卡把大家从小到大排好，一起闯过五轮。", art: img("/assets/naodong-scale/box.webp", "contain"), bg: "#1d6a73", online: "/?game=nd", join: (c) => "/?game=nd&room=" + c.toUpperCase() },
   { id: "ss", title: "汽水走私犯", en: "Soda Smugglers", min: 3, max: 8, tag: "吹牛 · 推理", blurb: "秘密装好手提箱，和缉私警长斗智，带着汽水顺利过关。", art: img("/assets/soda-smugglers/box-logo.webp", "contain"), bg: "#3d2b4a", online: "/?game=ss", join: (c) => "/?game=ss&room=" + c.toUpperCase() },
@@ -113,6 +114,7 @@ function Cart({ g, onOpen, small, i = 0 }: { g: Game; onOpen: () => void; small?
       <span className={`cart-art${g.fill ? " fill" : ""}`} style={{ background: g.bg }}>
         <Cover g={g} kind="card" />
         {g.isNew && <span className="cart-new">新</span>}
+        {g.isBeta && <span className="cart-beta">Beta</span>}
       </span>
       <span className="cart-label">
         <b>{g.title}</b>
@@ -146,6 +148,7 @@ function Detail({ g, onClose }: { g: Game; onClose: () => void }) {
         <div className="hall-chips">
           <span>👥 {g.min}–{g.max} 人</span>
           <span>{g.tag}</span>
+          {g.isBeta && <span>Beta 测试版</span>}
           {g.time && <span>⏱ {g.time}</span>}
         </div>
         <p className="hall-blurb">{g.blurb}</p>
