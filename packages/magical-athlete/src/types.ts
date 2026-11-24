@@ -38,6 +38,7 @@ export interface Token {
 }
 
 export interface RaceState {
+  twist?: { triggered: boolean; remaining: number[]; drawn: number[] };
   /** Physical mounts are shared by every racer; rider ids are racer ids. */
   hogs?: Array<{ source: string; rider: string | null; pos: number }>;
   championIntercepted?: boolean;

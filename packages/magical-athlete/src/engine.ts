@@ -551,6 +551,23 @@ function hugeBaby(s: MAState, c: Ctx, t: Token) {
 }
 
 /** 移动（main = 主移动）。n 可正可负；0 不算移动。 */
+/** Commit the card before reactions; incomplete effects explicitly reject preview play. */
+function crossTwist(s: MAState, c: Ctx, t: Token, from: number, to: number) {
+  const twist = race(s).twist;
+  if (!twist || twist.triggered || from > 13 || to < 14 || !active(t)) return;
+  twist.triggered = true;
+  const index = randInt(s, twist.remaining.length);
+  const [card] = twist.remaining.splice(index, 1);
+  twist.drawn.push(card);
+  log(s, `${rname(t)} 跨过 Twist：抽到事件 ${card}。`);
+  if (card !== 1) fail("CHECK_REQUIRED", `Twist 事件 ${card} 尚未实现，不能结算。`);
+  const live = race(s).tokens.filter(active);
+  const last = Math.min(...live.map(x => x.pos));
+  const targets = inOrder(s).filter(x => active(x) && x.pos === last);
+  log(s, `【地上烤鸡！】末位 ${targets.map(rname).join("、")} 各向前移动 7 格。`);
+  for (const target of targets) if (active(target)) move(s, c, target, 7, false, "地上烤鸡");
+}
+
 /**
  * 移动（main = 主移动；其余为技能移动 / 赛道移动，都算「移动」，会经过别人）。n 可正可负；0 不算移动。
  *
@@ -641,6 +658,7 @@ function move(s: MAState, c: Ctx, t: Token, n: number, main: boolean, why: strin
     why,
   });
   if (p >= L) {
+    for (const g of group) crossTwist(s, c, g, from, p);
     for (const g of group)
       if (active(g)) {
         if (magicalTrip && g === t)
@@ -671,6 +689,7 @@ function move(s: MAState, c: Ctx, t: Token, n: number, main: boolean, why: strin
     return;
   }
   for (const g of group) g.pos = p;
+  for (const g of group) crossTwist(s, c, g, from, p);
   log(
     s,
     n < 0
@@ -2486,6 +2505,7 @@ function startRace(s: MAState) {
     over: false,
     setup: false,
     firstTurnDone: [],
+    ...(track === "twisty-twirl" ? { twist: { triggered: false, remaining: Array.from({length: 13}, (_, i) => i + 1), drawn: [] } } : {}),
   };
   for (const returning of s.returningRacers ?? []) {
     if (s.race.tokens.some((t) => t.racer === returning.racer)) continue;
