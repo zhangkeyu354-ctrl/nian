@@ -25,6 +25,7 @@ const Menace = lazy(() => import("./ta/Menace.tsx").then(m => ({default:m.Menace
 const CrimeScene = lazy(() => import("./cs/CrimeScene.tsx"));
 const BossFighters = lazy(() => import("./bf/BossFighters.tsx").then(m => ({default:m.BossFighters})));
 const Kariba = lazy(() => import("./kb/Kariba.tsx").then(m => ({default:m.Kariba})));
+const BlackA = lazy(() => import("./ba/BlackA.tsx").then(m => ({default:m.BlackA})));
 const NaodongScale = lazy(() => import("./nd/NaodongScale.tsx").then(m => ({default:m.NaodongScale})));
 const q = new URLSearchParams(location.search);
 const Xiabaiwang = lazy(() => import('./xb/Xiabaiwang.tsx').then(m => ({default:m.Xiabaiwang})));
@@ -78,6 +79,8 @@ createRoot(document.getElementById("root")!).render(
       <Suspense fallback={<p>正在打开犯罪现场…</p>}><CrimeScene /></Suspense>
     ) : q.get("game") === "bf" ? (
       <Suspense fallback={<p>正在打开魔王试炼…</p>}><BossFighters /></Suspense>
+    ) : q.get("game") === "ba" ? (
+      <Suspense fallback={<p>正在打开双黑A五十K…</p>}><BlackA /></Suspense>
     ) : q.get("game") === "kb" ? (
       <Suspense fallback={<p>正在打开卡里巴湖…</p>}><Kariba /></Suspense>
     ) : q.get("game") === "nd" ? (

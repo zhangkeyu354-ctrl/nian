@@ -1,0 +1,43 @@
+{
+  "seeds": "1..1000",
+  "rounds": 1000,
+  "team": 772,
+  "solo": 228,
+  "actions": 94273,
+  "failures": 0,
+  "combinations": {
+    "CONTAINS_D3/FINAL": {
+      "rounds": 250,
+      "solo": 63,
+      "team": 187
+    },
+    "OWNER_ANY/BASE": {
+      "rounds": 250,
+      "solo": 54,
+      "team": 196
+    },
+    "CONTAINS_D3/BASE": {
+      "rounds": 250,
+      "solo": 53,
+      "team": 197
+    },
+    "OWNER_ANY/FINAL": {
+      "rounds": 250,
+      "solo": 58,
+      "team": 192
+    }
+  },
+  "playTypes": {
+    "SINGLE": 43807,
+    "BLACK_A": 1952,
+    "PAIR": 1300,
+    "TRIPLE_SINGLE": 56,
+    "MIXED_510K": 421,
+    "PURE_510K": 25,
+    "STRAIGHT": 17,
+    "BOMB": 20,
+    "DOUBLE_BLACK_A": 19,
+    "TRIPLE_PAIR": 7
+  },
+  "scope": "single round pure engine; excludes exchanges, network, timeouts"
+}

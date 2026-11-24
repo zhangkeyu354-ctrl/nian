@@ -1,0 +1,22 @@
+{
+  "seeds": "group 0..99, round 0..9",
+  "groups": 100,
+  "roundsPerGroup": 10,
+  "failures": 0,
+  "combinations": {
+    "OWNER_ANY/FINAL": 25,
+    "CONTAINS_D3/FINAL": 25,
+    "OWNER_ANY/BASE": 25,
+    "CONTAINS_D3/BASE": 25
+  },
+  "counts": {
+    "rounds": 1000,
+    "transactions": 2016,
+    "normal": 1997,
+    "shaved": 19,
+    "team": 684,
+    "soloWin": 124,
+    "soloLoss": 92
+  },
+  "scope": "pure engine and deterministic return; excludes network, timeouts, exits"
+}

@@ -1,0 +1,435 @@
+{
+  "source_url": "https://github.com/AustinGabriel/Public-Domain-and-CC0-Playing-Cards",
+  "author": "AustinGabriel",
+  "commit": "3765067c32fcef42a30e87022332db729658e7cd",
+  "download_date": "2026-11-24",
+  "license": "CC0-1.0",
+  "license_evidence": "apps/web/public/assets/black-a-510k/cards/LICENSE-CC0.txt",
+  "modification": "resized PNG from 1500x2100 to 168x235 using LANCZOS; encoded WebP quality 91",
+  "assets": [
+    {
+      "id": "2D",
+      "source_filename": "png cards/card fronts/diamonds/2 of diamonds.png",
+      "source_sha256": "25bd4a9de12e29c87d34f679b4fa3965b6deb0ca0f6114155d1b5ae038535ff3",
+      "path": "apps/web/public/assets/black-a-510k/cards/2D.webp",
+      "bytes": 2608,
+      "sha256": "a059b1d6078d2c86a9fc4f6bd9cbd80e9b184df708eda41a620d7305040e9e95"
+    },
+    {
+      "id": "3D",
+      "source_filename": "png cards/card fronts/diamonds/3 of diamonds.png",
+      "source_sha256": "f07a7bcafb7fc8c88650e7bd52542bb0a8da30653e9482d983a454aa52625434",
+      "path": "apps/web/public/assets/black-a-510k/cards/3D.webp",
+      "bytes": 3004,
+      "sha256": "cfde080f364eb0a1f71ecb30dc5c3c8083638283d5cbab41f5fa5343061c4ad8"
+    },
+    {
+      "id": "4D",
+      "source_filename": "png cards/card fronts/diamonds/4 of diamonds.png",
+      "source_sha256": "49e1c2444eb1d327b6e442b9572a1e116525f4bbf03869be7001797f0c7bf5c4",
+      "path": "apps/web/public/assets/black-a-510k/cards/4D.webp",
+      "bytes": 3376,
+      "sha256": "1b92caabb788eff4c24edb5a40976921b75bc0480daef025f7fe5d2e7e5074b1"
+    },
+    {
+      "id": "5D",
+      "source_filename": "png cards/card fronts/diamonds/5 of diamonds.png",
+      "source_sha256": "91758b0328b6397051308b99670f150bb7a29f375974dc4b62c11ad3010f2f83",
+      "path": "apps/web/public/assets/black-a-510k/cards/5D.webp",
+      "bytes": 3960,
+      "sha256": "5d24bd790e327da98d0669911a631a06e34fd336c4f7a3af651d1da19d48639f"
+    },
+    {
+      "id": "6D",
+      "source_filename": "png cards/card fronts/diamonds/6 of diamonds.png",
+      "source_sha256": "735ac83f059914ef1d1ad5da98e3fd9feedc9041cf9a5bd13a3797c2f39a5436",
+      "path": "apps/web/public/assets/black-a-510k/cards/6D.webp",
+      "bytes": 4396,
+      "sha256": "585a5bc6cc1fca4a6c6c6d960a2e2b46b07a6b6d9b24a94f22714767b0754ee8"
+    },
+    {
+      "id": "7D",
+      "source_filename": "png cards/card fronts/diamonds/7 of diamonds.png",
+      "source_sha256": "05118716b063daa4a9dad6172588573b4ab0e002ca744dbba0f98955206c7629",
+      "path": "apps/web/public/assets/black-a-510k/cards/7D.webp",
+      "bytes": 4706,
+      "sha256": "f013ef176eeefa0df6d0e553523af912d30dc78f040677832a4b15aa5aad3525"
+    },
+    {
+      "id": "8D",
+      "source_filename": "png cards/card fronts/diamonds/8 of diamonds.png",
+      "source_sha256": "b0391568d415f30944988abfda5434bbe6914e9fdca0ff24e419308914912770",
+      "path": "apps/web/public/assets/black-a-510k/cards/8D.webp",
+      "bytes": 5336,
+      "sha256": "61dc2132234f6472bf81e80ff57186ddedd41003c3a351f63cbe3c6bba8d8972"
+    },
+    {
+      "id": "9D",
+      "source_filename": "png cards/card fronts/diamonds/9 of diamonds.png",
+      "source_sha256": "0182a52e7a052512aa1b030ae52090e17ff54d01ba41b27e45d9e70643316b0e",
+      "path": "apps/web/public/assets/black-a-510k/cards/9D.webp",
+      "bytes": 5762,
+      "sha256": "34547dd4a6167e9704ded18505f1f27b66bf9632338717217457a1374f752368"
+    },
+    {
+      "id": "10D",
+      "source_filename": "png cards/card fronts/diamonds/10 of diamonds.png",
+      "source_sha256": "4605a8913c6f4c5ed5cf707d7095f4fb731cbc6fe9bc5ba80e7c3469b7b4ec1b",
+      "path": "apps/web/public/assets/black-a-510k/cards/10D.webp",
+      "bytes": 6078,
+      "sha256": "e28724ddab3a63e5456c6225c5d6ae5b11603f38370700b724db5650bac3b8f4"
+    },
+    {
+      "id": "AD",
+      "source_filename": "png cards/card fronts/diamonds/ace of diamonds.png",
+      "source_sha256": "feabe92e4fd7352b5e8836ebe87dfc01f70df4d8e28a30804c66b5839469fae0",
+      "path": "apps/web/public/assets/black-a-510k/cards/AD.webp",
+      "bytes": 1942,
+      "sha256": "103aaf0f6aead274dcc8555283504d221ae9815371a74a5be3efc6d752bb4c3f"
+    },
+    {
+      "id": "JD",
+      "source_filename": "png cards/card fronts/diamonds/jack of diamonds.png",
+      "source_sha256": "467a0f3799d53f6cc21369f57ba25008d56892dfbe401eedc9b22b2fd955314d",
+      "path": "apps/web/public/assets/black-a-510k/cards/JD.webp",
+      "bytes": 15606,
+      "sha256": "32efcc45df0e820649e9f872904552efc1e1fbdb3d81a017c88c797848ded366"
+    },
+    {
+      "id": "QD",
+      "source_filename": "png cards/card fronts/diamonds/queen of diamonds.png",
+      "source_sha256": "2d61ebd9ca4ff956b2ac8fc134a0049ad2df9db9c7d1d46ffc2b1a7c495de3ce",
+      "path": "apps/web/public/assets/black-a-510k/cards/QD.webp",
+      "bytes": 15242,
+      "sha256": "4262bc4cedc71cda0418600c0d0bafcf66e5a03242df2e871e0b473901c3f334"
+    },
+    {
+      "id": "KD",
+      "source_filename": "png cards/card fronts/diamonds/king of diamonds.png",
+      "source_sha256": "006f68e4309aecb79473fe1225dc39ec994a68809d898040eaa40133d92aadcb",
+      "path": "apps/web/public/assets/black-a-510k/cards/KD.webp",
+      "bytes": 15340,
+      "sha256": "1dd4dda5598242456fa62914525a92f194cd89e1f6a5a349b084e2b74c0f257e"
+    },
+    {
+      "id": "2C",
+      "source_filename": "png cards/card fronts/clubs/2 of clubs.png",
+      "source_sha256": "fb3df96fe8779de4f005576125bc93c16612336e3f8940c1611fd71e8363a981",
+      "path": "apps/web/public/assets/black-a-510k/cards/2C.webp",
+      "bytes": 2426,
+      "sha256": "4e7b1c4486e915bdb8da1e9c7b83847d9931e9cb5f3e247e1017d232468d5ab7"
+    },
+    {
+      "id": "3C",
+      "source_filename": "png cards/card fronts/clubs/3 of clubs.png",
+      "source_sha256": "d0ad74fdcc41acee23bd56122197aa5c184478aa15ce343fa58452009a32514a",
+      "path": "apps/web/public/assets/black-a-510k/cards/3C.webp",
+      "bytes": 2928,
+      "sha256": "e108c68673bc81db780f745990cf3d5364456493bbffe67e8a42bbb65f9855f4"
+    },
+    {
+      "id": "4C",
+      "source_filename": "png cards/card fronts/clubs/4 of clubs.png",
+      "source_sha256": "bc987c130db0f50e801bb7df82ac668ec441253e19234450fb42d0b47db85ccd",
+      "path": "apps/web/public/assets/black-a-510k/cards/4C.webp",
+      "bytes": 3224,
+      "sha256": "88af661abb56f725bfd562eb14041b5e275305a6938b4c89d4dd1a317291decc"
+    },
+    {
+      "id": "5C",
+      "source_filename": "png cards/card fronts/clubs/5 of clubs.png",
+      "source_sha256": "fbca94b16f03656f3bb15c57b2224f31cab2fa4a26e004772c29c63612cdd49f",
+      "path": "apps/web/public/assets/black-a-510k/cards/5C.webp",
+      "bytes": 3786,
+      "sha256": "e57feaf673d0f8ed372b810ff4b7fb6ede67976e1d5001272623ebbdae182889"
+    },
+    {
+      "id": "6C",
+      "source_filename": "png cards/card fronts/clubs/6 of clubs.png",
+      "source_sha256": "3aeaca5a466e4e5d49ce866206a969123978e13b9eba3a4b2869316dba44fbf2",
+      "path": "apps/web/public/assets/black-a-510k/cards/6C.webp",
+      "bytes": 4386,
+      "sha256": "33ab1fa84cc06ec2ba6330c671d864e1656064eba548d35a49cf94b84b188f72"
+    },
+    {
+      "id": "7C",
+      "source_filename": "png cards/card fronts/clubs/7 of clubs.png",
+      "source_sha256": "4a792c883b3997b1f58595019517d5aa44dded43b747b8fad5e3ac0dd061b032",
+      "path": "apps/web/public/assets/black-a-510k/cards/7C.webp",
+      "bytes": 4690,
+      "sha256": "5f96bf8bb3219e36f59dfe69449d93132f67abbc8284a1a745bd50c68449b420"
+    },
+    {
+      "id": "8C",
+      "source_filename": "png cards/card fronts/clubs/8 of clubs.png",
+      "source_sha256": "24f98d8b476fbb82131d0402d0c18a03f291491cc6d4cef5169bd7ce81b39ad9",
+      "path": "apps/web/public/assets/black-a-510k/cards/8C.webp",
+      "bytes": 5420,
+      "sha256": "47ce66e58f957dd778878c431308c2a276de8e6f071561d6c5ec4e6076edcd04"
+    },
+    {
+      "id": "9C",
+      "source_filename": "png cards/card fronts/clubs/9 of clubs.png",
+      "source_sha256": "aa834eb833d8296885b99ffa993f6a8de2d825e47275bd1a77c74ad17fc6cc3c",
+      "path": "apps/web/public/assets/black-a-510k/cards/9C.webp",
+      "bytes": 5850,
+      "sha256": "f7bbc8d83f839f6bff75d3e8cd6f5fae759a7b7af5c458a7efc3c2c00a97ba6c"
+    },
+    {
+      "id": "10C",
+      "source_filename": "png cards/card fronts/clubs/10 of clubs.png",
+      "source_sha256": "d64fa6f44b5c79774f800c2dbaa464049e3331447b851b90e8abef5ac28c8b76",
+      "path": "apps/web/public/assets/black-a-510k/cards/10C.webp",
+      "bytes": 6404,
+      "sha256": "ec2fb2de1161a2f3ba78b4580fe37d15827b8ee939a575cac00c51e70e72edb3"
+    },
+    {
+      "id": "AC",
+      "source_filename": "png cards/card fronts/clubs/ace of clubs.png",
+      "source_sha256": "5cf77b875f94540a25acb05863c2970e6f9fc50778bb9ec8c1421cd38cc35d5c",
+      "path": "apps/web/public/assets/black-a-510k/cards/AC.webp",
+      "bytes": 1732,
+      "sha256": "e2b4a9c0187c026c1bb14c394dfb4282eebd663159407999b5f2a452dd29287c"
+    },
+    {
+      "id": "JC",
+      "source_filename": "png cards/card fronts/clubs/jack of clubs.png",
+      "source_sha256": "1f2e8e2cf9e4fc558714bacb289f658b51a6e4aa8107ef4fef529eeebb39e2fa",
+      "path": "apps/web/public/assets/black-a-510k/cards/JC.webp",
+      "bytes": 15404,
+      "sha256": "2ac6b73bf7fb16e190354dcb48c7f81b2d6e62fbd07a81771607851ce5579551"
+    },
+    {
+      "id": "QC",
+      "source_filename": "png cards/card fronts/clubs/queen of clubs.png",
+      "source_sha256": "8e4caa3d88dcda5f9b79385f59057bf263a2d9651a275668ea9a64a582b4e803",
+      "path": "apps/web/public/assets/black-a-510k/cards/QC.webp",
+      "bytes": 15588,
+      "sha256": "a23349579f7927beb2479bba6f8dba5b5fe732ef99713393c43a021e92c3c258"
+    },
+    {
+      "id": "KC",
+      "source_filename": "png cards/card fronts/clubs/king of clubs.png",
+      "source_sha256": "fc66708b5995e845ac21321bcc2e037852a2c26c69d187d6a249a5f268b155e2",
+      "path": "apps/web/public/assets/black-a-510k/cards/KC.webp",
+      "bytes": 15034,
+      "sha256": "833d4e2ee2c8554307c4d7e280102aafa503b6c417eb32f7464d0e0395919acb"
+    },
+    {
+      "id": "2H",
+      "source_filename": "png cards/card fronts/hearts/2 of hearts.png",
+      "source_sha256": "ce2e3421cb568d4cd6db962e21c390a3055d8d8ce6952a3d00af2e5d9013c40e",
+      "path": "apps/web/public/assets/black-a-510k/cards/2H.webp",
+      "bytes": 2858,
+      "sha256": "1f97234ef84218b6c0b3a867b66d1f0367234ae48d6f59229cec87fc26ec68e4"
+    },
+    {
+      "id": "3H",
+      "source_filename": "png cards/card fronts/hearts/3 of hearts.png",
+      "source_sha256": "bf4f8f4081a130b0d02421298a5ac3aa9369ac68360eafc6a3c0a80c2abbddce",
+      "path": "apps/web/public/assets/black-a-510k/cards/3H.webp",
+      "bytes": 3462,
+      "sha256": "bc37fac5d211b1d64f846a01b56a6d482e9655202cf0119cbffd154e9c956d92"
+    },
+    {
+      "id": "4H",
+      "source_filename": "png cards/card fronts/hearts/4 of hearts.png",
+      "source_sha256": "312c73b773996e12ee174212a7bb59582106a2f96632148695baf951fd94eb32",
+      "path": "apps/web/public/assets/black-a-510k/cards/4H.webp",
+      "bytes": 3898,
+      "sha256": "2ede2c935d9906a9f2531f901280ee85aaa0cbc9b3a701947a318221bf230ac6"
+    },
+    {
+      "id": "5H",
+      "source_filename": "png cards/card fronts/hearts/5 of hearts.png",
+      "source_sha256": "161680995bc8bb169230db814bd0836a0d1ff09d588a7885794bf843a3bb2270",
+      "path": "apps/web/public/assets/black-a-510k/cards/5H.webp",
+      "bytes": 4644,
+      "sha256": "fe086088864a24bc905938d8fddcae9160b99873434177d7511249a0ac3dae13"
+    },
+    {
+      "id": "6H",
+      "source_filename": "png cards/card fronts/hearts/6 of hearts.png",
+      "source_sha256": "4871bbaf3b4eea3f672effe3fb085fc616c4269906e42e0764fc045a89564908",
+      "path": "apps/web/public/assets/black-a-510k/cards/6H.webp",
+      "bytes": 5182,
+      "sha256": "be298c98556a8b99b613e22f7c95ccf0409d4a7dbd77cc69aea75961620f7095"
+    },
+    {
+      "id": "7H",
+      "source_filename": "png cards/card fronts/hearts/7 of hearts.png",
+      "source_sha256": "07d9ea0afcf51910b35ff364003adb991a96a081aaf87b4fd6c62dc5ba107c1e",
+      "path": "apps/web/public/assets/black-a-510k/cards/7H.webp",
+      "bytes": 5542,
+      "sha256": "38d70f238a42eaaeea554a07865810dec8a4460a95e6dd4c73bce99a5c59c050"
+    },
+    {
+      "id": "8H",
+      "source_filename": "png cards/card fronts/hearts/8 of hearts.png",
+      "source_sha256": "22370ed25c144f36d44c72c27b51aa81e69ed0b26ea21baaa5dfdfa8203068ba",
+      "path": "apps/web/public/assets/black-a-510k/cards/8H.webp",
+      "bytes": 6240,
+      "sha256": "652e5cc501d4b9fe025d7a0e5b9be2897588d949e921415fa30e4bda566ab26a"
+    },
+    {
+      "id": "9H",
+      "source_filename": "png cards/card fronts/hearts/9 of hearts.png",
+      "source_sha256": "d9873168e00f594c871a78bbb1a86e67425e5394c5472ac0cda3b88856eb773e",
+      "path": "apps/web/public/assets/black-a-510k/cards/9H.webp",
+      "bytes": 6838,
+      "sha256": "bda65423df342df81a2513ba42e9005989d425cde4e66e262c4201d7c3d83633"
+    },
+    {
+      "id": "10H",
+      "source_filename": "png cards/card fronts/hearts/10 of hearts.png",
+      "source_sha256": "038726c33dc425265ec9c4f7833b42a36170c331120fbd45e13a57fc32646e18",
+      "path": "apps/web/public/assets/black-a-510k/cards/10H.webp",
+      "bytes": 7204,
+      "sha256": "6960a4eaffb2564fc75a69c0f3475976cd7b15bcdcd12f89dbbe61851c906fef"
+    },
+    {
+      "id": "AH",
+      "source_filename": "png cards/card fronts/hearts/ace of hearts.png",
+      "source_sha256": "13c3c95824eb5b9175a235ca3a210938f457055b54be941a72c1f13e823759a3",
+      "path": "apps/web/public/assets/black-a-510k/cards/AH.webp",
+      "bytes": 2154,
+      "sha256": "b3d8df14245eea9f779e7f4f77c1fde7e04eddf6ffbe0ed80bc9d69a48b889c2"
+    },
+    {
+      "id": "JH",
+      "source_filename": "png cards/card fronts/hearts/jack of hearts.png",
+      "source_sha256": "47b12c2a143be2d86a01e221e4258fac75dd315df08c158ccbbebcb7ce80a55a",
+      "path": "apps/web/public/assets/black-a-510k/cards/JH.webp",
+      "bytes": 15876,
+      "sha256": "08bf3a6a412d70e11784981d1f76355c3b009257934dd6003651e9c502340fea"
+    },
+    {
+      "id": "QH",
+      "source_filename": "png cards/card fronts/hearts/queen of hearts.png",
+      "source_sha256": "a15009b65ad801d2145fd068c5cd1f80a2a7753ab80cccde2294fa566cd18849",
+      "path": "apps/web/public/assets/black-a-510k/cards/QH.webp",
+      "bytes": 15474,
+      "sha256": "033b84212d51d32d6005928259a624c0eaea7dd729741575851e5acd0a77eda8"
+    },
+    {
+      "id": "KH",
+      "source_filename": "png cards/card fronts/hearts/king of hearts.png",
+      "source_sha256": "563e4e863fcc0bab5696c1ddbd803c750b5e0511a4abd5d38ff1cff47a650f9e",
+      "path": "apps/web/public/assets/black-a-510k/cards/KH.webp",
+      "bytes": 16316,
+      "sha256": "4ab00b01ad61dcaeb0c16d04948b3e033b412cbf96328fd0492d821e01c62da9"
+    },
+    {
+      "id": "2S",
+      "source_filename": "png cards/card fronts/spades/2 of spades.png",
+      "source_sha256": "4fd0fe4578488f02e7e9ea67c64a2225fccca5a0af7fad4ed532b7cfca529cb4",
+      "path": "apps/web/public/assets/black-a-510k/cards/2S.webp",
+      "bytes": 2228,
+      "sha256": "8fb957512c25d0c120f31e2075511b11d7e4435eb37fc21981fa096b4762342a"
+    },
+    {
+      "id": "3S",
+      "source_filename": "png cards/card fronts/spades/3 of spades.png",
+      "source_sha256": "65b7f6aa89a3239cb710a78dd1581a78d8871c5e679a014f2cb2cb4296d386cc",
+      "path": "apps/web/public/assets/black-a-510k/cards/3S.webp",
+      "bytes": 2632,
+      "sha256": "783a67b974225575c884ed1af42dd8282e93bcf6adf72489488a8983e79f441a"
+    },
+    {
+      "id": "4S",
+      "source_filename": "png cards/card fronts/spades/4 of spades.png",
+      "source_sha256": "5645f7e00c5850c244c143b40a03c4fa71741cf749c52a31550cd77f33a24569",
+      "path": "apps/web/public/assets/black-a-510k/cards/4S.webp",
+      "bytes": 2860,
+      "sha256": "1173060a87e405274126b9d1ee7cb2799648dd0e7a30a17e48b69a071d4c6ce0"
+    },
+    {
+      "id": "5S",
+      "source_filename": "png cards/card fronts/spades/5 of spades.png",
+      "source_sha256": "50dd22a03f48b6e2cb02f0336697add4baed466290fc3f802d4dcfe54e096613",
+      "path": "apps/web/public/assets/black-a-510k/cards/5S.webp",
+      "bytes": 3372,
+      "sha256": "8d90b740ce08f56f1254a7c3c6b510037818a95c3fb74797ae7482ffec872368"
+    },
+    {
+      "id": "6S",
+      "source_filename": "png cards/card fronts/spades/6 of spades.png",
+      "source_sha256": "2de2816d58d7ee615d163b0e092285810f764aff109838793811116092fc81f6",
+      "path": "apps/web/public/assets/black-a-510k/cards/6S.webp",
+      "bytes": 3866,
+      "sha256": "f283f81e12a9426b094a567ea0ecdedfb8478dfcbce92635ec578d67a795e0f5"
+    },
+    {
+      "id": "7S",
+      "source_filename": "png cards/card fronts/spades/7 of spades.png",
+      "source_sha256": "47fba7ffd8355abf739726ed2fa9a32867ef9f917ccd5073e1cb8d7b9a8736c2",
+      "path": "apps/web/public/assets/black-a-510k/cards/7S.webp",
+      "bytes": 4102,
+      "sha256": "69629ee51f8ec5b5d49f2e9654deffe2f7add394a6a4275961413d09f4823c26"
+    },
+    {
+      "id": "8S",
+      "source_filename": "png cards/card fronts/spades/8 of spades.png",
+      "source_sha256": "05446a8ed9344eaa95b537b1fa64f5144c20f65ea299666096b134d4b5a00b15",
+      "path": "apps/web/public/assets/black-a-510k/cards/8S.webp",
+      "bytes": 4730,
+      "sha256": "22f569a175d42a19ef3dd7c54d849431160fc513657bef65b9fe08eff4314384"
+    },
+    {
+      "id": "9S",
+      "source_filename": "png cards/card fronts/spades/9 of spades.png",
+      "source_sha256": "31f2113099243b7ecb8ebc972ea58fa7b4712ab8d3c9911bbe74de99d1562ad1",
+      "path": "apps/web/public/assets/black-a-510k/cards/9S.webp",
+      "bytes": 5152,
+      "sha256": "bdf777ffc6ce29049f55dc2f29bf5f0f80414bea1131a1f9c058fe128210b056"
+    },
+    {
+      "id": "10S",
+      "source_filename": "png cards/card fronts/spades/10 of spades.png",
+      "source_sha256": "0c5d1ea3a9470b69f55064d91f94e54213417f5779e14193bf9f300515193619",
+      "path": "apps/web/public/assets/black-a-510k/cards/10S.webp",
+      "bytes": 5350,
+      "sha256": "950477b8edef58d1af47ecca2ab297c871fc7a1f11b01d82f31e966afd912045"
+    },
+    {
+      "id": "AS",
+      "source_filename": "png cards/card fronts/spades/ace of spades.png",
+      "source_sha256": "94dbf283d82efd7461f77ce6fdeecb836d28a9b014426db4ab484ceaf065b873",
+      "path": "apps/web/public/assets/black-a-510k/cards/AS.webp",
+      "bytes": 4326,
+      "sha256": "7b9dd99396679dfaa552323fa9826311f7845117c31bd695c1acd08e270b7f7c"
+    },
+    {
+      "id": "JS",
+      "source_filename": "png cards/card fronts/spades/jack of spades.png",
+      "source_sha256": "dd19ea20e9ba98b05ff943d523293e8f6d04982d8d35a25ab48dd8d0ceb8c3a4",
+      "path": "apps/web/public/assets/black-a-510k/cards/JS.webp",
+      "bytes": 14966,
+      "sha256": "d4a87e1f1b03a2abb61a0673f8a904b215c522d1e8fd0b323e2cb774b38ca161"
+    },
+    {
+      "id": "QS",
+      "source_filename": "png cards/card fronts/spades/queen of spades.png",
+      "source_sha256": "81446f3f17f28e95de43974c637651a9995844a49df3b16c1d66dfc5baaf1e56",
+      "path": "apps/web/public/assets/black-a-510k/cards/QS.webp",
+      "bytes": 15006,
+      "sha256": "eeb59b497e52530c3aa16a35f766bf06fc86873be1241afbe0d5e6e040ad7bd5"
+    },
+    {
+      "id": "KS",
+      "source_filename": "png cards/card fronts/spades/king of spades.png",
+      "source_sha256": "0de375997f913f615b1b8f9ea510b4ece0aa276ea5028927d59e9245afbf1eb3",
+      "path": "apps/web/public/assets/black-a-510k/cards/KS.webp",
+      "bytes": 14716,
+      "sha256": "45008ecfaa41662c9d84957c96b8a13a7ce5bcbc6bfe811fabcb143191a20103"
+    },
+    {
+      "id": "BACK",
+      "source_filename": "png cards/card backs/card back blue.png",
+      "source_sha256": "bbffea93665b9a34eaab0a5ddfc065ed5e48361931fb112952dba56b05213134",
+      "path": "apps/web/public/assets/black-a-510k/cards/back.webp",
+      "bytes": 24276,
+      "sha256": "b92cb401597c49769ecbb399161669fe0e92d77289e12e96e59947f770bd3483"
+    }
+  ]
+}

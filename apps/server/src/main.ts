@@ -21,6 +21,7 @@ import { attachXiabaiwang } from "./xb-rooms.ts";
 import { attachWitchTown } from "./wt-rooms.ts";
 import { attachNaodongScale } from "./nd-rooms.ts";
 import { attachKariba } from "./kb-rooms.ts";
+import { attachBlackA510K } from "./ba-rooms.ts";
 import { attachBossFighters } from "./bf-rooms.ts";
 import { attachMenace } from "./ta-rooms.ts";
 import { attachCrimeScene } from "./cs-sockets.ts";
@@ -110,6 +111,7 @@ const http = createServer((req, res) => {
         dpRooms: dpStore.rooms.size,
         ndRooms: ndStore.rooms.size,
         kbRooms: kbStore.rooms.size,
+        baRooms: baStore.rooms.size,
         bfRooms: bfStore.rooms.size,
         taRooms: taStore.rooms.size,
         csRooms: csStore.rooms.size,
@@ -274,6 +276,7 @@ if (ASSET_CDN.base !== "off") {
 }
 const GZIP_CACHE = new Map<string, { etag: string; body: Buffer }>();
 const io = new Server(http, { cors: { origin: true } });
+io.of('/').setMaxListeners(32);
 // 记录每个房间最后一次有人操作的时间（任何游戏事件都算），给健康检查判断「挂着没人玩」
 const lastActive = new Map<string, number>();
 // /site：每个页面都连的提示频道（网站要重启时推送），不参与游戏
@@ -319,6 +322,11 @@ const csStore = attachCrimeScene(
 const kbStore = attachKariba(
   io,
   resolve(process.env.KB_DATA_DIR ?? join(DATA, "../kb-rooms")),
+  { maxRooms: MAX_ROOMS, idleMs: ROOM_IDLE_MS },
+);
+const baStore = attachBlackA510K(
+  io,
+  resolve(process.env.BA_DATA_DIR ?? join(DATA, "../ba-rooms")),
   { maxRooms: MAX_ROOMS, idleMs: ROOM_IDLE_MS },
 );
 const bfStore = attachBossFighters(
@@ -579,7 +587,7 @@ http.listen(PORT, HOST, async () => {
 const STARTED_AT = Date.now();
 // 健康检查用：按 Socket.IO 房间统计「哪个游戏的房间里连着几个人」
 const GAME_PREFIX: Record<string, string> = {
-  bf: "魔王试炼", cn: "行动代号", cs: "犯罪现场", dm: "请留遗言", dp: "绘画派对", du: "反转王牌", kb: "卡里巴湖",
+  ba: "双黑A五十K", bf: "魔王试炼", cn: "行动代号", cs: "犯罪现场", dm: "请留遗言", dp: "绘画派对", du: "反转王牌", kb: "卡里巴湖",
   ma: "魔法运动员", nd: "脑洞量表", rk: "拉密", rr: "眼疾手快", sk: "骷髅王", ss: "汽水走私犯", ta: "我们之中的威胁",
   xb: "瞎掰王", wt: "女巫镇",
 };
