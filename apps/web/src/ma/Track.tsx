@@ -7,6 +7,7 @@ import { racerName, TRACKS } from "../../../../packages/magical-athlete/src/inde
 import type { RaceState } from "../../../../packages/magical-athlete/src/types.ts";
 import type { Special } from "../../../../packages/magical-athlete/src/tracks.ts";
 import { racerArtId } from "../../../../packages/magical-athlete/src/second-wind-preview.ts";
+import { SECOND_WIND_MAPS } from "../../../../packages/magical-athlete/src/second-wind-maps.ts";
 import coords from "../../public/assets/magical-athlete/boards/coordinates.json" with { type: "json" };
 
 // 第 7、8 位玩家：粉色、青色；骰子和玩家标记共用这套颜色。
@@ -42,6 +43,14 @@ export function useVerticalBoard() {
 }
 
 const BOARDS = new Map((coords.boards as unknown as BoardCoords[]).map((b) => [b.id, b]));
+for (const map of Object.values(SECOND_WIND_MAPS)) {
+  const [w,h] = map.canvas;
+  BOARDS.set(map.id, {
+    id: map.id, canvas: [w,h], finish_podium: {x:79/w,y:210/h},
+    spaces: map.spaces.map(s=>({index:s.index,x:(s.x+s.width/2)/w,y:(s.y+s.height/2)/h,width:s.width/w,height:s.height/h})),
+    assets: {webp:`boards/second-wind/${map.id}.svg`,mobile:`boards/second-wind/${map.id}.svg`},
+  });
+}
 
 /** 手机「清晰棋盘」：5 列，0–14 从左到右、15–29 从右到左（和原版两条长边方向一致，箭头格的箭头方向不会反） */
 export const GRID_COLS = 5;

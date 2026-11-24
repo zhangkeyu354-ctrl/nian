@@ -1,0 +1,121 @@
+import { describe, expect, it } from "vitest";
+import { createMAGame, testRace } from "../src/engine.ts";
+import { answer, tok } from "./helpers.ts";
+import { PLAYABLE_TRACKS } from "../src/tracks.ts";
+const pairs = [
+  [4, 6],
+  [8, 12],
+  [11, 15],
+  [17, 22],
+  [20, 23],
+  [24, 28],
+];
+describe("螺旋世界：权威引擎落点", () => {
+  for (const [a, b] of pairs)
+    for (const [from, to] of [
+      [a, b],
+      [b, a],
+    ])
+      it(`${from}落点双向传送至${to}且不回跳`, () => {
+        let s = testRace({
+          racers: ["twin", "banana", "lovable_loser"],
+          pos: [from - 1, 0, 0],
+          rolls: [1],
+          skipSetup: true,
+          track: "whirly-world",
+        });
+        s = answer(s, "roll");
+        expect(tok(s, "twin").pos).toBe(to);
+        expect(
+          s.log
+            .filter((e) => e.fx?.kind === "warp" && e.fx.racer === "twin")
+            .map((e) => e.fx),
+        ).toEqual([{ kind: "warp", racer: "twin", from, to }]);
+      });
+  it("途经端点不传送", () => {
+    const s = answer(
+      testRace({
+        racers: ["twin", "banana", "lovable_loser"],
+        pos: [3, 0, 0],
+        rolls: [2],
+        skipSetup: true,
+        track: "whirly-world",
+      }),
+      "roll",
+    );
+    expect(tok(s, "twin").pos).toBe(5);
+  });
+  it("传送不触发香蕉经过，落点仍触发鸡脚小屋", () => {
+    let s = testRace({
+      racers: ["twin", "banana", "baba_yaga"],
+      pos: [16, 20, 22],
+      rolls: [1],
+      skipSetup: true,
+      track: "whirly-world",
+    });
+    s = answer(s, "roll");
+    expect(tok(s, "twin").pos).toBe(22);
+    expect(tok(s, "twin").tripped).toBe(true);
+    expect(s.log.some((l) => l.text.includes("香蕉皮"))).toBe(false);
+  });
+  it("技能传送抵达端点也触发通道", () => {
+    let s = testRace({
+      racers: ["hypnotist", "twin", "banana"],
+      pos: [17, 0, 0],
+      skipSetup: true,
+      track: "whirly-world",
+    });
+    s = answer(s, "twin");
+    expect(tok(s, "twin").pos).toBe(22);
+  });
+  it("赛前摆放端点不触发", () => {
+    const s = testRace({
+      racers: ["twin", "banana", "lovable_loser"],
+      pos: [17, 0, 0],
+      skipSetup: true,
+      track: "whirly-world",
+    });
+    expect(tok(s, "twin").pos).toBe(17);
+    expect(s.log.some((l) => l.fx?.kind === "warp")).toBe(false);
+  });
+  it("地图优先：端点上的巨婴不能先把到达者挤离通道", () => {
+    const s = answer(
+      testRace({
+        racers: ["twin", "huge_baby", "banana"],
+        pos: [3, 4, 0],
+        rolls: [1],
+        skipSetup: true,
+        track: "whirly-world",
+      }),
+      "roll",
+    );
+    expect(tok(s, "twin").pos).toBe(6);
+  });
+  it("原移动真实经过香蕉的反应不因传送丢失", () => {
+    const s = answer(
+      testRace({
+        racers: ["twin", "banana", "lovable_loser"],
+        pos: [2, 3, 0],
+        rolls: [2],
+        skipSetup: true,
+        track: "whirly-world",
+      }),
+      "roll",
+    );
+    expect(tok(s, "twin").pos).toBe(6);
+    expect(tok(s, "twin").tripped).toBe(true);
+  });
+  it("未验收地图不进入正式可用池", () => {
+    expect(PLAYABLE_TRACKS).toEqual(["mild", "wild"]);
+    expect(() =>
+      createMAGame({
+        players: [
+          { id: "a", name: "甲" },
+          { id: "b", name: "乙" },
+        ],
+        seed: 1,
+        settings: { schedule: ["whirly-world", "mild", "wild", "mild"] },
+      }),
+    ).toThrow();
+  });
+});

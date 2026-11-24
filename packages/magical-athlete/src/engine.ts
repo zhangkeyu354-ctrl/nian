@@ -8,7 +8,8 @@
  */
 import { DRAFTABLE, racerName } from "./racers.ts";
 import { SECOND_WIND_FIRST_CORNERS, SECOND_WIND_PREVIEW_IDS } from "./second-wind-preview.ts";
-import { PLAYABLE_TRACKS, TRACKS } from "./tracks.ts";
+import { warpDestination } from "./second-wind-maps.ts";
+import { PLAYABLE_TRACKS, TRACKS } from "./track-registry.ts";
 import type {
   Chip,
   CreateMAOptions,
@@ -280,6 +281,7 @@ function takeHogs(s: MAState, c: Ctx, t: Token, simultaneous: boolean) {
 
 // ---------------------------------------------------------------- 单元执行上下文
 interface Ctx {
+  warpChains?: Map<Token, Set<string>>;
   choiceEpoch?: number;
   unforcedEpoch?: number;
   romanticSeen?: Map<string, string>;
@@ -525,6 +527,8 @@ function eliminateWithPower(s: MAState, targets: Token[], effect: () => void) {
 /** 巨婴：除起点外不能与它同格 */
 function hugeBaby(s: MAState, c: Ctx, t: Token) {
   if (!active(t) || t.pos === 0) return;
+  // 二代落点先走地图。传送后已访问的通道不再抢在角色能力前重复触发。
+  if (warpDestination(race(s).track, t.pos, [...(c.warpChains?.get(t) ?? [])])) return;
   for (const hb of holders(s, "huge_baby")) {
     if (hb !== t && hb.pos === t.pos && t.pos > 0) {
       t.pos -= 1;
@@ -759,6 +763,20 @@ function penguinPass(s: MAState, c: Ctx, passed: Token[], penguins?: Set<Token>)
 }
 
 function react(
+  s: MAState, c: Ctx, t: Token, passed: Token[], simultaneous = false,
+  streaking = false, penguins?: Set<Token>, bananaPassed: Token[] = passed,
+) {
+  const chains = c.warpChains ??= new Map();
+  const root = !chains.has(t);
+  if (root) chains.set(t, new Set());
+  try {
+    reactBody(s,c,t,passed,simultaneous,streaking,penguins,bananaPassed);
+  } finally {
+    if (root) chains.delete(t);
+  }
+}
+
+function reactBody(
   s: MAState,
   c: Ctx,
   t: Token,
@@ -769,6 +787,19 @@ function react(
   bananaPassed: Token[] = passed,
 ) {
   if (!active(t)) return;
+  const chain = c.warpChains!.get(t)!;
+  const from = t.pos;
+  const portal = warpDestination(race(s).track, from, [...chain]);
+  if (portal) {
+    chain.add(portal.pair);
+    t.pos = portal.to;
+    log(s, `${rname(t)} 进入螺旋通道：第 ${from} 格 → 第 ${portal.to} 格。`,
+      { kind: "warp", racer: t.racer, from, to: portal.to });
+    hugeBaby(s, c, t);
+    // 保留原移动真实经过的对象；通道本身不添加任何经过对象。
+    react(s, c, t, passed, simultaneous, streaking, penguins, bananaPassed);
+    return;
+  }
   penguinPass(s, c, passed, penguins);
   if (streaking && passed.length) {
     awardPower(s, c, t, 1, `${rname(t)}【擦身得分】：经过其他选手，获得 1 分。`, "sw_streaker");
@@ -2563,7 +2594,7 @@ export function testRace(opts: {
   skipSetup?: boolean;
   /** 接下来的骰子点数（测试用） */
   rolls?: number[];
-  track?: "mild" | "wild";
+  track?: import("./track-registry.ts").TrackId;
 }): MAState {
   const players = opts.racers.map((_, i) => ({
     id: "p" + (i + 1),

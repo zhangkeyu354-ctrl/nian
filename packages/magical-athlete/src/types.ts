@@ -1,4 +1,4 @@
-import type { TrackId } from "./tracks.ts";
+import type { TrackId } from "./track-registry.ts";
 
 export interface Chip {
   kind: "gold" | "silver" | "bronze";

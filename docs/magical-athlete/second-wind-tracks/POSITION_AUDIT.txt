@@ -1,0 +1,101 @@
+213:const onSpace = (s: MAState, pos: number) => race(s).tokens.filter((x) => active(x) && x.pos === pos);
+218:  const max = Math.max(...act.map((t) => t.pos));
+219:  return act.filter((t) => t.pos === max);
+243:    race(s).tokens.some((o) => o !== t && active(o) && o.pos < t.pos && nativePowerOf(s, o) === "sw_null")
+262:  (race(s).hogs ??= []).push({ source: t.racer, rider: t.racer, pos: t.pos });
+268:    const pos = rider?.pos ?? h.pos;
+269:    if (h.rider === t.racer || pos !== t.pos || !hogActive(s, h.source)) continue;
+278:    h.pos = t.pos;
+309:    .tokens.map((t) => `${t.pos}${t.tripped ? "T" : ""}${t.place ?? ""}${t.out ? "X" : ""}`)
+458:  t.pos = trackOf(s).length;
+529:  if (!active(t) || t.pos === 0) return;
+531:    if (hb !== t && hb.pos === t.pos && t.pos > 0) {
+532:      t.pos -= 1;
+533:      log(s, "", { kind: "warp", racer: t.racer, from: t.pos + 1, to: t.pos });
+537:  if (active(t) && t.pos > 0 && has(s, t, "huge_baby"))
+539:      if (active(t) && t.pos > 0 && active(o) && o.pos === t.pos) {
+540:        o.pos -= 1;
+544:          from: o.pos + 1,
+545:          to: o.pos,
+562:  const from = t.pos;
+593:    if (f === t || f.pos !== from) continue;
+615:  const group = [t, ...together.filter((x) => active(x) && x.pos === from && x !== t), ...riders];
+626:  const before = new Map(race(s).tokens.map((o) => [o, o.pos]));
+631:          (o) => !group.includes(o) && (before.get(o) ?? 0) > from && (g.place !== null || o.pos < g.pos),
+671:  for (const g of group) g.pos = p;
+688:        ? others(s, g).filter((o) => !group.includes(o) && (before.get(o) ?? 0) < from && o.pos > g.pos)
+704:      const from = o.pos;
+705:      o.pos = destination;
+714:  const from = t.pos;
+715:  t.pos = Math.max(0, Math.min(trackOf(s).length - 1, to));
+716:  log(s, "", { kind: "warp", racer: t.racer, from, to: t.pos });
+718:    const exchangeFrom = exchange.pos;
+719:    exchange.pos = from;
+724:      to: exchange.pos,
+789:  const from = t.pos;
+793:    t.pos = portal.to;
+805:  const pos = t.pos;
+835:    if (p === "sw_hotel" && x !== t && t.pos === pos && x.pos === pos && !simultaneous) {
+860:    } else if (p === "baba_yaga" && t.pos === pos && !simultaneous) {
+861:      if (x !== t && x.pos === pos) {
+874:    } else if (p === "romantic" && t.pos === pos && !simultaneous && onSpace(s, pos).length === 2) {
+879:    } else if (p === "duelist" && t.pos === pos && !simultaneous) {
+880:      const foes = x === t ? onSpace(s, pos).filter((o) => o !== x) : x.pos === pos ? [t] : [];
+919:  const min = Math.min(...act.map((x) => x.pos));
+920:  const last = act.filter((x) => x.pos === min);
+933:    const stunner = holders(s, "sw_stunner").find((o) => o !== t && Math.abs(o.pos - t.pos) <= 1);
+993:  if (has(s, t, "sw_mole") && !others(s, t).some((o) => Math.abs(o.pos - t.pos) <= 1))
+998:      if (o.pos !== t.pos)
+1012:    const [a, b] = [t.pos, o.pos];
+1015:    t.pos = b;
+1016:    o.pos = a;
+1128:          if (critic === t || t.pos <= critic.pos || c.criticUsed.has(critic.racer)) continue;
+1343:      const edge = mainRoll === 2 ? Math.min(...act.map((o) => o.pos)) : Math.max(...act.map((o) => o.pos));
+1344:      const targets = act.filter((o) => o.pos === edge);
+1356:      if (mainRoll === 2) warp(s, c, target, t.pos);
+1371:        warp(s, c, t, target.pos);
+1417:        .map((o) => o.pos),
+1419:    if (t.pos === last && mainRoll !== null) {
+1422:    } else if (t.pos !== last) {
+1439:    const n = others(s, t).filter((o) => o.pos > t.pos).length;
+1461:    if (co.pos === t.pos) {
+1466:    const n = onSpace(s, t.pos).filter((o) => o !== t).length;
+1489:    if (t.pos > n.pos) {
+1525:    const movers = others(s, t).filter((o) => o.pos !== t.pos);
+1528:      const to = Math.max(0, o.pos + (o.pos < t.pos ? 1 : -1));
+1529:      if (to === o.pos) continue;
+1533:        from: o.pos,
+1537:      o.pos = to;
+1541:      log(s, arrivals.map((o) => `${rname(o)} → 第 ${o.pos} 格`).join("，") + "（人气磁铁，同时移动）");
+1547:    const min = Math.min(...act.map((x) => x.pos));
+1548:    const last = inOrder(s).filter((x) => active(x) && x.pos === min);
+1567:    const targets = others(s, t).filter((o) => o.pos !== t.pos);
+1577:            label: `${rname(o)}（第 ${o.pos} 格）`,
+1585:        warp(s, c, o, t.pos);
+1591:    for (const o of others(s, t)) counts.set(o.pos, (counts.get(o.pos) ?? 0) + 1);
+1592:    const spaces = [...counts].filter(([p, n]) => n === 2 && p !== t.pos).map(([p]) => p);
+1617:const turnStartPos = (t: Token) => turnStart.get(t) ?? t.pos;
+1622:  const startPos = t.pos;
+1664:      if (opponents.length && opponents.every((o) => o.pos >= t.pos + 5)) {
+1687:        warp(s, c, t, t.pos, undefined, targets);
+1693:      if (target && Math.abs(t.pos - target.pos) <= 5) {
+1695:        warp(s, c, t, target.pos);
+1700:      if (opponents.length && t.pos >= Math.max(...opponents.map((o) => o.pos)) + 4) {
+1708:        const last = Math.min(t.pos, ...opponents.map((o) => o.pos));
+1709:        const targetPos = t.pos === last ? Math.max(...opponents.map((o) => o.pos)) : last;
+1710:        const targets = opponents.filter((o) => o.pos === targetPos);
+1726:        warp(s, c, t, target.pos, target);
+1730:      const ahead = others(s, t).filter((o) => o.pos > t.pos);
+1731:      const nearest = ahead.filter((o) => o.pos === Math.min(...ahead.map((x) => x.pos)));
+1743:          warp(s, c, t, target.pos - 1);
+1793:    if (active(t) && Math.abs(t.pos - startPos) <= 1)
+1799:    if (has(s, t, "sw_hopfrog") && others(s, t).some((o) => o.pos === t.pos + 1)) {
+1819:      for (const target of others(s, t)) if (target.pos > t.pos && target.pos - t.pos <= value) trip(s, target);
+1822:      const targets = others(s, t).filter((o) => o.owner !== t.owner && Math.abs(o.pos - t.pos) <= 1);
+1879:        holders(s, "sw_stunner").some((o) => o !== t && Math.abs(o.pos - t.pos) <= 1),
+2253:    live.every((t) => t.tripped && trackOf(initial).specials[t.pos]?.kind === "rock" &&
+2346:  const bonuses = holders(s, "sw_gloth").filter((t) => corner !== null && t.pos <= corner);
+2392:    .sort((a, b) => b.pos - a.pos || r.order.indexOf(a.owner) - r.order.indexOf(b.owner));
+2424:      const min = Math.min(...left.map((t) => t.pos));
+2425:      const back = left.filter((t) => t.pos === min).map((t) => t.owner);
+2630:    t.pos = opts.pos?.[i] ?? 0;

@@ -1,7 +1,7 @@
 import type { RacerInfo } from "./racers.ts";
 
 /** Existing MA-B03 board corners: 12→13 is the first turn. New content only. */
-export const SECOND_WIND_FIRST_CORNERS = { mild: 12, wild: 12 } as const;
+export const SECOND_WIND_FIRST_CORNERS = { mild: 12, wild: 12, "twisty-twirl": 12, "whirly-world": 12 } as const;
 
 /** User-accepted reference text, development only. Never appended to DRAFTABLE. */
 export const SECOND_WIND_PREVIEW: RacerInfo[] = [
