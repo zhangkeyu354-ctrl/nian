@@ -1,0 +1,23 @@
+services:
+  - type: web
+    name: dbd-boardgame-black-a-beta
+    repo: https://github.com/zhangkeyu354-ctrl/nian
+    branch: codex/black-a-510k-v11
+    runtime: node
+    plan: free
+    region: singapore
+    buildCommand: npm ci --ignore-scripts --no-audit --no-fund && npm run build
+    startCommand: npm run server
+    healthCheckPath: /api/health
+    autoDeployTrigger: off
+    envVars:
+      - key: NODE_VERSION
+        value: "24"
+      - key: PLAYWRIGHT_SKIP_BROWSER_DOWNLOAD
+        value: "1"
+      - key: DBD_DATA_DIR
+        value: data/black-a-beta-rooms
+      - key: BA_DATA_DIR
+        value: data/black-a-beta-rooms/ba-rooms
+      - key: DBD_ROOM_IDLE_HOURS
+        value: "24"
