@@ -7,6 +7,74 @@ import { createDeck,enumerateLegalPlays } from '../../../packages/black-a-510k/s
 import { startExchange } from '../../../packages/black-a-510k/src/exchange.js';
 
 describe('black A 510K authoritative room',()=>{
+  it('lets only the host add bots and kick other seats before the first round',()=>{
+    const dir=mkdtempSync(join(tmpdir(),'ba-room-'));
+    try{
+      const room=BARoom.create('ABCD',dir);
+      const host=room.claim('房主').token,guest=room.claim('朋友').token;
+      expect(()=>room.addBot(guest)).toThrow(/host/i);
+      room.addBot(host);
+      expect(room.snapshot(host).players.map(p=>p.bot)).toEqual([false,false,true]);
+      expect(()=>room.kick(guest,room.file.players[0].id)).toThrow(/host/i);
+      expect(()=>room.kick(host,room.file.players[0].id)).toThrow();
+      room.kick(host,room.file.players[1].id);
+      expect(room.snapshot(guest).self).toBeNull();
+      expect(room.snapshot(host).players.map(p=>p.name)).toEqual(['房主','人机1']);
+      room.addBot(host);room.addBot(host);
+      expect(room.file.players).toHaveLength(4);
+      expect(()=>room.addBot(host)).toThrow();
+    }finally{rmSync(dir,{recursive:true,force:true})}
+  });
+  it('runs three server bots through play, result readiness and exchange without client tokens',()=>{
+    const dir=mkdtempSync(join(tmpdir(),'ba-room-'));
+    try{
+      const room=BARoom.create('ABCD',dir),host=room.claim('真人').token;
+      room.addBot(host);room.addBot(host);room.addBot(host);
+      room.configure(host,{turnSeconds:0});
+      expect(room.snapshot(null).players.every(p=>p.bot||p.seat===0)).toBe(true);
+      expect(room.snapshot(null).round).toBeNull();
+      room.ready(host,true,'begin');
+      expect(room.file.phase).toBe('PLAY');
+      let botActions=0,humanActions=0;
+      for(let n=0;n<500&&room.file.phase==='PLAY';n++){
+        const s=room.file.round!,actor=s.currentActor!;
+        if(room.file.players[actor].bot){expect(room.tick()).toBe(true);botActions++;continue}
+        const hand=s.hands[actor],target=s.lastPlay?.cards??null;
+        const plays=enumerateLegalPlays(hand,target,{mustContainD3:s.firstLeadPending&&s.options.firstLead==='CONTAINS_D3'});
+        const action=plays.length?{kind:'PLAY' as const,cards:plays[0]}:{kind:'PASS' as const};
+        room.act(host,{roundId:room.file.roundId,actionId:'human-'+n,expectedVersion:room.file.version,turnId:s.turnId,action});humanActions++;
+      }
+      expect(botActions).toBeGreaterThan(0);expect(humanActions).toBeGreaterThan(0);
+      expect(room.file.phase).toBe('RESULT');
+      expect(room.file.players.slice(1).every(p=>p.ready)).toBe(true);
+      room.ready(host,true,'next');
+      for(let n=0;n<4&&room.file.phase==='EXCHANGE';n++){
+        const e=room.file.exchange!,pair=e.plan[e.transactionIndex];
+        if(room.file.players[pair.winner].bot)expect(room.tick()).toBe(true);
+        else room.act(host,{roundId:room.file.roundId,actionId:'return-'+n,expectedVersion:room.file.version,transactionIndex:e.transactionIndex,action:{kind:'RETURN',cards:e.hands[pair.winner].slice(0,pair.count)}});
+      }
+      expect(room.file.phase).toBe('PLAY');expect(room.file.roundId).toBe(2);
+      expect(room.file.round!.hands.every(h=>h.length===13)).toBe(true);
+      expect(room.snapshot(null).round?.hand).toBeNull();
+    }finally{rmSync(dir,{recursive:true,force:true})}
+  });
+  it('transfers the host to a human and clears orphan bots when the last human leaves',()=>{
+    const dir=mkdtempSync(join(tmpdir(),'ba-room-'));
+    try{
+      const room=BARoom.create('ABCD',dir),host=room.claim('房主').token;
+      room.addBot(host);
+      const guest=room.claim('朋友').token;
+      room.leavePermanent(host);
+      expect(room.file.hostId).toBe(room.file.players.find(p=>p.name==='朋友')?.id);
+      room.addBot(guest);
+      room.leavePermanent(guest);
+      expect(room.file.players).toEqual([]);
+      expect(room.file.hostId).toBeNull();
+      const next=room.claim('新房主').token;
+      room.addBot(next);
+      expect(room.file.players).toHaveLength(2);
+    }finally{rmSync(dir,{recursive:true,force:true})}
+  });
   it('seats four players, starts only when all ready, and hides hands',()=>{
     const dir=mkdtempSync(join(tmpdir(),'ba-room-'));
     try{

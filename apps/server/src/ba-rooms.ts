@@ -2,12 +2,12 @@ import { randomBytes,randomInt,randomUUID } from 'node:crypto';
 import { mkdirSync,readFileSync,readdirSync,renameSync,writeFileSync } from 'node:fs';
 import { join } from 'node:path';
 import type { Server,Socket } from 'socket.io';
-import { createDeck } from '../../../packages/black-a-510k/src/rules.js';
+import { createDeck,enumerateLegalPlays } from '../../../packages/black-a-510k/src/rules.js';
 import { applyAction,startRound,type RoundOptions,type RoundState } from '../../../packages/black-a-510k/src/round.js';
 import { createExchangePlan,deterministicAutoReturn,drawForTransaction,returnCards,startExchange,type ExchangePair,type ExchangeState } from '../../../packages/black-a-510k/src/exchange.js';
 import { viewExchange,viewRound } from '../../../packages/black-a-510k/src/privacy.js';
 
-interface Player {id:string;token:string;name:string;ready:boolean}
+interface Player {id:string;token:string;name:string;ready:boolean;bot?:boolean}
 interface Options extends RoundOptions {advanceExchange:boolean;turnSeconds:0|15|30|45|60;returnSeconds:30|45|60}
 interface Receipt {digest:string;version:number}
 interface BAFile {
@@ -44,15 +44,32 @@ export class BARoom {
     this.file.players.push(p);this.file.hostId??=p.id;this.file.version++;
     return {token:p.token,playerId:p.id,seat:this.file.players.length-1};
   })}
+  addBot(token:string){return this.mutate(()=>{
+    const host=this.player(token);assert(host.id===this.file.hostId,'host only');
+    assert(this.file.phase==='LOBBY'&&this.file.roundId===0,'bots can only join before first round');
+    assert(this.file.players.length<4,'room full');
+    const used=new Set(this.file.players.map(p=>p.name));let number=1;while(used.has('人机'+number))number++;
+    this.file.players.push({id:randomUUID(),token:randomBytes(24).toString('base64url'),name:'人机'+number,ready:true,bot:true});
+    this.file.players.forEach(p=>p.ready=!!p.bot);this.file.version++;
+  })}
+  kick(token:string,targetId:string){return this.mutate(()=>{
+    const host=this.player(token);assert(host.id===this.file.hostId,'host only');
+    assert(this.file.phase==='LOBBY'&&this.file.roundId===0,'kick only before first round');
+    assert(targetId!==host.id,'host cannot kick self');
+    const target=this.file.players.find(p=>p.id===targetId);assert(target,'player not found');
+    this.file.players=this.file.players.filter(p=>p.id!==targetId);
+    this.file.players.forEach(p=>p.ready=!!p.bot);this.file.version++;
+    return target.id;
+  })}
   configure(token:string,patch:Partial<Options>){return this.mutate(()=>{
     const p=this.player(token);assert(p.id===this.file.hostId,'host only');
     assert(this.file.phase==='LOBBY'&&this.file.roundId===0,'rules locked for series');
     const o={...this.file.options,...patch};
     assert(['CONTAINS_D3','OWNER_ANY'].includes(o.firstLead)&&['FINAL','BASE'].includes(o.soloScoreBasis)&&typeof o.advanceExchange==='boolean'&&[0,15,30,45,60].includes(o.turnSeconds)&&[30,45,60].includes(o.returnSeconds),'unsupported rules');
-    this.file.options=o;this.file.players.forEach(p=>p.ready=false);this.file.version++;
+    this.file.options=o;this.file.players.forEach(p=>p.ready=!!p.bot);this.file.version++;
   })}
   ready(token:string,ready:boolean,actionId:string){return this.mutate(()=>{
-    const p=this.player(token);
+    const p=this.player(token);assert(!p.bot,'bot actions are server only');
     assert(typeof ready==='boolean'&&typeof actionId==='string'&&actionId.length>0,'bad ready action');
     const key=`${this.file.code}|${this.file.seriesId}|${p.id}|ready|${actionId}`;
     const digest=JSON.stringify({ready});
@@ -71,8 +88,9 @@ export class BARoom {
     }
     if(this.file.phase==='RESULT'&&this.file.round?.result)this.file.history.push({roundId:this.file.roundId,options:{...this.file.options},result:this.file.round.result,finishedOrder:[...this.file.round.finishedOrder]});
     this.file.players=this.file.players.filter(x=>x.id!==p.id);
-    this.file.hostId=this.file.players[0]?.id??null;
-    this.file.players.forEach(x=>x.ready=false);
+    if(!this.file.players.some(x=>!x.bot))this.file.players=[];
+    this.file.hostId=this.file.players.find(x=>!x.bot)?.id??null;
+    this.file.players.forEach(x=>x.ready=!!x.bot);
     this.file.phase='LOBBY';this.file.round=null;this.file.exchange=null;this.file.nextPlan=null;
     this.file.deadline=null;this.file.roundId=0;this.file.seriesId=randomUUID();this.file.receipts={};
     this.file.version++;
@@ -120,7 +138,7 @@ export class BARoom {
       assert(req.action.kind==='PLAY'||req.action.kind==='PASS','wrong action for phase');
       this.file.round=applyAction(state,req.action.kind==='PLAY'?{kind:'PLAY',actor:seat,cards:req.action.cards}:{kind:'PASS',actor:seat});
       if(this.file.round.phase==='RESULT'){
-        this.file.phase='RESULT';this.file.deadline=null;
+        this.file.phase='RESULT';this.file.deadline=null;this.file.players.forEach(x=>{if(x.bot)x.ready=true});
         const result=this.file.round.result!;
         const shaved=result.winningTeam==='BLACK_A'?result.shavedPenalty[1]:result.shavedPenalty[0];
         this.file.nextPlan=this.file.options.advanceExchange?createExchangePlan(result.winnerIds,result.loserIds,shaved):null;
@@ -139,17 +157,22 @@ export class BARoom {
     this.file.receipts[key]={digest,version:this.file.version};
     return receipt;
   })}
-  tick(now=Date.now()){if(this.file.deadline===null||now<this.file.deadline)return false;
+  tick(now=Date.now()){
+    const botTurn=this.file.phase==='PLAY'&&this.file.round?.currentActor!==null&&!!this.file.players[this.file.round!.currentActor!]?.bot;
+    const pair=this.file.phase==='EXCHANGE'?this.file.exchange?.plan[this.file.exchange.transactionIndex]:null;
+    const botReturn=!!pair&&!!this.file.players[pair.winner]?.bot;
+    if(!botTurn&&!botReturn&&(this.file.deadline===null||now<this.file.deadline))return false;
     return this.mutate(()=>{
       if(this.file.phase==='PLAY'){
         const s=this.file.round!,actor=s.currentActor!;
-        const action=s.lastPlay?{kind:'PASS' as const,actor}:{kind:'PLAY' as const,actor,cards:[s.firstLeadPending&&s.options.firstLead==='CONTAINS_D3'?'3D':s.hands[actor].slice().sort()[0]]};
+        const choices=botTurn?enumerateLegalPlays(s.hands[actor],s.lastPlay?.cards??null,{mustContainD3:s.firstLeadPending&&s.options.firstLead==='CONTAINS_D3'},s.rules):[];
+        const action=botTurn?(choices.length?{kind:'PLAY' as const,actor,cards:choices[0]}:{kind:'PASS' as const,actor}):s.lastPlay?{kind:'PASS' as const,actor}:{kind:'PLAY' as const,actor,cards:[s.firstLeadPending&&s.options.firstLead==='CONTAINS_D3'?'3D':s.hands[actor].slice().sort()[0]]};
         this.file.round=applyAction(s,action);
         if(this.file.round.phase==='RESULT'){
           this.file.phase='RESULT';const result=this.file.round.result!;
           const shaved=result.winningTeam==='BLACK_A'?result.shavedPenalty[1]:result.shavedPenalty[0];
           this.file.nextPlan=this.file.options.advanceExchange?createExchangePlan(result.winnerIds,result.loserIds,shaved):null;
-          this.file.deadline=null;
+          this.file.deadline=null;this.file.players.forEach(x=>{if(x.bot)x.ready=true});
         }else this.setDeadline();
       }else if(this.file.phase==='EXCHANGE'){
         const e=this.file.exchange!;this.file.exchange=returnCards(e,deterministicAutoReturn(e));
@@ -163,14 +186,14 @@ export class BARoom {
   snapshot(token:string|null){
     const p=token?this.file.players.find(x=>x.token===token):null;const seat=p?this.file.players.indexOf(p):null;
     return {code:this.file.code,seriesId:this.file.seriesId,roundId:this.file.roundId,version:this.file.version,phase:this.file.phase,
-      self:seat,hostId:this.file.hostId,players:this.file.players.map((x,i)=>({id:x.id,name:x.name,seat:i,ready:x.ready,online:(this.connections.get(x.id)??0)>0})),
+      self:seat,hostId:this.file.hostId,players:this.file.players.map((x,i)=>({id:x.id,name:x.name,seat:i,ready:x.ready,online:!!x.bot||(this.connections.get(x.id)??0)>0,bot:!!x.bot})),
       options:{...this.file.options},deadline:this.file.deadline,
       round:this.file.round?viewRound(this.file.round,seat):null,exchange:this.file.exchange?viewExchange(this.file.exchange,seat):null,
       history:this.file.history??[]};
   }
 }
 
-export const BA_EVENTS={create:'ba:create',join:'ba:join',claim:'ba:claim',ready:'ba:ready',configure:'ba:configure',action:'ba:action',leave:'ba:leave',update:'ba:update'} as const;
+export const BA_EVENTS={create:'ba:create',join:'ba:join',claim:'ba:claim',ready:'ba:ready',configure:'ba:configure',addBot:'ba:add-bot',kick:'ba:kick',action:'ba:action',leave:'ba:leave',update:'ba:update',kicked:'ba:kicked'} as const;
 export function attachBlackA510K(io:Server,directory:string,opts:{maxRooms:number;idleMs:number}){
   mkdirSync(directory,{recursive:true});const rooms=new Map<string,BARoom>();
   for(const name of readdirSync(directory)){
@@ -196,6 +219,8 @@ export function attachBlackA510K(io:Server,directory:string,opts:{maxRooms:numbe
     const authenticated=(req:any)=>{const r=find(req.code);assert(socket.data.baRoom===r&&socket.data.baToken===req.token&&r.file.players.some(p=>p.token===req.token),'reconnect required');return r};
     handle(BA_EVENTS.ready,req=>{const r=authenticated(req);r.ready(req.token,req.ready,req.actionId);broadcast(r);return {snapshot:r.snapshot(req.token)}});
     handle(BA_EVENTS.configure,req=>{const r=authenticated(req);r.configure(req.token,req.options);broadcast(r);return {snapshot:r.snapshot(req.token)}});
+    handle(BA_EVENTS.addBot,req=>{const r=authenticated(req);r.addBot(req.token);broadcast(r);return {snapshot:r.snapshot(req.token)}});
+    handle(BA_EVENTS.kick,req=>{const r=authenticated(req);const targetId=r.kick(req.token,req.playerId);r.connections.delete(targetId);for(const id of io.sockets.adapter.rooms.get(channel(r.file.code))??[]){const peer=io.sockets.sockets.get(id);if(peer?.data.baToken&&peer.data.baToken!==req.token&&!r.file.players.some(p=>p.token===peer.data.baToken)){peer.data.baToken=undefined;peer.data.baRoom=undefined;peer.leave(channel(r.file.code));peer.emit(BA_EVENTS.kicked,{code:r.file.code})}}broadcast(r);return {snapshot:r.snapshot(req.token),targetId}});
     handle(BA_EVENTS.leave,req=>{const r=authenticated(req);const result=r.leavePermanent(req.token);attach(r);broadcast(r);return {result,snapshot:r.snapshot(null)}});
     handle(BA_EVENTS.action,req=>{const r=authenticated(req);const result=r.act(req.token,req);broadcast(r);return {...result,snapshot:r.snapshot(req.token)}});
     socket.on('disconnect',leave);
