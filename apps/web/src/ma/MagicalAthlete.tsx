@@ -956,6 +956,9 @@ function Race({
       <div className={"ma-board" + (useGrid ? " grid-mode" : "") + (pb.shake ? " shake" : "")}>
         <div className="ma-board-head">
           <b>第 {race.index + 1} 场 · {track.zh}</b>
+          {race.twist?.reversed && (
+            <span className="ma-direction-reversed" role="status">↶ 镜像世界：向旧起点前进 · 第 0 格冲线</span>
+          )}
           {portrait ? (
             <button type="button" className="ma-zoom" onClick={flipLayout} data-testid="ma-zoom">
               {useGrid ? "🖼 原版棋盘" : "🔲 清晰棋盘"}
@@ -969,9 +972,9 @@ function Race({
             <span className="ma-legend">
               <i className="star">★</i>星星 +1 分 <i className="rock">▲</i>石头摔倒 <i className="arrow">➜</i>箭头额外前进/后退
             </span>
-          ) : (
+          ) : race.track === "mild" ? (
             <span className="ma-legend">普通赛道，没有特殊格</span>
-          )}
+          ) : null}
         </div>
         <Track
           race={race}

@@ -319,7 +319,7 @@ export function Track({
           ref={surface}
           className="ma-grid"
           role="img"
-          aria-label={`${track.zh}，第 ${race.index + 1} 场`}
+          aria-label={`${track.zh}，第 ${race.index + 1} 场${race.twist?.reversed ? "，镜像方向，向第 0 格前进" : ""}`}
           style={{ aspectRatio: `${GRID_COLS} / ${GRID_ROWS}` }}
         >
           {board.spaces.map((sp) => {
@@ -337,11 +337,12 @@ export function Track({
                 }}
               >
                 {sp.index === 0 ? (
-                  <div className="ma-cell-art start">起点</div>
+                  <div className={`ma-cell-art start${race.twist?.reversed ? " reverse-finish" : ""}`}>{race.twist?.reversed ? "镜像终点" : "起点"}</div>
                 ) : (
                   <div className="ma-cell-art" style={crop(sp.x, sp.y, sp.width * 0.97, sp.height * 0.97)} />
                 )}
                 <span className="ma-cell-no">{sp.index}</span>
+                {sp.index === 29 && race.twist?.reversed && <span className="ma-cell-tag reverse-start">镜像起点</span>}
                 {special && <span className={"ma-cell-tag " + special.kind}>{specialLabel(special)}</span>}
               </div>
             );
@@ -352,7 +353,7 @@ export function Track({
           >
             <div className="ma-cell-art podium">
               <span className="ma-cell-trophy" style={crop(fp.x, 0.5, 0.075, 0.42)} />
-              <b>终点 · 领奖台</b>
+              <b>{race.twist?.reversed ? "第 0 格冲线 · 领奖台" : "终点 · 领奖台"}</b>
             </div>
           </div>
           {linkLayer}
@@ -376,7 +377,7 @@ export function Track({
             : { aspectRatio: `${w} / ${h}` }
       }
       role="img"
-      aria-label={`${track.zh}，第 ${race.index + 1} 场`}
+      aria-label={`${track.zh}，第 ${race.index + 1} 场${race.twist?.reversed ? "，镜像方向，向第 0 格前进" : ""}`}
     >
       {vertical ? (
         // 竖版放大后需要清晰的原图

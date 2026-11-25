@@ -29,7 +29,9 @@ const samples = Object.fromEntries(
             value: "roll",
           })
         : before;
-    return [track, { before: before.race, after: after.race }];
+    const mirrored = structuredClone(before.race);
+    if (mirrored.twist) mirrored.twist.reversed = true;
+    return [track, { before: before.race, after: after.race, mirrored }];
   }),
 );
 writeFileSync(
@@ -38,7 +40,7 @@ writeFileSync(
 );
 writeFileSync(
   join(work, "entry.tsx"),
-  `import React,{useState}from'react';import{createRoot}from'react-dom/client';import{Track,PLAYER_COLORS}from'../../apps/web/src/ma/Track.tsx';import'../../apps/web/src/style.css';import'../../apps/web/src/ma/ma.css';const samples=${JSON.stringify(samples)};function App(){const[id,setId]=useState('whirly-world');const[after,setAfter]=useState(false);const[layout,setLayout]=useState('art');const r=samples[id][after?'after':'before'];window.render_game_to_text=()=>JSON.stringify({track:id,layout,stage:after?'after':'before',tokens:r.tokens.map(t=>({id:t.racer,pos:t.pos,tripped:t.tripped})),experimental:true});return <div className="ma-app"><header style={{padding:12}}><h1 style={{fontSize:20}}>二代赛道 · 开发预览</h1><p>地图结构、螺旋通道与怪物棋子预览；扭扭事件尚未完整启用。</p><button id="whirly" onClick={()=>{setId('whirly-world');setAfter(false)}}>螺旋世界</button><button id="twisty" onClick={()=>{setId('twisty-twirl');setAfter(false)}}>扭扭赛道</button><button id="move" disabled={id!=='whirly-world'} onClick={()=>setAfter(x=>!x)}>演示17→22</button><button id="layout" onClick={()=>setLayout(x=>x==='art'?'grid':'art')}>切换棋盘布局</button></header><Track race={r} me="p1" colorOf={id=>PLAYER_COLORS[Number(id.slice(1))-1]} layout={layout} fit={true}/></div>}createRoot(document.getElementById('root')).render(<App/>);`,
+  `import React,{useState}from'react';import{createRoot}from'react-dom/client';import{Track,PLAYER_COLORS}from'../../apps/web/src/ma/Track.tsx';import'../../apps/web/src/style.css';import'../../apps/web/src/ma/ma.css';const samples=${JSON.stringify(samples)};function App(){const[id,setId]=useState('whirly-world');const[after,setAfter]=useState(false);const[mirror,setMirror]=useState(false);const[layout,setLayout]=useState('art');const r=samples[id][mirror?'mirrored':after?'after':'before'];window.render_game_to_text=()=>JSON.stringify({track:id,layout,stage:mirror?'mirror':after?'after':'before',tokens:r.tokens.map(t=>({id:t.racer,pos:t.pos,tripped:t.tripped})),experimental:true});return <div className="ma-app"><header style={{padding:12}}><h1 style={{fontSize:20}}>二代赛道 · 开发预览</h1><p>地图结构、螺旋通道与怪物棋子预览；扭扭事件尚未完整启用。</p><button id="whirly" onClick={()=>{setId('whirly-world');setAfter(false);setMirror(false)}}>螺旋世界</button><button id="twisty" onClick={()=>{setId('twisty-twirl');setAfter(false);setMirror(false)}}>扭扭赛道</button><button id="move" disabled={id!=='whirly-world'} onClick={()=>setAfter(x=>!x)}>演示17→22</button><button id="mirror" disabled={id!=='twisty-twirl'} onClick={()=>setMirror(x=>!x)}>镜像方向</button><button id="layout" onClick={()=>setLayout(x=>x==='art'?'grid':'art')}>切换棋盘布局</button></header><Track race={r} me="p1" colorOf={id=>PLAYER_COLORS[Number(id.slice(1))-1]} layout={layout} fit={true}/></div>}createRoot(document.getElementById('root')).render(<App/>);`,
 );
 await build({
   configFile: false,
@@ -131,6 +133,22 @@ for (const width of [320, 360, 390, 414, 1280]) {
     if (overflow) throw new Error(`横向溢出 ${map}/${width}`);
     results.push({ map, width, overflow });
   }
+}
+for (const height of [844, 664]) {
+  await page.setViewportSize({ width: 390, height });
+  await page.goto(previewUrl);
+  await page.click("#twisty");
+  await page.click("#mirror");
+  await page.click("#layout");
+  if (!(await page.locator(".ma-cell-art.reverse-finish").innerText()).includes("镜像终点"))
+    throw new Error("镜像终点标签未显示");
+  if (!(await page.locator(".ma-cell-tag.reverse-start").innerText()).includes("镜像起点"))
+    throw new Error("镜像起点标签未显示");
+  if (await page.evaluate(() => document.documentElement.scrollWidth > innerWidth))
+    throw new Error(`镜像清晰棋盘横向溢出 390×${height}`);
+  await page.screenshot({ path: join(out, `twisty-mirror-grid-390x${height}.png`), fullPage: true });
+  await page.click("#layout");
+  await page.screenshot({ path: join(out, `twisty-mirror-art-390x${height}.png`), fullPage: true });
 }
 await page.setViewportSize({ width: 1280, height: 600 });
 for (const id of ["twisty-twirl", "whirly-world"]) {

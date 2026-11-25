@@ -1002,6 +1002,18 @@
   font-size: 17px;
   font-weight: 900;
 }
+.ma-direction-reversed {
+  display: inline-flex;
+  align-items: center;
+  border: 2px solid #fff5b7;
+  border-radius: 999px;
+  padding: 3px 9px;
+  background: #4b2478;
+  color: #fffbe9;
+  font-size: 12px;
+  font-weight: 800;
+  line-height: 1.2;
+}
 .ma-legend {
   font-size: 13px;
   opacity: 0.95;
@@ -1689,6 +1701,12 @@
   font-size: 19px;
   -webkit-text-stroke: 1px #111;
 }
+.ma-cell-art.start.reverse-finish {
+  background: #6b3798;
+  color: #fff9d6;
+  font-size: clamp(11px, 3.1vw, 15px);
+  -webkit-text-stroke: 0;
+}
 .ma-cell.occupied .ma-cell-art {
   border-color: var(--sun);
 }
@@ -1732,6 +1750,10 @@
 .ma-cell-tag.arrow {
   background: #1fa37a;
   color: #fff;
+}
+.ma-cell-tag.reverse-start {
+  background: #6b3798;
+  color: #fff9d6;
 }
 .ma-cell.finish .ma-cell-art.podium {
   display: flex;
