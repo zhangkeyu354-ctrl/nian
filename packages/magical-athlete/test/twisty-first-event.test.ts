@@ -46,7 +46,7 @@ describe("扭扭赛道首次跨界与烤鸡", () => {
     expect(done.race!.twist!.remaining).toEqual([]);
     expect(b.race!.twist!.triggered).toBe(false);
   });
-  it("未实现事件明确拒绝，避免空效果冒充完整规则", () => {
+  it("已实现的镜像事件反转当前比赛方向", () => {
     const s = race([13, 0, 0], 1);
     s.race!.twist!.remaining = [2];
     if (s.turn) {
@@ -54,6 +54,8 @@ describe("扭扭赛道首次跨界与烤鸡", () => {
       q.race.twist.remaining = [2];
       s.turn.snapshot = JSON.stringify(q);
     }
-    expect(() => answer(s, "roll")).toThrow(/尚未实现/);
+    const done = answer(s, "roll");
+    expect(done.race!.twist!.drawn).toEqual([2]);
+    expect(done.race!.twist!.reversed).toBe(true);
   });
 });

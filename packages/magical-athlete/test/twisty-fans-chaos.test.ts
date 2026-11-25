@@ -47,7 +47,11 @@ describe("观众渴求混乱", () => {
     expect(after.race!.twist!.chips).toContain(13);
   });
 
-  it("抽到尚未实现的子卡时明确拒绝结算", () => {
-    expect(() => chaos([2, 7])).toThrow(/事件 2 尚未实现/);
+  it("先镜像后放皮纳塔筹码，按反向第一弯道选择格子", () => {
+    const after = chaos([2, 7]);
+    expect(after.race!.twist!.drawn).toEqual([10, 2, 7]);
+    expect(after.race!.twist!.reversed).toBe(true);
+    expect(after.race!.twist!.chips).toContain(1);
+    expect(after.race!.twist!.chips).not.toContain(25);
   });
 });
