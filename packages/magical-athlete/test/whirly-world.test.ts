@@ -92,6 +92,28 @@ describe("螺旋世界：权威引擎落点", () => {
     expect(after.players[0].chips.reduce((sum, c) => sum + c.value, 0)).toBe(1);
     expect(after.players[1].chips.reduce((sum, c) => sum + c.value, 0)).toBe(1);
   });
+  it("炫耀者追加骰累计落在通道端点时传送一次", () => {
+    let s = testRace({
+      racers: ["sw_show_off", "banana", "twin"], pos: [0, 10, 20],
+      rolls: [1, 3], skipSetup: true, track: "whirly-world", secondWindPreview: true,
+    });
+    s = answer(s, "roll");
+    expect(s.pending?.kind).toBe("showoff");
+    s = answer(s, "roll");
+    s = answer(s, "stop");
+    expect(tok(s, "sw_show_off").pos).toBe(6);
+    expect(s.log.filter(l => l.fx?.kind === "warp" && l.fx.racer === "sw_show_off")).toHaveLength(1);
+  });
+  it("返场跑者在螺旋图冲线后登记下一场返场资格", () => {
+    let s = testRace({
+      racers: ["sw_re_runner", "banana"], pos: [29, 29], rolls: [1, 1],
+      track: "whirly-world", secondWindPreview: true,
+    });
+    s = answer(s, "roll");
+    s = answer(s, "roll");
+    expect(s.race!.over).toBe(true);
+    expect(s.returningRacers?.some(r => r.racer === "sw_re_runner")).toBe(true);
+  });
   it("赛前摆放端点不触发", () => {
     const s = testRace({
       racers: ["twin", "banana", "lovable_loser"],
