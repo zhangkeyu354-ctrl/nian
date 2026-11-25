@@ -8,6 +8,8 @@ import { SECOND_WIND_PREVIEW_IDS } from "../packages/magical-athlete/src/second-
 const roster = ["banana", "lovable_loser", "twin", "alchemist", "legs", "sisyphus", "centaur", "skipper"];
 const counts = new Map<number, number>();
 const portals = new Map<string, number>();
+const participants = new Map<string, number>();
+const powers = new Map<string, number>();
 const checkRequired = new Map<string, number>();
 const checkRequiredCases: Array<{ players: number; seed: number; step: number; message: string }> = [];
 const completed: Array<{ players: number; seed: number; steps: number; finale: boolean }> = [];
@@ -79,6 +81,11 @@ for (const players of [2, 4, 6, 8]) for (let seed = 1; seed <= seeds; seed++) {
     assertState(s);
     const cards = s.race?.finaleOrigin?.twist?.drawn ?? s.race?.twist?.drawn ?? [];
     for (const card of cards) counts.set(card, (counts.get(card) ?? 0) + 1);
+    for (const id of racers) participants.set(id, (participants.get(id) ?? 0) + 1);
+    for (const entry of s.log) if (entry.fx?.kind === "power") {
+      const id = entry.fx.power;
+      powers.set(id, (powers.get(id) ?? 0) + 1);
+    }
     for (const entry of s.log) if (entry.text.includes("进入螺旋通道") && entry.fx?.kind === "warp") {
       const pair = `${entry.fx.from}→${entry.fx.to}`;
       portals.set(pair, (portals.get(pair) ?? 0) + 1);
@@ -94,7 +101,7 @@ for (const players of [2, 4, 6, 8]) for (let seed = 1; seed <= seeds; seed++) {
 }
 
 mkdirSync("output/ma-tracks", { recursive: true });
-const result = { track, roster: mixed ? "mixed" : "base", setup, completed: completed.length, byPlayers: Object.fromEntries([2, 4, 6, 8].map(n => [n, completed.filter(x => x.players === n).length])), finale: completed.filter(x => x.finale).length, cards: Object.fromEntries(counts), portals: Object.fromEntries(portals), checkRequired: Object.fromEntries(checkRequired), checkRequiredCases, failures };
+const result = { track, roster: mixed ? "mixed" : "base", setup, completed: completed.length, byPlayers: Object.fromEntries([2, 4, 6, 8].map(n => [n, completed.filter(x => x.players === n).length])), finale: completed.filter(x => x.finale).length, cards: Object.fromEntries(counts), portals: Object.fromEntries(portals), participants: Object.fromEntries(participants), powers: Object.fromEntries(powers), checkRequired: Object.fromEntries(checkRequired), checkRequiredCases, failures };
 writeFileSync(`output/ma-tracks/stress-${track}-${mixed ? "mixed" : "base"}${setup ? "-setup" : ""}.json`, JSON.stringify(result, null, 2));
 console.log(JSON.stringify(result, null, 2));
 if (failures.length) process.exitCode = 1;
