@@ -571,6 +571,13 @@ function drawTwist(s: MAState, c: Ctx, t: Token) {
 
 function resolveTwistCard(s: MAState, c: Ctx, t: Token, card: number) {
   const twist = race(s).twist!;
+  if (card === 9) {
+    if (race(s).tokens.some(x => active(x) && has(s, x, "sw_bite_mark") && x.secondWind?.wereMouth))
+      fail("CHECK_REQUIRED", "炼金实验室怪物与已变身的巨口同时存在，交互尚待核对。");
+    twist.monster = { pos: 0 };
+    log(s, "【炼金实验室泄露！】巨口怪物从起点出发，之后每回合结束掷骰移动。");
+    return;
+  }
   if (card === 10) {
     log(s, "【观众渴求混乱！】依次抽取并结算两张剩余事件。");
     drawTwist(s, c, t);
@@ -2156,6 +2163,7 @@ function proveForcedTurn(snapshot: string): boolean {
 
 function nextTurn(s: MAState, f: TurnFlags) {
   const r = race(s);
+  moveTwistMonster(s);
   const live = (id: string) => r.tokens.some((x) => x.owner === id && active(x));
   if (f.extra && live(r.current)) return;
   if (f.skipper && live(f.skipper)) {
@@ -2176,6 +2184,22 @@ function nextTurn(s: MAState, f: TurnFlags) {
       return;
     }
   }
+}
+
+/** The Twist monster rolls its own die; landing on a racer is not passing it. */
+function moveTwistMonster(s: MAState) {
+  const r = race(s);
+  const monster = r.twist?.monster;
+  if (!monster || monster.finished || r.over || r.finishers.length >= 2 || !r.tokens.some(active)) return;
+  const from = monster.pos;
+  const roll = d6(s);
+  const to = Math.min(trackOf(s).length, from + roll);
+  monster.pos = to;
+  log(s, `【炼金实验室泄露！】巨口怪物掷 ${roll}，从第 ${from} 格移动到${to >= trackOf(s).length ? "终点" : `第 ${to} 格`}。`);
+  if (to >= trackOf(s).length) monster.finished = true;
+  const victims = r.tokens.filter(x => active(x) && x.pos > from && x.pos < to);
+  if (victims.length)
+    eliminateWithPower(s, victims, () => log(s, `巨口怪物超越 ${victims.map(rname).join("、")}，将其淘汰。`));
 }
 
 /** 赛前：神秘蛋、双胞胎、西西弗斯 */
