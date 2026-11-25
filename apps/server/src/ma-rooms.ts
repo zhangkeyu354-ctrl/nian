@@ -26,6 +26,7 @@ const MAX_PLAYERS = 8;
 const MIN_PLAYERS = 2;
 const RACES = 4;
 const SWAP_MEET_TIMEOUT_MS = 60_000;
+export const TRACK_PICK_TIMEOUT_MS = 90_000;
 const DEFAULT_SCHEDULE: TrackId[] = ["mild", "wild", "mild", "wild"];
 
 interface MAPlayerFile {
@@ -46,6 +47,10 @@ export interface MARoomFile {
   points: MAPointsSetting[];
   /** Optional on legacy saves; absent means the original alternating schedule. */
   schedule?: TrackId[];
+  /** Absent = preset (all four maps fixed before start). */
+  trackMode?: "preset" | "perRound";
+  /** Persisted deadline for the host's per-round map pick. */
+  trackPickDeadline?: number;
   /** 只在 3 人时有意义（2 人固定双选手） */
   variant?: "standard" | "double";
   /** 随机模式：每人随机发 4 名（旧存档没有这个字段 = 选秀） */
@@ -72,6 +77,7 @@ export class MARoom {
       this.state = s;
       if (s.pending?.kind === "twist_swap_meet" && !file.swapMeetDeadline)
         file.swapMeetDeadline = Date.now() + SWAP_MEET_TIMEOUT_MS;
+      if (s.trackPick && !file.trackPickDeadline) file.trackPickDeadline = Date.now() + TRACK_PICK_TIMEOUT_MS;
     }
   }
   get code() {
@@ -85,7 +91,8 @@ export class MARoom {
       settings: {
         races: RACES,
         points: this.file.points,
-        ...(this.file.schedule ? { schedule: this.file.schedule } : {}),
+        ...(this.file.schedule ? { schedule: [...this.file.schedule] } : {}),
+        ...(this.file.trackMode === "perRound" ? { trackMode: "perRound" as const } : {}),
         variant: "standard",
         deal: this.file.deal ?? "draft",
         bananaBackwardPass: this.file.bananaBackwardPass === true,
@@ -138,6 +145,9 @@ export class MARoom {
         !requested.every((id) => typeof id === "string" && PLAYABLE_TRACKS.includes(id as TrackId)))
         throw new Error("BAD_SCHEDULE");
       this.file.schedule = [...requested] as TrackId[];
+    } else if (action?.type === "SET_TRACK_MODE") {
+      if (action.mode !== "preset" && action.mode !== "perRound") throw new Error("BAD_ACTION");
+      this.file.trackMode = action.mode;
     } else if (action?.type === "SHUFFLE_SCHEDULE") {
       this.file.schedule = Array.from({ length: RACES }, () => PLAYABLE_TRACKS[randomInt(PLAYABLE_TRACKS.length)]);
     } else if (action?.type === "KICK") {
@@ -173,6 +183,7 @@ export class MARoom {
       this.file.bananaBackwardPass = true;
       this.file.independentMasterminds = true;
       this.state = this.create();
+      this.syncSwapMeetDeadline();
     } else throw new Error("BAD_ACTION");
   }
   apply(token: string, version: number, cmd: MAClientCommand) {
@@ -187,12 +198,34 @@ export class MARoom {
         ? { type: "CHOOSE", player: me, racers: cmd.racers.slice(0, 2).map(String) }
         : { type: "CHOOSE", player: me, racer: String(cmd.racer) };
     else if (cmd?.type === "ANSWER") full = { type: "ANSWER", player: me, value: String(cmd.value) };
-    else throw new Error("BAD_ACTION");
+    else if (cmd?.type === "TRACK") {
+      if (me !== this.file.hostId) throw new Error("HOST_ONLY");
+      full = { type: "TRACK", player: me, track: String(cmd.track) as TrackId };
+    } else throw new Error("BAD_ACTION");
     this.state = reduceMA(this.state, full);
     this.file.commands.push(full);
     this.syncSwapMeetDeadline();
   }
+  private syncTrackPickDeadline(now = Date.now()) {
+    if (this.state?.trackPick) this.file.trackPickDeadline ??= now + TRACK_PICK_TIMEOUT_MS;
+    else delete this.file.trackPickDeadline;
+  }
+  /** 房主超时没选（含掉线）：用开局前预定的这一场地图，写进命令记录以便重放 */
+  expireTrackPick(now = Date.now()): boolean {
+    const pick = this.state?.trackPick;
+    if (!pick || !this.file.trackPickDeadline || now < this.file.trackPickDeadline) return false;
+    const command: MACommand = {
+      type: "TRACK",
+      player: this.file.hostId ?? this.state!.seats[0],
+      track: this.state!.settings.schedule[pick.race],
+    };
+    this.state = reduceMA(this.state!, command);
+    this.file.commands.push(command);
+    this.syncSwapMeetDeadline(now);
+    return true;
+  }
   private syncSwapMeetDeadline(now = Date.now()) {
+    this.syncTrackPickDeadline(now);
     if (this.state?.pending?.kind === "twist_swap_meet")
       this.file.swapMeetDeadline = now + SWAP_MEET_TIMEOUT_MS;
     else delete this.file.swapMeetDeadline;
@@ -214,7 +247,7 @@ export class MARoom {
   /** 人机走一步：轮到任何一个人机做决定时，随机选一个合法选项。没有可做的返回 false */
   botStep(): boolean {
     const s = this.state;
-    if (!s || s.phase === "over") return false;
+    if (!s || s.phase === "over" || s.trackPick) return false;
     const pick = <T>(xs: T[]) => xs[Math.floor(Math.random() * xs.length)];
     let cmd: MACommand | null = null;
     if (s.phase === "draft" && s.draft) {
@@ -246,7 +279,9 @@ export class MARoom {
       })),
       mySeat: me,
       points: this.file.points,
-      schedule: this.file.schedule ?? [...DEFAULT_SCHEDULE],
+      schedule: this.state ? [...this.state.settings.schedule] : (this.file.schedule ?? [...DEFAULT_SCHEDULE]),
+      trackMode: this.file.trackMode ?? "preset",
+      ...(this.file.trackPickDeadline ? { trackPickDeadline: this.file.trackPickDeadline } : {}),
       variant: "standard",
       deal: this.file.deal ?? "draft",
       secondWind: this.file.secondWind === true,
@@ -376,7 +411,7 @@ export function attachMagicalAthlete(
     const now = Date.now();
     for (const room of store.rooms.values()) {
       try {
-        if (room.expireSwapMeet(now)) {
+        if (room.expireSwapMeet(now) || room.expireTrackPick(now)) {
           store.save(room);
           broadcast(room);
         }
