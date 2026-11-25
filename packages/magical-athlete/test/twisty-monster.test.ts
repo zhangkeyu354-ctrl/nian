@@ -3,6 +3,70 @@ import { testRace } from "../src/engine.ts";
 import { answer, tok } from "./helpers.ts";
 
 describe("炼金实验室泄露", () => {
+  function biteMarkEvent(transformed: boolean, two = false) {
+    const racers = two ? ["sw_bite_mark", "twin", "banana"] : ["sw_bite_mark", "banana", "twin"];
+    const s = testRace({ racers, pos: [13, 8, 20], rolls: two ? [1, 2, 3] : [1, 3], track: "twisty-twirl", skipSetup: true, secondWindPreview: true });
+    const prepare = (q: typeof s) => {
+      q.race!.twist!.remaining = [9];
+      if (transformed) q.race!.tokens[0].secondWind = { wereMouth: true };
+      if (two) q.race!.tokens[1].base = "sw_bite_mark";
+    };
+    prepare(s);
+    const snapshot = JSON.parse(s.turn!.snapshot);
+    prepare(snapshot);
+    s.turn!.snapshot = JSON.stringify(snapshot);
+    return answer(s, "roll");
+  }
+  it("已变身咬痕回起点，作为唯一怪物追加移动", () => {
+    const s = biteMarkEvent(true);
+    expect(tok(s, "sw_bite_mark").secondWind?.wereMouth).toBe(true);
+    expect(tok(s, "sw_bite_mark").pos).toBe(3);
+    expect(s.race!.twist!.monster).toBeUndefined();
+  });
+  it("未变身咬痕立即变身、回起点并追加移动", () => {
+    const s = biteMarkEvent(false);
+    expect(tok(s, "sw_bite_mark").secondWind?.wereMouth).toBe(true);
+    expect(tok(s, "sw_bite_mark").pos).toBe(3);
+    expect(s.race!.twist!.monster).toBeUndefined();
+  });
+  it("复制出的两名咬痕各自追加掷骰移动", () => {
+    const s = biteMarkEvent(false, true);
+    expect(s.race!.tokens.slice(0, 2).map(t => t.pos)).toEqual([2, 3]);
+    expect(s.race!.twist!.monster).toBeUndefined();
+  });
+  it("咬痕的怪物追加移动冲线照常领取名次与金牌", () => {
+    const s = testRace({ racers: ["twin", "sw_bite_mark", "banana"], pos: [0, 29, 29], rolls: [1, 1, 1], track: "twisty-twirl", skipSetup: true, secondWindPreview: true });
+    const prepare = (q: typeof s) => {
+      q.race!.twist!.triggered = true;
+      q.race!.twist!.drawn = [9];
+      q.race!.twist!.monsterRacers = ["sw_bite_mark"];
+      q.race!.tokens[1].secondWind = { wereMouth: true };
+    };
+    prepare(s);
+    const snapshot = JSON.parse(s.turn!.snapshot);
+    prepare(snapshot);
+    s.turn!.snapshot = JSON.stringify(snapshot);
+    const afterFirst = answer(s, "roll");
+    expect(tok(afterFirst, "sw_bite_mark").place).toBe(1);
+    const afterSecond = answer(afterFirst, "roll");
+    expect(afterSecond.players[1].chips.some(c => c.kind === "gold")).toBe(true);
+  });
+  it("咬痕追加移动只淘汰严格超越者，同格停下不淘汰", () => {
+    const s = testRace({ racers: ["twin", "sw_bite_mark", "banana", "lovable_loser"], pos: [20, 0, 2, 3], rolls: [1, 3], track: "twisty-twirl", skipSetup: true, secondWindPreview: true });
+    const prepare = (q: typeof s) => {
+      q.race!.twist!.triggered = true;
+      q.race!.twist!.drawn = [9];
+      q.race!.twist!.monsterRacers = ["sw_bite_mark"];
+      q.race!.tokens[1].secondWind = { wereMouth: true };
+    };
+    prepare(s);
+    const snapshot = JSON.parse(s.turn!.snapshot);
+    prepare(snapshot);
+    s.turn!.snapshot = JSON.stringify(snapshot);
+    const after = answer(s, "roll");
+    expect(tok(after, "banana").out).toBe(true);
+    expect(tok(after, "lovable_loser").out).toBe(false);
+  });
   function withMonster(pos: number[], rolls: number[], start = 0) {
     const s = testRace({
       racers: ["twin", "banana", "lovable_loser"],
