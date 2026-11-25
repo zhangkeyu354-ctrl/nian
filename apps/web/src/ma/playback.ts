@@ -2,6 +2,8 @@ import { useEffect, useRef, useState } from "react";
 import type { Fx, LogEntry, Token } from "../../../../packages/magical-athlete/src/types.ts";
 import { RACER_BY_ID, type MAView } from "../../../../packages/magical-athlete/src/index.ts";
 import { sfxCount, sfxCheer, sfxFanfare, sfxFinish, sfxLand, sfxOops, sfxPower, sfxRoll, sfxStep } from "./sfx.ts";
+import { SECOND_WIND_MAPS } from "../../../../packages/magical-athlete/src/second-wind-maps.ts";
+import { raceFxBaseDuration, type RaceFxCue, type RaceFxKind } from "./RaceFx.tsx";
 
 /** 屏幕上正在播放的东西 */
 export type Show = (
@@ -86,7 +88,7 @@ export interface ShownToken {
 const sleep = (ms: number) => new Promise((r) => setTimeout(r, ms));
 
 export { getSpeed, setSpeed, type Speed } from "./motion-clock.ts";
-import { motionMs, reduced } from "./motion-clock.ts";
+import { getSpeed, motionMs, reduced } from "./motion-clock.ts";
 import {classifyTravel,type TravelCue} from "./travel.ts";
 
 /**
@@ -116,6 +118,7 @@ export function usePlayback(view: MAView) {
   const [spot, setSpot] = useState<string | null>(null);
   /** 正在走的选手要停的格子（棋盘上提前亮起来） */
   const [target, setTarget] = useState<number | null>(null);
+  const [raceFx, setRaceFx] = useState<RaceFxCue[]>([]);
   const fxId = useRef(0);
   const [shown, setShown] = useState<Map<string, ShownToken> | null>(null);
   /** 动画里的当前位置；不播放时等于上一段动画结束时（= 当时服务器）的位置 */
@@ -155,6 +158,20 @@ export function usePlayback(view: MAView) {
     /** 最近发动技能的选手：之后别人被移动 / 传送 / 绊倒，就从它拉一条线过去 */
     let lastPower: string | null = null;
     let lastPowerKind:string|null=null;
+    let currentTrack: string | undefined = latest.current.race?.track;
+    let pendingTwist = false;
+    let monsterCause = false;
+    const emitRaceFx = (kind: RaceFxKind, racer?: string, pos?: number, color?: string, weight = 1) => {
+      if (reduced() || skip.current || (getSpeed() === "fast" && ["power", "coins", "trip", "duel", "out"].includes(kind))) return;
+      const duration = motionMs(raceFxBaseDuration(kind), weight);
+      if (duration <= 0) return;
+      const cue: RaceFxCue = { id: ++fxId.current, kind, racer, pos, color, duration };
+      setRaceFx(old => {
+        if (old.some(x => x.kind === kind && x.racer === racer && x.pos === pos)) return old;
+        return [...old, cue].slice(-4);
+      });
+      setTimeout(() => setRaceFx(old => old.filter(x => x.id !== cue.id)), duration);
+    };
     const float = (racer: string, text: string, tone: Float["tone"]) => {
       const f = { id: ++fxId.current, text, tone };
       setFloats((m) => new Map(m).set(racer, f));
@@ -180,7 +197,13 @@ export function usePlayback(view: MAView) {
     while (queue.current.length) {
       const e = queue.current.shift()!;
       const fx = e.fx;
-      if (!fx) continue;
+      if (!fx) {
+        if (e.text.includes("抽到 Twist 事件")) pendingTwist = true;
+        if (/巨口怪物超越|大嘴狼人.*超越/.test(e.text)) monsterCause = true;
+        else if (e.text && !e.text.includes("淘汰")) monsterCause = false;
+        continue;
+      }
+      if (fx.kind !== "out" && fx.kind !== "power") monsterCause = false;
       // 点屏幕只跳过「当前这一段」动画；领奖台、总冠军不会被之前的点击连带跳过
       skip.current = false;
       /** 这一段有没有弹窗：有的话结束后留一点空档，免得弹窗一个接一个闪 */
@@ -228,6 +251,9 @@ export function usePlayback(view: MAView) {
           await wait(900);
           break;
         case "start": {
+          currentTrack = fx.track;
+          pendingTwist = false;
+          setRaceFx([]);
           const r = latest.current.race;
           cur = r
             ? new Map(
@@ -237,6 +263,7 @@ export function usePlayback(view: MAView) {
           shownRef.current = cur;
           setShown(cur);
           showIt({ kind: "start", race: fx.race, track: fx.track, text: e.text, finale: fx.finale });
+          if (fx.finale) emitRaceFx("finale");
           await wait(2200);
           // 3、2、1、开跑！
           for (const n of [3, 2, 1, 0]) {
@@ -262,9 +289,13 @@ export function usePlayback(view: MAView) {
           await wait(750);
           showIt({ ...fx, rolling: false });
           play(() => sfxLand());
+          emitRaceFx("duel", fx.a.racer);
+          emitRaceFx("duel", fx.b.racer);
           await wait(1300);
           break;
         case "power":
+          if (fx.power === "sw_bite_mark" && e.text.includes("巨口变身")) monsterCause = true;
+          emitRaceFx("power", fx.racer, undefined, undefined, k);
           showIt({ kind: "power", racer: fx.racer, power: fx.power, text: e.text, duration:motionMs(2600,k) });
           play(sfxPower);
           lastPower = fx.racer;
@@ -278,6 +309,7 @@ export function usePlayback(view: MAView) {
           setSpot(null);
           break;
         case "move": {
+          if (fx.why === "大嘴狼人追加移动") monsterCause = true;
           if (!cur) cur = fromRace(latest.current.race?.tokens ?? []);
           const dir = fx.to >= fx.from ? 1 : -1;
           setMoving(fx.racers);
@@ -307,6 +339,10 @@ export function usePlayback(view: MAView) {
           setMoving([]);
           setTravel(new Map());
           await wait(380);
+          if (pendingTwist) {
+            emitRaceFx("reveal", fx.racers[0], fx.to, undefined, k);
+            pendingTwist = false;
+          }
           setTarget(null);
           break;
         }
@@ -314,14 +350,23 @@ export function usePlayback(view: MAView) {
           if (!cur) cur = fromRace(latest.current.race?.tokens ?? []);
           setMoving([fx.racer]);
           setTravel(new Map([[fx.racer,{id:++fxId.current,kind:classifyTravel(fx,lastPower!==fx.racer&&["hypnotist","party_animal","sw_magical_athlete"].includes(lastPowerKind??"")),to:fx.to,weight:k}]]));
+          {
+            const pair = currentTrack === "whirly-world" && SECOND_WIND_MAPS["whirly-world"].warpPairs.find(([a, b]) =>
+              (a === fx.from && b === fx.to) || (b === fx.from && a === fx.to));
+            if (pair) emitRaceFx("portal", fx.racer, fx.from, SECOND_WIND_MAPS["whirly-world"].spaces[fx.from].color, k);
+          }
           float(fx.racer, `传送 → 第 ${fx.to} 格`, "info");
           linkTo(fx.racer);
           setPos(fx.racer, { pos: fx.to });
           await wait(900);
+          if (currentTrack === "whirly-world" && SECOND_WIND_MAPS["whirly-world"].warpPairs.some(([a, b]) =>
+            (a === fx.from && b === fx.to) || (b === fx.from && a === fx.to)))
+            emitRaceFx("teleport", fx.racer, fx.to, SECOND_WIND_MAPS["whirly-world"].spaces[fx.to].color, k);
           setMoving([]);
           setTravel(new Map());
           break;
         case "trip":
+          emitRaceFx("trip", fx.racer, undefined, undefined, k);
           hitFx(fx.racer, "trip", true,k);
           setPos(fx.racer, { tripped: true });
           float(fx.racer, "摔倒！下回合不动", "bad");
@@ -330,6 +375,7 @@ export function usePlayback(view: MAView) {
           await wait(1400);
           break;
         case "out":
+          emitRaceFx(monsterCause ? "monster" : "out", fx.racer, undefined, undefined, k);
           float(fx.racer, "淘汰！", "bad");
           linkTo(fx.racer);
           // 先播飞出棋盘的动画，再把它从棋盘上拿掉
@@ -341,18 +387,21 @@ export function usePlayback(view: MAView) {
           await wait(1600);
           break;
         case "finish":
+          if (fx.place <= 2) emitRaceFx(fx.place === 1 ? "gold" : "silver", fx.racer, undefined, undefined, k);
           setPos(fx.racer, { place: fx.place });
           showIt({ kind: "finish", racer: fx.racer, place: fx.place, text: e.text });
           play(sfxFinish);
           await wait(2500);
           break;
         case "chip": {
-          const tok = latest.current.race?.tokens.find((x) => x.owner === fx.player && !x.out);
+          const tok = [...(cur?.values() ?? [])].find((x) => x.owner === fx.player && !x.out);
           if (tok) float(tok.racer, `★ ${fx.value < 0 ? "" : "+"}${fx.value} 分`, fx.value < 0 ? "bad" : "good");
+          if (tok && fx.value > 0) emitRaceFx("coins", tok.racer, undefined, undefined, k);
           await wait(300);
           break;
         }
         case "podium":
+          for (const place of fx.places) if (place.place === 3) emitRaceFx("bronze", place.racer, undefined, undefined, k);
           // 领奖台：3、2、1 依次登台（CSS 里按名次延迟），号角 + 一小段欢呼
           showIt({ kind: "podium", race: fx.race, places: fx.places });
           play(() => {
@@ -387,6 +436,8 @@ export function usePlayback(view: MAView) {
       // 用户反馈（2026-10-23）：弹窗太快一个接一个会眼花 → 每个弹窗之后停 0.6 秒再出下一个
       if (popped && queue.current.length && !skip.current && !reduced()) await sleep(motionMs(600));
     }
+    // A few Twist cards replace the triggering move, so no later move cue exists.
+    if (pendingTwist) emitRaceFx("reveal", undefined, 14);
     // 播放完：对齐服务器的真实状态
     const r = latest.current.race;
     shownRef.current = r ? fromRace(r.tokens) : null;
@@ -411,6 +462,7 @@ export function usePlayback(view: MAView) {
     hit,
     shake,
     target,
+    raceFx,
     skip: () => {
       skip.current = true;
       [...wakers.current].forEach((f) => f());

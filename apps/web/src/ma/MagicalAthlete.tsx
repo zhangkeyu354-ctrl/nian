@@ -992,6 +992,7 @@ function Race({
           spot={pb.spot}
           hit={pb.hit}
           target={pb.target}
+          raceFx={pb.raceFx}
         />
       </div>
       {showBar && p && (

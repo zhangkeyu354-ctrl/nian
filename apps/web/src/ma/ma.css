@@ -2933,6 +2933,23 @@
 .ma-float-anchor { position:absolute;left:0;top:0;width:0;height:0;transition:transform var(--ma-move-ms,400ms) var(--ma-ease-standard); }
 .ma-float-layer .ma-float { left:0;bottom:0;font-size:13px;box-sizing:border-box;max-width:170px;overflow:hidden;text-overflow:ellipsis;line-height:1;padding:4px 8px;border-width:2px; }
 .ma-travel .ma-pawn.fx-trip>img:not(.ma-pawn-trip),.ma-travel .ma-pawn.fx-knock>img:not(.ma-pawn-trip),.ma-travel .ma-pawn.fx-out>img:not(.ma-pawn-trip) { animation-duration:var(--ma-impact-ms,var(--ma-hit-ms,1000ms))!important; }
+
+/* Lightweight CC0 race effects. They never receive pointer events or affect layout. */
+.ma-race-fx-layer { position:absolute; inset:0; z-index:450; pointer-events:none; overflow:hidden; }
+.ma-race-fx { position:absolute; display:block; transform:translate(-50%,-70%); pointer-events:none; }
+.ma-race-fx::before { content:""; position:absolute; inset:25%; border-radius:50%; background:currentColor; opacity:.4; filter:blur(10px); }
+.ma-race-fx-portal::after, .ma-race-fx-teleport::after, .ma-race-fx-reveal::after { content:""; position:absolute; inset:12%; border:3px solid currentColor; border-radius:50%; box-shadow:0 0 8px currentColor; animation:ma-race-ring var(--ma-fx-duration) ease-out forwards; }
+.ma-race-fx-reveal { color:#e5b8ff; }
+.ma-race-fx-monster::before { background:#ff3434; opacity:.6; }
+.ma-race-fx-clip { position:relative; display:block; overflow:hidden; }
+.ma-race-fx-clip > img { display:block; max-width:none; image-rendering:pixelated; animation:ma-race-vfx var(--ma-fx-steps) forwards; }
+.ma-race-fx-particle { position:absolute; left:50%; top:50%; width:75%; height:75%; background:currentColor; transform:translate(-50%,-50%); mix-blend-mode:screen; mask-size:contain; mask-repeat:no-repeat; mask-position:center; -webkit-mask-size:contain; -webkit-mask-repeat:no-repeat; -webkit-mask-position:center; animation:ma-race-particle ease-out forwards; }
+.ma-grid .ma-cell-no { z-index:500; }
+.ma-race-fx-power, .ma-race-fx-coins, .ma-race-fx-trip { opacity:.75; }
+@keyframes ma-race-vfx { to { transform:translateX(var(--ma-fx-distance)); } }
+@keyframes ma-race-particle { from { opacity:.8; scale:.4; } to { opacity:0; scale:1.4; } }
+@keyframes ma-race-ring { from { opacity:.85; scale:.5; } to { opacity:0; scale:1.3; } }
+@media (prefers-reduced-motion: reduce) { .ma-race-fx-layer { display:none; } }
 .ma-panel,.ma-fold,.ma-decide,.ma-cc,.ma-ov-skill,.ma-lightbox-text { border-radius:16px; }
 .ma-app button { border-radius:12px;box-shadow:0 3px 0 var(--ink); }
 .ma-app button:disabled { opacity:.5;box-shadow:none;cursor:not-allowed; }

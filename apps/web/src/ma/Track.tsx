@@ -1,5 +1,6 @@
 import React, { useEffect, useLayoutEffect, useRef, useState } from "react";
 import {PawnMotion} from "./PawnMotion.tsx";
+import { RaceFx, type RaceFxCue } from "./RaceFx.tsx";
 import {useRaceCamera} from "./camera.ts";
 import type {TravelCue} from "./travel.ts";
 import {layoutFloats} from "./float-layout.ts";
@@ -110,6 +111,7 @@ export function Track({
   spot,
   hit,
   target,
+  raceFx = [],
 }: {
   race: RaceState;
   colorOf: (playerId: string) => string;
@@ -135,6 +137,7 @@ export function Track({
   hit?: { id: number; racer: string; kind: string; duration?:number } | null;
   /** 正在走的选手要停的格子 */
   target?: number | null;
+  raceFx?: RaceFxCue[];
 }) {
   const race: RaceState = shown
     ? { ...raceIn, tokens: raceIn.tokens.map((t) => ({ ...t, ...(shown.get(t.racer) ?? {}) })) }
@@ -366,6 +369,7 @@ export function Track({
           {linkLayer}
           {monster}
           {pawns}
+          <RaceFx cues={raceFx} spot={spots} place={p => place(p, 0, 1)} />
           {floatLayer}
         </div>
       </div>
@@ -409,6 +413,7 @@ export function Track({
       {linkLayer}
       {monster}
       {pawns}
+      <RaceFx cues={raceFx} spot={spots} place={p => place(p, 0, 1)} />
       {floatLayer}
     </div>
   );
