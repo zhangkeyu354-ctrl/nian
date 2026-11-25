@@ -1,6 +1,6 @@
 import { describe,expect,it } from 'vitest';
 import { createDeck } from '../src/rules.js';
-import { createExchangePlan, startExchange, drawForTransaction, returnCards } from '../src/exchange.js';
+import { createExchangePlan, startExchange, prepareFaceDownPool, drawByIndices, drawForTransaction, returnCards } from '../src/exchange.js';
 
 const hands=()=>{const d=createDeck().map(c=>c.id);return [d.slice(0,13),d.slice(13,26),d.slice(26,39),d.slice(39,52)];};
 describe('next-round exchange transactions',()=>{
@@ -32,5 +32,20 @@ describe('next-round exchange transactions',()=>{
     expect(()=>returnCards(state,drawn.slice(0,3))).toThrow();
     state=returnCards(state,drawn);
     expect(state.hands.map(hand=>hand.length)).toEqual([13,13,13,13]);
+  });
+  it('supports manual face-down draw by shuffled indices and records logs',()=>{
+    const h=hands();
+    const shuffled=[...h[1]].reverse();
+    let s=prepareFaceDownPool(startExchange(h,[{winner:0,loser:1,count:2}]),shuffled);
+    expect(()=>drawByIndices(s,[0,0])).toThrow(/invalid draw indices/);
+    expect(()=>drawByIndices(s,[0,13])).toThrow(/invalid draw indices/);
+    s=drawByIndices(s,[0,2]);
+    expect(s.phase).toBe('RETURN_PENDING');
+    expect(s.drawnIds).toEqual([shuffled[0],shuffled[2]]);
+    expect(s.faceDownPool).toBeUndefined();
+    const ret=s.hands[0].slice(0,2);
+    s=returnCards(s,ret);
+    expect(s.phase).toBe('COMPLETE');
+    expect(s.logs).toEqual([{winner:0,loser:1,count:2,drawn:[shuffled[0],shuffled[2]],returned:ret}]);
   });
 });

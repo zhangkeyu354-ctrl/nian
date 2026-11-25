@@ -8,7 +8,7 @@ import {Server} from 'socket.io';
 import {io as clientIo,type Socket} from 'socket.io-client';
 import {attachBlackA510K,BA_EVENTS} from '../src/ba-rooms.js';
 import {createDeck} from '../../../packages/black-a-510k/src/rules.js';
-import {startExchange,drawForTransaction} from '../../../packages/black-a-510k/src/exchange.js';
+import {startExchange,prepareFaceDownPool,drawForTransaction} from '../../../packages/black-a-510k/src/exchange.js';
 
 describe('black A 510K private data over the actual socket protocol',()=>{
   it('filters broadcasts, spectator, reconnect and error responses before reveal',async()=>{
@@ -81,7 +81,17 @@ describe('black A 510K private data over the actual socket protocol',()=>{
       const nextHands=[deck.slice(0,13),deck.slice(13,26),deck.slice(26,39),deck.slice(39,52)];
       const drawn=nextHands[1].slice(0,4);
       room.file.round=null;room.file.phase='EXCHANGE';room.file.roundId++;
-      room.file.exchange=drawForTransaction(startExchange(nextHands,[{winner:0,loser:1,count:4}]),drawn);
+      room.file.exchange=prepareFaceDownPool(startExchange(nextHands,[{winner:0,loser:1,count:4}]),[...nextHands[1]].reverse());
+      for(let i=0;i<4;i++){
+        const active=i===0?reconnected:clients[i];
+        const drawView=await send<{ok:boolean;snapshot:any}>(active,BA_EVENTS.join,{code,token:token[i]});
+        expect(drawView.ok).toBe(true);
+        expect(drawView.snapshot.exchange.faceDownCount).toBe(13);
+        expect(drawView.snapshot.exchange).not.toHaveProperty('faceDownPool');
+        if(i!==1)for(const card of nextHands[1])expect(JSON.stringify(drawView.snapshot)).not.toContain(`"${card}"`);
+      }
+      room.file.exchange=drawForTransaction(room.file.exchange,drawn);
+      room.file.exchangeLogs=[...(room.file.exchange.logs??[])];
       for(let i=0;i<4;i++){
         const active=i===0?reconnected:clients[i];
         const response=await send<{ok:boolean;snapshot:any}>(active,BA_EVENTS.join,{code,token:token[i]});

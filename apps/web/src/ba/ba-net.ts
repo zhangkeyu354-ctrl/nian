@@ -2,13 +2,16 @@ import { useEffect,useRef,useState } from 'react';
 import { io,type Socket } from 'socket.io-client';
 import type { Settlement } from '../../../../packages/black-a-510k/src/settlement.js';
 
+export type BARecentPlay = { kind: 'PLAY'; cards: string[]; trickId: number } | { kind: 'PASS'; trickId: number } | null;
+export interface BAExchangeLog { winner:number; loser:number; count:number; drawnCount:number; returnedCount:number; drawn:string[]|null; returned:string[]|null }
 export interface BASnapshot {
   code:string;seriesId:string;roundId:number;version:number;phase:'LOBBY'|'PLAY'|'EXCHANGE'|'RESULT'|'ABORTED';
   self:number|null;hostId:string|null;players:{id:string;name:string;seat:number;ready:boolean;online:boolean;bot:boolean}[];
   options:{firstLead:'CONTAINS_D3'|'OWNER_ANY';soloScoreBasis:'FINAL'|'BASE';advanceExchange:boolean;turnSeconds:0|15|30|45|60;returnSeconds:30|45|60};
   deadline:number|null;
-  round:{phase:'PLAY'|'RESULT';version:number;turnId:number;trickId:number;currentActor:number|null;hand:string[]|null;handCounts:number[];capturedScores:number[];tableCards:string[];tableScore:number;lastPlay:{actor:number;cards:string[]}|null;finishedOrder:number[];result:Settlement|null}|null;
-  exchange:{phase:'DRAW_PENDING'|'RETURN_PENDING'|'COMPLETE';transactionIndex:number;transactionCount:number;pair:{winner:number;loser:number;count:number}|null;completed:number;hand:string[]|null;handCounts:number[];returnCount:number|null}|null;
+  round:{phase:'PLAY'|'RESULT';version:number;turnId:number;trickId:number;currentActor:number|null;hand:string[]|null;handCounts:number[];capturedScores:number[];tableCards:string[];tableScore:number;lastPlay:{actor:number;cards:string[]}|null;recentPlays:BARecentPlay[];finishedOrder:number[];result:Settlement|null}|null;
+  exchange:{phase:'DRAW_PENDING'|'RETURN_PENDING'|'COMPLETE';transactionIndex:number;transactionCount:number;pair:{winner:number;loser:number;count:number}|null;completed:number;hand:string[]|null;handCounts:number[];returnCount:number|null;drawCount:number|null;faceDownCount:number;drawnIds:string[]|null;logs:BAExchangeLog[]}|null;
+  exchangeLogs?:BAExchangeLog[];
 }
 type Ack<T>={ok:true}&T|{ok:false;error:string};
 const tokenKey=(code:string)=>'ba-seat-'+code;
@@ -37,7 +40,7 @@ export function useBARoom(code:string){
   const addBot=async()=>{const r=await call<{snapshot:BASnapshot}>('ba:add-bot',{code,token:get(tokenKey(code))});if(r.ok)accept(r.snapshot);return r.ok?null:r.error};
   const kick=async(playerId:string)=>{const r=await call<{snapshot:BASnapshot}>('ba:kick',{code,token:get(tokenKey(code)),playerId});if(r.ok)accept(r.snapshot);return r.ok?null:r.error};
   const leave=async()=>{const r=await call<{snapshot:BASnapshot}>('ba:leave',{code,token:get(tokenKey(code))});if(r.ok){try{localStorage.removeItem(tokenKey(code))}catch{};location.href='/'}return r.ok?null:r.error};
-  const action=async(a:{kind:'PLAY';cards:string[]}|{kind:'PASS'}|{kind:'RETURN';cards:string[]})=>{
+  const action=async(a:{kind:'PLAY';cards:string[]}|{kind:'PASS'}|{kind:'DRAW';indices:number[]}|{kind:'RETURN';cards:string[]})=>{
     if(!snap)return '尚未同步';
     const r=await callAction<{snapshot:BASnapshot}>({code,token:get(tokenKey(code)),roundId:snap.roundId,actionId:crypto.randomUUID(),expectedVersion:snap.version,turnId:snap.round?.turnId,transactionIndex:snap.exchange?.transactionIndex,action:a});
     if(r.ok)accept(r.snapshot);return r.ok?null:r.error;

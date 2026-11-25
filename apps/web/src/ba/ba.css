@@ -50,3 +50,38 @@
 .ba-result-audit p{margin:5px 0}.ba-theme-light .ba-result-audit{border-color:#b8c7b7;background:#ffffff8a;color:#314d3f}
 .ba-theme-light .ba-ledger-head{color:#526d5d;font-weight:750}
 .ba-app .ba-result>button.ba-result-next:disabled{opacity:.72;cursor:default}
+
+/* Mobile-first full-hand grid, recent-play mini cards, and manual draw UI */
+.ba-hand-wrap{display:grid;gap:8px;margin-top:4px}
+.ba-hand,.ba-facedown-grid{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:9px 3px;overflow:visible;min-height:0;padding:12px 6px 6px;background:linear-gradient(180deg,#ffffff08,#ffffff02);border:1px solid #ffffff12;border-radius:12px;touch-action:manipulation;justify-items:center}
+.ba-hand .ba-card,.ba-facedown-grid .ba-card,.ba-hand-drawn-cards .ba-card{width:100%;min-width:0;max-width:62px;height:auto;aspect-ratio:56/82;margin-right:0;position:relative;flex:none}
+.ba-card.ba-selected{transform:translateY(-8px);box-shadow:0 8px 14px #071f1b70,0 0 0 2px var(--ba-accent);z-index:2}
+.ba-hand-drawn{display:grid;gap:6px;padding:8px 6px 6px;border:1px solid var(--ba-accent);border-radius:12px;background:#e6c99118}
+.ba-theme-light .ba-hand-drawn{background:#bc574814}
+.ba-drawn-row-label{font-size:11px;font-weight:700;color:var(--ba-accent);letter-spacing:.04em}
+.ba-hand-drawn-cards{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:8px 3px;justify-items:center}
+.ba-card-drawn{box-shadow:0 0 0 2px var(--ba-accent),0 3px 9px #091c1b55}
+.ba-drawn-tag{position:absolute;right:2px;bottom:2px;font-size:9px;font-weight:800;line-height:1;padding:2px 3px;border-radius:4px;background:var(--ba-accent);color:#1d332c;pointer-events:none}
+.ba-theme-light .ba-drawn-tag{color:#fff}
+.ba-opponent{padding:6px 4px;gap:3px}
+.ba-opponent-recent{min-height:28px;display:flex;align-items:center;justify-content:center;margin-top:2px}
+.ba-recent-cards{display:flex;flex-wrap:wrap;justify-content:center;gap:2px;max-width:100%}
+.ba-mini-card{display:inline-block;width:20px;height:29px;border-radius:3px;border:1px solid #e6dbca;overflow:hidden;background:#fffdf7;box-shadow:0 1px 3px #071f1b44;flex:none}
+.ba-mini-card img{display:block;width:100%;height:100%;object-fit:fill}
+.ba-pass-badge{display:inline-flex;align-items:center;justify-content:center;padding:2px 7px;border-radius:999px;font-size:11px;font-weight:700;background:#ffffff1a;color:#e4dcc3;border:1px solid #ffffff2b}
+.ba-theme-light .ba-pass-badge{background:#27433814;color:#3d594b;border-color:#98ab9d}
+.ba-recent-empty{font-size:11px;opacity:.55}
+.ba-self{flex-wrap:wrap}
+.ba-self-recent{display:flex;align-items:center;gap:5px;font-size:12px;color:var(--ba-muted)}
+.ba-exchange-logs{display:grid;gap:4px;padding:7px 9px;border:1px solid var(--ba-border);border-radius:10px;background:#ffffff0c;font-size:12px;margin:4px 0}
+.ba-theme-light .ba-exchange-logs{background:#ffffff99}
+.ba-exchange-log-row{display:flex;flex-wrap:wrap;align-items:center;gap:4px}
+@media(max-width:420px){
+  .ba-app,.ba-home{padding-left:10px;padding-right:10px}
+  .ba-table{height:clamp(148px,24dvh,220px);padding:10px 12px}
+  .ba-table-cards{min-height:66px}
+  .ba-table-cards .ba-card{width:46px;min-width:46px;height:68px}
+}
+@media(min-width:650px){
+  .ba-hand,.ba-facedown-grid,.ba-hand-drawn-cards{gap:10px 6px;padding:14px 12px 8px}
+}

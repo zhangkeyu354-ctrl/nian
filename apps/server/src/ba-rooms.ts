@@ -4,8 +4,8 @@ import { join } from 'node:path';
 import type { Server,Socket } from 'socket.io';
 import { createDeck,enumerateLegalPlays } from '../../../packages/black-a-510k/src/rules.js';
 import { applyAction,startRound,type RoundOptions,type RoundState } from '../../../packages/black-a-510k/src/round.js';
-import { createExchangePlan,deterministicAutoReturn,drawForTransaction,returnCards,startExchange,type ExchangePair,type ExchangeState } from '../../../packages/black-a-510k/src/exchange.js';
-import { viewExchange,viewRound } from '../../../packages/black-a-510k/src/privacy.js';
+import { createExchangePlan,deterministicAutoReturn,drawByIndices,prepareFaceDownPool,returnCards,startExchange,type ExchangeLogEntry,type ExchangePair,type ExchangeState } from '../../../packages/black-a-510k/src/exchange.js';
+import { viewExchange,viewExchangeLogs,viewRound } from '../../../packages/black-a-510k/src/privacy.js';
 
 interface Player {id:string;token:string;name:string;ready:boolean;bot?:boolean}
 interface Options extends RoundOptions {advanceExchange:boolean;turnSeconds:0|15|30|45|60;returnSeconds:30|45|60}
@@ -14,16 +14,16 @@ interface BAFile {
   schema:1;game:'black-a-510k';code:string;seriesId:string;roundId:number;version:number;
   phase:'LOBBY'|'PLAY'|'EXCHANGE'|'RESULT'|'ABORTED';hostId:string|null;
   players:Player[];options:Options;round:RoundState|null;exchange:ExchangeState|null;
-  nextPlan:ExchangePair[]|null;receipts:Record<string,Receipt>;deadline:number|null;
+  nextPlan:ExchangePair[]|null;exchangeLogs?:ExchangeLogEntry[];receipts:Record<string,Receipt>;deadline:number|null;
   history:{roundId:number;options:Options;result:NonNullable<RoundState['result']>;finishedOrder:number[]}[];
   createdAt:number;updatedAt:number;
 }
-type GameRequest={roundId:number;actionId:string;expectedVersion:number;turnId?:number;transactionIndex?:number;action:{kind:'PLAY';cards:string[]}|{kind:'PASS'}|{kind:'RETURN';cards:string[]}};
+type GameRequest={roundId:number;actionId:string;expectedVersion:number;turnId?:number;transactionIndex?:number;action:{kind:'PLAY';cards:string[]}|{kind:'PASS'}|{kind:'DRAW';indices:number[]}|{kind:'RETURN';cards:string[]}};
 const validCode=(code:string)=>/^[A-Z2-9]{4}$/.test(code);
 function assert(ok:unknown,msg:string):asserts ok{if(!ok)throw new Error(msg)}
 const defaultOptions:Options={firstLead:'CONTAINS_D3',soloScoreBasis:'FINAL',advanceExchange:true,turnSeconds:45,returnSeconds:45};
 function shuffleDeal(){const d=createDeck().map(c=>c.id);for(let i=d.length-1;i>0;i--){const j=randomInt(i+1);[d[i],d[j]]=[d[j],d[i]]}return [d.slice(0,13),d.slice(13,26),d.slice(26,39),d.slice(39,52)];}
-const canonical=(req:GameRequest)=>JSON.stringify({roundId:req.roundId,expectedVersion:req.expectedVersion,turnId:req.turnId??null,transactionIndex:req.transactionIndex??null,kind:req.action.kind,cards:'cards'in req.action?[...req.action.cards].sort():[]});
+const canonical=(req:GameRequest)=>JSON.stringify({roundId:req.roundId,expectedVersion:req.expectedVersion,turnId:req.turnId??null,transactionIndex:req.transactionIndex??null,kind:req.action.kind,cards:'cards'in req.action?[...req.action.cards].sort():[],indices:'indices'in req.action?[...req.action.indices].sort((a,b)=>a-b):[]});
 
 export class BARoom {
   connections=new Map<string,number>();
@@ -91,7 +91,7 @@ export class BARoom {
     if(!this.file.players.some(x=>!x.bot))this.file.players=[];
     this.file.hostId=this.file.players.find(x=>!x.bot)?.id??null;
     this.file.players.forEach(x=>x.ready=!!x.bot);
-    this.file.phase='LOBBY';this.file.round=null;this.file.exchange=null;this.file.nextPlan=null;
+    this.file.phase='LOBBY';this.file.round=null;this.file.exchange=null;this.file.nextPlan=null;this.file.exchangeLogs=[];
     this.file.deadline=null;this.file.roundId=0;this.file.seriesId=randomUUID();this.file.receipts={};
     this.file.version++;
     return {seatLocked:false};
@@ -99,19 +99,19 @@ export class BARoom {
   private startNext(){
     if(this.file.phase==='RESULT'&&this.file.round?.result)this.file.history.push({roundId:this.file.roundId,options:{...this.file.options},result:this.file.round.result,finishedOrder:[...this.file.round.finishedOrder]});
     this.file.roundId++;this.file.players.forEach(p=>p.ready=false);
-    this.file.round=null;this.file.exchange=null;
+    this.file.round=null;this.file.exchange=null;this.file.exchangeLogs=[];
     const dealt=shuffleDeal();
     if(this.file.nextPlan&&this.file.options.advanceExchange){
       this.file.exchange=startExchange(dealt,this.file.nextPlan);
-      this.file.phase='EXCHANGE';this.drawNext();
+      this.file.phase='EXCHANGE';this.prepareDraw();
     }else{this.file.round=startRound(dealt,this.file.options);this.file.phase='PLAY';this.setDeadline()}
     this.file.nextPlan=null;this.file.version++;
   }
-  private drawNext(){
+  private prepareDraw(){
     const e=this.file.exchange!;const pair=e.plan[e.transactionIndex];const pool=[...e.hands[pair.loser]];
     for(let i=pool.length-1;i>0;i--){const j=randomInt(i+1);[pool[i],pool[j]]=[pool[j],pool[i]]}
-    this.file.exchange=drawForTransaction(e,pool.slice(0,pair.count));
-    this.file.deadline=Date.now()+this.file.options.returnSeconds*1000;
+    this.file.exchange=prepareFaceDownPool(e,pool);
+    this.file.deadline=Date.now()+30_000;
   }
   private setDeadline(){
     if(this.file.options.turnSeconds){this.file.deadline=Date.now()+this.file.options.turnSeconds*1000;return}
@@ -145,12 +145,22 @@ export class BARoom {
       }else this.setDeadline();
     }else if(this.file.phase==='EXCHANGE'){
       const e=this.file.exchange!;const pair=e.plan[e.transactionIndex];
-      assert(req.action.kind==='RETURN'&&seat===pair.winner&&req.transactionIndex===e.transactionIndex,'wrong exchange action');
-      this.file.exchange=returnCards(e,req.action.cards);
-      if(this.file.exchange.phase==='COMPLETE'){
-        this.file.round=startRound(this.file.exchange.hands,this.file.options);
-        this.file.exchange=null;this.file.phase='PLAY';this.setDeadline();
-      }else this.drawNext();
+      assert(seat===pair.winner&&req.transactionIndex===e.transactionIndex,'wrong exchange action');
+      if(req.action.kind==='DRAW'){
+        assert(e.phase==='DRAW_PENDING','not waiting for draw');
+        assert(Array.isArray(req.action.indices),'invalid draw indices');
+        this.file.exchange=drawByIndices(e,req.action.indices);
+        this.file.exchangeLogs=[...(this.file.exchange.logs??[])];
+        this.file.deadline=Date.now()+this.file.options.returnSeconds*1000;
+      }else if(req.action.kind==='RETURN'){
+        assert(e.phase==='RETURN_PENDING','not waiting for return');
+        this.file.exchange=returnCards(e,req.action.cards);
+        this.file.exchangeLogs=[...(this.file.exchange.logs??[])];
+        if(this.file.exchange.phase==='COMPLETE'){
+          this.file.round=startRound(this.file.exchange.hands,this.file.options);
+          this.file.exchange=null;this.file.phase='PLAY';this.setDeadline();
+        }else this.prepareDraw();
+      }else throw new Error('wrong exchange action');
     }else throw new Error('wrong phase');
     this.file.version++;
     const receipt={applied:true,version:this.file.version,replayed:false};
@@ -160,8 +170,8 @@ export class BARoom {
   tick(now=Date.now()){
     const botTurn=this.file.phase==='PLAY'&&this.file.round?.currentActor!==null&&!!this.file.players[this.file.round!.currentActor!]?.bot;
     const pair=this.file.phase==='EXCHANGE'?this.file.exchange?.plan[this.file.exchange.transactionIndex]:null;
-    const botReturn=!!pair&&!!this.file.players[pair.winner]?.bot;
-    if(!botTurn&&!botReturn&&(this.file.deadline===null||now<this.file.deadline))return false;
+    const botExchange=!!pair&&!!this.file.players[pair.winner]?.bot;
+    if(!botTurn&&!botExchange&&(this.file.deadline===null||now<this.file.deadline))return false;
     return this.mutate(()=>{
       if(this.file.phase==='PLAY'){
         const s=this.file.round!,actor=s.currentActor!;
@@ -175,10 +185,21 @@ export class BARoom {
           this.file.deadline=null;this.file.players.forEach(x=>{if(x.bot)x.ready=true});
         }else this.setDeadline();
       }else if(this.file.phase==='EXCHANGE'){
-        const e=this.file.exchange!;this.file.exchange=returnCards(e,deterministicAutoReturn(e));
-        if(this.file.exchange.phase==='COMPLETE'){
-          this.file.round=startRound(this.file.exchange.hands,this.file.options);this.file.exchange=null;this.file.phase='PLAY';this.setDeadline();
-        }else this.drawNext();
+        const e=this.file.exchange!;const currentPair=e.plan[e.transactionIndex];
+        if(e.phase==='DRAW_PENDING'){
+          const poolLen=e.faceDownPool?.length??e.hands[currentPair.loser].length;
+          const all=Array.from({length:poolLen},(_,i)=>i);
+          for(let i=all.length-1;i>0;i--){const j=randomInt(i+1);[all[i],all[j]]=[all[j],all[i]]}
+          this.file.exchange=drawByIndices(e,all.slice(0,currentPair.count));
+          this.file.exchangeLogs=[...(this.file.exchange.logs??[])];
+          this.file.deadline=Date.now()+this.file.options.returnSeconds*1000;
+        }else{
+          this.file.exchange=returnCards(e,deterministicAutoReturn(e));
+          this.file.exchangeLogs=[...(this.file.exchange.logs??[])];
+          if(this.file.exchange.phase==='COMPLETE'){
+            this.file.round=startRound(this.file.exchange.hands,this.file.options);this.file.exchange=null;this.file.phase='PLAY';this.setDeadline();
+          }else this.prepareDraw();
+        }
       }else{this.file.deadline=null;return false}
       this.file.version++;return true;
     });
@@ -189,6 +210,7 @@ export class BARoom {
       self:seat,hostId:this.file.hostId,players:this.file.players.map((x,i)=>({id:x.id,name:x.name,seat:i,ready:x.ready,online:!!x.bot||(this.connections.get(x.id)??0)>0,bot:!!x.bot})),
       options:{...this.file.options},deadline:this.file.deadline,
       round:this.file.round?viewRound(this.file.round,seat):null,exchange:this.file.exchange?viewExchange(this.file.exchange,seat):null,
+      exchangeLogs:viewExchangeLogs(this.file.exchangeLogs??[],seat),
       history:this.file.history??[]};
   }
 }
