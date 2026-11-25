@@ -560,6 +560,11 @@ function crossTwist(s: MAState, c: Ctx, t: Token, from: number, to: number) {
   const [card] = twist.remaining.splice(index, 1);
   twist.drawn.push(card);
   log(s, `${rname(t)} 跨过 Twist：抽到事件 ${card}。`);
+  if (card === 6) {
+    twist.fixedDice = Object.fromEntries(s.players.map(p => [p.id, d6(s)]));
+    log(s, "【随机性消失！】" + s.players.map(p => `${p.name} 的骰点固定为 ${twist.fixedDice![p.id]}`).join("，") + "。本场有效。");
+    return;
+  }
   if (card === 7) {
     const occupied = new Set(race(s).tokens.filter(active).map(x => x.pos));
     twist.chips = Array.from({ length: 17 }, (_, i) => i + 13).filter(pos => !occupied.has(pos));
@@ -986,6 +991,8 @@ interface TurnFlags {
 function racerDie(s: MAState, c: Ctx, t: Token) {
   for (let safety = 0; safety < SAFETY; safety++) {
     const stunner = holders(s, "sw_stunner").find((o) => o !== t && Math.abs(o.pos - t.pos) <= 1);
+    const fixed = race(s).twist?.fixedDice?.[t.owner];
+    if (fixed !== undefined && !stunner) return fixed;
     if (!stunner) {
       c.unforcedDie = true;
       c.unforcedEpoch = (c.unforcedEpoch ?? 0) + 1;
