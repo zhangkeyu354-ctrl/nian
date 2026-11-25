@@ -556,10 +556,27 @@ function crossTwist(s: MAState, c: Ctx, t: Token, from: number, to: number) {
   const twist = race(s).twist;
   if (!twist || twist.triggered || from > 13 || to < 14 || !active(t)) return;
   twist.triggered = true;
+  drawTwist(s, c, t);
+}
+
+function drawTwist(s: MAState, c: Ctx, t: Token) {
+  const twist = race(s).twist!;
+  if (!twist.remaining.length) return;
   const index = randInt(s, twist.remaining.length);
   const [card] = twist.remaining.splice(index, 1);
   twist.drawn.push(card);
-  log(s, `${rname(t)} 跨过 Twist：抽到事件 ${card}。`);
+  log(s, `${rname(t)} 抽到 Twist 事件 ${card}。`);
+  resolveTwistCard(s, c, t, card);
+}
+
+function resolveTwistCard(s: MAState, c: Ctx, t: Token, card: number) {
+  const twist = race(s).twist!;
+  if (card === 10) {
+    log(s, "【观众渴求混乱！】依次抽取并结算两张剩余事件。");
+    drawTwist(s, c, t);
+    drawTwist(s, c, t);
+    return;
+  }
   if (card === 6) {
     twist.fixedDice = Object.fromEntries(s.players.map(p => [p.id, d6(s)]));
     log(s, "【随机性消失！】" + s.players.map(p => `${p.name} 的骰点固定为 ${twist.fixedDice![p.id]}`).join("，") + "。本场有效。");
