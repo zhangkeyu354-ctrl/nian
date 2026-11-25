@@ -586,7 +586,8 @@ function crossTwist(s: MAState, c: Ctx, t: Token, from: number, to: number) {
   }
   if (card === 3) {
     log(s, "【传送带启动！】全员传送至起点后一格，本场主移动 +3。实际骰值不变。");
-    for (const target of inOrder(s).filter(active)) warp(s, c, target, 1);
+    const targets = inOrder(s).filter(active);
+    if (targets.length) warp(s, c, targets[0], 1, undefined, targets);
     return;
   }
   if (card === 5) {
