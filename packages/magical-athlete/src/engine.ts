@@ -565,6 +565,10 @@ function crossTwist(s: MAState, c: Ctx, t: Token, from: number, to: number) {
     log(s, "【随机性消失！】" + s.players.map(p => `${p.name} 的骰点固定为 ${twist.fixedDice![p.id]}`).join("，") + "。本场有效。");
     return;
   }
+  if (card === 8) {
+    log(s, "【人人诅咒魔杖！】每回合结束时掷骰，跳过后面相应数量的行动顺位。");
+    return;
+  }
   if (card === 7) {
     const occupied = new Set(race(s).tokens.filter(active).map(x => x.pos));
     twist.chips = Array.from({ length: 17 }, (_, i) => i + 13).filter(pos => !occupied.has(pos));
@@ -2135,7 +2139,10 @@ function nextTurn(s: MAState, f: TurnFlags) {
   }
   const i = r.order.indexOf(f.resumeAfter ?? r.current);
   delete r.insertionResume;
-  for (let k = 1; k <= r.order.length; k++) {
+  const cursed = r.twist?.drawn.includes(8);
+  const skipped = cursed ? (r.twist?.fixedDice?.[r.current] ?? d6(s)) : 0;
+  if (cursed) log(s, `【人人诅咒魔杖】${pname(s, r.current)} 掷 ${skipped}，跳过后面 ${skipped} 个原行动顺位。`);
+  for (let k = skipped + 1; k <= skipped + r.order.length; k++) {
     const id = r.order[(i + k) % r.order.length];
     if (live(id)) {
       r.current = id;
