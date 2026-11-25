@@ -98,6 +98,18 @@ try {
     await p.getByTestId("ma-claim").click();
     await p.getByTestId("ma-code").waitFor();
   }
+  if (process.env.MA_SCHEDULE_TEST === "1") {
+    assert.equal(await pages[1].getByTestId("ma-track-1-wild").isDisabled(), true);
+    assert.equal(await host.getByTestId("ma-track-1-twisty-twirl").isDisabled(), true);
+    await host.getByTestId("ma-schedule-random").click();
+    const desired = ["wild", "wild", "mild", "wild"];
+    for (const [i, id] of desired.entries()) {
+      await host.getByTestId(`ma-track-${i + 1}-${id}`).click();
+      await host.locator(`[data-testid="ma-track-${i + 1}-${id}"][aria-pressed="true"]`).waitFor();
+      await pages[1].locator(`[data-testid="ma-track-${i + 1}-${id}"][aria-pressed="true"]`).waitFor();
+    }
+    await host.screenshot({ path: `${out}/schedule-phone.png`, fullPage: true });
+  }
   if (process.env.MA_SECOND_WIND === "1") {
     const toggle = host.getByTestId("ma-second-wind");
     assert.equal(await toggle.isChecked(), false, "新角色默认关闭");
@@ -356,6 +368,10 @@ try {
       : null;
     if (label && !label.includes(`第 ${races} 场`)) {
       races++;
+      if (process.env.MA_SCHEDULE_TEST === "1") {
+        const expected = ["狂野赛道", "狂野赛道", "温和赛道", "狂野赛道"][races - 1];
+        assert(label.includes(expected), `第 ${races} 场赛道错误：${label}`);
+      }
       await host.screenshot({
         path: `${out}/2_第${races}场.png`,
         fullPage: true,

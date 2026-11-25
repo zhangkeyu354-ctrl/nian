@@ -79,8 +79,9 @@ export function createMAGame(opts: CreateMAOptions): MAState {
     Array.from({ length: races }, (_, i) =>
       i % 2 === 0 ? "mild" : PLAYABLE_TRACKS.includes("wild") ? "wild" : "mild",
     );
+  if (schedule.length !== races) fail("SCHEDULE", `赛程必须恰好包含 ${races} 场。`);
   for (const t of schedule)
-    if (!PLAYABLE_TRACKS.includes(t)) fail("TRACK_UNCONFIRMED", `${TRACKS[t].zh}：${TRACKS[t].missing}。`);
+    if (!PLAYABLE_TRACKS.includes(t)) fail("TRACK_UNCONFIRMED", `${TRACKS[t]?.zh ?? String(t)}：${TRACKS[t]?.missing ?? "地图不可用"}。`);
   const deal: "draft" | "random" = opts.settings?.deal === "random" && variant === "standard" ? "random" : "draft";
   const settings: Settings = {
     ...(opts.settings?.bananaBackwardPass === false ? {} : { bananaBackwardPass: true }),

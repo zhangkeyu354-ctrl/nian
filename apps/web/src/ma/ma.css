@@ -218,6 +218,23 @@
   width: 72px;
   min-height: 38px;
 }
+.ma-schedule-presets,
+.ma-schedule-maps {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+.ma-schedule-presets { margin: 10px 0 14px; }
+.ma-schedule-presets button,
+.ma-schedule-maps button {
+  min-height: 38px;
+  padding: 6px 10px;
+  font-size: 14px;
+}
+.ma-schedule-races { display: grid; gap: 10px; }
+.ma-schedule-race strong { display: block; margin-bottom: 4px; }
+.ma-schedule-maps button[aria-pressed="true"] { background: var(--sun); border-color: var(--ink); }
+.ma-schedule-maps button small { display: block; font-size: 10px; }
 .ma-wait {
   color: var(--chalk);
   text-align: center;

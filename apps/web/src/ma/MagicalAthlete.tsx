@@ -4,7 +4,9 @@ import {
   racerName,
   total,
   TRACKS,
+  PLAYABLE_TRACKS,
   HIDDEN_CHOICE,
+  type TrackId,
   type MAView,
 } from "../../../../packages/magical-athlete/src/index.ts";
 import type { MARoomSnapshot } from "../../../../packages/shared/src/ma-protocol.ts";
@@ -242,6 +244,13 @@ function Lobby({ snap, lobby }: { snap: MARoomSnapshot; lobby: (a: Parameters<Re
   const [error, setError] = useState("");
   const host = snap.players.find((p) => p.host)?.playerId === snap.mySeat;
   const [points, setPoints] = useState(snap.points);
+  const schedule = snap.schedule ?? ["mild", "wild", "mild", "wild"];
+  const mapIds: TrackId[] = ["mild", "wild", "twisty-twirl", "whirly-world"];
+  const presets: Array<{ label: string; maps: TrackId[] }> = [
+    { label: "仅一代", maps: ["mild", "wild", "mild", "wild"] },
+    { label: "仅二代", maps: ["twisty-twirl", "whirly-world", "twisty-twirl", "whirly-world"] },
+    { label: "一二代混合", maps: ["mild", "wild", "twisty-twirl", "whirly-world"] },
+  ];
   useEffect(() => setPoints(snap.points), [snap.points]);
   const run = async (a: Parameters<typeof lobby>[0]) => setError((await lobby(a)) ?? "");
   return (
@@ -328,12 +337,39 @@ function Lobby({ snap, lobby }: { snap: MARoomSnapshot; lobby: (a: Parameters<Re
             ))}
           </tbody>
         </table>
-        <p className="ma-muted">
-          赛道顺序：温和 → 狂野 → 温和 → 狂野。
-          <a href={`${ART}/docs/skillbook.pdf`} target="_blank" rel="noreferrer">
-            原版 36 名选手技能书（PDF）
-          </a>
-        </p>
+        <p className="ma-muted"><a href={`${ART}/docs/skillbook.pdf`} target="_blank" rel="noreferrer">原版 36 名选手技能书（PDF）</a></p>
+      </section>
+      <section className="ma-panel ma-schedule-panel">
+        <h2>四场赛程</h2>
+        <p className="ma-muted">可以重复选择同一张地图。开局前所有人都能看到本场赛程。</p>
+        <div className="ma-schedule-presets">
+          {presets.map(({ label, maps }) => (
+            <button key={label} type="button" disabled={!host || maps.some(id => !PLAYABLE_TRACKS.includes(id))}
+              onClick={() => void run({ type: "SET_SCHEDULE", schedule: maps })}>
+              {label}{maps.some(id => !PLAYABLE_TRACKS.includes(id)) ? " · 待验收" : ""}
+            </button>
+          ))}
+          <button type="button" data-testid="ma-schedule-random" disabled={!host} onClick={() => void run({ type: "SHUFFLE_SCHEDULE" })}>🎲 随机赛程／重抽</button>
+        </div>
+        <div className="ma-schedule-races">
+          {schedule.map((selected, i) => (
+            <div className="ma-schedule-race" key={i}>
+              <strong>第 {i + 1} 场</strong>
+              <div className="ma-schedule-maps" role="group" aria-label={`第 ${i + 1} 场地图`}>
+                {mapIds.map(id => (
+                  <button key={id} type="button" aria-pressed={selected === id}
+                    data-testid={`ma-track-${i + 1}-${id}`}
+                    disabled={!host || !PLAYABLE_TRACKS.includes(id)}
+                    title={PLAYABLE_TRACKS.includes(id) ? TRACKS[id].zh : `${TRACKS[id].zh}尚待验收`}
+                    onClick={() => void run({ type: "SET_SCHEDULE", schedule: schedule.map((v, j) => j === i ? id : v) as TrackId[] })}>
+                    {TRACKS[id].zh}{!PLAYABLE_TRACKS.includes(id) && <small>待验收</small>}
+                  </button>
+                ))}
+              </div>
+            </div>
+          ))}
+        </div>
+        {!host && <p className="ma-muted">由房主选择赛程。</p>}
       </section>
       <section className="ma-panel">
         <h2>怎么拿选手</h2>

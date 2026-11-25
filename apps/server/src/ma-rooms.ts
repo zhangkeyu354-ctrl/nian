@@ -5,10 +5,12 @@ import type { Server, Socket } from "socket.io";
 import {
   createMAGame,
   DEFAULT_POINTS,
+  PLAYABLE_TRACKS,
   MARuleError,
   reduceMA,
   viewForMA,
 } from "../../../packages/magical-athlete/src/index.ts";
+import type { TrackId } from "../../../packages/magical-athlete/src/track-registry.ts";
 import type { MACommand, MAState } from "../../../packages/magical-athlete/src/types.ts";
 import {
   MA_EVENTS,
@@ -23,6 +25,7 @@ const CODE_CHARS = "ABCDEFGHJKLMNPQRSTUVWXYZ23456789";
 const MAX_PLAYERS = 8;
 const MIN_PLAYERS = 2;
 const RACES = 4;
+const DEFAULT_SCHEDULE: TrackId[] = ["mild", "wild", "mild", "wild"];
 
 interface MAPlayerFile {
   playerId: string;
@@ -40,6 +43,8 @@ export interface MARoomFile {
   hostId: string | null;
   players: MAPlayerFile[];
   points: MAPointsSetting[];
+  /** Optional on legacy saves; absent means the original alternating schedule. */
+  schedule?: TrackId[];
   /** 只在 3 人时有意义（2 人固定双选手） */
   variant?: "standard" | "double";
   /** 随机模式：每人随机发 4 名（旧存档没有这个字段 = 选秀） */
@@ -75,6 +80,7 @@ export class MARoom {
       settings: {
         races: RACES,
         points: this.file.points,
+        ...(this.file.schedule ? { schedule: this.file.schedule } : {}),
         variant: "standard",
         deal: this.file.deal ?? "draft",
         bananaBackwardPass: this.file.bananaBackwardPass === true,
@@ -121,6 +127,14 @@ export class MARoom {
         gold: clampPoint(p?.gold),
         silver: clampPoint(p?.silver),
       }));
+    } else if (action?.type === "SET_SCHEDULE") {
+      const requested: unknown = action.schedule;
+      if (!Array.isArray(requested) || requested.length !== RACES ||
+        !requested.every((id) => typeof id === "string" && PLAYABLE_TRACKS.includes(id as TrackId)))
+        throw new Error("BAD_SCHEDULE");
+      this.file.schedule = [...requested] as TrackId[];
+    } else if (action?.type === "SHUFFLE_SCHEDULE") {
+      this.file.schedule = Array.from({ length: RACES }, () => PLAYABLE_TRACKS[randomInt(PLAYABLE_TRACKS.length)]);
     } else if (action?.type === "KICK") {
       // 房主在开局前移除多出来的玩家（比如重进时多出的同名玩家）
       const id = String(action.playerId);
@@ -209,6 +223,7 @@ export class MARoom {
       })),
       mySeat: me,
       points: this.file.points,
+      schedule: this.file.schedule ?? [...DEFAULT_SCHEDULE],
       variant: "standard",
       deal: this.file.deal ?? "draft",
       secondWind: this.file.secondWind === true,
