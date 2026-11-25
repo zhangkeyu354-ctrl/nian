@@ -7,6 +7,7 @@ import { SECOND_WIND_PREVIEW_IDS } from "../packages/magical-athlete/src/second-
 
 const roster = ["banana", "lovable_loser", "twin", "alchemist", "legs", "sisyphus", "centaur", "skipper"];
 const counts = new Map<number, number>();
+const portals = new Map<string, number>();
 const checkRequired = new Map<string, number>();
 const checkRequiredCases: Array<{ players: number; seed: number; step: number; message: string }> = [];
 const completed: Array<{ players: number; seed: number; steps: number; finale: boolean }> = [];
@@ -16,6 +17,7 @@ const onlySeed = Number(process.env.MA_STRESS_ONLY ?? 0);
 const maxSteps = Number(process.env.MA_STRESS_MAX_STEPS ?? 400);
 const mixed = process.env.MA_STRESS_ROSTER === "mixed";
 const setup = process.env.MA_STRESS_SETUP === "1";
+const track = process.env.MA_STRESS_TRACK === "whirly-world" ? "whirly-world" : "twisty-twirl";
 const pool = [...DRAFTABLE, ...SECOND_WIND_PREVIEW_IDS];
 
 function racersFor(players: number, seed: number) {
@@ -57,7 +59,7 @@ for (const players of [2, 4, 6, 8]) for (let seed = 1; seed <= seeds; seed++) {
   if (onlySeed && gameSeed !== onlySeed) continue;
   const racers = racersFor(players, gameSeed);
   const positions = racers.map((_, i) => i === 0 ? 13 : (gameSeed * (i * 7 + 3)) % 30);
-  let s = testRace({ racers, pos: positions, seed: gameSeed, track: "twisty-twirl", skipSetup: !setup, secondWindPreview: true });
+  let s = testRace({ racers, pos: positions, seed: gameSeed, track, skipSetup: !setup, secondWindPreview: true });
   let random = gameSeed;
   let steps = 0;
   let sawFinale = false;
@@ -77,6 +79,10 @@ for (const players of [2, 4, 6, 8]) for (let seed = 1; seed <= seeds; seed++) {
     assertState(s);
     const cards = s.race?.finaleOrigin?.twist?.drawn ?? s.race?.twist?.drawn ?? [];
     for (const card of cards) counts.set(card, (counts.get(card) ?? 0) + 1);
+    for (const entry of s.log) if (entry.text.includes("进入螺旋通道") && entry.fx?.kind === "warp") {
+      const pair = `${entry.fx.from}→${entry.fx.to}`;
+      portals.set(pair, (portals.get(pair) ?? 0) + 1);
+    }
     completed.push({ players, seed: gameSeed, steps, finale: sawFinale });
   } catch (error) {
     const message = error instanceof Error ? error.message : String(error);
@@ -88,7 +94,7 @@ for (const players of [2, 4, 6, 8]) for (let seed = 1; seed <= seeds; seed++) {
 }
 
 mkdirSync("output/ma-tracks", { recursive: true });
-const result = { roster: mixed ? "mixed" : "base", setup, completed: completed.length, byPlayers: Object.fromEntries([2, 4, 6, 8].map(n => [n, completed.filter(x => x.players === n).length])), finale: completed.filter(x => x.finale).length, cards: Object.fromEntries(counts), checkRequired: Object.fromEntries(checkRequired), checkRequiredCases, failures };
-writeFileSync(`output/ma-tracks/stress-${mixed ? "mixed" : "base"}${setup ? "-setup" : ""}.json`, JSON.stringify(result, null, 2));
+const result = { track, roster: mixed ? "mixed" : "base", setup, completed: completed.length, byPlayers: Object.fromEntries([2, 4, 6, 8].map(n => [n, completed.filter(x => x.players === n).length])), finale: completed.filter(x => x.finale).length, cards: Object.fromEntries(counts), portals: Object.fromEntries(portals), checkRequired: Object.fromEntries(checkRequired), checkRequiredCases, failures };
+writeFileSync(`output/ma-tracks/stress-${track}-${mixed ? "mixed" : "base"}${setup ? "-setup" : ""}.json`, JSON.stringify(result, null, 2));
 console.log(JSON.stringify(result, null, 2));
 if (failures.length) process.exitCode = 1;
