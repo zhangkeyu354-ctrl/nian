@@ -70,4 +70,37 @@ describe("炼金实验室泄露", () => {
     expect(after.race!.twist!.monster?.pos).toBe(5);
     expect(after.forcedRolls).toEqual([]);
   });
+
+  it("镜像时怪物若在旧起点，立即到达新终点且不再移动", () => {
+    const s = testRace({ racers: ["twin", "banana", "lovable_loser"], pos: [13, 20, 25], rolls: [1, 4], track: "twisty-twirl", skipSetup: true });
+    const prepare = (q: typeof s) => {
+      q.race!.twist!.remaining = [2];
+      q.race!.twist!.monster = { pos: 0 };
+    };
+    prepare(s);
+    const snapshot = JSON.parse(s.turn!.snapshot);
+    prepare(snapshot);
+    s.turn!.snapshot = JSON.stringify(snapshot);
+    const after = answer(s, "roll");
+    expect(after.race!.twist!.reversed).toBe(true);
+    expect(after.race!.twist!.monster).toEqual({ pos: 0, finished: true });
+    expect(after.forcedRolls).toEqual([4]);
+  });
+
+  it("镜像时尚未到终点的怪物按反向独立骰移动", () => {
+    const s = withMonster([13, 18, 25], [1, 3], 20);
+    const prepare = (q: typeof s) => {
+      q.race!.twist!.triggered = false;
+      q.race!.twist!.remaining = [2];
+    };
+    prepare(s);
+    const snapshot = JSON.parse(s.turn!.snapshot);
+    prepare(snapshot);
+    s.turn!.snapshot = JSON.stringify(snapshot);
+    const after = answer(s, "roll");
+    expect(after.race!.twist!.reversed).toBe(true);
+    expect(after.race!.twist!.monster).toEqual({ pos: 17 });
+    expect(tok(after, "banana").out).toBe(true);
+    expect(tok(after, "lovable_loser").out).toBe(false);
+  });
 });

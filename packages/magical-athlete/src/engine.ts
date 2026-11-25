@@ -580,6 +580,10 @@ function resolveTwistCard(s: MAState, c: Ctx, t: Token, card: number) {
   if (card === 2) {
     twist.reversed = true;
     log(s, "【镜像世界生效！】本场从另一端开始前进；选手原地不动。");
+    if (twist.monster && !twist.monster.finished && progress(s, twist.monster.pos) >= trackOf(s).length) {
+      twist.monster.finished = true;
+      log(s, "巨口怪物已在新的终点，停止追逐。");
+    }
     for (const x of inOrder(s).filter(x => active(x) && progress(s, x.pos) >= trackOf(s).length))
       if (active(x)) finish(s, c, x);
     return;
@@ -2257,7 +2261,10 @@ function nextTurn(s: MAState, f: TurnFlags) {
   delete r.insertionResume;
   const cursed = r.twist?.drawn.includes(8);
   const skipped = cursed ? (r.twist?.fixedDice?.[r.current] ?? d6(s)) : 0;
-  if (cursed) log(s, `【人人诅咒魔杖】${pname(s, r.current)} 掷 ${skipped}，跳过后面 ${skipped} 个原行动顺位。`);
+  if (cursed) {
+    const seats = Array.from({ length: skipped }, (_, k) => r.order[(i + k + 1) % r.order.length]);
+    log(s, `【人人诅咒魔杖】${pname(s, r.current)} 掷 ${skipped}，跳过后面 ${skipped} 个原行动顺位：${seats.map(id => pname(s, id)).join("、")}。`);
+  }
   for (let k = skipped + 1; k <= skipped + r.order.length; k++) {
     const id = r.order[(i + k) % r.order.length];
     if (live(id)) {

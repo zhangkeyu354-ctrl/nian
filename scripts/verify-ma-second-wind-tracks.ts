@@ -29,7 +29,7 @@ const samples = Object.fromEntries(
             value: "roll",
           })
         : before;
-    const mirrored = structuredClone(before.race);
+    const mirrored = structuredClone(before.race!);
     if (mirrored.twist) mirrored.twist.reversed = true;
     return [track, { before: before.race, after: after.race, mirrored }];
   }),
