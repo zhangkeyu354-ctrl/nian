@@ -63,6 +63,22 @@ export function gridCell(pos: number) {
 
 type Tok = RaceState["tokens"][number];
 
+function MonsterMarker({ x, y, width, height, pos }: { x: number; y: number; width: number; height: number; pos: number }) {
+  const [ready, setReady] = useState(false);
+  useEffect(() => {
+    const frame = requestAnimationFrame(() => setReady(true));
+    return () => cancelAnimationFrame(frame);
+  }, []);
+  return (
+    <span
+      className={`ma-twist-monster${ready ? " ready" : ""}`}
+      role="img"
+      aria-label={`巨口怪物，第 ${pos} 格`}
+      style={{ width, height, transform: `translate3d(${x}px, ${y}px, 0) translate(-50%, -65%)` }}
+    ><img src={`${ART}/tokens/sw_bite_mark_were.png`} alt="" /></span>
+  );
+}
+
 /** 同一格多人时：每人的偏移（单位：格宽 / 格高）和缩放 */
 function crowd(k: number, n: number): { dx: number; dy: number; scale: number } {
   if (n <= 1) return { dx: 0, dy: 0, scale: 1 };
@@ -193,6 +209,19 @@ export function Track({
   const focus=current&&focused?place(current.pos,focused.indexOf(current.racer),focused.length):null;
   useRaceCamera(scroller,surface,focus,vertical,layout==="grid");
   const spots = new Map<string, { x: number; y: number }>();
+  const monsterPos = race.twist?.monster && !race.twist.monster.finished
+    ? place(race.twist.monster.pos, 0, 1)
+    : null;
+  const monster = monsterPos ? (
+    <MonsterMarker
+      key={`monster-${layout}`}
+      x={monsterPos.x * size.w}
+      y={monsterPos.y * size.h}
+      width={size.w * (layout === "grid" ? 0.11 : 0.046)}
+      height={size.w * (layout === "grid" ? 0.18 : 0.075)}
+      pos={race.twist!.monster!.pos}
+    />
+  ) : null;
   const pawns = [...groups].flatMap(([pos, racers]) =>
     racers.map((rid, k) => {
       const t: Tok = race.tokens.find((x) => x.racer === rid)!;
@@ -327,6 +356,7 @@ export function Track({
             </div>
           </div>
           {linkLayer}
+          {monster}
           {pawns}
           {floatLayer}
         </div>
@@ -369,6 +399,7 @@ export function Track({
         />
       )}
       {linkLayer}
+      {monster}
       {pawns}
       {floatLayer}
     </div>

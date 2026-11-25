@@ -19,6 +19,7 @@ const samples = Object.fromEntries(
       skipSetup: true,
       secondWindPreview: true,
     });
+    if (track === "twisty-twirl") before.race!.twist!.monster = { pos: 15 };
     // Only the verified whirly movement fixture is executable. Twisty remains structural.
     const after =
       track === "whirly-world"
@@ -37,7 +38,7 @@ writeFileSync(
 );
 writeFileSync(
   join(work, "entry.tsx"),
-  `import React,{useState}from'react';import{createRoot}from'react-dom/client';import{Track,PLAYER_COLORS}from'../../apps/web/src/ma/Track.tsx';import'../../apps/web/src/style.css';import'../../apps/web/src/ma/ma.css';const samples=${JSON.stringify(samples)};function App(){const[id,setId]=useState('whirly-world');const[after,setAfter]=useState(false);const[layout,setLayout]=useState('art');const r=samples[id][after?'after':'before'];window.render_game_to_text=()=>JSON.stringify({track:id,layout,stage:after?'after':'before',tokens:r.tokens.map(t=>({id:t.racer,pos:t.pos,tripped:t.tripped})),experimental:true});return <div className="ma-app"><header style={{padding:12}}><h1 style={{fontSize:20}}>二代赛道 · 开发预览</h1><p>地图结构与螺旋通道测试；扭扭事件尚未启用。</p><button id="whirly" onClick={()=>{setId('whirly-world');setAfter(false)}}>螺旋世界</button><button id="twisty" onClick={()=>{setId('twisty-twirl');setAfter(false)}}>扭扭赛道</button><button id="move" disabled={id!=='whirly-world'} onClick={()=>setAfter(x=>!x)}>演示17→22</button><button id="layout" onClick={()=>setLayout(x=>x==='art'?'grid':'art')}>切换棋盘布局</button></header><Track race={r} me="p1" colorOf={id=>PLAYER_COLORS[Number(id.slice(1))-1]} layout={layout} fit={true}/></div>}createRoot(document.getElementById('root')).render(<App/>);`,
+  `import React,{useState}from'react';import{createRoot}from'react-dom/client';import{Track,PLAYER_COLORS}from'../../apps/web/src/ma/Track.tsx';import'../../apps/web/src/style.css';import'../../apps/web/src/ma/ma.css';const samples=${JSON.stringify(samples)};function App(){const[id,setId]=useState('whirly-world');const[after,setAfter]=useState(false);const[layout,setLayout]=useState('art');const r=samples[id][after?'after':'before'];window.render_game_to_text=()=>JSON.stringify({track:id,layout,stage:after?'after':'before',tokens:r.tokens.map(t=>({id:t.racer,pos:t.pos,tripped:t.tripped})),experimental:true});return <div className="ma-app"><header style={{padding:12}}><h1 style={{fontSize:20}}>二代赛道 · 开发预览</h1><p>地图结构、螺旋通道与怪物棋子预览；扭扭事件尚未完整启用。</p><button id="whirly" onClick={()=>{setId('whirly-world');setAfter(false)}}>螺旋世界</button><button id="twisty" onClick={()=>{setId('twisty-twirl');setAfter(false)}}>扭扭赛道</button><button id="move" disabled={id!=='whirly-world'} onClick={()=>setAfter(x=>!x)}>演示17→22</button><button id="layout" onClick={()=>setLayout(x=>x==='art'?'grid':'art')}>切换棋盘布局</button></header><Track race={r} me="p1" colorOf={id=>PLAYER_COLORS[Number(id.slice(1))-1]} layout={layout} fit={true}/></div>}createRoot(document.getElementById('root')).render(<App/>);`,
 );
 await build({
   configFile: false,
@@ -75,9 +76,12 @@ const server = createServer((req, res) => {
   );
   res.end(readFileSync(file));
 });
-await new Promise<void>((r) => server.listen(5214, "127.0.0.1", r));
+await new Promise<void>((r) => server.listen(0, "127.0.0.1", r));
+const address = server.address();
+if (!address || typeof address === "string") throw new Error("预览服务端口不可用");
+const previewUrl = `http://127.0.0.1:${address.port}`;
 if (process.env.MA_PREVIEW_SERVE) {
-  console.log("PREVIEW http://127.0.0.1:5214");
+  console.log("PREVIEW " + previewUrl);
   await new Promise(() => {});
 }
 const browser = await chromium.launch();
@@ -87,7 +91,7 @@ page.on("pageerror", (e) => errors.push(e.message));
 const results = [];
 for (const width of [320, 360, 390, 414, 1280]) {
   await page.setViewportSize({ width, height: width === 390 ? 664 : 844 });
-  await page.goto("http://127.0.0.1:5214");
+  await page.goto(previewUrl);
   await page.waitForSelector(".ma-board-img");
   for (const map of ["whirly", "twisty"]) {
     await page.click("#" + map);
@@ -98,6 +102,29 @@ for (const width of [320, 360, 390, 414, 1280]) {
       path: join(out, `${map}-${width}.png`),
       fullPage: true,
     });
+    if (map === "twisty" && width === 390) {
+      if (await page.locator(".ma-twist-monster").count() !== 1)
+        throw new Error("扭扭赛道怪物棋子未显示");
+      await page.click("#layout");
+      await page.waitForTimeout(250);
+      await page.screenshot({ path: join(out, "twisty-monster-grid-390.png"), fullPage: true });
+      if (await page.locator(".ma-twist-monster").count() !== 1)
+        throw new Error("清晰棋盘怪物棋子未显示");
+      const monsterInsideGrid = await page.evaluate(() => {
+        const grid = document.querySelector(".ma-grid")!.getBoundingClientRect();
+        const marker = document.querySelector(".ma-twist-monster")!.getBoundingClientRect();
+        return marker.left >= grid.left && marker.right <= grid.right && marker.top >= grid.top && marker.bottom <= grid.bottom;
+      });
+      if (!monsterInsideGrid) {
+        const geometry = await page.evaluate(() => ({
+          grid: document.querySelector(".ma-grid")!.getBoundingClientRect().toJSON(),
+          marker: document.querySelector(".ma-twist-monster")!.getBoundingClientRect().toJSON(),
+          style: (document.querySelector(".ma-twist-monster") as HTMLElement).style.cssText,
+        }));
+        throw new Error("清晰棋盘怪物棋子超出棋盘 " + JSON.stringify(geometry));
+      }
+      await page.click("#layout");
+    }
     const overflow = await page.evaluate(
       () => document.documentElement.scrollWidth > innerWidth,
     );
@@ -107,10 +134,10 @@ for (const width of [320, 360, 390, 414, 1280]) {
 }
 await page.setViewportSize({ width: 1280, height: 600 });
 for (const id of ["twisty-twirl", "whirly-world"]) {
-  await page.goto("http://127.0.0.1:5214/debug/" + id + "-debug.svg");
+  await page.goto(previewUrl + "/debug/" + id + "-debug.svg");
   await page.screenshot({ path: join(out, id + "-debug.png") });
 }
-await page.goto("http://127.0.0.1:5214");
+await page.goto(previewUrl);
 await page.click("#move");
 const state = await page.evaluate(() =>
   JSON.parse((window as any).render_game_to_text()),

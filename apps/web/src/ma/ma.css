@@ -466,6 +466,25 @@
   width: 100%;
   min-width: 640px;
 }
+.ma-twist-monster {
+  position: absolute;
+  left: 0;
+  top: 0;
+  z-index: 18;
+  pointer-events: none;
+  filter: drop-shadow(0 3px 1px rgba(0, 0, 0, .65));
+}
+.ma-twist-monster.ready {
+  transition: transform var(--ma-move-ms, 450ms) ease-out;
+}
+.ma-twist-monster img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+.ma-board-scroll.vertical .ma-twist-monster img {
+  transform: rotate(-90deg);
+}
 .ma-board-art picture,
 .ma-board-img {
   display: block;
