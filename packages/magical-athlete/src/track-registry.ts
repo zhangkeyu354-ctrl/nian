@@ -1,4 +1,4 @@
-/** 增量注册表：一代tracks.ts保持字节冻结，新地图未验收不进入正式池。 */
+/** 增量注册表：一代tracks.ts保持字节冻结；二代两图 2026-11-25 用户确认上线，进入正式池。 */
 import {
   TRACKS as LEGACY_TRACKS,
   PLAYABLE_TRACKS as LEGACY_PLAYABLE_TRACKS,
@@ -8,7 +8,7 @@ import {
 import { SECOND_WIND_MAPS, type SecondWindMapId } from "./second-wind-maps.ts";
 export type TrackId = LegacyTrackId | SecondWindMapId;
 export type Track = Omit<LegacyTrack, "id"> & { id: TrackId };
-export const PLAYABLE_TRACKS: TrackId[] = [...LEGACY_PLAYABLE_TRACKS];
+export const PLAYABLE_TRACKS: TrackId[] = [...LEGACY_PLAYABLE_TRACKS, "twisty-twirl", "whirly-world"];
 export const TRACKS: Record<TrackId, Track> = {
   ...LEGACY_TRACKS,
   "twisty-twirl": {
@@ -18,8 +18,7 @@ export const TRACKS: Record<TrackId, Track> = {
     length: 30,
     secondCorner: 15,
     specials: {},
-    status: "CHECK_REQUIRED",
-    missing: "13张事件尚未全部通过验收",
+    status: "CONFIRMED",
     source_ref: SECOND_WIND_MAPS["twisty-twirl"].source,
   },
   "whirly-world": {
@@ -29,8 +28,7 @@ export const TRACKS: Record<TrackId, Track> = {
     length: 30,
     secondCorner: 15,
     specials: {},
-    status: "CHECK_REQUIRED",
-    missing: "仅预发布，尚待全角色及联机验收",
+    status: "CONFIRMED",
     source_ref: SECOND_WIND_MAPS["whirly-world"].source,
   },
 };

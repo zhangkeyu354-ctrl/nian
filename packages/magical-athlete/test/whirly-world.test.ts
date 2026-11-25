@@ -2,6 +2,7 @@ import { describe, expect, it } from "vitest";
 import { createMAGame, testRace } from "../src/engine.ts";
 import { answer, tok } from "./helpers.ts";
 import { PLAYABLE_TRACKS } from "../src/tracks.ts";
+import { PLAYABLE_TRACKS as ALL_PLAYABLE } from "../src/track-registry.ts";
 const pairs = [
   [4, 6],
   [8, 12],
@@ -151,8 +152,9 @@ describe("螺旋世界：权威引擎落点", () => {
     expect(tok(s, "twin").pos).toBe(6);
     expect(tok(s, "twin").tripped).toBe(true);
   });
-  it("未验收地图不进入正式可用池", () => {
+  it("二代两图已进入正式可用池（一代文件保持不变）", () => {
     expect(PLAYABLE_TRACKS).toEqual(["mild", "wild"]);
+    expect(ALL_PLAYABLE).toEqual(["mild", "wild", "twisty-twirl", "whirly-world"]);
     expect(() =>
       createMAGame({
         players: [
@@ -160,8 +162,8 @@ describe("螺旋世界：权威引擎落点", () => {
           { id: "b", name: "乙" },
         ],
         seed: 1,
-        settings: { schedule: ["whirly-world", "mild", "wild", "mild"] },
+        settings: { schedule: ["whirly-world", "mild", "wild", "twisty-twirl"] },
       }),
-    ).toThrow();
+    ).not.toThrow();
   });
 });
