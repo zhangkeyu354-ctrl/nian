@@ -20,6 +20,10 @@ export function viewForMA(s: MAState, playerId: string | null): MAView {
     if (p.id !== playerId) p.choices = p.choices.map(() => HIDDEN_CHOICE);
   // 待决定事项：只有决定人看得到选项（例如神秘蛋抽到的 3 张）
   if (v.pending && v.pending.player !== playerId)
-    v.pending = { ...v.pending, options: [] };
+    v.pending = {
+      ...v.pending,
+      ...(v.pending.kind === "twist_swap_meet" ? { prompt: "等待对方决定是否交换运动员。" } : {}),
+      options: [],
+    };
   return v;
 }

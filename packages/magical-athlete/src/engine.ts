@@ -572,6 +572,10 @@ function drawTwist(s: MAState, c: Ctx, t: Token) {
 
 function resolveTwistCard(s: MAState, c: Ctx, t: Token, card: number) {
   const twist = race(s).twist!;
+  if (card === 11) {
+    resolveSwapMeet(s, c);
+    return;
+  }
   if (card === 9) {
     if (race(s).tokens.some(x => active(x) && has(s, x, "sw_bite_mark") && x.secondWind?.wereMouth))
       fail("CHECK_REQUIRED", "炼金实验室怪物与已变身的巨口同时存在，交互尚待核对。");
@@ -629,6 +633,59 @@ function resolveTwistCard(s: MAState, c: Ctx, t: Token, card: number) {
   const targets = inOrder(s).filter(x => active(x) && x.pos === last);
   log(s, `【地上烤鸡！】末位 ${targets.map(rname).join("、")} 各向前移动 7 格。`);
   for (const target of targets) if (active(target)) move(s, c, target, 7, false, "地上烤鸡");
+}
+
+/** Collect private choices before changing any racer identity or publishing a result. */
+function resolveSwapMeet(s: MAState, c: Ctx) {
+  const r = race(s);
+  const owners = r.order.filter(id => r.tokens.some(x => x.owner === id && active(x)));
+  const allowed = new Set(s.settings.secondWindPreview ? [...DRAFTABLE, ...SECOND_WIND_PREVIEW_IDS] : DRAFTABLE);
+  const held = new Set([...s.players.flatMap(p => [...p.hand, ...p.used]), ...r.tokens.map(x => x.racer)]);
+  const draws = owners.flatMap(owner => {
+    const index = s.deck.findIndex(id => allowed.has(id) && !held.has(id));
+    if (index < 0) return [];
+    const [card] = s.deck.splice(index, 1);
+    held.add(card);
+    return [{ owner, card }];
+  });
+  const choices = draws.map(({ owner, card }) => {
+    const eligible = r.tokens.filter(x => x.owner === owner && active(x));
+    const pick = ask(s, c, {
+      player: owner,
+      racer: null,
+      kind: "twist_swap_meet",
+      prompt: `【交换大会】你抽到 ${racerName(card)}。要与哪名在场选手交换？`,
+      options: [
+        ...eligible.map(x => ({ value: `swap:${x.racer}`, label: `换下 ${rname(x)}` })),
+        { value: "keep", label: "保留原选手" },
+      ],
+    });
+    return { owner, card, pick };
+  });
+  const rejected: string[] = [];
+  for (const { owner, card, pick } of choices) {
+    const old = pick.startsWith("swap:") ? pick.slice(5) : null;
+    const target = old ? r.tokens.find(x => x.owner === owner && x.racer === old && active(x)) : null;
+    if (!target) {
+      rejected.push(card);
+      log(s, `${pname(s, owner)} 在交换大会保留原选手。`);
+      continue;
+    }
+    target.racer = card;
+    target.base = card;
+    target.copyPick = null;
+    target.started = false;
+    delete target.secondWind;
+    if (r.mastermindPicks) delete r.mastermindPicks[old!];
+    if (r.hogs) r.hogs = r.hogs.filter(h => h.source !== old && h.rider !== old);
+    if (s.returningRacers) s.returningRacers = s.returningRacers.filter(x => x.racer !== old);
+    const p = player(s, owner);
+    p.hand.push(card);
+    p.used.push(card);
+    registerReturner(s, target);
+    log(s, `${pname(s, owner)} 在交换大会用 ${racerName(card)} 替换 ${racerName(old!)}，保留原位置。`);
+  }
+  s.deck.push(...rejected);
 }
 
 /**

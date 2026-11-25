@@ -25,6 +25,7 @@ const CODE_CHARS = "ABCDEFGHJKLMNPQRSTUVWXYZ23456789";
 const MAX_PLAYERS = 8;
 const MIN_PLAYERS = 2;
 const RACES = 4;
+const SWAP_MEET_TIMEOUT_MS = 60_000;
 const DEFAULT_SCHEDULE: TrackId[] = ["mild", "wild", "mild", "wild"];
 
 interface MAPlayerFile {
@@ -55,6 +56,8 @@ export interface MARoomFile {
   /** Absent on old saves: replay with the old forward-only Banana rule. */
   bananaBackwardPass?: boolean;
   independentMasterminds?: boolean;
+  /** Persisted deadline for a private Swap Meet answer. */
+  swapMeetDeadline?: number;
   seed: number;
   commands: MACommand[];
 }
@@ -67,6 +70,8 @@ export class MARoom {
       let s = this.create();
       for (const c of file.commands) s = reduceMA(s, c);
       this.state = s;
+      if (s.pending?.kind === "twist_swap_meet" && !file.swapMeetDeadline)
+        file.swapMeetDeadline = Date.now() + SWAP_MEET_TIMEOUT_MS;
     }
   }
   get code() {
@@ -185,6 +190,23 @@ export class MARoom {
     else throw new Error("BAD_ACTION");
     this.state = reduceMA(this.state, full);
     this.file.commands.push(full);
+    this.syncSwapMeetDeadline();
+  }
+  private syncSwapMeetDeadline(now = Date.now()) {
+    if (this.state?.pending?.kind === "twist_swap_meet")
+      this.file.swapMeetDeadline = now + SWAP_MEET_TIMEOUT_MS;
+    else delete this.file.swapMeetDeadline;
+  }
+  /** Server-only timeout action; the ordinary command/replay path remains authoritative. */
+  expireSwapMeet(now = Date.now()): boolean {
+    const pending = this.state?.pending;
+    if (pending?.kind !== "twist_swap_meet" || !this.file.swapMeetDeadline || now < this.file.swapMeetDeadline)
+      return false;
+    const command: MACommand = { type: "ANSWER", player: pending.player, value: "keep" };
+    this.state = reduceMA(this.state!, command);
+    this.file.commands.push(command);
+    this.syncSwapMeetDeadline(now);
+    return true;
   }
   private isBot(id: string | null | undefined) {
     return !!id && this.file.players.some((p) => p.playerId === id && p.bot);
@@ -208,6 +230,7 @@ export class MARoom {
     if (!cmd) return false;
     this.state = reduceMA(s, cmd);
     this.file.commands.push(cmd);
+    this.syncSwapMeetDeadline();
     return true;
   }
   snapshot(me: string | null): MARoomSnapshot {
@@ -349,6 +372,19 @@ export function attachMagicalAthlete(
       }, 250),
     );
   };
+  setInterval(() => {
+    const now = Date.now();
+    for (const room of store.rooms.values()) {
+      try {
+        if (room.expireSwapMeet(now)) {
+          store.save(room);
+          broadcast(room);
+        }
+      } catch (e) {
+        console.warn("魔法运动员交换大会超时处理失败", room.code, e instanceof Error ? e.message : e);
+      }
+    }
+  }, 1000).unref();
   const find = (code: unknown) => store.rooms.get(String(code ?? "").toUpperCase());
 
   io.on("connection", (socket: Socket) => {
