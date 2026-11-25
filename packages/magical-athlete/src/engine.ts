@@ -2154,7 +2154,7 @@ function turnUnit(s: MAState, c: Ctx) {
 }
 
 function forcedTurnKey(s: MAState, ignoreCurrent = false, ignoreAwards = false) {
-  const { forcedCycle: _anchor, forcedCycleBlocked: _blocked, ...r } = race(s);
+  const { forcedCycle: _anchor, forcedCycleBlocked: _blocked, stalemateSeen: _stalemate, ...r } = race(s);
   // USER_RULING 2026-10-29: added star/skill awards do not prevent a forced
   // repeat. Keep every score value that can change a later legal outcome.
   const sensitive = ignoreAwards
@@ -2547,6 +2547,52 @@ function forcedStandupCycle(initial: MAState): boolean {
   }
 }
 
+/** A repeated complete state with no intervening free choice is deterministic forever. */
+function terminalStalemate(s: MAState): boolean {
+  if (!s.race || !s.pending) return false;
+  const r = s.race;
+  // A fixed event die makes this replay provably deterministic. Legacy races
+  // keep their exact serialized shape and existing replay hashes.
+  if (!r.twist?.fixedDice) return false;
+  if (s.pending.options.length !== 1) {
+    delete r.stalemateSeen;
+    return false;
+  }
+  const answerCount = s.turn?.answers.length ?? 0;
+  const semantic = structuredClone(s);
+  semantic.log = [];
+  semantic.version = 0;
+  semantic.turn = null;
+  delete semantic.race!.stalemateSeen;
+  if (semantic.race!.lastRoll) semantic.race!.lastRoll.seq = 0;
+  const key = JSON.stringify({ ...semantic, answerCount });
+  const seen = r.stalemateSeen ?? [];
+  if (seen.includes(key)) return true;
+  // The bound limits stored history, never the number of actions a race may take.
+  r.stalemateSeen = [...seen.slice(-63), key];
+  return false;
+}
+
+function checkpointStalemate(s: MAState): MAState {
+  if (!s.race || !s.pending) return s;
+  if (terminalStalemate(s)) {
+    log(s, "比赛局面完全重复，且没有可改变结果的选择；本场结束，已得分与已冲线名次保留。未冲线者不获奖牌。");
+    endRace(s);
+    s.pending = null;
+    s.turn = null;
+    return s;
+  }
+  // A Need is replayed from the unit's initial snapshot. Carry only the
+  // bookkeeping forward so the next answer cannot erase the proof history.
+  if (s.turn) {
+    const snapshot = JSON.parse(s.turn.snapshot) as MAState;
+    if (s.race.stalemateSeen) snapshot.race!.stalemateSeen = s.race.stalemateSeen;
+    else delete snapshot.race!.stalemateSeen;
+    s.turn.snapshot = JSON.stringify(snapshot);
+  }
+  return s;
+}
+
 /** 自动推进到下一个需要有人选择的地方 */
 function advance(s: MAState): MAState {
   for (let guard = 0; guard < 1000; guard++) {
@@ -2563,7 +2609,7 @@ function advance(s: MAState): MAState {
         res.s.turn = null;
         return res.s;
       }
-      return res.s;
+      return checkpointStalemate(res.s);
     }
     s = res.s;
   }
@@ -2865,12 +2911,19 @@ export function reduceMA(prev: MAState, cmd: MACommand): MAState {
     if (p.player !== me.id) fail("NOT_YOUR_DECISION", "这不是你的决定。");
     if (!p.options.some((o) => o.value === cmd.value)) fail("BAD_OPTION", "无效的选项。");
     const turn = s.turn!;
+    if (p.options.length > 1) {
+      // A different choice may escape an apparent loop; restart the proof.
+      delete s.race?.stalemateSeen;
+      const snapshot = JSON.parse(turn.snapshot) as MAState;
+      if (snapshot.race) delete snapshot.race.stalemateSeen;
+      turn.snapshot = JSON.stringify(snapshot);
+    }
     const answers = [...turn.answers, cmd.value];
     const res = runUnit(turn.snapshot, answers);
     if (res.need) {
       res.s.pending = res.need;
       res.s.turn = { snapshot: turn.snapshot, answers };
-      s = res.s;
+      s = checkpointStalemate(res.s);
     } else {
       s = res.s;
       s.pending = null;

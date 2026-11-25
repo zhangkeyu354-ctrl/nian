@@ -38,6 +38,8 @@ export interface Token {
 }
 
 export interface RaceState {
+  /** Server-only exact states seen at mandatory decision boundaries this race. */
+  stalemateSeen?: string[];
   /** Stable identifier; the finale shares index with its scheduled race. */
   instanceId?: string;
   twist?: { triggered: boolean; remaining: number[]; drawn: number[]; reversed?: boolean; chips?: number[]; fixedDice?: Record<string, number>; monster?: { pos: number; finished?: boolean }; finalePending?: boolean };
