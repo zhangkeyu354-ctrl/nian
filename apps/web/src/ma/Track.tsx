@@ -305,6 +305,8 @@ export function Track({
     ) : null;
 
   if (layout === "grid") {
+    const secondWindMap = race.track === "twisty-twirl" || race.track === "whirly-world"
+      ? SECOND_WIND_MAPS[race.track] : null;
     const img = `url(${ART}/${board.assets.webp})`;
     const crop = (cx: number, cy: number, cw: number, ch: number): React.CSSProperties => ({
       backgroundImage: img,
@@ -325,6 +327,9 @@ export function Track({
           {board.spaces.map((sp) => {
             const { col, row } = gridCell(sp.index);
             const special = track.specials[sp.index];
+            const mapSpace = secondWindMap?.spaces[sp.index];
+            const portal = secondWindMap?.warpPairs.find(([a, b]) => a === sp.index || b === sp.index);
+            const portalTo = portal ? (portal[0] === sp.index ? portal[1] : portal[0]) : null;
             return (
               <div
                 key={sp.index}
@@ -339,9 +344,11 @@ export function Track({
                 {sp.index === 0 ? (
                   <div className={`ma-cell-art start${race.twist?.reversed ? " reverse-finish" : ""}`}>{race.twist?.reversed ? "镜像终点" : "起点"}</div>
                 ) : (
-                  <div className="ma-cell-art" style={crop(sp.x, sp.y, sp.width * 0.97, sp.height * 0.97)} />
+                  <div className={"ma-cell-art" + (mapSpace ? " second-wind" : "")}
+                    style={mapSpace ? { backgroundColor: mapSpace.color } : crop(sp.x, sp.y, sp.width * 0.97, sp.height * 0.97)} />
                 )}
                 <span className="ma-cell-no">{sp.index}</span>
+                {portalTo !== null && <span className="ma-cell-tag portal">↔ {portalTo}</span>}
                 {sp.index === 29 && race.twist?.reversed && <span className="ma-cell-tag reverse-start">镜像起点</span>}
                 {special && <span className={"ma-cell-tag " + special.kind}>{specialLabel(special)}</span>}
               </div>

@@ -34,13 +34,22 @@ const samples = Object.fromEntries(
     return [track, { before: before.race, after: after.race, mirrored }];
   }),
 );
+const bite = testRace({
+  racers: ["sw_bite_mark", "banana", "twin"], pos: [5, 12, 20],
+  track: "twisty-twirl", skipSetup: true, secondWindPreview: true,
+});
+bite.race!.tokens[0].secondWind = { wereMouth: true };
+bite.race!.twist!.triggered = true;
+bite.race!.twist!.drawn = [9];
+bite.race!.twist!.monsterRacers = ["sw_bite_mark"];
+samples["twisty-bite"] = { before: bite.race!, after: bite.race!, mirrored: bite.race! };
 writeFileSync(
   join(work, "index.html"),
   '<html lang="zh-CN"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><body><div id="root"></div><script type="module" src="/entry.tsx"></script></body></html>',
 );
 writeFileSync(
   join(work, "entry.tsx"),
-  `import React,{useState}from'react';import{createRoot}from'react-dom/client';import{Track,PLAYER_COLORS}from'../../apps/web/src/ma/Track.tsx';import'../../apps/web/src/style.css';import'../../apps/web/src/ma/ma.css';const samples=${JSON.stringify(samples)};function App(){const[id,setId]=useState('whirly-world');const[after,setAfter]=useState(false);const[mirror,setMirror]=useState(false);const[layout,setLayout]=useState('art');const r=samples[id][mirror?'mirrored':after?'after':'before'];window.render_game_to_text=()=>JSON.stringify({track:id,layout,stage:mirror?'mirror':after?'after':'before',tokens:r.tokens.map(t=>({id:t.racer,pos:t.pos,tripped:t.tripped})),experimental:true});return <div className="ma-app"><header style={{padding:12}}><h1 style={{fontSize:20}}>二代赛道 · 开发预览</h1><p>地图结构、螺旋通道与怪物棋子预览；扭扭事件尚未完整启用。</p><button id="whirly" onClick={()=>{setId('whirly-world');setAfter(false);setMirror(false)}}>螺旋世界</button><button id="twisty" onClick={()=>{setId('twisty-twirl');setAfter(false);setMirror(false)}}>扭扭赛道</button><button id="move" disabled={id!=='whirly-world'} onClick={()=>setAfter(x=>!x)}>演示17→22</button><button id="mirror" disabled={id!=='twisty-twirl'} onClick={()=>setMirror(x=>!x)}>镜像方向</button><button id="layout" onClick={()=>setLayout(x=>x==='art'?'grid':'art')}>切换棋盘布局</button></header><Track race={r} me="p1" colorOf={id=>PLAYER_COLORS[Number(id.slice(1))-1]} layout={layout} fit={true}/></div>}createRoot(document.getElementById('root')).render(<App/>);`,
+  `import React,{useState}from'react';import{createRoot}from'react-dom/client';import{Track,PLAYER_COLORS}from'../../apps/web/src/ma/Track.tsx';import'../../apps/web/src/style.css';import'../../apps/web/src/ma/ma.css';const samples=${JSON.stringify(samples)};function App(){const[id,setId]=useState('whirly-world');const[after,setAfter]=useState(false);const[mirror,setMirror]=useState(false);const[layout,setLayout]=useState('art');const r=samples[id][mirror?'mirrored':after?'after':'before'];window.render_game_to_text=()=>JSON.stringify({track:id,layout,stage:mirror?'mirror':after?'after':'before',tokens:r.tokens.map(t=>({id:t.racer,pos:t.pos,tripped:t.tripped,wereMouth:!!t.secondWind?.wereMouth})),experimental:true});return <div className="ma-app"><header style={{padding:12}}><h1 style={{fontSize:20}}>二代赛道 · 开发预览</h1><p>地图结构、螺旋通道与怪物棋子预览；扭扭事件尚未完整启用。</p><button id="whirly" onClick={()=>{setId('whirly-world');setAfter(false);setMirror(false)}}>螺旋世界</button><button id="twisty" onClick={()=>{setId('twisty-twirl');setAfter(false);setMirror(false)}}>扭扭赛道</button><button id="bite" onClick={()=>{setId('twisty-bite');setAfter(false);setMirror(false)}}>咬痕变身</button><button id="move" disabled={id!=='whirly-world'} onClick={()=>setAfter(x=>!x)}>演示17→22</button><button id="mirror" disabled={id!=='twisty-twirl'} onClick={()=>setMirror(x=>!x)}>镜像方向</button><button id="layout" onClick={()=>setLayout(x=>x==='art'?'grid':'art')}>切换棋盘布局</button></header><Track race={r} me="p1" colorOf={id=>PLAYER_COLORS[Number(id.slice(1))-1]} layout={layout} fit={true}/></div>}createRoot(document.getElementById('root')).render(<App/>);`,
 );
 await build({
   configFile: false,
@@ -104,6 +113,13 @@ for (const width of [320, 360, 390, 414, 1280]) {
       path: join(out, `${map}-${width}.png`),
       fullPage: true,
     });
+    if (map === "whirly" && width === 390) {
+      await page.click("#layout");
+      if (await page.locator(".ma-cell-tag.portal").count() !== 12)
+        throw new Error("螺旋清晰棋盘未标出12个通道端点");
+      await page.screenshot({ path: join(out, "whirly-grid-390.png"), fullPage: true });
+      await page.click("#layout");
+    }
     if (map === "twisty" && width === 390) {
       if (await page.locator(".ma-twist-monster").count() !== 1)
         throw new Error("扭扭赛道怪物棋子未显示");
@@ -156,6 +172,20 @@ for (const id of ["twisty-twirl", "whirly-world"]) {
   await page.screenshot({ path: join(out, id + "-debug.png") });
 }
 await page.goto(previewUrl);
+await page.setViewportSize({ width: 390, height: 844 });
+await page.click("#bite");
+const bitePawn = page.locator('[data-ma-racer="sw_bite_mark"] img[src*="sw_bite_mark_were.png"]');
+await bitePawn.waitFor();
+if (!(await bitePawn.evaluate((img: HTMLImageElement) => img.complete && img.naturalWidth > 0)))
+  throw new Error("变身咬痕棋子图片未加载");
+if (await page.locator(".ma-twist-monster").count())
+  throw new Error("咬痕已担任怪物时仍显示中立怪物");
+await page.screenshot({ path: join(out, "twisty-bite-390.png"), fullPage: true });
+await page.click("#layout");
+if (await page.locator(".ma-cell-art.second-wind").count() !== 29)
+  throw new Error("新地图清晰棋盘仍在裁切整张底图");
+await page.screenshot({ path: join(out, "twisty-bite-grid-390.png"), fullPage: true });
+await page.click("#whirly");
 await page.click("#move");
 const state = await page.evaluate(() =>
   JSON.parse((window as any).render_game_to_text()),

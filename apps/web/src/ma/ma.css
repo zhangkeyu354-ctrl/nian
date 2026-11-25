@@ -1707,6 +1707,10 @@
   font-size: clamp(11px, 3.1vw, 15px);
   -webkit-text-stroke: 0;
 }
+.ma-cell-art.second-wind {
+  background-image: none;
+  box-shadow: inset 0 0 0 2px rgba(17, 17, 24, 0.25);
+}
 .ma-cell.occupied .ma-cell-art {
   border-color: var(--sun);
 }
@@ -1754,6 +1758,11 @@
 .ma-cell-tag.reverse-start {
   background: #6b3798;
   color: #fff9d6;
+}
+.ma-cell-tag.portal {
+  background: #ffe5a3;
+  color: #17171c;
+  border-color: #17171c;
 }
 .ma-cell.finish .ma-cell-art.podium {
   display: flex;
