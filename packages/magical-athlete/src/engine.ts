@@ -297,6 +297,7 @@ interface Ctx {
   answers: string[];
   i: number;
   guard: Set<string>;
+  loopAwards?: Map<string, Chip[][]>;
   depth: number;
   criticUsed: Set<string>;
 }
@@ -307,20 +308,17 @@ function ask(s: MAState, c: Ctx, d: Decision): string {
   throw new Need(d);
 }
 
-/** 局面指纹：所有选手的位置、摔倒、名次、淘汰（判断「真正重复、不改变状态」的无限循环） */
-function stateKey(s: MAState) {
-  const positions = race(s)
-    .tokens.map((t) => `${t.pos}${t.tripped ? "T" : ""}${t.place ?? ""}${t.out ? "X" : ""}`)
-    .join(",");
-  return s.settings.secondWindPreview
-    ? positions +
-        JSON.stringify({
-          powers: race(s).tokens.map((t) => [t.racer, t.owner, t.base, t.secondWind]),
-          hogs: race(s).hogs,
-          deck: s.deck.length,
-        })
-    : positions;
+/** Semantic state, excluding only replay/display metadata. */
+function stateKey(s: MAState, includeScores = true) {
+  const { lastRoll: _roll, stalemateSeen: _seen, ...r } = race(s);
+  return JSON.stringify({
+    ...s, log: [], version: 0, turn: null, pending: null,
+    players: includeScores ? s.players : s.players.map(p => ({ ...p, chips: [] })),
+    race: r,
+  });
 }
+/** @internal Loop guard fingerprint for regression tests. */
+export { stateKey as __testStateKey };
 /**
  * 循环判定：同一个触发（同一来源 → 同一对象）在**完全相同的局面**下第二次出现，才是规则书说的无限循环
  * （「按发生顺序结算一轮后停止」）。局面在变化的长连锁（如挪挪 × 吸盘鱼一路往前）是合法的，继续结算。
@@ -330,8 +328,11 @@ const SAFETY = 20000;
 function loopCheck(s: MAState, c: Ctx, trigger: string, what: string): boolean {
   if (++c.depth > SAFETY) fail("ENGINE_SAFETY", "连锁结算超过程序保险上限，请把这局的记录发给开发者。");
   const key = `${trigger}|${stateKey(s)}`;
-  if (!c.guard.has(key)) {
+  const structural = `${trigger}|${stateKey(s, false)}`;
+  const earlier = c.loopAwards?.get(structural);
+  if (!c.guard.has(key) && !(earlier && onlyAddedAwards(earlier, s))) {
     c.guard.add(key);
+    (c.loopAwards ??= new Map()).set(structural, s.players.map(p => [...p.chips]));
     return false;
   }
   log(s, `（循环：${what}。同一触发在相同局面下再次出现，已按发生顺序结算一轮，到此停止）`);
@@ -2487,6 +2488,9 @@ function runUnit(snapshot: string, answers: string[], provingForcedTurn = false,
  * actual movement or scoring invalidates this proof; it is never a chain cap.
  * Base-only games never enter this path. No hidden history is sent to clients.
  */
+/** @internal Exposes the raw deterministic unit runner for shortcut equivalence tests. */
+export { runUnit as __testRunUnit };
+
 function forcedStandupCycle(initial: MAState): boolean {
   if (initial.pending?.kind !== "standup" || !initial.settings.secondWindPreview)
     return false;
