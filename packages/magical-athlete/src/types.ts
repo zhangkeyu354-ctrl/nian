@@ -39,6 +39,8 @@ export interface Token {
 
 export interface RaceState {
   twist?: { triggered: boolean; remaining: number[]; drawn: number[]; reversed?: boolean; chips?: number[]; fixedDice?: Record<string, number>; monster?: { pos: number; finished?: boolean } };
+  /** T08: the first eligible racer slot after skipped positions. */
+  curseNextRacer?: string;
   /** Physical mounts are shared by every racer; rider ids are racer ids. */
   hogs?: Array<{ source: string; rider: string | null; pos: number }>;
   championIntercepted?: boolean;

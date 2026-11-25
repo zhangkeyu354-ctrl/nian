@@ -1108,6 +1108,7 @@ interface TurnFlags {
   extra: boolean;
   skipper: string | null;
   resumeAfter?: string;
+  lastRacer?: string;
 }
 
 /** Racer-owned rolls, including auxiliary dice; player roll-offs stay unchanged. */
@@ -2076,6 +2077,12 @@ function turnUnit(s: MAState, c: Ctx) {
   try {
     // 2026-08 规则：多名选手按赛前摆好的顺序（顺时针）行动，不再每回合重选顺序
     let seq = mine();
+    const curseFirst = r.curseNextRacer;
+    delete r.curseNextRacer;
+    if (curseFirst) {
+      const first = seq.findIndex(x => x.racer === curseFirst);
+      if (first >= 0) seq = seq.slice(first);
+    }
     if (
       seq.length > 1 &&
       s.settings.variant === "double" &&
@@ -2093,7 +2100,10 @@ function turnUnit(s: MAState, c: Ctx) {
       seq = seq.filter((x) => x.racer === a);
     }
     if (!r.firstTurnDone.includes(r.current)) r.firstTurnDone.push(r.current);
-    for (const t of seq) if (active(t) && t.owner === r.current) racerTurn(s, c, t, f);
+    for (const t of seq) if (active(t) && t.owner === r.current) {
+      f.lastRacer = t.racer;
+      racerTurn(s, c, t, f);
+    }
     // Prove a closed cycle before watching its actual completion. Its private
     // anchor survives Need/recovery; never omit a stand-up or other cycle step.
     const blocked = r.forcedCycleBlocked;
@@ -2260,12 +2270,30 @@ function nextTurn(s: MAState, f: TurnFlags) {
   const i = r.order.indexOf(f.resumeAfter ?? r.current);
   delete r.insertionResume;
   const cursed = r.twist?.drawn.includes(8);
-  const skipped = cursed ? (r.twist?.fixedDice?.[r.current] ?? d6(s)) : 0;
   if (cursed) {
-    const seats = Array.from({ length: skipped }, (_, k) => r.order[(i + k + 1) % r.order.length]);
-    log(s, `【人人诅咒魔杖】${pname(s, r.current)} 掷 ${skipped}，跳过后面 ${skipped} 个原行动顺位：${seats.map(id => pname(s, id)).join("、")}。`);
+    const skipped = r.twist?.fixedDice?.[r.current] ?? d6(s);
+    const slots = r.order.flatMap(id => r.tokens.filter(t => t.owner === id));
+    const resume = f.resumeAfter ?? r.current;
+    const cursor = f.resumeAfter
+      ? slots.findLastIndex(t => t.owner === resume)
+      : slots.findIndex(t => t.racer === f.lastRacer);
+    const start = cursor >= 0 ? cursor : slots.findLastIndex(t => t.owner === resume);
+    if (start < 0 || !slots.length) return;
+    const passed = Array.from({ length: skipped }, (_, k) => slots[(start + k + 1) % slots.length]);
+    const multi = slots.length > r.order.length;
+    log(s, `【人人诅咒魔杖】${pname(s, r.current)} 掷 ${skipped}，跳过后面 ${skipped} 个原行动顺位：${passed.map(t => multi ? rname(t) : pname(s, t.owner)).join("、")}。`);
+    for (let k = skipped + 1; k <= skipped + slots.length; k++) {
+      const next = slots[(start + k) % slots.length];
+      if (active(next)) {
+        r.current = next.owner;
+        r.curseNextRacer = next.racer;
+        return;
+      }
+    }
+    return;
   }
-  for (let k = skipped + 1; k <= skipped + r.order.length; k++) {
+  delete r.curseNextRacer;
+  for (let k = 1; k <= r.order.length; k++) {
     const id = r.order[(i + k) % r.order.length];
     if (live(id)) {
       r.current = id;
