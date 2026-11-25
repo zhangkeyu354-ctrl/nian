@@ -560,6 +560,12 @@ function crossTwist(s: MAState, c: Ctx, t: Token, from: number, to: number) {
   const [card] = twist.remaining.splice(index, 1);
   twist.drawn.push(card);
   log(s, `${rname(t)} 跨过 Twist：抽到事件 ${card}。`);
+  if (card === 7) {
+    const occupied = new Set(race(s).tokens.filter(active).map(x => x.pos));
+    twist.chips = Array.from({ length: 17 }, (_, i) => i + 13).filter(pos => !occupied.has(pos));
+    log(s, `【皮纳塔破了！】第一弯道后的 ${twist.chips.length} 个空格各放一枚 1 分筹码。`);
+    return;
+  }
   if (card === 3) {
     log(s, "【传送带启动！】全员传送至起点后一格，本场主移动 +3。实际骰值不变。");
     for (const target of inOrder(s).filter(active)) warp(s, c, target, 1);
@@ -846,6 +852,12 @@ function reactBody(
     awardPower(s, c, t, 1, `${rname(t)}【擦身得分】：经过其他选手，获得 1 分。`, "sw_streaker");
   }
   const pos = t.pos;
+  const chips = race(s).twist?.chips;
+  if (chips?.includes(pos)) {
+    chips.splice(chips.indexOf(pos), 1);
+    gainChip(s, t.owner, 1);
+    log(s, `${rname(t)} 停在皮纳塔筹码格，获得 1 分。`);
+  }
   const sp = trackOf(s).specials[pos];
   if (sp) {
     if (sp.kind === "rock") {
