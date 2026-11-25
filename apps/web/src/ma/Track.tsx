@@ -48,7 +48,7 @@ for (const map of Object.values(SECOND_WIND_MAPS)) {
   BOARDS.set(map.id, {
     id: map.id, canvas: [w,h], finish_podium: {x:79/w,y:210/h},
     spaces: map.spaces.map(s=>({index:s.index,x:(s.x+s.width/2)/w,y:(s.y+s.height/2)/h,width:s.width/w,height:s.height/h})),
-    assets: {webp:`boards/second-wind/${map.id}.svg`,mobile:`boards/second-wind/${map.id}.svg`},
+    assets: {webp:`boards/second-wind/${map.id}.webp`,mobile:`boards/second-wind/${map.id}-mobile.webp`},
   });
 }
 
