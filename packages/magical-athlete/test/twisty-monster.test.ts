@@ -54,4 +54,20 @@ describe("炼金实验室泄露", () => {
     expect(after.race!.finishers).toEqual([]);
     expect(after.race!.tokens.every(t => !t.out)).toBe(true);
   });
+
+  it("玩家固定骰值不会被错误套到怪物的独立骰", () => {
+    const s = withMonster([1, 10, 20], [5], 0);
+    const setFixed = (q: typeof s) => {
+      q.race!.twist!.drawn.push(6);
+      q.race!.twist!.fixedDice = { p1: 2, p2: 3, p3: 4 };
+    };
+    setFixed(s);
+    const snapshot = JSON.parse(s.turn!.snapshot);
+    setFixed(snapshot);
+    s.turn!.snapshot = JSON.stringify(snapshot);
+    const after = answer(s, "roll");
+    expect(tok(after, "twin").pos).toBe(3);
+    expect(after.race!.twist!.monster?.pos).toBe(5);
+    expect(after.forcedRolls).toEqual([]);
+  });
 });
