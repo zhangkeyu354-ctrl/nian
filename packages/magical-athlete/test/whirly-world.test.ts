@@ -68,6 +68,30 @@ describe("螺旋世界：权威引擎落点", () => {
     s = answer(s, "twin");
     expect(tok(s, "twin").pos).toBe(22);
   });
+  it("通道到达后结算浪漫者的同格能力", () => {
+    const s = answer(testRace({
+      racers: ["twin", "romantic", "banana"], pos: [16, 22, 0],
+      rolls: [1], skipSetup: true, track: "whirly-world",
+    }), "roll");
+    expect(tok(s, "twin").pos).toBe(22);
+    // Her +2 lands on another portal, so that separate movement warps again.
+    expect(tok(s, "romantic").pos).toBe(28);
+    expect(s.log.some(l => l.text.includes("见不得成双"))).toBe(true);
+  });
+  it("通道到达后结算酒店费用，传送本身不重复收费", () => {
+    const s = testRace({
+      racers: ["twin", "sw_hotel", "banana"], pos: [16, 22, 0],
+      rolls: [1], skipSetup: true, track: "whirly-world", secondWindPreview: true,
+    });
+    s.players[0].chips.push({ kind: "bronze", value: 2, race: 0 });
+    const snapshot = JSON.parse(s.turn!.snapshot);
+    snapshot.players[0].chips.push({ kind: "bronze", value: 2, race: 0 });
+    s.turn!.snapshot = JSON.stringify(snapshot);
+    const after = answer(s, "roll");
+    expect(tok(after, "twin").pos).toBe(22);
+    expect(after.players[0].chips.reduce((sum, c) => sum + c.value, 0)).toBe(1);
+    expect(after.players[1].chips.reduce((sum, c) => sum + c.value, 0)).toBe(1);
+  });
   it("赛前摆放端点不触发", () => {
     const s = testRace({
       racers: ["twin", "banana", "lovable_loser"],
