@@ -9,7 +9,7 @@ export type Show = (
   | { kind: "duel"; a: { racer: string; value: number }; b: { racer: string; value: number }; rolling: boolean }
   | { kind: "power"; racer: string; power: string; text: string; duration?:number }
   | { kind: "finish"; racer: string; place: number; text: string }
-  | { kind: "start"; race: number; track: string; text: string }
+  | { kind: "start"; race: number; track: string; text: string; finale?: boolean }
   | { kind: "note"; racer: string; text: string }
   | { kind: "count"; n: number }
   | { kind: "stats"; race: number; rows: RacerStat[] }
@@ -35,11 +35,13 @@ export function raceStats(log: LogEntry[], race: number, owners: Map<string, str
     return s;
   };
   for (const r of owners.keys()) get(r);
+  let reversed = false;
   for (const e of log) {
     if (e.race !== race || !e.fx) continue;
     const fx = e.fx;
+    if (fx.kind === "direction") { reversed = fx.reversed; continue; }
     if (fx.kind === "move" || fx.kind === "warp") {
-      const d = fx.to - fx.from;
+      const d = (fx.to - fx.from) * (reversed ? -1 : 1);
       for (const r of fx.kind === "move" ? fx.racers : [fx.racer]) {
         if (d > 0) get(r).forward += d;
         else get(r).back += -d;
@@ -48,6 +50,14 @@ export function raceStats(log: LogEntry[], race: number, owners: Map<string, str
     else if (fx.kind === "power") get(fx.racer).powers++;
   }
   return [...m.values()];
+}
+
+export function raceOwners(log: LogEntry[], race: number, current: Array<{ racer: string; owner: string }>, places: Array<{ racer: string; owner: string }>) {
+  const owners = new Map(current.map(t => [t.racer, t.owner] as const));
+  for (const e of log) if (e.race === race && e.fx?.kind === "start")
+    for (const [racer, owner] of Object.entries(e.fx.owners ?? {})) owners.set(racer, owner);
+  for (const p of places) owners.set(p.racer, p.owner);
+  return owners;
 }
 
 /** 小人头顶飘出的字（「🎲 +5」「箭头 +3」「摔倒！」…） */
@@ -208,6 +218,8 @@ export function usePlayback(view: MAView) {
         setShown(cur);
       };
       switch (fx.kind) {
+        case "direction":
+          break;
         case "control":
           setPos(fx.racer, { owner: fx.owner });
           setPos(fx.target, { owner: fx.targetOwner });
@@ -219,12 +231,12 @@ export function usePlayback(view: MAView) {
           const r = latest.current.race;
           cur = r
             ? new Map(
-                r.tokens.map((t) => [t.racer, { racer: t.racer, owner: fx.owners?.[t.racer] ?? t.owner, pos: 0, tripped: false, out: false, place: null, secondWind: undefined }]),
+                r.tokens.map((t) => [t.racer, { racer: t.racer, owner: fx.owners?.[t.racer] ?? t.owner, pos: fx.positions?.[t.racer] ?? 0, tripped: false, out: false, place: null, secondWind: undefined }]),
               )
             : null;
           shownRef.current = cur;
           setShown(cur);
-          showIt({ kind: "start", race: fx.race, track: fx.track, text: e.text });
+          showIt({ kind: "start", race: fx.race, track: fx.track, text: e.text, finale: fx.finale });
           await wait(2200);
           // 3、2、1、开跑！
           for (const n of [3, 2, 1, 0]) {
@@ -351,8 +363,7 @@ export function usePlayback(view: MAView) {
           {
             // 本场数据榜：跑最远、技能王、倒退王、摔跤王
             const r = latest.current.race;
-            const owners = new Map((r && r.index === fx.race ? r.tokens : []).map((x) => [x.racer, x.owner] as const));
-            for (const p of fx.places) owners.set(p.racer, p.owner);
+            const owners = raceOwners(latest.current.log, fx.race, r && r.index === fx.race ? r.tokens : [], fx.places);
             const rows = raceStats(latest.current.log, fx.race, owners);
             if (rows.length) {
               // The podium tap advances to this page; it must not skip it too.

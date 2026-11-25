@@ -955,7 +955,7 @@ function Race({
       )}
       <div className={"ma-board" + (useGrid ? " grid-mode" : "") + (pb.shake ? " shake" : "")}>
         <div className="ma-board-head">
-          <b>第 {race.index + 1} 场 · {track.zh}</b>
+          <b>第 {race.index + 1} 场 · {track.zh}{race.finale ? " · 附加决赛" : ""}</b>
           {race.twist?.reversed && (
             <span className="ma-direction-reversed" role="status">↶ 镜像世界：向旧起点前进 · 第 0 格冲线</span>
           )}
@@ -1308,13 +1308,15 @@ export function Overlay({
     const tr = TRACKS[show.track as "mild" | "wild"];
     body = (
       <div className="ma-ov-start">
-        <small>第 {show.race + 1} 场</small>
+        <small>第 {show.race + 1} 场{show.finale ? " · 附加决赛" : ""}</small>
         <b>{tr?.zh ?? show.track}</b>
-        {show.track === "wild" ? (
+        {show.finale ? (
+          <p>两名冲线选手从第二弯道再赛一场，胜者获得金银奖池。</p>
+        ) : show.track === "wild" ? (
           <p>第二张地图：特殊赛道！停在 ★ 得 1 分，停在石头上摔倒，停在箭头上额外前进或后退。</p>
-        ) : (
+        ) : show.track === "mild" ? (
           <p>普通赛道，前两个冲线的拿奖牌。</p>
-        )}
+        ) : null}
       </div>
     );
   } else {

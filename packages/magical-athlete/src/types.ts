@@ -38,7 +38,13 @@ export interface Token {
 }
 
 export interface RaceState {
-  twist?: { triggered: boolean; remaining: number[]; drawn: number[]; reversed?: boolean; chips?: number[]; fixedDice?: Record<string, number>; monster?: { pos: number; finished?: boolean } };
+  /** Stable identifier; the finale shares index with its scheduled race. */
+  instanceId?: string;
+  twist?: { triggered: boolean; remaining: number[]; drawn: number[]; reversed?: boolean; chips?: number[]; fixedDice?: Record<string, number>; monster?: { pos: number; finished?: boolean }; finalePending?: boolean };
+  /** T12 is an extra race instance of the same scheduled race. */
+  finale?: boolean;
+  /** Completed normal race retained for the next-race first-player ruling. */
+  finaleOrigin?: RaceState;
   /** T08: the first eligible racer slot after skipped positions. */
   curseNextRacer?: string;
   /** Physical mounts are shared by every racer; rider ids are racer ids. */
@@ -121,7 +127,8 @@ export type Fx =
   | { kind: "finish"; racer: string; place: number }
   | { kind: "out"; racer: string }
   | { kind: "chip"; player: string; value: number }
-  | { kind: "start"; race: number; track: string; owners?: Record<string, string> }
+  | { kind: "direction"; reversed: boolean }
+  | { kind: "start"; race: number; track: string; owners?: Record<string, string>; positions?: Record<string, number>; finale?: boolean }
   /** 每场结束的领奖台：第 1、2 名（冲线，拿奖牌）＋第 3 名（场上最靠前的未冲线选手，不计分） */
   | {
       kind: "podium";

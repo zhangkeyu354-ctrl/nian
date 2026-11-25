@@ -579,7 +579,7 @@ function resolveTwistCard(s: MAState, c: Ctx, t: Token, card: number) {
   const twist = race(s).twist!;
   if (card === 2) {
     twist.reversed = true;
-    log(s, "【镜像世界生效！】本场从另一端开始前进；选手原地不动。");
+    log(s, "【镜像世界生效！】本场从另一端开始前进；选手原地不动。", { kind: "direction", reversed: true });
     if (twist.monster && !twist.monster.finished && progress(s, twist.monster.pos) >= trackOf(s).length) {
       twist.monster.finished = true;
       log(s, "巨口怪物已在新的终点，停止追逐。");
@@ -590,6 +590,11 @@ function resolveTwistCard(s: MAState, c: Ctx, t: Token, card: number) {
   }
   if (card === 11) {
     resolveSwapMeet(s, c);
+    return;
+  }
+  if (card === 12) {
+    twist.finalePending = true;
+    log(s, "【季终决战！】本场正常比赛继续；前两名实际冲线后，从第二弯道加赛争夺金银奖池。");
     return;
   }
   if (card === 9) {
@@ -2565,6 +2570,59 @@ function advance(s: MAState): MAState {
   return fail("LOOP", "自动结算次数过多。");
 }
 
+/** T12: the scheduled race has finished, but its medals now belong to a separate duel. */
+function startSeasonFinale(s: MAState): boolean {
+  const normal = race(s);
+  if (!normal.twist?.finalePending || normal.cancelledBy) return false;
+  const terminal = physical(s, trackOf(s).length);
+  const crossed = [...new Set(normal.finishers)]
+    .map(id => normal.tokens.find(t => t.racer === id))
+    .filter((t): t is Token => !!t && !t.out && t.pos === terminal);
+  if (crossed.length < 2) {
+    log(s, "【季终决战】不足两名合法冲线者，取消附加决赛，按正常比赛结算。");
+    return false;
+  }
+  const finalists = crossed.slice(0, 2);
+  const corner = (normal.twist.reversed ? 12 : trackOf(s).secondCorner) ?? fail("CHECK_REQUIRED", "季终决战的第二弯道尚未确认。");
+  const owners = [...new Set(finalists.map(t => t.owner))];
+  const origin = structuredClone(normal);
+  log(s, `【季终决战】正常比赛前两名为 ${finalists.map(rname).join("、")}；金银牌暂不发放，开始附加决赛。`);
+  s.race = {
+    index: normal.index,
+    instanceId: `finale:${normal.index}`,
+    track: normal.track,
+    finale: true,
+    finaleOrigin: origin,
+    twist: { triggered: true, remaining: [], drawn: [], ...(normal.twist.reversed ? { reversed: true } : {}) },
+    order: owners,
+    current: finalists[0].owner,
+    tokens: finalists.map(t => ({
+      ...t,
+      pos: corner,
+      tripped: false,
+      place: null,
+      out: false,
+      copyPick: null,
+      started: false,
+      secondWind: undefined,
+    })),
+    finishers: [],
+    eliminated: [],
+    mastermindPick: null,
+    lastRoll: null,
+    over: false,
+    setup: true,
+    firstTurnDone: owners,
+  };
+  log(s, `第 ${normal.index + 1} 场附加决赛：${finalists.map(rname).join(" 对阵 ")}，从第 ${corner} 格出发。`, {
+    kind: "start", race: normal.index, track: normal.track,
+    owners: Object.fromEntries(finalists.map(t => [t.racer, t.owner])),
+    positions: Object.fromEntries(finalists.map(t => [t.racer, corner])),
+    finale: true,
+  });
+  return true;
+}
+
 function endRace(
   s: MAState,
   c: Ctx = {
@@ -2588,15 +2646,16 @@ function endRace(
   const bonuses = holders(s, "sw_gloth").filter((t) => corner !== null && progress(s, t.pos) <= progress(s, corner));
   for (const gloth of bonuses)
     awardPower(s, c, gloth, 3, `${rname(gloth)}【慢有慢福】：赛后没超过第二个弯道，获得 3 分。`, "sw_gloth");
+  if (startSeasonFinale(s)) return;
   const pts = s.settings.points[r.index] ?? DEFAULT_POINTS;
   const owner = (racer: string) => r.tokens.find((t) => t.racer === racer)!.owner;
   const [first, second] = r.cancelledBy ? [] : r.finishers;
-  const seconds = r.cancelledBy ? [] : r.mastermindWinners?.length
+  const seconds = r.finale || r.cancelledBy ? [] : r.mastermindWinners?.length
     ? [...new Set(r.mastermindWinners)].filter((id) => r.finishers.includes(id)) : second ? [second] : [];
   if (first) {
     player(s, owner(first)).chips.push({
       kind: "gold",
-      value: pts.gold,
+      value: r.finale ? pts.gold + pts.silver : pts.gold,
       race: r.index,
     });
     s.winners.push(first);
@@ -2607,7 +2666,7 @@ function endRace(
       value: pts.silver,
       race: r.index,
     });
-  if (!seconds.length) log(s, "没有第二名，银牌作废。");
+  if (!seconds.length && !r.finale) log(s, "没有第二名，银牌作废。");
   // 领奖台（只是展示用）：第 3 名 = 还在场上、位置最靠前的选手（同格按本场行动顺序）；不计分
   const places: Array<{
     racer: string;
@@ -2620,8 +2679,10 @@ function endRace(
       racer: first,
       owner: owner(first),
       place: 1,
-      points: pts.gold,
+      points: r.finale ? pts.gold + pts.silver : pts.gold,
     });
+  if (r.finale && second && second !== first)
+    places.push({ racer: second, owner: owner(second), place: 2, points: 0 });
   for (const id of seconds)
     places.push({
       racer: id,
@@ -2641,17 +2702,20 @@ function endRace(
     });
   log(
     s,
-    r.cancelledBy
+    r.finale
+      ? `第 ${r.index + 1} 场附加决赛结束：${first ? racerName(first) : "无"} 获得金银奖池（+${first ? pts.gold + pts.silver : 0}）。`
+      : r.cancelledBy
       ? `第 ${r.index + 1} 场已取消：保留已得分，不发本场金银牌。`
       : `第 ${r.index + 1} 场结束：冠军 ${first ? racerName(first) : "无"}（+${pts.gold}），亚军 ${seconds.length ? seconds.map(racerName).join("、") : "无"}${seconds.length ? `（+${pts.silver}）` : ""}。`,
     { kind: "podium", race: r.index, places },
   );
   // 下一场先手：上一场最落后的选手（或第一个被淘汰的）；2 人变体：上一场得分较少的玩家，平分掷骰
   let next: string;
+  const previous = r.finaleOrigin ?? r;
   if (s.seats.length === 2 && s.settings.variant === "double") {
     const got = s.seats.map((id) => ({
       id,
-      v: total(player(s, id).chips.filter((ch) => ch.race === r.index)) - (r.priorRaceSpending?.[id] ?? 0),
+      v: total(player(s, id).chips.filter((ch) => ch.race === r.index)) - (previous.priorRaceSpending?.[id] ?? 0),
     }));
     next =
       got[0].v === got[1].v
@@ -2659,14 +2723,14 @@ function endRace(
         : got[0].v < got[1].v
           ? got[0].id
           : got[1].id;
-  } else if (r.eliminated.length) next = r.eliminated[0];
+  } else if (previous.eliminated.length) next = previous.eliminated[0];
   else {
-    const left = r.tokens.filter(active);
+    const left = previous.tokens.filter(active);
     if (left.length) {
       const min = Math.min(...left.map((t) => progress(s, t.pos)));
       const back = left.filter((t) => progress(s, t.pos) === min).map((t) => t.owner);
       next = back.length > 1 ? rollOff(s, back, "并列最落后，掷骰决定下一场先手") : back[0];
-    } else next = r.order[0];
+    } else next = previous.order[0];
   }
   for (const p of s.players) p.choices = [];
   if (r.index + 1 >= s.settings.races) {
@@ -2703,6 +2767,7 @@ function startRace(s: MAState) {
   const track = s.settings.schedule[idx] ?? "mild";
   s.race = {
     index: idx,
+    ...(track === "twisty-twirl" || track === "whirly-world" ? { instanceId: `normal:${idx}` } : {}),
     track,
     order,
     current: first,
