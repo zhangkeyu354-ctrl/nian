@@ -111,4 +111,69 @@ describe("季终决战", () => {
     expect(after.players[1].chips.some(c => c.kind === "gold")).toBe(true);
     expect(after.players[2].chips.some(c => c.kind === "silver")).toBe(true);
   });
+
+  it("时之灵只在下一场正常比赛返场，不混入附加决赛", () => {
+    const s = finale();
+    const prepare = (q: typeof s) => { q.race!.twist!.remaining = [10, 13, 12]; q.rng = 0; };
+    prepare(s);
+    const snapshot = JSON.parse(s.turn!.snapshot);
+    prepare(snapshot);
+    s.turn!.snapshot = JSON.stringify(snapshot);
+    let after = answer(s, "roll");
+    expect(after.race!.twist!.drawn).toEqual([10, 13, 12]);
+    expect(after.timeImpReturners?.map(x => x.racer)).toEqual(["twin"]);
+    after = answer(answer(after, "roll"), "roll");
+    expect(after.race!.finale).toBe(true);
+    expect(after.race!.tokens.map(t => t.racer)).toEqual(["banana", "lovable_loser"]);
+    const setFinish = (q: typeof after) => { q.race!.tokens.forEach(t => { t.pos = 29; }); q.forcedRolls = [1, 1]; };
+    setFinish(after);
+    const finalSnapshot = JSON.parse(after.turn!.snapshot);
+    setFinish(finalSnapshot);
+    after.turn!.snapshot = JSON.stringify(finalSnapshot);
+    after = answer(answer(after, "roll"), "roll");
+    after.settings.schedule[1] = "mild";
+    for (const [i, racer] of ["hare", "skipper", "legs"].entries()) {
+      const owner = `p${i + 1}`;
+      after.players[i].hand.push(racer);
+      after = reduceMA(after, { type: "CHOOSE", player: owner, racer });
+    }
+    expect(after.race!.index).toBe(1);
+    expect(after.race!.tokens.some(t => t.racer === "twin" && t.owner === "p1")).toBe(true);
+    expect(after.timeImpReturners).toBeUndefined();
+  });
+
+  it("两名决赛选手归同一玩家时，仍按正常冲线先后逐名行动", () => {
+    const s = finale();
+    const prepare = (q: typeof s) => { q.race!.tokens[2].owner = "p2"; };
+    prepare(s);
+    const snapshot = JSON.parse(s.turn!.snapshot);
+    prepare(snapshot);
+    s.turn!.snapshot = JSON.stringify(snapshot);
+    let after = answer(answer(answer(s, "roll"), "roll"), "roll");
+    expect(after.race!.finale).toBe(true);
+    expect(after.race!.order).toEqual(["p2"]);
+    expect(after.race!.tokens.map(t => t.owner)).toEqual(["p2", "p2"]);
+    expect(after.pending?.racer).toBe("banana");
+    const setFinish = (q: typeof after) => { q.race!.tokens.forEach(t => { t.pos = 29; }); q.forcedRolls = [1, 1]; };
+    setFinish(after);
+    const finalSnapshot = JSON.parse(after.turn!.snapshot);
+    setFinish(finalSnapshot);
+    after.turn!.snapshot = JSON.stringify(finalSnapshot);
+    after = answer(answer(after, "roll"), "roll");
+    expect(after.phase).toBe("choose");
+    expect(after.players[1].chips.filter(c => c.kind === "gold")).toHaveLength(1);
+  });
+
+  it("正常比赛已被取消时，不启动决赛或发放奖池", () => {
+    const s = answer(answer(finale(), "roll"), "roll");
+    const cancel = (q: typeof s) => { q.race!.cancelledBy = "sw_spoilsport"; };
+    cancel(s);
+    const snapshot = JSON.parse(s.turn!.snapshot);
+    cancel(snapshot);
+    s.turn!.snapshot = JSON.stringify(snapshot);
+    const after = answer(s, "roll");
+    expect(after.race!.finale).toBeUndefined();
+    expect(after.phase).toBe("choose");
+    expect(after.players.flatMap(p => p.chips).filter(c => c.kind === "gold" || c.kind === "silver")).toEqual([]);
+  });
 });
