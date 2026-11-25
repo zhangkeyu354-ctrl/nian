@@ -560,6 +560,10 @@ function crossTwist(s: MAState, c: Ctx, t: Token, from: number, to: number) {
   const [card] = twist.remaining.splice(index, 1);
   twist.drawn.push(card);
   log(s, `${rname(t)} 跨过 Twist：抽到事件 ${card}。`);
+  if (card === 4) {
+    log(s, "【禁跑水潭！】本场主移动最终达到 6 格时，移动前淘汰。");
+    return;
+  }
   if (card !== 1) fail("CHECK_REQUIRED", `Twist 事件 ${card} 尚未实现，不能结算。`);
   const live = race(s).tokens.filter(active);
   const last = Math.min(...live.map(x => x.pos));
@@ -1511,11 +1515,16 @@ function mainMove(s: MAState, c: Ctx, t: Token, f: TurnFlags) {
       fire(s, c, n, `${rname(n)}【虚无领域】：${rname(t)} 主移动 -1。`, "sw_null");
       dist -= 1;
     }
+  const finalMainSteps = Math.max(0, dist);
+  if (r.twist?.drawn.includes(4) && finalMainSteps >= 6) {
+    eliminateWithPower(s, [t], () => log(s, `${rname(t)}【禁跑水潭】：主移动 ${finalMainSteps} 格，移动前淘汰。`));
+    return;
+  }
   move(
     s,
     c,
     t,
-    Math.max(0, dist) * (reverseMain ? -1 : 1),
+    finalMainSteps * (reverseMain ? -1 : 1),
     true,
     blunderdog
       ? "倒霉反转"

@@ -53,3 +53,5 @@
 
 专项：twisty-first-event 5通过，连同一代冻结与螺旋回归共30通过；typecheck/build通过。完整npm test结果见twisty-full.log，完成后补数。未合并main，未部署。
 完整npm test：163文件通过、1文件跳过；1923项通过、1项跳过。耗时242.43秒。日志twisty-full.log。
+续作：T04 禁跑水潭已加入最终主移动格数检查。5格合法；6格及以上移动前淘汰；加成后达到阈值照算；抽卡前已完成的本次移动不追溯。一代赛道6格回归通过。专项29项通过，typecheck/build通过；全量结果见pool-full.log。其余Twist未完成，地图仍CHECK_REQUIRED。
+T04全量npm test：164文件通过、1跳过；1928项通过、1跳过，耗时240.44秒。
