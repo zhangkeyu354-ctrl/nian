@@ -67,10 +67,18 @@ describe('four real socket clients in constructed decisive cases',()=>{
       let completed=0;
       while(String(room.file.phase)==='EXCHANGE'){
         const exchange=room.file.exchange!,pair=exchange.plan[exchange.transactionIndex];
+        expect(exchange.phase).toBe('DRAW_PENDING');
+        const winnerDrawView=await send<{ok:boolean;snapshot:any}>(clients[pair.winner],BA_EVENTS.join,{code,token:tokens[pair.winner]});
+        expect(winnerDrawView.snapshot.exchange.faceDownCount).toBe(13);
+        expect(winnerDrawView.snapshot.exchange.drawCount).toBe(scenario.drawCount);
+        const drawn=await send<{ok:boolean}>(clients[pair.winner],BA_EVENTS.action,{code,token:tokens[pair.winner],roundId:room.file.roundId,actionId:`draw-${completed}`,expectedVersion:room.file.version,transactionIndex:exchange.transactionIndex,action:{kind:'DRAW',indices:Array.from({length:scenario.drawCount},(_,i)=>i)}});
+        expect(drawn.ok).toBe(true);
         const winner=await send<{ok:boolean;snapshot:any}>(clients[pair.winner],BA_EVENTS.join,{code,token:tokens[pair.winner]});
         const loser=await send<{ok:boolean;snapshot:any}>(clients[pair.loser],BA_EVENTS.join,{code,token:tokens[pair.loser]});
         expect(winner.snapshot.exchange.hand).toHaveLength(13+scenario.drawCount);
         expect(loser.snapshot.exchange.hand).toHaveLength(13-scenario.drawCount);
+        expect(winner.snapshot.exchange.drawnIds).toHaveLength(scenario.drawCount);
+        expect(loser.snapshot.exchange.drawnIds).toEqual(winner.snapshot.exchange.drawnIds);
         const returned=await send<{ok:boolean}>(clients[pair.winner],BA_EVENTS.action,{code,token:tokens[pair.winner],roundId:room.file.roundId,actionId:`return-${completed}`,expectedVersion:room.file.version,transactionIndex:exchange.transactionIndex,action:{kind:'RETURN',cards:winner.snapshot.exchange.hand.slice(0,scenario.drawCount)}});
         expect(returned.ok).toBe(true);
         completed++;

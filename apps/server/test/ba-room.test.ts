@@ -48,9 +48,10 @@ describe('black A 510K authoritative room',()=>{
       expect(room.file.phase).toBe('RESULT');
       expect(room.file.players.slice(1).every(p=>p.ready)).toBe(true);
       room.ready(host,true,'next');
-      for(let n=0;n<4&&room.file.phase==='EXCHANGE';n++){
+      for(let n=0;n<8&&room.file.phase==='EXCHANGE';n++){
         const e=room.file.exchange!,pair=e.plan[e.transactionIndex];
         if(room.file.players[pair.winner].bot)expect(room.tick()).toBe(true);
+        else if(e.phase==='DRAW_PENDING')room.act(host,{roundId:room.file.roundId,actionId:'draw-'+n,expectedVersion:room.file.version,transactionIndex:e.transactionIndex,action:{kind:'DRAW',indices:Array.from({length:pair.count},(_,i)=>i)}});
         else room.act(host,{roundId:room.file.roundId,actionId:'return-'+n,expectedVersion:room.file.version,transactionIndex:e.transactionIndex,action:{kind:'RETURN',cards:e.hands[pair.winner].slice(0,pair.count)}});
       }
       expect(room.file.phase).toBe('PLAY');expect(room.file.roundId).toBe(2);
@@ -207,6 +208,24 @@ describe('black A 510K authoritative room',()=>{
       expect(room.tick(Date.now()+100_000)).toBe(false);
       expect(()=>room.act(tokens[terminal.actor],{...terminal.request,action:{kind:'PASS'}})).toThrow(/conflict/i);
       expect(room.file.round!.result).toEqual(result);
+    }finally{rmSync(dir,{recursive:true,force:true})}
+  });
+  it('auto-draws random cards after the 30s draw deadline',()=>{
+    const dir=mkdtempSync(join(tmpdir(),'ba-room-'));
+    try{
+      const room=BARoom.create('ABCD',dir);
+      const tokens=['甲','乙','丙','丁'].map(name=>room.claim(name).token);
+      const cards=createDeck().map(c=>c.id);
+      room.file.roundId=2;room.file.phase='EXCHANGE';
+      room.file.exchange=startExchange([cards.slice(0,13),cards.slice(13,26),cards.slice(26,39),cards.slice(39,52)],[{winner:0,loser:1,count:2}]);
+      room.file.deadline=Date.now()-1;
+      expect(room.tick(Date.now())).toBe(true);
+      expect(room.file.exchange?.phase).toBe('RETURN_PENDING');
+      expect(room.file.exchange?.drawnIds).toHaveLength(2);
+      expect(room.file.exchange?.hands[0]).toHaveLength(15);
+      expect(room.file.exchange?.hands[1]).toHaveLength(11);
+      expect(room.snapshot(tokens[0]).exchangeLogs?.[0]?.drawn).toHaveLength(2);
+      expect(room.snapshot(tokens[2]).exchangeLogs?.[0]?.drawn).toBeNull();
     }finally{rmSync(dir,{recursive:true,force:true})}
   });
 });

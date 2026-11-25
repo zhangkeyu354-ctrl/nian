@@ -66,5 +66,25 @@ describe('V1.1 turn state machine',()=>{
     expect(s.tableCards).toEqual([]);
     expect(s.currentActor).toBe(0);
     expect(()=>applyAction(s,{kind:'PASS',actor:0})).toThrow();
+    expect(s.recentPlays).toEqual([
+      {kind:'PLAY',cards:['3D'],trickId:1},
+      {kind:'PASS',trickId:1},
+      {kind:'PASS',trickId:1},
+      {kind:'PASS',trickId:1},
+    ]);
+  });
+  it('T22: keeps playing when two teammates finish first and settles immediately when third finishes',()=>{
+    const full=createDeck().map(c=>c.id);
+    const s=startRound([full.slice(0,13),full.slice(13,26),full.slice(26,39),full.slice(39,52)]);
+    s.hands=[[],['5D'],[],['KH','2S']];
+    s.capturedPiles=[full.filter(id=>!['5D','KH','2S','4S'].includes(id)),[],[],[]];
+    s.tableCards=['4S'];s.lastPlay={actor:2,cards:['4S']};s.finishedOrder=[0,2];
+    s.blackAOwners=[0,2];s.currentActor=1;s.firstLeadPending=false;s.trickId=9;
+    expect(s.phase).toBe('PLAY');
+    const settled=applyAction(s,{kind:'PLAY',actor:1,cards:['5D']});
+    expect(settled.phase).toBe('RESULT');
+    expect(settled.finishedOrder).toEqual([0,2,1,3]);
+    expect(settled.result?.ledger[1].capturedScore).toBe(5);
+    expect(settled.result?.remainderRecipient).toBe(3);
   });
 });

@@ -3,10 +3,12 @@ import { settleRound, type Settlement } from './settlement.js';
 
 export interface RoundOptions { firstLead: 'CONTAINS_D3'|'OWNER_ANY'; soloScoreBasis: 'FINAL'|'BASE' }
 export const DEFAULT_ROUND_OPTIONS: RoundOptions = Object.freeze({firstLead:'CONTAINS_D3',soloScoreBasis:'FINAL'});
+export type RecentPlay = { kind: 'PLAY'; cards: string[]; trickId: number } | { kind: 'PASS'; trickId: number } | null;
 export interface RoundState {
   phase: 'PLAY'|'RESULT'; version: number; turnId: number;
   hands: string[][]; capturedPiles: string[][]; tableCards: string[];
   currentActor: number|null; lastPlay: {actor:number;cards:string[]}|null;
+  recentPlays: RecentPlay[];
   pendingResponders: number[]; finishedOrder: number[];
   firstLeadPending: boolean; trickId: number; blackAOwners: number[];
   options: RoundOptions; rules: Rules; result: Settlement|null;
@@ -16,13 +18,14 @@ const nextIn = (start:number,candidates:readonly number[]) => {
   for(let step=1;step<=4;step++){const seat=(start+step)%4;if(candidates.includes(seat))return seat;}
   throw new Error('no next actor');
 };
-const copy = (s:RoundState):RoundState => ({...s,hands:s.hands.map(h=>[...h]),capturedPiles:s.capturedPiles.map(p=>[...p]),tableCards:[...s.tableCards],lastPlay:s.lastPlay?{actor:s.lastPlay.actor,cards:[...s.lastPlay.cards]}:null,pendingResponders:[...s.pendingResponders],finishedOrder:[...s.finishedOrder]});
+const copyRecent=(recent:readonly RecentPlay[]|undefined):RecentPlay[]=>(recent??[null,null,null,null]).map(p=>p?(p.kind==='PLAY'?{kind:'PLAY' as const,cards:[...p.cards],trickId:p.trickId}:{kind:'PASS' as const,trickId:p.trickId}):null);
+const copy = (s:RoundState):RoundState => ({...s,hands:s.hands.map(h=>[...h]),capturedPiles:s.capturedPiles.map(p=>[...p]),tableCards:[...s.tableCards],lastPlay:s.lastPlay?{actor:s.lastPlay.actor,cards:[...s.lastPlay.cards]}:null,recentPlays:copyRecent(s.recentPlays),pendingResponders:[...s.pendingResponders],finishedOrder:[...s.finishedOrder]});
 export function startRound(hands:readonly (readonly string[])[], options:RoundOptions=DEFAULT_ROUND_OPTIONS, rules:Rules=DEFAULT_RULES):RoundState {
   if(hands.length!==4 || hands.some(h=>h.length!==13))throw new Error('four hands of 13 required');
   const all=hands.flat(); const deck=new Set(createDeck().map(c=>c.id));
   if(all.length!==52 || new Set(all).size!==52 || all.some(id=>!deck.has(id as never)))throw new Error('52 unique valid cards required');
   const first=hands.findIndex(h=>h.includes('3D'));
-  return {phase:'PLAY',version:0,turnId:1,hands:hands.map(h=>[...h]),capturedPiles:[[],[],[],[]],tableCards:[],currentActor:first,lastPlay:null,pendingResponders:[],finishedOrder:[],firstLeadPending:true,trickId:1,blackAOwners:hands.map((h,i)=>h.includes('AS')||h.includes('AC')?i:-1).filter(i=>i>=0),options:{...options},rules:{...rules},result:null};
+  return {phase:'PLAY',version:0,turnId:1,hands:hands.map(h=>[...h]),capturedPiles:[[],[],[],[]],tableCards:[],currentActor:first,lastPlay:null,recentPlays:[null,null,null,null],pendingResponders:[],finishedOrder:[],firstLeadPending:true,trickId:1,blackAOwners:hands.map((h,i)=>h.includes('AS')||h.includes('AC')?i:-1).filter(i=>i>=0),options:{...options},rules:{...rules},result:null};
 }
 export function applyAction(state:RoundState, action:Action):RoundState {
   if(state.phase!=='PLAY' || action.actor!==state.currentActor)throw new Error('wrong phase or actor');
@@ -34,6 +37,7 @@ export function applyAction(state:RoundState, action:Action):RoundState {
     s.hands[actor]=s.hands[actor].filter(id=>!action.cards.includes(id));
     s.tableCards.push(...action.cards);
     s.lastPlay={actor,cards:[...action.cards]}; s.firstLeadPending=false;
+    s.recentPlays[actor]={kind:'PLAY',cards:[...action.cards],trickId:s.trickId};
     if(s.hands[actor].length===0 && !s.finishedOrder.includes(actor))s.finishedOrder.push(actor);
     if(s.finishedOrder.length===3){
       const tail=[0,1,2,3].find(id=>!s.finishedOrder.includes(id))!;
@@ -46,6 +50,7 @@ export function applyAction(state:RoundState, action:Action):RoundState {
     }
   }else{
     if(!s.lastPlay || !s.pendingResponders.includes(actor))throw new Error('cannot pass on empty trick');
+    s.recentPlays[actor]={kind:'PASS',trickId:s.trickId};
     s.pendingResponders=s.pendingResponders.filter(id=>id!==actor);
     if(s.pendingResponders.length){s.currentActor=nextIn(actor,s.pendingResponders);}
     else{

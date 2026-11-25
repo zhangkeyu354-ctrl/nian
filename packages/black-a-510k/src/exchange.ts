@@ -1,10 +1,13 @@
 import { createDeck } from './rules.js';
 
 export interface ExchangePair { winner:number; loser:number; count:2|4 }
+export interface ExchangeLogEntry { winner:number; loser:number; count:2|4; drawn:string[]; returned:string[] }
 export interface ExchangeState {
   phase:'DRAW_PENDING'|'RETURN_PENDING'|'COMPLETE';
   hands:string[][]; plan:ExchangePair[]; transactionIndex:number;
   drawnIds:string[]; completed:number;
+  faceDownPool?:string[];
+  logs?:ExchangeLogEntry[];
 }
 const seats=(ids:readonly number[])=>ids.length>0 && new Set(ids).size===ids.length && ids.every(id=>Number.isInteger(id)&&id>=0&&id<4);
 export function createExchangePlan(winners:readonly number[],losers:readonly number[],shavedPenalty:boolean):ExchangePair[]{
@@ -22,7 +25,21 @@ const verifyCards=(hands:readonly (readonly string[])[])=>{
 export function startExchange(hands:readonly (readonly string[])[],plan:readonly ExchangePair[]):ExchangeState{
   verifyCards(hands);
   if(hands.some(h=>h.length!==13)||plan.length<1||plan.length>3||plan.some(p=>p.winner===p.loser||![2,4].includes(p.count)||!seats([p.winner,p.loser])))throw new Error('invalid exchange plan');
-  return {phase:'DRAW_PENDING',hands:hands.map(h=>[...h]),plan:plan.map(p=>({...p})),transactionIndex:0,drawnIds:[],completed:0};
+  return {phase:'DRAW_PENDING',hands:hands.map(h=>[...h]),plan:plan.map(p=>({...p})),transactionIndex:0,drawnIds:[],completed:0,logs:[]};
+}
+export function prepareFaceDownPool(state:ExchangeState,shuffledPool:readonly string[]):ExchangeState{
+  if(state.phase!=='DRAW_PENDING')throw new Error('not waiting for draw');
+  const pair=state.plan[state.transactionIndex];
+  const expected=state.hands[pair.loser];
+  if(shuffledPool.length!==expected.length||new Set(shuffledPool).size!==expected.length||shuffledPool.some(id=>!expected.includes(id)))throw new Error('invalid face-down pool');
+  return {...state,faceDownPool:[...shuffledPool]};
+}
+export function drawByIndices(state:ExchangeState,indices:readonly number[]):ExchangeState{
+  if(state.phase!=='DRAW_PENDING')throw new Error('not waiting for draw');
+  const pair=state.plan[state.transactionIndex];
+  const pool=state.faceDownPool??state.hands[pair.loser];
+  if(indices.length!==pair.count||new Set(indices).size!==indices.length||indices.some(i=>!Number.isInteger(i)||i<0||i>=pool.length))throw new Error('invalid draw indices');
+  return drawForTransaction(state,indices.map(i=>pool[i]));
 }
 export function drawForTransaction(state:ExchangeState,drawn:readonly string[]):ExchangeState{
   if(state.phase!=='DRAW_PENDING')throw new Error('not waiting for draw');
@@ -32,7 +49,8 @@ export function drawForTransaction(state:ExchangeState,drawn:readonly string[]):
   hands[pair.loser]=hands[pair.loser].filter(id=>!drawn.includes(id));
   hands[pair.winner].push(...drawn);
   verifyCards(hands);
-  return {...state,phase:'RETURN_PENDING',hands,drawnIds:[...drawn]};
+  const logs=[...(state.logs??[]),{winner:pair.winner,loser:pair.loser,count:pair.count,drawn:[...drawn],returned:[]}];
+  return {...state,phase:'RETURN_PENDING',hands,drawnIds:[...drawn],faceDownPool:undefined,logs};
 }
 export function returnCards(state:ExchangeState,returned:readonly string[]):ExchangeState{
   if(state.phase!=='RETURN_PENDING')throw new Error('not waiting for return');
@@ -43,8 +61,9 @@ export function returnCards(state:ExchangeState,returned:readonly string[]):Exch
   hands[pair.loser].push(...returned);
   verifyCards(hands);
   if(hands.some(h=>h.length!==13))throw new Error('exchange did not restore 13 cards');
+  const logs=(state.logs??[]).map((entry,idx,arr)=>idx===arr.length-1&&entry.winner===pair.winner&&entry.loser===pair.loser?{...entry,returned:[...returned]}:{...entry,drawn:[...entry.drawn],returned:[...entry.returned]});
   const transactionIndex=state.transactionIndex+1;
-  return {...state,hands,phase:transactionIndex===state.plan.length?'COMPLETE':'DRAW_PENDING',transactionIndex,drawnIds:[],completed:state.completed+1};
+  return {...state,hands,phase:transactionIndex===state.plan.length?'COMPLETE':'DRAW_PENDING',transactionIndex,drawnIds:[],completed:state.completed+1,faceDownPool:undefined,logs};
 }
 export function deterministicAutoReturn(state:ExchangeState):string[]{
   if(state.phase!=='RETURN_PENDING')throw new Error('not waiting for return');
