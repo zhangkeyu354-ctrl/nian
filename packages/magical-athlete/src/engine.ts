@@ -565,6 +565,15 @@ function crossTwist(s: MAState, c: Ctx, t: Token, from: number, to: number) {
     log(s, "【随机性消失！】" + s.players.map(p => `${p.name} 的骰点固定为 ${twist.fixedDice![p.id]}`).join("，") + "。本场有效。");
     return;
   }
+  if (card === 13) {
+    if (race(s).index + 1 < s.settings.races) {
+      s.timeImpReturners ??= [];
+      if (!s.timeImpReturners.some(x => x.racer === t.racer))
+        s.timeImpReturners.push({ racer: t.racer, owner: t.owner, base: t.base });
+    }
+    eliminateWithPower(s, [t], () => log(s, `${rname(t)}【踩到时之灵！】淘汰，下一场正常比赛额外参赛。`));
+    return;
+  }
   if (card === 8) {
     log(s, "【人人诅咒魔杖！】每回合结束时掷骰，跳过后面相应数量的行动顺位。");
     return;
@@ -2561,7 +2570,7 @@ function startRace(s: MAState) {
     firstTurnDone: [],
     ...(track === "twisty-twirl" ? { twist: { triggered: false, remaining: Array.from({length: 13}, (_, i) => i + 1), drawn: [] } } : {}),
   };
-  for (const returning of s.returningRacers ?? []) {
+  for (const returning of [...(s.returningRacers ?? []), ...(s.timeImpReturners ?? [])]) {
     if (s.race.tokens.some((t) => t.racer === returning.racer)) continue;
     s.race.tokens.push({
       racer: returning.racer,
@@ -2575,6 +2584,7 @@ function startRace(s: MAState) {
       started: false,
     });
   }
+  if (s.timeImpReturners?.length) delete s.timeImpReturners;
   for (const p of s.players) p.used.push(...p.choices);
   s.phase = "race";
   log(

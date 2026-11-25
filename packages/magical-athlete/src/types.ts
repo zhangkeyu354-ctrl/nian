@@ -164,6 +164,7 @@ export interface Settings {
 }
 
 export interface MAState {
+  timeImpReturners?: Array<{ racer: string; owner: string; base: string }>;
   /** Extra racers registered for future races, separate from secret selections. */
   returningRacers?: Array<{ racer: string; owner: string; base: string }>;
   game: "magical-athlete";
