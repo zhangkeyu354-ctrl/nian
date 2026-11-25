@@ -73,18 +73,45 @@ describe('V1.1 turn state machine',()=>{
       {kind:'PASS',trickId:1},
     ]);
   });
-  it('T22: keeps playing when two teammates finish first and settles immediately when third finishes',()=>{
+  // House rule 2026-11-25: a two-player team that finishes both members ends the round at once.
+  function endgame(hands:string[][],finished:number[],owners:number[],actor:number,lastPlay:{actor:number;cards:string[]}){
     const full=createDeck().map(c=>c.id);
     const s=startRound([full.slice(0,13),full.slice(13,26),full.slice(26,39),full.slice(39,52)]);
-    s.hands=[[],['5D'],[],['KH','2S']];
-    s.capturedPiles=[full.filter(id=>!['5D','KH','2S','4S'].includes(id)),[],[],[]];
-    s.tableCards=['4S'];s.lastPlay={actor:2,cards:['4S']};s.finishedOrder=[0,2];
-    s.blackAOwners=[0,2];s.currentActor=1;s.firstLeadPending=false;s.trickId=9;
-    expect(s.phase).toBe('PLAY');
-    const settled=applyAction(s,{kind:'PLAY',actor:1,cards:['5D']});
+    const inPlay=new Set([...hands.flat(),...lastPlay.cards]);
+    s.hands=hands;s.capturedPiles=[full.filter(id=>!inPlay.has(id)),[],[],[]];
+    s.tableCards=[...lastPlay.cards];s.lastPlay=lastPlay;s.finishedOrder=finished;
+    s.blackAOwners=owners;s.currentActor=actor;s.firstLeadPending=false;s.trickId=9;
+    s.pendingResponders=[0,1,2,3].filter(id=>id!==lastPlay.actor&&hands[id].length>0);
+    return s;
+  }
+  it('T22: ends immediately when both teammates finish; unbeatable leftovers go to the last finisher',()=>{
+    // seat 0 (black) already out; seat 2 (black) plays its last card 2S, opponents hold 5D / KH 10C which cannot beat it.
+    const s=endgame([[],['5D','4C'],['2S'],['KH','10C']],[0],[0,2],2,{actor:1,cards:['4D']});
+    const settled=applyAction(s,{kind:'PLAY',actor:2,cards:['2S']});
     expect(settled.phase).toBe('RESULT');
-    expect(settled.finishedOrder).toEqual([0,2,1,3]);
-    expect(settled.result?.ledger[1].capturedScore).toBe(5);
-    expect(settled.result?.remainderRecipient).toBe(3);
+    expect(settled.result?.earlyEnd).toBe(true);
+    expect(settled.finishedOrder).toEqual([0,2,3,1]); // tie on cards left → turn order after seat 2
+    expect(settled.result?.remainderRecipients).toEqual([{from:1,to:2},{from:3,to:2}]);
+    expect(settled.result?.ledger[2].remainderScore).toBe(25);
+    expect(settled.result?.ledger[1].transferOut).toBe(30);
+  });
+  it('T22: an unfinished player who can beat the terminal play keeps their own point cards',()=>{
+    const s=endgame([[],['5D','4C'],['QS'],['KH','10C']],[0],[0,2],2,{actor:1,cards:['4D']});
+    const settled=applyAction(s,{kind:'PLAY',actor:2,cards:['QS']});
+    expect(settled.result?.remainderRecipients).toEqual([{from:1,to:2},{from:3,to:3}]);
+    expect(settled.result?.ledger[3].remainderScore).toBe(20);
+    expect(settled.result?.ledger.reduce((n,l)=>n+l.finalScore,0)).toBe(100);
+  });
+  it('T22: keeps playing when the first two finishers are on different teams',()=>{
+    const s=endgame([[],['5D','4C'],['2S'],['KH','10C']],[1],[0,2],2,{actor:3,cards:['4D']});
+    s.hands[0]=['3C'];s.capturedPiles[0]=s.capturedPiles[0].filter(id=>id!=='3C');s.finishedOrder=[1];s.hands[1]=[];
+    s.capturedPiles[0].push('5D','4C');s.pendingResponders=[0,2];
+    const next=applyAction(s,{kind:'PLAY',actor:2,cards:['2S']});
+    expect(next.phase).toBe('PLAY');
+  });
+  it('T22: a solo double-black-A player finishing first does not end the round',()=>{
+    const s=endgame([['2S'],['5D'],['4C'],['KH','10C']],[],[0],0,{actor:3,cards:['4D']});
+    const next=applyAction(s,{kind:'PLAY',actor:0,cards:['2S']});
+    expect(next.phase).toBe('PLAY');
   });
 });

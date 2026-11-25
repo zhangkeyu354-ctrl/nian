@@ -39,9 +39,14 @@ export function applyAction(state:RoundState, action:Action):RoundState {
     s.lastPlay={actor,cards:[...action.cards]}; s.firstLeadPending=false;
     s.recentPlays[actor]={kind:'PLAY',cards:[...action.cards],trickId:s.trickId};
     if(s.hands[actor].length===0 && !s.finishedOrder.includes(actor))s.finishedOrder.push(actor);
-    if(s.finishedOrder.length===3){
-      const tail=[0,1,2,3].find(id=>!s.finishedOrder.includes(id))!;
-      s.finishedOrder.push(tail);
+    // House rule (2026-11-25): when both members of a two-player team have finished, the round ends at once.
+    const teamDone=s.blackAOwners.length===2 && s.finishedOrder.length===2 &&
+      s.blackAOwners.includes(s.finishedOrder[0])===s.blackAOwners.includes(s.finishedOrder[1]);
+    if(s.finishedOrder.length===3 || teamDone){
+      // Unfinished players are ranked by cards left (fewer = better); ties go in turn order after the last finisher.
+      const rest=[1,2,3].map(k=>(actor+k)%4).filter(id=>!s.finishedOrder.includes(id))
+        .sort((a,b)=>s.hands[a].length-s.hands[b].length);
+      s.finishedOrder.push(...rest);
       s.result=settleRound({hands:s.hands,capturedPiles:s.capturedPiles,tableCards:s.tableCards,terminalPlay:action.cards,finishedOrder:s.finishedOrder as [number,number,number,number],blackAOwners:s.blackAOwners,soloScoreBasis:s.options.soloScoreBasis});
       s.phase='RESULT';s.currentActor=null;s.pendingResponders=[];
     }else{

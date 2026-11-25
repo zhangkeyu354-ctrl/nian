@@ -16,6 +16,10 @@ export interface Ledger {
 export interface Settlement {
   ledger: readonly Ledger[];
   remainderRecipient: number;
+  /** Where each unfinished player's leftover point cards went (one entry normally, two on a team early end). */
+  remainderRecipients: readonly {from:number;to:number}[];
+  /** True when both members of a 2-player team finished first and the round ended immediately. */
+  earlyEnd: boolean;
   blackTeam: readonly number[];
   otherTeam: readonly number[];
   winningTeam: 'BLACK_A'|'OTHER';
@@ -37,16 +41,22 @@ export function settleRound(input: SettlementInput): Settlement {
       input.blackAOwners.some(id=>id<0 || id>3)) throw new Error('invalid settlement seats');
   const all = [...input.hands.flat(),...input.capturedPiles.flat(),...input.tableCards];
   if (all.length !== 52 || new Set(all).size !== 52 || all.some(id=>!points.has(id as CardId))) throw new Error('expected 52 unique physical cards');
-  const [first,,third,tail] = input.finishedOrder;
-  if (input.hands.some((hand,id)=>id !== tail && hand.length !== 0) || input.hands[tail].length === 0 ||
+  const first = input.finishedOrder[0], tail = input.finishedOrder[3];
+  const unfinished = [0,1,2,3].filter(id=>input.hands[id].length>0);
+  const earlyEnd = unfinished.length===2;
+  if (!(unfinished.length===1 || earlyEnd) || !unfinished.includes(tail) ||
+      (earlyEnd && !unfinished.includes(input.finishedOrder[2])) ||
       input.tableCards.length === 0 || input.terminalPlay.some(id=>!input.tableCards.includes(id))) throw new Error('invalid terminal state');
+  // The player who made the terminal play (last finisher) takes the unresolved terminal trick.
+  const lastFinisher = input.finishedOrder[3-unfinished.length];
   const captured = input.capturedPiles.map(pile=>[...pile]);
-  captured[third].push(...input.tableCards);
-  // The entire unresolved terminal trick belongs to the third finisher.
-  const remainderRecipient = hasBeatingPlay(input.hands[tail],input.terminalPlay,{},DEFAULT_RULES) ? tail : third;
+  captured[lastFinisher].push(...input.tableCards);
+  // Each unfinished player keeps their leftover point cards only if they could beat the terminal play.
+  const remainderRecipients = unfinished.map(from=>({from,to:hasBeatingPlay(input.hands[from],input.terminalPlay,{},DEFAULT_RULES) ? from : lastFinisher}));
+  const remainderRecipient = remainderRecipients.find(r=>r.from===tail)!.to;
   const ledger: Ledger[] = captured.map((pile,id)=>{
     const capturedScore=sum(pile);
-    const remainderScore=id===remainderRecipient ? sum(input.hands[tail]) : 0;
+    const remainderScore=remainderRecipients.filter(r=>r.to===id).reduce((n,r)=>n+sum(input.hands[r.from]),0);
     const transferIn=id===first ? 30 : 0;
     const transferOut=id===tail ? 30 : 0;
     const baseScore=capturedScore+remainderScore;
@@ -62,7 +72,7 @@ export function settleRound(input: SettlementInput): Settlement {
   const teamZeroCaptured=[teamSum(blackTeam,ledger,'capturedScore')===0,teamSum(otherTeam,ledger,'capturedScore')===0] as const;
   const teamZeroBase=[teamSum(blackTeam,ledger,'baseScore')===0,teamSum(otherTeam,ledger,'baseScore')===0] as const;
   return {
-    ledger,remainderRecipient,blackTeam,otherTeam,winningTeam,
+    ledger,remainderRecipient,remainderRecipients,earlyEnd,blackTeam,otherTeam,winningTeam,
     winnerIds:blackWins?blackTeam:otherTeam,loserIds:blackWins?otherTeam:blackTeam,
     teamZeroCaptured,teamZeroBase,shavedPenalty:[!blackWins && teamZeroBase[0],blackWins && teamZeroBase[1]],
     reason:solo ? blackWins?'SOLO_30':'SOLO_FAILED' : blackWins?'BLACK_LEAD_30':'OTHER_HOLDS',

@@ -85,3 +85,20 @@
 @media(min-width:650px){
   .ba-hand,.ba-facedown-grid,.ba-hand-drawn-cards{gap:10px 6px;padding:14px 12px 8px}
 }
+
+/* 2026-11-25 feedback: grouped hand, larger recent plays, prominent turn timer */
+.ba-sort-buttons{display:flex;gap:6px}.ba-sort-buttons button{white-space:nowrap}
+.ba-card-special{box-shadow:0 0 0 2px #d8b56a,0 2px 6px #071f1b55}
+.ba-opponent{position:relative}
+.ba-opponent-recent{min-height:46px}
+.ba-opponent-recent .ba-recent-cards{flex-wrap:wrap;gap:0;row-gap:3px;padding-left:15px}
+.ba-opponent-recent .ba-mini-card,.ba-self-recent .ba-mini-card{width:31px;height:44px;margin-left:-15px;border-radius:4px}
+.ba-self-recent .ba-recent-cards{display:flex;padding-left:15px}
+.ba-opponent-recent .ba-pass-badge{font-size:14px;padding:4px 12px}
+.ba-clock{position:absolute;bottom:-10px;right:-4px;z-index:2;min-width:30px;height:30px;padding:0 7px;border-radius:999px;display:flex;align-items:center;justify-content:center;font-size:15px;font-weight:800;background:#e6c27a;color:#173c34;box-shadow:0 3px 10px #071f1b66;animation:ba-clock-pulse 1.2s ease-in-out infinite}
+.ba-clock.ba-clock-urgent{background:#d9574a;color:#fff}
+.ba-your-turn{display:flex;align-items:center;justify-content:center;gap:10px;margin:6px 0;padding:8px 12px;border-radius:10px;font-weight:800;font-size:16px;background:linear-gradient(150deg,#e9c97f,#d2a75a);color:#173c34;box-shadow:0 4px 14px #071f1b55}
+.ba-your-turn strong{font-size:22px;min-width:28px;text-align:center}
+.ba-your-turn.ba-clock-urgent{background:linear-gradient(150deg,#e46a5b,#c8473b);color:#fff;animation:ba-clock-pulse .8s ease-in-out infinite}
+@keyframes ba-clock-pulse{50%{transform:scale(1.06)}}
+@media (prefers-reduced-motion:reduce){.ba-clock,.ba-your-turn{animation:none}}
