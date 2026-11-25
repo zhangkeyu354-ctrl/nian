@@ -560,6 +560,15 @@ function crossTwist(s: MAState, c: Ctx, t: Token, from: number, to: number) {
   const [card] = twist.remaining.splice(index, 1);
   twist.drawn.push(card);
   log(s, `${rname(t)} 跨过 Twist：抽到事件 ${card}。`);
+  if (card === 3) {
+    log(s, "【传送带启动！】全员传送至起点后一格，本场主移动 +3。实际骰值不变。");
+    for (const target of inOrder(s).filter(active)) warp(s, c, target, 1);
+    return;
+  }
+  if (card === 5) {
+    log(s, "【终点虫潮！】本场停在终点前两格时后退 5 格。");
+    return;
+  }
   if (card === 4) {
     log(s, "【禁跑水潭！】本场主移动最终达到 6 格时，移动前淘汰。");
     return;
@@ -662,7 +671,9 @@ function move(s: MAState, c: Ctx, t: Token, n: number, main: boolean, why: strin
     why,
   });
   if (p >= L) {
+    const twistBefore = race(s).twist?.triggered;
     for (const g of group) crossTwist(s, c, g, from, p);
+    if (!twistBefore && race(s).twist?.drawn.includes(3)) return;
     for (const g of group)
       if (active(g)) {
         if (magicalTrip && g === t)
@@ -693,7 +704,9 @@ function move(s: MAState, c: Ctx, t: Token, n: number, main: boolean, why: strin
     return;
   }
   for (const g of group) g.pos = p;
+  const twistBefore = race(s).twist?.triggered;
   for (const g of group) crossTwist(s, c, g, from, p);
+  if (!twistBefore && race(s).twist?.drawn.includes(3)) return;
   log(
     s,
     n < 0
@@ -810,6 +823,11 @@ function reactBody(
   bananaPassed: Token[] = passed,
 ) {
   if (!active(t)) return;
+  if (race(s).twist?.drawn.includes(5) && (t.pos === 28 || t.pos === 29)) {
+    log(s, `${rname(t)}【终点虫潮】：停在第 ${t.pos} 格，后退 5 格。`);
+    move(s, c, t, -5, false, "终点虫潮");
+    return;
+  }
   const chain = c.warpChains!.get(t)!;
   const from = t.pos;
   const portal = warpDestination(race(s).track, from, [...chain]);
@@ -1515,6 +1533,7 @@ function mainMove(s: MAState, c: Ctx, t: Token, f: TurnFlags) {
       fire(s, c, n, `${rname(n)}【虚无领域】：${rname(t)} 主移动 -1。`, "sw_null");
       dist -= 1;
     }
+  if (r.twist?.drawn.includes(3)) dist += 3;
   const finalMainSteps = Math.max(0, dist);
   if (r.twist?.drawn.includes(4) && finalMainSteps >= 6) {
     eliminateWithPower(s, [t], () => log(s, `${rname(t)}【禁跑水潭】：主移动 ${finalMainSteps} 格，移动前淘汰。`));
