@@ -25,10 +25,6 @@ export interface MARoomSnapshot {
   points: MAPointsSetting[];
   /** Public four-race schedule, including repeated maps. */
   schedule: TrackId[];
-  /** preset：开局前定好四场；perRound：每场选角前由房主定本场地图 */
-  trackMode?: "preset" | "perRound";
-  /** 逐轮选图等待房主的截止时间（毫秒时间戳）；超时自动用预定地图 */
-  trackPickDeadline?: number;
   /** 3 人房可选双选手变体；2 人房固定双选手 */
   variant: "standard" | "double";
   /** draft：轮流选秀；random：随机模式，每人随机发 4 名、全场不重复 */
@@ -46,7 +42,6 @@ export type MALobbyAction =
   | { type: "SET_POINTS"; points: MAPointsSetting[] }
   | { type: "SET_SCHEDULE"; schedule: TrackId[] }
   | { type: "SHUFFLE_SCHEDULE" }
-  | { type: "SET_TRACK_MODE"; mode: "preset" | "perRound" }
   | { type: "SET_DEAL"; deal: "draft" | "random" }
   | { type: "SET_SECOND_WIND"; enabled: boolean; only?: boolean }
   | { type: "KICK"; playerId: string }
@@ -56,7 +51,6 @@ export type MALobbyAction =
 export type MAClientCommand =
   | { type: "DRAFT"; racer: string }
   | { type: "CHOOSE"; racer?: string; racers?: string[] }
-  | { type: "ANSWER"; value: string }
-  | { type: "TRACK"; track: TrackId };
+  | { type: "ANSWER"; value: string };
 
 export type { MACommand };

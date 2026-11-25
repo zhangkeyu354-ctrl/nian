@@ -170,8 +170,6 @@ export interface Settings {
   /** draft：蛇形选秀（规则书）；random：随机模式，每人直接随机发 4 名，全场不重复 */
   deal?: "draft" | "random";
   schedule: TrackId[];
-  /** perRound：房主每场选角前再定本场地图（schedule 作为超时回退）；缺省 = 开局前全部定好 */
-  trackMode?: "preset" | "perRound";
   /** 每场金牌、银牌分值（待核对，房主可改） */
   points: Array<{ gold: number; silver: number }>;
 }
@@ -199,8 +197,6 @@ export interface MAState {
     startPlayer: string;
   } | null;
   race: RaceState | null;
-  /** 逐轮选图：正在等房主确定第 race 场（0 起）的地图；确定前不能选角 */
-  trackPick?: { race: number } | null;
   /** 历届冠军角色（双胞胎用） */
   winners: string[];
   /** 下一场先手玩家 */
@@ -218,9 +214,7 @@ export interface MAState {
 export type MACommand =
   | { type: "DRAFT"; player: string; racer: string }
   | { type: "CHOOSE"; player: string; racer?: string; racers?: string[] }
-  | { type: "ANSWER"; player: string; value: string }
-  /** 逐轮选图：确定下一场地图（只在 trackPick 时有效；谁有权由服务器决定） */
-  | { type: "TRACK"; player: string; track: TrackId };
+  | { type: "ANSWER"; player: string; value: string };
 
 export interface CreateMAOptions {
   players: Array<{ id: string; name: string }>;

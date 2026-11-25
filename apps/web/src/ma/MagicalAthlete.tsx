@@ -341,16 +341,7 @@ function Lobby({ snap, lobby }: { snap: MARoomSnapshot; lobby: (a: Parameters<Re
       </section>
       <section className="ma-panel ma-schedule-panel">
         <h2>四场赛程</h2>
-        <div className="ma-variant" role="radiogroup" aria-label="选图方式">
-          {([["preset", "开局前定好四场"], ["perRound", "每场开始前再选"]] as const).map(([mode, label]) => (
-            <button key={mode} type="button" role="radio" data-testid={`ma-track-mode-${mode}`}
-              aria-checked={(snap.trackMode ?? "preset") === mode} className={(snap.trackMode ?? "preset") === mode ? "on" : ""}
-              disabled={!host} onClick={() => void run({ type: "SET_TRACK_MODE", mode })}><b>{label}</b></button>
-          ))}
-        </div>
-        <p className="ma-muted">{snap.trackMode === "perRound"
-          ? "每场选选手之前，房主再定这一场的地图（下面是预定，房主 90 秒内没选就用预定的）。定好后这一场不能再改。"
-          : "可以重复选择同一张地图。开局前所有人都能看到本场赛程，比赛开始后不能再改。"}</p>
+        <p className="ma-muted">可以重复选择同一张地图。开局前所有人都能看到本场赛程。</p>
         <div className="ma-schedule-presets">
           {presets.map(({ label, maps }) => (
             <button key={label} type="button" disabled={!host || maps.some(id => !PLAYABLE_TRACKS.includes(id))}
@@ -553,7 +544,7 @@ function Game({ snap, view, send, connected }: { snap: MARoomSnapshot; view: MAV
     !!me &&
     !pb.busy &&
     ((view.phase === "draft" && view.draft?.order[view.draft.step] === me) ||
-      (view.phase === "choose" && (view.trackPick ? snap.players.find((p) => p.host)?.playerId === me : !!mine && !mine.choices.length)) ||
+      (view.phase === "choose" && !!mine && !mine.choices.length) ||
       (view.phase === "race" && view.pending?.player === me));
   const [toast, setToast] = useState(false);
   const wasTurn = useRef(false);
@@ -600,9 +591,7 @@ function Game({ snap, view, send, connected }: { snap: MARoomSnapshot; view: MAV
       <Scores view={view} me={me} colorOf={colorOf} compact={showRace} />
       {error && <p className="ma-error" role="alert">{error}</p>}
       {view.phase === "draft" && <Draft view={view} me={me} name={name} act={act} />}
-      {view.phase === "choose" && !showRace && (view.trackPick
-        ? <TrackPick view={view} snap={snap} me={me} act={act} />
-        : <Choose view={view} me={me} act={act} />)}
+      {view.phase === "choose" && !showRace && <Choose view={view} me={me} act={act} />}
       {showRace && (
         <Race view={view} me={me} name={name} colorOf={colorOf} act={act} pb={pb} openCard={setCard} />
       )}
@@ -784,40 +773,6 @@ function Draft({ view, me, name, act }: { view: MAView; me: string | null; name:
           <div className="ma-cards">{mine.hand.map((id) => <RacerCard key={id} id={id} compact />)}</div>
         </>
       )}
-    </section>
-  );
-}
-
-/** 逐轮选图：房主在本场选角前锁定地图；其他人只读，显示倒计时 */
-function TrackPick({ view, snap, me, act }: { view: MAView; snap: MARoomSnapshot; me: string | null; act: (c: Parameters<Send>[0]) => void }) {
-  const idx = view.trackPick!.race;
-  const planned = view.settings.schedule[idx];
-  const host = snap.players.find((p) => p.host);
-  const isHost = !!me && host?.playerId === me;
-  const [now, setNow] = useState(Date.now());
-  useEffect(() => { const id = setInterval(() => setNow(Date.now()), 1000); return () => clearInterval(id); }, []);
-  const left = snap.trackPickDeadline ? Math.max(0, Math.ceil((snap.trackPickDeadline - now) / 1000)) : null;
-  const mapIds: TrackId[] = ["mild", "wild", "twisty-twirl", "whirly-world"];
-  const rest = view.settings.schedule.slice(idx + 1);
-  return (
-    <section className="ma-stage" data-testid="ma-track-pick">
-      <h2>第 {idx + 1} 场 · 选地图</h2>
-      <p className={"ma-banner" + (isHost ? " you" : "")}>
-        {isHost ? "你是房主：选这一场的地图，选好就锁定，大家再选选手。" : `等房主 ${host?.name ?? ""} 选这一场的地图…`}
-      </p>
-      <div className="ma-schedule-maps" role="group" aria-label={`第 ${idx + 1} 场地图`}>
-        {mapIds.map((id) => (
-          <button key={id} type="button" aria-pressed={planned === id} data-testid={`ma-pick-track-${id}`}
-            disabled={!isHost || !PLAYABLE_TRACKS.includes(id)}
-            onClick={() => act({ type: "TRACK", track: id })}>
-            {TRACKS[id].zh}{!PLAYABLE_TRACKS.includes(id) && <small>待验收</small>}
-          </button>
-        ))}
-      </div>
-      <p className="ma-muted">
-        {left !== null && `${left} 秒内没选，自动用预定的「${TRACKS[planned].zh}」。`}
-        {rest.length > 0 && ` 之后预定：${rest.map((t) => TRACKS[t].zh).join(" → ")}（到时再选）。`}
-      </p>
     </section>
   );
 }

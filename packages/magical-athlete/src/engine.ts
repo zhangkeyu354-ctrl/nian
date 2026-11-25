@@ -92,7 +92,6 @@ export function createMAGame(opts: CreateMAOptions): MAState {
     variant,
     deal,
     schedule,
-    ...(opts.settings?.trackMode === "perRound" ? { trackMode: "perRound" as const } : {}),
     points: opts.settings?.points ?? Array.from({ length: races }, () => ({ ...DEFAULT_POINTS })),
   };
   const s: MAState = {
@@ -132,7 +131,7 @@ export function createMAGame(opts: CreateMAOptions): MAState {
     // 牌堆里每名选手只有一张，所以全场不会有两人拿到同一名选手。
     const each = 4;
     for (const p of s.players) p.hand = s.deck.splice(0, each);
-    enterChoose(s, 0);
+    s.phase = "choose";
     log(s, `随机模式：每人随机发 ${each} 名选手（全场不重复）。`);
     for (const p of s.players) log(s, `${p.name} 拿到：${p.hand.map(racerName).join("、")}。`);
     log(s, "请秘密选择第 1 场的出场选手。");
@@ -2830,22 +2829,13 @@ function endRace(
       },
     );
   } else {
+    s.phase = "choose";
     s.nextFirst = next;
     log(s, `下一场由 ${pname(s, next)} 先手。请秘密选择出场选手。`);
-    enterChoose(s, r.index + 1);
   }
 }
 
 export const total = (chips: Chip[]) => chips.reduce((a, ch) => a + ch.value, 0);
-
-/** 进入选角阶段；逐轮选图模式下先等房主锁定这一场的地图 */
-function enterChoose(s: MAState, race: number) {
-  s.phase = "choose";
-  if (s.settings.trackMode === "perRound") {
-    s.trackPick = { race };
-    log(s, `请房主确定第 ${race + 1} 场的地图（预定：${TRACKS[s.settings.schedule[race]].zh}）。`);
-  }
-}
 
 function startRace(s: MAState) {
   const idx = s.race ? s.race.index + 1 : 0;
@@ -2931,20 +2921,12 @@ export function reduceMA(prev: MAState, cmd: MACommand): MAState {
       if (d.round + 1 < draftRounds(s)) startDraftRound(s, d.round + 1, d.startPlayer);
       else {
         s.draft = null;
+        s.phase = "choose";
         log(s, "选秀结束！请秘密选择第 1 场的出场选手。");
-        enterChoose(s, 0);
       }
     }
-  } else if (cmd.type === "TRACK") {
-    const pick = s.phase === "choose" && s.trackPick ? s.trackPick : fail("TRACK_LOCKED", "本场地图已经锁定，不能再改。");
-    if (!PLAYABLE_TRACKS.includes(cmd.track))
-      fail("TRACK_UNCONFIRMED", `${TRACKS[cmd.track]?.zh ?? String(cmd.track)}：${TRACKS[cmd.track]?.missing ?? "地图不可用"}。`);
-    s.settings.schedule[pick.race] = cmd.track;
-    s.trackPick = null;
-    log(s, `第 ${pick.race + 1} 场地图锁定：${TRACKS[cmd.track].zh}。`);
   } else if (cmd.type === "CHOOSE") {
     if (s.phase !== "choose") fail("PHASE", "现在不是选择出场选手的阶段。");
-    if (s.trackPick) fail("TRACK_PENDING", "房主还没确定这一场的地图。");
     const need = s.settings.variant === "double" ? 2 : 1;
     const picks = cmd.racers ?? (cmd.racer ? [cmd.racer] : []);
     if (picks.length !== need) fail("PICK_COUNT", `这一场要派 ${need} 名选手。`);
@@ -2989,7 +2971,6 @@ export function reduceMA(prev: MAState, cmd: MACommand): MAState {
 /** 当前需要谁做什么（大厅/界面用） */
 export function waitingFor(s: MAState): string[] {
   if (s.phase === "draft" && s.draft) return [s.draft.order[s.draft.step]];
-  if (s.phase === "choose" && s.trackPick) return [];
   if (s.phase === "choose") return s.players.filter((p) => !p.choices.length).map((p) => p.id);
   if (s.pending) return [s.pending.player];
   return [];
