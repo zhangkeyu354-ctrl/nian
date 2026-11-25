@@ -330,7 +330,11 @@ function loopCheck(s: MAState, c: Ctx, trigger: string, what: string): boolean {
   const key = `${trigger}|${stateKey(s)}`;
   const structural = `${trigger}|${stateKey(s, false)}`;
   const earlier = c.loopAwards?.get(structural);
-  if (!c.guard.has(key) && !(earlier && onlyAddedAwards(earlier, s))) {
+  // A hotel payment may consume a newly earned chip in the same cycle. Compare
+  // net scores as well as chip-list prefixes before treating it as pure scoring.
+  const scoringCycle = earlier && s.players.every((p, i) =>
+    total(p.chips) >= total(earlier[i]));
+  if (!c.guard.has(key) && !(earlier && (onlyAddedAwards(earlier, s) || scoringCycle))) {
     c.guard.add(key);
     (c.loopAwards ??= new Map()).set(structural, s.players.map(p => [...p.chips]));
     return false;
@@ -1037,7 +1041,7 @@ function reactBody(
         loopCheck(
           s,
           c,
-          `hotel:${x.racer}>${t.racer}:${total(player(s, t.owner).chips)}:${total(player(s, x.owner).chips)}`,
+          `hotel:${x.racer}>${t.racer}`,
           `${rname(x)} 重复收取同一停格费用`,
         )
       )
