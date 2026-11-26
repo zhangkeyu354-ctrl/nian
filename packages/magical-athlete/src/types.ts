@@ -42,7 +42,7 @@ export interface RaceState {
   stalemateSeen?: string[];
   /** Stable identifier; the finale shares index with its scheduled race. */
   instanceId?: string;
-  twist?: { triggered: boolean; remaining: number[]; drawn: number[]; reversed?: boolean; chips?: number[]; fixedDice?: Record<string, number>; monster?: { pos: number; finished?: boolean }; monsterRacers?: string[]; finalePending?: boolean };
+  twist?: { triggered: boolean; remaining: number[]; drawn: number[]; reversed?: boolean; chips?: number[]; fixedDice?: Record<string, number>; monster?: { pos: number; finished?: boolean }; finalePending?: boolean };
   /** T12 is an extra race instance of the same scheduled race. */
   finale?: boolean;
   /** Completed normal race retained for the next-race first-player ruling. */
@@ -132,7 +132,7 @@ export type Fx =
   | { kind: "direction"; reversed: boolean }
   | { kind: "twist_card"; racer: string; card: number }
   | { kind: "monster_spawn"; pos: number }
-  | { kind: "monster_roll"; value: number; racer?: string }
+  | { kind: "monster_roll"; value: number }
   | { kind: "monster_move"; from: number; to: number; finished: boolean }
   | { kind: "start"; race: number; track: string; owners?: Record<string, string>; positions?: Record<string, number>; finale?: boolean }
   /** 每场结束的领奖台：第 1、2 名（冲线，拿奖牌）＋第 3 名（场上最靠前的未冲线选手，不计分） */

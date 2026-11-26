@@ -32,7 +32,7 @@ const TWIST_CARDS: Record<number, { title: string; effect: string }> = {
   6: { title: "随机性消失！", effect: "每位玩家各自掷出固定骰点，本场之后使用自己的固定结果。" },
   7: { title: "皮纳塔破了！", effect: "第一弯道后的空格出现 1 分筹码，停上去可拾取。" },
   8: { title: "人人诅咒魔杖！", effect: "本场每回合结束时掷骰，按点数跳过后续行动顺位。" },
-  9: { title: "炼金实验室泄露！", effect: "巨口怪物从起点追赶选手；若有咬痕选手，则由他们变身。" },
+  9: { title: "炼金实验室泄露！", effect: "独立的巨口怪物从起点追赶所有选手，包括已变身的咬痕。" },
   10: { title: "观众渴求混乱！", effect: "接下来从剩余牌堆依次再抽两张事件卡，并逐张结算。" },
   11: { title: "交换大会！", effect: "每位玩家私下抽取新选手，决定保留当前选手或交换。" },
   12: { title: "季终决战！", effect: "前两名正常冲线后加赛一场，争夺金牌和银牌。" },
@@ -1210,7 +1210,7 @@ export function Overlay({
     );
   } else if (show.kind === "monster_roll") {
     body = <div className="ma-ov-roll ma-ov-monster-roll" data-testid="ma-monster-roll">
-      <p>🐺 {show.racer ? `${racerName(show.racer)}（大嘴狼人）` : "巨口怪物"}掷骰</p>
+      <p>🐺 巨口怪物掷骰</p>
       <RollingDie seat={show.racer ? dieSeat(owner(show.racer)) : 1} value={show.value} rolling={show.rolling} />
       {!show.rolling && <p className="ma-ov-big">掷出 {show.value} · 怪物开始追赶！</p>}
     </div>;

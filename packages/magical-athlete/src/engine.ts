@@ -603,19 +603,6 @@ function resolveTwistCard(s: MAState, c: Ctx, t: Token, card: number) {
     return;
   }
   if (card === 9) {
-    const biteMarks = inOrder(s).filter(x => active(x) && has(s, x, "sw_bite_mark"));
-    if (biteMarks.length) {
-      delete twist.monster;
-      twist.monsterRacers = biteMarks.map(x => x.racer);
-      for (const x of biteMarks) {
-        const from = x.pos;
-        x.secondWind = { ...x.secondWind, wereMouth: true };
-        x.pos = physical(s, 0);
-        log(s, `【炼金实验室泄露！】${rname(x)} 以大嘴狼人身份回到起点，此后每回合末追加怪物移动。`,
-          { kind: "warp", racer: x.racer, from, to: x.pos });
-      }
-      return;
-    }
     twist.monster = { pos: physical(s, 0) };
     log(s, "【炼金实验室泄露！】巨口怪物从起点出发，之后每回合结束掷骰移动。",
       { kind: "monster_spawn", pos: twist.monster.pos });
@@ -2280,7 +2267,7 @@ function proveForcedTurn(snapshot: string): boolean {
 
 function nextTurn(s: MAState, f: TurnFlags, c: Ctx) {
   const r = race(s);
-  moveTwistMonster(s, c);
+  moveTwistMonster(s);
   const live = (id: string) => r.tokens.some((x) => x.owner === id && active(x));
   if (f.extra && live(r.current)) return;
   if (f.skipper && live(f.skipper)) {
@@ -2325,27 +2312,8 @@ function nextTurn(s: MAState, f: TurnFlags, c: Ctx) {
 }
 
 /** The Twist monster rolls its own die; landing on a racer is not passing it. */
-function moveTwistMonster(s: MAState, c: Ctx) {
+function moveTwistMonster(s: MAState) {
   const r = race(s);
-  if (r.twist?.monsterRacers?.length) {
-    for (const id of r.twist.monsterRacers) {
-      if (r.over || r.finishers.length >= 2) break;
-      const t = r.tokens.find(x => x.racer === id);
-      if (!t || !active(t)) continue;
-      const from = t.pos;
-      const roll = d6(s);
-      log(s, "", { kind: "monster_roll", value: roll, racer: t.racer });
-      const to = physical(s, Math.min(trackOf(s).length, progress(s, from) + roll));
-      t.pos = to;
-      log(s, `【炼金实验室泄露！】${rname(t)} 追加掷 ${roll}，从第 ${from} 格移动到第 ${to} 格。`,
-        { kind: "move", racers: [t.racer], from, to, why: "大嘴狼人追加移动" });
-      const victims = r.tokens.filter(x => x !== t && active(x) && progress(s, x.pos) > progress(s, from) && progress(s, x.pos) < progress(s, to));
-      if (victims.length)
-        eliminateWithPower(s, victims, () => log(s, `${rname(t)} 超越 ${victims.map(rname).join("、")}，将其淘汰。`));
-      if (active(t) && progress(s, t.pos) >= trackOf(s).length) finish(s, c, t);
-    }
-    return;
-  }
   const monster = r.twist?.monster;
   if (!monster || monster.finished || r.over || r.finishers.length >= 2 || !r.tokens.some(active)) return;
   const from = monster.pos;

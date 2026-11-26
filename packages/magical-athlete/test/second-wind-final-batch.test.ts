@@ -422,6 +422,22 @@ describe("Second Wind最后8名", () => {
     expect(s.race!.hogs?.[0].rider).toBe("twin");
     expect(tok(s, "twin").owner).toBe("p1");
   });
+  it("野猪被接走后，新骑手下一次主移动加2，原骑士不再加2", () => {
+    let s = testRace({
+      racers: ["twin", "sw_hog_knight", "banana"],
+      pos: [0, 3, 20],
+      rolls: [3, 1, 1, 2],
+      secondWindPreview: true,
+    });
+    s = answer(restore(s), "roll");
+    expect(s.race!.hogs?.[0].rider).toBe("twin");
+    s = answer(restore(s), "roll");
+    expect(tok(s, "sw_hog_knight").pos).toBe(4);
+    s = answer(restore(s), "roll");
+    s = answer(restore(s), "roll");
+    expect(tok(s, "twin").pos).toBe(7);
+    expect(s.log.some(entry => entry.text.includes("野猪坐骑") && entry.text.includes("主移动 +2"))).toBe(true);
+  });
   it("野猪骑士经过并不停留不转移坐骑", () => {
     let s = testRace({
       racers: ["twin", "sw_hog_knight", "banana"],

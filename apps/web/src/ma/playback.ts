@@ -11,7 +11,7 @@ export type Show = (
   | { kind: "duel"; a: { racer: string; value: number }; b: { racer: string; value: number }; rolling: boolean }
   | { kind: "power"; racer: string; power: string; text: string; duration?:number }
   | { kind: "twist_card"; racer: string; card: number }
-  | { kind: "monster_roll"; value: number; racer?: string; rolling: boolean }
+  | { kind: "monster_roll"; value: number; rolling: boolean }
   | { kind: "finish"; racer: string; place: number; text: string }
   | { kind: "start"; race: number; track: string; text: string; finale?: boolean }
   | { kind: "note"; racer: string; text: string }
@@ -349,7 +349,6 @@ export function usePlayback(view: MAView) {
           break;
         }
         case "move": {
-          if (fx.why === "大嘴狼人追加移动") monsterCause = true;
           if (!cur) cur = fromRace(latest.current.race?.tokens ?? []);
           const dir = fx.to >= fx.from ? 1 : -1;
           setMoving(fx.racers);
