@@ -131,6 +131,9 @@ export type Fx =
   | { kind: "chip"; player: string; value: number }
   | { kind: "direction"; reversed: boolean }
   | { kind: "twist_card"; racer: string; card: number }
+  | { kind: "monster_spawn"; pos: number }
+  | { kind: "monster_roll"; value: number; racer?: string }
+  | { kind: "monster_move"; from: number; to: number; finished: boolean }
   | { kind: "start"; race: number; track: string; owners?: Record<string, string>; positions?: Record<string, number>; finale?: boolean }
   /** 每场结束的领奖台：第 1、2 名（冲线，拿奖牌）＋第 3 名（场上最靠前的未冲线选手，不计分） */
   | {

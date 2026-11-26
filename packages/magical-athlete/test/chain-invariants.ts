@@ -72,7 +72,7 @@ export function checkChainInvariants(s: MAState) {
     if (ended)
       assert(!["power", "chip", "move", "warp", "trip", "finish"].includes(f.kind), "activity after podium");
     if (f.kind === "move") for (const id of f.racers) assert(!stopped.has(id), `stopped racer moved: ${id}`);
-    if (["warp", "trip"].includes(f.kind) && "racer" in f)
+    if ((f.kind === "warp" || f.kind === "trip") && "racer" in f)
       assert(!stopped.has(f.racer), `stopped racer acted: ${f.racer} ${f.kind}`);
     if (f.kind === "power") assert(!eliminated.has(f.racer), `eliminated racer acted: ${f.racer}`);
     if (f.kind === "finish" || f.kind === "out") stopped.add(f.racer);

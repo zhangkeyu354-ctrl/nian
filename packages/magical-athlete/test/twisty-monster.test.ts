@@ -33,6 +33,8 @@ describe("炼金实验室泄露", () => {
     const s = biteMarkEvent(false, true);
     expect(s.race!.tokens.slice(0, 2).map(t => t.pos)).toEqual([2, 3]);
     expect(s.race!.twist!.monster).toBeUndefined();
+    expect(s.log.flatMap(entry => entry.fx?.kind === "monster_roll" ? [entry.fx] : []))
+      .toEqual([{ kind: "monster_roll", racer: "sw_bite_mark", value: 2 }, { kind: "monster_roll", racer: "twin", value: 3 }]);
   });
   it("咬痕的怪物追加移动冲线照常领取名次与金牌", () => {
     const s = testRace({ racers: ["twin", "sw_bite_mark", "banana"], pos: [0, 29, 29], rolls: [1, 1, 1], track: "twisty-twirl", skipSetup: true, secondWindPreview: true });
@@ -101,6 +103,12 @@ describe("炼金实验室泄露", () => {
     const after = answer(s, "roll");
     expect(after.race!.twist!.drawn).toEqual([9]);
     expect(after.race!.twist!.monster?.pos).toBe(4);
+    expect(after.log.flatMap((entry) => entry.fx?.kind === "monster_spawn" || entry.fx?.kind === "monster_roll" || entry.fx?.kind === "monster_move" ? [entry.fx] : []))
+      .toEqual([
+        { kind: "monster_spawn", pos: 0 },
+        { kind: "monster_roll", value: 4 },
+        { kind: "monster_move", from: 0, to: 4, finished: false },
+      ]);
     expect(tok(after, "twin").pos).toBe(14);
   });
 

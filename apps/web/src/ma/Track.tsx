@@ -112,6 +112,7 @@ export function Track({
   hit,
   target,
   raceFx = [],
+  monsterView,
 }: {
   race: RaceState;
   colorOf: (playerId: string) => string;
@@ -138,6 +139,8 @@ export function Track({
   /** 正在走的选手要停的格子 */
   target?: number | null;
   raceFx?: RaceFxCue[];
+  /** null = monster not revealed yet; undefined = use authoritative race state. */
+  monsterView?: { pos: number; finished?: boolean } | null;
 }) {
   const race: RaceState = shown
     ? { ...raceIn, tokens: raceIn.tokens.map((t) => ({ ...t, ...(shown.get(t.racer) ?? {}) })) }
@@ -212,8 +215,9 @@ export function Track({
   const focus=current&&focused?place(current.pos,focused.indexOf(current.racer),focused.length):null;
   useRaceCamera(scroller,surface,focus,vertical,layout==="grid");
   const spots = new Map<string, { x: number; y: number }>();
-  const monsterPos = race.twist?.monster && !race.twist.monster.finished
-    ? place(race.twist.monster.pos, 0, 1)
+  const monsterState = monsterView === undefined ? race.twist?.monster : monsterView;
+  const monsterPos = monsterState && !monsterState.finished
+    ? place(monsterState.pos, 0, 1)
     : null;
   const monster = monsterPos ? (
     <MonsterMarker
@@ -222,7 +226,7 @@ export function Track({
       y={monsterPos.y * size.h}
       width={size.w * (layout === "grid" ? 0.11 : 0.046)}
       height={size.w * (layout === "grid" ? 0.18 : 0.075)}
-      pos={race.twist!.monster!.pos}
+      pos={monsterState!.pos}
     />
   ) : null;
   const pawns = [...groups].flatMap(([pos, racers]) =>

@@ -496,6 +496,9 @@
   height: 100%;
   object-fit: contain;
 }
+.ma-overlay.ov-monster_roll { background: rgba(17, 12, 27, .72); }
+.ma-ov-monster-roll { color: #fff6e5; text-align: center; }
+.ma-ov-monster-roll > p:first-child { font-size: clamp(23px, 7vw, 34px); font-weight: 900; }
 .ma-board-scroll.vertical .ma-twist-monster img {
   transform: rotate(-90deg);
 }

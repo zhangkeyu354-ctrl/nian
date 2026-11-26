@@ -1034,6 +1034,7 @@ function Race({
           colorOf={colorOf}
           me={me}
           shown={pb.shown}
+          monsterView={pb.monsterShown}
           moving={pb.moving}
           travel={pb.travel}
           onPawn={openCard}
@@ -1207,6 +1208,12 @@ export function Overlay({
         {!show.rolling && <p className="ma-ov-big">掷出 {show.value}</p>}
       </div>
     );
+  } else if (show.kind === "monster_roll") {
+    body = <div className="ma-ov-roll ma-ov-monster-roll" data-testid="ma-monster-roll">
+      <p>🐺 {show.racer ? `${racerName(show.racer)}（大嘴狼人）` : "巨口怪物"}掷骰</p>
+      <RollingDie seat={show.racer ? dieSeat(owner(show.racer)) : 1} value={show.value} rolling={show.rolling} />
+      {!show.rolling && <p className="ma-ov-big">掷出 {show.value} · 怪物开始追赶！</p>}
+    </div>;
   } else if (show.kind === "duel") {
     body = (
       <div className="ma-ov-roll">

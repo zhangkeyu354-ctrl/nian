@@ -11,6 +11,7 @@ export type Show = (
   | { kind: "duel"; a: { racer: string; value: number }; b: { racer: string; value: number }; rolling: boolean }
   | { kind: "power"; racer: string; power: string; text: string; duration?:number }
   | { kind: "twist_card"; racer: string; card: number }
+  | { kind: "monster_roll"; value: number; racer?: string; rolling: boolean }
   | { kind: "finish"; racer: string; place: number; text: string }
   | { kind: "start"; race: number; track: string; text: string; finale?: boolean }
   | { kind: "note"; racer: string; text: string }
@@ -120,6 +121,8 @@ export function usePlayback(view: MAView) {
   /** 正在走的选手要停的格子（棋盘上提前亮起来） */
   const [target, setTarget] = useState<number | null>(null);
   const [raceFx, setRaceFx] = useState<RaceFxCue[]>([]);
+  /** 怪物按已播放到的日志位置显示，避免服务器一步结算后在抽卡弹窗前剧透。 */
+  const [monsterShown, setMonsterShown] = useState<{ pos: number; finished?: boolean } | null>(view.race?.twist?.monster ?? null);
   /** 正在给本机玩家看的 Twist 事件卡：点「知道了」才消失、才继续播放（每人只关自己的） */
   const [twistShow, setTwistShow] = useState<{ card: number; racer: string } | null>(null);
   /** 已经抽到、但动画还没播到的卡：事件卡按钮里先不显示，免得剧透 */
@@ -259,6 +262,7 @@ export function usePlayback(view: MAView) {
         case "start": {
           currentTrack = fx.track;
           setRaceFx([]);
+          setMonsterShown(null);
           const r = latest.current.race;
           cur = r
             ? new Map(
@@ -322,6 +326,28 @@ export function usePlayback(view: MAView) {
           await new Promise<void>((done) => { twistDone.current = done; });
           setTwistHidden((old) => { const i = old.indexOf(fx.card); return i < 0 ? old : [...old.slice(0, i), ...old.slice(i + 1)]; });
           break;
+        case "monster_spawn":
+          setMonsterShown({ pos: fx.pos });
+          await wait(750);
+          break;
+        case "monster_roll":
+          showIt({ ...fx, rolling: true });
+          play(sfxRoll);
+          await wait(750);
+          showIt({ ...fx, rolling: false });
+          play(() => sfxLand(fx.value));
+          await wait(1400, 1200);
+          break;
+        case "monster_move": {
+          const dir = fx.to >= fx.from ? 1 : -1;
+          for (let pos = fx.from + dir; dir > 0 ? pos <= fx.to : pos >= fx.to; pos += dir) {
+            setMonsterShown({ pos });
+            play(sfxStep);
+            await wait(380);
+          }
+          if (fx.finished) setMonsterShown(null);
+          break;
+        }
         case "move": {
           if (fx.why === "大嘴狼人追加移动") monsterCause = true;
           if (!cur) cur = fromRace(latest.current.race?.tokens ?? []);
@@ -449,6 +475,7 @@ export function usePlayback(view: MAView) {
     // 播放完：对齐服务器的真实状态
     const r = latest.current.race;
     shownRef.current = r ? fromRace(r.tokens) : null;
+    setMonsterShown(r?.twist?.monster && !r.twist.monster.finished ? r.twist.monster : null);
     setShown(null);
     setTravel(new Map());
     running.current = false;
@@ -464,6 +491,7 @@ export function usePlayback(view: MAView) {
     moving,
     travel,
     shown: frozen,
+    monsterShown,
     floats,
     link,
     spot,

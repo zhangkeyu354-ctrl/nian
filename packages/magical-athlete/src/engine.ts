@@ -617,7 +617,8 @@ function resolveTwistCard(s: MAState, c: Ctx, t: Token, card: number) {
       return;
     }
     twist.monster = { pos: physical(s, 0) };
-    log(s, "【炼金实验室泄露！】巨口怪物从起点出发，之后每回合结束掷骰移动。");
+    log(s, "【炼金实验室泄露！】巨口怪物从起点出发，之后每回合结束掷骰移动。",
+      { kind: "monster_spawn", pos: twist.monster.pos });
     return;
   }
   if (card === 10) {
@@ -2333,6 +2334,7 @@ function moveTwistMonster(s: MAState, c: Ctx) {
       if (!t || !active(t)) continue;
       const from = t.pos;
       const roll = d6(s);
+      log(s, "", { kind: "monster_roll", value: roll, racer: t.racer });
       const to = physical(s, Math.min(trackOf(s).length, progress(s, from) + roll));
       t.pos = to;
       log(s, `【炼金实验室泄露！】${rname(t)} 追加掷 ${roll}，从第 ${from} 格移动到第 ${to} 格。`,
@@ -2348,10 +2350,12 @@ function moveTwistMonster(s: MAState, c: Ctx) {
   if (!monster || monster.finished || r.over || r.finishers.length >= 2 || !r.tokens.some(active)) return;
   const from = monster.pos;
   const roll = d6(s);
+  log(s, "", { kind: "monster_roll", value: roll });
   const to = physical(s, Math.min(trackOf(s).length, progress(s, from) + roll));
   monster.pos = to;
-  log(s, `【炼金实验室泄露！】巨口怪物掷 ${roll}，从第 ${from} 格移动到${progress(s, to) >= trackOf(s).length ? "终点" : `第 ${to} 格`}。`);
   if (progress(s, to) >= trackOf(s).length) monster.finished = true;
+  log(s, `【炼金实验室泄露！】巨口怪物掷 ${roll}，从第 ${from} 格移动到${monster.finished ? "终点" : `第 ${to} 格`}。`,
+    { kind: "monster_move", from, to, finished: monster.finished === true });
   const victims = r.tokens.filter(x => active(x) && progress(s, x.pos) > progress(s, from) && progress(s, x.pos) < progress(s, to));
   if (victims.length)
     eliminateWithPower(s, victims, () => log(s, `巨口怪物超越 ${victims.map(rname).join("、")}，将其淘汰。`));

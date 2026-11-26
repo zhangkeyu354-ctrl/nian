@@ -8,11 +8,12 @@ import { Track, PLAYER_COLORS } from "../src/ma/Track.tsx";
 import { usePlayback } from "../src/ma/playback.ts";
 import "../src/ma/ma.css";
 
-const before = testRace({ racers: ["twin", "banana", "lovable_loser"], pos: [13, 20, 25], rolls: [1], track: "twisty-twirl", skipSetup: true });
-before.race!.twist!.remaining = [2];
+const card = Number(new URLSearchParams(location.search).get("card") ?? 2);
+const before = testRace({ racers: ["twin", "banana", "lovable_loser"], pos: [13, 20, 25], rolls: card === 9 ? [1, 4] : [1], track: "twisty-twirl", skipSetup: true });
+before.race!.twist!.remaining = [card];
 if (before.turn) {
   const snapshot = JSON.parse(before.turn.snapshot);
-  snapshot.race.twist.remaining = [2];
+  snapshot.race.twist.remaining = [card];
   before.turn.snapshot = JSON.stringify(snapshot);
 }
 const after = answer(before, "roll");
@@ -24,7 +25,7 @@ function Demo() {
     <button type="button" data-testid="draw-card" onClick={() => setView(viewForMA(after, "p1"))}>跨过 TWIST 抽卡</button>
     <h1 style={{ color: "white" }}>扭扭赛道 · 抽卡演示</h1>
     <div className="ma-board"><Track race={view.race!} colorOf={(id) => PLAYER_COLORS[Number(id.slice(1)) - 1] ?? PLAYER_COLORS[0]}
-      me="p1" layout="grid" shown={pb.shown} fit raceFx={pb.raceFx} /></div>
+      me="p1" layout="grid" shown={pb.shown} monsterView={pb.monsterShown} fit raceFx={pb.raceFx} /></div>
     {pb.twistShow && <TwistReveal card={pb.twistShow.card} racer={pb.twistShow.racer} onDone={pb.dismissTwist} />}
     {pb.show && !pb.twistShow && <Overlay show={pb.show} view={view} name={(id) => id} colorOf={() => PLAYER_COLORS[0]} me="p1" onSkip={pb.skip} />}
   </main>;
