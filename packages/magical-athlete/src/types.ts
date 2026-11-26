@@ -131,6 +131,7 @@ export type Fx =
   | { kind: "chip"; player: string; value: number }
   | { kind: "direction"; reversed: boolean }
   | { kind: "twist_card"; racer: string; card: number }
+  | { kind: "curse_wand"; player: string; value: number; skipped: Array<{ owner: string; racer: string; status?: "out" | "finished" }>; next?: { owner: string; racer: string } }
   | { kind: "monster_spawn"; pos: number }
   | { kind: "monster_roll"; value: number }
   | { kind: "monster_move"; from: number; to: number; finished: boolean }

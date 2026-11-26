@@ -29,6 +29,10 @@ describe("人人诅咒魔杖",()=>{
    const entry=after.log.find(l=>l.text.includes("人人诅咒魔杖")&&l.text.includes("跳过后面"));
    expect(entry?.text).toContain("玩家2");
    expect(entry?.text).toContain("玩家3");
+   expect(entry?.fx).toEqual({kind:"curse_wand",player:"p1",value:2,skipped:[
+     {owner:"p2",racer:"banana",status:"out"},
+     {owner:"p3",racer:"lovable_loser",status:undefined},
+   ],next:{owner:"p4",racer:"hare"}});
  });
  it("双棋子模式逐名跳过：跳过对手第一名后，只让第二名行动",()=>{
    const s=doubleCursed([1,1,1]);

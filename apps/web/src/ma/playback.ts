@@ -12,6 +12,7 @@ export type Show = (
   | { kind: "power"; racer: string; power: string; text: string; duration?:number }
   | { kind: "twist_card"; racer: string; card: number }
   | { kind: "monster_roll"; value: number; rolling: boolean }
+  | { kind: "curse_wand"; player: string; value: number; skipped: Array<{ owner: string; racer: string; status?: "out" | "finished" }>; next?: { owner: string; racer: string }; rolling: boolean }
   | { kind: "finish"; racer: string; place: number; text: string }
   | { kind: "start"; race: number; track: string; text: string; finale?: boolean }
   | { kind: "note"; racer: string; text: string }
@@ -337,6 +338,16 @@ export function usePlayback(view: MAView) {
           showIt({ ...fx, rolling: false });
           play(() => sfxLand(fx.value));
           await wait(1400, 1200);
+          break;
+        case "curse_wand":
+          if (!reduced()) {
+            showIt({ ...fx, rolling: true });
+            play(sfxRoll);
+            await wait(650);
+          }
+          showIt({ ...fx, rolling: false });
+          play(() => sfxLand(fx.value));
+          await wait(3800, 1800);
           break;
         case "monster_move": {
           const dir = fx.to >= fx.from ? 1 : -1;

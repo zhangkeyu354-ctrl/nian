@@ -9,7 +9,7 @@ import { usePlayback } from "../src/ma/playback.ts";
 import "../src/ma/ma.css";
 
 const card = Number(new URLSearchParams(location.search).get("card") ?? 2);
-const before = testRace({ racers: ["twin", "banana", "lovable_loser"], pos: [13, 20, 25], rolls: card === 9 ? [1, 4] : [1], track: "twisty-twirl", skipSetup: true });
+const before = testRace({ racers: ["twin", "banana", "lovable_loser"], pos: [13, 20, 25], rolls: card === 9 ? [1, 4] : card === 8 ? [1, 2] : [1], track: "twisty-twirl", skipSetup: true });
 before.race!.twist!.remaining = [card];
 if (before.turn) {
   const snapshot = JSON.parse(before.turn.snapshot);

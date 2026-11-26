@@ -2290,14 +2290,21 @@ function nextTurn(s: MAState, f: TurnFlags, c: Ctx) {
     if (start < 0 || !slots.length) return;
     const passed = Array.from({ length: skipped }, (_, k) => slots[(start + k + 1) % slots.length]);
     const multi = slots.length > r.order.length;
-    log(s, `【人人诅咒魔杖】${pname(s, r.current)} 掷 ${skipped}，跳过后面 ${skipped} 个原行动顺位：${passed.map(t => multi ? rname(t) : pname(s, t.owner)).join("、")}。`);
+    let next: Token | undefined;
     for (let k = skipped + 1; k <= skipped + slots.length; k++) {
-      const next = slots[(start + k) % slots.length];
-      if (active(next)) {
-        r.current = next.owner;
-        r.curseNextRacer = next.racer;
-        return;
+      const candidate = slots[(start + k) % slots.length];
+      if (active(candidate)) {
+        next = candidate;
+        break;
       }
+    }
+    log(s, `【人人诅咒魔杖】${pname(s, r.current)} 掷 ${skipped}，跳过后面 ${skipped} 个原行动顺位：${passed.map(t => multi ? rname(t) : pname(s, t.owner)).join("、")}。`,
+      { kind: "curse_wand", player: r.current, value: skipped,
+        skipped: passed.map(t => ({ owner: t.owner, racer: t.racer, status: t.out ? "out" as const : t.place !== null ? "finished" as const : undefined })),
+        next: next ? { owner: next.owner, racer: next.racer } : undefined });
+    if (next) {
+      r.current = next.owner;
+      r.curseNextRacer = next.racer;
     }
     return;
   }

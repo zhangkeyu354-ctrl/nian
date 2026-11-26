@@ -16,6 +16,24 @@ it("shows the drawn Twist card and its effect to every player", () => {
   expect(html).toContain("事件卡 02");
 });
 
+it("broadcasts the curse wand roll, skipped racers and next turn", () => {
+  const view = viewForMA(testRace({ racers: ["twin", "banana", "hare"], track: "twisty-twirl", skipSetup: true }), "p1");
+  const html = renderToStaticMarkup(<Overlay
+    show={{ kind: "curse_wand", player: "p1", value: 2, rolling: false, skipped: [
+      { owner: "p2", racer: "banana" },
+      { owner: "p3", racer: "hare", status: "out" },
+    ], next: { owner: "p1", racer: "twin" } }} view={view}
+    name={(id) => `玩家${id.slice(1)}`} colorOf={() => "#ffcc22"} me="p2" onSkip={() => {}}
+  />);
+  expect(html).toContain("人人诅咒魔杖");
+  expect(html).toContain("掷出 2");
+  expect(html).toContain("跳过 2 个行动顺位");
+  expect(html).toContain("香蕉");
+  expect(html).toContain("兔子");
+  expect(html).toContain("已淘汰");
+  expect(html).toContain("接下来");
+});
+
 it("has a named explanation for every Twist card, including extra draws", () => {
   const view = viewForMA(testRace({ racers: ["twin", "banana"], track: "twisty-twirl", skipSetup: true }), "p1");
   for (let card = 1; card <= 13; card++) {

@@ -41,7 +41,7 @@ const bite = testRace({
 bite.race!.tokens[0].secondWind = { wereMouth: true };
 bite.race!.twist!.triggered = true;
 bite.race!.twist!.drawn = [9];
-bite.race!.twist!.monsterRacers = ["sw_bite_mark"];
+bite.race!.twist!.monster = { pos: 0 };
 samples["twisty-bite"] = { before: bite.race!, after: bite.race!, mirrored: bite.race! };
 writeFileSync(
   join(work, "index.html"),
@@ -178,8 +178,8 @@ const bitePawn = page.locator('[data-ma-racer="sw_bite_mark"] img[src*="sw_bite_
 await bitePawn.waitFor();
 if (!(await bitePawn.evaluate((img: HTMLImageElement) => img.complete && img.naturalWidth > 0)))
   throw new Error("变身咬痕棋子图片未加载");
-if (await page.locator(".ma-twist-monster").count())
-  throw new Error("咬痕已担任怪物时仍显示中立怪物");
+if (await page.locator(".ma-twist-monster").count() !== 1)
+  throw new Error("变身咬痕与独立怪物应同时显示");
 await page.screenshot({ path: join(out, "twisty-bite-390.png"), fullPage: true });
 await page.click("#layout");
 if (await page.locator(".ma-cell-art.second-wind").count() !== 29)

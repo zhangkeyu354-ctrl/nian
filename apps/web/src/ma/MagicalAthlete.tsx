@@ -1211,7 +1211,7 @@ export function Overlay({
   } else if (show.kind === "monster_roll") {
     body = <div className="ma-ov-roll ma-ov-monster-roll" data-testid="ma-monster-roll">
       <p>🐺 巨口怪物掷骰</p>
-      <RollingDie seat={show.racer ? dieSeat(owner(show.racer)) : 1} value={show.value} rolling={show.rolling} />
+      <RollingDie seat={1} value={show.value} rolling={show.rolling} />
       {!show.rolling && <p className="ma-ov-big">掷出 {show.value} · 怪物开始追赶！</p>}
     </div>;
   } else if (show.kind === "duel") {
@@ -1254,6 +1254,24 @@ export function Overlay({
       <div className="ma-ov-twist-face"><span aria-hidden="true">✦</span><b>{card?.title ?? "事件发生！"}</b></div>
       <p>{card?.effect ?? "请查看比赛记录。"}</p>
       <em>{racerName(show.racer)} 首次跨过 TWIST，抽出了这张卡</em>
+    </div>;
+  } else if (show.kind === "curse_wand") {
+    body = <div className="ma-ov-curse" data-testid="ma-curse-wand-overlay">
+      <small>扭扭赛道 · 事件播报</small>
+      <h2>🪄 人人诅咒魔杖</h2>
+      <p>{show.player === me ? "你" : name(show.player)} 的回合结束</p>
+      <RollingDie seat={dieSeat(show.player)} value={show.value} rolling={show.rolling} />
+      {!show.rolling && <>
+        <strong className="ma-ov-curse-result">掷出 {show.value} · 跳过 {show.skipped.length} 个行动顺位</strong>
+        <ol aria-label="被跳过的行动顺位">
+          {show.skipped.map((t, i) => <li key={`${i}-${t.racer}`}>
+            <span className="ma-dot" style={{ background: colorOf(t.owner) }} />
+            <span>{name(t.owner)} · {racerName(t.racer)}</span>
+            {t.status && <small>{t.status === "out" ? "已淘汰" : "已冲线"}</small>}
+          </li>)}
+        </ol>
+        <p className="ma-ov-curse-next">{show.next ? `接下来：${name(show.next.owner)} · ${racerName(show.next.racer)}` : "接下来：本场没有可行动的选手"}</p>
+      </>}
     </div>;
   } else if (show.kind === "finish") {
     body = (
