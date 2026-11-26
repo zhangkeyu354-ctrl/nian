@@ -576,7 +576,7 @@ function drawTwist(s: MAState, c: Ctx, t: Token) {
   const index = randInt(s, twist.remaining.length);
   const [card] = twist.remaining.splice(index, 1);
   twist.drawn.push(card);
-  log(s, `${rname(t)} 抽到 Twist 事件 ${card}。`);
+  log(s, `${rname(t)} 抽到 Twist 事件 ${card}。`, { kind: "twist_card", racer: t.racer, card });
   resolveTwistCard(s, c, t, card);
 }
 

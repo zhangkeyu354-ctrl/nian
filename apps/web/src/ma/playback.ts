@@ -10,6 +10,7 @@ export type Show = (
   | { kind: "roll"; player: string; racer: string; value: number; reroll?: boolean; rolling: boolean }
   | { kind: "duel"; a: { racer: string; value: number }; b: { racer: string; value: number }; rolling: boolean }
   | { kind: "power"; racer: string; power: string; text: string; duration?:number }
+  | { kind: "twist_card"; racer: string; card: number }
   | { kind: "finish"; racer: string; place: number; text: string }
   | { kind: "start"; race: number; track: string; text: string; finale?: boolean }
   | { kind: "note"; racer: string; text: string }
@@ -159,7 +160,6 @@ export function usePlayback(view: MAView) {
     let lastPower: string | null = null;
     let lastPowerKind:string|null=null;
     let currentTrack: string | undefined = latest.current.race?.track;
-    let pendingTwist = false;
     let monsterCause = false;
     const emitRaceFx = (kind: RaceFxKind, racer?: string, pos?: number, color?: string, weight = 1) => {
       if (reduced() || skip.current || (getSpeed() === "fast" && ["power", "coins", "trip", "duel", "out"].includes(kind))) return;
@@ -198,7 +198,6 @@ export function usePlayback(view: MAView) {
       const e = queue.current.shift()!;
       const fx = e.fx;
       if (!fx) {
-        if (e.text.includes("抽到 Twist 事件")) pendingTwist = true;
         if (/巨口怪物超越|大嘴狼人.*超越/.test(e.text)) monsterCause = true;
         else if (e.text && !e.text.includes("淘汰")) monsterCause = false;
         continue;
@@ -215,8 +214,8 @@ export function usePlayback(view: MAView) {
       };
       // 用户反馈（2026-10-22）：连锁触发太快、眼花缭乱 → 不再因为排队多而加速（只有特别长的连锁才稍快一点）
       const k = reduced() ? 0 : queue.current.length > 30 ? 0.8 : 1;
-      const wait = (ms: number) =>
-        k === 0 || skip.current
+      const wait = (ms: number, reducedNoticeMs = 0) =>
+        (k === 0 && reducedNoticeMs === 0) || skip.current
           ? Promise.resolve()
           : new Promise<void>((res) => {
               const done = () => {
@@ -224,7 +223,7 @@ export function usePlayback(view: MAView) {
                 wakers.current.delete(done);
                 res();
               };
-              const id = setTimeout(done, motionMs(ms, k));
+              const id = setTimeout(done, k === 0 ? reducedNoticeMs : motionMs(ms, k));
               wakers.current.add(done);
             });
       /** 快进（点屏幕跳过 / 积压太多）时不出声 */
@@ -252,7 +251,6 @@ export function usePlayback(view: MAView) {
           break;
         case "start": {
           currentTrack = fx.track;
-          pendingTwist = false;
           setRaceFx([]);
           const r = latest.current.race;
           cur = r
@@ -308,6 +306,12 @@ export function usePlayback(view: MAView) {
           }
           setSpot(null);
           break;
+        case "twist_card":
+          emitRaceFx("reveal", fx.racer, 14, undefined, k);
+          showIt({ kind: "twist_card", racer: fx.racer, card: fx.card });
+          play(sfxPower);
+          await wait(3200, 2400);
+          break;
         case "move": {
           if (fx.why === "大嘴狼人追加移动") monsterCause = true;
           if (!cur) cur = fromRace(latest.current.race?.tokens ?? []);
@@ -339,10 +343,6 @@ export function usePlayback(view: MAView) {
           setMoving([]);
           setTravel(new Map());
           await wait(380);
-          if (pendingTwist) {
-            emitRaceFx("reveal", fx.racers[0], fx.to, undefined, k);
-            pendingTwist = false;
-          }
           setTarget(null);
           break;
         }
@@ -436,8 +436,6 @@ export function usePlayback(view: MAView) {
       // 用户反馈（2026-10-23）：弹窗太快一个接一个会眼花 → 每个弹窗之后停 0.6 秒再出下一个
       if (popped && queue.current.length && !skip.current && !reduced()) await sleep(motionMs(600));
     }
-    // A few Twist cards replace the triggering move, so no later move cue exists.
-    if (pendingTwist) emitRaceFx("reveal", undefined, 14);
     // 播放完：对齐服务器的真实状态
     const r = latest.current.race;
     shownRef.current = r ? fromRace(r.tokens) : null;

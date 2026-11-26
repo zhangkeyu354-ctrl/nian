@@ -22,6 +22,21 @@ import {motionMs} from "./motion-clock.ts";
 import "./ma.css";
 
 const roomFromUrl = () => new URLSearchParams(location.search).get("room")?.toUpperCase() ?? null;
+const TWIST_CARDS: Record<number, { title: string; effect: string }> = {
+  1: { title: "地上烤鸡！", effect: "当前最后一名选手向前移动 7 格；并列最后的选手都会移动。" },
+  2: { title: "镜像世界生效！", effect: "赛道方向反转，选手原地不动，改向另一端冲线。" },
+  3: { title: "传送带启动！", effect: "所有在赛选手传送到新起点后一格；本场主移动增加 3 格。" },
+  4: { title: "禁跑水潭！", effect: "本场主移动达到 6 格或更多时，该选手直接淘汰。" },
+  5: { title: "终点虫潮！", effect: "本场停在终点前最后两格的选手，会后退 5 格。" },
+  6: { title: "随机性消失！", effect: "每位玩家各自掷出固定骰点，本场之后使用自己的固定结果。" },
+  7: { title: "皮纳塔破了！", effect: "第一弯道后的空格出现 1 分筹码，停上去可拾取。" },
+  8: { title: "人人诅咒魔杖！", effect: "本场每回合结束时掷骰，按点数跳过后续行动顺位。" },
+  9: { title: "炼金实验室泄露！", effect: "巨口怪物从起点追赶选手；若有咬痕选手，则由他们变身。" },
+  10: { title: "观众渴求混乱！", effect: "接下来从剩余牌堆依次再抽两张事件卡，并逐张结算。" },
+  11: { title: "交换大会！", effect: "每位玩家私下抽取新选手，决定保留当前选手或交换。" },
+  12: { title: "季终决战！", effect: "前两名正常冲线后加赛一场，争夺金牌和银牌。" },
+  13: { title: "踩到时之灵！", effect: "触发者立刻淘汰；若还有下一场正常比赛，会额外参赛。" },
+};
 const goRoom = (code: string) => {
   history.pushState(null, "", `/?game=ma&room=${code}`);
   dispatchEvent(new PopStateEvent("popstate"));
@@ -947,6 +962,12 @@ function Race({
             </span>
           ) : race.track === "mild" ? (
             <span className="ma-legend">普通赛道，没有特殊格</span>
+          ) : race.track === "twisty-twirl" ? (
+            <span className="ma-legend" data-testid="ma-twist-legend">
+              {race.twist?.drawn.length ? `✦ 已抽事件：${race.twist.drawn.map((id) => TWIST_CARDS[id]?.title ?? `事件 ${id}`).join("、")}` : "✦ 首次跨过第 13→14 格会抽事件卡"}
+            </span>
+          ) : race.track === "whirly-world" ? (
+            <span className="ma-legend">↔ 停在彩色管道口会传送，经过不触发</span>
           ) : null}
         </div>
         <Track
@@ -1160,6 +1181,14 @@ export function Overlay({
         <p className="ma-skill-text">{show.text.replace(/^[^】]*】：?/, "")}</p>
       </div></FlyingSkill>
     );
+  } else if (show.kind === "twist_card") {
+    const card = TWIST_CARDS[show.card];
+    body = <div className="ma-ov-twist" data-testid="ma-twist-card-overlay">
+      <small>扭扭赛道 · 事件卡 {String(show.card).padStart(2, "0")}</small>
+      <div className="ma-ov-twist-face"><span aria-hidden="true">✦</span><b>{card?.title ?? "事件发生！"}</b></div>
+      <p>{card?.effect ?? "请查看比赛记录。"}</p>
+      <em>{racerName(show.racer)} 首次跨过 TWIST，抽出了这张卡</em>
+    </div>;
   } else if (show.kind === "finish") {
     body = (
       <div className="ma-ov-power finish" style={{ ["--pc" as string]: colorOf(owner(show.racer)) }}>
@@ -1290,6 +1319,10 @@ export function Overlay({
           <p>第二张地图：特殊赛道！停在 ★ 得 1 分，停在石头上摔倒，停在箭头上额外前进或后退。</p>
         ) : show.track === "mild" ? (
           <p>普通赛道，前两个冲线的拿奖牌。</p>
+        ) : show.track === "twisty-twirl" ? (
+          <p>首名选手跨过 TWIST 格时抽一张事件卡，弹窗会说明效果；本场按卡牌结果继续比赛。</p>
+        ) : show.track === "whirly-world" ? (
+          <p>停在彩色管道口会传送到配对的另一端；只是经过不会触发。</p>
         ) : null}
       </div>
     );

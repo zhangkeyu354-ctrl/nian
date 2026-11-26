@@ -21,6 +21,8 @@ describe("扭扭赛道首次跨界与烤鸡", () => {
   it("13→14抽一次；并列末位在名单固定后各移动7格", () => {
     let s = answer(race([13, 0, 0], 1), "roll");
     expect(s.race!.twist!.drawn).toEqual([1]);
+    expect(s.log.filter((entry) => entry.fx?.kind === "twist_card").map((entry) => entry.fx))
+      .toEqual([{ kind: "twist_card", racer: "twin", card: 1 }]);
     expect(tok(s, "banana").pos).toBe(7);
     expect(tok(s, "lovable_loser").pos).toBe(7);
     expect(tok(s, "twin").pos).toBe(14);

@@ -27,6 +27,8 @@ describe("观众渴求混乱", () => {
     expect(after.race!.twist!.drawn).toHaveLength(3);
     expect(after.race!.twist!.drawn[0]).toBe(10);
     expect(new Set(after.race!.twist!.drawn)).toEqual(new Set([10, 6, 7]));
+    expect(after.log.flatMap((entry) => entry.fx?.kind === "twist_card" ? [entry.fx.card] : []))
+      .toEqual(after.race!.twist!.drawn);
     expect(after.race!.twist!.remaining).toEqual([]);
     expect(after.race!.twist!.fixedDice).toBeDefined();
     expect(after.race!.twist!.chips?.length).toBeGreaterThan(0);
