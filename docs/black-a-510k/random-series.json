@@ -11,12 +11,12 @@
   },
   "counts": {
     "rounds": 1000,
-    "transactions": 2011,
-    "normal": 1959,
-    "shaved": 52,
-    "team": 689,
-    "soloWin": 118,
-    "soloLoss": 93
+    "transactions": 2012,
+    "normal": 1962,
+    "shaved": 50,
+    "team": 688,
+    "soloWin": 126,
+    "soloLoss": 86
   },
   "scope": "pure engine and deterministic return; excludes network, timeouts, exits"
 }

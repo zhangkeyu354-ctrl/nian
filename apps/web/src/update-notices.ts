@@ -1,6 +1,8 @@
 /** 大厅更新公告：每次发布在顶部追加，使用玩家能看懂的简短说明。 */
 /** dev:true 的条目只给开发者看（只出现在网站状态页），大厅和游戏里的公告不显示 */
 export const UPDATE_NOTICES: Array<{ id: string; date: string; game: string; title: string; text: string; dev?: boolean }> = [
+  {id:"2026-11-26-ba-wolf-draw",date:"2026-11-26",game:"双黑A五十K",title:"双黑A五十K：独狼先抽完三家再还牌",text:"独狼赢了以后抽牌，改为先依次把三家的牌都抽完，再依次还给每一家，手里任何牌都能还（包括从别家抽来的）。抽到的牌直接混在手牌里，加红边，角上写着从谁那里抽的。其他情况的换牌不变。（来自玩家反馈）"},
+  {id:"2026-11-26-ba-wolf-draw-dev",date:"2026-11-26",game:"双黑A五十K",title:"BA 独狼批量抽还（Claude）",text:"exchange.ts 新增 isBatchExchange：一赢三时 DRAW×3 → RETURN×3（transactionIndex 在两段各自从 0 计），drawnIds 累积、还牌后移除；privacy 对被抽者只给自己那一笔的 drawnIds；ba-rooms 抽完/还完统一走 afterExchangeStep。抽到的牌不再单独一排，红边+「抽自XX」。新增 exchange-batch.test.ts，改了 random-series 与 constructed-network 测试循环；ACCEPTANCE T34 已更新。",dev:true},
   {id:"2026-11-26-ma-twist-match-deck",date:"2026-11-26",game:"魔法运动员",title:"魔法运动员：一局里事件卡不再重复",text:"同一局四场比赛共用一副 13 张事件卡，抽过的不会再出现，「观众渴求混乱」多抽的两张也算。下一局重新洗满 13 张。"},
   {id:"2026-11-26-ma-twist-match-deck-dev",dev:true,date:"2026-11-26",game:"魔法运动员",title:"Twist 整局牌堆（开发记录）",text:"settings.twistMatchDeck + state.twistPool：服务端 START 时标记并存档，整局不放回抽取；viewForMA 不发送 twistPool 与 race.twist.remaining。旧存档无标记，仍每场 13 张以保证重放一致。已知未修：T06 固定骰 1 + 黏黏怪减速可让所有主移动为 0，比赛无法结束（规则组合僵局，待用户裁定）。"},
   {id:"2026-11-26-ba-fx",date:"2026-11-26",game:"双黑A五十K",title:"双黑A五十K：大牌特效、滑动选牌、新牌桌",text:"打出黑A、五十K、炸弹、双黑A时有专属特效，炸弹和双黑A会让牌桌震一下。出的牌会从出牌人那边飞到桌上；一墩有分时显示谁收了几分。手指在手牌上横着滑就能连续选牌，点牌桌空白处取消选择；安卓手机选牌和出炸弹时会轻震。对手剩5张及以下会亮「报牌」。牌桌换成带木边的绒布桌，结算分数会滚动显示。"},

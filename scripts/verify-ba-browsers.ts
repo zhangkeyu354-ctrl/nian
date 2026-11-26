@@ -113,7 +113,7 @@ try{
         }
       }
       const button=page.getByRole('button',{name:'确认归还'});
-      if(await button.count()&&await page.locator('.ba-hand-drawn').count()){
+      if(await button.count()&&await page.locator('.ba-card-drawn').count()){
         const text=await page.locator('.ba-selection').textContent();
         const count=Number(text?.match(/\/\s*(\d+)/)?.[1]??0);
         if(count){

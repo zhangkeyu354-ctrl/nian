@@ -134,3 +134,8 @@
 .ba-team-scores>div.ba-win{border-color:#e6c27a;box-shadow:0 0 0 1px #e6c27a,0 0 24px #e6c27a55}
 .ba-selection{cursor:default}
 @media(prefers-reduced-motion:reduce){.ba-fly,.ba-fx span,.ba-fx::before,.ba-fx::after,.ba-shake,.ba-gain,.ba-low{animation:none!important}.ba-fx,.ba-gain{display:none}}
+/* 2026-11-26 独狼先抽后还：抽到的牌混入手牌，红边 */
+.ba-app .ba-card-drawn{box-shadow:0 0 0 2.5px #d9483b,0 3px 9px #091c1b55}
+.ba-app .ba-card-drawn.ba-selected{box-shadow:0 0 0 2.5px #d9483b,0 8px 15px #061e1f}
+.ba-app .ba-drawn-tag{background:#d9483b;color:#fff;font-size:8.5px;max-width:calc(100% - 4px);overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.ba-batch-note{font-style:normal;font-size:12px;color:var(--ba-accent)}

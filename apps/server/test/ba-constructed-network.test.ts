@@ -64,21 +64,31 @@ describe('four real socket clients in constructed decisive cases',()=>{
       expect(room.file.phase).toBe('EXCHANGE');
       expect(room.file.exchange!.plan).toHaveLength(scenario.transactions);
       expect(room.file.exchange!.plan.every(pair=>pair.count===scenario.drawCount)).toBe(true);
-      let completed=0;
+      let completed=0,draws=0;
       while(String(room.file.phase)==='EXCHANGE'){
         const exchange=room.file.exchange!,pair=exchange.plan[exchange.transactionIndex];
-        expect(exchange.phase).toBe('DRAW_PENDING');
-        const winnerDrawView=await send<{ok:boolean;snapshot:any}>(clients[pair.winner],BA_EVENTS.join,{code,token:tokens[pair.winner]});
-        expect(winnerDrawView.snapshot.exchange.faceDownCount).toBe(13);
-        expect(winnerDrawView.snapshot.exchange.drawCount).toBe(scenario.drawCount);
-        const drawn=await send<{ok:boolean}>(clients[pair.winner],BA_EVENTS.action,{code,token:tokens[pair.winner],roundId:room.file.roundId,actionId:`draw-${completed}`,expectedVersion:room.file.version,transactionIndex:exchange.transactionIndex,action:{kind:'DRAW',indices:Array.from({length:scenario.drawCount},(_,i)=>i)}});
-        expect(drawn.ok).toBe(true);
+        const batch=exchange.plan.length>1&&exchange.plan.every(p=>p.winner===exchange.plan[0].winner);
+        if(exchange.phase==='DRAW_PENDING'){
+          const winnerDrawView=await send<{ok:boolean;snapshot:any}>(clients[pair.winner],BA_EVENTS.join,{code,token:tokens[pair.winner]});
+          expect(winnerDrawView.snapshot.exchange.faceDownCount).toBe(13);
+          expect(winnerDrawView.snapshot.exchange.drawCount).toBe(scenario.drawCount);
+          const drawn=await send<{ok:boolean}>(clients[pair.winner],BA_EVENTS.action,{code,token:tokens[pair.winner],roundId:room.file.roundId,actionId:`draw-${draws}`,expectedVersion:room.file.version,transactionIndex:exchange.transactionIndex,action:{kind:'DRAW',indices:Array.from({length:scenario.drawCount},(_,i)=>i)}});
+          expect(drawn.ok).toBe(true);draws++;
+          if(batch&&draws<exchange.plan.length)expect(room.file.exchange!.phase).toBe('DRAW_PENDING');
+          continue;
+        }
         const winner=await send<{ok:boolean;snapshot:any}>(clients[pair.winner],BA_EVENTS.join,{code,token:tokens[pair.winner]});
         const loser=await send<{ok:boolean;snapshot:any}>(clients[pair.loser],BA_EVENTS.join,{code,token:tokens[pair.loser]});
-        expect(winner.snapshot.exchange.hand).toHaveLength(13+scenario.drawCount);
+        if(!batch){
+          expect(winner.snapshot.exchange.hand).toHaveLength(13+scenario.drawCount);
+          expect(winner.snapshot.exchange.drawnIds).toHaveLength(scenario.drawCount);
+          expect(loser.snapshot.exchange.drawnIds).toEqual(winner.snapshot.exchange.drawnIds);
+        }else{
+          expect(winner.snapshot.exchange.hand).toHaveLength(13+scenario.drawCount*(exchange.plan.length-completed));
+          expect(loser.snapshot.exchange.drawnIds).toHaveLength(scenario.drawCount);
+          for(const id of loser.snapshot.exchange.drawnIds)expect(winner.snapshot.exchange.drawnIds).toContain(id);
+        }
         expect(loser.snapshot.exchange.hand).toHaveLength(13-scenario.drawCount);
-        expect(winner.snapshot.exchange.drawnIds).toHaveLength(scenario.drawCount);
-        expect(loser.snapshot.exchange.drawnIds).toEqual(winner.snapshot.exchange.drawnIds);
         const returned=await send<{ok:boolean}>(clients[pair.winner],BA_EVENTS.action,{code,token:tokens[pair.winner],roundId:room.file.roundId,actionId:`return-${completed}`,expectedVersion:room.file.version,transactionIndex:exchange.transactionIndex,action:{kind:'RETURN',cards:winner.snapshot.exchange.hand.slice(0,scenario.drawCount)}});
         expect(returned.ok).toBe(true);
         completed++;

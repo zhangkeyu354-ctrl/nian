@@ -10,7 +10,7 @@ export interface BASnapshot {
   options:{firstLead:'CONTAINS_D3'|'OWNER_ANY';soloScoreBasis:'FINAL'|'BASE';advanceExchange:boolean;turnSeconds:0|15|30|45|60;returnSeconds:30|45|60};
   deadline:number|null;
   round:{phase:'PLAY'|'RESULT';version:number;turnId:number;trickId:number;currentActor:number|null;hand:string[]|null;handCounts:number[];capturedScores:number[];tableCards:string[];tableScore:number;lastPlay:{actor:number;cards:string[]}|null;recentPlays:BARecentPlay[];finishedOrder:number[];result:Settlement|null}|null;
-  exchange:{phase:'DRAW_PENDING'|'RETURN_PENDING'|'COMPLETE';transactionIndex:number;transactionCount:number;pair:{winner:number;loser:number;count:number}|null;completed:number;hand:string[]|null;handCounts:number[];returnCount:number|null;drawCount:number|null;faceDownCount:number;drawnIds:string[]|null;logs:BAExchangeLog[]}|null;
+  exchange:{phase:'DRAW_PENDING'|'RETURN_PENDING'|'COMPLETE';transactionIndex:number;transactionCount:number;pair:{winner:number;loser:number;count:number}|null;completed:number;hand:string[]|null;handCounts:number[];returnCount:number|null;drawCount:number|null;faceDownCount:number;drawnIds:string[]|null;batch?:boolean;logs:BAExchangeLog[]}|null;
   exchangeLogs?:BAExchangeLog[];
 }
 type Ack<T>={ok:true}&T|{ok:false;error:string};

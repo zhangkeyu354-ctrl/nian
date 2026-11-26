@@ -31,13 +31,18 @@ describe('100 reproducible ten-round series',()=>{
           let e=startExchange(hands,plan);
           while(e.phase!=='COMPLETE'){
             const pair=e.plan[e.transactionIndex];
-            const pool=[...e.hands[pair.loser]];
-            for(let i=pool.length-1;i>0;i--){const j=Math.floor(random()*(i+1));[pool[i],pool[j]]=[pool[j],pool[i]]}
-            e=drawForTransaction(e,pool.slice(0,pair.count));
-            expect(e.hands[pair.winner].length).toBe(13+pair.count);
-            expect(e.hands[pair.loser].length).toBe(13-pair.count);
-            e=returnCards(e,deterministicAutoReturn(e));
-            counts.transactions++;counts[shaved?'shaved':'normal']++;
+            if(e.phase==='DRAW_PENDING'){
+              const before=e.hands[pair.winner].length;
+              const pool=[...e.hands[pair.loser]];
+              for(let i=pool.length-1;i>0;i--){const j=Math.floor(random()*(i+1));[pool[i],pool[j]]=[pool[j],pool[i]]}
+              e=drawForTransaction(e,pool.slice(0,pair.count));
+              expect(e.hands[pair.winner].length).toBe(before+pair.count);
+              expect(e.hands[pair.loser].length).toBe(13-pair.count);
+            }else{
+              e=returnCards(e,deterministicAutoReturn(e));
+              expect(e.hands[pair.loser].length).toBe(13);
+              counts.transactions++;counts[shaved?'shaved':'normal']++;
+            }
           }
           hands=e.hands;
           expect(hands.every(h=>h.length===13)).toBe(true);

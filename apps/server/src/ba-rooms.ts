@@ -107,6 +107,11 @@ export class BARoom {
     }else{this.file.round=startRound(dealt,this.file.options);this.file.phase='PLAY';this.setDeadline()}
     this.file.nextPlan=null;this.file.version++;
   }
+  private afterExchangeStep(){
+    const e=this.file.exchange!;
+    if(e.phase==='DRAW_PENDING'){this.prepareDraw();return}
+    this.file.deadline=Date.now()+this.file.options.returnSeconds*1000;
+  }
   private prepareDraw(){
     const e=this.file.exchange!;const pair=e.plan[e.transactionIndex];const pool=[...e.hands[pair.loser]];
     for(let i=pool.length-1;i>0;i--){const j=randomInt(i+1);[pool[i],pool[j]]=[pool[j],pool[i]]}
@@ -151,7 +156,7 @@ export class BARoom {
         assert(Array.isArray(req.action.indices),'invalid draw indices');
         this.file.exchange=drawByIndices(e,req.action.indices);
         this.file.exchangeLogs=[...(this.file.exchange.logs??[])];
-        this.file.deadline=Date.now()+this.file.options.returnSeconds*1000;
+        this.afterExchangeStep();
       }else if(req.action.kind==='RETURN'){
         assert(e.phase==='RETURN_PENDING','not waiting for return');
         this.file.exchange=returnCards(e,req.action.cards);
@@ -159,7 +164,7 @@ export class BARoom {
         if(this.file.exchange.phase==='COMPLETE'){
           this.file.round=startRound(this.file.exchange.hands,this.file.options);
           this.file.exchange=null;this.file.phase='PLAY';this.setDeadline();
-        }else this.prepareDraw();
+        }else this.afterExchangeStep();
       }else throw new Error('wrong exchange action');
     }else throw new Error('wrong phase');
     this.file.version++;
@@ -192,13 +197,13 @@ export class BARoom {
           for(let i=all.length-1;i>0;i--){const j=randomInt(i+1);[all[i],all[j]]=[all[j],all[i]]}
           this.file.exchange=drawByIndices(e,all.slice(0,currentPair.count));
           this.file.exchangeLogs=[...(this.file.exchange.logs??[])];
-          this.file.deadline=Date.now()+this.file.options.returnSeconds*1000;
+          this.afterExchangeStep();
         }else{
           this.file.exchange=returnCards(e,deterministicAutoReturn(e));
           this.file.exchangeLogs=[...(this.file.exchange.logs??[])];
           if(this.file.exchange.phase==='COMPLETE'){
             this.file.round=startRound(this.file.exchange.hands,this.file.options);this.file.exchange=null;this.file.phase='PLAY';this.setDeadline();
-          }else this.prepareDraw();
+          }else this.afterExchangeStep();
         }
       }else{this.file.deadline=null;return false}
       this.file.version++;return true;

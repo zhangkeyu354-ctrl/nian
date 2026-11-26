@@ -15,34 +15,25 @@ const savedGroup=()=>{try{return localStorage.getItem('ba-sort-group')!=='off'}c
 const sortHand=(list:string[],descending:boolean,group:boolean)=>{list.sort(order);if(descending)list.reverse();if(!group)return list;return [...list.filter(isSpecial),...list.filter(id=>!isSpecial(id))]};
 const savedTheme=()=>{try{return localStorage.getItem('ba-theme')==='light'?'light':'dark'}catch{return 'dark'}};
 function useBATheme(){const [theme,setTheme]=useState<'dark'|'light'>(savedTheme);const toggle=()=>setTheme(current=>{const next=current==='dark'?'light':'dark';try{localStorage.setItem('ba-theme',next)}catch{}return next});return {theme,toggle}}
-function Card({id,selected=false,drawn=false,special=false,onClick}: {id:string;selected?:boolean;drawn?:boolean;special?:boolean;onClick?:()=>void}){return <button type="button" className={`ba-card ${selected?'ba-selected':''} ${drawn?'ba-card-drawn':''} ${special?'ba-card-special':''}`} data-id={id} aria-label={cardName(id)} aria-pressed={selected} onClick={onClick?e=>{if(e.detail===0)onClick()}:undefined} disabled={!onClick}><img src={`/assets/black-a-510k/cards/${id}.webp`} alt="" draggable={false}/>{drawn&&<span className="ba-drawn-tag">抽到</span>}</button>}
+function Card({id,selected=false,drawn=false,special=false,source,onClick}: {id:string;selected?:boolean;drawn?:boolean;special?:boolean;source?:string;onClick?:()=>void}){return <button type="button" className={`ba-card ${selected?'ba-selected':''} ${drawn?'ba-card-drawn':''} ${special?'ba-card-special':''}`} data-id={id} aria-label={cardName(id)} aria-pressed={selected} onClick={onClick?e=>{if(e.detail===0)onClick()}:undefined} disabled={!onClick}><img src={`/assets/black-a-510k/cards/${id}.webp`} alt="" draggable={false}/>{drawn&&<span className="ba-drawn-tag">{source?`抽自${source}`:'抽到'}</span>}</button>}
 function MiniCard({id}:{id:string}){return <span className="ba-mini-card" aria-label={cardName(id)}><img src={`/assets/black-a-510k/cards/${id}.webp`} alt={cardName(id)} draggable={false}/></span>}
 function RecentPlayBadge({play}:{play:{kind:'PLAY';cards:string[]}|{kind:'PASS'}|null|undefined}){
   if(!play)return <span className="ba-recent-empty">—</span>;
   if(play.kind==='PASS')return <span className="ba-pass-badge">过</span>;
   return <div className="ba-recent-cards">{play.cards.map(id=><MiniCard key={id} id={id}/>)}</div>;
 }
-function Hand({cards,drawnIds,selected,onToggle,descending,group}: {cards:string[];drawnIds?:string[]|null;selected:string[];onToggle?:(id:string)=>void;descending:boolean;group:boolean}){
+function Hand({cards,drawnIds,sources,selected,onToggle,descending,group}: {cards:string[];drawnIds?:string[]|null;sources?:Record<string,string>;selected:string[];onToggle?:(id:string)=>void;descending:boolean;group:boolean}){
   const drawnSet=useMemo(()=>new Set(drawnIds??[]),[drawnIds]);
   const mainCards=useMemo(()=>{
-    const list=drawnSet.size?cards.filter(id=>!drawnSet.has(id)):[...cards];
-    return sortHand(list,descending,group);
+    return sortHand([...cards],descending,group);
   },[cards,drawnSet,descending,group]);
-  const drawnCards=useMemo(()=>{
-    if(!drawnIds?.length)return [];
-    const list=cards.filter(id=>drawnSet.has(id));
-    list.sort(order);
-    if(descending)list.reverse();
-    return list;
-  },[cards,drawnIds,drawnSet,descending]);
   const drag=useRef<{mode:boolean;seen:Set<string>}|null>(null);
   const pick=(e:React.PointerEvent)=>{const el=(document.elementFromPoint(e.clientX,e.clientY) as HTMLElement|null)?.closest<HTMLElement>('[data-id]');return el&&e.currentTarget.contains(el)?el.dataset.id??null:null};
   const down=(e:React.PointerEvent)=>{if(!onToggle||e.button>0)return;const id=pick(e);if(!id)return;drag.current={mode:!selected.includes(id),seen:new Set([id])};onToggle(id);try{(e.currentTarget as HTMLElement).setPointerCapture(e.pointerId)}catch{}};
   const move=(e:React.PointerEvent)=>{const d=drag.current;if(!d||!onToggle)return;const id=pick(e);if(!id||d.seen.has(id))return;d.seen.add(id);if(selected.includes(id)!==d.mode)onToggle(id)};
   const up=()=>{drag.current=null};
   return <div className={`ba-hand-wrap ${onToggle?'ba-hand-live':''}`} onPointerDown={down} onPointerMove={move} onPointerUp={up} onPointerCancel={up}>
-    <div className="ba-hand" aria-label="我的手牌">{mainCards.map(id=><Card key={id} id={id} special={group&&isSpecial(id)} selected={selected.includes(id)} onClick={onToggle?()=>onToggle(id):undefined}/>)}</div>
-    {drawnCards.length>0&&<div className="ba-hand-drawn" aria-label="抽到的牌"><span className="ba-drawn-row-label">抽到 {drawnCards.length} 张</span><div className="ba-hand-drawn-cards">{drawnCards.map(id=><Card key={id} id={id} drawn selected={selected.includes(id)} onClick={onToggle?()=>onToggle(id):undefined}/>)}</div></div>}
+    <div className="ba-hand" aria-label="我的手牌">{mainCards.map(id=><Card key={id} id={id} drawn={drawnSet.has(id)} source={sources?.[id]} special={group&&isSpecial(id)} selected={selected.includes(id)} onClick={onToggle?()=>onToggle(id):undefined}/>)}</div>
   </div>;
 }
 function RoomHome(){const {theme,toggle}=useBATheme();const [join,setJoin]=useState(''),[busy,setBusy]=useState(false),[error,setError]=useState('');const create=async()=>{setBusy(true);const r=await createBARoom();setBusy(false);if(r.ok)location.href='/?game=ba&room='+r.code;else setError(r.error)};return <main className={`ba-home ba-theme-${theme}`}><div className="ba-home-nav"><a href="/" className="ba-back">← 游戏大厅</a><button className="ba-theme-toggle" onClick={toggle} aria-label={theme==='dark'?'切换明亮配色':'切换深绿配色'}>{theme==='dark'?'明亮配色':'深绿配色'}</button></div><div className="ba-home-card"><small>Beta 测试版 · 网站规则 V1.1 · 仅限四人</small><h1>双黑A<br/>五十K</h1><p>找出藏在牌桌上的队友，抢走每一分。两张黑A可能分属两人，也可能都在你手中。</p><div className="ba-home-cards"><Card id="AS"/><Card id="AC"/><Card id="5H"/><Card id="10H"/><Card id="KH"/></div><button className="ba-primary" onClick={create} disabled={busy}>{busy?'正在建房…':'创建四人房间'}</button><label>输入朋友的房号<input value={join} maxLength={4} autoCapitalize="characters" onChange={e=>setJoin(e.target.value.toUpperCase().replace(/[^A-Z2-9]/g,''))} placeholder="ABCD"/></label><button onClick={()=>location.href='/?game=ba&room='+join} disabled={join.length!==4}>加入房间</button><p>遇到问题，或知道 6 人／8 人两副牌的具体规则？请到首页点「反馈」告诉我们。</p>{error&&<p role="alert">{error}</p>}</div></main>}
@@ -94,6 +85,7 @@ function GameRoom({code}:{code:string}){
   const legal=selected.length>0&&beats(selected,target)&&(!mustD3||selected.includes('3D'));
   const hints=useMemo(()=>canPlay&&hand?enumerateLegalPlays(hand,target,{mustContainD3:mustD3}):[],[canPlay,handKey,target?.join('|'),mustD3]);
   const exchangeLogs=snap?.exchangeLogs?.length?snap.exchangeLogs:exchange?.logs??[];
+  const drawnSources=useMemo(()=>{const m:Record<string,string>={};for(const log of exchange?.logs??[])for(const id of log.drawn??[])m[id]=Array.from(snap?.players[log.loser]?.name??'').slice(0,2).join('');return m},[exchange?.logs,snap?.players]);
   if(!snap)return <main className="ba-app"><a href="/">← 游戏大厅</a><p>{error||'正在连接房间…'}</p></main>;
   return <main className={`ba-app ba-theme-${theme}`}><header className="ba-top"><a href="/" aria-label="返回游戏大厅">←</a><div><small>双黑A五十K · 网站规则 V1.1</small><strong>房间 {snap.code} · 第 {snap.roundId||1} 局</strong></div><button className="ba-theme-toggle" aria-label={theme==='dark'?'切换明亮配色':'切换深绿配色'} onClick={toggleTheme}>{theme==='dark'?'☼':'☾'}</button><button className="ba-sound-toggle" aria-label={soundOn?'关闭音效':'开启音效'} aria-pressed={soundOn} onClick={()=>{const next=!soundOn;setSoundOn(next);setSoundEnabled(next);unlockSound()}}>{soundOn?'♪':'♪̸'}</button><span>{connected?'● 在线':'○ 重连中'}</span></header>{snap.phase==='LOBBY'?<Lobby snap={snap} claim={claim} ready={ready} configure={configure} addBot={addBot} kick={kick}/>:snap.phase==='RESULT'?<Result snap={snap} ready={ready}/>:<>
     <div className="ba-opponents">{snap.players.filter(p=>p.seat!==self).map(p=><div key={p.id} className={`ba-opponent ${round?.currentActor===p.seat?'ba-turn':''}`}>{snap.phase==='PLAY'&&round?.currentActor===p.seat&&<span className={`ba-clock ${snap.deadline&&seconds<=10?'ba-clock-urgent':''}`} aria-label="正在出牌">{snap.deadline?seconds:'出牌中'}</span>}<span>{p.name}</span>{snap.phase==='PLAY'&&(round?.handCounts[p.seat]??99)>0&&(round?.handCounts[p.seat]??99)<=5&&<em className="ba-low">报牌</em>}<strong><img src="/assets/black-a-510k/cards/back.webp" alt=""/> {snap.phase==='EXCHANGE'?exchange?.handCounts[p.seat]:round?.handCounts[p.seat]} 张</strong><small>实抓 {round?.capturedScores[p.seat]??0}分</small>{snap.phase==='PLAY'&&round&&<div className="ba-opponent-recent"><RecentPlayBadge play={round.recentPlays?.[p.seat]}/></div>}</div>)}</div>
@@ -106,7 +98,7 @@ function GameRoom({code}:{code:string}){
       <div className="ba-selection" onClick={()=>setSelected([])}>{selected.length?`${selected.length}张 · ${play?typeName[play.type]:'非法组合'} · ${legal?'可出':mustD3&&!selected.includes('3D')?'首手需包含♦3':'不可压当前牌'}`:'点选或横向滑动选牌'}</div>
       <div className="ba-actions"><button disabled={!canPlay||busy||!hints.length} onClick={()=>{const next=hints[hintIndex%hints.length];setSelected(next);setHintIndex(i=>i+1)}}>提示</button><button disabled={!canPlay||busy||!round.lastPlay} onClick={()=>void submit({kind:'PASS'})}>过牌</button><button className="ba-primary" disabled={!canPlay||busy||!legal} onClick={()=>void submit({kind:'PLAY',cards:selected})}>{busy?'提交中…':'出牌'}</button></div>
     </>:exchange?<>
-      <div className="ba-exchange-title"><span>跨局抽牌 · 第 {exchange.transactionIndex+1}/{exchange.transactionCount} 笔</span><strong>{snap.players[exchange.pair?.winner??0]?.name} 从 {snap.players[exchange.pair?.loser??0]?.name} 抽 {exchange.pair?.count} 张</strong></div>
+      <div className="ba-exchange-title"><span>{exchange.batch?`${exchange.phase==='RETURN_PENDING'?'还牌':'抽牌'} · 第 ${exchange.transactionIndex+1}/${exchange.transactionCount} 家`:`跨局抽牌 · 第 ${exchange.transactionIndex+1}/${exchange.transactionCount} 笔`}</span><strong>{exchange.phase==='RETURN_PENDING'?`${snap.players[exchange.pair?.winner??0]?.name} 还给 ${snap.players[exchange.pair?.loser??0]?.name} ${exchange.pair?.count} 张`:`${snap.players[exchange.pair?.winner??0]?.name} 从 ${snap.players[exchange.pair?.loser??0]?.name} 抽 ${exchange.pair?.count} 张`}</strong>{exchange.batch&&<em className="ba-batch-note">独狼：先抽完三家，再依次还牌</em>}</div>
       {exchangeLogs.length>0&&<div className="ba-exchange-logs">{exchangeLogs.map((log,i)=><div key={i} className="ba-exchange-log-row"><span>{snap.players[log.winner]?.name} ↔ {snap.players[log.loser]?.name}：</span>{log.drawn?<><span>抽</span>{log.drawn.map(id=><MiniCard key={'d'+id} id={id}/>)}{log.returned&&log.returned.length>0&&<><span>还</span>{log.returned.map(id=><MiniCard key={'r'+id} id={id}/>)}</>}</>:<span>抽 {log.drawnCount} 张{log.returnedCount?`、还 ${log.returnedCount} 张`:''}</span>}</div>)}</div>}
       {exchange.phase==='DRAW_PENDING'?<>
         <p className="ba-note">{self===exchange.pair?.winner?`请从 ${snap.players[exchange.pair.loser]?.name} 打乱的背面手牌中点选 ${exchange.drawCount} 张抽取（超时自动随机抽取）。`:self===exchange.pair?.loser?`等待 ${snap.players[exchange.pair.winner]?.name} 从你的牌中抽取 ${exchange.drawCount} 张…`:'正在进行私密抽牌，你只能看到公开进度。'}</p>
@@ -117,11 +109,11 @@ function GameRoom({code}:{code:string}){
         </>}
         {self!==exchange.pair?.winner&&<div className="ba-selection">等待对方抽牌 · 剩余 {seconds} 秒</div>}
         <div className="ba-self"><strong>我的手牌 · {hand?.length??0} 张</strong>{sortButtons}</div>
-        <Hand cards={hand??[]} selected={[]} descending={descending} group={group}/>
+        <Hand cards={hand??[]} drawnIds={self===exchange.pair?.winner?exchange.drawnIds:null} sources={drawnSources} selected={[]} descending={descending} group={group}/>
       </>:<>
-        <p className="ba-note">{self===exchange.pair?.winner?'请从手牌中选择准确数量归还，下方高亮为刚抽到的牌，可原样归还。':self===exchange.pair?.loser?'对方已完成抽牌，上方记录可查看被抽走的牌，等待对方归还。':'正在进行私密还牌，你只能看到公开进度。'}</p>
+        <p className="ba-note">{self===exchange.pair?.winner?exchange.batch?`请选 ${exchange.returnCount??exchange.pair?.count} 张还给 ${snap.players[exchange.pair?.loser??0]?.name}。红边是抽到的牌（角上写着从谁那里抽的），手里任何牌都可以还。`:'请从手牌中选择准确数量归还，红边为刚抽到的牌，可原样归还。':self===exchange.pair?.loser?'对方已完成抽牌，上方记录可查看被抽走的牌，等待对方归还。':'正在进行私密还牌，你只能看到公开进度。'}</p>
         <div className="ba-self"><strong>我的手牌 · {hand?.length??0} 张</strong>{sortButtons}</div>
-        <Hand cards={hand??[]} drawnIds={self===exchange.pair?.winner?exchange.drawnIds:null} selected={self===exchange.pair?.winner?selected:[]} onToggle={self===exchange.pair?.winner?toggle:undefined} descending={descending} group={group}/>
+        <Hand cards={hand??[]} drawnIds={self===exchange.pair?.winner?exchange.drawnIds:null} sources={drawnSources} selected={self===exchange.pair?.winner?selected:[]} onToggle={self===exchange.pair?.winner?toggle:undefined} descending={descending} group={group}/>
         <div className="ba-selection">已选择 {selected.length}/{exchange.returnCount??exchange.pair?.count??0} 张 · 剩余 {seconds} 秒</div>
         <div className="ba-actions"><button onClick={()=>setSelected([])}>取消选择</button><button className="ba-primary" disabled={self!==exchange.pair?.winner||busy||selected.length!==exchange.returnCount} onClick={()=>void submit({kind:'RETURN',cards:selected})}>确认归还</button></div>
       </>}

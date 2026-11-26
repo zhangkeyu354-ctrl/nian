@@ -1,6 +1,6 @@
 import { createDeck } from './rules.js';
 import type { RoundState } from './round.js';
-import type { ExchangeLogEntry, ExchangeState } from './exchange.js';
+import { isBatchExchange,type ExchangeLogEntry, type ExchangeState } from './exchange.js';
 
 const score=new Map<string,number>(createDeck().map(c=>[c.id,c.points]));
 const visibleSeat=(seat:number|null)=>seat!==null&&Number.isInteger(seat)&&seat>=0&&seat<4;
@@ -40,7 +40,8 @@ export function viewExchange(state:ExchangeState,seat:number|null){
     returnCount:pair&&own===pair.winner&&state.phase==='RETURN_PENDING'?pair.count:null,
     drawCount:pair&&state.phase==='DRAW_PENDING'?pair.count:null,
     faceDownCount,
-    drawnIds:state.phase==='RETURN_PENDING'&&canSeeDrawn?[...state.drawnIds]:null,
+    drawnIds:own!==null&&pair!==null&&own===pair.winner&&isBatchExchange(state.plan)&&state.phase!=='COMPLETE'?[...state.drawnIds]:state.phase!=='RETURN_PENDING'||!canSeeDrawn?null:own===pair!.winner||!isBatchExchange(state.plan)?[...state.drawnIds]:[...((state.logs??[]).find(l=>l.winner===pair!.winner&&l.loser===pair!.loser)?.drawn??[])],
+    batch:isBatchExchange(state.plan),
     logs:viewExchangeLogs(state.logs??[],own),
   };
 }

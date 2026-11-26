@@ -18,6 +18,8 @@ export function createExchangePlan(winners:readonly number[],losers:readonly num
   if(w.length===1)return l.map(loser=>({winner:w[0],loser,count}));
   return w.map(winner=>({winner,loser:l[0],count}));
 }
+/** 独狼（一人对三人）先依次抽完三人，再依次归还（用户 2026-11-26 裁定）；其他情况抽一还一。 */
+export const isBatchExchange=(plan:readonly ExchangePair[])=>plan.length>1&&plan.every(p=>p.winner===plan[0].winner);
 const verifyCards=(hands:readonly (readonly string[])[])=>{
   const all=hands.flat(),deck=new Set<string>(createDeck().map(c=>c.id));
   if(hands.length!==4||all.length!==52||new Set(all).size!==52||all.some(id=>!deck.has(id)))throw new Error('expected 52 unique physical cards');
@@ -50,6 +52,11 @@ export function drawForTransaction(state:ExchangeState,drawn:readonly string[]):
   hands[pair.winner].push(...drawn);
   verifyCards(hands);
   const logs=[...(state.logs??[]),{winner:pair.winner,loser:pair.loser,count:pair.count,drawn:[...drawn],returned:[]}];
+  if(isBatchExchange(state.plan)){
+    const drawnIds=[...state.drawnIds,...drawn],next=state.transactionIndex+1;
+    if(next<state.plan.length)return {...state,phase:'DRAW_PENDING',hands,transactionIndex:next,drawnIds,faceDownPool:undefined,logs};
+    return {...state,phase:'RETURN_PENDING',hands,transactionIndex:0,drawnIds,faceDownPool:undefined,logs};
+  }
   return {...state,phase:'RETURN_PENDING',hands,drawnIds:[...drawn],faceDownPool:undefined,logs};
 }
 export function returnCards(state:ExchangeState,returned:readonly string[]):ExchangeState{
@@ -60,10 +67,13 @@ export function returnCards(state:ExchangeState,returned:readonly string[]):Exch
   hands[pair.winner]=hands[pair.winner].filter(id=>!returned.includes(id));
   hands[pair.loser].push(...returned);
   verifyCards(hands);
-  if(hands.some(h=>h.length!==13))throw new Error('exchange did not restore 13 cards');
-  const logs=(state.logs??[]).map((entry,idx,arr)=>idx===arr.length-1&&entry.winner===pair.winner&&entry.loser===pair.loser?{...entry,returned:[...returned]}:{...entry,drawn:[...entry.drawn],returned:[...entry.returned]});
-  const transactionIndex=state.transactionIndex+1;
-  return {...state,hands,phase:transactionIndex===state.plan.length?'COMPLETE':'DRAW_PENDING',transactionIndex,drawnIds:[],completed:state.completed+1,faceDownPool:undefined,logs};
+  const transactionIndex=state.transactionIndex+1,done=transactionIndex===state.plan.length,batch=isBatchExchange(state.plan);
+  if(hands[pair.loser].length!==13||(done&&hands.some(h=>h.length!==13)))throw new Error('exchange did not restore 13 cards');
+  const target=(state.logs??[]).findIndex(entry=>entry.winner===pair.winner&&entry.loser===pair.loser&&entry.returned.length===0);
+  const logs=(state.logs??[]).map((entry,idx)=>idx===target?{...entry,drawn:[...entry.drawn],returned:[...returned]}:{...entry,drawn:[...entry.drawn],returned:[...entry.returned]});
+  const phase=done?'COMPLETE':batch?'RETURN_PENDING':'DRAW_PENDING';
+  const drawnIds=batch&&!done?state.drawnIds.filter(id=>!returned.includes(id)):[];
+  return {...state,hands,phase,transactionIndex,drawnIds,completed:state.completed+1,faceDownPool:undefined,logs};
 }
 export function deterministicAutoReturn(state:ExchangeState):string[]{
   if(state.phase!=='RETURN_PENDING')throw new Error('not waiting for return');
