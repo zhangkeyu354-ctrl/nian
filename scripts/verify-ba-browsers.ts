@@ -2,7 +2,7 @@ import { chromium,type Page } from 'playwright';
 import {io as clientIo} from 'socket.io-client';
 
 const base=process.env.BA_TEST_URL??'http://127.0.0.1:4177';
-const browser=await chromium.launch({headless:true});
+const browser=await chromium.launch({headless:true,executablePath:process.env.PW_EXEC});
 const pages:Page[]=[];
 try{
   for(let i=0;i<4;i++){

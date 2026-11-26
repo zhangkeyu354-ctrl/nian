@@ -14,10 +14,11 @@ function accent(kind:Event){
   notes.forEach((frequency,index)=>{
     const at=context!.currentTime+index*.065;
     const osc=context!.createOscillator(),gain=context!.createGain();
-    osc.type=kind==='bomb'?'triangle':'sine';osc.frequency.setValueAtTime(frequency,at);
+    osc.type=kind==='bomb'||kind==='double'?'triangle':'sine';osc.frequency.setValueAtTime(frequency,at);
     gain.gain.setValueAtTime(.0001,at);gain.gain.exponentialRampToValueAtTime(kind==='bomb'?.045:.025,at+.012);gain.gain.exponentialRampToValueAtTime(.0001,at+.15);
     osc.connect(gain).connect(context!.destination);osc.start(at);osc.stop(at+.16);
   });
+  if(kind==='bomb'||kind==='double'){const at=context.currentTime;const osc=context.createOscillator(),g=context.createGain();osc.type='sine';osc.frequency.setValueAtTime(kind==='double'?140:110,at);osc.frequency.exponentialRampToValueAtTime(38,at+.45);g.gain.setValueAtTime(.0001,at);g.gain.exponentialRampToValueAtTime(kind==='double'?.22:.18,at+.015);g.gain.exponentialRampToValueAtTime(.0001,at+.5);osc.connect(g).connect(context.destination);osc.start(at);osc.stop(at+.52)}
 }
 export function playSound(kind:Event){
   if(!unlocked||!soundEnabled()||document.hidden||active>=3)return;
