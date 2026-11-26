@@ -101,7 +101,7 @@ try {
   if (process.env.MA_SCHEDULE_TEST === "1") {
     assert.equal(await pages[1].getByTestId("ma-track-1-wild").isDisabled(), true);
     assert.equal(await host.getByTestId("ma-track-1-twisty-twirl").isDisabled(), false, "二代地图已上线可选");
-    await host.getByTestId("ma-schedule-random").click();
+    assert.equal(await host.getByTestId("ma-schedule-random").count(), 0, "赛程预设与随机按钮已移除");
     const desired = ["twisty-twirl", "whirly-world", "mild", "twisty-twirl"];
     for (const [i, id] of desired.entries()) {
       await host.getByTestId(`ma-track-${i + 1}-${id}`).click();
@@ -111,34 +111,23 @@ try {
     await host.screenshot({ path: `${out}/schedule-phone.png`, fullPage: true });
   }
   if (process.env.MA_SECOND_WIND === "1") {
-    const toggle = host.getByTestId("ma-second-wind");
-    assert.equal(await toggle.isChecked(), false, "新角色默认关闭");
+    const base = host.getByTestId("ma-racer-pool-base");
+    const second = host.getByTestId("ma-racer-pool-second");
+    const mixed = host.getByTestId("ma-racer-pool-mixed");
+    assert.equal(await base.getAttribute("aria-checked"), "true", "默认仅一代角色");
     assert.equal(
-      await pages[1].getByTestId("ma-second-wind").isDisabled(),
+      await pages[1].getByTestId("ma-racer-pool-second").isDisabled(),
       true,
       "只有房主可改",
     );
-    await toggle.click();
-    await host.waitForFunction(
-      () =>
-        (
-          document.querySelector(
-            '[data-testid="ma-second-wind"]',
-          ) as HTMLInputElement
-        )?.checked,
-    );
-    await pages[1].waitForFunction(
-      () =>
-        (
-          document.querySelector(
-            '[data-testid="ma-second-wind"]',
-          ) as HTMLInputElement
-        )?.checked,
-    );
+    await second.click();
+    await pages[1].locator('[data-testid="ma-racer-pool-second"][aria-checked="true"]').waitFor();
+    await mixed.click();
+    await pages[1].locator('[data-testid="ma-racer-pool-mixed"][aria-checked="true"]').waitFor();
     await host.setViewportSize({ width: 390, height: 844 });
     await assertUiShot(host, `${out}/sw-lobby-phone.png`);
     await host.setViewportSize({ width: 1366, height: 768 });
-    await toggle.scrollIntoViewIfNeeded();
+    await mixed.scrollIntoViewIfNeeded();
     await assertUiShot(host, `${out}/sw-lobby-desktop.png`);
     await host.setViewportSize(viewport);
   }

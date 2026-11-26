@@ -22,7 +22,6 @@ import {motionMs} from "./motion-clock.ts";
 import "./ma.css";
 
 const roomFromUrl = () => new URLSearchParams(location.search).get("room")?.toUpperCase() ?? null;
-const expansionRacers = [...RACER_BY_ID.values()].filter((r) => r.id.startsWith("sw_"));
 const goRoom = (code: string) => {
   history.pushState(null, "", `/?game=ma&room=${code}`);
   dispatchEvent(new PopStateEvent("popstate"));
@@ -246,11 +245,7 @@ function Lobby({ snap, lobby }: { snap: MARoomSnapshot; lobby: (a: Parameters<Re
   const [points, setPoints] = useState(snap.points);
   const schedule = snap.schedule ?? ["mild", "wild", "mild", "wild"];
   const mapIds: TrackId[] = ["mild", "wild", "twisty-twirl", "whirly-world"];
-  const presets: Array<{ label: string; maps: TrackId[] }> = [
-    { label: "仅一代", maps: ["mild", "wild", "mild", "wild"] },
-    { label: "仅二代", maps: ["twisty-twirl", "whirly-world", "twisty-twirl", "whirly-world"] },
-    { label: "一二代混合", maps: ["mild", "wild", "twisty-twirl", "whirly-world"] },
-  ];
+  const racerPool = !snap.secondWind ? "base" : snap.secondWindOnly ? "second" : "mixed";
   useEffect(() => setPoints(snap.points), [snap.points]);
   const run = async (a: Parameters<typeof lobby>[0]) => setError((await lobby(a)) ?? "");
   return (
@@ -342,15 +337,6 @@ function Lobby({ snap, lobby }: { snap: MARoomSnapshot; lobby: (a: Parameters<Re
       <section className="ma-panel ma-schedule-panel">
         <h2>四场赛程</h2>
         <p className="ma-muted">可以重复选择同一张地图。开局前所有人都能看到本场赛程。</p>
-        <div className="ma-schedule-presets">
-          {presets.map(({ label, maps }) => (
-            <button key={label} type="button" disabled={!host || maps.some(id => !PLAYABLE_TRACKS.includes(id))}
-              onClick={() => void run({ type: "SET_SCHEDULE", schedule: maps })}>
-              {label}{maps.some(id => !PLAYABLE_TRACKS.includes(id)) ? " · 待验收" : ""}
-            </button>
-          ))}
-          <button type="button" data-testid="ma-schedule-random" disabled={!host} onClick={() => void run({ type: "SHUFFLE_SCHEDULE" })}>🎲 随机赛程／重抽</button>
-        </div>
         <div className="ma-schedule-races">
           {schedule.map((selected, i) => (
             <div className="ma-schedule-race" key={i}>
@@ -372,38 +358,25 @@ function Lobby({ snap, lobby }: { snap: MARoomSnapshot; lobby: (a: Parameters<Re
         {!host && <p className="ma-muted">由房主选择赛程。</p>}
       </section>
       <section className="ma-panel">
+        <h2>选手范围</h2>
+        <p className="ma-muted">房主选择本局可招募的选手。原版和二代各 36 名；所有人都能看到当前选择。</p>
+        <div className="ma-racer-pools" role="radiogroup" aria-label="选手范围">
+          {([
+            ["base", "仅一代", false, false],
+            ["second", "仅二代", true, true],
+            ["mixed", "一二代混合", true, false],
+          ] as const).map(([id, label, enabled, only]) => (
+            <button key={id} type="button" role="radio" aria-checked={racerPool === id}
+              data-testid={`ma-racer-pool-${id}`} disabled={!host}
+              onClick={() => void run({ type: "SET_SECOND_WIND", enabled, only })}>
+              {label}
+            </button>
+          ))}
+        </div>
+        {!host && <p className="ma-muted">由房主选择选手范围。</p>}
+      </section>
+      <section className="ma-panel">
         <h2>怎么拿选手</h2>
-        <label className="ma-expansion-toggle">
-          <input
-            type="checkbox"
-            data-testid="ma-second-wind"
-            checked={snap.secondWind === true}
-            disabled={!host}
-            onChange={(e) => void run({ type: "SET_SECOND_WIND", enabled: e.target.checked, only: false })}
-          />
-          <span>
-            <b>开启新角色</b>
-            <small>
-              当前可用 {expansionRacers.length} 名：{expansionRacers.map((r) => r.zh).join("、")}
-              。开启后与原版选手混合招募；关闭则只使用原版 36 名。
-            </small>
-          </span>
-        </label>
-        {snap.secondWind === true && (
-          <label className="ma-expansion-toggle">
-            <input
-              type="checkbox"
-              data-testid="ma-second-wind-only"
-              checked={snap.secondWindOnly === true}
-              disabled={!host}
-              onChange={(e) => void run({ type: "SET_SECOND_WIND", enabled: true, only: e.target.checked })}
-            />
-            <span>
-              <b>只用新角色</b>
-              <small>勾选后不混入原版 36 名，只从 {expansionRacers.length} 名新角色里招募。</small>
-            </span>
-          </label>
-        )}
         <div className="ma-variant" role="radiogroup" aria-label="怎么拿选手">
           {(
             [

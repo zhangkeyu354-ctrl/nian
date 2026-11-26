@@ -218,14 +218,11 @@
   width: 72px;
   min-height: 38px;
 }
-.ma-schedule-presets,
 .ma-schedule-maps {
   display: flex;
   flex-wrap: wrap;
   gap: 6px;
 }
-.ma-schedule-presets { margin: 10px 0 14px; }
-.ma-schedule-presets button,
 .ma-schedule-maps button {
   min-height: 38px;
   padding: 6px 10px;
@@ -757,6 +754,7 @@
 .ma-app .ma-variant button.on {
   background: var(--sun);
 }
+.ma-variant + .ma-muted { margin-top: 16px; }
 
 /* ---------- 比赛动画：大骰子、技能弹出、开场、冲线 ---------- */
 .ma-overlay {
@@ -2819,9 +2817,10 @@
   color: #8a8fa3;
   font-weight: 700;
 }
-.ma-expansion-toggle { display:flex; align-items:flex-start; gap:12px; padding:14px 0; cursor:pointer; }
-.ma-expansion-toggle input { width:24px; height:24px; min-width:24px; margin:4px 0; accent-color:#ffd25b; }
-.ma-expansion-toggle small { display:block; line-height:1.6; margin-top:5px; }
+.ma-racer-pools { display:flex; flex-wrap:wrap; gap:8px; margin-top:12px; }
+.ma-racer-pools button { min-height:44px; padding:8px 14px; border:2px solid var(--ink); border-radius:12px; font-weight:800; }
+.ma-racer-pools button[aria-checked="true"] { background:var(--sun); box-shadow:0 3px 0 var(--ink); }
+.ma-racer-pools button:disabled { opacity:.7; }
 
 /* Shared local clock only; no A rendering/layer experiments. */
 .ma-pawn { transition-duration: var(--ma-move-ms,400ms); }
