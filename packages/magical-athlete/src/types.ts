@@ -169,6 +169,8 @@ export interface Settings {
   secondWindPreview?: boolean;
   /** 只用新角色（二代），不混入原版 36 名（用户反馈 2026-11-20） */
   secondWindOnly?: boolean;
+  /** 2026-11-26 用户要求：Twist 事件整局（Match）共用一副 13 张牌、不放回。缺省 = 旧房间每场重开 13 张（保证旧存档重放一致） */
+  twistMatchDeck?: true;
   races: number;
   /** standard：每人每场 1 名；double：2 人局 / 3 人双选手变体，每人每场 2 名 */
   variant: "standard" | "double";
@@ -180,6 +182,8 @@ export interface Settings {
 }
 
 export interface MAState {
+  /** 本局（Match）还没抽过的 Twist 事件；只在服务端，不发给客户端。仅 settings.twistMatchDeck 时使用 */
+  twistPool?: number[];
   timeImpReturners?: Array<{ racer: string; owner: string; base: string }>;
   /** Extra racers registered for future races, separate from secret selections. */
   returningRacers?: Array<{ racer: string; owner: string; base: string }>;

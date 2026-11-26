@@ -1,7 +1,7 @@
 import type { MAState } from "./types.ts";
 
 /** 发给某位玩家的视图：去掉牌堆顺序、随机数、重放快照；别人的秘密出场选择只显示「已选」 */
-export type MAView = Omit<MAState, "deck" | "turn" | "rng" | "forcedRolls"> & {
+export type MAView = Omit<MAState, "deck" | "turn" | "rng" | "forcedRolls" | "twistPool"> & {
   deckCount: number;
   /** 别人的选择被隐藏为 "?"（已选）或 null（未选） */
 };
@@ -9,7 +9,9 @@ export type MAView = Omit<MAState, "deck" | "turn" | "rng" | "forcedRolls"> & {
 export const HIDDEN_CHOICE = "?";
 
 export function viewForMA(s: MAState, playerId: string | null): MAView {
-  const { deck, turn: _turn, rng: _rng, forcedRolls: _f, ...rest } = structuredClone(s);
+  const { deck, turn: _turn, rng: _rng, forcedRolls: _f, twistPool: _tp, ...rest } = structuredClone(s);
+  // 未抽的事件牌不发给客户端
+  if (rest.race?.twist) rest.race.twist.remaining = [];
   const v: MAView = { ...rest, deckCount: deck.length };
   if (v.race) {
     delete v.race.forcedCycle;

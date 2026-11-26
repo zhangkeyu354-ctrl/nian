@@ -88,6 +88,7 @@ export function createMAGame(opts: CreateMAOptions): MAState {
     ...(opts.settings?.independentMasterminds === false ? {} : { independentMasterminds: true }),
     ...(opts.settings?.secondWindPreview === true ? { secondWindPreview: true } : {}),
     ...(opts.settings?.secondWindPreview === true && opts.settings?.secondWindOnly === true ? { secondWindOnly: true } : {}),
+    ...(opts.settings?.twistMatchDeck === true ? { twistMatchDeck: true as const } : {}),
     races,
     variant,
     deal,
@@ -98,6 +99,7 @@ export function createMAGame(opts: CreateMAOptions): MAState {
     game: "magical-athlete",
     phase: "draft",
     rng: opts.seed >>> 0,
+    ...(opts.settings?.twistMatchDeck === true ? { twistPool: Array.from({ length: 13 }, (_, i) => i + 1) } : {}),
     players: opts.players.map((p): MAPlayer => ({
       id: p.id,
       name: p.name,
@@ -572,9 +574,11 @@ function crossTwist(s: MAState, c: Ctx, t: Token, from: number, to: number) {
 
 function drawTwist(s: MAState, c: Ctx, t: Token) {
   const twist = race(s).twist!;
-  if (!twist.remaining.length) return;
-  const index = randInt(s, twist.remaining.length);
-  const [card] = twist.remaining.splice(index, 1);
+  // 整局共用牌堆（新房间）：同一局四场里抽过的事件不再出现；旧房间仍是每场 13 张
+  const pool = s.settings.twistMatchDeck ? (s.twistPool ??= Array.from({ length: 13 }, (_, i) => i + 1)) : twist.remaining;
+  if (!pool.length) return;
+  const index = randInt(s, pool.length);
+  const [card] = pool.splice(index, 1);
   twist.drawn.push(card);
   log(s, `${rname(t)} 抽到 Twist 事件 ${card}。`, { kind: "twist_card", racer: t.racer, card });
   resolveTwistCard(s, c, t, card);
@@ -2853,7 +2857,7 @@ function startRace(s: MAState) {
     over: false,
     setup: false,
     firstTurnDone: [],
-    ...(track === "twisty-twirl" ? { twist: { triggered: false, remaining: Array.from({length: 13}, (_, i) => i + 1), drawn: [] } } : {}),
+    ...(track === "twisty-twirl" ? { twist: { triggered: false, remaining: s.settings.twistMatchDeck ? [] : Array.from({length: 13}, (_, i) => i + 1), drawn: [] } } : {}),
   };
   for (const returning of [...(s.returningRacers ?? []), ...(s.timeImpReturners ?? [])]) {
     if (s.race.tokens.some((t) => t.racer === returning.racer)) continue;

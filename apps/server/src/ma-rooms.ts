@@ -53,6 +53,8 @@ export interface MARoomFile {
   secondWind?: boolean;
   /** 只用新角色（需同时开启 secondWind） */
   secondWindOnly?: boolean;
+  /** 2026-11-26 起开的局：Twist 事件整局不重复。旧存档没有此字段 = 每场重开牌堆（重放结果不变） */
+  twistMatchDeck?: boolean;
   /** Absent on old saves: replay with the old forward-only Banana rule. */
   bananaBackwardPass?: boolean;
   independentMasterminds?: boolean;
@@ -92,6 +94,7 @@ export class MARoom {
         independentMasterminds: this.file.independentMasterminds === true,
         ...(this.file.secondWind === true ? { secondWindPreview: true } : {}),
         ...(this.file.secondWind === true && this.file.secondWindOnly === true ? { secondWindOnly: true } : {}),
+        ...(this.file.twistMatchDeck === true ? { twistMatchDeck: true } : {}),
       },
     });
   }
@@ -172,6 +175,7 @@ export class MARoom {
       this.file.commands = [];
       this.file.bananaBackwardPass = true;
       this.file.independentMasterminds = true;
+      this.file.twistMatchDeck = true;
       this.state = this.create();
     } else throw new Error("BAD_ACTION");
   }
