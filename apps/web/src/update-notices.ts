@@ -1,6 +1,8 @@
 /** 大厅更新公告：每次发布在顶部追加，使用玩家能看懂的简短说明。 */
 /** dev:true 的条目只给开发者看（只出现在网站状态页），大厅和游戏里的公告不显示 */
 export const UPDATE_NOTICES: Array<{ id: string; date: string; game: string; title: string; text: string; dev?: boolean }> = [
+  {id:"2026-11-26-ba-fx",date:"2026-11-26",game:"双黑A五十K",title:"双黑A五十K：大牌特效、滑动选牌、新牌桌",text:"打出黑A、五十K、炸弹、双黑A时有专属特效，炸弹和双黑A会让牌桌震一下。出的牌会从出牌人那边飞到桌上；一墩有分时显示谁收了几分。手指在手牌上横着滑就能连续选牌，点牌桌空白处取消选择；安卓手机选牌和出炸弹时会轻震。对手剩5张及以下会亮「报牌」。牌桌换成带木边的绒布桌，结算分数会滚动显示。"},
+  {id:"2026-11-26-ba-fx-dev",date:"2026-11-26",game:"双黑A五十K",title:"BA 特效与手感（Claude）",text:"BlackA.tsx：牌型特效层 .ba-fx、炸弹震桌、收分飘字、出牌飞入、滑动连选（pointer 事件 + data-id，鼠标/触屏点击走 pointerdown，键盘回车仍走 onClick）、navigator.vibrate、报牌标记、结算数字滚动；ba-sound.ts 炸弹/双黑A加低频轰响；ba.css 新增特效与木边牌桌，均尊重减少动态效果设置。verify-ba-browsers 可用 PW_EXEC 指定浏览器。",dev:true},
   {id:"2026-11-26-ma-twist-cards-tap",date:"2026-11-26",game:"魔法运动员",title:"魔法运动员：事件卡看完再关",text:"扭扭赛道翻开的事件卡不会再自己消失，停在你屏幕上，看完点「知道了」才继续（每人只关自己的，不耽误别人）。比赛中点赛道上方的「🃏 事件卡」，随时能再看本场翻过哪些卡、各是什么效果。"},
   {id:"2026-11-26-ma-racer-pools",date:"2026-11-26",game:"魔法运动员",title:"魔法运动员：选手范围一键切换",text:"开局前可选仅一代、仅二代或两代混合角色。四场地图仍可逐场自选。"},
   {id:"2026-11-26-ma-second-wind-tracks",date:"2026-11-26",game:"魔法运动员",title:"魔法运动员：两张新赛道上线",text:"四场赛程现在可选扭扭赛道和螺旋世界，也能混搭旧赛道。管道传送、事件卡、怪物淘汰和冲线领奖加入了比赛特效。"},
