@@ -9,6 +9,12 @@
 > - 图片/音效（`apps/web/public/assets`）会自动发布到 GitHub Pages，由网站转发；Render 只负责网页程序和联机。
 > - 叫醒服务（`keepalive.yml`）每 10 分钟访问网站，防止 Render 免费版休眠。
 
+## 游戏大厅与更新公告顺序（2026-11-26 起）
+
+- 每次发布游戏或游戏内容更新时，把最近更新的游戏放在首页 `apps/web/src/GameHall.tsx` 的 `GAMES` 列表最前；其后依次放上次更新的游戏、再上上次更新的游戏。其余游戏保持原有相对顺序。单纯修 bug 等维护更新不调整首页顺序。
+- 在 `apps/web/src/update-notices.ts` 的玩家公告列表顶部写一条简短、易懂的本次更新说明；旧公告保留并按原顺序排在后面。单纯修 bug 等维护更新按实际需要写公告，不因此调整首页游戏顺序。
+- `isNew` 只标本版本新发布或重点更新的游戏；下次发布新的游戏内容时，移除上次版本的 `isNew`，再给本次更新的游戏加上。`isBeta` 独立于 `isNew`，测试版游戏持续标 Beta，直到明确结束测试。
+
 ## 1. 项目定义
 
 - 游戏：Dead by Daylight: The Board Game（Level 99 Games 出品的实体桌游，基础版）

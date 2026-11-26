@@ -5,10 +5,12 @@ import type { Server, Socket } from "socket.io";
 import {
   createMAGame,
   DEFAULT_POINTS,
+  PLAYABLE_TRACKS,
   MARuleError,
   reduceMA,
   viewForMA,
 } from "../../../packages/magical-athlete/src/index.ts";
+import type { TrackId } from "../../../packages/magical-athlete/src/track-registry.ts";
 import type { MACommand, MAState } from "../../../packages/magical-athlete/src/types.ts";
 import {
   MA_EVENTS,
@@ -23,6 +25,8 @@ const CODE_CHARS = "ABCDEFGHJKLMNPQRSTUVWXYZ23456789";
 const MAX_PLAYERS = 8;
 const MIN_PLAYERS = 2;
 const RACES = 4;
+const SWAP_MEET_TIMEOUT_MS = 60_000;
+const DEFAULT_SCHEDULE: TrackId[] = ["mild", "wild", "mild", "wild"];
 
 interface MAPlayerFile {
   playerId: string;
@@ -40,6 +44,8 @@ export interface MARoomFile {
   hostId: string | null;
   players: MAPlayerFile[];
   points: MAPointsSetting[];
+  /** Optional on legacy saves; absent means the original alternating schedule. */
+  schedule?: TrackId[];
   /** 只在 3 人时有意义（2 人固定双选手） */
   variant?: "standard" | "double";
   /** 随机模式：每人随机发 4 名（旧存档没有这个字段 = 选秀） */
@@ -50,6 +56,8 @@ export interface MARoomFile {
   /** Absent on old saves: replay with the old forward-only Banana rule. */
   bananaBackwardPass?: boolean;
   independentMasterminds?: boolean;
+  /** Persisted deadline for a private Swap Meet answer. */
+  swapMeetDeadline?: number;
   seed: number;
   commands: MACommand[];
 }
@@ -62,6 +70,8 @@ export class MARoom {
       let s = this.create();
       for (const c of file.commands) s = reduceMA(s, c);
       this.state = s;
+      if (s.pending?.kind === "twist_swap_meet" && !file.swapMeetDeadline)
+        file.swapMeetDeadline = Date.now() + SWAP_MEET_TIMEOUT_MS;
     }
   }
   get code() {
@@ -75,6 +85,7 @@ export class MARoom {
       settings: {
         races: RACES,
         points: this.file.points,
+        ...(this.file.schedule ? { schedule: this.file.schedule } : {}),
         variant: "standard",
         deal: this.file.deal ?? "draft",
         bananaBackwardPass: this.file.bananaBackwardPass === true,
@@ -121,6 +132,14 @@ export class MARoom {
         gold: clampPoint(p?.gold),
         silver: clampPoint(p?.silver),
       }));
+    } else if (action?.type === "SET_SCHEDULE") {
+      const requested: unknown = action.schedule;
+      if (!Array.isArray(requested) || requested.length !== RACES ||
+        !requested.every((id) => typeof id === "string" && PLAYABLE_TRACKS.includes(id as TrackId)))
+        throw new Error("BAD_SCHEDULE");
+      this.file.schedule = [...requested] as TrackId[];
+    } else if (action?.type === "SHUFFLE_SCHEDULE") {
+      this.file.schedule = Array.from({ length: RACES }, () => PLAYABLE_TRACKS[randomInt(PLAYABLE_TRACKS.length)]);
     } else if (action?.type === "KICK") {
       // 房主在开局前移除多出来的玩家（比如重进时多出的同名玩家）
       const id = String(action.playerId);
@@ -171,6 +190,23 @@ export class MARoom {
     else throw new Error("BAD_ACTION");
     this.state = reduceMA(this.state, full);
     this.file.commands.push(full);
+    this.syncSwapMeetDeadline();
+  }
+  private syncSwapMeetDeadline(now = Date.now()) {
+    if (this.state?.pending?.kind === "twist_swap_meet")
+      this.file.swapMeetDeadline = now + SWAP_MEET_TIMEOUT_MS;
+    else delete this.file.swapMeetDeadline;
+  }
+  /** Server-only timeout action; the ordinary command/replay path remains authoritative. */
+  expireSwapMeet(now = Date.now()): boolean {
+    const pending = this.state?.pending;
+    if (pending?.kind !== "twist_swap_meet" || !this.file.swapMeetDeadline || now < this.file.swapMeetDeadline)
+      return false;
+    const command: MACommand = { type: "ANSWER", player: pending.player, value: "keep" };
+    this.state = reduceMA(this.state!, command);
+    this.file.commands.push(command);
+    this.syncSwapMeetDeadline(now);
+    return true;
   }
   private isBot(id: string | null | undefined) {
     return !!id && this.file.players.some((p) => p.playerId === id && p.bot);
@@ -194,6 +230,7 @@ export class MARoom {
     if (!cmd) return false;
     this.state = reduceMA(s, cmd);
     this.file.commands.push(cmd);
+    this.syncSwapMeetDeadline();
     return true;
   }
   snapshot(me: string | null): MARoomSnapshot {
@@ -209,6 +246,7 @@ export class MARoom {
       })),
       mySeat: me,
       points: this.file.points,
+      schedule: this.file.schedule ?? [...DEFAULT_SCHEDULE],
       variant: "standard",
       deal: this.file.deal ?? "draft",
       secondWind: this.file.secondWind === true,
@@ -334,6 +372,19 @@ export function attachMagicalAthlete(
       }, 250),
     );
   };
+  setInterval(() => {
+    const now = Date.now();
+    for (const room of store.rooms.values()) {
+      try {
+        if (room.expireSwapMeet(now)) {
+          store.save(room);
+          broadcast(room);
+        }
+      } catch (e) {
+        console.warn("魔法运动员交换大会超时处理失败", room.code, e instanceof Error ? e.message : e);
+      }
+    }
+  }, 1000).unref();
   const find = (code: unknown) => store.rooms.get(String(code ?? "").toUpperCase());
 
   io.on("connection", (socket: Socket) => {

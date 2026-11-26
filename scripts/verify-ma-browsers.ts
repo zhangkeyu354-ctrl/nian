@@ -56,7 +56,7 @@ for (let i = 0; ; i++) {
   await new Promise((r) => setTimeout(r, 50));
 }
 
-const browser = await chromium.launch({channel:process.env.MA_BROWSER_CHANNEL});
+const browser = await chromium.launch({channel:process.env.MA_BROWSER_CHANNEL,...(process.env.PW_EXEC?{executablePath:process.env.PW_EXEC}:{})});
 const errors: string[] = [];
 let recording:Video|null=null;
 let phoneCount=0;
@@ -97,6 +97,18 @@ try {
     await p.getByTestId("ma-name").fill("选手" + pages.indexOf(p));
     await p.getByTestId("ma-claim").click();
     await p.getByTestId("ma-code").waitFor();
+  }
+  if (process.env.MA_SCHEDULE_TEST === "1") {
+    assert.equal(await pages[1].getByTestId("ma-track-1-wild").isDisabled(), true);
+    assert.equal(await host.getByTestId("ma-track-1-twisty-twirl").isDisabled(), false, "二代地图已上线可选");
+    await host.getByTestId("ma-schedule-random").click();
+    const desired = ["twisty-twirl", "whirly-world", "mild", "twisty-twirl"];
+    for (const [i, id] of desired.entries()) {
+      await host.getByTestId(`ma-track-${i + 1}-${id}`).click();
+      await host.locator(`[data-testid="ma-track-${i + 1}-${id}"][aria-pressed="true"]`).waitFor();
+      await pages[1].locator(`[data-testid="ma-track-${i + 1}-${id}"][aria-pressed="true"]`).waitFor();
+    }
+    await host.screenshot({ path: `${out}/schedule-phone.png`, fullPage: true });
   }
   if (process.env.MA_SECOND_WIND === "1") {
     const toggle = host.getByTestId("ma-second-wind");
@@ -171,7 +183,15 @@ try {
   const preferredRacers = (process.env.MA_PREFER_RACERS ?? "")
     .split(",")
     .filter(Boolean);
+  let reloads = 0;
   for (;;) {
+    // 掉线重连：比赛中途把两名客人的页面刷新，确认按身份接回并继续
+    if (process.env.MA_RELOAD === "1" && (steps === 60 || steps === 400) && pages.length > 2) {
+      const p = pages[steps === 60 ? 1 : 2];
+      await p.reload();
+      await p.locator(".ma-game").waitFor({ timeout: 15000 });
+      reloads++;
+    }
     if (++steps >= Number(process.env.MA_MAX_STEPS ?? 4000)) {
       // 诊断：卡住时把每个人看到的界面和最近的比赛记录打出来
       for (const p of pages)
@@ -356,6 +376,10 @@ try {
       : null;
     if (label && !label.includes(`第 ${races} 场`)) {
       races++;
+      if (process.env.MA_SCHEDULE_TEST === "1") {
+        const expected = ["扭扭赛道", "螺旋世界", "温和赛道", "扭扭赛道"][races - 1];
+        assert(label.includes(expected), `第 ${races} 场赛道错误：${label}`);
+      }
       await host.screenshot({
         path: `${out}/2_第${races}场.png`,
         fullPage: true,
@@ -390,6 +414,7 @@ try {
       speedChecked,
       statsScreens: statsShots.size,
       newRacersPicked: [...newRacersPicked],
+      reloads,
     }),
   );
   assert.equal(

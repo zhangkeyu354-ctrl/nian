@@ -1,5 +1,6 @@
 import React, { useEffect, useLayoutEffect, useRef, useState } from "react";
 import {PawnMotion} from "./PawnMotion.tsx";
+import { RaceFx, type RaceFxCue } from "./RaceFx.tsx";
 import {useRaceCamera} from "./camera.ts";
 import type {TravelCue} from "./travel.ts";
 import {layoutFloats} from "./float-layout.ts";
@@ -7,6 +8,7 @@ import { racerName, TRACKS } from "../../../../packages/magical-athlete/src/inde
 import type { RaceState } from "../../../../packages/magical-athlete/src/types.ts";
 import type { Special } from "../../../../packages/magical-athlete/src/tracks.ts";
 import { racerArtId } from "../../../../packages/magical-athlete/src/second-wind-preview.ts";
+import { SECOND_WIND_MAPS } from "../../../../packages/magical-athlete/src/second-wind-maps.ts";
 import coords from "../../public/assets/magical-athlete/boards/coordinates.json" with { type: "json" };
 
 // 第 7、8 位玩家：粉色、青色；骰子和玩家标记共用这套颜色。
@@ -42,6 +44,14 @@ export function useVerticalBoard() {
 }
 
 const BOARDS = new Map((coords.boards as unknown as BoardCoords[]).map((b) => [b.id, b]));
+for (const map of Object.values(SECOND_WIND_MAPS)) {
+  const [w,h] = map.canvas;
+  BOARDS.set(map.id, {
+    id: map.id, canvas: [w,h], finish_podium: {x:79/w,y:210/h},
+    spaces: map.spaces.map(s=>({index:s.index,x:(s.x+s.width/2)/w,y:(s.y+s.height/2)/h,width:s.width/w,height:s.height/h})),
+    assets: {webp:`boards/second-wind/${map.id}.webp`,mobile:`boards/second-wind/${map.id}-mobile.webp`},
+  });
+}
 
 /** 手机「清晰棋盘」：5 列，0–14 从左到右、15–29 从右到左（和原版两条长边方向一致，箭头格的箭头方向不会反） */
 export const GRID_COLS = 5;
@@ -53,6 +63,22 @@ export function gridCell(pos: number) {
 }
 
 type Tok = RaceState["tokens"][number];
+
+function MonsterMarker({ x, y, width, height, pos }: { x: number; y: number; width: number; height: number; pos: number }) {
+  const [ready, setReady] = useState(false);
+  useEffect(() => {
+    const frame = requestAnimationFrame(() => setReady(true));
+    return () => cancelAnimationFrame(frame);
+  }, []);
+  return (
+    <span
+      className={`ma-twist-monster${ready ? " ready" : ""}`}
+      role="img"
+      aria-label={`巨口怪物，第 ${pos} 格`}
+      style={{ width, height, transform: `translate3d(${x}px, ${y}px, 0) translate(-50%, -65%)` }}
+    ><img src={`${ART}/tokens/sw_bite_mark_were.png`} alt="" /></span>
+  );
+}
 
 /** 同一格多人时：每人的偏移（单位：格宽 / 格高）和缩放 */
 function crowd(k: number, n: number): { dx: number; dy: number; scale: number } {
@@ -85,6 +111,7 @@ export function Track({
   spot,
   hit,
   target,
+  raceFx = [],
 }: {
   race: RaceState;
   colorOf: (playerId: string) => string;
@@ -110,6 +137,7 @@ export function Track({
   hit?: { id: number; racer: string; kind: string; duration?:number } | null;
   /** 正在走的选手要停的格子 */
   target?: number | null;
+  raceFx?: RaceFxCue[];
 }) {
   const race: RaceState = shown
     ? { ...raceIn, tokens: raceIn.tokens.map((t) => ({ ...t, ...(shown.get(t.racer) ?? {}) })) }
@@ -184,6 +212,19 @@ export function Track({
   const focus=current&&focused?place(current.pos,focused.indexOf(current.racer),focused.length):null;
   useRaceCamera(scroller,surface,focus,vertical,layout==="grid");
   const spots = new Map<string, { x: number; y: number }>();
+  const monsterPos = race.twist?.monster && !race.twist.monster.finished
+    ? place(race.twist.monster.pos, 0, 1)
+    : null;
+  const monster = monsterPos ? (
+    <MonsterMarker
+      key={`monster-${layout}`}
+      x={monsterPos.x * size.w}
+      y={monsterPos.y * size.h}
+      width={size.w * (layout === "grid" ? 0.11 : 0.046)}
+      height={size.w * (layout === "grid" ? 0.18 : 0.075)}
+      pos={race.twist!.monster!.pos}
+    />
+  ) : null;
   const pawns = [...groups].flatMap(([pos, racers]) =>
     racers.map((rid, k) => {
       const t: Tok = race.tokens.find((x) => x.racer === rid)!;
@@ -267,6 +308,8 @@ export function Track({
     ) : null;
 
   if (layout === "grid") {
+    const secondWindMap = race.track === "twisty-twirl" || race.track === "whirly-world"
+      ? SECOND_WIND_MAPS[race.track] : null;
     const img = `url(${ART}/${board.assets.webp})`;
     const crop = (cx: number, cy: number, cw: number, ch: number): React.CSSProperties => ({
       backgroundImage: img,
@@ -281,12 +324,15 @@ export function Track({
           ref={surface}
           className="ma-grid"
           role="img"
-          aria-label={`${track.zh}，第 ${race.index + 1} 场`}
+          aria-label={`${track.zh}，第 ${race.index + 1} 场${race.twist?.reversed ? "，镜像方向，向第 0 格前进" : ""}`}
           style={{ aspectRatio: `${GRID_COLS} / ${GRID_ROWS}` }}
         >
           {board.spaces.map((sp) => {
             const { col, row } = gridCell(sp.index);
             const special = track.specials[sp.index];
+            const mapSpace = secondWindMap?.spaces[sp.index];
+            const portal = secondWindMap?.warpPairs.find(([a, b]) => a === sp.index || b === sp.index);
+            const portalTo = portal ? (portal[0] === sp.index ? portal[1] : portal[0]) : null;
             return (
               <div
                 key={sp.index}
@@ -299,11 +345,14 @@ export function Track({
                 }}
               >
                 {sp.index === 0 ? (
-                  <div className="ma-cell-art start">起点</div>
+                  <div className={`ma-cell-art start${race.twist?.reversed ? " reverse-finish" : ""}`}>{race.twist?.reversed ? "镜像终点" : "起点"}</div>
                 ) : (
-                  <div className="ma-cell-art" style={crop(sp.x, sp.y, sp.width * 0.97, sp.height * 0.97)} />
+                  <div className={"ma-cell-art" + (mapSpace ? " second-wind" : "")}
+                    style={mapSpace ? { backgroundColor: mapSpace.color } : crop(sp.x, sp.y, sp.width * 0.97, sp.height * 0.97)} />
                 )}
                 <span className="ma-cell-no">{sp.index}</span>
+                {portalTo !== null && <span className="ma-cell-tag portal">↔ {portalTo}</span>}
+                {sp.index === 29 && race.twist?.reversed && <span className="ma-cell-tag reverse-start">镜像起点</span>}
                 {special && <span className={"ma-cell-tag " + special.kind}>{specialLabel(special)}</span>}
               </div>
             );
@@ -314,11 +363,13 @@ export function Track({
           >
             <div className="ma-cell-art podium">
               <span className="ma-cell-trophy" style={crop(fp.x, 0.5, 0.075, 0.42)} />
-              <b>终点 · 领奖台</b>
+              <b>{race.twist?.reversed ? "第 0 格冲线 · 领奖台" : "终点 · 领奖台"}</b>
             </div>
           </div>
           {linkLayer}
+          {monster}
           {pawns}
+          <RaceFx cues={raceFx} spot={spots} place={p => place(p, 0, 1)} />
           {floatLayer}
         </div>
       </div>
@@ -337,7 +388,7 @@ export function Track({
             : { aspectRatio: `${w} / ${h}` }
       }
       role="img"
-      aria-label={`${track.zh}，第 ${race.index + 1} 场`}
+      aria-label={`${track.zh}，第 ${race.index + 1} 场${race.twist?.reversed ? "，镜像方向，向第 0 格前进" : ""}`}
     >
       {vertical ? (
         // 竖版放大后需要清晰的原图
@@ -360,7 +411,9 @@ export function Track({
         />
       )}
       {linkLayer}
+      {monster}
       {pawns}
+      <RaceFx cues={raceFx} spot={spots} place={p => place(p, 0, 1)} />
       {floatLayer}
     </div>
   );

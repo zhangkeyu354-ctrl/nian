@@ -1,5 +1,6 @@
 import type { MAView } from "../../magical-athlete/src/privacy.ts";
 import type { MACommand } from "../../magical-athlete/src/types.ts";
+import type { TrackId } from "../../magical-athlete/src/track-registry.ts";
 
 /** 魔法运动员联机协议（与黎明杀机共用同一个服务器，事件名加 ma: 前缀，互不干扰） */
 export const MA_EVENTS = {
@@ -22,6 +23,8 @@ export interface MARoomSnapshot {
   players: Array<{ playerId: string; name: string; connected: boolean; host: boolean; bot?: boolean }>;
   mySeat: string | null;
   points: MAPointsSetting[];
+  /** Public four-race schedule, including repeated maps. */
+  schedule: TrackId[];
   /** 3 人房可选双选手变体；2 人房固定双选手 */
   variant: "standard" | "double";
   /** draft：轮流选秀；random：随机模式，每人随机发 4 名、全场不重复 */
@@ -37,6 +40,8 @@ export interface MARoomSnapshot {
 export type MALobbyAction =
   | { type: "START" }
   | { type: "SET_POINTS"; points: MAPointsSetting[] }
+  | { type: "SET_SCHEDULE"; schedule: TrackId[] }
+  | { type: "SHUFFLE_SCHEDULE" }
   | { type: "SET_DEAL"; deal: "draft" | "random" }
   | { type: "SET_SECOND_WIND"; enabled: boolean; only?: boolean }
   | { type: "KICK"; playerId: string }

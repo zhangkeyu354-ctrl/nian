@@ -4,7 +4,9 @@ import {
   racerName,
   total,
   TRACKS,
+  PLAYABLE_TRACKS,
   HIDDEN_CHOICE,
+  type TrackId,
   type MAView,
 } from "../../../../packages/magical-athlete/src/index.ts";
 import type { MARoomSnapshot } from "../../../../packages/shared/src/ma-protocol.ts";
@@ -242,6 +244,13 @@ function Lobby({ snap, lobby }: { snap: MARoomSnapshot; lobby: (a: Parameters<Re
   const [error, setError] = useState("");
   const host = snap.players.find((p) => p.host)?.playerId === snap.mySeat;
   const [points, setPoints] = useState(snap.points);
+  const schedule = snap.schedule ?? ["mild", "wild", "mild", "wild"];
+  const mapIds: TrackId[] = ["mild", "wild", "twisty-twirl", "whirly-world"];
+  const presets: Array<{ label: string; maps: TrackId[] }> = [
+    { label: "仅一代", maps: ["mild", "wild", "mild", "wild"] },
+    { label: "仅二代", maps: ["twisty-twirl", "whirly-world", "twisty-twirl", "whirly-world"] },
+    { label: "一二代混合", maps: ["mild", "wild", "twisty-twirl", "whirly-world"] },
+  ];
   useEffect(() => setPoints(snap.points), [snap.points]);
   const run = async (a: Parameters<typeof lobby>[0]) => setError((await lobby(a)) ?? "");
   return (
@@ -328,12 +337,39 @@ function Lobby({ snap, lobby }: { snap: MARoomSnapshot; lobby: (a: Parameters<Re
             ))}
           </tbody>
         </table>
-        <p className="ma-muted">
-          赛道顺序：温和 → 狂野 → 温和 → 狂野。
-          <a href={`${ART}/docs/skillbook.pdf`} target="_blank" rel="noreferrer">
-            原版 36 名选手技能书（PDF）
-          </a>
-        </p>
+        <p className="ma-muted"><a href={`${ART}/docs/skillbook.pdf`} target="_blank" rel="noreferrer">原版 36 名选手技能书（PDF）</a></p>
+      </section>
+      <section className="ma-panel ma-schedule-panel">
+        <h2>四场赛程</h2>
+        <p className="ma-muted">可以重复选择同一张地图。开局前所有人都能看到本场赛程。</p>
+        <div className="ma-schedule-presets">
+          {presets.map(({ label, maps }) => (
+            <button key={label} type="button" disabled={!host || maps.some(id => !PLAYABLE_TRACKS.includes(id))}
+              onClick={() => void run({ type: "SET_SCHEDULE", schedule: maps })}>
+              {label}{maps.some(id => !PLAYABLE_TRACKS.includes(id)) ? " · 待验收" : ""}
+            </button>
+          ))}
+          <button type="button" data-testid="ma-schedule-random" disabled={!host} onClick={() => void run({ type: "SHUFFLE_SCHEDULE" })}>🎲 随机赛程／重抽</button>
+        </div>
+        <div className="ma-schedule-races">
+          {schedule.map((selected, i) => (
+            <div className="ma-schedule-race" key={i}>
+              <strong>第 {i + 1} 场</strong>
+              <div className="ma-schedule-maps" role="group" aria-label={`第 ${i + 1} 场地图`}>
+                {mapIds.map(id => (
+                  <button key={id} type="button" aria-pressed={selected === id}
+                    data-testid={`ma-track-${i + 1}-${id}`}
+                    disabled={!host || !PLAYABLE_TRACKS.includes(id)}
+                    title={PLAYABLE_TRACKS.includes(id) ? TRACKS[id].zh : `${TRACKS[id].zh}尚待验收`}
+                    onClick={() => void run({ type: "SET_SCHEDULE", schedule: schedule.map((v, j) => j === i ? id : v) as TrackId[] })}>
+                    {TRACKS[id].zh}{!PLAYABLE_TRACKS.includes(id) && <small>待验收</small>}
+                  </button>
+                ))}
+              </div>
+            </div>
+          ))}
+        </div>
+        {!host && <p className="ma-muted">由房主选择赛程。</p>}
       </section>
       <section className="ma-panel">
         <h2>怎么拿选手</h2>
@@ -919,7 +955,10 @@ function Race({
       )}
       <div className={"ma-board" + (useGrid ? " grid-mode" : "") + (pb.shake ? " shake" : "")}>
         <div className="ma-board-head">
-          <b>第 {race.index + 1} 场 · {track.zh}</b>
+          <b>第 {race.index + 1} 场 · {track.zh}{race.finale ? " · 附加决赛" : ""}</b>
+          {race.twist?.reversed && (
+            <span className="ma-direction-reversed" role="status">↶ 镜像世界：向旧起点前进 · 第 0 格冲线</span>
+          )}
           {portrait ? (
             <button type="button" className="ma-zoom" onClick={flipLayout} data-testid="ma-zoom">
               {useGrid ? "🖼 原版棋盘" : "🔲 清晰棋盘"}
@@ -933,9 +972,9 @@ function Race({
             <span className="ma-legend">
               <i className="star">★</i>星星 +1 分 <i className="rock">▲</i>石头摔倒 <i className="arrow">➜</i>箭头额外前进/后退
             </span>
-          ) : (
+          ) : race.track === "mild" ? (
             <span className="ma-legend">普通赛道，没有特殊格</span>
-          )}
+          ) : null}
         </div>
         <Track
           race={race}
@@ -953,6 +992,7 @@ function Race({
           spot={pb.spot}
           hit={pb.hit}
           target={pb.target}
+          raceFx={pb.raceFx}
         />
       </div>
       {showBar && p && (
@@ -1269,13 +1309,15 @@ export function Overlay({
     const tr = TRACKS[show.track as "mild" | "wild"];
     body = (
       <div className="ma-ov-start">
-        <small>第 {show.race + 1} 场</small>
+        <small>第 {show.race + 1} 场{show.finale ? " · 附加决赛" : ""}</small>
         <b>{tr?.zh ?? show.track}</b>
-        {show.track === "wild" ? (
+        {show.finale ? (
+          <p>两名冲线选手从第二弯道再赛一场，胜者获得金银奖池。</p>
+        ) : show.track === "wild" ? (
           <p>第二张地图：特殊赛道！停在 ★ 得 1 分，停在石头上摔倒，停在箭头上额外前进或后退。</p>
-        ) : (
+        ) : show.track === "mild" ? (
           <p>普通赛道，前两个冲线的拿奖牌。</p>
-        )}
+        ) : null}
       </div>
     );
   } else {

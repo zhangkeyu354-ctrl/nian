@@ -8,7 +8,8 @@
  */
 import { DRAFTABLE, racerName } from "./racers.ts";
 import { SECOND_WIND_FIRST_CORNERS, SECOND_WIND_PREVIEW_IDS } from "./second-wind-preview.ts";
-import { PLAYABLE_TRACKS, TRACKS } from "./tracks.ts";
+import { warpDestination } from "./second-wind-maps.ts";
+import { PLAYABLE_TRACKS, TRACKS } from "./track-registry.ts";
 import type {
   Chip,
   CreateMAOptions,
@@ -78,8 +79,9 @@ export function createMAGame(opts: CreateMAOptions): MAState {
     Array.from({ length: races }, (_, i) =>
       i % 2 === 0 ? "mild" : PLAYABLE_TRACKS.includes("wild") ? "wild" : "mild",
     );
+  if (schedule.length !== races) fail("SCHEDULE", `赛程必须恰好包含 ${races} 场。`);
   for (const t of schedule)
-    if (!PLAYABLE_TRACKS.includes(t)) fail("TRACK_UNCONFIRMED", `${TRACKS[t].zh}：${TRACKS[t].missing}。`);
+    if (!PLAYABLE_TRACKS.includes(t)) fail("TRACK_UNCONFIRMED", `${TRACKS[t]?.zh ?? String(t)}：${TRACKS[t]?.missing ?? "地图不可用"}。`);
   const deal: "draft" | "random" = opts.settings?.deal === "random" && variant === "standard" ? "random" : "draft";
   const settings: Settings = {
     ...(opts.settings?.bananaBackwardPass === false ? {} : { bananaBackwardPass: true }),
@@ -199,6 +201,9 @@ function startDraftRound(s: MAState, round: number, startPlayer: string) {
 const race = (s: MAState) => s.race ?? fail("NO_RACE", "现在不在比赛中。");
 const active = (t: Token) => !t.out && t.place === null;
 const trackOf = (s: MAState) => TRACKS[race(s).track];
+/** Number of physical spaces from the current starting edge. */
+const progress = (s: MAState, pos: number) => race(s).twist?.reversed ? trackOf(s).length - pos : pos;
+const physical = (s: MAState, step: number) => race(s).twist?.reversed ? trackOf(s).length - step : step;
 const rname = (t: Token) => racerName(t.racer);
 
 /** 从当前玩家开始顺时针的选手顺序（结算顺序） */
@@ -214,8 +219,8 @@ const onSpace = (s: MAState, pos: number) => race(s).tokens.filter((x) => active
 function leaders(s: MAState): Token[] {
   const act = race(s).tokens.filter(active);
   if (!act.length) return [];
-  const max = Math.max(...act.map((t) => t.pos));
-  return act.filter((t) => t.pos === max);
+  const max = Math.max(...act.map((t) => progress(s, t.pos)));
+  return act.filter((t) => progress(s, t.pos) === max);
 }
 
 /** 选手当前生效的能力 id（山寨猫取领先者的能力） */
@@ -239,7 +244,7 @@ export function powerOf(s: MAState, t: Token): string | null {
 function suppressedByNull(s: MAState, t: Token): boolean {
   return (
     !!s.settings.secondWindPreview &&
-    race(s).tokens.some((o) => o !== t && active(o) && o.pos < t.pos && nativePowerOf(s, o) === "sw_null")
+    race(s).tokens.some((o) => o !== t && active(o) && progress(s, o.pos) < progress(s, t.pos) && nativePowerOf(s, o) === "sw_null")
   );
 }
 const has = (s: MAState, t: Token, id: string) => powerOf(s, t) === id;
@@ -280,6 +285,7 @@ function takeHogs(s: MAState, c: Ctx, t: Token, simultaneous: boolean) {
 
 // ---------------------------------------------------------------- 单元执行上下文
 interface Ctx {
+  warpChains?: Map<Token, Set<string>>;
   choiceEpoch?: number;
   unforcedEpoch?: number;
   romanticSeen?: Map<string, string>;
@@ -291,6 +297,7 @@ interface Ctx {
   answers: string[];
   i: number;
   guard: Set<string>;
+  loopAwards?: Map<string, Chip[][]>;
   depth: number;
   criticUsed: Set<string>;
 }
@@ -301,20 +308,17 @@ function ask(s: MAState, c: Ctx, d: Decision): string {
   throw new Need(d);
 }
 
-/** 局面指纹：所有选手的位置、摔倒、名次、淘汰（判断「真正重复、不改变状态」的无限循环） */
-function stateKey(s: MAState) {
-  const positions = race(s)
-    .tokens.map((t) => `${t.pos}${t.tripped ? "T" : ""}${t.place ?? ""}${t.out ? "X" : ""}`)
-    .join(",");
-  return s.settings.secondWindPreview
-    ? positions +
-        JSON.stringify({
-          powers: race(s).tokens.map((t) => [t.racer, t.owner, t.base, t.secondWind]),
-          hogs: race(s).hogs,
-          deck: s.deck.length,
-        })
-    : positions;
+/** Semantic state, excluding only replay/display metadata. */
+function stateKey(s: MAState, includeScores = true) {
+  const { lastRoll: _roll, stalemateSeen: _seen, ...r } = race(s);
+  return JSON.stringify({
+    ...s, log: [], version: 0, turn: null, pending: null,
+    players: includeScores ? s.players : s.players.map(p => ({ ...p, chips: [] })),
+    race: r,
+  });
 }
+/** @internal Loop guard fingerprint for regression tests. */
+export { stateKey as __testStateKey };
 /**
  * 循环判定：同一个触发（同一来源 → 同一对象）在**完全相同的局面**下第二次出现，才是规则书说的无限循环
  * （「按发生顺序结算一轮后停止」）。局面在变化的长连锁（如挪挪 × 吸盘鱼一路往前）是合法的，继续结算。
@@ -324,8 +328,15 @@ const SAFETY = 20000;
 function loopCheck(s: MAState, c: Ctx, trigger: string, what: string): boolean {
   if (++c.depth > SAFETY) fail("ENGINE_SAFETY", "连锁结算超过程序保险上限，请把这局的记录发给开发者。");
   const key = `${trigger}|${stateKey(s)}`;
-  if (!c.guard.has(key)) {
+  const structural = `${trigger}|${stateKey(s, false)}`;
+  const earlier = c.loopAwards?.get(structural);
+  // A hotel payment may consume a newly earned chip in the same cycle. Compare
+  // net scores as well as chip-list prefixes before treating it as pure scoring.
+  const scoringCycle = earlier && s.players.every((p, i) =>
+    total(p.chips) >= total(earlier[i]));
+  if (!c.guard.has(key) && !(earlier && (onlyAddedAwards(earlier, s) || scoringCycle))) {
     c.guard.add(key);
+    (c.loopAwards ??= new Map()).set(structural, s.players.map(p => [...p.chips]));
     return false;
   }
   log(s, `（循环：${what}。同一触发在相同局面下再次出现，已按发生顺序结算一轮，到此停止）`);
@@ -453,7 +464,7 @@ function finish(s: MAState, c: Ctx, t: Token) {
       return;
     }
   }
-  t.pos = trackOf(s).length;
+  t.pos = physical(s, trackOf(s).length);
   r.finishers.push(t.racer);
   t.place = r.finishers.length;
   log(s, `🏁 ${rname(t)}（${pname(s, t.owner)}）第 ${t.place} 个冲过终点！`, {
@@ -524,22 +535,26 @@ function eliminateWithPower(s: MAState, targets: Token[], effect: () => void) {
 
 /** 巨婴：除起点外不能与它同格 */
 function hugeBaby(s: MAState, c: Ctx, t: Token) {
-  if (!active(t) || t.pos === 0) return;
+  if (!active(t) || progress(s, t.pos) === 0) return;
+  // 二代落点先走地图。传送后已访问的通道不再抢在角色能力前重复触发。
+  if (warpDestination(race(s).track, t.pos, [...(c.warpChains?.get(t) ?? [])])) return;
   for (const hb of holders(s, "huge_baby")) {
-    if (hb !== t && hb.pos === t.pos && t.pos > 0) {
-      t.pos -= 1;
-      log(s, "", { kind: "warp", racer: t.racer, from: t.pos + 1, to: t.pos });
+    if (hb !== t && hb.pos === t.pos && progress(s, t.pos) > 0) {
+      const from = t.pos;
+      t.pos = physical(s, progress(s, t.pos) - 1);
+      log(s, "", { kind: "warp", racer: t.racer, from, to: t.pos });
       fire(s, c, hb, `${rname(hb)}【块头太大】：${rname(t)} 被放到它身后一格。`);
     }
   }
-  if (active(t) && t.pos > 0 && has(s, t, "huge_baby"))
+  if (active(t) && progress(s, t.pos) > 0 && has(s, t, "huge_baby"))
     for (const o of others(s, t))
-      if (active(t) && t.pos > 0 && active(o) && o.pos === t.pos) {
-        o.pos -= 1;
+      if (active(t) && progress(s, t.pos) > 0 && active(o) && o.pos === t.pos) {
+        const from = o.pos;
+        o.pos = physical(s, progress(s, o.pos) - 1);
         log(s, "", {
           kind: "warp",
           racer: o.racer,
-          from: o.pos + 1,
+          from,
           to: o.pos,
         });
         fire(s, c, t, `${rname(t)}【块头太大】：${rname(o)} 被挤到它身后一格。`);
@@ -547,6 +562,171 @@ function hugeBaby(s: MAState, c: Ctx, t: Token) {
 }
 
 /** 移动（main = 主移动）。n 可正可负；0 不算移动。 */
+/** Commit the card before reactions; incomplete effects explicitly reject preview play. */
+function crossTwist(s: MAState, c: Ctx, t: Token, from: number, to: number) {
+  const twist = race(s).twist;
+  if (!twist || twist.triggered || from > 13 || to < 14 || !active(t)) return;
+  twist.triggered = true;
+  drawTwist(s, c, t);
+}
+
+function drawTwist(s: MAState, c: Ctx, t: Token) {
+  const twist = race(s).twist!;
+  if (!twist.remaining.length) return;
+  const index = randInt(s, twist.remaining.length);
+  const [card] = twist.remaining.splice(index, 1);
+  twist.drawn.push(card);
+  log(s, `${rname(t)} 抽到 Twist 事件 ${card}。`);
+  resolveTwistCard(s, c, t, card);
+}
+
+function resolveTwistCard(s: MAState, c: Ctx, t: Token, card: number) {
+  const twist = race(s).twist!;
+  if (card === 2) {
+    twist.reversed = true;
+    log(s, "【镜像世界生效！】本场从另一端开始前进；选手原地不动。", { kind: "direction", reversed: true });
+    if (twist.monster && !twist.monster.finished && progress(s, twist.monster.pos) >= trackOf(s).length) {
+      twist.monster.finished = true;
+      log(s, "巨口怪物已在新的终点，停止追逐。");
+    }
+    for (const x of inOrder(s).filter(x => active(x) && progress(s, x.pos) >= trackOf(s).length))
+      if (active(x)) finish(s, c, x);
+    return;
+  }
+  if (card === 11) {
+    resolveSwapMeet(s, c);
+    return;
+  }
+  if (card === 12) {
+    twist.finalePending = true;
+    log(s, "【季终决战！】本场正常比赛继续；前两名实际冲线后，从第二弯道加赛争夺金银奖池。");
+    return;
+  }
+  if (card === 9) {
+    const biteMarks = inOrder(s).filter(x => active(x) && has(s, x, "sw_bite_mark"));
+    if (biteMarks.length) {
+      delete twist.monster;
+      twist.monsterRacers = biteMarks.map(x => x.racer);
+      for (const x of biteMarks) {
+        const from = x.pos;
+        x.secondWind = { ...x.secondWind, wereMouth: true };
+        x.pos = physical(s, 0);
+        log(s, `【炼金实验室泄露！】${rname(x)} 以大嘴狼人身份回到起点，此后每回合末追加怪物移动。`,
+          { kind: "warp", racer: x.racer, from, to: x.pos });
+      }
+      return;
+    }
+    twist.monster = { pos: physical(s, 0) };
+    log(s, "【炼金实验室泄露！】巨口怪物从起点出发，之后每回合结束掷骰移动。");
+    return;
+  }
+  if (card === 10) {
+    log(s, "【观众渴求混乱！】依次抽取并结算两张剩余事件。");
+    drawTwist(s, c, t);
+    drawTwist(s, c, t);
+    return;
+  }
+  if (card === 6) {
+    twist.fixedDice = Object.fromEntries(s.players.map(p => [p.id, d6(s)]));
+    log(s, "【随机性消失！】" + s.players.map(p => `${p.name} 的骰点固定为 ${twist.fixedDice![p.id]}`).join("，") + "。本场有效。");
+    return;
+  }
+  if (card === 13) {
+    if (race(s).index + 1 < s.settings.races) {
+      s.timeImpReturners ??= [];
+      if (!s.timeImpReturners.some(x => x.racer === t.racer))
+        s.timeImpReturners.push({ racer: t.racer, owner: t.owner, base: t.base });
+    }
+    eliminateWithPower(s, [t], () => log(s, `${rname(t)}【踩到时之灵！】淘汰，下一场正常比赛额外参赛。`));
+    return;
+  }
+  if (card === 8) {
+    log(s, "【人人诅咒魔杖！】每回合结束时掷骰，跳过后面相应数量的行动顺位。");
+    return;
+  }
+  if (card === 7) {
+    const occupied = new Set(race(s).tokens.filter(active).map(x => x.pos));
+    twist.chips = (twist.reversed
+      ? Array.from({ length: 14 }, (_, i) => 14 - i)
+      : Array.from({ length: 17 }, (_, i) => i + 13)).filter(pos => !occupied.has(pos));
+    log(s, `【皮纳塔破了！】第一弯道后的 ${twist.chips.length} 个空格各放一枚 1 分筹码。`);
+    return;
+  }
+  if (card === 3) {
+    log(s, "【传送带启动！】全员传送至起点后一格，本场主移动 +3。实际骰值不变。");
+    const targets = inOrder(s).filter(active);
+    if (targets.length) warp(s, c, targets[0], physical(s, 1), undefined, targets);
+    return;
+  }
+  if (card === 5) {
+    log(s, "【终点虫潮！】本场停在终点前两格时后退 5 格。");
+    return;
+  }
+  if (card === 4) {
+    log(s, "【禁跑水潭！】本场主移动最终达到 6 格时，移动前淘汰。");
+    return;
+  }
+  if (card !== 1) fail("CHECK_REQUIRED", `Twist 事件 ${card} 尚未实现，不能结算。`);
+  const live = race(s).tokens.filter(active);
+  const last = Math.min(...live.map(x => progress(s, x.pos)));
+  const targets = inOrder(s).filter(x => active(x) && progress(s, x.pos) === last);
+  log(s, `【地上烤鸡！】末位 ${targets.map(rname).join("、")} 各向前移动 7 格。`);
+  for (const target of targets) if (active(target)) move(s, c, target, 7, false, "地上烤鸡");
+}
+
+/** Collect private choices before changing any racer identity or publishing a result. */
+function resolveSwapMeet(s: MAState, c: Ctx) {
+  const r = race(s);
+  const owners = r.order.filter(id => r.tokens.some(x => x.owner === id && active(x)));
+  const allowed = new Set(s.settings.secondWindPreview ? [...DRAFTABLE, ...SECOND_WIND_PREVIEW_IDS] : DRAFTABLE);
+  const held = new Set([...s.players.flatMap(p => [...p.hand, ...p.used]), ...r.tokens.map(x => x.racer)]);
+  const draws = owners.flatMap(owner => {
+    const index = s.deck.findIndex(id => allowed.has(id) && !held.has(id));
+    if (index < 0) return [];
+    const [card] = s.deck.splice(index, 1);
+    held.add(card);
+    return [{ owner, card }];
+  });
+  const choices = draws.map(({ owner, card }) => {
+    const eligible = r.tokens.filter(x => x.owner === owner && active(x));
+    const pick = ask(s, c, {
+      player: owner,
+      racer: null,
+      kind: "twist_swap_meet",
+      prompt: `【交换大会】你抽到 ${racerName(card)}。要与哪名在场选手交换？`,
+      options: [
+        ...eligible.map(x => ({ value: `swap:${x.racer}`, label: `换下 ${rname(x)}` })),
+        { value: "keep", label: "保留原选手" },
+      ],
+    });
+    return { owner, card, pick };
+  });
+  const rejected: string[] = [];
+  for (const { owner, card, pick } of choices) {
+    const old = pick.startsWith("swap:") ? pick.slice(5) : null;
+    const target = old ? r.tokens.find(x => x.owner === owner && x.racer === old && active(x)) : null;
+    if (!target) {
+      rejected.push(card);
+      log(s, `${pname(s, owner)} 在交换大会保留原选手。`);
+      continue;
+    }
+    target.racer = card;
+    target.base = card;
+    target.copyPick = null;
+    target.started = false;
+    delete target.secondWind;
+    if (r.mastermindPicks) delete r.mastermindPicks[old!];
+    if (r.hogs) r.hogs = r.hogs.filter(h => h.source !== old && h.rider !== old);
+    if (s.returningRacers) s.returningRacers = s.returningRacers.filter(x => x.racer !== old);
+    const p = player(s, owner);
+    p.hand.push(card);
+    p.used.push(card);
+    registerReturner(s, target);
+    log(s, `${pname(s, owner)} 在交换大会用 ${racerName(card)} 替换 ${racerName(old!)}，保留原位置。`);
+  }
+  s.deck.push(...rejected);
+}
+
 /**
  * 移动（main = 主移动；其余为技能移动 / 赛道移动，都算「移动」，会经过别人）。n 可正可负；0 不算移动。
  *
@@ -558,24 +738,29 @@ function move(s: MAState, c: Ctx, t: Token, n: number, main: boolean, why: strin
   if (!active(t) || n === 0) return;
   const L = trackOf(s).length;
   const from = t.pos;
+  const reversedAtStart = race(s).twist?.reversed === true;
+  const toward = (pos: number) => reversedAtStart ? L - pos : pos;
+  const at = (step: number) => reversedAtStart ? L - step : step;
+  const startStep = toward(from);
 
   // 1) 算出终点（跳跳蟾跳过有人的格子；较真怪要求恰好冲线）
   let p: number;
+  let targetStep: number;
   let skips = 0;
   let overshoot = false;
   if (n < 0) {
-    p = Math.max(0, from + n);
-    if (p === from) return;
+    targetStep = Math.max(0, startStep + n);
+    if (targetStep === startStep) return;
   } else {
     const leap = has(s, t, "leaptoad");
     let rem = n;
-    p = from;
-    while (rem > 0 && p < L) {
-      p++;
-      if (p < L && leap && onSpace(s, p).some((x) => x !== t)) skips++;
+    targetStep = startStep;
+    while (rem > 0 && targetStep < L) {
+      targetStep++;
+      if (targetStep < L && leap && onSpace(s, at(targetStep)).some((x) => x !== t)) skips++;
       else rem--;
     }
-    overshoot = p >= L && rem > 0;
+    overshoot = targetStep >= L && rem > 0;
     if (overshoot) {
       const st = holders(s, "stickler").find((x) => x !== t);
       if (st) {
@@ -584,6 +769,7 @@ function move(s: MAState, c: Ctx, t: Token, n: number, main: boolean, why: strin
       }
     }
   }
+  p = at(targetStep);
 
   // 2) 同格的吸盘鱼在出发前决定要不要一起走
   const riders: Token[] = [];
@@ -593,7 +779,7 @@ function move(s: MAState, c: Ctx, t: Token, n: number, main: boolean, why: strin
       player: f.owner,
       racer: f.racer,
       kind: "suckerfish",
-      prompt: `${rname(f)}【吸附蹭车】：要跟着 ${rname(t)} 一起移动到${p >= L ? "终点" : `第 ${p} 格`}吗？`,
+      prompt: `${rname(f)}【吸附蹭车】：要跟着 ${rname(t)} 一起移动到${targetStep >= L ? "终点" : `第 ${p} 格`}吗？`,
       options: [
         { value: "yes", label: "跟上" },
         { value: "no", label: "不跟" },
@@ -626,17 +812,23 @@ function move(s: MAState, c: Ctx, t: Token, n: number, main: boolean, why: strin
     n < 0
       ? []
       : others(s, g).filter(
-          (o) => !group.includes(o) && (before.get(o) ?? 0) > from && (g.place !== null || o.pos < g.pos),
+          (o) => !group.includes(o) && toward(before.get(o) ?? 0) > startStep && (g.place !== null || toward(o.pos) < toward(g.pos)),
         );
   for (const f of riders) log(s, `${rname(f)}【吸附蹭车】跟着 ${rname(t)} 一起移动。`);
   log(s, "", {
     kind: "move",
     racers: group.map((g) => g.racer),
     from,
-    to: Math.min(p, L),
+    to: p,
     why,
   });
-  if (p >= L) {
+  if (targetStep >= L) {
+    const twistBefore = race(s).twist?.triggered;
+    for (const g of group) crossTwist(s, c, g, from, p);
+    if (!reversedAtStart && race(s).twist?.reversed) {
+      fail("CHECK_REQUIRED", "本步跨越 Twist 并触及原终点时，镜像后的落点尚待裁定。");
+    }
+    if (!twistBefore && race(s).twist?.drawn.includes(3)) return;
     for (const g of group)
       if (active(g)) {
         if (magicalTrip && g === t)
@@ -644,22 +836,22 @@ function move(s: MAState, c: Ctx, t: Token, n: number, main: boolean, why: strin
             s,
             c,
             g,
-            others(s, g).filter((o) => !group.includes(o) && (before.get(o) ?? 0) > from),
+            others(s, g).filter((o) => !group.includes(o) && toward(before.get(o) ?? 0) > startStep),
           );
         if (biting.has(g))
           bitePass(
             s,
             c,
             g,
-            others(s, g).filter((o) => !group.includes(o) && (before.get(o) ?? 0) > from),
+            others(s, g).filter((o) => !group.includes(o) && toward(before.get(o) ?? 0) > startStep),
           );
         penguinPass(
           s,
           c,
-          n < 0 ? [] : others(s, g).filter((o) => !group.includes(o) && (before.get(o) ?? 0) > from),
+          n < 0 ? [] : others(s, g).filter((o) => !group.includes(o) && toward(before.get(o) ?? 0) > startStep),
           penguins,
         );
-        if (n > 0 && streaking.has(g) && others(s, g).some((o) => !group.includes(o) && (before.get(o) ?? 0) > from)) {
+        if (n > 0 && streaking.has(g) && others(s, g).some((o) => !group.includes(o) && toward(before.get(o) ?? 0) > startStep)) {
           awardPower(s, c, g, 1, `${rname(g)}【擦身得分】：经过其他选手，获得 1 分。`, "sw_streaker");
         }
         finish(s, c, g);
@@ -667,6 +859,9 @@ function move(s: MAState, c: Ctx, t: Token, n: number, main: boolean, why: strin
     return;
   }
   for (const g of group) g.pos = p;
+  const twistBefore = race(s).twist?.triggered;
+  for (const g of group) crossTwist(s, c, g, from, p);
+  if (!twistBefore && race(s).twist?.drawn.includes(3)) return;
   log(
     s,
     n < 0
@@ -683,7 +878,7 @@ function move(s: MAState, c: Ctx, t: Token, n: number, main: boolean, why: strin
     group.map((g) => [
       g,
       n < 0 && s.settings.bananaBackwardPass
-        ? others(s, g).filter((o) => !group.includes(o) && (before.get(o) ?? 0) < from && o.pos > g.pos)
+        ? others(s, g).filter((o) => !group.includes(o) && toward(before.get(o) ?? 0) < startStep && toward(o.pos) > toward(g.pos))
         : passed.get(g) ?? [],
     ]),
   );
@@ -759,6 +954,20 @@ function penguinPass(s: MAState, c: Ctx, passed: Token[], penguins?: Set<Token>)
 }
 
 function react(
+  s: MAState, c: Ctx, t: Token, passed: Token[], simultaneous = false,
+  streaking = false, penguins?: Set<Token>, bananaPassed: Token[] = passed,
+) {
+  const chains = c.warpChains ??= new Map();
+  const root = !chains.has(t);
+  if (root) chains.set(t, new Set());
+  try {
+    reactBody(s,c,t,passed,simultaneous,streaking,penguins,bananaPassed);
+  } finally {
+    if (root) chains.delete(t);
+  }
+}
+
+function reactBody(
   s: MAState,
   c: Ctx,
   t: Token,
@@ -769,11 +978,35 @@ function react(
   bananaPassed: Token[] = passed,
 ) {
   if (!active(t)) return;
+  if (race(s).twist?.drawn.includes(5) && (progress(s, t.pos) === 28 || progress(s, t.pos) === 29)) {
+    log(s, `${rname(t)}【终点虫潮】：停在第 ${t.pos} 格，后退 5 格。`);
+    move(s, c, t, -5, false, "终点虫潮");
+    return;
+  }
+  const chain = c.warpChains!.get(t)!;
+  const from = t.pos;
+  const portal = warpDestination(race(s).track, from, [...chain]);
+  if (portal) {
+    chain.add(portal.pair);
+    t.pos = portal.to;
+    log(s, `${rname(t)} 进入螺旋通道：第 ${from} 格 → 第 ${portal.to} 格。`,
+      { kind: "warp", racer: t.racer, from, to: portal.to });
+    hugeBaby(s, c, t);
+    // 保留原移动真实经过的对象；通道本身不添加任何经过对象。
+    react(s, c, t, passed, simultaneous, streaking, penguins, bananaPassed);
+    return;
+  }
   penguinPass(s, c, passed, penguins);
   if (streaking && passed.length) {
     awardPower(s, c, t, 1, `${rname(t)}【擦身得分】：经过其他选手，获得 1 分。`, "sw_streaker");
   }
   const pos = t.pos;
+  const chips = race(s).twist?.chips;
+  if (chips?.includes(pos)) {
+    chips.splice(chips.indexOf(pos), 1);
+    gainChip(s, t.owner, 1);
+    log(s, `${rname(t)} 停在皮纳塔筹码格，获得 1 分。`);
+  }
   const sp = trackOf(s).specials[pos];
   if (sp) {
     if (sp.kind === "rock") {
@@ -808,7 +1041,7 @@ function react(
         loopCheck(
           s,
           c,
-          `hotel:${x.racer}>${t.racer}:${total(player(s, t.owner).chips)}:${total(player(s, x.owner).chips)}`,
+          `hotel:${x.racer}>${t.racer}`,
           `${rname(x)} 重复收取同一停格费用`,
         )
       )
@@ -887,8 +1120,8 @@ function aloneInLead(s: MAState, t: Token) {
 }
 function aloneLast(s: MAState, t: Token) {
   const act = race(s).tokens.filter(active);
-  const min = Math.min(...act.map((x) => x.pos));
-  const last = act.filter((x) => x.pos === min);
+  const min = Math.min(...act.map((x) => progress(s, x.pos)));
+  const last = act.filter((x) => progress(s, x.pos) === min);
   return last.length === 1 && last[0] === t;
 }
 
@@ -896,12 +1129,15 @@ interface TurnFlags {
   extra: boolean;
   skipper: string | null;
   resumeAfter?: string;
+  lastRacer?: string;
 }
 
 /** Racer-owned rolls, including auxiliary dice; player roll-offs stay unchanged. */
 function racerDie(s: MAState, c: Ctx, t: Token) {
   for (let safety = 0; safety < SAFETY; safety++) {
     const stunner = holders(s, "sw_stunner").find((o) => o !== t && Math.abs(o.pos - t.pos) <= 1);
+    const fixed = race(s).twist?.fixedDice?.[t.owner];
+    if (fixed !== undefined && !stunner) return fixed;
     if (!stunner) {
       c.unforcedDie = true;
       c.unforcedEpoch = (c.unforcedEpoch ?? 0) + 1;
@@ -1096,7 +1332,7 @@ function mainMove(s: MAState, c: Ctx, t: Token, f: TurnFlags) {
       for (;;) {
         let forcedByCritic = false;
         for (const critic of holders(s, "sw_critic")) {
-          if (critic === t || t.pos <= critic.pos || c.criticUsed.has(critic.racer)) continue;
+          if (critic === t || progress(s, t.pos) <= progress(s, critic.pos) || c.criticUsed.has(critic.racer)) continue;
           const picked = ask(s, c, {
             player: critic.owner,
             racer: critic.racer,
@@ -1311,8 +1547,8 @@ function mainMove(s: MAState, c: Ctx, t: Token, f: TurnFlags) {
     if (mainRoll === 6) base = 6;
     if (mainRoll === 2 || mainRoll === 5) {
       const act = r.tokens.filter(active);
-      const edge = mainRoll === 2 ? Math.min(...act.map((o) => o.pos)) : Math.max(...act.map((o) => o.pos));
-      const targets = act.filter((o) => o.pos === edge);
+      const edge = mainRoll === 2 ? Math.min(...act.map((o) => progress(s, o.pos))) : Math.max(...act.map((o) => progress(s, o.pos)));
+      const targets = act.filter((o) => progress(s, o.pos) === edge);
       const id =
         targets.length === 1
           ? targets[0].racer
@@ -1385,12 +1621,12 @@ function mainMove(s: MAState, c: Ctx, t: Token, f: TurnFlags) {
     const last = Math.min(
       ...race(s)
         .tokens.filter(active)
-        .map((o) => o.pos),
+        .map((o) => progress(s, o.pos)),
     );
-    if (t.pos === last && mainRoll !== null) {
+    if (progress(s, t.pos) === last && mainRoll !== null) {
       dist += mainRoll * 2;
       fire(s, c, t, `${rname(t)}【倒霉反转】：垫底，主移动骰点乘 3。`);
-    } else if (t.pos !== last) {
+    } else if (progress(s, t.pos) !== last) {
       reverseMain = true;
       fire(s, c, t, `${rname(t)}【倒霉反转】：没有垫底，主移动改为后退。`);
     }
@@ -1407,15 +1643,15 @@ function mainMove(s: MAState, c: Ctx, t: Token, f: TurnFlags) {
     fire(s, c, t, `${rname(t)}【飞行风险】：主移动 +3。`);
   }
   if (has(s, t, "sw_overtaker")) {
-    const n = others(s, t).filter((o) => o.pos > t.pos).length;
+    const n = others(s, t).filter((o) => progress(s, o.pos) > progress(s, t.pos)).length;
     if (n) {
       dist += n;
       fire(s, c, t, `${rname(t)}【赶超计谋】：前方 ${n} 名选手，主移动 +${n}。`);
     }
   }
   if (has(s, t, "blimp")) {
-    const corner = trackOf(s).secondCorner ?? fail("CHECK_REQUIRED", "第二个弯道位置未确认。");
-    const before = turnStartPos(t) < corner;
+    const corner = r.twist?.reversed ? 12 : trackOf(s).secondCorner ?? fail("CHECK_REQUIRED", "第二个弯道位置未确认。");
+    const before = progress(s, turnStartPos(t)) < progress(s, corner);
     dist += before ? 3 : -1;
     fire(
       s,
@@ -1457,15 +1693,21 @@ function mainMove(s: MAState, c: Ctx, t: Token, f: TurnFlags) {
       dist += 2;
     }
   for (const n of holders(s, "sw_null"))
-    if (t.pos > n.pos) {
+    if (progress(s, t.pos) > progress(s, n.pos)) {
       fire(s, c, n, `${rname(n)}【虚无领域】：${rname(t)} 主移动 -1。`, "sw_null");
       dist -= 1;
     }
+  if (r.twist?.drawn.includes(3)) dist += 3;
+  const finalMainSteps = Math.max(0, dist);
+  if (r.twist?.drawn.includes(4) && finalMainSteps >= 6) {
+    eliminateWithPower(s, [t], () => log(s, `${rname(t)}【禁跑水潭】：主移动 ${finalMainSteps} 格，移动前淘汰。`));
+    return;
+  }
   move(
     s,
     c,
     t,
-    Math.max(0, dist) * (reverseMain ? -1 : 1),
+    finalMainSteps * (reverseMain ? -1 : 1),
     true,
     blunderdog
       ? "倒霉反转"
@@ -1496,7 +1738,7 @@ function beforeMain(s: MAState, c: Ctx, t: Token) {
     const movers = others(s, t).filter((o) => o.pos !== t.pos);
     const arrivals: Token[] = [];
     for (const o of movers) {
-      const to = Math.max(0, o.pos + (o.pos < t.pos ? 1 : -1));
+      const to = physical(s, Math.max(0, Math.min(trackOf(s).length - 1, progress(s, o.pos) + (progress(s, o.pos) < progress(s, t.pos) ? 1 : -1))));
       if (to === o.pos) continue;
       log(s, "", {
         kind: "move",
@@ -1515,8 +1757,8 @@ function beforeMain(s: MAState, c: Ctx, t: Token) {
   }
   if (has(s, t, "cheerleader")) {
     const act = race(s).tokens.filter(active);
-    const min = Math.min(...act.map((x) => x.pos));
-    const last = inOrder(s).filter((x) => active(x) && x.pos === min);
+    const min = Math.min(...act.map((x) => progress(s, x.pos)));
+    const last = inOrder(s).filter((x) => active(x) && progress(s, x.pos) === min);
     const a = ask(s, c, {
       player: t.owner,
       racer: t.racer,
@@ -1632,7 +1874,7 @@ function racerTurn(s: MAState, c: Ctx, t: Token, f: TurnFlags) {
     // New turn-start abilities are not skipped just because the main move is lost.
     if (has(s, t, "sw_spoilsport")) {
       const opponents = others(s, t);
-      if (opponents.length && opponents.every((o) => o.pos >= t.pos + 5)) {
+      if (opponents.length && opponents.every((o) => progress(s, o.pos) >= progress(s, t.pos) + 5)) {
         r.cancelledBy = t.racer;
         r.over = true;
         fire(s, c, t, `${rname(t)}【举报罢赛】：取消本场，保留已得分，不发金银牌，自己获得 3 分。`, "sw_spoilsport");
@@ -1668,7 +1910,7 @@ function racerTurn(s: MAState, c: Ctx, t: Token, f: TurnFlags) {
     }
     if (has(s, t, "sw_speed_demon")) {
       const opponents = others(s, t);
-      if (opponents.length && t.pos >= Math.max(...opponents.map((o) => o.pos)) + 4) {
+      if (opponents.length && progress(s, t.pos) >= Math.max(...opponents.map((o) => progress(s, o.pos))) + 4) {
         eliminateWithPower(s, [t], () => fire(s, c, t, `${rname(t)}【极速失控】：领先至少 4 格，淘汰出本场。`, "sw_speed_demon", undefined, true));
         return;
       }
@@ -1676,9 +1918,9 @@ function racerTurn(s: MAState, c: Ctx, t: Token, f: TurnFlags) {
     if (has(s, t, "sw_diva")) {
       const opponents = others(s, t);
       if (opponents.length) {
-        const last = Math.min(t.pos, ...opponents.map((o) => o.pos));
-        const targetPos = t.pos === last ? Math.max(...opponents.map((o) => o.pos)) : last;
-        const targets = opponents.filter((o) => o.pos === targetPos);
+        const last = Math.min(progress(s, t.pos), ...opponents.map((o) => progress(s, o.pos)));
+        const targetPos = progress(s, t.pos) === last ? Math.max(...opponents.map((o) => progress(s, o.pos))) : last;
+        const targets = opponents.filter((o) => progress(s, o.pos) === targetPos);
         const picked =
           targets.length === 1
             ? targets[0].racer
@@ -1698,8 +1940,8 @@ function racerTurn(s: MAState, c: Ctx, t: Token, f: TurnFlags) {
       }
     }
     if (has(s, t, "sw_tail")) {
-      const ahead = others(s, t).filter((o) => o.pos > t.pos);
-      const nearest = ahead.filter((o) => o.pos === Math.min(...ahead.map((x) => x.pos)));
+      const ahead = others(s, t).filter((o) => progress(s, o.pos) > progress(s, t.pos));
+      const nearest = ahead.filter((o) => progress(s, o.pos) === Math.min(...ahead.map((x) => progress(s, x.pos))));
       if (nearest.length) {
         const picked = ask(s, c, {
           player: t.owner,
@@ -1767,7 +2009,7 @@ function racerTurn(s: MAState, c: Ctx, t: Token, f: TurnFlags) {
           fire(s, c, h, `${rname(h)}【幸灾乐祸】：${rname(t)} 这回合几乎没动，移动 2 格。`);
           move(s, c, h, 2, false, "幸灾乐祸");
         }
-    if (has(s, t, "sw_hopfrog") && others(s, t).some((o) => o.pos === t.pos + 1)) {
+    if (has(s, t, "sw_hopfrog") && others(s, t).some((o) => progress(s, o.pos) === progress(s, t.pos) + 1)) {
       fire(s, c, t, `${rname(t)}【弹跳加赛】：前方一格有选手，获得一个额外回合。`);
       f.extra = true;
     }
@@ -1787,7 +2029,7 @@ function racerTurn(s: MAState, c: Ctx, t: Token, f: TurnFlags) {
         racer: t.racer,
         value,
       });
-      for (const target of others(s, t)) if (target.pos > t.pos && target.pos - t.pos <= value) trip(s, target);
+      for (const target of others(s, t)) if (progress(s, target.pos) > progress(s, t.pos) && progress(s, target.pos) - progress(s, t.pos) <= value) trip(s, target);
     }
     if (has(s, t, "sw_switcharoo")) {
       const targets = others(s, t).filter((o) => o.owner !== t.owner && Math.abs(o.pos - t.pos) <= 1);
@@ -1856,6 +2098,12 @@ function turnUnit(s: MAState, c: Ctx) {
   try {
     // 2026-08 规则：多名选手按赛前摆好的顺序（顺时针）行动，不再每回合重选顺序
     let seq = mine();
+    const curseFirst = r.curseNextRacer;
+    delete r.curseNextRacer;
+    if (curseFirst) {
+      const first = seq.findIndex(x => x.racer === curseFirst);
+      if (first >= 0) seq = seq.slice(first);
+    }
     if (
       seq.length > 1 &&
       s.settings.variant === "double" &&
@@ -1873,7 +2121,10 @@ function turnUnit(s: MAState, c: Ctx) {
       seq = seq.filter((x) => x.racer === a);
     }
     if (!r.firstTurnDone.includes(r.current)) r.firstTurnDone.push(r.current);
-    for (const t of seq) if (active(t) && t.owner === r.current) racerTurn(s, c, t, f);
+    for (const t of seq) if (active(t) && t.owner === r.current) {
+      f.lastRacer = t.racer;
+      racerTurn(s, c, t, f);
+    }
     // Prove a closed cycle before watching its actual completion. Its private
     // anchor survives Need/recovery; never omit a stand-up or other cycle step.
     const blocked = r.forcedCycleBlocked;
@@ -1912,14 +2163,14 @@ function turnUnit(s: MAState, c: Ctx) {
     );
   } catch (e) {
     // 等人决定时回合还没结束，不能换人；比赛结束时照常记下一位
-    if (!(e instanceof Need) && !(e instanceof ProofDie)) nextTurn(s, f);
+    if (!(e instanceof Need) && !(e instanceof ProofDie)) nextTurn(s, f, c);
     throw e;
   }
-  nextTurn(s, f);
+  nextTurn(s, f, c);
 }
 
 function forcedTurnKey(s: MAState, ignoreCurrent = false, ignoreAwards = false) {
-  const { forcedCycle: _anchor, forcedCycleBlocked: _blocked, ...r } = race(s);
+  const { forcedCycle: _anchor, forcedCycleBlocked: _blocked, stalemateSeen: _stalemate, ...r } = race(s);
   // USER_RULING 2026-10-29: added star/skill awards do not prevent a forced
   // repeat. Keep every score value that can change a later legal outcome.
   const sensitive = ignoreAwards
@@ -2026,8 +2277,9 @@ function proveForcedTurn(snapshot: string): boolean {
   return returns.size === nodes.size;
 }
 
-function nextTurn(s: MAState, f: TurnFlags) {
+function nextTurn(s: MAState, f: TurnFlags, c: Ctx) {
   const r = race(s);
+  moveTwistMonster(s, c);
   const live = (id: string) => r.tokens.some((x) => x.owner === id && active(x));
   if (f.extra && live(r.current)) return;
   if (f.skipper && live(f.skipper)) {
@@ -2038,6 +2290,30 @@ function nextTurn(s: MAState, f: TurnFlags) {
   }
   const i = r.order.indexOf(f.resumeAfter ?? r.current);
   delete r.insertionResume;
+  const cursed = r.twist?.drawn.includes(8);
+  if (cursed) {
+    const skipped = r.twist?.fixedDice?.[r.current] ?? d6(s);
+    const slots = r.order.flatMap(id => r.tokens.filter(t => t.owner === id));
+    const resume = f.resumeAfter ?? r.current;
+    const cursor = f.resumeAfter
+      ? slots.findLastIndex(t => t.owner === resume)
+      : slots.findIndex(t => t.racer === f.lastRacer);
+    const start = cursor >= 0 ? cursor : slots.findLastIndex(t => t.owner === resume);
+    if (start < 0 || !slots.length) return;
+    const passed = Array.from({ length: skipped }, (_, k) => slots[(start + k + 1) % slots.length]);
+    const multi = slots.length > r.order.length;
+    log(s, `【人人诅咒魔杖】${pname(s, r.current)} 掷 ${skipped}，跳过后面 ${skipped} 个原行动顺位：${passed.map(t => multi ? rname(t) : pname(s, t.owner)).join("、")}。`);
+    for (let k = skipped + 1; k <= skipped + slots.length; k++) {
+      const next = slots[(start + k) % slots.length];
+      if (active(next)) {
+        r.current = next.owner;
+        r.curseNextRacer = next.racer;
+        return;
+      }
+    }
+    return;
+  }
+  delete r.curseNextRacer;
   for (let k = 1; k <= r.order.length; k++) {
     const id = r.order[(i + k) % r.order.length];
     if (live(id)) {
@@ -2045,6 +2321,40 @@ function nextTurn(s: MAState, f: TurnFlags) {
       return;
     }
   }
+}
+
+/** The Twist monster rolls its own die; landing on a racer is not passing it. */
+function moveTwistMonster(s: MAState, c: Ctx) {
+  const r = race(s);
+  if (r.twist?.monsterRacers?.length) {
+    for (const id of r.twist.monsterRacers) {
+      if (r.over || r.finishers.length >= 2) break;
+      const t = r.tokens.find(x => x.racer === id);
+      if (!t || !active(t)) continue;
+      const from = t.pos;
+      const roll = d6(s);
+      const to = physical(s, Math.min(trackOf(s).length, progress(s, from) + roll));
+      t.pos = to;
+      log(s, `【炼金实验室泄露！】${rname(t)} 追加掷 ${roll}，从第 ${from} 格移动到第 ${to} 格。`,
+        { kind: "move", racers: [t.racer], from, to, why: "大嘴狼人追加移动" });
+      const victims = r.tokens.filter(x => x !== t && active(x) && progress(s, x.pos) > progress(s, from) && progress(s, x.pos) < progress(s, to));
+      if (victims.length)
+        eliminateWithPower(s, victims, () => log(s, `${rname(t)} 超越 ${victims.map(rname).join("、")}，将其淘汰。`));
+      if (active(t) && progress(s, t.pos) >= trackOf(s).length) finish(s, c, t);
+    }
+    return;
+  }
+  const monster = r.twist?.monster;
+  if (!monster || monster.finished || r.over || r.finishers.length >= 2 || !r.tokens.some(active)) return;
+  const from = monster.pos;
+  const roll = d6(s);
+  const to = physical(s, Math.min(trackOf(s).length, progress(s, from) + roll));
+  monster.pos = to;
+  log(s, `【炼金实验室泄露！】巨口怪物掷 ${roll}，从第 ${from} 格移动到${progress(s, to) >= trackOf(s).length ? "终点" : `第 ${to} 格`}。`);
+  if (progress(s, to) >= trackOf(s).length) monster.finished = true;
+  const victims = r.tokens.filter(x => active(x) && progress(s, x.pos) > progress(s, from) && progress(s, x.pos) < progress(s, to));
+  if (victims.length)
+    eliminateWithPower(s, victims, () => log(s, `巨口怪物超越 ${victims.map(rname).join("、")}，将其淘汰。`));
 }
 
 /** 赛前：神秘蛋、双胞胎、西西弗斯 */
@@ -2211,6 +2521,9 @@ function runUnit(snapshot: string, answers: string[], provingForcedTurn = false,
  * actual movement or scoring invalidates this proof; it is never a chain cap.
  * Base-only games never enter this path. No hidden history is sent to clients.
  */
+/** @internal Exposes the raw deterministic unit runner for shortcut equivalence tests. */
+export { runUnit as __testRunUnit };
+
 function forcedStandupCycle(initial: MAState): boolean {
   if (initial.pending?.kind !== "standup" || !initial.settings.secondWindPreview)
     return false;
@@ -2271,6 +2584,52 @@ function forcedStandupCycle(initial: MAState): boolean {
   }
 }
 
+/** A repeated complete state with no intervening free choice is deterministic forever. */
+function terminalStalemate(s: MAState): boolean {
+  if (!s.race || !s.pending) return false;
+  const r = s.race;
+  // A fixed event die makes this replay provably deterministic. Legacy races
+  // keep their exact serialized shape and existing replay hashes.
+  if (!r.twist?.fixedDice) return false;
+  if (s.pending.options.length !== 1) {
+    delete r.stalemateSeen;
+    return false;
+  }
+  const answerCount = s.turn?.answers.length ?? 0;
+  const semantic = structuredClone(s);
+  semantic.log = [];
+  semantic.version = 0;
+  semantic.turn = null;
+  delete semantic.race!.stalemateSeen;
+  if (semantic.race!.lastRoll) semantic.race!.lastRoll.seq = 0;
+  const key = JSON.stringify({ ...semantic, answerCount });
+  const seen = r.stalemateSeen ?? [];
+  if (seen.includes(key)) return true;
+  // The bound limits stored history, never the number of actions a race may take.
+  r.stalemateSeen = [...seen.slice(-63), key];
+  return false;
+}
+
+function checkpointStalemate(s: MAState): MAState {
+  if (!s.race || !s.pending) return s;
+  if (terminalStalemate(s)) {
+    log(s, "比赛局面完全重复，且没有可改变结果的选择；本场结束，已得分与已冲线名次保留。未冲线者不获奖牌。");
+    endRace(s);
+    s.pending = null;
+    s.turn = null;
+    return s;
+  }
+  // A Need is replayed from the unit's initial snapshot. Carry only the
+  // bookkeeping forward so the next answer cannot erase the proof history.
+  if (s.turn) {
+    const snapshot = JSON.parse(s.turn.snapshot) as MAState;
+    if (s.race.stalemateSeen) snapshot.race!.stalemateSeen = s.race.stalemateSeen;
+    else delete snapshot.race!.stalemateSeen;
+    s.turn.snapshot = JSON.stringify(snapshot);
+  }
+  return s;
+}
+
 /** 自动推进到下一个需要有人选择的地方 */
 function advance(s: MAState): MAState {
   for (let guard = 0; guard < 1000; guard++) {
@@ -2287,11 +2646,64 @@ function advance(s: MAState): MAState {
         res.s.turn = null;
         return res.s;
       }
-      return res.s;
+      return checkpointStalemate(res.s);
     }
     s = res.s;
   }
   return fail("LOOP", "自动结算次数过多。");
+}
+
+/** T12: the scheduled race has finished, but its medals now belong to a separate duel. */
+function startSeasonFinale(s: MAState): boolean {
+  const normal = race(s);
+  if (!normal.twist?.finalePending || normal.cancelledBy) return false;
+  const terminal = physical(s, trackOf(s).length);
+  const crossed = [...new Set(normal.finishers)]
+    .map(id => normal.tokens.find(t => t.racer === id))
+    .filter((t): t is Token => !!t && !t.out && t.pos === terminal);
+  if (crossed.length < 2) {
+    log(s, "【季终决战】不足两名合法冲线者，取消附加决赛，按正常比赛结算。");
+    return false;
+  }
+  const finalists = crossed.slice(0, 2);
+  const corner = (normal.twist.reversed ? 12 : trackOf(s).secondCorner) ?? fail("CHECK_REQUIRED", "季终决战的第二弯道尚未确认。");
+  const owners = [...new Set(finalists.map(t => t.owner))];
+  const origin = structuredClone(normal);
+  log(s, `【季终决战】正常比赛前两名为 ${finalists.map(rname).join("、")}；金银牌暂不发放，开始附加决赛。`);
+  s.race = {
+    index: normal.index,
+    instanceId: `finale:${normal.index}`,
+    track: normal.track,
+    finale: true,
+    finaleOrigin: origin,
+    twist: { triggered: true, remaining: [], drawn: [], ...(normal.twist.reversed ? { reversed: true } : {}) },
+    order: owners,
+    current: finalists[0].owner,
+    tokens: finalists.map(t => ({
+      ...t,
+      pos: corner,
+      tripped: false,
+      place: null,
+      out: false,
+      copyPick: null,
+      started: false,
+      secondWind: undefined,
+    })),
+    finishers: [],
+    eliminated: [],
+    mastermindPick: null,
+    lastRoll: null,
+    over: false,
+    setup: true,
+    firstTurnDone: owners,
+  };
+  log(s, `第 ${normal.index + 1} 场附加决赛：${finalists.map(rname).join(" 对阵 ")}，从第 ${corner} 格出发。`, {
+    kind: "start", race: normal.index, track: normal.track,
+    owners: Object.fromEntries(finalists.map(t => [t.racer, t.owner])),
+    positions: Object.fromEntries(finalists.map(t => [t.racer, corner])),
+    finale: true,
+  });
+  return true;
 }
 
 function endRace(
@@ -2313,19 +2725,20 @@ function endRace(
   for (const t of r.tokens) if (t.out) t.place = null;
   for (const t of r.tokens) registerReturner(s, t);
   r.over = true;
-  const corner = trackOf(s).secondCorner;
-  const bonuses = holders(s, "sw_gloth").filter((t) => corner !== null && t.pos <= corner);
+  const corner = r.twist?.reversed ? 12 : trackOf(s).secondCorner;
+  const bonuses = holders(s, "sw_gloth").filter((t) => corner !== null && progress(s, t.pos) <= progress(s, corner));
   for (const gloth of bonuses)
     awardPower(s, c, gloth, 3, `${rname(gloth)}【慢有慢福】：赛后没超过第二个弯道，获得 3 分。`, "sw_gloth");
+  if (startSeasonFinale(s)) return;
   const pts = s.settings.points[r.index] ?? DEFAULT_POINTS;
   const owner = (racer: string) => r.tokens.find((t) => t.racer === racer)!.owner;
   const [first, second] = r.cancelledBy ? [] : r.finishers;
-  const seconds = r.cancelledBy ? [] : r.mastermindWinners?.length
+  const seconds = r.finale || r.cancelledBy ? [] : r.mastermindWinners?.length
     ? [...new Set(r.mastermindWinners)].filter((id) => r.finishers.includes(id)) : second ? [second] : [];
   if (first) {
     player(s, owner(first)).chips.push({
       kind: "gold",
-      value: pts.gold,
+      value: r.finale ? pts.gold + pts.silver : pts.gold,
       race: r.index,
     });
     s.winners.push(first);
@@ -2336,7 +2749,7 @@ function endRace(
       value: pts.silver,
       race: r.index,
     });
-  if (!seconds.length) log(s, "没有第二名，银牌作废。");
+  if (!seconds.length && !r.finale) log(s, "没有第二名，银牌作废。");
   // 领奖台（只是展示用）：第 3 名 = 还在场上、位置最靠前的选手（同格按本场行动顺序）；不计分
   const places: Array<{
     racer: string;
@@ -2349,8 +2762,10 @@ function endRace(
       racer: first,
       owner: owner(first),
       place: 1,
-      points: pts.gold,
+      points: r.finale ? pts.gold + pts.silver : pts.gold,
     });
+  if (r.finale && second && second !== first)
+    places.push({ racer: second, owner: owner(second), place: 2, points: 0 });
   for (const id of seconds)
     places.push({
       racer: id,
@@ -2360,7 +2775,7 @@ function endRace(
     });
   const rest = r.tokens
     .filter((t) => active(t) && !r.finishers.includes(t.racer))
-    .sort((a, b) => b.pos - a.pos || r.order.indexOf(a.owner) - r.order.indexOf(b.owner));
+    .sort((a, b) => progress(s, b.pos) - progress(s, a.pos) || r.order.indexOf(a.owner) - r.order.indexOf(b.owner));
   if (rest[0] && first && seconds.length)
     places.push({
       racer: rest[0].racer,
@@ -2370,17 +2785,20 @@ function endRace(
     });
   log(
     s,
-    r.cancelledBy
+    r.finale
+      ? `第 ${r.index + 1} 场附加决赛结束：${first ? racerName(first) : "无"} 获得金银奖池（+${first ? pts.gold + pts.silver : 0}）。`
+      : r.cancelledBy
       ? `第 ${r.index + 1} 场已取消：保留已得分，不发本场金银牌。`
       : `第 ${r.index + 1} 场结束：冠军 ${first ? racerName(first) : "无"}（+${pts.gold}），亚军 ${seconds.length ? seconds.map(racerName).join("、") : "无"}${seconds.length ? `（+${pts.silver}）` : ""}。`,
     { kind: "podium", race: r.index, places },
   );
   // 下一场先手：上一场最落后的选手（或第一个被淘汰的）；2 人变体：上一场得分较少的玩家，平分掷骰
   let next: string;
+  const previous = r.finaleOrigin ?? r;
   if (s.seats.length === 2 && s.settings.variant === "double") {
     const got = s.seats.map((id) => ({
       id,
-      v: total(player(s, id).chips.filter((ch) => ch.race === r.index)) - (r.priorRaceSpending?.[id] ?? 0),
+      v: total(player(s, id).chips.filter((ch) => ch.race === r.index)) - (previous.priorRaceSpending?.[id] ?? 0),
     }));
     next =
       got[0].v === got[1].v
@@ -2388,14 +2806,14 @@ function endRace(
         : got[0].v < got[1].v
           ? got[0].id
           : got[1].id;
-  } else if (r.eliminated.length) next = r.eliminated[0];
+  } else if (previous.eliminated.length) next = previous.eliminated[0];
   else {
-    const left = r.tokens.filter(active);
+    const left = previous.tokens.filter(active);
     if (left.length) {
-      const min = Math.min(...left.map((t) => t.pos));
-      const back = left.filter((t) => t.pos === min).map((t) => t.owner);
+      const min = Math.min(...left.map((t) => progress(s, t.pos)));
+      const back = left.filter((t) => progress(s, t.pos) === min).map((t) => t.owner);
       next = back.length > 1 ? rollOff(s, back, "并列最落后，掷骰决定下一场先手") : back[0];
-    } else next = r.order[0];
+    } else next = previous.order[0];
   }
   for (const p of s.players) p.choices = [];
   if (r.index + 1 >= s.settings.races) {
@@ -2432,6 +2850,7 @@ function startRace(s: MAState) {
   const track = s.settings.schedule[idx] ?? "mild";
   s.race = {
     index: idx,
+    ...(track === "twisty-twirl" || track === "whirly-world" ? { instanceId: `normal:${idx}` } : {}),
     track,
     order,
     current: first,
@@ -2455,8 +2874,9 @@ function startRace(s: MAState) {
     over: false,
     setup: false,
     firstTurnDone: [],
+    ...(track === "twisty-twirl" ? { twist: { triggered: false, remaining: Array.from({length: 13}, (_, i) => i + 1), drawn: [] } } : {}),
   };
-  for (const returning of s.returningRacers ?? []) {
+  for (const returning of [...(s.returningRacers ?? []), ...(s.timeImpReturners ?? [])]) {
     if (s.race.tokens.some((t) => t.racer === returning.racer)) continue;
     s.race.tokens.push({
       racer: returning.racer,
@@ -2470,6 +2890,7 @@ function startRace(s: MAState) {
       started: false,
     });
   }
+  if (s.timeImpReturners?.length) delete s.timeImpReturners;
   for (const p of s.players) p.used.push(...p.choices);
   s.phase = "race";
   log(
@@ -2527,12 +2948,19 @@ export function reduceMA(prev: MAState, cmd: MACommand): MAState {
     if (p.player !== me.id) fail("NOT_YOUR_DECISION", "这不是你的决定。");
     if (!p.options.some((o) => o.value === cmd.value)) fail("BAD_OPTION", "无效的选项。");
     const turn = s.turn!;
+    if (p.options.length > 1) {
+      // A different choice may escape an apparent loop; restart the proof.
+      delete s.race?.stalemateSeen;
+      const snapshot = JSON.parse(turn.snapshot) as MAState;
+      if (snapshot.race) delete snapshot.race.stalemateSeen;
+      turn.snapshot = JSON.stringify(snapshot);
+    }
     const answers = [...turn.answers, cmd.value];
     const res = runUnit(turn.snapshot, answers);
     if (res.need) {
       res.s.pending = res.need;
       res.s.turn = { snapshot: turn.snapshot, answers };
-      s = res.s;
+      s = checkpointStalemate(res.s);
     } else {
       s = res.s;
       s.pending = null;
@@ -2563,7 +2991,7 @@ export function testRace(opts: {
   skipSetup?: boolean;
   /** 接下来的骰子点数（测试用） */
   rolls?: number[];
-  track?: "mild" | "wild";
+  track?: import("./track-registry.ts").TrackId;
 }): MAState {
   const players = opts.racers.map((_, i) => ({
     id: "p" + (i + 1),
