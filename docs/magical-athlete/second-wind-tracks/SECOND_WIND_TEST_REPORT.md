@@ -107,3 +107,5 @@ T09咬痕交互按用户提供的官方规则书说明实现：有咬痕就由�
 
 T09最终回归：全站`npm test -- --maxWorkers=1 --reporter=dot`为180文件通过、1文件跳过；2014项通过、1项跳过，0失败。`npm run typecheck`、`npm run build`通过。两名咬痕按参赛顺序各自掷独立骰；中立怪物既有测试保持通过。地图美术和其他模块验收仍未完成，地图入口继续锁定。
 螺旋世界用同一压力脚本开启赛前能力及新旧混合角色，2/4/6/8人各1,000局，共4,000局全部完成，没有CHECK_REQUIRED或状态不变量失败；另一次每人数250局样本中六组通道的12个传送方向全部实际出现，单方向至少305次。结果保存在`output/ma-tracks/stress-whirly-world-mixed-setup.json`。固定种子覆盖了随机角色、位置、骰点和自动选择，仍需联机多客户端和完整赛程浏览器验收。
+
+2026-11-26 上线记录：用户确认后，将二代赛道、比赛特效和首页更新合并为 `046857b` 并推送 `main`。合并结果本地 `npm run typecheck`、`npm run build`、`npm test`（181 文件通过、1 跳过；2018 项通过、1 跳过）、`npm run verify:replays`（3 条固定回放）、`npm run verify:mobile-interfaces`（64 个场景）通过；新赛道浏览器完整四场 1514 步、2 次重载通过，默认赛程完整四场 2746 步通过。GitHub CI 成功，Pages 素材发布重试后成功。10:15（Asia/Tokyo）线上 `/api/health` 显示 `version=046857b`、`online=0`，素材 CDN 指纹本地与远端均为 `35e38ad87fac` 且 `ok=true`。手机真机多人整局尚未实测；本记录不将本地模拟等同于真机体验。
