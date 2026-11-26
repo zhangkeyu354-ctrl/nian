@@ -3,7 +3,7 @@ import { createRoot } from "react-dom/client";
 import { testRace } from "../../../packages/magical-athlete/src/engine.ts";
 import { viewForMA } from "../../../packages/magical-athlete/src/privacy.ts";
 import { answer } from "../../../packages/magical-athlete/test/helpers.ts";
-import { Overlay } from "../src/ma/MagicalAthlete.tsx";
+import { Overlay, TwistReveal } from "../src/ma/MagicalAthlete.tsx";
 import { Track, PLAYER_COLORS } from "../src/ma/Track.tsx";
 import { usePlayback } from "../src/ma/playback.ts";
 import "../src/ma/ma.css";
@@ -25,7 +25,8 @@ function Demo() {
     <h1 style={{ color: "white" }}>扭扭赛道 · 抽卡演示</h1>
     <div className="ma-board"><Track race={view.race!} colorOf={(id) => PLAYER_COLORS[Number(id.slice(1)) - 1] ?? PLAYER_COLORS[0]}
       me="p1" layout="grid" shown={pb.shown} fit raceFx={pb.raceFx} /></div>
-    {pb.show && <Overlay show={pb.show} view={view} name={(id) => id} colorOf={() => PLAYER_COLORS[0]} me="p1" onSkip={pb.skip} />}
+    {pb.twistShow && <TwistReveal card={pb.twistShow.card} racer={pb.twistShow.racer} onDone={pb.dismissTwist} />}
+    {pb.show && !pb.twistShow && <Overlay show={pb.show} view={view} name={(id) => id} colorOf={() => PLAYER_COLORS[0]} me="p1" onSkip={pb.skip} />}
   </main>;
 }
 

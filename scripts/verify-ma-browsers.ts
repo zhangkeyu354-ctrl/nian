@@ -173,7 +173,25 @@ try {
     .split(",")
     .filter(Boolean);
   let reloads = 0;
+  let twistSeen = 0;
+  const twistDeckChecked = { done: false };
   for (;;) {
+    // 扭扭赛道事件卡：每个人都要在自己屏幕上点「知道了」，之前动画暂停
+    for (const p of pages) {
+      const ok = p.getByTestId("ma-twist-ok");
+      if (await ok.isVisible().catch(() => false)) {
+        if (!twistSeen) await p.screenshot({ path: `${out}/twist-reveal.png` });
+        twistSeen++;
+        await ok.click();
+        if (!twistDeckChecked.done) {
+          await p.getByTestId("ma-twist-deck").click();
+          await p.getByTestId("ma-twist-list").waitFor();
+          await p.screenshot({ path: `${out}/twist-deck.png` });
+          await p.getByTestId("ma-twist-list").getByRole("button", { name: "关闭" }).click();
+          twistDeckChecked.done = true;
+        }
+      }
+    }
     // 掉线重连：比赛中途把两名客人的页面刷新，确认按身份接回并继续
     if (process.env.MA_RELOAD === "1" && (steps === 60 || steps === 400) && pages.length > 2) {
       const p = pages[steps === 60 ? 1 : 2];
@@ -404,6 +422,7 @@ try {
       statsScreens: statsShots.size,
       newRacersPicked: [...newRacersPicked],
       reloads,
+      twistCardsTapped: twistSeen,
     }),
   );
   assert.equal(

@@ -120,6 +120,11 @@ export function usePlayback(view: MAView) {
   /** 正在走的选手要停的格子（棋盘上提前亮起来） */
   const [target, setTarget] = useState<number | null>(null);
   const [raceFx, setRaceFx] = useState<RaceFxCue[]>([]);
+  /** 正在给本机玩家看的 Twist 事件卡：点「知道了」才消失、才继续播放（每人只关自己的） */
+  const [twistShow, setTwistShow] = useState<{ card: number; racer: string } | null>(null);
+  /** 已经抽到、但动画还没播到的卡：事件卡按钮里先不显示，免得剧透 */
+  const [twistHidden, setTwistHidden] = useState<number[]>([]);
+  const twistDone = useRef<(() => void) | null>(null);
   const fxId = useRef(0);
   const [shown, setShown] = useState<Map<string, ShownToken> | null>(null);
   /** 动画里的当前位置；不播放时等于上一段动画结束时（= 当时服务器）的位置 */
@@ -145,6 +150,8 @@ export function usePlayback(view: MAView) {
     seen.current = log.length;
     setSeenLen(log.length);
     queue.current.push(...fresh);
+    const flipped = fresh.flatMap((e) => (e.fx?.kind === "twist_card" ? [e.fx.card] : []));
+    if (flipped.length) setTwistHidden((old) => [...old, ...flipped]);
     if (!running.current) void run();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [view.log.length]);
@@ -308,9 +315,12 @@ export function usePlayback(view: MAView) {
           break;
         case "twist_card":
           emitRaceFx("reveal", fx.racer, 14, undefined, k);
-          showIt({ kind: "twist_card", racer: fx.racer, card: fx.card });
           play(sfxPower);
-          await wait(3200, 2400);
+          setShow(null);
+          setTwistShow({ card: fx.card, racer: fx.racer });
+          // 不计时：等本机玩家点「知道了」（跳过动画也要看到卡）
+          await new Promise<void>((done) => { twistDone.current = done; });
+          setTwistHidden((old) => { const i = old.indexOf(fx.card); return i < 0 ? old : [...old.slice(0, i), ...old.slice(i + 1)]; });
           break;
         case "move": {
           if (fx.why === "大嘴狼人追加移动") monsterCause = true;
@@ -461,6 +471,14 @@ export function usePlayback(view: MAView) {
     shake,
     target,
     raceFx,
+    twistShow,
+    twistHidden,
+    dismissTwist: () => {
+      setTwistShow(null);
+      const done = twistDone.current;
+      twistDone.current = null;
+      done?.();
+    },
     skip: () => {
       skip.current = true;
       [...wakers.current].forEach((f) => f());

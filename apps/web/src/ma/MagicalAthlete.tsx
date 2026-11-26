@@ -19,6 +19,7 @@ import { installMotionClock } from "./motion-clock.ts";
 import { usePreparedArt } from "./art-cache.ts";
 import {FlyingSkill,RollingScore,useWindowFade} from "./LiteMotion.tsx";
 import {motionMs} from "./motion-clock.ts";
+import { TWIST_CARDS as TWIST_INFO, type TwistCardInfo } from "./twist-cards.ts";
 import "./ma.css";
 
 const roomFromUrl = () => new URLSearchParams(location.search).get("room")?.toUpperCase() ?? null;
@@ -554,7 +555,8 @@ function Game({ snap, view, send, connected }: { snap: MARoomSnapshot; view: MAV
   const showRace = !!view.race && (view.phase === "race" || view.phase === "over" || (view.phase === "choose" && pb.busy));
   return (
     <main ref={gameRoot} className={"ma-game phase-" + view.phase + (sending ? " is-sending" : "")} onPointerDownCapture={onPress}>
-      {pb.show && <Overlay show={pb.show} view={view} name={name} colorOf={colorOf} me={me} onSkip={pb.skip} />}
+      {pb.twistShow && <TwistReveal card={pb.twistShow.card} racer={pb.twistShow.racer} onDone={pb.dismissTwist} />}
+      {pb.show && !pb.twistShow && <Overlay show={pb.show} view={view} name={name} colorOf={colorOf} me={me} onSkip={pb.skip} />}
       {toast && !pb.show && (
         <button
           type="button"
@@ -765,6 +767,64 @@ function Draft({ view, me, name, act }: { view: MAView; me: string | null; name:
   );
 }
 
+function TwistCardFace({ c }: { c: TwistCardInfo }) {
+  return (
+    <div className="ma-twist-card">
+      <small>TWIST 事件卡 · 编号 {String(c.id).padStart(2, "0")}</small>
+      <b>{c.zh}</b>
+      <i>{c.en}</i>
+      <p>{c.text}</p>
+      {c.lasting && <em>持续到本场结束</em>}
+    </div>
+  );
+}
+
+/** 翻开事件卡：留在自己屏幕上，点「知道了」才消失（不影响别人） */
+export function TwistReveal({ card, racer, onDone }: { card: number; racer: string; onDone: () => void }) {
+  const c = TWIST_INFO[card] ?? { id: card, zh: `事件 ${card}`, en: "", text: "详见比赛记录。" };
+  return (
+    <div className="ma-twist-reveal" role="dialog" aria-modal="true" aria-label={`事件卡：${c.zh}`} data-testid="ma-twist-reveal">
+      <div className="ma-twist-pop">
+        <p className="ma-twist-title">{racerName(racer)} 冲过 TWIST，翻开事件卡！</p>
+        <TwistCardFace c={c} />
+        <button type="button" className="ma-twist-ok" data-testid="ma-twist-ok" onClick={onDone} autoFocus>
+          知道了
+        </button>
+      </div>
+    </div>
+  );
+}
+
+/** 本场已翻开的事件卡：随时点开再看 */
+function TwistDeck({ drawn }: { drawn: number[] }) {
+  const [open, setOpen] = useState(false);
+  return (
+    <>
+      <button type="button" className={"ma-twist-deck" + (drawn.length ? " has" : "")} data-testid="ma-twist-deck" onClick={() => setOpen(true)}>
+        🃏 事件卡{drawn.length ? ` ${drawn.length}` : ""}
+      </button>
+      {open && (
+        <div className="ma-twist-reveal" role="dialog" aria-modal="true" aria-label="本场事件卡" data-testid="ma-twist-list" onClick={() => setOpen(false)}>
+          <div className="ma-twist-pop list" onClick={(e) => e.stopPropagation()}>
+            <p className="ma-twist-title">本场事件卡</p>
+            {drawn.length ? (
+              drawn.map((id, i) => TWIST_INFO[id] && (
+                <div key={id}>
+                  <small className="ma-twist-order">第 {i + 1} 张</small>
+                  <TwistCardFace c={TWIST_INFO[id]} />
+                </div>
+              ))
+            ) : (
+              <p className="ma-twist-empty">还没翻开。第一次有人冲过 TWIST 格时会翻开一张事件卡（每场最多一次，「观众渴求混乱」会再连抽两张）。</p>
+            )}
+            <button type="button" className="ma-twist-ok" onClick={() => setOpen(false)}>关闭</button>
+          </div>
+        </div>
+      )}
+    </>
+  );
+}
+
 function Choose({ view, me, act }: { view: MAView; me: string | null; act: (c: Parameters<Send>[0]) => void }) {
   const mine = view.players.find((p) => p.id === me);
   const idx = view.race ? view.race.index + 1 : 0;
@@ -944,6 +1004,7 @@ function Race({
       <div className={"ma-board" + (useGrid ? " grid-mode" : "") + (pb.shake ? " shake" : "")}>
         <div className="ma-board-head">
           <b>第 {race.index + 1} 场 · {track.zh}{race.finale ? " · 附加决赛" : ""}</b>
+          {race.track === "twisty-twirl" && race.twist && <TwistDeck drawn={race.twist.drawn.filter((c) => !pb.twistHidden.includes(c))} />}
           {race.twist?.reversed && (
             <span className="ma-direction-reversed" role="status">↶ 镜像世界：向旧起点前进 · 第 0 格冲线</span>
           )}
@@ -963,9 +1024,7 @@ function Race({
           ) : race.track === "mild" ? (
             <span className="ma-legend">普通赛道，没有特殊格</span>
           ) : race.track === "twisty-twirl" ? (
-            <span className="ma-legend" data-testid="ma-twist-legend">
-              {race.twist?.drawn.length ? `✦ 已抽事件：${race.twist.drawn.map((id) => TWIST_CARDS[id]?.title ?? `事件 ${id}`).join("、")}` : "✦ 首次跨过第 13→14 格会抽事件卡"}
-            </span>
+            <span className="ma-legend" data-testid="ma-twist-legend">✦ 首次跨过第 13→14 格会抽事件卡，点「🃏 事件卡」随时查看</span>
           ) : race.track === "whirly-world" ? (
             <span className="ma-legend">↔ 停在彩色管道口会传送，经过不触发</span>
           ) : null}

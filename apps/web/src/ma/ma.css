@@ -3045,3 +3045,20 @@
 @keyframes ma-result-in { from { opacity:0; transform:translateY(6px) scale(.92); } to { opacity:1; transform:none; } }
 @media (prefers-reduced-motion:reduce) { .ma-dice3d.rolling canvas, .ov-roll .ma-ov-big, .ov-duel .ma-ov-big { animation:none; } }
 
+/* ── 扭扭赛道：事件卡 ── */
+.ma-twist-reveal{position:fixed;inset:0;z-index:80;display:flex;align-items:center;justify-content:center;padding:16px;background:rgba(10,8,24,.62);backdrop-filter:blur(2px)}
+.ma-twist-pop{width:min(360px,100%);max-height:calc(100dvh - 32px);overflow:auto;display:flex;flex-direction:column;gap:12px;padding:18px 16px 16px;border-radius:18px;background:#1f1840;color:#fff;box-shadow:0 12px 40px rgba(0,0,0,.45);animation:ma-twist-in .35s ease-out}
+.ma-twist-title{margin:0;text-align:center;font-weight:800;font-size:15px;letter-spacing:.06em;color:#ffd75e}
+.ma-twist-card{display:flex;flex-direction:column;gap:4px;padding:14px;border-radius:14px;background:linear-gradient(160deg,#fff7e0,#ffe2a8);color:#2a1d0a;border:3px solid #ffb400}
+.ma-twist-card small{font-size:11px;font-weight:700;color:#a06a00;letter-spacing:.08em}
+.ma-twist-card b{font-size:22px;line-height:1.2}
+.ma-twist-card i{font-size:11px;color:#7a5a20}
+.ma-twist-card p{margin:6px 0 0;font-size:15px;line-height:1.55}
+.ma-twist-card em{align-self:flex-start;margin-top:4px;font-style:normal;font-size:12px;font-weight:700;padding:2px 8px;border-radius:999px;background:#2a1d0a;color:#ffd75e}
+.ma-twist-ok{min-height:44px;border:0;border-radius:12px;background:#ffb400;color:#2a1d0a;font-weight:800;font-size:16px;cursor:pointer}
+.ma-twist-order{display:block;margin:0 0 4px;font-size:12px;color:#c9bdf5}
+.ma-twist-empty{margin:0;font-size:14px;line-height:1.6;color:#e5defc}
+.ma-twist-deck{min-height:32px;padding:4px 10px;border-radius:999px;border:1px solid #ffb400;background:#2a1d0a;color:#ffd75e;font-weight:700;font-size:13px;cursor:pointer}
+.ma-twist-deck.has{background:#ffb400;color:#2a1d0a}
+@keyframes ma-twist-in{from{transform:scale(.8) rotate(-4deg);opacity:0}to{transform:none;opacity:1}}
+@media (prefers-reduced-motion:reduce){.ma-twist-pop{animation:none}}
