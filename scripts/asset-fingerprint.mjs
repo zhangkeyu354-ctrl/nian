@@ -13,6 +13,7 @@ export function assetFingerprint(root) {
     }
   };
   walk(join(root, "assets"));
+  walk(join(root, "fonts"));
   const h = createHash("sha1");
   for (const f of files) h.update(relative(root, f).split("\\").join("/") + "\0" + createHash("sha1").update(readFileSync(f)).digest("hex") + "\n");
   return h.digest("hex");

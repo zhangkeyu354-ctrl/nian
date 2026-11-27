@@ -37,6 +37,7 @@ import {
 const root = resolve(fileURLToPath(new URL("../../..", import.meta.url)));
 const PORT = Number(process.env.PORT ?? 3000);
 const HOST = process.env.HOST ?? "0.0.0.0";
+const PUBLIC_ASSETS = resolve(join(root, "apps/web/public/assets"));
 const WEB = resolve(process.env.DBD_WEB_DIR ?? join(root, "dist/web"));
 const DATA = resolve(process.env.DBD_DATA_DIR ?? join(root, "data/rooms"));
 const allowFixedSeed = process.env.DBD_ALLOW_FIXED_SEED === "1";
@@ -185,8 +186,8 @@ const http = createServer((req, res) => {
     res.end("not found");
     return;
   }
-  // 图片、音效等素材：GitHub Pages 上的版本和本机完全一致时，转发过去（省 Render 流量）
-  if (!missing && ASSET_CDN.ok && /^\/assets\/[^/]+\/./.test(url.pathname)) {
+  // 图片、音效等素材（含 /assets/ 下直接放的黎明杀机图片；构建产物 js/css 不在 public 里，不会被转发）：GitHub Pages 上的版本和本机完全一致时，转发过去（省 Render 流量）
+  if (!missing && ASSET_CDN.ok && (/^\/assets\/[^/]+\/./.test(url.pathname) || /^\/fonts\/[^/]+$/.test(url.pathname) || (/^\/assets\/[^/]+$/.test(url.pathname) && existsSync(join(PUBLIC_ASSETS, decodeURIComponent(url.pathname.slice(8))))))) {
     res.statusCode = 302;
     res.setHeader("location", ASSET_CDN.base + url.pathname);
     res.setHeader("cache-control", "public, max-age=3600");
