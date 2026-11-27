@@ -95,6 +95,18 @@ describe('V1.1 turn state machine',()=>{
     expect(settled.result?.ledger[2].remainderScore).toBe(25);
     expect(settled.result?.ledger[1].transferOut).toBe(30);
   });
+  it('feedback #29: the lone wolf finishing ends the round at once; the three others settle their leftovers',()=>{
+    // seat 1 is the lone wolf and plays its last card 2S; seat 3 holds a bomb and can beat it, seats 0 and 2 cannot.
+    const s=endgame([['5D','4C','6C'],['2S'],['KH','10C'],['9S','9H','9C','9D']],[],[1],1,{actor:0,cards:['3C']});
+    const settled=applyAction(s,{kind:'PLAY',actor:1,cards:['2S']});
+    expect(settled.phase).toBe('RESULT');
+    expect(settled.result?.earlyEnd).toBe(true);
+    expect(settled.finishedOrder[0]).toBe(1);
+    expect(settled.finishedOrder[3]).toBe(3);
+    expect([...settled.result!.remainderRecipients].sort((a,b)=>a.from-b.from)).toEqual([{from:0,to:1},{from:2,to:1},{from:3,to:3}]);
+    expect(settled.result?.ledger[1].remainderScore).toBe(25);
+    expect(settled.result?.ledger[1].transferIn).toBe(30);
+  });
   it('T22: an unfinished player who can beat the terminal play keeps their own point cards',()=>{
     const s=endgame([[],['5D','4C'],['QS'],['KH','10C']],[0],[0,2],2,{actor:1,cards:['4D']});
     const settled=applyAction(s,{kind:'PLAY',actor:2,cards:['QS']});
@@ -109,9 +121,9 @@ describe('V1.1 turn state machine',()=>{
     const next=applyAction(s,{kind:'PLAY',actor:2,cards:['2S']});
     expect(next.phase).toBe('PLAY');
   });
-  it('T22: a solo double-black-A player finishing first does not end the round',()=>{
+  it('T22 (changed 2026-11-27, feedback #29): a solo double-black-A player finishing first ends the round',()=>{
     const s=endgame([['2S'],['5D'],['4C'],['KH','10C']],[],[0],0,{actor:3,cards:['4D']});
     const next=applyAction(s,{kind:'PLAY',actor:0,cards:['2S']});
-    expect(next.phase).toBe('PLAY');
+    expect(next.phase).toBe('RESULT');
   });
 });

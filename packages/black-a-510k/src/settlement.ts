@@ -43,9 +43,9 @@ export function settleRound(input: SettlementInput): Settlement {
   if (all.length !== 52 || new Set(all).size !== 52 || all.some(id=>!points.has(id as CardId))) throw new Error('expected 52 unique physical cards');
   const first = input.finishedOrder[0], tail = input.finishedOrder[3];
   const unfinished = [0,1,2,3].filter(id=>input.hands[id].length>0);
-  const earlyEnd = unfinished.length===2;
-  if (!(unfinished.length===1 || earlyEnd) || !unfinished.includes(tail) ||
-      (earlyEnd && !unfinished.includes(input.finishedOrder[2])) ||
+  const earlyEnd = unfinished.length>=2;
+  if (!(unfinished.length>=1 && unfinished.length<=3) || (unfinished.length===3 && input.blackAOwners.length!==1) ||
+      input.finishedOrder.slice(4-unfinished.length).some(id=>!unfinished.includes(id)) ||
       input.tableCards.length === 0 || input.terminalPlay.some(id=>!input.tableCards.includes(id))) throw new Error('invalid terminal state');
   // The player who made the terminal play (last finisher) takes the unresolved terminal trick.
   const lastFinisher = input.finishedOrder[3-unfinished.length];

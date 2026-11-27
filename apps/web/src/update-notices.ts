@@ -1,6 +1,8 @@
 /** 大厅更新公告：每次发布在顶部追加，使用玩家能看懂的简短说明。 */
 /** dev:true 的条目只给开发者看（只出现在网站状态页），大厅和游戏里的公告不显示 */
 export const UPDATE_NOTICES: Array<{ id: string; date: string; game: string; title: string; text: string; dev?: boolean }> = [
+  {id:"2026-11-27-ba-solo-end",date:"2026-11-27",game:"双黑A五十K",title:"双黑A五十K：独狼出完立即结束",text:"独狼（一个人拿两张黑A）把牌出完，本局立刻结束，不用再等其他三人打完：没出完的人压不过独狼最后出的那手牌，手里的分牌（5、10、K）归独狼；压得过就归自己。（来自玩家反馈）"},
+  {id:"2026-11-27-ba-solo-end-dev",date:"2026-11-27",game:"双黑A五十K",title:"BA 独狼出完即结算（Claude）",text:"round.ts 增加 soloDone；settlement.ts 允许 3 人未出完（仅独狼局），名次与余分判断沿用 T22 提前结束逻辑。旧测试「独狼先出完不结束」按反馈 #29 改为结束。反馈里的「打几把后卡住」在本地 300+ 局模拟中未复现，待补充房间号与时间。",dev:true},
   {id:"2026-11-27-pause",date:"2026-11-27",game:"全站",title:"本周暂停更新",text:"这周比较忙，网站暂停更新一周，所有游戏照常可以玩。有建议或发现问题，欢迎继续用首页的「反馈」按钮告诉我们，恢复更新后会统一处理。"},
   {id:"2026-11-26-ba-wolf-draw",date:"2026-11-26",game:"双黑A五十K",title:"双黑A五十K：独狼先抽完三家再还牌",text:"独狼赢了以后抽牌，改为先依次把三家的牌都抽完，再依次还给每一家，手里任何牌都能还（包括从别家抽来的）。抽到的牌直接混在手牌里，加红边，角上写着从谁那里抽的。其他情况的换牌不变。（来自玩家反馈）"},
   {id:"2026-11-26-ba-wolf-draw-dev",date:"2026-11-26",game:"双黑A五十K",title:"BA 独狼批量抽还（Claude）",text:"exchange.ts 新增 isBatchExchange：一赢三时 DRAW×3 → RETURN×3（transactionIndex 在两段各自从 0 计），drawnIds 累积、还牌后移除；privacy 对被抽者只给自己那一笔的 drawnIds；ba-rooms 抽完/还完统一走 afterExchangeStep。抽到的牌不再单独一排，红边+「抽自XX」。新增 exchange-batch.test.ts，改了 random-series 与 constructed-network 测试循环；ACCEPTANCE T34 已更新。",dev:true},

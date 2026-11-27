@@ -42,7 +42,9 @@ export function applyAction(state:RoundState, action:Action):RoundState {
     // House rule (2026-11-25): when both members of a two-player team have finished, the round ends at once.
     const teamDone=s.blackAOwners.length===2 && s.finishedOrder.length===2 &&
       s.blackAOwners.includes(s.finishedOrder[0])===s.blackAOwners.includes(s.finishedOrder[1]);
-    if(s.finishedOrder.length===3 || teamDone){
+    // User ruling (2026-11-27, feedback #29): the lone wolf is a whole team, so the round also ends at once when they finish.
+    const soloDone=s.blackAOwners.length===1 && s.finishedOrder.includes(s.blackAOwners[0]) && s.finishedOrder.length<3;
+    if(s.finishedOrder.length===3 || teamDone || soloDone){
       // Unfinished players are ranked by cards left (fewer = better); ties go in turn order after the last finisher.
       const rest=[1,2,3].map(k=>(actor+k)%4).filter(id=>!s.finishedOrder.includes(id))
         .sort((a,b)=>s.hands[a].length-s.hands[b].length);
