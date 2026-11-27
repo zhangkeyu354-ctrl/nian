@@ -27,6 +27,7 @@ jobs:
         run: |
           mkdir -p _site
           cp -r apps/web/public/assets _site/assets
+          cp -r apps/web/public/fonts _site/fonts
           node scripts/asset-fingerprint.mjs apps/web/public > _site/fingerprint.txt
           touch _site/.nojekyll
           echo "fingerprint: $(cat _site/fingerprint.txt)"; du -sh _site

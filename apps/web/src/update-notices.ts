@@ -1,6 +1,7 @@
 /** 大厅更新公告：每次发布在顶部追加，使用玩家能看懂的简短说明。 */
 /** dev:true 的条目只给开发者看（只出现在网站状态页），大厅和游戏里的公告不显示 */
 export const UPDATE_NOTICES: Array<{ id: string; date: string; game: string; title: string; text: string; dev?: boolean }> = [
+  {id:"2026-11-27-bandwidth-dev",date:"2026-11-27",game:"全站",title:"省流量：黎明杀机图片和字体改走 GitHub Pages（Claude）",text:"11-27 Render 免费流量（每月 5GB）用完被暂停。原因：/assets/ 根目录下的黎明杀机图片（34 张，每张最大 2.6MB，共约 88MB）和 4.7MB 字体不在转发规则里，一直由 Render 直接提供。现在 /assets/ 根目录里属于 public 的图片和 /fonts/ 也 302 到 Pages；指纹同时包含 fonts，Pages 也发布 fonts。构建产物 js/css 仍由 Render 提供（gzip 后约 1MB）。",dev:true},
   {id:"2026-11-27-pause",date:"2026-11-27",game:"全站",title:"本周暂停更新",text:"这周比较忙，网站暂停更新一周，所有游戏照常可以玩。有建议或发现问题，欢迎继续用首页的「反馈」按钮告诉我们，恢复更新后会统一处理。"},
   {id:"2026-11-26-ba-wolf-draw",date:"2026-11-26",game:"双黑A五十K",title:"双黑A五十K：独狼先抽完三家再还牌",text:"独狼赢了以后抽牌，改为先依次把三家的牌都抽完，再依次还给每一家，手里任何牌都能还（包括从别家抽来的）。抽到的牌直接混在手牌里，加红边，角上写着从谁那里抽的。其他情况的换牌不变。（来自玩家反馈）"},
   {id:"2026-11-26-ba-wolf-draw-dev",date:"2026-11-26",game:"双黑A五十K",title:"BA 独狼批量抽还（Claude）",text:"exchange.ts 新增 isBatchExchange：一赢三时 DRAW×3 → RETURN×3（transactionIndex 在两段各自从 0 计），drawnIds 累积、还牌后移除；privacy 对被抽者只给自己那一笔的 drawnIds；ba-rooms 抽完/还完统一走 afterExchangeStep。抽到的牌不再单独一排，红边+「抽自XX」。新增 exchange-batch.test.ts，改了 random-series 与 constructed-network 测试循环；ACCEPTANCE T34 已更新。",dev:true},
