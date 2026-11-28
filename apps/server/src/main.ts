@@ -276,7 +276,8 @@ if (ASSET_CDN.base !== "off") {
   }, 2000).unref();
 }
 const GZIP_CACHE = new Map<string, { etag: string; body: Buffer }>();
-const io = new Server(http, { cors: { origin: true } });
+// 2026-11-28：开启 WebSocket 压缩（Render 流量里 WebSocket 占约 70%，快照是重复度很高的 JSON，压缩后通常只剩 1/5～1/10）。
+const io = new Server(http, { cors: { origin: true }, perMessageDeflate: { threshold: 512 }, httpCompression: { threshold: 512 } });
 io.of('/').setMaxListeners(32);
 // 记录每个房间最后一次有人操作的时间（任何游戏事件都算），给健康检查判断「挂着没人玩」
 const lastActive = new Map<string, number>();
