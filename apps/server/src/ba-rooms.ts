@@ -5,6 +5,7 @@ import type { Server,Socket } from 'socket.io';
 import { createDeck,enumerateLegalPlays } from '../../../packages/black-a-510k/src/rules.js';
 import { applyAction,startRound,type RoundOptions,type RoundState } from '../../../packages/black-a-510k/src/round.js';
 import { createExchangePlan,deterministicAutoReturn,drawByIndices,prepareFaceDownPool,returnCards,startExchange,type ExchangeLogEntry,type ExchangePair,type ExchangeState } from '../../../packages/black-a-510k/src/exchange.js';
+import { chooseBotAction,timeoutLeadCard } from '../../../packages/black-a-510k/src/bot.js';
 import { viewExchange,viewExchangeLogs,viewRound } from '../../../packages/black-a-510k/src/privacy.js';
 
 interface Player {id:string;token:string;name:string;ready:boolean;bot?:boolean}
@@ -180,8 +181,8 @@ export class BARoom {
     return this.mutate(()=>{
       if(this.file.phase==='PLAY'){
         const s=this.file.round!,actor=s.currentActor!;
-        const choices=botTurn?enumerateLegalPlays(s.hands[actor],s.lastPlay?.cards??null,{mustContainD3:s.firstLeadPending&&s.options.firstLead==='CONTAINS_D3'},s.rules):[];
-        const action=botTurn?(choices.length?{kind:'PLAY' as const,actor,cards:choices[0]}:{kind:'PASS' as const,actor}):s.lastPlay?{kind:'PASS' as const,actor}:{kind:'PLAY' as const,actor,cards:[s.firstLeadPending&&s.options.firstLead==='CONTAINS_D3'?'3D':s.hands[actor].slice().sort()[0]]};
+        const pick=botTurn?chooseBotAction(s,actor,s.rules):null;
+        const action=botTurn?(pick?{kind:'PLAY' as const,actor,cards:pick}:{kind:'PASS' as const,actor}):s.lastPlay?{kind:'PASS' as const,actor}:{kind:'PLAY' as const,actor,cards:[timeoutLeadCard(s.hands[actor],s.firstLeadPending&&s.options.firstLead==='CONTAINS_D3')]};
         this.file.round=applyAction(s,action);
         if(this.file.round.phase==='RESULT'){
           this.file.phase='RESULT';const result=this.file.round.result!;
@@ -213,7 +214,7 @@ export class BARoom {
     const p=token?this.file.players.find(x=>x.token===token):null;const seat=p?this.file.players.indexOf(p):null;
     return {code:this.file.code,seriesId:this.file.seriesId,roundId:this.file.roundId,version:this.file.version,phase:this.file.phase,
       self:seat,hostId:this.file.hostId,players:this.file.players.map((x,i)=>({id:x.id,name:x.name,seat:i,ready:x.ready,online:!!x.bot||(this.connections.get(x.id)??0)>0,bot:!!x.bot})),
-      options:{...this.file.options},deadline:this.file.deadline,
+      options:{...this.file.options},deadline:this.file.deadline,serverNow:Date.now(),
       round:this.file.round?viewRound(this.file.round,seat):null,exchange:this.file.exchange?viewExchange(this.file.exchange,seat):null,
       exchangeLogs:viewExchangeLogs(this.file.exchangeLogs??[],seat),
       history:this.file.history??[]};

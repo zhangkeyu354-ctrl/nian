@@ -8,7 +8,7 @@ export interface BASnapshot {
   code:string;seriesId:string;roundId:number;version:number;phase:'LOBBY'|'PLAY'|'EXCHANGE'|'RESULT'|'ABORTED';
   self:number|null;hostId:string|null;players:{id:string;name:string;seat:number;ready:boolean;online:boolean;bot:boolean}[];
   options:{firstLead:'CONTAINS_D3'|'OWNER_ANY';soloScoreBasis:'FINAL'|'BASE';advanceExchange:boolean;turnSeconds:0|15|30|45|60;returnSeconds:30|45|60};
-  deadline:number|null;
+  deadline:number|null;serverNow?:number;
   round:{phase:'PLAY'|'RESULT';version:number;turnId:number;trickId:number;currentActor:number|null;hand:string[]|null;handCounts:number[];capturedScores:number[];tableCards:string[];tableScore:number;lastPlay:{actor:number;cards:string[]}|null;recentPlays:BARecentPlay[];finishedOrder:number[];result:Settlement|null}|null;
   exchange:{phase:'DRAW_PENDING'|'RETURN_PENDING'|'COMPLETE';transactionIndex:number;transactionCount:number;pair:{winner:number;loser:number;count:number}|null;completed:number;hand:string[]|null;handCounts:number[];returnCount:number|null;drawCount:number|null;faceDownCount:number;drawnIds:string[]|null;batch?:boolean;logs:BAExchangeLog[]}|null;
   exchangeLogs?:BAExchangeLog[];

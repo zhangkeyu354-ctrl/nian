@@ -66,7 +66,9 @@ function GameRoom({code}:{code:string}){
     if(snap.phase==='PLAY'&&snap.round&&old.round?.trickId!==snap.round.trickId){playSound('trick');return}
     if(snap.phase==='PLAY'&&snap.round?.lastPlay){const before=old.round?.lastPlay?.cards.join(',');const now=snap.round.lastPlay.cards.join(',');if(before!==now){const type=classify(snap.round.lastPlay.cards)?.type;const event=type==='BLACK_A'?'blackA':type==='MIXED_510K'?'mixed':type==='PURE_510K'?'pure':type==='BOMB'?'bomb':type==='DOUBLE_BLACK_A'?'double':'play';playSound(event)}}
   },[snap,soundOn]);
-  useEffect(()=>{const t=setInterval(()=>setSeconds(snap?.deadline?Math.max(0,Math.ceil((snap.deadline-Date.now())/1000)):0),250);return()=>clearInterval(t)},[snap?.deadline]);
+  const clockSkew=useRef(0);
+  useEffect(()=>{if(snap?.serverNow)clockSkew.current=snap.serverNow-Date.now()},[snap?.serverNow]);
+  useEffect(()=>{const calc=()=>setSeconds(snap?.deadline?Math.max(0,Math.ceil((snap.deadline-(Date.now()+clockSkew.current))/1000)):0);calc();const t=setInterval(calc,250);return()=>clearInterval(t)},[snap?.deadline]);
   useEffect(()=>{setSelected([]);setDrawIndices([])},[snap?.roundId,snap?.round?.turnId,snap?.exchange?.transactionIndex,snap?.exchange?.phase]);
   const hand=snap?.phase==='EXCHANGE'?snap.exchange?.hand:snap?.round?.hand;
   const handKey=hand?.join('|')??'';
