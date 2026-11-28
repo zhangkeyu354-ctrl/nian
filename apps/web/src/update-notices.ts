@@ -1,6 +1,8 @@
 /** 大厅更新公告：每次发布在顶部追加，使用玩家能看懂的简短说明。 */
 /** dev:true 的条目只给开发者看（只出现在网站状态页），大厅和游戏里的公告不显示 */
 export const UPDATE_NOTICES: Array<{ id: string; date: string; game: string; title: string; text: string; dev?: boolean }> = [
+  {id:"2026-11-28-ba-bot",date:"2026-11-28",game:"双黑A五十K",title:"双黑A五十K：人机更会打、倒计时更准",text:"人机不再一上来就打出 10、2 这类牌，也不会拿炸弹去压别人的小单张，会把黑A、五十K和炸弹留到关键时候用。出牌超时自动出牌时，改为出最小的一张非分牌。倒计时以服务器时间为准，手机时间不准也不会提前显示 0 秒。"},
+  {id:"2026-11-28-ba-bot-dev",date:"2026-11-28",game:"双黑A五十K",title:"BA 人机与超时出牌（Claude）",text:"新增 packages/black-a-510k/src/bot.ts：chooseBotAction 按牌型强弱选牌（原来取 enumerateLegalPlays 第一项，按牌面字符串排序，导致先出 10/2）；timeoutLeadCard 替换原 hand.sort()[0]。快照加 serverNow，客户端用时差校正倒计时。新增 bot.test.ts。",dev:true},
   {id:"2026-11-27-bandwidth-dev",date:"2026-11-27",game:"全站",title:"省流量：黎明杀机图片和字体改走 GitHub Pages（Claude）",text:"11-27 Render 免费流量（每月 5GB）用完被暂停。原因：/assets/ 根目录下的黎明杀机图片（34 张，每张最大 2.6MB，共约 88MB）和 4.7MB 字体不在转发规则里，一直由 Render 直接提供。现在 /assets/ 根目录里属于 public 的图片和 /fonts/ 也 302 到 Pages；指纹同时包含 fonts，Pages 也发布 fonts。构建产物 js/css 仍由 Render 提供（gzip 后约 1MB）。",dev:true},
   {id:"2026-11-27-ba-solo-end",date:"2026-11-27",game:"双黑A五十K",title:"双黑A五十K：独狼出完立即结束",text:"独狼（一个人拿两张黑A）把牌出完，本局立刻结束，不用再等其他三人打完：没出完的人压不过独狼最后出的那手牌，手里的分牌（5、10、K）归独狼；压得过就归自己。（来自玩家反馈）"},
   {id:"2026-11-27-ba-solo-end-dev",date:"2026-11-27",game:"双黑A五十K",title:"BA 独狼出完即结算（Claude）",text:"round.ts 增加 soloDone；settlement.ts 允许 3 人未出完（仅独狼局），名次与余分判断沿用 T22 提前结束逻辑。旧测试「独狼先出完不结束」按反馈 #29 改为结束。反馈里的「打几把后卡住」在本地 300+ 局模拟中未复现，待补充房间号与时间。",dev:true},
