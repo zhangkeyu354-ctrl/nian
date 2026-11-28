@@ -1,6 +1,7 @@
 /** 大厅更新公告：每次发布在顶部追加，使用玩家能看懂的简短说明。 */
 /** dev:true 的条目只给开发者看（只出现在网站状态页），大厅和游戏里的公告不显示 */
 export const UPDATE_NOTICES: Array<{ id: string; date: string; game: string; title: string; text: string; dev?: boolean }> = [
+  {id:"2026-11-28-ws-compress-dev",date:"2026-11-28",game:"全站",title:"联机数据压缩（Claude）",text:"Render 本月流量 5.8GB 中 WebSocket 占 4.07GB、HTTP 1.73GB。Socket.IO 默认不压缩，现开启 perMessageDeflate 与轮询 httpCompression（阈值 512 字节），浏览器自动支持，客户端不用改。",dev:true},
   {id:"2026-11-28-ba-bot",date:"2026-11-28",game:"双黑A五十K",title:"双黑A五十K：人机更会打、倒计时更准",text:"人机不再一上来就打出 10、2 这类牌，也不会拿炸弹去压别人的小单张，会把黑A、五十K和炸弹留到关键时候用。出牌超时自动出牌时，改为出最小的一张非分牌。倒计时以服务器时间为准，手机时间不准也不会提前显示 0 秒。"},
   {id:"2026-11-28-ba-bot-dev",date:"2026-11-28",game:"双黑A五十K",title:"BA 人机与超时出牌（Claude）",text:"新增 packages/black-a-510k/src/bot.ts：chooseBotAction 按牌型强弱选牌（原来取 enumerateLegalPlays 第一项，按牌面字符串排序，导致先出 10/2）；timeoutLeadCard 替换原 hand.sort()[0]。快照加 serverNow，客户端用时差校正倒计时。新增 bot.test.ts。",dev:true},
   {id:"2026-11-27-bandwidth-dev",date:"2026-11-27",game:"全站",title:"省流量：黎明杀机图片和字体改走 GitHub Pages（Claude）",text:"11-27 Render 免费流量（每月 5GB）用完被暂停。原因：/assets/ 根目录下的黎明杀机图片（34 张，每张最大 2.6MB，共约 88MB）和 4.7MB 字体不在转发规则里，一直由 Render 直接提供。现在 /assets/ 根目录里属于 public 的图片和 /fonts/ 也 302 到 Pages；指纹同时包含 fonts，Pages 也发布 fonts。构建产物 js/css 仍由 Render 提供（gzip 后约 1MB）。",dev:true},
